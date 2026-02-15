@@ -62,7 +62,7 @@ class CallStack {
 
   CallStack(int maxDepth) : data = Uint32List(maxDepth * _frameMetaSize);
 
-  static const _frameMetaSize = 4;  // returnPC, savedFP, savedVSP, savedRSP
+  static const _frameMetaSize = 6;  // funcId, returnPC, savedFP, savedVSP, savedRSP, resultReg
 }
 ```
 
@@ -89,10 +89,12 @@ class CallStack {
 
 调用栈 (CallStack)
 ┌──────────────────────────────────┐
+│ funcId      │ 当前函数 ID        │
 │ returnPC    │ 调用者的 PC        │
 │ savedFP     │ 调用者的帧指针     │
 │ savedVSP    │ 调用者的值栈指针   │
 │ savedRSP    │ 调用者的引用栈指针 │
+│ resultReg   │ 调用者的返回值寄存器│
 ├──────────────────────────────────┤ ← fp
 │ (下一帧)                         │
 └──────────────────────────────────┘
