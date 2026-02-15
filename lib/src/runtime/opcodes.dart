@@ -6,6 +6,8 @@ abstract class OpCode {
   static const int loadTrue = 0x03;
   static const int loadFalse = 0x04;
   static const int loadInt = 0x05;
+  static const int boxInt = 0x06;     // ref[A] = val[B] (box int64 → Object)
+  static const int unboxInt = 0x07;   // val[A] = ref[B] (unbox Object → int64)
   static const int moveRef = 0x08;
   static const int moveVal = 0x09;
 

@@ -11,9 +11,11 @@ void main() {
     final bindings = HostBindings();
     bindings.register('print', (args) {
       printLog.add(args[0]);
+      return null;
     });
     final listAddId = bindings.register('List.add', (args) {
       (args[0] as List).add(args[1]);
+      return null;
     });
     final listLengthId = bindings.register('List.length', (args) {
       return (args[0] as List).length;

@@ -46,6 +46,16 @@ class DartiRuntime {
         case OpCode.loadInt:
           _vs.intView[vBase + Instr.decodeA(instr)] = Instr.decodesBx(instr);
 
+        case OpCode.boxInt:
+          final a = Instr.decodeA(instr);
+          final b = Instr.decodeB(instr);
+          _rs.slots[rBase + a] = _vs.intView[vBase + b];
+
+        case OpCode.unboxInt:
+          final a = Instr.decodeA(instr);
+          final b = Instr.decodeB(instr);
+          _vs.intView[vBase + a] = _rs.slots[rBase + b] as int;
+
         case OpCode.loadConst:
           final a = Instr.decodeA(instr);
           final bx = Instr.decodeBx(instr);
@@ -143,10 +153,15 @@ class DartiRuntime {
           _rs.slots[rBase + a] = result;
 
         case OpCode.callHost:
+          // ABC format: A=baseReg, B=argCount, C=hostId
           final a = Instr.decodeA(instr);
-          final bx = Instr.decodeBx(instr);
-          final arg = _rs.slots[rBase + a];
-          final result = hostBindings.invoke(bx, [arg]);
+          final b = Instr.decodeB(instr);
+          final c = Instr.decodeC(instr);
+          final args = <Object?>[];
+          for (int i = 0; i < b; i++) {
+            args.add(_rs.slots[rBase + a + i]);
+          }
+          final result = hostBindings.invoke(c, args);
           _rs.slots[rBase + a] = result;
 
         case OpCode.returnRef:

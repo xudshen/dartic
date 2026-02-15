@@ -11,6 +11,10 @@ workspace:
   - packages/poc_bench
   - packages/poc_bridge
 
+dependencies:
+  kernel:
+    path: vendor/dart-sdk/pkg/kernel
+
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.25.6

@@ -9,5 +9,8 @@
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 
+# Generated test artifacts
+*.dill
+
 # Vendored dependencies
 vendor/

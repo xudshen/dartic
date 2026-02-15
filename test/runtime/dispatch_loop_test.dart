@@ -86,12 +86,13 @@ void main() {
       final bindings = HostBindings();
       bindings.register('print', (args) {
         printLog.add(args[0]);
+        return null;
       });
 
       // load "hello" from constPool[0], call print
       final code = Uint32List.fromList([
         Instr.encodeABx(OpCode.loadConst, 0, 0),   // ref[0] = constPool[0]
-        Instr.encodeABx(OpCode.callHost, 0, 0),    // hostBindings[0](ref[0])
+        Instr.encodeABC(OpCode.callHost, 0, 1, 0), // hostBindings[0](ref[0]), argCount=1
         Instr.encodeABC(OpCode.returnNull, 0, 0, 0),
       ]);
       final func = FuncProto(
