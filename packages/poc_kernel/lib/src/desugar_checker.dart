@@ -35,16 +35,7 @@ class DesugarChecker extends RecursiveVisitor {
       final name = node.runtimeType.toString();
       _counts[name] = (_counts[name] ?? 0) + 1;
     }
-    // Continue recursive traversal, guarding against unlinked references
-    // in --no-link-platform .dill files
-    try {
-      node.visitChildren(this);
-    } catch (e) {
-      // Unlinked reference (e.g. dart:core::int) throws a bare String
-      // in --no-link-platform .dill files — skip this subtree
-      if ('$e'.contains('is not bound to an AST node')) return;
-      rethrow;
-    }
+    node.visitChildren(this);
   }
 
   @override

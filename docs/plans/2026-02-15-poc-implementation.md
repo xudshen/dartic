@@ -212,7 +212,7 @@ DIR="$(cd "$(dirname "$0")/../test/fixtures" && pwd)"
 for f in "$DIR"/*.dart; do
   name=$(basename "$f" .dart)
   echo "Compiling $name.dart → $name.dill"
-  dart compile kernel --no-link-platform -o "$DIR/$name.dill" "$f"
+  dart compile kernel -o "$DIR/$name.dill" "$f"  # 注：不使用 --no-link-platform，见 POC-4 发现
 done
 
 echo "Done. Generated .dill files:"
@@ -224,7 +224,7 @@ ls -la "$DIR"/*.dill
 Run: `chmod +x packages/poc_kernel/tool/compile_fixtures.sh && packages/poc_kernel/tool/compile_fixtures.sh`
 Expected: 3 个 .dill 文件生成，无错误
 
-> **记录**：`--no-link-platform` 是否成功？生成的 .dill 大小分别是多少？
+> **决策更新**：不使用 `--no-link-platform`。linked-platform .dill (~8MB) 确保所有 Reference 正确解析，编译器可直接用 `interfaceTarget`、`classNode` 等属性，无需 canonicalName fallback。详见 `docs/tasks/poc/poc-4-e2e.md` 关键发现 #1。
 
 **Step 4: .gitignore .dill 文件**
 
@@ -977,7 +977,7 @@ Expected: 输出 fetchValue 标记为 async，脱糖检查通过，AwaitExpressi
 
 > **关键记录点**：
 > - dart: 库引用在 Kernel 中的表示方式（CanonicalName 结构）
-> - `--no-link-platform` .dill 中 CoreTypes 是否可用
+> - linked-platform .dill 中 CoreTypes 可用（已验证）
 > - 任何与 Ch4 设计假设不符的行为
 
 **Step 4: Commit**
@@ -2821,7 +2821,7 @@ void main() {
   // 前置：编译 fixture 为 .dill
   setUpAll(() {
     final result = Process.runSync('dart', [
-      'compile', 'kernel', '--no-link-platform',
+      'compile', 'kernel',  // 注：不使用 --no-link-platform
       '-o', 'test/fixtures/counter.dill',
       'test/fixtures/counter.dart',
     ]);

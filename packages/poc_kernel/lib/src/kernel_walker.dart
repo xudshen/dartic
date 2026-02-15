@@ -139,10 +139,7 @@ class KernelWalker {
   }
 
   String _className(Reference ref) {
-    final node = ref.node;
-    if (node is Class) return node.name;
-    // Unlinked reference (e.g. dart:core types with --no-link-platform)
-    return ref.canonicalName?.name ?? 'Unknown';
+    return (ref.node as Class).name;
   }
 
   String _typeName(DartType type) {

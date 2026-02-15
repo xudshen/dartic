@@ -11,7 +11,7 @@ fi
 for f in "$DIR"/*.dart; do
   name=$(basename "$f" .dart)
   echo "Compiling $name.dart → $name.dill"
-  $DART_CMD compile kernel --no-link-platform -o "$DIR/$name.dill" "$f"
+  $DART_CMD compile kernel -o "$DIR/$name.dill" "$f"
 done
 
 echo "Done. Generated .dill files:"

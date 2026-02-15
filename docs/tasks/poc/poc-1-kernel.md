@@ -80,19 +80,17 @@
 
 ## 关键发现
 
-### 1. `--no-link-platform` .dill 的未链接引用
+### 1. 必须使用 linked-platform .dill
 
-`dart compile kernel --no-link-platform` 生成的 .dill 不包含 dart:core/dart:async 的 AST 节点。所有指向平台类型的 `Reference` 未绑定（`node == null`）。
+**决策：** 不使用 `--no-link-platform`，编译时链接平台库。
 
-**影响：**
-- `InterfaceType.classNode` / `Supertype.classNode` 直接访问会崩溃
-- `Reference.asClass` / `asProcedure` / `asMember` 在未绑定时 **`throw` 裸字符串**（非标准异常类型）
-- `RecursiveVisitor` 的 `node.visitChildren(this)` 会触发深层引用解析崩溃
+`--no-link-platform` 编出的 .dill 不包含 dart:core/dart:async 的 AST 节点，所有平台类型的 `Reference` 未绑定，访问 `interfaceTarget`、`classNode` 等属性会抛 `Reference is not bound to an AST node`。
 
-**解决模式：**
-- 类型名称获取：通过 `Reference.node` 检查是否绑定，回退到 `Reference.canonicalName.name`
-- 类型分类（StackKind）：通过 canonical name 字符串匹配（`'int'`/`'double'`/`'bool'`），不依赖 `CoreTypes` 对象相等
-- AST 遍历：`try { node.visitChildren(this); } catch (e)` + 字符串匹配 `'is not bound to an AST node'`
+**正确做法：** `dart compile kernel -o output.dill input.dart`（不加 `--no-link-platform`）：
+- .dill 大小 ~8MB（包含平台 AST），但所有 Reference 正确解析
+- 可直接使用 `InterfaceType.classNode.name`、`x.interfaceTarget.enclosingClass` 等
+- 无需 `canonicalName` fallback 或 try-catch guard
+- 编译器代码更简洁、更可靠
 
 ### 2. `package:kernel` API 版本差异 (SDK 3.10.7)
 
@@ -100,9 +98,9 @@
 |---------|---------|
 | `RecursiveVisitor<void>` | `RecursiveVisitor`（无类型参数） |
 | `super.visitXxx(node)` 可调 | mixin 链导致 `super` 找不到方法 |
-| `InterfaceType.classNode.name` | 需用 `classReference` + `Reference.canonicalName` |
+| `InterfaceType.classNode.name` | 使用 linked-platform .dill 后可直接用 `classNode.name` |
 | `cls.superclass?.name` | 需用 `cls.supertype?.className`（`Reference` 类型） |
-| `CoreTypes(component)` 可用 | `--no-link-platform` 下不可用，dart:core 类未链接 |
+| `CoreTypes(component)` 可用 | 使用 linked-platform .dill 后可用 |
 
 ### 3. CFE 脱糖确认
 
@@ -117,11 +115,11 @@
 
 | Fixture | 大小 | 说明 |
 |---------|------|------|
-| simple.dill | 912 B | fibonacci + main |
-| generics.dill | 1,424 B | Box<T> 泛型类 |
-| async_closures.dill | 1,464 B | async + cascade + lambda |
+| simple.dill | ~8.0 MB | fibonacci + main + 平台库 |
+| generics.dill | ~8.0 MB | Box<T> 泛型类 + 平台库 |
+| async_closures.dill | ~8.0 MB | async + cascade + lambda + 平台库 |
 
-`--no-link-platform` 极大减小文件体积，仅包含用户代码 AST。
+使用 linked-platform 后 .dill 包含完整平台 AST（~8MB），确保所有引用正确解析。用户代码部分仍然很小，大部分体积来自 dart:core 等标准库。
 
 ### 5. StackKind 分类数据
 

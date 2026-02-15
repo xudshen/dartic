@@ -17,23 +17,17 @@ class TypeClassifySummary {
 
 /// Classifies Kernel DartTypes into [StackKind.value] or [StackKind.ref].
 ///
-/// Works with --no-link-platform .dill files by using canonical name
-/// comparison instead of CoreTypes identity checks.
+/// Requires linked-platform .dill files so that class references resolve
+/// to AST nodes.
 class TypeClassifier {
   static const _valueTypeNames = {'int', 'double', 'bool'};
 
   StackKind classify(DartType type) {
     if (type is InterfaceType) {
-      final name = _resolveClassName(type.classReference);
+      final name = type.classNode.name;
       if (_valueTypeNames.contains(name)) return StackKind.value;
     }
     return StackKind.ref;
-  }
-
-  String _resolveClassName(Reference ref) {
-    final node = ref.node;
-    if (node is Class) return node.name;
-    return ref.canonicalName?.name ?? '';
   }
 
   TypeClassifySummary summarize(Component component) {
