@@ -1,0 +1,12 @@
+name: poc_bridge
+description: "POC-3: Bridge interop mechanism"
+publish_to: none
+
+environment:
+  sdk: ^3.10.7
+
+resolution: workspace
+
+dev_dependencies:
+  test: any
+  lints: any

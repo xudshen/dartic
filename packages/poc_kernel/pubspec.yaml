@@ -1,0 +1,16 @@
+name: poc_kernel
+description: "POC-1: Kernel AST loading and traversal"
+publish_to: none
+
+environment:
+  sdk: ^3.10.7
+
+resolution: workspace
+
+dependencies:
+  kernel:
+    path: ../../vendor/dart-sdk/pkg/kernel
+
+dev_dependencies:
+  test: any
+  lints: any
