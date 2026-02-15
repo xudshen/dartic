@@ -31,7 +31,7 @@
 
 ### 宿主函数注册表
 
-Bridge 预生成库提供绑定注册表，将宿主函数/方法映射为整数 ID：
+Bridge 预生成库提供绑定注册表，将宿主函数/方法映射为符号名 → 整数 ID：
 
 ```dart
 class HostBindings {
@@ -45,13 +45,16 @@ class HostBindings {
     return id;
   }
 
+  /// 按名称查找运行时 ID（加载 .dartib 时符号解析用）
+  int? lookupByName(String name) => _nameToId[name];
+
   Object? invoke(int id, List<Object?> args) {
     return Function.apply(_functions[id], args);
   }
 }
 ```
 
-编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`，其中 Bx 是 `List.add` 在绑定表中的 ID。
+编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`，其中 Bx 是编译期的**本地绑定索引**（指向 .dartib 绑定名称表中的条目）。运行时加载 .dartib 时通过符号解析将本地索引映射为运行时 ID（详见 Chapter 4 加载时符号解析）。
 
 ### 包装器类（结构化访问）
 
@@ -160,7 +163,9 @@ VM 对象传入解释器时不做任何包装，直接作为 `Object?` 存入引
 ```dart
 // CALL_HOST 返回 VM 原生对象
 case OpCode.CALL_HOST:
-  final result = hostBindings.invoke(funcId, args);
+  final localIndex = (instr >> 16) & 0xFFFF;
+  final runtimeId = module.bindingRelocationTable[localIndex]; // 符号解析后的运行时 ID
+  final result = hostBindings.invoke(runtimeId, args);
   // result 是 VM 原生对象（如 HttpResponse），直接存入引用栈
   _rs.slots[destReg] = result;
 ```
