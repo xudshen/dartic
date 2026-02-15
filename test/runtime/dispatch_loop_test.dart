@@ -81,6 +81,104 @@ void main() {
       expect(result, equals(42));
     });
 
+    test('CALL_STATIC uses iterative dispatch (no Dart recursion)', () {
+      // func 0 (main): calls func 1 (add) with args 3, 7; returns result
+      // func 1 (add): returns param0 + param1
+      //
+      // Main layout:
+      //   ref regs: 0=result, 1=arg0(boxed 3), 2=arg1(boxed 7)
+      //   val regs: 0=scratch(3), 1=scratch(7)
+      final mainCode = Uint32List.fromList([
+        Instr.encodeAsBx(OpCode.loadInt, 0, 3),        // val[0] = 3
+        Instr.encodeABC(OpCode.boxInt, 1, 0, 0),       // ref[1] = box(val[0]) = 3
+        Instr.encodeAsBx(OpCode.loadInt, 1, 7),        // val[1] = 7
+        Instr.encodeABC(OpCode.boxInt, 2, 1, 0),       // ref[2] = box(val[1]) = 7
+        Instr.encodeABx(OpCode.callStatic, 0, 1),      // ref[0] = call func[1](ref[1], ref[2])
+        Instr.encodeABC(OpCode.returnRef, 0, 0, 0),    // return ref[0]
+      ]);
+      // Add (func 1): paramCount=2, ref[0]=a, ref[1]=b
+      //   val regs: 0=unboxed a, 1=unboxed b, 2=sum
+      final addCode = Uint32List.fromList([
+        Instr.encodeABC(OpCode.unboxInt, 0, 0, 0),     // val[0] = unbox(ref[0])
+        Instr.encodeABC(OpCode.unboxInt, 1, 1, 0),     // val[1] = unbox(ref[1])
+        Instr.encodeABC(OpCode.addInt, 2, 0, 1),       // val[2] = val[0] + val[1]
+        Instr.encodeABC(OpCode.returnVal, 2, 0, 0),    // return val[2] (boxed as Object)
+      ]);
+
+      final mainFunc = FuncProto(
+        name: 'main', paramCount: 0,
+        refRegCount: 4, valRegCount: 4, bytecode: mainCode,
+      );
+      final addFunc = FuncProto(
+        name: 'add', paramCount: 2,
+        refRegCount: 4, valRegCount: 4, bytecode: addCode,
+      );
+      final module = DartiModule(
+        functions: [mainFunc, addFunc], classes: [], constPool: [], entryPoint: 0,
+      );
+
+      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final result = runtime.execute(module);
+      expect(result, equals(10));
+    });
+
+    test('CALL_STATIC with nested calls', () {
+      // func 0 (main): calls func 1(5) which calls func 2(5)
+      // func 1 (double): returns func2(n) * 2
+      // func 2 (addOne): returns n + 1
+      // Expected: addOne(5)=6, double(5)=addOne(5)*2=12
+
+      // Main: ref[0]=result, ref[1]=arg (boxed 5), val[0]=5
+      final mainCode = Uint32List.fromList([
+        Instr.encodeAsBx(OpCode.loadInt, 0, 5),        // val[0] = 5
+        Instr.encodeABC(OpCode.boxInt, 1, 0, 0),       // ref[1] = box(5)
+        Instr.encodeABx(OpCode.callStatic, 0, 1),      // ref[0] = call double(ref[1])
+        Instr.encodeABC(OpCode.returnRef, 0, 0, 0),    // return ref[0]
+      ]);
+
+      // Double (func 1): paramCount=1, ref[0]=n
+      //   ref[1]=arg to addOne, ref[2]=result from addOne
+      //   val[0]=unboxed result, val[1]=2, val[2]=product
+      final doubleCode = Uint32List.fromList([
+        Instr.encodeABC(OpCode.moveRef, 3, 0, 0),      // ref[3] = ref[0] (save n)
+        Instr.encodeABC(OpCode.moveRef, 1, 0, 0),      // ref[1] = ref[0] (arg for addOne)
+        Instr.encodeABx(OpCode.callStatic, 0, 2),      // ref[0] = call addOne(ref[1])
+        Instr.encodeABC(OpCode.unboxInt, 0, 0, 0),     // val[0] = unbox(ref[0])
+        Instr.encodeAsBx(OpCode.loadInt, 1, 2),        // val[1] = 2
+        Instr.encodeABC(OpCode.mulInt, 2, 0, 1),       // val[2] = val[0] * 2
+        Instr.encodeABC(OpCode.returnVal, 2, 0, 0),    // return val[2]
+      ]);
+
+      // AddOne (func 2): paramCount=1, ref[0]=n
+      //   val[0]=unboxed n, val[1]=result
+      final addOneCode = Uint32List.fromList([
+        Instr.encodeABC(OpCode.unboxInt, 0, 0, 0),     // val[0] = unbox(ref[0])
+        Instr.encodeABC(OpCode.addIntImm, 1, 0, 1),    // val[1] = val[0] + 1
+        Instr.encodeABC(OpCode.returnVal, 1, 0, 0),    // return val[1]
+      ]);
+
+      final mainFunc = FuncProto(
+        name: 'main', paramCount: 0,
+        refRegCount: 4, valRegCount: 4, bytecode: mainCode,
+      );
+      final doubleFunc = FuncProto(
+        name: 'double', paramCount: 1,
+        refRegCount: 4, valRegCount: 4, bytecode: doubleCode,
+      );
+      final addOneFunc = FuncProto(
+        name: 'addOne', paramCount: 1,
+        refRegCount: 4, valRegCount: 4, bytecode: addOneCode,
+      );
+      final module = DartiModule(
+        functions: [mainFunc, doubleFunc, addOneFunc],
+        classes: [], constPool: [], entryPoint: 0,
+      );
+
+      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final result = runtime.execute(module);
+      expect(result, equals(12));
+    });
+
     test('CALL_HOST invokes print binding', () {
       final printLog = <Object?>[];
       final bindings = HostBindings();
