@@ -14,13 +14,14 @@
 | POC-2 | 双视图值栈性能 | `poc/poc-2-bench.md` | ✅ 完成 |
 | POC-3 | Bridge / 互调机制 | `poc/poc-3-bridge.md` | ✅ 完成 |
 | POC-4 | 端到端最小原型 | `poc/poc-4-e2e.md` | ✅ 完成 |
+| POC-5 | Flat Call Stack + Fuel + Async | `poc/poc-5-async.md` | ✅ 完成 |
 
 ### 依赖关系
 
 ```
 setup ──► POC-1 ──┐
-          POC-2 ──┤──► POC-4
+          POC-2 ──┤──► POC-4 ──► POC-5
           POC-3 ──┘
 ```
 
-POC-1/2/3 可并行，POC-4 依赖前三者的产出。
+POC-1/2/3 可并行，POC-4 依赖前三者的产出，POC-5 依赖 POC-4。
