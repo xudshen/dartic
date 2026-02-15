@@ -6,7 +6,7 @@ import 'package:darti/src/runtime/dispatch_loop.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('hand-written Counter program outputs 10 and 4', () {
+  test('hand-written Counter program outputs 10 and 4', () async {
     final printLog = <Object?>[];
     final bindings = HostBindings();
     bindings.register('print', (args) {
@@ -74,11 +74,11 @@ void main() {
 
     // Call increment 10 times
     for (int i = 0; i < 10; i++) {
-      runtime.executeFunc(module, 1, [counter], 0, 0);
+      await runtime.executeFunc(module, 1, [counter], 0, 0);
     }
 
     // Call count getter
-    final count = runtime.executeFunc(module, 2, [counter], 0, 0);
+    final count = await runtime.executeFunc(module, 2, [counter], 0, 0);
     printLog.add(count);
 
     // List operations via host bindings

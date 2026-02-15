@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('DispatchLoop', () {
-    test('executes LOAD_INT + ADD_INT + RETURN_VAL', () {
+    test('executes LOAD_INT + ADD_INT + RETURN_VAL', () async {
       // Program: return 3 + 7
       final code = Uint32List.fromList([
         Instr.encodeAsBx(OpCode.loadInt, 0, 3),
@@ -24,11 +24,11 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: HostBindings());
-      final result = runtime.execute(module);
+      final result = await runtime.execute(module);
       expect(result, equals(10));
     });
 
-    test('executes for loop counting to 10', () {
+    test('executes for loop counting to 10', () async {
       // Program: i=0; while(i<10) i++; return i
       final code = Uint32List.fromList([
         Instr.encodeAsBx(OpCode.loadInt, 0, 0),     // v[0] = i = 0
@@ -50,11 +50,11 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: HostBindings());
-      final result = runtime.execute(module);
+      final result = await runtime.execute(module);
       expect(result, equals(10));
     });
 
-    test('NEW_INSTANCE + GET/SET_FIELD_VAL', () {
+    test('NEW_INSTANCE + GET/SET_FIELD_VAL', () async {
       final cls = ClassInfo(
         classId: 0, name: 'Foo',
         refFieldCount: 0, valueFieldCount: 1,
@@ -77,11 +77,11 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: HostBindings());
-      final result = runtime.execute(module);
+      final result = await runtime.execute(module);
       expect(result, equals(42));
     });
 
-    test('CALL_STATIC uses iterative dispatch (no Dart recursion)', () {
+    test('CALL_STATIC uses iterative dispatch (no Dart recursion)', () async {
       // func 0 (main): calls func 1 (add) with args 3, 7; returns result
       // func 1 (add): returns param0 + param1
       //
@@ -118,11 +118,11 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: HostBindings());
-      final result = runtime.execute(module);
+      final result = await runtime.execute(module);
       expect(result, equals(10));
     });
 
-    test('CALL_STATIC with nested calls', () {
+    test('CALL_STATIC with nested calls', () async {
       // func 0 (main): calls func 1(5) which calls func 2(5)
       // func 1 (double): returns func2(n) * 2
       // func 2 (addOne): returns n + 1
@@ -175,11 +175,11 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: HostBindings());
-      final result = runtime.execute(module);
+      final result = await runtime.execute(module);
       expect(result, equals(12));
     });
 
-    test('CALL_HOST invokes print binding', () {
+    test('CALL_HOST invokes print binding', () async {
       final printLog = <Object?>[];
       final bindings = HostBindings();
       bindings.register('print', (args) {
@@ -202,7 +202,7 @@ void main() {
       );
 
       final runtime = DartiRuntime(hostBindings: bindings);
-      runtime.execute(module);
+      await runtime.execute(module);
       expect(printLog, equals(['hello']));
     });
   });

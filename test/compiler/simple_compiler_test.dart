@@ -24,7 +24,7 @@ void main() {
     }
   });
 
-  test('compiles and executes counter.dart', () {
+  test('compiles and executes counter.dart', () async {
     final printLog = <Object?>[];
 
     final bindings = HostBindings();
@@ -37,7 +37,7 @@ void main() {
     final module = compiler.compile('test/fixtures/counter.dill');
 
     final runtime = DartiRuntime(hostBindings: bindings);
-    runtime.execute(module);
+    await runtime.execute(module);
 
     expect(printLog, equals([10, 4]));
   });

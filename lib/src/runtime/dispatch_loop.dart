@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'opcodes.dart';
 import 'types.dart';
 import 'value_stack.dart';
@@ -7,23 +9,29 @@ import 'call_stack.dart';
 
 class DartiRuntime {
   final HostBindings hostBindings;
+  final int _fuelBudget;
   final ValueStack _vs;
   final RefStack _rs;
   final CallStack _callStack;
+
+  /// Number of times execution yielded via Timer.run due to fuel exhaustion.
+  int yieldCount = 0;
 
   DartiRuntime({
     required this.hostBindings,
     int stackSize = 4096,
     int maxCallDepth = 512,
-  })  : _vs = ValueStack(stackSize),
+    int fuelBudget = 10000,
+  })  : _fuelBudget = fuelBudget,
+        _vs = ValueStack(stackSize),
         _rs = RefStack(stackSize),
         _callStack = CallStack(maxDepth: maxCallDepth);
 
-  Object? execute(DartiModule module) {
+  Future<Object?> execute(DartiModule module) {
     return executeFunc(module, module.entryPoint, [], 0, 0);
   }
 
-  Object? executeFunc(
+  Future<Object?> executeFunc(
     DartiModule module,
     int funcId,
     List<Object?> refArgs,
@@ -35,282 +43,320 @@ class DartiRuntime {
       _rs.slots[baseR + i] = refArgs[i];
     }
 
-    // Initialize current frame state
+    // Initialize current frame state (captured by closure for fuel resumption)
     var curFuncId = funcId;
     var curFunc = module.functions[curFuncId];
     var code = curFunc.bytecode;
     var pc = 0;
     var vBase = baseV;
     var rBase = baseR;
+    var finished = false;
+    Object? finalResult;
 
-    // Iterative dispatch loop
-    outerLoop:
-    while (true) {
-      // Inner loop: execute instructions for the current frame
-      innerLoop:
+    final completer = Completer<Object?>();
+    yieldCount = 0;
+
+    void drive() {
+      int fuel = _fuelBudget;
+
+      outerLoop:
       while (true) {
-        final instr = code[pc++];
-        final op = instr & 0xFF;
+        // Inner loop: execute instructions for the current frame
+        innerLoop:
+        while (fuel > 0) {
+          fuel--;
+          final instr = code[pc++];
+          final op = instr & 0xFF;
 
-        switch (op) {
-          case OpCode.nop:
-            break;
+          switch (op) {
+            case OpCode.nop:
+              break;
 
-          case OpCode.loadInt:
-            _vs.intView[vBase + Instr.decodeA(instr)] =
-                Instr.decodesBx(instr);
+            case OpCode.loadInt:
+              _vs.intView[vBase + Instr.decodeA(instr)] =
+                  Instr.decodesBx(instr);
 
-          case OpCode.boxInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            _rs.slots[rBase + a] = _vs.intView[vBase + b];
+            case OpCode.boxInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              _rs.slots[rBase + a] = _vs.intView[vBase + b];
 
-          case OpCode.unboxInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            _vs.intView[vBase + a] = _rs.slots[rBase + b] as int;
+            case OpCode.unboxInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              _vs.intView[vBase + a] = _rs.slots[rBase + b] as int;
 
-          case OpCode.loadConst:
-            final a = Instr.decodeA(instr);
-            final bx = Instr.decodeBx(instr);
-            _rs.slots[rBase + a] = module.constPool[bx];
+            case OpCode.loadConst:
+              final a = Instr.decodeA(instr);
+              final bx = Instr.decodeBx(instr);
+              _rs.slots[rBase + a] = module.constPool[bx];
 
-          case OpCode.loadNull:
-            _rs.slots[rBase + Instr.decodeA(instr)] = null;
+            case OpCode.loadNull:
+              _rs.slots[rBase + Instr.decodeA(instr)] = null;
 
-          case OpCode.loadTrue:
-            _vs.intView[vBase + Instr.decodeA(instr)] = 1;
+            case OpCode.loadTrue:
+              _vs.intView[vBase + Instr.decodeA(instr)] = 1;
 
-          case OpCode.loadFalse:
-            _vs.intView[vBase + Instr.decodeA(instr)] = 0;
+            case OpCode.loadFalse:
+              _vs.intView[vBase + Instr.decodeA(instr)] = 0;
 
-          case OpCode.moveRef:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            _rs.slots[rBase + a] = _rs.slots[rBase + b];
+            case OpCode.moveRef:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              _rs.slots[rBase + a] = _rs.slots[rBase + b];
 
-          case OpCode.moveVal:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            _vs.intView[vBase + a] = _vs.intView[vBase + b];
+            case OpCode.moveVal:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              _vs.intView[vBase + a] = _vs.intView[vBase + b];
 
-          case OpCode.addInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] + _vs.intView[vBase + c];
+            case OpCode.addInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] + _vs.intView[vBase + c];
 
-          case OpCode.subInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] - _vs.intView[vBase + c];
+            case OpCode.subInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] - _vs.intView[vBase + c];
 
-          case OpCode.mulInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] * _vs.intView[vBase + c];
+            case OpCode.mulInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] * _vs.intView[vBase + c];
 
-          case OpCode.addIntImm:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] = _vs.intView[vBase + b] + c;
+            case OpCode.addIntImm:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] = _vs.intView[vBase + b] + c;
 
-          case OpCode.ltInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] < _vs.intView[vBase + c] ? 1 : 0;
+            case OpCode.ltInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] < _vs.intView[vBase + c] ? 1 : 0;
 
-          case OpCode.leInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] <= _vs.intView[vBase + c] ? 1 : 0;
+            case OpCode.leInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] <= _vs.intView[vBase + c] ? 1 : 0;
 
-          case OpCode.eqInt:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            _vs.intView[vBase + a] =
-                _vs.intView[vBase + b] == _vs.intView[vBase + c] ? 1 : 0;
+            case OpCode.eqInt:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              _vs.intView[vBase + a] =
+                  _vs.intView[vBase + b] == _vs.intView[vBase + c] ? 1 : 0;
 
-          case OpCode.jump:
-            pc += Instr.decodesBx(instr);
-
-          case OpCode.jumpIfFalse:
-            if (_vs.intView[vBase + Instr.decodeA(instr)] == 0) {
+            case OpCode.jump:
               pc += Instr.decodesBx(instr);
-            }
 
-          case OpCode.callStatic:
-            final a = Instr.decodeA(instr);
-            final bx = Instr.decodeBx(instr);
-            final targetFunc = module.functions[bx];
+            case OpCode.jumpIfFalse:
+              if (_vs.intView[vBase + Instr.decodeA(instr)] == 0) {
+                pc += Instr.decodesBx(instr);
+              }
 
-            // Save current frame onto the call stack
-            _callStack.push(
-              funcId: curFuncId,
-              returnPC: pc, // pc already advanced past CALL_STATIC
-              savedFP: 0,
-              savedVSP: vBase,
-              savedRSP: rBase,
-              resultReg: a,
-            );
+            case OpCode.callStatic:
+              final a = Instr.decodeA(instr);
+              final bx = Instr.decodeBx(instr);
+              final targetFunc = module.functions[bx];
 
-            // Compute new bases for the callee
-            final newBaseV = vBase + curFunc.valRegCount;
-            final newBaseR = rBase + curFunc.refRegCount;
+              // Save current frame onto the call stack
+              _callStack.push(
+                funcId: curFuncId,
+                returnPC: pc, // pc already advanced past CALL_STATIC
+                savedFP: 0,
+                savedVSP: vBase,
+                savedRSP: rBase,
+                resultReg: a,
+              );
 
-            // Copy ref args from caller's ref[a+1..a+paramCount] to callee's ref[0..paramCount-1]
-            for (int i = 0; i < targetFunc.paramCount; i++) {
-              _rs.slots[newBaseR + i] = _rs.slots[rBase + a + 1 + i];
-            }
+              // Compute new bases for the callee
+              final newBaseV = vBase + curFunc.valRegCount;
+              final newBaseR = rBase + curFunc.refRegCount;
 
-            // Switch to callee frame
-            curFuncId = bx;
-            curFunc = targetFunc;
-            code = targetFunc.bytecode;
-            pc = 0;
-            vBase = newBaseV;
-            rBase = newBaseR;
+              // Copy ref args from caller's ref[a+1..a+paramCount] to callee's ref[0..paramCount-1]
+              for (int i = 0; i < targetFunc.paramCount; i++) {
+                _rs.slots[newBaseR + i] = _rs.slots[rBase + a + 1 + i];
+              }
 
-            break innerLoop; // Re-enter outer loop with new frame
+              // Switch to callee frame
+              curFuncId = bx;
+              curFunc = targetFunc;
+              code = targetFunc.bytecode;
+              pc = 0;
+              vBase = newBaseV;
+              rBase = newBaseR;
 
-          case OpCode.callHost:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            final args = <Object?>[];
-            for (int i = 0; i < b; i++) {
-              args.add(_rs.slots[rBase + a + i]);
-            }
-            final result = hostBindings.invoke(c, args);
-            _rs.slots[rBase + a] = result;
+              break innerLoop; // Re-enter outer loop with new frame
 
-          case OpCode.returnRef:
-            final a = Instr.decodeA(instr);
-            final retVal = _rs.slots[rBase + a];
-            _rs.clear(rBase, rBase + curFunc.refRegCount);
+            case OpCode.callHost:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              final args = <Object?>[];
+              for (int i = 0; i < b; i++) {
+                args.add(_rs.slots[rBase + a + i]);
+              }
+              final result = hostBindings.invoke(c, args);
+              _rs.slots[rBase + a] = result;
 
-            if (_callStack.isEmpty) {
-              return retVal;
-            }
+            case OpCode.returnRef:
+              final retVal = _rs.slots[rBase + Instr.decodeA(instr)];
+              _rs.clear(rBase, rBase + curFunc.refRegCount);
+              if (_callStack.isEmpty) {
+                finished = true;
+                finalResult = retVal;
+                break outerLoop;
+              }
+              _restoreCallerFrame(module, retVal);
+              curFuncId = _restoredFuncId;
+              curFunc = _restoredFunc!;
+              code = curFunc.bytecode;
+              pc = _restoredPC;
+              vBase = _restoredVBase;
+              rBase = _restoredRBase;
+              break innerLoop;
 
-            // Pop caller's frame and restore state
-            final caller = _callStack.pop();
-            curFuncId = caller.funcId;
-            curFunc = module.functions[curFuncId];
-            code = curFunc.bytecode;
-            pc = caller.returnPC;
-            vBase = caller.savedVSP;
-            rBase = caller.savedRSP;
+            case OpCode.returnVal:
+              final retVal = _vs.intView[vBase + Instr.decodeA(instr)];
+              _rs.clear(rBase, rBase + curFunc.refRegCount);
+              if (_callStack.isEmpty) {
+                finished = true;
+                finalResult = retVal;
+                break outerLoop;
+              }
+              _restoreCallerFrame(module, retVal);
+              curFuncId = _restoredFuncId;
+              curFunc = _restoredFunc!;
+              code = curFunc.bytecode;
+              pc = _restoredPC;
+              vBase = _restoredVBase;
+              rBase = _restoredRBase;
+              break innerLoop;
 
-            // Store return value into caller's result register (ref slot)
-            _rs.slots[rBase + caller.resultReg] = retVal;
+            case OpCode.returnNull:
+              _rs.clear(rBase, rBase + curFunc.refRegCount);
+              if (_callStack.isEmpty) {
+                finished = true;
+                finalResult = null;
+                break outerLoop;
+              }
+              _restoreCallerFrame(module, null);
+              curFuncId = _restoredFuncId;
+              curFunc = _restoredFunc!;
+              code = curFunc.bytecode;
+              pc = _restoredPC;
+              vBase = _restoredVBase;
+              rBase = _restoredRBase;
+              break innerLoop;
 
-            break innerLoop; // Continue caller's frame
+            case OpCode.newInstance:
+              final a = Instr.decodeA(instr);
+              final bx = Instr.decodeBx(instr);
+              final cls = module.classes[bx];
+              _rs.slots[rBase + a] = InterpreterObject(
+                classId: cls.classId,
+                refFieldCount: cls.refFieldCount,
+                valueFieldCount: cls.valueFieldCount,
+              );
 
-          case OpCode.returnVal:
-            final a = Instr.decodeA(instr);
-            final retVal = _vs.intView[vBase + a];
-            _rs.clear(rBase, rBase + curFunc.refRegCount);
+            case OpCode.getFieldRef:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              final obj = _rs.slots[rBase + b] as InterpreterObject;
+              _rs.slots[rBase + a] = obj.refFields[c];
 
-            if (_callStack.isEmpty) {
-              return retVal;
-            }
+            case OpCode.setFieldRef:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              final obj = _rs.slots[rBase + a] as InterpreterObject;
+              obj.refFields[c] = _rs.slots[rBase + b];
 
-            // Pop caller's frame and restore state
-            final caller = _callStack.pop();
-            curFuncId = caller.funcId;
-            curFunc = module.functions[curFuncId];
-            code = curFunc.bytecode;
-            pc = caller.returnPC;
-            vBase = caller.savedVSP;
-            rBase = caller.savedRSP;
+            case OpCode.getFieldVal:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              final obj = _rs.slots[rBase + b] as InterpreterObject;
+              _vs.intView[vBase + a] = obj.valueFields![c];
 
-            // RETURN_VAL returns an int; box it into caller's ref register
-            _rs.slots[rBase + caller.resultReg] = retVal;
+            case OpCode.setFieldVal:
+              final a = Instr.decodeA(instr);
+              final b = Instr.decodeB(instr);
+              final c = Instr.decodeC(instr);
+              final obj = _rs.slots[rBase + a] as InterpreterObject;
+              obj.valueFields![c] = _vs.intView[vBase + b];
 
-            break innerLoop; // Continue caller's frame
+            case OpCode.halt:
+              finished = true;
+              finalResult = null;
+              break outerLoop;
 
-          case OpCode.returnNull:
-            _rs.clear(rBase, rBase + curFunc.refRegCount);
-
-            if (_callStack.isEmpty) {
-              return null;
-            }
-
-            // Pop caller's frame and restore state
-            final caller = _callStack.pop();
-            curFuncId = caller.funcId;
-            curFunc = module.functions[curFuncId];
-            code = curFunc.bytecode;
-            pc = caller.returnPC;
-            vBase = caller.savedVSP;
-            rBase = caller.savedRSP;
-
-            // Store null into caller's result register
-            _rs.slots[rBase + caller.resultReg] = null;
-
-            break innerLoop; // Continue caller's frame
-
-          case OpCode.newInstance:
-            final a = Instr.decodeA(instr);
-            final bx = Instr.decodeBx(instr);
-            final cls = module.classes[bx];
-            _rs.slots[rBase + a] = InterpreterObject(
-              classId: cls.classId,
-              refFieldCount: cls.refFieldCount,
-              valueFieldCount: cls.valueFieldCount,
-            );
-
-          case OpCode.getFieldRef:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            final obj = _rs.slots[rBase + b] as InterpreterObject;
-            _rs.slots[rBase + a] = obj.refFields[c];
-
-          case OpCode.setFieldRef:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            final obj = _rs.slots[rBase + a] as InterpreterObject;
-            obj.refFields[c] = _rs.slots[rBase + b];
-
-          case OpCode.getFieldVal:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            final obj = _rs.slots[rBase + b] as InterpreterObject;
-            _vs.intView[vBase + a] = obj.valueFields![c];
-
-          case OpCode.setFieldVal:
-            final a = Instr.decodeA(instr);
-            final b = Instr.decodeB(instr);
-            final c = Instr.decodeC(instr);
-            final obj = _rs.slots[rBase + a] as InterpreterObject;
-            obj.valueFields![c] = _vs.intView[vBase + b];
-
-          case OpCode.halt:
-            return null;
-
-          default:
-            throw StateError(
-                'Unknown opcode: 0x${op.toRadixString(16)} at pc=${pc - 1}');
+            default:
+              completer.completeError(StateError(
+                  'Unknown opcode: 0x${op.toRadixString(16)} at pc=${pc - 1}'));
+              return;
+          }
         }
+
+        // fuel exhausted but not finished — break out of outerLoop to yield
+        if (fuel <= 0) {
+          break outerLoop;
+        }
+
+        // After CALL or RETURN broke innerLoop, continue outerLoop
+        // with refreshed frame state.
+        continue outerLoop;
       }
-      // After breaking out of innerLoop, the outer loop continues
-      // with the updated frame state (either a new callee or a restored caller).
-      continue outerLoop;
+
+      // Check if execution is done
+      if (finished) {
+        completer.complete(finalResult);
+      } else {
+        // Fuel exhausted, schedule next round
+        yieldCount++;
+        Timer.run(drive);
+      }
     }
+
+    // Kick off the first round
+    drive();
+
+    return completer.future;
+  }
+
+  // --- Shared RETURN helper fields (avoids allocation per return) ---
+  int _restoredFuncId = 0;
+  FuncProto? _restoredFunc;
+  int _restoredPC = 0;
+  int _restoredVBase = 0;
+  int _restoredRBase = 0;
+
+  /// Pops the caller frame from the call stack, stores [returnValue] into
+  /// the caller's result register, and populates the `_restored*` fields.
+  ///
+  /// Must only be called when `_callStack.isNotEmpty`.
+  void _restoreCallerFrame(DartiModule module, Object? returnValue) {
+    final caller = _callStack.pop();
+    _restoredFuncId = caller.funcId;
+    _restoredFunc = module.functions[caller.funcId];
+    _restoredPC = caller.returnPC;
+    _restoredVBase = caller.savedVSP;
+    _restoredRBase = caller.savedRSP;
+
+    // Store return value into caller's result register (ref slot)
+    _rs.slots[_restoredRBase + caller.resultReg] = returnValue;
   }
 }
