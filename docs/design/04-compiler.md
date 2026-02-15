@@ -13,7 +13,7 @@
 ## 编译器架构
 
 ```
-darti_compiler CLI
+dartic_compiler CLI
   │
   ├── Kernel 加载层
   │   └── package:kernel BinaryBuilder 解析 .dill → Component AST
@@ -34,7 +34,7 @@ darti_compiler CLI
   │   ├── 窥孔优化
   │   └── 死代码消除
   │
-  └── 序列化输出 → .dartib 文件
+  └── 序列化输出 → .darticb 文件
 ```
 
 ## Kernel 加载
@@ -60,7 +60,7 @@ class BridgeRegistry {
   // 已知的 Bridge 绑定符号名集合（从预生成库元数据加载）
   final Set<String> _knownBindings = {};
 
-  // 编译期本地绑定表：符号名 → 本地索引（写入 .dartib）
+  // 编译期本地绑定表：符号名 → 本地索引（写入 .darticb）
   final List<String> _bindingNames = [];
   final Map<String, int> _nameToLocalIndex = {};
 
@@ -76,14 +76,14 @@ class BridgeRegistry {
     });
   }
 
-  /// 输出绑定名称表（写入 .dartib 的绑定名称表段）
+  /// 输出绑定名称表（写入 .darticb 的绑定名称表段）
   List<String> get bindingNames => _bindingNames;
 }
 ```
 
 编译器遇到对 `dart:core::List.add` 的引用时，通过 `interfaceTarget.enclosingClass` 识别宿主类，查找 Bridge 注册表确认绑定存在，分配一个**本地绑定索引**，生成 `CALL_HOST A, B, C`（A=baseReg, B=argCount, C=本地绑定索引）。如果引用的类未在 Bridge 注册表中，编译器报错。
 
-**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.dartib` 文件中存储完整的绑定名称表（符号名列表），运行时加载时通过 `HostBindings.lookupByName()` 解析每个符号名为真实的运行时 ID，构建重定位表。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。详见下方「加载时符号解析」。
+**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.darticb` 文件中存储完整的绑定名称表（符号名列表），运行时加载时通过 `HostBindings.lookupByName()` 解析每个符号名为真实的运行时 ID，构建重定位表。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。详见下方「加载时符号解析」。
 
 ## 作用域分析
 
@@ -435,10 +435,10 @@ GET_FIELD_VAL + UNBOX_INT →  GET_FIELD_UNBOX_INT
 
 实际的 Superinstruction 集合根据 profiling 数据决定。
 
-## 编译产物格式 (.dartib)
+## 编译产物格式 (.darticb)
 
 ```
-DartiB 文件格式
+DarticB 文件格式
 ┌─────────────────────────────────┐
 │ Magic: 0xDART1B00 (4 bytes)     │
 │ Version: UInt32                  │
@@ -486,7 +486,7 @@ DartiB 文件格式
 
 ### 加载时符号解析
 
-运行时加载 .dartib 时执行以下步骤：
+运行时加载 .darticb 时执行以下步骤：
 
 1. 校验 magic 和 checksum
 2. 读取绑定名称表，对每个符号名调用 `HostBindings.lookupByName()` 解析为运行时 ID，构建**重定位表**
@@ -494,12 +494,12 @@ DartiB 文件格式
 4. 将字节码加载到 `Uint32List`，常量池加载到对应的 typed list
 
 ```dart
-class DartiModule {
+class DarticModule {
   final Uint32List bytecode;
   final List<int> bindingRelocationTable; // localIndex → runtimeId
   // ... 常量池、函数表等
 
-  static DartiModule load(Uint8List bytes, HostBindings hostBindings) {
+  static DarticModule load(Uint8List bytes, HostBindings hostBindings) {
     // ... 解析文件头、绑定名称表
     final bindingNames = _readBindingNames(bytes);
     final relocationTable = List<int>.filled(bindingNames.length, -1);
@@ -507,7 +507,7 @@ class DartiModule {
     for (var i = 0; i < bindingNames.length; i++) {
       final runtimeId = hostBindings.lookupByName(bindingNames[i]);
       if (runtimeId == null) {
-        throw DartiLoadError(
+        throw DarticLoadError(
           'Missing host binding: ${bindingNames[i]}. '
           'Ensure the Bridge library version matches the compiler.',
         );
@@ -515,7 +515,7 @@ class DartiModule {
       relocationTable[i] = runtimeId;
     }
 
-    return DartiModule(
+    return DarticModule(
       bytecode: _readBytecode(bytes),
       bindingRelocationTable: relocationTable,
       // ...
@@ -537,4 +537,4 @@ case OpCode.CALL_HOST:
   _rs.slots[a] = result;
 ```
 
-**序列化与运行时命名映射**：.dartib 的序列化字段名与 Chapter 2 运行时类的字段名存在对应关系：`methodTable` → `ClassInfo.methods`，`refFieldCount`/`valueFieldCount` → `ClassInfo.refFieldCount`/`ClassInfo.valueFieldCount`，`typeParamCount` → `ClassInfo.typeParamCount`。序列化存储紧凑形式（计数值、偏移量），运行时反序列化为结构化对象。
+**序列化与运行时命名映射**：.darticb 的序列化字段名与 Chapter 2 运行时类的字段名存在对应关系：`methodTable` → `ClassInfo.methods`，`refFieldCount`/`valueFieldCount` → `ClassInfo.refFieldCount`/`ClassInfo.valueFieldCount`，`typeParamCount` → `ClassInfo.typeParamCount`。序列化存储紧凑形式（计数值、偏移量），运行时反序列化为结构化对象。

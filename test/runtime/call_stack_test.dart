@@ -1,4 +1,4 @@
-import 'package:darti/src/runtime/call_stack.dart';
+import 'package:dartic/src/runtime/call_stack.dart';
 import 'package:test/test.dart';
 
 void main() {

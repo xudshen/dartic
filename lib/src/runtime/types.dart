@@ -4,7 +4,7 @@ import 'dart:typed_data';
 /// Saved state of a suspended async frame, created when AWAIT encounters
 /// a pending Future.
 class InterpreterFrame {
-  final DartiModule module;
+  final DarticModule module;
   final Completer<Object?> completer;
   int funcId;
   int pc;
@@ -75,13 +75,13 @@ class InterpreterObject {
        valueFields = valueFieldCount > 0 ? Int64List(valueFieldCount) : null;
 }
 
-class DartiModule {
+class DarticModule {
   final List<FuncProto> functions;
   final List<ClassInfo> classes;
   final List<Object?> constPool;
   final int entryPoint;
 
-  DartiModule({
+  DarticModule({
     required this.functions,
     required this.classes,
     required this.constPool,

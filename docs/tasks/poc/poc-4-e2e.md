@@ -77,10 +77,10 @@
 
 **依赖:** Task 15, 16, 17, 18
 **产出文件:**
-- `lib/darti.dart`（修改，添加导出）
+- `lib/dartic.dart`（修改，添加导出）
 
 **TDD 步骤:**
-- [x] 更新 `lib/darti.dart` 导出
+- [x] 更新 `lib/dartic.dart` 导出
 - [x] 运行全部测试确认通过（10 tests, 0 issues）
 - [x] **Commit**（编译器 + POC-4 完成）
 

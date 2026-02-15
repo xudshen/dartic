@@ -1,8 +1,8 @@
 import 'dart:typed_data';
-import 'package:darti/src/runtime/opcodes.dart';
-import 'package:darti/src/runtime/types.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/types.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -53,8 +53,8 @@ void main() {
       refRegCount: 4, valRegCount: 4, bytecode: countCode,
     );
 
-    final runtime = DartiRuntime(hostBindings: bindings);
-    final module = DartiModule(
+    final runtime = DarticRuntime(hostBindings: bindings);
+    final module = DarticModule(
       functions: [
         FuncProto(name: 'main', paramCount: 0,
           refRegCount: 8, valRegCount: 8,

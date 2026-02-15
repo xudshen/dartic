@@ -337,7 +337,7 @@ sync* 使用同步阻塞式执行，每次 moveNext() 从上次 yield 点恢复�
 ```dart
 class SyncStarIterator<T> implements Iterator<T> {
   final InterpreterFrame _frame;
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
   T? _current;
 
   @override

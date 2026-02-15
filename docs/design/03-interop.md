@@ -45,7 +45,7 @@ class HostBindings {
     return id;
   }
 
-  /// 按名称查找运行时 ID（加载 .dartib 时符号解析用）
+  /// 按名称查找运行时 ID（加载 .darticb 时符号解析用）
   int? lookupByName(String name) => _nameToId[name];
 
   Object? invoke(int id, List<Object?> args) {
@@ -54,7 +54,7 @@ class HostBindings {
 }
 ```
 
-编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`，其中 Bx 是编译期的**本地绑定索引**（指向 .dartib 绑定名称表中的条目）。运行时加载 .dartib 时通过符号解析将本地索引映射为运行时 ID（详见 Chapter 4 加载时符号解析）。
+编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`，其中 Bx 是编译期的**本地绑定索引**（指向 .darticb 绑定名称表中的条目）。运行时加载 .darticb 时通过符号解析将本地索引映射为运行时 ID（详见 Chapter 4 加载时符号解析）。
 
 ### 包装器类（结构化访问）
 
@@ -68,7 +68,7 @@ class $List extends HostClassWrapper {
     'length' => (host as List).length,
     'isEmpty' => (host as List).isEmpty,
     'first' => (host as List).first,
-    _ => throw DartiError('Unknown property: List.$name'),
+    _ => throw DarticError('Unknown property: List.$name'),
   };
 
   @override
@@ -78,7 +78,7 @@ class $List extends HostClassWrapper {
     'contains' => (host as List).contains(args[0]),
     'map' => (host as List).map(_toFunction1(args[0])),
     'where' => (host as List).where(_toPredicate(args[0])),
-    _ => throw DartiError('Unknown method: List.$name'),
+    _ => throw DarticError('Unknown method: List.$name'),
   };
 }
 ```
@@ -93,7 +93,7 @@ class $List extends HostClassWrapper {
 class ProxyManager {
   final Expando<GenericProxy> _interpToProxy = Expando('i2p');
   final Expando<InterpreterObject> _proxyToInterp = Expando('p2i');
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
 
   /// 解释器 → VM：按需包装
   Object wrapForVM(Object obj) {
@@ -128,7 +128,7 @@ class ProxyManager {
 ```dart
 class GenericProxy {
   final InterpreterObject target;
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
 
   GenericProxy(this.target, this._runtime);
 
@@ -178,7 +178,7 @@ case OpCode.CALL_HOST:
 
 ```dart
 class CallbackProxy {
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
   final InterpreterObject _closure;  // 解释器闭包对象
 
   CallbackProxy(this._runtime, this._closure);
@@ -212,13 +212,13 @@ case 'map':
 ```dart
 /// 预生成的常用回调类型适配器
 class TypedCallbacks {
-  static bool Function(dynamic) predicate(DartiRuntime rt, InterpreterObject c) =>
+  static bool Function(dynamic) predicate(DarticRuntime rt, InterpreterObject c) =>
       (arg) => rt.invokeClosure(c, [arg]) as bool;
 
-  static int Function(dynamic, dynamic) comparator(DartiRuntime rt, InterpreterObject c) =>
+  static int Function(dynamic, dynamic) comparator(DarticRuntime rt, InterpreterObject c) =>
       (a, b) => rt.invokeClosure(c, [a, b]) as int;
 
-  static void Function(dynamic) consumer(DartiRuntime rt, InterpreterObject c) =>
+  static void Function(dynamic) consumer(DarticRuntime rt, InterpreterObject c) =>
       (arg) { rt.invokeClosure(c, [arg]); };
 }
 ```
@@ -240,7 +240,7 @@ class MyWidget extends StatelessWidget {
 
 // 必须有预生成的 Bridge
 class $StatelessWidget$bridge extends StatelessWidget with $BridgeMixin {
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
   final InterpreterObject _target;
 
   $StatelessWidget$bridge(this._runtime, this._target);
@@ -260,7 +260,7 @@ class $StatelessWidget$bridge extends StatelessWidget with $BridgeMixin {
 
 ```dart
 mixin $BridgeMixin {
-  DartiRuntime get _runtime;
+  DarticRuntime get _runtime;
   InterpreterObject get _target;
 
   /// 委托方法调用给解释器
@@ -311,7 +311,7 @@ Object createInstance(int classId, RuntimeType type) {
 
 ```dart
 class $Comparable$proxy implements Comparable<dynamic> {
-  final DartiRuntime _runtime;
+  final DarticRuntime _runtime;
   final InterpreterObject _target;
 
   $Comparable$proxy(this._runtime, this._target);
@@ -400,7 +400,7 @@ class BridgeGenerator extends GeneratorForAnnotation<GenerateBridge> {
 ### 输出结构
 
 ```
-package:darti_bridges_core/
+package:dartic_bridges_core/
   lib/
     src/
       dart_core/
@@ -412,23 +412,23 @@ package:darti_bridges_core/
         $future.dart
         $stream.dart
         ...
-    darti_bridges_core.dart  // 统一导出 + 注册入口
+    dartic_bridges_core.dart  // 统一导出 + 注册入口
 
-package:darti_bridges_flutter/
+package:dartic_bridges_flutter/
   lib/
     src/
       widgets/
         $stateless_widget.dart
         $stateful_widget.dart
         ...
-    darti_bridges_flutter.dart
+    dartic_bridges_flutter.dart
 ```
 
-宿主应用在初始化 DartiRuntime 时注册所需的 Bridge 库：
+宿主应用在初始化 DarticRuntime 时注册所需的 Bridge 库：
 
 ```dart
-final runtime = DartiRuntime();
+final runtime = DarticRuntime();
 registerCoreBridges(runtime.hostBindings);      // dart:core 等
 registerFlutterBridges(runtime.hostBindings);   // Flutter（可选）
-runtime.loadAndRun('app.dartib');
+runtime.loadAndRun('app.darticb');
 ```

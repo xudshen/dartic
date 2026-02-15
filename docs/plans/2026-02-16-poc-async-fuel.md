@@ -14,7 +14,7 @@
 
 ### 当前实现（POC-4）
 
-`DartiRuntime.executeFunc()` 通过 **Dart 递归调用** 处理 `CALL_STATIC`：
+`DarticRuntime.executeFunc()` 通过 **Dart 递归调用** 处理 `CALL_STATIC`：
 
 ```dart
 case OpCode.callStatic:
@@ -137,13 +137,13 @@ POC 简化版 async 流程：
 
 **依赖:** Task 20, 21, 22
 **产出文件:**
-- `lib/darti.dart`（修改，添加 call_stack 导出）
+- `lib/dartic.dart`（修改，添加 call_stack 导出）
 - `docs/tasks/poc/poc-5-async.md`（更新进度）
 - `docs/tasks/overview.md`（添加 POC-5 条目）
 
 **TDD 步骤:**
 
-- [ ] 更新 `lib/darti.dart` 导出
+- [ ] 更新 `lib/dartic.dart` 导出
 - [ ] 运行 `fvm dart analyze` 确认 0 issues
 - [ ] 运行全部测试确认通过
 - [ ] 更新 `docs/tasks/poc/poc-5-async.md` 记录关键发现

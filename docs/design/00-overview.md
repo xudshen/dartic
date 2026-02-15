@@ -2,14 +2,14 @@
 
 ## 项目定位
 
-darti 是一个运行于 Dart VM 内部的自定义字节码解释器。以 Dart Kernel（.dill 文件）为输入，编译为寄存器式字节码，在纯 Dart 实现的运行时中执行，通过 Bridge 层与宿主 Dart VM 双向互调。
+dartic 是一个运行于 Dart VM 内部的自定义字节码解释器。以 Dart Kernel（.dill 文件）为输入，编译为寄存器式字节码，在纯 Dart 实现的运行时中执行，通过 Bridge 层与宿主 Dart VM 双向互调。
 
 ## 术语约定
 
 | 术语 | 含义 |
 |------|------|
-| 宿主 VM / VM | 运行 darti 的 Dart VM 进程 |
-| 解释器 | darti 字节码解释器 |
+| 宿主 VM / VM | 运行 dartic 的 Dart VM 进程 |
+| 解释器 | dartic 字节码解释器 |
 | Bridge | 预生成的宿主类子类，用于 extends/implements 宿主类型 |
 | 代理（Proxy） | 运行时按需创建的包装对象（GenericProxy / CallbackProxy） |
 
@@ -51,9 +51,9 @@ darti 是一个运行于 Dart VM 内部的自定义字节码解释器。以 Dart
 ```
                     本机（开发/CI）                     设备端
                   ┌──────────────────┐              ┌─────────────────────┐
-Dart 源码 ──CFE──► .dill (Kernel AST) ──darti 编译器──► 字节码 (.dartib)     │
+Dart 源码 ──CFE──► .dill (Kernel AST) ──dartic 编译器──► 字节码 (.darticb)     │
                   └──────────────────┘    │         │                     │
-                                          │         │  darti 运行时        │
+                                          │         │  dartic 运行时        │
                                           │         │  ┌───────────────┐  │
                                           │         │  │ 字节码加载     │  │
                                           ▼         │  │ 分发循环执行   │  │
@@ -97,7 +97,7 @@ Dart 源码 ──CFE──► .dill (Kernel AST) ──darti 编译器──►
 
 ## 与现有方案的定位差异
 
-| 维度 | dart_eval | d4rt | hetu_script | **darti** |
+| 维度 | dart_eval | d4rt | hetu_script | **dartic** |
 |------|-----------|------|-------------|-----------|
 | 输入 | Dart 源码 (analyzer) | Dart 源码 (自定义解析) | 自定义语言 | **Kernel .dill (CFE)** |
 | 执行 | 栈式字节码 | AST 遍历 | 栈式字节码 | **寄存器式字节码** |
@@ -106,4 +106,4 @@ Dart 源码 ──CFE──► .dill (Kernel AST) ──darti 编译器──►
 | async | 有限 | async/await | Future/async | **帧快照续体 + Completer 桥接** |
 | 性能预期 | AOT 的 1/10~1/50 | AOT 的 1/50~1/100 | - | **AOT 的 1/5~1/3** |
 
-darti 的核心差异化在于：使用 CFE 编译产出的 Kernel AST 作为输入（避免重新实现 Dart 解析器），寄存器式字节码 + 紧凑存储（减少指令数和内存开销），以及系统性的跨边界互调设计（含泛型和异步）。
+dartic 的核心差异化在于：使用 CFE 编译产出的 Kernel AST 作为输入（避免重新实现 Dart 解析器），寄存器式字节码 + 紧凑存储（减少指令数和内存开销），以及系统性的跨边界互调设计（含泛型和异步）。

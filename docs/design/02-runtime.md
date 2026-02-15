@@ -118,7 +118,7 @@ class GlobalTable {
         initializerFuncIds = List<int>.filled(count, -1);
 
   /// LOAD_GLOBAL 运行时：惰性初始化
-  Object? load(int index, DartiRuntime runtime) {
+  Object? load(int index, DarticRuntime runtime) {
     final value = slots[index];
     if (identical(value, _uninitialized)) {
       final initId = initializerFuncIds[index];
@@ -189,7 +189,7 @@ class InterpreterObject {
 ### 核心结构
 
 ```dart
-class DartiRuntime {
+class DarticRuntime {
   final ValueStack _vs;
   final RefStack _rs;
   final CallStack _cs;
@@ -205,11 +205,11 @@ class DartiRuntime {
   // === 公开 API ===
 
   /// 加载字节码模块（含验证 + 绑定符号解析，详见 Chapter 4/7）
-  /// 解析 .dartib 绑定名称表，构建重定位表（localIndex → runtimeId）
-  DartiModule loadModule(Uint8List bytes);
+  /// 解析 .darticb 绑定名称表，构建重定位表（localIndex → runtimeId）
+  DarticModule loadModule(Uint8List bytes);
 
   /// 执行已加载的模块
-  Future<void> execute(DartiModule module);
+  Future<void> execute(DarticModule module);
 
   /// 字段读写与方法调用（供 Bridge/Proxy 使用，详见 Chapter 3）
   Object? getField(InterpreterObject target, String name);
@@ -226,7 +226,7 @@ class DartiRuntime {
     _currentCallDepth++;
     if (_currentCallDepth > maxCallDepth) {
       _currentCallDepth--;
-      throw DartiError('Stack overflow: call depth exceeded $maxCallDepth');
+      throw DarticError('Stack overflow: call depth exceeded $maxCallDepth');
     }
     _runQueue.addFirst(frame);
   }

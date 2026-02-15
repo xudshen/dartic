@@ -1,4 +1,4 @@
-import 'package:darti/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
 import 'package:test/test.dart';
 
 void main() {

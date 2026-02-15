@@ -7,7 +7,7 @@ import 'ref_stack.dart';
 import 'host_bindings.dart';
 import 'call_stack.dart';
 
-class DartiRuntime {
+class DarticRuntime {
   final HostBindings hostBindings;
   final int _fuelBudget;
   final ValueStack _vs;
@@ -17,7 +17,7 @@ class DartiRuntime {
   /// Number of times execution yielded via Timer.run due to fuel exhaustion.
   int yieldCount = 0;
 
-  DartiRuntime({
+  DarticRuntime({
     required this.hostBindings,
     int stackSize = 4096,
     int maxCallDepth = 512,
@@ -27,12 +27,12 @@ class DartiRuntime {
         _rs = RefStack(stackSize),
         _callStack = CallStack(maxDepth: maxCallDepth);
 
-  Future<Object?> execute(DartiModule module) {
+  Future<Object?> execute(DarticModule module) {
     return executeFunc(module, module.entryPoint, [], 0, 0);
   }
 
   Future<Object?> executeFunc(
-    DartiModule module,
+    DarticModule module,
     int funcId,
     List<Object?> refArgs,
     int baseV,
@@ -425,7 +425,7 @@ class DartiRuntime {
   /// the caller's result register, and populates the `_restored*` fields.
   ///
   /// Must only be called when `_callStack.isNotEmpty`.
-  void _restoreCallerFrame(DartiModule module, Object? returnValue) {
+  void _restoreCallerFrame(DarticModule module, Object? returnValue) {
     final caller = _callStack.pop();
     _restoredFuncId = caller.funcId;
     _restoredFunc = module.functions[caller.funcId];

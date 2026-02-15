@@ -5,7 +5,7 @@ import '../runtime/host_bindings.dart';
 import 'kernel_loader.dart';
 import 'bytecode_emitter.dart';
 
-/// Minimal compiler from Kernel AST to darti bytecode.
+/// Minimal compiler from Kernel AST to dartic bytecode.
 /// Handles only the subset needed for counter.dart.
 class SimpleCompiler {
   final HostBindings hostBindings;
@@ -20,7 +20,7 @@ class SimpleCompiler {
 
   SimpleCompiler({required this.hostBindings});
 
-  DartiModule compile(String dillPath) {
+  DarticModule compile(String dillPath) {
     final component = loadKernel(dillPath);
 
     final userLib = component.libraries.firstWhere(
@@ -43,7 +43,7 @@ class SimpleCompiler {
       if (proc.name.text == 'main') _entryPoint = funcId;
     }
 
-    return DartiModule(
+    return DarticModule(
       functions: _functions,
       classes: _classes,
       constPool: _constPool,

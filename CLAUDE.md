@@ -39,6 +39,23 @@
 
 - **排查不动时加日志** — 静态读代码超过 2 轮没定位到根因，立刻在关键路径（guard 条件、async 衔接点、回调触发点）加 `debugPrint`，用实际运行数据定位，不要靠猜
 
+## 初始化
+
+首次 clone 后需要初始化 vendor 依赖（`vendor/` 在 `.gitignore` 中，不随仓库分发）：
+
+```bash
+git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+  https://github.com/dart-lang/sdk.git vendor/dart-sdk
+git clone --depth 1 --filter=blob:none \
+  https://github.com/dart-lang/co19.git vendor/co19
+fvm dart pub get
+```
+
+| vendor 目录 | 用途 |
+|-------------|------|
+| `vendor/dart-sdk/pkg/kernel` | `pubspec.yaml` 中 `kernel` 包的本地依赖 |
+| `vendor/co19` | Dart 语言与标准库一致性测试集 |
+
 ## 命令
 
 ```bash

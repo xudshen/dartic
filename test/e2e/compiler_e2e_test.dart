@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:darti/src/compiler/simple_compiler.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
+import 'package:dartic/src/compiler/simple_compiler.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -36,7 +36,7 @@ void main() {
     final compiler = SimpleCompiler(hostBindings: bindings);
     final module = compiler.compile('test/fixtures/counter.dill');
 
-    final runtime = DartiRuntime(hostBindings: bindings);
+    final runtime = DarticRuntime(hostBindings: bindings);
     await runtime.execute(module);
 
     expect(printLog, equals([10, 4]));

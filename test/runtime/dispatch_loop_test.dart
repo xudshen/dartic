@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:darti/src/runtime/opcodes.dart';
-import 'package:darti/src/runtime/types.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/types.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -20,11 +20,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(10));
     });
@@ -46,11 +46,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(10));
     });
@@ -73,11 +73,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [cls], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(42));
     });
@@ -114,11 +114,11 @@ void main() {
         name: 'add', paramCount: 2,
         refRegCount: 4, valRegCount: 4, bytecode: addCode,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [mainFunc, addFunc], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(10));
     });
@@ -170,12 +170,12 @@ void main() {
         name: 'addOne', paramCount: 1,
         refRegCount: 4, valRegCount: 4, bytecode: addOneCode,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [mainFunc, doubleFunc, addOneFunc],
         classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(12));
     });
@@ -198,11 +198,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: ['hello'], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: bindings);
+      final runtime = DarticRuntime(hostBindings: bindings);
       await runtime.execute(module);
       expect(printLog, equals(['hello']));
     });
@@ -221,11 +221,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       expect(result, equals(10));
     });
@@ -249,12 +249,12 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
       // Small fuel budget forces multiple Timer.run rounds
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 5,
       );
@@ -288,13 +288,13 @@ void main() {
         name: 'add', paramCount: 2,
         refRegCount: 4, valRegCount: 4, bytecode: addCode,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [mainFunc, addFunc], classes: [], constPool: [],
         entryPoint: 0,
       );
 
       // With fuelBudget=3, we'll exhaust fuel mid-execution
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 3,
       );
@@ -313,11 +313,11 @@ void main() {
         name: 'addOne', paramCount: 1,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 2,
       );
@@ -333,11 +333,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 5,
       );
@@ -363,11 +363,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 3,
       );
@@ -415,13 +415,13 @@ void main() {
         name: 'addOne', paramCount: 1,
         refRegCount: 4, valRegCount: 4, bytecode: addOneCode,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [mainFunc, doubleFunc, addOneFunc],
         classes: [], constPool: [], entryPoint: 0,
       );
 
       // Very small fuel to force many rounds
-      final runtime = DartiRuntime(
+      final runtime = DarticRuntime(
         hostBindings: HostBindings(),
         fuelBudget: 2,
       );
@@ -464,14 +464,14 @@ void main() {
         valRegCount: 4,
         bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func],
         classes: [],
         constPool: [42],
         entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = await runtime.execute(module);
       // execute returns Future<Object?> which is asyncCompleter.future
       // that resolves to 42
@@ -512,14 +512,14 @@ void main() {
         valRegCount: 4,
         bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func],
         classes: [],
         constPool: [99],
         entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: bindings);
+      final runtime = DarticRuntime(hostBindings: bindings);
       final result = await runtime.execute(module);
       expect(result, equals(99));
     });
@@ -555,14 +555,14 @@ void main() {
         valRegCount: 4,
         bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func],
         classes: [],
         constPool: [],
         entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: bindings);
+      final runtime = DarticRuntime(hostBindings: bindings);
       final result = await runtime.execute(module);
       expect(result, equals(42));
     });
@@ -606,14 +606,14 @@ void main() {
         valRegCount: 4,
         bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func],
         classes: [],
         constPool: [],
         entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: bindings);
+      final runtime = DarticRuntime(hostBindings: bindings);
       final result = await runtime.execute(module);
       expect(result, equals(15));
     });

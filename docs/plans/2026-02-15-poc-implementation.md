@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** 通过 4 个 POC 验证 darti 设计中的关键技术风险，并组合为端到端最小原型。
+**Goal:** 通过 4 个 POC 验证 dartic 设计中的关键技术风险，并组合为端到端最小原型。
 
 **Architecture:** 多 package 工作区，POC-1/2/3 独立验证 Kernel 加载、值栈性能、Bridge 互调，POC-4 组合为最小 .dill→字节码→执行 全链路。
 
@@ -26,10 +26,10 @@
 **Step 1: 根目录 pubspec.yaml 添加 workspace**
 
 ```yaml
-name: darti
+name: dartic
 description: A Dart bytecode interpreter.
 version: 1.0.0
-repository: https://github.com/xudshen/darti.git
+repository: https://github.com/xudshen/dartic.git
 
 environment:
   sdk: ^3.10.7
@@ -2036,7 +2036,7 @@ git commit -m "feat(poc-3): finalize POC-3 with exports and full test suite"
 
 `test/runtime/opcodes_test.dart`:
 ```dart
-import 'package:darti/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -2224,13 +2224,13 @@ class InterpreterObject {
        valueFields = valueFieldCount > 0 ? Int64List(valueFieldCount) : null;
 }
 
-class DartiModule {
+class DarticModule {
   final List<FuncProto> functions;
   final List<ClassInfo> classes;
   final List<Object?> constPool;
   final int entryPoint; // funcId of main
 
-  DartiModule({
+  DarticModule({
     required this.functions,
     required this.classes,
     required this.constPool,
@@ -2265,10 +2265,10 @@ git commit -m "feat(poc-4): define ISA opcodes, stacks, and core data types"
 `test/runtime/dispatch_loop_test.dart`:
 ```dart
 import 'dart:typed_data';
-import 'package:darti/src/runtime/opcodes.dart';
-import 'package:darti/src/runtime/types.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/types.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -2285,11 +2285,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = runtime.execute(module);
       expect(result, equals(10));
     });
@@ -2311,11 +2311,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = runtime.execute(module);
       expect(result, equals(10));
     });
@@ -2342,11 +2342,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [cls], constPool: [], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: HostBindings());
+      final runtime = DarticRuntime(hostBindings: HostBindings());
       final result = runtime.execute(module);
       expect(result, equals(42));
     });
@@ -2368,11 +2368,11 @@ void main() {
         name: 'test', paramCount: 0,
         refRegCount: 4, valRegCount: 4, bytecode: code,
       );
-      final module = DartiModule(
+      final module = DarticModule(
         functions: [func], classes: [], constPool: ['hello'], entryPoint: 0,
       );
 
-      final runtime = DartiRuntime(hostBindings: bindings);
+      final runtime = DarticRuntime(hostBindings: bindings);
       runtime.execute(module);
       expect(printLog, equals(['hello']));
     });
@@ -2417,21 +2417,21 @@ import 'value_stack.dart';
 import 'ref_stack.dart';
 import 'host_bindings.dart';
 
-class DartiRuntime {
+class DarticRuntime {
   final HostBindings hostBindings;
   late ValueStack _vs;
   late RefStack _rs;
 
-  DartiRuntime({required this.hostBindings});
+  DarticRuntime({required this.hostBindings});
 
-  Object? execute(DartiModule module) {
+  Object? execute(DarticModule module) {
     _vs = ValueStack(4096);
     _rs = RefStack(4096);
     return _executeFunc(module, module.entryPoint, [], 0, 0);
   }
 
   Object? _executeFunc(
-    DartiModule module,
+    DarticModule module,
     int funcId,
     List<Object?> refArgs,
     int baseV,
@@ -2653,10 +2653,10 @@ git commit -m "feat(poc-4): implement dispatch loop with 22-opcode ISA subset"
 `test/e2e/handwritten_bytecode_test.dart`:
 ```dart
 import 'dart:typed_data';
-import 'package:darti/src/runtime/opcodes.dart';
-import 'package:darti/src/runtime/types.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/opcodes.dart';
+import 'package:dartic/src/runtime/types.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -2721,8 +2721,8 @@ void main() {
     );
 
     // For main, we test runtime APIs directly
-    final runtime = DartiRuntime(hostBindings: bindings);
-    final module = DartiModule(
+    final runtime = DarticRuntime(hostBindings: bindings);
+    final module = DarticModule(
       functions: [
         FuncProto(name: 'main', paramCount: 0,
           refRegCount: 8, valRegCount: 8,
@@ -2812,9 +2812,9 @@ Run: `dart pub get`
 `test/e2e/compiler_e2e_test.dart`:
 ```dart
 import 'dart:io';
-import 'package:darti/src/compiler/simple_compiler.dart';
-import 'package:darti/src/runtime/dispatch_loop.dart';
-import 'package:darti/src/runtime/host_bindings.dart';
+import 'package:dartic/src/compiler/simple_compiler.dart';
+import 'package:dartic/src/runtime/dispatch_loop.dart';
+import 'package:dartic/src/runtime/host_bindings.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -2847,7 +2847,7 @@ void main() {
       return (args[0] as List).length;
     });
 
-    final runtime = DartiRuntime(hostBindings: bindings);
+    final runtime = DarticRuntime(hostBindings: bindings);
     runtime.execute(module);
 
     expect(printLog, equals([10, 4]));
@@ -2961,7 +2961,7 @@ class SimpleCompiler {
   final Map<String, int> _hostBindingIds = {};
   int _entryPoint = -1;
 
-  DartiModule compile(String dillPath) {
+  DarticModule compile(String dillPath) {
     _component = loadKernel(dillPath);
     _coreTypes = CoreTypes(_component);
 
@@ -2983,7 +2983,7 @@ class SimpleCompiler {
       }
     }
 
-    return DartiModule(
+    return DarticModule(
       functions: _functions,
       classes: _classes,
       constPool: _constPool,
@@ -3031,11 +3031,11 @@ git commit -m "feat(poc-4): implement minimal Kernel-to-bytecode compiler"
 ## Task 19: POC-4 — 更新导出与全部测试
 
 **Files:**
-- Modify: `lib/darti.dart`
+- Modify: `lib/dartic.dart`
 
 **Step 1: 更新导出**
 
-`lib/darti.dart`:
+`lib/dartic.dart`:
 ```dart
 library;
 
@@ -3056,7 +3056,7 @@ Expected: 全部 PASS
 **Step 3: Commit**
 
 ```bash
-git add lib/darti.dart
+git add lib/dartic.dart
 git commit -m "feat(poc-4): finalize POC-4 with exports and full test suite"
 ```
 

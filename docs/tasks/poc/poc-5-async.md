@@ -64,12 +64,12 @@
 
 **依赖:** Task 20, 21, 22
 **产出文件:**
-- `lib/darti.dart`（修改）
+- `lib/dartic.dart`（修改）
 - `docs/tasks/poc/poc-5-async.md`（更新）
 - `docs/tasks/overview.md`（更新）
 
 **TDD 步骤:**
-- [x] 更新 `lib/darti.dart` 导出
+- [x] 更新 `lib/dartic.dart` 导出
 - [x] 运行 `fvm dart analyze` 确认 0 issues
 - [x] 运行全部测试确认通过
 - [x] 更新进度和关键发现

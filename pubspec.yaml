@@ -1,7 +1,7 @@
-name: darti
+name: dartic
 description: A Dart bytecode interpreter.
 version: 1.0.0
-repository: https://github.com/xudshen/darti.git
+repository: https://github.com/xudshen/dartic.git
 
 environment:
   sdk: ^3.10.7

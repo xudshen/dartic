@@ -11,7 +11,7 @@
 
 ## 安全目标
 
-darti 的安全目标是**保护宿主应用不因解释器代码的错误而崩溃**，而非隔离不可信代码。具体保障：
+dartic 的安全目标是**保护宿主应用不因解释器代码的错误而崩溃**，而非隔离不可信代码。具体保障：
 
 1. **不因格式错误的字节码崩溃**：加载时验证确保所有字节码结构合法
 2. **不因无限循环卡死**：fuel 计数机制确保解释器定期让出控制权
@@ -20,7 +20,7 @@ darti 的安全目标是**保护宿主应用不因解释器代码的错误而崩
 
 **不在目标内**：
 - 阻止解释器代码调用任意宿主 API（由 Bridge 注册表控制暴露范围）
-- 文件系统/网络等 OS 级隔离（需要 isolate 级沙箱，不在 darti 范围内）
+- 文件系统/网络等 OS 级隔离（需要 isolate 级沙箱，不在 dartic 范围内）
 - 防御恶意字节码的信息泄漏或侧信道攻击
 
 ## 加载时字节码验证
@@ -31,7 +31,7 @@ darti 的安全目标是**保护宿主应用不因解释器代码的错误而崩
 class BytecodeVerifier {
   final List<String> errors = [];
 
-  bool verify(DartiModule module) {
+  bool verify(DarticModule module) {
     _verifyHeader(module);
     _verifyConstantPool(module.constantPool);
     for (final func in module.functions) {
@@ -49,7 +49,7 @@ class BytecodeVerifier {
 #### 1. 文件头验证
 
 ```dart
-void _verifyHeader(DartiModule module) {
+void _verifyHeader(DarticModule module) {
   if (module.magic != 0xDART1B00) {
     errors.add('Invalid magic number');
   }
@@ -81,7 +81,7 @@ void _verifyConstantPool(ConstantPool pool) {
 每个函数的字节码逐指令扫描：
 
 ```dart
-void _verifyFunction(FuncProto func, DartiModule module) {
+void _verifyFunction(FuncProto func, DarticModule module) {
   final codeLength = func.bytecode.length;
 
   for (int pc = 0; pc < codeLength; pc++) {
@@ -177,7 +177,7 @@ void _verifyExceptionTable(FuncProto func) {
 #### 6. 类表验证
 
 ```dart
-void _verifyClassTable(DartiModule module) {
+void _verifyClassTable(DarticModule module) {
   for (final cls in module.classes) {
     // 超类引用合法
     if (cls.superClassId >= 0 && cls.superClassId >= module.classes.length) {
@@ -196,14 +196,14 @@ void _verifyClassTable(DartiModule module) {
 ### 验证时机与流程
 
 ```dart
-DartiModule loadModule(Uint8List bytes) {
+DarticModule loadModule(Uint8List bytes) {
   // 1. 反序列化
-  final module = DartiModuleDeserializer.deserialize(bytes);
+  final module = DarticModuleDeserializer.deserialize(bytes);
 
   // 2. 验证
   final verifier = BytecodeVerifier();
   if (!verifier.verify(module)) {
-    throw DartiLoadError(
+    throw DarticLoadError(
       'Bytecode verification failed:\n${verifier.errors.join('\n')}'
     );
   }
@@ -250,7 +250,7 @@ fuel 耗尽时通过 `Timer.run` 让出控制权，不会导致宿主事件循�
 ### 调用深度限制（防栈溢出）
 
 ```dart
-class DartiRuntime {
+class DarticRuntime {
   static const int maxCallDepth = 512;
   int _currentCallDepth = 0;
 
@@ -258,7 +258,7 @@ class DartiRuntime {
     _currentCallDepth++;
     if (_currentCallDepth > maxCallDepth) {
       _currentCallDepth--;
-      throw DartiError('Stack overflow: call depth exceeded $maxCallDepth');
+      throw DarticError('Stack overflow: call depth exceeded $maxCallDepth');
     }
     _runQueue.addFirst(frame);
   }
@@ -282,16 +282,16 @@ class DartiRuntime {
 
 ## Bridge 注册表作为 API 边界
 
-虽然 darti 不实现能力模型，但 Bridge 注册表天然形成了 API 边界——解释器代码只能访问已注册的宿主 API：
+虽然 dartic 不实现能力模型，但 Bridge 注册表天然形成了 API 边界——解释器代码只能访问已注册的宿主 API：
 
 ```dart
-final runtime = DartiRuntime();
+final runtime = DarticRuntime();
 
 // 仅注册核心库，不注册 dart:io
 registerCoreBridges(runtime.hostBindings);
 // 不调用 registerIoBridges → 解释器无法访问文件/网络
 
-runtime.loadAndRun('plugin.dartib');
+runtime.loadAndRun('plugin.darticb');
 ```
 
 这不是安全沙箱（解释器可以通过已注册的 API 间接访问 IO），但提供了基本的 API 表面控制。宿主应用的开发者决定暴露哪些能力给解释器代码。
@@ -301,14 +301,14 @@ runtime.loadAndRun('plugin.dartib');
 解释器运行时的错误不应导致宿主应用崩溃：
 
 ```dart
-Future<void> runPlugin(DartiRuntime runtime, String path) async {
+Future<void> runPlugin(DarticRuntime runtime, String path) async {
   try {
     final module = runtime.loadModule(File(path).readAsBytesSync());
     await runtime.execute(module);
-  } on DartiLoadError catch (e) {
+  } on DarticLoadError catch (e) {
     // 字节码验证失败 → 拒绝加载
     log.warning('Plugin load failed: $e');
-  } on DartiError catch (e) {
+  } on DarticError catch (e) {
     // 运行时错误（栈溢出、未捕获异常等） → 隔离处理
     log.warning('Plugin execution error: $e');
   }
@@ -320,25 +320,25 @@ Future<void> runPlugin(DartiRuntime runtime, String path) async {
 
 ```dart
 /// 加载时错误：字节码格式/验证失败
-class DartiLoadError implements Exception {
+class DarticLoadError implements Exception {
   final String message;
-  DartiLoadError(this.message);
+  DarticLoadError(this.message);
 }
 
 /// 运行时错误：解释器执行中的可恢复错误
-class DartiError implements Exception {
+class DarticError implements Exception {
   final String message;
-  DartiError(this.message);
+  DarticError(this.message);
 }
 
 /// 内部错误：解释器实现 bug（不应发生）
-class DartiInternalError implements Exception {
+class DarticInternalError implements Exception {
   final String message;
-  DartiInternalError(this.message);
+  DarticInternalError(this.message);
 }
 ```
 
-`DartiError` 和 `DartiLoadError` 是预期的、可恢复的。`DartiInternalError` 表示解释器自身的 bug，应当记录并上报。
+`DarticError` 和 `DarticLoadError` 是预期的、可恢复的。`DarticInternalError` 表示解释器自身的 bug，应当记录并上报。
 
 ## 未来扩展点
 

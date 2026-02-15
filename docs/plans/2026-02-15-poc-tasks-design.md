@@ -2,7 +2,7 @@
 
 ## 总览
 
-通过 4 个 POC 验证 darti 设计中的关键技术风险，并组合为端到端最小原型。
+通过 4 个 POC 验证 dartic 设计中的关键技术风险，并组合为端到端最小原型。
 
 ```
 阶段 1（可并行）:  POC-1 Kernel 探索  |  POC-2 值栈性能  |  POC-3 Bridge 互调
@@ -52,10 +52,10 @@ packages/
     test/
       interop_test.dart          # 双向调用 + 身份一致性测试
     pubspec.yaml
-  darti/                # POC-4: 端到端原型（现有 package 改造）
+  dartic/                # POC-4: 端到端原型（现有 package 改造）
     bin/
-      compile.dart      # 编译器 CLI：.dill → .dartib
-      run.dart          # 运行器 CLI：执行 .dartib
+      compile.dart      # 编译器 CLI：.dill → .darticb
+      run.dart          # 运行器 CLI：执行 .darticb
     lib/
       src/
         compiler/
@@ -84,7 +84,7 @@ packages/
 
 ### 目的
 
-验证 `package:kernel` 能否作为 darti 编译器的可靠输入源。
+验证 `package:kernel` 能否作为 dartic 编译器的可靠输入源。
 
 ### 技术风险
 
@@ -563,7 +563,7 @@ void main() {
 
 ### 目的
 
-全链路验证：.dill → darti 编译器 → .dartib 字节码 → darti 运行时执行。
+全链路验证：.dill → dartic 编译器 → .darticb 字节码 → dartic 运行时执行。
 
 ### 依赖
 
@@ -613,7 +613,7 @@ void main() {
 ### 最小编译器
 
 **输入**：.dill（package:kernel 加载）
-**输出**：内存中的字节码模块（暂不序列化为 .dartib 文件）
+**输出**：内存中的字节码模块（暂不序列化为 .darticb 文件）
 
 简化决策（POC 阶段）：
 - **寄存器分配**：递增分配（不做 LSRA），每个变量占一个寄存器
@@ -629,7 +629,7 @@ void main() {
      → 编译每个 Class → ClassInfo（字段布局、方法表）
      → 编译每个 Procedure → FuncProto（字节码序列）
      → 注册宿主绑定（print, List.add, List.length getter）
-     → 输出 DartiModule
+     → 输出 DarticModule
 ```
 
 #### 关键编译规则
@@ -675,13 +675,13 @@ CALL_HOST      r_discard, printId   // print(r_tmp)，printId 是绑定表索引
 ### 最小运行时
 
 ```dart
-class DartiRuntime {
+class DarticRuntime {
   final ValueStack _vs;
   final RefStack _rs;
   final HostBindings hostBindings;
   final List<ClassInfo> classes;
 
-  Object? execute(DartiModule module) {
+  Object? execute(DarticModule module) {
     final mainFunc = module.functions[module.entryPoint];
     var pc = 0;
     final code = mainFunc.bytecode;
@@ -728,7 +728,7 @@ void registerMinimalBindings(HostBindings bindings) {
 
 | 标准 | 验证方式 |
 |------|----------|
-| counter.dart 编译成功 | 无编译错误，生成 DartiModule |
+| counter.dart 编译成功 | 无编译错误，生成 DarticModule |
 | 执行输出 `10` | Counter 类正确创建和操作 |
 | 执行输出 `4` | List 互调正确（add + length） |
 | 全链路无 crash | 从 .dill 到最终输出零异常 |
@@ -739,7 +739,7 @@ void registerMinimalBindings(HostBindings bindings) {
 - 闭包与上值捕获（CLOSURE、CLOSE_UPVALUE）
 - async/await（INIT_ASYNC、AWAIT）
 - 异常处理（THROW、try/catch handler table）
-- .dartib 文件序列化/反序列化
+- .darticb 文件序列化/反序列化
 - LSRA 寄存器分配
 - 优化遍（常量折叠、窥孔、死代码消除）
 - 内联缓存 / Quickening
