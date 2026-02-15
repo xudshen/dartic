@@ -22,7 +22,6 @@
 - [ ] 创建 3 个 fixture 源文件
 - [ ] 创建编译脚本 `tool/compile_fixtures.sh`
 - [ ] 运行脚本生成 .dill 文件
-- [ ] Commit: `feat(poc_kernel): add test fixtures and compile script`
 
 ### Task 3: KernelWalker 加载与遍历
 
@@ -36,7 +35,7 @@
 - [ ] 运行验证测试失败
 - [ ] 实现 `kernel_walker.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_kernel): implement KernelWalker for .dill traversal`
+- [ ] **Commit**（fixtures + KernelWalker）
 
 ### Task 4: TypeClassifier StackKind 分类
 
@@ -50,7 +49,6 @@
 - [ ] 运行验证测试失败
 - [ ] 实现 `type_classifier.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_kernel): implement TypeClassifier for StackKind mapping`
 
 ### Task 5: DesugarChecker 脱糖验证
 
@@ -64,7 +62,7 @@
 - [ ] 运行验证测试失败
 - [ ] 实现 `desugar_checker.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_kernel): implement DesugarChecker for Kernel lowering verification`
+- [ ] **Commit**（TypeClassifier + DesugarChecker）
 
 ### Task 6: CLI 入口与综合报告
 
@@ -77,4 +75,4 @@
 - [ ] 创建 `bin/explore.dart` CLI
 - [ ] 更新 `lib/poc_kernel.dart` 导出
 - [ ] 对所有 fixture 运行 CLI 验证输出
-- [ ] Commit: `feat(poc_kernel): add explore CLI entry point`
+- [ ] **Commit**（POC-1 完成）

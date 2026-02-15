@@ -26,7 +26,7 @@
 - [ ] 实现 `ref_stack.dart`
 - [ ] 实现 `types.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(runtime): define ISA opcodes and stack data structures`
+- [ ] **Commit**（ISA 定义 + 栈数据结构）
 
 ### Task 16: 分发循环
 
@@ -42,7 +42,6 @@
 - [ ] 实现 `host_bindings.dart`
 - [ ] 实现 `dispatch_loop.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(runtime): implement dispatch loop with fuel-based scheduling`
 
 ### Task 17: 手写字节码集成测试（Counter 程序）
 
@@ -54,7 +53,7 @@
 - [ ] 写集成测试 `handwritten_counter_test.dart`
 - [ ] 运行验证测试失败
 - [ ] 调试直到测试通过
-- [ ] Commit: `test(e2e): add handwritten bytecode Counter integration test`
+- [ ] **Commit**（分发循环 + 集成测试）
 
 ### Task 18: 最小编译器（Kernel → 字节码）
 
@@ -72,7 +71,6 @@
 - [ ] 实现 `simple_compiler.dart`
 - [ ] 实现 `bytecode_emitter.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(compiler): implement minimal Kernel-to-bytecode compiler`
 
 ### Task 19: 更新导出与全部测试
 
@@ -83,4 +81,4 @@
 **TDD 步骤:**
 - [ ] 更新 `lib/darti.dart` 导出
 - [ ] 运行全部测试确认通过
-- [ ] Commit: `feat: finalize darti exports and verify full test suite`
+- [ ] **Commit**（编译器 + POC-4 完成）

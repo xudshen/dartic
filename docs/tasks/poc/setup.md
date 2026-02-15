@@ -19,4 +19,4 @@
 - [ ] 创建 `packages/poc_bench/pubspec.yaml` + lib 入口
 - [ ] 创建 `packages/poc_bridge/pubspec.yaml` + lib 入口
 - [ ] 运行 `dart pub get` 验证依赖解析
-- [ ] Commit: `feat: scaffold workspace with poc_kernel, poc_bench, poc_bridge packages`
+- [ ] **Commit**

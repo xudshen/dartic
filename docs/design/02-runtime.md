@@ -202,7 +202,8 @@ class DartiRuntime {
 
   // === 公开 API ===
 
-  /// 加载字节码模块（含验证，详见 Chapter 7）
+  /// 加载字节码模块（含验证 + 绑定符号解析，详见 Chapter 4/7）
+  /// 解析 .dartib 绑定名称表，构建重定位表（localIndex → runtimeId）
   DartiModule loadModule(Uint8List bytes);
 
   /// 执行已加载的模块

@@ -20,7 +20,7 @@
 - [ ] 运行验证测试失败
 - [ ] 实现 `value_stack.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_bench): implement dual-view ValueStack`
+- [ ] **Commit**（ValueStack 实现）
 
 ### Task 8: 基准场景实现
 
@@ -32,7 +32,6 @@
 **TDD 步骤:**
 - [ ] 实现 `benchmarks.dart`（4 种基准：int 累加、double 累加、混合、装箱对照）
 - [ ] 实现 `dispatch_sim.dart`（分发循环模拟）
-- [ ] Commit: `feat(poc_bench): add benchmark scenarios and dispatch simulator`
 
 ### Task 9: 基准 CLI 与 AOT 测量
 
@@ -45,4 +44,4 @@
 - [ ] JIT 模式运行基准，记录结果
 - [ ] AOT 编译后运行基准，记录结果
 - [ ] 对比分析性能数据
-- [ ] Commit: `feat(poc_bench): add bench CLI with AOT measurement`
+- [ ] **Commit**（基准场景 + CLI + 测量结果）

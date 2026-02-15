@@ -47,12 +47,7 @@
       "Bash(git fetch:*)",
       "Bash(git blame:*)",
       "WebFetch",
-      "WebSearch",
-      "Bash(python3:*)",
-      "Bash(/tmp/co19_unknown_types.dart:*)",
-      "Bash(/tmp/co19_typecast_b7.dart:*)",
-      "Bash(/tmp/test_object_extends.dart:*)",
-      "Bash(/tmp/co19_deferred_analysis.dart:*)"
+      "WebSearch"
     ]
   },
   "outputStyle": "Explanatory"

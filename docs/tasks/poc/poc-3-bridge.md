@@ -22,7 +22,6 @@
 - [ ] 实现 `interpreter_object.dart`
 - [ ] 实现 `mini_runtime.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_bridge): implement InterpreterObject and MiniRuntime`
 
 ### Task 11: ProxyManager（Expando 双向缓存）
 
@@ -38,7 +37,7 @@
 - [ ] 实现 `generic_proxy.dart`
 - [ ] 实现 `proxy_manager.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_bridge): implement ProxyManager with Expando bidirectional cache`
+- [ ] **Commit**（对象模型 + 代理缓存）
 
 ### Task 12: $List HostClassWrapper
 
@@ -52,7 +51,6 @@
 - [ ] 运行验证测试失败
 - [ ] 实现 `list_wrapper.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_bridge): implement $List HostClassWrapper`
 
 ### Task 13: Bridge 类与 CallbackProxy
 
@@ -68,7 +66,6 @@
 - [ ] 实现 `comparable_bridge.dart`
 - [ ] 实现 `callback_proxy.dart`
 - [ ] 运行验证测试通过
-- [ ] Commit: `feat(poc_bridge): implement ComparableBridge and CallbackProxy`
 
 ### Task 14: 更新导出与综合报告
 
@@ -79,4 +76,4 @@
 **TDD 步骤:**
 - [ ] 更新 `lib/poc_bridge.dart` 导出
 - [ ] 运行全部测试确认通过
-- [ ] Commit: `feat(poc_bridge): finalize exports and verify all tests`
+- [ ] **Commit**（wrappers + bridge + POC-3 完成）
