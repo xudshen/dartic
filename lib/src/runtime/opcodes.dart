@@ -41,6 +41,11 @@ abstract class OpCode {
   static const int setFieldVal = 0x63;
   static const int newInstance = 0x64;
 
+  // Async
+  static const int initAsync = 0x78;    // A, Bx — create Completer, ref[A] = completer
+  static const int await_ = 0x79;       // A, Bx — await ref[A], resume PC = Bx
+  static const int asyncReturn = 0x7A;  // A     — completer.complete(ref[A])
+
   // System
   static const int halt = 0xFF;
 }

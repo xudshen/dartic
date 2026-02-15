@@ -1,4 +1,30 @@
+import 'dart:async';
 import 'dart:typed_data';
+
+/// Saved state of a suspended async frame, created when AWAIT encounters
+/// a pending Future.
+class InterpreterFrame {
+  final DartiModule module;
+  final Completer<Object?> completer;
+  int funcId;
+  int pc;
+  int vBase;
+  int rBase;
+
+  /// The register index (A operand of AWAIT) where the awaited result
+  /// should be written when the Future completes.
+  int awaitResultReg;
+
+  InterpreterFrame({
+    required this.module,
+    required this.completer,
+    required this.funcId,
+    required this.pc,
+    required this.vBase,
+    required this.rBase,
+    required this.awaitResultReg,
+  });
+}
 
 class FuncProto {
   final String name;

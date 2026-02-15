@@ -51,6 +51,9 @@ class DartiRuntime {
     var vBase = baseV;
     var rBase = baseR;
     var finished = false;
+    var suspended = false;
+    var isAsync = false;
+    Completer<Object?>? asyncCompleter;
     Object? finalResult;
 
     final completer = Completer<Object?>();
@@ -299,6 +302,73 @@ class DartiRuntime {
               final obj = _rs.slots[rBase + a] as InterpreterObject;
               obj.valueFields![c] = _vs.intView[vBase + b];
 
+            case OpCode.initAsync:
+              // INIT_ASYNC A, Bx
+              // Create a Completer for the async function.
+              // Store the completer in ref[A] (for ASYNC_RETURN to find).
+              // Complete executeFunc's completer with asyncCompleter.future
+              // so the caller receives the async function's eventual result.
+              final aInit = Instr.decodeA(instr);
+              asyncCompleter = Completer<Object?>();
+              isAsync = true;
+              _rs.slots[rBase + aInit] = asyncCompleter;
+              completer.complete(asyncCompleter!.future);
+
+            case OpCode.await_:
+              // AWAIT A, Bx
+              // Read ref[A]. If not a Future, fast path: continue execution.
+              // If Future: suspend frame, register .then() callback, break.
+              final aAwait = Instr.decodeA(instr);
+              final resumePC = Instr.decodeBx(instr);
+              final awaitValue = _rs.slots[rBase + aAwait];
+
+              if (awaitValue is! Future) {
+                // Fast path: value is not a Future, just continue.
+                // Value stays in ref[A], execution continues to next instruction.
+              } else {
+                // Suspend: save frame state and register callback.
+                final savedFuncId = curFuncId;
+                final savedPC = resumePC;
+                final savedVBase = vBase;
+                final savedRBase = rBase;
+                final savedAsyncCompleter = asyncCompleter!;
+                final savedModule = module;
+
+                awaitValue.then((value) {
+                  // Restore frame state
+                  curFuncId = savedFuncId;
+                  curFunc = savedModule.functions[savedFuncId];
+                  code = curFunc.bytecode;
+                  pc = savedPC;
+                  vBase = savedVBase;
+                  rBase = savedRBase;
+                  asyncCompleter = savedAsyncCompleter;
+                  isAsync = true;
+                  finished = false;
+                  suspended = false;
+
+                  // Write resolved value into ref[A]
+                  _rs.slots[rBase + aAwait] = value;
+
+                  // Resume execution
+                  drive();
+                }, onError: (Object error, StackTrace stackTrace) {
+                  savedAsyncCompleter.completeError(error, stackTrace);
+                });
+
+                suspended = true;
+                break outerLoop;
+              }
+
+            case OpCode.asyncReturn:
+              // ASYNC_RETURN A
+              // Complete the async function's completer with ref[A].
+              final aRet = Instr.decodeA(instr);
+              final retValue = _rs.slots[rBase + aRet];
+              asyncCompleter!.complete(retValue);
+              finished = true;
+              break outerLoop;
+
             case OpCode.halt:
               finished = true;
               finalResult = null;
@@ -323,7 +393,14 @@ class DartiRuntime {
 
       // Check if execution is done
       if (finished) {
-        completer.complete(finalResult);
+        if (!isAsync) {
+          completer.complete(finalResult);
+        }
+        // For async functions, asyncCompleter was completed by ASYNC_RETURN;
+        // executeFunc's completer was already completed by INIT_ASYNC.
+      } else if (suspended) {
+        // AWAIT suspended the frame. The Future's .then() callback
+        // will resume execution — nothing to do here.
       } else {
         // Fuel exhausted, schedule next round
         yieldCount++;
