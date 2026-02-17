@@ -6,7 +6,7 @@
 |--------|------|------|
 | 编译器形态 | 独立 CLI 工具（独立 package） | 编译器依赖 `package:kernel`（SDK 级别），运行时不需要 |
 | Kernel 加载 | `package:kernel` BinaryBuilder | 正确性有保障，跟随 SDK 升级 |
-| 寄存器分配 | LSRA（线性扫描） | 编译在本机，时间不受限；LSRA 生成质量优于简单递增 |
+| 寄存器分配 | 作用域级回收（Phase 1）→ LSRA（Phase 2 优化） | Phase 1 以低复杂度覆盖主要场景；LSRA 留待性能调优阶段，收益主要在 async 帧快照和缓存局部性 |
 | Bridge 生成 | 预生成库（独立 package） | 常用框架类通过 build_runner 预生成，作为 package 发布 |
 | 优化遍 | 编译期全量开启 | 常量折叠、窥孔优化、死代码消除 |
 
@@ -24,8 +24,7 @@ dartic_compiler CLI
   │   └── 依赖分析（确定需要的 Bridge 绑定集合）
   │
   ├── 代码生成阶段
-  │   ├── Kernel AST → 线性 IR
-  │   ├── LSRA 寄存器分配
+  │   ├── 作用域级寄存器分配（Phase 1）
   │   ├── 字节码发射
   │   └── 常量池构建
   │
@@ -56,34 +55,40 @@ Component loadKernel(String dillPath) {
 编译器输入为 **linked-platform .dill**（`dart compile kernel` 默认输出，不使用 `--no-link-platform`）。平台库的 AST 节点完整链接，所有 `Reference`（如 `interfaceTarget`、`target`）均可直接解析。编译器通过 `interfaceTarget.enclosingClass` 等属性识别平台类型，映射到 Bridge 绑定标识。编译器维护一份 **Bridge 注册表**，记录预生成库中可用的绑定符号名：
 
 ```dart
+class BindingNameEntry {
+  final String symbolName;
+  final int argCount;
+  BindingNameEntry(this.symbolName, this.argCount);
+}
+
 class BridgeRegistry {
   // 已知的 Bridge 绑定符号名集合（从预生成库元数据加载）
   final Set<String> _knownBindings = {};
 
-  // 编译期本地绑定表：符号名 → 本地索引（写入 .darticb）
-  final List<String> _bindingNames = [];
-  final Map<String, int> _nameToLocalIndex = {};
+  // 编译期本地绑定表：(符号名, argCount) → 本地索引（写入 .darticb）
+  final List<BindingNameEntry> _bindingEntries = [];
+  final Map<String, int> _keyToLocalIndex = {};
 
   bool hasBridge(String libraryUri, String className) =>
       _knownBindings.contains('$libraryUri::$className');
 
-  /// 分配本地绑定索引（编译期递增，仅在当前编译单元内有效）
-  int getOrAllocLocalIndex(String libraryUri, String className, String member) {
-    final name = '$libraryUri::$className::$member';
-    return _nameToLocalIndex.putIfAbsent(name, () {
-      _bindingNames.add(name);
-      return _bindingNames.length - 1;
+  /// 分配本地绑定索引（含参数数量；同一方法不同 argCount 生成不同条目）
+  int getOrAllocLocalIndex(String libraryUri, String className, String member, int argCount) {
+    final key = '$libraryUri::$className::$member#$argCount';
+    return _keyToLocalIndex.putIfAbsent(key, () {
+      _bindingEntries.add(BindingNameEntry('$libraryUri::$className::$member', argCount));
+      return _bindingEntries.length - 1;
     });
   }
 
   /// 输出绑定名称表（写入 .darticb 的绑定名称表段）
-  List<String> get bindingNames => _bindingNames;
+  List<BindingNameEntry> get bindingEntries => _bindingEntries;
 }
 ```
 
-编译器遇到对 `dart:core::List.add` 的引用时，通过 `interfaceTarget.enclosingClass` 识别宿主类，查找 Bridge 注册表确认绑定存在，分配一个**本地绑定索引**，生成 `CALL_HOST A, B, C`（A=baseReg, B=argCount, C=本地绑定索引）。如果引用的类未在 Bridge 注册表中，编译器报错。
+编译器遇到对 `dart:core::List.add` 的引用时，通过 `interfaceTarget.enclosingClass` 识别宿主类，查找 Bridge 注册表确认绑定存在，分配一个**本地绑定索引**（包含符号名和参数数量），生成 `CALL_HOST A, Bx`（A=baseReg, Bx=本地绑定索引）。如果引用的类未在 Bridge 注册表中，编译器报错。
 
-**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.darticb` 文件中存储完整的绑定名称表（符号名列表），运行时加载时通过 `HostBindings.lookupByName()` 解析每个符号名为真实的运行时 ID，构建重定位表。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。详见下方「加载时符号解析」。
+**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.darticb` 文件中存储完整的绑定名称表（每个条目含符号名和 argCount），运行时加载时通过 `HostBindings.lookupByName()` 解析每个符号名为真实的运行时 ID，与 argCount 一起构建绑定表。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。详见下方「加载时符号解析」。
 
 ## 作用域分析
 
@@ -121,11 +126,54 @@ StackKind classifyType(DartType type) {
 }
 ```
 
-## 寄存器分配：LSRA
+## 寄存器分配
 
-### 从 Kernel AST 构建控制流图
+### Phase 1：作用域级回收（当前）
 
-Kernel AST 不是 SSA 形式。编译器先将 AST 转换为线性 IR（基本块序列），然后构建 CFG：
+编译器为值栈和引用栈各维护独立的寄存器池。分配采用递增计数 + 作用域回收：变量离开作用域时，其占用的寄存器归还空闲池，可被后续变量复用。
+
+```dart
+class RegisterAllocator {
+  int _next = 0, _max = 0;
+  final List<int> _freePool = [];
+
+  int alloc() {
+    if (_freePool.isNotEmpty) return _freePool.removeLast();
+    final r = _next++;
+    if (r > _max) _max = r;
+    return r;
+  }
+
+  void free(int reg) => _freePool.add(reg);
+
+  int get maxUsed => _max;
+}
+```
+
+作用域退出时批量归还：
+
+```dart
+void exitScope() {
+  for (final v in currentScope.variables) {
+    allocator.free(v.register);
+  }
+}
+```
+
+**设计取舍**：作用域级回收以极低复杂度（无需 CFG 或活跃区间分析）覆盖主要的寄存器复用场景——if/else 分支、for 循环体、块级临时变量。Dart 函数通常局部变量不多（<50），8 位寄存器编码上限 256，作用域回收足以满足需求。
+
+**值栈和引用栈独立分配**：两个栈各自维护独立的寄存器池。值栈变量不与引用栈变量竞争寄存器。
+
+### Extension Type 处理
+
+Dart 3 的 extension type 是编译期零成本抽象，在 Kernel AST 中已被 CFE 脱糖为底层表示类型的操作。编译器无需特殊处理——extension type 的方法调用在 Kernel 中表现为普通的静态调用或实例调用，编译器正常生成 `CALL_STATIC` 或 `CALL_VIRTUAL` 即可。
+
+### Phase 2：LSRA 线性扫描（未来优化）
+
+> **状态**：Phase 2 优化项，留待性能调优阶段实施。
+> **触发条件**：当 async 帧快照大小成为瓶颈、或 profiling 显示帧尺寸影响缓存局部性时考虑引入。
+
+LSRA 需要先将 Kernel AST 转换为线性 IR 并构建 CFG：
 
 ```
 Kernel AST → 线性 IR（基本块） → CFG → 活跃区间分析 → LSRA → 字节码发射
@@ -137,7 +185,7 @@ Kernel AST → 线性 IR（基本块） → CFG → 活跃区间分析 → LSRA 
 - `TryCatch` → try 块、catch 处理器块
 - `SwitchStatement` → 每个 case 一个块
 
-### 活跃区间计算
+#### 活跃区间计算
 
 每个变量的活跃区间 [start, end) 表示从首次定义到最后一次使用的指令范围：
 
@@ -150,7 +198,7 @@ class LiveInterval {
 }
 ```
 
-### 分配算法
+#### 分配算法
 
 ```dart
 void linearScan(List<LiveInterval> intervals) {
@@ -180,13 +228,7 @@ void linearScan(List<LiveInterval> intervals) {
 }
 ```
 
-**值栈和引用栈独立分配**：两个栈各自维护独立的寄存器池和 LSRA 实例。值栈变量不与引用栈变量竞争寄存器。
-
-### Extension Type 处理
-
-Dart 3 的 extension type 是编译期零成本抽象，在 Kernel AST 中已被 CFE 脱糖为底层表示类型的操作。编译器无需特殊处理——extension type 的方法调用在 Kernel 中表现为普通的静态调用或实例调用，编译器正常生成 `CALL_STATIC` 或 `CALL_VIRTUAL` 即可。
-
-### 溢出处理
+#### 溢出处理
 
 当寄存器不足时，选择活跃区间最长的变量溢出到栈帧的溢出区。溢出生成额外的 `MOVE_VAL` / `MOVE_REF` 指令在使用点恢复。由于 Dart 函数通常局部变量不多，溢出在实际中极少发生。
 
@@ -232,15 +274,16 @@ void compileForStatement(ForStatement node) {
 
 ### try/catch → 异常处理器表
 
-不使用内联跳转，而是生成异常处理器表。每个保护区域记录 `(startPC, endPC, handlerPC, catchType, stackDepth)` 元组。运行时查表跳转。
+不使用内联跳转，而是生成异常处理器表。每个保护区域记录 `(startPC, endPC, handlerPC, catchType, valueStackDepth, refStackDepth)` 元组。运行时查表跳转。
 
 ```dart
 class ExceptionHandler {
   final int startPC;
   final int endPC;
   final int handlerPC;
-  final int catchTypeIndex;  // 常量池中的类型索引，-1 表示 catch-all
-  final int stackDepth;      // 进入 try 时的栈深度（用于恢复）
+  final int catchTypeIndex;    // 常量池中的类型索引，-1 表示 catch-all
+  final int valueStackDepth;   // 进入 try 时的值栈深度（异常时回退值栈指针）
+  final int refStackDepth;     // 进入 try 时的引用栈深度（异常时回退引用栈指针 + 存放异常对象）
 }
 ```
 
@@ -376,6 +419,9 @@ Kernel 的 `ConstantExpression` 引用 `Constant` 节点（`InstanceConstant`、
 | 复合赋值 (+=, ??= 等) | 展开为读取 + 运算 + 写入 |
 | 条件表达式 (`a ? b : c`) | `ConditionalExpression` → `JUMP_IF_FALSE` + `JUMP` |
 | Type aliases (typedef) | 展开为底层类型引用 |
+| `StringConcatenation` | 编译器直接处理：生成各部分求值 + 字符串拼接指令序列 |
+| `Let` | CFE 内部绑定表达式，编译为临时变量赋值 + 体表达式求值 |
+| `RecordLiteral` / `RecordType` | Dart 3 记录类型，编译为记录对象创建指令 |
 
 ## 闭包编译
 
@@ -394,46 +440,33 @@ class UpvalueDesc {
 
 `CLOSURE A, Bx` 在运行时根据 `funcProto[Bx]` 的上值描述符列表，从当前帧的寄存器或上值表中收集上值，创建 `ClosureObject`。
 
+### 值类型变量捕获
+
+当 `int`/`double`/`bool` 类型变量被闭包捕获（`isCaptured = true`）时，编译器将其 `stackKind` 强制设为 `StackKind.ref`（走引用栈装箱路径）。这是一个正确性约束——值栈上的数据无法被 `CLOSE_UPVALUE` 的 `Object?` 引用语义正确处理。
+
+```dart
+// 作用域分析阶段
+if (binding.isCaptured && binding.stackKind == StackKind.value) {
+  binding.stackKind = StackKind.ref;  // 强制装箱
+}
+```
+
+性能影响：被捕获的 `int`/`double` 变量额外承受一次装箱和拆箱。Dart 代码中被闭包捕获的原始类型变量较少（循环变量和计数器通常不被捕获），实际影响有限。
+
 ### CLOSE_UPVALUE 指令
 
 当变量离开作用域且被捕获时，编译器在作用域退出前插入 `CLOSE_UPVALUE A`。运行时将所有指向 >= A 槽位的开放上值关闭（值从栈复制到上值对象内部）。
 
 ## 优化遍
 
-编译器在字节码发射后执行优化遍（均在编译期，设备端不执行）：
-
-### 常量折叠
-
-```
-LOAD_CONST_INT r1, K1    →  LOAD_CONST_INT r1, (K1+K2)
-LOAD_CONST_INT r2, K2
-ADD_INT r3, r1, r2
-```
-
-### 窥孔优化
-
-```
-JUMP +0                  →  (删除)
-MOVE_VAL r1, r1          →  (删除)
-JUMP_IF_FALSE r, +1      →  (删除，条件跳转跳过的是下一条)
-BIT_NOT r1, r2
-JUMP_IF_FALSE r1, off    →  JUMP_IF_TRUE r2, off
-```
-
-### 死代码消除
-
-移除 `RETURN_*`（`RETURN_REF` / `RETURN_VAL` / `RETURN_NULL`）或 `THROW` 之后到下一个跳转目标之间的不可达指令。
-
-### Superinstruction 候选
-
-分析高频指令序列，在预留 opcode 空间生成合并指令：
-
-```
-LOAD_CONST_INT + ADD_INT  →  ADD_INT_IMM (已在 ISA 中预定义)
-GET_FIELD_VAL + UNBOX_INT →  GET_FIELD_UNBOX_INT
-```
-
-实际的 Superinstruction 集合根据 profiling 数据决定。
+> **Phase 2**：以下优化遍留待 profiling 数据确定优先级后实施。
+>
+> - 常量折叠
+> - 窥孔优化
+> - 死代码消除
+> - Superinstruction（高频指令序列合并）
+>
+> 各优化遍的具体变换规则根据 profiling 数据设计。
 
 ## 编译产物格式 (.darticb)
 
@@ -446,10 +479,10 @@ DarticB 文件格式
 ├─────────────────────────────────┤
 │ 绑定名称表                       │
 │   [bindingCount]                 │
-│   每个条目: 符号名字符串           │
-│   (如 "dart:core::List::add")    │
-│   字节码中 CALL_HOST 的 C 操作数   │
-│   是此表的本地索引                │
+│   每个条目: (符号名, argCount)    │
+│   (如 "dart:core::List::add", 2) │
+│   字节码中 CALL_HOST 的 Bx 操作数  │
+│   是此表的本地索引（16-bit）     │
 ├─────────────────────────────────┤
 │ 常量池                           │
 │   refs: [length, data...]        │
@@ -489,35 +522,41 @@ DarticB 文件格式
 运行时加载 .darticb 时执行以下步骤：
 
 1. 校验 magic 和 checksum
-2. 读取绑定名称表，对每个符号名调用 `HostBindings.lookupByName()` 解析为运行时 ID，构建**重定位表**
+2. 读取绑定名称表（每个条目含符号名和 argCount），对每个符号名调用 `HostBindings.lookupByName()` 解析为运行时 ID，与 argCount 一起构建**绑定表**
 3. 如果任何符号名找不到对应的运行时绑定，加载失败并报告缺失的绑定（在执行前即发现版本不匹配）
 4. 将字节码加载到 `Uint32List`，常量池加载到对应的 typed list
 
 ```dart
+class ResolvedBinding {
+  final int runtimeId;
+  final int argCount;
+  ResolvedBinding(this.runtimeId, this.argCount);
+}
+
 class DarticModule {
   final Uint32List bytecode;
-  final List<int> bindingRelocationTable; // localIndex → runtimeId
+  final List<ResolvedBinding> bindingTable; // localIndex → (runtimeId, argCount)
   // ... 常量池、函数表等
 
   static DarticModule load(Uint8List bytes, HostBindings hostBindings) {
     // ... 解析文件头、绑定名称表
-    final bindingNames = _readBindingNames(bytes);
-    final relocationTable = List<int>.filled(bindingNames.length, -1);
+    final entries = _readBindingEntries(bytes); // [(symbolName, argCount), ...]
+    final bindingTable = <ResolvedBinding>[];
 
-    for (var i = 0; i < bindingNames.length; i++) {
-      final runtimeId = hostBindings.lookupByName(bindingNames[i]);
+    for (final entry in entries) {
+      final runtimeId = hostBindings.lookupByName(entry.symbolName);
       if (runtimeId == null) {
         throw DarticLoadError(
-          'Missing host binding: ${bindingNames[i]}. '
+          'Missing host binding: ${entry.symbolName}. '
           'Ensure the Bridge library version matches the compiler.',
         );
       }
-      relocationTable[i] = runtimeId;
+      bindingTable.add(ResolvedBinding(runtimeId, entry.argCount));
     }
 
     return DarticModule(
       bytecode: _readBytecode(bytes),
-      bindingRelocationTable: relocationTable,
+      bindingTable: bindingTable,
       // ...
     );
   }
@@ -528,12 +567,11 @@ class DarticModule {
 
 ```dart
 case OpCode.CALL_HOST:
-  final a = decodeA(instr);     // baseReg
-  final b = decodeB(instr);     // argCount
-  final localIndex = decodeC(instr);  // 本地绑定索引
-  final runtimeId = module.bindingRelocationTable[localIndex];
-  final args = [for (int i = 0; i < b; i++) _rs.slots[a + i]];
-  final result = hostBindings.invoke(runtimeId, args);
+  final a = decodeA(instr);      // baseReg
+  final bx = decodeBx(instr);    // 本地绑定索引 (16-bit)
+  final entry = module.bindingTable[bx];
+  final args = [for (int i = 0; i < entry.argCount; i++) _rs.slots[a + i]];
+  final result = hostBindings.invoke(entry.runtimeId, args);
   _rs.slots[a] = result;
 ```
 

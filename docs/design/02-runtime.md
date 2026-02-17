@@ -100,7 +100,7 @@ class CallStack {
 └──────────────────────────────────┘
 ```
 
-函数入口时，编译器已知该函数需要多少值栈槽位和引用栈槽位（LSRA 的输出），直接推进 sp 预留空间。
+函数入口时，编译器已知该函数需要多少值栈槽位和引用栈槽位（寄存器分配的输出），直接推进 sp 预留空间。
 
 ## 全局变量表
 
@@ -111,23 +111,34 @@ class GlobalTable {
   final List<Object?> slots;
   final List<int> initializerFuncIds;  // 惰性初始化函数 ID，-1 = 无/已初始化
 
-  static final Object _uninitialized = Object();  // 哨兵值
+  static final Object _uninitialized = Object();   // 哨兵：未初始化
+  static final Object _initializing = Object();    // 哨兵：正在初始化（检测循环依赖）
 
   GlobalTable(int count)
       : slots = List<Object?>.filled(count, _uninitialized),
         initializerFuncIds = List<int>.filled(count, -1);
 
-  /// LOAD_GLOBAL 运行时：惰性初始化
+  /// LOAD_GLOBAL 运行时：惰性初始化 + 循环依赖检测
   Object? load(int index, DarticRuntime runtime) {
     final value = slots[index];
+    if (identical(value, _initializing)) {
+      throw DarticError('Circular dependency: global variable $index is being initialized');
+    }
     if (identical(value, _uninitialized)) {
       final initId = initializerFuncIds[index];
       if (initId == -1) {
         throw LateInitializationError('Global variable $index not initialized');
       }
-      // 执行初始化函数，结果存回槽位
-      slots[index] = runtime._executeInitializer(initId);
-      return slots[index];
+      // 标记为"正在初始化"，防止循环依赖
+      slots[index] = _initializing;
+      try {
+        final result = runtime._executeInitializer(initId);
+        slots[index] = result;
+        return result;
+      } catch (e) {
+        slots[index] = _uninitialized;  // 初始化失败，重置为未初始化
+        rethrow;
+      }
     }
     return value;
   }
@@ -198,7 +209,7 @@ class DarticRuntime {
   final GlobalTable globals;         // 静态字段/顶层变量
   bool _driving = false;
 
-  static const int _fuelBudget = 10000;
+  static const int _fuelBudget = 50000;  // 根据 profiling 调优；基于 ~200μs Timer.run 开销和 ~10ms 目标回合时间
   static const int maxCallDepth = 512;
   int _currentCallDepth = 0;
 
@@ -340,33 +351,11 @@ Object? _executeCallVirtual(InterpreterFrame frame, int instr) {
 }
 ```
 
-多态退化（2-4 条目）和超态回退（全局查找）在慢路径中处理。
+> **Phase 2**：多态 IC（2-4 条目）和超态回退（全局查找）留待 profiling 显示单态命中率不足时引入。
 
 ## Quickening
 
-当 IC 观察到类型稳定时，通用指令被就地改写：
-
-```dart
-void _quicken(Uint32List code, int pc, int newOpcode) {
-  code[pc] = (code[pc] & ~0xFF) | newOpcode;
-}
-
-// 示例：ADD_GENERIC 快化为 ADD_INT
-case OpCode.ADD_GENERIC:
-  final b = _rs.slots[(instr >> 16) & 0xFF];
-  final c = _rs.slots[(instr >> 24) & 0xFF];
-  if (b is int && c is int) {
-    // 快化：下次直接走 ADD_INT 路径
-    _quicken(code, pc - 1, OpCode.ADD_INT);
-    // 这次的结果
-    _vs.intView[(instr >> 8) & 0xFF] = b + c;
-  } else {
-    // 动态路径
-    _rs.slots[(instr >> 8) & 0xFF] = (b as dynamic) + c;
-  }
-```
-
-类型守卫失败时回退为通用版本（改写回原 opcode）。
+> **Phase 2**：编译器已根据 CFE 静态类型信息生成特化指令（如 `ADD_INT`、`ADD_DBL`），运行时 Quickening 留待 profiling 显示需要时再引入。
 
 ## GC 集成
 

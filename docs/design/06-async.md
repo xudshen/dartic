@@ -4,7 +4,7 @@
 
 | 决策项 | 选择 | 理由 |
 |--------|------|------|
-| async 实现 | 帧快照续体 | 解释器帧天然在堆上，挂起/恢复零拷贝 |
+| async 实现 | 帧快照续体（挂起时拷贝栈数据到帧对象） | 解释器帧在堆上；挂起时快照值栈/引用栈区间到帧对象，恢复时拷回 |
 | 跨边界桥接 | Completer\<T\>（async）/ StreamController\<T\>（async*） | 返回 VM 原生 Future/Stream |
 | 协作调度 | fuel 耗尽 → Timer.run；await 恢复 → scheduleMicrotask | 不饿死 event queue |
 | sync* 阻塞 | 接受限制 | sync* 是同步语义，调用者对阻塞有预期 |
@@ -12,9 +12,9 @@
 
 ## 核心原理
 
-解释器的帧（InterpreterFrame）是 Dart 堆对象——局部变量、操作数、PC 全部在堆上。挂起只需将帧从运行队列移除，恢复只需加回。不需要像 Dart VM 那样在栈和堆之间复制帧。
+解释器的帧（InterpreterFrame）是 Dart 堆对象——PC、异常处理器、Completer 等元数据在堆上。局部变量和操作数存储在全局 ValueStack/RefStack 中（详见 Chapter 2），挂起时需要将帧占用的栈区间快照到帧对象，恢复时拷回。快照大小等于帧的寄存器数量（编译期确定），通常仅 10-50 个槽位（80-400 字节），拷贝代价相比 Future.then 回调 + microtask 调度可忽略。
 
-这是字节码解释器相比编译到原生代码的根本优势：**帧本身就是续体**。
+这是字节码解释器的核心优势：**帧本身就是续体**，挂起/恢复的全部状态封装在帧对象中。
 
 ## InterpreterFrame 异步扩展
 
@@ -27,6 +27,10 @@ class InterpreterFrame {
   // 值栈/引用栈通过全局 sp 偏移定位
   int savedVSP;   // 挂起时保存的值栈指针
   int savedRSP;   // 挂起时保存的引用栈指针
+  int savedVBase = 0;  // 挂起时值栈帧基址
+  int savedRBase = 0;  // 挂起时引用栈帧基址
+  Int64List? savedValueSlots;    // 挂起时值栈快照（帧占用区间）
+  List<Object?>? savedRefSlots;  // 挂起时引用栈快照（帧占用区间）
 
   // 异步扩展
   Completer<Object?>? resultCompleter;  // async 函数的结果 Completer
@@ -58,13 +62,58 @@ class InterpreterFrame {
 
 ## 异步帧与全局栈的交互
 
-Chapter 2 的运行时使用全局 ValueStack/RefStack。async 帧挂起时需要保护其栈数据不被后续帧覆盖：
+Chapter 2 的运行时使用全局 ValueStack/RefStack。多个 async 帧可能并发挂起，它们的栈区间在全局栈上可能重叠——后启动的帧分配到与先挂起帧相同的栈位置。因此挂起时必须快照栈数据，恢复时拷回。
 
-**挂起时**：帧的 `savedVSP` 和 `savedRSP` 记录当前栈指针位置。挂起的帧占据的栈区间 `[帧基址, savedSP)` 保持不变——因为全局栈指针回退到调用者帧的位置，挂起帧的区间在栈顶之上（"已归还"区域）。但在挂起期间该区间不会被新帧使用，因为新的同步调用链从调用者帧的 sp 继续向上分配。
+**挂起时**（AWAIT 遇到真 Future）：
 
-**恢复时**：`_resumeFrame` 将 `savedVSP`/`savedRSP` 恢复为全局 sp，帧从挂起点继续执行。此时栈数据仍在原位（挂起期间无人写入该区间）。
+```dart
+void _suspendFrame(InterpreterFrame frame) {
+  final vBase = frame.savedVBase;
+  final vSize = frame.savedVSP - vBase;
+  final rBase = frame.savedRBase;
+  final rSize = frame.savedRSP - rBase;
 
-**关键约束**：同一时刻只有 `_runQueue.first` 帧在执行，其他帧要么是该帧的调用者（栈区间在下方），要么是挂起的 async 帧（等待 Future 完成后恢复）。不会出现两个帧同时使用全局栈的情况。
+  // 快照值栈区间
+  if (vSize > 0) {
+    frame.savedValueSlots = Int64List(vSize);
+    frame.savedValueSlots!.setRange(0, vSize, _vs.intView, vBase);
+  }
+
+  // 快照引用栈区间
+  if (rSize > 0) {
+    frame.savedRefSlots = List<Object?>.filled(rSize, null);
+    for (int i = 0; i < rSize; i++) {
+      frame.savedRefSlots![i] = _rs.slots[rBase + i];
+      _rs.slots[rBase + i] = null;  // 释放引用，允许 GC
+    }
+  }
+}
+```
+
+**恢复时**（Future 完成，`_resumeFrame` 调用前）：
+
+```dart
+void _restoreFrameStack(InterpreterFrame frame) {
+  final vBase = frame.savedVBase;
+  final rBase = frame.savedRBase;
+
+  // 恢复值栈
+  if (frame.savedValueSlots != null) {
+    _vs.intView.setRange(vBase, vBase + frame.savedValueSlots!.length, frame.savedValueSlots!);
+    frame.savedValueSlots = null;  // 释放快照
+  }
+
+  // 恢复引用栈
+  if (frame.savedRefSlots != null) {
+    for (int i = 0; i < frame.savedRefSlots!.length; i++) {
+      _rs.slots[rBase + i] = frame.savedRefSlots![i];
+    }
+    frame.savedRefSlots = null;
+  }
+}
+```
+
+**性能**：快照大小由编译器的寄存器分配输出决定（`FuncProto.refRegCount` + `FuncProto.valueRegCount`），典型帧 10-50 个槽位。`Int64List.setRange` 底层为 `memcpy`，80-400 字节的拷贝在现代 CPU 上 <1μs。相比 Future.then 回调注册（~5-10μs）和 microtask 调度开销，栈快照代价可忽略。
 
 ## 字节码指令
 
@@ -165,8 +214,8 @@ void _resumeFrame(InterpreterFrame frame) {
     final handler = _findHandler(frame, frame.pc);
     if (handler != null) {
       // 异常和栈追踪写入处理器约定的寄存器位置
-      _rs.slots[handler.stackDepth] = frame.resumeException;
-      _rs.slots[handler.stackDepth + 1] = frame.resumeStackTrace;
+      _rs.slots[handler.refStackDepth] = frame.resumeException;
+      _rs.slots[handler.refStackDepth + 1] = frame.resumeStackTrace;
       frame.pc = handler.handlerPC;
     } else {
       // 无处理器 → 完成 Completer 为错误
@@ -182,6 +231,7 @@ void _resumeFrame(InterpreterFrame frame) {
     frame.resumeValue = null;
   }
 
+  _restoreFrameStack(frame);  // 恢复栈快照
   _runQueue.addFirst(frame);
   _scheduleDrive();
 }

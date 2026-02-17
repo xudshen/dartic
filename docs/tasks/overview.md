@@ -1,9 +1,10 @@
 # 任务总索引
 
-## 当前阶段: POC 验证
+## POC 阶段 (已完成，已归档)
 
 > 方案: `docs/plans/2026-02-15-poc-tasks-design.md`
 > 实现计划: `docs/plans/2026-02-15-poc-implementation.md`
+> POC 代码归档: `archive/poc/`
 
 ### 进度
 

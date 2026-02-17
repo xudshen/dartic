@@ -47,7 +47,8 @@
       "Bash(git fetch:*)",
       "Bash(git blame:*)",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git clone:*)"
     ]
   },
   "outputStyle": "Explanatory"

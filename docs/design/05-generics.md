@@ -51,7 +51,7 @@ enum Nullability { nonNullable, nullable, legacy }
 
 ```dart
 class TypeRegistry {
-  final Map<int, RuntimeType> _canonical = {};
+  final Map<int, List<RuntimeType>> _buckets = {};
 
   /// 常用类型预注册
   late final RuntimeType intType = _intern(RuntimeType._(classId: ClassIds.int, typeArgs: const [], nullability: Nullability.nonNullable));
@@ -62,17 +62,32 @@ class TypeRegistry {
   late final RuntimeType objectNullableType = _intern(RuntimeType._(classId: ClassIds.object, typeArgs: const [], nullability: Nullability.nullable));
   late final RuntimeType neverType = _intern(RuntimeType._(classId: ClassIds.never_, typeArgs: const [], nullability: Nullability.nonNullable));
 
-  /// 驻留：相同结构返回同一实例
+  /// 驻留：相同结构返回同一实例（桶链处理哈希碰撞）
   RuntimeType intern(int classId, List<RuntimeType> typeArgs, Nullability nullability) {
     final hash = _structuralHash(classId, typeArgs, nullability);
-    final existing = _canonical[hash];
-    if (existing != null && _structuralEquals(existing, classId, typeArgs, nullability)) {
-      return existing;
+    final bucket = _buckets[hash];
+    if (bucket != null) {
+      for (final existing in bucket) {
+        if (_structuralEquals(existing, classId, typeArgs, nullability)) {
+          return existing;  // 结构匹配，返回驻留实例
+        }
+      }
     }
+    // 无匹配，创建新类型并加入桶
     final type = RuntimeType._(classId: classId, typeArgs: List.unmodifiable(typeArgs), nullability: nullability);
     type._canonicalHash = hash;
-    _canonical[hash] = type;
+    (_buckets[hash] ??= []).add(type);
     return type;
+  }
+
+  bool _structuralEquals(RuntimeType existing, int classId, List<RuntimeType> typeArgs, Nullability nullability) {
+    if (existing.classId != classId) return false;
+    if (existing.nullability != nullability) return false;
+    if (existing.typeArgs.length != typeArgs.length) return false;
+    for (int i = 0; i < typeArgs.length; i++) {
+      if (!identical(existing.typeArgs[i], typeArgs[i])) return false;  // 子类型已驻留，用 identical
+    }
+    return true;
   }
 
   int _structuralHash(int classId, List<RuntimeType> typeArgs, Nullability nullability) {
@@ -166,22 +181,9 @@ class ClosureObject {
 
 ## is / as 类型检查
 
-### 分级缓存
+### 子类型检查策略
 
-```
-Level 1: 调用点 IC（每个 INSTANCEOF / CAST 指令关联 1 个 IC 槽，多态时扩展为 2-4 条目）
-  → 单态命中 O(1)，覆盖 ~80% 检查
-
-Level 2: 全局 SubtypeTestCache（哈希表）
-  → 键为 (sourceType, targetType)，均已驻留，比较为 identical()
-  → 上限 512 条目，LRU 淘汰
-  → 覆盖 ~15% 检查
-
-Level 3: 完整子类型计算
-  → 递归遍历类层级 + 类型参数匹配
-  → 结果回填 Level 1 和 Level 2
-  → 覆盖 ~5% 检查
-```
+初期使用直接子类型计算（递归遍历类层级 + 类型参数匹配 + 可空性/Null/FutureOr 特殊规则）。调用点缓存和全局缓存留待 profiling 后添加。
 
 ### 子类型检查算法
 
@@ -199,7 +201,31 @@ bool isSubtypeOf(RuntimeType sub, RuntimeType sup) {
 
   // 可空性检查
   if (sub.nullability == Nullability.nullable &&
-      sup.nullability == Nullability.nonNullable) return false;
+      sup.nullability == Nullability.nonNullable) {
+    // 例外：Null <: Never? 等已由底类型规则处理
+    // T? <: S（S 非空）→ 需要 T <: S 且 Null <: S，此处直接拒绝
+    return false;
+  }
+
+  // Null 类型特殊处理
+  if (sub.classId == ClassIds.null_) {
+    // Null <: T? → true（对任意 T）
+    return sup.nullability == Nullability.nullable;
+  }
+
+  // 非空到可空提升：T <: T?
+  if (sup.nullability == Nullability.nullable &&
+      sub.nullability == Nullability.nonNullable &&
+      sub.classId == sup.classId) {
+    // 快速路径：相同 classId，检查类型参数
+    if (sub.typeArgs.length == sup.typeArgs.length) {
+      bool match = true;
+      for (int i = 0; i < sub.typeArgs.length; i++) {
+        if (!identical(sub.typeArgs[i], sup.typeArgs[i])) { match = false; break; }
+      }
+      if (match) return true;
+    }
+  }
 
   // 查找 sub 在 sup 类层级中的对应超类型
   final superTypeArgs = _findSuperTypeArgs(sub.classId, sup.classId);
@@ -245,10 +271,14 @@ if (sub.classId == ClassIds.futureOr) {
 TypeRegistry 在驻留时执行类型规范化，确保等价类型共享实例：
 
 ```
-FutureOr<Never>  → Future<Never>
+FutureOr<Never>   → Future<Never>
 FutureOr<Object?> → Object?
-FutureOr<Null>   → Future<Null>?
-Null             → Never?（在可空性层面）
+FutureOr<Object>  → Object
+FutureOr<dynamic> → dynamic
+FutureOr<void>    → void
+FutureOr<Null>    → Future<Null>?
+FutureOr<T?>      → FutureOr<T>?（可空性提升到外层）
+Null              → Never?（在可空性层面）
 ```
 
 ### 函数类型子类型检查
@@ -285,21 +315,7 @@ final Map<int, Map<int, List<TypeArgTemplate>>> _superTypeMap;
 
 ### 解释器 → VM
 
-编译器分析用户代码中实际出现的泛型组合（如 `List<int>`, `Map<String, dynamic>`），在预生成的 Bridge 库中为这些组合生成类型化版本：
-
-```dart
-// 预生成 Bridge 库中
-Object createTypedList(RuntimeType elementType, List elements) {
-  // 编译器分析后预生成的分发表
-  if (identical(elementType, typeRegistry.intType)) return List<int>.from(elements);
-  if (identical(elementType, typeRegistry.stringType)) return List<String>.from(elements);
-  if (identical(elementType, typeRegistry.doubleType)) return List<double>.from(elements);
-  // ... 其他编译器发现的组合
-  return List<dynamic>.from(elements);  // 兜底
-}
-```
-
-`identical` 比较因为 RuntimeType 已驻留，是 O(1)。
+初期统一使用 `List<dynamic>.from()` 等动态类型兜底，类型化创建留待需要时添加。
 
 ### VM → 解释器
 
@@ -335,17 +351,8 @@ CFE 生成的 forwarding stub（`AsExpression`）在字节码中表现为 `CHECK
 
 ### 实例化缓存
 
-当 Kernel 类型模板含 TypeParameterType 引用时，需要用 ITA/FTA 实例化。缓存常见的实例化结果：
-
-```dart
-// RuntimeType 上的实例化缓存
-// (instantiatorTypeArgs, functionTypeArgs) → resultType
-final Map<(int, int), RuntimeType> _instantiationCache = {};
-// 键用 identityHashCode 对编码（因为 TypeArgs 已驻留）
-```
+> **Phase 2**：当 Kernel 类型模板含 TypeParameterType 引用时，需要用 ITA/FTA 实例化。初期每次实例化直接计算，缓存留待 profiling 显示类型实例化成为热点时引入。
 
 ### 静态消除
 
-编译器在生成字节码时消除冗余的类型检查：
-- 变量声明类型已是目标类型 → 省略 `INSTANCEOF`
-- 类型参数在函数中未被 `is`/`as` 使用 → 省略 FTA 传递（擦除优化标记）
+> **Phase 2**：编译器可省略未使用的 FTA 传递和冗余类型检查，具体消除规则留待实现阶段确定。

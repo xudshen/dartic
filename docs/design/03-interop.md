@@ -54,7 +54,7 @@ class HostBindings {
 }
 ```
 
-编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`，其中 Bx 是编译期的**本地绑定索引**（指向 .darticb 绑定名称表中的条目）。运行时加载 .darticb 时通过符号解析将本地索引映射为运行时 ID（详见 Chapter 4 加载时符号解析）。
+编译器将 `list.add(item)` 编译为 `CALL_HOST A, Bx`（A=baseReg, Bx=本地绑定索引，16-bit）。Bx 指向 .darticb 绑定名称表中的条目，每个条目包含符号名和参数数量（argCount）。同一宿主方法因可选参数在不同调用点参数数量不同时，编译器生成不同的绑定表条目。运行时加载 .darticb 时通过符号解析将本地索引映射为运行时 ID（详见 Chapter 4 加载时符号解析）。
 
 ### 包装器类（结构化访问）
 
@@ -163,11 +163,12 @@ VM 对象传入解释器时不做任何包装，直接作为 `Object?` 存入引
 ```dart
 // CALL_HOST 返回 VM 原生对象
 case OpCode.CALL_HOST:
-  final localIndex = (instr >> 16) & 0xFFFF;
-  final runtimeId = module.bindingRelocationTable[localIndex]; // 符号解析后的运行时 ID
-  final result = hostBindings.invoke(runtimeId, args);
-  // result 是 VM 原生对象（如 HttpResponse），直接存入引用栈
-  _rs.slots[destReg] = result;
+  final a = (instr >> 8) & 0xFF;     // baseReg
+  final bx = (instr >> 16) & 0xFFFF; // 本地绑定索引 (16-bit)
+  final entry = module.bindingTable[bx]; // 符号解析后的绑定条目
+  final args = [for (int i = 0; i < entry.argCount; i++) _rs.slots[a + i]];
+  final result = hostBindings.invoke(entry.runtimeId, args);
+  _rs.slots[a] = result;
 ```
 
 解释器通过 `GET_FIELD_DYN` / `CALL_VIRTUAL` 访问这些对象时，走 HostClassWrapper 路由。
@@ -192,6 +193,11 @@ class CallbackProxy {
 
   Object? Function(Object?, Object?) proxy2() =>
       (a, b) => _runtime.invokeClosure(_closure, [a, b]);
+
+  Object? Function(Object?, Object?, Object?) proxy3() =>
+      (a, b, c) => _runtime.invokeClosure(_closure, [a, b, c]);
+
+  // 4+ 参数回调极为罕见（标准库中几乎不存在），需要时通过 Function.apply 处理
 }
 ```
 
@@ -204,26 +210,6 @@ case 'map':
   final proxy = CallbackProxy(_runtime, closure);
   return (host as List).map(proxy.proxy1());
 ```
-
-### 类型化回调
-
-回调代理的类型退化（`Function(T)` → `Function(dynamic)`）通过预生成的类型化适配器缓解：
-
-```dart
-/// 预生成的常用回调类型适配器
-class TypedCallbacks {
-  static bool Function(dynamic) predicate(DarticRuntime rt, InterpreterObject c) =>
-      (arg) => rt.invokeClosure(c, [arg]) as bool;
-
-  static int Function(dynamic, dynamic) comparator(DarticRuntime rt, InterpreterObject c) =>
-      (a, b) => rt.invokeClosure(c, [a, b]) as int;
-
-  static void Function(dynamic) consumer(DarticRuntime rt, InterpreterObject c) =>
-      (arg) { rt.invokeClosure(c, [arg]); };
-}
-```
-
-HostClassWrapper 根据参数位置的已知函数签名选择正确的适配器。
 
 ## Bridge 类（extends/implements 宿主类）
 
@@ -307,26 +293,7 @@ Object createInstance(int classId, RuntimeType type) {
 
 ### noSuchMethod 转发（接口代理）
 
-对于 `implements` 接口但不 `extends` 具体类的场景，可使用 noSuchMethod 转发作为轻量替代：
-
-```dart
-class $Comparable$proxy implements Comparable<dynamic> {
-  final DarticRuntime _runtime;
-  final InterpreterObject _target;
-
-  $Comparable$proxy(this._runtime, this._target);
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) {
-    final name = invocation.memberName.toString();
-    return _runtime.invokeMethod(
-      _target, name, invocation.positionalArguments,
-    );
-  }
-}
-```
-
-**性能警告**：noSuchMethod 每次调用创建 Invocation 对象，比直接 Bridge 慢 10-100x。仅用于低频接口或编译期未知的接口。
+对于 implements 宿主接口但不 extends 具体类的场景，未来可通过 noSuchMethod 转发实现轻量级代理。
 
 ## 对象身份一致性
 

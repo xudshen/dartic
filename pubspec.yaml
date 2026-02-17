@@ -6,11 +6,6 @@ repository: https://github.com/xudshen/dartic.git
 environment:
   sdk: ^3.10.7
 
-workspace:
-  - packages/poc_kernel
-  - packages/poc_bench
-  - packages/poc_bridge
-
 dependencies:
   kernel:
     path: vendor/dart-sdk/pkg/kernel

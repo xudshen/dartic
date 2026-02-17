@@ -47,6 +47,14 @@ int decodesBx(int instr) => decodeBx(instr) - 0x7FFF;
 int decodeAx(int instr) => (instr >> 8) & 0xFFFFFF;
 ```
 
+### 双视图安全约束
+
+值栈的 `intView` 和 `doubleView` 共享底层 `ByteBuffer`。编译器必须保证：**同一值栈槽位在其活跃区间内只通过一种视图访问**。违反此不变式会导致位模式误读（将 double 的 IEEE 754 位模式当作 int 解释，反之亦然）。
+
+编译器通过 `StackKind` 分类确保正确性——`int`/`bool` 变量只生成 `intView` 访问指令，`double` 变量只生成 `doubleView` 访问指令。同一槽位不会在不同类型间复用（作用域级分配按 `StackKind` 独立分配寄存器）。
+
+> **Debug 模式**：可添加运行时断言，在每次值栈写入时记录槽位的视图类型，读取时校验一致性。仅用于开发期验证，生产模式无开销。
+
 ### WIDE 前缀
 
 当操作数超出 8 位或 16 位范围时，`WIDE` 前缀将下一条指令的操作数宽度扩展。`WIDE` 后紧跟一条 32 位扩展字：
@@ -157,8 +165,8 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 0x51  CALL_STATIC   A, Bx         refStack[A] = call staticFunc[Bx]
                                   参数数量和类型从 funcProto[Bx].paramCount 获取
                                   参数从 refStack[A+1] 开始连续排列
-0x52  CALL_HOST     A, B, C       refStack[A] = hostBindings[C](refStack[A..A+B-1])
-                                  A=baseReg, B=argCount, C=hostId; 参数从 refStack[A] 开始连续排列
+0x52  CALL_HOST     A, Bx         refStack[A] = hostBindings.invoke(Bx, args)
+                                  A=baseReg, Bx=绑定索引(16-bit); argCount 从绑定表条目获取
 0x53  CALL_VIRTUAL  A, B, C       refStack[A] = refStack[B].method(IC)(args)
                                   关联内联缓存槽
 0x54  CALL_SUPER    A, Bx         refStack[A] = super.method[Bx](args)
@@ -263,15 +271,9 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 0xFF  HALT                        停机
 ```
 
-**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）、Quickening 特化指令等后续优化。具体的 Quickening 特化 opcode 在运行时按需分配，示例：
+**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。
 
-| 通用指令 | 特化指令（预留区） | 条件 |
-|----------|-------------------|------|
-| `ADD_GENERIC` | `ADD_INT` (已在主表) | 操作数始终为 int |
-| `CALL_VIRTUAL` | `CALL_DIRECT` (0xA8+) | 单态调用，跳过虚方法查找 |
-| `INSTANCEOF` | `INSTANCEOF_CACHED` (0xA8+) | 类型检查缓存命中 |
-
-特化 opcode 的具体编号在实现阶段根据 profiling 数据确定。
+> **Phase 2**：具体特化 opcode 留待 profiling 数据确定。
 
 ## 常量池设计
 
@@ -298,11 +300,6 @@ class InlineCacheEntry {
   int cachedClassId = -1;         // 单态缓存的类 ID
   int cachedMethodOffset = -1;    // 缓存的方法入口偏移
 
-  // 多态退化时扩展为数组
-  Int32List? polyClassIds;
-  Int32List? polyMethodOffsets;
-  int polySize = 0;
-
   InlineCacheEntry(this.methodNameIndex);
 }
 ```
@@ -311,12 +308,4 @@ class InlineCacheEntry {
 
 ## Quickening 预留
 
-操作码空间 0xA8-0xFD 预留给运行时指令快化。当分析器检测到调用点的类型稳定时，通用指令被就地替换为特化版本：
-
-```
-ADD_GENERIC → ADD_INT        (操作数始终为 int)
-CALL_VIRTUAL → CALL_DIRECT   (单态调用，跳过虚方法查找)
-INSTANCEOF → INSTANCEOF_CACHED (类型检查缓存命中)
-```
-
-快化通过直接修改 `Uint32List` 中的 opcode 字节实现。类型守卫失败时回退为通用版本。
+> **Phase 2**：操作码空间 0xA8-0xFD 预留给运行时指令快化。编译器已根据 CFE 静态类型信息生成特化指令（如 `ADD_INT`、`ADD_DBL`），运行时 Quickening 留待 profiling 显示需要时再引入。

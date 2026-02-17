@@ -113,7 +113,22 @@ void _verifyFunction(FuncProto func, DarticModule module) {
       }
     }
 
-    // e) 方法/函数引用验证
+    // e) WIDE 前缀验证
+    if (op == OpCode.WIDE) {
+      if (pc + 1 >= codeLength) {
+        errors.add('${func.name}@$pc: WIDE at end of bytecode, missing next instruction');
+      } else {
+        final nextInstr = func.bytecode[pc + 1];
+        final nextOp = nextInstr & 0xFF;
+        if (!OpCode.isWideCompatible(nextOp)) {
+          errors.add('${func.name}@$pc: WIDE before non-compatible opcode 0x${nextOp.toRadixString(16)}');
+        }
+      }
+      pc++;  // 跳过 WIDE 后的扩展字
+      continue;
+    }
+
+    // f) 方法/函数引用验证
     if (OpCode.isCall(op)) {
       final funcId = _decodeFuncId(instr);
       if (funcId >= module.functions.length && !_isHostBinding(funcId)) {
@@ -122,7 +137,7 @@ void _verifyFunction(FuncProto func, DarticModule module) {
     }
   }
 
-  // f) 异常处理器表验证
+  // g) 异常处理器表验证
   _verifyExceptionTable(func);
 }
 ```
@@ -167,8 +182,11 @@ void _verifyExceptionTable(FuncProto func) {
     if (handler.handlerPC >= codeLength) {
       errors.add('${func.name}: exception handler target ${handler.handlerPC} out of bounds');
     }
-    if (handler.stackDepth < 0) {
-      errors.add('${func.name}: exception handler has negative stack depth');
+    if (handler.valueStackDepth < 0) {
+      errors.add('${func.name}: exception handler has negative value stack depth');
+    }
+    if (handler.refStackDepth < 0) {
+      errors.add('${func.name}: exception handler has negative ref stack depth');
     }
   }
 }
@@ -225,7 +243,7 @@ DarticModule loadModule(Uint8List bytes) {
 复用 Chapter 2 分发循环中已有的 fuel 机制：
 
 ```dart
-static const int _fuelBudget = 10000;
+static const int _fuelBudget = 50000;  // 根据 profiling 调优
 
 void _driveInterpreter() {
   int fuel = _fuelBudget;
@@ -271,6 +289,41 @@ class DarticRuntime {
 ```
 
 深度限制值 512 足以覆盖正常递归场景，同时防止恶意或错误的无限递归耗尽宿主内存。
+
+### 执行超时（可选）
+
+fuel 机制保证单回合不超时，但无法限制累计执行时间。宿主应用可配置以下可选限制：
+
+```dart
+class DarticRuntime {
+  int? maxTotalFuel;         // 跨回合累计指令数上限（null = 不限）
+  Duration? executionTimeout; // 执行超时（null = 不限）
+
+  int _totalFuelConsumed = 0;
+  Stopwatch? _executionTimer;
+
+  void _driveInterpreter() {
+    if (executionTimeout != null) {
+      _executionTimer ??= Stopwatch()..start();
+      if (_executionTimer!.elapsed >= executionTimeout!) {
+        _runQueue.clear();
+        throw DarticError('Execution timeout exceeded');
+      }
+    }
+
+    int fuel = _fuelBudget;
+    // ... 正常分发循环 ...
+    _totalFuelConsumed += _fuelBudget - fuel;
+
+    if (maxTotalFuel != null && _totalFuelConsumed >= maxTotalFuel!) {
+      _runQueue.clear();
+      throw DarticError('Total fuel budget exceeded');
+    }
+  }
+}
+```
+
+这些限制是可选的——默认不启用，由宿主应用根据需要配置。
 
 ### 内存保护
 
@@ -348,7 +401,7 @@ class DarticInternalError implements Exception {
 |----------|----------|--------|
 | 内存上限 | 需要多租户资源隔离 | 低：追踪 InterpreterObject 分配计数 |
 | API 白名单 | 需要细粒度权限控制 | 中：在 HostBindings 层添加权限检查 |
-| 执行超时 | 需要硬时间限制 | 低：在 fuel 机制上加时间戳检查 |
+| 执行超时 | 需要硬时间限制 | 低：已设计 `executionTimeout` + `maxTotalFuel`，默认不启用 |
 | 字节码签名 | 需要防篡改 | 低：在文件头添加 HMAC/Ed25519 签名 |
 
 这些扩展都可以在不改变核心架构的前提下增量添加。
