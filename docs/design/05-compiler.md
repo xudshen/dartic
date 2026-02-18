@@ -1,4 +1,4 @@
-# Chapter 4: 编译器
+# Chapter 5: 编译器
 
 ## 模块定位
 
@@ -9,12 +9,13 @@ dartic 编译器是一个**离线 CLI 工具**，运行在开发机或 CI 环境
 | 方向 | 模块 | 接口 |
 |------|------|------|
 | 输入 | CFE（Dart SDK 工具链） | linked-platform `.dill`：所有 `Reference` 已解析，类型信息完整 |
-| 输入 | Ch3 Bridge 预生成库 | Bridge 注册表元数据：已知绑定符号名集合 |
+| 输入 | Ch4 Bridge 预生成库 | Bridge 注册表元数据：已知绑定符号名集合 |
 | 输出目标 | Ch1 ISA | 生成符合 Ch1 编码格式的 `Uint32List` 字节码 |
-| 输出产物 | Ch2 运行时 | `.darticb` 文件，包含字节码、常量池、类表、绑定名称表 |
-| 类型系统 | Ch5 泛型 | 编译器传递 ITA/FTA 描述符，运行时按需实化 |
-| 异步编译 | Ch6 异步 | 编译器标记 async 函数，生成帧快照所需的寄存器元数据 |
-| 安全验证 | Ch7 沙箱 | `.darticb` 结构需通过加载时验证（操作码合法性、操作数范围） |
+| 输出产物 | Ch2 对象模型 | `.darticb` 中的类表和栈帧布局信息以 Ch2 数据结构为目标 |
+| 输出产物 | Ch3 执行引擎 | `.darticb` 文件由执行引擎加载，包含字节码、常量池、绑定名称表 |
+| 类型系统 | Ch6 泛型 | 编译器传递 ITA/FTA 描述符，运行时按需实化 |
+| 异步编译 | Ch7 异步 | 编译器标记 async 函数，生成帧快照所需的寄存器元数据 |
+| 安全验证 | Ch8 沙箱 | `.darticb` 结构需通过加载时验证（操作码合法性、操作数范围） |
 
 ## 设计决策
 
@@ -120,7 +121,7 @@ CFE 已在 Kernel AST 中填入完整类型信息。编译器根据变量的静�
 | `TypeParameterType` | ref（无法静态确定） | TypeTemplate(TYPE_PARAM, paramIndex)，运行时从 ITA/FTA 解析 |
 | `StructuralParameterType` | ref | 同 TypeParameterType，用于 `FunctionType` 内部的类型参数 |
 | `RecordType` | ref | TypeTemplate(RECORD, [fieldTypes..., fieldNames...]) |
-| `FutureOrType` | ref | TypeTemplate(FUTURE_OR, [typeArg])，运行时特殊处理 `is`/`as`（详见 Ch5） |
+| `FutureOrType` | ref | TypeTemplate(FUTURE_OR, [typeArg])，运行时特殊处理 `is`/`as`（详见 Ch6） |
 | `IntersectionType` | ref | 使用 promoted type（`right`）生成 TypeTemplate——IntersectionType 是 CFE 类型提升产物 |
 | `DynamicType` | ref | TypeTemplate(DYNAMIC)。`is` 检查始终为 true，`as` 无操作 |
 | `VoidType` | ref | TypeTemplate(VOID)。语义与 dynamic 类似，仅在静态分析中区分 |
@@ -134,7 +135,7 @@ CFE 已在 Kernel AST 中填入完整类型信息。编译器根据变量的静�
 
 编译器遍历 Kernel AST 中所有对宿主类型的引用，通过 `interfaceTarget.enclosingClass` 识别宿主类，查找 Bridge 注册表确认绑定存在。对每个引用分配**本地绑定索引**（包含符号名和参数数量），最终输出绑定名称表写入 `.darticb`。如果引用的类未在 Bridge 注册表中，编译器报错。
 
-**Bridge 注册表**从预生成库元数据加载已知绑定符号名集合。编译器遇到对 `dart:core::List.add` 等的引用时，以 `"库URI::类名::方法名#参数数量"` 为键分配本地索引。同一方法不同参数数量生成不同条目。编译器生成 `CALL_HOST A, Bx`（A=baseReg, Bx=本地绑定索引）。详见 Ch3 宿主函数注册表。
+**Bridge 注册表**从预生成库元数据加载已知绑定符号名集合。编译器遇到对 `dart:core::List.add` 等的引用时，以 `"库URI::类名::方法名#参数数量"` 为键分配本地索引。同一方法不同参数数量生成不同条目。编译器生成 `CALL_HOST A, Bx`（A=baseReg, Bx=本地绑定索引）。详见 Ch4 宿主函数注册表。
 
 ### 寄存器分配
 
@@ -185,9 +186,9 @@ Kernel 的 `Constant` 子类映射到常量池四分区（refs/ints/doubles/name
 | `for` | 向后跳转 | 进入作用域 → 编译初始化 → 记录循环起点 → 编译条件 → `JUMP_IF_FALSE` 出循环 → 编译循环体 → 编译更新 → `JUMP` 回起点 → 回填出口 |
 | `while` | 向后跳转 | 与 `for` 类似，无初始化和更新步骤 |
 | `do-while` | 先执行后判断 | 记录循环起点 → 编译循环体 → 编译条件 → `JUMP_IF_TRUE` 回起点 |
-| `for-in` | 迭代器协议 | 同步（`ForInStatement.isAsync == false`）：编译 `iterable.iterator` → 循环调用 `moveNext()` + `current` getter → 绑定循环变量。异步（`isAsync == true`，即 `await for`）：编译为 `stream.listen` + `AWAIT_STREAM_NEXT` 序列（详见 Ch6 async\* 生成器） |
+| `for-in` | 迭代器协议 | 同步（`ForInStatement.isAsync == false`）：编译 `iterable.iterator` → 循环调用 `moveNext()` + `current` getter → 绑定循环变量。异步（`isAsync == true`，即 `await for`）：编译为 `stream.listen` + `AWAIT_STREAM_NEXT` 序列（详见 Ch7 async\* 生成器） |
 | `switch` | 跳转表 / 二分查找 | 密集整数 case → 跳转表指令；稀疏 case → 二分查找跳转链。Pattern matching 在 Kernel 中已由 CFE 脱糖为 if-else 链 |
-| `try`/`catch` | 异常处理器表 | 不使用内联跳转。生成 `(startPC, endPC, handlerPC, catchType, valueStackDepth, refStackDepth)` 元组。嵌套 try 按范围从小到大排序，运行时顺序扫描首个匹配。详见 Ch2 异常分发 |
+| `try`/`catch` | 异常处理器表 | 不使用内联跳转。生成 `(startPC, endPC, handlerPC, catchType, valueStackDepth, refStackDepth)` 元组。嵌套 try 按范围从小到大排序，运行时顺序扫描首个匹配。详见 Ch3 异常分发 |
 | `try`/`finally` | 处理器表 + finally 块 | finally 块在正常路径和异常路径各编译一份 |
 | `labeled break`/`continue` | 标签→跳转目标映射 | 编译器维护标签映射表，`BreakStatement` 发射 `JUMP` 并记录待回填，标签语句结束时批量回填所有 break 跳转 |
 | `assert` | 条件省略 | `--no-enable-asserts` 时完全不生成代码。否则：编译条件 → `JUMP_IF_TRUE` 跳过 → `ASSERT` 指令（携带消息常量池索引） |
@@ -202,7 +203,7 @@ Kernel 的 `Constant` 子类映射到常量池四分区（refs/ints/doubles/name
 | `Block` | 进入新作用域 → 逐条编译子 Statement → 退出作用域（批量释放寄存器） |
 | `ExpressionStatement` | 编译 expression → 若结果占用临时寄存器则释放（不保留结果值） |
 | `EmptyStatement` | 不生成任何指令 |
-| `ReturnStatement` | 同步函数：编译 expression → 根据返回类型 `RETURN_REF` / `RETURN_VAL` / `RETURN_NULL`。async 函数：`ASYNC_RETURN`（详见 Ch6）。async\* 函数：`controller.close()` + 帧结束（详见 Ch6）。sync\* 函数：标记 iterator done + 帧结束（详见 Ch6） |
+| `ReturnStatement` | 同步函数：编译 expression → 根据返回类型 `RETURN_REF` / `RETURN_VAL` / `RETURN_NULL`。async 函数：`ASYNC_RETURN`（详见 Ch7）。async\* 函数：`controller.close()` + 帧结束（详见 Ch7）。sync\* 函数：标记 iterator done + 帧结束（详见 Ch7） |
 | `YieldStatement` | 编译 expression → `YIELD A, Bx`（`isYieldStar` 时用 `YIELD_STAR`）。Bx 编码恢复点 IP（详见 Generator 编译） |
 | `AssertBlock` | 与 `AssertStatement` 相同处理，`--no-enable-asserts` 时完全不生成代码 |
 | `FunctionDeclaration` | 详见闭包编译 |
@@ -220,7 +221,7 @@ Kernel 中属性访问统一为 `InstanceGet` / `InstanceSet` 节点。编译器
 |----------|----------|------|
 | 解释器类的真实字段 | `GET_FIELD_REF` / `GET_FIELD_VAL` / `SET_FIELD_REF` / `SET_FIELD_VAL` | 直接字段访问 |
 | getter/setter `Procedure` | `CALL_VIRTUAL` | 调用 getter/setter 方法 |
-| 宿主类属性 | `GET_FIELD_DYN` / `SET_FIELD_DYN` | 走 HostClassWrapper 路由（详见 Ch3） |
+| 宿主类属性 | `GET_FIELD_DYN` / `SET_FIELD_DYN` | 走 HostClassWrapper 路由（详见 Ch4） |
 
 ### 表达式编译
 
@@ -255,7 +256,7 @@ Kernel 中属性访问统一为 `InstanceGet` / `InstanceSet` 节点。编译器
 | `IsExpression` | 编译操作数 → 将 `type` 编译为 TypeTemplate 写入常量池 → `INSTANCEOF A, B, Cx` |
 | `AsExpression` | 编译操作数 → 将 `type` 编译为 TypeTemplate 写入常量池 → `CAST A, B, Cx`（失败抛 `TypeError`） |
 
-TypeTemplate 生成：编译器将 Kernel `DartType` 递归转换为 Ch5 定义的 TypeTemplate 描述符。对于参数化类型（如 `List<int>`），TypeTemplate 包含 classId + typeArgs 引用。运行时 `INSTANCEOF`/`CAST` 通过 `resolveType()` 实化 TypeTemplate 后调用 `isSubtypeOf()` 判定（详见 Ch5 泛型数据流）。
+TypeTemplate 生成：编译器将 Kernel `DartType` 递归转换为 Ch6 定义的 TypeTemplate 描述符。对于参数化类型（如 `List<int>`），TypeTemplate 包含 classId + typeArgs 引用。运行时 `INSTANCEOF`/`CAST` 通过 `resolveType()` 实化 TypeTemplate 后调用 `isSubtypeOf()` 判定（详见 Ch6 泛型数据流）。
 
 #### Dynamic 调度
 
@@ -326,10 +327,10 @@ Super 分发通过 `interfaceTarget` 确定目标方法在父类方法表中的�
 |------------|----------|
 | `FunctionExpression` | 与闭包编译策略相同 → `CLOSURE A, Bx` |
 | `BlockExpression` | 编译 body（Statement 列表）→ 编译 value（Expression），结果为 value 的值 |
-| `Instantiation` | 编译函数操作数 → 将类型参数编译为 TypeTemplate → 生成实例化包装闭包（详见 Ch5） |
+| `Instantiation` | 编译函数操作数 → 将类型参数编译为 TypeTemplate → 生成实例化包装闭包（详见 Ch6） |
 | `InstanceCreation` | const 上下文对象创建 → `LOAD_CONST_REF`（常量池中的 InstanceConstant） |
 | `Let` | 编译 variable 赋值 → 编译 body 表达式，结果为 body 的值 |
-| `AwaitExpression` | 详见 Ch6 异步 |
+| `AwaitExpression` | 详见 Ch7 异步 |
 | `InvalidExpression` | 编译为 `THROW`（CFE 编译错误占位，正常代码中不应出现） |
 | `FileUriExpression` | 透传包装器，编译内部 expression |
 | `SwitchExpression` | CFE 应已脱糖（待验证，同 Pattern 脱糖验证） |
@@ -385,7 +386,7 @@ Kernel 的 `VariableDeclaration` 携带 `isLate` 标志。编译策略：
 
 ### 静态字段与顶层变量
 
-编译器为每个静态字段和顶层变量分配全局索引，生成 `LOAD_GLOBAL` / `STORE_GLOBAL`。初始化器编译为独立的 `DarticFuncProto`，在 `LOAD_GLOBAL` 首次访问时由运行时惰性调用（详见 Ch2 惰性初始化流程）。
+编译器为每个静态字段和顶层变量分配全局索引，生成 `LOAD_GLOBAL` / `STORE_GLOBAL`。初始化器编译为独立的 `DarticFuncProto`，在 `LOAD_GLOBAL` 首次访问时由运行时惰性调用（详见 Ch3 惰性初始化流程）。
 
 ### Const 对象规范化
 
@@ -393,15 +394,15 @@ Kernel 的 `ConstantExpression` 引用 `Constant` 节点（`InstanceConstant`、
 
 ### Generator 编译
 
-编译器通过 `FunctionNode.dartAsyncMarker` 识别 async/generator 函数（详见 Ch6 asyncMarker 字段决策）。Kernel 的 `FunctionNode` 有两个异步标记字段：`asyncMarker`（运行时标记，可能被 Kernel 脱糖变换修改为 Sync）和 `dartAsyncMarker`（源码标记，始终不变）。dartic 不做 Kernel 层脱糖，两字段实际相同，但编译器统一读取 `dartAsyncMarker`。
+编译器通过 `FunctionNode.dartAsyncMarker` 识别 async/generator 函数（详见 Ch7 asyncMarker 字段决策）。Kernel 的 `FunctionNode` 有两个异步标记字段：`asyncMarker`（运行时标记，可能被 Kernel 脱糖变换修改为 Sync）和 `dartAsyncMarker`（源码标记，始终不变）。dartic 不做 Kernel 层脱糖，两字段实际相同，但编译器统一读取 `dartAsyncMarker`。
 
-编译器同时从 `FunctionNode.emittedValueType` 获取产出值类型（如 async 函数返回 `Future<int>` 时 `emittedValueType = int`），编译为 TypeTemplate 写入常量池，作为 INIT_ASYNC / INIT_ASYNC_STAR / INIT_SYNC_STAR 指令的 Bx 操作数（详见 Ch6 emittedValueType 与类型参数）。
+编译器同时从 `FunctionNode.emittedValueType` 获取产出值类型（如 async 函数返回 `Future<int>` 时 `emittedValueType = int`），编译为 TypeTemplate 写入常量池，作为 INIT_ASYNC / INIT_ASYNC_STAR / INIT_SYNC_STAR 指令的 Bx 操作数（详见 Ch7 emittedValueType 与类型参数）。
 
 | 函数类型 | dartAsyncMarker | 编译策略 |
 |----------|-----------------|----------|
-| async | `Async` | 函数入口发射 `INIT_ASYNC A, Bx`。`ReturnStatement` 编译为 `ASYNC_RETURN`。`AwaitExpression` 编译为 `AWAIT`（详见 Ch6） |
+| async | `Async` | 函数入口发射 `INIT_ASYNC A, Bx`。`ReturnStatement` 编译为 `ASYNC_RETURN`。`AwaitExpression` 编译为 `AWAIT`（详见 Ch7） |
 | sync\* | `SyncStar` | 函数入口发射 `INIT_SYNC_STAR A, Bx`。`YIELD A, Bx` 暂停执行并产出值，`moveNext()` 从 Bx 恢复。函数正常返回时迭代器标记 done |
-| async\* | `AsyncStar` | 函数入口发射 `INIT_ASYNC_STAR A, Bx`。`YIELD A, Bx` 通过 StreamController 产出值。`yield*` 委托子流（详见 Ch6） |
+| async\* | `AsyncStar` | 函数入口发射 `INIT_ASYNC_STAR A, Bx`。`YIELD A, Bx` 通过 StreamController 产出值。`yield*` 委托子流（详见 Ch7） |
 
 `YieldStatement` 编译流程：
 
@@ -409,7 +410,7 @@ Kernel 的 `ConstantExpression` 引用 `Constant` 节点（`InstanceConstant`、
 2. 发射 `YIELD A, Bx`（Bx = 当前 PC+1，即恢复点）。`isYieldStar` 时发射 `YIELD_STAR A, Bx`
 3. 编译器记录恢复点处的寄存器活跃状态，供运行时帧快照使用
 
-Generator 函数的帧管理与 async 函数共享相同的帧快照/恢复机制（详见 Ch6）。
+Generator 函数的帧管理与 async 函数共享相同的帧快照/恢复机制（详见 Ch7）。
 
 ## CFE 脱糖与语言特性处理
 
@@ -491,9 +492,9 @@ DarticB 文件格式
 └─────────────────────────────────┘
 ```
 
-**序列化与运行时命名映射**：`.darticb` 的序列化字段名与 Ch2 运行时类的字段名存在对应关系：`methodTable` → `DarticClassInfo.methods`，`refFieldCount`/`valueFieldCount` → `DarticClassInfo.refFieldCount`/`DarticClassInfo.valueFieldCount`，`typeParamCount` → `DarticClassInfo.typeParamCount`。序列化存储紧凑形式（计数值、偏移量），运行时反序列化为结构化对象。
+**序列化与运行时命名映射**：`.darticb` 的序列化字段名与 Ch2 对象模型类的字段名存在对应关系：`methodTable` → `DarticClassInfo.methods`，`refFieldCount`/`valueFieldCount` → `DarticClassInfo.refFieldCount`/`DarticClassInfo.valueFieldCount`，`typeParamCount` → `DarticClassInfo.typeParamCount`。序列化存储紧凑形式（计数值、偏移量），运行时反序列化为结构化对象。
 
-**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.darticb` 存储完整的绑定名称表，运行时按名称解析。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。加载时符号解析流程（校验 → 绑定名称解析 → 数据加载）和 `CALL_HOST` 运行时分发详见 Ch2 运行时加载、Ch3 宿主函数注册表。
+**编译期与运行时的解耦**：编译器不需要知道运行时 `HostBindings` 的注册顺序。`.darticb` 存储完整的绑定名称表，运行时按名称解析。这使得编译产物与 Bridge 库版本解耦——只要符号名存在，ID 如何分配无关紧要。加载时符号解析流程（校验 → 绑定名称解析 → 数据加载）和 `CALL_HOST` 运行时分发详见 Ch3 运行时加载、Ch4 宿主函数注册表。
 
 ## 关键约束与边界条件
 

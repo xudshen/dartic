@@ -8,11 +8,12 @@
 
 | 方向 | 模块 | 接口 |
 |------|------|------|
-| 依赖 | Ch2 运行时 | 使用全局 ValueStack/RefStack 和分发循环；挂起/恢复修改栈指针 |
+| 依赖 | Ch2 对象模型 | 使用全局 ValueStack/RefStack；挂起/恢复修改栈指针 |
+| 依赖 | Ch3 执行引擎 | 复用分发循环的帧管理机制 |
 | 依赖 | Ch1 ISA | 消费 AWAIT、YIELD 等异步指令的编码和操作数 |
-| 依赖 | Ch4 编译器 | 编译器为每个 async/generator 函数输出寄存器数量，决定快照大小 |
-| 被依赖 | Ch3 互调 | 跨边界异步互调通过本章的 Completer/StreamController 桥接 |
-| 契约 | Ch7 沙箱 | 沙箱验证器检查异步指令的合法性（如 AWAIT 仅出现在 async 函数内） |
+| 依赖 | Ch5 编译器 | 编译器为每个 async/generator 函数输出寄存器数量，决定快照大小 |
+| 被依赖 | Ch4 互调 | 跨边界异步互调通过本章的 Completer/StreamController 桥接 |
+| 契约 | Ch8 沙箱 | 沙箱验证器检查异步指令的合法性（如 AWAIT 仅出现在 async 函数内） |
 
 ## 设计决策
 
@@ -66,7 +67,7 @@ Kernel 的 `FunctionNode` 携带 `emittedValueType` 字段（`DartType?`），�
 | async* | `Stream<String>` | `String` | StreamController\<T\> 的 T |
 | sync* | `Iterable<int>` | `int` | SyncStarIterable\<T\> 的 T |
 
-编译器将 `emittedValueType` 编译为 TypeTemplate 写入常量池 refs 分区（详见 Ch5），其索引即为 INIT_ASYNC / INIT_ASYNC_STAR / INIT_SYNC_STAR 指令的 Bx 操作数。运行时从 `constPool.refs[Bx]` 取出 TypeTemplate，实化后传递给 Completer / StreamController / SyncStarIterable 的类型参数，保证返回的 Future\<T\> / Stream\<T\> / Iterable\<T\> 类型正确。
+编译器将 `emittedValueType` 编译为 TypeTemplate 写入常量池 refs 分区（详见 Ch6），其索引即为 INIT_ASYNC / INIT_ASYNC_STAR / INIT_SYNC_STAR 指令的 Bx 操作数。运行时从 `constPool.refs[Bx]` 取出 TypeTemplate，实化后传递给 Completer / StreamController / SyncStarIterable 的类型参数，保证返回的 Future\<T\> / Stream\<T\> / Iterable\<T\> 类型正确。
 
 ### 异步帧状态机
 
@@ -133,7 +134,7 @@ VM Future 异常 → errorCallback 触发
 
 ### 分发循环集成
 
-分发循环主路径不因 async 支持变慢（详见 Ch2）：
+分发循环主路径不因 async 支持变慢（详见 Ch3）：
 
 ```
 case OpCode.AWAIT:

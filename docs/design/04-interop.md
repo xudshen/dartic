@@ -1,19 +1,20 @@
-# Chapter 3: 跨边界互调
+# Chapter 4: 跨边界互调
 
 ## 模块定位
 
-跨边界互调层管理 dartic 解释器与宿主 Dart VM 之间的双向调用。它解决三个核心问题：类型映射（解释器类型与 VM 类型的对应）、身份一致性（同一对象跨边界传递多次必须保持 `identical` 关系）、双向调用管理（解释器调用 VM API 和 VM 回调解释器函数）。在架构分层中，本层位于运行时（Ch2）之上，为编译器（Ch4）的符号解析和泛型系统（Ch5）的跨边界类型检查提供基础设施。
+跨边界互调层管理 dartic 解释器与宿主 Dart VM 之间的双向调用。它解决三个核心问题：类型映射（解释器类型与 VM 类型的对应）、身份一致性（同一对象跨边界传递多次必须保持 `identical` 关系）、双向调用管理（解释器调用 VM API 和 VM 回调解释器函数）。在架构分层中，本层位于执行引擎（Ch3）之上，为编译器（Ch5）的符号解析和泛型系统（Ch6）的跨边界类型检查提供基础设施。
 
 ## 与其他模块的关系
 
 | 方向 | 模块 | 接口 |
 |------|------|------|
-| 依赖 | Ch2 运行时 | 使用 DarticObject、引用栈、分发循环的 `CALL_HOST` / `GET_FIELD_DYN` 指令 |
+| 依赖 | Ch2 对象模型 | 使用 DarticObject、引用栈等核心数据结构 |
+| 依赖 | Ch3 执行引擎 | 使用分发循环的 `CALL_HOST` / `GET_FIELD_DYN` 指令和运行时 API |
 | 依赖 | Ch1 字节码 ISA | `CALL_HOST`、`GET_FIELD_DYN`、`SET_FIELD_DYN`、`NEW_INSTANCE` 指令编码 |
-| 被依赖 | Ch4 编译器 | 编译器生成 .darticb 绑定名称表，运行时加载时通过 HostBindings 做符号解析 |
-| 被依赖 | Ch5 泛型 | 跨边界泛型类型检查依赖 Bridge 的类型信息（详见 Ch5） |
-| 被依赖 | Ch6 异步 | async 帧的 `Completer` 桥接依赖异常传播契约（详见 Ch6） |
-| 契约 | Ch7 沙箱 | `CALL_HOST` 调用计入沙箱的调用深度限制 |
+| 被依赖 | Ch5 编译器 | 编译器生成 .darticb 绑定名称表，运行时加载时通过 HostBindings 做符号解析 |
+| 被依赖 | Ch6 泛型 | 跨边界泛型类型检查依赖 Bridge 的类型信息（详见 Ch6） |
+| 被依赖 | Ch7 异步 | async 帧的 `Completer` 桥接依赖异常传播契约（详见 Ch7） |
+| 契约 | Ch8 沙箱 | `CALL_HOST` 调用计入沙箱的调用深度限制 |
 
 ## 设计决策
 
@@ -60,7 +61,7 @@
 
 ### HostBindings（宿主函数注册表）
 
-HostBindings 将宿主 VM 的函数和方法映射为符号名到整数 ID 的注册表。Bridge 预生成库在初始化时批量注册绑定，运行时通过整数 ID 进行 O(1) 调用分发。编译器将宿主方法调用编译为 `CALL_HOST A, Bx`，其中 Bx 指向 .darticb 绑定名称表条目（含符号名和 argCount），加载时通过符号解析映射为运行时 ID（详见 Ch4）。
+HostBindings 将宿主 VM 的函数和方法映射为符号名到整数 ID 的注册表。Bridge 预生成库在初始化时批量注册绑定，运行时通过整数 ID 进行 O(1) 调用分发。编译器将宿主方法调用编译为 `CALL_HOST A, Bx`，其中 Bx 指向 .darticb 绑定名称表条目（含符号名和 argCount），加载时通过符号解析映射为运行时 ID（详见 Ch5）。
 
 | 属性 | 类型 | 说明 |
 |------|------|------|
@@ -214,7 +215,7 @@ package:dartic_bridges_flutter/
 ### 解释器 -> VM 调用流程（外调）
 
 1. 编译器将宿主方法调用编译为 `CALL_HOST A, Bx` 指令，Bx 为 .darticb 绑定名称表中的本地索引
-2. 运行时加载 .darticb 时，通过 `HostBindings.lookupByName` 将符号名解析为运行时 ID（详见 Ch4）
+2. 运行时加载 .darticb 时，通过 `HostBindings.lookupByName` 将符号名解析为运行时 ID（详见 Ch5）
 3. 分发循环执行 `CALL_HOST` 时，从引用栈取参数，调用 `HostBindings.invoke(runtimeId, args)`
 4. 返回值（VM 原生对象）直接存入引用栈，后续通过 HostClassWrapper 路由访问
 
@@ -227,7 +228,7 @@ package:dartic_bridges_flutter/
    a. 在 CallStack 上压入 HOST_BOUNDARY 哨兵帧（详见 Ch2）
    b. 在值栈/引用栈栈顶为回调分配新帧空间
    c. 将参数写入新帧的寄存器
-   d. 调用 `drive()` 执行回调（嵌套 drive，共享 fuel 预算，详见 Ch7）
+   d. 调用 `drive()` 执行回调（嵌套 drive，共享 fuel 预算，详见 Ch3）
    e. 回调的 RETURN 遇到 HOST_BOUNDARY → 退出 `drive()`，控制权交还 VM
    f. 从值栈/引用栈读取返回值，恢复栈指针到回调入口前的状态
 
@@ -271,7 +272,7 @@ Bridge 的创建需要与 VM 超类构造函数协调——Dart 要求 `super()`
 | 场景 | 解释器侧行为 |
 |------|-------------|
 | `CALL_HOST` 执行中 VM 抛异常 | 分发循环捕获异常，查找当前帧的异常处理器表 |
-| `await` 的 VM Future 带异常完成 | `errorCallback` 将异常存入 `frame.resumeException`，帧恢复后查处理器（详见 Ch6） |
+| `await` 的 VM Future 带异常完成 | `errorCallback` 将异常存入 `frame.resumeException`，帧恢复后查处理器（详见 Ch7） |
 
 **异常类型保留**：VM 异常直接存入引用栈，解释器的 `catch (e)` 可正常捕获。`on FormatException catch (e)` 通过 `INSTANCEOF` 检查 VM 对象类型，**可以正常匹配**（VM 对象支持 `is` 检查）。
 
@@ -296,7 +297,7 @@ Bridge 的创建需要与 VM 超类构造函数协调——Dart 要求 `super()`
 | null | 直接传值 | Dart 语言保证 `identical(null, null)` |
 | VM 原生集合（List/Map/Set） | 直接存引用栈，不包装 | `CREATE_LIST` 等指令创建的是 VM 原生对象（详见 Ch2） |
 | Record | 直接传值（VM 原生对象） | `CREATE_RECORD` 创建 VM 原生 Record（详见 Ch1） |
-| 常量（Constant 物化后） | 直接传值（VM 原生对象） | 常量池物化为 VM 对象后直接引用（详见 Ch2 常量池物化策略） |
+| 常量（Constant 物化后） | 直接传值（VM 原生对象） | 常量池物化为 VM 对象后直接引用（详见 Ch3 常量池物化策略） |
 | VM 原生对象（其他） | 直接存引用栈，不包装 | 对象本身即 VM 实例 |
 
 Expando 内部使用 ephemeron 语义——键不可达时值也被 GC，不会内存泄漏。

@@ -1,17 +1,18 @@
-# Chapter 5: 泛型系统
+# Chapter 6: 泛型系统
 
 ## 模块定位
 
-泛型系统负责在运行时表示、传递和检查参数化类型。它将 Kernel AST 中的类型信息编译为紧凑的 TypeTemplate，在运行时按需实例化为驻留的 DarticType，并提供 `is`/`as` 所需的子类型判定。泛型系统位于运行时（Ch2）之上、编译器（Ch4）之下，为 Bridge 层（Ch3）的跨边界类型保真提供基础。
+泛型系统负责在运行时表示、传递和检查参数化类型。它将 Kernel AST 中的类型信息编译为紧凑的 TypeTemplate，在运行时按需实例化为驻留的 DarticType，并提供 `is`/`as` 所需的子类型判定。泛型系统位于对象模型（Ch2）之上、编译器（Ch5）之下，为 Bridge 层（Ch4）的跨边界类型保真提供基础。
 
 ## 与其他模块的关系
 
 | 方向 | 模块 | 接口 |
 |------|------|------|
-| 输入 | Ch4 编译器 | 编译器从 Kernel 提取类型信息，生成 TypeTemplate 和 SuperTypeMap，写入 .darticb 常量池 |
-| 输入 | Ch2 运行时 | 栈帧提供 ITA/FTA 槽位；分发循环执行 INSTANCEOF/CAST 等指令 |
-| 输出 | Ch2 运行时 | isSubtypeOf 结果驱动 INSTANCEOF/CAST 指令的分支 |
-| 输出 | Ch3 Bridge | 跨边界对象的类型提取和泛型类型保真 |
+| 输入 | Ch5 编译器 | 编译器从 Kernel 提取类型信息，生成 TypeTemplate 和 SuperTypeMap，写入 .darticb 常量池 |
+| 输入 | Ch2 对象模型 | 栈帧提供 ITA/FTA 槽位；DarticObject.runtimeType 存储类型信息 |
+| 输入 | Ch3 执行引擎 | 分发循环执行 INSTANCEOF/CAST 等指令 |
+| 输出 | Ch3 执行引擎 | isSubtypeOf 结果驱动 INSTANCEOF/CAST 指令的分支 |
+| 输出 | Ch4 Bridge | 跨边界对象的类型提取和泛型类型保真 |
 | 契约 | Ch1 ISA | 泛型相关指令语义（PUSH_ITA, INSTANTIATE_TYPE, LOAD_TYPE_ARG 等，详见 Ch1） |
 
 ## 泛型数据流
@@ -57,7 +58,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 | `InterfaceType` | 携带 `classReference` + `typeArguments`，是 `List<int>` 的表示 |
 | `FunctionType` | 携带 `typeParameters`（`StructuralParameter` 列表）、`positionalParameters`、`namedParameters`（含 `isRequired` 标志）、`requiredParameterCount` 和 `returnType` |
 | `TypeParameterType` | 引用类/方法级 `TypeParameter`，使用 de Bruijn 风格索引，运行时从 ITA/FTA 查找 |
-| `StructuralParameterType` | 引用 `FunctionType` 内部的 `StructuralParameter`，索引方式同 `TypeParameterType`（详见 Ch4 DartType 分类表） |
+| `StructuralParameterType` | 引用 `FunctionType` 内部的 `StructuralParameter`，索引方式同 `TypeParameterType`（详见 Ch5 DartType 分类表） |
 | `FutureOrType` | `FutureOr<T>` 特殊处理（驻留时规范化，子类型判定特殊规则） |
 | `RecordType` | Dart 3 记录类型（positional + named 字段），Phase 2 支持 |
 | `DynamicType` | 编译为 `TypeTemplate(DYNAMIC)`，isSubtypeOf 顶类型规则处理 |
@@ -71,7 +72,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 |-------------|---------|
 | `ExtensionType` | CFE 已擦除为底层表示类型（`InterfaceType`） |
 | `TypedefType` | CFE 已展开为底层类型引用 |
-| `IntersectionType` | CFE 类型提升产物，编译器取 promoted type（`right`）生成 TypeTemplate（详见 Ch4） |
+| `IntersectionType` | CFE 类型提升产物，编译器取 promoted type（`right`）生成 TypeTemplate（详见 Ch5） |
 | `InvalidType` | 编译错误标记，不应进入代码生成阶段；若出现则编译器报错 |
 
 方法调用中推断的类型参数已填入 `Arguments.types`。编译器只需读取并传播。
@@ -187,7 +188,7 @@ resolveType 处理 FunctionTypeTemplate 时，递归解析所有内嵌 TypeTempl
 
 ### 泛型函数实例化（Instantiation）
 
-Kernel 的 `Instantiation` 节点表示泛型函数的类型实例化（如 `identity<int>`），产生一个绑定了类型参数的新函数值。Ch4 将其编译为"实例化包装闭包"，运行时语义如下：
+Kernel 的 `Instantiation` 节点表示泛型函数的类型实例化（如 `identity<int>`），产生一个绑定了类型参数的新函数值。Ch5 将其编译为"实例化包装闭包"，运行时语义如下：
 
 1. 编译器为 `Instantiation` 生成包装闭包的 `DarticFuncProto`，其参数签名与原函数一致（去掉类型参数部分）
 2. 将实例化的类型参数编译为 TypeTemplate 列表，存入常量池
@@ -299,7 +300,7 @@ VM 对象进入解释器时，通过类型提取器（extractType）获取 Darti
 3. **Bridge 对象**：对象本身是 Bridge 类实例 → 直接从 Bridge 关联的 DarticObject 获取已有的 DarticType
 4. **未知类型**：以上均不匹配 → 退化为 `dynamic`
 
-**设计约束**：Dart 的 `Type` 对象不提供结构化访问 API（无法编程提取类型参数），因此步骤 2 依赖泛型辅助函数——利用 Dart reified generics 在泛型函数签名中捕获类型参数。详见 Ch3 Bridge 层的类型映射设计。
+**设计约束**：Dart 的 `Type` 对象不提供结构化访问 API（无法编程提取类型参数），因此步骤 2 依赖泛型辅助函数——利用 Dart reified generics 在泛型函数签名中捕获类型参数。详见 Ch4 Bridge 层的类型映射设计。
 
 ### 协变检查
 
@@ -315,7 +316,7 @@ CFE 生成的 forwarding stub（`AsExpression`）在字节码中表现为 `CHECK
 | SuperTypeMap 查找 | O(1) 两级 Map 查找 | 编译器预计算 |
 | isSubtypeOf 最坏复杂度 | O(depth * args)，depth 为继承深度，args 为类型参数数量 | 递归检查 + SuperTypeMap 查找 |
 | FutureOr 规范化 | 驻留时一次性执行，后续查找 O(1) | TypeRegistry.intern 内部处理 |
-| 类型参数最大嵌套深度 | 无硬限制，受栈深度约束（详见 Ch7） | 递归 resolveType 深度 |
+| 类型参数最大嵌套深度 | 无硬限制，受栈深度约束（详见 Ch8） | 递归 resolveType 深度 |
 
 ## 已知局限与演进路径
 

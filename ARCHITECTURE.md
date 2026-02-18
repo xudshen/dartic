@@ -36,17 +36,19 @@ Dart 源码 ──CFE──► .dill (Kernel AST) ──dartic 编译器──�
 ┌─────────────────────────────────────────────────┐
 │  宿主 Dart VM                                    │
 ├─────────────────────────────────────────────────┤
-│  安全沙箱层       字节码验证 · 指令计数 · 调用深度  │  Ch7
+│  安全沙箱层       字节码验证 · 指令计数 · 调用深度  │  Ch8
 ├─────────────────────────────────────────────────┤
-│  异步子系统       帧快照续体 · Completer 桥接      │  Ch6
+│  异步子系统       帧快照续体 · Completer 桥接      │  Ch7
 ├─────────────────────────────────────────────────┤
-│  泛型系统         延迟按需实化 · DarticType 驻留   │  Ch5
+│  泛型系统         延迟按需实化 · DarticType 驻留   │  Ch6
 ├─────────────────────────────────────────────────┤
-│  编译器（离线）    Kernel 加载 · 寄存器分配 · 优化遍  │  Ch4
+│  编译器（离线）    Kernel 加载 · 寄存器分配 · 优化遍  │  Ch5
 ├─────────────────────────────────────────────────┤
-│  Bridge / 互调    Bridge 类 · 代理缓存 · 回调代理   │  Ch3
+│  Bridge / 互调    Bridge 类 · 代理缓存 · 回调代理   │  Ch4
 ├─────────────────────────────────────────────────┤
-│  运行时           双视图栈 · 分发循环 · IC · GC     │  Ch2
+│  执行引擎         分发循环 · IC · GC · 模块加载     │  Ch3
+├─────────────────────────────────────────────────┤
+│  内存模型与对象    双视图栈 · DarticObject · 栈帧    │  Ch2
 ├─────────────────────────────────────────────────┤
 │  字节码 ISA       32 位定宽指令 · 类型特化操作码     │  Ch1
 └─────────────────────────────────────────────────┘
@@ -58,12 +60,13 @@ Dart 源码 ──CFE──► .dill (Kernel AST) ──dartic 编译器──�
 |---------|------|------|------|------|
 | Ch0 | `docs/design/00-overview.md` | 架构总览、目标场景、跨章依赖 | — | 全局约束、设计不变式 |
 | Ch1 | `docs/design/01-bytecode-isa.md` | 32 位定宽指令集、操作码、常量池 | — | 指令编码规范 |
-| Ch2 | `docs/design/02-runtime.md` | 双视图值栈、分发循环、IC、对象模型 | Ch1 指令集 | 运行时 API |
-| Ch3 | `docs/design/03-interop.md` | Bridge、代理缓存、回调代理、跨边界泛型 | Ch2 运行时 API | 宿主互调能力 |
-| Ch4 | `docs/design/04-compiler.md` | Kernel 遍历、寄存器分配、闭包编译、.darticb 格式 | .dill, Ch1 ISA | .darticb 字节码 |
-| Ch5 | `docs/design/05-generics.md` | DarticType 驻留、ITA/FTA、子类型检查 | Ch2 栈帧, Ch4 类型传递 | 类型检查能力 |
-| Ch6 | `docs/design/06-async.md` | async/await 帧快照、生成器、协作调度 | Ch2 分发循环 | 异步执行能力 |
-| Ch7 | `docs/design/07-sandbox.md` | 字节码验证、fuel 计数、调用深度限制 | Ch2 fuel 机制 | 安全保障 |
+| Ch2 | `docs/design/02-object-model.md` | 三栈模型、DarticObject、DarticFrame、栈帧布局 | Ch1 指令集 | 内存模型与对象表示 |
+| Ch3 | `docs/design/03-execution-engine.md` | 分发循环、IC、模块加载、异常分发、GC | Ch2 数据结构 | 运行时 API |
+| Ch4 | `docs/design/04-interop.md` | Bridge、代理缓存、回调代理、跨边界泛型 | Ch3 运行时 API | 宿主互调能力 |
+| Ch5 | `docs/design/05-compiler.md` | Kernel 遍历、寄存器分配、闭包编译、.darticb 格式 | .dill, Ch1 ISA | .darticb 字节码 |
+| Ch6 | `docs/design/06-generics.md` | DarticType 驻留、ITA/FTA、子类型检查 | Ch2 栈帧, Ch5 类型传递 | 类型检查能力 |
+| Ch7 | `docs/design/07-async.md` | async/await 帧快照、生成器、协作调度 | Ch3 分发循环 | 异步执行能力 |
+| Ch8 | `docs/design/08-sandbox.md` | 字节码验证、fuel 计数、调用深度限制 | Ch3 fuel 机制 | 安全保障 |
 
 ## 技术栈
 
