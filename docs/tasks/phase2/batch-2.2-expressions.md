@@ -161,18 +161,26 @@ feat: support float arithmetic, comparisons, logical/bitwise/conditional express
 
 ## 核心发现
 
-_(执行时填写：短路求值的跳转生成方式、NaN 比较行为确认、Kernel 中比较运算符的 AST 节点类型（InstanceInvocation vs EqualsCall）、`??` 的 CFE 脱糖形式、`/` 在 int 上返回 double 的处理方式等)_
+- **短路求值跳转生成**：`&&` 用 `JUMP_IF_FALSE`，`||` 用 `JUMP_IF_TRUE`，采用 emitPlaceholder + patchJump 回填模式，sBx = targetPC - (jumpPC + 1)
+- **NaN 比较行为**：IEEE 754 NaN 语义由 Dart 宿主 VM 的 `<`, `<=`, `>`, `>=`, `==` 运算符自然继承，NaN 与任何值比较（包括自身）均为 false
+- **比较运算符 AST 节点**：`<`, `<=`, `>`, `>=` 为 InstanceInvocation（interfaceTarget.enclosingClass == numClass），`==` 为 EqualsCall 特殊节点，`!=` 由 CFE 脱糖为 `Not(EqualsCall(...))`
+- **`??` CFE 脱糖**：`x ?? default` 脱糖为 `let #t = x in #t == null ? default : #t`（Let + EqualsNull + ConditionalExpression），自然由已实现的组件支持
+- **`/` 在 int 上返回 double**：int 的 `/` 运算符返回类型为 double，编译器将两个 int 操作数通过 INT_TO_DBL 转换后使用 DIV_DBL
+- **bool 装箱特殊处理**：BOX_INT 将 bool 的 0/1 装箱为 Dart int 而非 bool，is/as 需要真实 bool 对象时使用条件分支模式（JUMP_IF_FALSE + LOAD_CONST true/false）
+- **VariableDeclaration 栈类型不匹配**：CFE 脱糖产物中出现声明类型（ref）与初始化器类型（value）不一致的情况，需要在声明时自动装箱
+- **类型检查委托策略**：Phase 2 将 is/as 的类型检查委托给 Dart 宿主 VM 的闭包（`bool Function(Object?)`），存入常量池 refs 分区，INSTANCEOF/CAST 运行时直接调用闭包
+- **调用约定自动装箱**：传递 value-stack 参数给 ref-stack 形参（如 `int` → `Object`）时需自动插入 BOX_INT/BOX_DOUBLE
 
 ## Batch 完成检查
 
-- [ ] 2.2.1 浮点算术指令 + 编译器 double 运算
-- [ ] 2.2.2 比较运算符
-- [ ] 2.2.3 逻辑运算符短路求值
-- [ ] 2.2.4 位运算编译器支持
-- [ ] 2.2.5 条件表达式
-- [ ] 2.2.6 类型测试与类型转换
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
+- [x] 2.2.1 浮点算术指令 + 编译器 double 运算
+- [x] 2.2.2 比较运算符
+- [x] 2.2.3 逻辑运算符短路求值
+- [x] 2.2.4 位运算编译器支持
+- [x] 2.2.5 条件表达式
+- [x] 2.2.6 类型测试与类型转换
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过（696 tests）
 - [ ] commit 已提交
 - [ ] overview.md 已更新
 - [ ] code review 已完成

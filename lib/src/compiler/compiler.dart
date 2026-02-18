@@ -270,6 +270,34 @@ class DarticCompiler {
 
   int _allocRefReg() => _refAlloc.alloc();
 
+  /// Boxes a value-stack register to the ref stack, preserving the Dart
+  /// runtime type. Bools (stored as int 0/1) are converted to actual `bool`
+  /// objects via a conditional pattern; ints and doubles use BOX_INT/BOX_DOUBLE.
+  ///
+  /// Returns the ref-stack register containing the boxed value.
+  int _emitBoxToRef(int valueReg, ir.DartType? type) {
+    final refReg = _allocRefReg();
+    if (type != null && _isDoubleType(type)) {
+      _emitter.emit(encodeABC(Op.boxDouble, refReg, valueReg, 0));
+    } else if (type != null && _isBoolType(type)) {
+      // Bools are stored as int 0/1 on the value stack. BOX_INT would create
+      // an int object, not a bool. Emit a conditional to produce a real bool:
+      //   JUMP_IF_FALSE valueReg, +2
+      //   LOAD_CONST refReg, <true>
+      //   JUMP +1
+      //   LOAD_CONST refReg, <false>
+      final trueIdx = _constantPool.addRef(true);
+      final falseIdx = _constantPool.addRef(false);
+      _emitter.emit(encodeAsBx(Op.jumpIfFalse, valueReg, 2));
+      _emitter.emit(encodeABx(Op.loadConst, refReg, trueIdx));
+      _emitter.emit(encodeAsBx(Op.jump, 0, 1));
+      _emitter.emit(encodeABx(Op.loadConst, refReg, falseIdx));
+    } else {
+      _emitter.emit(encodeABC(Op.boxInt, refReg, valueReg, 0));
+    }
+    return refReg;
+  }
+
   /// Patches pending outgoing arg MOVE placeholders.
   ///
   /// Value args go to `valueRegCount + argIdx`, ref args to
@@ -366,14 +394,41 @@ class DarticCompiler {
     final kind = _classifyStackKind(decl.type);
     if (decl.initializer != null) {
       final (initReg, initLoc) = _compileExpression(decl.initializer!);
-      // Bind the variable to the initializer's result register.
-      // In Phase 1, the declared type and initializer type must agree.
-      assert(
-        kind.isValue == (initLoc == ResultLoc.value),
-        'Type mismatch: declared $kind but initializer is $initLoc '
-        'for ${decl.name}',
-      );
-      _scope.declareWithReg(decl, kind, initReg);
+
+      // Handle stack kind mismatch: box value→ref when assigning a value-stack
+      // result (e.g. int literal) to a ref-stack variable (e.g. int?).
+      if (kind == StackKind.ref && initLoc == ResultLoc.value) {
+        final refReg = _allocRefReg();
+        // Determine the boxing op from the underlying non-nullable type.
+        final baseType = decl.type is ir.InterfaceType
+            ? (decl.type as ir.InterfaceType)
+                .withDeclaredNullability(ir.Nullability.nonNullable)
+            : decl.type;
+        if (_isDoubleType(baseType)) {
+          _emitter.emit(encodeABC(Op.boxDouble, refReg, initReg, 0));
+        } else {
+          _emitter.emit(encodeABC(Op.boxInt, refReg, initReg, 0));
+        }
+        _scope.declareWithReg(decl, kind, refReg);
+      } else if (kind.isValue && initLoc == ResultLoc.ref) {
+        // The declared type says value-stack (e.g. `int`), but the initializer
+        // lives on the ref stack (e.g. from a nullable variable). This happens
+        // in CFE-desugared `??` where `let int #t = x{int}` has type `int`
+        // but the initializer comes from an `int?` variable.
+        //
+        // Keep the variable on the ref stack so downstream null checks (via
+        // EqualsNull/JUMP_IF_NNULL) work correctly. The caller will unbox
+        // when actually using the value in a non-null context.
+        _scope.declareWithReg(decl, StackKind.ref, initReg);
+      } else {
+        // Bind the variable to the initializer's result register.
+        assert(
+          kind.isValue == (initLoc == ResultLoc.value),
+          'Type mismatch: declared $kind but initializer is $initLoc '
+          'for ${decl.name}',
+        );
+        _scope.declareWithReg(decl, kind, initReg);
+      }
     } else {
       // No initializer — allocate a register and load a default value.
       final binding = _scope.declare(decl, kind);
@@ -408,6 +463,12 @@ class DarticCompiler {
     if (expr is ir.StaticSet) return _compileStaticSet(expr);
     if (expr is ir.StaticInvocation) return _compileStaticInvocation(expr);
     if (expr is ir.InstanceInvocation) return _compileInstanceInvocation(expr);
+    if (expr is ir.LogicalExpression) return _compileLogicalExpression(expr);
+    if (expr is ir.ConditionalExpression) {
+      return _compileConditionalExpression(expr);
+    }
+    if (expr is ir.IsExpression) return _compileIsExpression(expr);
+    if (expr is ir.AsExpression) return _compileAsExpression(expr);
     throw UnsupportedError(
       'Unsupported expression: ${expr.runtimeType}',
     );
@@ -511,10 +572,135 @@ class DarticCompiler {
     return (resultReg, ResultLoc.value);
   }
 
+  // ── LogicalExpression (&&, ||) ──
+
+  (int, ResultLoc) _compileLogicalExpression(ir.LogicalExpression expr) {
+    // Compile the left operand — result lands in leftReg on the value stack.
+    final (leftReg, _) = _compileExpression(expr.left);
+
+    if (expr.operatorEnum == ir.LogicalExpressionOperator.AND) {
+      // &&: if left is false (0), short-circuit — skip right operand.
+      // Emit JUMP_IF_FALSE leftReg, sBx (placeholder).
+      final jumpPC = _emitter.emitPlaceholder();
+
+      // Compile right operand.
+      final (rightReg, _) = _compileExpression(expr.right);
+
+      // If right compiled to a different register, move result to leftReg
+      // so both paths leave the result in the same register.
+      if (rightReg != leftReg) {
+        _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
+      }
+
+      // Backpatch: target is current PC.
+      // sBx = targetPC - (jumpPC + 1)
+      final targetPC = _emitter.currentPC;
+      _emitter.patchJump(
+        jumpPC,
+        encodeAsBx(Op.jumpIfFalse, leftReg, targetPC - jumpPC - 1),
+      );
+    } else {
+      // ||: if left is true (non-zero), short-circuit — skip right operand.
+      // Emit JUMP_IF_TRUE leftReg, sBx (placeholder).
+      final jumpPC = _emitter.emitPlaceholder();
+
+      // Compile right operand.
+      final (rightReg, _) = _compileExpression(expr.right);
+
+      // Move result to leftReg if needed.
+      if (rightReg != leftReg) {
+        _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
+      }
+
+      // Backpatch: target is current PC.
+      final targetPC = _emitter.currentPC;
+      _emitter.patchJump(
+        jumpPC,
+        encodeAsBx(Op.jumpIfTrue, leftReg, targetPC - jumpPC - 1),
+      );
+    }
+
+    return (leftReg, ResultLoc.value);
+  }
+
+  // ── ConditionalExpression (? :) ──
+
+  (int, ResultLoc) _compileConditionalExpression(
+    ir.ConditionalExpression expr,
+  ) {
+    // Determine the result location (value or ref) from the static type.
+    final resultLoc = _classifyType(expr.staticType);
+
+    // Allocate the result register BEFORE compiling either branch.
+    // Both branches write their result to this same register.
+    final resultReg = resultLoc == ResultLoc.ref
+        ? _allocRefReg()
+        : _allocValueReg();
+
+    // 1. Compile the condition.
+    final (condReg, _) = _compileExpression(expr.condition);
+
+    // 2. JUMP_IF_FALSE condReg → else (placeholder).
+    final jumpToElse = _emitter.emitPlaceholder();
+
+    // 3. Compile the then branch.
+    var (thenReg, thenLoc) = _compileExpression(expr.then);
+
+    // Box if the branch produced a value but the conditional expects ref.
+    if (thenLoc != resultLoc && resultLoc == ResultLoc.ref) {
+      final thenType = _inferExprType(expr.then);
+      thenReg = _emitBoxToRef(thenReg, thenType);
+    }
+    if (thenReg != resultReg) {
+      if (resultLoc == ResultLoc.ref) {
+        _emitter.emit(encodeABC(Op.moveRef, resultReg, thenReg, 0));
+      } else {
+        _emitter.emit(encodeABC(Op.moveVal, resultReg, thenReg, 0));
+      }
+    }
+
+    // 4. JUMP → end (placeholder, skip else branch).
+    final jumpToEnd = _emitter.emitPlaceholder();
+
+    // 5. Backpatch else label.
+    final elsePC = _emitter.currentPC;
+    _emitter.patchJump(
+      jumpToElse,
+      encodeAsBx(Op.jumpIfFalse, condReg, elsePC - jumpToElse - 1),
+    );
+
+    // 6. Compile the else branch.
+    var (elseReg, elseLoc) = _compileExpression(expr.otherwise);
+
+    // Box if the branch produced a value but the conditional expects ref.
+    if (elseLoc != resultLoc && resultLoc == ResultLoc.ref) {
+      final elseType = _inferExprType(expr.otherwise);
+      elseReg = _emitBoxToRef(elseReg, elseType);
+    }
+    if (elseReg != resultReg) {
+      if (resultLoc == ResultLoc.ref) {
+        _emitter.emit(encodeABC(Op.moveRef, resultReg, elseReg, 0));
+      } else {
+        _emitter.emit(encodeABC(Op.moveVal, resultReg, elseReg, 0));
+      }
+    }
+
+    // 7. Backpatch end label.
+    final endPC = _emitter.currentPC;
+    _emitter.patchJump(
+      jumpToEnd,
+      encodeAsBx(Op.jump, 0, endPC - jumpToEnd - 1),
+    );
+
+    return (resultReg, resultLoc);
+  }
+
   // ── EqualsNull ──
 
   (int, ResultLoc) _compileEqualsNull(ir.EqualsNull expr) {
-    final (refReg, _) = _compileExpression(expr.expression);
+    final (refReg, loc) = _compileExpression(expr.expression);
+    assert(loc == ResultLoc.ref,
+        'EqualsNull operand must be on ref stack (got value)');
     final resultReg = _allocValueReg();
     // EqualsNull always represents `x == null` (no isNot flag).
     // CFE expresses `x != null` as `Not(EqualsNull(x))`.
@@ -530,6 +716,7 @@ class DarticCompiler {
   (int, ResultLoc) _compileEqualsCall(ir.EqualsCall expr) {
     final leftType = _inferExprType(expr.left);
     final isInt = leftType != null && _isIntType(leftType);
+    final isDouble = leftType != null && _isDoubleType(leftType);
 
     final (lhsReg, _) = _compileExpression(expr.left);
     final (rhsReg, _) = _compileExpression(expr.right);
@@ -537,10 +724,13 @@ class DarticCompiler {
 
     if (isInt) {
       _emitter.emit(encodeABC(Op.eqInt, resultReg, lhsReg, rhsReg));
+    } else if (isDouble) {
+      _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
     } else {
-      // TODO(Phase 3): Replace EQ_REF (identical) with EQ_GENERIC or
-      // CALL_VIRTUAL on operator== once user-defined classes are supported.
-      _emitter.emit(encodeABC(Op.eqRef, resultReg, lhsReg, rhsReg));
+      // EQ_GENERIC dispatches to operator== for value equality on ref-stack
+      // objects (e.g. String). Phase 3+ will replace this with CALL_VIRTUAL
+      // once user-defined classes are supported.
+      _emitter.emit(encodeABC(Op.eqGeneric, resultReg, lhsReg, rhsReg));
     }
     return (resultReg, ResultLoc.value);
   }
@@ -725,9 +915,24 @@ class DarticCompiler {
     // These are "source" registers — the actual outgoing placement happens
     // via MOVE instructions patched after compilation (see _compileProcedure).
     final args = expr.arguments.positional;
+    final params = target.function.positionalParameters;
     final argTemps = <(int, ResultLoc)>[];
-    for (final arg in args) {
-      argTemps.add(_compileExpression(arg));
+    for (var i = 0; i < args.length; i++) {
+      var (argReg, argLoc) = _compileExpression(args[i]);
+
+      // Box value-stack args when the callee parameter expects ref stack.
+      // This handles cases like passing `42` (int, value stack) to an
+      // `Object` parameter (ref stack).
+      if (i < params.length) {
+        final paramKind = _classifyStackKind(params[i].type);
+        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
+          final argType = _inferExprType(args[i]);
+          argReg = _emitBoxToRef(argReg, argType);
+          argLoc = ResultLoc.ref;
+        }
+      }
+
+      argTemps.add((argReg, argLoc));
     }
 
     // Emit placeholder MOVE instructions for each arg. The destination
@@ -756,7 +961,7 @@ class DarticCompiler {
   }
 
   (int, ResultLoc) _compileInstanceInvocation(ir.InstanceInvocation expr) {
-    // Phase 1: specialize int arithmetic operators.
+    // Specialize arithmetic operators for int and double.
     //
     // In Dart, `int` extends `num`, so arithmetic operators (+, -, *, etc.)
     // are defined on `num`. The interfaceTarget.enclosingClass is `num`,
@@ -767,8 +972,26 @@ class DarticCompiler {
 
     if (targetClass == _coreTypes.intClass ||
         targetClass == _coreTypes.numClass) {
-      // Check if receiver is statically int.
       final receiverType = _inferExprType(expr.receiver);
+
+      // int `/` returns double — convert both operands and use DIV_DBL.
+      if (name == '/' &&
+          receiverType != null &&
+          _isIntType(receiverType)) {
+        final (lhsReg, _) = _compileExpression(expr.receiver);
+        final (rhsReg, _) =
+            _compileExpression(expr.arguments.positional[0]);
+        // Convert both int operands to double.
+        final lhsDbl = _allocValueReg();
+        _emitter.emit(encodeABC(Op.intToDbl, lhsDbl, lhsReg, 0));
+        final rhsDbl = _allocValueReg();
+        _emitter.emit(encodeABC(Op.intToDbl, rhsDbl, rhsReg, 0));
+        final resultReg = _allocValueReg();
+        _emitter.emit(encodeABC(Op.divDbl, resultReg, lhsDbl, rhsDbl));
+        return (resultReg, ResultLoc.value);
+      }
+
+      // Check if receiver is statically int.
       if (receiverType != null && _isIntType(receiverType)) {
         final intOp = _intArithOp(name);
         if (intOp != null) {
@@ -780,6 +1003,17 @@ class DarticCompiler {
           return (resultReg, ResultLoc.value);
         }
 
+        // Int comparison operators (<, <=, >, >=).
+        final intCmpOp = _intCompareOp(name);
+        if (intCmpOp != null) {
+          final (lhsReg, _) = _compileExpression(expr.receiver);
+          final (rhsReg, _) =
+              _compileExpression(expr.arguments.positional[0]);
+          final resultReg = _allocValueReg();
+          _emitter.emit(encodeABC(intCmpOp, resultReg, lhsReg, rhsReg));
+          return (resultReg, ResultLoc.value);
+        }
+
         // Unary minus: in Kernel, -a is InstanceInvocation(a, 'unary-', [])
         if (name == 'unary-') {
           final (srcReg, _) = _compileExpression(expr.receiver);
@@ -787,12 +1021,172 @@ class DarticCompiler {
           _emitter.emit(encodeABC(Op.negInt, resultReg, srcReg, 0));
           return (resultReg, ResultLoc.value);
         }
+
+        // Bitwise NOT: in Kernel, ~a is InstanceInvocation(a, '~', [])
+        if (name == '~') {
+          final (srcReg, _) = _compileExpression(expr.receiver);
+          final resultReg = _allocValueReg();
+          _emitter.emit(encodeABC(Op.bitNot, resultReg, srcReg, 0));
+          return (resultReg, ResultLoc.value);
+        }
+
+        // int.toDouble() → INT_TO_DBL
+        if (name == 'toDouble') {
+          final (srcReg, _) = _compileExpression(expr.receiver);
+          final resultReg = _allocValueReg();
+          _emitter.emit(encodeABC(Op.intToDbl, resultReg, srcReg, 0));
+          return (resultReg, ResultLoc.value);
+        }
       }
+
+      // Check if receiver is statically double.
+      if (receiverType != null && _isDoubleType(receiverType)) {
+        final result = _tryCompileDoubleOp(expr, name);
+        if (result != null) return result;
+      }
+    }
+
+    // double-specific class target (e.g., double.operator/).
+    if (targetClass == _coreTypes.doubleClass) {
+      final result = _tryCompileDoubleOp(expr, name);
+      if (result != null) return result;
     }
 
     throw UnsupportedError(
       'Unsupported instance invocation: $name on $targetClass',
     );
+  }
+
+  /// Tries to compile a double operation (arithmetic, comparison, unary, toInt).
+  /// Returns null if [name] is not a recognized double operation.
+  (int, ResultLoc)? _tryCompileDoubleOp(
+    ir.InstanceInvocation expr,
+    String name,
+  ) {
+    final dblOp = _doubleArithOp(name);
+    if (dblOp != null) {
+      final (lhsReg, _) = _compileExpression(expr.receiver);
+      final (rhsReg, _) = _compileExpression(expr.arguments.positional[0]);
+      final resultReg = _allocValueReg();
+      _emitter.emit(encodeABC(dblOp, resultReg, lhsReg, rhsReg));
+      return (resultReg, ResultLoc.value);
+    }
+
+    final dblCmpOp = _doubleCompareOp(name);
+    if (dblCmpOp != null) {
+      final (lhsReg, _) = _compileExpression(expr.receiver);
+      final (rhsReg, _) = _compileExpression(expr.arguments.positional[0]);
+      final resultReg = _allocValueReg();
+      _emitter.emit(encodeABC(dblCmpOp, resultReg, lhsReg, rhsReg));
+      return (resultReg, ResultLoc.value);
+    }
+
+    if (name == 'unary-') {
+      final (srcReg, _) = _compileExpression(expr.receiver);
+      final resultReg = _allocValueReg();
+      _emitter.emit(encodeABC(Op.negDbl, resultReg, srcReg, 0));
+      return (resultReg, ResultLoc.value);
+    }
+
+    if (name == 'toInt') {
+      final (srcReg, _) = _compileExpression(expr.receiver);
+      final resultReg = _allocValueReg();
+      _emitter.emit(encodeABC(Op.dblToInt, resultReg, srcReg, 0));
+      return (resultReg, ResultLoc.value);
+    }
+
+    return null;
+  }
+
+  // ── Type operations (is / as) ──
+
+  (int, ResultLoc) _compileIsExpression(ir.IsExpression expr) {
+    // 1. Compile operand.
+    var (operandReg, operandLoc) = _compileExpression(expr.operand);
+
+    // 2. Box if on value stack — INSTANCEOF needs the operand on the ref stack.
+    if (operandLoc == ResultLoc.value) {
+      final operandType = _inferExprType(expr.operand);
+      operandReg = _emitBoxToRef(operandReg, operandType);
+    }
+
+    // 3. Create type checker function and add to constant pool.
+    final checker = _createTypeChecker(expr.type);
+    final checkerIdx = _constantPool.addRef(checker);
+    assert(checkerIdx <= 0xFF,
+        'INSTANCEOF C operand overflow: checkerIdx=$checkerIdx > 255');
+
+    // 4. Emit INSTANCEOF A, B, C.
+    final resultReg = _allocValueReg();
+    _emitter.emit(encodeABC(Op.instanceOf, resultReg, operandReg, checkerIdx));
+
+    return (resultReg, ResultLoc.value);
+  }
+
+  (int, ResultLoc) _compileAsExpression(ir.AsExpression expr) {
+    // 1. Compile operand.
+    var (operandReg, operandLoc) = _compileExpression(expr.operand);
+
+    // 2. Box if on value stack — CAST needs the operand on the ref stack.
+    if (operandLoc == ResultLoc.value) {
+      final operandType = _inferExprType(expr.operand);
+      operandReg = _emitBoxToRef(operandReg, operandType);
+    }
+
+    // 3. Create cast function and add to constant pool.
+    final caster = _createCaster(expr.type);
+    final casterIdx = _constantPool.addRef(caster);
+    assert(casterIdx <= 0xFF,
+        'CAST C operand overflow: casterIdx=$casterIdx > 255');
+
+    // 4. Emit CAST A, B, C.
+    final resultReg = _allocRefReg();
+    _emitter.emit(encodeABC(Op.cast, resultReg, operandReg, casterIdx));
+
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Creates a type-checking function for the Phase 2 simplified is-check.
+  ///
+  /// Delegates to Dart host VM's `is` operator via a closure stored in the
+  /// constant pool. Phase 4 will replace this with DarticType/TypeTemplate.
+  bool Function(Object?) _createTypeChecker(ir.DartType type) {
+    if (type is ir.InterfaceType) {
+      final cls = type.classNode;
+      if (cls == _coreTypes.intClass) return (v) => v is int;
+      if (cls == _coreTypes.doubleClass) return (v) => v is double;
+      if (cls == _coreTypes.boolClass) return (v) => v is bool;
+      if (cls == _coreTypes.stringClass) return (v) => v is String;
+      if (cls == _coreTypes.numClass) return (v) => v is num;
+      if (cls == _coreTypes.objectClass) {
+        // Object? (nullable) matches everything; Object (non-nullable) excludes null.
+        if (type.nullability == ir.Nullability.nullable) return (v) => true;
+        return (v) => v != null;
+      }
+    }
+    if (type is ir.NullType) return (v) => v == null;
+    throw UnsupportedError('Unsupported type for is check: $type');
+  }
+
+  /// Creates a cast function for the Phase 2 simplified as-cast.
+  ///
+  /// Delegates to Dart host VM's `as` operator. Throws [TypeError] on failure.
+  /// Phase 4 will replace this with DarticType/TypeTemplate.
+  Object? Function(Object?) _createCaster(ir.DartType type) {
+    if (type is ir.InterfaceType) {
+      final cls = type.classNode;
+      if (cls == _coreTypes.intClass) return (v) => v as int;
+      if (cls == _coreTypes.doubleClass) return (v) => v as double;
+      if (cls == _coreTypes.boolClass) return (v) => v as bool;
+      if (cls == _coreTypes.stringClass) return (v) => v as String;
+      if (cls == _coreTypes.numClass) return (v) => v as num;
+      if (cls == _coreTypes.objectClass) {
+        if (type.nullability == ir.Nullability.nullable) return (v) => v;
+        return (v) => v as Object;
+      }
+    }
+    if (type is ir.NullType) return (v) => v as Null;
+    throw UnsupportedError('Unsupported type for cast: $type');
   }
 
   // ── Type classification ──
@@ -811,8 +1205,10 @@ class DarticCompiler {
     if (expr is ir.NullLiteral) return const ir.NullType();
     if (expr is ir.ConstantExpression) return _inferConstantType(expr.constant);
     if (expr is ir.Not) return _coreTypes.boolNonNullableRawType;
+    if (expr is ir.LogicalExpression) return _coreTypes.boolNonNullableRawType;
     if (expr is ir.EqualsNull) return _coreTypes.boolNonNullableRawType;
     if (expr is ir.EqualsCall) return _coreTypes.boolNonNullableRawType;
+    if (expr is ir.ConditionalExpression) return expr.staticType;
     if (expr is ir.Let) return _inferExprType(expr.body);
     if (expr is ir.BlockExpression) return _inferExprType(expr.value);
     if (expr is ir.NullCheck) {
@@ -829,17 +1225,46 @@ class DarticCompiler {
       if (target is ir.Field) return target.type;
       if (target is ir.Procedure) return target.function.returnType;
     }
+    if (expr is ir.IsExpression) return _coreTypes.boolNonNullableRawType;
+    if (expr is ir.AsExpression) return expr.type;
     if (expr is ir.StaticInvocation) return expr.target.function.returnType;
     if (expr is ir.InstanceInvocation) {
-      // For chained int operations like (a + b) - c:
+      // For chained operations like (a + b) - c:
       // num.operator+ returns `num`, but if the receiver is `int`,
       // the result is `int` at runtime. Propagate the more specific type.
+      //
+      // Exception: `/` on int returns `double` (Dart spec). Also, if the
+      // receiver is `double`, the result is `double`.
       final targetClass = expr.interfaceTarget.enclosingClass;
-      if (targetClass == _coreTypes.numClass) {
+      final invName = expr.name.text;
+      // Comparison operators always return bool, regardless of receiver type.
+      if (_isCompareOp(invName)) {
+        return _coreTypes.boolNonNullableRawType;
+      }
+      if (targetClass == _coreTypes.numClass ||
+          targetClass == _coreTypes.intClass) {
         final receiverType = _inferExprType(expr.receiver);
         if (receiverType != null && _isIntType(receiverType)) {
+          // int `/` returns double; toDouble() returns double.
+          if (invName == '/' || invName == 'toDouble') {
+            return _coreTypes.doubleNonNullableRawType;
+          }
           return _coreTypes.intNonNullableRawType;
         }
+        if (receiverType != null && _isDoubleType(receiverType)) {
+          // toInt() on double returns int.
+          if (invName == 'toInt') {
+            return _coreTypes.intNonNullableRawType;
+          }
+          return _coreTypes.doubleNonNullableRawType;
+        }
+      }
+      if (targetClass == _coreTypes.doubleClass) {
+        // Comparison operators already handled above.
+        if (invName == 'toInt') {
+          return _coreTypes.intNonNullableRawType;
+        }
+        return _coreTypes.doubleNonNullableRawType;
       }
       return expr.interfaceTarget.function.returnType;
     }
@@ -848,6 +1273,12 @@ class DarticCompiler {
 
   bool _isIntType(ir.DartType type) =>
       type is ir.InterfaceType && type.classNode == _coreTypes.intClass;
+
+  bool _isDoubleType(ir.DartType type) =>
+      type is ir.InterfaceType && type.classNode == _coreTypes.doubleClass;
+
+  bool _isBoolType(ir.DartType type) =>
+      type is ir.InterfaceType && type.classNode == _coreTypes.boolClass;
 
   ir.DartType? _inferConstantType(ir.Constant constant) {
     if (constant is ir.IntConstant) return _coreTypes.intNonNullableRawType;
@@ -894,8 +1325,45 @@ class DarticCompiler {
         '*' => Op.mulInt,
         '~/' => Op.divInt,
         '%' => Op.modInt,
+        '&' => Op.bitAnd,
+        '|' => Op.bitOr,
+        '^' => Op.bitXor,
+        '<<' => Op.shl,
+        '>>' => Op.shr,
+        '>>>' => Op.ushr,
         _ => null,
       };
+
+  /// Maps double operator names to opcodes.
+  static int? _doubleArithOp(String name) => switch (name) {
+        '+' => Op.addDbl,
+        '-' => Op.subDbl,
+        '*' => Op.mulDbl,
+        '/' => Op.divDbl,
+        _ => null,
+      };
+
+  /// Maps int comparison operator names to opcodes.
+  static int? _intCompareOp(String name) => switch (name) {
+        '<' => Op.ltInt,
+        '<=' => Op.leInt,
+        '>' => Op.gtInt,
+        '>=' => Op.geInt,
+        _ => null,
+      };
+
+  /// Maps double comparison operator names to opcodes.
+  static int? _doubleCompareOp(String name) => switch (name) {
+        '<' => Op.ltDbl,
+        '<=' => Op.leDbl,
+        '>' => Op.gtDbl,
+        '>=' => Op.geDbl,
+        _ => null,
+      };
+
+  /// Returns true if the operator name is a comparison operator.
+  static bool _isCompareOp(String name) =>
+      name == '<' || name == '<=' || name == '>' || name == '>=';
 
   // ── Helpers ──
 

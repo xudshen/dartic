@@ -262,7 +262,7 @@ void main() {}
       expect(eqIdx, isNot(-1), reason: 'EQ_INT not found for int == int');
     });
 
-    test('Object == Object → EQ_REF', () async {
+    test('Object == Object → EQ_GENERIC', () async {
       final module = await compileDart('''
 bool f(Object a, Object b) => a == b;
 void main() {}
@@ -270,8 +270,9 @@ void main() {}
       final f = findFunc(module, 'f');
       final code = f.bytecode;
 
-      final eqIdx = findOp(code, Op.eqRef);
-      expect(eqIdx, isNot(-1), reason: 'EQ_REF not found for Object == Object');
+      final eqIdx = findOp(code, Op.eqGeneric);
+      expect(eqIdx, isNot(-1),
+          reason: 'EQ_GENERIC not found for Object == Object');
     });
 
     test('int equality result goes to value stack', () async {

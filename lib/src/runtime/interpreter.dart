@@ -249,6 +249,51 @@ class DarticInterpreter {
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) + c);
 
+        // ── Float Arithmetic (0x20-0x2F) ──
+
+        case Op.addDbl: // ADD_DBL A, B, C — doubleView[A] = doubleView[B] + doubleView[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeDouble(
+              vBase + a, vs.readDouble(vBase + b) + vs.readDouble(vBase + c));
+
+        case Op.subDbl: // SUB_DBL A, B, C — doubleView[A] = doubleView[B] - doubleView[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeDouble(
+              vBase + a, vs.readDouble(vBase + b) - vs.readDouble(vBase + c));
+
+        case Op.mulDbl: // MUL_DBL A, B, C — doubleView[A] = doubleView[B] * doubleView[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeDouble(
+              vBase + a, vs.readDouble(vBase + b) * vs.readDouble(vBase + c));
+
+        case Op.divDbl: // DIV_DBL A, B, C — doubleView[A] = doubleView[B] / doubleView[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeDouble(
+              vBase + a, vs.readDouble(vBase + b) / vs.readDouble(vBase + c));
+
+        case Op.negDbl: // NEG_DBL A, B — doubleView[A] = -doubleView[B]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          vs.writeDouble(vBase + a, -vs.readDouble(vBase + b));
+
+        case Op.intToDbl: // INT_TO_DBL A, B — doubleView[A] = intView[B].toDouble()
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          vs.writeDouble(vBase + a, vs.readInt(vBase + b).toDouble());
+
+        case Op.dblToInt: // DBL_TO_INT A, B — intView[A] = doubleView[B].toInt()
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          vs.writeInt(vBase + a, vs.readDouble(vBase + b).toInt());
+
         // ── Comparison (0x30-0x3F) ──
 
         case Op.ltInt: // LT_INT A, B, C
@@ -286,12 +331,54 @@ class DarticInterpreter {
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) == vs.readInt(vBase + c) ? 1 : 0);
 
+        case Op.ltDbl: // LT_DBL A, B, C — valueStack[A] = doubleView[B] < doubleView[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              vs.readDouble(vBase + b) < vs.readDouble(vBase + c) ? 1 : 0);
+
+        case Op.leDbl: // LE_DBL A, B, C — valueStack[A] = doubleView[B] <= doubleView[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              vs.readDouble(vBase + b) <= vs.readDouble(vBase + c) ? 1 : 0);
+
+        case Op.gtDbl: // GT_DBL A, B, C — valueStack[A] = doubleView[B] > doubleView[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              vs.readDouble(vBase + b) > vs.readDouble(vBase + c) ? 1 : 0);
+
+        case Op.geDbl: // GE_DBL A, B, C — valueStack[A] = doubleView[B] >= doubleView[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              vs.readDouble(vBase + b) >= vs.readDouble(vBase + c) ? 1 : 0);
+
+        case Op.eqDbl: // EQ_DBL A, B, C — valueStack[A] = doubleView[B] == doubleView[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              vs.readDouble(vBase + b) == vs.readDouble(vBase + c) ? 1 : 0);
+
         case Op.eqRef: // EQ_REF A, B, C — identical(refStack[B], refStack[C])
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a,
               identical(rs.read(rBase + b), rs.read(rBase + c)) ? 1 : 0);
+
+        case Op.eqGeneric: // EQ_GENERIC A, B, C — valueStack[A] = refStack[B] == refStack[C] ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          vs.writeInt(vBase + a,
+              rs.read(rBase + b) == rs.read(rBase + c) ? 1 : 0);
 
         // ── Control Flow (0x40-0x4F) ──
 
@@ -447,6 +534,24 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           _globalTable!.store(bx, rs.read(rBase + a));
+
+        // ── Type Operations (0x65-0x66) ──
+
+        case Op.instanceOf: // INSTANCEOF A, B, C — valueStack[A] = checker(refStack[B]) ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final checker = cp.getRef(c) as bool Function(Object?);
+          final value = rs.read(rBase + b);
+          vs.writeInt(vBase + a, checker(value) ? 1 : 0);
+
+        case Op.cast: // CAST A, B, C — refStack[A] = caster(refStack[B]); throws TypeError on failure
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final caster = cp.getRef(c) as Object? Function(Object?);
+          final value = rs.read(rBase + b);
+          rs.write(rBase + a, caster(value));
 
         // ── Null Safety (0xA7) ──
 
