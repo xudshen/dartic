@@ -1,0 +1,628 @@
+# Dartic 开发路线图
+
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+
+**Goal:** 从零搭建 dartic 字节码解释器，最终通过 co19 核心语言测试集
+
+**Architecture:** 混合路线——先按设计文档依赖拓扑搭建最小可运行管线（Ch1→Ch2→Ch3→Ch5），再按 co19 测试类别从简到繁逐步扩展语言特性。Ch4/Ch6/Ch7/Ch8 按需引入。
+
+**Tech Stack:** Pure Dart, Kernel AST (`package:kernel`), TDD (`package:test`), co19 测试集
+
+---
+
+## 决策记录
+
+| 问题 | 决策 | 理由 |
+|------|------|------|
+| 开发路线选择 | 混合路线（管线优先 + co19 驱动） | 纯设计文档顺序端到端验证太晚；纯 co19 顺序架构不稳 |
+| 阶段一粒度 | 最小管线只覆盖标量变量+算术+控制流+函数调用 | 最小化前期投入，尽快能跑 co19 测试 |
+| co19 测试接入时机 | 阶段一结束即接入（不等所有特性就绪） | 持续验证，尽早发现设计问题 |
+| Ch4 Interop 引入时机 | P5 阶段（需要 `dart:core` 标准库时） | 前期不需要跨边界调用，延迟引入减少复杂度 |
+| Ch6 泛型引入时机 | P4 阶段（碰到泛型类/泛型方法测试时） | 泛型是 Dart 核心特性，不能太晚 |
+| Ch7 异步引入时机 | P6 阶段（碰到 `LibTest/async` 时） | async/await 依赖 Ch3 充分稳定后才引入 |
+| co19 测试如何跑 | Phase 2 用自建原生 harness（不依赖 expect.dart），Phase 3 类就绪后切到 co19 expect.dart | expect.dart 定义了 `class Expect` + `class ExpectException`，Phase 2 无类支持无法编译 |
+| co19 harness 演进策略 | v0→v4 五版迭代，随 Phase 逐步增强 | co19 Utils 有分层依赖：expect.dart 需类（P3）、expect_common 需 Bridge（P5）、static_type_helper 需 extension method（P6） |
+
+---
+
+## co19 Test Harness 演进路线（贯穿 Phase 2-6）
+
+co19 测试依赖 `vendor/co19/Utils/` 下的分层基础设施。**关键约束**：`expect.dart` 本身定义了 `class Expect` 和 `class ExpectException`，且顶层 `import 'dart:async'`——Phase 2 无类支持时无法编译。因此 harness 从 v0（自建原生）起步，Phase 3 类就绪后才切到 co19 expect.dart。
+
+```
+Phase 2 ─ v0 原生 harness（不依赖 expect.dart）
+  ├─ 测试发现（文件名匹配 *_t[0-9]{2}.dart）
+  ├─ 编译 → 执行 → 捕获未处理异常判定 pass/fail
+  ├─ 自建断言 shim（纯函数，无 class：expectEquals/expectTrue/expectFalse）
+  ├─ 负面测试识别（// [analyzer] / // [cfe] 标记 → 预期编译失败）
+  ├─ 通过率统计与报告 + 结果快照 + diff
+  └─ 限制：只能跑不依赖 Expect 类的简单测试，或通过 shim 替换 import
+
+Phase 3 ─ v1 接入 expect.dart（类已就绪）
+  ├─ 编译 Utils/expect.dart（class Expect + class ExpectException）
+  ├─ 相对路径 import 解析（../../Utils/expect.dart）
+  ├─ 多文件测试支持（library 声明 + part/import）
+  └─ 工厂模式测试（test(Factory create) 模式）
+
+Phase 4 ─ v2 实验标志与类型负面测试
+  ├─ // SharedOptions=--enable-experiment=... 解析
+  ├─ 类型错误负面测试完善（@compile-error 类型相关子集）
+  └─ 注意：static_type_helper.dart 需 extension method，延迟到 Phase 6
+
+Phase 5 ─ v3 标准库导入 + expect_common 完整支持
+  ├─ dart:core / dart:collection / dart:math 导入解析（路由到 Bridge）
+  ├─ Utils/expect_common.dart 完整支持（deepEquals 需 Map/List Bridge）
+  └─ 跳过列表（skip list）管理不支持的库测试
+
+Phase 6 ─ v4 异步测试 + static_type_helper
+  ├─ Utils/static_type_helper.dart（需泛型 + extension method，两者此时均就绪）
+  ├─ Utils/async_utils.dart（asyncStart/asyncEnd 计数器）
+  ├─ stdout 输出检测（unittest-suite-wait-for-done / unittest-suite-success）
+  ├─ 异步测试超时机制
+  └─ Stream/Future 完成检测
+```
+
+**harness 产出文件：** `tool/co19_runner.dart`（主入口）+ `lib/src/testing/` 下的辅助模块
+
+---
+
+## co19 回归测试策略
+
+每个 Phase 的 harness batch 在跑当期新增测试类别的同时，**必须重跑所有历史类别**。原因：
+
+1. **回归检测**：新特性可能破坏已通过测试（如修改 dispatch loop 导致算术测试回归）
+2. **通过率提升**：新能力解锁之前因依赖缺失而失败的测试（如 `Language/Expressions` 中部分测试依赖类/闭包，Phase 3 加了类后自然通过）
+
+```
+Phase N harness 验证任务：
+  1. 跑本 Phase 新增 co19 类别        → 记录 "首次通过率"
+  2. 重跑所有历史 co19 类别            → 记录 "累计通过率"
+  3. 对比历史通过率，标记回归项         → 回归 = 上次 pass 本次 fail
+  4. 回归项必须在本 Phase 内修复，不得带入下一 Phase
+```
+
+**co19_runner 需支持的回归检测功能：**
+- 保存每次运行结果快照（`tool/co19_results/<phase>.json`）
+- diff 两次快照，输出：新增 pass / 新增 fail（回归）/ 持续 fail / 持续 pass
+- 回归项自动标红，CI 中回归 > 0 则 fail
+
+---
+
+## 总览：6 个阶段
+
+```
+Phase 1  最小管线          ← 设计文档顺序 (Ch1→Ch2→Ch3→Ch5)
+Phase 2  基础语言特性       ← co19: Variables, Expressions, Statements
+Phase 3  函数与类          ← co19: Functions, Classes, Reference
+Phase 4  高级 OOP          ← co19: 继承/Mixin/Sealed + Ch6 泛型
+Phase 5  标准库与互调       ← co19: LibTest/core + Ch4 Interop
+Phase 6  异步与高级特性     ← co19: LibTest/async + Ch7 Async + LanguageFeatures
+```
+
+每个 Phase 结束时有明确的里程碑验证。
+
+---
+
+## Phase 1: 最小可运行管线
+
+**目标：** 能编译并执行 `int add(int a, int b) => a + b;` 级别的 Dart 函数
+
+**设计章节：** Ch1 (ISA) → Ch2 (对象模型) → Ch3 (执行引擎) → Ch5 (编译器)
+
+**里程碑：** 手工构造的字节码能在执行引擎中运行，编译器能将简单 Kernel AST 编译为字节码
+
+### Batch 1.1: 字节码基础设施 (Ch1)
+
+- [ ] 1.1.1 Opcode 枚举与编解码工具函数 → `lib/src/bytecode/opcodes.dart`, `lib/src/bytecode/encoding.dart`
+- [ ] 1.1.2 常量池四分区数据结构 → `lib/src/bytecode/constant_pool.dart`
+- [ ] 1.1.3 WIDE 前缀编解码 → 扩展 `encoding.dart`
+- [ ] 1.1.4 字节码模块容器（函数表 + 常量池 + IC 表） → `lib/src/bytecode/module.dart`
+
+**commit:** `feat(bytecode): add ISA encoding, opcodes, and constant pool`
+
+> **核心发现：**
+> _(执行时填写：编解码 edge case、WIDE 实现陷阱、常量池设计调整等)_
+
+### Batch 1.2: 三栈与对象模型 (Ch2)
+
+- [ ] 1.2.1 ValueStack（共享 ByteBuffer 双视图：Int64List + Float64List） → `lib/src/runtime/value_stack.dart`
+- [ ] 1.2.2 RefStack（`List<Object?>` 引用栈） → `lib/src/runtime/ref_stack.dart`
+- [ ] 1.2.3 DarticFrame（栈帧：PC、FP、寄存器计数、返回地址） → `lib/src/runtime/frame.dart`
+- [ ] 1.2.4 DarticObject / DarticClassInfo 基础结构 → `lib/src/runtime/object.dart`
+
+**commit:** `feat(runtime): add three-stack model and object representation`
+
+> **核心发现：**
+> _(执行时填写：双视图对齐问题、栈增长策略、Frame 字段取舍等)_
+
+### Batch 1.3: 分发循环 (Ch3)
+
+- [ ] 1.3.1 核心分发循环骨架（switch on opcode） → `lib/src/runtime/interpreter.dart`
+- [ ] 1.3.2 实现加载/存储指令组 (0x00-0x0F) → 扩展 `interpreter.dart`
+- [ ] 1.3.3 实现整数算术 + 比较指令组 (0x10-0x1F, 0x30-0x3F) → 扩展 `interpreter.dart`
+- [ ] 1.3.4 实现控制流指令组 (0x40-0x4F) → 扩展 `interpreter.dart`
+- [ ] 1.3.5 实现 CALL/RETURN 指令（含帧推入/弹出） → 扩展 `interpreter.dart`
+- [ ] 1.3.6 端到端测试：手工构造字节码执行加法函数 → `test/runtime/interpreter_test.dart`
+
+**commit:** `feat(runtime): add dispatch loop with arithmetic, control flow, and call/return`
+
+> **核心发现：**
+> _(执行时填写：switch 分发性能、帧切换逻辑、excess-K 跳转偏移计算等)_
+
+### Batch 1.4: 最小编译器 (Ch5)
+
+- [ ] 1.4.1 Kernel AST 遍历骨架（`TreeVisitor` 实现） → `lib/src/compiler/compiler.dart`
+- [ ] 1.4.2 编译表达式：IntLiteral, DoubleLiteral, BoolLiteral, StringLiteral → 扩展 `compiler.dart`
+- [ ] 1.4.3 编译表达式：算术 MethodInvocation (+, -, *, ~/, %) → 扩展 `compiler.dart`
+- [ ] 1.4.4 编译语句：ReturnStatement, ExpressionStatement → 扩展 `compiler.dart`
+- [ ] 1.4.5 编译函数：FunctionNode (参数 + 局部变量 + 寄存器分配) → 扩展 `compiler.dart`
+- [ ] 1.4.6 端到端测试：Dart 源码 → Kernel → 字节码 → 执行 → 结果 → `test/e2e/basic_test.dart`
+
+**commit:** `feat(compiler): add minimal Kernel-to-bytecode compiler`
+
+> **核心发现：**
+> _(执行时填写：Kernel AST 中算术运算的实际节点类型、寄存器分配策略选择、CFE 输出的意外结构等)_
+
+### Batch 1.5: 模块格式与运行时补全
+
+审查发现 Phase 1 遗漏了设计文档中明确要求的关键组件，补充如下：
+
+- [ ] 1.5.1 `.darticb` 二进制模块格式（header + magic + 版本 + 校验和） → `lib/src/bytecode/format.dart`
+- [ ] 1.5.2 模块序列化/反序列化管线 → `lib/src/bytecode/serializer.dart`
+- [ ] 1.5.3 异常处理表结构（try 范围 → handler PC 映射） → 扩展 `module.dart` + `interpreter.dart`
+- [ ] 1.5.4 StackKind 分类（编译器为每个变量/临时值标注 intVal/doubleVal/ref，保证双视图不变式） → 扩展 `compiler.dart`
+- [ ] 1.5.5 IC 表元数据初始化（函数加载时 IC 表零填充） → 扩展 `module.dart`
+- [ ] 1.5.6 端到端测试：编译→序列化→反序列化→执行 → `test/e2e/module_roundtrip_test.dart`
+
+**commit:** `feat: add module format, exception tables, StackKind, and IC initialization`
+
+> **核心发现：**
+> _(执行时填写：.darticb 格式的版本兼容策略、异常处理表对 finally 的特殊处理、StackKind 推断的 edge case 等)_
+
+### Phase 1 里程碑验证
+
+```dart
+// 能编译并执行这段代码，返回正确结果
+int add(int a, int b) => a + b;
+int main() => add(1, 2); // => 3
+```
+
+- [ ] 里程碑通过
+- [ ] 编译→序列化→反序列化→执行 roundtrip 通过
+
+---
+
+## Phase 2: 基础语言特性
+
+**目标：** 通过 `co19/Language/Variables`, `co19/Language/Expressions`（算术/比较/逻辑子集）, `co19/Language/Statements`
+
+**设计章节：** 继续扩展 Ch1/Ch3/Ch5
+
+**里程碑：** 通过 co19 上述三个目录的基础测试
+
+### Batch 2.1: 变量与赋值
+
+- [ ] 2.1.1 局部变量声明与初始化（var/final/const） → `Language/Variables/`
+- [ ] 2.1.2 全局变量 LOAD_GLOBAL/STORE_GLOBAL → `Language/Variables/`
+- [ ] 2.1.3 null、bool 字面量与 null 检查 → `Language/Variables/`
+
+**commit:** `feat: support variable declaration, assignment, and globals`
+
+> **核心发现：**
+> _(执行时填写：const 编译期求值策略、late 变量处理等)_
+
+### Batch 2.2: 表达式
+
+- [ ] 2.2.1 浮点算术指令 (0x20-0x26) + 编译器支持 → `Language/Expressions/` 算术子集
+- [ ] 2.2.2 比较运算符（<, <=, >, >=, ==, !=）含 double → `Language/Expressions/` 比较子集
+- [ ] 2.2.3 逻辑运算符（&&, \|\|, !）短路求值 → `Language/Expressions/` 逻辑子集
+- [ ] 2.2.4 位运算操作 → `Language/Expressions/` 位运算子集
+- [ ] 2.2.5 条件表达式（`?:` 和 `??`） → `Language/Expressions/`
+- [ ] 2.2.6 类型转换（`as`）与类型测试（`is`/`is!`） → `Language/Expressions/`
+
+**commit:** `feat: support arithmetic, comparison, logical, and bitwise expressions`
+
+> **核心发现：**
+> _(执行时填写：短路求值的跳转生成、NaN 比较行为、Kernel 中运算符的 AST 表示等)_
+
+### Batch 2.3: 语句与控制流
+
+- [ ] 2.3.1 if/else 语句 → `Language/Statements/`
+- [ ] 2.3.2 for / while / do-while 循环 → `Language/Statements/`
+- [ ] 2.3.3 switch/case 语句（基础，无 pattern） → `Language/Statements/`
+- [ ] 2.3.4 break / continue / label → `Language/Statements/`
+- [ ] 2.3.5 try / catch / finally + THROW/RETHROW → `Language/Statements/`
+- [ ] 2.3.6 assert 语句 → `Language/Statements/`
+
+**commit:** `feat: support control flow statements and exception handling`
+
+> **核心发现：**
+> _(执行时填写：异常处理表实现方式、label 跳转的编译策略、finally 的控制流复杂度等)_
+
+### Batch 2.4: co19 Harness v0 — 原生 harness（不依赖 expect.dart）
+
+> **为什么不直接用 expect.dart？** `expect.dart` 定义了 `class Expect` 和 `class ExpectException`，且 `import 'dart:async'`。Phase 2 无类支持，无法编译。Phase 3 加了类后才切到真正的 expect.dart。
+
+- [ ] 2.4.1 测试发现器（扫描目录，匹配 `*_t[0-9]{2}.dart`） → `tool/co19_runner.dart`
+- [ ] 2.4.2 自建断言 shim（纯函数 API，无 class） → `lib/src/testing/expect_shim.dart`
+- [ ] 2.4.3 负面测试识别（解析 `// [analyzer]` / `// [cfe]` 标记，预期编译失败则跳过） → 扩展 co19_runner
+- [ ] 2.4.4 通过率统计与报告（pass/fail/skip/error 分类） → 扩展 co19_runner
+- [ ] 2.4.5 结果快照与 diff 功能（保存 JSON，对比新增 pass/回归 fail） → `tool/co19_results/`
+- [ ] 2.4.6 首轮验证：跑 Language/Variables + Expressions + Statements（仅标量/算术子集），保存基线快照 → 测试报告
+
+**commit:** `feat: add co19 test harness v0 with native assertion shim`
+
+> **核心发现：**
+> _(执行时填写：shim 替换 import 的可行性、co19 测试中有多少不依赖 class 的纯标量测试、负面测试标记格式变种等)_
+
+### Phase 2 里程碑验证
+
+- [ ] co19 `Language/Variables` 通过率 > 50%
+- [ ] co19 `Language/Expressions` 基础子集通过率 > 30%
+- [ ] co19 `Language/Statements` 通过率 > 30%
+
+**实际通过率：** _(执行时填写)_
+
+---
+
+## Phase 3: 函数与类
+
+**目标：** 通过 `co19/Language/Functions`, `co19/Language/Classes`（基础）, `co19/Language/Reference`
+
+**设计章节：** Ch2 (对象操作扩展), Ch3 (virtual dispatch), Ch5 (类编译)
+
+**里程碑：** 支持类的实例化、字段访问、方法调用、构造器、继承
+
+### Batch 3.1: 函数进阶
+
+- [ ] 3.1.1 可选参数（位置参数 + 命名参数） → `Language/Functions/`
+- [ ] 3.1.2 默认参数值 → `Language/Functions/`
+- [ ] 3.1.3 闭包 + CLOSURE/CLOSE_UPVALUE 指令 → `Language/Functions/`
+- [ ] 3.1.4 函数作为一等公民（tearoff、传参） → `Language/Functions/`
+
+**commit:** `feat: support optional params, closures, and first-class functions`
+
+> **核心发现：**
+> _(执行时填写：上值捕获的栈/堆迁移时机、命名参数在 Kernel 中的排列方式等)_
+
+### Batch 3.2: 类基础
+
+- [ ] 3.2.1 类定义、实例化 (NEW_INSTANCE) → `Language/Classes/`
+- [ ] 3.2.2 字段访问 (GET_FIELD_REF/VAL, SET_FIELD_REF/VAL) → `Language/Classes/`
+- [ ] 3.2.3 实例方法调用 (CALL_VIRTUAL + IC) → `Language/Classes/`
+- [ ] 3.2.4 构造器（默认/命名/重定向/工厂） → `Language/Classes/`
+- [ ] 3.2.5 静态方法与静态字段 → `Language/Classes/`
+- [ ] 3.2.6 getter / setter → `Language/Classes/`
+
+**commit:** `feat: support class instantiation, fields, methods, and constructors`
+
+> **核心发现：**
+> _(执行时填写：IC 单态缓存命中率、字段偏移计算（含继承链）、工厂构造器的 Kernel 表示等)_
+
+### Batch 3.3: 继承与多态
+
+- [ ] 3.3.1 单继承 + super 调用 (CALL_SUPER) → `Language/Classes/`
+- [ ] 3.3.2 方法重写 + 虚分发 → `Language/Classes/`
+- [ ] 3.3.3 抽象类与抽象方法 → `Language/Classes/`
+- [ ] 3.3.4 操作符重载 (EQ_GENERIC 等) → `Language/Classes/`
+
+**commit:** `feat: support inheritance, override, and operator overloading`
+
+> **核心发现：**
+> _(执行时填写：虚方法表结构选择、super 调用的 Kernel interfaceTarget 行为等)_
+
+### Batch 3.4: 作用域与名称解析
+
+- [ ] 3.4.1 块级作用域变量遮蔽 → `Language/Reference/`
+- [ ] 3.4.2 库导入/导出与可见性 → `Language/Libraries_and_Scripts/`
+- [ ] 3.4.3 this / super 引用 → `Language/Reference/`
+
+**commit:** `feat: support scoping, imports/exports, and name resolution`
+
+> **核心发现：**
+> _(执行时填写：Kernel 中已解析的名称与原始作用域的差异、多库编译的模块化策略等)_
+
+### Batch 3.5: co19 Harness v1 — 接入 expect.dart（类已就绪）
+
+> **此时类已就绪**，可以编译 `class Expect` 和 `class ExpectException`。从 shim 切到真正的 co19 expect.dart。
+
+- [ ] 3.5.1 编译 `Utils/expect.dart`（class Expect + class ExpectException + 基础断言） → 扩展 compiler
+- [ ] 3.5.2 相对路径 import 解析（`../../Utils/expect.dart`） → 扩展 compiler
+- [ ] 3.5.3 多文件测试支持（library 声明 + import 其他测试文件的解析与编译） → 扩展 compiler + co19_runner
+- [ ] 3.5.4 工厂模式测试支持（`test(Factory create)` 回调模式） → 扩展 co19_runner
+- [ ] 3.5.5 验证：跑 Language/Functions + Classes + Reference（新增类别） → 测试报告
+- [ ] 3.5.6 回归跑：重跑 Phase 2 全部类别（现在用真正的 expect.dart），diff 快照 → 回归报告
+
+**commit:** `feat: co19 harness v1 — integrate expect.dart with class support`
+
+> **核心发现：**
+> _(执行时填写：expect.dart 对 dart:async 的 import 如何处理（stub？忽略？）、expect.dart 的实际方法依赖链等)_
+
+### Batch 3.6: 泛型编译预备（为 Phase 4 铺路）
+
+> Phase 4 需要 Ch6 泛型，而 Ch6 依赖 Ch5 编译器能生成 TypeTemplate。此 batch 在 Phase 3 末尾为编译器补充类型信息基础设施。
+
+- [ ] 3.6.1 TypeTemplate 数据结构定义（类型参数、bounds、SuperTypeMap 骨架） → `lib/src/compiler/type_template.dart`
+- [ ] 3.6.2 编译器中 Kernel DartType 遍历框架（为 Phase 4 泛型编译做准备） → 扩展 `compiler.dart`
+- [ ] 3.6.3 类型参数 bounds 解析与编码 → 扩展 `type_template.dart`
+
+**commit:** `feat(compiler): add TypeTemplate infrastructure for generics`
+
+> **核心发现：**
+> _(执行时填写：Kernel 中 DartType 的具体子类型结构、TypeTemplate 序列化格式选择等)_
+
+### Phase 3 里程碑验证
+
+- [ ] co19 `Language/Functions` 通过率 > 50%
+- [ ] co19 `Language/Classes` 基础子集通过率 > 40%
+- [ ] co19 `Language/Reference` 通过率 > 40%
+- [ ] Phase 2 类别零回归（或回归已修复）
+- [ ] Phase 2 类别通过率较上期有提升（记录新增 pass 数）
+
+**实际通过率：** _(执行时填写)_
+**Phase 2 回归：** _(执行时填写：回归数 / 新增 pass 数)_
+
+---
+
+## Phase 4: 高级 OOP + 泛型 (Ch6)
+
+**目标：** 通过 `co19/Language/Generics`, `co19/Language/Mixins`, `co19/Language/Interfaces`, `co19/TypeSystem/subtyping`（核心子集）
+
+**设计章节：** **Ch6 泛型** 全面引入
+
+**里程碑：** 支持泛型类/方法、mixin、sealed class、子类型检查
+
+### Batch 4.1: Mixin 与接口
+
+- [ ] 4.1.1 implements 接口契约 → `Language/Interfaces/`
+- [ ] 4.1.2 mixin / mixin class / with → `Language/Mixins/`
+- [ ] 4.1.3 sealed / base / final class modifiers → `LanguageFeatures/Class-modifiers/`
+
+**commit:** `feat: support interfaces, mixins, and class modifiers`
+
+> **核心发现：**
+> _(执行时填写：mixin 线性化的 Kernel 表示、sealed class 在运行时的检查机制等)_
+
+### Batch 4.2: 泛型核心 (Ch6)
+
+- [ ] 4.2.1 DarticType 数据结构 + 驻留表 → `lib/src/runtime/type.dart`
+- [ ] 4.2.2 ITA/FTA 槽位 + PUSH_ITA/PUSH_FTA → Ch6 指令实现
+- [ ] 4.2.3 INSTANTIATE_TYPE + 类型参数传递 → Ch6 指令实现
+- [ ] 4.2.4 INSTANCEOF/CAST 子类型检查 → `Language/Generics/`
+- [ ] 4.2.5 泛型类编译 → `Language/Generics/`
+- [ ] 4.2.6 泛型方法编译 → `Language/Generics/`
+
+**commit:** `feat(generics): add reified generics with DarticType residency`
+
+> **核心发现：**
+> _(执行时填写：类型驻留表的哈希策略、ITA/FTA 在闭包中的传递、延迟实例化的触发条件等)_
+
+### Batch 4.3: 类型系统
+
+- [ ] 4.3.1 子类型检查算法实现 → `TypeSystem/subtyping/` 核心子集
+- [ ] 4.3.2 空安全类型检查（T? / T / Null） → `LanguageFeatures/nnbd/`
+- [ ] 4.3.3 Flow analysis 类型提升（type promotion） → `TypeSystem/flow-analysis/`
+
+**commit:** `feat: support subtype checking, null safety, and type promotion`
+
+> **核心发现：**
+> _(执行时填写：子类型算法的递归深度问题、FutureOr<T> 特殊处理、type promotion 是否需运行时支持等)_
+
+### Batch 4.4: co19 Harness v2 — 实验标志与类型负面测试
+
+> **注意**：`static_type_helper.dart` 使用 `extension StaticType<T> on T`，extension method 要到 Phase 6.2 才加，因此延迟到 Phase 6 harness v4。
+
+- [ ] 4.4.1 `// SharedOptions=--enable-experiment=...` 解析与传递 → 扩展 co19_runner
+- [ ] 4.4.2 类型错误负面测试完善（`@compile-error` 类型相关子集） → 扩展 co19_runner
+- [ ] 4.4.3 验证：跑 Language/Generics + Mixins + TypeSystem/subtyping（新增类别） → 测试报告
+- [ ] 4.4.4 回归跑：重跑 Phase 2-3 全部类别，diff 快照，确认零回归 → 回归报告
+
+**commit:** `feat: co19 harness v2 — experiment flags and type error tests`
+
+> **核心发现：**
+> _(执行时填写：实验标志对编译行为的影响、哪些 TypeSystem 测试因缺少 extension method 仍然 fail 等)_
+
+### Phase 4 里程碑验证
+
+- [ ] co19 `Language/Generics` 通过率 > 50%
+- [ ] co19 `Language/Mixins` 通过率 > 50%
+- [ ] co19 `TypeSystem/subtyping` 核心子集通过率 > 30%
+- [ ] Phase 2-3 类别零回归（或回归已修复）
+- [ ] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）
+
+**实际通过率：** _(执行时填写)_
+**历史回归：** _(执行时填写：回归数 / 新增 pass 数)_
+
+---
+
+## Phase 5: 标准库互调 (Ch4)
+
+**目标：** 通过 `co19/LibTest/core`（String, List, Map, int, double 等核心类型）
+
+**设计章节：** **Ch4 互调** 全面引入
+
+**里程碑：** 解释器代码能使用宿主 VM 的 `dart:core` 类型和方法
+
+### Batch 5.1: Bridge 基础设施 (Ch4)
+
+- [ ] 5.1.1 Bridge 类注册机制 + HostBindings → `lib/src/bridge/host_bindings.dart`
+- [ ] 5.1.2 DarticProxy（解释器对象→宿主包装） → `lib/src/bridge/proxy.dart`
+- [ ] 5.1.3 DarticCallbackProxy（解释器闭包→宿主 Function） → `lib/src/bridge/callback_proxy.dart`
+- [ ] 5.1.4 类型映射表（int/double/bool/String/null 自动转换） → `lib/src/bridge/type_mapping.dart`
+
+**commit:** `feat(bridge): add interop infrastructure with proxy and type mapping`
+
+> **核心发现：**
+> _(执行时填写：Expando 性能、Proxy 缓存策略、值类型装拆箱开销等)_
+
+### Batch 5.2: dart:core Bridge
+
+- [ ] 5.2.1 int / double Bridge → `LibTest/core/` 数值子集
+- [ ] 5.2.2 String Bridge → `LibTest/core/` 字符串子集
+- [ ] 5.2.3 List / Map / Set Bridge → `LibTest/core/` 集合子集
+- [ ] 5.2.4 print / Object / Type Bridge → `LibTest/core/` 基础子集
+
+**commit:** `feat(bridge): add dart:core bridge for int, String, List, Map`
+
+> **核心发现：**
+> _(执行时填写：Bridge 方法覆盖度、需要手写 vs 自动生成的边界、集合泛型与 Bridge 的交互等)_
+
+### Batch 5.3: 集合与字符串扩展
+
+- [ ] 5.3.1 集合操作指令 CREATE_LIST/MAP/SET → `Language/Expressions/` 集合子集
+- [ ] 5.3.2 字符串插值 STRING_INTERP → `Language/Expressions/` 字符串子集
+- [ ] 5.3.3 Spread 操作 (...) → `LanguageFeatures/Spread-collections/`
+
+**commit:** `feat: support collection literals, string interpolation, and spread`
+
+> **核心发现：**
+> _(执行时填写：集合字面量与 Bridge List 的关系、STRING_INTERP 的 toString 调用路径等)_
+
+### Batch 5.4: co19 Harness v3 — 标准库导入 + expect_common 完整支持
+
+> **此时 Bridge 已就绪**，`expect_common.dart` 的 `deepEquals` 需要 Map/List 才能工作，现在可以完整接入。
+
+- [ ] 5.4.1 `dart:core` / `dart:collection` / `dart:math` 导入解析（编译器路由到 Bridge） → 扩展 compiler
+- [ ] 5.4.2 接入 `Utils/expect_common.dart` 完整支持（deepEquals, listEquals, mapEquals 等） → 扩展 co19_runner
+- [ ] 5.4.3 跳过列表管理（不支持的库 `dart:io`/`dart:isolate`/`dart:ffi` 自动 skip） → `tool/co19_skip_list.txt`
+- [ ] 5.4.4 验证：跑 LibTest/core（新增类别） → 测试报告
+- [ ] 5.4.5 回归跑：重跑 Phase 2-4 全部类别，diff 快照，确认零回归 → 回归报告
+
+**commit:** `feat: co19 harness v3 — stdlib imports, expect_common, and skip list`
+
+> **核心发现：**
+> _(执行时填写：dart:core 中需 Bridge 的方法总数估算、expect_common 对泛型集合的实际依赖程度等)_
+
+### Phase 5 里程碑验证
+
+- [ ] co19 `LibTest/core` 通过率 > 30%
+- [ ] Bridge 基础类型（int/String/List/Map）方法覆盖率 > 60%
+- [ ] Phase 2-4 类别零回归（或回归已修复）
+- [ ] Phase 2-4 类别通过率较上期有提升（Bridge 解锁标准库方法调用相关测试）
+
+**实际通过率：** _(执行时填写)_
+**历史回归：** _(执行时填写：回归数 / 新增 pass 数)_
+
+---
+
+## Phase 6: 异步 + 高级语言特性
+
+**目标：** 通过 `co19/LibTest/async`, 各 `co19/LanguageFeatures/` 高级特性
+
+**设计章节：** **Ch7 异步**, **Ch8 沙箱**
+
+**里程碑：** 支持 async/await、generators、pattern matching、records、extension methods
+
+### Batch 6.1: 异步核心 (Ch7)
+
+- [ ] 6.1.1 帧快照/恢复（Frame-as-Continuation） → Ch7 核心机制
+- [ ] 6.1.2 INIT_ASYNC / AWAIT / ASYNC_RETURN → `LibTest/async/` Future 子集
+- [ ] 6.1.3 async* (INIT_ASYNC_STAR / YIELD) → `LibTest/async/` Stream 子集
+- [ ] 6.1.4 sync* (INIT_SYNC_STAR / YIELD) → `LibTest/async/` Iterable 子集
+- [ ] 6.1.5 await for (AWAIT_STREAM_NEXT) → `LibTest/async/`
+
+**commit:** `feat(async): add async/await, generators with frame-as-continuation`
+
+> **核心发现：**
+> _(执行时填写：浅保存 vs 深保存的性能差异、Completer 桥接的 GC 影响、generator 的首次 moveNext 触发时机等)_
+
+### Batch 6.2: 高级语言特性
+
+- [ ] 6.2.1 Extension methods → `LanguageFeatures/Extension-methods/` (275)
+- [ ] 6.2.2 Enhanced enum → `LanguageFeatures/Enhanced-Enum/` (156)
+- [ ] 6.2.3 Records + CREATE_RECORD 指令 → `LanguageFeatures/Records/` (172)
+- [ ] 6.2.4 Pattern matching（switch expression + destructuring） → `LanguageFeatures/Patterns/` (786)
+- [ ] 6.2.5 Constructor tearoffs → `LanguageFeatures/Constructor-tear-offs/` (378)
+- [ ] 6.2.6 Super parameters → `LanguageFeatures/Super-parameters/` (137)
+
+**commit:** `feat: support extension methods, records, patterns, and enhanced enums`
+
+> **核心发现：**
+> _(执行时填写：extension method 在 Kernel 中是否已脱糖、Pattern 的 Kernel 表示复杂度、Record 的运行时哈希/相等性等)_
+
+### Batch 6.3: co19 Harness v4 — static_type_helper + 异步测试
+
+> **此时 extension method + 泛型 + async 均已就绪**，可以接入剩余全部 Utils。
+
+- [ ] 6.3.1 接入 `Utils/static_type_helper.dart`（`extension StaticType<T> on T`，需 extension method + 泛型） → 扩展 co19_runner
+- [ ] 6.3.2 接入 `Utils/async_utils.dart`（asyncStart/asyncEnd 计数器） → 扩展 co19_runner
+- [ ] 6.3.3 stdout 输出检测（`unittest-suite-wait-for-done` / `unittest-suite-success`） → 扩展 co19_runner
+- [ ] 6.3.4 异步测试超时机制（可配置 timeout） → 扩展 co19_runner
+- [ ] 6.3.5 验证：跑 LibTest/async + LanguageFeatures/*（新增类别） → 测试报告
+- [ ] 6.3.6 全量回归跑：重跑 Phase 2-5 全部类别，diff 快照，确认零回归 → 最终回归报告
+
+**commit:** `feat: co19 harness v4 — static_type_helper, async test support`
+
+> **核心发现：**
+> _(执行时填写：static_type_helper 的实际使用频率（多少测试 import 它）、异步测试超时策略、asyncStart/asyncEnd 嵌套 edge case 等)_
+
+### Batch 6.4: 沙箱 (Ch8)
+
+- [ ] 6.4.1 字节码加载时验证器 → `lib/src/sandbox/verifier.dart`
+- [ ] 6.4.2 Fuel 计数 + 调用深度限制 → 扩展 `interpreter.dart`
+- [ ] 6.4.3 沙箱安全测试 → `test/sandbox/`
+
+**commit:** `feat(sandbox): add bytecode verification and resource limits`
+
+> **核心发现：**
+> _(执行时填写：验证器的检查项清单、fuel 粒度对性能的影响、已发现的安全漏洞等)_
+
+### Phase 6 里程碑验证
+
+- [ ] co19 `LibTest/async` 通过率 > 30%
+- [ ] co19 `LanguageFeatures/Patterns` 通过率 > 40%
+- [ ] co19 `LanguageFeatures/Records` 通过率 > 50%
+- [ ] Phase 2-5 全量零回归（或回归已修复）
+- [ ] 全量累计通过率与预估对比
+
+**实际通过率：** _(执行时填写)_
+**全量回归：** _(执行时填写：回归数 / 新增 pass 数 / 最终累计通过数)_
+
+---
+
+## 各 Phase 预估 co19 覆盖
+
+审查发现原预估存在偏差（Phase 5 预估超出实际测试数，Phase 4/6 通过率偏高），现提供乐观/保守双估：
+
+| Phase | co19 类别 | 实际测试数 | 新增 pass | 历史提升 | 累计（乐观） | 累计（保守） | 实际 | 回归 |
+|-------|----------|----------|----------|---------|------------|------------|------|------|
+| 1 | （手工测试，无 co19） | — | 0 | — | 0 | 0 | | |
+| 2 | Variables + Expressions + Statements | ~2,500 | ~1,000 | — | ~1,000 | ~700 | | |
+| 3 | Functions + Classes + Reference | ~1,600 | ~1,000 | ~300 | ~2,300 | ~1,700 | | |
+| 4 | Generics + Mixins + TypeSystem | ~3,200 | ~1,500 | ~700 | ~4,500 | ~3,200 | | |
+| 5 | LibTest/core + 集合/字符串特性 | ~1,100 | ~600 | ~400 | ~5,500 | ~4,000 | | |
+| 6 | Async + LanguageFeatures | ~2,300 | ~1,500 | ~500 | ~7,500 | ~5,500 | | |
+
+**关键修正说明：**
+- **Phase 2**：harness v0 只有自建 shim，通过率受限；大量 Expressions 测试依赖类（Phase 3 才解锁）
+- **Phase 4**：TypeSystem/subtyping 占 2,721 测试（86%），类型测试通过率通常偏低
+- **Phase 5**：LibTest/core 实际只有 ~1,124 测试（原计划 1,500 超出实际数）
+- **Phase 6**：Patterns (783 测试) 占大头且复杂度高，初始通过率可能 20-30%
+
+**"历史提升"**：指新能力解锁的、历史类别中之前 fail 现在 pass 的测试数。例如 Phase 3 加了类后，Phase 2 的 `Language/Expressions` 中依赖类的测试预计新增 ~300 个 pass。
+
+**最终目标覆盖率（乐观）：** ~7,500 / 24,350 ≈ 31%
+**最终目标覆盖率（保守）：** ~5,500 / 24,350 ≈ 23%
+
+排除 `dart:io`/`dart:isolate`/`dart:ffi`/`dart:mirrors`/`dart:html` 等不支持的库（~8,500 测试）和 `deferred as` 等不支持的语言特性后，可通过测试基数约 ~15,800，乐观覆盖率 ~47%，保守 ~35%。
+
+---
+
+## 执行节奏
+
+- 每个 Batch 约 3-6 个 Task，每个 Task 遵循 TDD：读设计文档 → 写测试 → 最小实现 → analyze → test → 重构
+- 每完成一个 Batch 必须：
+  1. 提交 commit
+  2. 勾选本文件中对应 checkbox
+  3. 填写该 Batch 的"核心发现"
+  4. 更新 `docs/tasks/overview.md` 汇总表
+- Phase 之间有明确的里程碑验证点，不达标不进入下一 Phase
+- 发现设计问题时及时更新 `docs/design/` 对应章节
+
+---
+
+## 下一步
+
+- [x] ~~为 Phase 1 编写详细的 Task 文件~~ → 已完成，见 [`docs/tasks/phase1/`](../tasks/phase1/README.md)
+- [ ] 执行 Phase 1（Batch 1.1 → 1.5，共 26 个 Task）
+- [ ] Phase 1 里程碑验证通过后，为 Phase 2 编写 Task 文件
