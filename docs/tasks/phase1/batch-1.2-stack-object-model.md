@@ -87,15 +87,18 @@ feat(runtime): add three-stack model and object representation
 
 ## 核心发现
 
-> _(执行时填写：双视图对齐问题、栈增长策略、Frame 字段取舍等)_
+- `Int64List.view()` / `Float64List.view()` 共享同一 `Uint8List.buffer`，每槽 8 字节自动对齐——无需手动处理对齐问题
+- DarticObject 空字段单例：`List<Object?>.unmodifiable([])` 用于 refFields，`Int64List(0)` 用于 valueFields。所有零字段实例共享同一对象
+- CallStack fp 设计：fp 指向当前帧"之后"（即 base + frameSize），读当前帧用 `fp - frameSize + offset`。这样 pushFrame 只需写入再前进，popFrame 只需读 savedFP
+- DarticFrame Phase 1 只实现 9 个基础+栈快照字段（共 22 个中的 9 个），异步/生成器字段留 TODO
 
 ## Batch 完成检查
 
-- [ ] 1.2.1 ValueStack
-- [ ] 1.2.2 RefStack
-- [ ] 1.2.3 CallStack + DarticFrame
-- [ ] 1.2.4 DarticObject / DarticClassInfo
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test test/runtime/` 全部通过
+- [x] 1.2.1 ValueStack
+- [x] 1.2.2 RefStack
+- [x] 1.2.3 CallStack + DarticFrame
+- [x] 1.2.4 DarticObject / DarticClassInfo
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test test/runtime/` 全部通过（73 tests）
 - [ ] commit 已提交
 - [ ] overview.md 已更新

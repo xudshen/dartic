@@ -96,5 +96,5 @@ feat(bytecode): add ISA encoding, opcodes, and constant pool
 - [x] 1.1.4 字节码模块容器
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test test/bytecode/` 全部通过（111 tests）
-- [ ] commit 已提交
-- [ ] overview.md 已更新
+- [x] commit 已提交 (`0b12b6e`)
+- [x] overview.md 已更新
