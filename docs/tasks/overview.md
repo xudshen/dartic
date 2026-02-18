@@ -27,6 +27,26 @@
 
 ---
 
-## Phase 2-6: 待规划
+## Phase 2: 基础语言特性 — 🔜 待执行
+
+**目标：** 支持变量声明（含全局变量）、完整表达式求值、控制流语句，并通过 co19 harness v0 验证
+
+**Task 目录：** [`docs/tasks/phase2/`](phase2/README.md)
+
+| Batch | 描述 | Task 数 | 状态 |
+|-------|------|---------|------|
+| [2.1](phase2/batch-2.1-variables.md) | 变量与赋值 | 3 | ⬜ |
+| [2.2](phase2/batch-2.2-expressions.md) | 表达式 | 6 | ⬜ |
+| [2.3](phase2/batch-2.3-statements.md) | 语句与控制流 | 6 | ⬜ |
+| [2.4](phase2/batch-2.4-co19-harness.md) | co19 Harness v0 | 6 | ⬜ |
+
+**里程碑：**
+- [ ] co19 `Language/Variables` 通过率 > 50%
+- [ ] co19 `Language/Expressions` 基础子集通过率 > 30%
+- [ ] co19 `Language/Statements` 通过率 > 30%
+
+---
+
+## Phase 3-6: 待规划
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)

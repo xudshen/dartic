@@ -647,4 +647,4 @@ review 发现的问题直接修复，修复后重新 review 直到通过。
 
 - [x] ~~为 Phase 1 编写详细的 Task 文件~~ → 已完成，见 [`docs/tasks/phase1/`](../tasks/phase1/README.md)
 - [x] 执行 Phase 1（Batch 1.1 → 1.5，共 26 个 Task）— 412 tests, all passing
-- [ ] 为 Phase 2 编写 Task 文件
+- [x] ~~为 Phase 2 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase2/`](../tasks/phase2/README.md)
