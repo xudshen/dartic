@@ -42,8 +42,9 @@ class DarticGlobalTable {
 
   /// Returns true if the global at [index] has been initialized.
   bool isInitialized(int index) {
-    return !identical(_slots[index], _uninitialized) &&
-        !identical(_slots[index], _initializing);
+    final value = _slots[index];
+    return !identical(value, _uninitialized) &&
+        !identical(value, _initializing);
   }
 
   /// Marks the global as currently initializing (for cycle detection).

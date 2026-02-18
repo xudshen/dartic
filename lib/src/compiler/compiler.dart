@@ -225,24 +225,8 @@ class DarticCompiler {
     _isEntryFunction = true; // Use HALT, not RETURN
     _pendingArgMoves.clear();
 
-    // Compile initializer expression.
     final (reg, loc) = _compileExpression(field.initializer!);
-
-    // Box value types to ref stack for STORE_GLOBAL.
-    int refReg;
-    if (loc == ResultLoc.value) {
-      refReg = _allocRefReg();
-      final kind = _classifyStackKind(field.type);
-      if (kind == StackKind.doubleVal) {
-        _emitter.emit(encodeABC(Op.boxDouble, refReg, reg, 0));
-      } else {
-        _emitter.emit(encodeABC(Op.boxInt, refReg, reg, 0));
-      }
-    } else {
-      refReg = reg;
-    }
-
-    // Store to global slot.
+    final refReg = _ensureRef(reg, loc, field.type);
     _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
 
     // HALT (end of initializer).
@@ -269,6 +253,61 @@ class DarticCompiler {
   int _allocValueReg() => _valueAlloc.alloc();
 
   int _allocRefReg() => _refAlloc.alloc();
+
+  /// Emits a MOVE instruction (value or ref) from [srcReg] to [destReg].
+  void _emitMove(int destReg, int srcReg, ResultLoc loc) {
+    final op = loc == ResultLoc.ref ? Op.moveRef : Op.moveVal;
+    _emitter.emit(encodeABC(op, destReg, srcReg, 0));
+  }
+
+  /// Compiles a binary value-stack operation: receiver op arg[0].
+  (int, ResultLoc) _emitBinaryOp(ir.InstanceInvocation expr, int op) {
+    final (lhsReg, _) = _compileExpression(expr.receiver);
+    final (rhsReg, _) = _compileExpression(expr.arguments.positional[0]);
+    final resultReg = _allocValueReg();
+    _emitter.emit(encodeABC(op, resultReg, lhsReg, rhsReg));
+    return (resultReg, ResultLoc.value);
+  }
+
+  /// Compiles a unary value-stack operation on the receiver.
+  (int, ResultLoc) _emitUnaryOp(ir.InstanceInvocation expr, int op) {
+    final (srcReg, _) = _compileExpression(expr.receiver);
+    final resultReg = _allocValueReg();
+    _emitter.emit(encodeABC(op, resultReg, srcReg, 0));
+    return (resultReg, ResultLoc.value);
+  }
+
+  /// Compiles [branchExpr], boxing and moving the result into [targetReg].
+  ///
+  /// Used by conditional expressions where both branches must write to the
+  /// same pre-allocated register.
+  void _compileBranchInto(
+    ir.Expression branchExpr,
+    int targetReg,
+    ResultLoc targetLoc,
+  ) {
+    var (reg, loc) = _compileExpression(branchExpr);
+    if (loc != targetLoc && targetLoc == ResultLoc.ref) {
+      reg = _emitBoxToRef(reg, _inferExprType(branchExpr));
+    }
+    if (reg != targetReg) {
+      _emitMove(targetReg, reg, targetLoc);
+    }
+  }
+
+  /// Ensures a value is on the ref stack, boxing if necessary.
+  ///
+  /// Used for STORE_GLOBAL which always operates on the ref stack. If the
+  /// value is already on the ref stack, returns [reg] unchanged.
+  int _ensureRef(int reg, ResultLoc loc, ir.DartType fieldType) {
+    if (loc == ResultLoc.ref) return reg;
+    final refReg = _allocRefReg();
+    final boxOp = _classifyStackKind(fieldType) == StackKind.doubleVal
+        ? Op.boxDouble
+        : Op.boxInt;
+    _emitter.emit(encodeABC(boxOp, refReg, reg, 0));
+    return refReg;
+  }
 
   /// Boxes a value-stack register to the ref stack, preserving the Dart
   /// runtime type. Bools (stored as int 0/1) are converted to actual `bool`
@@ -308,19 +347,11 @@ class DarticCompiler {
     final valRegCount = _valueAlloc.maxUsed;
     final refRegCount = _refAlloc.maxUsed;
     for (final move in _pendingArgMoves) {
-      if (move.loc == ResultLoc.value) {
-        final destReg = valRegCount + move.argIdx;
-        _emitter.patchJump(
-          move.pc,
-          encodeABC(Op.moveVal, destReg, move.srcReg, 0),
-        );
-      } else {
-        final destReg = refRegCount + move.argIdx;
-        _emitter.patchJump(
-          move.pc,
-          encodeABC(Op.moveRef, destReg, move.srcReg, 0),
-        );
-      }
+      final isValue = move.loc == ResultLoc.value;
+      final destReg =
+          (isValue ? valRegCount : refRegCount) + move.argIdx;
+      final op = isValue ? Op.moveVal : Op.moveRef;
+      _emitter.patchJump(move.pc, encodeABC(op, destReg, move.srcReg, 0));
     }
     _pendingArgMoves.clear();
   }
@@ -474,88 +505,73 @@ class DarticCompiler {
     );
   }
 
-  // ── Literal visitors ──
+  // ── Value loading primitives ──
 
-  (int, ResultLoc) _compileIntLiteral(ir.IntLiteral lit) {
+  (int, ResultLoc) _loadInt(int value) {
     final reg = _allocValueReg();
     // sBx uses excess-K encoding (K=0x7FFF): asymmetric range [-32767, +32768].
-    if (lit.value >= -32767 && lit.value <= 32768) {
-      _emitter.emit(encodeAsBx(Op.loadInt, reg, lit.value));
+    if (value >= -32767 && value <= 32768) {
+      _emitter.emit(encodeAsBx(Op.loadInt, reg, value));
     } else {
-      final idx = _constantPool.addInt(lit.value);
+      final idx = _constantPool.addInt(value);
       _emitter.emit(encodeABx(Op.loadConstInt, reg, idx));
     }
     return (reg, ResultLoc.value);
   }
 
-  (int, ResultLoc) _compileBoolLiteral(ir.BoolLiteral lit) {
+  (int, ResultLoc) _loadBool(bool value) {
     final reg = _allocValueReg();
     _emitter.emit(encodeABC(
-      lit.value ? Op.loadTrue : Op.loadFalse,
+      value ? Op.loadTrue : Op.loadFalse,
       reg, 0, 0,
     ));
     return (reg, ResultLoc.value);
   }
 
-  (int, ResultLoc) _compileDoubleLiteral(ir.DoubleLiteral lit) {
+  (int, ResultLoc) _loadDouble(double value) {
     final reg = _allocValueReg();
-    final idx = _constantPool.addDouble(lit.value);
+    final idx = _constantPool.addDouble(value);
     _emitter.emit(encodeABx(Op.loadConstDbl, reg, idx));
     return (reg, ResultLoc.value);
   }
 
-  (int, ResultLoc) _compileStringLiteral(ir.StringLiteral lit) {
+  (int, ResultLoc) _loadString(String value) {
     final reg = _allocRefReg();
-    final idx = _constantPool.addRef(lit.value);
+    final idx = _constantPool.addRef(value);
     _emitter.emit(encodeABx(Op.loadConst, reg, idx));
     return (reg, ResultLoc.ref);
   }
 
-  (int, ResultLoc) _compileNullLiteral() {
+  (int, ResultLoc) _loadNull() {
     final reg = _allocRefReg();
     _emitter.emit(encodeABC(Op.loadNull, reg, 0, 0));
     return (reg, ResultLoc.ref);
   }
 
+  // ── Literal visitors ──
+
+  (int, ResultLoc) _compileIntLiteral(ir.IntLiteral lit) => _loadInt(lit.value);
+
+  (int, ResultLoc) _compileBoolLiteral(ir.BoolLiteral lit) =>
+      _loadBool(lit.value);
+
+  (int, ResultLoc) _compileDoubleLiteral(ir.DoubleLiteral lit) =>
+      _loadDouble(lit.value);
+
+  (int, ResultLoc) _compileStringLiteral(ir.StringLiteral lit) =>
+      _loadString(lit.value);
+
+  (int, ResultLoc) _compileNullLiteral() => _loadNull();
+
   // ── ConstantExpression ──
 
   (int, ResultLoc) _compileConstantExpression(ir.ConstantExpression expr) {
     final constant = expr.constant;
-    if (constant is ir.IntConstant) {
-      final reg = _allocValueReg();
-      if (constant.value >= -32767 && constant.value <= 32768) {
-        _emitter.emit(encodeAsBx(Op.loadInt, reg, constant.value));
-      } else {
-        final idx = _constantPool.addInt(constant.value);
-        _emitter.emit(encodeABx(Op.loadConstInt, reg, idx));
-      }
-      return (reg, ResultLoc.value);
-    }
-    if (constant is ir.DoubleConstant) {
-      final reg = _allocValueReg();
-      final idx = _constantPool.addDouble(constant.value);
-      _emitter.emit(encodeABx(Op.loadConstDbl, reg, idx));
-      return (reg, ResultLoc.value);
-    }
-    if (constant is ir.BoolConstant) {
-      final reg = _allocValueReg();
-      _emitter.emit(encodeABC(
-        constant.value ? Op.loadTrue : Op.loadFalse,
-        reg, 0, 0,
-      ));
-      return (reg, ResultLoc.value);
-    }
-    if (constant is ir.StringConstant) {
-      final reg = _allocRefReg();
-      final idx = _constantPool.addRef(constant.value);
-      _emitter.emit(encodeABx(Op.loadConst, reg, idx));
-      return (reg, ResultLoc.ref);
-    }
-    if (constant is ir.NullConstant) {
-      final reg = _allocRefReg();
-      _emitter.emit(encodeABC(Op.loadNull, reg, 0, 0));
-      return (reg, ResultLoc.ref);
-    }
+    if (constant is ir.IntConstant) return _loadInt(constant.value);
+    if (constant is ir.DoubleConstant) return _loadDouble(constant.value);
+    if (constant is ir.BoolConstant) return _loadBool(constant.value);
+    if (constant is ir.StringConstant) return _loadString(constant.value);
+    if (constant is ir.NullConstant) return _loadNull();
     throw UnsupportedError(
       'Unsupported constant type: ${constant.runtimeType}',
     );
@@ -575,50 +591,25 @@ class DarticCompiler {
   // ── LogicalExpression (&&, ||) ──
 
   (int, ResultLoc) _compileLogicalExpression(ir.LogicalExpression expr) {
-    // Compile the left operand — result lands in leftReg on the value stack.
     final (leftReg, _) = _compileExpression(expr.left);
 
-    if (expr.operatorEnum == ir.LogicalExpressionOperator.AND) {
-      // &&: if left is false (0), short-circuit — skip right operand.
-      // Emit JUMP_IF_FALSE leftReg, sBx (placeholder).
-      final jumpPC = _emitter.emitPlaceholder();
+    // &&: short-circuit on false; ||: short-circuit on true.
+    final jumpOp = expr.operatorEnum == ir.LogicalExpressionOperator.AND
+        ? Op.jumpIfFalse
+        : Op.jumpIfTrue;
 
-      // Compile right operand.
-      final (rightReg, _) = _compileExpression(expr.right);
+    final jumpPC = _emitter.emitPlaceholder();
+    final (rightReg, _) = _compileExpression(expr.right);
 
-      // If right compiled to a different register, move result to leftReg
-      // so both paths leave the result in the same register.
-      if (rightReg != leftReg) {
-        _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
-      }
-
-      // Backpatch: target is current PC.
-      // sBx = targetPC - (jumpPC + 1)
-      final targetPC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpPC,
-        encodeAsBx(Op.jumpIfFalse, leftReg, targetPC - jumpPC - 1),
-      );
-    } else {
-      // ||: if left is true (non-zero), short-circuit — skip right operand.
-      // Emit JUMP_IF_TRUE leftReg, sBx (placeholder).
-      final jumpPC = _emitter.emitPlaceholder();
-
-      // Compile right operand.
-      final (rightReg, _) = _compileExpression(expr.right);
-
-      // Move result to leftReg if needed.
-      if (rightReg != leftReg) {
-        _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
-      }
-
-      // Backpatch: target is current PC.
-      final targetPC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpPC,
-        encodeAsBx(Op.jumpIfTrue, leftReg, targetPC - jumpPC - 1),
-      );
+    if (rightReg != leftReg) {
+      _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
     }
+
+    final targetPC = _emitter.currentPC;
+    _emitter.patchJump(
+      jumpPC,
+      encodeAsBx(jumpOp, leftReg, targetPC - jumpPC - 1),
+    );
 
     return (leftReg, ResultLoc.value);
   }
@@ -643,21 +634,8 @@ class DarticCompiler {
     // 2. JUMP_IF_FALSE condReg → else (placeholder).
     final jumpToElse = _emitter.emitPlaceholder();
 
-    // 3. Compile the then branch.
-    var (thenReg, thenLoc) = _compileExpression(expr.then);
-
-    // Box if the branch produced a value but the conditional expects ref.
-    if (thenLoc != resultLoc && resultLoc == ResultLoc.ref) {
-      final thenType = _inferExprType(expr.then);
-      thenReg = _emitBoxToRef(thenReg, thenType);
-    }
-    if (thenReg != resultReg) {
-      if (resultLoc == ResultLoc.ref) {
-        _emitter.emit(encodeABC(Op.moveRef, resultReg, thenReg, 0));
-      } else {
-        _emitter.emit(encodeABC(Op.moveVal, resultReg, thenReg, 0));
-      }
-    }
+    // 3. Compile the then branch → move result to resultReg.
+    _compileBranchInto(expr.then, resultReg, resultLoc);
 
     // 4. JUMP → end (placeholder, skip else branch).
     final jumpToEnd = _emitter.emitPlaceholder();
@@ -669,21 +647,8 @@ class DarticCompiler {
       encodeAsBx(Op.jumpIfFalse, condReg, elsePC - jumpToElse - 1),
     );
 
-    // 6. Compile the else branch.
-    var (elseReg, elseLoc) = _compileExpression(expr.otherwise);
-
-    // Box if the branch produced a value but the conditional expects ref.
-    if (elseLoc != resultLoc && resultLoc == ResultLoc.ref) {
-      final elseType = _inferExprType(expr.otherwise);
-      elseReg = _emitBoxToRef(elseReg, elseType);
-    }
-    if (elseReg != resultReg) {
-      if (resultLoc == ResultLoc.ref) {
-        _emitter.emit(encodeABC(Op.moveRef, resultReg, elseReg, 0));
-      } else {
-        _emitter.emit(encodeABC(Op.moveVal, resultReg, elseReg, 0));
-      }
-    }
+    // 6. Compile the else branch → move result to resultReg.
+    _compileBranchInto(expr.otherwise, resultReg, resultLoc);
 
     // 7. Backpatch end label.
     final endPC = _emitter.currentPC;
@@ -747,15 +712,14 @@ class DarticCompiler {
       // unbox after the null check so the result is on the value stack.
       final type = _inferExprType(expr.operand);
       if (type is ir.InterfaceType) {
-        final cls = type.classNode;
-        if (cls == _coreTypes.intClass || cls == _coreTypes.boolClass) {
+        final nonNullType =
+            type.withDeclaredNullability(ir.Nullability.nonNullable);
+        final kind = _classifyStackKind(nonNullType);
+        if (kind.isValue) {
+          final unboxOp =
+              kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
           final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.unboxInt, valReg, reg, 0));
-          return (valReg, ResultLoc.value);
-        }
-        if (cls == _coreTypes.doubleClass) {
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.unboxDouble, valReg, reg, 0));
+          _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
           return (valReg, ResultLoc.value);
         }
       }
@@ -798,36 +762,27 @@ class DarticCompiler {
 
   // ── Variable access ──
 
-  (int, ResultLoc) _compileVariableGet(ir.VariableGet expr) {
-    final binding = _scope.lookup(expr.variable);
+  VarBinding _lookupVar(ir.VariableDeclaration decl) {
+    final binding = _scope.lookup(decl);
     if (binding == null) {
-      throw StateError(
-        'Undefined variable: ${expr.variable.name}',
-      );
+      throw StateError('Undefined variable: ${decl.name}');
     }
-    return (
-      binding.reg,
-      binding.kind.isValue ? ResultLoc.value : ResultLoc.ref,
-    );
+    return binding;
+  }
+
+  ResultLoc _locOf(VarBinding binding) =>
+      binding.kind.isValue ? ResultLoc.value : ResultLoc.ref;
+
+  (int, ResultLoc) _compileVariableGet(ir.VariableGet expr) {
+    final binding = _lookupVar(expr.variable);
+    return (binding.reg, _locOf(binding));
   }
 
   (int, ResultLoc) _compileVariableSet(ir.VariableSet expr) {
-    final binding = _scope.lookup(expr.variable);
-    if (binding == null) {
-      throw StateError(
-        'Undefined variable: ${expr.variable.name}',
-      );
-    }
+    final binding = _lookupVar(expr.variable);
     final (srcReg, _) = _compileExpression(expr.value);
-    if (binding.kind.isValue) {
-      _emitter.emit(encodeABC(Op.moveVal, binding.reg, srcReg, 0));
-    } else {
-      _emitter.emit(encodeABC(Op.moveRef, binding.reg, srcReg, 0));
-    }
-    return (
-      binding.reg,
-      binding.kind.isValue ? ResultLoc.value : ResultLoc.ref,
-    );
+    _emitMove(binding.reg, srcReg, _locOf(binding));
+    return (binding.reg, _locOf(binding));
   }
 
   // ── Static field access ──
@@ -844,14 +799,11 @@ class DarticCompiler {
 
       // Unbox if the field type is a value type.
       final kind = _classifyStackKind(target.type);
-      if (kind == StackKind.intVal) {
+      if (kind.isValue) {
+        final unboxOp =
+            kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
         final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxInt, valReg, refReg, 0));
-        return (valReg, ResultLoc.value);
-      }
-      if (kind == StackKind.doubleVal) {
-        final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxDouble, valReg, refReg, 0));
+        _emitter.emit(encodeABC(unboxOp, valReg, refReg, 0));
         return (valReg, ResultLoc.value);
       }
       return (refReg, ResultLoc.ref);
@@ -869,21 +821,7 @@ class DarticCompiler {
         throw UnsupportedError('Unknown static field: ${target.name.text}');
       }
       final (srcReg, srcLoc) = _compileExpression(expr.value);
-
-      // Box value types to ref stack for STORE_GLOBAL.
-      int refReg;
-      if (srcLoc == ResultLoc.value) {
-        refReg = _allocRefReg();
-        final kind = _classifyStackKind(target.type);
-        if (kind == StackKind.doubleVal) {
-          _emitter.emit(encodeABC(Op.boxDouble, refReg, srcReg, 0));
-        } else {
-          _emitter.emit(encodeABC(Op.boxInt, refReg, srcReg, 0));
-        }
-      } else {
-        refReg = srcReg;
-      }
-
+      final refReg = _ensureRef(srcReg, srcLoc, target.type);
       _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
       return (srcReg, srcLoc); // Assignment evaluates to the assigned value
     }
@@ -993,50 +931,11 @@ class DarticCompiler {
 
       // Check if receiver is statically int.
       if (receiverType != null && _isIntType(receiverType)) {
-        final intOp = _intArithOp(name);
-        if (intOp != null) {
-          final (lhsReg, _) = _compileExpression(expr.receiver);
-          final (rhsReg, _) =
-              _compileExpression(expr.arguments.positional[0]);
-          final resultReg = _allocValueReg();
-          _emitter.emit(encodeABC(intOp, resultReg, lhsReg, rhsReg));
-          return (resultReg, ResultLoc.value);
-        }
-
-        // Int comparison operators (<, <=, >, >=).
-        final intCmpOp = _intCompareOp(name);
-        if (intCmpOp != null) {
-          final (lhsReg, _) = _compileExpression(expr.receiver);
-          final (rhsReg, _) =
-              _compileExpression(expr.arguments.positional[0]);
-          final resultReg = _allocValueReg();
-          _emitter.emit(encodeABC(intCmpOp, resultReg, lhsReg, rhsReg));
-          return (resultReg, ResultLoc.value);
-        }
-
-        // Unary minus: in Kernel, -a is InstanceInvocation(a, 'unary-', [])
-        if (name == 'unary-') {
-          final (srcReg, _) = _compileExpression(expr.receiver);
-          final resultReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.negInt, resultReg, srcReg, 0));
-          return (resultReg, ResultLoc.value);
-        }
-
-        // Bitwise NOT: in Kernel, ~a is InstanceInvocation(a, '~', [])
-        if (name == '~') {
-          final (srcReg, _) = _compileExpression(expr.receiver);
-          final resultReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.bitNot, resultReg, srcReg, 0));
-          return (resultReg, ResultLoc.value);
-        }
-
-        // int.toDouble() → INT_TO_DBL
-        if (name == 'toDouble') {
-          final (srcReg, _) = _compileExpression(expr.receiver);
-          final resultReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.intToDbl, resultReg, srcReg, 0));
-          return (resultReg, ResultLoc.value);
-        }
+        final op = _intBinaryOp(name);
+        if (op != null) return _emitBinaryOp(expr, op);
+        if (name == 'unary-') return _emitUnaryOp(expr, Op.negInt);
+        if (name == '~') return _emitUnaryOp(expr, Op.bitNot);
+        if (name == 'toDouble') return _emitUnaryOp(expr, Op.intToDbl);
       }
 
       // Check if receiver is statically double.
@@ -1063,38 +962,10 @@ class DarticCompiler {
     ir.InstanceInvocation expr,
     String name,
   ) {
-    final dblOp = _doubleArithOp(name);
-    if (dblOp != null) {
-      final (lhsReg, _) = _compileExpression(expr.receiver);
-      final (rhsReg, _) = _compileExpression(expr.arguments.positional[0]);
-      final resultReg = _allocValueReg();
-      _emitter.emit(encodeABC(dblOp, resultReg, lhsReg, rhsReg));
-      return (resultReg, ResultLoc.value);
-    }
-
-    final dblCmpOp = _doubleCompareOp(name);
-    if (dblCmpOp != null) {
-      final (lhsReg, _) = _compileExpression(expr.receiver);
-      final (rhsReg, _) = _compileExpression(expr.arguments.positional[0]);
-      final resultReg = _allocValueReg();
-      _emitter.emit(encodeABC(dblCmpOp, resultReg, lhsReg, rhsReg));
-      return (resultReg, ResultLoc.value);
-    }
-
-    if (name == 'unary-') {
-      final (srcReg, _) = _compileExpression(expr.receiver);
-      final resultReg = _allocValueReg();
-      _emitter.emit(encodeABC(Op.negDbl, resultReg, srcReg, 0));
-      return (resultReg, ResultLoc.value);
-    }
-
-    if (name == 'toInt') {
-      final (srcReg, _) = _compileExpression(expr.receiver);
-      final resultReg = _allocValueReg();
-      _emitter.emit(encodeABC(Op.dblToInt, resultReg, srcReg, 0));
-      return (resultReg, ResultLoc.value);
-    }
-
+    final op = _doubleBinaryOp(name);
+    if (op != null) return _emitBinaryOp(expr, op);
+    if (name == 'unary-') return _emitUnaryOp(expr, Op.negDbl);
+    if (name == 'toInt') return _emitUnaryOp(expr, Op.dblToInt);
     return null;
   }
 
@@ -1280,18 +1151,14 @@ class DarticCompiler {
   bool _isBoolType(ir.DartType type) =>
       type is ir.InterfaceType && type.classNode == _coreTypes.boolClass;
 
-  ir.DartType? _inferConstantType(ir.Constant constant) {
-    if (constant is ir.IntConstant) return _coreTypes.intNonNullableRawType;
-    if (constant is ir.DoubleConstant) {
-      return _coreTypes.doubleNonNullableRawType;
-    }
-    if (constant is ir.BoolConstant) return _coreTypes.boolNonNullableRawType;
-    if (constant is ir.StringConstant) {
-      return _coreTypes.stringNonNullableRawType;
-    }
-    if (constant is ir.NullConstant) return const ir.NullType();
-    return null;
-  }
+  ir.DartType? _inferConstantType(ir.Constant constant) => switch (constant) {
+        ir.IntConstant() => _coreTypes.intNonNullableRawType,
+        ir.DoubleConstant() => _coreTypes.doubleNonNullableRawType,
+        ir.BoolConstant() => _coreTypes.boolNonNullableRawType,
+        ir.StringConstant() => _coreTypes.stringNonNullableRawType,
+        ir.NullConstant() => const ir.NullType(),
+        _ => null,
+      };
 
   /// Classifies a DartType for expression result location (value or ref).
   ///
@@ -1318,8 +1185,8 @@ class DarticCompiler {
     return StackKind.ref;
   }
 
-  /// Maps int operator names to opcodes.
-  static int? _intArithOp(String name) => switch (name) {
+  /// Maps int binary operator names to opcodes (arithmetic + comparison).
+  static int? _intBinaryOp(String name) => switch (name) {
         '+' => Op.addInt,
         '-' => Op.subInt,
         '*' => Op.mulInt,
@@ -1331,20 +1198,6 @@ class DarticCompiler {
         '<<' => Op.shl,
         '>>' => Op.shr,
         '>>>' => Op.ushr,
-        _ => null,
-      };
-
-  /// Maps double operator names to opcodes.
-  static int? _doubleArithOp(String name) => switch (name) {
-        '+' => Op.addDbl,
-        '-' => Op.subDbl,
-        '*' => Op.mulDbl,
-        '/' => Op.divDbl,
-        _ => null,
-      };
-
-  /// Maps int comparison operator names to opcodes.
-  static int? _intCompareOp(String name) => switch (name) {
         '<' => Op.ltInt,
         '<=' => Op.leInt,
         '>' => Op.gtInt,
@@ -1352,8 +1205,12 @@ class DarticCompiler {
         _ => null,
       };
 
-  /// Maps double comparison operator names to opcodes.
-  static int? _doubleCompareOp(String name) => switch (name) {
+  /// Maps double binary operator names to opcodes (arithmetic + comparison).
+  static int? _doubleBinaryOp(String name) => switch (name) {
+        '+' => Op.addDbl,
+        '-' => Op.subDbl,
+        '*' => Op.mulDbl,
+        '/' => Op.divDbl,
         '<' => Op.ltDbl,
         '<=' => Op.leDbl,
         '>' => Op.gtDbl,

@@ -18,7 +18,6 @@ abstract final class DarbFormat {
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;
-
 }
 
 /// CRC32 lookup table (IEEE 802.3 polynomial 0xEDB88320, reflected).

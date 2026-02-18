@@ -415,14 +415,11 @@ class DarticInterpreter {
           final bx = (instr >> 16) & 0xFFFF;
           final callee = module.functions[bx];
 
-          // Overflow check.
-          if (vs.sp + callee.valueRegCount > vs.capacity) {
+          // Overflow and call depth checks.
+          if (vs.sp + callee.valueRegCount > vs.capacity ||
+              rs.sp + callee.refRegCount > rs.capacity) {
             throw DarticError('Stack overflow');
           }
-          if (rs.sp + callee.refRegCount > rs.capacity) {
-            throw DarticError('Stack overflow');
-          }
-          // Call depth check.
           if (callStack.depth >= callStack.maxFrames) {
             throw DarticError('Maximum call depth exceeded');
           }
@@ -447,40 +444,30 @@ class DarticInterpreter {
           code = callee.bytecode;
           pc = 0;
 
+        // RETURN_REF / RETURN_VAL / RETURN_NULL share identical frame-restore
+        // logic. The only difference: what is captured before and written after.
         case Op.returnRef: // RETURN_REF A — return refStack[A] to caller
-          final retRef = rs.read(rBase + ((instr >> 8) & 0xFF));
-
-          // Read caller state from current (callee) frame.
-          final rrCallerVSP = callStack.savedVSP;
-          final rrCallerRSP = callStack.savedRSP;
-          final rrRetPC = callStack.returnPC;
-          final rrResReg = callStack.resultReg;
-
-          // Clear callee's ref slots for GC safety.
-          rs.clearRange(rBase, rs.sp);
-
-          // Restore stack pointers (deallocate callee frame).
-          vs.sp = vBase;
-          rs.sp = rBase;
-          vBase = rrCallerVSP;
-          rBase = rrCallerRSP;
-
-          // Pop callee frame, then look up caller's bytecode.
-          callStack.popFrame();
-          code = module.functions[callStack.funcId].bytecode;
-          pc = rrRetPC;
-
-          // Write return value to caller's ref register.
-          rs.write(rrCallerRSP + rrResReg, retRef);
-
         case Op.returnVal: // RETURN_VAL A — return valueStack[A] to caller
-          final retVal = vs.readInt(vBase + ((instr >> 8) & 0xFF));
+        case Op.returnNull: // RETURN_NULL — return null to caller
+          // Capture return value before frame teardown.
+          final Object? retRef;
+          final int retVal;
+          if (op == Op.returnRef) {
+            retRef = rs.read(rBase + ((instr >> 8) & 0xFF));
+            retVal = 0;
+          } else if (op == Op.returnVal) {
+            retRef = null;
+            retVal = vs.readInt(vBase + ((instr >> 8) & 0xFF));
+          } else {
+            retRef = null;
+            retVal = 0;
+          }
 
           // Read caller state from current (callee) frame.
-          final rvCallerVSP = callStack.savedVSP;
-          final rvCallerRSP = callStack.savedRSP;
-          final rvRetPC = callStack.returnPC;
-          final rvResReg = callStack.resultReg;
+          final callerVSP = callStack.savedVSP;
+          final callerRSP = callStack.savedRSP;
+          final retPC = callStack.returnPC;
+          final resReg = callStack.resultReg;
 
           // Clear callee's ref slots for GC safety.
           rs.clearRange(rBase, rs.sp);
@@ -488,40 +475,20 @@ class DarticInterpreter {
           // Restore stack pointers (deallocate callee frame).
           vs.sp = vBase;
           rs.sp = rBase;
-          vBase = rvCallerVSP;
-          rBase = rvCallerRSP;
+          vBase = callerVSP;
+          rBase = callerRSP;
 
           // Pop callee frame, then look up caller's bytecode.
           callStack.popFrame();
           code = module.functions[callStack.funcId].bytecode;
-          pc = rvRetPC;
+          pc = retPC;
 
-          // Write return value to caller's value register.
-          vs.writeInt(rvCallerVSP + rvResReg, retVal);
-
-        case Op.returnNull: // RETURN_NULL — return null to caller's refStack[resultReg]
-          // Read caller state from current (callee) frame.
-          final rnCallerVSP = callStack.savedVSP;
-          final rnCallerRSP = callStack.savedRSP;
-          final rnRetPC = callStack.returnPC;
-          final rnResReg = callStack.resultReg;
-
-          // Clear callee's ref slots for GC safety.
-          rs.clearRange(rBase, rs.sp);
-
-          // Restore stack pointers (deallocate callee frame).
-          vs.sp = vBase;
-          rs.sp = rBase;
-          vBase = rnCallerVSP;
-          rBase = rnCallerRSP;
-
-          // Pop callee frame, then look up caller's bytecode.
-          callStack.popFrame();
-          code = module.functions[callStack.funcId].bytecode;
-          pc = rnRetPC;
-
-          // Write null to caller's ref register.
-          rs.write(rnCallerRSP + rnResReg, null);
+          // Write return value to caller's register.
+          if (op == Op.returnVal) {
+            vs.writeInt(callerVSP + resReg, retVal);
+          } else {
+            rs.write(callerRSP + resReg, retRef);
+          }
 
         // ── Global Variables (0xA0-0xA1) ──
 

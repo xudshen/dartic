@@ -4,7 +4,7 @@
 /// encoding. All opcodes occupy 8 bits (0x00-0xFF).
 ///
 /// See: docs/design/01-bytecode-isa.md
-abstract class Op {
+abstract final class Op {
   // ── Load/Store (0x00-0x0F) ──
   static const nop = 0x00;
   static const loadConst = 0x01;

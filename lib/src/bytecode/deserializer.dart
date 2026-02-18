@@ -104,10 +104,7 @@ class DarticDeserializer {
 
     // names partition
     final nameCount = r.readUint32();
-    final names = <String>[];
-    for (var i = 0; i < nameCount; i++) {
-      names.add(r.readString());
-    }
+    final names = List.generate(nameCount, (_) => r.readString());
 
     return ConstantPool.from(
       refs: refs,
@@ -121,11 +118,7 @@ class DarticDeserializer {
 
   List<DarticFuncProto> _readFunctionTable(_ByteReader r) {
     final count = r.readUint32();
-    final functions = <DarticFuncProto>[];
-    for (var i = 0; i < count; i++) {
-      functions.add(_readFunction(r));
-    }
-    return functions;
+    return List.generate(count, (_) => _readFunction(r));
   }
 
   DarticFuncProto _readFunction(_ByteReader r) {
@@ -144,9 +137,9 @@ class DarticDeserializer {
 
     // exception table
     final exceptionCount = r.readUint32();
-    final exceptionTable = <ExceptionHandler>[];
-    for (var i = 0; i < exceptionCount; i++) {
-      exceptionTable.add(ExceptionHandler(
+    final exceptionTable = List.generate(
+      exceptionCount,
+      (_) => ExceptionHandler(
         startPC: r.readUint32(),
         endPC: r.readUint32(),
         handlerPC: r.readUint32(),
@@ -155,25 +148,22 @@ class DarticDeserializer {
         refStackDP: r.readUint32(),
         exceptionReg: r.readUint32(),
         stackTraceReg: r.readUint32(),
-      ));
-    }
+      ),
+    );
 
-    // IC table — only methodNameIndex is persisted; runtime state resets
+    // IC table -- only methodNameIndex is persisted; runtime state resets
     final icCount = r.readUint32();
-    final icTable = <ICEntry>[];
-    for (var i = 0; i < icCount; i++) {
-      icTable.add(ICEntry(methodNameIndex: r.readUint32()));
-      // cachedClassId defaults to -1 (uncached) via ICEntry constructor
-    }
+    final icTable = List.generate(
+      icCount,
+      (_) => ICEntry(methodNameIndex: r.readUint32()),
+    );
 
     // upvalue descriptors
     final upvalueCount = r.readUint32();
-    final upvalueDescriptors = <UpvalueDescriptor>[];
-    for (var i = 0; i < upvalueCount; i++) {
+    final upvalueDescriptors = List.generate(upvalueCount, (_) {
       final isLocal = r.readByte() != 0;
-      final index = r.readUint32();
-      upvalueDescriptors.add(UpvalueDescriptor(isLocal: isLocal, index: index));
-    }
+      return UpvalueDescriptor(isLocal: isLocal, index: r.readUint32());
+    });
 
     return DarticFuncProto(
       funcId: funcId,

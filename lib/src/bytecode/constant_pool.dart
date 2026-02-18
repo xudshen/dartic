@@ -26,11 +26,11 @@ class ConstantPool {
     for (final r in refs) {
       addRef(r);
     }
-    for (var i = 0; i < ints.length; i++) {
-      addInt(ints[i]);
+    for (final v in ints) {
+      addInt(v);
     }
-    for (var i = 0; i < doubles.length; i++) {
-      addDouble(doubles[i]);
+    for (final v in doubles) {
+      addDouble(v);
     }
     for (final n in names) {
       addName(n);
