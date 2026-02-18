@@ -63,11 +63,12 @@ ir.VariableDeclaration makeDummyVarDecl(String name) {
   return ir.VariableDeclaration(name, type: const ir.DynamicType());
 }
 
-/// Finds the first instruction index with the given [op]code in [code].
+/// Finds the first instruction index with the given [op]code in [code],
+/// starting from [start].
 ///
 /// Returns -1 if not found.
-int findOp(List<int> code, int op) {
-  for (var i = 0; i < code.length; i++) {
+int findOp(List<int> code, int op, {int start = 0}) {
+  for (var i = start; i < code.length; i++) {
     if (decodeOp(code[i]) == op) return i;
   }
   return -1;

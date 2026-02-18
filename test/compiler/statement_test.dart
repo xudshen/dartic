@@ -176,7 +176,7 @@ void main() {}
       final load1Reg = decodeA(code[load1Idx]);
 
       // Find second LOAD_INT after the first.
-      final load2Idx = _findOpAfter(code, Op.loadInt, load1Idx + 1);
+      final load2Idx = findOp(code, Op.loadInt, start: load1Idx + 1);
       expect(load2Idx, isNot(-1), reason: 'second LOAD_INT not found');
       final load2Reg = decodeA(code[load2Idx]);
 
@@ -273,12 +273,4 @@ void main() {}
       expect(decodeA(code[retIdx]), sumReg);
     });
   });
-}
-
-/// Finds the first instruction with the given [op]code at or after [start].
-int _findOpAfter(List<int> code, int op, int start) {
-  for (var i = start; i < code.length; i++) {
-    if (decodeOp(code[i]) == op) return i;
-  }
-  return -1;
 }

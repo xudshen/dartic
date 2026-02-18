@@ -53,12 +53,15 @@ class DarticCompiler {
 
   /// Pending outgoing arg MOVE instructions to patch after the function is
   /// fully compiled. Each entry records the bytecode offset of a placeholder
-  /// MOVE_VAL instruction, the source register, and the arg index.
+  /// instruction, the source register, the arg index, and whether it is a
+  /// value-stack or ref-stack argument.
   ///
-  /// The calling convention places args at positions `valueRegCount + argIndex`
-  /// (beyond the frame), but `valueRegCount` is only known after compilation.
-  /// So we emit placeholder MOVEs and patch them in `_compileProcedure`.
-  final List<({int pc, int srcReg, int argIdx})> _pendingArgMoves = [];
+  /// The calling convention places value args at `valueRegCount + argIndex`
+  /// and ref args at `refRegCount + argIndex` (beyond the frame), but these
+  /// counts are only known after compilation. We emit placeholders and patch
+  /// them in `_compileProcedure`.
+  final List<({int pc, int srcReg, int argIdx, ResultLoc loc})>
+      _pendingArgMoves = [];
 
   /// Compiles the component and returns a [DarticModule].
   ///
@@ -151,18 +154,27 @@ class DarticCompiler {
       _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
     }
 
-    // Patch outgoing arg MOVE placeholders now that valueRegCount is known.
-    // Each call places args at consecutive positions starting at
-    // valueRegCount (the first slot beyond the caller's frame).
-    // The VM's CALL_STATIC sets callee.vBase = caller.vBase + valueRegCount,
-    // so outgoing[argIdx] becomes callee.v[argIdx].
+    // Patch outgoing arg MOVE placeholders now that register counts are known.
+    // Value args go to `valueRegCount + argIdx`, ref args to
+    // `refRegCount + argIdx`. The VM's CALL_STATIC sets
+    // callee.vBase = caller.vBase + valueRegCount (and similarly for refs),
+    // so outgoing[argIdx] becomes callee.v[argIdx] or callee.r[argIdx].
     final valRegCount = _valueAlloc.maxUsed;
+    final refRegCount = _refAlloc.maxUsed;
     for (final move in _pendingArgMoves) {
-      final destReg = valRegCount + move.argIdx;
-      _emitter.patchJump(
-        move.pc,
-        encodeABC(Op.moveVal, destReg, move.srcReg, 0),
-      );
+      if (move.loc == ResultLoc.value) {
+        final destReg = valRegCount + move.argIdx;
+        _emitter.patchJump(
+          move.pc,
+          encodeABC(Op.moveVal, destReg, move.srcReg, 0),
+        );
+      } else {
+        final destReg = refRegCount + move.argIdx;
+        _emitter.patchJump(
+          move.pc,
+          encodeABC(Op.moveRef, destReg, move.srcReg, 0),
+        );
+      }
     }
     _pendingArgMoves.clear();
 
@@ -171,8 +183,9 @@ class DarticCompiler {
       name: proc.name.text,
       bytecode: _emitter.toUint32List(),
       valueRegCount: valRegCount,
-      refRegCount: _refAlloc.maxUsed,
+      refRegCount: refRegCount,
       paramCount: fn.positionalParameters.length,
+      // TODO(Phase 2+): Handle namedParameters.
     );
   }
 
@@ -252,13 +265,13 @@ class DarticCompiler {
     if (decl.initializer != null) {
       final (initReg, initLoc) = _compileExpression(decl.initializer!);
       // Bind the variable to the initializer's result register.
-      // The declared type `kind` is intentionally not compared to `initLoc`
-      // here — in Phase 1 we assume they always agree.
-      _scope.declareWithReg(
-        decl,
-        initLoc == ResultLoc.value ? StackKind.value : StackKind.ref,
-        initReg,
+      // In Phase 1, the declared type and initializer type must agree.
+      assert(
+        (kind == StackKind.value) == (initLoc == ResultLoc.value),
+        'Type mismatch: declared $kind but initializer is $initLoc '
+        'for ${decl.name}',
       );
+      _scope.declareWithReg(decl, kind, initReg);
     } else {
       // No initializer — allocate a register and load a default value.
       final binding = _scope.declare(decl, kind);
@@ -395,13 +408,23 @@ class DarticCompiler {
     }
 
     // Emit placeholder MOVE instructions for each arg. The destination
-    // register is `valueRegCount + argIdx`, but valueRegCount isn't known
-    // yet (the function is still being compiled). We record these positions
-    // and patch them in _compileProcedure after compilation finishes.
+    // register depends on stack kind: value args go to valueRegCount + idx,
+    // ref args go to refRegCount + idx. Since these counts aren't known yet
+    // (the function is still being compiled), we record positions and patch
+    // them in _compileProcedure after compilation finishes.
+    //
+    // Value and ref args maintain separate arg indices because they live on
+    // separate stacks. The callee sees value args as v0, v1, ... and ref
+    // args as r3, r4, ... (after ITA/FTA/this).
+    var valArgIdx = 0;
+    var refArgIdx = 0;
     for (var i = 0; i < argTemps.length; i++) {
-      final (srcReg, _) = argTemps[i];
+      final (srcReg, loc) = argTemps[i];
       final movePC = _emitter.emitPlaceholder();
-      _pendingArgMoves.add((pc: movePC, srcReg: srcReg, argIdx: i));
+      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
+      _pendingArgMoves.add(
+        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
+      );
     }
 
     _emitter.emit(encodeABx(Op.callStatic, resultReg, funcId));
@@ -484,17 +507,18 @@ class DarticCompiler {
       type is ir.InterfaceType && type.classNode == _coreTypes.intClass;
 
   /// Classifies a DartType for expression result location (value or ref).
-  ResultLoc _classifyType(ir.DartType type) {
-    if (type is ir.InterfaceType) {
-      final cls = type.classNode;
-      if (cls == _coreTypes.intClass) return ResultLoc.value;
-      if (cls == _coreTypes.doubleClass) return ResultLoc.value;
-      if (cls == _coreTypes.boolClass) return ResultLoc.value;
-    }
-    return ResultLoc.ref;
-  }
+  ///
+  /// Derived from [_classifyStackKind] to avoid duplicating the type→stack
+  /// classification logic.
+  ResultLoc _classifyType(ir.DartType type) =>
+      _classifyStackKind(type) == StackKind.value
+          ? ResultLoc.value
+          : ResultLoc.ref;
 
   /// Classifies a DartType for scope-level register allocation.
+  ///
+  /// Canonical type classification: int/double/bool → value stack,
+  /// everything else → ref stack.
   StackKind _classifyStackKind(ir.DartType type) {
     if (type is ir.InterfaceType) {
       final cls = type.classNode;

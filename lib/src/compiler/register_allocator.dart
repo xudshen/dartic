@@ -39,20 +39,4 @@ class RegisterAllocator {
   /// High-water mark: the total number of register slots needed to size
   /// the stack frame (count, not max-index).
   int get maxUsed => _max;
-
-  /// Saves the current allocator state as a checkpoint.
-  ///
-  /// Used by the compiler to temporarily allocate "outgoing" registers
-  /// for call arguments. After the call, [restore] undoes these
-  /// allocations so they don't inflate `maxUsed` (and hence
-  /// `valueRegCount` / `refRegCount` in the function proto).
-  ({int next, int max, int poolLen}) checkpoint() =>
-      (next: _next, max: _max, poolLen: _freePool.length);
-
-  /// Restores the allocator to a previously saved checkpoint.
-  void restore(({int next, int max, int poolLen}) saved) {
-    _next = saved.next;
-    _max = saved.max;
-    _freePool.length = saved.poolLen;
-  }
 }

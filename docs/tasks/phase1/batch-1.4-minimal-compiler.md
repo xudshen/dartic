@@ -155,5 +155,5 @@ feat(compiler): add minimal Kernel-to-bytecode compiler
 - [x] 1.4.6 端到端测试
 - [x] `fvm dart analyze` 零警告（仅剩 pubspec path dependency 预存警告）
 - [x] `fvm dart test` 全部通过（350 tests）
-- [ ] commit 已提交
-- [ ] overview.md 已更新
+- [x] commit 已提交
+- [x] overview.md 已更新

@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:dartic/src/bytecode/module.dart';
-import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
-import 'package:kernel/ast.dart' as ir;
-import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:test/test.dart';
+
+import '../helpers/compile_helper.dart';
 
 /// End-to-end tests: Dart source → CFE (.dill) → DarticCompiler → DarticInterpreter.
 ///
@@ -86,38 +83,8 @@ int main() => mod(17, 5);
 /// The source should define `int main() => expr;` where expr evaluates to
 /// an int. The result is read from the root frame's value stack after HALT.
 Future<int> _compileAndRun(String source) async {
-  final module = await _compileDartToModule(source);
+  final module = await compileDart(source);
   return _executeAndReadResult(module);
-}
-
-/// Compiles Dart source to a DarticModule.
-Future<DarticModule> _compileDartToModule(String source) async {
-  final dir = await Directory.systemTemp.createTemp('dartic_e2e_');
-  try {
-    final dartFile = File('${dir.path}/input.dart');
-    await dartFile.writeAsString(source);
-
-    final dillPath = '${dir.path}/input.dill';
-    final result = await Process.run(
-      'fvm',
-      ['dart', 'compile', 'kernel', dartFile.path, '-o', dillPath],
-    );
-    if (result.exitCode != 0) {
-      throw StateError(
-        'Failed to compile .dill:\n'
-        'stdout: ${result.stdout}\n'
-        'stderr: ${result.stderr}',
-      );
-    }
-
-    final bytes = File(dillPath).readAsBytesSync();
-    final component = ir.Component();
-    BinaryBuilder(bytes).readComponent(component);
-
-    return DarticCompiler(component).compile();
-  } finally {
-    await dir.delete(recursive: true);
-  }
 }
 
 /// Executes a module and reads the int result from the root frame.
