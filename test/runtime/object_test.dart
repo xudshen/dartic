@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';

@@ -99,6 +99,9 @@ class ExceptionHandler {
     required this.startPC,
     required this.endPC,
     required this.handlerPC,
+    this.catchType = -1,
+    this.valStackDP = 0,
+    this.refStackDP = 0,
     required this.exceptionReg,
     required this.stackTraceReg,
   });
@@ -111,6 +114,15 @@ class ExceptionHandler {
 
   /// PC to jump to when an exception is caught.
   final int handlerPC;
+
+  /// Class ID of the catch type, or -1 for catch-all.
+  final int catchType;
+
+  /// Value stack depth to restore when entering the handler.
+  final int valStackDP;
+
+  /// Ref stack depth to restore when entering the handler.
+  final int refStackDP;
 
   /// Register to store the caught exception object.
   final int exceptionReg;

@@ -266,6 +266,23 @@ void main() {
       expect(interp.valueStack.readInt(0), 77);
       expect(interp.valueStack.readInt(1), 77);
     });
+
+    test('preserves double bit pattern', () {
+      final cp = ConstantPool();
+      final idx = cp.addDouble(3.14);
+
+      final module = _module(
+        Uint32List.fromList([
+          encodeABx(Opcode.loadConstDbl.code, 1, idx), // slot 1 = 3.14
+          encodeABC(Opcode.moveVal.code, 0, 1, 0), // copy slot 1 → slot 0
+          encodeAx(Opcode.halt.code, 0),
+        ]),
+        valueRegCount: 2,
+        constantPool: cp,
+      );
+      interp.execute(module);
+      expect(interp.valueStack.readDouble(0), 3.14);
+    });
   });
 
   // ── BOX_INT (0x0C): refStack[A] = valueStack[B] (box int) ──
@@ -329,6 +346,26 @@ void main() {
       );
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 123);
+    });
+
+    test('throws TypeError on non-int ref', () {
+      final cp = ConstantPool();
+      final idx = cp.addRef('not_an_int');
+
+      final module = _module(
+        Uint32List.fromList([
+          encodeABx(Opcode.loadConst.code, 0, idx),
+          encodeABC(Opcode.unboxInt.code, 0, 0, 0),
+          encodeAx(Opcode.halt.code, 0),
+        ]),
+        valueRegCount: 1,
+        refRegCount: 1,
+        constantPool: cp,
+      );
+      expect(
+        () => interp.execute(module),
+        throwsA(isA<TypeError>()),
+      );
     });
   });
 

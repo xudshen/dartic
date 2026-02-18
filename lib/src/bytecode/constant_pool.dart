@@ -85,6 +85,7 @@ class ConstantPool {
 
   // ── helpers ──
 
+  /// Shared conversion buffer. Single-isolate only; not reentrant.
   static final _bitsBuffer = ByteData(8);
 
   static int _doubleToBits(double value) {

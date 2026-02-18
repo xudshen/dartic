@@ -65,6 +65,34 @@ void main() {
       interp.execute(_module(_binaryOp(Opcode.addInt.code, 0, 0)));
       expect(interp.valueStack.readInt(2), 0);
     });
+
+    test('Int64 overflow wraps silently', () {
+      // Int64List wraps on overflow: max + 1 → min.
+      final cp = ConstantPool();
+      final maxIdx = cp.addInt(0x7FFFFFFFFFFFFFFF); // Int64 max
+      final oneIdx = cp.addInt(1);
+
+      final proto = DarticFuncProto(
+        funcId: 0,
+        bytecode: Uint32List.fromList([
+          encodeABx(Opcode.loadConstInt.code, 0, maxIdx),
+          encodeABx(Opcode.loadConstInt.code, 1, oneIdx),
+          encodeABC(Opcode.addInt.code, 2, 0, 1),
+          encodeAx(Opcode.halt.code, 0),
+        ]),
+        valueRegCount: 4,
+        refRegCount: 0,
+        paramCount: 0,
+      );
+      final mod = DarticModule(
+        functions: [proto],
+        constantPool: cp,
+        entryFuncId: 0,
+      );
+      interp.execute(mod);
+      // Int64 max + 1 wraps to Int64 min (-9223372036854775808).
+      expect(interp.valueStack.readInt(2), -9223372036854775808);
+    });
   });
 
   // ── SUB_INT (0x11) ──
@@ -117,6 +145,13 @@ void main() {
       interp.execute(_module(_binaryOp(Opcode.divInt.code, -7, 3)));
       expect(interp.valueStack.readInt(2), -2);
     });
+
+    test('division by zero throws', () {
+      expect(
+        () => interp.execute(_module(_binaryOp(Opcode.divInt.code, 10, 0))),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
   });
 
   // ── MOD_INT (0x14) ──
@@ -130,6 +165,13 @@ void main() {
     test('evenly divisible', () {
       interp.execute(_module(_binaryOp(Opcode.modInt.code, 9, 3)));
       expect(interp.valueStack.readInt(2), 0);
+    });
+
+    test('modulo by zero throws', () {
+      expect(
+        () => interp.execute(_module(_binaryOp(Opcode.modInt.code, 10, 0))),
+        throwsA(isA<UnsupportedError>()),
+      );
     });
   });
 

@@ -410,6 +410,9 @@ class DarticInterpreter {
         // ── System ──
 
         case 0xFF: // HALT
+          // Ref slots [rBase, rs.sp) are intentionally NOT cleared here.
+          // HALT ends the entire execution; the caller may read results.
+          // GC-safe clearing applies to RETURN (callee frame cleanup).
           vs.sp = vBase;
           rs.sp = rBase;
           callStack.popFrame();

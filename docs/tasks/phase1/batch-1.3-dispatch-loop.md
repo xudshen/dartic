@@ -149,6 +149,10 @@ feat(runtime): add dispatch loop with arithmetic, control flow, and call/return
 - **参数预布局约定**：编译器分配调用者的 `valueRegCount` 包含传出参数空间。调用者用超出本地寄存器的索引（如 `valueRegCount` + 偏移）写入参数位置，这些位置在 CALL_STATIC 推进 `vBase` 后恰好成为被调用者的 v0、v1 等。
 - **RETURN 读取顺序**：必须在 `popFrame()` 之前读取当前帧的 savedVSP、savedRSP、returnPC、resultReg，因为 pop 后访问器指向调用者帧。pop 之后再用 `callStack.funcId` 获取调用者的 funcId 以查找字节码。
 - **跳转偏移基准**：PC 在取指时已后增（`code[pc++]`），跳转偏移相对于已增后的 PC 值。`JUMP +2` 从索引 0 实际跳到索引 3（0→取指→PC=1→+2→3）。
+- **除零行为**：`DIV_INT` / `MOD_INT` 除数为 0 时，Int64List 的 `~/` 和 `%` 抛 `UnsupportedError`（`IntegerDivisionByZeroException` 已被 Dart 废弃）。当前直接传播异常，未包装为 `DarticError`。
+- **Int64 overflow 是静默 wrap**：Int64List 上 max+1 → min（two's complement），与 Dart VM 原生 int 行为一致。VM 的 "63-bit SMI" 是内部标签指针优化，不影响语言层面的 64-bit int 语义。
+- **MOVE_VAL 保留 bit pattern**：`MOVE_VAL` 复制 Int64List 的 64-bit 原始值，因此也能正确搬运 double 数据（共享 ByteBuffer 的 dual-view 设计）。
+- **UNBOX 类型安全依赖 Dart `as` cast**：`UNBOX_INT` 中 `rs.read(slot) as int` 对非 int 值抛 `TypeError`。当前未包装为 `DarticError`，编译器应保证类型正确。
 
 ## Batch 完成检查
 
@@ -159,6 +163,6 @@ feat(runtime): add dispatch loop with arithmetic, control flow, and call/return
 - [x] 1.3.5 CALL/RETURN 指令
 - [x] 1.3.6 端到端测试
 - [x] `fvm dart analyze` 零警告
-- [x] `fvm dart test` 全部通过（273 tests）
+- [x] `fvm dart test` 全部通过（279 tests）
 - [x] commit 已提交
 - [x] overview.md 已更新

@@ -91,6 +91,8 @@ feat(runtime): add three-stack model and object representation
 - DarticObject 空字段单例：`List<Object?>.unmodifiable([])` 用于 refFields，`Int64List(0)` 用于 valueFields。所有零字段实例共享同一对象
 - CallStack fp 设计：fp 指向当前帧"之后"（即 base + frameSize），读当前帧用 `fp - frameSize + offset`。这样 pushFrame 只需写入再前进，popFrame 只需读 savedFP
 - DarticFrame Phase 1 只实现 9 个基础+栈快照字段（共 22 个中的 9 个），异步/生成器字段留 TODO
+- ExceptionHandler 补齐了 `catchType`（默认 -1 = catch-all）、`valStackDP`、`refStackDP` 三个字段（代码审查发现缺失，Ch3 规定 8 个字段）
+- ConstantPool `_bitsBuffer` 是 static 共享缓冲，仅单 isolate 安全。Phase 1 可接受，已加注释
 
 ## Batch 完成检查
 

@@ -168,15 +168,7 @@ void main() {
 
     test('falls through when ref is non-null', () {
       final cp = ConstantPool()..addRef('x');
-      final module = _module(
-        Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, 0),
-          encodeAsBx(Opcode.jumpIfNull.code, 0, 1),
-          encodeAsBx(Opcode.loadInt.code, 0, 42),
-          encodeAx(Opcode.halt.code, 0),
-        ]),
-      );
-      // Override constantPool by creating module manually.
+      // Build module manually to inject a custom constantPool.
       final proto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
