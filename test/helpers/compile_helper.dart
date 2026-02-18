@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/compiler/compiler.dart';
+import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 
@@ -72,4 +73,15 @@ int findOp(List<int> code, int op, {int start = 0}) {
     if (decodeOp(code[i]) == op) return i;
   }
   return -1;
+}
+
+/// Compiles [source], executes it, and returns the int result from v0.
+///
+/// The source must use the pattern `int f() { ... } int main() => f();`
+/// so the return value flows through RETURN_VAL → CALL_STATIC → v0.
+Future<int> compileAndRun(String source) async {
+  final module = await compileDart(source);
+  final interp = DarticInterpreter();
+  interp.execute(module);
+  return interp.valueStack.readInt(0);
 }

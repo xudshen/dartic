@@ -8,7 +8,7 @@ import '../helpers/compile_helper.dart';
 void main() {
   group('assert compilation', () {
     test('assert(true) falls through normally', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   assert(true);
   return 42;
@@ -55,7 +55,7 @@ int main() => f();
     });
 
     test('assert(false) caught by try-catch', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   try {
     assert(false);
@@ -70,7 +70,7 @@ int main() => f();
     });
 
     test('assert with variable condition', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int x = 5;
   assert(x > 0);
@@ -93,11 +93,4 @@ void main() {}
       expect(hasAssert, isTrue, reason: 'ASSERT opcode not found');
     });
   });
-}
-
-Future<int> _compileAndRun(String source) async {
-  final module = await compileDart(source);
-  final interp = DarticInterpreter();
-  interp.execute(module);
-  return interp.valueStack.readInt(0);
 }

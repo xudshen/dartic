@@ -1,5 +1,4 @@
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -37,7 +36,7 @@ void main() {}
 
   group('switch e2e', () {
     test('switch matches correct case', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   switch (x) {
     case 0:
@@ -56,7 +55,7 @@ int main() => f(1);
     });
 
     test('switch default case', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   switch (x) {
     case 0:
@@ -73,7 +72,7 @@ int main() => f(99);
     });
 
     test('switch no match and no default skips', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   int result = 0;
   switch (x) {
@@ -90,7 +89,7 @@ int main() => f(99);
     });
 
     test('switch first case matches', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   switch (x) {
     case 42:
@@ -106,7 +105,7 @@ int main() => f(42);
 
     test('multiple case values share body (empty case fall-through)',
         () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   switch (x) {
     case 1:
@@ -122,11 +121,4 @@ int main() => f(2);
       expect(result, 100);
     });
   });
-}
-
-Future<int> _compileAndRun(String source) async {
-  final module = await compileDart(source);
-  final interp = DarticInterpreter();
-  interp.execute(module);
-  return interp.valueStack.readInt(0);
 }

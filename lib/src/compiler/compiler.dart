@@ -76,17 +76,9 @@ class DarticCompiler {
   /// backpatched to the label's end when the LabeledStatement finishes.
   final Map<ir.LabeledStatement, List<int>> _labelBreakJumps = {};
 
-  /// Maps loop/switch statements to their continue target PC
-  /// (the update-step PC for for-loops, the condition PC for while-loops).
-  final Map<ir.Statement, int> _continueTargets = {};
-
-  /// Maps loop/switch statements to their break jump lists.
-  /// BreakStatement that targets a loop/switch (not a LabeledStatement)
-  /// records its JUMP placeholder here.
-  final Map<ir.Statement, List<int>> _breakTargets = {};
-
-  /// Maps SwitchCase → PC of the case body start (for ContinueSwitchStatement).
-  final Map<ir.SwitchCase, int> _switchCasePCs = {};
+  // Note: CFE represents all break/continue as LabeledStatement+BreakStatement
+  // pairs, so separate continueTargets/breakTargets maps are not needed.
+  // ContinueSwitchStatement (fall-through) is not yet supported (Phase 3+).
 
   /// Exception handler table being built for the current function.
   final List<ExceptionHandler> _exceptionHandlers = [];
@@ -189,9 +181,6 @@ class DarticCompiler {
     _isEntryFunction = funcId == _entryFuncId;
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
-    _continueTargets.clear();
-    _breakTargets.clear();
-    _switchCasePCs.clear();
     _exceptionHandlers.clear();
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
@@ -704,6 +693,9 @@ class DarticCompiler {
 
   void _compileTryCatch(ir.TryCatch stmt) {
     // Record the value/ref stack depths at try entry for stack unwinding.
+    // maxUsed is the sequential high-water mark (= _next in the allocator).
+    // Freed registers from the free pool are always below _next, so maxUsed
+    // correctly represents the minimum frame depth to preserve on unwind.
     final valStackDP = _valueAlloc.maxUsed;
     final refStackDP = _refAlloc.maxUsed;
 
@@ -754,6 +746,7 @@ class DarticCompiler {
       final jumpToEnd = _emitter.emitPlaceholder();
 
       // Add exception handler entry.
+      // TODO(Phase 3): Support typed catch via catchClause.guard → catchType.
       _exceptionHandlers.add(ExceptionHandler(
         startPC: startPC,
         endPC: endPC,

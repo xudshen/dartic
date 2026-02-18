@@ -545,17 +545,20 @@ class DarticInterpreter {
             // Jump to handler.
             pc = handlerResult.handlerPC;
           } else {
-            // No handler — propagate through call stack.
-            // For now, simply rethrow as a Dart exception.
-            // The Dart VM will unwind the call stack.
+            // No handler in current frame — propagate to host VM.
+            // TODO(Phase 3): Walk dartic CallStack frames, searching each
+            // frame's exception table. Clean up intermediate frames (null
+            // ref slots for GC safety) before jumping to the handler.
             throw exception!;
           }
 
         case Op.rethrow_: // RETHROW A, B — rethrow refStack[A] with stackTrace refStack[B]
           final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
           final exception = rs.read(rBase + a);
-          // B operand is the stackTrace register — preserved from original throw.
-          // For Phase 2 we simply rethrow; full stackTrace handling in later phases.
+          // Read stackTrace BEFORE clearRange — the source register may fall
+          // within the range that gets nullified during stack unwinding.
+          final stackTrace = b > 0 ? rs.read(rBase + b) : null;
 
           final funcProto = module.functions[callStack.funcId];
           final handlerResult = _findHandler(funcProto, pc - 1);
@@ -566,9 +569,7 @@ class DarticInterpreter {
 
             rs.write(rBase + handlerResult.exceptionReg, exception);
             if (handlerResult.stackTraceReg >= 0) {
-              final b = (instr >> 16) & 0xFF;
-              rs.write(
-                  rBase + handlerResult.stackTraceReg, rs.read(rBase + b));
+              rs.write(rBase + handlerResult.stackTraceReg, stackTrace);
             }
 
             pc = handlerResult.handlerPC;

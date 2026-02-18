@@ -1,4 +1,3 @@
-import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -7,7 +6,7 @@ import '../helpers/compile_helper.dart';
 void main() {
   group('break in loops', () {
     test('break exits while loop early', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int sum = 0;
   int i = 0;
@@ -25,7 +24,7 @@ int main() => f();
     });
 
     test('break exits for loop early', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int sum = 0;
   for (int i = 0; i < 100; i = i + 1) {
@@ -43,7 +42,7 @@ int main() => f();
 
   group('continue in loops', () {
     test('continue skips current iteration in while loop', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int sum = 0;
   int i = 0;
@@ -61,7 +60,7 @@ int main() => f();
     });
 
     test('continue skips current iteration in for loop', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int sum = 0;
   for (int i = 0; i < 10; i = i + 1) {
@@ -79,7 +78,7 @@ int main() => f();
 
   group('nested break/continue', () {
     test('break only exits innermost loop', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int count = 0;
   for (int i = 0; i < 3; i = i + 1) {
@@ -97,7 +96,7 @@ int main() => f();
     });
 
     test('labeled break exits outer loop', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int count = 0;
   outer:
@@ -119,7 +118,7 @@ int main() => f();
 
   group('break in switch', () {
     test('break exits switch statement', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   int result = 0;
   switch (x) {
@@ -139,11 +138,4 @@ int main() => f(1);
       expect(result, 10);
     });
   });
-}
-
-Future<int> _compileAndRun(String source) async {
-  final module = await compileDart(source);
-  final interp = DarticInterpreter();
-  interp.execute(module);
-  return interp.valueStack.readInt(0);
 }

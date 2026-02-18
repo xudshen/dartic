@@ -1,4 +1,3 @@
-import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -7,7 +6,7 @@ import '../helpers/compile_helper.dart';
 void main() {
   group('try/catch e2e', () {
     test('catch catches thrown exception and returns value', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   try {
     throw 'error';
@@ -22,7 +21,7 @@ int main() => f();
     });
 
     test('no exception: try body executes normally', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int x = 0;
   try {
@@ -38,7 +37,7 @@ int main() => f();
     });
 
     test('nested try-catch: inner catch handles exception', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   try {
     try {
@@ -57,7 +56,7 @@ int main() => f();
     });
 
     test('rethrow propagates to outer catch', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   try {
     try {
@@ -78,7 +77,7 @@ int main() => f();
 
   group('try/finally e2e', () {
     test('finally executes on normal path', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int x = 0;
   try {
@@ -94,7 +93,7 @@ int main() => f();
     });
 
     test('finally executes on exception path', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f() {
   int x = 0;
   try {
@@ -118,7 +117,7 @@ int main() => f();
 
   group('throw expression', () {
     test('throw in conditional expression', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   try {
     int y = x > 0 ? x : throw 'negative';
@@ -133,7 +132,7 @@ int main() => f(-5);
     });
 
     test('throw in conditional, no exception path', () async {
-      final result = await _compileAndRun('''
+      final result = await compileAndRun('''
 int f(int x) {
   try {
     int y = x > 0 ? x : throw 'negative';
@@ -147,11 +146,4 @@ int main() => f(5);
       expect(result, 5);
     });
   });
-}
-
-Future<int> _compileAndRun(String source) async {
-  final module = await compileDart(source);
-  final interp = DarticInterpreter();
-  interp.execute(module);
-  return interp.valueStack.readInt(0);
 }
