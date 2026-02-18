@@ -49,6 +49,9 @@ class DarticFrame {
   /// Ref stack snapshot (frame region), null when not suspended.
   List<Object?>? savedRefSlots;
 
+  @override
+  String toString() => 'DarticFrame(func=#${funcProto.funcId}, pc=$pc)';
+
   // TODO(phase6): async/generator control fields
   // - resultCompleter, thenCallback, errorCallback
   // - streamController, streamPaused, isSuspendedAtYield, cancelled

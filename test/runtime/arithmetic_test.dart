@@ -7,20 +7,10 @@ import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
-DarticModule _module(Uint32List bytecode, {int valueRegCount = 4}) {
-  final proto = DarticFuncProto(
-    funcId: 0,
-    bytecode: bytecode,
-    valueRegCount: valueRegCount,
-    refRegCount: 0,
-    paramCount: 0,
-  );
-  return DarticModule(
-    functions: [proto],
-    constantPool: ConstantPool(),
-    entryFuncId: 0,
-  );
-}
+import '../helpers/module_helper.dart';
+
+DarticModule _module(Uint32List bytecode, {int valueRegCount = 4}) =>
+    buildModule(bytecode, valueRegCount: valueRegCount);
 
 /// Builds: LOAD_INT slot0=a, LOAD_INT slot1=b, op slot2=slot0 op slot1, HALT.
 Uint32List _binaryOp(int opcode, int a, int b) {

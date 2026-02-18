@@ -1,4 +1,5 @@
 import 'package:dartic/src/runtime/call_stack.dart';
+import 'package:dartic/src/runtime/error.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -130,6 +131,56 @@ void main() {
     test('custom capacity', () {
       final small = CallStack(maxFrames: 10);
       expect(small.maxFrames, 10);
+    });
+  });
+
+  group('overflow protection', () {
+    test('pushFrame throws DarticError when at capacity', () {
+      final small = CallStack(maxFrames: 2);
+      // Fill to capacity.
+      for (var i = 0; i < 2; i++) {
+        small.pushFrame(
+          funcId: i,
+          returnPC: 0,
+          savedFP: small.fp,
+          savedVSP: 0,
+          savedRSP: 0,
+          resultReg: 0,
+        );
+      }
+      expect(small.depth, 2);
+
+      // Third push should throw.
+      expect(
+        () => small.pushFrame(
+          funcId: 99,
+          returnPC: 0,
+          savedFP: small.fp,
+          savedVSP: 0,
+          savedRSP: 0,
+          resultReg: 0,
+        ),
+        throwsA(isA<DarticError>().having(
+          (e) => e.message,
+          'message',
+          contains('overflow'),
+        )),
+      );
+    });
+
+    test('pushFrame throws on zero-capacity stack', () {
+      final zero = CallStack(maxFrames: 0);
+      expect(
+        () => zero.pushFrame(
+          funcId: 0,
+          returnPC: 0,
+          savedFP: 0,
+          savedVSP: 0,
+          savedRSP: 0,
+          resultReg: 0,
+        ),
+        throwsA(isA<DarticError>()),
+      );
     });
   });
 

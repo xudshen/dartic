@@ -69,6 +69,11 @@ class DarticClassInfo {
   /// Field name index -> FieldLayout.
   final Map<int, FieldLayout> fields = {};
 
+  @override
+  String toString() => 'ClassInfo(#$classId $name, '
+      'super=$superClassId, '
+      'refs=$refFieldCount, vals=$valueFieldCount)';
+
   /// Transitive closure of all supertype classIds (self + parents + interfaces).
   /// Used for O(1) `INSTANCEOF` checks.
   final Set<int> supertypeIds = {};

@@ -7,25 +7,18 @@ import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
+import '../helpers/module_helper.dart';
+
 DarticModule _module(
   Uint32List bytecode, {
   int valueRegCount = 4,
   int refRegCount = 0,
   ConstantPool? constantPool,
-}) {
-  final proto = DarticFuncProto(
-    funcId: 0,
-    bytecode: bytecode,
-    valueRegCount: valueRegCount,
-    refRegCount: refRegCount,
-    paramCount: 0,
-  );
-  return DarticModule(
-    functions: [proto],
-    constantPool: constantPool ?? ConstantPool(),
-    entryFuncId: 0,
-  );
-}
+}) =>
+    buildModule(bytecode,
+        valueRegCount: valueRegCount,
+        refRegCount: refRegCount,
+        constantPool: constantPool);
 
 /// Builds: LOAD_INT slot0=a, LOAD_INT slot1=b, cmp slot2, HALT.
 Uint32List _cmpInt(int opcode, int a, int b) {

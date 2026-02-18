@@ -1,33 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
-import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/error.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
-/// Helper: builds a single-function DarticModule from bytecode.
-DarticModule _module(
-  Uint32List bytecode, {
-  int valueRegCount = 0,
-  int refRegCount = 0,
-  int paramCount = 0,
-}) {
-  final proto = DarticFuncProto(
-    funcId: 0,
-    bytecode: bytecode,
-    valueRegCount: valueRegCount,
-    refRegCount: refRegCount,
-    paramCount: paramCount,
-  );
-  return DarticModule(
-    functions: [proto],
-    constantPool: ConstantPool(),
-    entryFuncId: 0,
-  );
-}
+import '../helpers/module_helper.dart';
 
 void main() {
   late DarticInterpreter interpreter;
@@ -38,7 +17,7 @@ void main() {
 
   group('HALT', () {
     test('stops execution immediately', () {
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList([encodeAx(Op.halt, 0)]),
       );
       // Should complete without error.
@@ -46,7 +25,7 @@ void main() {
     });
 
     test('pops the root frame from CallStack', () {
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 4,
         refRegCount: 2,
@@ -61,7 +40,7 @@ void main() {
 
   group('NOP', () {
     test('is skipped without side effects', () {
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList([
           encodeABC(Op.nop, 0, 0, 0),
           encodeAx(Op.halt, 0),
@@ -71,7 +50,7 @@ void main() {
     });
 
     test('multiple NOPs advance PC correctly', () {
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList([
           encodeABC(Op.nop, 0, 0, 0),
           encodeABC(Op.nop, 0, 0, 0),
@@ -86,7 +65,7 @@ void main() {
 
   group('illegal opcode', () {
     test('throws DarticError for reserved opcode', () {
-      final module = _module(
+      final module = buildModule(
         // 0xA8 is in the reserved/superinstruction range.
         Uint32List.fromList([encodeABC(0xA8, 0, 0, 0)]),
       );
@@ -97,7 +76,7 @@ void main() {
     });
 
     test('error message contains the opcode value', () {
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList([encodeABC(0xB0, 0, 0, 0)]),
       );
       expect(
@@ -123,7 +102,7 @@ void main() {
       );
       instrs.add(encodeAx(Op.halt, 0));
 
-      final module = _module(
+      final module = buildModule(
         Uint32List.fromList(instrs),
         valueRegCount: 2,
         refRegCount: 1,

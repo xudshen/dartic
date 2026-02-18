@@ -33,6 +33,10 @@ class DarticObject {
 
   // TODO(phase6): DarticType runtimeType — deferred to generics phase.
 
+  @override
+  String toString() => 'DarticObject(cls=$classId, '
+      'refs=${refFields.length}, vals=${valueFields.length})';
+
   /// Global empty singletons — shared by all instances with zero fields.
   static final List<Object?> _emptyRefFields = List<Object?>.unmodifiable([]);
   static final Int64List _emptyValueFields = Int64List(0);

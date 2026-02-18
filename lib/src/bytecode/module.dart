@@ -67,6 +67,11 @@ class DarticFuncProto {
 
   /// Upvalue descriptors for `CLOSURE` instruction.
   final List<UpvalueDescriptor> upvalueDescriptors;
+
+  @override
+  String toString() => 'FuncProto(#$funcId, '
+      'vRegs=$valueRegCount, rRegs=$refRegCount, '
+      'params=$paramCount, codeLen=${bytecode.length})';
 }
 
 /// Inline cache entry for virtual method dispatch.
@@ -86,6 +91,10 @@ class ICEntry {
 
   /// Cached method entry offset (valid only when cachedClassId != -1).
   int cachedMethodOffset = 0;
+
+  @override
+  String toString() => 'ICEntry(name=$methodNameIndex, '
+      'cached=${cachedClassId == -1 ? "miss" : "cls$cachedClassId"})';
 }
 
 /// Exception handler descriptor within a function.
@@ -129,6 +138,10 @@ class ExceptionHandler {
 
   /// Register to store the stack trace.
   final int stackTraceReg;
+
+  @override
+  String toString() => 'ExHandler(pc=[$startPC,$endPC)→$handlerPC, '
+      'catch=${catchType == -1 ? "all" : "type$catchType"})';
 }
 
 /// Upvalue descriptor — tells `CLOSURE` how to capture variables.

@@ -94,6 +94,11 @@ feat(runtime): add three-stack model and object representation
 - ExceptionHandler 补齐了 `catchType`（默认 -1 = catch-all）、`valStackDP`、`refStackDP` 三个字段（代码审查发现缺失，Ch3 规定 8 个字段）
 - ConstantPool `_bitsBuffer` 是 static 共享缓冲，仅单 isolate 安全。Phase 1 可接受，已加注释
 
+## Code Review 发现
+
+- `CallStack.pushFrame` 缺少溢出保护：初始帧推入（`execute()` 入口）不经过 `CALL_STATIC` 的深度检查，`maxFrames=0` 或调用栈已满时直接 `RangeError`。已在 `pushFrame` 内部添加 `_depth >= _maxFrames` 检查，抛 `DarticError`（M1）
+- DarticObject / DarticClassInfo / DarticFrame 缺少 `toString()`。已补充（S2）
+
 ## Batch 完成检查
 
 - [x] 1.2.1 ValueStack
@@ -104,3 +109,4 @@ feat(runtime): add three-stack model and object representation
 - [x] `fvm dart test test/runtime/` 全部通过（73 tests）
 - [x] commit 已提交 (`757b160`)
 - [x] overview.md 已更新
+- [x] code review 已完成

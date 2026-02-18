@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'error.dart';
+
 /// Synchronous call stack storing frame metadata as packed uint32 fields.
 ///
 /// Each frame occupies [frameSize] (6) uint32 slots:
@@ -50,6 +52,8 @@ class CallStack {
   int get maxFrames => _maxFrames;
 
   /// Pushes a new frame onto the call stack.
+  ///
+  /// Throws [DarticError] if the stack is already at capacity.
   void pushFrame({
     required int funcId,
     required int returnPC,
@@ -58,6 +62,9 @@ class CallStack {
     required int savedRSP,
     required int resultReg,
   }) {
+    if (_depth >= _maxFrames) {
+      throw DarticError('Call stack overflow: exceeded $_maxFrames frames');
+    }
     final base = _fp;
     _data[base + _funcId] = funcId;
     _data[base + _returnPC] = returnPC;

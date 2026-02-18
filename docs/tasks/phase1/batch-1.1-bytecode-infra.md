@@ -88,6 +88,10 @@ feat(bytecode): add ISA encoding, opcodes, and constant pool
 - 常量池 doubles 分区的去重需要按 bit pattern 比较（`NaN != NaN`），通过 `ByteData.setFloat64/getInt64` 转换
 - WIDE AsBx 的 excess-K 编码用 `K = 0x7FFFFFFF`（32 位），而标准 AsBx 用 `K = 0x7FFF`（16 位）——K 值随操作数宽度变化
 
+## Code Review 发现
+
+- DarticFuncProto / ICEntry / ExceptionHandler 缺少 `toString()`，调试时输出 `Instance of 'xxx'`。已补充（S2）
+
 ## Batch 完成检查
 
 - [x] 1.1.1 Opcode 常量与编解码
@@ -98,3 +102,4 @@ feat(bytecode): add ISA encoding, opcodes, and constant pool
 - [x] `fvm dart test test/bytecode/` 全部通过（111 tests）
 - [x] commit 已提交 (`0b12b6e`)
 - [x] overview.md 已更新
+- [x] code review 已完成

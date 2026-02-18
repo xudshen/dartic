@@ -611,12 +611,19 @@ int main() => add(1, 2); // => 3
 ## 执行节奏
 
 - 每个 Batch 约 3-6 个 Task，每个 Task 遵循 TDD：读设计文档 → 写测试 → 最小实现 → analyze → test → 重构
+- 每个 Batch 执行完成后执行完成后自动启动 code-reviewer 进行代码 review，重点关注：
+  - **正确性**：逻辑是否正确，边界条件和异常处理是否完善
+  - **可维护性与可读性**：命名清晰、结构合理、抽象层次恰当，避免过度设计
+  - **性能**：有无不必要的重复计算、内存泄漏等性能隐患
+  - **可测试性**：代码是否便于单测，职责是否单一
+  - **一致性**：是否遵循项目既有的代码风格、架构模式和分层约定
+  - **兼容性**：对已有功能的影响，公开 API 是否保持向后兼容
+review 发现的问题直接修复，修复后重新 review 直到通过。
 - 每完成一个 Batch 必须：
-  1. 启动code-reviewer进行review
-  2. 勾选本文件中对应 checkbox
-  3. 填写该 Batch 的"核心发现"
-  4. 更新 `docs/tasks/overview.md` 汇总表
-  5. 提交 commit
+  1. 勾选本文件中对应 checkbox
+  2. 填写该 Batch 的"核心发现"
+  3. 更新 `docs/tasks/overview.md` 汇总表
+  4. 提交 commit
 - Phase 之间有明确的里程碑验证点，不达标不进入下一 Phase
 - 发现设计问题时及时更新 `docs/design/` 对应章节
 

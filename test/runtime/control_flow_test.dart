@@ -7,24 +7,15 @@ import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
+import '../helpers/module_helper.dart';
+
 DarticModule _module(
   Uint32List bytecode, {
   int valueRegCount = 4,
   int refRegCount = 2,
-}) {
-  final proto = DarticFuncProto(
-    funcId: 0,
-    bytecode: bytecode,
-    valueRegCount: valueRegCount,
-    refRegCount: refRegCount,
-    paramCount: 0,
-  );
-  return DarticModule(
-    functions: [proto],
-    constantPool: ConstantPool(),
-    entryFuncId: 0,
-  );
-}
+}) =>
+    buildModule(bytecode,
+        valueRegCount: valueRegCount, refRegCount: refRegCount);
 
 void main() {
   late DarticInterpreter interp;

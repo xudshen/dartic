@@ -154,6 +154,11 @@ feat(runtime): add dispatch loop with arithmetic, control flow, and call/return
 - **MOVE_VAL 保留 bit pattern**：`MOVE_VAL` 复制 Int64List 的 64-bit 原始值，因此也能正确搬运 double 数据（共享 ByteBuffer 的 dual-view 设计）。
 - **UNBOX 类型安全依赖 Dart `as` cast**：`UNBOX_INT` 中 `rs.read(slot) as int` 对非 int 值抛 `TypeError`。当前未包装为 `DarticError`，编译器应保证类型正确。
 
+## Code Review 发现
+
+- 测试辅助函数 `_module()` 在 5 个文件中重复定义。已提取为共享 `test/helpers/module_helper.dart`（S3）
+- `execute()` 不校验 `entryFuncId`、入口函数执行 RETURN 导致下溢：这两个问题由编译器和 Ch8 字节码验证器保证，不在运行时添加检查
+
 ## Batch 完成检查
 
 - [x] 1.3.1 核心分发循环骨架
@@ -163,6 +168,7 @@ feat(runtime): add dispatch loop with arithmetic, control flow, and call/return
 - [x] 1.3.5 CALL/RETURN 指令
 - [x] 1.3.6 端到端测试
 - [x] `fvm dart analyze` 零警告
-- [x] `fvm dart test` 全部通过（279 tests）
+- [x] `fvm dart test` 全部通过（276 tests）
 - [x] commit 已提交
 - [x] overview.md 已更新
+- [x] code review 已完成
