@@ -156,18 +156,51 @@ feat: add co19 test harness v0 with native assertion shim
 
 ## 核心发现
 
-_(执行时填写：shim 替换 import 的最终策略选择、co19 测试中有多少不依赖 class 的纯标量测试、负面测试标记格式变种、首轮实际通过率（Variables/Expressions/Statements 各多少）、主要失败原因分类比例等)_
+### 首轮通过率（全部超出里程碑目标）
+
+| Category | Pass | Fail | Total | Rate | Milestone |
+|----------|------|------|-------|------|-----------|
+| Variables | 73 | 38 | 111 | **65.8%** | > 50% ✅ |
+| Expressions | 1032 | 901 | 1933 | **53.4%** | > 30% ✅ |
+| Statements | 268 | 269 | 537 | **49.9%** | > 30% ✅ |
+| **TOTAL** | **1373** | **1208** | **2581** | **53.2%** | — |
+
+### Shim 替换 import 策略
+
+v0 阶段未执行 import 替换——shim 函数已实现（`expectEquals`/`expectTrue`/`expectFalse`/`expectThrows`/`expectIdentical`/`expectFail`），但大量 co19 测试直接 `import '../../Utils/expect.dart'` 并调用 `Expect.equals()` 等类方法。由于 Phase 2 无类支持，这些调用在 dartic 编译阶段表现为"Unknown static call target"失败。实际策略是：这些测试自然失败，Phase 3 类支持就绪后切换到 harness v1（直接编译 expect.dart）。
+
+### 主要失败原因分类
+
+| 失败原因 | 估计占比 | 解决阶段 |
+|---------|---------|---------|
+| 依赖 `Expect` 类方法（`equals/throws/isTrue` 等） | ~30% | Phase 3 (harness v1) |
+| `ConstructorInvocation`（类实例化） | ~15% | Phase 3 |
+| `InstanceGet/InstanceSet`（实例字段访问） | ~10% | Phase 3 |
+| `FunctionDeclaration`（局部函数声明） | ~8% | Phase 3 |
+| `YieldStatement`/async（生成器/异步） | ~8% | Phase 6 |
+| `StringConcatenation`（字符串拼接） | ~5% | Phase 5 (需 String Bridge) |
+| `DynamicInvocation/DynamicGet`（动态调用） | ~5% | Phase 3+ |
+| `InstanceConstant/ListConstant`（复杂常量） | ~5% | Phase 3-4 |
+| 其他（MapLiteral, FunctionExpression 等） | ~14% | Phase 3-6 |
+
+### 负面测试标记格式
+
+标记格式统一为 `// [analyzer] <desc>` 和 `// [cfe] <desc>`，通常成对出现。`<desc>` 多为 `unspecified` 或具体错误码如 `COMPILE_TIME_ERROR.UNDEFINED_CLASS`。标记前通常有 `//^` 指示错误位置。
+
+### 发现的 bug（已修复）
+
+- **路径尾斜杠 bug**: `discoverTests` 在根目录路径末尾有 `/` 时，`relativePath` 计算多跳一个字符，导致 category 名首字母被截断（如 "abels" 而非 "Labels"）。已修复：规范化去除尾部 `/`。
 
 ## Batch 完成检查
 
-- [ ] 2.4.1 测试发现器
-- [ ] 2.4.2 自建断言 shim
-- [ ] 2.4.3 负面测试识别
-- [ ] 2.4.4 通过率统计与报告
-- [ ] 2.4.5 结果快照与 diff
-- [ ] 2.4.6 首轮 co19 验证
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
+- [x] 2.4.1 测试发现器
+- [x] 2.4.2 自建断言 shim
+- [x] 2.4.3 负面测试识别
+- [x] 2.4.4 通过率统计与报告
+- [x] 2.4.5 结果快照与 diff
+- [x] 2.4.6 首轮 co19 验证
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过
 - [ ] commit 已提交
 - [ ] overview.md 已更新
 - [ ] code review 已完成
