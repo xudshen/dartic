@@ -38,4 +38,4 @@
 
 - 每个 Task 遵循 TDD：读设计文档 → 写测试 → 最小实现 → `fvm dart analyze` → `fvm dart test` → 重构
 - 每完成一个 Batch 勾选 checkbox → 填写"核心发现" → 更新 `docs/tasks/overview.md` → 提交 commit
-- 每 Batch 结束后执行 code-reviewer review
+- 每 Batch 结束后执行 code-reviewer review，修复后重新 review 直到通过。
