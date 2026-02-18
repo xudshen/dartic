@@ -6,7 +6,7 @@
 
 **设计参考：** `docs/design/02-object-model.md`
 
-**依赖：** Batch 1.1（Opcode 枚举、DarticFuncProto 定义）
+**依赖：** Batch 1.1（Op 常量类、DarticFuncProto 定义）
 
 ---
 

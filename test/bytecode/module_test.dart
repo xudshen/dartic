@@ -27,8 +27,8 @@ void main() {
   group('DarticFuncProto', () {
     test('holds bytecode and register counts', () {
       final bytecode = Uint32List.fromList([
-        encodeABC(Opcode.addInt.code, 0, 1, 2),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.addInt, 0, 1, 2),
+        encodeAx(Op.halt, 0),
       ]);
 
       final proto = DarticFuncProto(
@@ -106,7 +106,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeAx(Opcode.halt.code, 0),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 0,

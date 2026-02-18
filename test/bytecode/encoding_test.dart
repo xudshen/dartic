@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 void main() {
   group('ABC encoding', () {
     test('roundtrip with zero values', () {
-      final instr = encodeABC(Opcode.nop.code, 0, 0, 0);
-      expect(decodeOp(instr), Opcode.nop.code);
+      final instr = encodeABC(Op.nop, 0, 0, 0);
+      expect(decodeOp(instr), Op.nop);
       expect(decodeA(instr), 0);
       expect(decodeB(instr), 0);
       expect(decodeC(instr), 0);
@@ -21,8 +21,8 @@ void main() {
     });
 
     test('operands are independent', () {
-      final instr = encodeABC(Opcode.addInt.code, 1, 2, 3);
-      expect(decodeOp(instr), Opcode.addInt.code);
+      final instr = encodeABC(Op.addInt, 1, 2, 3);
+      expect(decodeOp(instr), Op.addInt);
       expect(decodeA(instr), 1);
       expect(decodeB(instr), 2);
       expect(decodeC(instr), 3);
@@ -37,8 +37,8 @@ void main() {
 
   group('ABx encoding', () {
     test('roundtrip with zero values', () {
-      final instr = encodeABx(Opcode.loadConst.code, 0, 0);
-      expect(decodeOp(instr), Opcode.loadConst.code);
+      final instr = encodeABx(Op.loadConst, 0, 0);
+      expect(decodeOp(instr), Op.loadConst);
       expect(decodeA(instr), 0);
       expect(decodeBx(instr), 0);
     });
@@ -51,8 +51,8 @@ void main() {
     });
 
     test('Bx uses full 16-bit range', () {
-      final instr = encodeABx(Opcode.loadConstInt.code, 5, 12345);
-      expect(decodeOp(instr), Opcode.loadConstInt.code);
+      final instr = encodeABx(Op.loadConstInt, 5, 12345);
+      expect(decodeOp(instr), Op.loadConstInt);
       expect(decodeA(instr), 5);
       expect(decodeBx(instr), 12345);
     });
@@ -60,47 +60,47 @@ void main() {
 
   group('AsBx encoding (excess-K, K=0x7FFF)', () {
     test('roundtrip zero', () {
-      final instr = encodeAsBx(Opcode.jump.code, 0, 0);
-      expect(decodeOp(instr), Opcode.jump.code);
+      final instr = encodeAsBx(Op.jump, 0, 0);
+      expect(decodeOp(instr), Op.jump);
       expect(decodeA(instr), 0);
       expect(decodesBx(instr), 0);
     });
 
     test('roundtrip positive max: +32768', () {
-      final instr = encodeAsBx(Opcode.jumpIfTrue.code, 1, 32768);
+      final instr = encodeAsBx(Op.jumpIfTrue, 1, 32768);
       expect(decodesBx(instr), 32768);
     });
 
     test('roundtrip negative min: -32767', () {
-      final instr = encodeAsBx(Opcode.jumpIfFalse.code, 2, -32767);
+      final instr = encodeAsBx(Op.jumpIfFalse, 2, -32767);
       expect(decodesBx(instr), -32767);
     });
 
     test('roundtrip negative one', () {
-      final instr = encodeAsBx(Opcode.jump.code, 0, -1);
+      final instr = encodeAsBx(Op.jump, 0, -1);
       expect(decodesBx(instr), -1);
     });
 
     test('excess-K encoding: value 0 encodes as 0x7FFF', () {
-      final instr = encodeAsBx(Opcode.jump.code, 0, 0);
+      final instr = encodeAsBx(Op.jump, 0, 0);
       expect(decodeBx(instr), 0x7FFF);
     });
 
     test('excess-K encoding: value -32767 encodes as 0', () {
-      final instr = encodeAsBx(Opcode.jump.code, 0, -32767);
+      final instr = encodeAsBx(Op.jump, 0, -32767);
       expect(decodeBx(instr), 0);
     });
 
     test('excess-K encoding: value +32768 encodes as 0xFFFF', () {
-      final instr = encodeAsBx(Opcode.jump.code, 0, 32768);
+      final instr = encodeAsBx(Op.jump, 0, 32768);
       expect(decodeBx(instr), 0xFFFF);
     });
   });
 
   group('Ax encoding', () {
     test('roundtrip zero', () {
-      final instr = encodeAx(Opcode.nop.code, 0);
-      expect(decodeOp(instr), Opcode.nop.code);
+      final instr = encodeAx(Op.nop, 0);
+      expect(decodeOp(instr), Op.nop);
       expect(decodeAx(instr), 0);
     });
 
@@ -110,45 +110,45 @@ void main() {
     });
 
     test('roundtrip mid value', () {
-      final instr = encodeAx(Opcode.nop.code, 123456);
+      final instr = encodeAx(Op.nop, 123456);
       expect(decodeAx(instr), 123456);
     });
   });
 
   group('sAx encoding (excess-K, K=0x7FFFFF)', () {
     test('roundtrip zero', () {
-      final instr = encodesAx(Opcode.jumpAx.code, 0);
-      expect(decodeOp(instr), Opcode.jumpAx.code);
+      final instr = encodesAx(Op.jumpAx, 0);
+      expect(decodeOp(instr), Op.jumpAx);
       expect(decodesAx(instr), 0);
     });
 
     test('roundtrip positive max: +8388608', () {
-      final instr = encodesAx(Opcode.jumpAx.code, 8388608);
+      final instr = encodesAx(Op.jumpAx, 8388608);
       expect(decodesAx(instr), 8388608);
     });
 
     test('roundtrip negative min: -8388607', () {
-      final instr = encodesAx(Opcode.jumpAx.code, -8388607);
+      final instr = encodesAx(Op.jumpAx, -8388607);
       expect(decodesAx(instr), -8388607);
     });
 
     test('roundtrip negative one', () {
-      final instr = encodesAx(Opcode.jumpAx.code, -1);
+      final instr = encodesAx(Op.jumpAx, -1);
       expect(decodesAx(instr), -1);
     });
 
     test('excess-K encoding: value 0 encodes as 0x7FFFFF', () {
-      final instr = encodesAx(Opcode.jumpAx.code, 0);
+      final instr = encodesAx(Op.jumpAx, 0);
       expect(decodeAx(instr), 0x7FFFFF);
     });
 
     test('excess-K encoding: value -8388607 encodes as 0', () {
-      final instr = encodesAx(Opcode.jumpAx.code, -8388607);
+      final instr = encodesAx(Op.jumpAx, -8388607);
       expect(decodeAx(instr), 0);
     });
 
     test('excess-K encoding: value +8388608 encodes as 0xFFFFFF', () {
-      final instr = encodesAx(Opcode.jumpAx.code, 8388608);
+      final instr = encodesAx(Op.jumpAx, 8388608);
       expect(decodeAx(instr), 0xFFFFFF);
     });
   });

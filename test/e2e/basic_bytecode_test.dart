@@ -34,10 +34,10 @@ void main() {
     final mainProto = DarticFuncProto(
       funcId: 0,
       bytecode: Uint32List.fromList([
-        encodeAsBx(Opcode.loadInt.code, 1, 1), // v1 = 1
-        encodeAsBx(Opcode.loadInt.code, 2, 2), // v2 = 2
-        encodeABx(Opcode.callStatic.code, 0, 1), // call add → v0
-        encodeAx(Opcode.halt.code, 0),
+        encodeAsBx(Op.loadInt, 1, 1), // v1 = 1
+        encodeAsBx(Op.loadInt, 2, 2), // v2 = 2
+        encodeABx(Op.callStatic, 0, 1), // call add → v0
+        encodeAx(Op.halt, 0),
       ]),
       valueRegCount: 1,
       refRegCount: 0,
@@ -47,8 +47,8 @@ void main() {
     final addProto = DarticFuncProto(
       funcId: 1,
       bytecode: Uint32List.fromList([
-        encodeABC(Opcode.addInt.code, 2, 0, 1), // v2 = v0 + v1
-        encodeABC(Opcode.returnVal.code, 2, 0, 0), // return v2
+        encodeABC(Op.addInt, 2, 0, 1), // v2 = v0 + v1
+        encodeABC(Op.returnVal, 2, 0, 0), // return v2
       ]),
       valueRegCount: 3,
       refRegCount: 0,
@@ -96,9 +96,9 @@ void main() {
     final mainProto = DarticFuncProto(
       funcId: 0,
       bytecode: Uint32List.fromList([
-        encodeAsBx(Opcode.loadInt.code, 1, 5), // arg = 5
-        encodeABx(Opcode.callStatic.code, 0, 1), // call factorial → v0
-        encodeAx(Opcode.halt.code, 0),
+        encodeAsBx(Op.loadInt, 1, 5), // arg = 5
+        encodeABx(Op.callStatic, 0, 1), // call factorial → v0
+        encodeAx(Op.halt, 0),
       ]),
       valueRegCount: 1,
       refRegCount: 0,
@@ -108,17 +108,17 @@ void main() {
     final factProto = DarticFuncProto(
       funcId: 1,
       bytecode: Uint32List.fromList([
-        encodeAsBx(Opcode.loadInt.code, 1, 0), // v1 = 0
-        encodeABC(Opcode.eqInt.code, 2, 0, 1), // v2 = (n == 0)
-        encodeAsBx(Opcode.jumpIfFalse.code, 2, 2), // skip if n != 0
-        encodeAsBx(Opcode.loadInt.code, 0, 1), // return 1
-        encodeABC(Opcode.returnVal.code, 0, 0, 0),
-        encodeAsBx(Opcode.loadInt.code, 1, 1), // v1 = 1
-        encodeABC(Opcode.subInt.code, 3, 0, 1), // v3 = n - 1
-        encodeABC(Opcode.moveVal.code, 4, 3, 0), // callee arg0 = v3
-        encodeABx(Opcode.callStatic.code, 3, 1), // factorial(n-1) → v3
-        encodeABC(Opcode.mulInt.code, 0, 0, 3), // v0 = n * factorial(n-1)
-        encodeABC(Opcode.returnVal.code, 0, 0, 0),
+        encodeAsBx(Op.loadInt, 1, 0), // v1 = 0
+        encodeABC(Op.eqInt, 2, 0, 1), // v2 = (n == 0)
+        encodeAsBx(Op.jumpIfFalse, 2, 2), // skip if n != 0
+        encodeAsBx(Op.loadInt, 0, 1), // return 1
+        encodeABC(Op.returnVal, 0, 0, 0),
+        encodeAsBx(Op.loadInt, 1, 1), // v1 = 1
+        encodeABC(Op.subInt, 3, 0, 1), // v3 = n - 1
+        encodeABC(Op.moveVal, 4, 3, 0), // callee arg0 = v3
+        encodeABx(Op.callStatic, 3, 1), // factorial(n-1) → v3
+        encodeABC(Op.mulInt, 0, 0, 3), // v0 = n * factorial(n-1)
+        encodeABC(Op.returnVal, 0, 0, 0),
       ]),
       valueRegCount: 4,
       refRegCount: 0,
@@ -152,10 +152,10 @@ void main() {
     final mainProto = DarticFuncProto(
       funcId: 0,
       bytecode: Uint32List.fromList([
-        encodeABx(Opcode.loadConst.code, 0, idx), // r0 = 'hello'
-        encodeABx(Opcode.loadConst.code, 1, idx), // r1 = 'hello' (same ref)
-        encodeABC(Opcode.eqRef.code, 0, 0, 1), // v0 = identical(r0, r1)
-        encodeAx(Opcode.halt.code, 0),
+        encodeABx(Op.loadConst, 0, idx), // r0 = 'hello'
+        encodeABx(Op.loadConst, 1, idx), // r1 = 'hello' (same ref)
+        encodeABC(Op.eqRef, 0, 0, 1), // v0 = identical(r0, r1)
+        encodeAx(Op.halt, 0),
       ]),
       valueRegCount: 1,
       refRegCount: 2,

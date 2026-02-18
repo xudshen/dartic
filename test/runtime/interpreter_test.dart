@@ -39,7 +39,7 @@ void main() {
   group('HALT', () {
     test('stops execution immediately', () {
       final module = _module(
-        Uint32List.fromList([encodeAx(Opcode.halt.code, 0)]),
+        Uint32List.fromList([encodeAx(Op.halt, 0)]),
       );
       // Should complete without error.
       interpreter.execute(module);
@@ -47,7 +47,7 @@ void main() {
 
     test('pops the root frame from CallStack', () {
       final module = _module(
-        Uint32List.fromList([encodeAx(Opcode.halt.code, 0)]),
+        Uint32List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 4,
         refRegCount: 2,
       );
@@ -63,8 +63,8 @@ void main() {
     test('is skipped without side effects', () {
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.nop.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.nop, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
       );
       interpreter.execute(module);
@@ -73,10 +73,10 @@ void main() {
     test('multiple NOPs advance PC correctly', () {
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.nop.code, 0, 0, 0),
-          encodeABC(Opcode.nop.code, 0, 0, 0),
-          encodeABC(Opcode.nop.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.nop, 0, 0, 0),
+          encodeABC(Op.nop, 0, 0, 0),
+          encodeABC(Op.nop, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
       );
       // Reaches HALT after 3 NOPs — no error.
@@ -119,9 +119,9 @@ void main() {
       // 10 NOPs + HALT — fuel runs out well before HALT.
       final instrs = List.generate(
         10,
-        (_) => encodeABC(Opcode.nop.code, 0, 0, 0),
+        (_) => encodeABC(Op.nop, 0, 0, 0),
       );
-      instrs.add(encodeAx(Opcode.halt.code, 0));
+      instrs.add(encodeAx(Op.halt, 0));
 
       final module = _module(
         Uint32List.fromList(instrs),

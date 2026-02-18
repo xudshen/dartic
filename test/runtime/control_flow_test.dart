@@ -44,11 +44,11 @@ void main() {
       //   3: LOAD_INT v0=42
       //   4: HALT
       final module = _module(Uint32List.fromList([
-        encodeAsBx(Opcode.jump.code, 0, 2), // pc=0, after fetch pc=1, +2→3
-        encodeAsBx(Opcode.loadInt.code, 0, 99),
-        encodeAsBx(Opcode.loadInt.code, 0, 99),
-        encodeAsBx(Opcode.loadInt.code, 0, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeAsBx(Op.jump, 0, 2), // pc=0, after fetch pc=1, +2→3
+        encodeAsBx(Op.loadInt, 0, 99),
+        encodeAsBx(Op.loadInt, 0, 99),
+        encodeAsBx(Op.loadInt, 0, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 42);
@@ -74,13 +74,13 @@ void main() {
       //   5: JUMP_IF_TRUE v1, -3   if v1!=0 → pc=5+1+(-3)=3 (loop body)
       //   6: HALT
       final module = _module(Uint32List.fromList([
-        encodeAsBx(Opcode.loadInt.code, 0, 0), // v0 = 0
-        encodeAsBx(Opcode.loadInt.code, 1, 3), // v1 = 3
-        encodeAsBx(Opcode.loadInt.code, 2, 1), // v2 = 1
-        encodeABC(Opcode.addInt.code, 0, 0, 2), // v0 += v2
-        encodeABC(Opcode.subInt.code, 1, 1, 2), // v1 -= v2
-        encodeAsBx(Opcode.jumpIfTrue.code, 1, -3), // if v1 != 0 → pc=3
-        encodeAx(Opcode.halt.code, 0),
+        encodeAsBx(Op.loadInt, 0, 0), // v0 = 0
+        encodeAsBx(Op.loadInt, 1, 3), // v1 = 3
+        encodeAsBx(Op.loadInt, 2, 1), // v2 = 1
+        encodeABC(Op.addInt, 0, 0, 2), // v0 += v2
+        encodeABC(Op.subInt, 1, 1, 2), // v1 -= v2
+        encodeAsBx(Op.jumpIfTrue, 1, -3), // if v1 != 0 → pc=3
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 3);
@@ -98,11 +98,11 @@ void main() {
       //   3: LOAD_INT v1=42
       //   4: HALT
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadTrue.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfTrue.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 1, 99),
-        encodeAsBx(Opcode.loadInt.code, 1, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadTrue, 0, 0, 0),
+        encodeAsBx(Op.jumpIfTrue, 0, 1),
+        encodeAsBx(Op.loadInt, 1, 99),
+        encodeAsBx(Op.loadInt, 1, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(1), 42);
@@ -114,10 +114,10 @@ void main() {
       //   2: LOAD_INT v1=42       (executed)
       //   3: HALT
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadFalse.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfTrue.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 1, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadFalse, 0, 0, 0),
+        encodeAsBx(Op.jumpIfTrue, 0, 1),
+        encodeAsBx(Op.loadInt, 1, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(1), 42);
@@ -129,11 +129,11 @@ void main() {
   group('JUMP_IF_FALSE', () {
     test('jumps when condition is false (zero)', () {
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadFalse.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfFalse.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 1, 99),
-        encodeAsBx(Opcode.loadInt.code, 1, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadFalse, 0, 0, 0),
+        encodeAsBx(Op.jumpIfFalse, 0, 1),
+        encodeAsBx(Op.loadInt, 1, 99),
+        encodeAsBx(Op.loadInt, 1, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(1), 42);
@@ -141,10 +141,10 @@ void main() {
 
     test('falls through when condition is true (non-zero)', () {
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadTrue.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfFalse.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 1, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadTrue, 0, 0, 0),
+        encodeAsBx(Op.jumpIfFalse, 0, 1),
+        encodeAsBx(Op.loadInt, 1, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(1), 42);
@@ -156,11 +156,11 @@ void main() {
   group('JUMP_IF_NULL', () {
     test('jumps when ref is null', () {
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadNull.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfNull.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 0, 99),
-        encodeAsBx(Opcode.loadInt.code, 0, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadNull, 0, 0, 0),
+        encodeAsBx(Op.jumpIfNull, 0, 1),
+        encodeAsBx(Op.loadInt, 0, 99),
+        encodeAsBx(Op.loadInt, 0, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 42);
@@ -172,10 +172,10 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, 0),
-          encodeAsBx(Opcode.jumpIfNull.code, 0, 1),
-          encodeAsBx(Opcode.loadInt.code, 0, 42),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, 0),
+          encodeAsBx(Op.jumpIfNull, 0, 1),
+          encodeAsBx(Op.loadInt, 0, 42),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 4,
         refRegCount: 2,
@@ -200,11 +200,11 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, 0),
-          encodeAsBx(Opcode.jumpIfNnull.code, 0, 1),
-          encodeAsBx(Opcode.loadInt.code, 0, 99),
-          encodeAsBx(Opcode.loadInt.code, 0, 42),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, 0),
+          encodeAsBx(Op.jumpIfNnull, 0, 1),
+          encodeAsBx(Op.loadInt, 0, 99),
+          encodeAsBx(Op.loadInt, 0, 42),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 4,
         refRegCount: 2,
@@ -221,10 +221,10 @@ void main() {
 
     test('falls through when ref is null', () {
       final module = _module(Uint32List.fromList([
-        encodeABC(Opcode.loadNull.code, 0, 0, 0),
-        encodeAsBx(Opcode.jumpIfNnull.code, 0, 1),
-        encodeAsBx(Opcode.loadInt.code, 0, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodeABC(Op.loadNull, 0, 0, 0),
+        encodeAsBx(Op.jumpIfNnull, 0, 1),
+        encodeAsBx(Op.loadInt, 0, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 42);
@@ -241,11 +241,11 @@ void main() {
       //   3: LOAD_INT v0=42
       //   4: HALT
       final module = _module(Uint32List.fromList([
-        encodesAx(Opcode.jumpAx.code, 2),
-        encodeAsBx(Opcode.loadInt.code, 0, 99),
-        encodeAsBx(Opcode.loadInt.code, 0, 99),
-        encodeAsBx(Opcode.loadInt.code, 0, 42),
-        encodeAx(Opcode.halt.code, 0),
+        encodesAx(Op.jumpAx, 2),
+        encodeAsBx(Op.loadInt, 0, 99),
+        encodeAsBx(Op.loadInt, 0, 99),
+        encodeAsBx(Op.loadInt, 0, 42),
+        encodeAx(Op.halt, 0),
       ]));
       interp.execute(module);
       expect(interp.valueStack.readInt(0), 42);
@@ -276,14 +276,14 @@ void main() {
       //   7: HALT
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 0), // v0 = 0 (sum)
-          encodeAsBx(Opcode.loadInt.code, 1, 1), // v1 = 1 (i)
-          encodeAsBx(Opcode.loadInt.code, 2, 10), // v2 = 10
-          encodeABC(Opcode.addInt.code, 0, 0, 1), // sum += i
-          encodeABC(Opcode.addIntImm.code, 1, 1, 1), // i++
-          encodeABC(Opcode.leInt.code, 3, 1, 2), // v3 = (i <= 10)
-          encodeAsBx(Opcode.jumpIfTrue.code, 3, -4), // loop if true
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, 0), // v0 = 0 (sum)
+          encodeAsBx(Op.loadInt, 1, 1), // v1 = 1 (i)
+          encodeAsBx(Op.loadInt, 2, 10), // v2 = 10
+          encodeABC(Op.addInt, 0, 0, 1), // sum += i
+          encodeABC(Op.addIntImm, 1, 1, 1), // i++
+          encodeABC(Op.leInt, 3, 1, 2), // v3 = (i <= 10)
+          encodeAsBx(Op.jumpIfTrue, 3, -4), // loop if true
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 5,
       );

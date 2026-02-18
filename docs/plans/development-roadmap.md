@@ -113,7 +113,7 @@ Phase 6  异步与高级特性     ← co19: LibTest/async + Ch7 Async + Languag
 
 ### Batch 1.1: 字节码基础设施 (Ch1)
 
-- [ ] 1.1.1 Opcode 枚举与编解码工具函数 → `lib/src/bytecode/opcodes.dart`, `lib/src/bytecode/encoding.dart`
+- [ ] 1.1.1 Opcode 常量与编解码工具函数 → `lib/src/bytecode/opcodes.dart`, `lib/src/bytecode/encoding.dart`
 - [ ] 1.1.2 常量池四分区数据结构 → `lib/src/bytecode/constant_pool.dart`
 - [ ] 1.1.3 WIDE 前缀编解码 → 扩展 `encoding.dart`
 - [ ] 1.1.4 字节码模块容器（函数表 + 常量池 + IC 表） → `lib/src/bytecode/module.dart`

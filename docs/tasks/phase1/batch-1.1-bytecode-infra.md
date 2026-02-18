@@ -2,7 +2,7 @@
 
 ## 概览
 
-实现 Ch1 ISA 的基础数据结构：操作码枚举、五种编码格式的编解码工具、四分区常量池、WIDE 前缀支持、以及字节码模块容器。
+实现 Ch1 ISA 的基础数据结构：操作码常量（`abstract class Op`）、五种编码格式的编解码工具、四分区常量池、WIDE 前缀支持、以及字节码模块容器。
 
 **设计参考：** `docs/design/01-bytecode-isa.md`
 
@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1.1.1: Opcode 枚举与编解码工具函数
+### Task 1.1.1: Opcode 常量与编解码工具函数
 
 **产出文件：**
 - Create: `lib/src/bytecode/opcodes.dart`
@@ -22,7 +22,7 @@
 
 1. **读设计文档** — Ch1"操作码分类"节，了解 0x00-0xFF 的全部操作码分组与语义
 2. **写 opcodes 测试** — 验证：所有操作码值唯一且在 0-255 范围内；按功能分组的边界值正确（如加载/存储 0x00-0x0F、整数算术 0x10-0x1F）；WIDE=0xFE、HALT=0xFF
-3. **实现 opcodes** — 定义枚举或静态常量类，包含 Ch1 中全部 105 个已定义操作码 + 预留区间填充 ILLEGAL
+3. **实现 opcodes** — 定义 `abstract class Op` 静态常量类，包含 Ch1 中全部 105 个已定义操作码（无需预留 ILLEGAL 填充，dispatch switch 的 default 分支处理非法操作码）
 4. **写 encoding 测试** — 验证五种编码格式（ABC、ABx、AsBx、Ax、sAx）的编解码往返正确性；excess-K 有符号编码的边界值（sBx: -32767~+32768，sAx: -8388607~+8388608）；操作数提取位运算（`instr & 0xFF`、`(instr >> 8) & 0xFF` 等）
 5. **实现 encoding** — 参考 Ch1 附录的编解码参考实现，实现 `encodeABC`/`decodeA`/`decodeB`/`decodeC`/`encodeABx`/`decodeBx`/`encodeAsBx`/`decodesBx`/`encodeAx`/`decodeAx`/`encodesAx`/`decodesAx`
 6. **运行** — `fvm dart analyze && fvm dart test test/bytecode/`
@@ -84,13 +84,13 @@ feat(bytecode): add ISA encoding, opcodes, and constant pool
 
 ## 核心发现
 
-- Dart enum 有内置 `index` 属性（声明顺序），不能用于自定义 opcode 值。改用 `code` 字段 + `byCode()` 静态查找表
+- 初版用 Dart enum + `code` 字段 + `byCode()` 静态查找表，后重构为 `abstract class Op` + `static const int`：enum 的 `.code` 不是 compile-time const 无法用于 switch/case，且 86 个 `illegal*` 填充项是维护负担。const class 零开销、可用于 dispatch switch 和 encoding 两处
 - 常量池 doubles 分区的去重需要按 bit pattern 比较（`NaN != NaN`），通过 `ByteData.setFloat64/getInt64` 转换
 - WIDE AsBx 的 excess-K 编码用 `K = 0x7FFFFFFF`（32 位），而标准 AsBx 用 `K = 0x7FFF`（16 位）——K 值随操作数宽度变化
 
 ## Batch 完成检查
 
-- [x] 1.1.1 Opcode 枚举与编解码
+- [x] 1.1.1 Opcode 常量与编解码
 - [x] 1.1.2 常量池四分区
 - [x] 1.1.3 WIDE 前缀编解码
 - [x] 1.1.4 字节码模块容器

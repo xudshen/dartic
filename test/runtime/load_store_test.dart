@@ -44,8 +44,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx),
+          encodeAx(Op.halt, 0),
         ]),
         refRegCount: 1,
         constantPool: cp,
@@ -60,8 +60,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx),
+          encodeAx(Op.halt, 0),
         ]),
         refRegCount: 1,
         constantPool: cp,
@@ -81,8 +81,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.loadNull.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.loadNull, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
         refRegCount: 1,
       );
@@ -102,8 +102,8 @@ void main() {
     test('LOAD_TRUE writes 1 to valueStack', () {
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.loadTrue.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.loadTrue, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -117,8 +117,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.loadFalse.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.loadFalse, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -133,8 +133,8 @@ void main() {
     test('loads positive immediate', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 42),
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, 42),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -145,8 +145,8 @@ void main() {
     test('loads negative immediate', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, -100),
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, -100),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -157,8 +157,8 @@ void main() {
     test('loads zero', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -169,8 +169,8 @@ void main() {
     test('loads max sBx value (+32768)', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 32768),
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, 32768),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -181,8 +181,8 @@ void main() {
     test('loads min sBx value (-32767)', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, -32767),
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, -32767),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
       );
@@ -200,8 +200,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConstInt.code, 0, idx),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConstInt, 0, idx),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         constantPool: cp,
@@ -220,8 +220,8 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConstDbl.code, 0, idx),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConstDbl, 0, idx),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         constantPool: cp,
@@ -237,9 +237,9 @@ void main() {
     test('copies reference between slots', () {
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 1, 0), // load 'world' to slot 1
-          encodeABC(Opcode.moveRef.code, 0, 1, 0), // copy slot 1 → slot 0
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 1, 0), // load 'world' to slot 1
+          encodeABC(Op.moveRef, 0, 1, 0), // copy slot 1 → slot 0
+          encodeAx(Op.halt, 0),
         ]),
         refRegCount: 2,
         constantPool: ConstantPool()..addRef('world'),
@@ -256,9 +256,9 @@ void main() {
     test('copies value between slots', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 1, 77), // slot 1 = 77
-          encodeABC(Opcode.moveVal.code, 0, 1, 0), // copy slot 1 → slot 0
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 1, 77), // slot 1 = 77
+          encodeABC(Op.moveVal, 0, 1, 0), // copy slot 1 → slot 0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 2,
       );
@@ -273,9 +273,9 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConstDbl.code, 1, idx), // slot 1 = 3.14
-          encodeABC(Opcode.moveVal.code, 0, 1, 0), // copy slot 1 → slot 0
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConstDbl, 1, idx), // slot 1 = 3.14
+          encodeABC(Op.moveVal, 0, 1, 0), // copy slot 1 → slot 0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 2,
         constantPool: cp,
@@ -291,9 +291,9 @@ void main() {
     test('boxes int from valueStack to refStack', () {
       final module = _module(
         Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 42), // valueStack[0] = 42
-          encodeABC(Opcode.boxInt.code, 0, 0, 0), // refStack[0] = box(42)
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 0, 42), // valueStack[0] = 42
+          encodeABC(Op.boxInt, 0, 0, 0), // refStack[0] = box(42)
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 1,
@@ -313,9 +313,9 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConstDbl.code, 0, idx), // doubleView[0] = 2.718
-          encodeABC(Opcode.boxDouble.code, 0, 0, 0), // refStack[0] = box(2.718)
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConstDbl, 0, idx), // doubleView[0] = 2.718
+          encodeABC(Op.boxDouble, 0, 0, 0), // refStack[0] = box(2.718)
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 1,
@@ -336,9 +336,9 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx), // refStack[0] = 123
-          encodeABC(Opcode.unboxInt.code, 0, 0, 0), // valueStack[0] = 123
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx), // refStack[0] = 123
+          encodeABC(Op.unboxInt, 0, 0, 0), // valueStack[0] = 123
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 1,
@@ -354,9 +354,9 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx),
-          encodeABC(Opcode.unboxInt.code, 0, 0, 0),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx),
+          encodeABC(Op.unboxInt, 0, 0, 0),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 1,
@@ -378,9 +378,9 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx), // refStack[0] = 1.5
-          encodeABC(Opcode.unboxDouble.code, 0, 0, 0), // doubleView[0] = 1.5
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx), // refStack[0] = 1.5
+          encodeABC(Op.unboxDouble, 0, 0, 0), // doubleView[0] = 1.5
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 1,

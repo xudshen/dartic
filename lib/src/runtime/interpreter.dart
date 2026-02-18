@@ -1,4 +1,5 @@
 import '../bytecode/module.dart';
+import '../bytecode/opcodes.dart';
 import 'call_stack.dart';
 import 'error.dart';
 import 'ref_stack.dart';
@@ -64,157 +65,157 @@ class DarticInterpreter {
       switch (op) {
         // ── Load/Store (0x00-0x0F) ──
 
-        case 0x00: // NOP
+        case Op.nop: // NOP
           break;
 
-        case 0x01: // LOAD_CONST A, Bx — refStack[A] = constPool.refs[Bx]
+        case Op.loadConst: // LOAD_CONST A, Bx — refStack[A] = constPool.refs[Bx]
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           rs.write(rBase + a, cp.getRef(bx));
 
-        case 0x02: // LOAD_NULL A — refStack[A] = null
+        case Op.loadNull: // LOAD_NULL A — refStack[A] = null
           rs.write(rBase + ((instr >> 8) & 0xFF), null);
 
-        case 0x03: // LOAD_TRUE A — valueStack[A] = 1
+        case Op.loadTrue: // LOAD_TRUE A — valueStack[A] = 1
           vs.writeInt(vBase + ((instr >> 8) & 0xFF), 1);
 
-        case 0x04: // LOAD_FALSE A — valueStack[A] = 0
+        case Op.loadFalse: // LOAD_FALSE A — valueStack[A] = 0
           vs.writeInt(vBase + ((instr >> 8) & 0xFF), 0);
 
-        case 0x05: // LOAD_INT A, sBx — valueStack[A] = sBx
+        case Op.loadInt: // LOAD_INT A, sBx — valueStack[A] = sBx
           final a = (instr >> 8) & 0xFF;
           final sbx = ((instr >> 16) & 0xFFFF) - 0x7FFF;
           vs.writeInt(vBase + a, sbx);
 
-        case 0x06: // LOAD_CONST_INT A, Bx — valueStack[A] = intPool[Bx]
+        case Op.loadConstInt: // LOAD_CONST_INT A, Bx — valueStack[A] = intPool[Bx]
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           vs.writeInt(vBase + a, cp.getInt(bx));
 
-        case 0x07: // LOAD_CONST_DBL A, Bx — doubleView[A] = dblPool[Bx]
+        case Op.loadConstDbl: // LOAD_CONST_DBL A, Bx — doubleView[A] = dblPool[Bx]
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           vs.writeDouble(vBase + a, cp.getDouble(bx));
 
-        case 0x08: // MOVE_REF A, B — refStack[A] = refStack[B]
+        case Op.moveRef: // MOVE_REF A, B — refStack[A] = refStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           rs.write(rBase + a, rs.read(rBase + b));
 
-        case 0x09: // MOVE_VAL A, B — valueStack[A] = valueStack[B]
+        case Op.moveVal: // MOVE_VAL A, B — valueStack[A] = valueStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b));
 
-        case 0x0A: // LOAD_UPVALUE A, Bx — deferred (closure support)
+        case Op.loadUpvalue: // LOAD_UPVALUE A, Bx — deferred (closure support)
           throw DarticError('Unimplemented opcode: 0x0a (LOAD_UPVALUE)');
 
-        case 0x0B: // STORE_UPVALUE A, Bx — deferred (closure support)
+        case Op.storeUpvalue: // STORE_UPVALUE A, Bx — deferred (closure support)
           throw DarticError('Unimplemented opcode: 0x0b (STORE_UPVALUE)');
 
-        case 0x0C: // BOX_INT A, B — refStack[A] = valueStack[B]
+        case Op.boxInt: // BOX_INT A, B — refStack[A] = valueStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           rs.write(rBase + a, vs.readInt(vBase + b));
 
-        case 0x0D: // BOX_DOUBLE A, B — refStack[A] = doubleView[B]
+        case Op.boxDouble: // BOX_DOUBLE A, B — refStack[A] = doubleView[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           rs.write(rBase + a, vs.readDouble(vBase + b));
 
-        case 0x0E: // UNBOX_INT A, B — valueStack[A] = refStack[B] as int
+        case Op.unboxInt: // UNBOX_INT A, B — valueStack[A] = refStack[B] as int
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeInt(vBase + a, rs.read(rBase + b) as int);
 
-        case 0x0F: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
+        case Op.unboxDouble: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeDouble(vBase + a, rs.read(rBase + b) as double);
 
         // ── Integer Arithmetic (0x10-0x1F) ──
 
-        case 0x10: // ADD_INT A, B, C
+        case Op.addInt: // ADD_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) + vs.readInt(vBase + c));
 
-        case 0x11: // SUB_INT A, B, C
+        case Op.subInt: // SUB_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) - vs.readInt(vBase + c));
 
-        case 0x12: // MUL_INT A, B, C
+        case Op.mulInt: // MUL_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) * vs.readInt(vBase + c));
 
-        case 0x13: // DIV_INT A, B, C (truncating ~/)
+        case Op.divInt: // DIV_INT A, B, C (truncating ~/)
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) ~/ vs.readInt(vBase + c));
 
-        case 0x14: // MOD_INT A, B, C
+        case Op.modInt: // MOD_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) % vs.readInt(vBase + c));
 
-        case 0x15: // NEG_INT A, B
+        case Op.negInt: // NEG_INT A, B
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeInt(vBase + a, -vs.readInt(vBase + b));
 
-        case 0x16: // BIT_AND A, B, C
+        case Op.bitAnd: // BIT_AND A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) & vs.readInt(vBase + c));
 
-        case 0x17: // BIT_OR A, B, C
+        case Op.bitOr: // BIT_OR A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) | vs.readInt(vBase + c));
 
-        case 0x18: // BIT_XOR A, B, C
+        case Op.bitXor: // BIT_XOR A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a, vs.readInt(vBase + b) ^ vs.readInt(vBase + c));
 
-        case 0x19: // BIT_NOT A, B
+        case Op.bitNot: // BIT_NOT A, B
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeInt(vBase + a, ~vs.readInt(vBase + b));
 
-        case 0x1A: // SHL A, B, C
+        case Op.shl: // SHL A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
 
-        case 0x1B: // SHR A, B, C (arithmetic)
+        case Op.shr: // SHR A, B, C (arithmetic)
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
 
-        case 0x1C: // USHR A, B, C (unsigned / logical)
+        case Op.ushr: // USHR A, B, C (unsigned / logical)
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
 
-        case 0x1D: // ADD_INT_IMM A, B, C (C is unsigned 8-bit immediate)
+        case Op.addIntImm: // ADD_INT_IMM A, B, C (C is unsigned 8-bit immediate)
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
@@ -222,42 +223,42 @@ class DarticInterpreter {
 
         // ── Comparison (0x30-0x3F) ──
 
-        case 0x30: // LT_INT A, B, C
+        case Op.ltInt: // LT_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) < vs.readInt(vBase + c) ? 1 : 0);
 
-        case 0x31: // LE_INT A, B, C
+        case Op.leInt: // LE_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) <= vs.readInt(vBase + c) ? 1 : 0);
 
-        case 0x32: // GT_INT A, B, C
+        case Op.gtInt: // GT_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) > vs.readInt(vBase + c) ? 1 : 0);
 
-        case 0x33: // GE_INT A, B, C
+        case Op.geInt: // GE_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) >= vs.readInt(vBase + c) ? 1 : 0);
 
-        case 0x34: // EQ_INT A, B, C
+        case Op.eqInt: // EQ_INT A, B, C
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) == vs.readInt(vBase + c) ? 1 : 0);
 
-        case 0x3A: // EQ_REF A, B, C — identical(refStack[B], refStack[C])
+        case Op.eqRef: // EQ_REF A, B, C — identical(refStack[B], refStack[C])
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
@@ -266,35 +267,35 @@ class DarticInterpreter {
 
         // ── Control Flow (0x40-0x4F) ──
 
-        case 0x40: // JUMP sBx — PC += sBx (A unused)
+        case Op.jump: // JUMP sBx — PC += sBx (A unused)
           pc += ((instr >> 16) & 0xFFFF) - 0x7FFF;
 
-        case 0x41: // JUMP_IF_TRUE A, sBx — if valueStack[A] != 0
+        case Op.jumpIfTrue: // JUMP_IF_TRUE A, sBx — if valueStack[A] != 0
           if (vs.readInt(vBase + ((instr >> 8) & 0xFF)) != 0) {
             pc += ((instr >> 16) & 0xFFFF) - 0x7FFF;
           }
 
-        case 0x42: // JUMP_IF_FALSE A, sBx — if valueStack[A] == 0
+        case Op.jumpIfFalse: // JUMP_IF_FALSE A, sBx — if valueStack[A] == 0
           if (vs.readInt(vBase + ((instr >> 8) & 0xFF)) == 0) {
             pc += ((instr >> 16) & 0xFFFF) - 0x7FFF;
           }
 
-        case 0x43: // JUMP_IF_NULL A, sBx — if refStack[A] == null
+        case Op.jumpIfNull: // JUMP_IF_NULL A, sBx — if refStack[A] == null
           if (rs.read(rBase + ((instr >> 8) & 0xFF)) == null) {
             pc += ((instr >> 16) & 0xFFFF) - 0x7FFF;
           }
 
-        case 0x44: // JUMP_IF_NNULL A, sBx — if refStack[A] != null
+        case Op.jumpIfNnull: // JUMP_IF_NNULL A, sBx — if refStack[A] != null
           if (rs.read(rBase + ((instr >> 8) & 0xFF)) != null) {
             pc += ((instr >> 16) & 0xFFFF) - 0x7FFF;
           }
 
-        case 0x45: // JUMP_AX sAx — PC += sAx (24-bit signed)
+        case Op.jumpAx: // JUMP_AX sAx — PC += sAx (24-bit signed)
           pc += ((instr >> 8) & 0xFFFFFF) - 0x7FFFFF;
 
         // ── Call/Return (0x50-0x5F) ──
 
-        case 0x51: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
+        case Op.callStatic: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           final callee = module.functions[bx];
@@ -331,7 +332,7 @@ class DarticInterpreter {
           code = callee.bytecode;
           pc = 0;
 
-        case 0x55: // RETURN_REF A — return refStack[A] to caller
+        case Op.returnRef: // RETURN_REF A — return refStack[A] to caller
           final retRef = rs.read(rBase + ((instr >> 8) & 0xFF));
 
           // Read caller state from current (callee) frame.
@@ -357,7 +358,7 @@ class DarticInterpreter {
           // Write return value to caller's ref register.
           rs.write(rrCallerRSP + rrResReg, retRef);
 
-        case 0x56: // RETURN_VAL A — return valueStack[A] to caller
+        case Op.returnVal: // RETURN_VAL A — return valueStack[A] to caller
           final retVal = vs.readInt(vBase + ((instr >> 8) & 0xFF));
 
           // Read caller state from current (callee) frame.
@@ -383,7 +384,7 @@ class DarticInterpreter {
           // Write return value to caller's value register.
           vs.writeInt(rvCallerVSP + rvResReg, retVal);
 
-        case 0x57: // RETURN_NULL — return null to caller's refStack[resultReg]
+        case Op.returnNull: // RETURN_NULL — return null to caller's refStack[resultReg]
           // Read caller state from current (callee) frame.
           final rnCallerVSP = callStack.savedVSP;
           final rnCallerRSP = callStack.savedRSP;
@@ -409,7 +410,7 @@ class DarticInterpreter {
 
         // ── System ──
 
-        case 0xFF: // HALT
+        case Op.halt: // HALT
           // Ref slots [rBase, rs.sp) are intentionally NOT cleared here.
           // HALT ends the entire execution; the caller may read results.
           // GC-safe clearing applies to RETURN (callee frame cleanup).

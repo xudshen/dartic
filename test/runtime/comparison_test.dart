@@ -30,10 +30,10 @@ DarticModule _module(
 /// Builds: LOAD_INT slot0=a, LOAD_INT slot1=b, cmp slot2, HALT.
 Uint32List _cmpInt(int opcode, int a, int b) {
   return Uint32List.fromList([
-    encodeAsBx(Opcode.loadInt.code, 0, a),
-    encodeAsBx(Opcode.loadInt.code, 1, b),
+    encodeAsBx(Op.loadInt, 0, a),
+    encodeAsBx(Op.loadInt, 1, b),
     encodeABC(opcode, 2, 0, 1),
-    encodeAx(Opcode.halt.code, 0),
+    encodeAx(Op.halt, 0),
   ]);
 }
 
@@ -48,17 +48,17 @@ void main() {
 
   group('LT_INT', () {
     test('less than → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.ltInt.code, 3, 5)));
+      interp.execute(_module(_cmpInt(Op.ltInt, 3, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('equal → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.ltInt.code, 5, 5)));
+      interp.execute(_module(_cmpInt(Op.ltInt, 5, 5)));
       expect(interp.valueStack.readInt(2), 0);
     });
 
     test('greater → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.ltInt.code, 7, 5)));
+      interp.execute(_module(_cmpInt(Op.ltInt, 7, 5)));
       expect(interp.valueStack.readInt(2), 0);
     });
   });
@@ -67,17 +67,17 @@ void main() {
 
   group('LE_INT', () {
     test('less than → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.leInt.code, 3, 5)));
+      interp.execute(_module(_cmpInt(Op.leInt, 3, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('equal → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.leInt.code, 5, 5)));
+      interp.execute(_module(_cmpInt(Op.leInt, 5, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('greater → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.leInt.code, 7, 5)));
+      interp.execute(_module(_cmpInt(Op.leInt, 7, 5)));
       expect(interp.valueStack.readInt(2), 0);
     });
   });
@@ -86,12 +86,12 @@ void main() {
 
   group('GT_INT', () {
     test('greater → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.gtInt.code, 7, 5)));
+      interp.execute(_module(_cmpInt(Op.gtInt, 7, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('equal → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.gtInt.code, 5, 5)));
+      interp.execute(_module(_cmpInt(Op.gtInt, 5, 5)));
       expect(interp.valueStack.readInt(2), 0);
     });
   });
@@ -100,17 +100,17 @@ void main() {
 
   group('GE_INT', () {
     test('greater → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.geInt.code, 7, 5)));
+      interp.execute(_module(_cmpInt(Op.geInt, 7, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('equal → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.geInt.code, 5, 5)));
+      interp.execute(_module(_cmpInt(Op.geInt, 5, 5)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('less → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.geInt.code, 3, 5)));
+      interp.execute(_module(_cmpInt(Op.geInt, 3, 5)));
       expect(interp.valueStack.readInt(2), 0);
     });
   });
@@ -119,12 +119,12 @@ void main() {
 
   group('EQ_INT', () {
     test('equal → 1', () {
-      interp.execute(_module(_cmpInt(Opcode.eqInt.code, 42, 42)));
+      interp.execute(_module(_cmpInt(Op.eqInt, 42, 42)));
       expect(interp.valueStack.readInt(2), 1);
     });
 
     test('not equal → 0', () {
-      interp.execute(_module(_cmpInt(Opcode.eqInt.code, 42, 43)));
+      interp.execute(_module(_cmpInt(Op.eqInt, 42, 43)));
       expect(interp.valueStack.readInt(2), 0);
     });
   });
@@ -138,10 +138,10 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx), // refStack[0] = 'same'
-          encodeABx(Opcode.loadConst.code, 1, idx), // refStack[1] = 'same'
-          encodeABC(Opcode.eqRef.code, 0, 0, 1), // valueStack[0] = identical?
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx), // refStack[0] = 'same'
+          encodeABx(Op.loadConst, 1, idx), // refStack[1] = 'same'
+          encodeABC(Op.eqRef, 0, 0, 1), // valueStack[0] = identical?
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 2,
@@ -158,10 +158,10 @@ void main() {
 
       final module = _module(
         Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx0),
-          encodeABx(Opcode.loadConst.code, 1, idx1),
-          encodeABC(Opcode.eqRef.code, 0, 0, 1),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, idx0),
+          encodeABx(Op.loadConst, 1, idx1),
+          encodeABC(Op.eqRef, 0, 0, 1),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 2,
@@ -174,10 +174,10 @@ void main() {
     test('both null → 1', () {
       final module = _module(
         Uint32List.fromList([
-          encodeABC(Opcode.loadNull.code, 0, 0, 0),
-          encodeABC(Opcode.loadNull.code, 1, 0, 0),
-          encodeABC(Opcode.eqRef.code, 0, 0, 1),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABC(Op.loadNull, 0, 0, 0),
+          encodeABC(Op.loadNull, 1, 0, 0),
+          encodeABC(Op.eqRef, 0, 0, 1),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 2,

@@ -232,10 +232,10 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 3, 10), // callee arg0
-          encodeAsBx(Opcode.loadInt.code, 4, 20), // callee arg1
-          encodeABx(Opcode.callStatic.code, 0, 1), // call add, result→v0
-          encodeAx(Opcode.halt.code, 0),
+          encodeAsBx(Op.loadInt, 3, 10), // callee arg0
+          encodeAsBx(Op.loadInt, 4, 20), // callee arg1
+          encodeABx(Op.callStatic, 0, 1), // call add, result→v0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 3,
         refRegCount: 0,
@@ -245,8 +245,8 @@ void main() {
       final addProto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeABC(Opcode.addInt.code, 2, 0, 1), // v2 = v0 + v1
-          encodeABC(Opcode.returnVal.code, 2, 0, 0), // return v2
+          encodeABC(Op.addInt, 2, 0, 1), // v2 = v0 + v1
+          encodeABC(Op.returnVal, 2, 0, 0), // return v2
         ]),
         valueRegCount: 3,
         refRegCount: 0,
@@ -273,8 +273,8 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.callStatic.code, 0, 1), // call getStr, result→r0
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.callStatic, 0, 1), // call getStr, result→r0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 0,
         refRegCount: 1,
@@ -284,8 +284,8 @@ void main() {
       final getStrProto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.loadConst.code, 0, idx), // r0 = 'hello'
-          encodeABC(Opcode.returnRef.code, 0, 0, 0), // return r0
+          encodeABx(Op.loadConst, 0, idx), // r0 = 'hello'
+          encodeABC(Op.returnRef, 0, 0, 0), // return r0
         ]),
         valueRegCount: 0,
         refRegCount: 1,
@@ -312,9 +312,9 @@ void main() {
         funcId: 0,
         bytecode: Uint32List.fromList([
           // Pre-fill r0 with non-null to verify it gets overwritten
-          encodeABx(Opcode.loadConst.code, 0, 0),
-          encodeABx(Opcode.callStatic.code, 0, 1), // call, result→r0
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.loadConst, 0, 0),
+          encodeABx(Op.callStatic, 0, 1), // call, result→r0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 0,
         refRegCount: 1,
@@ -324,7 +324,7 @@ void main() {
       final nullFuncProto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeAx(Opcode.returnNull.code, 0), // return null
+          encodeAx(Op.returnNull, 0), // return null
         ]),
         valueRegCount: 0,
         refRegCount: 0,
@@ -358,8 +358,8 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.callStatic.code, 0, 1), // call f1, result→v0
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.callStatic, 0, 1), // call f1, result→v0
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 0,
@@ -369,10 +369,10 @@ void main() {
       final f1Proto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 40), // v0 = 40
-          encodeABx(Opcode.callStatic.code, 1, 2), // call f2, result→v1
-          encodeABC(Opcode.addInt.code, 0, 0, 1), // v0 = v0 + v1 = 40 + 2
-          encodeABC(Opcode.returnVal.code, 0, 0, 0), // return v0
+          encodeAsBx(Op.loadInt, 0, 40), // v0 = 40
+          encodeABx(Op.callStatic, 1, 2), // call f2, result→v1
+          encodeABC(Op.addInt, 0, 0, 1), // v0 = v0 + v1 = 40 + 2
+          encodeABC(Op.returnVal, 0, 0, 0), // return v0
         ]),
         valueRegCount: 2,
         refRegCount: 0,
@@ -382,8 +382,8 @@ void main() {
       final f2Proto = DarticFuncProto(
         funcId: 2,
         bytecode: Uint32List.fromList([
-          encodeAsBx(Opcode.loadInt.code, 0, 2), // v0 = 2
-          encodeABC(Opcode.returnVal.code, 0, 0, 0), // return v0
+          encodeAsBx(Op.loadInt, 0, 2), // v0 = 2
+          encodeABC(Op.returnVal, 0, 0, 0), // return v0
         ]),
         valueRegCount: 1,
         refRegCount: 0,
@@ -407,8 +407,8 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.callStatic.code, 0, 1),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.callStatic, 0, 1),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 0,
@@ -418,7 +418,7 @@ void main() {
       final bigProto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeABC(Opcode.returnVal.code, 0, 0, 0),
+          encodeABC(Op.returnVal, 0, 0, 0),
         ]),
         valueRegCount: 100000, // exceeds default capacity of 10240
         refRegCount: 0,
@@ -451,8 +451,8 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.callStatic.code, 0, 1),
-          encodeAx(Opcode.halt.code, 0),
+          encodeABx(Op.callStatic, 0, 1),
+          encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 0,
@@ -462,8 +462,8 @@ void main() {
       final recurseProto = DarticFuncProto(
         funcId: 1,
         bytecode: Uint32List.fromList([
-          encodeABx(Opcode.callStatic.code, 0, 1), // call self
-          encodeABC(Opcode.returnVal.code, 0, 0, 0),
+          encodeABx(Op.callStatic, 0, 1), // call self
+          encodeABC(Op.returnVal, 0, 0, 0),
         ]),
         valueRegCount: 1,
         refRegCount: 0,
