@@ -5,6 +5,7 @@ import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/class_info.dart';
+import 'package:dartic/src/runtime/error.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -392,7 +393,7 @@ void main() {
 
       expect(
         () => interp.execute(module),
-        throwsA(isA<TypeError>()),
+        throwsA(isA<DarticError>()),
       );
     });
   });

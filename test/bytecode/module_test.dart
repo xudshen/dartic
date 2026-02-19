@@ -12,15 +12,15 @@ void main() {
       final entry = ICEntry(methodNameIndex: 5);
       expect(entry.methodNameIndex, 5);
       expect(entry.cachedClassId, -1);
-      expect(entry.cachedMethodOffset, 0);
+      expect(entry.cachedFuncId, 0);
     });
 
     test('can update cached values', () {
       final entry = ICEntry(methodNameIndex: 3);
       entry.cachedClassId = 42;
-      entry.cachedMethodOffset = 100;
+      entry.cachedFuncId = 100;
       expect(entry.cachedClassId, 42);
-      expect(entry.cachedMethodOffset, 100);
+      expect(entry.cachedFuncId, 100);
     });
   });
 

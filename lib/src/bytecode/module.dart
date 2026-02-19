@@ -107,8 +107,8 @@ class ICEntry {
   /// Cached class ID for monomorphic dispatch (-1 = uncached).
   int cachedClassId = -1;
 
-  /// Cached method entry offset (valid only when cachedClassId != -1).
-  int cachedMethodOffset = 0;
+  /// Cached funcId of the resolved method (valid only when cachedClassId != -1).
+  int cachedFuncId = 0;
 
   @override
   String toString() => 'ICEntry(name=$methodNameIndex, '

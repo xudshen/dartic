@@ -527,8 +527,14 @@ class DarticInterpreter {
           final cvB = (instr >> 16) & 0xFF; // receiver register
           final cvC = (instr >> 24) & 0xFF; // IC table index
 
-          // Read receiver — null receiver throws TypeError (Dart semantics).
-          final receiver = rs.read(rBase + cvB) as DarticObject;
+          // Read receiver — null receiver throws DarticError.
+          final receiverObj = rs.read(rBase + cvB);
+          if (receiverObj is! DarticObject) {
+            throw DarticError(
+              'NoSuchMethodError: method call on null receiver',
+            );
+          }
+          final receiver = receiverObj;
 
           // IC dispatch: look up the current function's IC table.
           final callerFuncProto = module.functions[callStack.funcId];
@@ -537,21 +543,22 @@ class DarticInterpreter {
           DarticFuncProto cvCallee;
           if (ic.cachedClassId == receiver.classId) {
             // IC hit — fast path.
-            cvCallee = module.functions[ic.cachedMethodOffset];
+            cvCallee = module.functions[ic.cachedFuncId];
           } else {
             // IC miss — slow path: look up method in class info.
             final classInfo = module.classes[receiver.classId];
             final method = classInfo.methods[ic.methodNameIndex];
             if (method == null) {
+              final name = module.constantPool.getName(ic.methodNameIndex);
               throw DarticError(
-                'NoSuchMethodError: method not found on '
+                'NoSuchMethodError: method "$name" not found on '
                 '${classInfo.name}',
               );
             }
             cvCallee = method;
             // Update IC cache.
             ic.cachedClassId = receiver.classId;
-            ic.cachedMethodOffset = cvCallee.funcId;
+            ic.cachedFuncId = cvCallee.funcId;
           }
 
           // Overflow and call depth checks.

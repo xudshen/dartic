@@ -10,9 +10,9 @@ void main() {
       expect(entry.cachedClassId, -1);
     });
 
-    test('cachedMethodOffset defaults to 0', () {
+    test('cachedFuncId defaults to 0', () {
       final entry = ICEntry(methodNameIndex: 0);
-      expect(entry.cachedMethodOffset, 0);
+      expect(entry.cachedFuncId, 0);
     });
 
     test('correctly stores methodNameIndex', () {
@@ -47,7 +47,7 @@ void main() {
       }
     });
 
-    test('cachedMethodOffset is 0 after roundtrip', () {
+    test('cachedFuncId is 0 after roundtrip', () {
       final proto = buildFuncProto(
         icTable: [
           ICEntry(methodNameIndex: 7),
@@ -61,8 +61,8 @@ void main() {
       final icTable = result.functions[0].icTable;
       expect(icTable.length, 2);
       for (final entry in icTable) {
-        expect(entry.cachedMethodOffset, 0,
-            reason: 'cachedMethodOffset must be 0 after deserialization');
+        expect(entry.cachedFuncId, 0,
+            reason: 'cachedFuncId must be 0 after deserialization');
       }
     });
 
@@ -98,9 +98,9 @@ void main() {
 
       // Simulate runtime cache hits — these should NOT survive serialization.
       icEntries[0].cachedClassId = 42;
-      icEntries[0].cachedMethodOffset = 200;
+      icEntries[0].cachedFuncId = 200;
       icEntries[1].cachedClassId = 7;
-      icEntries[1].cachedMethodOffset = 500;
+      icEntries[1].cachedFuncId = 500;
       // icEntries[2] left at defaults to verify mixed state.
 
       final proto = buildFuncProto(icTable: icEntries);
@@ -114,8 +114,8 @@ void main() {
       for (var i = 0; i < icTable.length; i++) {
         expect(icTable[i].cachedClassId, -1,
             reason: 'IC entry $i: cachedClassId must reset to -1');
-        expect(icTable[i].cachedMethodOffset, 0,
-            reason: 'IC entry $i: cachedMethodOffset must reset to 0');
+        expect(icTable[i].cachedFuncId, 0,
+            reason: 'IC entry $i: cachedFuncId must reset to 0');
       }
 
       // methodNameIndex must be preserved.
@@ -167,10 +167,10 @@ void main() {
       expect(f.icTable.length, 2);
       expect(f.icTable[0].methodNameIndex, 1);
       expect(f.icTable[0].cachedClassId, -1);
-      expect(f.icTable[0].cachedMethodOffset, 0);
+      expect(f.icTable[0].cachedFuncId, 0);
       expect(f.icTable[1].methodNameIndex, 2);
       expect(f.icTable[1].cachedClassId, -1);
-      expect(f.icTable[1].cachedMethodOffset, 0);
+      expect(f.icTable[1].cachedFuncId, 0);
 
       // Exception table checks.
       expect(f.exceptionTable.length, 2);

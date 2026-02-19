@@ -273,7 +273,7 @@ void main() {
 
       // Simulate runtime state that should NOT survive serialization.
       proto.icTable[0].cachedClassId = 99;
-      proto.icTable[0].cachedMethodOffset = 200;
+      proto.icTable[0].cachedFuncId = 200;
 
       final module = buildModuleFrom(functions: [proto]);
       final result = roundtripModule(module);
@@ -283,7 +283,7 @@ void main() {
 
       expect(icTable[0].methodNameIndex, 10);
       expect(icTable[0].cachedClassId, -1); // reset
-      expect(icTable[0].cachedMethodOffset, 0); // reset
+      expect(icTable[0].cachedFuncId, 0); // reset
 
       expect(icTable[1].methodNameIndex, 42);
       expect(icTable[1].cachedClassId, -1);
