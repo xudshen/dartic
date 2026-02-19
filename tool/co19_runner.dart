@@ -17,6 +17,16 @@ import 'package:kernel/binary/ast_from_binary.dart';
 // Data model
 // ---------------------------------------------------------------------------
 
+/// Shallow equality check for two lists.
+bool _listEquals<T>(List<T> a, List<T> b) {
+  if (identical(a, b)) return true;
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}
+
 /// A discovered co19 test file with classification metadata.
 class TestEntry {
   /// Full absolute path to the test file.
@@ -36,11 +46,17 @@ class TestEntry {
   /// their source code, indicating the test expects a compilation failure.
   final bool isNegative;
 
+  /// Experiment flags parsed from `// SharedOptions=--enable-experiment=...`
+  /// comments in the test file. These flags are passed to the Dart compiler
+  /// when compiling the test (e.g., `--enable-experiment=class-modifiers`).
+  final List<String> experimentFlags;
+
   TestEntry({
     required this.path,
     required this.category,
     required this.subcategory,
     this.isNegative = false,
+    this.experimentFlags = const [],
   });
 
   @override
@@ -51,10 +67,13 @@ class TestEntry {
           path == other.path &&
           category == other.category &&
           subcategory == other.subcategory &&
-          isNegative == other.isNegative;
+          isNegative == other.isNegative &&
+          _listEquals(experimentFlags, other.experimentFlags);
 
   @override
-  int get hashCode => Object.hash(path, category, subcategory, isNegative);
+  int get hashCode =>
+      Object.hash(path, category, subcategory, isNegative,
+          Object.hashAll(experimentFlags));
 
   @override
   String toString() {
@@ -131,6 +150,47 @@ bool isNegativeTest(String source) {
 }
 
 // ---------------------------------------------------------------------------
+// SharedOptions experiment flag parsing
+// ---------------------------------------------------------------------------
+
+/// Regex matching `// SharedOptions=--enable-experiment=<flags>` lines.
+///
+/// Captures the comma-separated list of experiment flag names after
+/// `--enable-experiment=`. Only scans the first 20 lines of the source.
+final _experimentFlagPattern =
+    RegExp(r'//\s*SharedOptions=--enable-experiment=(.+)');
+
+/// Parses experiment flags from `// SharedOptions=--enable-experiment=...`
+/// comments in the first 20 lines of [source].
+///
+/// Returns a list of experiment flag names. If the source contains multiple
+/// `SharedOptions` lines with experiment flags, all flags are merged into
+/// a single list. Comma-separated flags within a single line are split.
+///
+/// Example:
+/// ```
+/// // SharedOptions=--enable-experiment=class-modifiers,records
+/// ```
+/// Returns `['class-modifiers', 'records']`.
+List<String> parseExperimentFlags(String source) {
+  if (source.isEmpty) return const [];
+
+  final flags = <String>[];
+  final lines = source.split('\n');
+  final limit = lines.length < 20 ? lines.length : 20;
+
+  for (var i = 0; i < limit; i++) {
+    final match = _experimentFlagPattern.firstMatch(lines[i]);
+    if (match != null) {
+      final raw = match.group(1)!.trim();
+      flags.addAll(raw.split(',').map((f) => f.trim()).where((f) => f.isNotEmpty));
+    }
+  }
+
+  return flags;
+}
+
+// ---------------------------------------------------------------------------
 // Test discovery
 // ---------------------------------------------------------------------------
 
@@ -200,7 +260,7 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
         subcategory = parts[1];
       }
 
-      // Read file content to determine if this is a negative test.
+      // Read file content to determine negativity and experiment flags.
       final source = entity.readAsStringSync();
 
       entries.add(TestEntry(
@@ -208,6 +268,7 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
         category: category,
         subcategory: subcategory,
         isNegative: isNegativeTest(source),
+        experimentFlags: parseExperimentFlags(source),
       ));
     }
   }
@@ -249,9 +310,12 @@ Future<TestOutcome> runTest(TestEntry entry) async {
   try {
     // Step 1: Compile .dart → .dill via `fvm dart compile kernel`.
     final dillPath = '${tempDir.path}/test.dill';
+    final experimentArgs = entry.experimentFlags
+        .expand((f) => ['--enable-experiment=$f'])
+        .toList();
     final compileResult = await Process.run(
       'fvm',
-      ['dart', 'compile', 'kernel', entry.path, '-o', dillPath],
+      ['dart', 'compile', 'kernel', ...experimentArgs, entry.path, '-o', dillPath],
     );
 
     final compileFailed = compileResult.exitCode != 0;
@@ -432,16 +496,27 @@ class CategoryStats {
   final int skip;
   final int error;
 
+  /// Number of negative (compile-error) tests in this category.
+  final int negativeTotal;
+
+  /// Number of negative tests that passed (compile error as expected).
+  final int negativePass;
+
   CategoryStats({
     required this.category,
     required this.pass,
     required this.fail,
     required this.skip,
     required this.error,
+    this.negativeTotal = 0,
+    this.negativePass = 0,
   });
 
   /// Total number of tests in this category.
   int get total => pass + fail + skip + error;
+
+  /// Number of positive (non-negative) tests in this category.
+  int get positiveTotal => total - negativeTotal;
 
   /// Pass rate as a percentage (0.0–100.0). Returns 0.0 if [total] is 0.
   double get passRate => total == 0 ? 0.0 : (pass / total) * 100.0;
@@ -450,6 +525,8 @@ class CategoryStats {
 /// Groups [outcomes] by category and computes per-category statistics.
 ///
 /// Returns a list of [CategoryStats] sorted by category name.
+/// Each [CategoryStats] also includes a negative/positive breakdown
+/// based on [TestEntry.isNegative].
 List<CategoryStats> computeStats(List<TestOutcome> outcomes) {
   final groups = <String, List<TestOutcome>>{};
   for (final o in outcomes) {
@@ -459,12 +536,16 @@ List<CategoryStats> computeStats(List<TestOutcome> outcomes) {
   final stats = <CategoryStats>[];
   for (final category in groups.keys) {
     final list = groups[category]!;
+    final negativeOutcomes = list.where((o) => o.entry.isNegative).toList();
     stats.add(CategoryStats(
       category: category,
       pass: list.where((o) => o.result == TestResult.pass).length,
       fail: list.where((o) => o.result == TestResult.fail).length,
       skip: list.where((o) => o.result == TestResult.skip).length,
       error: list.where((o) => o.result == TestResult.error).length,
+      negativeTotal: negativeOutcomes.length,
+      negativePass:
+          negativeOutcomes.where((o) => o.result == TestResult.pass).length,
     ));
   }
 
@@ -525,6 +606,10 @@ String formatReport(
   );
   buf.writeln('─' * (catWidth + 8 * 5 + 10));
 
+  // Aggregate negative/positive totals for the TOTAL row.
+  var totalNegative = 0;
+  var totalPositive = 0;
+
   // Category rows.
   for (final s in stats) {
     buf.writeln(
@@ -536,6 +621,15 @@ String formatReport(
       '${s.total.toString().padLeft(8)}'
       '${_formatRate(s.passRate).padLeft(10)}',
     );
+    // Add negative/positive breakdown if there are negative tests.
+    if (s.negativeTotal > 0) {
+      buf.writeln(
+        '${''.padRight(catWidth)}'
+        '  (${s.negativeTotal} negative, ${s.positiveTotal} positive)',
+      );
+    }
+    totalNegative += s.negativeTotal;
+    totalPositive += s.positiveTotal;
   }
 
   // Separator and total row.
@@ -549,6 +643,12 @@ String formatReport(
     '${totalAll.toString().padLeft(8)}'
     '${_formatRate(totalRate).padLeft(10)}',
   );
+  if (totalNegative > 0) {
+    buf.writeln(
+      '${''.padRight(catWidth)}'
+      '  ($totalNegative negative, $totalPositive positive)',
+    );
+  }
 
   // Failed tests detail.
   final failures = outcomes.where((o) => o.result == TestResult.fail).toList();

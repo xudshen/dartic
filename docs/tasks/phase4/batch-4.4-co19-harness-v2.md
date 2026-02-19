@@ -117,18 +117,36 @@ feat: co19 harness v2 — experiment flags and type error tests
 
 ## 核心发现
 
-_(执行时填写：SharedOptions 实际使用频率、Phase 4 各类别通过率、主要失败原因 top 10、历史回归数和新增 pass 数、TypeSystem/subtyping 的通过率分布——static vs dynamic 子类别差异等)_
+- **SharedOptions 实际使用频率**：Class-modifiers 中约 10 个文件使用 `@dart=2.19` 版本标记，少量 Generics 文件有 `@dart=2.12`。`--enable-experiment` 标志在当前 co19 版本中较少使用（大部分实验已稳定）
+- **Phase 4 各类别通过率**：Generics 73.3% (143/195)、Mixins 69.2% (99/143)、Interfaces 80.0% (80/100)、TypeSystem/subtyping 49.4% (1345/2721)、Class-modifiers 62.5% (167/267)。**全部超过里程碑目标**
+- **TypeSystem/subtyping 通过率分布**：static 子类别 78.0% (1139/1461) vs dynamic 子类别 16.3% (206/1260)。dynamic 类别大量依赖 `Duration` 桥接和运行时类型检查，是主要拖累
+- **负面测试占比**：Generics ~75% 负面、Class-modifiers ~62% 负面。高负面比例意味着这些类别的"正面测试通过率"比总通过率更有参考价值
+- **Top 10 失败原因（占全部失败的 94.9%）**：
+  1. `Duration` class 未桥接 (422, 26.5%)
+  2. `TypeError` 运行时类型检查失败 (312, 19.6%)
+  3. `FutureOrType` 未实现 (153, 9.6%)
+  4. `RangeError` 寄存器/常量池溢出 (126, 7.9%)
+  5. `print` 函数未桥接 (118, 7.4%)
+  6. `RecordType` 未实现 (93, 5.8%)
+  7. `Null check operator` 失败 (90, 5.7%)
+  8. `Object` 常量未桥接 (70, 4.4%)
+  9. `ExtensionType` 未实现 (67, 4.2%)
+  10. `Object()` 构造器未桥接 (60, 3.8%)
+- **失败分类**：缺少 Bridge 42.1%、Phase 5+ 特性缺失 19.7%、编译器/解释器 bug 33.2%、其他 5.1%
+- **Class-modifiers 100% 被 `print` 桥接阻塞**：全部 100 个失败都是因为缺少 `print` 函数
+- **历史回归**：0 回归、+46 新通过（主要来自类型相关表达式、逻辑布尔表达式类型、常量构造器等）
+- **总体评估**：Phase 4 泛型/mixin/接口实现质量很高，实际"编译器质量通过率"（去除 Bridge 缺失和未来特性后）显著高于原始数字
 
 ## Batch 完成检查
 
-- [ ] 4.4.1 SharedOptions 实验标志解析
-- [ ] 4.4.2 类型错误负面测试完善
-- [ ] 4.4.3 验证——跑 Phase 4 新增 co19 类别
-- [ ] 4.4.4 回归跑——重跑 Phase 2-3 全部类别
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] 零回归（或回归已修复）
+- [x] 4.4.1 SharedOptions 实验标志解析
+- [x] 4.4.2 类型错误负面测试完善
+- [x] 4.4.3 验证——跑 Phase 4 新增 co19 类别
+- [x] 4.4.4 回归跑——重跑 Phase 2-3 全部类别
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过
+- [x] 零回归（或回归已修复）
 - [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] development-roadmap.md Phase 4 里程碑已更新
+- [x] overview.md 已更新
+- [x] development-roadmap.md Phase 4 里程碑已更新
 - [ ] code review 已完成

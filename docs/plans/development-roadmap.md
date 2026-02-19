@@ -440,30 +440,37 @@ int main() => add(1, 2); // => 3
 > **核心发现：**
 > _(执行时填写：子类型算法的递归深度问题、FutureOr<T> 特殊处理、type promotion 是否需运行时支持等)_
 
-### Batch 4.4: co19 Harness v2 — 实验标志与类型负面测试
+### Batch 4.4: co19 Harness v2 — 实验标志与类型负面测试 ✅
 
 > **注意**：`static_type_helper.dart` 使用 `extension StaticType<T> on T`，extension method 要到 Phase 6.2 才加，因此延迟到 Phase 6 harness v4。
 
-- [ ] 4.4.1 `// SharedOptions=--enable-experiment=...` 解析与传递 → 扩展 co19_runner
-- [ ] 4.4.2 类型错误负面测试完善（`@compile-error` 类型相关子集） → 扩展 co19_runner
-- [ ] 4.4.3 验证：跑 Language/Generics + Mixins + Interfaces + TypeSystem/subtyping + LanguageFeatures/Class-modifiers（新增类别） → 测试报告
-- [ ] 4.4.4 回归跑：重跑 Phase 2-3 全部类别，diff 快照，确认零回归 → 回归报告
+- [x] 4.4.1 `// SharedOptions=--enable-experiment=...` 解析与传递 → 扩展 co19_runner
+- [x] 4.4.2 类型错误负面测试完善（`@compile-error` 类型相关子集） → 扩展 co19_runner
+- [x] 4.4.3 验证：跑 Language/Generics + Mixins + Interfaces + TypeSystem/subtyping + LanguageFeatures/Class-modifiers（新增类别） → 测试报告
+- [x] 4.4.4 回归跑：重跑 Phase 2-3 全部类别，diff 快照，确认零回归 → 回归报告
 
 **commit:** `feat: co19 harness v2 — experiment flags and type error tests`
 
 > **核心发现：**
-> _(执行时填写：实验标志对编译行为的影响、哪些 TypeSystem 测试因缺少 extension method 仍然 fail 等)_
+> - SharedOptions 实验标志在当前 co19 版本中较少使用（大部分实验已稳定），但 `@dart=X.Y` 版本标记出现在 Class-modifiers (~10 文件) 和 Generics (~1 文件) 中
+> - 现有 `isNegativeTest` 正则完整覆盖 co19 所有标记变体（`[analyzer]` + `[cfe]`），未发现其他标记格式
+> - Generics 类别 ~75% 为负面测试、Class-modifiers ~62% 为负面测试，高负面比例拉高了总通过率
+> - TypeSystem/subtyping 的 static/dynamic 分裂明显：static 78.0% vs dynamic 16.3%，dynamic 子类别严重依赖 `Duration` 桥接
+> - Top 3 失败原因：`Duration` 未桥接 (422)、`TypeError` 运行时失败 (312)、`FutureOrType` 未实现 (153)——合计占 55.7%
+> - Class-modifiers 的 100 个失败全部因缺少 `print` 桥接，桥接后预期通过率 >90%
 
-### Phase 4 里程碑验证
+### Phase 4 里程碑验证 ✅
 
-- [ ] co19 `Language/Generics` 通过率 > 50%
-- [ ] co19 `Language/Mixins` 通过率 > 50%
-- [ ] co19 `TypeSystem/subtyping` 核心子集通过率 > 30%
-- [ ] Phase 2-3 类别零回归（或回归已修复）
-- [ ] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）
+- [x] co19 `Language/Generics` 通过率 > 50% — 实际 73.3% (143/195)
+- [x] co19 `Language/Mixins` 通过率 > 50% — 实际 69.2% (99/143)
+- [x] co19 `Language/Interfaces` 通过率 > 50% — 实际 80.0% (80/100)
+- [x] co19 `TypeSystem/subtyping` 核心子集通过率 > 30% — 实际 49.4% (1345/2721)
+- [x] co19 `LanguageFeatures/Class-modifiers` 通过率 > 30% — 实际 62.5% (167/267)
+- [x] Phase 2-3 类别零回归（或回归已修复） — 0 回归
+- [x] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试） — +46 new pass, 64.5% → 65.6%
 
-**实际通过率：** _(执行时填写)_
-**历史回归：** _(执行时填写：回归数 / 新增 pass 数)_
+**实际通过率：** Generics 73.3% / Mixins 69.2% / Interfaces 80.0% / TypeSystem/subtyping 49.4% / Class-modifiers 62.5% / Phase 4 新增五类合计 53.5% (1834/3426)
+**历史回归：** 0 回归 / +46 new pass / Phase 2-3 六类 65.6% (2732/4167) / 全十一类累计 60.1% (4566/7593)
 
 ---
 
@@ -633,7 +640,7 @@ int main() => add(1, 2); // => 3
 | 1 | （手工测试，无 co19） | — | 0 | — | 0 | 0 | | |
 | 2 | Variables + Expressions + Statements | 2,581 | ~1,000 | — | ~1,000 | ~700 | 1,373 | 0 |
 | 3 | Functions + Classes + Reference | 1,586 | 1,235 | +78 | ~2,300 | ~1,700 | 2,686 | 0 |
-| 4 | Generics + Mixins + TypeSystem | ~3,200 | ~1,500 | ~700 | ~4,500 | ~3,200 | | |
+| 4 | Generics + Mixins + TypeSystem | 3,426 | 1,834 | +46 | ~4,500 | ~3,200 | 4,566 | 0 |
 | 5 | LibTest/core + 集合/字符串特性 | ~1,100 | ~600 | ~400 | ~5,500 | ~4,000 | | |
 | 6 | Async + LanguageFeatures | ~2,300 | ~1,500 | ~500 | ~7,500 | ~5,500 | | |
 
@@ -682,4 +689,4 @@ review 发现的问题直接修复，修复后重新 review 直到通过。
 - [x] ~~为 Phase 3 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase3/`](../tasks/phase3/README.md)
 - [x] 执行 Phase 3（Batch 3.1 → 3.6，共 24 个 Task）— co19 六类累计 64.4% (2686/4167)，0 回归
 - [x] ~~为 Phase 4 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase4/`](../tasks/phase4/README.md)
-- [ ] 执行 Phase 4（Batch 4.1 → 4.4，共 16 个 Task）
+- [x] 执行 Phase 4（Batch 4.1 → 4.4，共 16 个 Task）— co19 Phase 4 五类 53.5% (1834/3426)，全十一类累计 60.1% (4566/7593)，0 回归

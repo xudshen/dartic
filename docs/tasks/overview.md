@@ -71,7 +71,7 @@
 
 ---
 
-## Phase 4: 高级 OOP + 泛型
+## Phase 4: 高级 OOP + 泛型 — ✅ 已完成
 
 **目标：** 实现泛型运行时系统（Ch6）、mixin/接口/类修饰符、完整子类型检查，通过 co19 harness v2 验证
 
@@ -82,16 +82,16 @@
 | [4.1](phase4/batch-4.1-mixin-interface.md) | Mixin 与接口 | 3 | ✅ |
 | [4.2](phase4/batch-4.2-generics-core.md) | 泛型核心 (Ch6) | 6 | ✅ (含 review 后修复：ref/value 栈协调) |
 | [4.3](phase4/batch-4.3-type-system.md) | 类型系统 | 3 | ✅ |
-| [4.4](phase4/batch-4.4-co19-harness-v2.md) | co19 Harness v2 | 4 | |
+| [4.4](phase4/batch-4.4-co19-harness-v2.md) | co19 Harness v2 | 4 | ✅ |
 
 **里程碑：**
-- [ ] co19 `Language/Generics` 通过率 > 50%
-- [ ] co19 `Language/Mixins` 通过率 > 50%
-- [ ] co19 `Language/Interfaces` 通过率 > 50%
-- [ ] co19 `TypeSystem/subtyping` 核心子集通过率 > 30%
-- [ ] co19 `LanguageFeatures/Class-modifiers` 通过率 > 30%（约 60% 为负面测试）
-- [ ] Phase 2-3 类别零回归（或回归已修复）
-- [ ] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）
+- [x] co19 `Language/Generics` 通过率 > 50% — 实际 73.3% (143/195)
+- [x] co19 `Language/Mixins` 通过率 > 50% — 实际 69.2% (99/143)
+- [x] co19 `Language/Interfaces` 通过率 > 50% — 实际 80.0% (80/100)
+- [x] co19 `TypeSystem/subtyping` 核心子集通过率 > 30% — 实际 49.4% (1345/2721)
+- [x] co19 `LanguageFeatures/Class-modifiers` 通过率 > 30%（约 60% 为负面测试）— 实际 62.5% (167/267)
+- [x] Phase 2-3 类别零回归（或回归已修复） — 0 回归
+- [x] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）— +46 new pass, 64.5% → 65.6%
 
 ---
 
