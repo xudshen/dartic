@@ -4,6 +4,7 @@
 /// Usage: `dart tool/co19_runner.dart [options] <directories...>`
 library;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -321,6 +322,102 @@ Future<List<TestOutcome>> runTests(List<TestEntry> entries) async {
     outcomes.add(await runTest(entry));
   }
   return outcomes;
+}
+
+// ---------------------------------------------------------------------------
+// Concurrency pool
+// ---------------------------------------------------------------------------
+
+/// A lightweight semaphore that limits concurrent async operations to [jobs].
+///
+/// Based on a FIFO queue of [Completer]s: when all slots are taken, callers
+/// wait in order. When a slot is released, it is handed directly to the next
+/// waiter (no redundant decrement-then-increment).
+class Pool {
+  Pool(this._maxJobs) : _currentJobs = 0;
+
+  final int _maxJobs;
+  int _currentJobs;
+  final _waiters = <Completer<void>>[];
+
+  /// Acquires a slot. Returns immediately if one is available, otherwise
+  /// suspends until a slot is released.
+  Future<void> acquire() {
+    if (_currentJobs < _maxJobs) {
+      _currentJobs++;
+      return Future.value();
+    }
+    final completer = Completer<void>();
+    _waiters.add(completer);
+    return completer.future;
+  }
+
+  /// Releases a slot. If waiters are queued, the slot is handed directly to
+  /// the next one (FIFO).
+  void release() {
+    if (_waiters.isNotEmpty) {
+      _waiters.removeAt(0).complete();
+    } else {
+      _currentJobs--;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Parallel test execution
+// ---------------------------------------------------------------------------
+
+/// Wraps [runTest] with a [timeout]. If the test does not complete in time,
+/// returns [TestResult.error] with a timeout message.
+///
+/// An optional [runner] parameter allows injecting a custom test function
+/// for testing purposes.
+Future<TestOutcome> runTestWithTimeout(
+  TestEntry entry,
+  Duration timeout, {
+  Future<TestOutcome> Function(TestEntry)? runner,
+}) async {
+  try {
+    return await (runner ?? runTest)(entry).timeout(timeout);
+  } on TimeoutException {
+    return TestOutcome(
+      entry: entry,
+      result: TestResult.error,
+      message: 'timeout after ${timeout.inSeconds}s',
+    );
+  }
+}
+
+/// Runs all [entries] in parallel with at most [jobs] concurrent executions.
+///
+/// Results are returned in the same order as [entries], regardless of
+/// completion order. The optional [onProgress] callback is invoked after
+/// each test completes.
+Future<List<TestOutcome>> runTestsParallel(
+  List<TestEntry> entries, {
+  required int jobs,
+  required Duration timeout,
+  void Function(int completed, int total, TestResult result)? onProgress,
+}) async {
+  if (entries.isEmpty) return [];
+
+  final pool = Pool(jobs);
+  final results = List<TestOutcome?>.filled(entries.length, null);
+  var completed = 0;
+
+  Future<void> runOne(int index) async {
+    await pool.acquire();
+    try {
+      results[index] = await runTestWithTimeout(entries[index], timeout);
+    } finally {
+      pool.release();
+      completed++;
+      onProgress?.call(completed, entries.length, results[index]!.result);
+    }
+  }
+
+  await Future.wait(List.generate(entries.length, runOne));
+  return results.cast<TestOutcome>();
 }
 
 // ---------------------------------------------------------------------------
@@ -681,6 +778,61 @@ String formatDiff(DiffResult diff) {
 }
 
 // ---------------------------------------------------------------------------
+// Progress reporting
+// ---------------------------------------------------------------------------
+
+/// Displays a single overwriting progress line on stderr.
+///
+/// Format: `[1234/4167] 900 pass, 300 fail, 34 error (28.5/s)`
+class _ProgressReporter {
+  _ProgressReporter(this._total)
+      : _pass = 0,
+        _fail = 0,
+        _error = 0,
+        _completed = 0,
+        _stopwatch = Stopwatch()..start();
+
+  final int _total;
+  int _pass;
+  int _fail;
+  int _error;
+  int _completed;
+  final Stopwatch _stopwatch;
+
+  /// Records a completed test result and rewrites the progress line.
+  void report(TestResult result) {
+    _completed++;
+    switch (result) {
+      case TestResult.pass:
+        _pass++;
+      case TestResult.fail:
+        _fail++;
+      case TestResult.error:
+        _error++;
+      case TestResult.skip:
+        break;
+    }
+    final elapsed = _stopwatch.elapsedMilliseconds / 1000.0;
+    final rate = elapsed > 0 ? _completed / elapsed : 0.0;
+    stderr.write(
+      '\r[$_completed/$_total] $_pass pass, $_fail fail, $_error error'
+      ' (${rate.toStringAsFixed(1)}/s)',
+    );
+  }
+
+  /// Prints the final progress line (with newline) and stops the stopwatch.
+  void finish() {
+    _stopwatch.stop();
+    final elapsed = _stopwatch.elapsedMilliseconds / 1000.0;
+    final rate = elapsed > 0 ? _completed / elapsed : 0.0;
+    stderr.writeln(
+      '\r[$_completed/$_total] $_pass pass, $_fail fail, $_error error'
+      ' (${rate.toStringAsFixed(1)}/s)',
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 // CLI entry point
 // ---------------------------------------------------------------------------
 
@@ -694,6 +846,9 @@ void _printUsage(StringSink sink) {
   sink.writeln('Options:');
   sink.writeln('  --run              Discover, compile, execute tests, and');
   sink.writeln('                     print report.');
+  sink.writeln('  --jobs=N, -jN      Number of concurrent test workers.');
+  sink.writeln('                     Defaults to CPU core count.');
+  sink.writeln('  --timeout=<secs>   Per-test timeout in seconds (default: 30).');
   sink.writeln('  --snapshot=<path>  Save results to a JSON snapshot file.');
   sink.writeln('                     Requires --run.');
   sink.writeln('  --baseline=<path>  Compare results against a baseline');
@@ -714,6 +869,10 @@ void _printUsage(StringSink sink) {
   sink.writeln(
       '  dart tool/co19_runner.dart --run vendor/co19/Language/Variables');
   sink.writeln('');
+  sink.writeln('  # Run with 8 workers and 60s timeout');
+  sink.writeln('  dart tool/co19_runner.dart --run --jobs=8 --timeout=60 \\');
+  sink.writeln('    vendor/co19/Language/Variables');
+  sink.writeln('');
   sink.writeln('  # Run, save snapshot, and compare against baseline');
   sink.writeln('  dart tool/co19_runner.dart --run \\');
   sink.writeln('    --snapshot=snapshots/current.json \\');
@@ -721,9 +880,18 @@ void _printUsage(StringSink sink) {
   sink.writeln('    vendor/co19/Language/Variables');
 }
 
+/// Parses `-jN` style shorthand (e.g. `-j4` → `4`). Returns `null` on
+/// parse failure.
+int? _parseShortJobs(String arg) {
+  final n = int.tryParse(arg.substring(2));
+  return (n != null && n > 0) ? n : null;
+}
+
 Future<void> main(List<String> args) async {
   // -- Parse arguments manually. --
   var runMode = false;
+  int? jobs;
+  var timeoutSeconds = 30;
   String? snapshotPath;
   String? baselinePath;
   var showHelp = false;
@@ -734,11 +902,33 @@ Future<void> main(List<String> args) async {
       runMode = true;
     } else if (arg == '--help' || arg == '-h') {
       showHelp = true;
+    } else if (arg.startsWith('--jobs=')) {
+      jobs = int.tryParse(arg.substring('--jobs='.length));
+      if (jobs == null || jobs <= 0) {
+        stderr.writeln('Invalid --jobs value: $arg');
+        exitCode = 1;
+        return;
+      }
+    } else if (arg.startsWith('-j') && arg.length > 2) {
+      jobs = _parseShortJobs(arg);
+      if (jobs == null) {
+        stderr.writeln('Invalid -j value: $arg');
+        exitCode = 1;
+        return;
+      }
+    } else if (arg.startsWith('--timeout=')) {
+      timeoutSeconds =
+          int.tryParse(arg.substring('--timeout='.length)) ?? -1;
+      if (timeoutSeconds <= 0) {
+        stderr.writeln('Invalid --timeout value: $arg');
+        exitCode = 1;
+        return;
+      }
     } else if (arg.startsWith('--snapshot=')) {
       snapshotPath = arg.substring('--snapshot='.length);
     } else if (arg.startsWith('--baseline=')) {
       baselinePath = arg.substring('--baseline='.length);
-    } else if (arg.startsWith('--')) {
+    } else if (arg.startsWith('--') || (arg.startsWith('-') && arg != '-')) {
       stderr.writeln('Unknown option: $arg');
       stderr.writeln('');
       _printUsage(stderr);
@@ -764,6 +954,9 @@ Future<void> main(List<String> args) async {
     return;
   }
 
+  // Default jobs to CPU core count.
+  jobs ??= Platform.numberOfProcessors;
+
   // -- Discover tests. --
   final entries = discoverTests(dirs);
 
@@ -776,18 +969,20 @@ Future<void> main(List<String> args) async {
     return;
   }
 
-  // -- Run mode: execute all discovered tests. --
-  stderr.writeln('Discovered ${entries.length} test(s). Running...');
-  stderr.writeln('');
+  // -- Run mode: execute tests in parallel. --
+  stderr.writeln(
+    'Discovered ${entries.length} test(s). '
+    'Running with $jobs worker(s), ${timeoutSeconds}s timeout...',
+  );
 
-  final outcomes = <TestOutcome>[];
-  for (var i = 0; i < entries.length; i++) {
-    final entry = entries[i];
-    final fileName = entry.path.split('/').last;
-    stderr.writeln('Running test ${i + 1}/${entries.length}: $fileName...');
-    outcomes.add(await runTest(entry));
-  }
-
+  final progress = _ProgressReporter(entries.length);
+  final outcomes = await runTestsParallel(
+    entries,
+    jobs: jobs,
+    timeout: Duration(seconds: timeoutSeconds),
+    onProgress: (completed, total, result) => progress.report(result),
+  );
+  progress.finish();
   stderr.writeln('');
 
   // -- Compute stats and print report to stdout. --
