@@ -657,11 +657,12 @@ int main() => add(1, 2); // => 3
 
 ### Batch 7.1: DarticEngine 公开 API
 
-- [ ] 7.1.1 DarticEngine / DarticConfig / DarticPlugin 接口 → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
-- [ ] 7.1.2 addFunction() 快速绑定（无需 codegen 的手动注册路径） → `lib/src/api/engine.dart`
-- [ ] 7.1.3 loadBytecode() + call() 端到端管线（封装 DarticInterpreter + HostBindings） → 集成测试
-- [ ] 7.1.4 错误模型（DarticError / FuelExhaustedError / BytecodeError / BindingResolutionError） → `lib/src/api/errors.dart`
-- [ ] 7.1.5 onPrint / onError 回调机制 → 扩展 engine.dart
+- [ ] 7.1.1 编译器 host/script 库分类机制 — `_isPlatformLibrary` → `_isHostLibrary`（scriptPackages 粗切分 + Bridge 注册表细粒度验证），DarticCompiler 构造器增加 scriptPackages 参数 → 扩展 `lib/src/compiler/compiler.dart`
+- [ ] 7.1.2 DarticEngine / DarticConfig / DarticPlugin 接口 → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
+- [ ] 7.1.3 addFunction() 快速绑定（无需 codegen 的手动注册路径） → `lib/src/api/engine.dart`
+- [ ] 7.1.4 loadBytecode() + call() 端到端管线（封装 DarticInterpreter + HostBindings） → 集成测试
+- [ ] 7.1.5 错误模型（DarticError / FuelExhaustedError / BytecodeError / BindingResolutionError） → `lib/src/api/errors.dart`
+- [ ] 7.1.6 onPrint / onError 回调机制 → 扩展 engine.dart
 
 **commit:** `feat(api): add DarticEngine public embedding API`
 

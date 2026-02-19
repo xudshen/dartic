@@ -177,6 +177,27 @@ CFE 已在 Kernel AST 中填入完整类型信息。编译器根据变量的静�
 
 **Bridge 注册表**从预生成库元数据加载已知绑定符号名集合。编译器遇到对 `dart:core::List.add` 等的引用时，以 `"库URI::类名::方法名#参数数量"` 为键分配本地索引。同一方法不同参数数量生成不同条目。编译器生成 `CALL_HOST A, Bx`（A=baseReg, Bx=本地绑定索引）。详见 Ch4 宿主函数注册表。
 
+**宿主库识别策略**：
+
+编译器需要区分"编译为字节码的脚本代码"和"生成 CALL_HOST 的宿主代码"。CFE 输出的 `.dill` 包含所有依赖的完整 AST（脚本 + 宿主 app + Flutter + dart:*），编译器必须正确分类。
+
+- **Phase 5-6（当前）**：仅桥接 `dart:*` 库，使用 `lib.importUri.isScheme('dart')` 判断即可。co19 测试和实际开发中不涉及 `package:*` 宿主调用。
+- **Phase 7（公开 API）**：引入 `scriptPackages` 编译器参数，采用包名粗切分 + Bridge 注册表细粒度验证：
+
+```dart
+bool _isHostLibrary(ir.Library lib) {
+  final uri = lib.importUri;
+  if (uri.isScheme('dart')) return true;           // dart:* 永远是宿主
+  if (uri.isScheme('package')) {
+    final package = uri.pathSegments.first;
+    return !_scriptPackages.contains(package);     // 不在脚本包列表中 → 宿主
+  }
+  return false;                                    // file: URI → 编译为字节码
+}
+```
+
+`scriptPackages` 由 DarticEngine API 透传给编译器。典型值：`{'my_script'}`——只有该包的代码被编译为字节码，`package:flutter/*`、`package:my_app/*` 等均生成 CALL_HOST。详见 Phase 7 设计 `docs/plans/2026-02-20-bridge-api-design.md`。
+
 ### 寄存器分配
 
 **Phase 1：作用域级回收**。编译器为值栈和引用栈各维护独立的寄存器池。分配采用递增计数 + 空闲池回收：请求寄存器时优先从空闲池取，否则递增分配新编号；变量离开作用域时批量归还。
