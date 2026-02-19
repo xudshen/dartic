@@ -30,6 +30,20 @@ class FieldLayout {
   final StackKind kind;
 }
 
+/// Dart 3 class modifier flags stored as a bitfield.
+///
+/// These modifiers are compile-time restrictions enforced by the Dart CFE.
+/// The dartic runtime stores them for debugging and future reflection support.
+abstract final class ClassModifiers {
+  static const int none = 0;
+  static const int sealed = 1 << 0;
+  static const int base = 1 << 1;
+  static const int interface = 1 << 2;
+  static const int final_ = 1 << 3;
+  static const int mixin_ = 1 << 4;
+  static const int abstract_ = 1 << 5;
+}
+
 /// Class metadata for interpreter-defined classes.
 ///
 /// Maintains method table, field layout, and supertype information.
@@ -45,6 +59,7 @@ class DarticClassInfo {
     required this.refFieldCount,
     required this.valueFieldCount,
     this.typeParamCount = 0,
+    this.modifiers = ClassModifiers.none,
   });
 
   /// Unique class identifier.
@@ -65,12 +80,34 @@ class DarticClassInfo {
   /// Number of type parameters (e.g., `List<T>` -> 1, `Map<K,V>` -> 2).
   final int typeParamCount;
 
+  /// Dart 3 class modifier flags (sealed / base / final / interface / mixin / abstract).
+  /// See [ClassModifiers] for bit constants.
+  final int modifiers;
+
   /// Method name index -> DarticFuncProto.
   /// Phase 1: simple Map. Phase 3: dual-strategy (sorted list / hash map).
   final Map<int, DarticFuncProto> methods = {};
 
   /// Field name index -> FieldLayout.
   final Map<int, FieldLayout> fields = {};
+
+  /// Whether this class has the `sealed` modifier.
+  bool get isSealed => modifiers & ClassModifiers.sealed != 0;
+
+  /// Whether this class has the `base` modifier.
+  bool get isBase => modifiers & ClassModifiers.base != 0;
+
+  /// Whether this class has the `interface` modifier.
+  bool get isInterface => modifiers & ClassModifiers.interface != 0;
+
+  /// Whether this class has the `final` modifier.
+  bool get isFinal => modifiers & ClassModifiers.final_ != 0;
+
+  /// Whether this class has the `mixin` modifier (mixin class).
+  bool get isMixinClass => modifiers & ClassModifiers.mixin_ != 0;
+
+  /// Whether this class is abstract.
+  bool get isAbstract => modifiers & ClassModifiers.abstract_ != 0;
 
   @override
   String toString() => 'ClassInfo(#$classId $name, '

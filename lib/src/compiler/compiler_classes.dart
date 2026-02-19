@@ -82,12 +82,22 @@ extension on DarticCompiler {
     }
     _instanceFieldLayouts[cls] = fieldLayouts;
 
+    // Compute Dart 3 class modifier flags from Kernel Class node.
+    var modifiers = ClassModifiers.none;
+    if (cls.isSealed) modifiers |= ClassModifiers.sealed;
+    if (cls.isBase) modifiers |= ClassModifiers.base;
+    if (cls.isInterface) modifiers |= ClassModifiers.interface;
+    if (cls.isFinal) modifiers |= ClassModifiers.final_;
+    if (cls.isMixinClass) modifiers |= ClassModifiers.mixin_;
+    if (cls.isAbstract) modifiers |= ClassModifiers.abstract_;
+
     final classInfo = DarticClassInfo(
       classId: classId,
       name: cls.name,
       superClassId: superClassId,
       refFieldCount: refOffset, // Total including inherited
       valueFieldCount: valOffset, // Total including inherited
+      modifiers: modifiers,
     );
 
     // Build supertypeIds: self + transitive closure of all supertypes.
