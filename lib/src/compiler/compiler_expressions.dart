@@ -11,70 +11,8 @@ extension on DarticCompiler {
   //
   // Returns (register, ResultLoc) indicating where the result lives.
 
-  (int, ResultLoc) _compileExpression(ir.Expression expr) {
-    if (expr is ir.IntLiteral) return _compileIntLiteral(expr);
-    if (expr is ir.BoolLiteral) return _compileBoolLiteral(expr);
-    if (expr is ir.DoubleLiteral) return _compileDoubleLiteral(expr);
-    if (expr is ir.StringLiteral) return _compileStringLiteral(expr);
-    if (expr is ir.NullLiteral) return _compileNullLiteral();
-    if (expr is ir.VariableGet) return _compileVariableGet(expr);
-    if (expr is ir.VariableSet) return _compileVariableSet(expr);
-    if (expr is ir.ConstantExpression) return _compileConstantExpression(expr);
-    if (expr is ir.Not) return _compileNot(expr);
-    if (expr is ir.EqualsNull) return _compileEqualsNull(expr);
-    if (expr is ir.EqualsCall) return _compileEqualsCall(expr);
-    if (expr is ir.Let) return _compileLet(expr);
-    if (expr is ir.BlockExpression) return _compileBlockExpression(expr);
-    if (expr is ir.NullCheck) return _compileNullCheck(expr);
-    if (expr is ir.StaticGet) return _compileStaticGet(expr);
-    if (expr is ir.StaticSet) return _compileStaticSet(expr);
-    if (expr is ir.StaticInvocation) return _compileStaticInvocation(expr);
-    if (expr is ir.InstanceInvocation) return _compileInstanceInvocation(expr);
-    if (expr is ir.LogicalExpression) return _compileLogicalExpression(expr);
-    if (expr is ir.ConditionalExpression) {
-      return _compileConditionalExpression(expr);
-    }
-    if (expr is ir.IsExpression) return _compileIsExpression(expr);
-    if (expr is ir.AsExpression) return _compileAsExpression(expr);
-    if (expr is ir.Throw) return _compileThrow(expr);
-    if (expr is ir.Rethrow) return _compileRethrow(expr);
-    if (expr is ir.LocalFunctionInvocation) {
-      return _compileLocalFunctionInvocation(expr);
-    }
-    if (expr is ir.FunctionExpression) {
-      return _compileFunctionExpression(expr);
-    }
-    if (expr is ir.FunctionInvocation) {
-      return _compileFunctionInvocation(expr);
-    }
-    if (expr is ir.StaticTearOff) {
-      return _compileStaticTearOff(expr);
-    }
-    if (expr is ir.ConstructorInvocation) {
-      return _compileConstructorInvocation(expr);
-    }
-    if (expr is ir.ThisExpression) {
-      return _compileThisExpression();
-    }
-    if (expr is ir.InstanceGet) {
-      return _compileInstanceGet(expr);
-    }
-    if (expr is ir.InstanceSet) {
-      return _compileInstanceSet(expr);
-    }
-    if (expr is ir.SuperMethodInvocation) {
-      return _compileSuperMethodInvocation(expr);
-    }
-    if (expr is ir.SuperPropertyGet) {
-      return _compileSuperPropertyGet(expr);
-    }
-    if (expr is ir.SuperPropertySet) {
-      return _compileSuperPropertySet(expr);
-    }
-    throw UnsupportedError(
-      'Unsupported expression: ${expr.runtimeType}',
-    );
-  }
+  (int, ResultLoc) _compileExpression(ir.Expression expr) =>
+      expr.accept(_exprVisitor);
 
   // ── Value loading primitives ──
 
@@ -1587,4 +1525,151 @@ extension on DarticCompiler {
       'Unsupported SuperPropertySet target: ${target.runtimeType}',
     );
   }
+}
+
+/// Visitor that compiles expressions by delegating to `_compileXxx` extension
+/// methods. Lives in the part file alongside the implementations it calls.
+class _ExprCompileVisitor
+    with ir.ExpressionVisitorDefaultMixin<(int, ResultLoc)> {
+  _ExprCompileVisitor(this._c);
+  final DarticCompiler _c;
+
+  @override
+  (int, ResultLoc) defaultExpression(ir.Expression node) =>
+      throw UnsupportedError('Unsupported expression: ${node.runtimeType}');
+
+  @override
+  (int, ResultLoc) defaultBasicLiteral(ir.BasicLiteral node) =>
+      throw UnsupportedError('Unsupported literal: ${node.runtimeType}');
+
+  // Literals
+  @override
+  (int, ResultLoc) visitIntLiteral(ir.IntLiteral node) =>
+      _c._compileIntLiteral(node);
+  @override
+  (int, ResultLoc) visitBoolLiteral(ir.BoolLiteral node) =>
+      _c._compileBoolLiteral(node);
+  @override
+  (int, ResultLoc) visitDoubleLiteral(ir.DoubleLiteral node) =>
+      _c._compileDoubleLiteral(node);
+  @override
+  (int, ResultLoc) visitStringLiteral(ir.StringLiteral node) =>
+      _c._compileStringLiteral(node);
+  @override
+  (int, ResultLoc) visitNullLiteral(ir.NullLiteral node) =>
+      _c._compileNullLiteral();
+
+  // Variable access
+  @override
+  (int, ResultLoc) visitVariableGet(ir.VariableGet node) =>
+      _c._compileVariableGet(node);
+  @override
+  (int, ResultLoc) visitVariableSet(ir.VariableSet node) =>
+      _c._compileVariableSet(node);
+
+  // Constants
+  @override
+  (int, ResultLoc) visitConstantExpression(ir.ConstantExpression node) =>
+      _c._compileConstantExpression(node);
+
+  // Logical / conditional / null
+  @override
+  (int, ResultLoc) visitNot(ir.Not node) => _c._compileNot(node);
+  @override
+  (int, ResultLoc) visitEqualsNull(ir.EqualsNull node) =>
+      _c._compileEqualsNull(node);
+  @override
+  (int, ResultLoc) visitEqualsCall(ir.EqualsCall node) =>
+      _c._compileEqualsCall(node);
+  @override
+  (int, ResultLoc) visitLogicalExpression(ir.LogicalExpression node) =>
+      _c._compileLogicalExpression(node);
+  @override
+  (int, ResultLoc) visitConditionalExpression(
+          ir.ConditionalExpression node) =>
+      _c._compileConditionalExpression(node);
+  @override
+  (int, ResultLoc) visitNullCheck(ir.NullCheck node) =>
+      _c._compileNullCheck(node);
+
+  // Let / BlockExpression
+  @override
+  (int, ResultLoc) visitLet(ir.Let node) => _c._compileLet(node);
+  @override
+  (int, ResultLoc) visitBlockExpression(ir.BlockExpression node) =>
+      _c._compileBlockExpression(node);
+
+  // Static access
+  @override
+  (int, ResultLoc) visitStaticGet(ir.StaticGet node) =>
+      _c._compileStaticGet(node);
+  @override
+  (int, ResultLoc) visitStaticSet(ir.StaticSet node) =>
+      _c._compileStaticSet(node);
+  @override
+  (int, ResultLoc) visitStaticTearOff(ir.StaticTearOff node) =>
+      _c._compileStaticTearOff(node);
+
+  // Invocations
+  @override
+  (int, ResultLoc) visitStaticInvocation(ir.StaticInvocation node) =>
+      _c._compileStaticInvocation(node);
+  @override
+  (int, ResultLoc) visitInstanceInvocation(ir.InstanceInvocation node) =>
+      _c._compileInstanceInvocation(node);
+  @override
+  (int, ResultLoc) visitConstructorInvocation(
+          ir.ConstructorInvocation node) =>
+      _c._compileConstructorInvocation(node);
+  @override
+  (int, ResultLoc) visitLocalFunctionInvocation(
+          ir.LocalFunctionInvocation node) =>
+      _c._compileLocalFunctionInvocation(node);
+  @override
+  (int, ResultLoc) visitFunctionInvocation(ir.FunctionInvocation node) =>
+      _c._compileFunctionInvocation(node);
+
+  // Type operations
+  @override
+  (int, ResultLoc) visitIsExpression(ir.IsExpression node) =>
+      _c._compileIsExpression(node);
+  @override
+  (int, ResultLoc) visitAsExpression(ir.AsExpression node) =>
+      _c._compileAsExpression(node);
+
+  // Exception expressions
+  @override
+  (int, ResultLoc) visitThrow(ir.Throw node) => _c._compileThrow(node);
+  @override
+  (int, ResultLoc) visitRethrow(ir.Rethrow node) => _c._compileRethrow(node);
+
+  // Closures
+  @override
+  (int, ResultLoc) visitFunctionExpression(ir.FunctionExpression node) =>
+      _c._compileFunctionExpression(node);
+
+  // this
+  @override
+  (int, ResultLoc) visitThisExpression(ir.ThisExpression node) =>
+      _c._compileThisExpression();
+
+  // Instance field access
+  @override
+  (int, ResultLoc) visitInstanceGet(ir.InstanceGet node) =>
+      _c._compileInstanceGet(node);
+  @override
+  (int, ResultLoc) visitInstanceSet(ir.InstanceSet node) =>
+      _c._compileInstanceSet(node);
+
+  // Super access
+  @override
+  (int, ResultLoc) visitSuperMethodInvocation(
+          ir.SuperMethodInvocation node) =>
+      _c._compileSuperMethodInvocation(node);
+  @override
+  (int, ResultLoc) visitSuperPropertyGet(ir.SuperPropertyGet node) =>
+      _c._compileSuperPropertyGet(node);
+  @override
+  (int, ResultLoc) visitSuperPropertySet(ir.SuperPropertySet node) =>
+      _c._compileSuperPropertySet(node);
 }

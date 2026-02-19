@@ -8,47 +8,7 @@ part of 'compiler.dart';
 extension on DarticCompiler {
   // ── Statement compilation ──
 
-  void _compileStatement(ir.Statement stmt) {
-    if (stmt is ir.ReturnStatement) {
-      _compileReturnStatement(stmt);
-    } else if (stmt is ir.Block) {
-      _compileBlock(stmt);
-    } else if (stmt is ir.ExpressionStatement) {
-      _compileExpression(stmt.expression);
-      // Result discarded — temporary register is not reclaimed here because
-      // it may alias a variable binding. Scope-level release handles cleanup.
-    } else if (stmt is ir.VariableDeclaration) {
-      _compileVariableDeclaration(stmt);
-    } else if (stmt is ir.IfStatement) {
-      _compileIfStatement(stmt);
-    } else if (stmt is ir.WhileStatement) {
-      _compileWhileStatement(stmt);
-    } else if (stmt is ir.ForStatement) {
-      _compileForStatement(stmt);
-    } else if (stmt is ir.DoStatement) {
-      _compileDoStatement(stmt);
-    } else if (stmt is ir.SwitchStatement) {
-      _compileSwitchStatement(stmt);
-    } else if (stmt is ir.LabeledStatement) {
-      _compileLabeledStatement(stmt);
-    } else if (stmt is ir.BreakStatement) {
-      _compileBreakStatement(stmt);
-    } else if (stmt is ir.TryCatch) {
-      _compileTryCatch(stmt);
-    } else if (stmt is ir.TryFinally) {
-      _compileTryFinally(stmt);
-    } else if (stmt is ir.AssertStatement) {
-      _compileAssertStatement(stmt);
-    } else if (stmt is ir.FunctionDeclaration) {
-      _compileFunctionDeclaration(stmt);
-    } else if (stmt is ir.EmptyStatement) {
-      // No-op.
-    } else {
-      throw UnsupportedError(
-        'Unsupported statement: ${stmt.runtimeType}',
-      );
-    }
-  }
+  void _compileStatement(ir.Statement stmt) => stmt.accept(_stmtVisitor);
 
   void _compileBlock(ir.Block block) {
     // Push a child scope for this block.
@@ -600,4 +560,60 @@ extension on DarticCompiler {
       }
     }
   }
+}
+
+/// Visitor that compiles statements by delegating to `_compileXxx` extension
+/// methods.
+class _StmtCompileVisitor with ir.StatementVisitorDefaultMixin<void> {
+  _StmtCompileVisitor(this._c);
+  final DarticCompiler _c;
+
+  @override
+  void defaultStatement(ir.Statement node) =>
+      throw UnsupportedError('Unsupported statement: ${node.runtimeType}');
+
+  @override
+  void visitReturnStatement(ir.ReturnStatement node) =>
+      _c._compileReturnStatement(node);
+  @override
+  void visitBlock(ir.Block node) => _c._compileBlock(node);
+  @override
+  void visitExpressionStatement(ir.ExpressionStatement node) =>
+      _c._compileExpression(node.expression);
+  @override
+  void visitVariableDeclaration(ir.VariableDeclaration node) =>
+      _c._compileVariableDeclaration(node);
+  @override
+  void visitIfStatement(ir.IfStatement node) =>
+      _c._compileIfStatement(node);
+  @override
+  void visitWhileStatement(ir.WhileStatement node) =>
+      _c._compileWhileStatement(node);
+  @override
+  void visitForStatement(ir.ForStatement node) =>
+      _c._compileForStatement(node);
+  @override
+  void visitDoStatement(ir.DoStatement node) =>
+      _c._compileDoStatement(node);
+  @override
+  void visitSwitchStatement(ir.SwitchStatement node) =>
+      _c._compileSwitchStatement(node);
+  @override
+  void visitLabeledStatement(ir.LabeledStatement node) =>
+      _c._compileLabeledStatement(node);
+  @override
+  void visitBreakStatement(ir.BreakStatement node) =>
+      _c._compileBreakStatement(node);
+  @override
+  void visitTryCatch(ir.TryCatch node) => _c._compileTryCatch(node);
+  @override
+  void visitTryFinally(ir.TryFinally node) => _c._compileTryFinally(node);
+  @override
+  void visitAssertStatement(ir.AssertStatement node) =>
+      _c._compileAssertStatement(node);
+  @override
+  void visitFunctionDeclaration(ir.FunctionDeclaration node) =>
+      _c._compileFunctionDeclaration(node);
+  @override
+  void visitEmptyStatement(ir.EmptyStatement node) {}
 }
