@@ -70,7 +70,7 @@ extension on DarticCompiler {
       classInfo.supertypeIds.addAll(_classInfos[superClassId].supertypeIds);
     }
 
-    // Register constructors → assign funcIds.
+    // Register constructors -> assign funcIds.
     for (final ctor in cls.constructors) {
       final funcId = _functions.length;
       _constructorToFuncId[ctor.reference] = funcId;
@@ -83,7 +83,7 @@ extension on DarticCompiler {
       ));
     }
 
-    // Register instance methods → assign funcIds.
+    // Register instance methods -> assign funcIds.
     for (final proc in cls.procedures) {
       if (proc.isStatic) continue;
       final funcId = _functions.length;
@@ -129,37 +129,10 @@ extension on DarticCompiler {
     final funcId = _constructorToFuncId[ctor.reference]!;
     final fn = ctor.function;
 
-    // Reset per-function state.
-    _emitter = BytecodeEmitter();
-    _valueAlloc = RegisterAllocator();
-    _refAlloc = RegisterAllocator();
-    _isEntryFunction = false;
-    _pendingArgMoves.clear();
-    _labelBreakJumps.clear();
-    _exceptionHandlers.clear();
-    _icEntries.clear();
-    _catchExceptionReg = -1;
-    _catchStackTraceReg = -1;
-
-    // Create function scope.
-    _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
-
-    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
-    _refAlloc.alloc(); // rsp+0: ITA
-    _refAlloc.alloc(); // rsp+1: FTA
-    _refAlloc.alloc(); // rsp+2: this/receiver
-
-    // Register parameters.
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      _scope.declareWithReg(param, kind, reg);
-    }
-    for (final param in fn.namedParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      _scope.declareWithReg(param, kind, reg);
-    }
+    _resetFunctionState(
+      positionalParams: fn.positionalParameters,
+      namedParams: fn.namedParameters,
+    );
 
     // Process initializers in declaration order.
     for (final init in ctor.initializers) {
@@ -188,14 +161,6 @@ extension on DarticCompiler {
 
     _patchPendingArgMoves();
 
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
-
-    // Count parameters (positional + named).
-    final paramCount =
-        fn.positionalParameters.length + fn.namedParameters.length;
-
-    // Build the function prototype and replace the placeholder.
     final className = ctor.enclosingClass.name;
     final ctorName = ctor.name.text;
     final displayName =
@@ -205,9 +170,9 @@ extension on DarticCompiler {
       funcId: funcId,
       name: displayName,
       bytecode: _emitter.toUint32List(),
-      valueRegCount: valRegCount,
-      refRegCount: refRegCount,
-      paramCount: paramCount,
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount: fn.positionalParameters.length + fn.namedParameters.length,
       icTable: List.of(_icEntries),
     );
   }
@@ -228,17 +193,12 @@ extension on DarticCompiler {
       throw StateError('Field layout not found for ${field.name}');
     }
 
-    // Compile the initializer value expression.
     final (valReg, valLoc) = _compileExpression(init.value);
-
-    // `this` is at rsp+2 (ref stack).
-    const thisReg = 2;
+    const thisReg = 2; // rsp+2 on the ref stack
 
     if (layout.kind.isValue) {
-      // Value field: SET_FIELD_VAL A=receiver(ref), B=value(val), C=offset.
       int srcReg = valReg;
       if (valLoc == ResultLoc.ref) {
-        // Unbox ref→value if the initializer is on the ref stack.
         srcReg = _allocValueReg();
         final unboxOp = layout.kind == StackKind.doubleVal
             ? Op.unboxDouble
@@ -247,11 +207,9 @@ extension on DarticCompiler {
       }
       _emitter.emit(encodeABC(Op.setFieldVal, thisReg, srcReg, layout.offset));
     } else {
-      // Ref field: SET_FIELD_REF A=receiver(ref), B=value(ref), C=offset.
       int srcReg = valReg;
       if (valLoc == ResultLoc.value) {
-        srcReg =
-            _emitBoxToRef(valReg, _inferExprType(init.value));
+        srcReg = _emitBoxToRef(valReg, _inferExprType(init.value));
       }
       _emitter.emit(encodeABC(Op.setFieldRef, thisReg, srcReg, layout.offset));
     }
@@ -260,61 +218,22 @@ extension on DarticCompiler {
   /// Compiles a [SuperInitializer] within a constructor.
   ///
   /// Emits CALL_SUPER to the parent constructor, passing `this` (rsp+2)
-  /// and the super arguments. Uses CALL_SUPER (ABx) since the target
-  /// constructor funcId is known at compile time.
+  /// and the super arguments.
   void _compileSuperInitializer(ir.SuperInitializer init) {
-    final targetRef = init.targetReference;
-    final funcId = _constructorToFuncId[targetRef];
+    final funcId = _constructorToFuncId[init.targetReference];
     if (funcId == null) {
       // Super constructor is in a platform class (e.g., Object()).
-      // Platform constructors are no-ops for our purposes — skip.
+      // Platform constructors are no-ops for our purposes -- skip.
       return;
     }
 
-    final targetParams = init.target.function.positionalParameters;
-    final targetNamedParams = init.target.function.namedParameters;
-    final argTemps = <(int, ResultLoc)>[];
-
-    // Compile positional arguments.
-    for (var i = 0; i < init.arguments.positional.length; i++) {
-      var (argReg, argLoc) = _compileExpression(init.arguments.positional[i]);
-      if (i < targetParams.length) {
-        final paramKind = _classifyStackKind(targetParams[i].type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg = _emitBoxToRef(
-            argReg,
-            _inferExprType(init.arguments.positional[i]),
-          );
-          argLoc = ResultLoc.ref;
-        }
-      }
-      argTemps.add((argReg, argLoc));
-    }
-
-    // Fill missing optional positional args with defaults.
-    for (var i = init.arguments.positional.length;
-        i < targetParams.length;
-        i++) {
-      argTemps.add(_compileDefaultValue(targetParams[i]));
-    }
-
-    // Handle named arguments.
-    if (targetNamedParams.isNotEmpty) {
-      _compileNamedArgsFromParams(
-        targetNamedParams,
-        init.arguments.named,
-        argTemps,
-      );
-    }
-
-    // Pass `this` (rsp+2) to the super constructor's `this` slot (argIdx 2).
-    const thisReg = 2;
-    final thisMovePC = _emitter.emitPlaceholder();
-    _pendingArgMoves.add(
-      (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
+    final argTemps = _compileInitializerArgs(
+      init.arguments,
+      init.target.function,
     );
 
-    // Emit arg moves + CALL_SUPER. Super constructor is compile-time resolved.
+    _emitThisPassthrough();
+
     final dummyResult = _allocRefReg();
     _emitArgMovesAndCall(argTemps, Op.callSuper, dummyResult, funcId);
   }
@@ -324,8 +243,7 @@ extension on DarticCompiler {
   /// Emits CALL_STATIC to the target constructor, passing `this` (rsp+2)
   /// and the redirecting arguments.
   void _compileRedirectingInitializer(ir.RedirectingInitializer init) {
-    final targetRef = init.targetReference;
-    final funcId = _constructorToFuncId[targetRef];
+    final funcId = _constructorToFuncId[init.targetReference];
     if (funcId == null) {
       throw UnsupportedError(
         'Unknown redirecting constructor target: '
@@ -333,19 +251,37 @@ extension on DarticCompiler {
       );
     }
 
-    final targetParams = init.target.function.positionalParameters;
-    final targetNamedParams = init.target.function.namedParameters;
+    final argTemps = _compileInitializerArgs(
+      init.arguments,
+      init.target.function,
+    );
+
+    _emitThisPassthrough();
+
+    final dummyResult = _allocRefReg();
+    _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
+  }
+
+  /// Compiles arguments for a constructor initializer call (super or
+  /// redirecting). Handles positional args with boxing, default values
+  /// for missing optionals, and named arguments.
+  List<(int, ResultLoc)> _compileInitializerArgs(
+    ir.Arguments arguments,
+    ir.FunctionNode targetFn,
+  ) {
+    final targetParams = targetFn.positionalParameters;
+    final targetNamedParams = targetFn.namedParameters;
     final argTemps = <(int, ResultLoc)>[];
 
     // Compile positional arguments.
-    for (var i = 0; i < init.arguments.positional.length; i++) {
-      var (argReg, argLoc) = _compileExpression(init.arguments.positional[i]);
+    for (var i = 0; i < arguments.positional.length; i++) {
+      var (argReg, argLoc) = _compileExpression(arguments.positional[i]);
       if (i < targetParams.length) {
         final paramKind = _classifyStackKind(targetParams[i].type);
         if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
           argReg = _emitBoxToRef(
             argReg,
-            _inferExprType(init.arguments.positional[i]),
+            _inferExprType(arguments.positional[i]),
           );
           argLoc = ResultLoc.ref;
         }
@@ -354,9 +290,7 @@ extension on DarticCompiler {
     }
 
     // Fill missing optional positional args with defaults.
-    for (var i = init.arguments.positional.length;
-        i < targetParams.length;
-        i++) {
+    for (var i = arguments.positional.length; i < targetParams.length; i++) {
       argTemps.add(_compileDefaultValue(targetParams[i]));
     }
 
@@ -364,20 +298,21 @@ extension on DarticCompiler {
     if (targetNamedParams.isNotEmpty) {
       _compileNamedArgsFromParams(
         targetNamedParams,
-        init.arguments.named,
+        arguments.named,
         argTemps,
       );
     }
 
-    // Pass `this` (rsp+2) to the target constructor's `this` slot (argIdx 2).
+    return argTemps;
+  }
+
+  /// Emits a pending MOVE to pass `this` (rsp+2) to the callee's `this`
+  /// slot (argIdx 2). Used by super and redirecting initializer calls.
+  void _emitThisPassthrough() {
     const thisReg = 2;
     final thisMovePC = _emitter.emitPlaceholder();
     _pendingArgMoves.add(
       (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
     );
-
-    // Emit arg moves + CALL_STATIC. Constructor returns void.
-    final dummyResult = _allocRefReg();
-    _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
   }
 }

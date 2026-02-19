@@ -1,3 +1,5 @@
+library;
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -30,16 +32,13 @@ class DarticSerializer {
     final payload = w.toBytes();
     final checksum = crc32(payload);
 
-    // Build final output: header + payload.
-    final header = _ByteWriter()
-      ..writeUint32(DarbFormat.magic)
-      ..writeUint32(DarbFormat.version)
-      ..writeUint32(checksum);
-
-    final headerBytes = header.toBytes();
-    final result = Uint8List(headerBytes.length + payload.length);
-    result.setAll(0, headerBytes);
-    result.setAll(headerBytes.length, payload);
+    // Build final output: header (12 bytes) + payload.
+    final result = Uint8List(DarbFormat.headerSize + payload.length);
+    final header = ByteData.sublistView(result);
+    header.setUint32(0, DarbFormat.magic, Endian.little);
+    header.setUint32(4, DarbFormat.version, Endian.little);
+    header.setUint32(8, checksum, Endian.little);
+    result.setAll(DarbFormat.headerSize, payload);
     return result;
   }
 
@@ -110,7 +109,7 @@ class DarticSerializer {
       w.writeUint32(handler.startPC);
       w.writeUint32(handler.endPC);
       w.writeUint32(handler.handlerPC);
-      w.writeUint32(handler.catchType);
+      w.writeInt32(handler.catchType);
       w.writeUint32(handler.valStackDP);
       w.writeUint32(handler.refStackDP);
       w.writeUint32(handler.exceptionReg);
@@ -147,6 +146,11 @@ class _ByteWriter {
     _builder.addByte((value >> 8) & 0xFF);
     _builder.addByte((value >> 16) & 0xFF);
     _builder.addByte((value >> 24) & 0xFF);
+  }
+
+  void writeInt32(int value) {
+    final bd = ByteData(4)..setInt32(0, value, Endian.little);
+    _builder.add(bd.buffer.asUint8List());
   }
 
   void writeInt64(int value) {

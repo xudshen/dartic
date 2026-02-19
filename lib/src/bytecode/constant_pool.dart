@@ -1,3 +1,5 @@
+library;
+
 import 'dart:typed_data';
 
 /// Four-partition constant pool for the dartic bytecode format.

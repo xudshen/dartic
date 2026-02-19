@@ -53,23 +53,29 @@ extension on DarticCompiler {
     _scope = ctx.scope;
     _isEntryFunction = ctx.isEntryFunction;
     _currentReturnType = ctx.currentReturnType;
-    _pendingArgMoves
-      ..clear()
-      ..addAll(ctx.pendingArgMoves);
-    _labelBreakJumps
-      ..clear()
-      ..addAll(ctx.labelBreakJumps);
-    _exceptionHandlers
-      ..clear()
-      ..addAll(ctx.exceptionHandlers);
-    _icEntries
-      ..clear()
-      ..addAll(ctx.icEntries);
+    _restoreList(_pendingArgMoves, ctx.pendingArgMoves);
+    _restoreMap(_labelBreakJumps, ctx.labelBreakJumps);
+    _restoreList(_exceptionHandlers, ctx.exceptionHandlers);
+    _restoreList(_icEntries, ctx.icEntries);
     _catchExceptionReg = ctx.catchExceptionReg;
     _catchStackTraceReg = ctx.catchStackTraceReg;
     _upvalueDescriptors = ctx.upvalueDescriptors;
     _upvalueIndices = ctx.upvalueIndices;
     _capturedVarRefRegs = ctx.capturedVarRefRegs;
+  }
+
+  /// Restores a mutable list's contents from a saved snapshot.
+  void _restoreList<T>(List<T> target, List<T> saved) {
+    target
+      ..clear()
+      ..addAll(saved);
+  }
+
+  /// Restores a mutable map's contents from a saved snapshot.
+  void _restoreMap<K, V>(Map<K, V> target, Map<K, V> saved) {
+    target
+      ..clear()
+      ..addAll(saved);
   }
 
   // ── Inner function compilation ──
@@ -136,25 +142,14 @@ extension on DarticCompiler {
       parent: outerScope,
     );
 
-    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
+    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) -- Ch2 convention.
     _refAlloc.alloc(); // rsp+0: ITA
     _refAlloc.alloc(); // rsp+1: FTA
     _refAlloc.alloc(); // rsp+2: this/receiver
 
-    // Register positional parameters.
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      _scope.declareWithReg(param, kind, reg);
-    }
-
-    // Register named parameters -- they occupy slots after positional params.
-    // CFE sorts named parameters alphabetically by name in FunctionNode.
-    for (final param in fn.namedParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      _scope.declareWithReg(param, kind, reg);
-    }
+    // Register parameters.
+    _registerParams(fn.positionalParameters);
+    _registerParams(fn.namedParameters);
 
     // Compile function body.
     final body = fn.body;

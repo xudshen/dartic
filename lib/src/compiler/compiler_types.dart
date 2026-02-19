@@ -155,7 +155,6 @@ extension on DarticCompiler {
     }
     return StackKind.ref;
   }
-
 }
 
 /// Maps int binary operator names to opcodes (arithmetic + comparison).

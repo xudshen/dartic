@@ -304,12 +304,8 @@ extension on DarticCompiler {
     // Result is bool (value stack).
     final resultReg = _allocValueReg();
 
-    // Emit arg move for right operand to callee's ref arg slot 3
-    // (slot 0=ITA, 1=FTA, 2=this, 3=first ref arg).
-    final movePC = _emitter.emitPlaceholder();
-    _pendingArgMoves.add(
-      (pc: movePC, srcReg: argReg, argIdx: 3, loc: ResultLoc.ref),
-    );
+    // Emit arg move for right operand via shared helper.
+    _emitArgMovesForVirtualCall([(argReg, ResultLoc.ref)]);
 
     // Emit CALL_VIRTUAL with method name '=='.
     final methodNameIdx = _constantPool.addName('==');
@@ -806,6 +802,24 @@ extension on DarticCompiler {
     }
   }
 
+  /// Emits placeholder MOVE instructions for arguments destined for a
+  /// CALL_VIRTUAL call. The receiver is handled by the interpreter, so
+  /// only non-receiver args are emitted here.
+  ///
+  /// This is the CALL_VIRTUAL counterpart to [_emitArgMovesAndCall] which
+  /// handles CALL_STATIC/CALL_SUPER/CALL.
+  void _emitArgMovesForVirtualCall(List<(int, ResultLoc)> argTemps) {
+    var valArgIdx = 0;
+    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2)
+    for (final (srcReg, loc) in argTemps) {
+      final movePC = _emitter.emitPlaceholder();
+      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
+      _pendingArgMoves.add(
+        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
+      );
+    }
+  }
+
   /// Emits placeholder MOVE instructions for all compiled arguments and
   /// the final call instruction.
   ///
@@ -939,16 +953,8 @@ extension on DarticCompiler {
       _compileNamedArgsFromParams(namedParams, expr.arguments.named, argTemps);
     }
 
-    // 4. Emit pending arg MOVEs (skip receiver — interpreter handles this).
-    var valArgIdx = 0;
-    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2)
-    for (final (srcReg, loc) in argTemps) {
-      final movePC = _emitter.emitPlaceholder();
-      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
-      _pendingArgMoves.add(
-        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
-      );
-    }
+    // 4. Emit pending arg MOVEs (skip receiver -- interpreter handles this).
+    _emitArgMovesForVirtualCall(argTemps);
 
     // 5. Allocate IC entry and emit CALL_VIRTUAL.
     final methodNameIdx = _constantPool.addName(methodName);
@@ -1340,28 +1346,15 @@ extension on DarticCompiler {
       valLoc = ResultLoc.ref;
     }
 
-    // 4. Allocate result register — setter returns void, so use a dummy.
-    final dummyResult = _allocRefReg();
-
-    // 5. Emit arg MOVE for the single value parameter.
+    // 4. Emit arg MOVE + CALL_VIRTUAL via shared helper.
     final argTemps = <(int, ResultLoc)>[(valReg, valLoc)];
-    var valArgIdx = 0;
-    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2)
-    for (final (srcReg, loc) in argTemps) {
-      final movePC = _emitter.emitPlaceholder();
-      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
-      _pendingArgMoves.add(
-        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
-      );
-    }
+    _emitArgMovesForVirtualCall(argTemps);
 
-    // 6. Allocate IC entry and emit CALL_VIRTUAL.
-    // Setters use "name=" convention in the method table.
+    final dummyResult = _allocRefReg();
     final methodName = '${expr.name.text}=';
     final methodNameIdx = _constantPool.addName(methodName);
     final icIndex = _icEntries.length;
     _icEntries.add(ICEntry(methodNameIndex: methodNameIdx));
-
     _emitter.emit(
         encodeABC(Op.callVirtual, dummyResult, receiverReg, icIndex));
 
@@ -1424,14 +1417,7 @@ extension on DarticCompiler {
       _compileNamedArgsFromParams(namedParams, expr.arguments.named, argTemps);
     }
 
-    // Pass `this` (rsp+2) to the callee's `this` slot (argIdx 2).
-    const thisReg = 2;
-    final thisMovePC = _emitter.emitPlaceholder();
-    _pendingArgMoves.add(
-      (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
-    );
-
-    // Emit arg moves + CALL_SUPER.
+    _emitThisPassthrough();
     _emitArgMovesAndCall(argTemps, Op.callSuper, resultReg, funcId);
 
     return (resultReg, retLoc);
@@ -1481,14 +1467,7 @@ extension on DarticCompiler {
       final resultReg =
           retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
 
-      // Pass `this` to the callee.
-      const thisReg = 2;
-      final thisMovePC = _emitter.emitPlaceholder();
-      _pendingArgMoves.add(
-        (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
-      );
-
-      // No arguments for a getter.
+      _emitThisPassthrough();
       _emitArgMovesAndCall(
           <(int, ResultLoc)>[], Op.callSuper, resultReg, funcId);
 
@@ -1563,13 +1542,7 @@ extension on DarticCompiler {
       final dummyResult = _allocRefReg();
       final argTemps = <(int, ResultLoc)>[(valReg, valLoc)];
 
-      // Pass `this` to the callee.
-      const thisReg = 2;
-      final thisMovePC = _emitter.emitPlaceholder();
-      _pendingArgMoves.add(
-        (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
-      );
-
+      _emitThisPassthrough();
       _emitArgMovesAndCall(argTemps, Op.callSuper, dummyResult, funcId);
 
       return (savedValReg, savedValLoc);

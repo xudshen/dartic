@@ -1,3 +1,5 @@
+library;
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -223,9 +225,9 @@ class _ByteReader {
   String readString() {
     final byteLen = readUint32();
     _checkBounds(byteLen);
-    final stringBytes = _bytes.sublist(_offset, _offset + byteLen);
+    final view = Uint8List.sublistView(_bytes, _offset, _offset + byteLen);
     _offset += byteLen;
-    return utf8.decode(stringBytes);
+    return utf8.decode(view);
   }
 
   void _checkBounds(int needed) {

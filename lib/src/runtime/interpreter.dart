@@ -487,14 +487,14 @@ class DarticInterpreter {
         // ── Call/Return (0x50-0x5F) ──
 
         case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
-          final callA = (instr >> 8) & 0xFF;
-          final callB = (instr >> 16) & 0xFF;
-          final closure = rs.read(rBase + callB) as DarticClosure;
-          final callCallee = closure.funcProto;
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final closure = rs.read(rBase + b) as DarticClosure;
+          final callee = closure.funcProto;
 
           // Overflow and call depth checks.
-          if (vs.sp + callCallee.valueRegCount > vs.capacity ||
-              rs.sp + callCallee.refRegCount > rs.capacity) {
+          if (vs.sp + callee.valueRegCount > vs.capacity ||
+              rs.sp + callee.refRegCount > rs.capacity) {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
@@ -503,12 +503,12 @@ class DarticInterpreter {
 
           // Push frame — save caller state.
           callStack.pushFrame(
-            funcId: callCallee.funcId,
+            funcId: callee.funcId,
             returnPC: pc,
             savedFP: callStack.fp,
             savedVSP: vBase,
             savedRSP: rBase,
-            resultReg: callA,
+            resultReg: a,
           );
 
           // Save caller's upvalues and switch to closure's upvalues.
@@ -518,11 +518,11 @@ class DarticInterpreter {
           // Advance to callee frame.
           vBase = vs.sp;
           rBase = rs.sp;
-          vs.sp += callCallee.valueRegCount;
-          rs.sp += callCallee.refRegCount;
+          vs.sp += callee.valueRegCount;
+          rs.sp += callee.refRegCount;
 
           // Switch to callee bytecode.
-          code = callCallee.bytecode;
+          code = callee.bytecode;
           pc = 0;
 
         case Op.callStatic: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
@@ -564,27 +564,25 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
-          final cvA = (instr >> 8) & 0xFF; // result register
-          final cvB = (instr >> 16) & 0xFF; // receiver register
-          final cvC = (instr >> 24) & 0xFF; // IC table index
+          final a = (instr >> 8) & 0xFF; // result register
+          final b = (instr >> 16) & 0xFF; // receiver register
+          final c = (instr >> 24) & 0xFF; // IC table index
 
           // Read receiver — null receiver throws DarticError.
-          final receiverObj = rs.read(rBase + cvB);
-          if (receiverObj is! DarticObject) {
+          final receiver = rs.read(rBase + b);
+          if (receiver is! DarticObject) {
             throw DarticError(
               'NoSuchMethodError: method call on null receiver',
             );
           }
-          final receiver = receiverObj;
 
           // IC dispatch: look up the current function's IC table.
-          final callerFuncProto = module.functions[callStack.funcId];
-          final ic = callerFuncProto.icTable[cvC];
+          final ic = module.functions[callStack.funcId].icTable[c];
 
-          DarticFuncProto cvCallee;
+          DarticFuncProto callee;
           if (ic.cachedClassId == receiver.classId) {
             // IC hit — fast path.
-            cvCallee = module.functions[ic.cachedFuncId];
+            callee = module.functions[ic.cachedFuncId];
           } else {
             // IC miss — slow path: look up method in class info.
             final classInfo = module.classes[receiver.classId];
@@ -596,15 +594,15 @@ class DarticInterpreter {
                 '${classInfo.name}',
               );
             }
-            cvCallee = method;
+            callee = method;
             // Update IC cache.
             ic.cachedClassId = receiver.classId;
-            ic.cachedFuncId = cvCallee.funcId;
+            ic.cachedFuncId = callee.funcId;
           }
 
           // Overflow and call depth checks.
-          if (vs.sp + cvCallee.valueRegCount > vs.capacity ||
-              rs.sp + cvCallee.refRegCount > rs.capacity) {
+          if (vs.sp + callee.valueRegCount > vs.capacity ||
+              rs.sp + callee.refRegCount > rs.capacity) {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
@@ -613,12 +611,12 @@ class DarticInterpreter {
 
           // Push frame — save caller state.
           callStack.pushFrame(
-            funcId: cvCallee.funcId,
+            funcId: callee.funcId,
             returnPC: pc,
             savedFP: callStack.fp,
             savedVSP: vBase,
             savedRSP: rBase,
-            resultReg: cvA,
+            resultReg: a,
           );
 
           // Save caller's upvalues.
@@ -628,24 +626,24 @@ class DarticInterpreter {
           // Advance to callee frame.
           vBase = vs.sp;
           rBase = rs.sp;
-          vs.sp += cvCallee.valueRegCount;
-          rs.sp += cvCallee.refRegCount;
+          vs.sp += callee.valueRegCount;
+          rs.sp += callee.refRegCount;
 
           // Place receiver at callee's rsp+2 (the `this` slot).
           rs.write(rBase + 2, receiver);
 
           // Switch to callee bytecode.
-          code = cvCallee.bytecode;
+          code = callee.bytecode;
           pc = 0;
 
         case Op.callSuper: // CALL_SUPER A, Bx — call super method functions[Bx], result→reg A
-          final csA = (instr >> 8) & 0xFF;
-          final csBx = (instr >> 16) & 0xFFFF;
-          final csCallee = module.functions[csBx];
+          final a = (instr >> 8) & 0xFF;
+          final bx = (instr >> 16) & 0xFFFF;
+          final callee = module.functions[bx];
 
           // Overflow and call depth checks.
-          if (vs.sp + csCallee.valueRegCount > vs.capacity ||
-              rs.sp + csCallee.refRegCount > rs.capacity) {
+          if (vs.sp + callee.valueRegCount > vs.capacity ||
+              rs.sp + callee.refRegCount > rs.capacity) {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
@@ -654,12 +652,12 @@ class DarticInterpreter {
 
           // Push frame — save caller state.
           callStack.pushFrame(
-            funcId: csCallee.funcId,
+            funcId: callee.funcId,
             returnPC: pc,
             savedFP: callStack.fp,
             savedVSP: vBase,
             savedRSP: rBase,
-            resultReg: csA,
+            resultReg: a,
           );
 
           // Save caller's upvalues; super calls have no closure upvalues.
@@ -669,11 +667,11 @@ class DarticInterpreter {
           // Advance to callee frame.
           vBase = vs.sp;
           rBase = rs.sp;
-          vs.sp += csCallee.valueRegCount;
-          rs.sp += csCallee.refRegCount;
+          vs.sp += callee.valueRegCount;
+          rs.sp += callee.refRegCount;
 
           // Switch to callee bytecode.
-          code = csCallee.bytecode;
+          code = callee.bytecode;
           pc = 0;
 
         // RETURN_REF / RETURN_VAL / RETURN_NULL share identical frame-restore
@@ -820,30 +818,28 @@ class DarticInterpreter {
         // ── Closure (0x70-0x71) ──
 
         case Op.closure: // CLOSURE A, Bx — refStack[A] = DarticClosure(funcProto[Bx])
-          final closA = (instr >> 8) & 0xFF;
-          final closBx = (instr >> 16) & 0xFFFF;
-          final proto = module.functions[closBx];
+          final a = (instr >> 8) & 0xFF;
+          final bx = (instr >> 16) & 0xFFFF;
+          final proto = module.functions[bx];
           final upvalues = <Upvalue>[];
           for (final desc in proto.upvalueDescriptors) {
             if (desc.isLocal) {
-              // Capture from current frame's ref stack slot.
               final absIndex = rBase + desc.index;
               upvalues.add(
-                _openUpvalues.putIfAbsent(absIndex, () => Upvalue.open(absIndex)),
+                _openUpvalues.putIfAbsent(
+                    absIndex, () => Upvalue.open(absIndex)),
               );
             } else {
-              // Pass through from enclosing closure's upvalues.
               upvalues.add(currentUpvalues![desc.index]);
             }
           }
           rs.write(
-            rBase + closA,
+            rBase + a,
             DarticClosure(funcProto: proto, upvalues: upvalues),
           );
 
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
-          final closeA = (instr >> 8) & 0xFF;
-          final minIndex = rBase + closeA;
+          final minIndex = rBase + ((instr >> 8) & 0xFF);
           _openUpvalues.removeWhere((stackIndex, uv) {
             if (stackIndex >= minIndex) {
               uv.close(rs.read(stackIndex));
@@ -864,12 +860,12 @@ class DarticInterpreter {
 
         case Op.halt: // HALT ABC: A=resultReg, B=kind, C=unused
           // Extract result BEFORE resetting stack pointers.
-          final haltA = (instr >> 8) & 0xFF;
-          final haltB = (instr >> 16) & 0xFF;
-          switch (haltB) {
-            case 1: _lastEntryResult = vs.readInt(vBase + haltA);
-            case 2: _lastEntryResult = vs.readDouble(vBase + haltA);
-            case 3: _lastEntryResult = rs.read(rBase + haltA);
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          switch (b) {
+            case 1: _lastEntryResult = vs.readInt(vBase + a);
+            case 2: _lastEntryResult = vs.readDouble(vBase + a);
+            case 3: _lastEntryResult = rs.read(rBase + a);
             default: _lastEntryResult = null;
           }
           vs.sp = vBase;

@@ -301,18 +301,24 @@ class DarticCompiler {
     );
   }
 
-  // ── Procedure compilation ──
+  // ── Per-function state management ──
 
-  void _compileProcedure(ir.Procedure proc) {
-    final funcId = _procToFuncId[proc.reference]!;
-    final fn = proc.function;
-
-    // Reset per-function state.
+  /// Resets all per-function compilation state and creates a fresh scope.
+  ///
+  /// Called at the start of compiling each procedure, constructor, or
+  /// global initializer. Reserves the 3 Ch2-convention ref registers
+  /// (ITA, FTA, this) and registers all function parameters.
+  void _resetFunctionState({
+    bool isEntry = false,
+    ir.DartType returnType = const ir.VoidType(),
+    List<ir.VariableDeclaration> positionalParams = const [],
+    List<ir.VariableDeclaration> namedParams = const [],
+  }) {
     _emitter = BytecodeEmitter();
     _valueAlloc = RegisterAllocator();
     _refAlloc = RegisterAllocator();
-    _isEntryFunction = funcId == _entryFuncId;
-    _currentReturnType = fn.returnType;
+    _isEntryFunction = isEntry;
+    _currentReturnType = returnType;
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -320,7 +326,6 @@ class DarticCompiler {
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
 
-    // Create the function-level scope.
     _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
 
     // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
@@ -332,23 +337,31 @@ class DarticCompiler {
     // Register function parameters as variable bindings.
     // Parameters get dedicated registers via the allocator (not scope-managed
     // for release -- they live for the entire function).
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue
-          ? _valueAlloc.alloc()
-          : _refAlloc.alloc();
-      _scope.declareWithReg(param, kind, reg);
-    }
+    _registerParams(positionalParams);
+    _registerParams(namedParams);
+  }
 
-    // Register named parameters -- they occupy slots after positional params.
-    // CFE sorts named parameters alphabetically by name in FunctionNode.
-    for (final param in fn.namedParameters) {
+  /// Registers a list of parameter declarations in the current scope.
+  void _registerParams(List<ir.VariableDeclaration> params) {
+    for (final param in params) {
       final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue
-          ? _valueAlloc.alloc()
-          : _refAlloc.alloc();
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       _scope.declareWithReg(param, kind, reg);
     }
+  }
+
+  // ── Procedure compilation ──
+
+  void _compileProcedure(ir.Procedure proc) {
+    final funcId = _procToFuncId[proc.reference]!;
+    final fn = proc.function;
+
+    _resetFunctionState(
+      isEntry: funcId == _entryFuncId,
+      returnType: fn.returnType,
+      positionalParams: fn.positionalParameters,
+      namedParams: fn.namedParameters,
+    );
 
     // Compile function body.
     final body = fn.body;
@@ -390,18 +403,7 @@ class DarticCompiler {
   int _compileGlobalInitializer(ir.Field field, int globalIndex) {
     final funcId = _functions.length;
 
-    // Reset per-function state.
-    _emitter = BytecodeEmitter();
-    _valueAlloc = RegisterAllocator();
-    _refAlloc = RegisterAllocator();
-    _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
-    _isEntryFunction = true; // Use HALT, not RETURN
-    _pendingArgMoves.clear();
-
-    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
-    _refAlloc.alloc(); // rsp+0: ITA
-    _refAlloc.alloc(); // rsp+1: FTA
-    _refAlloc.alloc(); // rsp+2: this/receiver
+    _resetFunctionState(isEntry: true);
 
     final (reg, loc) = _compileExpression(field.initializer!);
     final refReg = _ensureRef(reg, loc, field.type);
@@ -469,16 +471,17 @@ class DarticCompiler {
       reg = _emitBoxToRef(reg, _inferExprType(branchExpr));
       loc = ResultLoc.ref;
     } else if (loc == ResultLoc.ref && targetLoc == ResultLoc.value) {
-      // Unbox ref→value when the branch produces a ref-stack value but the
+      // Unbox ref->value when the branch produces a ref-stack value but the
       // ConditionalExpression targets a value-stack register. This occurs in
       // CFE-desugared `??` where the non-null branch is a VariableGet with
       // promotedType (e.g. int? promoted to int).
-      var type = _inferExprType(branchExpr);
-      if (type is ir.InterfaceType &&
-          type.nullability == ir.Nullability.nullable) {
-        type = type.withDeclaredNullability(ir.Nullability.nonNullable);
-      }
-      final kind = type != null ? _classifyStackKind(type) : StackKind.intVal;
+      final type = _inferExprType(branchExpr);
+      final nonNullType = (type is ir.InterfaceType &&
+              type.nullability == ir.Nullability.nullable)
+          ? type.withDeclaredNullability(ir.Nullability.nonNullable)
+          : type;
+      final kind =
+          nonNullType != null ? _classifyStackKind(nonNullType) : StackKind.intVal;
       final unboxOp =
           kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
       final valReg = _allocValueReg();

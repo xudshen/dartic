@@ -24,6 +24,34 @@ TypeTemplate dartTypeToTemplate(
   );
 }
 
+/// If [type] is nullable, returns its non-nullable equivalent.
+/// Returns null if the type is already non-nullable (no wrapping needed).
+ir.DartType? _toNonNullable(ir.DartType type) {
+  if (type is ir.InterfaceType &&
+      type.nullability == ir.Nullability.nullable) {
+    return type.withDeclaredNullability(ir.Nullability.nonNullable);
+  }
+  if (type is ir.FunctionType &&
+      type.nullability == ir.Nullability.nullable) {
+    return type.withDeclaredNullability(ir.Nullability.nonNullable);
+  }
+  if (type is ir.TypeParameterType &&
+      type.nullability == ir.Nullability.nullable) {
+    return ir.TypeParameterType(type.parameter, ir.Nullability.nonNullable);
+  }
+  if (type is ir.StructuralParameterType &&
+      type.nullability == ir.Nullability.nullable) {
+    return ir.StructuralParameterType(
+      type.parameter,
+      ir.Nullability.nonNullable,
+    );
+  }
+  if (type is ir.NeverType && type.nullability == ir.Nullability.nullable) {
+    return const ir.NeverType.nonNullable();
+  }
+  return null;
+}
+
 TypeTemplate _convert(
   ir.DartType type,
   Map<ir.Class, int> classIdLookup,
@@ -31,58 +59,21 @@ TypeTemplate _convert(
   List<ir.TypeParameter>? funcParams,
   List<ir.StructuralParameter>? structuralParams,
 ) {
-  // Handle nullable types by wrapping in NullableTemplate.
-  if (type is ir.InterfaceType && type.nullability == ir.Nullability.nullable) {
+  // Handle nullable types by unwrapping to non-nullable and wrapping the
+  // result in NullableTemplate. This consolidates the 5 nullable cases
+  // (InterfaceType, FunctionType, TypeParameterType, StructuralParameterType,
+  // NeverType) into a single dispatch.
+  final nonNullable = _toNonNullable(type);
+  if (nonNullable != null) {
     return NullableTemplate(
       inner: _convert(
-        type.withDeclaredNullability(ir.Nullability.nonNullable),
+        nonNullable,
         classIdLookup,
         classParams,
         funcParams,
         structuralParams,
       ),
     );
-  }
-  if (type is ir.FunctionType && type.nullability == ir.Nullability.nullable) {
-    return NullableTemplate(
-      inner: _convert(
-        type.withDeclaredNullability(ir.Nullability.nonNullable),
-        classIdLookup,
-        classParams,
-        funcParams,
-        structuralParams,
-      ),
-    );
-  }
-  if (type is ir.TypeParameterType &&
-      type.nullability == ir.Nullability.nullable) {
-    return NullableTemplate(
-      inner: _convert(
-        ir.TypeParameterType(type.parameter, ir.Nullability.nonNullable),
-        classIdLookup,
-        classParams,
-        funcParams,
-        structuralParams,
-      ),
-    );
-  }
-  if (type is ir.StructuralParameterType &&
-      type.nullability == ir.Nullability.nullable) {
-    return NullableTemplate(
-      inner: _convert(
-        ir.StructuralParameterType(
-          type.parameter,
-          ir.Nullability.nonNullable,
-        ),
-        classIdLookup,
-        classParams,
-        funcParams,
-        structuralParams,
-      ),
-    );
-  }
-  if (type is ir.NeverType && type.nullability == ir.Nullability.nullable) {
-    return const NullableTemplate(inner: NeverTemplate());
   }
 
   return switch (type) {
@@ -317,66 +308,31 @@ List<SuperTypeEntry> buildSuperTypeEntries(
   ir.Class cls,
   Map<ir.Class, int> classIdLookup,
 ) {
-  final entries = <SuperTypeEntry>[];
   final subClassId = classIdLookup[cls] ?? -1;
+  final entries = <SuperTypeEntry>[];
 
-  // Process direct superclass (extends).
-  if (cls.supertype != null) {
-    final sup = cls.supertype!;
-    final superClassId = classIdLookup[sup.classNode];
-    if (superClassId != null) {
-      entries.add(SuperTypeEntry(
-        subClassId: subClassId,
-        superClassId: superClassId,
-        typeArgMapping: [
-          for (final arg in sup.typeArguments)
-            dartTypeToTemplate(
-              arg,
-              classIdLookup,
-              enclosingClassTypeParams: cls.typeParameters,
-            ),
-        ],
-      ));
-    }
-  }
+  // Collect all direct supertypes: extends, implements, and with (mixin).
+  final supertypes = <ir.Supertype>[
+    if (cls.supertype != null) cls.supertype!,
+    ...cls.implementedTypes,
+    if (cls.mixedInType != null) cls.mixedInType!,
+  ];
 
-  // Process implemented interfaces.
-  for (final iface in cls.implementedTypes) {
-    final ifaceClassId = classIdLookup[iface.classNode];
-    if (ifaceClassId != null) {
-      entries.add(SuperTypeEntry(
-        subClassId: subClassId,
-        superClassId: ifaceClassId,
-        typeArgMapping: [
-          for (final arg in iface.typeArguments)
-            dartTypeToTemplate(
-              arg,
-              classIdLookup,
-              enclosingClassTypeParams: cls.typeParameters,
-            ),
-        ],
-      ));
-    }
-  }
-
-  // Process mixin application (with).
-  if (cls.mixedInType != null) {
-    final mixin = cls.mixedInType!;
-    final mixinClassId = classIdLookup[mixin.classNode];
-    if (mixinClassId != null) {
-      entries.add(SuperTypeEntry(
-        subClassId: subClassId,
-        superClassId: mixinClassId,
-        typeArgMapping: [
-          for (final arg in mixin.typeArguments)
-            dartTypeToTemplate(
-              arg,
-              classIdLookup,
-              enclosingClassTypeParams: cls.typeParameters,
-            ),
-        ],
-      ));
-    }
+  for (final supertype in supertypes) {
+    final superClassId = classIdLookup[supertype.classNode];
+    if (superClassId == null) continue;
+    entries.add(SuperTypeEntry(
+      subClassId: subClassId,
+      superClassId: superClassId,
+      typeArgMapping: [
+        for (final arg in supertype.typeArguments)
+          dartTypeToTemplate(
+            arg,
+            classIdLookup,
+            enclosingClassTypeParams: cls.typeParameters,
+          ),
+      ],
+    ));
   }
 
   return entries;

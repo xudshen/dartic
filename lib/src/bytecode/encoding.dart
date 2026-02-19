@@ -10,6 +10,8 @@
 /// See: docs/design/01-bytecode-isa.md
 library;
 
+import 'opcodes.dart';
+
 // ── Encoding ──
 
 /// Encodes an ABC-format instruction.
@@ -70,7 +72,7 @@ int decodesAx(int instr) => decodeAx(instr) - 0x7FFFFF;
 //   word[1]: extension word [high-order bits, layout varies by format]
 //   word[2]: original instr [op:8][low-order operands:24]
 
-const int _widePrefix = 0xFE;
+const int _widePrefix = Op.wide;
 
 /// Encodes a WIDE ABC instruction. Returns 3 words.
 ///
