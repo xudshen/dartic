@@ -81,7 +81,7 @@
 |-------|------|---------|------|
 | [4.1](phase4/batch-4.1-mixin-interface.md) | Mixin 与接口 | 3 | ✅ |
 | [4.2](phase4/batch-4.2-generics-core.md) | 泛型核心 (Ch6) | 6 | ✅ (含 review 后修复：ref/value 栈协调) |
-| [4.3](phase4/batch-4.3-type-system.md) | 类型系统 | 3 | |
+| [4.3](phase4/batch-4.3-type-system.md) | 类型系统 | 3 | ✅ |
 | [4.4](phase4/batch-4.4-co19-harness-v2.md) | co19 Harness v2 | 4 | |
 
 **里程碑：**

@@ -99,15 +99,19 @@ feat: support subtype checking, null safety, and type promotion
 
 ## 核心发现
 
-_(执行时填写：isSubtypeOf 规则命中频率分布、FutureOr 规范化在 co19 中的实际触发率、函数类型子类型的逆变验证复杂度、AsExpression isUnchecked 的实际比例等)_
+- **FutureOr-to-FutureOr 子类型**: 设计文档规则 7-8 不能直接推导 `FutureOr<S> <: FutureOr<T>`（当 `S <: T`），需要在规则 7 增加特殊处理（直接检查 `S <: T`），否则 `FutureOr<int> <: FutureOr<num>` 会错误返回 false
+- **设计文档测试用例错误**: 规则 9 测试用例 `int Function(String) <: num Function(Object)` 实际应为 false（参数逆变：需要 `Object <: String`），正确的测试应为 `int Function(Object) <: num Function(String)`
+- **CFE 类型提升机制**: CFE 的 flow-analysis 类型提升使用 `VariableGet.promotedType`，不使用 `AsExpression`。`AsExpression.isUnchecked=true` 主要用于 extension type 表示类型访问
+- **EqualsNull value-stack 操作数**: CFE 链式 `??` 降糖会产生内层 `EqualsNull` 节点操作数已在 value 栈上（类型被窄化为非空），需特殊处理（直接返回 false，因为 value 栈值不可能为 null）
+- **nullable value-type return boxing**: 函数返回类型为 `int?`（ref 栈）但 return 表达式为 value 栈值时，需要 box 后 RETURN_REF
 
 ## Batch 完成检查
 
-- [ ] 4.3.1 子类型检查算法完善
-- [ ] 4.3.2 空安全类型检查
-- [ ] 4.3.3 Flow analysis 类型提升
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] 4.3.1 子类型检查算法完善
+- [x] 4.3.2 空安全类型检查
+- [x] 4.3.3 Flow analysis 类型提升
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过（1512 tests）
+- [x] commit 已提交
+- [x] overview.md 已更新
+- [x] code review 已完成
