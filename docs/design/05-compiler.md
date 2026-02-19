@@ -112,6 +112,27 @@ CFE 已在 Kernel AST 中填入完整类型信息。编译器根据变量的静�
 
 **特殊情况**：当 `int`/`double`/`bool` 变量被闭包捕获（`isCaptured = true`）时，StackKind 强制设为 `ref`。这是正确性约束——值栈数据无法被 `CLOSE_UPVALUE` 的 `Object?` 语义处理。被捕获的原始类型变量额外承受一次装箱/拆箱，但 Dart 代码中此场景较少（循环变量和计数器通常不被捕获）。
 
+#### ResultLoc 与双栈协调
+
+`_compileExpression` 返回 `(int reg, ResultLoc loc)` 元组——`reg` 为寄存器编号，`loc` 标识结果位于值栈（`ResultLoc.value`）还是引用栈（`ResultLoc.ref`）。**消费端必须检查 `ResultLoc` 并在栈类型不匹配时插入协调指令**，这是编译器正确性的关键不变式。
+
+**不匹配的典型来源**：泛型字段（如 `Box<T>.value`）。字段布局根据声明时的 `TypeParameterType` 决定 `StackKind.ref`（无法静态确定），但 `_inferExprType` 利用 Kernel 已解析的类型信息将访问结果类型推断为具体类型（如 `int`）。此时结果在引用栈上，但消费端期望值栈。
+
+**消费端协调规则**：
+
+| 消费场景 | 期望 | 结果在 ref 栈时的协调 | 结果在 value 栈时的协调 |
+|----------|------|---------------------|----------------------|
+| Bool 条件（if/while/for/do/assert/`!`/`&&`/`\|\|`/`?:`） | value | `UNBOX_INT` | 无需 |
+| 函数参数（静态/虚/构造/super/闭包调用） | 取决于形参 StackKind | `UNBOX_INT`/`UNBOX_DOUBLE` | `BOX_INT`/`BOX_DOUBLE` |
+| 变量赋值（VariableSet） | 取决于变量 StackKind | `UNBOX_INT`/`UNBOX_DOUBLE` | `BOX_INT`/`BOX_DOUBLE` |
+| 返回值（ReturnStatement） | 取决于函数返回类型 | `UNBOX_INT`/`UNBOX_DOUBLE` | `BOX_INT`/`BOX_DOUBLE` |
+| 算术运算（`+`/`-`/`*` 等） | value | `UNBOX_INT`/`UNBOX_DOUBLE` | 无需 |
+| 接收者（InstanceInvocation） | ref | 无需 | 需 boxing（潜在问题，见下） |
+
+**安全的 `_) =` 模式**：以下场景中丢弃 `ResultLoc`（写为 `final (reg, _) = ...`）是安全的——因为结果必定在引用栈：接收者表达式（对象必须在 ref 栈上才能 `CALL_VIRTUAL`）、闭包表达式、switch case 常量。
+
+**潜在问题——值类型接收者**：当表达式类型为 `int`/`double`/`bool` 且需要调用非特化方法时（如假设 `42.someExtensionMethod()` 走虚分发），编译器当前不会插入 boxing。实际上 Dart 的 `int`/`double`/`bool` 方法（`toString`、`compareTo` 等）均已由宿主绑定特化处理（`CALL_HOST`），暂不触发此问题。若未来新增走 `CALL_VIRTUAL` 的值类型方法，需补充接收者 boxing 逻辑。
+
 **DartType 完整分类**：编译器在 StackKind 决策和 TypeTemplate 生成两个场景处理 Kernel 的 DartType。以下列出所有 DartType 子类的处理方式：
 
 | DartType | StackKind | TypeTemplate 生成（用于 `is`/`as`、泛型实例化） |

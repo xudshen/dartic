@@ -357,6 +357,7 @@ CFE 生成的 forwarding stub（`AsExpression`）在字节码中表现为 `CHECK
 | 无实例化缓存 | TypeTemplate 含 TypeParameterType 时每次 resolveType 都重新计算 | Phase 2：缓存 `(template, ITA, FTA) → DarticType`。触发条件：profiling 显示类型实例化成为热点 |
 | 跨边界集合类型丢失 | 解释器创建的 `List<dynamic>` 在 VM 侧无法通过 `is List<int>` | Phase 2：预生成类型化工厂（详见"跨边界泛型"节） |
 | Record 类型检查未实现 | `is (int, String)` 等结构化类型检查不支持 | Phase 2：补充 RuntimeRecordType、isRecordSubtype 和 RecordShape 映射。触发条件：业务代码需要 Record 类型检查 |
+| 值类型接收者虚分发 | 泛型字段返回 `int`/`double`/`bool` 时结果在 ref 栈，若需调用非特化虚方法（`CALL_VIRTUAL`）可正常工作；但若结果在 value 栈（非泛型场景），缺少 boxing 到 ref 栈的逻辑 | 当前 `int`/`double`/`bool` 方法均由宿主绑定特化（`CALL_HOST`），暂不触发。若未来新增值类型虚分发路径需补充接收者 boxing（详见 Ch5 ResultLoc 与双栈协调） |
 | 静态消除未实现 | 未使用的 FTA 传递和冗余类型检查仍在执行 | Phase 2：编译器优化遍消除。触发条件：profiling 显示类型传递开销显著 |
 | Type 对象表示未定义 | `runtimeType` 返回值和 `TypeLiteral` 的运行时表示未明确 | Phase 2：定义 Type 包装对象（包装 DarticType），实现 `==`（驻留后 identical）和 `toString`。触发条件：业务代码需要 `runtimeType` 反射 |
 
