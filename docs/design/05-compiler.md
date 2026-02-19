@@ -81,7 +81,7 @@ dartic_compiler CLI
 
 ### AST 派发机制
 
-编译器使用 `package:kernel` 的 `ExpressionVisitorDefaultMixin` 和 `StatementVisitorDefaultMixin` 进行 AST 节点派发，取代原有的 `if-is` 类型检查链。
+编译器使用 `package:kernel` 的 Visitor mixin（`ExpressionVisitorDefaultMixin`、`StatementVisitorDefaultMixin`、`ConstantVisitorDefaultMixin`、`InitializerVisitorDefaultMixin`）进行 AST 节点派发，取代原有的 `if-is` 类型检查链。
 
 **架构**：独立 visitor 类放在 part file 中，`DarticCompiler` 仅持有 visitor 字段：
 
@@ -89,6 +89,8 @@ dartic_compiler CLI
 |------------|---------|----------|------------------|
 | `_ExprCompileVisitor` | `compiler_expressions.dart` | `(int, ResultLoc)` | throw UnsupportedError |
 | `_StmtCompileVisitor` | `compiler_statements.dart` | `void` | throw UnsupportedError |
+| `_ConstantCompileVisitor` | `compiler_expressions.dart` | `(int, ResultLoc)` | throw UnsupportedError |
+| `_InitializerCompileVisitor` | `compiler_classes.dart` | `void` | throw UnsupportedError |
 | `_ExprTypeInferVisitor` | `compiler_types.dart` | `DartType?` | return null（未知类型是正常降级） |
 
 每个 `visitXxx` 通过 `_c._compileXxx(node)` 显式 receiver 委托给同 library 的 extension 方法——unnamed extension 方法在同一 library 内可通过静态类型匹配的 receiver 调用。跨 part file 的方法（如 `_compileFunctionExpression` 在 `compiler_closures.dart`）同样可调用。
