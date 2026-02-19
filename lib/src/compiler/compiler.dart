@@ -67,6 +67,9 @@ class DarticCompiler {
   /// Maps Kernel Class nodes to classIds.
   final Map<ir.Class, int> _classToClassId = {};
 
+  /// Classes currently being registered (cycle detection for malformed input).
+  final Set<ir.Class> _registeringInProgress = {};
+
   /// Maps Kernel Constructor references to funcIds.
   final Map<ir.Reference, int> _constructorToFuncId = {};
 

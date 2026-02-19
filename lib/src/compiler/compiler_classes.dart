@@ -19,6 +19,11 @@ extension on DarticCompiler {
     // dependency resolution).
     if (_classToClassId.containsKey(cls)) return;
 
+    // Guard against circular class dependencies in malformed Kernel input.
+    if (!_registeringInProgress.add(cls)) {
+      throw StateError('Circular class dependency detected: ${cls.name}');
+    }
+
     // Ensure superclass is registered first (critical for anonymous mixin
     // classes that may appear after the classes that use them in the Kernel
     // class list).
@@ -37,6 +42,8 @@ extension on DarticCompiler {
         _registerClass(implClass);
       }
     }
+
+    _registeringInProgress.remove(cls);
 
     final classId = _classInfos.length;
     _classToClassId[cls] = classId;

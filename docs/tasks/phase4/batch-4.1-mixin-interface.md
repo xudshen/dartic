@@ -100,15 +100,23 @@ feat: support interfaces, mixins, and class modifiers
 
 ## 核心发现
 
-_(执行时填写：mixin 线性化在 Kernel 中的实际表示、匿名中间类的方法复制策略、super 调用在 mixin 中的解析方式等)_
+1. **Kernel 匿名 mixin 类使用 `implementedTypes`（非 `mixedInType`）引用 mixin 类型。** Dart 3.10.7 CFE 已将 mixin 方法/字段内联到匿名中间类的 `procedures`/`fields` 列表中，`mixedInType` 为 null。无需手动复制方法。
+
+2. **Kernel 类列表顺序不保证拓扑排序。** 匿名 mixin 类（如 `_C&Object&M`）可能出现在使用它的类 `C` 之后。解决方案：`_registerClass` 改为递归注册，确保依赖先于被依赖者注册。
+
+3. **Mixin 字段初始化器是声明侧 `initializer` 表达式，不是构造器的 `FieldInitializer`。** `mixin M { int x = 10; }` 生成的匿名类构造器仅含 `SuperInitializer`，字段默认值在 `Field.initializer` 中。需要额外编译 pass 处理这些隐式字段初始化器。
+
+4. **Dart 3 类修饰符（sealed/base/final/interface）由 CFE 强制执行编译时限制。** dartic 运行时无需额外检查，仅需正常编译。注意 `base` 子类必须也是 `base`/`final`/`sealed`（CFE 强制）。
+
+5. **Super 调用在 mixin 中自动解析。** Kernel 的 `SuperMethodInvocation.interfaceTarget` 已解析到线性化链中正确的目标过程，编译器直接使用 `CALL_SUPER` 即可。
 
 ## Batch 完成检查
 
-- [ ] 4.1.1 implements 接口契约
-- [ ] 4.1.2 mixin / mixin class / with
-- [ ] 4.1.3 sealed / base / final / interface 类修饰符
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] 4.1.1 implements 接口契约
+- [x] 4.1.2 mixin / mixin class / with
+- [x] 4.1.3 sealed / base / final / interface 类修饰符
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过
+- [x] commit 已提交
+- [x] overview.md 已更新
+- [x] code review 已完成
