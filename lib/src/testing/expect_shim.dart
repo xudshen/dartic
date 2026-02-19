@@ -10,7 +10,7 @@ class ExpectShimException implements Exception {
   String toString() => 'ExpectShimException: $message';
 }
 
-void _fail(String message) {
+Never _fail(String message) {
   throw ExpectShimException(message);
 }
 
@@ -54,8 +54,6 @@ Object expectThrows(void Function() fn) {
     return e;
   }
   _fail('expectThrows() fails: function did not throw.');
-  // Unreachable but satisfies return type.
-  throw StateError('unreachable');
 }
 
 /// Equivalent to `Expect.identical(expected, actual)`.

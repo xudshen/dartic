@@ -488,16 +488,18 @@ String _formatRate(double rate) => '${rate.toStringAsFixed(1)}%';
 // Snapshot save / load
 // ---------------------------------------------------------------------------
 
+/// Converts [outcomes] to a snapshot map (test path → result name).
+Map<String, String> outcomesToMap(List<TestOutcome> outcomes) {
+  return {for (final o in outcomes) o.entry.path: o.result.name};
+}
+
 /// Serializes [outcomes] to a JSON file at [filePath].
 ///
 /// Format: `Map<String, String>` where key = test path, value = result name
 /// (e.g., "pass", "fail", "skip", "error"). Parent directories are created
 /// if they do not exist.
 void saveSnapshot(List<TestOutcome> outcomes, String filePath) {
-  final map = <String, String>{};
-  for (final o in outcomes) {
-    map[o.entry.path] = o.result.name;
-  }
+  final map = outcomesToMap(outcomes);
   final file = File(filePath);
   file.parent.createSync(recursive: true);
   file.writeAsStringSync(
@@ -804,12 +806,7 @@ Future<void> main(List<String> args) async {
       stderr.writeln(
           'Baseline file not found or empty: $baselinePath (skipping diff)');
     } else {
-      // Build current snapshot map from outcomes.
-      final current = <String, String>{};
-      for (final o in outcomes) {
-        current[o.entry.path] = o.result.name;
-      }
-      final diff = diffSnapshots(baseline, current);
+      final diff = diffSnapshots(baseline, outcomesToMap(outcomes));
       stdout.writeln('');
       stdout.write(formatDiff(diff));
     }
