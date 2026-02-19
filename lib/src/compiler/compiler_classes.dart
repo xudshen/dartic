@@ -219,17 +219,7 @@ extension on DarticCompiler {
 
     // Process initializers in declaration order.
     for (final init in ctor.initializers) {
-      if (init is ir.FieldInitializer) {
-        _compileFieldInitializer(init);
-      } else if (init is ir.SuperInitializer) {
-        _compileSuperInitializer(init);
-      } else if (init is ir.RedirectingInitializer) {
-        _compileRedirectingInitializer(init);
-      } else if (init is ir.LocalInitializer) {
-        _compileVariableDeclaration(init.variable);
-      } else if (init is ir.AssertInitializer) {
-        // Skip asserts for now.
-      }
+      init.accept(_initializerVisitor);
     }
 
     // Compile constructor body.
@@ -402,5 +392,38 @@ extension on DarticCompiler {
     _pendingArgMoves.add(
       (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
     );
+  }
+}
+
+/// Visitor that compiles constructor [ir.Initializer] nodes.
+///
+/// Delegates each initializer type to the corresponding extension method on
+/// [DarticCompiler]. Unhandled initializers fall through to [defaultInitializer]
+/// which throws [UnsupportedError].
+class _InitializerCompileVisitor
+    with ir.InitializerVisitorDefaultMixin<void> {
+  _InitializerCompileVisitor(this._c);
+  final DarticCompiler _c;
+
+  @override
+  void defaultInitializer(ir.Initializer node) => throw UnsupportedError(
+        'Unsupported initializer type: ${node.runtimeType}',
+      );
+
+  @override
+  void visitFieldInitializer(ir.FieldInitializer node) =>
+      _c._compileFieldInitializer(node);
+  @override
+  void visitSuperInitializer(ir.SuperInitializer node) =>
+      _c._compileSuperInitializer(node);
+  @override
+  void visitRedirectingInitializer(ir.RedirectingInitializer node) =>
+      _c._compileRedirectingInitializer(node);
+  @override
+  void visitLocalInitializer(ir.LocalInitializer node) =>
+      _c._compileVariableDeclaration(node.variable);
+  @override
+  void visitAssertInitializer(ir.AssertInitializer node) {
+    // Skip asserts for now.
   }
 }

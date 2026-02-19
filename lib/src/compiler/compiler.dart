@@ -167,6 +167,8 @@ class DarticCompiler {
   late final _StmtCompileVisitor _stmtVisitor = _StmtCompileVisitor(this);
   late final _ConstantCompileVisitor _constantVisitor =
       _ConstantCompileVisitor(this);
+  late final _InitializerCompileVisitor _initializerVisitor =
+      _InitializerCompileVisitor(this);
   late final _ExprTypeInferVisitor _typeInferVisitor =
       _ExprTypeInferVisitor(this);
 
