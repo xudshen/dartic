@@ -8,10 +8,11 @@ import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../runtime/class_info.dart';
-import '../runtime/object.dart';
 import 'bytecode_emitter.dart';
 import 'register_allocator.dart';
 import 'scope.dart';
+import 'type_converter.dart';
+import 'type_template.dart';
 
 part 'compiler_classes.dart';
 part 'compiler_closures.dart';
@@ -88,6 +89,17 @@ class DarticCompiler {
   bool _isEntryFunction = false;
   ir.DartType _currentReturnType = const ir.VoidType();
 
+  /// Type parameters of the enclosing class (for resolving TypeParameterType
+  /// references like `T` in `is T` checks within generic class methods).
+  /// Null when compiling top-level or static functions.
+  List<ir.TypeParameter>? _currentClassTypeParams;
+
+  /// Type parameters of the current function/method being compiled (for
+  /// resolving function-level TypeParameterType references like `T` in
+  /// `bool check<T>(Object o) => o is T`). Null when the function is
+  /// not generic.
+  List<ir.TypeParameter>? _currentFunctionTypeParams;
+
   /// Pending outgoing arg MOVE instructions to patch after the function is
   /// fully compiled. Each entry records the bytecode offset of a placeholder
   /// instruction, the source register, the arg index, and whether it is a
@@ -144,6 +156,15 @@ class DarticCompiler {
   // ── Core types (lazily initialized) ──
 
   late final CoreTypes _coreTypes = CoreTypes(_component);
+
+  /// Core type classIds — populated by [_registerCoreTypes].
+  CoreTypeIds? _coreTypeIds;
+
+  /// Combined classId lookup for type operations (core + user classes).
+  /// Used by `dartTypeToTemplate` to produce correct TypeTemplates.
+  /// Separate from `_classToClassId` to avoid polluting compiler decisions
+  /// (e.g., EqualsCall dispatch, constructor resolution).
+  final Map<ir.Class, int> _typeClassIdLookup = {};
 
   /// Compiles the component and returns a [DarticModule].
   ///
@@ -214,6 +235,10 @@ class DarticCompiler {
       }
     }
 
+    // Pass 1c-pre: register core types as virtual classes.
+    // These get classIds 0-5 before any user-defined classes.
+    _registerCoreTypes();
+
     // Pass 1c: register classes — assign classIds, compute field layouts,
     // assign funcIds to constructors and instance methods.
     // NOTE: Relies on Kernel CFE emitting classes in dependency order within
@@ -222,6 +247,24 @@ class DarticCompiler {
       if (_isPlatformLibrary(lib)) continue;
       for (final cls in lib.classes) {
         _registerClass(cls);
+      }
+    }
+
+    // Merge user class IDs into the type lookup for dartTypeToTemplate.
+    _typeClassIdLookup.addAll(_classToClassId);
+
+    // Pass 1d: populate SuperTypeMap entries for generic subtype checking.
+    // buildSuperTypeEntries uses _typeClassIdLookup (core + user classes) to
+    // resolve supertype classIds for both platform and user-defined types.
+    for (final lib in _component.libraries) {
+      if (_isPlatformLibrary(lib)) continue;
+      for (final cls in lib.classes) {
+        final classId = _classToClassId[cls]!;
+        final entries = buildSuperTypeEntries(cls, _typeClassIdLookup);
+        for (final entry in entries) {
+          _classInfos[classId].superTypeArgs[entry.superClassId] =
+              entry.typeArgMapping;
+        }
       }
     }
 
@@ -307,6 +350,61 @@ class DarticCompiler {
       globalCount: _globalCount,
       globalInitializerIds: _globalInitializerIds,
       classes: _classInfos,
+      coreTypeIds: _coreTypeIds,
+    );
+  }
+
+  // ── Core type registration ──
+
+  /// Registers core platform types (int, double, String, bool, Object, num)
+  /// as virtual class entries in the class table.
+  ///
+  /// These get the first classIds (before any user-defined classes) so that
+  /// `dartTypeToTemplate` can produce correct `InterfaceTypeTemplate` classIds
+  /// for type checks and casts.
+  ///
+  /// Core types are added to [_typeClassIdLookup] (for type conversion) but
+  /// NOT to [_classToClassId] (which controls compiler decisions like equality
+  /// dispatch and constructor resolution).
+  void _registerCoreTypes() {
+    int register(ir.Class cls, String name, {int superClassId = -1}) {
+      final classId = _classInfos.length;
+      // Only add to the type-operation lookup, NOT _classToClassId.
+      _typeClassIdLookup[cls] = classId;
+      _classInfos.add(DarticClassInfo(
+        classId: classId,
+        name: name,
+        superClassId: superClassId,
+        refFieldCount: 0,
+        valueFieldCount: 0,
+      ));
+      return classId;
+    }
+
+    final ct = _coreTypes;
+
+    final objectCid = register(ct.objectClass, 'Object');
+    final numCid = register(ct.numClass, 'num', superClassId: objectCid);
+    final intCid = register(ct.intClass, 'int', superClassId: numCid);
+    final doubleCid = register(ct.doubleClass, 'double', superClassId: numCid);
+    final stringCid = register(ct.stringClass, 'String', superClassId: objectCid);
+    final boolCid = register(ct.boolClass, 'bool', superClassId: objectCid);
+
+    // Set up supertype closures (transitive supertypeIds).
+    _classInfos[objectCid].supertypeIds.add(objectCid);
+    _classInfos[numCid].supertypeIds.addAll({numCid, objectCid});
+    _classInfos[intCid].supertypeIds.addAll({intCid, numCid, objectCid});
+    _classInfos[doubleCid].supertypeIds.addAll({doubleCid, numCid, objectCid});
+    _classInfos[stringCid].supertypeIds.addAll({stringCid, objectCid});
+    _classInfos[boolCid].supertypeIds.addAll({boolCid, objectCid});
+
+    _coreTypeIds = CoreTypeIds(
+      intId: intCid,
+      doubleId: doubleCid,
+      stringId: stringCid,
+      boolId: boolCid,
+      objectId: objectCid,
+      numId: numCid,
     );
   }
 
@@ -365,6 +463,17 @@ class DarticCompiler {
     final funcId = _procToFuncId[proc.reference]!;
     final fn = proc.function;
 
+    // Track enclosing class type params for generic type resolution.
+    final enclosingClass = proc.enclosingClass;
+    _currentClassTypeParams = (!proc.isStatic && enclosingClass != null)
+        ? enclosingClass.typeParameters
+        : null;
+
+    // Track function-level type params for generic method type resolution.
+    _currentFunctionTypeParams = fn.typeParameters.isNotEmpty
+        ? fn.typeParameters
+        : null;
+
     _resetFunctionState(
       isEntry: funcId == _entryFuncId,
       returnType: fn.returnType,
@@ -400,6 +509,8 @@ class DarticCompiler {
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
     );
+    _currentClassTypeParams = null;
+    _currentFunctionTypeParams = null;
   }
 
   // ── Global initializer compilation ──

@@ -19,6 +19,7 @@ class DarticModule {
     this.globalCount = 0,
     this.globalInitializerIds = const [],
     this.classes = const [],
+    this.coreTypeIds,
   });
 
   /// Function table — indexed by funcId.
@@ -39,6 +40,34 @@ class DarticModule {
 
   /// Class table — indexed by classId. Used by NEW_INSTANCE and CALL_VIRTUAL.
   final List<DarticClassInfo> classes;
+
+  /// Core type classIds for runtime TypeRegistry creation.
+  ///
+  /// Populated by the compiler. When non-null, the interpreter uses these
+  /// to auto-create a [TypeRegistry] for DarticType-based INSTANCEOF/CAST.
+  final CoreTypeIds? coreTypeIds;
+}
+
+/// Maps core Dart types to their compiler-assigned classIds.
+///
+/// These are the first entries in the class table, registered before
+/// user-defined classes.
+class CoreTypeIds {
+  const CoreTypeIds({
+    required this.intId,
+    required this.doubleId,
+    required this.stringId,
+    required this.boolId,
+    required this.objectId,
+    required this.numId,
+  });
+
+  final int intId;
+  final int doubleId;
+  final int stringId;
+  final int boolId;
+  final int objectId;
+  final int numId;
 }
 
 /// Compiled function prototype — the compiler's core output.

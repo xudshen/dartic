@@ -645,6 +645,9 @@ extension on DarticCompiler {
       _compileNamedArgsFromParams(namedParams, namedArgs, argTemps);
     }
 
+    // 4. Emit FTA for generic function calls.
+    _emitFTAForCall(expr.arguments.types);
+
     _emitArgMovesAndCall(argTemps, Op.callStatic, resultReg, funcId);
     return (resultReg, retLoc);
   }
@@ -853,6 +856,52 @@ extension on DarticCompiler {
     }
   }
 
+  /// Compiles FTA (Function Type Arguments) for a generic invocation and
+  /// emits a pending arg MOVE to place the FTA at callee's rsp+1.
+  ///
+  /// [typeArgs] are the Kernel type arguments from `arguments.types`.
+  /// For each type arg, emits INSTANTIATE_TYPE, then CREATE_TYPE_ARGS to
+  /// bundle them into a `List<DarticType>`, then a pending MOVE to rsp+1.
+  void _emitFTAForCall(List<ir.DartType> typeArgs) {
+    if (typeArgs.isEmpty) return;
+
+    // Resolve each type argument to a DarticType ref register.
+    final firstTypeReg = _allocRefReg();
+    final template0 = dartTypeToTemplate(
+      typeArgs[0],
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+    );
+    final templateIdx0 = _constantPool.addRef(template0);
+    _emitter.emit(encodeABx(Op.instantiateType, firstTypeReg, templateIdx0));
+
+    // Allocate consecutive ref registers for remaining type args.
+    for (var i = 1; i < typeArgs.length; i++) {
+      final typeReg = _allocRefReg();
+      assert(typeReg == firstTypeReg + i);
+      final template = dartTypeToTemplate(
+        typeArgs[i],
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final templateIdx = _constantPool.addRef(template);
+      _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+    }
+
+    // CREATE_TYPE_ARGS: bundle resolved types into a List<DarticType>.
+    final ftaReg = _allocRefReg();
+    _emitter.emit(
+        encodeABC(Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg));
+
+    // Emit pending MOVE to place FTA at callee's rsp+1 (FTA slot).
+    final ftaMovePC = _emitter.emitPlaceholder();
+    _pendingArgMoves.add(
+      (pc: ftaMovePC, srcReg: ftaReg, argIdx: 1, loc: ResultLoc.ref),
+    );
+  }
+
   // ── Instance invocation (arithmetic specialization) ──
 
   (int, ResultLoc) _compileInstanceInvocation(ir.InstanceInvocation expr) {
@@ -953,10 +1002,13 @@ extension on DarticCompiler {
       _compileNamedArgsFromParams(namedParams, expr.arguments.named, argTemps);
     }
 
-    // 4. Emit pending arg MOVEs (skip receiver -- interpreter handles this).
+    // 4. Emit FTA for generic method calls.
+    _emitFTAForCall(expr.arguments.types);
+
+    // 5. Emit pending arg MOVEs (skip receiver -- interpreter handles this).
     _emitArgMovesForVirtualCall(argTemps);
 
-    // 5. Allocate IC entry and emit CALL_VIRTUAL.
+    // 6. Allocate IC entry and emit CALL_VIRTUAL.
     final methodNameIdx = _constantPool.addName(methodName);
     final icIndex = _icEntries.length;
     _icEntries.add(ICEntry(methodNameIndex: methodNameIdx));
@@ -1017,13 +1069,11 @@ extension on DarticCompiler {
       operandReg = _emitBoxToRef(operandReg, operandType);
     }
 
-    final checker = _createTypeChecker(expr.type);
-    final checkerIdx = _constantPool.addRef(checker);
-    assert(checkerIdx <= 0xFF,
-        'INSTANCEOF C operand overflow: checkerIdx=$checkerIdx > 255');
+    // Emit INSTANTIATE_TYPE for the target type → ref register.
+    final typeReg = _emitInstantiateType(expr.type);
 
     final resultReg = _allocValueReg();
-    _emitter.emit(encodeABC(Op.instanceOf, resultReg, operandReg, checkerIdx));
+    _emitter.emit(encodeABC(Op.instanceOf, resultReg, operandReg, typeReg));
 
     return (resultReg, ResultLoc.value);
   }
@@ -1037,89 +1087,37 @@ extension on DarticCompiler {
       operandReg = _emitBoxToRef(operandReg, operandType);
     }
 
-    final caster = _createCaster(expr.type);
-    final casterIdx = _constantPool.addRef(caster);
-    assert(casterIdx <= 0xFF,
-        'CAST C operand overflow: casterIdx=$casterIdx > 255');
+    // Emit INSTANTIATE_TYPE for the target type → ref register.
+    final typeReg = _emitInstantiateType(expr.type);
 
     final resultReg = _allocRefReg();
-    _emitter.emit(encodeABC(Op.cast, resultReg, operandReg, casterIdx));
+    _emitter.emit(encodeABC(Op.cast, resultReg, operandReg, typeReg));
 
     return (resultReg, ResultLoc.ref);
   }
 
-  /// Creates a type-checking function for the Phase 2 simplified is-check.
-  bool Function(Object?) _createTypeChecker(ir.DartType type) {
-    if (type is ir.InterfaceType) {
-      final cls = type.classNode;
-      if (cls == _coreTypes.intClass) return (v) => v is int;
-      if (cls == _coreTypes.doubleClass) return (v) => v is double;
-      if (cls == _coreTypes.boolClass) return (v) => v is bool;
-      if (cls == _coreTypes.stringClass) return (v) => v is String;
-      if (cls == _coreTypes.numClass) return (v) => v is num;
-      if (cls == _coreTypes.objectClass) {
-        if (type.nullability == ir.Nullability.nullable) return (v) => true;
-        return (v) => v != null;
-      }
-    }
-    if (type is ir.NullType) return (v) => v == null;
-
-    // User-defined class: check via supertypeIds on DarticObject.
-    // Note: closures capture _classInfos by reference. This is safe because
-    // the list is fully populated before execution begins (single-module
-    // compilation model). Multi-module support would need to revisit this.
-    if (type is ir.InterfaceType) {
-      final classId = _classToClassId[type.classNode];
-      if (classId != null) {
-        return (v) {
-          if (v is! DarticObject) return false;
-          // Look up the class info to check supertypeIds.
-          return v.classId == classId ||
-              _classInfos[v.classId].supertypeIds.contains(classId);
-        };
-      }
-    }
-    throw UnsupportedError('Unsupported type for is check: $type');
-  }
-
-  /// Creates a cast function for the Phase 2 simplified as-cast.
-  Object? Function(Object?) _createCaster(ir.DartType type) {
-    if (type is ir.InterfaceType) {
-      final cls = type.classNode;
-      if (cls == _coreTypes.intClass) return (v) => v as int;
-      if (cls == _coreTypes.doubleClass) return (v) => v as double;
-      if (cls == _coreTypes.boolClass) return (v) => v as bool;
-      if (cls == _coreTypes.stringClass) return (v) => v as String;
-      if (cls == _coreTypes.numClass) return (v) => v as num;
-      if (cls == _coreTypes.objectClass) {
-        if (type.nullability == ir.Nullability.nullable) return (v) => v;
-        return (v) => v as Object;
-      }
-    }
-    if (type is ir.NullType) return (v) => v as Null;
-
-    // User-defined class: cast via supertypeIds check on DarticObject.
-    // Note: closures capture _classInfos by reference. See _createTypeChecker
-    // comment for safety rationale.
-    if (type is ir.InterfaceType) {
-      final classId = _classToClassId[type.classNode];
-      if (classId != null) {
-        return (v) {
-          if (v is DarticObject &&
-              (v.classId == classId ||
-                  _classInfos[v.classId].supertypeIds.contains(classId))) {
-            return v;
-          }
-          throw TypeError();
-        };
-      }
-    }
-    throw UnsupportedError('Unsupported type for cast: $type');
+  /// Emits INSTANTIATE_TYPE for a Kernel DartType, returning the ref register
+  /// holding the resolved DarticType at runtime.
+  ///
+  /// Uses [_currentClassTypeParams] so that TypeParameterType references (like
+  /// `T` in `x is T`) correctly resolve to TypeParameterTemplate indices.
+  int _emitInstantiateType(ir.DartType type) {
+    final template = dartTypeToTemplate(
+      type,
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+    );
+    final templateIdx = _constantPool.addRef(template);
+    final typeReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+    return typeReg;
   }
 
   // ── ConstructorInvocation ──
 
-  /// Compiles a [ConstructorInvocation]: NEW_INSTANCE → args → CALL_STATIC.
+  /// Compiles a [ConstructorInvocation]: NEW_INSTANCE (or ALLOC_GENERIC for
+  /// generic classes) → args → CALL_STATIC.
   ///
   /// The expression result is the newly allocated object (ref stack), NOT
   /// the constructor's void return value.
@@ -1139,9 +1137,32 @@ extension on DarticCompiler {
       throw StateError('Class not registered: ${cls.name}');
     }
 
-    // 1. Allocate object register and emit NEW_INSTANCE.
+    // 1. Allocate object register. Use ALLOC_GENERIC for generic classes
+    //    (type parameters present), or NEW_INSTANCE for non-generic classes.
     final objReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+    final isGeneric = cls.typeParameters.isNotEmpty;
+
+    if (isGeneric) {
+      // Build the full InterfaceType template from classId + type arguments.
+      // Arguments.types contains the class type arguments (e.g., [int] for
+      // Box<int>). For non-generic invocations of generic classes (e.g.,
+      // IntBox's super(v) call to Box<int>), the type args come from the
+      // Kernel supertype.
+      final typeArgs = expr.arguments.types;
+      final typeTemplate = InterfaceTypeTemplate(
+        classId: classId,
+        typeArgs: [
+          for (final arg in typeArgs)
+            dartTypeToTemplate(arg, _typeClassIdLookup),
+        ],
+      );
+      final templateIdx = _constantPool.addRef(typeTemplate);
+      final typeReg = _allocRefReg();
+      _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+      _emitter.emit(encodeABC(Op.allocGeneric, objReg, typeReg, 0));
+    } else {
+      _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+    }
 
     // 2. Compile arguments.
     final positionalParams = target.function.positionalParameters;

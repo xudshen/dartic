@@ -1,4 +1,5 @@
 import '../bytecode/module.dart';
+import '../compiler/type_template.dart';
 
 /// Classifies which stack a variable or field lives on.
 ///
@@ -117,4 +118,14 @@ class DarticClassInfo {
   /// Transitive closure of all supertype classIds (self + parents + interfaces).
   /// Used for O(1) `INSTANCEOF` checks.
   final Set<int> supertypeIds = {};
+
+  /// SuperTypeMap: maps a supertype classId to the type argument mapping.
+  ///
+  /// For example, if `class MyList<T> extends List<T>`, the entry
+  /// `{listClassId: [TypeParameterTemplate(index: 0)]}` allows the subtype
+  /// checker to resolve `T` from the sub's ITA when comparing against
+  /// `List<SomeType>`.
+  ///
+  /// Populated by the compiler from [SuperTypeEntry] data.
+  final Map<int, List<TypeTemplate>> superTypeArgs = {};
 }

@@ -192,18 +192,25 @@ feat(generics): add reified generics with DarticType residency
 
 ## 核心发现
 
-_(执行时填写：TypeRegistry bucket 大小选择、ITA/FTA 在非泛型帧中的开销、resolveType 递归深度限制、isSubtypeOf 规则的实际命中分布、编译器泛型代码膨胀程度等)_
+- **TypeRegistry bucket 大小**：初始 64 桶，自动扩展。常用基本类型预注册，命中率高
+- **ITA/FTA 在非泛型帧中的开销**：仅占用 rsp+0/rsp+1 两个 ref 槽位（null），零运行时成本
+- **ITA 自动加载策略**：选择在 CALL_VIRTUAL 解释器中自动从 `receiver.runtimeType_.typeArgs` 提取到 rsp+0，而非编译器在方法入口发射 bytecode。零 bytecode 膨胀
+- **FTA 传递机制**：编译器在调用点发射 `INSTANTIATE_TYPE` + `CREATE_TYPE_ARGS` 组装 FTA，通过 pending arg MOVE 放入 callee rsp+1。复用已有的 arg move 机制，无需新指令
+- **`_classToClassId` vs `_typeClassIdLookup` 分离**：避免 core type classIds 污染编译器的 EqualsCall dispatch 和 constructor resolution 等决策
+- **TypeParameterType 解析**：`_currentClassTypeParams` (ITA) 和 `_currentFunctionTypeParams` (FTA) 必须同时传递给 `dartTypeToTemplate`，否则 `is T` 中的 T 会退化为 DynamicTemplate（is dynamic 始终为 true）
+- **泛型类字段的 operator dispatch 局限**：`_inferExprType` 对 TypeParameterType 字段返回原始类型参数而非实例化类型（如 `Pair<int,int>.first` 返回 TypeParameterType(A) 而非 int），导致 int 专用算术指令无法触发。这是 Phase 2 的泛型类型特化问题
+- **SubtypeChecker 实现范围**：Phase 1 实现规则 1-3, 11-12（identical 快速路径、顶类型、底类型、SuperTypeMap + 类型参数递归），规则 4-10 留 Batch 4.3
 
 ## Batch 完成检查
 
-- [ ] 4.2.1 DarticType 数据结构 + 驻留表
-- [ ] 4.2.2 ITA/FTA 槽位 + PUSH_ITA/PUSH_FTA
-- [ ] 4.2.3 INSTANTIATE_TYPE + 类型参数传递
-- [ ] 4.2.4 INSTANCEOF / CAST 子类型检查
-- [ ] 4.2.5 泛型类编译
-- [ ] 4.2.6 泛型方法编译
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
+- [x] 4.2.1 DarticType 数据结构 + 驻留表
+- [x] 4.2.2 ITA/FTA 槽位 + PUSH_ITA/PUSH_FTA
+- [x] 4.2.3 INSTANTIATE_TYPE + 类型参数传递
+- [x] 4.2.4 INSTANCEOF / CAST 子类型检查
+- [x] 4.2.5 泛型类编译
+- [x] 4.2.6 泛型方法编译
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过
 - [ ] commit 已提交
 - [ ] overview.md 已更新
 - [ ] code review 已完成

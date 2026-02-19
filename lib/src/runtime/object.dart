@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'class_info.dart';
+import 'dartic_type.dart';
 
 /// Unified internal representation for all interpreter-defined class instances.
 ///
@@ -31,7 +32,11 @@ class DarticObject {
   /// Value-type field storage (int/double/bool via Int64List).
   final Int64List valueFields;
 
-  // TODO(phase6): DarticType runtimeType — deferred to generics phase.
+  /// Runtime type of this object (set by ALLOC_GENERIC for generic instances).
+  ///
+  /// For non-generic instances this is `null`, and [extractType] falls back to
+  /// creating a simple type from [classId].
+  DarticType? runtimeType_;
 
   @override
   String toString() => 'DarticObject(cls=$classId, '

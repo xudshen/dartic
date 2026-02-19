@@ -104,17 +104,27 @@ extension on DarticCompiler {
       superClassId: superClassId,
       refFieldCount: refOffset, // Total including inherited
       valueFieldCount: valOffset, // Total including inherited
+      typeParamCount: cls.typeParameters.length,
       modifiers: modifiers,
     );
 
     // Build supertypeIds: self + transitive closure of all supertypes.
     // Includes superclass chain AND implementedTypes (interfaces).
+    // Uses _typeClassIdLookup as fallback for platform types (core types).
     classInfo.supertypeIds.add(classId);
     if (superClassId >= 0) {
       classInfo.supertypeIds.addAll(_classInfos[superClassId].supertypeIds);
+    } else if (superClass != null) {
+      // Superclass is a platform class (e.g., Object). Check _typeClassIdLookup
+      // to include core type classIds in supertypeIds for runtime subtype checks.
+      final coreSuperCid = _typeClassIdLookup[superClass];
+      if (coreSuperCid != null) {
+        classInfo.supertypeIds.addAll(_classInfos[coreSuperCid].supertypeIds);
+      }
     }
     for (final implemented in cls.implementedTypes) {
-      final implClassId = _classToClassId[implemented.classNode];
+      final implClassId = _classToClassId[implemented.classNode]
+          ?? _typeClassIdLookup[implemented.classNode];
       if (implClassId != null) {
         // Add the interface itself and its transitive supertypeIds.
         classInfo.supertypeIds.addAll(_classInfos[implClassId].supertypeIds);
@@ -180,6 +190,9 @@ extension on DarticCompiler {
     final funcId = _constructorToFuncId[ctor.reference]!;
     final fn = ctor.function;
 
+    // Track enclosing class type params for generic type resolution.
+    _currentClassTypeParams = ctor.enclosingClass.typeParameters;
+
     _resetFunctionState(
       positionalParams: fn.positionalParameters,
       namedParams: fn.namedParameters,
@@ -244,6 +257,7 @@ extension on DarticCompiler {
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
       icTable: List.of(_icEntries),
     );
+    _currentClassTypeParams = null;
   }
 
   /// Compiles a [FieldInitializer] within a constructor.

@@ -1,11 +1,15 @@
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
+import '../compiler/type_template.dart';
 import 'call_stack.dart';
 import 'closure.dart';
+import 'dartic_type.dart';
 import 'error.dart';
 import 'global_table.dart';
 import 'object.dart';
 import 'ref_stack.dart';
+import 'subtype_checker.dart';
+import 'type_resolver.dart';
 import 'value_stack.dart';
 
 /// Bytecode interpreter with register-based dispatch loop.
@@ -19,6 +23,7 @@ class DarticInterpreter {
     ValueStack? valueStack,
     RefStack? refStack,
     CallStack? callStack,
+    this.typeRegistry,
     this.fuelBudget = defaultFuelBudget,
   })  : valueStack = valueStack ?? ValueStack(),
         refStack = refStack ?? RefStack(),
@@ -31,8 +36,14 @@ class DarticInterpreter {
   final CallStack callStack;
   final int fuelBudget;
 
+  /// Type registry for generics support. If null, generics instructions throw.
+  final TypeRegistry? typeRegistry;
+
   /// Global variable table — initialized per-module in [execute].
   DarticGlobalTable? _globalTable;
+
+  /// Subtype checker for DarticType-based INSTANCEOF/CAST.
+  SubtypeChecker? _subtypeChecker;
 
   /// Remaining fuel — shared across initializer and main execution.
   int _fuel = 0;
@@ -61,6 +72,9 @@ class DarticInterpreter {
     _openUpvalues.clear();
     _upvalueStack.clear();
 
+    // Auto-create TypeRegistry + SubtypeChecker from module metadata.
+    _provisionTypeSystem(module);
+
     // Set up global table and run initializers.
     if (module.globalCount > 0) {
       _globalTable = DarticGlobalTable(module.globalCount);
@@ -76,6 +90,37 @@ class DarticInterpreter {
     // Run main.
     _executeEntry(module, module.entryFuncId);
   }
+
+  /// Creates TypeRegistry and SubtypeChecker from module metadata if available.
+  void _provisionTypeSystem(DarticModule module) {
+    final ids = module.coreTypeIds;
+    if (ids != null && typeRegistry == null) {
+      final reg = TypeRegistry(
+        intClassId: ids.intId,
+        doubleClassId: ids.doubleId,
+        stringClassId: ids.stringId,
+        boolClassId: ids.boolId,
+        objectClassId: ids.objectId,
+        numClassId: ids.numId,
+      );
+      // Store as the effective type registry for this execution.
+      _effectiveTypeRegistry = reg;
+    }
+    final reg = _effectiveTypeRegistry ?? typeRegistry;
+    if (reg != null) {
+      _subtypeChecker = SubtypeChecker(
+        classes: module.classes,
+        registry: reg,
+      );
+    }
+  }
+
+  /// The effective type registry: either user-provided or auto-created from
+  /// module metadata.
+  TypeRegistry? _effectiveTypeRegistry;
+
+  /// Returns the active TypeRegistry (user-provided or auto-provisioned).
+  TypeRegistry? get _activeTypeRegistry => _effectiveTypeRegistry ?? typeRegistry;
 
   /// Runs the dispatch loop for a single entry function within [module].
   ///
@@ -632,6 +677,12 @@ class DarticInterpreter {
           // Place receiver at callee's rsp+2 (the `this` slot).
           rs.write(rBase + 2, receiver);
 
+          // Auto-load ITA from receiver's runtimeType_ for generic classes.
+          final rtType = receiver.runtimeType_;
+          if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
+            rs.write(rBase + 0, rtType.typeArgs);
+          }
+
           // Switch to callee bytecode.
           code = callee.bytecode;
           pc = 0;
@@ -773,21 +824,31 @@ class DarticInterpreter {
 
         // ── Type Operations (0x65-0x66) ──
 
-        case Op.instanceOf: // INSTANCEOF A, B, C — valueStack[A] = checker(refStack[B]) ? 1 : 0
+        case Op.instanceOf: // INSTANCEOF A, B, C — valStack[A] = isSubtypeOf(extractType(refStack[B]), refStack[C]) ? 1 : 0
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final checker = cp.getRef(c) as bool Function(Object?);
+          final targetType = rs.read(rBase + c) as DarticType;
           final value = rs.read(rBase + b);
-          vs.writeInt(vBase + a, checker(value) ? 1 : 0);
+          final checker = _subtypeChecker!;
+          final reg = _activeTypeRegistry!;
+          final objType = extractType(value, reg, module.classes);
+          vs.writeInt(vBase + a, checker.isSubtypeOf(objType, targetType) ? 1 : 0);
 
-        case Op.cast: // CAST A, B, C — refStack[A] = caster(refStack[B]); throws TypeError on failure
+        case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final caster = cp.getRef(c) as Object? Function(Object?);
+          final targetType = rs.read(rBase + c) as DarticType;
           final value = rs.read(rBase + b);
-          rs.write(rBase + a, caster(value));
+          final checker = _subtypeChecker!;
+          final reg = _activeTypeRegistry!;
+          final objType = extractType(value, reg, module.classes);
+          if (checker.isSubtypeOf(objType, targetType)) {
+            rs.write(rBase + a, value);
+          } else {
+            throw TypeError();
+          }
 
         // ── Exception Handling (0xA4-0xA5) ──
 
@@ -847,6 +908,55 @@ class DarticInterpreter {
             }
             return false;
           });
+
+        // ── Generics & Types (0x78-0x7F) ──
+
+        case Op.pushIta: // PUSH_ITA A — refStack[A] = refStack[0] (ITA slot)
+          rs.write(
+            rBase + ((instr >> 8) & 0xFF),
+            rs.read(rBase + 0),
+          );
+
+        case Op.pushFta: // PUSH_FTA A — refStack[A] = refStack[1] (FTA slot)
+          rs.write(
+            rBase + ((instr >> 8) & 0xFF),
+            rs.read(rBase + 1),
+          );
+
+        case Op.loadTypeArg: // LOAD_TYPE_ARG A, B, C — refStack[A] = (refStack[B] as List<DarticType>)[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final typeArgs = rs.read(rBase + b) as List<DarticType>;
+          rs.write(rBase + a, typeArgs[c]);
+
+        case Op.instantiateType: // INSTANTIATE_TYPE A, Bx — refStack[A] = resolveType(constPool.refs[Bx], ITA, FTA)
+          final a = (instr >> 8) & 0xFF;
+          final bx = (instr >> 16) & 0xFFFF;
+          final template = cp.getRef(bx) as TypeTemplate;
+          final ita = rs.read(rBase + 0) as List<DarticType>?;
+          final fta = rs.read(rBase + 1) as List<DarticType>?;
+          rs.write(
+              rBase + a, resolveType(template, ita, fta, _activeTypeRegistry!));
+
+        case Op.createTypeArgs: // CREATE_TYPE_ARGS A, B, C — refStack[C] = [refStack[B]..refStack[B+A-1]]
+          final count = (instr >> 8) & 0xFF;
+          final startReg = (instr >> 16) & 0xFF;
+          final destReg = (instr >> 24) & 0xFF;
+          final typeArgs = <DarticType>[
+            for (var i = 0; i < count; i++)
+              rs.read(rBase + startReg + i) as DarticType,
+          ];
+          rs.write(rBase + destReg, typeArgs);
+
+        case Op.allocGeneric: // ALLOC_GENERIC A, B — refStack[A] = new DarticObject with runtimeType from refStack[B]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final type = rs.read(rBase + b) as DarticInterfaceType;
+          final classInfo = module.classes[type.classId];
+          final obj = DarticObject(classInfo);
+          obj.runtimeType_ = type;
+          rs.write(rBase + a, obj);
 
         // ── Null Safety (0xA7) ──
 
