@@ -275,29 +275,12 @@ extension on DarticCompiler {
     final resultReg = _allocValueReg();
 
     if (isInt) {
-      // Unbox if operands are on the ref-stack (e.g., generic field access).
-      if (lhsLoc == ResultLoc.ref) {
-        final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxInt, valReg, lhsReg, 0));
-        lhsReg = valReg;
-      }
-      if (rhsLoc == ResultLoc.ref) {
-        final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxInt, valReg, rhsReg, 0));
-        rhsReg = valReg;
-      }
+      lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
+      rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
       _emitter.emit(encodeABC(Op.eqInt, resultReg, lhsReg, rhsReg));
     } else if (isDouble) {
-      if (lhsLoc == ResultLoc.ref) {
-        final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxDouble, valReg, lhsReg, 0));
-        lhsReg = valReg;
-      }
-      if (rhsLoc == ResultLoc.ref) {
-        final valReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.unboxDouble, valReg, rhsReg, 0));
-        rhsReg = valReg;
-      }
+      lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.doubleVal);
+      rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.doubleVal);
       _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
     } else {
       // EQ_GENERIC operates on the ref stack — ensure both operands are boxed.
@@ -483,19 +466,10 @@ extension on DarticCompiler {
 
     final binding = _lookupVar(expr.variable);
     var (srcReg, srcLoc) = _compileExpression(expr.value);
-    final bindingLoc = _locOf(binding);
     // Coerce stack kind if mismatch.
-    if (bindingLoc == ResultLoc.value && srcLoc == ResultLoc.ref) {
-      // Unbox ref→value (e.g., generic field assigned to int variable).
-      final kind = binding.kind;
-      final unboxOp = kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
-      final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(unboxOp, valReg, srcReg, 0));
-      srcReg = valReg;
-    } else if (bindingLoc == ResultLoc.ref && srcLoc == ResultLoc.value) {
-      // Box value→ref (e.g., int literal assigned to Object variable).
-      srcReg = _emitBoxToRef(srcReg, _inferExprType(expr.value));
-    }
+    (srcReg, _) = _coerceArg(
+        srcReg, srcLoc, binding.kind, _inferExprType(expr.value));
+    final bindingLoc = _locOf(binding);
     _emitMove(binding.reg, srcReg, bindingLoc);
     return (binding.reg, bindingLoc);
   }
@@ -661,18 +635,8 @@ extension on DarticCompiler {
       // Coerce stack kind when callee parameter and argument disagree.
       if (i < positionalParams.length) {
         final paramKind = _classifyStackKind(positionalParams[i].type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          final argType = _inferExprType(positionalArgs[i]);
-          argReg = _emitBoxToRef(argReg, argType);
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind, _inferExprType(positionalArgs[i]));
       }
 
       argTemps.add((argReg, argLoc));
@@ -734,17 +698,8 @@ extension on DarticCompiler {
       var (argReg, argLoc) = _compileExpression(args[i]);
       if (i < posParamTypes.length) {
         final paramKind = _classifyStackKind(posParamTypes[i]);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg = _emitBoxToRef(argReg, _inferExprType(args[i]));
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind, _inferExprType(args[i]));
       }
       argTemps.add((argReg, argLoc));
     }
@@ -785,17 +740,8 @@ extension on DarticCompiler {
       var (argReg, argLoc) = _compileExpression(args[i]);
       if (i < posParamTypes.length) {
         final paramKind = _classifyStackKind(posParamTypes[i]);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg = _emitBoxToRef(argReg, _inferExprType(args[i]));
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind, _inferExprType(args[i]));
       }
       argTemps.add((argReg, argLoc));
     }
@@ -836,18 +782,8 @@ extension on DarticCompiler {
       if (provided != null) {
         var (argReg, argLoc) = _compileExpression(provided.value);
         final paramKind = _classifyStackKind(param.type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          final argType = _inferExprType(provided.value);
-          argReg = _emitBoxToRef(argReg, argType);
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind, _inferExprType(provided.value));
         argTemps.add((argReg, argLoc));
       } else {
         final (argReg, argLoc) = _compileDefaultValue(param);
@@ -877,18 +813,8 @@ extension on DarticCompiler {
       if (provided != null) {
         var (argReg, argLoc) = _compileExpression(provided.value);
         final paramKind = _classifyStackKind(param.type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          final argType = _inferExprType(provided.value);
-          argReg = _emitBoxToRef(argReg, argType);
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind, _inferExprType(provided.value));
         argTemps.add((argReg, argLoc));
       } else {
         argTemps.add(_loadNull());
@@ -1010,17 +936,8 @@ extension on DarticCompiler {
         var (lhsReg, lhsLoc) = _compileExpression(expr.receiver);
         var (rhsReg, rhsLoc) =
             _compileExpression(expr.arguments.positional[0]);
-        // Unbox if operands are on the ref-stack (e.g., generic field access).
-        if (lhsLoc == ResultLoc.ref) {
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.unboxInt, valReg, lhsReg, 0));
-          lhsReg = valReg;
-        }
-        if (rhsLoc == ResultLoc.ref) {
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(Op.unboxInt, valReg, rhsReg, 0));
-          rhsReg = valReg;
-        }
+        lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
+        rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
         final lhsDbl = _allocValueReg();
         _emitter.emit(encodeABC(Op.intToDbl, lhsDbl, lhsReg, 0));
         final rhsDbl = _allocValueReg();
@@ -1083,18 +1000,9 @@ extension on DarticCompiler {
       var (argReg, argLoc) = _compileExpression(expr.arguments.positional[i]);
       if (i < positionalParams.length) {
         final paramKind = _classifyStackKind(positionalParams[i].type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg = _emitBoxToRef(
-              argReg, _inferExprType(expr.arguments.positional[i]));
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind,
+            _inferExprType(expr.arguments.positional[i]));
       }
       argTemps.add((argReg, argLoc));
     }
@@ -1287,18 +1195,9 @@ extension on DarticCompiler {
       var (argReg, argLoc) = _compileExpression(expr.arguments.positional[i]);
       if (i < positionalParams.length) {
         final paramKind = _classifyStackKind(positionalParams[i].type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg =
-              _emitBoxToRef(argReg, _inferExprType(expr.arguments.positional[i]));
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind,
+            _inferExprType(expr.arguments.positional[i]));
       }
       argTemps.add((argReg, argLoc));
     }
@@ -1538,18 +1437,9 @@ extension on DarticCompiler {
       var (argReg, argLoc) = _compileExpression(expr.arguments.positional[i]);
       if (i < positionalParams.length) {
         final paramKind = _classifyStackKind(positionalParams[i].type);
-        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
-          argReg = _emitBoxToRef(
-            argReg, _inferExprType(expr.arguments.positional[i]));
-          argLoc = ResultLoc.ref;
-        } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
-          final unboxOp = paramKind == StackKind.doubleVal
-              ? Op.unboxDouble : Op.unboxInt;
-          final valReg = _allocValueReg();
-          _emitter.emit(encodeABC(unboxOp, valReg, argReg, 0));
-          argReg = valReg;
-          argLoc = ResultLoc.value;
-        }
+        (argReg, argLoc) = _coerceArg(
+            argReg, argLoc, paramKind,
+            _inferExprType(expr.arguments.positional[i]));
       }
       argTemps.add((argReg, argLoc));
     }

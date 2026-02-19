@@ -577,17 +577,9 @@ class DarticCompiler {
   (int, ResultLoc) _emitBinaryOp(ir.InstanceInvocation expr, int op) {
     var (lhsReg, lhsLoc) = _compileExpression(expr.receiver);
     var (rhsReg, rhsLoc) = _compileExpression(expr.arguments.positional[0]);
-    final unboxOp = _isDoubleBinaryOp(op) ? Op.unboxDouble : Op.unboxInt;
-    if (lhsLoc == ResultLoc.ref) {
-      final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(unboxOp, valReg, lhsReg, 0));
-      lhsReg = valReg;
-    }
-    if (rhsLoc == ResultLoc.ref) {
-      final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(unboxOp, valReg, rhsReg, 0));
-      rhsReg = valReg;
-    }
+    final kind = _isDoubleBinaryOp(op) ? StackKind.doubleVal : StackKind.intVal;
+    lhsReg = _ensureValue(lhsReg, lhsLoc, kind);
+    rhsReg = _ensureValue(rhsReg, rhsLoc, kind);
     final resultReg = _allocValueReg();
     _emitter.emit(encodeABC(op, resultReg, lhsReg, rhsReg));
     return (resultReg, ResultLoc.value);
@@ -600,28 +592,46 @@ class DarticCompiler {
   /// input; everything else (negInt, bitNot, intToDbl) needs int input.
   (int, ResultLoc) _emitUnaryOp(ir.InstanceInvocation expr, int op) {
     var (srcReg, srcLoc) = _compileExpression(expr.receiver);
-    if (srcLoc == ResultLoc.ref) {
-      final isDoubleInput = (op == Op.negDbl || op == Op.dblToInt);
-      final unboxOp = isDoubleInput ? Op.unboxDouble : Op.unboxInt;
-      final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(unboxOp, valReg, srcReg, 0));
-      srcReg = valReg;
-    }
+    final kind = (op == Op.negDbl || op == Op.dblToInt)
+        ? StackKind.doubleVal : StackKind.intVal;
+    srcReg = _ensureValue(srcReg, srcLoc, kind);
     final resultReg = _allocValueReg();
     _emitter.emit(encodeABC(op, resultReg, srcReg, 0));
     return (resultReg, ResultLoc.value);
   }
 
-  /// Ensures a boolean expression result is on the value stack.
-  /// Bool values from generic fields may be on the ref stack; this
-  /// unboxes them so JUMP_IF_FALSE/JUMP_IF_TRUE/BIT_XOR can use them.
-  int _ensureBoolValue(int reg, ResultLoc loc) {
+  /// Ensures a value is on the value stack. If [loc] is ref, emits
+  /// UNBOX_INT or UNBOX_DOUBLE based on [kind]. No-op if already on value stack.
+  int _ensureValue(int reg, ResultLoc loc, StackKind kind) {
     if (loc == ResultLoc.ref) {
+      final unboxOp = kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
       final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(Op.unboxInt, valReg, reg, 0));
+      _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
       return valReg;
     }
     return reg;
+  }
+
+  /// Ensures a boolean expression result is on the value stack.
+  int _ensureBoolValue(int reg, ResultLoc loc) =>
+      _ensureValue(reg, loc, StackKind.intVal);
+
+  /// Coerces an argument register to match the expected parameter [paramKind].
+  /// Returns the (possibly new) register and its location.
+  ///
+  /// - ref arg → value param: emits UNBOX_INT/UNBOX_DOUBLE
+  /// - value arg → ref param: emits BOX via _emitBoxToRef
+  /// - matching: returns unchanged
+  (int, ResultLoc) _coerceArg(
+    int argReg, ResultLoc argLoc,
+    StackKind paramKind, ir.DartType? argType,
+  ) {
+    if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
+      return (_emitBoxToRef(argReg, argType), ResultLoc.ref);
+    } else if (paramKind.isValue && argLoc == ResultLoc.ref) {
+      return (_ensureValue(argReg, argLoc, paramKind), ResultLoc.value);
+    }
+    return (argReg, argLoc);
   }
 
   /// Returns true if [op] is a double binary opcode (arithmetic or comparison).
@@ -655,11 +665,7 @@ class DarticCompiler {
           : type;
       final kind =
           nonNullType != null ? _classifyStackKind(nonNullType) : StackKind.intVal;
-      final unboxOp =
-          kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
-      final valReg = _allocValueReg();
-      _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
-      reg = valReg;
+      reg = _ensureValue(reg, loc, kind);
       loc = ResultLoc.value;
     }
     if (reg != targetReg) {
