@@ -84,7 +84,7 @@ int f() => 42;
 void main() {}
 ''');
       final f = findFunc(module, 'f');
-      expect(f.refRegCount, 0);
+      expect(f.refRegCount, 3);
     });
 
     test('int params go to value stack', () async {

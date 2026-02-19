@@ -110,7 +110,8 @@ String main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.refStack.read(0), 'hello');
+      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
+      expect(interp.refStack.read(3), 'hello');
     });
 
     test('String result type false branch (ref stack)', () async {
@@ -123,7 +124,8 @@ String main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.refStack.read(0), 'world');
+      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
+      expect(interp.refStack.read(3), 'world');
     });
   });
 

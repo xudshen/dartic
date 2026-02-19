@@ -178,18 +178,30 @@ feat: support class instantiation, fields, methods, and constructors
 
 ## 核心发现
 
-_(执行时填写)_
+1. **Stale method table references (Task 3.2.3)**: Two-pass compilation creates placeholder FuncProtos in Pass 1c that get stored in `DarticClassInfo.methods`. Pass 2c compiles real FuncProtos and replaces `_functions[funcId]`, but the method table Map still holds references to old placeholders. Fixed with a post-compilation refresh loop that updates all method table entries to point to the compiled FuncProtos.
+
+2. **compileAndRun test pattern**: `compileAndRun` reads `valueStack.readInt(0)`, which only works if the result lands at v0. For tests with constructor calls and intermediate computations, wrap logic in a helper function: `int _test() { ... } int main() => _test();` — this routes through RETURN_VAL → CALL_STATIC → v0.
+
+3. **CALL_VIRTUAL receiver handling**: The interpreter automatically places the receiver at callee's rsp+2 (unlike CALL_STATIC for constructors where an explicit MOVE is emitted). This reduces instruction count per virtual call.
+
+4. **IC table per function**: `_icEntries` list in the compiler is per-function state — cleared at function start, saved/restored during closure compilation via `_CompilationContext`.
+
+5. **Setter naming convention (Task 3.2.6)**: Setters use "name=" convention in the method table (e.g., `value=`) to distinguish from getters/methods with the same base name. IC entries use the same convention.
+
+6. **Factory constructors are transparent**: Kernel represents them as `Procedure(isFactory=true, isStatic=true)`, compiled as regular static functions. Call-sites use `StaticInvocation`. No special handling needed beyond what already existed.
+
+7. **Redirecting constructors (Task 3.2.4)**: Compiled as CALL_STATIC to the target constructor, passing `this` (rsp+2) along with the redirecting arguments. The `RedirectingInitializer` node provides the target constructor reference and arguments.
 
 ## Batch 完成检查
 
-- [ ] 3.2.1 类定义与实例化
-- [ ] 3.2.2 字段访问
-- [ ] 3.2.3 实例方法调用 (CALL_VIRTUAL + IC)
-- [ ] 3.2.4 构造器
-- [ ] 3.2.5 静态方法与静态字段
-- [ ] 3.2.6 getter / setter
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
+- [x] 3.2.1 类定义与实例化
+- [x] 3.2.2 字段访问
+- [x] 3.2.3 实例方法调用 (CALL_VIRTUAL + IC)
+- [x] 3.2.4 构造器
+- [x] 3.2.5 静态方法与静态字段
+- [x] 3.2.6 getter / setter
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过 (996 tests)
 - [ ] commit 已提交
 - [ ] overview.md 已更新
 - [ ] code review 已完成

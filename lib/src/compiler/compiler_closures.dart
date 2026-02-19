@@ -20,6 +20,7 @@ extension on DarticCompiler {
       pendingArgMoves: List.of(_pendingArgMoves),
       labelBreakJumps: Map.of(_labelBreakJumps),
       exceptionHandlers: List.of(_exceptionHandlers),
+      icEntries: List.of(_icEntries),
       catchExceptionReg: _catchExceptionReg,
       catchStackTraceReg: _catchStackTraceReg,
       upvalueDescriptors: _upvalueDescriptors,
@@ -34,6 +35,7 @@ extension on DarticCompiler {
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
+    _icEntries.clear();
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
     _upvalueDescriptors = [];
@@ -58,6 +60,9 @@ extension on DarticCompiler {
     _exceptionHandlers
       ..clear()
       ..addAll(ctx.exceptionHandlers);
+    _icEntries
+      ..clear()
+      ..addAll(ctx.icEntries);
     _catchExceptionReg = ctx.catchExceptionReg;
     _catchStackTraceReg = ctx.catchStackTraceReg;
     _upvalueDescriptors = ctx.upvalueDescriptors;
@@ -128,6 +133,11 @@ extension on DarticCompiler {
       parent: outerScope,
     );
 
+    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver
+
     // Register positional parameters.
     for (final param in fn.positionalParameters) {
       final kind = _classifyStackKind(param.type);
@@ -168,6 +178,7 @@ extension on DarticCompiler {
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       exceptionTable: List.of(_exceptionHandlers),
+      icTable: List.of(_icEntries),
       upvalueDescriptors: upvalueDescs,
     );
 
@@ -392,6 +403,7 @@ class _CompilationContext {
     required this.pendingArgMoves,
     required this.labelBreakJumps,
     required this.exceptionHandlers,
+    required this.icEntries,
     required this.catchExceptionReg,
     required this.catchStackTraceReg,
     required this.upvalueDescriptors,
@@ -407,6 +419,7 @@ class _CompilationContext {
   final List<({int pc, int srcReg, int argIdx, ResultLoc loc})> pendingArgMoves;
   final Map<ir.LabeledStatement, List<int>> labelBreakJumps;
   final List<ExceptionHandler> exceptionHandlers;
+  final List<ICEntry> icEntries;
   final int catchExceptionReg;
   final int catchStackTraceReg;
   final List<UpvalueDescriptor> upvalueDescriptors;

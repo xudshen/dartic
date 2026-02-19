@@ -1,24 +1,9 @@
 import 'package:kernel/ast.dart' as ir;
 
+import '../runtime/class_info.dart' show StackKind;
 import 'register_allocator.dart';
 
-/// Where a compiled variable lives — mirrors [ResultLoc] but avoids
-/// circular dependency by being defined alongside Scope.
-///
-/// This is re-exported from compiler.dart as [ResultLoc].
-enum StackKind {
-  /// int, bool (encoded as 0/1) — ValueStack intView.
-  intVal,
-
-  /// double — ValueStack doubleView.
-  doubleVal,
-
-  /// String, object instances, closures, null, dynamic, num — RefStack.
-  ref;
-
-  /// Whether this kind uses the value stack (intVal or doubleVal).
-  bool get isValue => this != ref;
-}
+export '../runtime/class_info.dart' show StackKind;
 
 /// A variable binding within a [Scope].
 class VarBinding {

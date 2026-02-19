@@ -205,8 +205,8 @@ int main() => cast(42);
       final interp = DarticInterpreter();
       interp.execute(module);
       // After CAST, the value is on the ref stack (boxed).
-      // The return path should deliver it back.
-      expect(interp.refStack.read(0), 42);
+      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
+      expect(interp.refStack.read(3), 42);
     });
 
     test('x as String with string value passes through', () async {
@@ -216,7 +216,8 @@ String main() => cast("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.refStack.read(0), 'hello');
+      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
+      expect(interp.refStack.read(3), 'hello');
     });
 
     test('x as int with string value throws TypeError', () async {

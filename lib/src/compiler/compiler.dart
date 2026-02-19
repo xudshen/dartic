@@ -7,10 +7,12 @@ import '../bytecode/constant_pool.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
+import '../runtime/class_info.dart';
 import 'bytecode_emitter.dart';
 import 'register_allocator.dart';
 import 'scope.dart';
 
+part 'compiler_classes.dart';
 part 'compiler_closures.dart';
 part 'compiler_expressions.dart';
 part 'compiler_statements.dart';
@@ -56,6 +58,22 @@ class DarticCompiler {
   /// Total number of global variable slots.
   int _globalCount = 0;
 
+  // ── Class compilation state ──
+
+  /// Class info table — indexed by classId. Built during Pass 1c.
+  final List<DarticClassInfo> _classInfos = [];
+
+  /// Maps Kernel Class nodes to classIds.
+  final Map<ir.Class, int> _classToClassId = {};
+
+  /// Maps Kernel Constructor references to funcIds.
+  final Map<ir.Reference, int> _constructorToFuncId = {};
+
+  /// Per-class field layouts: maps field getter reference to FieldLayout.
+  /// Used by SET_FIELD/GET_FIELD compilation to determine offset and kind.
+  final Map<ir.Class, Map<ir.Reference, FieldLayout>> _instanceFieldLayouts =
+      {};
+
   // ── Per-function compilation state ──
   // Reset in _compileProcedure for each function.
 
@@ -87,6 +105,10 @@ class DarticCompiler {
 
   /// Exception handler table being built for the current function.
   final List<ExceptionHandler> _exceptionHandlers = [];
+
+  /// Inline cache entries being built for the current function.
+  /// Each CALL_VIRTUAL site adds one ICEntry.
+  final List<ICEntry> _icEntries = [];
 
   /// Maps catch Rethrow -> the exception/stackTrace register pair
   /// for the innermost catch clause.
@@ -125,9 +147,6 @@ class DarticCompiler {
   /// 2. Compile each procedure's body -> emit bytecode
   DarticModule compile() {
     // Pass 1a: assign funcIds to all user-defined procedures.
-    // TODO: Traverse class members (methods, getters, setters,
-    // constructors) once class compilation is supported. Currently only
-    // top-level procedures are collected.
     for (final lib in _component.libraries) {
       if (_isPlatformLibrary(lib)) continue;
       for (final proc in lib.procedures) {
@@ -141,6 +160,24 @@ class DarticCompiler {
           refRegCount: 0,
           paramCount: 0,
         ));
+      }
+      // Also register static procedures from classes.
+      for (final cls in lib.classes) {
+        for (final proc in cls.procedures) {
+          if (!proc.isStatic) continue;
+          // Skip if already registered (instance methods are registered in
+          // Pass 1c, but static ones need early registration like top-level).
+          if (_procToFuncId.containsKey(proc.reference)) continue;
+          final funcId = _functions.length;
+          _procToFuncId[proc.reference] = funcId;
+          _functions.add(DarticFuncProto(
+            funcId: funcId,
+            bytecode: _haltBytecode,
+            valueRegCount: 0,
+            refRegCount: 0,
+            paramCount: 0,
+          ));
+        }
       }
     }
 
@@ -157,6 +194,28 @@ class DarticCompiler {
         // Placeholder for initializer funcId -- will be set in Pass 2b.
         _globalInitializerIds.add(-1);
       }
+      // Also register static fields from classes.
+      for (final cls in lib.classes) {
+        for (final field in cls.fields) {
+          if (!field.isStatic) continue;
+          final globalIndex = _globalCount++;
+          _fieldToGlobalIndex[field.getterReference] = globalIndex;
+          final setterRef = field.setterReference;
+          if (setterRef != null) {
+            _fieldToGlobalIndex[setterRef] = globalIndex;
+          }
+          _globalInitializerIds.add(-1);
+        }
+      }
+    }
+
+    // Pass 1c: register classes — assign classIds, compute field layouts,
+    // assign funcIds to constructors and instance methods.
+    for (final lib in _component.libraries) {
+      if (_isPlatformLibrary(lib)) continue;
+      for (final cls in lib.classes) {
+        _registerClass(cls);
+      }
     }
 
     // Determine entry point.
@@ -169,11 +228,17 @@ class DarticCompiler {
       _entryFuncId = 0; // fallback
     }
 
-    // Pass 2a: compile each procedure.
+    // Pass 2a: compile each top-level procedure and static class procedures.
     for (final lib in _component.libraries) {
       if (_isPlatformLibrary(lib)) continue;
       for (final proc in lib.procedures) {
         _compileProcedure(proc);
+      }
+      for (final cls in lib.classes) {
+        for (final proc in cls.procedures) {
+          if (!proc.isStatic) continue;
+          _compileProcedure(proc);
+        }
       }
     }
 
@@ -187,6 +252,41 @@ class DarticCompiler {
           _globalInitializerIds[globalIndex] = initFuncId;
         }
       }
+      // Also compile static field initializers from classes.
+      for (final cls in lib.classes) {
+        for (final field in cls.fields) {
+          if (!field.isStatic) continue;
+          if (field.initializer != null) {
+            final globalIndex = _fieldToGlobalIndex[field.getterReference]!;
+            final initFuncId = _compileGlobalInitializer(field, globalIndex);
+            _globalInitializerIds[globalIndex] = initFuncId;
+          }
+        }
+      }
+    }
+
+    // Pass 2c: compile class members (constructors and instance methods).
+    for (final lib in _component.libraries) {
+      if (_isPlatformLibrary(lib)) continue;
+      for (final cls in lib.classes) {
+        for (final ctor in cls.constructors) {
+          _compileConstructor(ctor);
+        }
+        for (final proc in cls.procedures) {
+          if (proc.isStatic) continue;
+          _compileProcedure(proc);
+        }
+      }
+    }
+
+    // Post-compilation: refresh class method tables with compiled FuncProtos.
+    // Pass 1c stored placeholder FuncProtos; now that Pass 2c has compiled them,
+    // update the method table references to point to the real FuncProtos.
+    for (final classInfo in _classInfos) {
+      for (final nameIdx in classInfo.methods.keys.toList()) {
+        final placeholder = classInfo.methods[nameIdx]!;
+        classInfo.methods[nameIdx] = _functions[placeholder.funcId];
+      }
     }
 
     return DarticModule(
@@ -195,6 +295,7 @@ class DarticCompiler {
       entryFuncId: _entryFuncId,
       globalCount: _globalCount,
       globalInitializerIds: _globalInitializerIds,
+      classes: _classInfos,
     );
   }
 
@@ -212,11 +313,18 @@ class DarticCompiler {
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
+    _icEntries.clear();
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
 
     // Create the function-level scope.
     _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
+
+    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
+    // All frames follow this layout even if slots are unused (null).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver
 
     // Register function parameters as variable bindings.
     // Parameters get dedicated registers via the allocator (not scope-managed
@@ -265,6 +373,7 @@ class DarticCompiler {
       refRegCount: refRegCount,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
       exceptionTable: List.of(_exceptionHandlers),
+      icTable: List.of(_icEntries),
     );
   }
 
@@ -285,6 +394,11 @@ class DarticCompiler {
     _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
     _isEntryFunction = true; // Use HALT, not RETURN
     _pendingArgMoves.clear();
+
+    // Reserve 3 ref regs: ITA(0), FTA(1), this(2) — Ch2 convention.
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver
 
     final (reg, loc) = _compileExpression(field.initializer!);
     final refReg = _ensureRef(reg, loc, field.type);
@@ -350,6 +464,24 @@ class DarticCompiler {
     var (reg, loc) = _compileExpression(branchExpr);
     if (loc != targetLoc && targetLoc == ResultLoc.ref) {
       reg = _emitBoxToRef(reg, _inferExprType(branchExpr));
+      loc = ResultLoc.ref;
+    } else if (loc == ResultLoc.ref && targetLoc == ResultLoc.value) {
+      // Unbox ref→value when the branch produces a ref-stack value but the
+      // ConditionalExpression targets a value-stack register. This occurs in
+      // CFE-desugared `??` where the non-null branch is a VariableGet with
+      // promotedType (e.g. int? promoted to int).
+      var type = _inferExprType(branchExpr);
+      if (type is ir.InterfaceType &&
+          type.nullability == ir.Nullability.nullable) {
+        type = type.withDeclaredNullability(ir.Nullability.nonNullable);
+      }
+      final kind = type != null ? _classifyStackKind(type) : StackKind.intVal;
+      final unboxOp =
+          kind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
+      final valReg = _allocValueReg();
+      _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
+      reg = valReg;
+      loc = ResultLoc.value;
     }
     if (reg != targetReg) {
       _emitMove(targetReg, reg, targetLoc);

@@ -4,6 +4,7 @@ import 'call_stack.dart';
 import 'closure.dart';
 import 'error.dart';
 import 'global_table.dart';
+import 'object.dart';
 import 'ref_stack.dart';
 import 'value_stack.dart';
 
@@ -521,6 +522,74 @@ class DarticInterpreter {
           code = callee.bytecode;
           pc = 0;
 
+        case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
+          final cvA = (instr >> 8) & 0xFF; // result register
+          final cvB = (instr >> 16) & 0xFF; // receiver register
+          final cvC = (instr >> 24) & 0xFF; // IC table index
+
+          // Read receiver — null receiver throws TypeError (Dart semantics).
+          final receiver = rs.read(rBase + cvB) as DarticObject;
+
+          // IC dispatch: look up the current function's IC table.
+          final callerFuncProto = module.functions[callStack.funcId];
+          final ic = callerFuncProto.icTable[cvC];
+
+          DarticFuncProto cvCallee;
+          if (ic.cachedClassId == receiver.classId) {
+            // IC hit — fast path.
+            cvCallee = module.functions[ic.cachedMethodOffset];
+          } else {
+            // IC miss — slow path: look up method in class info.
+            final classInfo = module.classes[receiver.classId];
+            final method = classInfo.methods[ic.methodNameIndex];
+            if (method == null) {
+              throw DarticError(
+                'NoSuchMethodError: method not found on '
+                '${classInfo.name}',
+              );
+            }
+            cvCallee = method;
+            // Update IC cache.
+            ic.cachedClassId = receiver.classId;
+            ic.cachedMethodOffset = cvCallee.funcId;
+          }
+
+          // Overflow and call depth checks.
+          if (vs.sp + cvCallee.valueRegCount > vs.capacity ||
+              rs.sp + cvCallee.refRegCount > rs.capacity) {
+            throw DarticError('Stack overflow');
+          }
+          if (callStack.depth >= callStack.maxFrames) {
+            throw DarticError('Maximum call depth exceeded');
+          }
+
+          // Push frame — save caller state.
+          callStack.pushFrame(
+            funcId: cvCallee.funcId,
+            returnPC: pc,
+            savedFP: callStack.fp,
+            savedVSP: vBase,
+            savedRSP: rBase,
+            resultReg: cvA,
+          );
+
+          // Save caller's upvalues.
+          _upvalueStack.add(currentUpvalues);
+          currentUpvalues = null;
+
+          // Advance to callee frame.
+          vBase = vs.sp;
+          rBase = rs.sp;
+          vs.sp += cvCallee.valueRegCount;
+          rs.sp += cvCallee.refRegCount;
+
+          // Place receiver at callee's rsp+2 (the `this` slot).
+          rs.write(rBase + 2, receiver);
+
+          // Switch to callee bytecode.
+          code = cvCallee.bytecode;
+          pc = 0;
+
         // RETURN_REF / RETURN_VAL / RETURN_NULL share identical frame-restore
         // logic. The only difference: what is captured before and written after.
         case Op.returnRef: // RETURN_REF A — return refStack[A] to caller
@@ -581,6 +650,42 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           _globalTable!.store(bx, rs.read(rBase + a));
+
+        // ── Object Operations (0x60-0x64) ──
+
+        case Op.getFieldRef: // GET_FIELD_REF A, B, C — refStack[A] = refStack[B].refFields[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final obj = rs.read(rBase + b) as DarticObject;
+          rs.write(rBase + a, obj.refFields[c]);
+
+        case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final obj = rs.read(rBase + a) as DarticObject;
+          obj.refFields[c] = rs.read(rBase + b);
+
+        case Op.getFieldVal: // GET_FIELD_VAL A, B, C — valueStack[A] = refStack[B].valueFields[C]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final obj = rs.read(rBase + b) as DarticObject;
+          vs.writeInt(vBase + a, obj.valueFields[c]);
+
+        case Op.setFieldVal: // SET_FIELD_VAL A, B, C — refStack[A].valueFields[C] = valueStack[B]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final obj = rs.read(rBase + a) as DarticObject;
+          obj.valueFields[c] = vs.readInt(vBase + b);
+
+        case Op.newInstance: // NEW_INSTANCE A, Bx — refStack[A] = new DarticObject(class[Bx])
+          final a = (instr >> 8) & 0xFF;
+          final bx = (instr >> 16) & 0xFFFF;
+          final classInfo = module.classes[bx];
+          rs.write(rBase + a, DarticObject(classInfo));
 
         // ── Type Operations (0x65-0x66) ──
 

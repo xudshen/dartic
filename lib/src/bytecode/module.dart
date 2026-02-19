@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 
 /// A compiled bytecode module containing functions and constants.
@@ -15,6 +16,7 @@ class DarticModule {
     required this.entryFuncId,
     this.globalCount = 0,
     this.globalInitializerIds = const [],
+    this.classes = const [],
   });
 
   /// Function table — indexed by funcId.
@@ -32,6 +34,9 @@ class DarticModule {
   /// For each global: funcId of its initializer function, or -1 if none.
   /// Length must equal [globalCount].
   final List<int> globalInitializerIds;
+
+  /// Class table — indexed by classId. Used by NEW_INSTANCE and CALL_VIRTUAL.
+  final List<DarticClassInfo> classes;
 }
 
 /// Compiled function prototype — the compiler's core output.

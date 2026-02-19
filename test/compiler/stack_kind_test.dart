@@ -25,8 +25,8 @@ void main() {}
       // double param goes to value stack: at least 1 value reg for param.
       expect(f.valueRegCount, greaterThanOrEqualTo(1));
       expect(f.paramCount, 1);
-      // Should NOT add to ref stack.
-      expect(f.refRegCount, 0);
+      // 3 reserved ref regs (ITA+FTA+this) but no ref params.
+      expect(f.refRegCount, 3);
     });
 
     test('bool parameter -> StackKind.intVal (value stack)', () async {
@@ -38,8 +38,8 @@ void main() {}
       // bool param goes to value stack (encoded as 0/1 int).
       expect(f.valueRegCount, greaterThanOrEqualTo(1));
       expect(f.paramCount, 1);
-      // Should NOT add to ref stack.
-      expect(f.refRegCount, 0);
+      // 3 reserved ref regs (ITA+FTA+this) but no ref params.
+      expect(f.refRegCount, 3);
     });
 
     test('String parameter -> StackKind.ref (ref stack)', () async {

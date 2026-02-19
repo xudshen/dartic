@@ -50,6 +50,18 @@ extension on DarticCompiler {
     if (expr is ir.StaticTearOff) {
       return _compileStaticTearOff(expr);
     }
+    if (expr is ir.ConstructorInvocation) {
+      return _compileConstructorInvocation(expr);
+    }
+    if (expr is ir.ThisExpression) {
+      return _compileThisExpression();
+    }
+    if (expr is ir.InstanceGet) {
+      return _compileInstanceGet(expr);
+    }
+    if (expr is ir.InstanceSet) {
+      return _compileInstanceSet(expr);
+    }
     throw UnsupportedError(
       'Unsupported expression: ${expr.runtimeType}',
     );
@@ -448,8 +460,28 @@ extension on DarticCompiler {
       }
       return (refReg, ResultLoc.ref);
     }
+
+    // Static getter: compile as CALL_STATIC (no receiver).
+    if (target is ir.Procedure && target.isGetter) {
+      final funcId = _procToFuncId[target.reference];
+      if (funcId == null) {
+        throw UnsupportedError(
+          'Unknown static getter: ${target.name.text}',
+        );
+      }
+
+      final retType = target.function.returnType;
+      final retLoc = _classifyType(retType);
+      final resultReg =
+          retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
+
+      // No arguments — emit CALL_STATIC directly.
+      _emitter.emit(encodeABx(Op.callStatic, resultReg, funcId));
+      return (resultReg, retLoc);
+    }
+
     throw UnsupportedError(
-      'Static getter not yet supported: ${target.name.text}',
+      'Unsupported StaticGet: ${target.name.text}',
     );
   }
 
@@ -465,8 +497,43 @@ extension on DarticCompiler {
       _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
       return (srcReg, srcLoc); // Assignment evaluates to the assigned value
     }
+
+    // Static setter: compile as CALL_STATIC with one argument (no receiver).
+    if (target is ir.Procedure && target.isSetter) {
+      final funcId = _procToFuncId[target.reference];
+      if (funcId == null) {
+        throw UnsupportedError(
+          'Unknown static setter: ${target.name.text}',
+        );
+      }
+
+      // Compile the value argument.
+      var (valReg, valLoc) = _compileExpression(expr.value);
+
+      // Save the original value (StaticSet evaluates to the assigned value).
+      final savedValReg = valReg;
+      final savedValLoc = valLoc;
+
+      // Box if the setter parameter expects ref stack.
+      final setterParam = target.function.positionalParameters.first;
+      final paramKind = _classifyStackKind(setterParam.type);
+      if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
+        valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
+        valLoc = ResultLoc.ref;
+      }
+
+      // Setter returns void → use a dummy result register.
+      final dummyResult = _allocRefReg();
+
+      // Emit arg MOVE for the single value parameter.
+      final argTemps = <(int, ResultLoc)>[(valReg, valLoc)];
+      _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
+
+      return (savedValReg, savedValLoc);
+    }
+
     throw UnsupportedError(
-      'Static setter not yet supported: ${target.name.text}',
+      'Unsupported StaticSet: ${target.name.text}',
     );
   }
 
@@ -696,7 +763,7 @@ extension on DarticCompiler {
     int callOperandB,
   ) {
     var valArgIdx = 0;
-    var refArgIdx = 0;
+    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2) — Ch2 convention
     for (var i = 0; i < argTemps.length; i++) {
       final (srcReg, loc) = argTemps[i];
       final movePC = _emitter.emitPlaceholder();
@@ -761,9 +828,78 @@ extension on DarticCompiler {
       if (result != null) return result;
     }
 
-    throw UnsupportedError(
-      'Unsupported instance invocation: $name on $targetClass',
-    );
+    // General case: virtual method dispatch via CALL_VIRTUAL + IC.
+    return _compileVirtualCall(expr);
+  }
+
+  /// Compiles a virtual method call via CALL_VIRTUAL with inline cache.
+  ///
+  /// Handles: compile receiver → compile args → emit arg MOVEs →
+  /// emit CALL_VIRTUAL A,B,C where A=result, B=receiver, C=IC index.
+  /// The interpreter places the receiver at callee's rsp+2 automatically.
+  (int, ResultLoc) _compileVirtualCall(ir.InstanceInvocation expr) {
+    final target = expr.interfaceTarget;
+    final methodName = expr.name.text;
+
+    // 1. Compile receiver (always ref stack).
+    final (receiverReg, _) = _compileExpression(expr.receiver);
+
+    // 2. Allocate result register based on return type.
+    final retType = target.function.returnType;
+    final retLoc = _classifyType(retType);
+    final resultReg =
+        retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
+
+    // 3. Compile arguments.
+    final positionalParams = target.function.positionalParameters;
+    final namedParams = target.function.namedParameters;
+    final argTemps = <(int, ResultLoc)>[];
+
+    for (var i = 0; i < expr.arguments.positional.length; i++) {
+      var (argReg, argLoc) = _compileExpression(expr.arguments.positional[i]);
+      if (i < positionalParams.length) {
+        final paramKind = _classifyStackKind(positionalParams[i].type);
+        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
+          argReg = _emitBoxToRef(
+              argReg, _inferExprType(expr.arguments.positional[i]));
+          argLoc = ResultLoc.ref;
+        }
+      }
+      argTemps.add((argReg, argLoc));
+    }
+
+    // Fill missing optional positional args with defaults.
+    for (var i = expr.arguments.positional.length;
+        i < positionalParams.length;
+        i++) {
+      argTemps.add(_compileDefaultValue(positionalParams[i]));
+    }
+
+    // Handle named arguments.
+    if (namedParams.isNotEmpty) {
+      _compileNamedArgsFromParams(namedParams, expr.arguments.named, argTemps);
+    }
+
+    // 4. Emit pending arg MOVEs (skip receiver — interpreter handles this).
+    var valArgIdx = 0;
+    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2)
+    for (final (srcReg, loc) in argTemps) {
+      final movePC = _emitter.emitPlaceholder();
+      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
+      _pendingArgMoves.add(
+        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
+      );
+    }
+
+    // 5. Allocate IC entry and emit CALL_VIRTUAL.
+    final methodNameIdx = _constantPool.addName(methodName);
+    final icIndex = _icEntries.length;
+    _icEntries.add(ICEntry(methodNameIndex: methodNameIdx));
+
+    _emitter.emit(
+        encodeABC(Op.callVirtual, resultReg, receiverReg, icIndex));
+
+    return (resultReg, retLoc);
   }
 
   /// Tries to compile a double operation (arithmetic, comparison, unary, toInt).
@@ -881,5 +1017,263 @@ extension on DarticCompiler {
     }
     if (type is ir.NullType) return (v) => v as Null;
     throw UnsupportedError('Unsupported type for cast: $type');
+  }
+
+  // ── ConstructorInvocation ──
+
+  /// Compiles a [ConstructorInvocation]: NEW_INSTANCE → args → CALL_STATIC.
+  ///
+  /// The expression result is the newly allocated object (ref stack), NOT
+  /// the constructor's void return value.
+  (int, ResultLoc) _compileConstructorInvocation(
+    ir.ConstructorInvocation expr,
+  ) {
+    final target = expr.target;
+    final funcId = _constructorToFuncId[target.reference];
+    if (funcId == null) {
+      throw UnsupportedError(
+        'Unknown constructor: ${target.enclosingClass.name}.${target.name.text}',
+      );
+    }
+    final cls = target.enclosingClass;
+    final classId = _classToClassId[cls];
+    if (classId == null) {
+      throw StateError('Class not registered: ${cls.name}');
+    }
+
+    // 1. Allocate object register and emit NEW_INSTANCE.
+    final objReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+
+    // 2. Compile arguments.
+    final positionalParams = target.function.positionalParameters;
+    final namedParams = target.function.namedParameters;
+    final argTemps = <(int, ResultLoc)>[];
+
+    for (var i = 0; i < expr.arguments.positional.length; i++) {
+      var (argReg, argLoc) = _compileExpression(expr.arguments.positional[i]);
+      if (i < positionalParams.length) {
+        final paramKind = _classifyStackKind(positionalParams[i].type);
+        if (paramKind == StackKind.ref && argLoc == ResultLoc.value) {
+          argReg =
+              _emitBoxToRef(argReg, _inferExprType(expr.arguments.positional[i]));
+          argLoc = ResultLoc.ref;
+        }
+      }
+      argTemps.add((argReg, argLoc));
+    }
+
+    // Fill missing optional positional args with defaults.
+    for (var i = expr.arguments.positional.length;
+        i < positionalParams.length;
+        i++) {
+      argTemps.add(_compileDefaultValue(positionalParams[i]));
+    }
+
+    // Handle named arguments.
+    if (namedParams.isNotEmpty) {
+      _compileNamedArgsFromParams(namedParams, expr.arguments.named, argTemps);
+    }
+
+    // 3. Emit pending MOVE for `this` at ref argIdx 2.
+    final thisMovePC = _emitter.emitPlaceholder();
+    _pendingArgMoves.add(
+      (pc: thisMovePC, srcReg: objReg, argIdx: 2, loc: ResultLoc.ref),
+    );
+
+    // 4. Emit arg moves + CALL_STATIC. Constructor returns void, so use a
+    //    dummy ref register for the unused result.
+    final dummyResult = _allocRefReg();
+    _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
+
+    // 5. The expression result is the object, not the call result.
+    return (objReg, ResultLoc.ref);
+  }
+
+  // ── ThisExpression ──
+
+  /// Compiles [ThisExpression]: returns ref register at rsp+2.
+  (int, ResultLoc) _compileThisExpression() {
+    // `this` is always at ref register 2 (rsp+2) per Ch2 convention.
+    return (2, ResultLoc.ref);
+  }
+
+  // ── InstanceGet / InstanceSet (field access) ──
+
+  /// Compiles [InstanceGet]: dispatches to field access or getter call.
+  (int, ResultLoc) _compileInstanceGet(ir.InstanceGet expr) {
+    final target = expr.interfaceTarget;
+    final targetClass = target.enclosingClass;
+
+    // Check if the target is a field.
+    if (target is ir.Field) {
+      final layouts = _instanceFieldLayouts[targetClass];
+      if (layouts != null) {
+        final layout = layouts[target.getterReference];
+        if (layout != null) {
+          // Compile receiver.
+          final (recvReg, _) = _compileExpression(expr.receiver);
+          if (layout.kind.isValue) {
+            final resultReg = _allocValueReg();
+            _emitter.emit(encodeABC(
+              Op.getFieldVal, resultReg, recvReg, layout.offset,
+            ));
+            return (resultReg, ResultLoc.value);
+          } else {
+            final resultReg = _allocRefReg();
+            _emitter.emit(encodeABC(
+              Op.getFieldRef, resultReg, recvReg, layout.offset,
+            ));
+            return (resultReg, ResultLoc.ref);
+          }
+        }
+      }
+    }
+
+    // Check if the target is a getter Procedure → emit CALL_VIRTUAL.
+    if (target is ir.Procedure && target.isGetter) {
+      return _compileInstanceGetterCall(expr, target);
+    }
+
+    throw UnsupportedError(
+      'Unsupported InstanceGet: ${expr.name.text} on ${targetClass?.name}',
+    );
+  }
+
+  /// Compiles an instance getter call via CALL_VIRTUAL.
+  ///
+  /// A getter has no arguments (only the receiver). The interpreter places
+  /// the receiver at callee's rsp+2 automatically.
+  (int, ResultLoc) _compileInstanceGetterCall(
+    ir.InstanceGet expr,
+    ir.Procedure getter,
+  ) {
+    // 1. Compile receiver (always ref stack).
+    final (receiverReg, _) = _compileExpression(expr.receiver);
+
+    // 2. Allocate result register based on the getter's return type.
+    final retType = getter.function.returnType;
+    final retLoc = _classifyType(retType);
+    final resultReg =
+        retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
+
+    // 3. No arguments for a getter — skip arg moves.
+
+    // 4. Allocate IC entry and emit CALL_VIRTUAL.
+    final methodName = expr.name.text; // Getter uses the property name.
+    final methodNameIdx = _constantPool.addName(methodName);
+    final icIndex = _icEntries.length;
+    _icEntries.add(ICEntry(methodNameIndex: methodNameIdx));
+
+    _emitter.emit(
+        encodeABC(Op.callVirtual, resultReg, receiverReg, icIndex));
+
+    return (resultReg, retLoc);
+  }
+
+  /// Compiles [InstanceSet]: dispatches to field write or setter call.
+  (int, ResultLoc) _compileInstanceSet(ir.InstanceSet expr) {
+    final target = expr.interfaceTarget;
+    final targetClass = target.enclosingClass;
+
+    if (target is ir.Field) {
+      final layouts = _instanceFieldLayouts[targetClass];
+      if (layouts != null) {
+        final layout = layouts[target.getterReference];
+        if (layout != null) {
+          // Compile receiver and value.
+          final (recvReg, _) = _compileExpression(expr.receiver);
+          var (valReg, valLoc) = _compileExpression(expr.value);
+
+          if (layout.kind.isValue) {
+            if (valLoc == ResultLoc.ref) {
+              final unboxed = _allocValueReg();
+              final unboxOp = layout.kind == StackKind.doubleVal
+                  ? Op.unboxDouble
+                  : Op.unboxInt;
+              _emitter.emit(encodeABC(unboxOp, unboxed, valReg, 0));
+              valReg = unboxed;
+            }
+            _emitter.emit(encodeABC(
+              Op.setFieldVal, recvReg, valReg, layout.offset,
+            ));
+          } else {
+            if (valLoc == ResultLoc.value) {
+              valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
+            }
+            _emitter.emit(encodeABC(
+              Op.setFieldRef, recvReg, valReg, layout.offset,
+            ));
+          }
+          // InstanceSet result is the written value.
+          return (valReg, valLoc);
+        }
+      }
+    }
+
+    // Check if the target is a setter Procedure → emit CALL_VIRTUAL.
+    if (target is ir.Procedure && target.isSetter) {
+      return _compileInstanceSetterCall(expr, target);
+    }
+
+    throw UnsupportedError(
+      'Unsupported InstanceSet: ${expr.name.text} on ${targetClass?.name}',
+    );
+  }
+
+  /// Compiles an instance setter call via CALL_VIRTUAL.
+  ///
+  /// A setter has one parameter (the value) plus the receiver. The interpreter
+  /// places the receiver at callee's rsp+2 automatically.
+  /// InstanceSet evaluates to the assigned value (Dart semantics).
+  (int, ResultLoc) _compileInstanceSetterCall(
+    ir.InstanceSet expr,
+    ir.Procedure setter,
+  ) {
+    // 1. Compile receiver (always ref stack).
+    final (receiverReg, _) = _compileExpression(expr.receiver);
+
+    // 2. Compile the value argument.
+    var (valReg, valLoc) = _compileExpression(expr.value);
+
+    // Save the value before arg moves (InstanceSet evaluates to the value).
+    final savedValReg = valReg;
+    final savedValLoc = valLoc;
+
+    // 3. The setter's parameter determines where the arg goes.
+    final setterParam = setter.function.positionalParameters.first;
+    final paramKind = _classifyStackKind(setterParam.type);
+    if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
+      valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
+      valLoc = ResultLoc.ref;
+    }
+
+    // 4. Allocate result register — setter returns void, so use a dummy.
+    final dummyResult = _allocRefReg();
+
+    // 5. Emit arg MOVE for the single value parameter.
+    final argTemps = <(int, ResultLoc)>[(valReg, valLoc)];
+    var valArgIdx = 0;
+    var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2)
+    for (final (srcReg, loc) in argTemps) {
+      final movePC = _emitter.emitPlaceholder();
+      final argIdx = loc == ResultLoc.value ? valArgIdx++ : refArgIdx++;
+      _pendingArgMoves.add(
+        (pc: movePC, srcReg: srcReg, argIdx: argIdx, loc: loc),
+      );
+    }
+
+    // 6. Allocate IC entry and emit CALL_VIRTUAL.
+    // Setters use "name=" convention in the method table.
+    final methodName = '${expr.name.text}=';
+    final methodNameIdx = _constantPool.addName(methodName);
+    final icIndex = _icEntries.length;
+    _icEntries.add(ICEntry(methodNameIndex: methodNameIdx));
+
+    _emitter.emit(
+        encodeABC(Op.callVirtual, dummyResult, receiverReg, icIndex));
+
+    // InstanceSet evaluates to the assigned value.
+    return (savedValReg, savedValLoc);
   }
 }

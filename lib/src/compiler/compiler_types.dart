@@ -9,7 +9,7 @@ extension on DarticCompiler {
   ///
   /// Handles common cases needed for Phase 1 int arithmetic specialization.
   ir.DartType? _inferExprType(ir.Expression expr) {
-    if (expr is ir.VariableGet) return expr.variable.type;
+    if (expr is ir.VariableGet) return expr.promotedType ?? expr.variable.type;
     if (expr is ir.IntLiteral) return _coreTypes.intNonNullableRawType;
     if (expr is ir.DoubleLiteral) return _coreTypes.doubleNonNullableRawType;
     if (expr is ir.BoolLiteral) return _coreTypes.boolNonNullableRawType;
@@ -43,6 +43,23 @@ extension on DarticCompiler {
     if (expr is ir.InstanceInvocation) {
       return _inferInstanceInvocationType(expr);
     }
+    if (expr is ir.ConstructorInvocation) {
+      return ir.InterfaceType(
+        expr.target.enclosingClass,
+        ir.Nullability.nonNullable,
+      );
+    }
+    if (expr is ir.ThisExpression) {
+      // ThisExpression type is the enclosing class. We can't determine it
+      // statically here, but it's always a ref type.
+      return null;
+    }
+    if (expr is ir.InstanceGet) {
+      final target = expr.interfaceTarget;
+      if (target is ir.Field) return target.type;
+      if (target is ir.Procedure) return target.function.returnType;
+    }
+    if (expr is ir.InstanceSet) return _inferExprType(expr.value);
     return null;
   }
 

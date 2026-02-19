@@ -461,6 +461,18 @@ int main() => add(1, 2); // => 3
 
 **里程碑：** 解释器代码能使用宿主 VM 的 `dart:core` 类型和方法
 
+> **⚠️ 待决策：BridgeGenerator 构建时机**
+>
+> 设计文档 `04-interop.md` 描述了 BridgeGenerator（build_runner + package:analyzer 自动生成 Bridge 类），但本 roadmap 未单独立项。执行 Phase 5 前需先决策：
+>
+> | 方案 | 做法 | 权衡 |
+> |------|------|------|
+> | A. 先建 Generator | 在 Batch 5.1 前新增 Batch，实现 codegen 工具 | 前期投入大，后续每个类自动生成，扩展到 Flutter Bridge 时收益显著 |
+> | B. 先手写 Bridge | Batch 5.2 手写 dart:core 核心类，Generator 延后或不做 | 前期快，但手写维护成本高，覆盖面受限 |
+> | C. 混合 | 手写少量类验证设计，稳定后再抽成 Generator | 务实折中，但有重构成本 |
+>
+> 决策：_(Phase 5 启动前填写)_
+
 ### Batch 5.1: Bridge 基础设施 (Ch4)
 
 - [ ] 5.1.1 Bridge 类注册机制 + HostBindings → `lib/src/bridge/host_bindings.dart`

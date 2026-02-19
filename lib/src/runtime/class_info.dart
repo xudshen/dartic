@@ -11,7 +11,10 @@ enum StackKind {
   doubleVal,
 
   /// String, object instances, closures, null, dynamic, num — RefStack.
-  ref,
+  ref;
+
+  /// Whether this kind uses the value stack (intVal or doubleVal).
+  bool get isValue => this != ref;
 }
 
 /// Field layout descriptor — maps a field name index to its storage location.

@@ -120,7 +120,8 @@ String main() => greeting;
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.refStack.read(0), 'hello');
+      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
+      expect(interp.refStack.read(3), 'hello');
     });
   });
 }
