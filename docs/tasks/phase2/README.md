@@ -30,9 +30,9 @@
 
 ## 里程碑验证
 
-- [ ] co19 `Language/Variables` 通过率 > 50%
-- [ ] co19 `Language/Expressions` 基础子集通过率 > 30%
-- [ ] co19 `Language/Statements` 通过率 > 30%
+- [x] co19 `Language/Variables` 通过率 > 50% — 实际 65.8% (73/111)
+- [x] co19 `Language/Expressions` 基础子集通过率 > 30% — 实际 53.4% (1032/1933)
+- [x] co19 `Language/Statements` 通过率 > 30% — 实际 49.9% (268/537)
 
 ## 执行节奏
 
