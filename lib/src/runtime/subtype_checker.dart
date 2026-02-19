@@ -13,14 +13,19 @@ import 'type_resolver.dart';
 
 /// Checks subtype relationships between [DarticType] instances.
 ///
-/// Core rules implemented (Phase 4.2):
+/// Core rules implemented:
 ///   1. identical fast path
 ///   2. top type (dynamic / void / Object?)
 ///   3. bottom type (Never)
-///  11. SuperTypeMap lookup (non-generic: supertypeIds)
+///   4. nullable rejection (sub nullable + sup nonNullable → false)
+///   5. Null type handling
+///   6. nullable supertype decomposition
+///   7. FutureOr as supertype
+///   8. FutureOr as subtype
+///   9. function type dispatch
+///  10. Record type dispatch (stub → false)
+///  11. SuperTypeMap lookup
 ///  12. type argument recursive check
-///
-/// Rules 4-10 (nullability, Null, FutureOr, function types) deferred to 4.3.
 class SubtypeChecker {
   SubtypeChecker({
     required this.classes,
@@ -48,11 +53,23 @@ class SubtypeChecker {
       return true;
     }
 
-    // Rule 4: nullable rejection (sub is nullable, sup is non-nullable → false)
-    if (sub is DarticInterfaceType &&
-        sub.nullability == Nullability.nullable &&
-        sup is DarticInterfaceType &&
+    // Rule 4: nullable rejection (sub is nullable, sup is non-nullable → false).
+    // Applies to both DarticInterfaceType and DarticFunctionType.
+    if (sub.nullability == Nullability.nullable &&
         sup.nullability == Nullability.nonNullable) {
+      // For interface sup: sup must be nonNullable.
+      // For function sup: sup must be nonNullable.
+      // But we also need to exclude cases where sup is a top type or FutureOr
+      // that might accept nullable sub. Top types are already handled by rule 2.
+      // FutureOr is handled by rules 7-8 below, but rule 4 fires first.
+      //
+      // However, FutureOr<T?> as sup with nullable sub should work.
+      // Since FutureOr normalization converts FutureOr<T?> to FutureOr<T>?,
+      // the FutureOr sup would be nullable and won't trigger this rule.
+      //
+      // For interface sup that is non-nullable, this is correct to reject.
+      // But we must be careful: if sup is DarticFunctionType nonNullable,
+      // and sub is nullable, we should also reject.
       return false;
     }
 
@@ -60,41 +77,63 @@ class SubtypeChecker {
     if (sub is DarticInterfaceType &&
         sub.classId == SpecialClassId.never &&
         sub.nullability == Nullability.nullable) {
-      if (sup is DarticInterfaceType &&
-          sup.nullability == Nullability.nullable) {
+      // Null is subtype of any nullable type (interface or function).
+      if (sup.nullability == Nullability.nullable) {
         return true;
       }
       return false;
     }
 
-    // Rule 6: nullable supertype decomposition
-    if (sup is DarticInterfaceType &&
-        sup.nullability == Nullability.nullable) {
-      final supBase = registry.intern(
-        sup.classId,
-        sup.typeArgs,
-      );
-      DarticType subBase = sub;
-      if (sub is DarticInterfaceType &&
-          sub.nullability == Nullability.nullable) {
-        subBase = registry.intern(sub.classId, sub.typeArgs);
-      }
+    // Rule 6: nullable supertype decomposition.
+    // When sup is nullable, strip nullability from both sides and recurse.
+    if (sup.nullability == Nullability.nullable) {
+      final supBase = _stripNullable(sup);
+      final subBase = (sub.nullability == Nullability.nullable)
+          ? _stripNullable(sub)
+          : sub;
       return isSubtypeOf(subBase, supBase);
     }
+
+    // Rule 7: FutureOr as supertype.
+    // sup is FutureOr<T>: sub <: Future<T> || sub <: T
+    // Also: if sub is FutureOr<S>, check S <: T (handles FutureOr<S> <: FutureOr<T>).
+    if (sup is DarticInterfaceType &&
+        sup.classId == registry.futureOrClassId) {
+      final t = sup.typeArgs[0];
+      // Direct type argument check when sub is also FutureOr.
+      if (sub is DarticInterfaceType &&
+          sub.classId == registry.futureOrClassId) {
+        final s = sub.typeArgs[0];
+        if (isSubtypeOf(s, t)) return true;
+      }
+      // Construct Future<T> and check sub <: Future<T>.
+      final futureT = registry.intern(registry.futureClassId, [t]);
+      if (isSubtypeOf(sub, futureT)) return true;
+      // Check sub <: T.
+      if (isSubtypeOf(sub, t)) return true;
+      return false;
+    }
+
+    // Rule 8: FutureOr as subtype.
+    // sub is FutureOr<T>: Future<T> <: sup && T <: sup
+    if (sub is DarticInterfaceType &&
+        sub.classId == registry.futureOrClassId) {
+      final t = sub.typeArgs[0];
+      final futureT = registry.intern(registry.futureClassId, [t]);
+      return isSubtypeOf(futureT, sup) && isSubtypeOf(t, sup);
+    }
+
+    // Rule 9: function type dispatch.
+    if (sub is DarticFunctionType || sup is DarticFunctionType) {
+      return _checkFunctionTypeSubtype(sub, sup);
+    }
+
+    // Rule 10: Record type dispatch (stub — Phase 6).
+    // No RecordType class exists yet. Fall through to interface checks.
 
     // Rules 11-12: interface type subtype checking via supertypeIds + type args.
     if (sub is DarticInterfaceType && sup is DarticInterfaceType) {
       return _checkInterfaceSubtype(sub, sup);
-    }
-
-    // Function type as sub, Function/Object as sup.
-    if (sub is DarticFunctionType) {
-      if (sup is DarticInterfaceType &&
-          sup.classId == registry.objectType.classId) {
-        return true;
-      }
-      // Function subtype checking deferred to Batch 4.3.
-      return false;
     }
 
     return false;
@@ -110,6 +149,111 @@ class SubtypeChecker {
       return true;
     }
     return false;
+  }
+
+  /// Strips nullability from a type, returning the non-nullable equivalent.
+  DarticType _stripNullable(DarticType type) {
+    if (type is DarticInterfaceType) {
+      return registry.intern(type.classId, type.typeArgs);
+    } else if (type is DarticFunctionType) {
+      return registry.internFunction(
+        typeParamBounds: type.typeParamBounds,
+        requiredParamCount: type.requiredParamCount,
+        positionalParams: type.positionalParams,
+        namedParams: type.namedParams,
+        returnType: type.returnType,
+      );
+    }
+    return type;
+  }
+
+  /// Rule 9: function type dispatch.
+  bool _checkFunctionTypeSubtype(DarticType sub, DarticType sup) {
+    if (sub is DarticFunctionType && sup is DarticFunctionType) {
+      // Both are function types → detailed structural check.
+      return _isFunctionSubtype(sub, sup);
+    }
+    if (sub is DarticFunctionType && sup is DarticInterfaceType) {
+      // FunctionType <: Function class or Object → true.
+      if (sup.classId == registry.functionClassId) return true;
+      if (sup.classId == registry.objectType.classId) return true;
+      // FunctionType <: other InterfaceType → false.
+      return false;
+    }
+    if (sub is DarticInterfaceType && sup is DarticFunctionType) {
+      // Non-FunctionType <: FunctionType → false.
+      return false;
+    }
+    return false;
+  }
+
+  /// Structural function subtype check (9 rules).
+  ///
+  /// See: docs/design/06-generics.md "isFunctionSubtype"
+  bool _isFunctionSubtype(DarticFunctionType sub, DarticFunctionType sup) {
+    // Check 1: type parameter count must match.
+    if (sub.typeParamBounds.length != sup.typeParamBounds.length) {
+      return false;
+    }
+
+    // Check 2: type parameter bounds must be equivalent (mutual subtype).
+    for (var i = 0; i < sub.typeParamBounds.length; i++) {
+      if (!isSubtypeOf(sub.typeParamBounds[i], sup.typeParamBounds[i])) {
+        return false;
+      }
+      if (!isSubtypeOf(sup.typeParamBounds[i], sub.typeParamBounds[i])) {
+        return false;
+      }
+    }
+
+    // Check 3: return type covariance.
+    if (!isSubtypeOf(sub.returnType, sup.returnType)) return false;
+
+    // Check 4: required positional param count.
+    // sub.requiredParamCount <= sup.requiredParamCount
+    // (sub can require fewer params than sup).
+    if (sub.requiredParamCount > sup.requiredParamCount) return false;
+
+    // Check 5: positional param total count.
+    // sub must accept at least as many positional params as sup.
+    if (sub.positionalParams.length < sup.positionalParams.length) return false;
+
+    // Check 6: positional param types (contravariant).
+    for (var i = 0; i < sup.positionalParams.length; i++) {
+      if (!isSubtypeOf(sup.positionalParams[i], sub.positionalParams[i])) {
+        return false;
+      }
+    }
+
+    // Check 7-8-9: named parameter coverage, type contravariance, required flag.
+    // sup's every named param must exist in sub.
+    for (final supNamed in sup.namedParams) {
+      // Find matching named param in sub (namedParams are sorted by name).
+      final subNamed = _findNamedParam(sub.namedParams, supNamed.name);
+      if (subNamed == null) {
+        // Check 7: sup has a named param not in sub → false.
+        return false;
+      }
+      // Check 8: named param type contravariance.
+      if (!isSubtypeOf(supNamed.type, subNamed.type)) return false;
+      // Check 9: required flag — if sub is required, sup must also be required.
+      if (subNamed.isRequired && !supNamed.isRequired) return false;
+    }
+
+    return true;
+  }
+
+  /// Finds a named parameter by name in a sorted list of named params.
+  ({String name, DarticType type, bool isRequired})? _findNamedParam(
+    List<({String name, DarticType type, bool isRequired})> params,
+    String name,
+  ) {
+    // Named params are sorted by name — could use binary search,
+    // but linear scan is fine for typical param counts.
+    for (final p in params) {
+      if (p.name == name) return p;
+    }
+    return null;
   }
 
   /// Checks interface type subtype using supertypeIds and type arg mapping.

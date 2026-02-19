@@ -20,7 +20,14 @@ class TypeRegistry {
     required int boolClassId,
     required int objectClassId,
     required int numClassId,
-  }) : _buckets = List<List<DarticType>?>.filled(_initialBucketCount, null) {
+    int futureClassId = -100,
+    int futureOrClassId = -101,
+    int functionClassId = -102,
+  })  : _futureClassId = futureClassId,
+        _futureOrClassId = futureOrClassId,
+        _functionClassId = functionClassId,
+        _objectClassId = objectClassId,
+        _buckets = List<List<DarticType>?>.filled(_initialBucketCount, null) {
     // Pre-register special types (negative classIds).
     dynamicType = _internInterface(
         SpecialClassId.dynamic_, const [], Nullability.nonNullable);
@@ -48,6 +55,22 @@ class TypeRegistry {
   // ── Configuration ──
 
   static const _initialBucketCount = 64; // must be power of 2
+
+  // ── Stored class IDs (for FutureOr normalization and subtype checks) ──
+
+  final int _futureClassId;
+  final int _futureOrClassId;
+  final int _functionClassId;
+  final int _objectClassId;
+
+  /// Class ID for `Future` (dart:async).
+  int get futureClassId => _futureClassId;
+
+  /// Class ID for `FutureOr` (dart:async).
+  int get futureOrClassId => _futureOrClassId;
+
+  /// Class ID for `Function` (dart:core).
+  int get functionClassId => _functionClassId;
 
   // ── Bucket table ──
 
@@ -80,11 +103,18 @@ class TypeRegistry {
   /// Interns an interface type. Returns the canonical instance.
   ///
   /// [typeArgs] must contain already-interned [DarticType] instances.
+  ///
+  /// If [classId] is `futureOrClassId`, FutureOr normalization is applied
+  /// before interning (see design doc Ch6 "FutureOr 规范化").
   DarticInterfaceType intern(
     int classId,
     List<DarticType> typeArgs, {
     Nullability nullability = Nullability.nonNullable,
   }) {
+    // FutureOr normalization: applied at intern entry point.
+    if (classId == _futureOrClassId && typeArgs.length == 1) {
+      return _normalizeFutureOr(typeArgs[0], nullability);
+    }
     return _internInterface(classId, typeArgs, nullability);
   }
 
@@ -107,6 +137,75 @@ class TypeRegistry {
       returnType,
       nullability,
     );
+  }
+
+  // ── Internal: FutureOr normalization ──
+
+  /// Normalizes `FutureOr` according to the Dart language specification.
+  ///
+  /// | Input                   | Normalized Result       |
+  /// |-------------------------|-------------------------|
+  /// | `FutureOr<Never>`       | `Future<Never>`         |
+  /// | `FutureOr<Object?>`     | `Object?`               |
+  /// | `FutureOr<Object>`      | `Object`                |
+  /// | `FutureOr<dynamic>`     | `dynamic`               |
+  /// | `FutureOr<void>`        | `void`                  |
+  /// | `FutureOr<Null>`        | `Future<Null>?`         |
+  /// | `FutureOr<T?>`          | `FutureOr<T>?`          |
+  DarticInterfaceType _normalizeFutureOr(
+    DarticType typeArg,
+    Nullability outerNullability,
+  ) {
+    if (typeArg is DarticInterfaceType) {
+      final cid = typeArg.classId;
+      final n = typeArg.nullability;
+
+      // FutureOr<Never> → Future<Never>
+      if (cid == SpecialClassId.never && n == Nullability.nonNullable) {
+        return _internInterface(_futureClassId, [typeArg], outerNullability);
+      }
+
+      // FutureOr<dynamic> → dynamic
+      if (cid == SpecialClassId.dynamic_) {
+        return _internInterface(
+            SpecialClassId.dynamic_, const [], Nullability.nonNullable);
+      }
+
+      // FutureOr<void> → void
+      if (cid == SpecialClassId.void_) {
+        return _internInterface(
+            SpecialClassId.void_, const [], Nullability.nonNullable);
+      }
+
+      // FutureOr<Object?> → Object?
+      if (cid == _objectClassId && n == Nullability.nullable) {
+        return _internInterface(_objectClassId, const [], Nullability.nullable);
+      }
+
+      // FutureOr<Object> → Object
+      if (cid == _objectClassId && n == Nullability.nonNullable) {
+        return _internInterface(
+            _objectClassId, const [], outerNullability);
+      }
+
+      // FutureOr<Null> (Null = Never?) → Future<Null>?
+      if (cid == SpecialClassId.never && n == Nullability.nullable) {
+        return _internInterface(
+            _futureClassId, [typeArg], Nullability.nullable);
+      }
+
+      // FutureOr<T?> → FutureOr<T>? (promote nullability to outer)
+      if (n == Nullability.nullable) {
+        // Strip the inner nullable to get T, then make FutureOr<T>?.
+        final innerBase = _internInterface(
+            cid, typeArg.typeArgs, Nullability.nonNullable);
+        return _internInterface(
+            _futureOrClassId, [innerBase], Nullability.nullable);
+      }
+    }
+
+    // No normalization rule applies — intern as-is.
+    return _internInterface(_futureOrClassId, [typeArg], outerNullability);
   }
 
   // ── Internal: interface type interning ──
