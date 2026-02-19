@@ -51,6 +51,8 @@ class TypeRegistry {
 
   // ── Bucket table ──
 
+  // TODO(phase2): Add load-factor-triggered bucket resize/rehash.
+  // Current 64 buckets are sufficient for Phase 1 type counts.
   final List<List<DarticType>?> _buckets;
   int get _bucketMask => _buckets.length - 1;
 

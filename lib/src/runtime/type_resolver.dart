@@ -125,7 +125,7 @@ DarticFunctionType _resolveFunction(
       (
         name: n.name,
         type: resolveType(n.type, ita, fta, registry),
-        isRequired: true, // FunctionTypeTemplate doesn't track isRequired yet
+        isRequired: n.isRequired,
       ),
   ];
   final resolvedReturn = resolveType(template.returnType, ita, fta, registry);

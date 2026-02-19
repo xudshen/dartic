@@ -211,6 +211,6 @@ feat(generics): add reified generics with DarticType residency
 - [x] 4.2.6 泛型方法编译
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] commit 已提交
+- [x] overview.md 已更新
+- [x] code review 已完成

@@ -1153,7 +1153,12 @@ extension on DarticCompiler {
         classId: classId,
         typeArgs: [
           for (final arg in typeArgs)
-            dartTypeToTemplate(arg, _typeClassIdLookup),
+            dartTypeToTemplate(
+              arg,
+              _typeClassIdLookup,
+              enclosingClassTypeParams: _currentClassTypeParams,
+              enclosingFunctionTypeParams: _currentFunctionTypeParams,
+            ),
         ],
       );
       final templateIdx = _constantPool.addRef(typeTemplate);

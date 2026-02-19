@@ -89,7 +89,7 @@ sealed class TypeTemplate {
 
     // Named params
     final namedCount = data[offset++];
-    final namedParams = <({String name, TypeTemplate type})>[];
+    final namedParams = <({String name, TypeTemplate type, bool isRequired})>[];
     for (var i = 0; i < namedCount; i++) {
       // Name is encoded as length + codeUnits
       final nameLen = data[offset++];
@@ -98,8 +98,9 @@ sealed class TypeTemplate {
       final name = String.fromCharCodes(codeUnits);
 
       final (type, newOffset) = deserialize(data, offset);
-      namedParams.add((name: name, type: type));
       offset = newOffset;
+      final isRequired = data[offset++] != 0;
+      namedParams.add((name: name, type: type, isRequired: isRequired));
     }
 
     // Return type
@@ -278,8 +279,8 @@ class FunctionTypeTemplate extends TypeTemplate {
   /// Positional parameter types (required + optional).
   final List<TypeTemplate> positionalParams;
 
-  /// Named parameter descriptors, each with a name and type.
-  final List<({String name, TypeTemplate type})> namedParams;
+  /// Named parameter descriptors, each with a name, type, and isRequired flag.
+  final List<({String name, TypeTemplate type, bool isRequired})> namedParams;
 
   /// Number of required positional parameters (the rest are optional).
   /// Defaults to `positionalParams.length` (all required).
@@ -308,6 +309,7 @@ class FunctionTypeTemplate extends TypeTemplate {
       result.add(codeUnits.length);
       result.addAll(codeUnits);
       result.addAll(named.type.serialize());
+      result.add(named.isRequired ? 1 : 0);
     }
 
     // Return type
@@ -335,7 +337,8 @@ class FunctionTypeTemplate extends TypeTemplate {
     if (namedParams.length != other.namedParams.length) return false;
     for (var i = 0; i < namedParams.length; i++) {
       if (namedParams[i].name != other.namedParams[i].name ||
-          namedParams[i].type != other.namedParams[i].type) {
+          namedParams[i].type != other.namedParams[i].type ||
+          namedParams[i].isRequired != other.namedParams[i].isRequired) {
         return false;
       }
     }
@@ -349,7 +352,7 @@ class FunctionTypeTemplate extends TypeTemplate {
     h = Object.hash(h, requiredParamCount);
     h = Object.hash(h, Object.hashAll(typeParamBounds));
     for (final named in namedParams) {
-      h = Object.hash(h, named.name, named.type);
+      h = Object.hash(h, named.name, named.type, named.isRequired);
     }
     return h;
   }
@@ -358,7 +361,7 @@ class FunctionTypeTemplate extends TypeTemplate {
   String toString() => 'FunctionTypeTemplate('
       'ret: $returnType, '
       'pos: $positionalParams, '
-      'named: [${namedParams.map((n) => '${n.name}: ${n.type}').join(', ')}], '
+      'named: [${namedParams.map((n) => '${n.isRequired ? "required " : ""}${n.name}: ${n.type}').join(', ')}], '
       'required: $requiredParamCount, '
       'bounds: $typeParamBounds)';
 }

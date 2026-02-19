@@ -138,8 +138,11 @@ class SubtypeChecker {
       return sup.typeArgs.isEmpty;
     }
 
+    // Arity mismatch: mapping should have same length as supertype's type args.
+    if (mapping.length != sup.typeArgs.length) return false;
+
     // Resolve each mapping template using sub's typeArgs as ITA.
-    for (var i = 0; i < mapping.length && i < sup.typeArgs.length; i++) {
+    for (var i = 0; i < mapping.length; i++) {
       final resolved = resolveType(mapping[i], sub.typeArgs, null, registry);
       if (!isSubtypeOf(resolved, sup.typeArgs[i])) return false;
     }

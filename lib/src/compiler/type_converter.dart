@@ -163,6 +163,7 @@ TypeTemplate _convertFunctionType(
             funcParams,
             newStructuralParams,
           ),
+          isRequired: np.isRequired,
         ),
     ],
     requiredParamCount: type.requiredParameterCount,

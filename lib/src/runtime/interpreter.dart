@@ -716,10 +716,21 @@ class DarticInterpreter {
           currentUpvalues = null;
 
           // Advance to callee frame.
+          final callerRBase = rBase;
           vBase = vs.sp;
           rBase = rs.sp;
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
+
+          // Auto-load ITA from caller's `this` (rsp+2) runtimeType_ for
+          // generic classes, so super methods can access class type params.
+          final thisObj = rs.read(callerRBase + 2);
+          if (thisObj is DarticObject) {
+            final rtType = thisObj.runtimeType_;
+            if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
+              rs.write(rBase + 0, rtType.typeArgs);
+            }
+          }
 
           // Switch to callee bytecode.
           code = callee.bytecode;

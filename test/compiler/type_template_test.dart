@@ -116,7 +116,7 @@ void main() {
         returnType: VoidTemplate(),
         positionalParams: [intType],
         namedParams: [
-          (name: 'label', type: stringType),
+          (name: 'label', type: stringType, isRequired: false),
         ],
       );
       expect(fnType.namedParams.length, 1);
@@ -319,7 +319,7 @@ void main() {
           InterfaceTypeTemplate(classId: 0, typeArgs: []),
         ],
         namedParams: [
-          (name: 'label', type: InterfaceTypeTemplate(classId: 1, typeArgs: [])),
+          (name: 'label', type: InterfaceTypeTemplate(classId: 1, typeArgs: []), isRequired: false),
         ],
       );
       final bytes = original.serialize();
