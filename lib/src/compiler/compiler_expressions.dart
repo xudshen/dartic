@@ -167,15 +167,21 @@ extension on DarticCompiler {
   // ── EqualsNull ──
 
   (int, ResultLoc) _compileEqualsNull(ir.EqualsNull expr) {
-    final (refReg, loc) = _compileExpression(expr.expression);
-    assert(loc == ResultLoc.ref,
-        'EqualsNull operand must be on ref stack (got value)');
+    final (reg, loc) = _compileExpression(expr.expression);
     final resultReg = _allocValueReg();
+    if (loc == ResultLoc.value) {
+      // Value-stack operands (int, bool, double) can never be null.
+      // This can happen in CFE-desugared chained `??` where an intermediate
+      // Let variable has non-nullable type but is still tested with EqualsNull.
+      // Just emit LOAD_FALSE — the result is always "not null".
+      _emitter.emit(encodeABC(Op.loadFalse, resultReg, 0, 0));
+      return (resultReg, ResultLoc.value);
+    }
     // EqualsNull always represents `x == null` (no isNot flag).
     // CFE expresses `x != null` as `Not(EqualsNull(x))`.
     // Pattern: LOAD_FALSE -> JUMP_IF_NNULL +1 -> LOAD_TRUE
     _emitter.emit(encodeABC(Op.loadFalse, resultReg, 0, 0));
-    _emitter.emit(encodeAsBx(Op.jumpIfNnull, refReg, 1));
+    _emitter.emit(encodeAsBx(Op.jumpIfNnull, reg, 1));
     _emitter.emit(encodeABC(Op.loadTrue, resultReg, 0, 0));
     return (resultReg, ResultLoc.value);
   }
@@ -1020,6 +1026,35 @@ extension on DarticCompiler {
   }
 
   (int, ResultLoc) _compileAsExpression(ir.AsExpression expr) {
+    // ── Case 1: isUnchecked — CFE type-promotion / extension-type access ──
+    //
+    // CFE inserts AsExpression(isUnchecked=true) when it statically knows the
+    // cast is safe (e.g., extension type representation access, or a promotion
+    // the CFE has already verified). No runtime check is needed — just compile
+    // the operand. If the target type is a value type (int, double, bool) and
+    // the operand is on the ref stack, emit an UNBOX to move it to the value
+    // stack.
+    if (expr.isUnchecked) {
+      var (operandReg, operandLoc) = _compileExpression(expr.operand);
+      final targetKind = _classifyStackKind(expr.type);
+
+      if (targetKind.isValue && operandLoc == ResultLoc.ref) {
+        // Operand is on ref stack but target type is a value type → unbox.
+        final unboxOp =
+            targetKind == StackKind.doubleVal ? Op.unboxDouble : Op.unboxInt;
+        final valReg = _allocValueReg();
+        _emitter.emit(encodeABC(unboxOp, valReg, operandReg, 0));
+        return (valReg, ResultLoc.value);
+      }
+
+      // Otherwise pass through as-is (no CAST needed).
+      return (operandReg, operandLoc);
+    }
+
+    // ── Cases 2 & 3: isTypeError or explicit `as` — emit runtime CAST ──
+    //
+    // Both isTypeError (implicit downcast for assignment compatibility) and
+    // explicit `as` expressions need a runtime type check via CAST.
     var (operandReg, operandLoc) = _compileExpression(expr.operand);
 
     // Box if on value stack -- CAST needs the operand on the ref stack.

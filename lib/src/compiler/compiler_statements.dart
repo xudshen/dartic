@@ -477,17 +477,32 @@ extension on DarticCompiler {
     final (reg, loc) = _compileExpression(expr);
     _emitCloseUpvaluesIfNeeded();
 
-    // Unbox if expression is on ref stack but function returns a value type.
-    // E.g. `Object x = 42; return x as int;` — `as int` stays on ref stack,
-    // but caller expects RETURN_VAL for int return type.
+    // Coerce result between value/ref stacks when they don't match the
+    // function's declared return type.
     final retKind = _classifyStackKind(_currentReturnType);
     if (loc == ResultLoc.ref && retKind.isValue) {
+      // Unbox: expression is on ref stack but function returns a value type.
+      // E.g. `Object x = 42; return x as int;` — `as int` stays on ref stack,
+      // but caller expects RETURN_VAL for int return type.
       final valReg = _valueAlloc.alloc();
       final unboxOp = retKind == StackKind.doubleVal
           ? Op.unboxDouble
           : Op.unboxInt;
       _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
       _emitter.emit(encodeABC(Op.returnVal, valReg, 0, 0));
+    } else if (loc == ResultLoc.value && retKind == StackKind.ref) {
+      // Box: expression is on value stack but function returns a nullable
+      // value type (int?, bool?, double?).  The caller expects RETURN_REF.
+      // E.g. `int? f() => 42;` — literal 42 is on the value stack but the
+      // return type int? requires the ref stack.
+      final refReg = _allocRefReg();
+      final exprType = _inferExprType(expr);
+      if (exprType != null && _isDoubleType(exprType)) {
+        _emitter.emit(encodeABC(Op.boxDouble, refReg, reg, 0));
+      } else {
+        _emitter.emit(encodeABC(Op.boxInt, refReg, reg, 0));
+      }
+      _emitter.emit(encodeABC(Op.returnRef, refReg, 0, 0));
     } else {
       switch (loc) {
         case ResultLoc.value:
