@@ -95,6 +95,27 @@
 
 ---
 
-## Phase 5-6: 待规划
+## Phase 5: 标准库互调 (Ch4) — 进行中
+
+**目标：** 实现跨边界互调层（Ch4），桥接 dart:core 核心类型，通过 co19 LibTest/core 测试 + 历史类别大幅提升
+
+**Task 目录：** [`docs/tasks/phase5/`](phase5/README.md)
+
+| Batch | 描述 | Task 数 | 状态 |
+|-------|------|---------|------|
+| [5.1](phase5/batch-5.1-bridge-infra.md) | Bridge 基础设施 + CALL_HOST 管线 | 5 | |
+| [5.2](phase5/batch-5.2-core-bridges.md) | dart:core 完整桥接 | 6 | |
+| [5.3](phase5/batch-5.3-collections-strings.md) | 集合字面量、字符串插值与回调 | 4 | |
+| [5.4](phase5/batch-5.4-co19-harness-v3.md) | co19 Harness v3 — 验证与回归 | 4 | |
+
+**里程碑：**
+- [ ] co19 `LibTest/core` 通过率 > 30%（~1353 测试）
+- [ ] Bridge 基础类型方法覆盖率：int > 60%、String > 50%、List > 50%、Map > 40%
+- [ ] Phase 2-4 类别零回归（或回归已修复）
+- [ ] Phase 2-4 类别通过率较上期有提升（Bridge 解锁 print/toString/Duration 等）
+
+---
+
+## Phase 6: 待规划
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)

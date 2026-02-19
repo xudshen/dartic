@@ -506,7 +506,7 @@ int main() => add(1, 2); // => 3
 > | B. 先手写 Bridge | Batch 5.2 手写 dart:core 核心类，Generator 延后或不做 | 前期快，但手写维护成本高，覆盖面受限 |
 > | C. 混合 | 手写少量类验证设计，稳定后再抽成 Generator | 务实折中，但有重构成本 |
 >
-> 决策：_(Phase 5 启动前填写)_
+> 决策：**Option C（混合）** — Phase 5 手写所有 dart:core Bridge，提取通用模式到工具函数。BridgeGenerator 延迟到需要 Flutter Bridge 时再建设。理由：dart:core 类型有限（~20 类），手写可控；手写过程发现真实模式，为将来 Generator 提供更好输入。详见 [`docs/tasks/phase5/README.md`](../tasks/phase5/README.md)
 
 ### Batch 5.1: Bridge 基础设施 (Ch4)
 
@@ -704,3 +704,5 @@ review 发现的问题直接修复，修复后重新 review 直到通过。
 - [x] 执行 Phase 3（Batch 3.1 → 3.6，共 24 个 Task）— co19 六类累计 64.4% (2686/4167)，0 回归
 - [x] ~~为 Phase 4 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase4/`](../tasks/phase4/README.md)
 - [x] 执行 Phase 4（Batch 4.1 → 4.4，共 16 个 Task）— co19 Phase 4 五类 53.5% (1834/3426)，全十一类累计 60.1% (4566/7593)，0 回归
+- [x] ~~为 Phase 5 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase5/`](../tasks/phase5/README.md)
+- [ ] 执行 Phase 5（Batch 5.1 → 5.4，共 19 个 Task）
