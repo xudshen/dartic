@@ -202,6 +202,6 @@ feat: support class instantiation, fields, methods, and constructors
 - [x] 3.2.6 getter / setter
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test` 全部通过 (996 tests)
-- [x] commit 已提交 (c38e83a)
+- [x] commit 已提交 (c38e83a, e760b8a)
 - [x] overview.md 已更新
-- [ ] code review 已完成
+- [x] code review 已完成 — 3 issues fixed (null receiver check, IC naming, error message)
