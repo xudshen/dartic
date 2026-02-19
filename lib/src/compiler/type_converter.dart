@@ -116,6 +116,10 @@ TypeTemplate _convert(
 /// (e.g. `T Function<T>(T)`). These are tracked in [structuralParams] so
 /// that [StructuralParameterType] references within the function type body
 /// resolve to the correct index.
+///
+/// When a FunctionType is nested inside another (e.g. `T Function<T>(S Function<S>(T, S))`),
+/// the inner function's structural params are concatenated after the outer ones
+/// so that outer references remain resolvable.
 TypeTemplate _convertFunctionType(
   ir.FunctionType type,
   Map<ir.Class, int> classIdLookup,
@@ -123,14 +127,25 @@ TypeTemplate _convertFunctionType(
   List<ir.TypeParameter>? funcParams,
   List<ir.StructuralParameter>? outerStructuralParams,
 ) {
-  // If the FunctionType introduces its own type parameters, we build a new
-  // structural params list that contains them. Inner references will resolve
-  // against this list.
+  // Concatenate outer + inner structural params so that inner function bodies
+  // can still resolve references to outer type parameters (fix I-2).
   final List<ir.StructuralParameter>? newStructuralParams;
   if (type.typeParameters.isNotEmpty) {
-    newStructuralParams = type.typeParameters;
+    newStructuralParams = [
+      ...?outerStructuralParams,
+      ...type.typeParameters,
+    ];
   } else {
     newStructuralParams = outerStructuralParams;
+  }
+
+  // Convert type parameter bounds for generic function types.
+  final typeParamBounds = <TypeTemplate>[];
+  for (final tp in type.typeParameters) {
+    typeParamBounds.add(
+      _convert(tp.bound, classIdLookup, classParams, funcParams,
+          newStructuralParams),
+    );
   }
 
   return FunctionTypeTemplate(
@@ -159,6 +174,8 @@ TypeTemplate _convertFunctionType(
           ),
         ),
     ],
+    requiredParamCount: type.requiredParameterCount,
+    typeParamBounds: typeParamBounds,
   );
 }
 
@@ -289,7 +306,7 @@ class SuperTypeEntry {
 }
 
 /// Builds [SuperTypeEntry] records for a class's direct supertypes
-/// (extends + implements).
+/// (extends + implements + with).
 ///
 /// Only includes supertypes whose class node is present in [classIdLookup]
 /// (platform classes like `Object` are skipped).
@@ -332,6 +349,26 @@ List<SuperTypeEntry> buildSuperTypeEntries(
         superClassId: ifaceClassId,
         typeArgMapping: [
           for (final arg in iface.typeArguments)
+            dartTypeToTemplate(
+              arg,
+              classIdLookup,
+              enclosingClassTypeParams: cls.typeParameters,
+            ),
+        ],
+      ));
+    }
+  }
+
+  // Process mixin application (with).
+  if (cls.mixedInType != null) {
+    final mixin = cls.mixedInType!;
+    final mixinClassId = classIdLookup[mixin.classNode];
+    if (mixinClassId != null) {
+      entries.add(SuperTypeEntry(
+        subClassId: subClassId,
+        superClassId: mixinClassId,
+        typeArgMapping: [
+          for (final arg in mixin.typeArguments)
             dartTypeToTemplate(
               arg,
               classIdLookup,

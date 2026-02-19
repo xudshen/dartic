@@ -106,6 +106,6 @@ feat(compiler): add TypeTemplate infrastructure for generics
 - [x] 3.6.3 类型参数 bounds 解析与编码
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] commit 已提交 (ffebaee)
+- [x] overview.md 已更新
+- [x] code review 已完成 — 发现 3 个 Important 已修复：I-1 FunctionTypeTemplate 补全 requiredParamCount/typeParamBounds 字段及序列化；I-2 _convertFunctionType 嵌套函数类型 structural params 改为拼接而非替换；I-3 buildSuperTypeEntries 补全 mixedInType 处理

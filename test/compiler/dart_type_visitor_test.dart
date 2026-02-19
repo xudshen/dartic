@@ -459,6 +459,96 @@ void main() {
     });
   });
 
+  group('dartTypeToTemplate — FunctionType with own type params', () {
+    test('generic function type extracts requiredParamCount', () {
+      final intClass = _makeClass('int');
+      final classIdLookup = {intClass: 0};
+      // int Function(int, [int]) — 2 positional, 1 required
+      final fnType = ir.FunctionType(
+        [
+          ir.InterfaceType(intClass, ir.Nullability.nonNullable),
+          ir.InterfaceType(intClass, ir.Nullability.nonNullable),
+        ],
+        ir.InterfaceType(intClass, ir.Nullability.nonNullable),
+        ir.Nullability.nonNullable,
+        requiredParameterCount: 1,
+      );
+      final result = dartTypeToTemplate(fnType, classIdLookup);
+      expect(result, isA<FunctionTypeTemplate>());
+      final ft = result as FunctionTypeTemplate;
+      expect(ft.requiredParamCount, 1);
+      expect(ft.positionalParams.length, 2);
+    });
+
+    test('generic function type extracts typeParamBounds', () {
+      // T Function<T extends num>(T)
+      final numClass = _makeClass('num');
+      final classIdLookup = <ir.Class, int>{numClass: 0};
+      final structParam = ir.StructuralParameter(
+        'T',
+        ir.InterfaceType(numClass, ir.Nullability.nonNullable),
+      );
+      final spType = ir.StructuralParameterType(
+        structParam,
+        ir.Nullability.nonNullable,
+      );
+      final fnType = ir.FunctionType(
+        [spType],
+        spType,
+        ir.Nullability.nonNullable,
+        typeParameters: [structParam],
+      );
+      final result = dartTypeToTemplate(fnType, classIdLookup);
+      expect(result, isA<FunctionTypeTemplate>());
+      final ft = result as FunctionTypeTemplate;
+      expect(ft.typeParamBounds.length, 1);
+      expect(
+        ft.typeParamBounds[0],
+        equals(InterfaceTypeTemplate(classId: 0, typeArgs: [])),
+      );
+    });
+
+    test('nested function type can resolve outer structural params', () {
+      // Outer: T Function<T>(T Function<S>(T, S))
+      // Inner function type references both T (outer) and S (inner)
+      final outerParam = ir.StructuralParameter('T', const ir.DynamicType());
+      final innerParam = ir.StructuralParameter('S', const ir.DynamicType());
+      final outerRef = ir.StructuralParameterType(
+        outerParam,
+        ir.Nullability.nonNullable,
+      );
+      final innerRef = ir.StructuralParameterType(
+        innerParam,
+        ir.Nullability.nonNullable,
+      );
+
+      // Inner: T Function<S>(T, S)
+      final innerFnType = ir.FunctionType(
+        [outerRef, innerRef],
+        outerRef,
+        ir.Nullability.nonNullable,
+        typeParameters: [innerParam],
+      );
+      // Outer: T Function<T>(innerFnType)
+      final outerFnType = ir.FunctionType(
+        [innerFnType],
+        outerRef,
+        ir.Nullability.nonNullable,
+        typeParameters: [outerParam],
+      );
+
+      final result = dartTypeToTemplate(outerFnType, {});
+      expect(result, isA<FunctionTypeTemplate>());
+      final outerFt = result as FunctionTypeTemplate;
+      // The single positional param should be a FunctionTypeTemplate (inner)
+      expect(outerFt.positionalParams[0], isA<FunctionTypeTemplate>());
+      final innerFt = outerFt.positionalParams[0] as FunctionTypeTemplate;
+      // The inner function's return type references T (outer) — should not
+      // be DynamicTemplate (the old fallback for unresolved params).
+      expect(innerFt.returnType, isA<TypeParameterTemplate>());
+    });
+  });
+
   group('dartTypeToTemplate — fallback', () {
     test('unsupported type falls back to DynamicTemplate', () {
       // InvalidType is a convenient way to test the fallback.

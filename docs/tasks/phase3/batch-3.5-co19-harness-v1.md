@@ -175,6 +175,6 @@ feat: co19 harness v1 — integrate expect.dart with class support
 - [x] co19 Language/Classes 通过率 > 40% — 实际 76.8% (649/845)
 - [x] co19 Language/Reference 通过率 > 40% — 实际 81.4% (451/554)
 - [x] Phase 2 类别零回归（或回归已修复） — 0 回归，+78 new pass
-- [ ] commit 已提交
+- [x] commit 已提交 (e7f8a81)
 - [x] overview.md 已更新
 - [x] code review 已完成

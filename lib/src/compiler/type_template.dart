@@ -103,14 +103,28 @@ sealed class TypeTemplate {
     }
 
     // Return type
-    final (returnType, newOffset) = deserialize(data, offset);
-    offset = newOffset;
+    final (returnType, retOffset) = deserialize(data, offset);
+    offset = retOffset;
+
+    // Required param count
+    final requiredParamCount = data[offset++];
+
+    // Type parameter bounds
+    final boundsCount = data[offset++];
+    final typeParamBounds = <TypeTemplate>[];
+    for (var i = 0; i < boundsCount; i++) {
+      final (bound, newOffset) = deserialize(data, offset);
+      typeParamBounds.add(bound);
+      offset = newOffset;
+    }
 
     return (
       FunctionTypeTemplate(
         returnType: returnType,
         positionalParams: positionalParams,
         namedParams: namedParams,
+        requiredParamCount: requiredParamCount,
+        typeParamBounds: typeParamBounds,
       ),
       offset,
     );
@@ -254,7 +268,9 @@ class FunctionTypeTemplate extends TypeTemplate {
     required this.returnType,
     required this.positionalParams,
     required this.namedParams,
-  });
+    int? requiredParamCount,
+    this.typeParamBounds = const [],
+  }) : requiredParamCount = requiredParamCount ?? positionalParams.length;
 
   /// Return type of the function.
   final TypeTemplate returnType;
@@ -264,6 +280,15 @@ class FunctionTypeTemplate extends TypeTemplate {
 
   /// Named parameter descriptors, each with a name and type.
   final List<({String name, TypeTemplate type})> namedParams;
+
+  /// Number of required positional parameters (the rest are optional).
+  /// Defaults to `positionalParams.length` (all required).
+  final int requiredParamCount;
+
+  /// Bounds for the function's own type parameters (generic function types).
+  /// Empty for non-generic function types.
+  /// Example: `T Function<T extends num>(T)` → bounds = [numTemplate].
+  final List<TypeTemplate> typeParamBounds;
 
   @override
   List<int> serialize() {
@@ -288,6 +313,15 @@ class FunctionTypeTemplate extends TypeTemplate {
     // Return type
     result.addAll(returnType.serialize());
 
+    // Required param count
+    result.add(requiredParamCount);
+
+    // Type parameter bounds (generic function types)
+    result.add(typeParamBounds.length);
+    for (final bound in typeParamBounds) {
+      result.addAll(bound.serialize());
+    }
+
     return result;
   }
 
@@ -296,6 +330,8 @@ class FunctionTypeTemplate extends TypeTemplate {
     if (other is! FunctionTypeTemplate) return false;
     if (returnType != other.returnType) return false;
     if (!_listEquals(positionalParams, other.positionalParams)) return false;
+    if (requiredParamCount != other.requiredParamCount) return false;
+    if (!_listEquals(typeParamBounds, other.typeParamBounds)) return false;
     if (namedParams.length != other.namedParams.length) return false;
     for (var i = 0; i < namedParams.length; i++) {
       if (namedParams[i].name != other.namedParams[i].name ||
@@ -310,6 +346,8 @@ class FunctionTypeTemplate extends TypeTemplate {
   int get hashCode {
     var h = returnType.hashCode;
     h = Object.hash(h, Object.hashAll(positionalParams));
+    h = Object.hash(h, requiredParamCount);
+    h = Object.hash(h, Object.hashAll(typeParamBounds));
     for (final named in namedParams) {
       h = Object.hash(h, named.name, named.type);
     }
@@ -320,7 +358,9 @@ class FunctionTypeTemplate extends TypeTemplate {
   String toString() => 'FunctionTypeTemplate('
       'ret: $returnType, '
       'pos: $positionalParams, '
-      'named: [${namedParams.map((n) => '${n.name}: ${n.type}').join(', ')}])';
+      'named: [${namedParams.map((n) => '${n.name}: ${n.type}').join(', ')}], '
+      'required: $requiredParamCount, '
+      'bounds: $typeParamBounds)';
 }
 
 /// Represents a reference to a type parameter, resolved at runtime via

@@ -47,7 +47,7 @@
 
 ---
 
-## Phase 3: 函数与类 — ⏳ 进行中
+## Phase 3: 函数与类 — ✅ 已完成
 
 **目标：** 支持函数进阶（可选参数、闭包）、类（实例化/字段/方法/构造器/继承），通过 co19 harness v1 验证
 
@@ -60,7 +60,7 @@
 | [3.3](phase3/batch-3.3-inheritance.md) | 继承与多态 | 4 | ✅ |
 | [3.4](phase3/batch-3.4-scope-resolution.md) | 作用域与名称解析 | 3 | ✅ |
 | [3.5](phase3/batch-3.5-co19-harness-v1.md) | co19 Harness v1 | 6 | ✅ |
-| [3.6](phase3/batch-3.6-type-template.md) | 泛型编译预备 | 3 | ⏳ |
+| [3.6](phase3/batch-3.6-type-template.md) | 泛型编译预备 | 3 | ✅ |
 
 **里程碑：**
 - [x] co19 `Language/Functions` 通过率 > 50% — 实际 72.2% (135/187)

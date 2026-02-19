@@ -293,92 +293,106 @@ int main() => add(1, 2); // => 3
 
 ### Batch 3.1: 函数进阶
 
-- [ ] 3.1.1 可选参数（位置参数 + 命名参数） → `Language/Functions/`
-- [ ] 3.1.2 默认参数值 → `Language/Functions/`
-- [ ] 3.1.3 闭包 + CLOSURE/CLOSE_UPVALUE 指令 → `Language/Functions/`
-- [ ] 3.1.4 函数作为一等公民（tearoff、传参） → `Language/Functions/`
+- [x] 3.1.1 可选参数（位置参数 + 命名参数） → `Language/Functions/`
+- [x] 3.1.2 默认参数值 → `Language/Functions/`
+- [x] 3.1.3 闭包 + CLOSURE/CLOSE_UPVALUE 指令 → `Language/Functions/`
+- [x] 3.1.4 函数作为一等公民（tearoff、传参） → `Language/Functions/`
 
 **commit:** `feat: support optional params, closures, and first-class functions`
 
 > **核心发现：**
-> _(执行时填写：上值捕获的栈/堆迁移时机、命名参数在 Kernel 中的排列方式等)_
+> - Open/closed upvalue 语义：open upvalue 指向活跃 ref-stack slot 实现变量共享；`CLOSE_UPVALUE` 在作用域退出时将值复制到堆
+> - 嵌套闭包的传递性 upvalue 解析：需要 `isLocal=false` 描述符指向外层闭包的 upvalue 索引，而非祖先帧的寄存器
+> - 值类型装箱：闭包捕获的 int/bool/double 必须通过 BOX 指令提升到 ref stack，因为 upvalue 数组是 `List<Object?>`
 
 ### Batch 3.2: 类基础
 
-- [ ] 3.2.1 类定义、实例化 (NEW_INSTANCE) → `Language/Classes/`
-- [ ] 3.2.2 字段访问 (GET_FIELD_REF/VAL, SET_FIELD_REF/VAL) → `Language/Classes/`
-- [ ] 3.2.3 实例方法调用 (CALL_VIRTUAL + IC) → `Language/Classes/`
-- [ ] 3.2.4 构造器（默认/命名/重定向/工厂） → `Language/Classes/`
-- [ ] 3.2.5 静态方法与静态字段 → `Language/Classes/`
-- [ ] 3.2.6 getter / setter → `Language/Classes/`
+- [x] 3.2.1 类定义、实例化 (NEW_INSTANCE) → `Language/Classes/`
+- [x] 3.2.2 字段访问 (GET_FIELD_REF/VAL, SET_FIELD_REF/VAL) → `Language/Classes/`
+- [x] 3.2.3 实例方法调用 (CALL_VIRTUAL + IC) → `Language/Classes/`
+- [x] 3.2.4 构造器（默认/命名/重定向/工厂） → `Language/Classes/`
+- [x] 3.2.5 静态方法与静态字段 → `Language/Classes/`
+- [x] 3.2.6 getter / setter → `Language/Classes/`
 
 **commit:** `feat: support class instantiation, fields, methods, and constructors`
 
 > **核心发现：**
-> _(执行时填写：IC 单态缓存命中率、字段偏移计算（含继承链）、工厂构造器的 Kernel 表示等)_
+> - Pass 1c 创建占位 FuncProto 到方法表；Pass 2c 必须刷新为已编译的 FuncProto，避免过期引用
+> - `CALL_VIRTUAL` 自动将 receiver 放到 callee 的 rsp+2，减少构造器调用中的显式 MOVE 指令
+> - IC 表条目是 per-function 状态，函数开始时清空；闭包编译通过 `_CompilationContext` 保存/恢复
 
 ### Batch 3.3: 继承与多态
 
-- [ ] 3.3.1 单继承 + super 调用 (CALL_SUPER) → `Language/Classes/`
-- [ ] 3.3.2 方法重写 + 虚分发 → `Language/Classes/`
-- [ ] 3.3.3 抽象类与抽象方法 → `Language/Classes/`
-- [ ] 3.3.4 操作符重载 (EQ_GENERIC 等) → `Language/Classes/`
+- [x] 3.3.1 单继承 + super 调用 (CALL_SUPER) → `Language/Classes/`
+- [x] 3.3.2 方法重写 + 虚分发 → `Language/Classes/`
+- [x] 3.3.3 抽象类与抽象方法 → `Language/Classes/`
+- [x] 3.3.4 操作符重载 (EQ_GENERIC 等) → `Language/Classes/`
 
 **commit:** `feat: support inheritance, override, and operator overloading`
 
 > **核心发现：**
-> _(执行时填写：虚方法表结构选择、super 调用的 Kernel interfaceTarget 行为等)_
+> - 编译期扁平化方法表（Strategy B）：子类方法表包含所有继承+重写方法，IC miss 时 O(1) 查找无需运行时遍历超类链
+> - 用户定义的操作符（+、-、[]、== 等）自然路由到 `_compileInstanceInvocation` → 跳过 int/double 快速路径 → `CALL_VIRTUAL`，仅 `operator==` 需要通过 EqualsCall 节点特殊处理
+> - `_inferExprType` 闭包捕获 `_classInfos` 列表引用，单模块模型下安全（多模块需重新评估）
 
 ### Batch 3.4: 作用域与名称解析
 
-- [ ] 3.4.1 块级作用域变量遮蔽 → `Language/Reference/`
-- [ ] 3.4.2 库导入/导出与可见性 → `Language/Libraries_and_Scripts/`
-- [ ] 3.4.3 this / super 引用 → `Language/Reference/`
+- [x] 3.4.1 块级作用域变量遮蔽 → `Language/Reference/`
+- [x] 3.4.2 库导入/导出与可见性 → `Language/Libraries_and_Scripts/`
+- [x] 3.4.3 this / super 引用 → `Language/Reference/`
 
 **commit:** `feat: support scoping, imports/exports, and name resolution`
 
 > **核心发现：**
-> _(执行时填写：Kernel 中已解析的名称与原始作用域的差异、多库编译的模块化策略等)_
+> - 变量别名 bug：`declareWithReg` 将 `int b = a;` 绑定到源变量寄存器导致共享修改；修复：分配独立寄存器并 emit MOVE
+> - 多库编译零成本：编译器已遍历所有非平台库的全部 Pass（1a-2c）；Kernel CFE 将所有 import 合并到单个 .dill，跨库引用正确解析到分配的 funcId/classId
+> - this/super 表达式完全正确：22 个 e2e 测试无需修改产品代码即通过
 
 ### Batch 3.5: co19 Harness v1 — 接入 expect.dart（类已就绪）
 
 > **此时类已就绪**，可以编译 `class Expect` 和 `class ExpectException`。从 shim 切到真正的 co19 expect.dart。
 
-- [ ] 3.5.1 编译 `Utils/expect.dart`（class Expect + class ExpectException + 基础断言） → 扩展 compiler
-- [ ] 3.5.2 相对路径 import 解析（`../../Utils/expect.dart`） → 扩展 compiler
-- [ ] 3.5.3 多文件测试支持（library 声明 + import 其他测试文件的解析与编译） → 扩展 compiler + co19_runner
-- [ ] 3.5.4 工厂模式测试支持（`test(Factory create)` 回调模式） → 扩展 co19_runner
-- [ ] 3.5.5 验证：跑 Language/Functions + Classes + Reference（新增类别） → 测试报告
-- [ ] 3.5.6 回归跑：重跑 Phase 2 全部类别（现在用真正的 expect.dart），diff 快照 → 回归报告
+- [x] 3.5.1 编译 `Utils/expect.dart`（class Expect + class ExpectException + 基础断言） → 扩展 compiler
+- [x] 3.5.2 相对路径 import 解析（`../../Utils/expect.dart`） → 扩展 compiler
+- [x] 3.5.3 多文件测试支持（library 声明 + import 其他测试文件的解析与编译） → 扩展 compiler + co19_runner
+- [x] 3.5.4 工厂模式测试支持（`test(Factory create)` 回调模式） → 扩展 co19_runner
+- [x] 3.5.5 验证：跑 Language/Functions + Classes + Reference（新增类别） → 测试报告
+- [x] 3.5.6 回归跑：重跑 Phase 2 全部类别（现在用真正的 expect.dart），diff 快照 → 回归报告
 
 **commit:** `feat: co19 harness v1 — integrate expect.dart with class support`
 
 > **核心发现：**
-> _(执行时填写：expect.dart 对 dart:async 的 import 如何处理（stub？忽略？）、expect.dart 的实际方法依赖链等)_
+> - 简化 expect.dart 策略：去除 `implements Exception`、`dart:async`、泛型、字符串插值等 Phase 3 不支持特性
+> - 跨帧异常展开：THROW/RETHROW 需循环弹出帧并搜索 caller 的 exception table，直到找到 handler 或回到 entry frame
+> - noSuchMethod forwarder：CFE 为含 `noSuchMethod` 覆写的类自动生成 synthetic forwarder，其方法体使用 `_InvocationMirror._withType` 等平台内部 API，dartic 无法编译。需 `proc.isNoSuchMethodForwarder` 检测 + 自定义字节码生成（~54 个 co19 测试受影响，Phase 4/5 不会自动修复）
+> - Phase 2 零回归，+78 新通过（53.2% → 56.2%），新通过主要来自 Expressions 类/闭包相关测试
 
 ### Batch 3.6: 泛型编译预备（为 Phase 4 铺路）
 
 > Phase 4 需要 Ch6 泛型，而 Ch6 依赖 Ch5 编译器能生成 TypeTemplate。此 batch 在 Phase 3 末尾为编译器补充类型信息基础设施。
 
-- [ ] 3.6.1 TypeTemplate 数据结构定义（类型参数、bounds、SuperTypeMap 骨架） → `lib/src/compiler/type_template.dart`
-- [ ] 3.6.2 编译器中 Kernel DartType 遍历框架（为 Phase 4 泛型编译做准备） → 扩展 `compiler.dart`
-- [ ] 3.6.3 类型参数 bounds 解析与编码 → 扩展 `type_template.dart`
+- [x] 3.6.1 TypeTemplate 数据结构定义（类型参数、bounds、SuperTypeMap 骨架） → `lib/src/compiler/type_template.dart`
+- [x] 3.6.2 编译器中 Kernel DartType 遍历框架（为 Phase 4 泛型编译做准备） → 扩展 `compiler.dart`
+- [x] 3.6.3 类型参数 bounds 解析与编码 → 扩展 `type_template.dart`
 
 **commit:** `feat(compiler): add TypeTemplate infrastructure for generics`
 
 > **核心发现：**
-> _(执行时填写：Kernel 中 DartType 的具体子类型结构、TypeTemplate 序列化格式选择等)_
+> - `dartTypeToTemplate` 递归遍历 Kernel DartType 树，独立为 `type_converter.dart` 模块，复用于 bounds 和 supertype 转换
+> - Kernel 默认 bound 是 `DynamicType`（非 `Object?`），直接映射为 `DynamicTemplate`
+> - `SuperTypeEntry` 持有 subClassId/superClassId/typeArgMapping，为 Phase 4 的 isSubtypeOf 规则 11-12 提供编译期预计算数据
+> - 自引用 bound（如 `T extends Comparable<T>`）正确编码为 `InterfaceTypeTemplate(classId, [TypeParameterTemplate(0, ITA)])`
 
-### Phase 3 里程碑验证
+### Phase 3 里程碑验证 ✅
 
-- [ ] co19 `Language/Functions` 通过率 > 50%
-- [ ] co19 `Language/Classes` 基础子集通过率 > 40%
-- [ ] co19 `Language/Reference` 通过率 > 40%
-- [ ] Phase 2 类别零回归（或回归已修复）
-- [ ] Phase 2 类别通过率较上期有提升（记录新增 pass 数）
+- [x] co19 `Language/Functions` 通过率 > 50% — 实际 72.2% (135/187)
+- [x] co19 `Language/Classes` 基础子集通过率 > 40% — 实际 76.8% (649/845)
+- [x] co19 `Language/Reference` 通过率 > 40% — 实际 81.4% (451/554)
+- [x] Phase 2 类别零回归（或回归已修复） — 0 回归
+- [x] Phase 2 类别通过率较上期有提升 — 53.2% → 56.2% (+78 new pass)
 
-**实际通过率：** _(执行时填写)_
-**Phase 2 回归：** _(执行时填写：回归数 / 新增 pass 数)_
+**实际通过率：** Functions 72.2% / Classes 76.8% / Reference 81.4% / Phase 3 新增三类合计 78.0% (1235/1586)
+**Phase 2 回归：** 0 回归 / +78 new pass / 全六类累计 64.4% (2686/4167)
 
 ---
 
@@ -618,7 +632,7 @@ int main() => add(1, 2); // => 3
 |-------|----------|----------|----------|---------|------------|------------|------|------|
 | 1 | （手工测试，无 co19） | — | 0 | — | 0 | 0 | | |
 | 2 | Variables + Expressions + Statements | 2,581 | ~1,000 | — | ~1,000 | ~700 | 1,373 | 0 |
-| 3 | Functions + Classes + Reference | ~1,600 | ~1,000 | ~300 | ~2,300 | ~1,700 | | |
+| 3 | Functions + Classes + Reference | 1,586 | 1,235 | +78 | ~2,300 | ~1,700 | 2,686 | 0 |
 | 4 | Generics + Mixins + TypeSystem | ~3,200 | ~1,500 | ~700 | ~4,500 | ~3,200 | | |
 | 5 | LibTest/core + 集合/字符串特性 | ~1,100 | ~600 | ~400 | ~5,500 | ~4,000 | | |
 | 6 | Async + LanguageFeatures | ~2,300 | ~1,500 | ~500 | ~7,500 | ~5,500 | | |
@@ -666,3 +680,5 @@ review 发现的问题直接修复，修复后重新 review 直到通过。
 - [x] ~~为 Phase 2 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase2/`](../tasks/phase2/README.md)
 - [x] 执行 Phase 2（Batch 2.1 → 2.4，共 21 个 Task）— co19 总计 53.2% (1373/2581)
 - [x] ~~为 Phase 3 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase3/`](../tasks/phase3/README.md)
+- [x] 执行 Phase 3（Batch 3.1 → 3.6，共 24 个 Task）— co19 六类累计 64.4% (2686/4167)，0 回归
+- [ ] 为 Phase 4 编写 Task 文件

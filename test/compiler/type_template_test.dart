@@ -124,6 +124,42 @@ void main() {
       expect(fnType.namedParams[0].type, equals(stringType));
     });
 
+    test('function with requiredParamCount', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      // int Function(int, [int]) — 2 positional, 1 required
+      final fnType = FunctionTypeTemplate(
+        returnType: intType,
+        positionalParams: [intType, intType],
+        namedParams: [],
+        requiredParamCount: 1,
+      );
+      expect(fnType.requiredParamCount, 1);
+    });
+
+    test('function with typeParamBounds (generic function type)', () {
+      // T Function<T extends num>(T) — 1 type param with bound
+      final numType = InterfaceTypeTemplate(classId: 1, typeArgs: []);
+      final typeParam = TypeParameterTemplate(index: 0, isFunctionTypeParam: true);
+      final fnType = FunctionTypeTemplate(
+        returnType: typeParam,
+        positionalParams: [typeParam],
+        namedParams: [],
+        typeParamBounds: [numType],
+      );
+      expect(fnType.typeParamBounds.length, 1);
+      expect(fnType.typeParamBounds[0], equals(numType));
+    });
+
+    test('requiredParamCount defaults to positionalParams.length', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final fnType = FunctionTypeTemplate(
+        returnType: VoidTemplate(),
+        positionalParams: [intType, intType],
+        namedParams: [],
+      );
+      expect(fnType.requiredParamCount, 2);
+    });
+
     test('equality', () {
       final a = FunctionTypeTemplate(
         returnType: VoidTemplate(),
@@ -290,6 +326,26 @@ void main() {
       final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);
       expect(deserialized, equals(original));
       expect(offset, bytes.length);
+    });
+
+    test('FunctionTypeTemplate roundtrip with requiredParamCount and typeParamBounds', () {
+      final numType = InterfaceTypeTemplate(classId: 1, typeArgs: []);
+      final tpRef = TypeParameterTemplate(index: 0, isFunctionTypeParam: true);
+      final original = FunctionTypeTemplate(
+        returnType: tpRef,
+        positionalParams: [tpRef, InterfaceTypeTemplate(classId: 0, typeArgs: [])],
+        namedParams: [],
+        requiredParamCount: 1,
+        typeParamBounds: [numType],
+      );
+      final bytes = original.serialize();
+      final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);
+      expect(deserialized, equals(original));
+      expect(offset, bytes.length);
+      final ft = deserialized as FunctionTypeTemplate;
+      expect(ft.requiredParamCount, 1);
+      expect(ft.typeParamBounds.length, 1);
+      expect(ft.typeParamBounds[0], equals(numType));
     });
 
     test('TypeParameterTemplate roundtrip (ITA)', () {

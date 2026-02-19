@@ -311,6 +311,42 @@ void main() {
       );
     });
 
+    test('class with mixin (mixedInType) generates entry', () {
+      // class Base {}
+      // class Mixin<T> {}
+      // class Foo extends Base with Mixin<int> {}
+      final intClass = _makeClass('int');
+      final baseClass = _makeClass('Base');
+      final typeParamT = ir.TypeParameter('T', const ir.DynamicType());
+      final mixinClass = _makeClass('Mixin', typeParameters: [typeParamT]);
+      final fooClass = _makeClass('Foo');
+
+      fooClass.supertype = ir.Supertype(baseClass, const []);
+      fooClass.mixedInType = ir.Supertype(
+        mixinClass,
+        [ir.InterfaceType(intClass, ir.Nullability.nonNullable)],
+      );
+
+      final classIdLookup = <ir.Class, int>{
+        intClass: 0,
+        baseClass: 1,
+        mixinClass: 2,
+        fooClass: 3,
+      };
+
+      final entries = buildSuperTypeEntries(fooClass, classIdLookup);
+
+      // Should have entries for Base (super) and Mixin (mixin)
+      expect(entries.length, 2);
+      final mixinEntry = entries.firstWhere((e) => e.superClassId == 2);
+      expect(mixinEntry.subClassId, 3);
+      expect(mixinEntry.typeArgMapping.length, 1);
+      expect(
+        mixinEntry.typeArgMapping[0],
+        equals(InterfaceTypeTemplate(classId: 0, typeArgs: [])),
+      );
+    });
+
     test('class with no supertype (no known superclass) has empty entries', () {
       // A class whose supertype is Object (platform class, not in classIdLookup)
       final cls = _makeClass('Standalone');
