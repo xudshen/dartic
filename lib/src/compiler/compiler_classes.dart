@@ -10,7 +10,34 @@ extension on DarticCompiler {
   /// Inheritance: child class field offsets start after parent's field counts.
   /// superClassId is resolved if the parent is a user-defined class (not a
   /// platform class like Object).
+  ///
+  /// Handles dependency ordering: if the superclass or implemented types have
+  /// not been registered yet (e.g., anonymous mixin classes that appear later
+  /// in the Kernel class list), they are registered recursively first.
   void _registerClass(ir.Class cls) {
+    // Skip if already registered (avoids double registration from recursive
+    // dependency resolution).
+    if (_classToClassId.containsKey(cls)) return;
+
+    // Ensure superclass is registered first (critical for anonymous mixin
+    // classes that may appear after the classes that use them in the Kernel
+    // class list).
+    final superClass = cls.superclass;
+    if (superClass != null &&
+        !_classToClassId.containsKey(superClass) &&
+        !_isPlatformLibrary(superClass.enclosingLibrary)) {
+      _registerClass(superClass);
+    }
+
+    // Ensure implemented types (interfaces / mixin types) are registered.
+    for (final implemented in cls.implementedTypes) {
+      final implClass = implemented.classNode;
+      if (!_classToClassId.containsKey(implClass) &&
+          !_isPlatformLibrary(implClass.enclosingLibrary)) {
+        _registerClass(implClass);
+      }
+    }
+
     final classId = _classInfos.length;
     _classToClassId[cls] = classId;
 
@@ -19,7 +46,6 @@ extension on DarticCompiler {
     var inheritedValFields = 0;
     var superClassId = -1;
 
-    final superClass = cls.superclass;
     if (superClass != null && _classToClassId.containsKey(superClass)) {
       superClassId = _classToClassId[superClass]!;
       final superInfo = _classInfos[superClassId];
@@ -142,6 +168,24 @@ extension on DarticCompiler {
       namedParams: fn.namedParameters,
     );
 
+    // Compile implicit field initializers: fields with initializer expressions
+    // that are NOT explicitly listed as FieldInitializer in the constructor.
+    // In Kernel, `int x = 10;` on a field declaration may not generate an
+    // explicit FieldInitializer in the constructor's initializer list. These
+    // must be compiled before the explicit initializers.
+    final explicitFields = <ir.Field>{};
+    for (final init in ctor.initializers) {
+      if (init is ir.FieldInitializer) explicitFields.add(init.field);
+    }
+    final enclosingClass = ctor.enclosingClass;
+    for (final field in enclosingClass.fields) {
+      if (field.isStatic) continue;
+      if (explicitFields.contains(field)) continue;
+      if (field.initializer == null) continue;
+      // Compile the field-level initializer directly.
+      _compileFieldInit(field, field.initializer!);
+    }
+
     // Process initializers in declaration order.
     for (final init in ctor.initializers) {
       if (init is ir.FieldInitializer) {
@@ -190,7 +234,15 @@ extension on DarticCompiler {
   /// Emits SET_FIELD_REF or SET_FIELD_VAL to write the initializer value
   /// into the appropriate field of `this` (at rsp+2).
   void _compileFieldInitializer(ir.FieldInitializer init) {
-    final field = init.field;
+    _compileFieldInit(init.field, init.value);
+  }
+
+  /// Compiles a field initialization for [field] with the given [value]
+  /// expression.
+  ///
+  /// Shared by explicit [FieldInitializer] and implicit field-level
+  /// initializers (e.g., `int x = 10;` on field declarations).
+  void _compileFieldInit(ir.Field field, ir.Expression value) {
     final cls = field.enclosingClass!;
     final layouts = _instanceFieldLayouts[cls];
     if (layouts == null) {
@@ -201,7 +253,7 @@ extension on DarticCompiler {
       throw StateError('Field layout not found for ${field.name}');
     }
 
-    final (valReg, valLoc) = _compileExpression(init.value);
+    final (valReg, valLoc) = _compileExpression(value);
     const thisReg = 2; // rsp+2 on the ref stack
 
     if (layout.kind.isValue) {
@@ -217,7 +269,7 @@ extension on DarticCompiler {
     } else {
       int srcReg = valReg;
       if (valLoc == ResultLoc.value) {
-        srcReg = _emitBoxToRef(valReg, _inferExprType(init.value));
+        srcReg = _emitBoxToRef(valReg, _inferExprType(value));
       }
       _emitter.emit(encodeABC(Op.setFieldRef, thisReg, srcReg, layout.offset));
     }
