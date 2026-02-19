@@ -97,7 +97,10 @@ TypeTemplate _convert(
       _resolveStructuralParam(type.parameter, structuralParams),
     ir.IntersectionType() => _convert(
         type.right, classIdLookup, classParams, funcParams, structuralParams),
-    _ => const DynamicTemplate(), // Fallback for unsupported types
+    _ => throw UnsupportedError(
+        'Unsupported DartType for type template conversion: '
+        '${type.runtimeType}',
+      )
   };
 }
 

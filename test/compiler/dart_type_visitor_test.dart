@@ -550,10 +550,12 @@ void main() {
   });
 
   group('dartTypeToTemplate — fallback', () {
-    test('unsupported type falls back to DynamicTemplate', () {
+    test('unsupported type throws UnsupportedError', () {
       // InvalidType is a convenient way to test the fallback.
-      final result = dartTypeToTemplate(const ir.InvalidType(), {});
-      expect(result, equals(const DynamicTemplate()));
+      expect(
+        () => dartTypeToTemplate(const ir.InvalidType(), {}),
+        throwsUnsupportedError,
+      );
     });
   });
 
