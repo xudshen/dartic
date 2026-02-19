@@ -146,7 +146,7 @@ feat: co19 harness v2 — experiment flags and type error tests
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test` 全部通过
 - [x] 零回归（或回归已修复）
-- [ ] commit 已提交
+- [x] commit 已提交
 - [x] overview.md 已更新
 - [x] development-roadmap.md Phase 4 里程碑已更新
-- [ ] code review 已完成
+- [x] code review 已完成（零问题，3 个 nice-to-have 建议均无需修改）

@@ -28,27 +28,28 @@
 | [4.3](batch-4.3-type-system.md) | batch-4.3-type-system.md | 3 | Batch 4.2 |
 | [4.4](batch-4.4-co19-harness-v2.md) | batch-4.4-co19-harness-v2.md | 4 | Batch 4.1-4.3 |
 
-## 里程碑验证
+## 里程碑验证 ✅
 
-- [ ] co19 `Language/Generics` 通过率 > 50%
-- [ ] co19 `Language/Mixins` 通过率 > 50%
-- [ ] co19 `Language/Interfaces` 通过率 > 50%
-- [ ] co19 `TypeSystem/subtyping` 核心子集通过率 > 30%
-- [ ] co19 `LanguageFeatures/Class-modifiers` 通过率 > 30%（约 60% 为负面测试）
-- [ ] Phase 2-3 类别零回归（或回归已修复）
-- [ ] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）
+- [x] co19 `Language/Generics` 通过率 > 50% — 实际 73.3% (143/195)
+- [x] co19 `Language/Mixins` 通过率 > 50% — 实际 69.2% (99/143)
+- [x] co19 `Language/Interfaces` 通过率 > 50% — 实际 80.0% (80/100)
+- [x] co19 `TypeSystem/subtyping` 核心子集通过率 > 30% — 实际 49.4% (1345/2721)
+- [x] co19 `LanguageFeatures/Class-modifiers` 通过率 > 30%（约 60% 为负面测试）— 实际 62.5% (167/267)
+- [x] Phase 2-3 类别零回归（或回归已修复） — 0 回归
+- [x] Phase 2-3 类别通过率较上期有提升（泛型解锁大量之前的类型相关测试）— +46 new pass, 64.5% → 65.6%
 
-## co19 测试范围
+## co19 测试范围与实际结果
 
-| 类别 | 目录 | 预估测试数 | 说明 |
-|------|------|-----------|------|
-| Generics | `Language/Generics/` | ~195 | 泛型类/方法/参数/FutureOr |
-| Mixins | `Language/Mixins/` | ~143 | Mixin 声明/应用/类 |
-| Interfaces | `Language/Interfaces/` | ~100 | 接口层次/成员签名/覆写 |
-| TypeSystem/subtyping | `TypeSystem/subtyping/` | ~2,821 | 静态/动态子类型检查（占比最大） |
-| Class-modifiers | `LanguageFeatures/Class-modifiers/` | ~267 | sealed/base/final/interface |
-| **Phase 4 新增合计** | | **~3,526** | |
-| Phase 2-3 历史类别 | | ~4,167 | 回归检测 + 历史提升 |
+| 类别 | 目录 | 测试数 | 通过 | 通过率 | 目标 |
+|------|------|--------|------|--------|------|
+| Generics | `Language/Generics/` | 195 | 143 | 73.3% | >50% ✅ |
+| Mixins | `Language/Mixins/` | 143 | 99 | 69.2% | >50% ✅ |
+| Interfaces | `Language/Interfaces/` | 100 | 80 | 80.0% | >50% ✅ |
+| TypeSystem/subtyping | `TypeSystem/subtyping/` | 2,721 | 1,345 | 49.4% | >30% ✅ |
+| Class-modifiers | `LanguageFeatures/Class-modifiers/` | 267 | 167 | 62.5% | >30% ✅ |
+| **Phase 4 新增合计** | | **3,426** | **1,834** | **53.5%** | |
+| Phase 2-3 历史类别 | | 4,167 | 2,732 | 65.6% | 0 回归 ✅ |
+| **全部累计** | | **7,593** | **4,566** | **60.1%** | |
 
 ## 执行节奏
 

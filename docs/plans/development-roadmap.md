@@ -404,41 +404,55 @@ int main() => add(1, 2); // => 3
 
 **里程碑：** 支持泛型类/方法、mixin、sealed class、子类型检查
 
-### Batch 4.1: Mixin 与接口
+### Batch 4.1: Mixin 与接口 ✅
 
-- [ ] 4.1.1 implements 接口契约 → `Language/Interfaces/`
-- [ ] 4.1.2 mixin / mixin class / with → `Language/Mixins/`
-- [ ] 4.1.3 sealed / base / final class modifiers → `LanguageFeatures/Class-modifiers/`
+- [x] 4.1.1 implements 接口契约 → `Language/Interfaces/`
+- [x] 4.1.2 mixin / mixin class / with → `Language/Mixins/`
+- [x] 4.1.3 sealed / base / final class modifiers → `LanguageFeatures/Class-modifiers/`
 
 **commit:** `feat: support interfaces, mixins, and class modifiers`
 
 > **核心发现：**
-> _(执行时填写：mixin 线性化的 Kernel 表示、sealed class 在运行时的检查机制等)_
+> - Kernel 匿名 mixin 类使用 `implementedTypes`（非 `mixedInType`）引用 mixin 类型，`mixedInType` 为 null，CFE 已将方法/字段内联
+> - Kernel 类列表顺序不保证拓扑排序，`_registerClass` 改为递归注册确保依赖先于被依赖者
+> - Mixin 字段初始化器是 `Field.initializer` 表达式而非构造器的 `FieldInitializer`
+> - Dart 3 类修饰符（sealed/base/final/interface）由 CFE 强制编译时限制，运行时无需额外检查
+> - Super 调用在 mixin 中通过 Kernel 的 `SuperMethodInvocation.interfaceTarget` 自动解析到线性化链
 
-### Batch 4.2: 泛型核心 (Ch6)
+### Batch 4.2: 泛型核心 (Ch6) ✅
 
-- [ ] 4.2.1 DarticType 数据结构 + 驻留表 → `lib/src/runtime/dartic_type.dart`, `lib/src/runtime/type_registry.dart`
-- [ ] 4.2.2 ITA/FTA 槽位 + PUSH_ITA/PUSH_FTA → Ch6 指令实现
-- [ ] 4.2.3 INSTANTIATE_TYPE + 类型参数传递 → Ch6 指令实现
-- [ ] 4.2.4 INSTANCEOF/CAST 子类型检查 → `Language/Generics/`
-- [ ] 4.2.5 泛型类编译 → `Language/Generics/`
-- [ ] 4.2.6 泛型方法编译 → `Language/Generics/`
+- [x] 4.2.1 DarticType 数据结构 + 驻留表 → `lib/src/runtime/dartic_type.dart`, `lib/src/runtime/type_registry.dart`
+- [x] 4.2.2 ITA/FTA 槽位 + PUSH_ITA/PUSH_FTA → Ch6 指令实现
+- [x] 4.2.3 INSTANTIATE_TYPE + 类型参数传递 → Ch6 指令实现
+- [x] 4.2.4 INSTANCEOF/CAST 子类型检查 → `Language/Generics/`
+- [x] 4.2.5 泛型类编译 → `Language/Generics/`
+- [x] 4.2.6 泛型方法编译 → `Language/Generics/`
 
 **commit:** `feat(generics): add reified generics with DarticType residency`
 
 > **核心发现：**
-> _(执行时填写：类型驻留表的哈希策略、ITA/FTA 在闭包中的传递、延迟实例化的触发条件等)_
+> - TypeRegistry 初始 64 桶 bucket-hash，常用基本类型预注册，命中率高
+> - ITA 在 CALL_VIRTUAL 解释器中自动从 `receiver.runtimeType_.typeArgs` 加载到 rsp+0，零 bytecode 膨胀
+> - FTA 通过 `INSTANTIATE_TYPE` + `CREATE_TYPE_ARGS` 组装，复用已有 arg move 机制
+> - `_classToClassId` vs `_typeClassIdLookup` 分离，避免 core type classIds 污染编译器决策
+> - TypeParameterType 解析需同时传递 `_currentClassTypeParams` (ITA) 和 `_currentFunctionTypeParams` (FTA)
+> - 泛型类字段的 operator dispatch：`_inferExprType` 改用 Kernel 预计算字段（`expr.resultType`/`expr.functionType.returnType`）
+> - SubtypeChecker Phase 1 实现规则 1-6, 11-12，函数类型和 FutureOr 留 Batch 4.3
 
-### Batch 4.3: 类型系统
+### Batch 4.3: 类型系统 ✅
 
-- [ ] 4.3.1 子类型检查算法实现 → `TypeSystem/subtyping/` 核心子集
-- [ ] 4.3.2 空安全类型检查（T? / T / Null） → 实现空安全运行时支持（`LanguageFeatures/nnbd/` 作为后续验证参考，不纳入 Phase 4 co19 主验证范围）
-- [ ] 4.3.3 Flow analysis 类型提升（type promotion） → 编译 CFE 类型提升节点（`TypeSystem/flow-analysis/` 作为后续验证参考，不纳入 Phase 4 co19 主验证范围）
+- [x] 4.3.1 子类型检查算法实现 → `TypeSystem/subtyping/` 核心子集
+- [x] 4.3.2 空安全类型检查（T? / T / Null） → 实现空安全运行时支持（`LanguageFeatures/nnbd/` 作为后续验证参考，不纳入 Phase 4 co19 主验证范围）
+- [x] 4.3.3 Flow analysis 类型提升（type promotion） → 编译 CFE 类型提升节点（`TypeSystem/flow-analysis/` 作为后续验证参考，不纳入 Phase 4 co19 主验证范围）
 
 **commit:** `feat: support subtype checking, null safety, and type promotion`
 
 > **核心发现：**
-> _(执行时填写：子类型算法的递归深度问题、FutureOr<T> 特殊处理、type promotion 是否需运行时支持等)_
+> - FutureOr-to-FutureOr 子类型需在规则 7 增加特殊处理（直接检查 `S <: T`），设计文档规则 7-8 不能直接推导
+> - 设计文档测试用例错误：规则 9 的 `int Function(String) <: num Function(Object)` 实际为 false（参数逆变）
+> - CFE 类型提升使用 `VariableGet.promotedType`，不使用 `AsExpression`
+> - EqualsNull value-stack 操作数需特殊处理：CFE 链式 `??` 降糖产生的内层 `EqualsNull` 操作数已在 value 栈
+> - nullable value-type return boxing：返回类型为 `int?`（ref 栈）但表达式为 value 栈值时需 box
 
 ### Batch 4.4: co19 Harness v2 — 实验标志与类型负面测试 ✅
 
