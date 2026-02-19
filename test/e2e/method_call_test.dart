@@ -61,7 +61,7 @@ Object main() => _test();
       final interp = DarticInterpreter();
       interp.execute(module);
       // Result flows through RETURN_REF → CALL_STATIC → r3
-      expect(interp.refStack.read(3), 'hello');
+      expect(interp.entryResult, 'hello');
     });
 
     test('multiple calls on same object (IC hit)', () async {

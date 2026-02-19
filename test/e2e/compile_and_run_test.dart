@@ -75,6 +75,17 @@ int main() => mod(17, 5);
 ''');
       expect(result, 2);
     });
+
+    test('direct expression in main returns correct result', () async {
+      // Regression: result register must be encoded in HALT, not hardcoded to 0.
+      final result = await _compileAndRun('int main() => 1 + 2;');
+      expect(result, 3);
+    });
+
+    test('direct string return in main', () async {
+      final result = await _compileAndRun("String main() => 'hello';");
+      expect(result, 'hello');
+    });
   });
 }
 
@@ -82,22 +93,14 @@ int main() => mod(17, 5);
 ///
 /// The source should define `int main() => expr;` where expr evaluates to
 /// an int. The result is read from the root frame's value stack after HALT.
-Future<int> _compileAndRun(String source) async {
+Future<Object?> _compileAndRun(String source) async {
   final module = await compileDart(source);
   return _executeAndReadResult(module);
 }
 
-/// Executes a module and reads the int result from the root frame.
-///
-/// After HALT, the interpreter restores sp to vBase. The result of
-/// main's return expression is in the first value register.
-int _executeAndReadResult(DarticModule module) {
+/// Executes a module and returns the entry result via [DarticInterpreter.entryResult].
+Object? _executeAndReadResult(DarticModule module) {
   final interp = DarticInterpreter();
   interp.execute(module);
-
-  // main's return expression is compiled to a value register. After HALT,
-  // vs.sp is reset to vBase (0 for root frame). The result is in the
-  // register where the return expression was compiled — typically v0
-  // for simple cases. We read v0 directly.
-  return interp.valueStack.readInt(0);
+  return interp.entryResult;
 }

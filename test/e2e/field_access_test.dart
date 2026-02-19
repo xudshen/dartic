@@ -18,7 +18,7 @@ Object main() => Named('hello');
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       // Verify the ref field was set by the constructor.
       expect(obj.refFields[0], 'hello');
     });
@@ -91,7 +91,7 @@ Object main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       expect(obj.refFields[0], 'new');
     });
 
@@ -113,7 +113,7 @@ Object main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       expect(obj.refFields[0], 'Bob');
       expect(obj.valueFields[0], 31);
     });

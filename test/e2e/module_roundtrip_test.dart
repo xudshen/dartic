@@ -109,7 +109,7 @@ int main() => 42;
 
 /// Full pipeline: Dart source → .dill → compile → serialize → deserialize →
 /// execute → return main's int result.
-Future<int> _compileSerializeDeserializeRun(String source) async {
+Future<Object?> _compileSerializeDeserializeRun(String source) async {
   final module = await compileDart(source);
   final restored = _roundtrip(module);
   return _executeAndReadResult(restored);
@@ -121,9 +121,9 @@ DarticModule _roundtrip(DarticModule module) {
   return DarticDeserializer().deserialize(bytes);
 }
 
-/// Executes a module and reads the int result from the root frame.
-int _executeAndReadResult(DarticModule module) {
+/// Executes a module and returns the entry result via [DarticInterpreter.entryResult].
+Object? _executeAndReadResult(DarticModule module) {
   final interp = DarticInterpreter();
   interp.execute(module);
-  return interp.valueStack.readInt(0);
+  return interp.entryResult;
 }

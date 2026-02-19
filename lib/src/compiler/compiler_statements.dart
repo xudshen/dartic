@@ -481,11 +481,25 @@ extension on DarticCompiler {
   void _compileReturnStatement(ir.ReturnStatement stmt) {
     final expr = stmt.expression;
     if (_isEntryFunction) {
-      // Entry function: compile expression (if any), then HALT terminates.
+      // Entry function: encode result register and type in HALT ABC fields.
+      // B field: 0=void, 1=int, 2=double, 3=ref (StackKind.index + 1).
       if (expr != null) {
-        _compileExpression(expr);
+        final (reg, loc) = _compileExpression(expr);
+        final StackKind kind;
+        if (loc == ResultLoc.ref) {
+          kind = StackKind.ref;
+        } else {
+          // Value stack — distinguish int vs double via type inference.
+          // Default to intVal when type is unknown (covers int, bool).
+          final exprType = _inferExprType(expr);
+          kind = exprType != null
+              ? _classifyStackKind(exprType)
+              : StackKind.intVal;
+        }
+        _emitter.emit(encodeABC(Op.halt, reg, kind.index + 1, 0));
+      } else {
+        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
       }
-      _emitter.emit(encodeAx(Op.halt, 0));
       return;
     }
 
@@ -497,11 +511,25 @@ extension on DarticCompiler {
 
     final (reg, loc) = _compileExpression(expr);
     _emitCloseUpvaluesIfNeeded();
-    switch (loc) {
-      case ResultLoc.value:
-        _emitter.emit(encodeABC(Op.returnVal, reg, 0, 0));
-      case ResultLoc.ref:
-        _emitter.emit(encodeABC(Op.returnRef, reg, 0, 0));
+
+    // Unbox if expression is on ref stack but function returns a value type.
+    // E.g. `Object x = 42; return x as int;` — `as int` stays on ref stack,
+    // but caller expects RETURN_VAL for int return type.
+    final retKind = _classifyStackKind(_currentReturnType);
+    if (loc == ResultLoc.ref && retKind.isValue) {
+      final valReg = _valueAlloc.alloc();
+      final unboxOp = retKind == StackKind.doubleVal
+          ? Op.unboxDouble
+          : Op.unboxInt;
+      _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
+      _emitter.emit(encodeABC(Op.returnVal, valReg, 0, 0));
+    } else {
+      switch (loc) {
+        case ResultLoc.value:
+          _emitter.emit(encodeABC(Op.returnVal, reg, 0, 0));
+        case ResultLoc.ref:
+          _emitter.emit(encodeABC(Op.returnRef, reg, 0, 0));
+      }
     }
   }
 

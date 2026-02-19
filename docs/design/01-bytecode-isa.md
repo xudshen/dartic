@@ -368,8 +368,10 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 
 ```
 0xFE  WIDE                        下一条指令使用扩展操作数
-0xFF  HALT                        停机
+0xFF  HALT          A, B, C       停机并记录入口函数返回值
 ```
+
+**HALT 编码**：使用 ABC 格式。A = 结果寄存器编号，B = 结果类型（0=void/无返回值，1=int，2=double，3=ref），C = 保留。解释器在重置栈指针前根据 B 字段从对应栈读取返回值，存入 `entryResult`。`encodeABC(Op.halt, 0, 0, 0)` 与旧的 `encodeAx(Op.halt, 0)` 二进制兼容（均为 `0x000000FF`）。
 
 **0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。当前已定义 105 个操作码（含 WIDE 和 HALT），预留 86 个槽位。
 

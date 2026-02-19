@@ -282,10 +282,10 @@ int main() => f(42, 99);
   });
 }
 
-/// Compiles Dart source -> bytecode -> executes -> returns main's int result.
-Future<int> _compileAndRun(String source) async {
+/// Compiles Dart source -> bytecode -> executes -> returns entry result.
+Future<Object?> _compileAndRun(String source) async {
   final module = await compileDart(source);
   final interp = DarticInterpreter();
   interp.execute(module);
-  return interp.valueStack.readInt(0);
+  return interp.entryResult;
 }

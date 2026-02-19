@@ -75,13 +75,10 @@ int findOp(List<int> code, int op, {int start = 0}) {
   return -1;
 }
 
-/// Compiles [source], executes it, and returns the int result from v0.
-///
-/// The source must use the pattern `int f() { ... } int main() => f();`
-/// so the return value flows through RETURN_VAL → CALL_STATIC → v0.
-Future<int> compileAndRun(String source) async {
+/// Compiles [source], executes it, and returns the entry result.
+Future<Object?> compileAndRun(String source) async {
   final module = await compileDart(source);
   final interp = DarticInterpreter();
   interp.execute(module);
-  return interp.valueStack.readInt(0);
+  return interp.entryResult;
 }

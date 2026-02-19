@@ -396,7 +396,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('const int 100000 (large) executes correctly', () async {
@@ -408,7 +408,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 100000);
+      expect(interp.entryResult, 100000);
     });
 
     test('!true and !false compile with BIT_XOR', () async {
@@ -437,7 +437,7 @@ int main() => add(10, 20);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 30);
+      expect(interp.entryResult, 30);
     });
   });
 }

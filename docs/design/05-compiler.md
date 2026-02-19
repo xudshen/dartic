@@ -203,7 +203,7 @@ Kernel 的 `Constant` 子类映射到常量池四分区（refs/ints/doubles/name
 | `Block` | 进入新作用域 → 逐条编译子 Statement → 退出作用域（批量释放寄存器） |
 | `ExpressionStatement` | 编译 expression → 若结果占用临时寄存器则释放（不保留结果值） |
 | `EmptyStatement` | 不生成任何指令 |
-| `ReturnStatement` | 同步函数：编译 expression → 根据返回类型 `RETURN_REF` / `RETURN_VAL` / `RETURN_NULL`。async 函数：`ASYNC_RETURN`（详见 Ch7）。async\* 函数：`controller.close()` + 帧结束（详见 Ch7）。sync\* 函数：标记 iterator done + 帧结束（详见 Ch7） |
+| `ReturnStatement` | **入口函数**：编译 expression → 根据 `loc` 和类型推断确定结果种类（int/double/ref）→ `HALT A, B, 0`（A=结果寄存器，B=种类编码）。无表达式时 `HALT 0, 0, 0`。**普通同步函数**：编译 expression → 若表达式在 ref 栈但函数返回值类型为值类型，先发射 `UNBOX_INT`/`UNBOX_DOUBLE` 拆箱 → `RETURN_VAL` / `RETURN_REF` / `RETURN_NULL`。async 函数：`ASYNC_RETURN`（详见 Ch7）。async\* 函数：`controller.close()` + 帧结束（详见 Ch7）。sync\* 函数：标记 iterator done + 帧结束（详见 Ch7） |
 | `YieldStatement` | 编译 expression → `YIELD A, Bx`（`isYieldStar` 时用 `YIELD_STAR`）。Bx 编码恢复点 IP（详见 Generator 编译） |
 | `AssertBlock` | 与 `AssertStatement` 相同处理，`--no-enable-asserts` 时完全不生成代码 |
 | `FunctionDeclaration` | 详见闭包编译 |

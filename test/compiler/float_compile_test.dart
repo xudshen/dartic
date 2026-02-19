@@ -131,7 +131,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 4.0);
+      expect(interp.entryResult, 4.0);
     });
 
     test('double subtraction end-to-end', () async {
@@ -145,7 +145,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 7.0);
+      expect(interp.entryResult, 7.0);
     });
 
     test('double multiplication end-to-end', () async {
@@ -159,7 +159,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 12.0);
+      expect(interp.entryResult, 12.0);
     });
 
     test('double division end-to-end', () async {
@@ -173,7 +173,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 2.5);
+      expect(interp.entryResult, 2.5);
     });
 
     test('double negation end-to-end', () async {
@@ -187,7 +187,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), -3.14);
+      expect(interp.entryResult, -3.14);
     });
 
     test('toInt() end-to-end', () async {
@@ -201,7 +201,7 @@ int main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 3);
+      expect(interp.entryResult, 3);
     });
 
     test('toDouble() end-to-end', () async {
@@ -215,7 +215,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 42.0);
+      expect(interp.entryResult, 42.0);
     });
 
     test('int / int end-to-end', () async {
@@ -229,7 +229,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 2.5);
+      expect(interp.entryResult, 2.5);
     });
 
     test('mixed type expression end-to-end', () async {
@@ -244,7 +244,7 @@ double main() {
 
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readDouble(0), 4.5);
+      expect(interp.entryResult, 4.5);
     });
   });
 }

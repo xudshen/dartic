@@ -52,7 +52,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is int with string value returns false', () async {
@@ -62,7 +62,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('x is! int with int value returns false', () async {
@@ -72,7 +72,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('x is! int with string value returns true', () async {
@@ -82,7 +82,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is num with int returns true', () async {
@@ -92,7 +92,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is num with double returns true', () async {
@@ -102,7 +102,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is num with string returns false', () async {
@@ -112,7 +112,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('x is Object with non-null returns true', () async {
@@ -122,7 +122,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is Object with null returns false', () async {
@@ -132,7 +132,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('null is int returns false', () async {
@@ -142,7 +142,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('x is String with string value returns true', () async {
@@ -152,7 +152,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is String with int value returns false', () async {
@@ -162,7 +162,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('x is bool with bool value returns true', () async {
@@ -172,7 +172,7 @@ bool main() => check(true);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is double with double value returns true', () async {
@@ -182,7 +182,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('x is double with int value returns false', () async {
@@ -192,7 +192,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
   });
 
@@ -204,9 +204,7 @@ int main() => cast(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      // After CAST, the value is on the ref stack (boxed).
-      // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
-      expect(interp.refStack.read(3), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('x as String with string value passes through', () async {
@@ -217,7 +215,7 @@ String main() => cast("hello");
       final interp = DarticInterpreter();
       interp.execute(module);
       // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
-      expect(interp.refStack.read(3), 'hello');
+      expect(interp.entryResult, 'hello');
     });
 
     test('x as int with string value throws TypeError', () async {
@@ -253,7 +251,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double variable is num returns true (requires boxing)', () async {
@@ -263,7 +261,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('bool variable is bool returns true (requires boxing)', () async {
@@ -273,7 +271,7 @@ bool main() => check(true);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
   });
 
@@ -285,7 +283,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('non-null is Null returns false', () async {
@@ -295,7 +293,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
   });
 }

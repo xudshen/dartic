@@ -191,7 +191,7 @@ Object main() => _test();
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.refStack.read(3), 'world');
+      expect(interp.entryResult, 'world');
     });
 
     test('constructor with optional parameter', () async {

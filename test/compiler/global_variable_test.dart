@@ -76,7 +76,7 @@ int main() => x;
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('var x = 0; setX sets x = 1; main reads x', () async {
@@ -87,7 +87,7 @@ int main() { setX(); return x; }
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('int compute() => 42; var x = compute(); main() => x', () async {
@@ -98,7 +98,7 @@ int main() => x;
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('multiple globals', () async {
@@ -110,7 +110,7 @@ int main() => add(a, b);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 30);
+      expect(interp.entryResult, 30);
     });
 
     test('string global', () async {
@@ -121,7 +121,7 @@ String main() => greeting;
       final interp = DarticInterpreter();
       interp.execute(module);
       // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
-      expect(interp.refStack.read(3), 'hello');
+      expect(interp.entryResult, 'hello');
     });
   });
 }

@@ -14,7 +14,7 @@ int main() => Math.square(5);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 25);
+      expect(interp.entryResult, 25);
     });
 
     test('static method with multiple params', () async {
@@ -26,7 +26,7 @@ int main() => Calc.add(10, 20);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 30);
+      expect(interp.entryResult, 30);
     });
   });
 
@@ -40,7 +40,7 @@ int main() => Config.value;
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('static field write and read back', () async {
@@ -61,7 +61,7 @@ int main() => run();
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 3);
+      expect(interp.entryResult, 3);
     });
   });
 
@@ -76,7 +76,7 @@ int main() => Config.answer;
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
   });
 
@@ -100,7 +100,7 @@ int main() => run();
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
   });
 
@@ -118,7 +118,7 @@ int main() => run();
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('static fields from different classes are independent', () async {
@@ -134,7 +134,7 @@ int main() => run();
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 300);
+      expect(interp.entryResult, 300);
     });
   });
 }

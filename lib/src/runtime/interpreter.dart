@@ -48,11 +48,16 @@ class DarticInterpreter {
   /// Pushed on CALL/CALL_STATIC, popped on RETURN.
   final List<List<Upvalue>?> _upvalueStack = [];
 
+  /// The entry function's result after [execute], or `null` if void.
+  Object? get entryResult => _lastEntryResult;
+  Object? _lastEntryResult;
+
   /// Executes [module] starting from its entry function.
   ///
   /// Runs the dispatch loop until HALT is reached or fuel is exhausted.
   void execute(DarticModule module) {
     _fuel = fuelBudget;
+    _lastEntryResult = null;
     _openUpvalues.clear();
     _upvalueStack.clear();
 
@@ -841,10 +846,16 @@ class DarticInterpreter {
 
         // ── System ──
 
-        case Op.halt: // HALT
-          // Ref slots [rBase, rs.sp) are intentionally NOT cleared here.
-          // HALT ends the entire execution; the caller may read results.
-          // GC-safe clearing applies to RETURN (callee frame cleanup).
+        case Op.halt: // HALT ABC: A=resultReg, B=kind, C=unused
+          // Extract result BEFORE resetting stack pointers.
+          final haltA = (instr >> 8) & 0xFF;
+          final haltB = (instr >> 16) & 0xFF;
+          switch (haltB) {
+            case 1: _lastEntryResult = vs.readInt(vBase + haltA);
+            case 2: _lastEntryResult = vs.readDouble(vBase + haltA);
+            case 3: _lastEntryResult = rs.read(rBase + haltA);
+            default: _lastEntryResult = null;
+          }
           vs.sp = vBase;
           rs.sp = rBase;
           callStack.popFrame();

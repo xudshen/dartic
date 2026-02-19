@@ -17,7 +17,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 10);
+      expect(interp.entryResult, 10);
     });
 
     test('condition ? a : b with false condition returns b', () async {
@@ -30,7 +30,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 20);
+      expect(interp.entryResult, 20);
     });
 
     test('nested: a ? (b ? 1 : 2) : 3', () async {
@@ -43,7 +43,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('nested: a ? (b ? 1 : 2) : 3 with a=true, b=false', () async {
@@ -56,7 +56,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 2);
+      expect(interp.entryResult, 2);
     });
 
     test('nested: a ? (b ? 1 : 2) : 3 with a=false', () async {
@@ -69,7 +69,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 3);
+      expect(interp.entryResult, 3);
     });
   });
 
@@ -84,7 +84,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
 
     test('bool result type', () async {
@@ -97,7 +97,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('String result type (ref stack)', () async {
@@ -111,7 +111,7 @@ String main() {
       final interp = DarticInterpreter();
       interp.execute(module);
       // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
-      expect(interp.refStack.read(3), 'hello');
+      expect(interp.entryResult, 'hello');
     });
 
     test('String result type false branch (ref stack)', () async {
@@ -125,7 +125,7 @@ String main() {
       final interp = DarticInterpreter();
       interp.execute(module);
       // Ref result at reg 3 (after 3 reserved ITA/FTA/this slots).
-      expect(interp.refStack.read(3), 'world');
+      expect(interp.entryResult, 'world');
     });
   });
 
@@ -143,7 +143,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 99);
+      expect(interp.entryResult, 99);
     });
 
     test('x ?? defaultValue with non-null x returns x', () async {
@@ -159,7 +159,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      expect(interp.entryResult, 42);
     });
   });
 
@@ -229,7 +229,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 13);
+      expect(interp.entryResult, 13);
     });
 
     test('ternary with arithmetic in branches, false path', () async {
@@ -242,7 +242,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 7);
+      expect(interp.entryResult, 7);
     });
 
     test('ternary with comparison condition', () async {
@@ -255,7 +255,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 5);
+      expect(interp.entryResult, 5);
     });
 
     test('ternary with comparison condition, positive value', () async {
@@ -268,7 +268,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 7);
+      expect(interp.entryResult, 7);
     });
   });
 
@@ -289,7 +289,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 100);
+      expect(interp.entryResult, 100);
     });
 
     test('function returning ternary result', () async {
@@ -304,7 +304,7 @@ int main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 7);
+      expect(interp.entryResult, 7);
     });
   });
 }

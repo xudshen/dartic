@@ -164,7 +164,7 @@ bool main() {
       final interp = DarticInterpreter();
       interp.execute(module);
       // bool true = 1 on valueStack
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double < double (false) end-to-end', () async {
@@ -177,7 +177,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('double <= double (equal, true) end-to-end', () async {
@@ -190,7 +190,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double > double (true) end-to-end', () async {
@@ -203,7 +203,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double >= double (equal, true) end-to-end', () async {
@@ -216,7 +216,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double == double (true) end-to-end', () async {
@@ -229,7 +229,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double == double (false) end-to-end', () async {
@@ -242,7 +242,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('double != double (true) end-to-end', () async {
@@ -255,7 +255,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('double != double (false) end-to-end', () async {
@@ -268,7 +268,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
 
     test('int < int (true) end-to-end', () async {
@@ -281,7 +281,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 1);
+      expect(interp.entryResult, 1);
     });
 
     test('int >= int (false) end-to-end', () async {
@@ -294,7 +294,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 0);
+      expect(interp.entryResult, 0);
     });
   });
 }

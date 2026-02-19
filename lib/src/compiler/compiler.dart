@@ -82,6 +82,7 @@ class DarticCompiler {
   late RegisterAllocator _refAlloc;
   late Scope _scope;
   bool _isEntryFunction = false;
+  ir.DartType _currentReturnType = const ir.VoidType();
 
   /// Pending outgoing arg MOVE instructions to patch after the function is
   /// fully compiled. Each entry records the bytecode offset of a placeholder
@@ -310,6 +311,7 @@ class DarticCompiler {
     _valueAlloc = RegisterAllocator();
     _refAlloc = RegisterAllocator();
     _isEntryFunction = funcId == _entryFuncId;
+    _currentReturnType = fn.returnType;
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -355,7 +357,7 @@ class DarticCompiler {
 
     // Safety net: if no explicit return, emit HALT or RETURN_NULL.
     if (_isEntryFunction) {
-      _emitter.emit(encodeAx(Op.halt, 0));
+      _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
     } else {
       _emitCloseUpvaluesIfNeeded();
       _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));

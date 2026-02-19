@@ -14,7 +14,7 @@ Object main() => Foo();
       final interp = DarticInterpreter();
       interp.execute(module);
       // Entry function ref result at reg 3 (after reserved ITA/FTA/this).
-      final obj = interp.refStack.read(3);
+      final obj = interp.entryResult;
       expect(obj, isA<DarticObject>());
     });
 
@@ -29,7 +29,7 @@ Object main() => Point(3, 4);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       // x → valueFields[0], y → valueFields[1]
       expect(obj.valueFields[0], 3);
       expect(obj.valueFields[1], 4);
@@ -45,7 +45,7 @@ Object main() => Named('hello');
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       expect(obj.refFields[0], 'hello');
     });
 
@@ -60,7 +60,7 @@ Object main() => Person('Alice', 30);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       expect(obj.refFields[0], 'Alice');
       expect(obj.valueFields[0], 30);
     });
@@ -75,7 +75,7 @@ Object main() => Counter(99);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      final obj = interp.refStack.read(3) as DarticObject;
+      final obj = interp.entryResult as DarticObject;
       expect(obj.valueFields[0], 99);
     });
   });

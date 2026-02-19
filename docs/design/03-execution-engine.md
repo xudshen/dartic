@@ -53,6 +53,7 @@ DarticFuncProto 是编译器为每个函数生成的元数据对象，包含执�
 |-----|------|------|-----------|
 | loadModule | (Uint8List bytes) -> void | 加载并注册 .darb 字节码模块（详见"模块加载"节） | 宿主应用 |
 | execute | (int entryFuncId) -> Future\<Object?\> | 创建 DarticFrame 入队 `_runQueue`，启动分发循环 | 宿主应用 |
+| entryResult | Object? (getter) | HALT 后入口函数的返回值（HALT B=0 时为 null）。HALT 在重置栈指针前根据 B 字段从值栈/引用栈读取结果 | 宿主应用、测试 |
 | invokeClosure | (DarticClosure, List\<Object?\> args) -> Object? | VM 回调解释器闭包的入口（详见"invokeClosure 机制"节） | Ch4 DarticCallbackProxy、BridgeMixin |
 | invokeMethod | (DarticObject, String name, List\<Object?\> args) -> Object? | 按名称调用解释器对象的方法（查方法表 + invokeClosure） | Ch4 DarticProxy.toString()、BridgeMixin.$_invoke |
 | getField / setField | (DarticObject, String name) -> Object? | 读写解释器对象的字段（查 DarticClassInfo.fields） | Ch4 BridgeMixin.$_get/$_set |
@@ -91,7 +92,7 @@ DarticFuncProto 是编译器为每个函数生成的元数据对象，包含执�
 │  │  │    ├─ THROW → 异常分发（查handler/栈展开），break     │ │ │
 │  │  │    ├─ AWAIT → 保存帧，移出队列，break (详见 Ch7)      │ │ │
 │  │  │    ├─ ASYNC_RETURN → 完成Completer，移出队列(详见Ch7) │ │ │
-│  │  │    └─ HALT → pop 帧，break 内循环                     │ │ │
+│  │  │    └─ HALT → 提取返回值(A=reg,B=kind)→pop帧→break     │ │ │
 │  │  │                                                       │ │ │
 │  │  └───────────────────────────────────────────────────────┘ │ │
 │  │                                                            │ │

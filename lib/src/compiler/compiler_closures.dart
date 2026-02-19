@@ -17,6 +17,7 @@ extension on DarticCompiler {
       refAlloc: _refAlloc,
       scope: _scope,
       isEntryFunction: _isEntryFunction,
+      currentReturnType: _currentReturnType,
       pendingArgMoves: List.of(_pendingArgMoves),
       labelBreakJumps: Map.of(_labelBreakJumps),
       exceptionHandlers: List.of(_exceptionHandlers),
@@ -51,6 +52,7 @@ extension on DarticCompiler {
     _refAlloc = ctx.refAlloc;
     _scope = ctx.scope;
     _isEntryFunction = ctx.isEntryFunction;
+    _currentReturnType = ctx.currentReturnType;
     _pendingArgMoves
       ..clear()
       ..addAll(ctx.pendingArgMoves);
@@ -124,6 +126,7 @@ extension on DarticCompiler {
 
     // Step 4: Compile the inner function.
     _pushContext();
+    _currentReturnType = fn.returnType;
 
     // Create a new scope for the inner function. Its parent is the
     // outer scope so that upvalue resolution can walk up.
@@ -400,6 +403,7 @@ class _CompilationContext {
     required this.refAlloc,
     required this.scope,
     required this.isEntryFunction,
+    required this.currentReturnType,
     required this.pendingArgMoves,
     required this.labelBreakJumps,
     required this.exceptionHandlers,
@@ -416,6 +420,7 @@ class _CompilationContext {
   final RegisterAllocator refAlloc;
   final Scope scope;
   final bool isEntryFunction;
+  final ir.DartType currentReturnType;
   final List<({int pc, int srcReg, int argIdx, ResultLoc loc})> pendingArgMoves;
   final Map<ir.LabeledStatement, List<int>> labelBreakJumps;
   final List<ExceptionHandler> exceptionHandlers;
