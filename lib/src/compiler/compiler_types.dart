@@ -56,6 +56,7 @@ extension on DarticCompiler {
       return ir.InterfaceType(
         expr.target.enclosingClass,
         ir.Nullability.nonNullable,
+        expr.arguments.types,
       );
     }
     if (expr is ir.ThisExpression) {
@@ -121,6 +122,25 @@ extension on DarticCompiler {
       return rawType;
     }
     if (expr is ir.SuperPropertySet) return _inferExprType(expr.value);
+
+    // ── Calls with Kernel pre-computed functionType ──
+    // LocalFunctionInvocation: Kernel's functionType already includes generic
+    // substitution. E.g., T local<T>(T t) => t; local(0) → functionType = int Function(int)
+    if (expr is ir.LocalFunctionInvocation) {
+      return expr.functionType.returnType;
+    }
+    // FunctionInvocation: Kernel's functionType includes the substituted return type.
+    if (expr is ir.FunctionInvocation) {
+      return expr.functionType?.returnType;
+    }
+
+    // ── Assignment expressions — type follows the assigned value ──
+    if (expr is ir.VariableSet) return _inferExprType(expr.value);
+    if (expr is ir.StaticSet) return _inferExprType(expr.value);
+
+    // ── Never type ──
+    if (expr is ir.Throw) return const ir.NeverType.nonNullable();
+
     return null;
   }
 
