@@ -157,17 +157,21 @@ feat(bridge): add CALL_HOST pipeline — HostBindings, compiler integration, and
 
 ## 核心发现
 
-_(执行时填写：CALL_HOST 参数收集策略的最终选择、编译器平台调用识别的边界条件、值类型装箱的性能影响、绑定名称表大小等)_
+- **CALL_HOST 参数收集策略**：采用"编译→装箱→分配连续块→MOVE"4 阶段方法。与 CALL_STATIC 的 pending arg moves 不同，CALL_HOST 不压帧，参数在调用者 ref 栈 A+1..A+N 连续布局
+- **编译器平台调用识别**：通过 `lib.importUri.isScheme('dart')` 判断平台库。特化操作码（int/double 算术比较）优先于 CALL_HOST 检查，保证性能关键路径不退化
+- **值类型装箱**：所有传给 CALL_HOST 的 value-stack 参数（int/double/bool）自动插入 BOX 指令。返回值在 ref 栈，消费端按需 UNBOX
+- **绑定符号名格式**：`"libUri::className::methodName#paramCount"`，实例方法 argCount = paramCount + 1（含 receiver）
+- **绑定名称表大小**：UInt16 count（最大 65535），匹配 CALL_HOST Bx 操作数 16-bit 宽度
 
 ## Batch 完成检查
 
-- [ ] 5.1.1 HostBindings 函数注册表 + 类型映射基础
-- [ ] 5.1.2 CALL_HOST 解释器处理 + DarticModule 绑定表
-- [ ] 5.1.3 绑定名称表 .darb 序列化/反序列化
-- [ ] 5.1.4 编译器 — 平台调用识别 + CALL_HOST 生成
-- [ ] 5.1.5 print + Object 基础桥接 + 端到端验证
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] 5.1.1 HostBindings 函数注册表 + 类型映射基础
+- [x] 5.1.2 CALL_HOST 解释器处理 + DarticModule 绑定表
+- [x] 5.1.3 绑定名称表 .darb 序列化/反序列化
+- [x] 5.1.4 编译器 — 平台调用识别 + CALL_HOST 生成
+- [x] 5.1.5 print + Object 基础桥接 + 端到端验证
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过（1631 tests）
+- [x] commit 已提交
+- [x] overview.md 已更新
+- [x] code review 已完成（4 Important issues fixed + re-review passed）

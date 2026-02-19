@@ -11,6 +11,7 @@ import 'module.dart';
 ///
 /// Binary layout:
 /// - Header (12 bytes): magic (UInt32) + version (UInt32) + CRC32 checksum (UInt32)
+/// - Binding name table: count (UInt16) + entries (symbolName + argCount)
 /// - Constant pool: refs, ints, doubles, names
 /// - Function table: count + each function's metadata, bytecode, tables
 /// - Entry point: funcId (UInt32)
@@ -23,7 +24,8 @@ class DarticSerializer {
   Uint8List serialize(DarticModule module) {
     final w = _ByteWriter();
 
-    // Write all section data (constant pool, function table, entry point).
+    // Write all section data.
+    _writeBindingTable(w, module.bindingNames);
     _writeConstantPool(w, module.constantPool);
     _writeFunctionTable(w, module.functions);
     w.writeUint32(module.entryFuncId);
@@ -40,6 +42,16 @@ class DarticSerializer {
     header.setUint32(8, checksum, Endian.little);
     result.setAll(DarbFormat.headerSize, payload);
     return result;
+  }
+
+  // ── Binding Name Table ──
+
+  void _writeBindingTable(_ByteWriter w, List<BindingEntry> bindings) {
+    w.writeUint16(bindings.length);
+    for (final entry in bindings) {
+      w.writeString(entry.name);
+      w.addByte(entry.argCount);
+    }
   }
 
   // ── Constant Pool ──
@@ -139,6 +151,11 @@ class _ByteWriter {
 
   void addByte(int byte) {
     _builder.addByte(byte);
+  }
+
+  void writeUint16(int value) {
+    _builder.addByte(value & 0xFF);
+    _builder.addByte((value >> 8) & 0xFF);
   }
 
   void writeUint32(int value) {

@@ -527,6 +527,12 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileStaticInvocation(ir.StaticInvocation expr) {
     final target = expr.target;
+
+    // Platform library target → CALL_HOST (host function dispatch).
+    if (_isPlatformLibrary(target.enclosingLibrary)) {
+      return _compileHostStaticInvocation(expr);
+    }
+
     final funcId = _procToFuncId[target.reference];
     if (funcId == null) {
       throw UnsupportedError(
@@ -578,6 +584,30 @@ extension on DarticCompiler {
 
     _emitArgMovesAndCall(argTemps, Op.callStatic, resultReg, funcId);
     return (resultReg, retLoc);
+  }
+
+  /// Compiles a [StaticInvocation] targeting a platform library function
+  /// as a CALL_HOST instruction.
+  (int, ResultLoc) _compileHostStaticInvocation(ir.StaticInvocation expr) {
+    final target = expr.target;
+
+    // Compile all arguments.
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+    for (final arg in expr.arguments.named) {
+      final (reg, loc) = _compileExpression(arg.value);
+      compiledArgs.add((reg, loc, _inferExprType(arg.value)));
+    }
+
+    // Allocate binding.
+    final symbolName = _hostSymbolName(target);
+    final argCount = compiledArgs.length; // static: no receiver
+    final bindingIndex = _allocBinding(symbolName, argCount);
+
+    return _emitCallHost(compiledArgs, bindingIndex);
   }
 
   /// Compiles the default value for a parameter declaration.
@@ -759,6 +789,48 @@ extension on DarticCompiler {
     }
   }
 
+  /// Emits a CALL_HOST instruction for a platform function call.
+  ///
+  /// Unlike CALL_STATIC (which pushes a CallStack frame), CALL_HOST reads
+  /// args from the caller's own ref stack at positions A+1..A+argCount.
+  /// All args must be on the ref stack (value-type args are boxed).
+  ///
+  /// [compiledArgs] contains (register, ResultLoc, DartType?) tuples for
+  /// each argument (already compiled). The method handles boxing and
+  /// consecutive register layout.
+  ///
+  /// Returns (resultReg, ResultLoc.ref) — CALL_HOST always returns on ref.
+  (int, ResultLoc) _emitCallHost(
+    List<(int reg, ResultLoc loc, ir.DartType? type)> compiledArgs,
+    int bindingIndex,
+  ) {
+    // Phase 1: ensure all args are on the ref stack.
+    final refArgRegs = <int>[];
+    for (final (srcReg, srcLoc, srcType) in compiledArgs) {
+      if (srcLoc == ResultLoc.ref) {
+        refArgRegs.add(srcReg);
+      } else {
+        refArgRegs.add(_emitBoxToRef(srcReg, srcType));
+      }
+    }
+
+    // Phase 2: allocate consecutive ref registers — result + arg slots.
+    final resultReg = _allocRefReg();
+    final targetArgRegs =
+        List.generate(refArgRegs.length, (_) => _allocRefReg());
+
+    // Phase 3: MOVE each arg into its consecutive target slot.
+    for (var i = 0; i < refArgRegs.length; i++) {
+      if (refArgRegs[i] != targetArgRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetArgRegs[i], refArgRegs[i], 0));
+      }
+    }
+
+    // Phase 4: emit CALL_HOST A=resultReg, Bx=bindingIndex.
+    _emitter.emit(encodeABx(Op.callHost, resultReg, bindingIndex));
+    return (resultReg, ResultLoc.ref);
+  }
+
   /// Emits placeholder MOVE instructions for all compiled arguments and
   /// the final call instruction.
   ///
@@ -888,8 +960,46 @@ extension on DarticCompiler {
       if (result != null) return result;
     }
 
+    // Platform method call → CALL_HOST (if specialization above didn't fire).
+    if (targetClass != null &&
+        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+      return _compileHostInstanceCall(expr);
+    }
+
     // General case: virtual method dispatch via CALL_VIRTUAL + IC.
     return _compileVirtualCall(expr);
+  }
+
+  /// Compiles an [InstanceInvocation] targeting a platform class method
+  /// as a CALL_HOST instruction.
+  ///
+  /// The receiver is the first arg (index 0), followed by explicit args.
+  (int, ResultLoc) _compileHostInstanceCall(ir.InstanceInvocation expr) {
+    final target = expr.interfaceTarget;
+
+    // 1. Compile receiver.
+    final (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    final recvType = _inferExprType(expr.receiver);
+
+    // 2. Compile explicit arguments.
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[
+      (recvReg, recvLoc, recvType),
+    ];
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+    for (final arg in expr.arguments.named) {
+      final (reg, loc) = _compileExpression(arg.value);
+      compiledArgs.add((reg, loc, _inferExprType(arg.value)));
+    }
+
+    // 3. Allocate binding: receiver is arg[0], so total argCount includes it.
+    final symbolName = _hostSymbolName(target);
+    final argCount = compiledArgs.length; // receiver + explicit args
+    final bindingIndex = _allocBinding(symbolName, argCount);
+
+    return _emitCallHost(compiledArgs, bindingIndex);
   }
 
   /// Compiles a virtual method call via CALL_VIRTUAL with inline cache.
@@ -1078,6 +1188,35 @@ extension on DarticCompiler {
 
   // ── ConstructorInvocation ──
 
+  /// Compiles a platform class constructor invocation as CALL_HOST.
+  ///
+  /// The host function wrapper handles object allocation internally.
+  /// Returns the result from CALL_HOST (the constructed object on ref stack).
+  (int, ResultLoc) _compileHostConstructorInvocation(
+    ir.ConstructorInvocation expr,
+  ) {
+    final target = expr.target;
+
+    // Compile all arguments.
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+    for (final arg in expr.arguments.named) {
+      final (reg, loc) = _compileExpression(arg.value);
+      compiledArgs.add((reg, loc, _inferExprType(arg.value)));
+    }
+
+    // Constructor symbol: "libUri::ClassName::ClassName#paramCount" or
+    // "libUri::ClassName::new#paramCount" for unnamed constructors.
+    final symbolName = _hostSymbolName(target);
+    final argCount = compiledArgs.length;
+    final bindingIndex = _allocBinding(symbolName, argCount);
+
+    return _emitCallHost(compiledArgs, bindingIndex);
+  }
+
   /// Compiles a [ConstructorInvocation]: NEW_INSTANCE (or ALLOC_GENERIC for
   /// generic classes) → args → CALL_STATIC.
   ///
@@ -1087,13 +1226,19 @@ extension on DarticCompiler {
     ir.ConstructorInvocation expr,
   ) {
     final target = expr.target;
+    final cls = target.enclosingClass;
+
+    // Platform class constructor → CALL_HOST.
+    if (_isPlatformLibrary(cls.enclosingLibrary)) {
+      return _compileHostConstructorInvocation(expr);
+    }
+
     final funcId = _constructorToFuncId[target.reference];
     if (funcId == null) {
       throw UnsupportedError(
-        'Unknown constructor: ${target.enclosingClass.name}.${target.name.text}',
+        'Unknown constructor: ${cls.name}.${target.name.text}',
       );
     }
-    final cls = target.enclosingClass;
     final classId = _classToClassId[cls];
     if (classId == null) {
       throw StateError('Class not registered: ${cls.name}');
@@ -1203,6 +1348,12 @@ extension on DarticCompiler {
       }
     }
 
+    // Platform class property → CALL_HOST.
+    if (targetClass != null &&
+        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+      return _compileHostGetterCall(expr);
+    }
+
     // Check if the target is a getter Procedure → emit CALL_VIRTUAL.
     if (target is ir.Procedure && target.isGetter) {
       return _compileInstanceGetterCall(expr, target);
@@ -1211,6 +1362,29 @@ extension on DarticCompiler {
     throw UnsupportedError(
       'Unsupported InstanceGet: ${expr.name.text} on ${targetClass?.name}',
     );
+  }
+
+  /// Compiles a platform class getter/property access as CALL_HOST.
+  ///
+  /// The receiver is the only arg. E.g., `"hello".length` becomes
+  /// `CALL_HOST` with symbol `"dart:core::String::length#0"`, argCount=1.
+  (int, ResultLoc) _compileHostGetterCall(ir.InstanceGet expr) {
+    final target = expr.interfaceTarget;
+
+    // Compile receiver.
+    final (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    final recvType = _inferExprType(expr.receiver);
+
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[
+      (recvReg, recvLoc, recvType),
+    ];
+
+    // Getter has 0 explicit params; symbol uses target member name.
+    final symbolName = _hostSymbolName(target);
+    final argCount = 1; // receiver only
+    final bindingIndex = _allocBinding(symbolName, argCount);
+
+    return _emitCallHost(compiledArgs, bindingIndex);
   }
 
   /// Compiles an instance getter call via CALL_VIRTUAL.
@@ -1270,6 +1444,12 @@ extension on DarticCompiler {
       }
     }
 
+    // Platform class property set → CALL_HOST.
+    if (targetClass != null &&
+        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+      return _compileHostSetterCall(expr);
+    }
+
     // Check if the target is a setter Procedure → emit CALL_VIRTUAL.
     if (target is ir.Procedure && target.isSetter) {
       return _compileInstanceSetterCall(expr, target);
@@ -1278,6 +1458,54 @@ extension on DarticCompiler {
     throw UnsupportedError(
       'Unsupported InstanceSet: ${expr.name.text} on ${targetClass?.name}',
     );
+  }
+
+  /// Compiles a platform class property set as CALL_HOST.
+  ///
+  /// Args: receiver + value. The expression evaluates to the written value.
+  (int, ResultLoc) _compileHostSetterCall(ir.InstanceSet expr) {
+    final target = expr.interfaceTarget;
+
+    // Compile receiver.
+    final (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    final recvType = _inferExprType(expr.receiver);
+
+    // Compile value.
+    final (valReg, valLoc) = _compileExpression(expr.value);
+    final valType = _inferExprType(expr.value);
+
+    // Save value into a dedicated register *before* _emitCallHost, which may
+    // MOVE registers and invalidate the original location.
+    final int savedReg;
+    final ResultLoc savedLoc;
+    if (valLoc == ResultLoc.ref) {
+      savedReg = _allocRefReg();
+      _emitter.emit(encodeABC(Op.moveRef, savedReg, valReg, 0));
+      savedLoc = ResultLoc.ref;
+    } else {
+      savedReg = _allocValueReg();
+      _emitter.emit(encodeABC(Op.moveVal, savedReg, valReg, 0));
+      savedLoc = ResultLoc.value;
+    }
+
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[
+      (recvReg, recvLoc, recvType),
+      (valReg, valLoc, valType),
+    ];
+
+    // Setter symbol: "propertyName=" with 1 explicit param (the value).
+    final symbolName = _hostSymbolName(
+      target,
+      nameOverride: '${expr.name.text}=',
+      paramCountOverride: 1,
+    );
+    final argCount = 2; // receiver + value
+    final bindingIndex = _allocBinding(symbolName, argCount);
+
+    _emitCallHost(compiledArgs, bindingIndex);
+
+    // InstanceSet evaluates to the assigned value.
+    return (savedReg, savedLoc);
   }
 
   /// Compiles an instance setter call via CALL_VIRTUAL.

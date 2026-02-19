@@ -61,6 +61,15 @@ class DarticCompiler {
   /// Total number of global variable slots.
   int _globalCount = 0;
 
+  // ── Host binding state ──
+
+  /// Binding name table for CALL_HOST instructions.
+  /// Each entry maps a local binding index (Bx) to a symbol name + argCount.
+  final List<BindingEntry> _bindingNames = [];
+
+  /// Maps symbol names to their binding index in [_bindingNames].
+  final Map<String, int> _bindingNameToIndex = {};
+
   // ── Class compilation state ──
 
   /// Class info table — indexed by classId. Built during Pass 1c.
@@ -366,6 +375,7 @@ class DarticCompiler {
       globalInitializerIds: _globalInitializerIds,
       classes: _classInfos,
       coreTypeIds: _coreTypeIds,
+      bindingNames: _bindingNames,
     );
   }
 
@@ -795,6 +805,57 @@ class DarticCompiler {
     if (_capturedVarRefRegs.isNotEmpty) {
       _emitter.emit(encodeABC(Op.closeUpvalue, 0, 0, 0));
     }
+  }
+
+  // ── Host binding helpers ──
+
+  /// Allocates (or reuses) a binding index for a host function symbol.
+  ///
+  /// [symbolName] follows the convention: `"libUri::className::methodName#N"`
+  /// where N is the number of explicit parameters (not counting receiver).
+  /// [argCount] is the total number of args the CALL_HOST instruction will
+  /// pass (includes receiver for instance methods).  Must fit in a uint8
+  /// (max 255) since the .darb binding table serialises it as a single byte.
+  int _allocBinding(String symbolName, int argCount) {
+    assert(argCount >= 0 && argCount <= 255,
+        'argCount $argCount out of uint8 range for binding "$symbolName"');
+    return _bindingNameToIndex.putIfAbsent(symbolName, () {
+      final index = _bindingNames.length;
+      _bindingNames.add(BindingEntry(name: symbolName, argCount: argCount));
+      return index;
+    });
+  }
+
+  /// Builds a host binding symbol name for a [Member].
+  ///
+  /// Format: `"libUri::className::memberName#paramCount"`
+  /// Top-level functions have an empty className: `"dart:core::::print#1"`.
+  ///
+  /// [nameOverride] replaces the member name (e.g. `"propName="` for setters).
+  /// [paramCountOverride] replaces the computed param count.
+  String _hostSymbolName(
+    ir.Member target, {
+    String? nameOverride,
+    int? paramCountOverride,
+  }) {
+    final lib = target.enclosingLibrary.importUri.toString();
+    final className = target.enclosingClass?.name ?? '';
+    final memberName = nameOverride ?? target.name.text;
+
+    int paramCount;
+    if (paramCountOverride != null) {
+      paramCount = paramCountOverride;
+    } else if (target is ir.Procedure) {
+      paramCount = target.function.positionalParameters.length +
+          target.function.namedParameters.length;
+    } else if (target is ir.Constructor) {
+      paramCount = target.function.positionalParameters.length +
+          target.function.namedParameters.length;
+    } else {
+      paramCount = 0; // field getter/setter
+    }
+
+    return '$lib::$className::$memberName#$paramCount';
   }
 
   // ── Helpers ──

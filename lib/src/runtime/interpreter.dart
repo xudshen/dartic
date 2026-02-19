@@ -1,3 +1,4 @@
+import '../bridge/host_bindings.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../compiler/type_template.dart';
@@ -24,6 +25,7 @@ class DarticInterpreter {
     RefStack? refStack,
     CallStack? callStack,
     this.typeRegistry,
+    this.hostBindings,
     this.fuelBudget = defaultFuelBudget,
   })  : valueStack = valueStack ?? ValueStack(),
         refStack = refStack ?? RefStack(),
@@ -38,6 +40,9 @@ class DarticInterpreter {
 
   /// Type registry for generics support. If null, generics instructions throw.
   final TypeRegistry? typeRegistry;
+
+  /// Host function bindings for CALL_HOST. If null, CALL_HOST throws.
+  final HostBindings? hostBindings;
 
   /// Global variable table — initialized per-module in [execute].
   DarticGlobalTable? _globalTable;
@@ -74,6 +79,9 @@ class DarticInterpreter {
 
     // Auto-create TypeRegistry + SubtypeChecker from module metadata.
     _provisionTypeSystem(module);
+
+    // Resolve binding name table for CALL_HOST.
+    _resolveBindings(module);
 
     // Set up global table and run initializers.
     if (module.globalCount > 0) {
@@ -121,6 +129,24 @@ class DarticInterpreter {
 
   /// Returns the active TypeRegistry (user-provided or auto-provisioned).
   TypeRegistry? get _activeTypeRegistry => _effectiveTypeRegistry ?? typeRegistry;
+
+  /// Resolves the module's binding name table using [hostBindings].
+  ///
+  /// Maps each symbolic name in [module.bindingNames] to a runtime ID via
+  /// [HostBindings.resolveBindingTable]. Unresolved names get -1.
+  void _resolveBindings(DarticModule module) {
+    if (module.bindingNames.isEmpty) return;
+    final hb = hostBindings;
+    if (hb == null) {
+      throw DarticError(
+        'Module has ${module.bindingNames.length} host bindings '
+        'but no HostBindings provided',
+      );
+    }
+    module.bindingIdMap = hb.resolveBindingTable(
+      [for (final entry in module.bindingNames) entry.name],
+    );
+  }
 
   /// Runs the dispatch loop for a single entry function within [module].
   ///
@@ -611,6 +637,40 @@ class DarticInterpreter {
           // Switch to callee bytecode.
           code = callee.bytecode;
           pc = 0;
+
+        case Op.callHost: // CALL_HOST A, Bx — host function call (no frame push)
+          final chA = (instr >> 8) & 0xFF;
+          final chBx = (instr >> 16) & 0xFFFF;
+
+          // Look up the runtime binding ID from the module's resolved map.
+          final bindingMap = module.bindingIdMap;
+          if (chBx >= bindingMap.length) {
+            throw DarticError(
+              'CALL_HOST binding index $chBx out of range '
+              '(table size: ${bindingMap.length})',
+            );
+          }
+          final runtimeId = bindingMap[chBx];
+          if (runtimeId < 0) {
+            final name = module.bindingNames[chBx].name;
+            throw DarticError('Unresolved host binding: $name');
+          }
+
+          // Collect args from ref stack: r[A+1], r[A+2], ..., r[A+argCount].
+          final argCount = module.bindingNames[chBx].argCount;
+          final hostArgs = List<Object?>.generate(
+            argCount,
+            (i) => rs.read(rBase + chA + 1 + i),
+          );
+
+          // Invoke the host function and write result to refStack[A].
+          try {
+            final hostResult = hostBindings!.invoke(runtimeId, hostArgs);
+            rs.write(rBase + chA, hostResult);
+          } on Object catch (e, st) {
+            // Host function threw — route through the exception handler.
+            pc = unwindToHandler(pc - 1, e, st);
+          }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
           final a = (instr >> 8) & 0xFF; // result register

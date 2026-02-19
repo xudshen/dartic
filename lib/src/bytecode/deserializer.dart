@@ -61,6 +61,7 @@ class DarticDeserializer {
     }
 
     // Read sections.
+    final bindingNames = _readBindingTable(reader);
     final constantPool = _readConstantPool(reader);
     final functions = _readFunctionTable(reader);
     final entryFuncId = reader.readUint32();
@@ -69,7 +70,19 @@ class DarticDeserializer {
       functions: functions,
       constantPool: constantPool,
       entryFuncId: entryFuncId,
+      bindingNames: bindingNames,
     );
+  }
+
+  // ── Binding Name Table ──
+
+  List<BindingEntry> _readBindingTable(_ByteReader r) {
+    final count = r.readUint16();
+    return List.generate(count, (_) {
+      final name = r.readString();
+      final argCount = r.readByte();
+      return BindingEntry(name: name, argCount: argCount);
+    });
   }
 
   // ── Constant Pool ──
@@ -192,6 +205,13 @@ class _ByteReader {
   int readByte() {
     _checkBounds(1);
     return _bytes[_offset++];
+  }
+
+  int readUint16() {
+    _checkBounds(2);
+    final value = _bd.getUint16(_offset, Endian.little);
+    _offset += 2;
+    return value;
   }
 
   int readUint32() {

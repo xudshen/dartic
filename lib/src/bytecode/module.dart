@@ -20,6 +20,7 @@ class DarticModule {
     this.globalInitializerIds = const [],
     this.classes = const [],
     this.coreTypeIds,
+    this.bindingNames = const [],
   });
 
   /// Function table — indexed by funcId.
@@ -46,6 +47,22 @@ class DarticModule {
   /// Populated by the compiler. When non-null, the interpreter uses these
   /// to auto-create a [TypeRegistry] for DarticType-based INSTANCEOF/CAST.
   final CoreTypeIds? coreTypeIds;
+
+  /// Binding name table — symbol names for CALL_HOST instructions.
+  ///
+  /// Each entry is a [BindingEntry] containing the symbol name and arg count.
+  /// CALL_HOST's Bx operand indexes into this table. At module load time,
+  /// the interpreter resolves these names via [HostBindings] to fill
+  /// [bindingIdMap].
+  ///
+  /// See: docs/design/05-compiler.md "绑定名称表"
+  final List<BindingEntry> bindingNames;
+
+  /// Runtime-resolved binding ID map: local index → HostBindings runtime ID.
+  ///
+  /// Filled by the interpreter during [execute] via
+  /// `HostBindings.resolveBindingTable`. Length matches [bindingNames].
+  List<int> bindingIdMap = const [];
 }
 
 /// Maps core Dart types to their compiler-assigned classIds.
@@ -68,6 +85,22 @@ class CoreTypeIds {
   final int boolId;
   final int objectId;
   final int numId;
+}
+
+/// A binding name table entry for CALL_HOST instructions.
+///
+/// Contains the symbolic name and argument count for a host function binding.
+class BindingEntry {
+  const BindingEntry({required this.name, required this.argCount});
+
+  /// Symbolic binding name, e.g. `"dart:core::::print#1"`.
+  final String name;
+
+  /// Number of arguments expected by the host function.
+  final int argCount;
+
+  @override
+  String toString() => 'BindingEntry($name, args=$argCount)';
 }
 
 /// Compiled function prototype — the compiler's core output.
