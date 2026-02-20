@@ -84,6 +84,22 @@ HostClassWrapper 在转发方法参数时，对每个参数执行 `is DarticClos
 
 **操作符路由**：操作符调用通过 `invokeMethod` 统一路由，使用 Dart 的规范操作符名作为 `name` 参数（如 `+`、`-`、`[]`、`[]=`、`==`、`<`、`>`、`unary-`）。命名与 Kernel `InstanceInvocation.name.text` 一致，无需转换。BridgeGenerator 扫描 `ProcedureKind.Operator` 的方法时，按相同命名注册到 HostClassWrapper 分发表。
 
+**Invocation 包装器**：`HostClassRegistry` 为 `Invocation` 类型注册了内建的 `_InvocationClassWrapper`，使 `GET_FIELD_DYN` 路径可以直接分发 `Invocation` 的属性访问（`memberName`、`positionalArguments`、`namedArguments`、`typeArguments`、`isMethod`、`isGetter`、`isSetter`）。当用户代码在 `noSuchMethod` 重写中通过 `dynamic` 类型访问 `invocation.memberName` 时，走此路径。静态类型访问（编译器已知 `Invocation` 类型）则通过 `CALL_HOST` 绑定走 `CoreBindings` 中注册的 `InvocationBindings`。
+
+### DarticInvocation（noSuchMethod 调用描述）
+
+DarticInvocation 是 Dart `Invocation` 抽象类的具体实现，供运行时在动态分发查找失败时构造，传递给用户代码的 `noSuchMethod(Invocation)` 重写。
+
+提供三个命名构造函数，对应三种调用类型：
+
+| 构造函数 | 用途 | isMethod | isGetter | isSetter |
+|---------|------|----------|----------|----------|
+| DarticInvocation.method(memberName, positionalArgs, [namedArgs, typeArgs]) | 方法调用失败 | true | false | false |
+| DarticInvocation.getter(memberName) | getter 访问失败 | false | true | false |
+| DarticInvocation.setter(memberName, value) | setter 访问失败 | false | false | true |
+
+覆盖所有 `Invocation` 属性：`memberName`（Symbol）、`positionalArguments`（不可变 List）、`namedArguments`（不可变 Map）、`typeArguments`（不可变 List）、`isMethod`、`isGetter`、`isSetter`、`isAccessor`（= isGetter || isSetter）。
+
 ### DarticProxyManager（代理缓存管理器）
 
 DarticProxyManager 通过双向 Expando 缓存维护解释器对象与 VM 代理之间的一对一映射，保证对象身份一致性。它提供两个方向的转换：`wrapForVM` 将 DarticObject 包装为 DarticProxy（或直接返回 Bridge 实例 / 基本类型），`unwrapForInterpreter` 将 DarticProxy 解包回 DarticObject（防止二次包装）。

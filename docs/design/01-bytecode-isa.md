@@ -61,6 +61,7 @@ ISA 指令直接操作两个栈（完整的三栈模型——含 CallStack——
 | 属性 | 类型 | 说明 |
 |------|------|------|
 | methodNameIndex | int | 方法名在常量池 names 中的索引 |
+| argCount | int | 参数数量（不含 receiver），用于 noSuchMethod 回退时构造 Invocation |
 | cachedClassId | int | 单态缓存的类 ID（-1 = 未缓存） |
 | cachedMethodOffset | int | 缓存的方法入口偏移 |
 

@@ -158,7 +158,7 @@ DarticFuncProto 是编译器为每个函数生成的元数据对象，包含执�
 
 ### 内联缓存 (IC) 分发
 
-每个 `CALL_VIRTUAL` 指令关联一个 IC 槽位（存储在 DarticFuncProto.icTable 中，IC 条目结构定义详见 Ch1），记录最近一次成功匹配的 classId 和方法偏移。
+每个 `CALL_VIRTUAL` 指令关联一个 IC 槽位（存储在 DarticFuncProto.icTable 中，IC 条目结构定义详见 Ch1），记录最近一次成功匹配的 classId 和方法偏移。IC 条目还包含 `argCount`（不含 receiver 的参数数量），用于 IC miss 时 noSuchMethod 回退构造 Invocation（详见"动态分发"节）。
 
 **IC 分发流程**：
 
@@ -262,11 +262,26 @@ for each frame in call stack (current -> bottom):
 **分发流程**：
 
 1. 检查接收者类型：
-   - DarticObject -> 通过 `classId` 查找 DarticClassInfo，在 `fields` 或 `methods` 中按名称索引查找
+   - DarticObject -> 通过 `classId` 查找 DarticClassInfo，按名称索引在 `fields`（字段表）或 `methods`（方法表）中查找
    - 宿主对象 -> 委托给 HostClassWrapper 路由（详见 Ch4）
-2. 查找失败时 -> 查找接收者类的 `noSuchMethod` 方法并调用，传入 `Invocation` 描述对象
+2. 查找成功 -> 通过 `_callDarticMethod` 辅助机制执行（详见下方"DarticObject 方法的动态调用"）
+3. 查找失败 -> 进入 noSuchMethod 回退（详见下方"noSuchMethod 回退"）
 
 动态分发不使用 IC 缓存——`dynamic` 调用点类型不稳定，单态 IC 的命中率低，缓存维护开销大于收益。
+
+**DarticObject 方法的动态调用**：动态分发路径（`INVOKE_DYN` / `GET_FIELD_DYN` getter / `SET_FIELD_DYN` setter）在方法表中找到目标方法后，通过 HOST_BOUNDARY 机制执行（与 `invokeClosure` 相同），而非直接压帧。原因：动态分发的调用者期望结果在引用栈（ref），但被调用方法可能返回值类型（`RETURN_VAL` 写值栈）。HOST_BOUNDARY 机制自动处理值类型装箱，确保动态分发结果始终在引用栈上。
+
+**noSuchMethod 回退**：当字段/方法查找失败时，运行时构造 `DarticInvocation` 描述对象（详见 Ch4）并查找接收者类的 `noSuchMethod` 方法：
+
+| 分派路径 | Invocation 类型 | 参数来源 |
+|---------|----------------|---------|
+| CALL_VIRTUAL IC miss | `.method(name, args)` | 从引用栈收集，数量从 `ICEntry.argCount` |
+| INVOKE_DYN 未找到 | `.method(name, args)` | 从引用栈收集 |
+| GET_FIELD_DYN 未找到 | `.getter(name)` | 无参 |
+| SET_FIELD_DYN 未找到 | `.setter(name, value)` | 已有的 value |
+
+- **DarticObject**：查 `DarticClassInfo.methods` 中的 `noSuchMethod` 方法名索引（通过 `ConstantPool.lookupNameIndex('noSuchMethod')` 获取）。若有 override -> 通过 HOST_BOUNDARY 机制调用 `noSuchMethod(invocation)`，返回值作为分发结果。若无 override -> 抛出 `NoSuchMethodError`
+- **宿主对象**：直接调用 `(receiver as Object).noSuchMethod(invocation)`（通常抛出 `NoSuchMethodError`），异常通过 `unwindToHandler` 路由到 Dartic 异常处理器
 
 ### Super 方法解析
 
