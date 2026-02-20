@@ -6,6 +6,7 @@ import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/runtime/closure.dart';
+import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -158,6 +159,107 @@ void main() {
 
       final result = interp.invokeClosure(closure, []);
       expect(result, equals(99));
+    });
+
+    test('invokes a closure that returns a double via RETURN_VAL', () {
+      // Closure: LOAD_CONST_DBL 0, 0 → RETURN_VAL 0
+      final cp = ConstantPool();
+      cp.addDouble(3.14);
+
+      final closureBytecode = Uint32List.fromList([
+        encodeABx(Op.loadConstDbl, 0, 0), // doubleView[0] = 3.14
+        encodeABC(Op.returnVal, 0, 0, 0), // return valueStack[0]
+      ]);
+
+      final closureProto = DarticFuncProto(
+        funcId: 1,
+        name: 'dblReturn',
+        bytecode: closureBytecode,
+        valueRegCount: 1,
+        refRegCount: 2, // ITA, FTA
+        paramCount: 0,
+        returnKind: StackKind.doubleVal.index,
+      );
+
+      final entryBytecode = Uint32List.fromList([
+        encodeABC(Op.halt, 0, 0, 0),
+      ]);
+
+      final module = DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: entryBytecode,
+            valueRegCount: 0,
+            refRegCount: 1,
+            paramCount: 0,
+          ),
+          closureProto,
+        ],
+        constantPool: cp,
+        entryFuncId: 0,
+      );
+
+      final interp = DarticInterpreter();
+      interp.execute(module);
+
+      final closure = DarticClosure(
+        funcProto: closureProto,
+        upvalues: [],
+      );
+
+      final result = interp.invokeClosure(closure, []);
+      expect(result, isA<double>());
+      expect(result, closeTo(3.14, 0.001));
+    });
+
+    test('invokes a closure that returns a bool via RETURN_VAL', () {
+      // Closure: LOAD_INT 0, 1 → RETURN_VAL 0
+      final closureBytecode = Uint32List.fromList([
+        encodeABx(Op.loadInt, 0, 1 + 0x7FFF), // valueStack[0] = 1 (true)
+        encodeABC(Op.returnVal, 0, 0, 0), // return valueStack[0]
+      ]);
+
+      final closureProto = DarticFuncProto(
+        funcId: 1,
+        name: 'boolReturn',
+        bytecode: closureBytecode,
+        valueRegCount: 1,
+        refRegCount: 2, // ITA, FTA
+        paramCount: 0,
+        returnKind: StackKind.boolVal.index,
+      );
+
+      final entryBytecode = Uint32List.fromList([
+        encodeABC(Op.halt, 0, 0, 0),
+      ]);
+
+      final module = DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: entryBytecode,
+            valueRegCount: 0,
+            refRegCount: 1,
+            paramCount: 0,
+          ),
+          closureProto,
+        ],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+
+      final interp = DarticInterpreter();
+      interp.execute(module);
+
+      final closure = DarticClosure(
+        funcProto: closureProto,
+        upvalues: [],
+      );
+
+      final result = interp.invokeClosure(closure, []);
+      expect(result, isA<bool>());
+      expect(result, true);
     });
 
     test('invokes a closure that returns null via RETURN_NULL', () {

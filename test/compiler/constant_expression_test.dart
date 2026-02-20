@@ -604,6 +604,18 @@ bool main() => neq(true, false);
       expect(interp.entryResult, true);
     });
 
+    test('bool return from ref-stack expression uses UNBOX_BOOL', () async {
+      // When a function returns bool but the expression is on the ref stack
+      // (e.g., via Object? → bool), the return path should use UNBOX_BOOL.
+      final module = await compileDart('''
+bool cast(Object? x) => x as bool;
+bool main() => cast(true);
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, true);
+    });
+
     test('bool? variable boxing preserves bool identity', () async {
       // bool? x = true; should use BOX_BOOL (not BOX_INT), so that
       // the ref stack holds a Dart bool, not an int.

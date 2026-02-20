@@ -503,9 +503,11 @@ extension on DarticCompiler {
       // E.g. `Object x = 42; return x as int;` — `as int` stays on ref stack,
       // but caller expects RETURN_VAL for int return type.
       final valReg = _valueAlloc.alloc();
-      final unboxOp = retKind == StackKind.doubleVal
-          ? Op.unboxDouble
-          : Op.unboxInt;
+      final unboxOp = switch (retKind) {
+        StackKind.doubleVal => Op.unboxDouble,
+        StackKind.boolVal => Op.unboxBool,
+        _ => Op.unboxInt,
+      };
       _emitter.emit(encodeABC(unboxOp, valReg, reg, 0));
       _emitter.emit(encodeABC(Op.returnVal, valReg, 0, 0));
     } else if (loc == ResultLoc.value && retKind == StackKind.ref) {
@@ -513,8 +515,8 @@ extension on DarticCompiler {
       // value type (int?, bool?, double?).  The caller expects RETURN_REF.
       // E.g. `int? f() => 42;` — literal 42 is on the value stack but the
       // return type int? requires the ref stack.
-      // Use _emitBoxToRef which correctly handles bool (JUMP_IF_FALSE pattern)
-      // in addition to int (BOX_INT) and double (BOX_DOUBLE).
+      // Use _emitBoxToRef which correctly handles bool (BOX_BOOL),
+      // int (BOX_INT), and double (BOX_DOUBLE).
       final exprType = _inferExprType(expr);
       final refReg = _emitBoxToRef(reg, exprType);
       _emitter.emit(encodeABC(Op.returnRef, refReg, 0, 0));

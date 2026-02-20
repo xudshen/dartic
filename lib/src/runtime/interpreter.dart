@@ -1017,15 +1017,19 @@ class DarticInterpreter {
           // Capture return value before frame teardown.
           final Object? retRef;
           final int retVal;
+          final int retValIdx; // absolute value-stack index for HOST_BOUNDARY reads
           if (op == Op.returnRef) {
             retRef = rs.read(rBase + ((instr >> 8) & 0xFF));
             retVal = 0;
+            retValIdx = 0;
           } else if (op == Op.returnVal) {
             retRef = null;
-            retVal = vs.readInt(vBase + ((instr >> 8) & 0xFF));
+            retValIdx = vBase + ((instr >> 8) & 0xFF);
+            retVal = vs.readInt(retValIdx);
           } else {
             retRef = null;
             retVal = 0;
+            retValIdx = 0;
           }
 
           // Read caller state from current (callee) frame.
@@ -1049,12 +1053,17 @@ class DarticInterpreter {
 
           if (callStack.isHostBoundary) {
             // Callback complete — store result for invokeClosure to read.
-            // Convert value-stack bool (int 0/1) to Dart bool at the boundary.
+            // At HOST_BOUNDARY, value-stack results cross into Dart Object? land,
+            // so we must read with the correct view based on returnKind.
             if (op == Op.returnVal) {
               final retKind = module.functions[calleeFuncId].returnKind;
-              _callbackResult = retKind == StackKind.boolVal.index
-                  ? (retVal != 0)
-                  : retVal;
+              if (retKind == StackKind.boolVal.index) {
+                _callbackResult = retVal != 0;
+              } else if (retKind == StackKind.doubleVal.index) {
+                _callbackResult = vs.readDouble(retValIdx);
+              } else {
+                _callbackResult = retVal;
+              }
             } else {
               _callbackResult = retRef;
             }
