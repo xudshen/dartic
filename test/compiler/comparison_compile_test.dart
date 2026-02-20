@@ -110,20 +110,20 @@ void main() {}
   });
 
   group('!= operator compilation', () {
-    test('int != int -> EQ_INT + BIT_XOR (not)', () async {
+    test('int != int -> EQ_INT + NOT_BOOL', () async {
       final module = await compileDart('''
 bool f(int a, int b) => a != b;
 void main() {}
 ''');
       final f = findFunc(module, 'f');
-      // != desugars to Not(EqualsCall(a, b)), so we expect EQ_INT + XOR.
+      // != desugars to Not(EqualsCall(a, b)), so we expect EQ_INT + NOT_BOOL.
       expect(findOp(f.bytecode, Op.eqInt), isNot(-1),
           reason: 'EQ_INT not found for !=');
-      expect(findOp(f.bytecode, Op.bitXor), isNot(-1),
-          reason: 'BIT_XOR not found for != negation');
+      expect(findOp(f.bytecode, Op.notBool), isNot(-1),
+          reason: 'NOT_BOOL not found for != negation');
     });
 
-    test('double != double -> EQ_DBL + BIT_XOR (not)', () async {
+    test('double != double -> EQ_DBL + NOT_BOOL', () async {
       final module = await compileDart('''
 bool f(double a, double b) => a != b;
 void main() {}
@@ -131,8 +131,8 @@ void main() {}
       final f = findFunc(module, 'f');
       expect(findOp(f.bytecode, Op.eqDbl), isNot(-1),
           reason: 'EQ_DBL not found for !=');
-      expect(findOp(f.bytecode, Op.bitXor), isNot(-1),
-          reason: 'BIT_XOR not found for != negation');
+      expect(findOp(f.bytecode, Op.notBool), isNot(-1),
+          reason: 'NOT_BOOL not found for != negation');
     });
   });
 
@@ -163,8 +163,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      // bool true = 1 on valueStack
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double < double (false) end-to-end', () async {
@@ -177,7 +176,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('double <= double (equal, true) end-to-end', () async {
@@ -190,7 +189,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double > double (true) end-to-end', () async {
@@ -203,7 +202,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double >= double (equal, true) end-to-end', () async {
@@ -216,7 +215,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double == double (true) end-to-end', () async {
@@ -229,7 +228,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double == double (false) end-to-end', () async {
@@ -242,7 +241,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('double != double (true) end-to-end', () async {
@@ -255,7 +254,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double != double (false) end-to-end', () async {
@@ -268,7 +267,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('int < int (true) end-to-end', () async {
@@ -281,7 +280,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('int >= int (false) end-to-end', () async {
@@ -294,7 +293,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 }

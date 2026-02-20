@@ -23,12 +23,12 @@ void main() {}
 ''');
       final f = findFunc(module, 'f');
       // is! compiles as Not(IsExpression), which means INSTANCEOF followed by
-      // a bitwise XOR (NOT) to invert the boolean result.
+      // NOT_BOOL to invert the boolean result.
       expect(findOp(f.bytecode, Op.instanceOf), isNot(-1),
           reason: 'INSTANCEOF not found for is! int');
       final instanceOfIdx = findOp(f.bytecode, Op.instanceOf);
-      expect(findOp(f.bytecode, Op.bitXor, start: instanceOfIdx), isNot(-1),
-          reason: 'BIT_XOR (NOT) not found after INSTANCEOF for is!');
+      expect(findOp(f.bytecode, Op.notBool, start: instanceOfIdx), isNot(-1),
+          reason: 'NOT_BOOL not found after INSTANCEOF for is!');
     });
   });
 
@@ -52,7 +52,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is int with string value returns false', () async {
@@ -62,7 +62,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('x is! int with int value returns false', () async {
@@ -72,7 +72,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('x is! int with string value returns true', () async {
@@ -82,7 +82,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is num with int returns true', () async {
@@ -92,7 +92,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is num with double returns true', () async {
@@ -102,7 +102,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is num with string returns false', () async {
@@ -112,7 +112,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('x is Object with non-null returns true', () async {
@@ -122,7 +122,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is Object with null returns false', () async {
@@ -132,7 +132,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('null is int returns false', () async {
@@ -142,7 +142,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('x is String with string value returns true', () async {
@@ -152,7 +152,7 @@ bool main() => check("hello");
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is String with int value returns false', () async {
@@ -162,7 +162,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('x is bool with bool value returns true', () async {
@@ -172,7 +172,7 @@ bool main() => check(true);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is double with double value returns true', () async {
@@ -182,7 +182,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('x is double with int value returns false', () async {
@@ -192,7 +192,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 
@@ -251,7 +251,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('double variable is num returns true (requires boxing)', () async {
@@ -261,7 +261,7 @@ bool main() => check(3.14);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('bool variable is bool returns true (requires boxing)', () async {
@@ -271,7 +271,7 @@ bool main() => check(true);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
   });
 
@@ -283,7 +283,7 @@ bool main() => check(null);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('non-null is Null returns false', () async {
@@ -293,7 +293,7 @@ bool main() => check(42);
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 }

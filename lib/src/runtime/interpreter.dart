@@ -7,6 +7,7 @@ import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../compiler/type_template.dart';
 import 'call_stack.dart';
+import 'class_info.dart' show StackKind;
 import 'closure.dart';
 import 'dartic_type.dart';
 import 'error.dart';
@@ -248,13 +249,15 @@ class DarticInterpreter {
       var valArgIdx = 0;
       var refArgIdx = 3; // After ITA(0), FTA(1), this(2)
       for (var i = 0; i < args.length; i++) {
-        final kind = i < paramKinds.length ? paramKinds[i] : 2; // default ref
-        if (kind == 2) {
-          // StackKind.ref
+        final kind =
+            i < paramKinds.length ? paramKinds[i] : StackKind.ref.index;
+        if (kind == StackKind.ref.index) {
           refStack.write(rBase + refArgIdx, args[i]);
           refArgIdx++;
-        } else if (kind == 0) {
-          // StackKind.intVal (int, bool — bools stored as 0/1)
+        } else if (kind == StackKind.intVal.index) {
+          valueStack.writeInt(vBase + valArgIdx, args[i] as int);
+          valArgIdx++;
+        } else if (kind == StackKind.boolVal.index) {
           final v = args[i];
           valueStack.writeInt(
               vBase + valArgIdx, v is bool ? (v ? 1 : 0) : v as int);
@@ -305,7 +308,7 @@ class DarticInterpreter {
 
     // Box RETURN_VAL results: the value stack stores bool as int 0/1,
     // but the host VM expects a Dart bool.
-    if (result is int && proto.returnKind == 3) {
+    if (result is int && proto.returnKind == StackKind.boolVal.index) {
       result = result != 0;
     }
 
@@ -446,6 +449,9 @@ class DarticInterpreter {
             uv.value = val;
           }
 
+        // ── Type Conversion & Boxing (0x25-0x2D) ──
+        // (intToDbl/dblToInt handled below in Float Arithmetic section)
+
         case Op.boxInt: // BOX_INT A, B — refStack[A] = valueStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
@@ -456,18 +462,30 @@ class DarticInterpreter {
           final b = (instr >> 16) & 0xFF;
           rs.write(rBase + a, vs.readDouble(vBase + b));
 
+        case Op.boxBool: // BOX_BOOL A, B — refStack[A] = (valueStack[B] != 0)
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          rs.write(rBase + a, vs.readInt(vBase + b) != 0);
+
         case Op.unboxInt: // UNBOX_INT A, B — valueStack[A] = refStack[B] as int
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
-          final ubVal = rs.read(rBase + b);
-          // Bool values from generic fields are stored as Dart bool on the ref
-          // stack but share int (0/1) representation on the value stack.
-          vs.writeInt(vBase + a, ubVal is bool ? (ubVal ? 1 : 0) : ubVal as int);
+          vs.writeInt(vBase + a, rs.read(rBase + b) as int);
 
         case Op.unboxDouble: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           vs.writeDouble(vBase + a, rs.read(rBase + b) as double);
+
+        case Op.unboxBool: // UNBOX_BOOL A, B — valueStack[A] = (refStack[B] as bool) ? 1 : 0
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          vs.writeInt(vBase + a, (rs.read(rBase + b) as bool) ? 1 : 0);
+
+        case Op.notBool: // NOT_BOOL A, B — valueStack[A] = valueStack[B] ^ 1
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          vs.writeInt(vBase + a, vs.readInt(vBase + b) ^ 1);
 
         // ── Integer Arithmetic (0x10-0x1F) ──
 
@@ -1404,15 +1422,26 @@ class DarticInterpreter {
 
         // ── System ──
 
-        case Op.halt: // HALT ABC: A=resultReg, B=kind, C=unused
+        case Op.halt: // HALT ABC: A=resultReg, B=kind+1, C=unused
           // Extract result BEFORE resetting stack pointers.
+          // B encodes StackKind.index + 1, where 0 means void/no result.
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
-          switch (b) {
-            case 1: _lastEntryResult = vs.readInt(vBase + a);
-            case 2: _lastEntryResult = vs.readDouble(vBase + a);
-            case 3: _lastEntryResult = rs.read(rBase + a);
-            default: _lastEntryResult = null;
+          if (b == 0) {
+            _lastEntryResult = null; // void
+          } else {
+            final kindIdx = b - 1;
+            if (kindIdx == StackKind.ref.index) {
+              _lastEntryResult = rs.read(rBase + a);
+            } else if (kindIdx == StackKind.boolVal.index) {
+              _lastEntryResult = vs.readInt(vBase + a) != 0;
+            } else if (kindIdx == StackKind.intVal.index) {
+              _lastEntryResult = vs.readInt(vBase + a);
+            } else if (kindIdx == StackKind.doubleVal.index) {
+              _lastEntryResult = vs.readDouble(vBase + a);
+            } else {
+              _lastEntryResult = null;
+            }
           }
           vs.sp = vBase;
           rs.sp = rBase;

@@ -28,7 +28,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('a && b does not short-circuit: true && true => true', () async {
@@ -41,7 +41,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a && b does not short-circuit: true && false => false', () async {
@@ -54,7 +54,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 
@@ -80,7 +80,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a || b does not short-circuit: false || true => true', () async {
@@ -93,7 +93,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a || b does not short-circuit: false || false => false', () async {
@@ -106,7 +106,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 
@@ -121,7 +121,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('!false => true', () async {
@@ -134,7 +134,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
   });
 
@@ -256,7 +256,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a && b || c: (true && true) || false => true', () async {
@@ -269,7 +269,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a && b || c: (false && true) || false => false', () async {
@@ -282,7 +282,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('!(a || b): !(false || false) => true', () async {
@@ -295,7 +295,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('!(a || b): !(true || false) => false', () async {
@@ -308,7 +308,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('a && b && c: chained &&', () async {
@@ -321,7 +321,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('a && b && c: first false short-circuits all', () async {
@@ -334,7 +334,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('a && b && c: middle false short-circuits rest', () async {
@@ -347,7 +347,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 
@@ -363,7 +363,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('assign || result to variable and return', () async {
@@ -377,7 +377,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('function returning && result', () async {
@@ -392,7 +392,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('function returning || result', () async {
@@ -407,7 +407,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 
@@ -422,7 +422,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('(x > 0) && (y > 0) short-circuits when x <= 0', () async {
@@ -435,7 +435,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
 
     test('(x == 0) || (y == 0)', () async {
@@ -448,7 +448,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('(x == 0) || (y == 0) both nonzero', () async {
@@ -461,7 +461,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 0);
+      expect(interp.entryResult, false);
     });
   });
 

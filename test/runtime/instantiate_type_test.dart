@@ -45,7 +45,7 @@ void main() {
         Uint32List.fromList([
           // INSTANTIATE_TYPE A=3, Bx=templateIdx
           encodeABx(Op.instantiateType, 3, templateIdx),
-          encodeABC(Op.halt, 3, 3, 0), // return ref reg 3
+          encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -72,7 +72,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 = ITA
           encodeABx(Op.instantiateType, 3, templateIdx), // resolve T → string
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -99,7 +99,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 = ITA = [intType]
           encodeABx(Op.instantiateType, 3, templateIdx), // List<int>
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -131,7 +131,7 @@ void main() {
           encodeABx(Op.instantiateType, 4, strIdx), // reg 4 = stringType
           // CREATE_TYPE_ARGS A=count(2), B=startReg(3), C=destReg(5)
           encodeABC(Op.createTypeArgs, 2, 3, 5),
-          encodeABC(Op.halt, 5, 3, 0), // return ref reg 5
+          encodeABC(Op.halt, 5, 1, 0), // return ref reg 5
         ]),
         refRegCount: 7,
         constantPool: cp,
@@ -155,7 +155,7 @@ void main() {
           encodeABx(Op.instantiateType, 3, dblIdx), // reg 3 = doubleType
           // CREATE_TYPE_ARGS count=1, start=3, dest=4
           encodeABC(Op.createTypeArgs, 1, 3, 4),
-          encodeABC(Op.halt, 4, 3, 0),
+          encodeABC(Op.halt, 4, 1, 0),
         ]),
         refRegCount: 6,
         constantPool: cp,

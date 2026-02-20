@@ -29,7 +29,7 @@ void main() {
           encodeABx(Op.loadConst, 0, helloIdx),
           encodeABx(Op.loadConst, 1, worldIdx),
           encodeABC(Op.stringInterp, 2, 0, 2),
-          encodeABC(Op.halt, 2, 3, 0), // B=3 → ref result
+          encodeABC(Op.halt, 2, 1, 0), // B=1 → ref result
         ]),
         refRegCount: 3,
         constantPool: cp,
@@ -48,7 +48,7 @@ void main() {
         encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
         encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) = 42
         encodeABC(Op.stringInterp, 2, 0, 2), // r2 = concat(r0, r1) = "value=42"
-        encodeABC(Op.halt, 2, 3, 0), // return r2 as ref
+        encodeABC(Op.halt, 2, 1, 0), // return r2 as ref
       ]);
 
       final module = buildModule(
@@ -72,7 +72,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 0, idx),
           encodeABC(Op.stringInterp, 1, 0, 1),
-          encodeABC(Op.halt, 1, 3, 0),
+          encodeABC(Op.halt, 1, 1, 0),
         ]),
         refRegCount: 2,
         constantPool: cp,
@@ -87,7 +87,7 @@ void main() {
       final module = buildModule(
         Uint32List.fromList([
           encodeABC(Op.stringInterp, 0, 0, 0),
-          encodeABC(Op.halt, 0, 3, 0),
+          encodeABC(Op.halt, 0, 1, 0),
         ]),
         refRegCount: 1,
       );
@@ -109,7 +109,7 @@ void main() {
           encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) = 3
           encodeABx(Op.loadConst, 2, partCIdx), // r2 = " items"
           encodeABC(Op.stringInterp, 3, 0, 3), // r3 = concat(r0,r1,r2)
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 4,
         valueRegCount: 1,
@@ -130,7 +130,7 @@ void main() {
           encodeABx(Op.loadConst, 0, prefixIdx), // r0 = "val="
           encodeABC(Op.loadNull, 1, 0, 0), // r1 = null
           encodeABC(Op.stringInterp, 2, 0, 2), // r2 = "val=null"
-          encodeABC(Op.halt, 2, 3, 0),
+          encodeABC(Op.halt, 2, 1, 0),
         ]),
         refRegCount: 3,
         constantPool: cp,

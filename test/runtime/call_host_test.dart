@@ -48,10 +48,10 @@ void main() {
       bindings.register('test::noarg#0', (args) => 42);
 
       // CALL_HOST A=0, Bx=0  →  refStack[0] = hostBindings.invoke(0, [])
-      // HALT A=0, B=3(ref)
+      // HALT A=0, B=1(ref)
       final code = Uint32List.fromList([
         encodeABx(Op.callHost, 0, 0), // callHost r0, binding#0
-        encodeABC(Op.halt, 0, 3, 0), // halt r0, kind=ref
+        encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
 
       final result = runWithBindings(
@@ -78,7 +78,7 @@ void main() {
         // So we need arg at r1.
         encodeABC(Op.moveRef, 1, 0, 0), // r1 = r0 (arg)
         encodeABx(Op.callHost, 0, 0), // r0 = callHost binding#0
-        encodeABC(Op.halt, 0, 3, 0), // halt r0, kind=ref
+        encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
 
       final result = runWithBindings(
@@ -100,7 +100,7 @@ void main() {
         encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) → arg0
         encodeABC(Op.boxInt, 2, 1, 0), // r2 = box(v1) → arg1
         encodeABx(Op.callHost, 0, 0), // r0 = callHost binding#0
-        encodeABC(Op.halt, 0, 3, 0), // halt r0, kind=ref
+        encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
 
       final result = runWithBindings(
@@ -118,10 +118,10 @@ void main() {
       // try { callHost } catch (e) { result = 99 }
       final code = Uint32List.fromList([
         encodeABx(Op.callHost, 0, 0), // PC=0: callHost r0, binding#0
-        encodeABC(Op.halt, 0, 3, 0), // PC=1: halt (unreachable)
+        encodeABC(Op.halt, 0, 1, 0), // PC=1: halt (unreachable)
         // handler at PC=2:
         encodeAsBx(Op.loadInt, 0, 99), // PC=2: v0 = 99
-        encodeABC(Op.halt, 0, 1, 0), // PC=3: halt v0, kind=int
+        encodeABC(Op.halt, 0, 3, 0), // PC=3: halt v0, kind=int
       ]);
 
       final module = DarticModule(
@@ -207,7 +207,7 @@ void main() {
 
       final code = Uint32List.fromList([
         encodeABx(Op.callHost, 0, 0),
-        encodeABC(Op.halt, 0, 3, 0), // halt r0, kind=ref
+        encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
 
       final result = runWithBindings(
@@ -222,7 +222,7 @@ void main() {
 
       final code = Uint32List.fromList([
         encodeABx(Op.callHost, 0, 0),
-        encodeABC(Op.halt, 0, 3, 0), // halt r0, kind=ref
+        encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
 
       final result = runWithBindings(
@@ -236,7 +236,7 @@ void main() {
       // Modules without CALL_HOST should work even without hostBindings.
       final code = Uint32List.fromList([
         encodeAsBx(Op.loadInt, 0, 7),
-        encodeABC(Op.halt, 0, 1, 0),
+        encodeABC(Op.halt, 0, 3, 0),
       ]);
 
       final module = DarticModule(

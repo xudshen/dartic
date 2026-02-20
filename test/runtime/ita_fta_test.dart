@@ -44,7 +44,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 (ITA slot) = ita
           encodeABx(Op.pushIta, 3, 0), // reg 3 = ITA (from reg 0)
-          encodeABC(Op.halt, 3, 3, 0), // return ref reg 3
+          encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -59,7 +59,7 @@ void main() {
       final module = buildModule(
         Uint32List.fromList([
           encodeABx(Op.pushIta, 3, 0), // reg 3 = ITA (reg 0 = null)
-          encodeABC(Op.halt, 3, 3, 0), // return ref reg 3
+          encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
         ]),
         refRegCount: 5,
       );
@@ -80,7 +80,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 1, ftaIdx), // reg 1 (FTA slot) = fta
           encodeABx(Op.pushFta, 4, 0), // reg 4 = FTA (from reg 1)
-          encodeABC(Op.halt, 4, 3, 0), // return ref reg 4
+          encodeABC(Op.halt, 4, 1, 0), // return ref reg 4
         ]),
         refRegCount: 6,
         constantPool: cp,
@@ -94,7 +94,7 @@ void main() {
       final module = buildModule(
         Uint32List.fromList([
           encodeABx(Op.pushFta, 3, 0), // reg 3 = FTA (reg 1 = null)
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 5,
       );
@@ -115,7 +115,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 2, taIdx), // reg 2 = typeArgs list
           encodeABC(Op.loadTypeArg, 3, 2, 0), // reg 3 = typeArgs[0]
-          encodeABC(Op.halt, 3, 3, 0), // return ref reg 3
+          encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -134,7 +134,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 2, taIdx),
           encodeABC(Op.loadTypeArg, 3, 2, 1), // reg 3 = typeArgs[1]
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 5,
         constantPool: cp,
@@ -154,7 +154,7 @@ void main() {
         Uint32List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 (ITA) = [boolType]
           encodeABC(Op.loadTypeArg, 3, 0, 0), // reg 3 = ITA[0] = boolType
-          encodeABC(Op.halt, 3, 3, 0),
+          encodeABC(Op.halt, 3, 1, 0),
         ]),
         refRegCount: 5,
         constantPool: cp,

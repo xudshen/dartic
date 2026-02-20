@@ -97,7 +97,7 @@ bool main() {
 ''');
       final interp = DarticInterpreter();
       interp.execute(module);
-      expect(interp.entryResult, 1);
+      expect(interp.entryResult, true);
     });
 
     test('String result type (ref stack)', () async {

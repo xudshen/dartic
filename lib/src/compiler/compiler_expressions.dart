@@ -2107,17 +2107,21 @@ extension on DarticCompiler {
     if (actualRetKind == StackKind.ref && instRetKind.isValue) {
       // Inner returns ref, caller expects value → UNBOX + RETURN_VAL.
       final valReg = _allocValueReg();
-      final unboxOp = instRetKind == StackKind.doubleVal
-          ? Op.unboxDouble
-          : Op.unboxInt;
+      final unboxOp = switch (instRetKind) {
+        StackKind.doubleVal => Op.unboxDouble,
+        StackKind.boolVal => Op.unboxBool,
+        _ => Op.unboxInt,
+      };
       _emitter.emit(encodeABC(unboxOp, valReg, innerResultReg, 0));
       _emitter.emit(encodeABC(Op.returnVal, valReg, 0, 0));
     } else if (actualRetKind.isValue && instRetKind == StackKind.ref) {
       // Inner returns value, caller expects ref → BOX + RETURN_REF.
       final refReg = _allocRefReg();
-      final boxOp = actualRetKind == StackKind.doubleVal
-          ? Op.boxDouble
-          : Op.boxInt;
+      final boxOp = switch (actualRetKind) {
+        StackKind.doubleVal => Op.boxDouble,
+        StackKind.boolVal => Op.boxBool,
+        _ => Op.boxInt,
+      };
       _emitter.emit(encodeABC(boxOp, refReg, innerResultReg, 0));
       _emitter.emit(encodeABC(Op.returnRef, refReg, 0, 0));
     } else if (actualRetKind.isValue) {

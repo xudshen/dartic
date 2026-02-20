@@ -16,7 +16,7 @@ void main() {
       //   LOAD_CONST r1, "b"
       //   LOAD_CONST r2, "c"
       //   CREATE_LIST r3, 0, 3  → r3 = [r0, r1, r2]
-      //   HALT r3, kind=3 (ref)
+      //   HALT r3, kind=1 (ref)
       final cp = ConstantPool();
       final idxA = cp.addRef('a');
       final idxB = cp.addRef('b');
@@ -27,7 +27,7 @@ void main() {
         encodeABx(Op.loadConst, 1, idxB),
         encodeABx(Op.loadConst, 2, idxC),
         encodeABC(Op.createList, 3, 0, 3),
-        encodeABC(Op.halt, 3, 3, 0), // result in ref reg 3, kind=3 (ref)
+        encodeABC(Op.halt, 3, 1, 0), // result in ref reg 3, kind=1 (ref)
       ]);
 
       final module = buildModule(
@@ -46,10 +46,10 @@ void main() {
     test('creates empty list with C=0', () {
       // Program:
       //   CREATE_LIST r0, 0, 0  → r0 = []
-      //   HALT r0, kind=3 (ref)
+      //   HALT r0, kind=1 (ref)
       final bytecode = Uint32List.fromList([
         encodeABC(Op.createList, 0, 0, 0),
-        encodeABC(Op.halt, 0, 3, 0),
+        encodeABC(Op.halt, 0, 1, 0),
       ]);
 
       final module = buildModule(bytecode, refRegCount: 1);
@@ -68,14 +68,14 @@ void main() {
       //   LOAD_INT v1, 20
       //   BOX_INT r1, v1
       //   CREATE_LIST r2, 0, 2  → r2 = [10, 20]
-      //   HALT r2, kind=3 (ref)
+      //   HALT r2, kind=1 (ref)
       final bytecode = Uint32List.fromList([
         encodeAsBx(Op.loadInt, 0, 10),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeAsBx(Op.loadInt, 1, 20),
         encodeABC(Op.boxInt, 1, 1, 0),
         encodeABC(Op.createList, 2, 0, 2),
-        encodeABC(Op.halt, 2, 3, 0),
+        encodeABC(Op.halt, 2, 1, 0),
       ]);
 
       final module = buildModule(
@@ -98,7 +98,7 @@ void main() {
       final bytecode = Uint32List.fromList([
         encodeABx(Op.loadConst, 0, idx),
         encodeABC(Op.createList, 1, 0, 1),
-        encodeABC(Op.halt, 1, 3, 0),
+        encodeABC(Op.halt, 1, 1, 0),
       ]);
 
       final module = buildModule(
@@ -121,7 +121,7 @@ void main() {
       //   LOAD_CONST r2, "y"   (key 1)
       //   LOAD_CONST r3, "2"   (value 1)
       //   CREATE_MAP r4, 0, 2  → r4 = {r0:r1, r2:r3}
-      //   HALT r4, kind=3 (ref)
+      //   HALT r4, kind=1 (ref)
       final cp = ConstantPool();
       final idxX = cp.addRef('x');
       final idx1 = cp.addRef('1');
@@ -134,7 +134,7 @@ void main() {
         encodeABx(Op.loadConst, 2, idxY),
         encodeABx(Op.loadConst, 3, idx2),
         encodeABC(Op.createMap, 4, 0, 2),
-        encodeABC(Op.halt, 4, 3, 0),
+        encodeABC(Op.halt, 4, 1, 0),
       ]);
 
       final module = buildModule(
@@ -153,7 +153,7 @@ void main() {
     test('creates empty map with C=0', () {
       final bytecode = Uint32List.fromList([
         encodeABC(Op.createMap, 0, 0, 0),
-        encodeABC(Op.halt, 0, 3, 0),
+        encodeABC(Op.halt, 0, 1, 0),
       ]);
 
       final module = buildModule(bytecode, refRegCount: 1);
@@ -177,7 +177,7 @@ void main() {
         encodeAsBx(Op.loadInt, 3, 200),
         encodeABC(Op.boxInt, 3, 3, 0),
         encodeABC(Op.createMap, 4, 0, 2),
-        encodeABC(Op.halt, 4, 3, 0),
+        encodeABC(Op.halt, 4, 1, 0),
       ]);
 
       final module = buildModule(
@@ -201,7 +201,7 @@ void main() {
       //   LOAD_CONST r1, "b"
       //   LOAD_CONST r2, "c"
       //   CREATE_SET r3, 0, 3  → r3 = {"a", "b", "c"}
-      //   HALT r3, kind=3 (ref)
+      //   HALT r3, kind=1 (ref)
       final cp = ConstantPool();
       final idxA = cp.addRef('a');
       final idxB = cp.addRef('b');
@@ -212,7 +212,7 @@ void main() {
         encodeABx(Op.loadConst, 1, idxB),
         encodeABx(Op.loadConst, 2, idxC),
         encodeABC(Op.createSet, 3, 0, 3),
-        encodeABC(Op.halt, 3, 3, 0),
+        encodeABC(Op.halt, 3, 1, 0),
       ]);
 
       final module = buildModule(
@@ -231,7 +231,7 @@ void main() {
     test('creates empty set with C=0', () {
       final bytecode = Uint32List.fromList([
         encodeABC(Op.createSet, 0, 0, 0),
-        encodeABC(Op.halt, 0, 3, 0),
+        encodeABC(Op.halt, 0, 1, 0),
       ]);
 
       final module = buildModule(bytecode, refRegCount: 1);
@@ -252,7 +252,7 @@ void main() {
         encodeABx(Op.loadConst, 0, idxA),
         encodeABx(Op.loadConst, 1, idxB),
         encodeABC(Op.createSet, 2, 0, 2),
-        encodeABC(Op.halt, 2, 3, 0),
+        encodeABC(Op.halt, 2, 1, 0),
       ]);
 
       final module = buildModule(
