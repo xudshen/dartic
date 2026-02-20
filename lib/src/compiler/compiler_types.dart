@@ -27,14 +27,17 @@ extension on DarticCompiler {
     if (targetClass == _coreTypes.numClass ||
         targetClass == _coreTypes.intClass) {
       final receiverType = _inferExprType(expr.receiver);
-      if (receiverType != null && _isIntType(receiverType)) {
+      final receiverKind = receiverType != null
+          ? _classifyStackKind(receiverType)
+          : StackKind.ref;
+      if (receiverKind == StackKind.intVal) {
         // int `/` returns double; toDouble() returns double.
         if (invName == '/' || invName == 'toDouble') {
           return _coreTypes.doubleNonNullableRawType;
         }
         return _coreTypes.intNonNullableRawType;
       }
-      if (receiverType != null && _isDoubleType(receiverType)) {
+      if (receiverKind == StackKind.doubleVal) {
         if (invName == 'toInt') {
           return _coreTypes.intNonNullableRawType;
         }
@@ -54,12 +57,6 @@ extension on DarticCompiler {
     // becomes `int` for `Box<int>.getValue()`).
     return expr.functionType.returnType;
   }
-
-  bool _isIntType(ir.DartType type) =>
-      type is ir.InterfaceType && type.classNode == _coreTypes.intClass;
-
-  bool _isDoubleType(ir.DartType type) =>
-      type is ir.InterfaceType && type.classNode == _coreTypes.doubleClass;
 
   ir.DartType? _inferConstantType(ir.Constant constant) => switch (constant) {
         ir.IntConstant() => _coreTypes.intNonNullableRawType,

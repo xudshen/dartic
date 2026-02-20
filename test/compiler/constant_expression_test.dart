@@ -275,6 +275,40 @@ void main() {}
           reason: 'EQ_GENERIC not found for Object == Object');
     });
 
+    test('bool == bool → EQ_INT (no boxing)', () async {
+      final module = await compileDart('''
+bool f(bool a, bool b) => a == b;
+void main() {}
+''');
+      final f = findFunc(module, 'f');
+      final code = f.bytecode;
+
+      // bool == bool should use EQ_INT directly (bools are 0/1 on intView),
+      // not BOX_BOOL + BOX_BOOL + EQ_GENERIC.
+      expect(findOp(code, Op.eqInt), isNot(-1),
+          reason: 'EQ_INT not found for bool == bool');
+      expect(findOp(code, Op.boxBool), -1,
+          reason: 'BOX_BOOL should not appear — no boxing needed');
+      expect(findOp(code, Op.eqGeneric), -1,
+          reason: 'EQ_GENERIC should not appear for bool == bool');
+    });
+
+    test('bool != bool → EQ_INT + NOT_BOOL (no boxing)', () async {
+      final module = await compileDart('''
+bool f(bool a, bool b) => a != b;
+void main() {}
+''');
+      final f = findFunc(module, 'f');
+      final code = f.bytecode;
+
+      expect(findOp(code, Op.eqInt), isNot(-1),
+          reason: 'EQ_INT not found for bool != bool');
+      expect(findOp(code, Op.notBool), isNot(-1),
+          reason: 'NOT_BOOL not found for != negation');
+      expect(findOp(code, Op.boxBool), -1,
+          reason: 'BOX_BOOL should not appear');
+    });
+
     test('int equality result goes to value stack', () async {
       final module = await compileDart('''
 bool f(int a, int b) => a == b;
@@ -538,6 +572,51 @@ bool eq(int a, int b) => a == b;
 int main() => 42;
 ''');
       expect(findOp(findFunc(module, 'eq').bytecode, Op.eqInt), isNot(-1));
+    });
+
+    test('bool == bool (true) end-to-end', () async {
+      final module = await compileDart('''
+bool eq(bool a, bool b) => a == b;
+bool main() => eq(true, true);
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, true);
+    });
+
+    test('bool == bool (false) end-to-end', () async {
+      final module = await compileDart('''
+bool eq(bool a, bool b) => a == b;
+bool main() => eq(true, false);
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, false);
+    });
+
+    test('bool != bool (true) end-to-end', () async {
+      final module = await compileDart('''
+bool neq(bool a, bool b) => a != b;
+bool main() => neq(true, false);
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, true);
+    });
+
+    test('bool? variable boxing preserves bool identity', () async {
+      // bool? x = true; should use BOX_BOOL (not BOX_INT), so that
+      // the ref stack holds a Dart bool, not an int.
+      final module = await compileDart('''
+bool check(bool v) {
+  bool? x = v;
+  return x is bool;
+}
+bool main() => check(true);
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, true);
     });
 
     test('const arithmetic via function call', () async {

@@ -465,7 +465,7 @@ extension on DarticCompiler {
     final expr = stmt.expression;
     if (_isEntryFunction) {
       // Entry function: encode result register and type in HALT ABC fields.
-      // B field: 0=void, 1=int, 2=double, 3=ref (StackKind.index + 1).
+      // B field: 0=void, 1=ref, 2=boolVal, 3=intVal, 4=doubleVal (StackKind.index + 1).
       if (expr != null) {
         final (reg, loc) = _compileExpression(expr);
         final StackKind kind;
@@ -565,11 +565,12 @@ extension on DarticCompiler {
             ? (decl.type as ir.InterfaceType)
                 .withDeclaredNullability(ir.Nullability.nonNullable)
             : decl.type;
-        if (_isDoubleType(baseType)) {
-          _emitter.emit(encodeABC(Op.boxDouble, refReg, initReg, 0));
-        } else {
-          _emitter.emit(encodeABC(Op.boxInt, refReg, initReg, 0));
-        }
+        final boxOp = switch (_classifyStackKind(baseType)) {
+          StackKind.doubleVal => Op.boxDouble,
+          StackKind.boolVal => Op.boxBool,
+          _ => Op.boxInt,
+        };
+        _emitter.emit(encodeABC(boxOp, refReg, initReg, 0));
         _scope.declareWithReg(decl, kind, refReg);
       } else if (kind.isValue && initLoc == ResultLoc.ref) {
         // The declared type says value-stack (e.g. `int`), but the initializer

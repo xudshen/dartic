@@ -233,12 +233,12 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileEqualsCall(ir.EqualsCall expr) {
     final leftType = _inferExprType(expr.left);
-    final isInt = leftType != null && _isIntType(leftType);
-    final isDouble = leftType != null && _isDoubleType(leftType);
+    final leftKind =
+        leftType != null ? _classifyStackKind(leftType) : StackKind.ref;
 
     // User-defined operator==: dispatch via CALL_VIRTUAL.
-    // Check if interfaceTarget is from a user-defined class (not Object/int/double).
-    if (!isInt && !isDouble) {
+    // Check if interfaceTarget is from a user-defined class (not Object/int/double/bool).
+    if (leftKind == StackKind.ref) {
       final eqClass = expr.interfaceTarget.enclosingClass;
       if (eqClass != null && _classToClassId.containsKey(eqClass)) {
         return _compileUserEqualsCall(expr);
@@ -249,23 +249,25 @@ extension on DarticCompiler {
     var (rhsReg, rhsLoc) = _compileExpression(expr.right);
     final resultReg = _allocValueReg();
 
-    if (isInt) {
-      lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
-      rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
-      _emitter.emit(encodeABC(Op.eqInt, resultReg, lhsReg, rhsReg));
-    } else if (isDouble) {
-      lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.doubleVal);
-      rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.doubleVal);
-      _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
-    } else {
-      // EQ_GENERIC operates on the ref stack — ensure both operands are boxed.
-      if (lhsLoc == ResultLoc.value) {
-        lhsReg = _emitBoxToRef(lhsReg, _inferExprType(expr.left));
-      }
-      if (rhsLoc == ResultLoc.value) {
-        rhsReg = _emitBoxToRef(rhsReg, _inferExprType(expr.right));
-      }
-      _emitter.emit(encodeABC(Op.eqGeneric, resultReg, lhsReg, rhsReg));
+    switch (leftKind) {
+      case StackKind.intVal || StackKind.boolVal:
+        // bool uses intView (0/1), so EQ_INT works for both int and bool.
+        lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
+        rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
+        _emitter.emit(encodeABC(Op.eqInt, resultReg, lhsReg, rhsReg));
+      case StackKind.doubleVal:
+        lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.doubleVal);
+        rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.doubleVal);
+        _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
+      case StackKind.ref:
+        // EQ_GENERIC operates on the ref stack — ensure both operands are boxed.
+        if (lhsLoc == ResultLoc.value) {
+          lhsReg = _emitBoxToRef(lhsReg, _inferExprType(expr.left));
+        }
+        if (rhsLoc == ResultLoc.value) {
+          rhsReg = _emitBoxToRef(rhsReg, _inferExprType(expr.right));
+        }
+        _emitter.emit(encodeABC(Op.eqGeneric, resultReg, lhsReg, rhsReg));
     }
     return (resultReg, ResultLoc.value);
   }
@@ -962,11 +964,12 @@ extension on DarticCompiler {
     if (targetClass == _coreTypes.intClass ||
         targetClass == _coreTypes.numClass) {
       final receiverType = _inferExprType(expr.receiver);
+      final receiverKind = receiverType != null
+          ? _classifyStackKind(receiverType)
+          : StackKind.ref;
 
       // int `/` returns double -- convert both operands and use DIV_DBL.
-      if (name == '/' &&
-          receiverType != null &&
-          _isIntType(receiverType)) {
+      if (name == '/' && receiverKind == StackKind.intVal) {
         var (lhsReg, lhsLoc) = _compileExpression(expr.receiver);
         var (rhsReg, rhsLoc) =
             _compileExpression(expr.arguments.positional[0]);
@@ -982,7 +985,7 @@ extension on DarticCompiler {
       }
 
       // Check if receiver is statically int.
-      if (receiverType != null && _isIntType(receiverType)) {
+      if (receiverKind == StackKind.intVal) {
         final op = _intBinaryOp(name);
         if (op != null) return _emitBinaryOp(expr, op);
         if (name == 'unary-') return _emitUnaryOp(expr, Op.negInt);
@@ -991,7 +994,7 @@ extension on DarticCompiler {
       }
 
       // Check if receiver is statically double.
-      if (receiverType != null && _isDoubleType(receiverType)) {
+      if (receiverKind == StackKind.doubleVal) {
         final result = _tryCompileDoubleOp(expr, name);
         if (result != null) return result;
       }
