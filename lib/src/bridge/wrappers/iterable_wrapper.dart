@@ -63,6 +63,36 @@ abstract final class IterableBindings {
       return (args[0] as Iterable).iterator;
     });
 
-    // Callback-based methods (map, where, fold, etc.) -- deferred to 5.3.3
+    // ── Callback-based methods ──
+
+    bindings.register('dart:core::Iterable::forEach#1', (args) {
+      final fn = args[1] as Function;
+      (args[0] as Iterable).forEach((e) => Function.apply(fn, [e]));
+      return null;
+    });
+    bindings.register('dart:core::Iterable::map#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as Iterable).map((e) => Function.apply(fn, [e]));
+    });
+    bindings.register('dart:core::Iterable::where#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as Iterable)
+          .where((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::Iterable::fold#2', (args) {
+      final fn = args[2] as Function;
+      return (args[0] as Iterable)
+          .fold(args[1], (prev, e) => Function.apply(fn, [prev, e]));
+    });
+    bindings.register('dart:core::Iterable::any#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as Iterable)
+          .any((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::Iterable::every#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as Iterable)
+          .every((e) => Function.apply(fn, [e]) as bool);
+    });
   }
 }

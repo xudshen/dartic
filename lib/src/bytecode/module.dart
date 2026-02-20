@@ -117,6 +117,8 @@ class DarticFuncProto {
     required this.refRegCount,
     required this.paramCount,
     this.name = '',
+    this.paramKinds,
+    this.returnKind = 2,
     this.icTable = const [],
     this.exceptionTable = const [],
     this.upvalueDescriptors = const [],
@@ -140,6 +142,21 @@ class DarticFuncProto {
 
   /// Number of parameters.
   final int paramCount;
+
+  /// Per-parameter stack kind for [DarticInterpreter.invokeClosure] routing.
+  ///
+  /// Length equals [paramCount]. Each byte encodes a [StackKind] index:
+  /// `0` = intVal, `1` = doubleVal, `2` = ref.
+  /// When null, invokeClosure falls back to writing all args to the ref stack
+  /// (backward compatible with hand-crafted test protos).
+  final Uint8List? paramKinds;
+
+  /// Return value classification for [DarticInterpreter.invokeClosure] boxing.
+  ///
+  /// `0` = intVal, `1` = doubleVal, `2` = ref, `3` = boolVal (int 0/1 → bool).
+  /// Defaults to `2` (ref). Used by invokeClosure to convert RETURN_VAL results
+  /// back to the correct Dart type before handing to the host.
+  final int returnKind;
 
   /// Inline cache table — one entry per `CALL_VIRTUAL` instruction.
   final List<ICEntry> icTable;

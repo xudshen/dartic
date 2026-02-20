@@ -175,6 +175,9 @@ extension on DarticCompiler {
       refRegCount: refRegCount,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
       upvalueDescriptors: upvalueDescs,

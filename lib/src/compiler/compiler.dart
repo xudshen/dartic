@@ -482,6 +482,37 @@ class DarticCompiler {
     }
   }
 
+  /// Builds a [Uint8List] encoding each parameter's [StackKind] for
+  /// [DarticFuncProto.paramKinds]. Used by invokeClosure to route
+  /// host-side arguments to the correct stack.
+  Uint8List _buildParamKinds(
+    List<ir.VariableDeclaration> positional,
+    List<ir.VariableDeclaration> named,
+  ) {
+    final all = [...positional, ...named];
+    final kinds = Uint8List(all.length);
+    for (var i = 0; i < all.length; i++) {
+      kinds[i] = _classifyStackKind(all[i].type).index;
+    }
+    return kinds;
+  }
+
+  /// Computes [DarticFuncProto.returnKind] for invokeClosure result boxing.
+  ///
+  /// Returns: 0=intVal, 1=doubleVal, 2=ref, 3=boolVal.
+  /// Bool is distinguished from int because the value stack stores both
+  /// as int64, but the host VM expects a Dart [bool].
+  int _classifyReturnKind(ir.DartType returnType) {
+    if (returnType is ir.InterfaceType &&
+        returnType.nullability != ir.Nullability.nullable) {
+      final cls = returnType.classNode;
+      if (cls == _coreTypes.boolClass) return 3; // boolVal
+      if (cls == _coreTypes.intClass) return 0; // intVal
+      if (cls == _coreTypes.doubleClass) return 1; // doubleVal
+    }
+    return 2; // ref
+  }
+
   // ── Procedure compilation ──
 
   void _compileProcedure(ir.Procedure proc) {
@@ -534,6 +565,9 @@ class DarticCompiler {
       valueRegCount: valRegCount,
       refRegCount: refRegCount,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
     );

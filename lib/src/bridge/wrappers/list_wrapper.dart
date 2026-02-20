@@ -146,7 +146,6 @@ abstract final class ListBindings {
     });
 
     // List.generate(int length, E Function(int) generator, {bool growable = true})
-    // -- 3 formal params. Callback -- register but can't fully test until 5.3.3
     bindings.register('dart:core::List::generate#3', (args) {
       final length = args[0] as int;
       final generator = args[1] as Function;
@@ -183,14 +182,42 @@ abstract final class ListBindings {
       return List.unmodifiable(args[0] as Iterable);
     });
 
-    // ── Callback methods -- registered but full testing deferred to 5.3.3 ──
+    // ── Callback methods ──
+
+    bindings.register('dart:core::List::forEach#1', (args) {
+      final fn = args[1] as Function;
+      (args[0] as List).forEach((e) => Function.apply(fn, [e]));
+      return null;
+    });
+    bindings.register('dart:core::List::map#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).map((e) => Function.apply(fn, [e]));
+    });
+    bindings.register('dart:core::List::where#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).where((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::List::fold#2', (args) {
+      final fn = args[2] as Function;
+      return (args[0] as List)
+          .fold(args[1], (prev, e) => Function.apply(fn, [prev, e]));
+    });
+    bindings.register('dart:core::List::any#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).any((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::List::every#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).every((e) => Function.apply(fn, [e]) as bool);
+    });
 
     bindings.register('dart:core::List::sort#1', (args) {
-      (args[0] as List).sort(
-        args.length > 1
-            ? args[1] as int Function(dynamic, dynamic)?
-            : null,
-      );
+      if (args.length > 1 && args[1] != null) {
+        final fn = args[1] as Function;
+        (args[0] as List).sort((a, b) => Function.apply(fn, [a, b]) as int);
+      } else {
+        (args[0] as List).sort();
+      }
       return null;
     });
     bindings.register('dart:core::List::shuffle#1', (args) {
@@ -460,16 +487,64 @@ abstract final class ListBindings {
       return null;
     });
     bindings.register('dart:core::_GrowableList::sort#1', (args) {
-      (args[0] as List).sort(
-        args.length > 1
-            ? args[1] as int Function(dynamic, dynamic)?
-            : null,
-      );
+      if (args.length > 1 && args[1] != null) {
+        final fn = args[1] as Function;
+        (args[0] as List).sort((a, b) => Function.apply(fn, [a, b]) as int);
+      } else {
+        (args[0] as List).sort();
+      }
       return null;
     });
     bindings.register('dart:core::_GrowableList::shuffle#1', (args) {
       (args[0] as List).shuffle();
       return null;
+    });
+
+    // ── _GrowableList callback methods (mirrors of Iterable methods) ──
+    bindings.register('dart:core::_GrowableList::forEach#1', (args) {
+      final fn = args[1] as Function;
+      (args[0] as List).forEach((e) => Function.apply(fn, [e]));
+      return null;
+    });
+    bindings.register('dart:core::_GrowableList::map#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).map((e) => Function.apply(fn, [e]));
+    });
+    bindings.register('dart:core::_GrowableList::where#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).where((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::_GrowableList::fold#2', (args) {
+      final fn = args[2] as Function;
+      return (args[0] as List)
+          .fold(args[1], (prev, e) => Function.apply(fn, [prev, e]));
+    });
+    bindings.register('dart:core::_GrowableList::any#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).any((e) => Function.apply(fn, [e]) as bool);
+    });
+    bindings.register('dart:core::_GrowableList::every#1', (args) {
+      final fn = args[1] as Function;
+      return (args[0] as List).every((e) => Function.apply(fn, [e]) as bool);
+    });
+
+    // _GrowableList.generate -- Kernel may resolve List.generate to _GrowableList.generate
+    bindings.register('dart:core::_GrowableList::generate#3', (args) {
+      final length = args[0] as int;
+      final generator = args[1] as Function;
+      if (args.length > 2 && args[2] != null) {
+        return List.generate(
+          length,
+          (i) => Function.apply(generator, [i]),
+          growable: args[2] as bool,
+        );
+      }
+      return List.generate(length, (i) => Function.apply(generator, [i]));
+    });
+    bindings.register('dart:core::_GrowableList::generate#2', (args) {
+      final length = args[0] as int;
+      final generator = args[1] as Function;
+      return List.generate(length, (i) => Function.apply(generator, [i]));
     });
   }
 }

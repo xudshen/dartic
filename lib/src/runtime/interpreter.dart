@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
+import '../bridge/callback_proxy.dart';
 import '../bridge/host_bindings.dart';
+import '../bridge/host_class_wrapper.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../compiler/type_template.dart';
@@ -68,12 +72,23 @@ class DarticInterpreter {
   Object? get entryResult => _lastEntryResult;
   Object? _lastEntryResult;
 
+  /// The currently executing module — set in [execute], used by [invokeClosure].
+  DarticModule? _activeModule;
+
+  /// Return value from a callback that exited via HOST_BOUNDARY RETURN.
+  Object? _callbackResult;
+
+  /// Dynamic dispatch registry for host (VM-native) objects.
+  /// Initialized per-execution from [hostBindings].
+  HostClassRegistry? _hostClassRegistry;
+
   /// Executes [module] starting from its entry function.
   ///
   /// Runs the dispatch loop until HALT is reached or fuel is exhausted.
   void execute(DarticModule module) {
     _fuel = fuelBudget;
     _lastEntryResult = null;
+    _activeModule = module;
     _openUpvalues.clear();
     _upvalueStack.clear();
 
@@ -82,6 +97,11 @@ class DarticInterpreter {
 
     // Resolve binding name table for CALL_HOST.
     _resolveBindings(module);
+
+    // Initialize dynamic dispatch registry for host objects.
+    if (hostBindings != null) {
+      _hostClassRegistry = HostClassRegistry(hostBindings!);
+    }
 
     // Set up global table and run initializers.
     if (module.globalCount > 0) {
@@ -153,13 +173,10 @@ class DarticInterpreter {
   /// Used for both global initializer functions and the main entry point.
   void _executeEntry(DarticModule module, int entryFuncId) {
     final entryFunc = module.functions[entryFuncId];
-    final cp = module.constantPool;
-    final vs = valueStack;
-    final rs = refStack;
 
     // Set up initial frame.
-    var vBase = vs.sp;
-    var rBase = rs.sp;
+    final vBase = valueStack.sp;
+    final rBase = refStack.sp;
 
     callStack.pushFrame(
       funcId: entryFunc.funcId,
@@ -170,18 +187,151 @@ class DarticInterpreter {
       resultReg: 0,
     );
 
-    vs.sp += entryFunc.valueRegCount;
-    rs.sp += entryFunc.refRegCount;
+    valueStack.sp += entryFunc.valueRegCount;
+    refStack.sp += entryFunc.refRegCount;
 
-    // Dispatch loop — hot-path locals.
-    var code = entryFunc.bytecode;
-    var pc = 0;
+    _executeLoop(module, vBase, rBase, entryFunc.bytecode, 0, null);
+  }
 
-    // Current frame's closure upvalues (null for top-level / CALL_STATIC).
-    List<Upvalue>? currentUpvalues;
+  /// Invokes an interpreter [closure] with [args] from the host VM.
+  ///
+  /// Used by [DarticCallbackProxy] to bridge VM callbacks (e.g. list.map)
+  /// back into the interpreter. Pushes a HOST_BOUNDARY sentinel frame,
+  /// executes the closure's bytecode, and returns the result.
+  ///
+  /// Re-entrant: can be called from within a CALL_HOST handler, nesting
+  /// dispatch loops on the Dart call stack.
+  ///
+  /// See: docs/design/03-execution-engine.md "invokeClosure 机制"
+  Object? invokeClosure(DarticClosure closure, List<Object?> args) {
+    final module = _activeModule;
+    if (module == null) {
+      throw DarticError('invokeClosure called outside of execute()');
+    }
+    final proto = closure.funcProto;
 
-    // Push sentinel entry for the initial frame.
-    _upvalueStack.add(null);
+    // Stack overflow checks.
+    if (valueStack.sp + proto.valueRegCount > valueStack.capacity ||
+        refStack.sp + proto.refRegCount > refStack.capacity) {
+      throw DarticError('Stack overflow');
+    }
+    if (callStack.depth + 2 >= callStack.maxFrames) {
+      throw DarticError('Maximum call depth exceeded');
+    }
+
+    // Save pre-callback stack state for exception cleanup.
+    final savedVSP = valueStack.sp;
+    final savedRSP = refStack.sp;
+
+    // 1. Push HOST_BOUNDARY sentinel frame.
+    callStack.pushFrame(
+      funcId: CallStack.sentinelHostBoundary,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: savedVSP,
+      savedRSP: savedRSP,
+      resultReg: 0,
+    );
+    _upvalueStack.add(null); // upvalue entry for HOST_BOUNDARY
+
+    // 2. Allocate closure frame space.
+    final vBase = valueStack.sp;
+    final rBase = refStack.sp;
+    valueStack.sp += proto.valueRegCount;
+    refStack.sp += proto.refRegCount;
+
+    // 3. Write arguments routed to the correct stack.
+    //    Convention: ref[0]=ITA, ref[1]=FTA, ref[2]=this (reserved).
+    //    Ref params start at rBase+3; value params start at vBase+0.
+    final paramKinds = proto.paramKinds;
+    if (paramKinds != null) {
+      var valArgIdx = 0;
+      var refArgIdx = 3; // After ITA(0), FTA(1), this(2)
+      for (var i = 0; i < args.length; i++) {
+        final kind = i < paramKinds.length ? paramKinds[i] : 2; // default ref
+        if (kind == 2) {
+          // StackKind.ref
+          refStack.write(rBase + refArgIdx, args[i]);
+          refArgIdx++;
+        } else if (kind == 0) {
+          // StackKind.intVal (int, bool)
+          valueStack.writeInt(vBase + valArgIdx, args[i] as int);
+          valArgIdx++;
+        } else {
+          // StackKind.doubleVal
+          valueStack.writeDouble(
+              vBase + valArgIdx, (args[i] as num).toDouble());
+          valArgIdx++;
+        }
+      }
+    } else {
+      // Legacy fallback: no paramKinds metadata — write all args to ref stack
+      // at rBase+2+ (for hand-crafted test protos without paramKinds).
+      for (var i = 0; i < args.length; i++) {
+        refStack.write(rBase + 2 + i, args[i]);
+      }
+    }
+
+    // 4. Push closure frame.
+    callStack.pushFrame(
+      funcId: proto.funcId,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: vBase,
+      savedRSP: rBase,
+      resultReg: 0,
+    );
+
+    // 5. Execute callback dispatch loop.
+    try {
+      _executeLoop(module, vBase, rBase, proto.bytecode, 0, closure.upvalues);
+    } on Object {
+      // Exception propagated past HOST_BOUNDARY — restore stacks.
+      valueStack.sp = savedVSP;
+      refStack.sp = savedRSP;
+      // Pop HOST_BOUNDARY if still on the call stack.
+      if (callStack.isHostBoundary) {
+        callStack.popFrame();
+        _upvalueStack.removeLast();
+      }
+      rethrow;
+    }
+
+    // 6. Read result, box if needed, and clean up.
+    Object? result = _callbackResult;
+    _callbackResult = null;
+
+    // Box RETURN_VAL results: the value stack stores bool as int 0/1,
+    // but the host VM expects a Dart bool.
+    if (result is int && proto.returnKind == 3) {
+      result = result != 0;
+    }
+
+    // Pop HOST_BOUNDARY sentinel.
+    callStack.popFrame();
+    _upvalueStack.removeLast();
+
+    return result;
+  }
+
+  /// Core dispatch loop shared by [_executeEntry] and [invokeClosure].
+  ///
+  /// Runs bytecode until HALT, HOST_BOUNDARY RETURN, or fuel exhaustion.
+  /// Parameters are copied to hot-path locals for performance.
+  void _executeLoop(
+    DarticModule module,
+    int vBase,
+    int rBase,
+    Uint32List code,
+    int pc,
+    List<Upvalue>? currentUpvalues,
+  ) {
+    final cp = module.constantPool;
+    final vs = valueStack;
+    final rs = refStack;
+
+    // Push upvalue entry for the initial frame (entry or callback closure).
+    _upvalueStack.add(currentUpvalues);
 
     // Helper: unwind frames searching for an exception handler starting at
     // [startPC]. If found, restores stacks, writes exception/stackTrace into
@@ -213,6 +363,11 @@ class DarticInterpreter {
         final callerRSP = callStack.savedRSP;
         searchPC = callStack.returnPC - 1;
         callStack.popFrame();
+        // HOST_BOUNDARY: exception propagates to VM caller.
+        if (callStack.isHostBoundary) {
+          _upvalueStack.removeLast();
+          throw exception!;
+        }
         vBase = callerVSP;
         rBase = callerRSP;
         code = module.functions[callStack.funcId].bytecode;
@@ -663,6 +818,21 @@ class DarticInterpreter {
             (i) => rs.read(rBase + chA + 1 + i),
           );
 
+          // Wrap DarticClosure args as Dart Functions via DarticCallbackProxy.
+          for (var i = 0; i < hostArgs.length; i++) {
+            final arg = hostArgs[i];
+            if (arg is DarticClosure) {
+              final proxy = DarticCallbackProxy(this, arg);
+              hostArgs[i] = switch (arg.funcProto.paramCount) {
+                0 => proxy.proxy0(),
+                1 => proxy.proxy1(),
+                2 => proxy.proxy2(),
+                3 => proxy.proxy3(),
+                _ => proxy.proxy1(), // 4+ params: best-effort
+              };
+            }
+          }
+
           // Invoke the host function and write result to refStack[A].
           try {
             final hostResult = hostBindings!.invoke(runtimeId, hostArgs);
@@ -677,11 +847,25 @@ class DarticInterpreter {
           final b = (instr >> 16) & 0xFF; // receiver register
           final c = (instr >> 24) & 0xFF; // IC table index
 
-          // Read receiver — null receiver throws DarticError.
+          // Read receiver — must be a DarticObject for virtual dispatch.
           final receiver = rs.read(rBase + b);
           if (receiver is! DarticObject) {
+            final ic = module.functions[callStack.funcId].icTable[c];
+            final methodName = cp.getName(ic.methodNameIndex);
+            if (receiver == null) {
+              throw DarticError(
+                'NoSuchMethodError: method "$methodName" called on null',
+              );
+            }
+            // Non-DarticObject: try HostClassWrapper dynamic dispatch.
+            final vcWrapper = _hostClassRegistry?.lookup(receiver);
+            if (vcWrapper != null) {
+              rs.write(rBase + a, vcWrapper.invokeMethod(receiver, methodName, []));
+              continue;
+            }
             throw DarticError(
-              'NoSuchMethodError: method call on null receiver',
+              'NoSuchMethodError: method "$methodName" not found on '
+              '${receiver.runtimeType}',
             );
           }
 
@@ -834,8 +1018,17 @@ class DarticInterpreter {
           vBase = callerVSP;
           rBase = callerRSP;
 
-          // Pop callee frame, then look up caller's bytecode.
+          // Pop callee frame, then check for HOST_BOUNDARY.
           callStack.popFrame();
+
+          if (callStack.isHostBoundary) {
+            // Callback complete — store result for invokeClosure to read.
+            _callbackResult = (op == Op.returnVal) ? retVal : retRef;
+            _upvalueStack.removeLast();
+            return;
+          }
+
+          // Normal return — look up caller's bytecode.
           code = module.functions[callStack.funcId].bytecode;
           pc = retPC;
 
@@ -1039,6 +1232,137 @@ class DarticInterpreter {
           if (rs.read(rBase + ((instr >> 8) & 0xFF)) == null) {
             throw DarticError(
                 'Null check operator used on a null value');
+          }
+
+        // ── Collection Creation (0x90-0x92) ──
+
+        case Op.createList: // CREATE_LIST A, B, C — refStack[A] = List from refStack[B..B+C-1]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final list = List<Object?>.generate(c, (i) => rs.read(rBase + b + i));
+          rs.write(rBase + a, list);
+
+        case Op.createMap: // CREATE_MAP A, B, C — refStack[A] = Map from C key/value pairs starting at B
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final map = <Object?, Object?>{};
+          for (var i = 0; i < c; i++) {
+            final key = rs.read(rBase + b + i * 2);
+            final value = rs.read(rBase + b + i * 2 + 1);
+            map[key] = value;
+          }
+          rs.write(rBase + a, map);
+
+        case Op.createSet: // CREATE_SET A, B, C — refStack[A] = Set from refStack[B..B+C-1]
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final set = <Object?>{};
+          for (var i = 0; i < c; i++) {
+            set.add(rs.read(rBase + b + i));
+          }
+          rs.write(rBase + a, set);
+
+        // ── String & Dynamic (0x98-0x9F) ──
+
+        case Op.stringInterp: // STRING_INTERP A, B, C — refStack[A] = concat(refStack[B..B+C-1])
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final buf = StringBuffer();
+          for (var i = 0; i < c; i++) {
+            final part = rs.read(rBase + b + i);
+            buf.write(part);
+          }
+          rs.write(rBase + a, buf.toString());
+
+        // ── Dynamic Dispatch (0x67-0x68, 0x9A) ──
+
+        case Op.getFieldDyn: // GET_FIELD_DYN A, B, C — refStack[A] = refStack[B].getProperty(names[C])
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final receiver = rs.read(rBase + b);
+          final name = cp.getName(c);
+          if (receiver == null) {
+            throw DarticError(
+              'NoSuchMethodError: getter "$name" called on null',
+            );
+          }
+          final wrapper = _hostClassRegistry?.lookup(receiver);
+          if (wrapper != null) {
+            rs.write(rBase + a, wrapper.getProperty(receiver, name));
+          } else {
+            throw DarticError(
+              'NoSuchMethodError: getter "$name" not found on '
+              '${receiver.runtimeType}',
+            );
+          }
+
+        case Op.setFieldDyn: // SET_FIELD_DYN A, B, C — refStack[A].setProperty(names[C], refStack[B])
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final receiver = rs.read(rBase + a);
+          final value = rs.read(rBase + b);
+          final name = cp.getName(c);
+          if (receiver == null) {
+            throw DarticError(
+              'NoSuchMethodError: setter "$name" called on null',
+            );
+          }
+          // Dynamic set dispatches through HostClassWrapper as "[]=".
+          final setWrapper = _hostClassRegistry?.lookup(receiver);
+          if (setWrapper != null) {
+            setWrapper.invokeMethod(receiver, '$name=', [value]);
+          } else {
+            throw DarticError(
+              'NoSuchMethodError: setter "$name" not found on '
+              '${receiver.runtimeType}',
+            );
+          }
+
+        case Op.invokeDyn: // INVOKE_DYN A, B, C — refStack[A] = dynamicDispatch(refStack[A+1], names[C], args)
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF; // arg count (including receiver)
+          final c = (instr >> 24) & 0xFF;
+          final receiver = rs.read(rBase + a + 1);
+          final name = cp.getName(c);
+          if (receiver == null) {
+            throw DarticError(
+              'NoSuchMethodError: method "$name" called on null',
+            );
+          }
+          final dynWrapper = _hostClassRegistry?.lookup(receiver);
+          if (dynWrapper != null) {
+            // Collect explicit args from consecutive ref regs after receiver.
+            final explicitArgCount = b - 1;
+            final dynArgs = List<Object?>.generate(
+              explicitArgCount,
+              (i) => rs.read(rBase + a + 2 + i),
+            );
+            // Wrap DarticClosure args as Dart Functions.
+            for (var i = 0; i < dynArgs.length; i++) {
+              final arg = dynArgs[i];
+              if (arg is DarticClosure) {
+                final proxy = DarticCallbackProxy(this, arg);
+                dynArgs[i] = switch (arg.funcProto.paramCount) {
+                  0 => proxy.proxy0(),
+                  1 => proxy.proxy1(),
+                  2 => proxy.proxy2(),
+                  3 => proxy.proxy3(),
+                  _ => proxy.proxy1(),
+                };
+              }
+            }
+            rs.write(rBase + a, dynWrapper.invokeMethod(receiver, name, dynArgs));
+          } else {
+            throw DarticError(
+              'NoSuchMethodError: method "$name" not found on '
+              '${receiver.runtimeType}',
+            );
           }
 
         // ── System ──

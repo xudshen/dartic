@@ -72,6 +72,51 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileNullLiteral() => _loadNull();
 
+  // ── StringConcatenation (string interpolation) ──
+
+  (int, ResultLoc) _compileStringConcatenation(ir.StringConcatenation expr) {
+    final parts = expr.expressions;
+
+    // Empty interpolation → empty string.
+    if (parts.isEmpty) {
+      return _loadString('');
+    }
+
+    // Single StringLiteral → no need to emit STRING_INTERP.
+    if (parts.length == 1 && parts[0] is ir.StringLiteral) {
+      return _loadString((parts[0] as ir.StringLiteral).value);
+    }
+
+    // Phase 1: Compile each part, ensuring all results are on the ref stack.
+    final partRegs = <int>[];
+    for (final part in parts) {
+      var (reg, loc) = _compileExpression(part);
+      if (loc == ResultLoc.value) {
+        reg = _emitBoxToRef(reg, _inferExprType(part));
+      }
+      partRegs.add(reg);
+    }
+
+    // Phase 2: Allocate consecutive ref registers for STRING_INTERP operands.
+    // The dest register comes first, then the base + part count.
+    final destReg = _allocRefReg();
+    final baseReg = _allocRefReg();
+    for (var i = 1; i < parts.length; i++) {
+      _allocRefReg(); // allocate remaining consecutive slots
+    }
+
+    // Phase 3: Move each part result into its consecutive slot.
+    for (var i = 0; i < partRegs.length; i++) {
+      if (partRegs[i] != baseReg + i) {
+        _emitter.emit(encodeABC(Op.moveRef, baseReg + i, partRegs[i], 0));
+      }
+    }
+
+    // Phase 4: Emit STRING_INTERP A=destReg, B=baseReg, C=partCount.
+    _emitter.emit(encodeABC(Op.stringInterp, destReg, baseReg, parts.length));
+    return (destReg, ResultLoc.ref);
+  }
+
   // ── ConstantExpression ──
 
   (int, ResultLoc) _compileConstantExpression(ir.ConstantExpression expr) =>
@@ -1554,6 +1599,95 @@ extension on DarticCompiler {
     return (savedValReg, savedValLoc);
   }
 
+  // ── Dynamic dispatch (DynamicGet / DynamicSet / DynamicInvocation) ──
+
+  /// Compiles [DynamicGet]: emits GET_FIELD_DYN for dynamic receiver property
+  /// access (e.g., `dynamic x = 'hello'; x.length`).
+  (int, ResultLoc) _compileDynamicGet(ir.DynamicGet expr) {
+    // 1. Compile receiver to ref stack.
+    var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    if (recvLoc == ResultLoc.value) {
+      recvReg = _emitBoxToRef(recvReg, _inferExprType(expr.receiver));
+    }
+
+    // 2. Allocate result (always ref for dynamic dispatch).
+    final resultReg = _allocRefReg();
+
+    // 3. Add property name to names partition and emit GET_FIELD_DYN.
+    final nameIdx = _constantPool.addName(expr.name.text);
+    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Compiles [DynamicSet]: emits SET_FIELD_DYN for dynamic receiver property
+  /// set (e.g., `dynamic x = obj; x.field = 42`).
+  (int, ResultLoc) _compileDynamicSet(ir.DynamicSet expr) {
+    // 1. Compile receiver to ref stack.
+    var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    if (recvLoc == ResultLoc.value) {
+      recvReg = _emitBoxToRef(recvReg, _inferExprType(expr.receiver));
+    }
+
+    // 2. Compile value to ref stack.
+    var (valReg, valLoc) = _compileExpression(expr.value);
+    if (valLoc == ResultLoc.value) {
+      valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
+    }
+
+    // 3. Add property name to names partition and emit SET_FIELD_DYN.
+    final nameIdx = _constantPool.addName(expr.name.text);
+    _emitter.emit(encodeABC(Op.setFieldDyn, recvReg, valReg, nameIdx));
+
+    // DynamicSet evaluates to the assigned value.
+    return (valReg, ResultLoc.ref);
+  }
+
+  /// Compiles [DynamicInvocation]: emits INVOKE_DYN for dynamic receiver
+  /// method calls (e.g., `dynamic x = [1,2]; x.contains(1)`).
+  ///
+  /// Layout: result at reg A, receiver at A+1, args at A+2...
+  /// INVOKE_DYN A, B, C where B=totalArgCount (receiver+args), C=nameIdx.
+  (int, ResultLoc) _compileDynamicInvocation(ir.DynamicInvocation expr) {
+    // 1. Compile receiver to ref (box if needed).
+    var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    if (recvLoc == ResultLoc.value) {
+      recvReg = _emitBoxToRef(recvReg, _inferExprType(expr.receiver));
+    }
+
+    // 2. Compile all positional args to ref (box if needed).
+    final argRegs = <int>[];
+    for (final arg in expr.arguments.positional) {
+      var (argReg, argLoc) = _compileExpression(arg);
+      if (argLoc == ResultLoc.value) {
+        argReg = _emitBoxToRef(argReg, _inferExprType(arg));
+      }
+      argRegs.add(argReg);
+    }
+
+    // 3. Allocate consecutive ref registers: result, receiver, args.
+    final resultReg = _allocRefReg();
+    final recvSlot = _allocRefReg();
+    final argSlots = List.generate(argRegs.length, (_) => _allocRefReg());
+
+    // 4. MOVE receiver and args into consecutive slots.
+    if (recvReg != recvSlot) {
+      _emitter.emit(encodeABC(Op.moveRef, recvSlot, recvReg, 0));
+    }
+    for (var i = 0; i < argRegs.length; i++) {
+      if (argRegs[i] != argSlots[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, argSlots[i], argRegs[i], 0));
+      }
+    }
+
+    // 5. Emit INVOKE_DYN A=result, B=totalArgCount, C=nameIdx.
+    final nameIdx = _constantPool.addName(expr.name.text);
+    final totalArgCount = 1 + argRegs.length; // receiver + explicit args
+    _emitter.emit(encodeABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx));
+
+    return (resultReg, ResultLoc.ref);
+  }
+
   // ── Super access expressions ──
 
   /// Compiles [SuperMethodInvocation] via CALL_SUPER.
@@ -2005,6 +2139,9 @@ extension on DarticCompiler {
       refRegCount: _refAlloc.maxUsed,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
     );
 
     // Restore enclosing compilation state.
@@ -2025,6 +2162,235 @@ extension on DarticCompiler {
       return (_emitUnbox(reg, actualKind), ResultLoc.value);
     }
     return (reg, instKind.isValue ? ResultLoc.value : ResultLoc.ref);
+  }
+
+  // ── Collection Literals ──
+
+  /// Compiles a [ir.ListLiteral] to CREATE_LIST bytecode.
+  ///
+  /// Each element is compiled, boxed to the ref stack if needed, moved to
+  /// consecutive ref registers, then CREATE_LIST is emitted.
+  (int, ResultLoc) _compileListLiteral(ir.ListLiteral expr) {
+    final elements = expr.expressions;
+    final destReg = _allocRefReg();
+
+    if (elements.isEmpty) {
+      _emitter.emit(encodeABC(Op.createList, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Phase 1: compile each element, box to ref if needed.
+    final elementRegs = <int>[];
+    for (final elem in elements) {
+      var (reg, loc) = _compileExpression(elem);
+      if (loc == ResultLoc.value) {
+        reg = _emitBoxToRef(reg, _inferExprType(elem));
+      }
+      elementRegs.add(reg);
+    }
+
+    // Phase 2: allocate consecutive ref registers and move elements.
+    final targetRegs = List.generate(elementRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < elementRegs.length; i++) {
+      if (elementRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], elementRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createList, destReg, targetRegs.first, elements.length));
+    return (destReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.MapLiteral] to CREATE_MAP bytecode.
+  ///
+  /// Keys and values are interleaved: [k0, v0, k1, v1, ...] in consecutive
+  /// ref registers, then CREATE_MAP is emitted with C = number of pairs.
+  (int, ResultLoc) _compileMapLiteral(ir.MapLiteral expr) {
+    final entries = expr.entries;
+    final destReg = _allocRefReg();
+
+    if (entries.isEmpty) {
+      _emitter.emit(encodeABC(Op.createMap, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Phase 1: compile each key/value, box to ref if needed.
+    final kvRegs = <int>[];
+    for (final entry in entries) {
+      var (keyReg, keyLoc) = _compileExpression(entry.key);
+      if (keyLoc == ResultLoc.value) {
+        keyReg = _emitBoxToRef(keyReg, _inferExprType(entry.key));
+      }
+      kvRegs.add(keyReg);
+
+      var (valReg, valLoc) = _compileExpression(entry.value);
+      if (valLoc == ResultLoc.value) {
+        valReg = _emitBoxToRef(valReg, _inferExprType(entry.value));
+      }
+      kvRegs.add(valReg);
+    }
+
+    // Phase 2: allocate consecutive ref registers and move k/v pairs.
+    final targetRegs = List.generate(kvRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < kvRegs.length; i++) {
+      if (kvRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], kvRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createMap, destReg, targetRegs.first, entries.length));
+    return (destReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.SetLiteral] to CREATE_SET bytecode.
+  ///
+  /// Same pattern as list: elements are compiled, boxed, moved to consecutive
+  /// ref registers, then CREATE_SET is emitted.
+  (int, ResultLoc) _compileSetLiteral(ir.SetLiteral expr) {
+    final elements = expr.expressions;
+    final destReg = _allocRefReg();
+
+    if (elements.isEmpty) {
+      _emitter.emit(encodeABC(Op.createSet, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Phase 1: compile each element, box to ref if needed.
+    final elementRegs = <int>[];
+    for (final elem in elements) {
+      var (reg, loc) = _compileExpression(elem);
+      if (loc == ResultLoc.value) {
+        reg = _emitBoxToRef(reg, _inferExprType(elem));
+      }
+      elementRegs.add(reg);
+    }
+
+    // Phase 2: allocate consecutive ref registers and move elements.
+    final targetRegs = List.generate(elementRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < elementRegs.length; i++) {
+      if (elementRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], elementRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createSet, destReg, targetRegs.first, elements.length));
+    return (destReg, ResultLoc.ref);
+  }
+
+  // ── Collection Constants ──
+
+  /// Compiles a [ir.ListConstant] to CREATE_LIST bytecode.
+  (int, ResultLoc) _compileListConstant(ir.ListConstant constant) {
+    final entries = constant.entries;
+    final destReg = _allocRefReg();
+
+    if (entries.isEmpty) {
+      _emitter.emit(encodeABC(Op.createList, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Compile each element constant, box to ref if needed.
+    final elementRegs = <int>[];
+    for (final entry in entries) {
+      var (reg, loc) = entry.accept(_constantVisitor);
+      if (loc == ResultLoc.value) {
+        reg = _emitBoxToRef(reg, _inferConstantType(entry));
+      }
+      elementRegs.add(reg);
+    }
+
+    // Allocate consecutive ref registers and move elements.
+    final targetRegs = List.generate(elementRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < elementRegs.length; i++) {
+      if (elementRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], elementRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createList, destReg, targetRegs.first, entries.length));
+    return (destReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.MapConstant] to CREATE_MAP bytecode.
+  (int, ResultLoc) _compileMapConstant(ir.MapConstant constant) {
+    final entries = constant.entries;
+    final destReg = _allocRefReg();
+
+    if (entries.isEmpty) {
+      _emitter.emit(encodeABC(Op.createMap, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Compile each key/value constant, box to ref if needed.
+    final kvRegs = <int>[];
+    for (final entry in entries) {
+      var (keyReg, keyLoc) = entry.key.accept(_constantVisitor);
+      if (keyLoc == ResultLoc.value) {
+        keyReg = _emitBoxToRef(keyReg, _inferConstantType(entry.key));
+      }
+      kvRegs.add(keyReg);
+
+      var (valReg, valLoc) = entry.value.accept(_constantVisitor);
+      if (valLoc == ResultLoc.value) {
+        valReg = _emitBoxToRef(valReg, _inferConstantType(entry.value));
+      }
+      kvRegs.add(valReg);
+    }
+
+    // Allocate consecutive ref registers and move k/v pairs.
+    final targetRegs = List.generate(kvRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < kvRegs.length; i++) {
+      if (kvRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], kvRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createMap, destReg, targetRegs.first, entries.length));
+    return (destReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.SetConstant] to CREATE_SET bytecode.
+  (int, ResultLoc) _compileSetConstant(ir.SetConstant constant) {
+    final entries = constant.entries;
+    final destReg = _allocRefReg();
+
+    if (entries.isEmpty) {
+      _emitter.emit(encodeABC(Op.createSet, destReg, 0, 0));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Compile each element constant, box to ref if needed.
+    final elementRegs = <int>[];
+    for (final entry in entries) {
+      var (reg, loc) = entry.accept(_constantVisitor);
+      if (loc == ResultLoc.value) {
+        reg = _emitBoxToRef(reg, _inferConstantType(entry));
+      }
+      elementRegs.add(reg);
+    }
+
+    // Allocate consecutive ref registers and move elements.
+    final targetRegs = List.generate(elementRegs.length, (_) => _allocRefReg());
+
+    for (var i = 0; i < elementRegs.length; i++) {
+      if (elementRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], elementRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createSet, destReg, targetRegs.first, entries.length));
+    return (destReg, ResultLoc.ref);
   }
 
   /// Compiles an [ir.InstantiationConstant]: a generic function tear-off
@@ -2100,6 +2466,22 @@ class _ExprCompileVisitor
   @override
   (int, ResultLoc) visitNullLiteral(ir.NullLiteral node) =>
       _c._compileNullLiteral();
+
+  // Collection literals
+  @override
+  (int, ResultLoc) visitListLiteral(ir.ListLiteral node) =>
+      _c._compileListLiteral(node);
+  @override
+  (int, ResultLoc) visitMapLiteral(ir.MapLiteral node) =>
+      _c._compileMapLiteral(node);
+  @override
+  (int, ResultLoc) visitSetLiteral(ir.SetLiteral node) =>
+      _c._compileSetLiteral(node);
+
+  // String interpolation
+  @override
+  (int, ResultLoc) visitStringConcatenation(ir.StringConcatenation node) =>
+      _c._compileStringConcatenation(node);
 
   // Variable access
   @override
@@ -2222,6 +2604,17 @@ class _ExprCompileVisitor
   @override
   (int, ResultLoc) visitInstantiation(ir.Instantiation node) =>
       _c._compileInstantiation(node);
+
+  // Dynamic dispatch (Phase 5)
+  @override
+  (int, ResultLoc) visitDynamicGet(ir.DynamicGet node) =>
+      _c._compileDynamicGet(node);
+  @override
+  (int, ResultLoc) visitDynamicSet(ir.DynamicSet node) =>
+      _c._compileDynamicSet(node);
+  @override
+  (int, ResultLoc) visitDynamicInvocation(ir.DynamicInvocation node) =>
+      _c._compileDynamicInvocation(node);
 }
 
 /// Visitor that compiles [ir.Constant] nodes to bytecode.
@@ -2270,4 +2663,15 @@ class _ConstantCompileVisitor
   (int, ResultLoc) visitInstantiationConstant(
           ir.InstantiationConstant node) =>
       _c._compileInstantiationConstant(node);
+
+  // Collection constants
+  @override
+  (int, ResultLoc) visitListConstant(ir.ListConstant node) =>
+      _c._compileListConstant(node);
+  @override
+  (int, ResultLoc) visitMapConstant(ir.MapConstant node) =>
+      _c._compileMapConstant(node);
+  @override
+  (int, ResultLoc) visitSetConstant(ir.SetConstant node) =>
+      _c._compileSetConstant(node);
 }

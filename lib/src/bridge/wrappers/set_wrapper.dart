@@ -12,6 +12,18 @@ import '../host_bindings.dart';
 /// Registers all `dart:core::Set` host function bindings.
 abstract final class SetBindings {
   static void register(HostBindings bindings) {
+    // ── Internal _Set factories ──
+    // Dart SDK lowers set literals {a, b, c} to _Set()..add(a)..add(b)..add(c).
+    // We must register the _Set constructor from dart:_compact_hash.
+    bindings.register('dart:_compact_hash::_Set::#0', (args) {
+      return <dynamic>{};
+    });
+
+    // _Set instance methods (kernel may resolve to _Set rather than Set)
+    bindings.register('dart:_compact_hash::_Set::add#1', (args) {
+      return (args[0] as Set).add(args[1]);
+    });
+
     // ── Getters ──
     bindings.register('dart:core::Set::length#0', (args) {
       return (args[0] as Set).length;

@@ -246,6 +246,9 @@ extension on DarticCompiler {
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
     );
     _currentEnclosingClass = null;

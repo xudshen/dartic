@@ -7,11 +7,21 @@
 /// See: docs/design/04-interop.md
 library;
 
+import 'dart:collection';
+
 import '../host_bindings.dart';
 
 /// Registers all `dart:core::Map` host function bindings.
 abstract final class MapBindings {
   static void register(HostBindings bindings) {
+    // ── LinkedHashMap factories (CFE lowers map literals/spreads to these) ──
+    bindings.register('dart:collection::LinkedHashMap::of#1', (args) {
+      return LinkedHashMap<dynamic, dynamic>.of(args[0] as Map);
+    });
+    bindings.register('dart:collection::LinkedHashMap::#0', (args) {
+      return <dynamic, dynamic>{};
+    });
+
     // ── Getters ──
     bindings.register('dart:core::Map::length#0', (args) {
       return (args[0] as Map).length;
