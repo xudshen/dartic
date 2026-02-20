@@ -302,15 +302,9 @@ class DarticInterpreter {
       rethrow;
     }
 
-    // 6. Read result, box if needed, and clean up.
-    Object? result = _callbackResult;
+    // 6. Read result and clean up.
+    final result = _callbackResult;
     _callbackResult = null;
-
-    // Box RETURN_VAL results: the value stack stores bool as int 0/1,
-    // but the host VM expects a Dart bool.
-    if (result is int && proto.returnKind == StackKind.boolVal.index) {
-      result = result != 0;
-    }
 
     // Pop HOST_BOUNDARY sentinel.
     callStack.popFrame();
@@ -1035,6 +1029,7 @@ class DarticInterpreter {
           }
 
           // Read caller state from current (callee) frame.
+          final calleeFuncId = callStack.funcId;
           final callerVSP = callStack.savedVSP;
           final callerRSP = callStack.savedRSP;
           final retPC = callStack.returnPC;
@@ -1054,7 +1049,15 @@ class DarticInterpreter {
 
           if (callStack.isHostBoundary) {
             // Callback complete — store result for invokeClosure to read.
-            _callbackResult = (op == Op.returnVal) ? retVal : retRef;
+            // Convert value-stack bool (int 0/1) to Dart bool at the boundary.
+            if (op == Op.returnVal) {
+              final retKind = module.functions[calleeFuncId].returnKind;
+              _callbackResult = retKind == StackKind.boolVal.index
+                  ? (retVal != 0)
+                  : retVal;
+            } else {
+              _callbackResult = retRef;
+            }
             _upvalueStack.removeLast();
             return;
           }
