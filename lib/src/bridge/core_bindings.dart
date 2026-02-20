@@ -2,24 +2,24 @@
 ///
 /// Provides `registerAll` to wire up platform bindings needed for the
 /// CALL_HOST pipeline. Each type's bindings are delegated to its dedicated
-/// wrapper class in `wrappers/`.
+/// registration class in `bindings/`.
 ///
 /// See: docs/design/04-interop.md "基本类型传递"
 library;
 
 import 'host_bindings.dart';
-import 'wrappers/bool_wrapper.dart';
-import 'wrappers/double_wrapper.dart';
-import 'wrappers/duration_wrapper.dart';
-import 'wrappers/error_wrappers.dart';
-import 'wrappers/int_wrapper.dart';
-import 'wrappers/iterable_wrapper.dart';
-import 'wrappers/list_wrapper.dart';
-import 'wrappers/map_wrapper.dart';
-import 'wrappers/num_wrapper.dart';
-import 'wrappers/object_wrapper.dart';
-import 'wrappers/set_wrapper.dart';
-import 'wrappers/string_wrapper.dart';
+import 'bindings/bool_bindings.dart';
+import 'bindings/double_bindings.dart';
+import 'bindings/duration_bindings.dart';
+import 'bindings/error_bindings.dart';
+import 'bindings/int_bindings.dart';
+import 'bindings/iterable_bindings.dart';
+import 'bindings/list_bindings.dart';
+import 'bindings/map_bindings.dart';
+import 'bindings/num_bindings.dart';
+import 'bindings/object_bindings.dart';
+import 'bindings/set_bindings.dart';
+import 'bindings/string_bindings.dart';
 
 /// Registers all dart:core host function bindings into [bindings].
 ///

@@ -1,8 +1,6 @@
 /// Registers `Iterable` host bindings for the CALL_HOST pipeline.
 ///
-/// Covers Iterable instance methods and getters that do not require
-/// callbacks. Callback-based methods (map, where, fold, etc.) are
-/// deferred to 5.3.3 when DarticCallbackProxy is ready.
+/// Covers Iterable factory constructors, instance methods and getters.
 ///
 /// See: docs/design/04-interop.md
 library;
@@ -12,6 +10,19 @@ import '../host_bindings.dart';
 /// Registers all `dart:core::Iterable` host function bindings.
 abstract final class IterableBindings {
   static void register(HostBindings bindings) {
+    // ── Factory constructors ──
+
+    // Iterable.generate(int count, [E Function(int)? generator])
+    bindings.register('dart:core::Iterable::generate#2', (args) {
+      final count = args[0] as int;
+      final generator = args[1] as Function;
+      return Iterable.generate(count, (i) => generator(i));
+    });
+    bindings.register('dart:core::Iterable::generate#1', (args) {
+      final count = args[0] as int;
+      return Iterable.generate(count);
+    });
+
     // ── Getters ──
     bindings.register('dart:core::Iterable::length#0', (args) {
       return (args[0] as Iterable).length;
