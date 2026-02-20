@@ -42,29 +42,7 @@ void main() {
       final cp = ConstantPool();
       final prefixIdx = cp.addRef('value=');
 
-      // v0 = 42 (value stack)
-      // BOX_INT r0, v0  → r0 = 42 (boxed on ref stack)
-      // r1 = "value="
-      // STRING_INTERP r2, r1, 2  → r2 = "value=42"
-      // HALT r2 (ref kind=3)
-      final module = buildModule(
-        Uint32List.fromList([
-          encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
-          encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(v0)
-          encodeABx(Op.loadConst, 1, prefixIdx), // r1 = "value="
-          encodeABC(Op.stringInterp, 3, 1, 2), // r3 = concat(r1, r0+1=r2?)
-          // Wait — STRING_INTERP reads from r[B..B+C-1].
-          // We need parts in consecutive ref regs. Let me restructure:
-          // r0 = "value=", r1 = boxed 42
-          // STRING_INTERP r2, r0, 2 → r2 = "value=42"
-          encodeABC(Op.halt, 0, 0, 0), // placeholder — will rewrite below
-        ]),
-        refRegCount: 4,
-        valueRegCount: 1,
-        constantPool: cp,
-      );
-
-      // Rewrite: let's build the correct bytecode directly.
+      // r0 = "value=", r1 = box(42), STRING_INTERP r2, r0, 2 → "value=42"
       final code = Uint32List.fromList([
         encodeABx(Op.loadConst, 0, prefixIdx), // r0 = "value="
         encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
@@ -73,13 +51,13 @@ void main() {
         encodeABC(Op.halt, 2, 3, 0), // return r2 as ref
       ]);
 
-      final module2 = buildModule(
+      final module = buildModule(
         code,
         refRegCount: 3,
         valueRegCount: 1,
         constantPool: cp,
       );
-      interp.execute(module2);
+      interp.execute(module);
       expect(interp.entryResult, 'value=42');
     });
 

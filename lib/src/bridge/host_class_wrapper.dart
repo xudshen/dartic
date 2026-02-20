@@ -33,13 +33,16 @@ class BindingsClassWrapper implements HostClassWrapper {
   /// Tried in order; first match wins.
   final List<String> _prefixes;
 
+  /// Sentinel used to distinguish "method not found" from "method returned null".
+  static const notFound = #_bindingsClassWrapperNotFound;
+
   @override
   Object? getProperty(Object host, String name) {
     for (final prefix in _prefixes) {
       final id = _bindings.lookupByName('$prefix$name#0');
       if (id >= 0) return _bindings.invoke(id, [host]);
     }
-    return null;
+    return notFound;
   }
 
   @override
@@ -53,7 +56,7 @@ class BindingsClassWrapper implements HostClassWrapper {
         if (id >= 0) return _bindings.invoke(id, [host, ...args]);
       }
     }
-    return null;
+    return notFound;
   }
 }
 

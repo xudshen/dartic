@@ -9,8 +9,6 @@ import 'package:dartic/src/runtime/closure.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
-import '../helpers/module_helper.dart';
-
 void main() {
   group('invokeClosure', () {
     test('invokes a closure that returns a constant string', () {

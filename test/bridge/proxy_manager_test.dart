@@ -39,6 +39,7 @@ void main() {
     test('proxy is not == to non-proxy object', () {
       final obj = DarticObject(_makeClassInfo(0));
       final proxy = DarticProxy(obj);
+      // ignore: unrelated_type_equality_checks
       expect(proxy == obj, isFalse);
     });
 

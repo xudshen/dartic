@@ -254,8 +254,10 @@ class DarticInterpreter {
           refStack.write(rBase + refArgIdx, args[i]);
           refArgIdx++;
         } else if (kind == 0) {
-          // StackKind.intVal (int, bool)
-          valueStack.writeInt(vBase + valArgIdx, args[i] as int);
+          // StackKind.intVal (int, bool — bools stored as 0/1)
+          final v = args[i];
+          valueStack.writeInt(
+              vBase + valArgIdx, v is bool ? (v ? 1 : 0) : v as int);
           valArgIdx++;
         } else {
           // StackKind.doubleVal
@@ -828,7 +830,9 @@ class DarticInterpreter {
                 1 => proxy.proxy1(),
                 2 => proxy.proxy2(),
                 3 => proxy.proxy3(),
-                _ => proxy.proxy1(), // 4+ params: best-effort
+                _ => throw DarticError(
+                    'DarticCallbackProxy: unsupported arity '
+                    '${arg.funcProto.paramCount}'),
               };
             }
           }
@@ -858,10 +862,19 @@ class DarticInterpreter {
               );
             }
             // Non-DarticObject: try HostClassWrapper dynamic dispatch.
+            // NOTE: only zero-arg getters are supported here — method calls on
+            // host objects with arguments should go through CALL_HOST (compiler
+            // routes them there for statically-typed receivers) or INVOKE_DYN
+            // (for dynamic receivers). This fallback handles the edge case where
+            // a zero-arg method/getter ends up via CALL_VIRTUAL.
             final vcWrapper = _hostClassRegistry?.lookup(receiver);
             if (vcWrapper != null) {
-              rs.write(rBase + a, vcWrapper.invokeMethod(receiver, methodName, []));
-              continue;
+              final vcResult =
+                  vcWrapper.getProperty(receiver, methodName);
+              if (!identical(vcResult, BindingsClassWrapper.notFound)) {
+                rs.write(rBase + a, vcResult);
+                continue;
+              }
             }
             throw DarticError(
               'NoSuchMethodError: method "$methodName" not found on '
@@ -1293,7 +1306,14 @@ class DarticInterpreter {
           }
           final wrapper = _hostClassRegistry?.lookup(receiver);
           if (wrapper != null) {
-            rs.write(rBase + a, wrapper.getProperty(receiver, name));
+            final result = wrapper.getProperty(receiver, name);
+            if (identical(result, BindingsClassWrapper.notFound)) {
+              throw DarticError(
+                'NoSuchMethodError: getter "$name" not found on '
+                '${receiver.runtimeType}',
+              );
+            }
+            rs.write(rBase + a, result);
           } else {
             throw DarticError(
               'NoSuchMethodError: getter "$name" not found on '
@@ -1313,10 +1333,17 @@ class DarticInterpreter {
               'NoSuchMethodError: setter "$name" called on null',
             );
           }
-          // Dynamic set dispatches through HostClassWrapper as "[]=".
+          // Dynamic set dispatches through HostClassWrapper.
           final setWrapper = _hostClassRegistry?.lookup(receiver);
           if (setWrapper != null) {
-            setWrapper.invokeMethod(receiver, '$name=', [value]);
+            final setResult =
+                setWrapper.invokeMethod(receiver, '$name=', [value]);
+            if (identical(setResult, BindingsClassWrapper.notFound)) {
+              throw DarticError(
+                'NoSuchMethodError: setter "$name" not found on '
+                '${receiver.runtimeType}',
+              );
+            }
           } else {
             throw DarticError(
               'NoSuchMethodError: setter "$name" not found on '
@@ -1353,11 +1380,21 @@ class DarticInterpreter {
                   1 => proxy.proxy1(),
                   2 => proxy.proxy2(),
                   3 => proxy.proxy3(),
-                  _ => proxy.proxy1(),
+                  _ => throw DarticError(
+                      'DarticCallbackProxy: unsupported arity '
+                      '${arg.funcProto.paramCount}'),
                 };
               }
             }
-            rs.write(rBase + a, dynWrapper.invokeMethod(receiver, name, dynArgs));
+            final dynResult =
+                dynWrapper.invokeMethod(receiver, name, dynArgs);
+            if (identical(dynResult, BindingsClassWrapper.notFound)) {
+              throw DarticError(
+                'NoSuchMethodError: method "$name" not found on '
+                '${receiver.runtimeType}',
+              );
+            }
+            rs.write(rBase + a, dynResult);
           } else {
             throw DarticError(
               'NoSuchMethodError: method "$name" not found on '
