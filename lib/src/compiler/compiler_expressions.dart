@@ -1697,6 +1697,9 @@ extension on DarticCompiler {
     final cls = constant.classNode;
     final classId = _classToClassId[cls];
     if (classId == null) {
+      if (_isPlatformLibrary(cls.enclosingLibrary)) {
+        return _compilePlatformInstanceConstant(constant);
+      }
       throw UnsupportedError(
         'InstanceConstant: unknown class ${cls.name}',
       );
@@ -1750,6 +1753,42 @@ extension on DarticCompiler {
     }
 
     return (objReg, ResultLoc.ref);
+  }
+
+  /// Compiles an [ir.InstanceConstant] for a **platform class** (e.g.,
+  /// `Duration`) by emitting a CALL_HOST to a synthetic `_#fromFields`
+  /// binding.
+  ///
+  /// Platform classes are not registered in [_classToClassId] (only
+  /// user-defined classes are), so we cannot allocate + set fields via
+  /// bytecode. Instead, we compile the field values and pass them to a
+  /// host binding that reconstructs the object from raw field data.
+  ///
+  /// Symbol format: `{libUri}::{className}::_#fromFields#{fieldCount}`
+  (int, ResultLoc) _compilePlatformInstanceConstant(
+    ir.InstanceConstant constant,
+  ) {
+    final cls = constant.classNode;
+    final libUri = cls.enclosingLibrary.importUri.toString();
+    final className = cls.name;
+
+    // Sort field entries by field name for deterministic ordering.
+    final sortedEntries = constant.fieldValues.entries.toList()
+      ..sort((a, b) =>
+          a.key.asField.name.text.compareTo(b.key.asField.name.text));
+
+    // Compile each field value and collect as CALL_HOST arg tuples.
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
+    for (final entry in sortedEntries) {
+      final value = entry.value;
+      final (reg, loc) = value.accept(_constantVisitor);
+      compiledArgs.add((reg, loc, _inferConstantType(value)));
+    }
+
+    final symbolName =
+        '$libUri::$className::_#fromFields#${compiledArgs.length}';
+    final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
+    return _emitCallHost(compiledArgs, bindingIndex);
   }
 
   // ── TypeLiteral (Type as value, e.g., `int` used as expression) ──

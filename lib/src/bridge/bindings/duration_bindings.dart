@@ -97,6 +97,13 @@ abstract final class DurationBindings {
       );
     });
 
+    // ── _#fromFields (platform InstanceConstant reconstruction) ──
+    // Duration has one field: `_duration` (microseconds as int).
+    // Sorted by name: [_duration] → 1 arg.
+    registry.register('dart:core::Duration::_#fromFields#1', (args) {
+      return Duration(microseconds: args[0] as int);
+    });
+
     // ── Static getters / constants ──
     registry.register('dart:core::Duration::zero#0', (args) {
       return Duration.zero;

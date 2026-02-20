@@ -359,6 +359,7 @@ Expando 内部使用 ephemeron 语义——键不可达时值也被 GC，不会�
 | Expando 缓存容量 | 无固定上限，随 GC 自动回收 | ephemeron 语义 |
 | 操作符命名 | 使用 Dart 规范名（`+`、`[]`、`==` 等），与 Kernel `Name.text` 一致 | HostClassWrapper / HostBindings / BridgeGenerator 统一约定 |
 | Super 转发器命名 | `$super$<方法名>` + HostBindings 符号格式 `"库URI::类名::$super$方法名#N"` | BridgeGenerator 生成，编译器引用 |
+| 平台类 InstanceConstant 重建 | `"库URI::类名::_#fromFields#N"` 格式，N 为字段数，参数按字段名字母序排列 | 编译器 `_compilePlatformInstanceConstant` 生成，BridgeGenerator 需为每个平台类生成对应绑定。字段值来自 Kernel CFE 常量折叠结果（是最终字段值，非构造参数），绑定实现需做字段值→构造参数的映射（如 Duration 的 `_duration` 字段 → `microseconds:` 构造参数） |
 | Bridge 构造函数变体 | 每个可用的 VM 超类构造函数对应一个 BridgeFactory | BridgeGenerator 按超类构造函数签名生成 |
 | 跨边界集合泛型 | 解释器创建的集合为 `List<dynamic>` 等，VM 侧精确泛型 `is` 检查失败 | Phase 1 限制，详见"跨边界泛型"节 |
 
