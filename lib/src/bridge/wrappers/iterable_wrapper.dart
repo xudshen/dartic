@@ -67,32 +67,32 @@ abstract final class IterableBindings {
 
     bindings.register('dart:core::Iterable::forEach#1', (args) {
       final fn = args[1] as Function;
-      (args[0] as Iterable).forEach((e) => Function.apply(fn, [e]));
+      (args[0] as Iterable).forEach((e) => fn(e));
       return null;
     });
     bindings.register('dart:core::Iterable::map#1', (args) {
       final fn = args[1] as Function;
-      return (args[0] as Iterable).map((e) => Function.apply(fn, [e]));
+      return (args[0] as Iterable).map((e) => fn(e));
     });
     bindings.register('dart:core::Iterable::where#1', (args) {
       final fn = args[1] as Function;
       return (args[0] as Iterable)
-          .where((e) => Function.apply(fn, [e]) as bool);
+          .where((e) => fn(e) as bool);
     });
     bindings.register('dart:core::Iterable::fold#2', (args) {
       final fn = args[2] as Function;
       return (args[0] as Iterable)
-          .fold(args[1], (prev, e) => Function.apply(fn, [prev, e]));
+          .fold(args[1], (prev, e) => fn(prev, e));
     });
     bindings.register('dart:core::Iterable::any#1', (args) {
       final fn = args[1] as Function;
       return (args[0] as Iterable)
-          .any((e) => Function.apply(fn, [e]) as bool);
+          .any((e) => fn(e) as bool);
     });
     bindings.register('dart:core::Iterable::every#1', (args) {
       final fn = args[1] as Function;
       return (args[0] as Iterable)
-          .every((e) => Function.apply(fn, [e]) as bool);
+          .every((e) => fn(e) as bool);
     });
   }
 }

@@ -79,7 +79,7 @@ abstract final class MapBindings {
       final fn = args[2] as Function;
       return (args[0] as Map).putIfAbsent(
         args[1],
-        () => Function.apply(fn, []),
+        () => fn(),
       );
     });
     bindings.register('dart:core::Map::addEntries#1', (args) {
@@ -91,9 +91,9 @@ abstract final class MapBindings {
       final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
       return (args[0] as Map).update(
         args[1],
-        (v) => Function.apply(updateFn, [v]),
+        (v) => updateFn(v),
         ifAbsent: ifAbsentFn != null
-            ? () => Function.apply(ifAbsentFn, [])
+            ? () => ifAbsentFn()
             : null,
       );
     });
