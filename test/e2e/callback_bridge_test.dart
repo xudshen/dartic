@@ -120,4 +120,51 @@ void main() {
       expect(result, equals([6, 8, 10]));
     });
   });
+
+  group('host-created collection passed to dartic', () {
+    test('String.split returns a host List, dartic reads its length', () async {
+      final result = await _compileAndRunWithHost('''
+        int main() {
+          String s = 'a,b,c';
+          List<String> parts = s.split(',');
+          return parts.length;
+        }
+      ''');
+      expect(result, equals(3));
+    });
+
+    test('String.split result used with indexing', () async {
+      final result = await _compileAndRunWithHost('''
+        Object main() {
+          String s = 'hello world';
+          List<String> parts = s.split(' ');
+          return parts[1];
+        }
+      ''');
+      expect(result, equals('world'));
+    });
+
+    test('String.split result used with forEach callback', () async {
+      final (_, prints) = await _compileAndCapturePrint('''
+        void main() {
+          String csv = 'x,y,z';
+          List<String> parts = csv.split(',');
+          parts.forEach((p) {
+            print(p);
+          });
+        }
+      ''');
+      expect(prints, equals(['x', 'y', 'z']));
+    });
+
+    test('String.split result chained with map', () async {
+      final result = await _compileAndRunWithHost('''
+        Object main() {
+          String s = 'ab,cd,ef';
+          return s.split(',').map((p) => p.length).toList();
+        }
+      ''');
+      expect(result, equals([2, 2, 2]));
+    });
+  });
 }

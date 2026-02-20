@@ -114,6 +114,153 @@ void main() {
       expect(interp.invokeClosure(closure, [null]), isNull);
     });
 
+    test('passes a List from host and returns it (same reference)', () {
+      // Closure: param is at refStack[2] (ITA=0, FTA=1, arg0=2)
+      //   MOVE_REF 0, 2 → RETURN_REF 0
+      final closureBytecode = Uint32List.fromList([
+        encodeABC(Op.moveRef, 0, 2, 0),
+        encodeABC(Op.returnRef, 0, 0, 0),
+      ]);
+
+      final closureProto = DarticFuncProto(
+        funcId: 1,
+        name: 'identity',
+        bytecode: closureBytecode,
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 1,
+      );
+
+      final entryBytecode = Uint32List.fromList([
+        encodeABC(Op.halt, 0, 0, 0),
+      ]);
+
+      final module = DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: entryBytecode,
+            valueRegCount: 0,
+            refRegCount: 1,
+            paramCount: 0,
+          ),
+          closureProto,
+        ],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+
+      final interp = DarticInterpreter();
+      interp.execute(module);
+
+      final closure = DarticClosure(
+        funcProto: closureProto,
+        upvalues: [],
+      );
+
+      final hostList = [1, 'two', 3.0, true, null];
+      final result = interp.invokeClosure(closure, [hostList]);
+      expect(result, isA<List>());
+      expect(identical(result, hostList), isTrue,
+          reason: 'should be the same List reference, not a copy');
+      expect(result, equals([1, 'two', 3.0, true, null]));
+    });
+
+    test('passes a Map from host and returns it (same reference)', () {
+      final closureBytecode = Uint32List.fromList([
+        encodeABC(Op.moveRef, 0, 2, 0),
+        encodeABC(Op.returnRef, 0, 0, 0),
+      ]);
+
+      final closureProto = DarticFuncProto(
+        funcId: 1,
+        name: 'identity',
+        bytecode: closureBytecode,
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 1,
+      );
+
+      final entryBytecode = Uint32List.fromList([
+        encodeABC(Op.halt, 0, 0, 0),
+      ]);
+
+      final module = DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: entryBytecode,
+            valueRegCount: 0,
+            refRegCount: 1,
+            paramCount: 0,
+          ),
+          closureProto,
+        ],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+
+      final interp = DarticInterpreter();
+      interp.execute(module);
+
+      final closure = DarticClosure(
+        funcProto: closureProto,
+        upvalues: [],
+      );
+
+      final hostMap = {'key': 42, 'nested': [1, 2]};
+      final result = interp.invokeClosure(closure, [hostMap]);
+      expect(identical(result, hostMap), isTrue);
+    });
+
+    test('passes a custom host object and returns it', () {
+      final closureBytecode = Uint32List.fromList([
+        encodeABC(Op.moveRef, 0, 2, 0),
+        encodeABC(Op.returnRef, 0, 0, 0),
+      ]);
+
+      final closureProto = DarticFuncProto(
+        funcId: 1,
+        name: 'identity',
+        bytecode: closureBytecode,
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 1,
+      );
+
+      final entryBytecode = Uint32List.fromList([
+        encodeABC(Op.halt, 0, 0, 0),
+      ]);
+
+      final module = DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: entryBytecode,
+            valueRegCount: 0,
+            refRegCount: 1,
+            paramCount: 0,
+          ),
+          closureProto,
+        ],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+
+      final interp = DarticInterpreter();
+      interp.execute(module);
+
+      final closure = DarticClosure(
+        funcProto: closureProto,
+        upvalues: [],
+      );
+
+      // Any arbitrary Dart object — dartic treats it as opaque ref
+      final hostObj = Uri.parse('https://example.com');
+      final result = interp.invokeClosure(closure, [hostObj]);
+      expect(identical(result, hostObj), isTrue);
+    });
+
     test('invokes a closure that returns an int via RETURN_VAL', () {
       // Closure: LOAD_INT 0, 99 → RETURN_VAL 0
       final closureBytecode = Uint32List.fromList([
