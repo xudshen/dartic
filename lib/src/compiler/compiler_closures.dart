@@ -18,6 +18,7 @@ extension on DarticCompiler {
       scope: _scope,
       isEntryFunction: _isEntryFunction,
       currentReturnType: _currentReturnType,
+      currentAsyncMarker: _currentAsyncMarker,
       pendingArgMoves: List.of(_pendingArgMoves),
       labelBreakJumps: Map.of(_labelBreakJumps),
       exceptionHandlers: List.of(_exceptionHandlers),
@@ -33,6 +34,7 @@ extension on DarticCompiler {
     _valueAlloc = RegisterAllocator();
     _refAlloc = RegisterAllocator();
     _isEntryFunction = false;
+    _currentAsyncMarker = ir.AsyncMarker.Sync;
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -53,6 +55,7 @@ extension on DarticCompiler {
     _scope = ctx.scope;
     _isEntryFunction = ctx.isEntryFunction;
     _currentReturnType = ctx.currentReturnType;
+    _currentAsyncMarker = ctx.currentAsyncMarker;
     _restoreList(_pendingArgMoves, ctx.pendingArgMoves);
     _restoreMap(_labelBreakJumps, ctx.labelBreakJumps);
     _restoreList(_exceptionHandlers, ctx.exceptionHandlers);
@@ -151,21 +154,119 @@ extension on DarticCompiler {
     _registerParams(fn.positionalParameters);
     _registerParams(fn.namedParameters);
 
-    // Async/generator closures are not yet supported (Phase 6).
-    // Emit a stub that throws at runtime instead of failing at compile time.
-    if (fn.asyncMarker != ir.AsyncMarker.Sync) {
-      _emitAsyncStub(fn.asyncMarker, name ?? '<anonymous>');
-    } else {
-      // Compile function body.
+    // Check async marker using dartAsyncMarker (design doc decision).
+    final asyncMarker = fn.dartAsyncMarker;
+
+    if (asyncMarker == ir.AsyncMarker.Async) {
+      _currentAsyncMarker = ir.AsyncMarker.Async;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the future result.
+      final futureReg = _allocRefReg();
+
+      // Emit INIT_ASYNC A, Bx.
+      _emitter.emit(encodeABx(Op.initAsync, futureReg, typeBx));
+
+      // Compile function body normally.
       final body = fn.body;
       if (body != null) {
         _compileStatement(body);
       }
-    }
 
-    // Safety net: emit implicit RETURN_NULL if no explicit return.
-    _emitCloseUpvaluesIfNeeded();
-    _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      // Safety net: ASYNC_RETURN null.
+      final nullReg = _allocRefReg();
+      _emitter.emit(encodeABC(Op.loadNull, nullReg, 0, 0));
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.asyncReturn, nullReg, 0, 0));
+    } else if (asyncMarker == ir.AsyncMarker.SyncStar) {
+      _currentAsyncMarker = ir.AsyncMarker.SyncStar;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the iterable.
+      final iterableReg = _allocRefReg();
+
+      // Emit INIT_SYNC_STAR A, Bx — creates the lazy iterable.
+      _emitter.emit(encodeABx(Op.initSyncStar, iterableReg, typeBx));
+
+      // Emit RETURN_REF A — return the iterable synchronously.
+      _emitter.emit(encodeABC(Op.returnRef, iterableReg, 0, 0));
+
+      // Body bytecode follows (executed by SyncStarIterator via drive).
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: RETURN_NULL signals generator done.
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    } else if (asyncMarker == ir.AsyncMarker.AsyncStar) {
+      _currentAsyncMarker = ir.AsyncMarker.AsyncStar;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the stream.
+      final streamReg = _allocRefReg();
+
+      // Emit INIT_ASYNC_STAR A, Bx — creates StreamController, stores stream.
+      _emitter.emit(encodeABx(Op.initAsyncStar, streamReg, typeBx));
+
+      // Emit RETURN_REF A — return the stream synchronously.
+      _emitter.emit(encodeABC(Op.returnRef, streamReg, 0, 0));
+
+      // Body bytecode follows (executed when the stream gets a listener).
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: RETURN_NULL signals generator done -> controller.close().
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    } else if (asyncMarker != ir.AsyncMarker.Sync) {
+      // Unknown async marker — use stub.
+      _emitAsyncStub(asyncMarker, name ?? '<anonymous>');
+
+      // Safety net: emit implicit RETURN_NULL if no explicit return.
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    } else {
+      // Synchronous function — compile body normally.
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: emit implicit RETURN_NULL if no explicit return.
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    }
 
     _patchPendingArgMoves();
 
@@ -409,6 +510,7 @@ class _CompilationContext {
     required this.scope,
     required this.isEntryFunction,
     required this.currentReturnType,
+    required this.currentAsyncMarker,
     required this.pendingArgMoves,
     required this.labelBreakJumps,
     required this.exceptionHandlers,
@@ -426,6 +528,7 @@ class _CompilationContext {
   final Scope scope;
   final bool isEntryFunction;
   final ir.DartType currentReturnType;
+  final ir.AsyncMarker currentAsyncMarker;
   final List<({int pc, int srcReg, int argIdx, ResultLoc loc})> pendingArgMoves;
   final Map<ir.LabeledStatement, List<int>> labelBreakJumps;
   final List<ExceptionHandler> exceptionHandlers;

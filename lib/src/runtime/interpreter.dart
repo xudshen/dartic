@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import '../bridge/callback_proxy.dart';
@@ -12,10 +13,12 @@ import 'closure.dart';
 import 'dartic_invocation.dart';
 import 'dartic_type.dart';
 import 'error.dart';
+import 'frame.dart';
 import 'global_table.dart';
 import 'object.dart';
 import 'ref_stack.dart';
 import 'subtype_checker.dart';
+import 'sync_star.dart';
 import 'type_resolver.dart';
 import 'value_stack.dart';
 
@@ -90,6 +93,30 @@ class DarticInterpreter {
   /// Initialized per-execution from [hostFunctionRegistry].
   HostDispatchRegistry? _hostClassRegistry;
 
+  /// The current async frame being executed. Set when an async function is
+  /// entered via INIT_ASYNC. Used by AWAIT/ASYNC_RETURN/ASYNC_THROW to
+  /// access the DarticFrame across _executeLoop invocations.
+  DarticFrame? _currentAsyncFrame;
+
+  /// The active sync* iterator being driven. Non-null only while inside
+  /// [driveSyncStar]. Used by the YIELD and RETURN_NULL handlers to
+  /// distinguish sync* context from other contexts.
+  SyncStarIterator<Object?>? _activeSyncStarIterator;
+
+  /// Result status from the last sync* drive step. Set by YIELD or
+  /// RETURN_NULL when in sync* context, read by [driveSyncStar] after
+  /// _executeLoop returns.
+  SyncStarStatus? _syncStarStatus;
+
+  /// Suspended frame from a YIELD in sync* context. Set by the YIELD handler,
+  /// read by [driveSyncStar] to update the iterator's frame reference.
+  DarticFrame? _syncStarSuspendedFrame;
+
+  /// The current async* frame being executed. Non-null only while inside
+  /// an async* generator body. Used by YIELD and RETURN_NULL to distinguish
+  /// async* context from sync* and regular async contexts.
+  DarticFrame? _currentAsyncStarFrame;
+
   /// Executes [module] starting from its entry function.
   ///
   /// Runs the dispatch loop until HALT is reached or fuel is exhausted.
@@ -99,6 +126,7 @@ class DarticInterpreter {
     _activeModule = module;
     _openUpvalues.clear();
     _upvalueStack.clear();
+    _currentAsyncFrame = null;
 
     // Auto-create TypeRegistry + SubtypeChecker from module metadata.
     _provisionTypeSystem(module);
@@ -399,6 +427,451 @@ class DarticInterpreter {
           valArgIdx++;
       }
     }
+  }
+
+  /// Saves the value-stack and ref-stack regions owned by [frame] into its
+  /// snapshot fields ([DarticFrame.savedValueSlots], [DarticFrame.savedRefSlots]).
+  ///
+  /// After snapshotting, the original ref-stack slots are set to null so that
+  /// objects referenced only by this frame become eligible for GC.
+  ///
+  /// See: docs/design/07-async.md "挂起流程（Suspend）"
+  void suspendFrame(DarticFrame frame) {
+    final vBase = frame.savedVBase;
+    final vSize = frame.savedVSP - vBase;
+    final rBase = frame.savedRBase;
+    final rSize = frame.savedRSP - rBase;
+
+    if (vSize > 0) {
+      frame.savedValueSlots = Int64List(vSize);
+      frame.savedValueSlots!.setRange(0, vSize, valueStack.intView, vBase);
+    }
+
+    if (rSize > 0) {
+      frame.savedRefSlots = List<Object?>.filled(rSize, null);
+      for (int i = 0; i < rSize; i++) {
+        frame.savedRefSlots![i] = refStack.slots[rBase + i];
+        refStack.slots[rBase + i] = null; // Release references for GC.
+      }
+    }
+  }
+
+  /// Restores [frame]'s saved stack data at the **current stack top** (not
+  /// the original position).
+  ///
+  /// Allocates space at [valueStack.sp]/[refStack.sp], copies the snapshot
+  /// back, updates the frame's base/sp fields to the new positions, and
+  /// advances the global stack pointers. The snapshot fields are set to null
+  /// after restoration.
+  ///
+  /// See: docs/design/07-async.md "恢复 — _restoreFrameStack"
+  void restoreFrameStack(DarticFrame frame) {
+    final vSize = frame.savedValueSlots?.length ?? 0;
+    final rSize = frame.savedRefSlots?.length ?? 0;
+
+    final newVBase = valueStack.sp;
+    final newRBase = refStack.sp;
+
+    assert(newVBase + vSize <= valueStack.capacity,
+        'ValueStack overflow during frame restore');
+    assert(newRBase + rSize <= refStack.capacity,
+        'RefStack overflow during frame restore');
+
+    if (frame.savedValueSlots != null) {
+      valueStack.intView.setRange(
+          newVBase, newVBase + vSize, frame.savedValueSlots!);
+      frame.savedValueSlots = null;
+    }
+
+    if (frame.savedRefSlots != null) {
+      for (int i = 0; i < rSize; i++) {
+        refStack.slots[newRBase + i] = frame.savedRefSlots![i];
+      }
+      frame.savedRefSlots = null;
+    }
+
+    frame.savedVBase = newVBase;
+    frame.savedRBase = newRBase;
+    frame.savedVSP = newVBase + vSize;
+    frame.savedRSP = newRBase + rSize;
+    valueStack.sp = newVBase + vSize;
+    refStack.sp = newRBase + rSize;
+  }
+
+  /// Registers then/error callbacks on a Future or schedules immediate resume
+  /// for a non-Future value.
+  ///
+  /// For async* frames (identified by `frame.streamController != null`),
+  /// routes to [_resumeAsyncStarFrame] instead of [_resumeFrame].
+  void _registerAwaitCallbacks(
+    DarticFrame frame, Object? value, DarticModule module,
+  ) {
+    final zone = frame.capturedZone ?? Zone.current;
+
+    // Choose the correct resume function based on frame type.
+    final isAsyncStar = frame.streamController != null;
+    void Function() resumeAction() => isAsyncStar
+        ? () => _resumeAsyncStarFrame(frame, module)
+        : () => _resumeFrame(frame, module);
+
+    if (value is Future) {
+      // Lazily create cached callbacks for this frame.
+      frame.thenCallback ??= (Object? result) {
+        frame.resumeValue = result;
+        zone.scheduleMicrotask(resumeAction());
+      };
+      frame.errorCallback ??= (Object error, StackTrace stackTrace) {
+        frame.resumeException = error;
+        frame.resumeStackTrace = stackTrace;
+        zone.scheduleMicrotask(resumeAction());
+      };
+      value.then(
+        frame.thenCallback! as void Function(Object?),
+        onError: frame.errorCallback! as void Function(Object, StackTrace),
+      );
+    } else {
+      // Non-Future value: schedule immediate resume via microtask.
+      frame.resumeValue = value;
+      zone.scheduleMicrotask(resumeAction());
+    }
+  }
+
+  /// Resumes a suspended async frame after a Future completes.
+  ///
+  /// Called from a microtask scheduled by the AWAIT handler. Restores the
+  /// frame's stack data at the current stack top, writes the resume value
+  /// (or routes the exception to a handler), then starts a new
+  /// [_executeLoop] invocation to continue execution.
+  void _resumeFrame(DarticFrame frame, DarticModule module) {
+    // Restore frame stack data at the current stack top.
+    restoreFrameStack(frame);
+
+    final vBase = frame.savedVBase;
+    final rBase = frame.savedRBase;
+
+    // Push a call stack entry for the resumed frame.
+    callStack.pushFrame(
+      funcId: frame.funcProto.funcId,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: vBase,
+      savedRSP: rBase,
+      resultReg: 0,
+    );
+    // Push upvalue stack entry to keep it in sync with the call stack.
+    // Resumed frames don't capture upvalues from a closure caller, so
+    // push null (matching the entry-frame pattern in _executeEntry).
+    _upvalueStack.add(null);
+
+    int pc = frame.pc;
+
+    // Check if we're resuming with an exception.
+    if (frame.resumeException != null) {
+      final exception = frame.resumeException;
+      final stackTrace = frame.resumeStackTrace;
+      frame.resumeException = null;
+      frame.resumeStackTrace = null;
+
+      // Search for an exception handler at the resume PC.
+      final funcProto = frame.funcProto;
+      final handler = _findHandler(
+          funcProto, pc, exception, module, rBase, refStack);
+      if (handler != null) {
+        refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
+        valueStack.sp = vBase + handler.valStackDP;
+        refStack.sp = rBase + handler.refStackDP;
+        refStack.write(rBase + handler.exceptionReg, exception);
+        if (handler.stackTraceReg >= 0) {
+          refStack.write(rBase + handler.stackTraceReg, stackTrace);
+        }
+        pc = handler.handlerPC;
+      } else {
+        // No handler found — complete the async completer with error.
+        valueStack.sp = vBase;
+        refStack.sp = rBase;
+        callStack.popFrame();
+        _upvalueStack.removeLast();
+        frame.resultCompleter!.completeError(exception!, stackTrace as StackTrace?);
+        _currentAsyncFrame = null;
+        return;
+      }
+    } else {
+      // Normal resume: write resumeValue to the await destination register.
+      refStack.write(rBase + frame.awaitDestReg, frame.resumeValue);
+      frame.resumeValue = null;
+    }
+
+    // Set the async frame context and start a new dispatch loop.
+    _currentAsyncFrame = frame;
+    _executeLoop(
+      module,
+      vBase,
+      rBase,
+      frame.funcProto.bytecode,
+      pc,
+      null,
+    );
+  }
+
+  /// Starts the async* generator body for the first time.
+  ///
+  /// Called from the StreamController's onListen callback (via microtask).
+  /// Restores the frame's saved argument snapshot, pushes a call stack entry,
+  /// sets the async* context, and starts a dispatch loop.
+  void _startAsyncStarBody(DarticFrame frame, DarticModule module) {
+    // Restore the saved argument snapshot at the current stack top.
+    restoreFrameStack(frame);
+
+    final vBase = frame.savedVBase;
+    final rBase = frame.savedRBase;
+
+    // Cast upvalues from List<Object?> to List<Upvalue> (they were
+    // constructed as List<Upvalue> in INIT_ASYNC_STAR).
+    final upvalues = frame.upvalues.isNotEmpty
+        ? frame.upvalues.cast<Upvalue>()
+        : null;
+
+    // Push a call stack entry for the async* body.
+    callStack.pushFrame(
+      funcId: frame.funcProto.funcId,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: vBase,
+      savedRSP: rBase,
+      resultReg: 0,
+    );
+    _upvalueStack.add(upvalues);
+
+    // Set async* context.
+    _currentAsyncStarFrame = frame;
+    // Also set _currentAsyncFrame so AWAIT works inside async* bodies.
+    _currentAsyncFrame = frame;
+
+    try {
+      _executeLoop(
+        module,
+        vBase,
+        rBase,
+        frame.funcProto.bytecode,
+        frame.pc,
+        upvalues,
+      );
+    } on Object catch (e, st) {
+      // Uncaught exception from the async* body — route to the stream.
+      final controller = frame.streamController;
+      if (controller != null && !controller.isClosed) {
+        controller.addError(e, st);
+        controller.close();
+      }
+      _currentAsyncStarFrame = null;
+      _currentAsyncFrame = null;
+    }
+  }
+
+  /// Resumes a suspended async* generator frame (after pause/yield resume,
+  /// cancel, or await completion).
+  ///
+  /// Called from onResume/onCancel callbacks or from await resume (via
+  /// microtask). Similar to [_resumeFrame] but uses async* context.
+  void _resumeAsyncStarFrame(DarticFrame frame, DarticModule module) {
+    // Restore frame stack data at the current stack top.
+    restoreFrameStack(frame);
+
+    final vBase = frame.savedVBase;
+    final rBase = frame.savedRBase;
+
+    // Cast upvalues from List<Object?> to List<Upvalue>.
+    final upvalues = frame.upvalues.isNotEmpty
+        ? frame.upvalues.cast<Upvalue>()
+        : null;
+
+    // Push a call stack entry for the resumed frame.
+    callStack.pushFrame(
+      funcId: frame.funcProto.funcId,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: vBase,
+      savedRSP: rBase,
+      resultReg: 0,
+    );
+    _upvalueStack.add(upvalues);
+
+    int pc = frame.pc;
+
+    // Check if we're resuming with an exception (from a failed await).
+    if (frame.resumeException != null) {
+      final exception = frame.resumeException;
+      final stackTrace = frame.resumeStackTrace;
+      frame.resumeException = null;
+      frame.resumeStackTrace = null;
+
+      // Search for an exception handler at the resume PC.
+      final funcProto = frame.funcProto;
+      final handler = _findHandler(
+          funcProto, pc, exception, module, rBase, refStack);
+      if (handler != null) {
+        refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
+        valueStack.sp = vBase + handler.valStackDP;
+        refStack.sp = rBase + handler.refStackDP;
+        refStack.write(rBase + handler.exceptionReg, exception);
+        if (handler.stackTraceReg >= 0) {
+          refStack.write(rBase + handler.stackTraceReg, stackTrace);
+        }
+        pc = handler.handlerPC;
+      } else {
+        // No handler found — add error to stream and close.
+        valueStack.sp = vBase;
+        refStack.sp = rBase;
+        callStack.popFrame();
+        _upvalueStack.removeLast();
+        final controller = frame.streamController;
+        if (controller != null && !controller.isClosed) {
+          controller.addError(
+              exception!, stackTrace as StackTrace? ?? StackTrace.empty);
+          controller.close();
+        }
+        _currentAsyncStarFrame = null;
+        _currentAsyncFrame = null;
+        return;
+      }
+    } else if (frame.resumeValue != null || frame.awaitDestReg >= 0) {
+      // Normal resume from await: write resumeValue to the destination reg.
+      if (frame.resumeValue != null) {
+        refStack.write(rBase + frame.awaitDestReg, frame.resumeValue);
+        frame.resumeValue = null;
+      }
+    }
+
+    // Set the async* frame context and start a new dispatch loop.
+    _currentAsyncStarFrame = frame;
+    _currentAsyncFrame = frame;
+    try {
+      _executeLoop(
+        module,
+        vBase,
+        rBase,
+        frame.funcProto.bytecode,
+        pc,
+        upvalues,
+      );
+    } on Object catch (e, st) {
+      // Uncaught exception from the async* body — route to the stream.
+      final controller = frame.streamController;
+      if (controller != null && !controller.isClosed) {
+        controller.addError(e, st);
+        controller.close();
+      }
+      _currentAsyncStarFrame = null;
+      _currentAsyncFrame = null;
+    }
+  }
+
+  /// Drives a sync* generator frame synchronously until YIELD or completion.
+  ///
+  /// Called by [SyncStarIterator.moveNext]. On the first call,
+  /// [capturedArgs] provides the argument snapshot to restore into the new
+  /// frame's stack region. On subsequent calls (resume), the iterator's saved
+  /// [DarticFrame] is restored via [restoreFrameStack].
+  ///
+  /// Returns [SyncStarStatus.yielded] when the generator yields a value
+  /// (already set on [iterator] via [SyncStarIterator.setCurrent]), or
+  /// [SyncStarStatus.done] when the generator body finishes.
+  ///
+  /// Exceptions thrown by the generator body propagate to the caller
+  /// (i.e., to [SyncStarIterator.moveNext]).
+  SyncStarStatus driveSyncStar(
+    DarticFuncProto proto,
+    int startPC,
+    DarticModule module,
+    SyncStarIterator<Object?> iterator, {
+    List<Upvalue> upvalues = const [],
+    ({List<int> valueSlots, List<Object?> refSlots})? capturedArgs,
+  }) {
+    final vs = valueStack;
+    final rs = refStack;
+
+    int vBase;
+    int rBase;
+    int pc;
+    List<Upvalue>? loopUpvalues = upvalues.isNotEmpty ? upvalues : null;
+
+    final existingFrame = iterator.frame;
+
+    if (capturedArgs != null && existingFrame == null) {
+      // First call: allocate stack space and restore captured arguments.
+      vBase = vs.sp;
+      rBase = rs.sp;
+      vs.sp += proto.valueRegCount;
+      rs.sp += proto.refRegCount;
+
+      // Restore captured value slots.
+      final vSlots = capturedArgs.valueSlots;
+      for (var i = 0; i < vSlots.length; i++) {
+        vs.writeInt(vBase + i, vSlots[i]);
+      }
+
+      // Restore captured ref slots.
+      final rSlots = capturedArgs.refSlots;
+      for (var i = 0; i < rSlots.length; i++) {
+        rs.write(rBase + i, rSlots[i]);
+      }
+
+      pc = startPC;
+    } else if (existingFrame != null) {
+      // Resume: restore frame stack data at current stack top.
+      restoreFrameStack(existingFrame);
+      vBase = existingFrame.savedVBase;
+      rBase = existingFrame.savedRBase;
+      pc = existingFrame.pc;
+    } else {
+      throw DarticError('driveSyncStar: no frame and no capturedArgs');
+    }
+
+    // Push a call stack entry for this drive invocation.
+    callStack.pushFrame(
+      funcId: proto.funcId,
+      returnPC: 0,
+      savedFP: callStack.fp,
+      savedVSP: vBase,
+      savedRSP: rBase,
+      resultReg: 0,
+    );
+    _upvalueStack.add(null);
+
+    // Set sync* context so YIELD and RETURN_NULL know they're in a generator.
+    final savedIterator = _activeSyncStarIterator;
+    _activeSyncStarIterator = iterator;
+    _syncStarStatus = null;
+    _syncStarSuspendedFrame = null;
+
+    try {
+      _executeLoop(
+        module,
+        vBase,
+        rBase,
+        proto.bytecode,
+        pc,
+        loopUpvalues,
+      );
+    } on Object {
+      // Exception from the generator body propagates to moveNext() caller.
+      _activeSyncStarIterator = savedIterator;
+      _syncStarStatus = null;
+      _syncStarSuspendedFrame = null;
+      rethrow;
+    }
+
+    // If YIELD suspended, store the suspended frame on the iterator for the
+    // next moveNext() call.
+    if (_syncStarSuspendedFrame != null) {
+      iterator.frame = _syncStarSuspendedFrame;
+      _syncStarSuspendedFrame = null;
+    }
+
+    _activeSyncStarIterator = savedIterator;
+    final status = _syncStarStatus ?? SyncStarStatus.done;
+    _syncStarStatus = null;
+    return status;
   }
 
   /// Core dispatch loop shared by [_executeEntry] and [invokeClosure].
@@ -1173,6 +1646,36 @@ class DarticInterpreter {
         case Op.returnRef: // RETURN_REF A — return refStack[A] to caller
         case Op.returnVal: // RETURN_VAL A — return valueStack[A] to caller
         case Op.returnNull: // RETURN_NULL — return null to caller
+          // sync* generator: RETURN_NULL signals generator done.
+          if (op == Op.returnNull && _activeSyncStarIterator != null) {
+            _syncStarStatus = SyncStarStatus.done;
+            // Clean up stacks and return from _executeLoop.
+            rs.clearRange(rBase, rs.sp);
+            vs.sp = vBase;
+            rs.sp = rBase;
+            callStack.popFrame();
+            _upvalueStack.removeLast();
+            return;
+          }
+
+          // async* generator: RETURN_NULL signals generator done ->
+          // controller.close().
+          if (op == Op.returnNull && _currentAsyncStarFrame != null) {
+            final asyncStarFrame = _currentAsyncStarFrame!;
+            final controller = asyncStarFrame.streamController;
+            if (controller != null && !controller.isClosed) {
+              controller.close();
+            }
+            // Clean up stacks and return from _executeLoop.
+            rs.clearRange(rBase, rs.sp);
+            vs.sp = vBase;
+            rs.sp = rBase;
+            callStack.popFrame();
+            _upvalueStack.removeLast();
+            _currentAsyncStarFrame = null;
+            return;
+          }
+
           // Capture return value before frame teardown.
           final Object? retRef;
           final int retVal;
@@ -1703,6 +2206,649 @@ class DarticInterpreter {
           if (pushed) continue;
           pc = handlerPC;
           continue;
+
+        // ── Async & Generators (0x80-0x8F) ──
+
+        case Op.initAsync: // INIT_ASYNC A, Bx — create Completer<T>, refStack[A] = completer.future
+          {
+            final a = (instr >> 8) & 0xFF;
+            // Bx = constant pool index for emittedValueType TypeTemplate.
+            // Phase 1: use Completer<dynamic> (typed Completer deferred).
+            // final bx = (instr >> 16) & 0xFFFF;
+            final completer = Completer<Object?>();
+
+            // Create a DarticFrame to hold the async state.
+            final frame = DarticFrame(funcProto: module.functions[callStack.funcId]);
+            frame.resultCompleter = completer;
+            frame.capturedZone = Zone.current;
+            frame.futureReg = a;
+
+            // Save the caller's async frame so it can be restored when this
+            // async function returns its future to the caller via `continue`.
+            frame.callerAsyncFrame = _currentAsyncFrame;
+
+            _currentAsyncFrame = frame;
+
+            // Store the future in the designated ref register.
+            rs.write(rBase + a, completer.future);
+          }
+
+        case Op.await_: // AWAIT A, Bx — suspend frame, register callbacks on future
+          {
+            final a = (instr >> 8) & 0xFF;
+            final bx = (instr >> 16) & 0xFFFF;
+
+            final frame = _currentAsyncFrame!;
+            frame.awaitDestReg = a;
+            frame.pc = bx; // Resume PC
+
+            // Read the awaited value BEFORE suspending (suspend nulls the slots).
+            final Object? value = rs.read(rBase + a);
+
+            // If this is the first suspension point, we need to return the
+            // future to the caller. The async function was called via
+            // CALL_STATIC/CALL, so the caller is waiting for a return value.
+            final bool needsReturnToCaller = !frame.futureReturned;
+            final Object? future = needsReturnToCaller
+                ? rs.read(rBase + frame.futureReg)
+                : null;
+
+            // Save stack bounds on frame before suspending.
+            frame.savedVBase = vBase;
+            frame.savedRBase = rBase;
+            frame.savedVSP = vs.sp;
+            frame.savedRSP = rs.sp;
+
+            // Suspend: snapshot stack data to frame object.
+            suspendFrame(frame);
+
+            if (needsReturnToCaller) {
+              frame.futureReturned = true;
+
+              // Check if this is the entry function (no caller to return to).
+              if (callStack.depth <= 1) {
+                _lastEntryResult = future;
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                _registerAwaitCallbacks(frame, value, module);
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              // Return the future to the caller via normal return path.
+              // Mimics RETURN_REF logic: pop callee frame, restore caller
+              // state, write future to caller's result register.
+              final callerVSP = callStack.savedVSP;
+              final callerRSP = callStack.savedRSP;
+              final retPC = callStack.returnPC;
+              final resReg = callStack.resultReg;
+
+              vs.sp = vBase;
+              rs.sp = rBase;
+              vBase = callerVSP;
+              rBase = callerRSP;
+
+              callStack.popFrame();
+
+              if (callStack.isHostBoundary) {
+                // Called from HOST_BOUNDARY (e.g., invokeClosure).
+                _callbackResult = future;
+                _upvalueStack.removeLast();
+                _registerAwaitCallbacks(frame, value, module);
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              // Write future to caller's result register.
+              rs.write(callerRSP + resReg, future);
+
+              // Restore caller's bytecode and upvalues.
+              code = module.functions[callStack.funcId].bytecode;
+              pc = retPC;
+              currentUpvalues = _upvalueStack.removeLast();
+
+              // Register async callbacks for the suspended frame.
+              _registerAwaitCallbacks(frame, value, module);
+
+              // Restore the caller's async frame context (may be null if
+              // caller is not async, or points to caller's DarticFrame).
+              _currentAsyncFrame = frame.callerAsyncFrame;
+
+              // Continue the caller's dispatch loop (do not return).
+              continue;
+            } else {
+              // Already returned the future on a previous AWAIT.
+              // This is a resumed frame — just suspend and return.
+              vs.sp = vBase;
+              rs.sp = rBase;
+              callStack.popFrame();
+              _upvalueStack.removeLast();
+
+              _registerAwaitCallbacks(frame, value, module);
+              _currentAsyncFrame = null;
+              _currentAsyncStarFrame = null;
+              return; // Exit dispatch loop — will be resumed via microtask.
+            }
+          }
+
+        case Op.asyncReturn: // ASYNC_RETURN A — completer.complete(refStack[A])
+          {
+            final a = (instr >> 8) & 0xFF;
+            final frame = _currentAsyncFrame!;
+            final result = rs.read(rBase + a);
+            frame.resultCompleter!.complete(result);
+
+            if (!frame.futureReturned) {
+              frame.futureReturned = true;
+
+              // First completion: return the future to the caller.
+              final future = rs.read(rBase + frame.futureReg);
+
+              rs.clearRange(rBase, rs.sp);
+
+              // Check if this is the entry function (no caller to return to).
+              if (callStack.depth <= 1) {
+                _lastEntryResult = future;
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              final callerVSP = callStack.savedVSP;
+              final callerRSP = callStack.savedRSP;
+              final retPC = callStack.returnPC;
+              final resReg = callStack.resultReg;
+
+              vs.sp = vBase;
+              rs.sp = rBase;
+              vBase = callerVSP;
+              rBase = callerRSP;
+
+              callStack.popFrame();
+
+              if (callStack.isHostBoundary) {
+                _callbackResult = future;
+                _upvalueStack.removeLast();
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              // Write future to caller's result register.
+              rs.write(callerRSP + resReg, future);
+
+              code = module.functions[callStack.funcId].bytecode;
+              pc = retPC;
+              currentUpvalues = _upvalueStack.removeLast();
+
+              // Restore the caller's async frame context.
+              _currentAsyncFrame = frame.callerAsyncFrame;
+
+              // Continue the caller's dispatch loop.
+              continue;
+            } else {
+              // Resumed frame completing: just clean up and return.
+              rs.clearRange(rBase, rs.sp);
+              vs.sp = vBase;
+              rs.sp = rBase;
+              callStack.popFrame();
+              _upvalueStack.removeLast();
+              _currentAsyncFrame = null;
+              return;
+            }
+          }
+
+        case Op.asyncThrow: // ASYNC_THROW A, B — completer.completeError(refStack[A], refStack[B])
+          {
+            final a = (instr >> 8) & 0xFF;
+            final b = (instr >> 16) & 0xFF;
+            final frame = _currentAsyncFrame!;
+            final error = rs.read(rBase + a);
+            final stackTrace = rs.read(rBase + b);
+            frame.resultCompleter!.completeError(
+              error!,
+              stackTrace as StackTrace?,
+            );
+
+            if (!frame.futureReturned) {
+              frame.futureReturned = true;
+
+              final future = rs.read(rBase + frame.futureReg);
+
+              rs.clearRange(rBase, rs.sp);
+
+              // Check if this is the entry function (no caller to return to).
+              if (callStack.depth <= 1) {
+                _lastEntryResult = future;
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              final callerVSP = callStack.savedVSP;
+              final callerRSP = callStack.savedRSP;
+              final retPC = callStack.returnPC;
+              final resReg = callStack.resultReg;
+
+              vs.sp = vBase;
+              rs.sp = rBase;
+              vBase = callerVSP;
+              rBase = callerRSP;
+
+              callStack.popFrame();
+
+              if (callStack.isHostBoundary) {
+                _callbackResult = future;
+                _upvalueStack.removeLast();
+                _currentAsyncFrame = null;
+                return;
+              }
+
+              rs.write(callerRSP + resReg, future);
+
+              code = module.functions[callStack.funcId].bytecode;
+              pc = retPC;
+              currentUpvalues = _upvalueStack.removeLast();
+
+              // Restore the caller's async frame context.
+              _currentAsyncFrame = frame.callerAsyncFrame;
+              continue;
+            } else {
+              rs.clearRange(rBase, rs.sp);
+              vs.sp = vBase;
+              rs.sp = rBase;
+              callStack.popFrame();
+              _upvalueStack.removeLast();
+              _currentAsyncFrame = null;
+              return;
+            }
+          }
+
+        // ── Async* Generator (0x84) ──
+
+        case Op.initAsyncStar: // INIT_ASYNC_STAR A, Bx — create StreamController
+          {
+            final a = (instr >> 8) & 0xFF;
+            // Bx = constant pool index for emittedValueType TypeTemplate.
+            // (reserved for future typed StreamController; currently unused).
+            // final bx = (instr >> 16) & 0xFFFF;
+
+            final funcProto = module.functions[callStack.funcId];
+
+            // bodyStartPC = pc + 1 (skip the upcoming RETURN_REF, land on
+            // the body). The compiler emits:
+            //   INIT_ASYNC_STAR -> RETURN_REF -> body...
+            final bodyStartPC = pc + 1; // skip RETURN_REF
+
+            // Snapshot the current stack state so onListen can start the body
+            // with a copy of the function arguments.
+            final vSize = vs.sp - vBase;
+            final rSize = rs.sp - rBase;
+            final valueSlots = <int>[];
+            for (var i = 0; i < vSize; i++) {
+              valueSlots.add(vs.readInt(vBase + i));
+            }
+            final refSlots = List<Object?>.filled(rSize, null);
+            for (var i = 0; i < rSize; i++) {
+              refSlots[i] = rs.read(rBase + i);
+            }
+
+            // Build upvalue list from current context.
+            final upvalueList = <Upvalue>[];
+            final uv = currentUpvalues;
+            if (uv != null) {
+              upvalueList.addAll(uv);
+            }
+
+            // Create a DarticFrame to hold the async* state.
+            final frame = DarticFrame(
+              funcProto: funcProto,
+              upvalues: upvalueList,
+            );
+            frame.pc = bodyStartPC;
+            frame.capturedZone = Zone.current;
+            // Mark futureReturned=true so AWAIT takes the "already returned"
+            // path (the stream was returned synchronously, not via AWAIT).
+            frame.futureReturned = true;
+
+            // Save the argument snapshot on the frame for initial startup.
+            frame.savedVBase = 0;
+            frame.savedRBase = 0;
+            frame.savedVSP = vSize;
+            frame.savedRSP = rSize;
+            if (vSize > 0) {
+              frame.savedValueSlots = Int64List(vSize);
+              for (var i = 0; i < vSize; i++) {
+                frame.savedValueSlots![i] = valueSlots[i];
+              }
+            }
+            if (rSize > 0) {
+              frame.savedRefSlots = List<Object?>.of(refSlots);
+            }
+
+            // Create the StreamController with lifecycle callbacks.
+            final controller = StreamController<Object?>(
+              onListen: () {
+                // Start executing the body via microtask.
+                final zone = frame.capturedZone ?? Zone.current;
+                zone.scheduleMicrotask(
+                    () => _startAsyncStarBody(frame, module));
+              },
+              onPause: () {
+                frame.streamPaused = true;
+              },
+              onResume: () {
+                frame.streamPaused = false;
+                if (frame.isSuspendedAtYield) {
+                  frame.isSuspendedAtYield = false;
+                  final zone = frame.capturedZone ?? Zone.current;
+                  zone.scheduleMicrotask(
+                      () => _resumeAsyncStarFrame(frame, module));
+                }
+              },
+              onCancel: () {
+                frame.cancelled = true;
+                if (frame.isSuspendedAtYield) {
+                  frame.isSuspendedAtYield = false;
+                  final zone = frame.capturedZone ?? Zone.current;
+                  zone.scheduleMicrotask(
+                      () => _resumeAsyncStarFrame(frame, module));
+                }
+              },
+            );
+
+            frame.streamController = controller;
+
+            // Store the stream in the designated ref register.
+            rs.write(rBase + a, controller.stream);
+            // Fall through to the next instruction (RETURN_REF A), which
+            // will return the stream to the caller synchronously.
+          }
+
+        // ── Sync* Generator (0x85, 0x87) ──
+
+        case Op.initSyncStar: // INIT_SYNC_STAR A, Bx — create lazy SyncStarIterable
+          {
+            final a = (instr >> 8) & 0xFF;
+            // Bx = constant pool index for emittedValueType TypeTemplate
+            // (reserved for future typed iterable; currently unused).
+            // final bx = (instr >> 16) & 0xFFFF;
+
+            final funcProto = module.functions[callStack.funcId];
+
+            // bodyStartPC = pc (the instruction after INIT_SYNC_STAR, which
+            // is RETURN_REF). The SyncStarIterable records pc+1 (skip the
+            // RETURN_REF) as the actual body start. But it's simpler to just
+            // record pc here and let the iterable use bodyStartPC directly.
+            // The compiler emits: INIT_SYNC_STAR -> RETURN_REF -> body...
+            // So bodyStartPC = pc + 1 (skip RETURN_REF, land on body start).
+            final bodyStartPC = pc + 1; // skip the upcoming RETURN_REF
+
+            // Snapshot the current stack state so each iterator can start
+            // with a copy of the function arguments.
+            final vSize = vs.sp - vBase;
+            final rSize = rs.sp - rBase;
+            final valueSlots = <int>[];
+            for (var i = 0; i < vSize; i++) {
+              valueSlots.add(vs.readInt(vBase + i));
+            }
+            final refSlots = List<Object?>.filled(rSize, null);
+            for (var i = 0; i < rSize; i++) {
+              refSlots[i] = rs.read(rBase + i);
+            }
+
+            // Build upvalue list from current context (same as CLOSURE).
+            final upvalues = <Upvalue>[];
+            final uv = currentUpvalues;
+            if (uv != null) {
+              upvalues.addAll(uv);
+            }
+
+            final iterable = SyncStarIterable<Object?>(
+              interpreter: this,
+              module: module,
+              funcProto: funcProto,
+              bodyStartPC: bodyStartPC,
+              upvalues: upvalues,
+              capturedArgs: (valueSlots: valueSlots, refSlots: refSlots),
+            );
+
+            rs.write(rBase + a, iterable);
+            // Fall through to the next instruction (RETURN_REF A), which
+            // will return the iterable to the caller synchronously.
+          }
+
+        case Op.yield_: // YIELD A, Bx — yield refStack[A], resume at Bx
+          {
+            final a = (instr >> 8) & 0xFF;
+            final bx = (instr >> 16) & 0xFFFF;
+
+            final syncIter = _activeSyncStarIterator;
+            if (syncIter != null) {
+              // sync* context: set iterator.current, suspend, return.
+              final value = rs.read(rBase + a);
+              syncIter.setCurrent(value);
+
+              // Save frame state for resume.
+              final frame = DarticFrame(
+                funcProto: module.functions[callStack.funcId],
+                upvalues: currentUpvalues ?? const [],
+              );
+              frame.pc = bx; // resume PC
+
+              // Save stack bounds.
+              frame.savedVBase = vBase;
+              frame.savedRBase = rBase;
+              frame.savedVSP = vs.sp;
+              frame.savedRSP = rs.sp;
+
+              // Snapshot stack data.
+              suspendFrame(frame);
+
+              // Update the iterator's frame reference.
+              // We use a field on the iterator to store the frame between
+              // drive() calls. The SyncStarIterator._frame field is set
+              // externally by setting it here via the reference we have.
+              // Actually, we need to communicate the frame back. The simplest
+              // approach: store it on the iterator via a setter, or use the
+              // _activeSyncStarIterator's _frame field. But _frame is private.
+              // Instead, we'll use a different approach: store the frame info
+              // on a field that driveSyncStar can access.
+              //
+              // Revised approach: We'll store the suspended frame in a field
+              // on the interpreter that driveSyncStar reads after _executeLoop
+              // returns.
+              _syncStarSuspendedFrame = frame;
+
+              _syncStarStatus = SyncStarStatus.yielded;
+
+              // Clean up stacks and return from _executeLoop.
+              vs.sp = vBase;
+              rs.sp = rBase;
+              callStack.popFrame();
+              _upvalueStack.removeLast();
+              return;
+            }
+
+            // async* context: add value to stream, check pause/cancel.
+            final asyncStarFrame = _currentAsyncStarFrame;
+            if (asyncStarFrame != null &&
+                asyncStarFrame.streamController != null) {
+              final value = rs.read(rBase + a);
+              final controller = asyncStarFrame.streamController!;
+
+              // Add value to the stream.
+              controller.add(value);
+
+              // Check if cancelled — if so, suspend (finally will run).
+              if (asyncStarFrame.cancelled) {
+                asyncStarFrame.pc = bx; // resume PC
+
+                // Save stack bounds.
+                asyncStarFrame.savedVBase = vBase;
+                asyncStarFrame.savedRBase = rBase;
+                asyncStarFrame.savedVSP = vs.sp;
+                asyncStarFrame.savedRSP = rs.sp;
+
+                // Snapshot stack data.
+                suspendFrame(asyncStarFrame);
+
+                // Clean up and return from _executeLoop.
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                _currentAsyncStarFrame = null;
+
+                // Schedule resume to execute finally blocks.
+                final zone = asyncStarFrame.capturedZone ?? Zone.current;
+                zone.scheduleMicrotask(
+                    () => _resumeAsyncStarFrame(asyncStarFrame, module));
+                return;
+              }
+
+              // Check if stream is paused — if so, suspend at yield.
+              if (asyncStarFrame.streamPaused) {
+                asyncStarFrame.isSuspendedAtYield = true;
+                asyncStarFrame.pc = bx; // resume PC
+
+                // Save stack bounds.
+                asyncStarFrame.savedVBase = vBase;
+                asyncStarFrame.savedRBase = rBase;
+                asyncStarFrame.savedVSP = vs.sp;
+                asyncStarFrame.savedRSP = rs.sp;
+
+                // Snapshot stack data.
+                suspendFrame(asyncStarFrame);
+
+                // Clean up and return from _executeLoop.
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                _currentAsyncStarFrame = null;
+                return;
+              }
+
+              // Not paused, not cancelled — continue execution.
+              break;
+            }
+
+            throw DarticError('YIELD in non-generator context');
+          }
+
+        case Op.yieldStar: // YIELD_STAR A, Bx — yield* refStack[A], resume at Bx
+          {
+            final a = (instr >> 8) & 0xFF;
+            final bx = (instr >> 16) & 0xFFFF;
+
+            final delegateValue = rs.read(rBase + a);
+
+            final syncIter = _activeSyncStarIterator;
+            if (syncIter != null) {
+              // sync* context: yield* an Iterable.
+              // Get the delegate's iterator. Since the value is a host-level
+              // Dart Iterable (List, SyncStarIterable, etc.), call .iterator
+              // directly.
+              final iterable = delegateValue as Iterable;
+              final delegateIterator = iterable.iterator;
+
+              // Check if the delegate has any elements. If it does, set it on
+              // the sync* iterator and suspend. If empty, just continue.
+              if (delegateIterator.moveNext()) {
+                // Set the first value as current.
+                syncIter.setCurrent(delegateIterator.current);
+
+                // Store the delegate on the iterator for subsequent moveNext()
+                // calls to drain.
+                syncIter.setDelegateIterator(delegateIterator);
+
+                // Save frame state for resume (when delegate is exhausted,
+                // moveNext() will resume the generator from bx).
+                final frame = DarticFrame(
+                  funcProto: module.functions[callStack.funcId],
+                  upvalues: currentUpvalues ?? const [],
+                );
+                frame.pc = bx; // resume PC (after delegate is done)
+
+                // Save stack bounds.
+                frame.savedVBase = vBase;
+                frame.savedRBase = rBase;
+                frame.savedVSP = vs.sp;
+                frame.savedRSP = rs.sp;
+
+                // Snapshot stack data.
+                suspendFrame(frame);
+
+                _syncStarSuspendedFrame = frame;
+                _syncStarStatus = SyncStarStatus.yielded;
+
+                // Clean up stacks and return from _executeLoop.
+                vs.sp = vBase;
+                rs.sp = rBase;
+                callStack.popFrame();
+                _upvalueStack.removeLast();
+                return;
+              }
+
+              // Delegate is empty — continue execution from next instruction
+              // (which is Bx, the resume PC, same as falling through).
+              break;
+            }
+
+            // async* context: yield* a Stream.
+            final asyncStarFrame = _currentAsyncStarFrame;
+            if (asyncStarFrame != null &&
+                asyncStarFrame.streamController != null) {
+              final controller = asyncStarFrame.streamController!;
+              final delegateStream = delegateValue as Stream;
+
+              // Save frame state for resume (when the delegate stream is done).
+              asyncStarFrame.pc = bx;
+              asyncStarFrame.savedVBase = vBase;
+              asyncStarFrame.savedRBase = rBase;
+              asyncStarFrame.savedVSP = vs.sp;
+              asyncStarFrame.savedRSP = rs.sp;
+
+              // Snapshot stack data.
+              suspendFrame(asyncStarFrame);
+
+              // Subscribe to the delegate stream: forward events to our
+              // controller, and resume the generator frame when done.
+              final zone = asyncStarFrame.capturedZone ?? Zone.current;
+              delegateStream.listen(
+                (value) {
+                  controller.add(value);
+                },
+                onError: (Object error, StackTrace stackTrace) {
+                  controller.addError(error, stackTrace);
+                },
+                onDone: () {
+                  // Delegate stream is done — resume the generator from Bx.
+                  zone.scheduleMicrotask(
+                      () => _resumeAsyncStarFrame(asyncStarFrame, module));
+                },
+              );
+
+              // Clean up and return from _executeLoop (frame is suspended).
+              vs.sp = vBase;
+              rs.sp = rBase;
+              callStack.popFrame();
+              _upvalueStack.removeLast();
+              _currentAsyncStarFrame = null;
+              _currentAsyncFrame = null;
+              return;
+            }
+
+            throw DarticError('YIELD_STAR in non-generator context');
+          }
 
         // ── System ──
 

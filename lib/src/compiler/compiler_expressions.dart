@@ -457,6 +457,28 @@ extension on DarticCompiler {
     return false;
   }
 
+  // ── Await expression ──
+
+  (int, ResultLoc) _compileAwaitExpression(ir.AwaitExpression expr) {
+    // Compile the operand expression (the value being awaited).
+    var (operandReg, operandLoc) = _compileExpression(expr.operand);
+
+    // Ensure the operand is on the ref stack (AWAIT operates on ref stack).
+    operandReg = _boxToRefIfValue(operandReg, operandLoc,
+        _inferExprType(expr.operand));
+
+    // The resume PC is the instruction AFTER the AWAIT instruction.
+    // AWAIT A, Bx where Bx = currentPC + 1 (the next instruction).
+    final awaitPC = _emitter.currentPC;
+    final resumePC = awaitPC + 1;
+
+    // Emit AWAIT A, Bx.
+    _emitter.emit(encodeABx(Op.await_, operandReg, resumePC));
+
+    // After resume, the result is in refStack[A] (same register).
+    return (operandReg, ResultLoc.ref);
+  }
+
   // ── Static field access ──
 
   (int, ResultLoc) _compileStaticGet(ir.StaticGet expr) {
@@ -2385,6 +2407,11 @@ class _ExprCompileVisitor
   (int, ResultLoc) visitThrow(ir.Throw node) => _c._compileThrow(node);
   @override
   (int, ResultLoc) visitRethrow(ir.Rethrow node) => _c._compileRethrow(node);
+
+  // Async
+  @override
+  (int, ResultLoc) visitAwaitExpression(ir.AwaitExpression node) =>
+      _c._compileAwaitExpression(node);
 
   // Closures
   @override

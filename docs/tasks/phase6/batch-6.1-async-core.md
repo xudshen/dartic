@@ -212,18 +212,23 @@ feat(async): add async/await, sync*/async* generators with frame-as-continuation
 
 ## 核心发现
 
-_(执行时填写：浅保存 vs 深保存的性能差异、Completer 桥接的 GC 影响、generator 的首次 moveNext 触发时机、Zone 传播对错误处理的影响、AWAIT 恢复点 PC 的占位回填策略等)_
+- **深保存 vs 浅保存**：所有异步挂起均使用深保存（快照值栈+引用栈区间到帧对象），浅保存仅保存 PC/基址不复制数据。深保存保证恢复后帧在栈顶，避免与活跃帧重叠
+- **callerAsyncFrame 模式**：async 函数需要保存调用者的异步帧引用，以便在首次 AWAIT 或 ASYNC_RETURN 时恢复调用者上下文。通过 `frame.callerAsyncFrame` 字段和 `futureReturned` 标志实现三路返回
+- **CFE 解语法糖**：`await for` 被 CFE 解糖为 `_StreamIterator` 模式（moveNext/cancel/current），无需 AWAIT_STREAM_NEXT 操作码。创建了 StreamIteratorBindings 宿主绑定替代
+- **Completer\<T\> 简化**：INIT_ASYNC 当前创建 `Completer<Object?>()` 而非 `Completer<T>()`，TypeTemplate Bx 已编码但运行时暂未使用。待泛型实化完善后可启用
+- **sync\* 驱动模型**：SyncStarIterator 通过 `driveSyncStar()` 公开方法同步驱动解释器，使用解释器字段（`_activeSyncStarIterator`、`_syncStarStatus`）在 YIELD 与 moveNext 间传递状态
+- **async\* StreamController 四回调**：onListen 启动函数体、onPause 设标志、onResume 恢复已暂停帧、onCancel 标记取消并恢复帧执行 finally
 
 ## Batch 完成检查
 
-- [ ] 6.1.1 DarticFrame 异步字段 + 挂起/恢复机制
-- [ ] 6.1.2 async/await — INIT_ASYNC + AWAIT + ASYNC_RETURN + ASYNC_THROW
-- [ ] 6.1.3 sync* 生成器 — INIT_SYNC_STAR + YIELD
-- [ ] 6.1.4 async* 生成器 — INIT_ASYNC_STAR + YIELD
-- [ ] 6.1.5 YIELD_STAR + await for + 异步 skip list 清理
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] 之前 skip 的 10 个 async 测试恢复通过
+- [x] 6.1.1 DarticFrame 异步字段 + 挂起/恢复机制
+- [x] 6.1.2 async/await — INIT_ASYNC + AWAIT + ASYNC_RETURN + ASYNC_THROW
+- [x] 6.1.3 sync* 生成器 — INIT_SYNC_STAR + YIELD
+- [x] 6.1.4 async* 生成器 — INIT_ASYNC_STAR + YIELD
+- [x] 6.1.5 YIELD_STAR + await for + 异步 skip list 清理
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过（2425/2425）
+- [x] 之前 skip 的 10 个 async 测试恢复通过（skip list 已从 co19_runner.dart 移除）
 - [ ] commit 已提交
 - [ ] overview.md 已更新
 - [ ] code review 已完成

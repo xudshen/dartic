@@ -25,6 +25,7 @@ import 'bindings/object_bindings.dart';
 import 'bindings/regexp_bindings.dart';
 import 'bindings/runes_bindings.dart';
 import 'bindings/set_bindings.dart';
+import 'bindings/stream_iterator_bindings.dart';
 import 'bindings/string_bindings.dart';
 import 'bindings/string_buffer_bindings.dart';
 import 'bindings/uri_bindings.dart';
@@ -57,6 +58,7 @@ abstract final class CoreBindings {
     MiscBindings.register(registry);
     RegExpBindings.register(registry);
     RunesBindings.register(registry);
+    StreamIteratorBindings.register(registry);
     StringBufferBindings.register(registry);
     UriBindings.register(registry);
   }

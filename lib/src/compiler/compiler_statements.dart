@@ -455,10 +455,64 @@ extension on DarticCompiler {
     _emitter.emit(encodeABx(Op.assert_, condReg, msgIdx));
   }
 
+  // ── Yield statement ──
+
+  void _compileYieldStatement(ir.YieldStatement stmt) {
+    // Compile the yield expression (must be on the ref stack for YIELD/YIELD_STAR).
+    var (reg, loc) = _compileExpression(stmt.expression);
+    reg = _boxToRefIfValue(reg, loc, _inferExprType(stmt.expression));
+
+    // Choose opcode: YIELD for plain yield, YIELD_STAR for yield*.
+    final opcode = stmt.isYieldStar ? Op.yieldStar : Op.yield_;
+
+    // YIELD/YIELD_STAR A, Bx — A = yielded value/iterable/stream (ref),
+    // Bx = resume PC. Bx is a placeholder that will be patched to point to
+    // the next instruction after the yield (the resume point).
+    final yieldPC = _emitter.currentPC;
+    _emitter.emit(encodeABx(opcode, reg, 0)); // placeholder Bx=0
+
+    // The resume PC is the instruction immediately after YIELD/YIELD_STAR.
+    final resumePC = _emitter.currentPC;
+    _emitter.patchJump(yieldPC, encodeABx(opcode, reg, resumePC));
+  }
+
   // ── Return statement ──
 
   void _compileReturnStatement(ir.ReturnStatement stmt) {
     final expr = stmt.expression;
+
+    // sync* and async* functions: explicit return statements just signal
+    // generator done — emit RETURN_NULL (the return value, if any, is
+    // ignored per Dart spec). For async*, RETURN_NULL triggers
+    // controller.close() in the interpreter.
+    if (_currentAsyncMarker == ir.AsyncMarker.SyncStar ||
+        _currentAsyncMarker == ir.AsyncMarker.AsyncStar) {
+      // Compile the expression for side effects (if any), but discard.
+      if (expr != null) {
+        _compileExpression(expr);
+      }
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      return;
+    }
+
+    // Async functions use ASYNC_RETURN instead of RETURN/HALT.
+    if (_currentAsyncMarker == ir.AsyncMarker.Async) {
+      if (expr == null) {
+        final nullReg = _allocRefReg();
+        _emitter.emit(encodeABC(Op.loadNull, nullReg, 0, 0));
+        _emitCloseUpvaluesIfNeeded();
+        _emitter.emit(encodeABC(Op.asyncReturn, nullReg, 0, 0));
+      } else {
+        var (reg, loc) = _compileExpression(expr);
+        // ASYNC_RETURN always operates on the ref stack.
+        reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
+        _emitCloseUpvaluesIfNeeded();
+        _emitter.emit(encodeABC(Op.asyncReturn, reg, 0, 0));
+      }
+      return;
+    }
+
     if (_isEntryFunction) {
       // Entry function: encode result register and type in HALT ABC fields.
       // B field: 0=void, 1=ref, 2=boolVal, 3=intVal, 4=doubleVal (StackKind.index + 1).
@@ -628,6 +682,9 @@ class _StmtCompileVisitor with ir.StatementVisitorDefaultMixin<void> {
   @override
   void visitFunctionDeclaration(ir.FunctionDeclaration node) =>
       _c._compileFunctionDeclaration(node);
+  @override
+  void visitYieldStatement(ir.YieldStatement node) =>
+      _c._compileYieldStatement(node);
   @override
   void visitEmptyStatement(ir.EmptyStatement node) {}
 }

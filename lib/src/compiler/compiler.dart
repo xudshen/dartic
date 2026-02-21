@@ -99,6 +99,10 @@ class DarticCompiler {
   bool _isEntryFunction = false;
   ir.DartType _currentReturnType = const ir.VoidType();
 
+  /// The async marker of the current function being compiled.
+  /// Used by [_compileReturnStatement] to emit ASYNC_RETURN instead of RETURN.
+  ir.AsyncMarker _currentAsyncMarker = ir.AsyncMarker.Sync;
+
   /// The class currently being compiled. Null for top-level functions.
   ir.Class? _currentEnclosingClass;
 
@@ -410,6 +414,7 @@ class DarticCompiler {
     _refAlloc = RegisterAllocator();
     _isEntryFunction = isEntry;
     _currentReturnType = returnType;
+    _currentAsyncMarker = ir.AsyncMarker.Sync;
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -521,24 +526,147 @@ class DarticCompiler {
       namedParams: fn.namedParameters,
     );
 
-    // Async/generator functions are not yet supported (Phase 6).
-    // Emit a stub that throws at runtime instead of failing at compile time.
-    if (fn.asyncMarker != ir.AsyncMarker.Sync) {
-      _emitAsyncStub(fn.asyncMarker, proc.name.text);
-    } else {
-      // Compile function body.
+    // Check async marker using dartAsyncMarker (design doc decision).
+    final asyncMarker = fn.dartAsyncMarker;
+
+    if (asyncMarker == ir.AsyncMarker.Async) {
+      _currentAsyncMarker = ir.AsyncMarker.Async;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the future result.
+      final futureReg = _allocRefReg();
+
+      // Emit INIT_ASYNC A, Bx.
+      _emitter.emit(encodeABx(Op.initAsync, futureReg, typeBx));
+
+      // Compile function body normally.
       final body = fn.body;
       if (body != null) {
         _compileStatement(body);
       }
-    }
 
-    // Safety net: if no explicit return, emit HALT or RETURN_NULL.
-    if (_isEntryFunction) {
-      _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
-    } else {
+      // Safety net: if no explicit return, emit ASYNC_RETURN null.
+      // For async entry functions, INIT_ASYNC stores the future in
+      // _lastEntryResult (handled in the interpreter), so no HALT needed.
+      {
+        // Non-entry async function: safety net is ASYNC_RETURN null.
+        final nullReg = _allocRefReg();
+        _emitter.emit(encodeABC(Op.loadNull, nullReg, 0, 0));
+        _emitCloseUpvaluesIfNeeded();
+        _emitter.emit(encodeABC(Op.asyncReturn, nullReg, 0, 0));
+      }
+    } else if (asyncMarker == ir.AsyncMarker.SyncStar) {
+      _currentAsyncMarker = ir.AsyncMarker.SyncStar;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the iterable.
+      final iterableReg = _allocRefReg();
+
+      // Emit INIT_SYNC_STAR A, Bx — creates the lazy iterable.
+      _emitter.emit(encodeABx(Op.initSyncStar, iterableReg, typeBx));
+
+      // Emit RETURN_REF A — return the iterable synchronously to the caller.
+      // For entry functions, use HALT instead so the dispatch loop exits.
+      if (_isEntryFunction) {
+        _emitter.emit(
+          encodeABC(Op.halt, iterableReg, StackKind.refDefault + 1, 0),
+        );
+      } else {
+        _emitter.emit(encodeABC(Op.returnRef, iterableReg, 0, 0));
+      }
+
+      // The body bytecode follows (executed by SyncStarIterator.moveNext
+      // via drive()). Compile the function body.
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: RETURN_NULL signals generator done.
       _emitCloseUpvaluesIfNeeded();
       _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    } else if (asyncMarker == ir.AsyncMarker.AsyncStar) {
+      _currentAsyncMarker = ir.AsyncMarker.AsyncStar;
+
+      // Compile emittedValueType to TypeTemplate, store in constant pool.
+      final emittedType = fn.emittedValueType ?? const ir.DynamicType();
+      final template = dartTypeToTemplate(
+        emittedType,
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      );
+      final typeBx = _constantPool.addRef(template);
+
+      // Allocate a ref register for the stream.
+      final streamReg = _allocRefReg();
+
+      // Emit INIT_ASYNC_STAR A, Bx — creates StreamController, stores stream.
+      _emitter.emit(encodeABx(Op.initAsyncStar, streamReg, typeBx));
+
+      // Emit RETURN_REF A — return the stream synchronously to the caller.
+      // For entry functions, use HALT instead so the dispatch loop exits.
+      if (_isEntryFunction) {
+        _emitter.emit(
+          encodeABC(Op.halt, streamReg, StackKind.refDefault + 1, 0),
+        );
+      } else {
+        _emitter.emit(encodeABC(Op.returnRef, streamReg, 0, 0));
+      }
+
+      // The body bytecode follows (executed when the stream gets a listener
+      // via onListen callback). Compile the function body.
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: RETURN_NULL signals generator done -> controller.close().
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    } else if (asyncMarker != ir.AsyncMarker.Sync) {
+      // Unknown async marker — use stub.
+      _emitAsyncStub(asyncMarker, proc.name.text);
+
+      // Safety net: if no explicit return, emit HALT or RETURN_NULL.
+      if (_isEntryFunction) {
+        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
+      } else {
+        _emitCloseUpvaluesIfNeeded();
+        _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      }
+    } else {
+      // Synchronous function — compile body normally.
+      final body = fn.body;
+      if (body != null) {
+        _compileStatement(body);
+      }
+
+      // Safety net: if no explicit return, emit HALT or RETURN_NULL.
+      if (_isEntryFunction) {
+        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
+      } else {
+        _emitCloseUpvaluesIfNeeded();
+        _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      }
     }
 
     _patchPendingArgMoves();

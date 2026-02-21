@@ -170,24 +170,6 @@ bool isNegativeTest(String source) {
 /// is scanned.
 const _supportedDartLibraries = {'dart:core', 'dart:async'};
 
-/// Tests known to regress due to the async stub (Phase 5).
-///
-/// These tests previously passed because they only checked return types or
-/// other static properties of async/generator functions. After the async stub
-/// was added (which throws at runtime for async/sync*/async* bodies), they
-/// fail. They will be removed from this list once Phase 6 implements async.
-const _knownAsyncRegressions = <String>{
-  'vendor/co19/Language/Expressions/Identifier_Reference/async_and_generator_t02.dart',
-  'vendor/co19/Language/Expressions/Identifier_Reference/async_and_generator_t05.dart',
-  'vendor/co19/Language/Expressions/Identifier_Reference/async_and_generator_t08.dart',
-  'vendor/co19/Language/Functions/async_return_type_t02.dart',
-  'vendor/co19/Language/Functions/generator_return_type_t03.dart',
-  'vendor/co19/Language/Functions/generator_return_type_t04.dart',
-  'vendor/co19/Language/Functions/generator_return_type_t07.dart',
-  'vendor/co19/Language/Functions/generator_return_type_t08.dart',
-  'vendor/co19/Language/Statements/Return/no_expression_function_t13.dart',
-  'vendor/co19/Language/Statements/Return/no_expression_function_t14.dart',
-};
 
 /// Regex matching `import 'dart:xxx'` or `import "dart:xxx"` statements.
 ///
@@ -364,15 +346,6 @@ Future<TestOutcome> runTest(TestEntry entry) async {
       entry: entry,
       result: TestResult.error,
       message: 'file not found: ${entry.path}',
-    );
-  }
-
-  // Skip known async-stub regressions (Phase 5 → Phase 6).
-  if (_knownAsyncRegressions.contains(entry.path)) {
-    return TestOutcome(
-      entry: entry,
-      result: TestResult.skip,
-      message: 'known async-stub regression (Phase 6 scope)',
     );
   }
 
