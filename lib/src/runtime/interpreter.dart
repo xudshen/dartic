@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import '../bridge/callback_proxy.dart';
 import '../bridge/host_function_registry.dart';
-import '../bridge/dynamic_dispatch.dart';
+import '../bridge/host_dispatch_registry.dart';
 import '../bytecode/deserializer.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';

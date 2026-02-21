@@ -145,24 +145,27 @@
 
 ---
 
-## Phase 7: 公开 API + 代码生成 — 待规划
+## Phase 7: 公开 API + 代码生成 — 已规划
 
-**目标：** 封装 DarticEngine 公开 API，实现 @DarticExport 代码生成器，提供 Flutter Bridge 和热更新 demo
+**目标：** 封装 DarticEngine 公开 API（含内部基础设施重构），实现 @DarticExport 代码生成器，提供 Flutter Bridge 和热更新 demo
 
 **设计参考：** [`docs/plans/2026-02-20-bridge-api-design.md`](../plans/2026-02-20-bridge-api-design.md)
 
-**Task 目录：** 待创建
+**Task 目录：** [`docs/tasks/phase7/`](phase7/README.md)
 
 | Batch | 描述 | Task 数 | 状态 |
 |-------|------|---------|------|
-| 7.1 | DarticEngine 公开 API | 5 | |
-| 7.2 | @DarticExport 代码生成 | 5 | |
-| 7.3 | Flutter Bridge + 热更新 Demo | 4 | |
+| [7.1](phase7/batch-7.1-engine-api.md) | DarticEngine 公开 API + 内部重构 | 6 | |
+| [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | |
+| [7.3](phase7/batch-7.3-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | |
 
 **里程碑：**
 - [ ] DarticEngine 3 行代码加载执行 .darb 脚本
+- [ ] engine.call() 支持重入（宿主回调内再次调用）
+- [ ] registerClass 可一次性注册类的绑定/分发/Bridge
 - [ ] @DarticExport 生成的 Bridge 与手写 Bridge 功能等价
 - [ ] Flutter 热更新 demo 端到端运行
+- [ ] Phase 2-6 全量零回归
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)
 

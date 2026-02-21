@@ -726,33 +726,33 @@ int main() => add(1, 2); // => 3
 
 ## Phase 7: 公开 API + 代码生成
 
-**目标：** 将内部 Bridge 基础设施封装为用户友好的嵌入式引擎 API，实现 @DarticExport 代码生成器，提供 Flutter Bridge
+**目标：** 封装 DarticEngine 公开 API（含内部基础设施重构），实现 @DarticExport 代码生成器，提供 Flutter Bridge 和热更新 demo
 
 **设计章节：** [`docs/plans/2026-02-20-bridge-api-design.md`](2026-02-20-bridge-api-design.md)（公开 API 设计）
 
-**里程碑：** 宿主应用可通过 `DarticEngine` 3 行代码加载并执行 .darb 脚本，@DarticExport 注解自动生成 Bridge，Flutter 热更新 demo 端到端运行
+**里程碑：** 宿主应用可通过 `DarticEngine` 3 行代码加载并执行 .darb 脚本，engine.call() 支持重入，registerClass 一次性注册类的绑定/分发/Bridge，@DarticExport 注解自动生成 Bridge，Flutter 热更新 demo 端到端运行
 
-**依赖：** Phase 5（内部 Bridge 基础设施）、Phase 6 Batch 6.1（async/await，生产环境必需）、Phase 6 Batch 6.4（沙箱，DarticConfig.maxFuel）
+**依赖：** Phase 5（内部 Bridge 基础设施）、Phase 6 Batch 6.1（async/await，生产环境必需）、Phase 6 Batch 6.4（沙箱，DarticConfig.maxTotalFuel）
 
-### Batch 7.1: DarticEngine 公开 API
+### Batch 7.1: DarticEngine 公开 API + 内部重构
 
-- [ ] 7.1.1 编译器 host/script 库分类机制 — `_isPlatformLibrary` → `_isHostLibrary`（scriptPackages 粗切分 + Bridge 注册表细粒度验证），DarticCompiler 构造器增加 scriptPackages 参数 → 扩展 `lib/src/compiler/compiler.dart`
-- [ ] 7.1.2 DarticEngine / DarticConfig / DarticPlugin 接口 → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
-- [ ] 7.1.3 addFunction() 快速绑定（无需 codegen 的手动注册路径） → `lib/src/api/engine.dart`
-- [ ] 7.1.4 loadBytecode() + call() 端到端管线（封装 DarticInterpreter + HostBindings） → 集成测试
-- [ ] 7.1.5 错误模型（DarticError / FuelExhaustedError / BytecodeError / BindingResolutionError） → `lib/src/api/errors.dart`
-- [ ] 7.1.6 onPrint / onError 回调机制 → 扩展 engine.dart
+- [ ] 7.1.1 HostDispatchRegistry 重构 — 新增 `register(test, prefixes)` 方法支持动态注册用户宿主类；查找优先级：硬编码核心类型（快路径）→ 动态注册类型（按注册顺序遍历）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_dispatch_registry.dart`
+- [ ] 7.1.2 BridgeFactoryRegistry + BridgeDispatch — BridgeFactoryRegistry（className → BridgeFactory 映射表），BridgeDispatch（invoke/get/set 三个分发方法 + `#_bridgeNotOverridden` 哨兵值），NEW_INSTANCE 指令查找 BridgeFactoryRegistry → 新增 `lib/src/bridge/bridge_factory_registry.dart`, `lib/src/bridge/bridge_dispatch.dart`
+- [ ] 7.1.3 DarticModule 导出表 — 编译器为顶层函数生成 `exportedFunctions: Map<String, int>`（名称→funcId）；.darb 序列化新增导出表段；DarticInterpreter 新增 `executeFunction(module, funcId, args)` → 扩展 `lib/src/compiler/compiler.dart`, `lib/src/bytecode/module.dart`, `lib/src/runtime/interpreter.dart`
+- [ ] 7.1.4 错误模型 — CallDepthExceededError 从通用 DarticError 提升为独立子类；DarticLoadError（字节码加载/校验/绑定解析失败）；DarticInternalError（解释器实现 bug） → `lib/src/api/errors.dart`
+- [ ] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 接口 — DarticEngine 封装 DarticInterpreter + 所有注册表，状态机 `created → loaded → disposed`；DarticConfig 映射 fuelBudget/maxTotalFuel/executionTimeout/maxCallDepth/onPrint/onError；DarticPlugin（name getter + register 方法） → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
+- [ ] 7.1.6 engine.call() 端到端管线 — loadBytecode 加载验证 + 绑定解析；call() 按名查导出表 + 区分顶层调用(executeFunction)/重入调用(_runNestedDispatch)；registerClass 协调三注册表（HostFunctionRegistry 绑定 + HostDispatchRegistry 动态分发 + BridgeFactoryRegistry 工厂）；registerBinding 注册顶层函数；onPrint 映射到 CoreBindings.registerAll(printFn:)；onError 仅处理脚本未捕获异常（资源错误始终传播） → 集成测试
 
-**commit:** `feat(api): add DarticEngine public embedding API`
+**commit:** `feat(api): add DarticEngine public embedding API with internal refactoring`
 
 > **核心发现：**
-> _(执行时填写：DarticEngine 对 DarticInterpreter 的封装层薄厚、addFunction 的类型推断可行性、call() 的返回值类型映射策略等)_
+> _(执行时填写：HostDispatchRegistry 动态注册的性能影响、BridgeFactoryRegistry 查找频率、exportedFunctions 序列化格式、call() 重入状态检测机制等)_
 
 ### Batch 7.2: @DarticExport 代码生成
 
 - [ ] 7.2.1 dartic_annotation 包（@DarticExport, @DarticHide 纯注解定义） → `packages/dartic_annotation/`
-- [ ] 7.2.2 BridgeGenerator 核心 — HostClassWrapper 自动生成（package:analyzer 扫描 + 方法/属性路由代码生成） → `packages/dartic_generator/`
-- [ ] 7.2.3 BridgeGenerator — Bridge 类 + BridgeFactory 生成（可继承类的 extends 子类 + super 转发器） → `packages/dartic_generator/`
+- [ ] 7.2.2 BridgeGenerator 核心 — HostClassWrapper 自动生成（package:analyzer 扫描 + 方法/属性路由代码生成），methods map 包含继承链所有公开方法/属性的 typed wrapper，key 格式 `"methodName#argCount"` → `packages/dartic_generator/`
+- [ ] 7.2.3 BridgeGenerator — Bridge 类 + BridgeFactory 生成（可继承类的 extends 子类 + super 转发器），BridgeFactory 签名匹配 Ch4 定义 `(DarticRuntime, DarticObject, List<Object?> superArgs) → Object`，额外生成 `$super$methodName()` 转发器 → `packages/dartic_generator/`
 - [ ] 7.2.4 build_runner 集成（Builder 注册、分文件输出、增量构建支持） → `packages/dartic_generator/`
 - [ ] 7.2.5 自测：用 codegen 重生成 dart:core bridges，对比 Phase 5 手写版，验证功能等价 → 集成测试
 
@@ -776,8 +776,9 @@ int main() => add(1, 2); // => 3
 ### Phase 7 里程碑验证
 
 - [ ] DarticEngine 3 行代码可加载执行 .darb 脚本
+- [ ] engine.call() 支持重入（宿主回调内再次调用 engine.call()）
+- [ ] registerClass 一次性注册类的绑定/分发/Bridge（协调三注册表）
 - [ ] @DarticExport 生成的 Bridge 与 Phase 5 手写 Bridge 功能等价
-- [ ] addFunction() 手动绑定路径可用（无需 codegen 的快速原型开发）
 - [ ] Flutter 热更新 demo 端到端运行（编译 → 传输 → 加载 → 渲染）
 - [ ] Phase 2-6 全量零回归
 

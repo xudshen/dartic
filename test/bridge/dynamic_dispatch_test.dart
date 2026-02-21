@@ -1,6 +1,6 @@
 import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
-import 'package:dartic/src/bridge/dynamic_dispatch.dart';
+import 'package:dartic/src/bridge/host_dispatch_registry.dart';
 import 'package:test/test.dart';
 
 void main() {
