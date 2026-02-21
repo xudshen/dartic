@@ -78,32 +78,40 @@ int findOp(List<int> code, int op, {int start = 0}) {
 }
 
 /// Compiles [source], executes it, and returns the entry result.
-Future<Object?> compileAndRun(String source) async {
+Future<Object?> compileAndRun(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
-  final interp = DarticInterpreter();
+  final interp = DarticInterpreter(
+    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+  );
   interp.execute(module);
   return interp.entryResult;
 }
 
 /// Compiles [source] and executes with [CoreBindings] host functions.
-Future<Object?> compileAndRunWithHost(String source) async {
+Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
   CoreBindings.registerAll(registry);
-  final interp = DarticInterpreter(hostFunctionRegistry: registry);
+  final interp = DarticInterpreter(
+    hostFunctionRegistry: registry,
+    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+  );
   interp.execute(module);
   return interp.entryResult;
 }
 
 /// Like [compileAndRunWithHost] but captures print output.
 Future<(Object?, List<String>)> compileAndCapturePrint(
-  String source,
+  String source, {int? fuelBudget}
 ) async {
   final printLog = <String>[];
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
   CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
-  final interp = DarticInterpreter(hostFunctionRegistry: registry);
+  final interp = DarticInterpreter(
+    hostFunctionRegistry: registry,
+    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+  );
   interp.execute(module);
   return (interp.entryResult, printLog);
 }
@@ -161,9 +169,12 @@ Future<DarticModule> compileDartMultiFile(
 Future<Object?> compileAndRunMultiFile(
   Map<String, String> sources, {
   String? mainFile,
+  int? fuelBudget,
 }) async {
   final module = await compileDartMultiFile(sources, mainFile: mainFile);
-  final interp = DarticInterpreter();
+  final interp = DarticInterpreter(
+    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+  );
   interp.execute(module);
   return interp.entryResult;
 }
