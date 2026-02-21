@@ -191,6 +191,48 @@ Stream<String> main() {
       final values = await stream.toList();
       expect(values, ['hello', 'world']);
     });
+
+    test('async* cross-frame exception: await throws inside try/catch',
+        () async {
+      final (stream, prints) = await _compileAndGetStreamWithPrint('''
+Future<int> bad() async {
+  await 0;
+  throw 'async-star-err';
+}
+Stream<int> gen() async* {
+  try {
+    yield await bad();
+  } catch (e) {
+    yield -1;
+  }
+}
+Stream<int> main() {
+  return gen();
+}
+''');
+      final values = await stream.toList();
+      expect(values, [-1]);
+    });
+
+    test('async* sync cross-frame: callee throws before any await', () async {
+      // async callee throws synchronously (before any AWAIT) inside async* body.
+      // Tests _currentAsyncFrame restoration via unwindToHandler in async* context.
+      final (stream, prints) = await _compileAndGetStreamWithPrint('''
+Future<int> bad() async { throw 'sync-in-async-star'; }
+Stream<int> gen() async* {
+  try {
+    yield await bad();
+  } catch (e) {
+    yield -2;
+  }
+}
+Stream<int> main() {
+  return gen();
+}
+''');
+      final values = await stream.toList();
+      expect(values, [-2]);
+    });
   });
 }
 

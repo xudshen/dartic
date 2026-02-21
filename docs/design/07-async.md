@@ -121,13 +121,30 @@ Zone 沿调用链向下传播。帧创建时捕获 `Zone.current` 到 `capturedZ
 
 ### 异常跨边界传播
 
+跨 async 帧的异常有两条传播路径，取决于 callee 是否已挂起：
+
+**路径 1：同步跨帧 throw**（callee 在首次 AWAIT 前抛出）
+
+```
+callee async 函数 throw → unwindToHandler 栈回退
+  → pop callee 帧时恢复 _currentAsyncFrame = callerAsyncFrame
+  → caller 有 catch → 解释器内处理（ASYNC_RETURN 使用正确的 Completer）
+  → caller 无 catch → 继续栈回退
+```
+
+`unwindToHandler` 在 pop 帧时检查 `_currentAsyncFrame.funcProto.funcId == callStack.funcId`，若匹配则沿 `callerAsyncFrame` 链恢复，确保 caller 的 ASYNC_RETURN 完成自身的 Completer 而非 callee 的。
+
+**路径 2：跨帧异步 throw**（callee 经 AWAIT 挂起/恢复后抛出）
+
 ```
 VM Future 异常 → errorCallback 触发
   → frame.resumeException = error
-  → 帧恢复，查找 handler
+  → 帧恢复，在 AWAIT 指令 PC（frame.pc - 1）查找 handler
   → 有 catch → 解释器内处理
   → 无 catch → completer.completeError() → VM 的 await 收到异常
 ```
+
+`_resumeFrame` / `_resumeAsyncStarFrame` 使用 `pc - 1`（AWAIT 指令的 PC）而非 `pc`（恢复 PC）查找 handler，因为恢复 PC 可能恰好等于 handler 的 `endPC` 而落在 `[startPC, endPC)` 范围外。
 
 异常栈追踪拼接：errorCallback 中将 VM 栈追踪与解释器帧的异步栈追踪合并为 CombinedStackTrace（详见 Ch4 栈追踪拼接）。
 
@@ -212,9 +229,7 @@ Future 完成后，通过 `scheduleMicrotask` 触发：
 
 ### try/catch 与 await 的交互
 
-异常处理器表（`funcProto.exceptionTable`，详见 Ch3）需要跨越 await 点。恢复帧后根据当前 PC 线性扫描 `exceptionTable`，找到 `startPC <= pc < endPC` 的处理器。finally 中的 await 正常工作——finally 块的字节码序列包含 AWAIT 指令，挂起/恢复机制与普通 await 一致。
-
-> **当前限制**：编译器生成的异常表 `endPC` 尚未扩展到覆盖 AWAIT 恢复 PC。当 callee 在 resume 后抛出异常并通过 `completeError` 传播到 awaiter 时，`_findHandler` 在恢复 PC 处找不到 handler。运行时已添加 `_resumeFrame` try-catch 兜底（将逃逸异常路由到 Completer），但 awaiter 端 catch 块的匹配需要编译器配合修复。详见"已知局限与演进路径"表。
+异常处理器表（`funcProto.exceptionTable`，详见 Ch3）需要跨越 await 点。恢复帧后根据 AWAIT 指令的 PC（即 `frame.pc - 1`）线性扫描 `exceptionTable`，找到 `startPC <= pc < endPC` 的处理器。使用 AWAIT 指令的 PC 而非恢复 PC 进行查找，因为异常逻辑上发生在 await 表达式处，且恢复 PC 可能恰好落在 handler 的 `endPC` 边界上。finally 中的 await 正常工作——finally 块的字节码序列包含 AWAIT 指令，挂起/恢复机制与普通 await 一致。
 
 ### async* 生成器
 
@@ -233,7 +248,7 @@ Future 完成后，通过 `scheduleMicrotask` 触发：
 1. `controller.add(refStack[A])` 发送值到 Stream
 2. 检查暂停/取消状态：
    - `frame.cancelled` → 保存恢复点（Bx），帧挂起；恢复后跳转到当前 PC 覆盖的 finally 处理器（若有），执行清理后关闭 Stream
-   - `frame.streamPaused` → `frame.isSuspendedAtYield = true`，帧挂起，等待 `onResume` 恢复
+   - `frame.streamPaused` → `frame.isSuspendedAtYield = true`，`frame.awaitDestReg = -1`（重置，避免恢复时误写寄存器），帧挂起，等待 `onResume` 恢复
 3. 否则继续执行
 
 **正常完成**：async\* 函数体执行完毕（fall through 或 `return;`）时：
@@ -367,8 +382,9 @@ YIELD_STAR 在 async\* 和 sync\* 中的运行时行为完全不同：
    - `onData(value)` → `controller.add(value)` 转发到当前 StreamController
    - `onError(e, st)` → `controller.addError(e, st)` 转发错误
    - `onDone()` → 委托结束，`scheduleMicrotask` 恢复帧从 Bx 继续
-3. 帧挂起，等待被委托 Stream 完成
-4. 被委托 Stream 发出 done 事件时，帧恢复执行
+3. `frame.awaitDestReg = -1`（重置，避免恢复时误写寄存器）
+4. 帧挂起，等待被委托 Stream 完成
+5. 被委托 Stream 发出 done 事件时，帧恢复执行
 
 > 背压传播（pause/cancel 转发到被委托 Stream）在 Phase 1 不实现，详见"已知局限与演进路径"。
 
@@ -395,7 +411,6 @@ YIELD_STAR 在 async\* 和 sync\* 中的运行时行为完全不同：
 | 局限 | 影响 | 演进 |
 |------|------|------|
 | sync* 两 yield 间长计算阻塞事件循环 | 用户可感知卡顿 | 接受限制，sync* 语义决定 |
-| 跨帧异步异常传播：异常表未覆盖 AWAIT 恢复点 PC | callee 抛出 → `completeError` → awaiter 的 `catch` 无法匹配 handler（`_findHandler` 在恢复 PC 找不到 handler） | 编译器需扩展异常表 `endPC`，使 try/catch 块的 PC 范围覆盖块内所有 AWAIT 的恢复 PC。运行时 `_resumeFrame` 已添加 try-catch 兜底（将逃逸异常路由到 Completer），但 awaiter 端的 catch 块匹配需要编译器配合 |
 | Completer 泄漏检测仅依赖 WeakReference | 无主动告警 | > **Phase 2**：添加诊断计数器 `pendingCount`，可通过调试接口查询。触发条件：用户报告 async 函数"不返回"的 bug |
 | 异步栈追踪为简化拼接 | 跨边界追踪可读性差 | > **Phase 2**：实现 causal async stack trace（类似 Dart VM 的 --causal-async-stacks）。触发条件：用户反馈异步调试体验不佳 |
 | async\* yield\* 无背压传播 | 高速生产者可能 OOM | > **Phase 2**：当前 StreamController 被 pause 时，被委托 Stream 的订阅也应 pause；当前订阅被 cancel 时，被委托 Stream 的订阅也应 cancel。触发条件：async\* 相关 OOM 报告 |

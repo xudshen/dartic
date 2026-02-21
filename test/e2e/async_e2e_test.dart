@@ -122,13 +122,189 @@ void main() async { print(await safe()); }
       expect(prints, ['-1']);
     });
 
-    // TODO(async): Exception propagation across async frames (throw in callee
-    // → completeError → awaiter's catch) requires the compiler to extend
-    // exception table ranges to cover AWAIT resume PCs. Currently the
-    // exception table's endPC for try/catch doesn't cover the resume point
-    // after AWAIT, so _findHandler fails to find the handler on resume.
-    // This needs a compiler fix to emit correct exception table ranges for
-    // async functions.
+    test('cross-frame exception: callee throws after resume', () async {
+      // The callee awaits (suspends), then throws on resume. The exception
+      // propagates via completeError → awaiter's _resumeFrame → _findHandler
+      // at pc-1 (the AWAIT instruction's PC).
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> bad() async {
+  await 0;
+  throw 'cross-frame';
+}
+Future<int> caller() async {
+  try {
+    return await bad();
+  } catch (e) {
+    return -1;
+  }
+}
+void main() async { print(await caller()); }
+''');
+      expect(prints, ['-1']);
+    });
+
+    test('nested try/catch with await — inner callee throws after resume',
+        () async {
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> fail() async {
+  await 0;
+  throw 'inner';
+}
+Future<int> f() async {
+  try {
+    try {
+      return await fail();
+    } catch (e) {
+      return -2;
+    }
+  } catch (e) {
+    return -3;
+  }
+}
+void main() async { print(await f()); }
+''');
+      expect(prints, ['-2']);
+    });
+
+    test('multiple sequential awaits in try — second callee throws after resume',
+        () async {
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> ok() async { return 1; }
+Future<int> bad() async {
+  await 0;
+  throw 'boom';
+}
+Future<int> f() async {
+  try {
+    var a = await ok();
+    var b = await bad();
+    return a + b;
+  } catch (e) {
+    return -1;
+  }
+}
+void main() async { print(await f()); }
+''');
+      expect(prints, ['-1']);
+    });
+
+    test('await in finally block', () async {
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> cleanup() async { return 99; }
+Future<int> f() async {
+  int result = 0;
+  try {
+    result = 1;
+  } finally {
+    var c = await cleanup();
+    result = result + c;
+  }
+  return result;
+}
+void main() async { print(await f()); }
+''');
+      expect(prints, ['100']);
+    });
+
+    test('sync cross-frame: callee throws before any await', () async {
+      // Callee throws synchronously (no AWAIT). The exception unwinds through
+      // unwindToHandler, crossing the async frame boundary. _currentAsyncFrame
+      // must be restored so caller's ASYNC_RETURN completes the right Completer.
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> bad() async { throw 'sync-cross'; }
+Future<int> caller() async {
+  try {
+    return await bad();
+  } catch (e) {
+    return -1;
+  }
+}
+void main() async { print(await caller()); }
+''');
+      expect(prints, ['-1']);
+    });
+
+    test('sync cross-frame: nested async calls, inner throws', () async {
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> inner() async { throw 'deep'; }
+Future<int> middle() async { return await inner(); }
+Future<int> outer() async {
+  try {
+    return await middle();
+  } catch (e) {
+    return -99;
+  }
+}
+void main() async { print(await outer()); }
+''');
+      expect(prints, ['-99']);
+    });
+
+    test('recursive async function throw', () async {
+      // Recursive async: innermost call throws, caught by outermost try/catch.
+      // Tests that funcId-based _currentAsyncFrame restoration works correctly
+      // when multiple frames share the same funcId.
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> foo(int n) async {
+  if (n <= 0) throw 'recursive-throw';
+  try {
+    return await foo(n - 1);
+  } catch (e) {
+    return n;
+  }
+}
+void main() async { print(await foo(3)); }
+''');
+      // foo(0) throws → foo(1) catches → returns 1
+      expect(prints, ['1']);
+    });
+
+    test('failing await in finally block', () async {
+      // An await inside a finally block that fails — the exception from
+      // the finally propagates to the caller.
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> bad() async {
+  await 0;
+  throw 'finally-fail';
+}
+Future<int> f() async {
+  try {
+    var x = 1;
+  } finally {
+    await bad();
+  }
+  return 0;
+}
+void main() async {
+  try {
+    await f();
+  } catch (e) {
+    print(e);
+  }
+}
+''');
+      expect(prints, ['finally-fail']);
+    });
+
+    test('host boundary: async throw inside forEach callback', () async {
+      // async function throws synchronously inside a host callback (forEach).
+      // Exception crosses HOST_BOUNDARY; _currentAsyncFrame must be restored.
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> bad() async { throw 'hb-err'; }
+void main() async {
+  try {
+    var list = [1];
+    list.forEach((x) {
+      bad();
+    });
+    print('no-error');
+  } catch (e) {
+    print('caught');
+  }
+}
+''');
+      expect(prints, ['caught']);
+    });
   });
 }
 

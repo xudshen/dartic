@@ -218,7 +218,8 @@ feat(async): add async/await, sync*/async* generators with frame-as-continuation
 - **Completer\<T\> 简化**：INIT_ASYNC 当前创建 `Completer<Object?>()` 而非 `Completer<T>()`，TypeTemplate Bx 已编码但运行时暂未使用。待泛型实化完善后可启用
 - **sync\* 驱动模型**：SyncStarIterator 通过 `driveSyncStar()` 公开方法同步驱动解释器，使用解释器字段（`_activeSyncStarIterator`、`_syncStarStatus`）在 YIELD 与 moveNext 间传递状态
 - **async\* StreamController 四回调**：onListen 启动函数体、onPause 设标志、onResume 恢复已暂停帧、onCancel 标记取消并恢复帧执行 finally
-- **跨帧异步异常传播受限**：callee async 函数 throw → `completeError` → awaiter 的 `catch` 无法命中 handler，因为编译器生成的异常表 `endPC` 未覆盖 AWAIT 恢复 PC。运行时 `_resumeFrame` 已添加 try-catch 兜底，但 awaiter 端 catch 匹配需编译器修复。详见 `docs/design/07-async.md` "已知局限"
+- **跨帧异常传播已修复**（两条路径）：(1) `_resumeFrame` / `_resumeAsyncStarFrame` 中 `_findHandler` 改用 `pc - 1`（AWAIT 指令的 PC）而非 `pc`（恢复 PC），修复 post-resume 异常 handler 查找；(2) `unwindToHandler` pop 帧时恢复 `_currentAsyncFrame = callerAsyncFrame`，修复同步 throw 跨 async 边界时 ASYNC_RETURN 完成错误 Completer 的问题。无需修改编译器异常表生成
+- **async\* YIELD/YIELD_STAR awaitDestReg 修复**：YIELD（stream paused 时）和 YIELD_STAR 在挂起前需设 `awaitDestReg = -1`，否则 `_resumeAsyncStarFrame` 恢复时误将 null 写入 `refStack[rBase + 0]`（ITA 槽位），可能破坏泛型类型参数
 
 ## Batch 完成检查
 

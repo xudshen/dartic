@@ -645,10 +645,13 @@ class DarticInterpreter {
       frame.resumeException = null;
       frame.resumeStackTrace = null;
 
-      // Search for an exception handler at the resume PC.
+      // Search at the AWAIT instruction's PC (pc - 1), not the resume PC.
+      // The exception occurred during the await expression, so the AWAIT's
+      // PC is the correct point for handler lookup. The resume PC (pc) may
+      // fall outside the try handler's [startPC, endPC) range.
       final funcProto = frame.funcProto;
       final handler = _findHandler(
-          funcProto, pc, exception, module, rBase, refStack);
+          funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
         refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
         valueStack.sp = vBase + handler.valStackDP;
@@ -798,10 +801,13 @@ class DarticInterpreter {
       frame.resumeException = null;
       frame.resumeStackTrace = null;
 
-      // Search for an exception handler at the resume PC.
+      // Search at the AWAIT instruction's PC (pc - 1), not the resume PC.
+      // The exception occurred during the await expression, so the AWAIT's
+      // PC is the correct point for handler lookup. The resume PC (pc) may
+      // fall outside the try handler's [startPC, endPC) range.
       final funcProto = frame.funcProto;
       final handler = _findHandler(
-          funcProto, pc, exception, module, rBase, refStack);
+          funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
         refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
         valueStack.sp = vBase + handler.valStackDP;
@@ -1014,6 +1020,13 @@ class DarticInterpreter {
         final callerVSP = callStack.savedVSP;
         final callerRSP = callStack.savedRSP;
         searchPC = callStack.returnPC - 1;
+        // Restore _currentAsyncFrame when unwinding past an async function
+        // boundary.  Without this, ASYNC_RETURN in a catching caller would
+        // complete the callee's Completer instead of its own.
+        if (_currentAsyncFrame != null &&
+            _currentAsyncFrame!.funcProto.funcId == callStack.funcId) {
+          _currentAsyncFrame = _currentAsyncFrame!.callerAsyncFrame;
+        }
         callStack.popFrame();
         // HOST_BOUNDARY: exception propagates to VM caller.
         if (callStack.isHostBoundary) {
@@ -2688,6 +2701,7 @@ class DarticInterpreter {
               if (asyncStarFrame.streamPaused) {
                 asyncStarFrame.isSuspendedAtYield = true;
                 asyncStarFrame.pc = bx; // resume PC
+                asyncStarFrame.awaitDestReg = -1; // Not an await resume
 
                 // Save stack bounds.
                 asyncStarFrame.savedVBase = vBase;
@@ -2782,6 +2796,7 @@ class DarticInterpreter {
 
               // Save frame state for resume (when the delegate stream is done).
               asyncStarFrame.pc = bx;
+              asyncStarFrame.awaitDestReg = -1; // Not an await resume
               asyncStarFrame.savedVBase = vBase;
               asyncStarFrame.savedRBase = rBase;
               asyncStarFrame.savedVSP = vs.sp;
