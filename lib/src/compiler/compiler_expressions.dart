@@ -1047,24 +1047,36 @@ extension on DarticCompiler {
         targetClass == _coreTypes.numClass) {
       final receiverKind = _inferStackKind(expr.receiver);
 
-      // int `/` returns double -- convert both operands and use DIV_DBL.
+      // int `/` always returns double — delegate to _emitBinaryOp(divDbl).
+      // Auto-coercion handles both int/int and int/double operands.
       if (name == '/' && receiverKind == StackKind.intVal) {
-        var (lhsReg, lhsLoc) = _compileExpression(expr.receiver);
-        var (rhsReg, rhsLoc) =
-            _compileExpression(expr.arguments.positional[0]);
-        lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
-        rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
-        final lhsDbl = _allocValueReg();
-        _emitter.emit(encodeABC(Op.intToDbl, lhsDbl, lhsReg, 0));
-        final rhsDbl = _allocValueReg();
-        _emitter.emit(encodeABC(Op.intToDbl, rhsDbl, rhsReg, 0));
-        final resultReg = _allocValueReg();
-        _emitter.emit(encodeABC(Op.divDbl, resultReg, lhsDbl, rhsDbl));
-        return (resultReg, ResultLoc.value);
+        return _emitBinaryOp(expr, Op.divDbl)!;
       }
 
       // Check if receiver is statically int.
       if (receiverKind == StackKind.intVal) {
+        // ~/ with double arg: intToDbl → divDbl → dblToInt (no double opcode
+        // for truncating division, but we can compose it from 3 instructions).
+        if (name == '~/') {
+          final args = expr.arguments.positional;
+          final argKind = args.isNotEmpty
+              ? _inferStackKind(args[0])
+              : StackKind.intVal;
+          if (argKind == StackKind.doubleVal) {
+            var (lhsReg, lhsLoc) = _compileExpression(expr.receiver);
+            var (rhsReg, rhsLoc) = _compileExpression(args[0]);
+            lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
+            rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.doubleVal);
+            final lhsDbl = _allocValueReg();
+            _emitter.emit(encodeABC(Op.intToDbl, lhsDbl, lhsReg, 0));
+            final divResult = _allocValueReg();
+            _emitter.emit(encodeABC(Op.divDbl, divResult, lhsDbl, rhsReg));
+            final intResult = _allocValueReg();
+            _emitter.emit(encodeABC(Op.dblToInt, intResult, divResult, 0));
+            return (intResult, ResultLoc.value);
+          }
+        }
+
         final op = _intBinaryOp(name);
         if (op != null) {
           final result = _emitBinaryOp(expr, op);
