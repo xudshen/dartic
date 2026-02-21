@@ -149,6 +149,11 @@ class DarticCompiler {
   int _catchExceptionReg = -1;
   int _catchStackTraceReg = -1;
 
+  /// The field currently being initialized by [_compileGlobalInitializer].
+  /// Used by [_findEnumConstantGlobal] to avoid circular self-references
+  /// (an enum field's initializer must not load from its own global slot).
+  ir.Field? _currentInitializingField;
+
   // ── Closure compilation state ──
 
   /// Upvalue descriptors being built for the current inner function.
@@ -700,10 +705,12 @@ class DarticCompiler {
   /// ends with HALT.
   int _compileGlobalInitializer(ir.Field field, int globalIndex) {
     _resetFunctionState(isEntry: true);
+    _currentInitializingField = field;
 
     final (reg, loc) = _compileExpression(field.initializer!);
     final refReg = _boxToRefIfValue(reg, loc, field.type);
     _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
+    _currentInitializingField = null;
 
     // HALT (end of initializer).
     _emitter.emit(encodeAx(Op.halt, 0));
@@ -1157,6 +1164,46 @@ class DarticCompiler {
   }
 
   bool _isPlatformLibrary(ir.Library lib) => lib.importUri.isScheme('dart');
+
+  /// Resolves the receiver expression's class node, if it can be determined
+  /// statically. Used to look up field layouts when the interface target's
+  /// enclosing class differs from the receiver's actual class (e.g., enum
+  /// instances where the field target is in `_Enum` but the receiver is a
+  /// user-defined enum class).
+  ir.Class? _resolveReceiverClass(ir.Expression receiver) {
+    final type = _inferExprType(receiver);
+    if (type is ir.InterfaceType) {
+      return type.classNode;
+    }
+    // For ThisExpression, the type inference returns null. Use the
+    // enclosing class instead.
+    if (receiver is ir.ThisExpression) {
+      return _currentEnclosingClass;
+    }
+    return null;
+  }
+
+  /// Finds the global slot index for an enum InstanceConstant by matching
+  /// it against the static fields of the enum class.
+  ///
+  /// Returns the global index if found, or null if no matching field exists.
+  /// Uses Dart object identity on the Constant (Kernel shares constant
+  /// references across the component for identical constants).
+  int? _findEnumConstantGlobal(ir.Class cls, ir.InstanceConstant constant) {
+    for (final field in cls.fields) {
+      if (!field.isStatic || !field.isConst) continue;
+      // Skip the field currently being initialized to avoid circular
+      // self-references (e.g., Color.red's initializer must not load
+      // from Color.red's own global slot).
+      if (identical(field, _currentInitializingField)) continue;
+      final init = field.initializer;
+      if (init is ir.ConstantExpression &&
+          identical(init.constant, constant)) {
+        return _fieldToGlobalIndex[field.getterReference];
+      }
+    }
+    return null;
+  }
 
   static final _haltBytecode =
       Uint32List.fromList([encodeAx(Op.halt, 0)]);

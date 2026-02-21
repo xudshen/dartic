@@ -11,6 +11,7 @@ import 'call_stack.dart';
 import 'class_info.dart' show StackKind;
 import 'closure.dart';
 import 'dartic_invocation.dart';
+import 'dartic_record.dart';
 import 'dartic_type.dart';
 import 'error.dart';
 import 'frame.dart';
@@ -2082,6 +2083,25 @@ class DarticInterpreter {
           }
           rs.write(rBase + a, set);
 
+        case Op.createRecord: // CREATE_RECORD A, B, C — refStack[A] = Record from shape cp.refs[C], fields at B
+          final a = (instr >> 8) & 0xFF;
+          final b = (instr >> 16) & 0xFF;
+          final c = (instr >> 24) & 0xFF;
+          final shape = cp.getRef(c) as List;
+          final positionalCount = shape[0] as int;
+          final namedNames = <String>[
+            for (var i = 1; i < shape.length; i++) shape[i] as String,
+          ];
+          final positional = List<Object?>.generate(
+            positionalCount,
+            (i) => rs.read(rBase + b + i),
+          );
+          final named = <String, Object?>{};
+          for (var i = 0; i < namedNames.length; i++) {
+            named[namedNames[i]] = rs.read(rBase + b + positionalCount + i);
+          }
+          rs.write(rBase + a, DarticRecord(positional, named));
+
         // ── String & Dynamic (0x98-0x9F) ──
 
         case Op.stringInterp: // STRING_INTERP A, B, C — refStack[A] = concat(refStack[B..B+C-1])
@@ -2148,6 +2168,27 @@ class DarticInterpreter {
                 dispatchNoSuchMethod(receiver, nsmInvocation, a);
             if (nsmPushed) continue;
             pc = nsmHandlerPC;
+            continue;
+          }
+
+          // DarticRecord: positional ($1, $2, ...) or named field access.
+          if (receiver is DarticRecord) {
+            if (name.startsWith(r'$')) {
+              final index = int.parse(name.substring(1)) - 1;
+              if (index < 0 || index >= receiver.positional.length) {
+                throw DarticError(
+                    'Record positional field $name out of range '
+                    '(record has ${receiver.positional.length} positional fields)');
+              }
+              rs.write(rBase + a, receiver.getPositional(index));
+            } else {
+              if (!receiver.named.containsKey(name)) {
+                throw DarticError(
+                    'Record has no named field \'$name\' '
+                    '(available: ${receiver.named.keys.join(', ')})');
+              }
+              rs.write(rBase + a, receiver.getNamed(name));
+            }
             continue;
           }
 

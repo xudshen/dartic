@@ -360,6 +360,548 @@ extension on DarticCompiler {
     return (closureReg, ResultLoc.ref);
   }
 
+  // ── ConstructorTearOff ──
+
+  /// Compiles a [ConstructorTearOff]: generates a thunk FuncProto whose body
+  /// allocates a new instance, passes arguments, calls the constructor via
+  /// CALL_STATIC, and returns the object.
+  ///
+  /// The thunk has the same parameter signature as the constructor so that
+  /// callers can pass arguments directly.
+  (int, ResultLoc) _compileConstructorTearOff(ir.ConstructorTearOff expr) {
+    final target = expr.target;
+
+    // target may be a Constructor or a factory Procedure.
+    if (target is ir.Constructor) {
+      return _generateConstructorTearOffThunk(target);
+    } else if (target is ir.Procedure && target.isFactory) {
+      // Factory constructors are compiled as static functions with funcIds
+      // in _procToFuncId — just emit a static tearoff.
+      final funcId = _procToFuncId[target.reference];
+      if (funcId == null) {
+        throw UnsupportedError(
+          'ConstructorTearOff: unknown factory ${target.name.text}',
+        );
+      }
+      final closureReg = _allocRefReg();
+      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      return (closureReg, ResultLoc.ref);
+    }
+
+    throw UnsupportedError(
+      'ConstructorTearOff: unsupported target type ${target.runtimeType}',
+    );
+  }
+
+  /// Generates a thunk FuncProto for a non-generic [Constructor] tearoff.
+  ///
+  /// Thunk body:
+  ///   1. NEW_INSTANCE objReg, classId
+  ///   2. Move objReg to `this` slot (ref argIdx 2)
+  ///   3. Move args to call slots + CALL_STATIC constructorFuncId
+  ///   4. RETURN_REF objReg
+  ///
+  /// For generic constructor tearoffs (e.g., `Box<int>.new`), see
+  /// [_generateGenericConstructorTearOffThunk] instead.
+  (int, ResultLoc) _generateConstructorTearOffThunk(
+    ir.Constructor target,
+  ) {
+    final cls = target.enclosingClass;
+    final funcId = _constructorToFuncId[target.reference];
+    if (funcId == null) {
+      throw UnsupportedError(
+        'ConstructorTearOff: unknown constructor '
+        '${cls.name}.${target.name.text}',
+      );
+    }
+    final classId = _classToClassId[cls];
+    if (classId == null) {
+      throw StateError(
+        'ConstructorTearOff: class not registered: ${cls.name}',
+      );
+    }
+
+    final fn = target.function;
+
+    // Reserve a slot in the function table.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // Save current compilation state.
+    _pushContext();
+    _currentReturnType = ir.InterfaceType(cls, ir.Nullability.nonNullable);
+
+    // Create a new scope for the thunk.
+    _scope = Scope(
+      valueAlloc: _valueAlloc,
+      refAlloc: _refAlloc,
+    );
+
+    // Reserve standard header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver (unused in thunk)
+
+    // Register parameters with the same types as the constructor.
+    final argTemps = <(int, ResultLoc)>[];
+    for (final param in fn.positionalParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+    for (final param in fn.namedParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+
+    // 1. Allocate object.
+    final objReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+
+    // 2. Emit pending MOVE for `this` at ref argIdx 2.
+    final thisMovePC = _emitter.emitPlaceholder();
+    _pendingArgMoves.add(
+      (pc: thisMovePC, srcReg: objReg, argIdx: 2, loc: ResultLoc.ref),
+    );
+
+    // 3. Emit arg moves + CALL_STATIC. Constructor returns void.
+    final dummyResult = _allocRefReg();
+    _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
+
+    // 4. RETURN_REF objReg.
+    _emitter.emit(encodeABC(Op.returnRef, objReg, 0, 0));
+
+    _patchPendingArgMoves();
+
+    // Create the thunk FuncProto.
+    _functions[thunkFuncId] = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<constructor-tearoff:${cls.name}.${target.name.text}>',
+      bytecode: _emitter.toUint32List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: StackKind.ref.index,
+    );
+
+    // Restore enclosing compilation state.
+    _popContext();
+
+    // Emit CLOSURE wrapping the thunk in the enclosing function.
+    final closureReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    return (closureReg, ResultLoc.ref);
+  }
+
+  // ── Generic ConstructorTearOff (InstantiationConstant) ──
+
+  /// Generates a constructor tearoff thunk for a generic class with bound
+  /// type arguments (e.g., `Box<int>.new`).
+  ///
+  /// The CFE represents this as
+  /// `InstantiationConstant(ConstructorTearOffConstant(ctor), [types])`.
+  /// Unlike non-generic tearoffs (which use NEW_INSTANCE), this thunk:
+  /// 1. Uses ALLOC_GENERIC to create the object with the bound type args
+  /// 2. Accepts parameters with **instantiated** types (e.g., `int` on value
+  ///    stack instead of `T` on ref stack)
+  /// 3. Coerces parameters to the constructor's original types before calling
+  (int, ResultLoc) _generateGenericConstructorTearOffThunk(
+    ir.Constructor target,
+    List<ir.DartType> typeArgs,
+  ) {
+    final cls = target.enclosingClass;
+    final funcId = _constructorToFuncId[target.reference];
+    if (funcId == null) {
+      throw UnsupportedError(
+        'GenericConstructorTearOff: unknown constructor '
+        '${cls.name}.${target.name.text}',
+      );
+    }
+    final classId = _classToClassId[cls];
+    if (classId == null) {
+      throw StateError(
+        'GenericConstructorTearOff: class not registered: ${cls.name}',
+      );
+    }
+
+    final fn = target.function;
+
+    // Build substitution for the class type parameters → concrete types.
+    final subst = type_algebra.Substitution.fromPairs(
+      cls.typeParameters,
+      typeArgs,
+    );
+
+    // Reserve a slot in the function table.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // Save current compilation state.
+    _pushContext();
+    _currentReturnType = ir.InterfaceType(
+      cls,
+      ir.Nullability.nonNullable,
+      typeArgs,
+    );
+
+    // Create a new scope for the thunk.
+    _scope = Scope(
+      valueAlloc: _valueAlloc,
+      refAlloc: _refAlloc,
+    );
+
+    // Reserve standard header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver (unused in thunk)
+
+    // Register parameters with INSTANTIATED types (the caller's calling
+    // convention). Track both the instantiated kind and the actual kind
+    // for coercion.
+    final paramMappings = <({
+      int reg,
+      StackKind instKind,
+      StackKind actualKind,
+      ir.DartType instType,
+    })>[];
+    for (final param in fn.positionalParameters) {
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      paramMappings.add((
+        reg: reg,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+      ));
+    }
+    final namedMappings = <({
+      int reg,
+      StackKind instKind,
+      StackKind actualKind,
+      ir.DartType instType,
+      String name,
+    })>[];
+    for (final param in fn.namedParameters) {
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      namedMappings.add((
+        reg: reg,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+        name: param.name!,
+      ));
+    }
+
+    // Coerce each parameter from instantiated kind to actual kind.
+    final argTemps = <(int, ResultLoc)>[];
+    for (final m in paramMappings) {
+      argTemps.add(
+          _coerceThunkArg(m.reg, m.instKind, m.actualKind, m.instType));
+    }
+    for (final m in namedMappings) {
+      argTemps.add(
+          _coerceThunkArg(m.reg, m.instKind, m.actualKind, m.instType));
+    }
+
+    // 1. Allocate object with ALLOC_GENERIC.
+    final objReg = _allocRefReg();
+    final typeTemplate = InterfaceTypeTemplate(
+      classId: classId,
+      typeArgs: [
+        for (final arg in typeArgs)
+          dartTypeToTemplate(
+            arg,
+            _typeClassIdLookup,
+            enclosingClassTypeParams: _currentClassTypeParams,
+            enclosingFunctionTypeParams: _currentFunctionTypeParams,
+          ),
+      ],
+    );
+    final templateIdx = _constantPool.addRef(typeTemplate);
+    final typeReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+    _emitter.emit(encodeABC(Op.allocGeneric, objReg, typeReg, 0));
+
+    // 2. Emit pending MOVE for `this` at ref argIdx 2.
+    final thisMovePC = _emitter.emitPlaceholder();
+    _pendingArgMoves.add(
+      (pc: thisMovePC, srcReg: objReg, argIdx: 2, loc: ResultLoc.ref),
+    );
+
+    // 3. Emit arg moves + CALL_STATIC. Constructor returns void.
+    final dummyResult = _allocRefReg();
+    _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
+
+    // 4. RETURN_REF objReg.
+    _emitter.emit(encodeABC(Op.returnRef, objReg, 0, 0));
+
+    _patchPendingArgMoves();
+
+    // Create the thunk FuncProto with INSTANTIATED paramKinds.
+    _functions[thunkFuncId] = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<generic-constructor-tearoff:${cls.name}<${typeArgs.join(', ')}>.${target.name.text}>',
+      bytecode: _emitter.toUint32List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: Uint8List.fromList([
+        ...paramMappings.map((m) => m.instKind.index),
+        ...namedMappings.map((m) => m.instKind.index),
+      ]),
+      returnKind: StackKind.ref.index,
+    );
+
+    // Restore enclosing compilation state.
+    _popContext();
+
+    // Emit CLOSURE wrapping the thunk in the enclosing function.
+    final closureReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    return (closureReg, ResultLoc.ref);
+  }
+
+  // ── ConstructorTearOffConstant ──
+
+  /// Compiles a [ConstructorTearOffConstant] (encountered inside a
+  /// [ConstantExpression]): same as ConstructorTearOff but from a constant
+  /// context.
+  (int, ResultLoc) _compileConstructorTearOffConstant(
+    ir.ConstructorTearOffConstant constant,
+  ) {
+    final target = constant.target;
+    if (target is ir.Constructor) {
+      return _generateConstructorTearOffThunk(target);
+    } else if (target is ir.Procedure && target.isFactory) {
+      final funcId = _procToFuncId[target.reference];
+      if (funcId == null) {
+        throw UnsupportedError(
+          'ConstructorTearOffConstant: unknown factory ${target.name.text}',
+        );
+      }
+      final closureReg = _allocRefReg();
+      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      return (closureReg, ResultLoc.ref);
+    }
+    throw UnsupportedError(
+      'ConstructorTearOffConstant: unsupported target '
+      '${target.runtimeType}',
+    );
+  }
+
+  // ── RedirectingFactoryTearOff ──
+
+  /// Compiles a [RedirectingFactoryTearOff]: resolves the redirect chain
+  /// to the final target, then generates a constructor tearoff thunk.
+  (int, ResultLoc) _compileRedirectingFactoryTearOff(
+    ir.RedirectingFactoryTearOff expr,
+  ) {
+    final finalTarget = _resolveRedirectingFactory(expr.target);
+    return _emitTearOffForMember(finalTarget, 'RedirectingFactoryTearOff');
+  }
+
+  /// Resolves a redirecting factory constructor chain to the final target
+  /// [Member] (which is either a [Constructor] or a non-redirecting
+  /// [Procedure]).
+  ir.Member _resolveRedirectingFactory(ir.Procedure proc) {
+    ir.Member current = proc;
+    while (current is ir.Procedure && current.isRedirectingFactory) {
+      final rft = current.function.redirectingFactoryTarget;
+      if (rft == null || rft.target == null) break;
+      current = rft.target!;
+    }
+    return current;
+  }
+
+  /// Emits a tearoff for a resolved [Member] — dispatches to
+  /// [_generateConstructorTearOffThunk] for constructors or emits a simple
+  /// CLOSURE for factory procedures.
+  (int, ResultLoc) _emitTearOffForMember(ir.Member target, String label) {
+    if (target is ir.Constructor) {
+      return _generateConstructorTearOffThunk(target);
+    } else if (target is ir.Procedure) {
+      final funcId = _procToFuncId[target.reference] ??
+          _constructorToFuncId[target.reference];
+      if (funcId == null) {
+        throw UnsupportedError(
+          '$label: unknown target ${target.name.text}',
+        );
+      }
+      final closureReg = _allocRefReg();
+      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      return (closureReg, ResultLoc.ref);
+    }
+    throw UnsupportedError(
+      '$label: unsupported target ${target.runtimeType}',
+    );
+  }
+
+  // ── RedirectingFactoryTearOffConstant ──
+
+  /// Compiles a [RedirectingFactoryTearOffConstant]: same as
+  /// RedirectingFactoryTearOff but from a constant context.
+  (int, ResultLoc) _compileRedirectingFactoryTearOffConstant(
+    ir.RedirectingFactoryTearOffConstant constant,
+  ) {
+    final finalTarget = _resolveRedirectingFactory(constant.target);
+    return _emitTearOffForMember(
+        finalTarget, 'RedirectingFactoryTearOffConstant');
+  }
+
+  // ── TypedefTearOff ──
+
+  /// Compiles a [TypedefTearOff]: resolves the typedef to the inner
+  /// expression and compiles it. The TypedefTearOff wraps another tearoff
+  /// with type argument substitution.
+  (int, ResultLoc) _compileTypedefTearOff(ir.TypedefTearOff expr) {
+    // The inner expression is the actual tearoff (e.g., ConstructorTearOff,
+    // StaticTearOff). Simply compile the inner expression — the type
+    // arguments are resolved by the CFE.
+    return _compileExpression(expr.expression);
+  }
+
+  // ── TypedefTearOffConstant ──
+
+  /// Compiles a [TypedefTearOffConstant]: resolves the inner tear-off
+  /// constant and compiles it.
+  (int, ResultLoc) _compileTypedefTearOffConstant(
+    ir.TypedefTearOffConstant constant,
+  ) {
+    return constant.tearOffConstant.accept(_constantVisitor);
+  }
+
+  // ── InstanceTearOff ──
+
+  /// Compiles an [InstanceTearOff]: captures the receiver as upvalue[0],
+  /// generates a thunk FuncProto whose body loads the receiver, sets up
+  /// args, and calls via CALL_VIRTUAL.
+  (int, ResultLoc) _compileInstanceTearOff(ir.InstanceTearOff expr) {
+    final target = expr.interfaceTarget;
+    final methodName = expr.name.text;
+    final fn = target.function;
+
+    // 1. Compile receiver expression.
+    var (recReg, recLoc) = _compileExpression(expr.receiver);
+    recReg = _boxToRefIfValue(recReg, recLoc, _inferExprType(expr.receiver));
+
+    // 2. Reserve a slot in the function table.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // 3. Save current compilation state.
+    _pushContext();
+    _currentReturnType = fn.returnType;
+
+    // Create a new scope for the thunk.
+    _scope = Scope(
+      valueAlloc: _valueAlloc,
+      refAlloc: _refAlloc,
+    );
+
+    // Reserve standard header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver (will be set from upvalue)
+
+    // Register parameters with the same types as the method.
+    final argTemps = <(int, ResultLoc)>[];
+    for (final param in fn.positionalParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+    for (final param in fn.namedParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+
+    // 4. Load receiver from upvalue[0] into a ref register.
+    final receiverReg = _allocRefReg();
+    _emitter.emit(encodeABC(Op.loadUpvalue, receiverReg, 0, 0));
+
+    // 5. Allocate result register based on return type.
+    final retType = fn.returnType;
+    final retLoc = _classifyType(retType);
+    final resultReg = retLoc == ResultLoc.ref
+        ? _allocRefReg()
+        : _allocValueReg();
+
+    // 6. Emit arg MOVEs for virtual call (skip receiver — interpreter
+    // handles it).
+    _emitArgMovesForVirtualCall(argTemps);
+
+    // 7. Emit CALL_VIRTUAL.
+    _emitCallVirtual(resultReg, receiverReg, methodName, argTemps.length);
+
+    // 8. Emit RETURN.
+    if (retLoc == ResultLoc.value) {
+      _emitter.emit(encodeABC(Op.returnVal, resultReg, 0, 0));
+    } else {
+      _emitter.emit(encodeABC(Op.returnRef, resultReg, 0, 0));
+    }
+
+    _patchPendingArgMoves();
+
+    // Create the thunk FuncProto with 1 upvalue descriptor.
+    _functions[thunkFuncId] = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<instance-tearoff:$methodName>',
+      bytecode: _emitter.toUint32List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: _buildParamKinds(
+          fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
+      icTable: List.of(_icEntries),
+      upvalueDescriptors: [
+        // upvalue[0] = receiver, captured from the enclosing function's
+        // recReg register (isLocal=true).
+        UpvalueDescriptor(isLocal: true, index: recReg),
+      ],
+    );
+
+    // Restore enclosing compilation state.
+    _popContext();
+
+    // Emit CLOSURE wrapping the thunk in the enclosing function.
+    // The CLOSURE instruction automatically captures upvalues according
+    // to the FuncProto's upvalueDescriptors.
+    final closureReg = _allocRefReg();
+    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    return (closureReg, ResultLoc.ref);
+  }
+
   // ── Captured variable analysis ──
 
   /// Pre-analyzes the function body to find all outer variables that are

@@ -217,18 +217,27 @@ feat: support records, constructor tearoffs, extension methods, patterns, and en
 
 ## 核心发现
 
-_(执行时填写：extension method 在 Kernel 中是否确认已脱糖、Pattern 的 Kernel 表示是否完全脱糖、Record 的运行时创建策略选择、ConstructorTearOff thunk 生成的复杂度、InstanceTearOff 的 receiver upvalue 绑定、Enhanced enum 的 _Enum 平台内部类处理等)_
+- **Extension methods**: CFE 3.10.7 已完全脱糖为 StaticInvocation，编译器无需特殊处理，11 个 E2E 测试全部直接通过
+- **Extension types**: CFE 已擦除为底层表示类型，编译器无需特殊处理
+- **Pattern matching**: CFE 3.10.7 已完全脱糖为 if-else 链，SwitchExpression 也已脱糖，11 个 E2E 测试全部直接通过
+- **Super parameters**: CFE 已脱糖为隐式 super(x: x) 参数转发，编译器无需特殊处理
+- **Records**: Host Dart VM 无公开 API 做程序化 Record 构造，使用自定义 DarticRecord 类替代。通过 CREATE_RECORD 指令创建，GET_FIELD_DYN 访问字段（$1/$2 映射到 0-based 位置索引）
+- **Enum 处理**: _Enum 是平台类，字段 index(valueFields[0]) 和 _name(refFields[0]) 需手动注册到 field layout。toString 通过 method table 别名 `toString -> _enumToString` 解决。Enum 常量通过 global slot loading 保证 identity equality
+- **Constructor tearoffs**: 生成 thunk FuncProto（NEW_INSTANCE + CALL_STATIC + RETURN_REF）。Factory 构造器直接复用 funcId 做 CLOSURE。泛型构造器 tearoff（如 `Box<int>.new`）由 CFE 表示为 `InstantiationConstant(ConstructorTearOffConstant(...), [types])`，使用 ALLOC_GENERIC 分配对象并通过 dual-stack coercion thunk 处理 TypeParameter→具体类型的栈类型切换
+- **Instance tearoffs**: receiver 捕获为 upvalue[0]，thunk body = LOAD_UPVALUE + CALL_VIRTUAL + RETURN
+- **Redirecting factory tearoffs**: 沿 redirect chain 解析到最终 target，再分发到 constructor/procedure tearoff 逻辑
+- **Typedef tearoffs**: 直接编译内层表达式，type arguments 由 CFE 处理
 
 ## Batch 完成检查
 
-- [ ] 6.2.1 Extension methods + Extension types（验证）
-- [ ] 6.2.2 Enhanced enums + Enum Bridge
-- [ ] 6.2.3 Records — CREATE_RECORD + field access
-- [ ] 6.2.4 Constructor tearoffs + Instance tearoffs
-- [ ] 6.2.5 Pattern matching（验证 + 补全）
-- [ ] 6.2.6 Super parameters + 剩余特性扫尾
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] 6.2.1 Extension methods + Extension types（验证）
+- [x] 6.2.2 Enhanced enums + Enum Bridge
+- [x] 6.2.3 Records — CREATE_RECORD + field access
+- [x] 6.2.4 Constructor tearoffs + Instance tearoffs
+- [x] 6.2.5 Pattern matching（验证 + 补全）
+- [x] 6.2.6 Super parameters + 剩余特性扫尾
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过
+- [x] commit 已提交
+- [x] overview.md 已更新
+- [x] code review 已完成

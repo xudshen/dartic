@@ -1076,8 +1076,15 @@ extension on DarticCompiler {
     }
 
     // Platform method call → CALL_HOST (if specialization above didn't fire).
+    // Exception: enum instances are DarticObjects, not host objects, so
+    // calls targeting _Enum methods must go through virtual dispatch.
     if (targetClass != null &&
         _isPlatformLibrary(targetClass.enclosingLibrary)) {
+      final receiverClass = _resolveReceiverClass(expr.receiver);
+      if (receiverClass != null && receiverClass.isEnum &&
+          _classToClassId.containsKey(receiverClass)) {
+        return _compileVirtualCall(expr);
+      }
       return _compileHostInstanceCall(expr);
     }
 
@@ -1368,7 +1375,17 @@ extension on DarticCompiler {
 
     // Check if the target is a field.
     if (target is ir.Field) {
-      final layouts = _instanceFieldLayouts[targetClass];
+      var layouts = _instanceFieldLayouts[targetClass];
+      // For enum classes, the field target may be in _Enum (platform class),
+      // but the actual receiver is a user-defined enum class. Look up the
+      // field in the receiver's class layout instead.
+      if (layouts == null && targetClass != null &&
+          _isPlatformLibrary(targetClass.enclosingLibrary)) {
+        final receiverClass = _resolveReceiverClass(expr.receiver);
+        if (receiverClass != null) {
+          layouts = _instanceFieldLayouts[receiverClass];
+        }
+      }
       if (layouts != null) {
         final layout = layouts[target.getterReference];
         if (layout != null) {
@@ -1777,6 +1794,21 @@ extension on DarticCompiler {
       );
     }
 
+    // For enum InstanceConstants, load from the global slot instead of
+    // creating a new object each time. This ensures identity equality
+    // works correctly (Color.red == Color.red). Enum values are static
+    // const fields whose initializers are InstanceConstants — we match
+    // by finding the static field whose initializer constant is identical
+    // to this one.
+    if (cls.isEnum) {
+      final globalIndex = _findEnumConstantGlobal(cls, constant);
+      if (globalIndex != null) {
+        final refReg = _allocRefReg();
+        _emitter.emit(encodeABx(Op.loadGlobal, refReg, globalIndex));
+        return (refReg, ResultLoc.ref);
+      }
+    }
+
     // 1. Allocate the object (generic or non-generic).
     final objReg = _allocRefReg();
     final isGeneric = constant.typeArguments.isNotEmpty;
@@ -2077,9 +2109,11 @@ extension on DarticCompiler {
       refRegCount: _refAlloc.maxUsed,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
-      paramKinds: _buildParamKinds(
-          fn.positionalParameters, fn.namedParameters),
-      returnKind: _classifyReturnKind(fn.returnType),
+      paramKinds: Uint8List.fromList([
+        ...paramMappings.map((m) => m.instKind.index),
+        ...namedMappings.map((m) => m.instKind.index),
+      ]),
+      returnKind: _classifyReturnKind(subst.substituteType(fn.returnType)),
     );
 
     // Restore enclosing compilation state.
@@ -2203,6 +2237,159 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileSetConstant(ir.SetConstant constant) =>
       _compileConstantElementCollection(Op.createSet, constant.entries);
 
+  // ── Record Literals & Constants ──
+
+  /// Compiles a [ir.RecordLiteral] to CREATE_RECORD bytecode.
+  ///
+  /// Positional fields are compiled first, then named fields (in declaration
+  /// order). All values are boxed to ref registers. A shape descriptor is
+  /// stored in the constant pool refs partition as a List:
+  /// `[positionalCount, namedFieldName1, namedFieldName2, ...]`.
+  ///
+  /// Emits: CREATE_RECORD A, B, C — A=dest ref reg, B=start ref reg,
+  /// C=shape index in constant pool refs.
+  (int, ResultLoc) _compileRecordLiteral(ir.RecordLiteral expr) {
+    final positional = expr.positional;
+    final named = expr.named;
+    final totalFields = positional.length + named.length;
+
+    final destReg = _allocRefReg();
+
+    if (totalFields == 0) {
+      // Empty record: shape = [0], no field registers needed.
+      final shape = <Object>[0];
+      final shapeIdx = _constantPool.addRef(shape);
+      _emitter.emit(encodeABC(Op.createRecord, destReg, 0, shapeIdx));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Compile all field expressions: positional first, then named.
+    final fieldRegs = <int>[];
+    for (final field in positional) {
+      var (reg, loc) = _compileExpression(field);
+      reg = _boxToRefIfValue(reg, loc, _inferExprType(field));
+      fieldRegs.add(reg);
+    }
+    for (final field in named) {
+      var (reg, loc) = _compileExpression(field.value);
+      reg = _boxToRefIfValue(reg, loc, _inferExprType(field.value));
+      fieldRegs.add(reg);
+    }
+
+    // Build shape descriptor: [positionalCount, namedName1, namedName2, ...].
+    final shape = <Object>[
+      positional.length,
+      ...named.map((n) => n.name),
+    ];
+    final shapeIdx = _constantPool.addRef(shape);
+
+    // Move all field values into consecutive ref registers.
+    final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
+    for (var i = 0; i < fieldRegs.length; i++) {
+      if (fieldRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createRecord, destReg, targetRegs.first, shapeIdx));
+    return (destReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.RecordIndexGet] to GET_FIELD_DYN bytecode.
+  ///
+  /// Accesses a positional record field by its index. The index is 0-based
+  /// in Kernel but maps to Dart's 1-based `$1`, `$2`, etc. syntax.
+  /// We use the property name `$N` (1-indexed) with GET_FIELD_DYN.
+  (int, ResultLoc) _compileRecordIndexGet(ir.RecordIndexGet expr) {
+    // 1. Compile receiver to ref stack.
+    var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    recvReg =
+        _boxToRefIfValue(recvReg, recvLoc, _inferExprType(expr.receiver));
+
+    // 2. Allocate result register.
+    final resultReg = _allocRefReg();
+
+    // 3. Add positional field name to names partition.
+    // Kernel uses 0-based index; Dart syntax uses 1-based ($1, $2, ...).
+    final fieldName = '\$${expr.index + 1}';
+    final nameIdx = _constantPool.addName(fieldName);
+
+    // 4. Emit GET_FIELD_DYN.
+    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.RecordNameGet] to GET_FIELD_DYN bytecode.
+  ///
+  /// Accesses a named record field by name.
+  (int, ResultLoc) _compileRecordNameGet(ir.RecordNameGet expr) {
+    // 1. Compile receiver to ref stack.
+    var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+    recvReg =
+        _boxToRefIfValue(recvReg, recvLoc, _inferExprType(expr.receiver));
+
+    // 2. Allocate result register.
+    final resultReg = _allocRefReg();
+
+    // 3. Add field name to names partition and emit GET_FIELD_DYN.
+    final nameIdx = _constantPool.addName(expr.name);
+    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Compiles a [ir.RecordConstant] to CREATE_RECORD bytecode.
+  ///
+  /// Similar to [_compileRecordLiteral] but operates on constant expressions.
+  (int, ResultLoc) _compileRecordConstant(ir.RecordConstant constant) {
+    final positional = constant.positional;
+    final named = constant.named;
+    final totalFields = positional.length + named.length;
+
+    final destReg = _allocRefReg();
+
+    if (totalFields == 0) {
+      final shape = <Object>[0];
+      final shapeIdx = _constantPool.addRef(shape);
+      _emitter.emit(encodeABC(Op.createRecord, destReg, 0, shapeIdx));
+      return (destReg, ResultLoc.ref);
+    }
+
+    // Compile all constant field values: positional first, then named.
+    final fieldRegs = <int>[];
+    for (final field in positional) {
+      var (reg, loc) = field.accept(_constantVisitor);
+      reg = _boxToRefIfValue(reg, loc, _inferConstantType(field));
+      fieldRegs.add(reg);
+    }
+    // Named entries are sorted by name in Kernel's RecordConstant.
+    final namedEntries = named.entries.toList();
+    for (final entry in namedEntries) {
+      var (reg, loc) = entry.value.accept(_constantVisitor);
+      reg = _boxToRefIfValue(reg, loc, _inferConstantType(entry.value));
+      fieldRegs.add(reg);
+    }
+
+    // Build shape descriptor.
+    final shape = <Object>[
+      positional.length,
+      ...namedEntries.map((e) => e.key),
+    ];
+    final shapeIdx = _constantPool.addRef(shape);
+
+    // Move into consecutive ref registers.
+    final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
+    for (var i = 0; i < fieldRegs.length; i++) {
+      if (fieldRegs[i] != targetRegs[i]) {
+        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(
+        encodeABC(Op.createRecord, destReg, targetRegs.first, shapeIdx));
+    return (destReg, ResultLoc.ref);
+  }
+
   /// Shared helper for list/set constant compilation: compiles each constant
   /// entry, boxes to ref if needed, and emits the collection creation op.
   (int, ResultLoc) _compileConstantElementCollection(
@@ -2230,8 +2417,14 @@ extension on DarticCompiler {
   /// Compiles an [ir.InstantiationConstant]: a generic function tear-off
   /// with bound type args in constant context.
   ///
-  /// For StaticTearOffConstant targets, applies the same thunk generation
-  /// as [_compileInstantiation]. For other targets, delegates directly.
+  /// Handles three cases:
+  /// 1. **StaticTearOffConstant**: generates a coercion thunk via
+  ///    [_generateInstantiationThunk] if the instantiation causes a
+  ///    value/ref stack-kind mismatch.
+  /// 2. **ConstructorTearOffConstant**: generates a generic constructor
+  ///    tearoff thunk via [_generateGenericConstructorTearOffThunk] that
+  ///    uses ALLOC_GENERIC and accepts parameters with instantiated types.
+  /// 3. **Other**: delegates to the constant visitor directly.
   (int, ResultLoc) _compileInstantiationConstant(
       ir.InstantiationConstant constant) {
     if (constant.tearOffConstant is ir.StaticTearOffConstant) {
@@ -2258,6 +2451,17 @@ extension on DarticCompiler {
       }
 
       return _generateInstantiationThunk(funcId, fn, subst, constant.types);
+    }
+    if (constant.tearOffConstant is ir.ConstructorTearOffConstant) {
+      final tearOff =
+          constant.tearOffConstant as ir.ConstructorTearOffConstant;
+      final target = tearOff.target;
+      if (target is ir.Constructor && constant.types.isNotEmpty) {
+        return _generateGenericConstructorTearOffThunk(
+          target,
+          constant.types,
+        );
+      }
     }
     return constant.tearOffConstant.accept(_constantVisitor);
   }
@@ -2311,6 +2515,17 @@ class _ExprCompileVisitor
   @override
   (int, ResultLoc) visitSetLiteral(ir.SetLiteral node) =>
       _c._compileSetLiteral(node);
+
+  // Record literals & field access
+  @override
+  (int, ResultLoc) visitRecordLiteral(ir.RecordLiteral node) =>
+      _c._compileRecordLiteral(node);
+  @override
+  (int, ResultLoc) visitRecordIndexGet(ir.RecordIndexGet node) =>
+      _c._compileRecordIndexGet(node);
+  @override
+  (int, ResultLoc) visitRecordNameGet(ir.RecordNameGet node) =>
+      _c._compileRecordNameGet(node);
 
   // String interpolation
   @override
@@ -2410,6 +2625,21 @@ class _ExprCompileVisitor
   @override
   (int, ResultLoc) visitFunctionExpression(ir.FunctionExpression node) =>
       _c._compileFunctionExpression(node);
+
+  // Tearoffs
+  @override
+  (int, ResultLoc) visitConstructorTearOff(ir.ConstructorTearOff node) =>
+      _c._compileConstructorTearOff(node);
+  @override
+  (int, ResultLoc) visitRedirectingFactoryTearOff(
+          ir.RedirectingFactoryTearOff node) =>
+      _c._compileRedirectingFactoryTearOff(node);
+  @override
+  (int, ResultLoc) visitTypedefTearOff(ir.TypedefTearOff node) =>
+      _c._compileTypedefTearOff(node);
+  @override
+  (int, ResultLoc) visitInstanceTearOff(ir.InstanceTearOff node) =>
+      _c._compileInstanceTearOff(node);
 
   // this
   @override
@@ -2513,4 +2743,21 @@ class _ConstantCompileVisitor
   @override
   (int, ResultLoc) visitSetConstant(ir.SetConstant node) =>
       _c._compileSetConstant(node);
+  @override
+  (int, ResultLoc) visitRecordConstant(ir.RecordConstant node) =>
+      _c._compileRecordConstant(node);
+
+  // Tearoff constants
+  @override
+  (int, ResultLoc) visitConstructorTearOffConstant(
+          ir.ConstructorTearOffConstant node) =>
+      _c._compileConstructorTearOffConstant(node);
+  @override
+  (int, ResultLoc) visitRedirectingFactoryTearOffConstant(
+          ir.RedirectingFactoryTearOffConstant node) =>
+      _c._compileRedirectingFactoryTearOffConstant(node);
+  @override
+  (int, ResultLoc) visitTypedefTearOffConstant(
+          ir.TypedefTearOffConstant node) =>
+      _c._compileTypedefTearOffConstant(node);
 }

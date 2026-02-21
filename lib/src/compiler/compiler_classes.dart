@@ -60,10 +60,35 @@ extension on DarticCompiler {
       inheritedValFields = superInfo.valueFieldCount;
     }
 
+    // Enum classes extend _Enum (a platform class) which has instance fields
+    // `index` (int) and `_name` (String). These are not tracked by the
+    // normal superclass path above because _Enum is a platform class.
+    // We must account for them so that:
+    // 1. InstanceConstant field values can be set correctly
+    // 2. InstanceGet on _Enum.index / _Enum._name resolves to GET_FIELD
+    final isEnumClass = cls.isEnum && superClass != null
+        && _isPlatformLibrary(superClass.enclosingLibrary);
     // Compute field layout: offsets start after inherited fields.
     var refOffset = inheritedRefFields;
     var valOffset = inheritedValFields;
     final fieldLayouts = <ir.Reference, FieldLayout>{};
+
+    // For enum classes, register the _Enum superclass fields in the layout
+    // so that _compileInstanceConstant can find them when setting fieldValues.
+    // Also compute inherited field counts from the actual platform fields.
+    if (isEnumClass) {
+      for (final field in superClass.fields) {
+        if (field.isStatic) continue;
+        final kind = _classifyStackKind(field.type);
+        final offset = kind.isValue ? valOffset++ : refOffset++;
+        final layout = FieldLayout(offset: offset, kind: kind);
+        fieldLayouts[field.getterReference] = layout;
+        final setterRef = field.setterReference;
+        if (setterRef != null) {
+          fieldLayouts[setterRef] = layout;
+        }
+      }
+    }
 
     for (final field in cls.fields) {
       if (field.isStatic) continue;
@@ -93,6 +118,17 @@ extension on DarticCompiler {
     // This maps constant-pool name indices to FieldLayout, enabling
     // GET_FIELD_DYN / SET_FIELD_DYN to resolve fields by name at runtime.
     final nameIndexedFields = <int, FieldLayout>{};
+
+    // Include _Enum inherited fields for enum classes.
+    if (isEnumClass) {
+      for (final field in superClass.fields) {
+        if (field.isStatic) continue;
+        final nameIdx = _constantPool.addName(field.name.text);
+        final layout = fieldLayouts[field.getterReference]!;
+        nameIndexedFields[nameIdx] = layout;
+      }
+    }
+
     for (final field in cls.fields) {
       if (field.isStatic) continue;
       final nameIdx = _constantPool.addName(field.name.text);
@@ -185,6 +221,20 @@ extension on DarticCompiler {
           : proc.name.text;
       final nameIdx = _constantPool.addName(methodName);
       classInfo.methods[nameIdx] = _functions.last;
+    }
+
+    // For enum classes, alias `toString` → `_enumToString` in the method
+    // table. Kernel compiles `_Enum.toString()` as a platform method that
+    // delegates to `_enumToString()`. Since _Enum is a platform class, we
+    // cannot compile its toString method. Instead, we make virtual dispatch
+    // for `toString` resolve directly to the enum class's `_enumToString`.
+    if (isEnumClass) {
+      final toStringIdx = _constantPool.addName('toString');
+      final enumToStringIdx = _constantPool.addName('_enumToString');
+      final enumToStringFunc = classInfo.methods[enumToStringIdx];
+      if (enumToStringFunc != null) {
+        classInfo.methods[toStringIdx] = enumToStringFunc;
+      }
     }
 
     // Flatten parent methods into child method table (compile-time flattening).

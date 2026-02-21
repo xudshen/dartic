@@ -13,6 +13,7 @@ import 'bindings/bool_bindings.dart';
 import 'bindings/date_time_bindings.dart';
 import 'bindings/double_bindings.dart';
 import 'bindings/duration_bindings.dart';
+import 'bindings/enum_bindings.dart';
 import 'bindings/error_bindings.dart';
 import 'bindings/int_bindings.dart';
 import 'bindings/invocation_bindings.dart';
@@ -51,6 +52,7 @@ abstract final class CoreBindings {
     MapBindings.register(registry);
     SetBindings.register(registry);
     DurationBindings.register(registry);
+    EnumBindings.register(registry);
     ErrorBindings.register(registry);
     InvocationBindings.register(registry);
     BigIntBindings.register(registry);
