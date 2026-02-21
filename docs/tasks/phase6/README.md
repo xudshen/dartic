@@ -45,13 +45,13 @@
 
 ## 里程碑验证
 
-- [ ] co19 `LibTest/async` 通过率 > 30%
-- [ ] co19 `LanguageFeatures/Patterns` 通过率 > 40%
-- [ ] co19 `LanguageFeatures/Records` 通过率 > 50%
-- [ ] co19 `LanguageFeatures/Extension-methods` 通过率 > 60%
-- [ ] co19 `LanguageFeatures/Constructor-tear-offs` 通过率 > 50%
-- [ ] Phase 2-5 全量零回归（或回归已修复）
-- [ ] Phase 2-5 类别通过率较上期有提升（async + 语言特性解锁历史测试）
+- [x] co19 `LibTest/async` 通过率 > 30% — 实际 **37.2%** (142/382)
+- [x] co19 `LanguageFeatures/Patterns` 通过率 > 40% — 实际 **60.2%** (471/783)
+- [x] co19 `LanguageFeatures/Records` 通过率 > 50% — 实际 **69.8%** (118/169)
+- [x] co19 `LanguageFeatures/Extension-methods` 通过率 > 60% — 实际 **92.4%** (242/262)
+- [x] co19 `LanguageFeatures/Constructor-tear-offs` 通过率 > 50% — 实际 **59.3%** (224/378)
+- [x] Phase 2-5 全量零回归（或回归已修复） — 0 regressions
+- [x] Phase 2-5 类别通过率较上期有提升 — +164 new pass, 全量 73.2%
 
 ## co19 测试范围（预估）
 

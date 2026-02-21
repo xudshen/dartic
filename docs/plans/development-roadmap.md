@@ -627,34 +627,41 @@ int main() => add(1, 2); // => 3
 
 **里程碑：** 支持 async/await、generators、pattern matching、records、extension methods
 
-### Batch 6.1: 异步核心 (Ch7)
+### Batch 6.1: 异步核心 (Ch7) ✅
 
-- [ ] 6.1.1 帧快照/恢复（Frame-as-Continuation） → Ch7 核心机制
-- [ ] 6.1.2 INIT_ASYNC / AWAIT / ASYNC_RETURN → `LibTest/async/` Future 子集
-- [ ] 6.1.3 async* (INIT_ASYNC_STAR / YIELD) → `LibTest/async/` Stream 子集
-- [ ] 6.1.4 sync* (INIT_SYNC_STAR / YIELD) → `LibTest/async/` Iterable 子集
-- [ ] 6.1.5 await for (AWAIT_STREAM_NEXT) → `LibTest/async/`
+- [x] 6.1.1 帧快照/恢复（Frame-as-Continuation） → Ch7 核心机制
+- [x] 6.1.2 INIT_ASYNC / AWAIT / ASYNC_RETURN → `LibTest/async/` Future 子集
+- [x] 6.1.3 async* (INIT_ASYNC_STAR / YIELD) → `LibTest/async/` Stream 子集
+- [x] 6.1.4 sync* (INIT_SYNC_STAR / YIELD) → `LibTest/async/` Iterable 子集
+- [x] 6.1.5 await for (AWAIT_STREAM_NEXT) → `LibTest/async/`
 
 **commit:** `feat(async): add async/await, generators with frame-as-continuation`
 
 > **核心发现：**
-> _(执行时填写：浅保存 vs 深保存的性能差异、Completer 桥接的 GC 影响、generator 的首次 moveNext 触发时机等)_
+> - DarticFrame 浅保存：挂起时 snapshot 当前帧的 value/ref 栈区间到帧对象，恢复时在栈顶重新分配空间并 memcpy 回来
+> - AWAIT 总是让出 microtask（`Completer.future.then(resume)`），不实现同步快速路径
+> - sync* 使用内部 SyncStarIterable，moveNext() 驱动解释器帧执行，YIELD 挂起帧后返回
+> - async* 通过 StreamController + microtask 调度，YIELD 暂停帧等待 StreamSubscription pull
 
-### Batch 6.2: 高级语言特性
+### Batch 6.2: 高级语言特性 ✅
 
-- [ ] 6.2.1 Extension methods → `LanguageFeatures/Extension-methods/` (275)
-- [ ] 6.2.2 Enhanced enum → `LanguageFeatures/Enhanced-Enum/` (156)
-- [ ] 6.2.3 Records + CREATE_RECORD 指令 → `LanguageFeatures/Records/` (172)
-- [ ] 6.2.4 Pattern matching（switch expression + destructuring） → `LanguageFeatures/Patterns/` (786)
-- [ ] 6.2.5 Constructor tearoffs → `LanguageFeatures/Constructor-tear-offs/` (378)
-- [ ] 6.2.6 Super parameters → `LanguageFeatures/Super-parameters/` (137)
+- [x] 6.2.1 Extension methods → `LanguageFeatures/Extension-methods/` (262)
+- [x] 6.2.2 Enhanced enum → `LanguageFeatures/Enhanced-Enum/` (156)
+- [x] 6.2.3 Records + CREATE_RECORD 指令 → `LanguageFeatures/Records/` (169)
+- [x] 6.2.4 Pattern matching（switch expression + destructuring） → `LanguageFeatures/Patterns/` (783)
+- [x] 6.2.5 Constructor tearoffs → `LanguageFeatures/Constructor-tear-offs/` (378)
+- [x] 6.2.6 Super parameters → `LanguageFeatures/Super-parameters/` (137)
 
-**commit:** `feat: support extension methods, records, patterns, and enhanced enums`
+**commit:** `feat: support records, constructor tearoffs, extension methods, patterns, and enhanced enums`
 
 > **核心发现：**
-> _(执行时填写：extension method 在 Kernel 中是否已脱糖、Pattern 的 Kernel 表示复杂度、Record 的运行时哈希/相等性等)_
+> - Extension methods 完全由 CFE 脱糖为 StaticInvocation，编译器无需特殊逻辑（92.4% 通过率）
+> - Records 使用 host Dart VM Record 对象（pass-through），CREATE_RECORD 指令构造运行时 Record
+> - Patterns 部分由 CFE 脱糖到 if-else 链，但 SwitchExpression 和 PatternVariableDeclaration 需编译器 visitor 支持
+> - Constructor tearoffs 编译为 thunk FuncProto（包装器函数），支持类型参数传递
+> - Enhanced enums 作为普通 Class 处理 + Enum 基类 Bridge（index/values/name）
 
-### Batch 6.3: co19 Harness v4 — static_type_helper + 异步测试
+### Batch 6.3: co19 Harness v4 — static_type_helper + 异步测试 ✅
 
 > **此时 extension method + 泛型 + async 均已就绪**，可以接入剩余全部 Utils。
 
@@ -673,16 +680,21 @@ int main() => add(1, 2); // => 3
 > - dart:async 绑定架构：AsyncBindings 作为入口，委托给 FutureBindings/CompleterBindings/StreamBindings/TimerBindings/ZoneBindings 各子模块。Zone 绑定最复杂（13 参数 ZoneSpecification 构造器 + 泛型 handler 类型签名）
 > - Batch 6.3+ 绑定补全后 LibTest/async 从 22.0% → **37.2%**（+58 tests），Zone/StreamTransformer/MultiStreamController/EventSink 绑定到位
 
-### Batch 6.4: 沙箱 (Ch8)
+### Batch 6.4: 沙箱 (Ch8) ✅
 
-- [ ] 6.4.1 字节码加载时验证器 → `lib/src/sandbox/verifier.dart`
-- [ ] 6.4.2 Fuel 计数 + 调用深度限制 → 扩展 `interpreter.dart`
-- [ ] 6.4.3 沙箱安全测试 → `test/sandbox/`
+- [x] 6.4.1 字节码加载时验证器 → `lib/src/sandbox/verifier.dart`（50 tests）
+- [x] 6.4.2 资源限制增强 — maxTotalFuel + executionTimeout + 错误分类 → `lib/src/runtime/error.dart` + `interpreter.dart`（17 tests）
+- [x] 6.4.3 沙箱集成测试 + 加载验证管线 → `loadAndVerify()` + `test/sandbox/sandbox_integration_test.dart`（14 tests）
 
-**commit:** `feat(sandbox): add bytecode verification and resource limits`
+**commit:** `feat(sandbox): add DarticVerifier bytecode validation and resource limits`
 
 > **核心发现：**
-> _(执行时填写：验证器的检查项清单、fuel 粒度对性能的影响、已发现的安全漏洞等)_
+> - DarticVerifier 覆盖全部 12 项检查，O(n) 单遍扫描，opcode 查找用 Set<int> 实现 O(1)
+> - 寄存器边界精确区分 value/ref 栈——每条指令的每个操作数根据其语义选择正确的 regCount 校验
+> - maxTotalFuel/executionTimeout 仅在 fuel exhaustion boundary 检查（零每指令开销），默认 null（无限制）
+> - `loadAndVerify(Uint8List)` 三阶段管线：反序列化 → 结构验证 → Bridge 依赖检查，统一返回 DarticLoadError
+> - 错误分类：DarticLoadError（加载失败）、DarticError（运行时可恢复，含 FuelExhaustedError / ExecutionTimeoutError）、DarticInternalError（实现 bug）
+> - Code review 发现并修复：assert_ 寄存器类型错误、exception handler valStackDP/refStackDP 缺失校验、WIDE 嵌套检测、stackTraceReg 哨兵值收紧
 
 ### Phase 6 里程碑验证
 
@@ -784,7 +796,7 @@ int main() => add(1, 2); // => 3
 | 3 | Functions + Classes + Reference | 1,586 | 1,235 | +78 | ~2,300 | ~1,700 | 2,686 | 0 |
 | 4 | Generics + Mixins + TypeSystem | 3,426 | 1,834 | +46 | ~4,500 | ~3,200 | 4,566 | 0 |
 | 5 | LibTest/core + 集合/字符串特性 | 1,124 | 611 | +675 | ~5,500 | ~4,000 | 5,852 | 0 (10 skipped) |
-| 6 | Async + LanguageFeatures | ~2,300 | ~1,500 | ~500 | ~7,500 | ~5,500 | | |
+| 6 | Async + LanguageFeatures | 2,628 | 1,736 | +164 | ~7,500 | ~5,500 | 8,121 (71.6%) | 0 |
 | 7 | 公开 API + codegen（无新 co19 类别） | — | ~0 | ~100 | ~7,600 | ~5,600 | | |
 
 **关键修正说明：**
@@ -837,6 +849,6 @@ review 发现的问题直接修复，修复后重新 review 直到通过。
 - [x] ~~为 Phase 5 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase5/`](../tasks/phase5/README.md)
 - [x] 执行 Phase 5（Batch 5.1 → 5.6，共 35 个 Task）— LibTest/core 54.4% (611/1124)，Phase 2-4 81.8% (3407/4167)，累计 5,852 pass，0 回归
 - [x] ~~为 Phase 6 编写 Task 文件~~ → 已完成，见 [`docs/tasks/phase6/`](../tasks/phase6/README.md)
-- [ ] 执行 Phase 6（Batch 6.1 → 6.4，共 20 个 Task）
+- [x] 执行 Phase 6（Batch 6.1 → 6.4，共 32 个 Task）— Phase 6 新增 8 类 2628 tests: 1736 pass (66.1%), 全量 20 类 11345 tests: 8121 pass (71.6%), 0 regressions
 - [ ] 为 Phase 7 编写 Task 文件 — 公开 API 设计已完成，见 [`docs/plans/2026-02-20-bridge-api-design.md`](2026-02-20-bridge-api-design.md)
 - [ ] 执行 Phase 7（Batch 7.1 → 7.3）
