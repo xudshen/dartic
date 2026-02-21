@@ -267,18 +267,21 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 
 ## 核心发现
 
-_(执行时填写：HostDispatchRegistry runtimeType 缓存命中率、BridgeFactoryRegistry 查找频率、导出表序列化格式对 .darb 体积影响、executeFunction 重入状态检测机制、call() 与 invokeClosure() 的共享路径等)_
+- **paramKinds/returnKind 序列化缺失**：.darb 序列化器未持久化 `DarticFuncProto.paramKinds` 和 `returnKind` 字段，导致 DarticEngine 通过序列化路径加载的模块丢失参数和返回值的栈类型信息（所有参数错误地路由到 ref 栈，value 栈参数读取为 0）。在 Task 7.1.6 中修复，在 `_writeFunction` / `_readFunction` 末尾新增 paramKinds（1 字节标志 + N 字节数据）和 returnKind（1 字节）
+- **onError 与 DarticError 分流**：`call()` 的 try-catch 链用 `on DarticError { rethrow; }` 保证资源错误（FuelExhaustedError/CallDepthExceededError/ExecutionTimeoutError）始终绕过 onError 传播到宿主。脚本异常走通用 `catch (e, st)` 路径交给 onError
+- **重入测试策略**：由于编译器只对 `dart:` 库生成 CALL_HOST，无法轻松注册自定义宿主函数让编译器识别。采用 `onPrint` 回调作为重入触发点——print() 是 CALL_HOST，onPrint 在宿主回调中调用 engine.call() 触发 `_isExecuting` 重入路径。支持多层嵌套重入
+- **InterfaceTypeTemplate 序列化限制**：async 函数在常量池中产生 `InterfaceTypeTemplate` 类型的 ref 常量，当前序列化器仅支持 null 和 String ref 类型，导致含 async 函数的模块无法通过 .darb 往返。async 函数的 engine.call() 测试需等待常量池序列化扩展
 
 ## Batch 完成检查
 
-- [ ] 7.1.1 HostDispatchRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
-- [ ] 7.1.2 BridgeFactoryRegistry + BridgeDispatch
-- [ ] 7.1.3 DarticModule 导出表 + .darb 序列化
-- [ ] 7.1.4 DarticInterpreter 重构 — executeFunction() + 错误模型完善
-- [ ] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 公开 API
-- [ ] 7.1.6 engine.call() 端到端管线 + 集成测试
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] 7.1.1 HostDispatchRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
+- [x] 7.1.2 BridgeFactoryRegistry + BridgeDispatch
+- [x] 7.1.3 DarticModule 导出表 + .darb 序列化
+- [x] 7.1.4 DarticInterpreter 重构 — executeFunction() + 错误模型完善
+- [x] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 公开 API
+- [x] 7.1.6 engine.call() 端到端管线 + 集成测试
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过 (2866 tests)
+- [x] commit 已提交 (`717cfee`)
+- [x] overview.md 已更新
+- [x] code review 已完成

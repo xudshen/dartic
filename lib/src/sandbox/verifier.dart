@@ -37,6 +37,7 @@ class DarticVerifier {
       _verifyFunction(func, module);
     }
     _verifyClassTable(module);
+    _verifyExportTable(module);
     return errors.isEmpty;
   }
 
@@ -207,6 +208,30 @@ class DarticVerifier {
             'not found in module functions',
           );
         }
+      }
+    }
+  }
+
+  // ── Check 13: Export table ──
+
+  void _verifyExportTable(DarticModule module) {
+    final funcCount = module.functions.length;
+
+    for (final entry in module.exportedFunctions.entries) {
+      final name = entry.key;
+      final funcId = entry.value;
+
+      if (name.isEmpty) {
+        errors.add(
+          'exportedFunctions: empty function name for funcId $funcId',
+        );
+      }
+
+      if (funcId < 0 || funcId >= funcCount) {
+        errors.add(
+          'exportedFunctions: funcId $funcId for "$name" out of range '
+          '[0, $funcCount)',
+        );
       }
     }
   }

@@ -443,7 +443,7 @@ void main() {
   });
 
   group('call depth', () {
-    test('exceeds maxCallDepth throws DarticError', () {
+    test('exceeds maxCallDepth throws CallDepthExceededError', () {
       // Create a recursive function that calls itself until depth limit
       // f0 (main): calls f1
       // f1: calls f1 (infinite recursion)
@@ -478,11 +478,7 @@ void main() {
 
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('call depth'),
-        )),
+        throwsA(isA<CallDepthExceededError>()),
       );
     });
   });

@@ -52,6 +52,9 @@ class DarticCompiler {
   /// The funcId of the entry point (main).
   int _entryFuncId = -1;
 
+  /// Export table — maps public top-level function names to their funcIds.
+  final Map<String, int> _exportedFunctions = {};
+
   /// Maps Kernel Field references (getter + setter) to global slot indices.
   final Map<ir.Reference, int> _fieldToGlobalIndex = {};
 
@@ -222,6 +225,22 @@ class DarticCompiler {
       }
     }
 
+    // Pass 1a-export: populate export table with public top-level functions.
+    // Only non-private, non-getter, non-setter top-level procedures are
+    // exported. Class methods and static methods are excluded.
+    for (final lib in _component.libraries) {
+      if (_isPlatformLibrary(lib)) continue;
+      for (final proc in lib.procedures) {
+        if (proc.kind != ir.ProcedureKind.Method) continue; // skip getters/setters
+        final name = proc.name.text;
+        if (name.startsWith('_')) continue; // skip private
+        final funcId = _procToFuncId[proc.reference];
+        if (funcId != null) {
+          _exportedFunctions[name] = funcId;
+        }
+      }
+    }
+
     // Pass 1b: assign global indices to top-level and static class fields.
     for (final lib in _component.libraries) {
       if (_isPlatformLibrary(lib)) continue;
@@ -344,6 +363,7 @@ class DarticCompiler {
       classes: _classInfos,
       coreTypeIds: _coreTypeIds,
       bindingNames: _bindingNames,
+      exportedFunctions: Map.unmodifiable(_exportedFunctions),
     );
   }
 

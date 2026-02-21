@@ -29,6 +29,7 @@ class DarticSerializer {
     _writeConstantPool(w, module.constantPool);
     _writeFunctionTable(w, module.functions);
     w.writeUint32(module.entryFuncId);
+    _writeExportTable(w, module.exportedFunctions);
 
     // Build payload and compute checksum.
     final payload = w.toBytes();
@@ -102,6 +103,16 @@ class DarticSerializer {
     }
   }
 
+  // ── Export Table ──
+
+  void _writeExportTable(_ByteWriter w, Map<String, int> exports) {
+    w.writeUint16(exports.length);
+    for (final entry in exports.entries) {
+      w.writeString(entry.key);
+      w.writeUint32(entry.value);
+    }
+  }
+
   void _writeFunction(_ByteWriter w, DarticFuncProto func) {
     w.writeString(func.name);
     w.writeUint32(func.funcId);
@@ -141,6 +152,21 @@ class DarticSerializer {
       w.addByte(desc.isLocal ? 1 : 0);
       w.writeUint32(desc.index);
     }
+
+    // paramKinds (per-parameter stack kind for arg routing)
+    // Format: 1 byte flag (0 = null, 1 = present) + if present: paramCount bytes
+    final paramKinds = func.paramKinds;
+    if (paramKinds != null) {
+      w.addByte(1);
+      for (var i = 0; i < paramKinds.length; i++) {
+        w.addByte(paramKinds[i]);
+      }
+    } else {
+      w.addByte(0);
+    }
+
+    // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
+    w.addByte(func.returnKind);
   }
 }
 

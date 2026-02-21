@@ -21,6 +21,7 @@ class DarticModule {
     this.classes = const [],
     this.coreTypeIds,
     this.bindingNames = const [],
+    this.exportedFunctions = const {},
   });
 
   /// Function table — indexed by funcId.
@@ -57,6 +58,14 @@ class DarticModule {
   ///
   /// See: docs/design/05-compiler.md "绑定名称表"
   final List<BindingEntry> bindingNames;
+
+  /// Export table — maps public top-level function names to their funcIds.
+  ///
+  /// Only non-private, non-getter/setter, top-level procedures are exported.
+  /// Used by the engine API to look up callable entry points by name.
+  ///
+  /// The map is treated as immutable after construction.
+  final Map<String, int> exportedFunctions;
 }
 
 /// Maps core Dart types to their compiler-assigned classIds.

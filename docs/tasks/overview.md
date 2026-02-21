@@ -155,7 +155,7 @@
 
 | Batch | 描述 | Task 数 | 状态 |
 |-------|------|---------|------|
-| [7.1](phase7/batch-7.1-engine-api.md) | DarticEngine 公开 API + 内部重构 | 6 | |
+| [7.1](phase7/batch-7.1-engine-api.md) | DarticEngine 公开 API + 内部重构 | 6 | ✅ |
 | [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | |
 | [7.3](phase7/batch-7.3-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | |
 

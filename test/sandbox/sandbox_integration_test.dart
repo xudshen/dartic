@@ -247,11 +247,7 @@ void main() {
         final verified = interp.loadAndVerify(bytes);
         expect(
           () => interp.execute(verified),
-          throwsA(isA<DarticError>().having(
-            (e) => e.message,
-            'message',
-            contains('call depth'),
-          )),
+          throwsA(isA<CallDepthExceededError>()),
         );
       });
     });

@@ -241,7 +241,7 @@ void main() {
   });
 
   group('maxCallDepth (existing behavior)', () {
-    test('deep recursion throws DarticError', () {
+    test('deep recursion throws CallDepthExceededError', () {
       // Function 0 calls itself (CALL_STATIC funcId=0), then HALTs.
       // The call depth check will trigger before HALT is ever reached.
       final code = Uint32List.fromList([
@@ -254,11 +254,7 @@ void main() {
       final interp = DarticInterpreter();
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('call depth'),
-        )),
+        throwsA(isA<CallDepthExceededError>()),
       );
     });
   });

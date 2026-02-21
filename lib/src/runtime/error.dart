@@ -48,6 +48,22 @@ class FuelExhaustedError extends DarticError {
   final int limit;
 }
 
+/// Thrown when the call stack depth exceeds [CallStack.maxFrames].
+///
+/// This is a structured subclass of [DarticError] that provides the
+/// current depth and configured limit. After catching this error, the
+/// runtime instance remains usable for subsequent calls.
+class CallDepthExceededError extends DarticError {
+  CallDepthExceededError({required this.depth, required this.limit})
+      : super('Call depth exceeded: $depth (limit: $limit)');
+
+  /// The call depth when the limit was hit.
+  final int depth;
+
+  /// The configured maximum call depth.
+  final int limit;
+}
+
 /// Thrown when [DarticInterpreter.executionTimeout] is exceeded.
 ///
 /// The interpreter has run longer than the configured wall-clock time limit.

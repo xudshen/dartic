@@ -65,12 +65,33 @@ class DarticDeserializer {
     final functions = _readFunctionTable(reader);
     final entryFuncId = reader.readUint32();
 
+    // Export table + paramKinds/returnKind (added in 7.1).
+    // No backward compatibility with pre-7.1 .darb files — the design
+    // constraint is "host engine and bytecode must be built with the same
+    // version." If bytes remain, read the export table; this is always the
+    // case for 7.1+ files since the serializer always writes this section.
+    final exportedFunctions = _readExportTable(reader);
+
     return DarticModule(
       functions: functions,
       constantPool: constantPool,
       entryFuncId: entryFuncId,
       bindingNames: bindingNames,
+      exportedFunctions: exportedFunctions,
     );
+  }
+
+  // ── Export Table ──
+
+  Map<String, int> _readExportTable(_ByteReader r) {
+    final count = r.readUint16();
+    final exports = <String, int>{};
+    for (var i = 0; i < count; i++) {
+      final name = r.readString();
+      final funcId = r.readUint32();
+      exports[name] = funcId;
+    }
+    return Map.unmodifiable(exports);
   }
 
   // ── Binding Name Table ──
@@ -183,6 +204,20 @@ class DarticDeserializer {
       return UpvalueDescriptor(isLocal: isLocal, index: r.readUint32());
     });
 
+    // paramKinds (per-parameter stack kind for arg routing)
+    // Format: 1 byte flag (0 = null, 1 = present) + if present: paramCount bytes
+    Uint8List? paramKinds;
+    final hasParamKinds = r.readByte();
+    if (hasParamKinds == 1) {
+      paramKinds = Uint8List(paramCount);
+      for (var i = 0; i < paramCount; i++) {
+        paramKinds[i] = r.readByte();
+      }
+    }
+
+    // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
+    final returnKind = r.readByte();
+
     return DarticFuncProto(
       funcId: funcId,
       name: name,
@@ -190,6 +225,8 @@ class DarticDeserializer {
       valueRegCount: valueRegCount,
       refRegCount: refRegCount,
       paramCount: paramCount,
+      paramKinds: paramKinds,
+      returnKind: returnKind,
       exceptionTable: exceptionTable,
       icTable: icTable,
       upvalueDescriptors: upvalueDescriptors,
@@ -204,6 +241,9 @@ class _ByteReader {
   final Uint8List _bytes;
   final ByteData _bd;
   int _offset = 0;
+
+  /// Returns `true` if there are unread bytes remaining.
+  bool get hasRemaining => _offset < _bytes.length;
 
   int readByte() {
     _checkBounds(1);

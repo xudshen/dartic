@@ -135,7 +135,7 @@ void main() {
   });
 
   group('overflow protection', () {
-    test('pushFrame throws DarticError when at capacity', () {
+    test('pushFrame throws CallDepthExceededError when at capacity', () {
       final small = CallStack(maxFrames: 2);
       // Fill to capacity.
       for (var i = 0; i < 2; i++) {
@@ -160,11 +160,9 @@ void main() {
           savedRSP: 0,
           resultReg: 0,
         ),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('overflow'),
-        )),
+        throwsA(isA<CallDepthExceededError>()
+            .having((e) => e.depth, 'depth', 2)
+            .having((e) => e.limit, 'limit', 2)),
       );
     });
 

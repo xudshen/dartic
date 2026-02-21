@@ -63,7 +63,7 @@ class CallStack {
     required int resultReg,
   }) {
     if (_depth >= _maxFrames) {
-      throw DarticError('Call stack overflow: exceeded $_maxFrames frames');
+      throw CallDepthExceededError(depth: _depth, limit: _maxFrames);
     }
     final base = _fp;
     _data[base + _funcId] = funcId;

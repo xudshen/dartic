@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
 import '../bridge/host_function_registry.dart';
 import '../bridge/host_dispatch_registry.dart';
@@ -35,7 +36,7 @@ import 'value_stack.dart';
 /// on resume, and microtask scheduling drives the continuation.
 ///
 /// See: docs/design/03-execution-engine.md, docs/design/07-async.md
-class DarticInterpreter {
+class DarticInterpreter implements DarticRuntime {
   DarticInterpreter({
     ValueStack? valueStack,
     RefStack? refStack,
@@ -45,7 +46,9 @@ class DarticInterpreter {
     this.fuelBudget = defaultFuelBudget,
     this.maxTotalFuel,
     this.executionTimeout,
-  })  : valueStack = valueStack ?? ValueStack(),
+    HostDispatchRegistry? hostDispatchRegistry,
+  })  : _externalHostDispatchRegistry = hostDispatchRegistry,
+        valueStack = valueStack ?? ValueStack(),
         refStack = refStack ?? RefStack(),
         callStack = callStack ?? CallStack();
 
@@ -114,14 +117,26 @@ class DarticInterpreter {
   /// Return value from a callback that exited via HOST_BOUNDARY RETURN.
   Object? _callbackResult;
 
+  /// Whether an [execute] or [executeFunction] call is currently in progress.
+  ///
+  /// Used by [executeFunction] to detect reentry (e.g. from a host callback)
+  /// and delegate to [_runNestedDispatch] instead of full state initialization.
+  /// Reset in a finally block to ensure correct behavior after errors.
+  bool _isExecuting = false;
+
   /// Runtime-resolved binding ID map: local index → HostFunctionRegistry runtime ID.
   ///
   /// Filled during [execute] via `HostFunctionRegistry.resolveBindingTable`.
   /// Read by CALL_HOST in the dispatch loop.
   List<int> _bindingIdMap = const [];
 
+  /// Externally provided host dispatch registry for reuse across executions.
+  /// When non-null, [execute] uses this instead of creating a new one.
+  final HostDispatchRegistry? _externalHostDispatchRegistry;
+
   /// Dynamic dispatch registry for host (VM-native) objects.
-  /// Initialized per-execution from [hostFunctionRegistry].
+  /// Initialized per-execution from [hostFunctionRegistry], or set to the
+  /// external registry if one was provided at construction time.
   HostDispatchRegistry? _hostClassRegistry;
 
   /// The current async frame being executed. Set when an async function is
@@ -234,9 +249,15 @@ class DarticInterpreter {
     _resolveBindings(module);
 
     // Initialize dynamic dispatch registry for host objects.
-    final hfr = hostFunctionRegistry;
-    _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
+    // Use external registry if provided; otherwise create per-execution.
+    if (_externalHostDispatchRegistry != null) {
+      _hostClassRegistry = _externalHostDispatchRegistry;
+    } else {
+      final hfr = hostFunctionRegistry;
+      _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
+    }
 
+    _isExecuting = true;
     try {
       // Set up global table and run initializers.
       if (module.globalCount > 0) {
@@ -257,7 +278,96 @@ class DarticInterpreter {
       // and other DarticErrors — clean up interpreter state for reuse.
       _resetState();
       rethrow;
+    } catch (_) {
+      // Script uncaught exceptions (e.g. `throw 'boom'`) — also reset state.
+      _resetState();
+      rethrow;
     } finally {
+      _isExecuting = false;
+      _executionStopwatch?.stop();
+      _executionStopwatch = null;
+    }
+  }
+
+  /// Executes an exported function by [funcId] with the given [args].
+  ///
+  /// Unlike [execute], which always runs the module's entry point (main),
+  /// this method runs an arbitrary function identified by its funcId.
+  /// The funcId is typically obtained from [DarticModule.exportedFunctions].
+  ///
+  /// Supports reentry: when called from within a host callback (i.e. while
+  /// [_isExecuting] is true), delegates to [_runNestedDispatch] instead of
+  /// performing full state initialization.
+  ///
+  /// Returns the function's return value, boxed as a Dart [Object?].
+  /// Void functions return null.
+  Object? executeFunction(DarticModule module, int funcId, List<Object?> args) {
+    final proto = module.functions[funcId];
+
+    if (_isExecuting) {
+      // Reentry path — we're inside a host callback, delegate to nested
+      // dispatch which handles HOST_BOUNDARY frame management.
+      return _runNestedDispatch(
+        module: module,
+        proto: proto,
+        args: args,
+      );
+    }
+
+    // Top-level path — initialize interpreter state and execute.
+    _fuel = fuelBudget;
+    _totalFuelConsumed = 0;
+    _executionStopwatch = executionTimeout != null
+        ? (Stopwatch()..start())
+        : null;
+    _lastEntryResult = null;
+    _activeModule = module;
+    _openUpvalues.clear();
+    _upvalueStack.clear();
+    _currentAsyncFrame = null;
+
+    // Provision type system + resolve bindings.
+    _provisionTypeSystem(module);
+    _resolveBindings(module);
+
+    // Initialize dynamic dispatch registry for host objects.
+    if (_externalHostDispatchRegistry != null) {
+      _hostClassRegistry = _externalHostDispatchRegistry;
+    } else {
+      final hfr = hostFunctionRegistry;
+      _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
+    }
+
+    _isExecuting = true;
+    try {
+      // Initialize globals if needed (only on first call for this module).
+      if (module.globalCount > 0 && _globalTable == null) {
+        _globalTable = DarticGlobalTable(module.globalCount);
+        for (var i = 0; i < module.globalCount; i++) {
+          final initFuncId = module.globalInitializerIds[i];
+          if (initFuncId >= 0) {
+            _executeEntry(module, initFuncId);
+          }
+        }
+      }
+
+      // Execute the target function via nested dispatch (HOST_BOUNDARY).
+      // Regular (non-entry) functions end with RETURN_* opcodes, not HALT,
+      // so we use _runNestedDispatch which handles HOST_BOUNDARY framing
+      // and return value collection via _callbackResult.
+      return _runNestedDispatch(
+        module: module,
+        proto: proto,
+        args: args,
+      );
+    } on DarticError {
+      _resetState();
+      rethrow;
+    } catch (_) {
+      _resetState();
+      rethrow;
+    } finally {
+      _isExecuting = false;
       _executionStopwatch?.stop();
       _executionStopwatch = null;
     }
@@ -423,7 +533,8 @@ class DarticInterpreter {
       throw DarticError('Stack overflow');
     }
     if (callStack.depth + 2 >= callStack.maxFrames) {
-      throw DarticError('Maximum call depth exceeded');
+      throw CallDepthExceededError(
+          depth: callStack.depth, limit: callStack.maxFrames);
     }
 
     // Save pre-callback stack state for exception cleanup.
@@ -1212,7 +1323,8 @@ class DarticInterpreter {
               throw DarticError('Stack overflow');
             }
             if (callStack.depth >= callStack.maxFrames) {
-              throw DarticError('Maximum call depth exceeded');
+              throw CallDepthExceededError(
+                depth: callStack.depth, limit: callStack.maxFrames);
             }
             callStack.pushFrame(
               funcId: nsmMethod.funcId,
@@ -1641,7 +1753,8 @@ class DarticInterpreter {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
-            throw DarticError('Maximum call depth exceeded');
+            throw CallDepthExceededError(
+                depth: callStack.depth, limit: callStack.maxFrames);
           }
 
           // Push frame — save caller state.
@@ -1679,7 +1792,8 @@ class DarticInterpreter {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
-            throw DarticError('Maximum call depth exceeded');
+            throw CallDepthExceededError(
+                depth: callStack.depth, limit: callStack.maxFrames);
           }
 
           // Push frame — save caller state.
@@ -1815,7 +1929,8 @@ class DarticInterpreter {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
-            throw DarticError('Maximum call depth exceeded');
+            throw CallDepthExceededError(
+                depth: callStack.depth, limit: callStack.maxFrames);
           }
 
           // Push frame — save caller state.
@@ -1862,7 +1977,8 @@ class DarticInterpreter {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
-            throw DarticError('Maximum call depth exceeded');
+            throw CallDepthExceededError(
+                depth: callStack.depth, limit: callStack.maxFrames);
           }
 
           // Push frame — save caller state.
