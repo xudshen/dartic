@@ -229,6 +229,6 @@ feat(async): add async/await, sync*/async* generators with frame-as-continuation
 - [x] `fvm dart analyze` 零警告
 - [x] `fvm dart test` 全部通过（2425/2425）
 - [x] 之前 skip 的 10 个 async 测试恢复通过（skip list 已从 co19_runner.dart 移除）
-- [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] code review 已完成
+- [x] commit 已提交（ec670d1）
+- [x] overview.md 已更新
+- [x] code review 已完成（f7fae15 — 修复 I-1~I-4 + S-1/S-2/S-8 + 2 新测试）

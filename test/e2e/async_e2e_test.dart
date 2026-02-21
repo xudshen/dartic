@@ -104,6 +104,31 @@ void main() async { print(await f()); }
 ''');
       expect(prints, ['20']);
     });
+
+    test('exception caught inside async function after await', () async {
+      // Exception after an await is caught by the same function's try/catch.
+      final (result, prints) = await _compileAndRunAsync('''
+Future<int> dummy() async { return 0; }
+Future<int> safe() async {
+  await dummy();
+  try {
+    throw 'boom';
+  } catch (e) {
+    return -1;
+  }
+}
+void main() async { print(await safe()); }
+''');
+      expect(prints, ['-1']);
+    });
+
+    // TODO(async): Exception propagation across async frames (throw in callee
+    // → completeError → awaiter's catch) requires the compiler to extend
+    // exception table ranges to cover AWAIT resume PCs. Currently the
+    // exception table's endPC for try/catch doesn't cover the resume point
+    // after AWAIT, so _findHandler fails to find the handler on resume.
+    // This needs a compiler fix to emit correct exception table ranges for
+    // async functions.
   });
 }
 

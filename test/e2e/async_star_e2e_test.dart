@@ -162,6 +162,22 @@ Stream<int> main() {
       expect(values, [0, 2, 4, 6]);
     });
 
+    test('async* with yield of awaited null', () async {
+      final stream = await _compileAndGetStream('''
+Stream<Object?> gen() async* {
+  Object? x = await genNull();
+  yield x;
+  yield 42;
+}
+Future<Object?> genNull() async { return null; }
+Stream<Object?> main() {
+  return gen();
+}
+''');
+      final values = await stream.toList();
+      expect(values, [null, 42]);
+    });
+
     test('async* yields string values', () async {
       final stream = await _compileAndGetStream('''
 Stream<String> greetings() async* {
