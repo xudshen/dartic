@@ -337,8 +337,37 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
 /// - **Error**: If the test file cannot be read or an unexpected internal error
 ///   occurs, the result is [TestResult.error].
 /// Path to the pre-compiled dartic_run kernel snapshot.
-/// Set by [_precompileRunner] before tests are executed.
+/// Set by the CLI [main] or lazily by [_ensureRunnerCompiled].
 String? _darticRunnerDill;
+
+/// Lazily compiles `tool/dartic_run.dart` to a kernel snapshot if not yet done.
+///
+/// The CLI [main] sets [_darticRunnerDill] eagerly before running tests.
+/// When tests call [runTest] directly (e.g., in unit tests), this function
+/// handles the on-demand compilation.
+Future<void> _ensureRunnerCompiled() async {
+  if (_darticRunnerDill != null) return;
+  final runnerDillDir =
+      await Directory.systemTemp.createTemp('dartic_runner_');
+  final runnerDillPath = '${runnerDillDir.path}/dartic_run.dill';
+  final compileResult = await Process.run(
+    'fvm',
+    [
+      'dart',
+      'compile',
+      'kernel',
+      'tool/dartic_run.dart',
+      '-o',
+      runnerDillPath,
+    ],
+  );
+  if (compileResult.exitCode != 0) {
+    throw StateError(
+      'Failed to compile dartic_run.dart: ${compileResult.stderr}',
+    );
+  }
+  _darticRunnerDill = runnerDillPath;
+}
 
 Future<TestOutcome> runTest(
   TestEntry entry, {
@@ -419,6 +448,7 @@ Future<TestOutcome> runTest(
     // The Dart VM naturally keeps the event loop running until all pending
     // async operations complete — matching how the official co19 runner
     // works (process-based execution).
+    await _ensureRunnerCompiled();
     final process = await Process.start(
       'fvm',
       ['dart', _darticRunnerDill!, dillPath],

@@ -118,7 +118,7 @@
 
 ---
 
-## Phase 6: 异步 + 高级语言特性 — 待执行
+## Phase 6: 异步 + 高级语言特性 — 进行中
 
 **目标：** 实现 async/await、sync*/async* 生成器、extension methods、records、pattern matching、constructor tearoffs 等高级语言特性，构建字节码加载验证器（沙箱），通过 co19 harness v4 验证
 
@@ -128,18 +128,18 @@
 |-------|------|---------|------|
 | [6.1](phase6/batch-6.1-async-core.md) | 异步核心 (Ch7) — Frame-as-Continuation | 5 | ✅ |
 | [6.2](phase6/batch-6.2-language-features.md) | 高级语言特性 — Records/Tearoffs/Extensions/Patterns | 6 | ✅ |
-| [6.3](phase6/batch-6.3-co19-harness-v4.md) | co19 Harness v4 — dart:async Bridge + 异步测试协议 | 6 | |
+| [6.3](phase6/batch-6.3-co19-harness-v4.md) | co19 Harness v4 — dart:async Bridge + 异步测试协议 | 6 | ✅ |
 | [6.3+](phase6/batch-6.3-binding-gaps.md) | Async/Collection/Math Binding 缺口补全 | 12 | ✅ |
 | [6.4](phase6/batch-6.4-sandbox.md) | 沙箱 (Ch8) — DarticVerifier + 资源限制 | 3 | |
 
 **里程碑：**
-- [ ] co19 `LibTest/async` 通过率 > 30%
-- [ ] co19 `LanguageFeatures/Patterns` 通过率 > 40%
-- [ ] co19 `LanguageFeatures/Records` 通过率 > 50%
-- [ ] co19 `LanguageFeatures/Extension-methods` 通过率 > 60%
-- [ ] co19 `LanguageFeatures/Constructor-tear-offs` 通过率 > 50%
-- [ ] Phase 2-5 全量零回归（或回归已修复）
-- [ ] Phase 2-5 类别通过率较上期有提升
+- [x] co19 `LibTest/async` 通过率 > 30% — 实际 **37.2%** (142/382)，Batch 6.3+ 绑定补全后达标
+- [x] co19 `LanguageFeatures/Patterns` 通过率 > 40% — 实际 **60.2%** (471/783)
+- [x] co19 `LanguageFeatures/Records` 通过率 > 50% — 实际 **69.8%** (118/169)
+- [x] co19 `LanguageFeatures/Extension-methods` 通过率 > 60% — 实际 **92.4%** (242/262)
+- [x] co19 `LanguageFeatures/Constructor-tear-offs` 通过率 > 50% — 实际 **59.3%** (224/378)
+- [x] Phase 2-5 全量零回归（或回归已修复） — 0 regressions（全量 12 类 8717 tests）
+- [x] Phase 2-5 类别通过率较上期有提升 — +164 new pass, 0 regressions, 6385/8717 = 73.2%
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)
 

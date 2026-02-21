@@ -41,4 +41,23 @@ class DarticCallbackProxy {
   Object? Function(Object?, Object?, Object?) proxy3() {
     return (a, b, c) => _interpreter.invokeClosure(_closure, [a, b, c]);
   }
+
+  /// Returns a four-argument Dart closure.
+  Object? Function(Object?, Object?, Object?, Object?) proxy4() {
+    return (a, b, c, d) =>
+        _interpreter.invokeClosure(_closure, [a, b, c, d]);
+  }
+
+  /// Returns a five-argument Dart closure.
+  Object? Function(Object?, Object?, Object?, Object?, Object?) proxy5() {
+    return (a, b, c, d, e) =>
+        _interpreter.invokeClosure(_closure, [a, b, c, d, e]);
+  }
+
+  /// Returns a six-argument Dart closure.
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?)
+      proxy6() {
+    return (a, b, c, d, e, f) =>
+        _interpreter.invokeClosure(_closure, [a, b, c, d, e, f]);
+  }
 }

@@ -658,17 +658,20 @@ int main() => add(1, 2); // => 3
 
 > **此时 extension method + 泛型 + async 均已就绪**，可以接入剩余全部 Utils。
 
-- [ ] 6.3.1 接入 `Utils/static_type_helper.dart`（`extension StaticType<T> on T`，需 extension method + 泛型） → 扩展 co19_runner
-- [ ] 6.3.2 接入 `Utils/async_utils.dart`（asyncStart/asyncEnd 计数器） → 扩展 co19_runner
-- [ ] 6.3.3 stdout 输出检测（`unittest-suite-wait-for-done` / `unittest-suite-success`） → 扩展 co19_runner
-- [ ] 6.3.4 异步测试超时机制（可配置 timeout） → 扩展 co19_runner
-- [ ] 6.3.5 验证：跑 LibTest/async + LanguageFeatures/*（新增类别） → 测试报告
-- [ ] 6.3.6 全量回归跑：重跑 Phase 2-5 全部类别，diff 快照，确认零回归 → 最终回归报告
+- [x] 6.3.1 dart:async Bridge — Future/Completer/Stream/Timer 绑定 → `lib/src/bridge/async_bindings.dart` + bindings/*
+- [x] 6.3.2 static_type_helper + async_utils + expect.dart 升级（CFE 自动解析 Utils import）
+- [x] 6.3.3 异步测试协议 — stdout 标记检测 + 子进程执行（匹配官方 co19 runner 机制）
+- [x] 6.3.4 dart:math + dart:collection Bridge → `lib/src/bridge/math_bindings.dart` + `collection_bindings.dart`
+- [x] 6.3.5 验证：跑 Phase 6 全部 8 类别（2628 tests） → `tool/co19_results/phase6.json`
+- [x] 6.3.6 全量回归：重跑 Phase 2-5 全部类别（8717 tests, 12 类） → `tool/co19_results/phase6-regression.json`
 
-**commit:** `feat: co19 harness v4 — static_type_helper, async test support`
+**commit:** `feat: co19 harness v4 — dart:async bridge, subprocess runner, async test protocol`
 
 > **核心发现：**
-> _(执行时填写：static_type_helper 的实际使用频率（多少测试 import 它）、异步测试超时策略、asyncStart/asyncEnd 嵌套 edge case 等)_
+> - 子进程执行（`tool/dartic_run.dart`）匹配官方 co19 runner 机制：每个测试运行在独立 Dart 进程中，VM 自然等待事件循环排空后退出。这比 in-process Completer hack 更自然，解决了 109 个 "wait-for-done without success" 失败
+> - static_type_helper 无需特殊处理——CFE 自动解析 `../../Utils/static_type_helper.dart` 的相对路径 import
+> - dart:async 绑定架构：AsyncBindings 作为入口，委托给 FutureBindings/CompleterBindings/StreamBindings/TimerBindings/ZoneBindings 各子模块。Zone 绑定最复杂（13 参数 ZoneSpecification 构造器 + 泛型 handler 类型签名）
+> - Batch 6.3+ 绑定补全后 LibTest/async 从 22.0% → **37.2%**（+58 tests），Zone/StreamTransformer/MultiStreamController/EventSink 绑定到位
 
 ### Batch 6.4: 沙箱 (Ch8)
 
@@ -683,14 +686,29 @@ int main() => add(1, 2); // => 3
 
 ### Phase 6 里程碑验证
 
-- [ ] co19 `LibTest/async` 通过率 > 30%
-- [ ] co19 `LanguageFeatures/Patterns` 通过率 > 40%
-- [ ] co19 `LanguageFeatures/Records` 通过率 > 50%
-- [ ] Phase 2-5 全量零回归（或回归已修复）
-- [ ] 全量累计通过率与预估对比
+- [x] co19 `LibTest/async` 通过率 > 30% — 实际 **37.2%** (142/382)，达标（Batch 6.3+ Zone/StreamTransformer/MultiStreamController 绑定补全）
+- [x] co19 `LanguageFeatures/Patterns` 通过率 > 40% — 实际 **60.2%** (471/783)
+- [x] co19 `LanguageFeatures/Records` 通过率 > 50% — 实际 **69.8%** (118/169)
+- [x] co19 `LanguageFeatures/Extension-methods` 通过率 > 60% — 实际 **92.4%** (242/262)
+- [x] co19 `LanguageFeatures/Constructor-tear-offs` 通过率 > 50% — 实际 **59.3%** (224/378)
+- [x] Phase 2-5 全量零回归（或回归已修复） — 0 regressions（mixed int/double 已修复 + binding 补全无回归）
+- [x] Phase 2-5 类别通过率较上期有提升 — 全量 12 类 8717 tests: 6385 pass (73.2%), overlap 5291 tests: +164 new pass, 0 regressions
 
-**实际通过率：** _(执行时填写)_
-**全量回归：** _(执行时填写：回归数 / 新增 pass 数 / 最终累计通过数)_
+**Phase 6 新增类别通过率：**
+
+| 类别 | Pass | Total | Rate |
+|------|------|-------|------|
+| Extension-methods | 242 | 262 | 92.4% |
+| Enhanced-Enum | 140 | 156 | 89.7% |
+| Super-parameters | 122 | 137 | 89.1% |
+| Extension-types | 277 | 361 | 76.7% |
+| Records | 118 | 169 | 69.8% |
+| Patterns | 471 | 783 | 60.2% |
+| Constructor-tear-offs | 224 | 378 | 59.3% |
+| LibTest/async | 142 | 382 | 37.2% |
+| **Phase 6 Total** | **1736** | **2628** | **66.1%** |
+
+**全量回归（12 类 8717 tests）：** 0 regressions / +164 new pass / 全量累计 6385 pass, Phase 6 新增 1736 pass
 
 ---
 

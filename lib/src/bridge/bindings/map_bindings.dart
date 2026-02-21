@@ -20,6 +20,11 @@ abstract final class MapBindings {
       return <dynamic, dynamic>{};
     });
 
+    // Map() factory constructor — CFE may emit as dart:core::Map::#0
+    registry.register('dart:core::Map::#0', (args) {
+      return <dynamic, dynamic>{};
+    });
+
     // ── Getters ──
     registry.register('dart:core::Map::length#0', (args) {
       return (args[0] as Map).length;

@@ -47,6 +47,47 @@ abstract final class StreamBindings {
       return const Stream.empty();
     });
 
+    // Stream.fromFutures(Iterable<Future<T>> futures)
+    registry.register('dart:async::Stream::fromFutures#1', (args) {
+      return Stream.fromFutures((args[0] as Iterable).cast<Future>());
+    });
+
+    // Stream.periodic(Duration period, [T Function(int)? computation])
+    registry.register('dart:async::Stream::periodic#2', (args) {
+      final period = args[0] as Duration;
+      final computation = args.length > 1 ? args[1] as Function? : null;
+      if (computation != null) {
+        return Stream.periodic(period, (i) => computation(i));
+      }
+      return Stream.periodic(period);
+    });
+
+    // Stream.multi(void Function(MultiStreamController<T>) onListen)
+    registry.register('dart:async::Stream::multi#2', (args) {
+      final onListen = args[0] as Function;
+      // args[1] is the optional `isBroadcast` flag (Kernel passes 2 params)
+      final isBroadcast = args.length > 1 ? args[1] as bool? ?? false : false;
+      return Stream.multi(
+        (controller) => onListen(controller),
+        isBroadcast: isBroadcast,
+      );
+    });
+
+    // Stream.eventTransformed(Stream source, EventSink Function(EventSink) mapSink)
+    registry.register('dart:async::Stream::eventTransformed#2', (args) {
+      final source = args[0] as Stream;
+      final mapSink = args[1] as Function;
+      return Stream.eventTransformed(
+        source,
+        (sink) => mapSink(sink) as EventSink,
+      );
+    });
+
+    // ── _EmptyStream (internal class for `const Stream.empty()`) ──
+    registry.register('dart:async::_EmptyStream::#0', (args) {
+      return const Stream.empty();
+    });
+
     // ── Instance methods ──
 
     // stream.listen(void Function(T)? onData, {Function? onError,
@@ -457,6 +498,187 @@ abstract final class StreamBindings {
     registry.register('dart:async::StreamSubscription::asFuture#1', (args) {
       return (args[0] as StreamSubscription)
           .asFuture(args.length > 1 ? args[1] : null);
+    });
+
+    // ══════════════════════════════════════════════════════════════════
+    // StreamTransformer
+    // ══════════════════════════════════════════════════════════════════
+
+    // StreamTransformer.fromHandlers({
+    //   void Function(S, EventSink<T>)? handleData,
+    //   void Function(Object, StackTrace, EventSink<T>)? handleError,
+    //   void Function(EventSink<T>)? handleDone})
+    // CFE resolves to _StreamHandlerTransformer::#3
+    registry.register('dart:async::_StreamHandlerTransformer::#3', (args) {
+      final handleData = args.isNotEmpty ? args[0] as Function? : null;
+      final handleError = args.length > 1 ? args[1] as Function? : null;
+      final handleDone = args.length > 2 ? args[2] as Function? : null;
+      return StreamTransformer.fromHandlers(
+        handleData:
+            handleData != null ? (data, sink) => handleData(data, sink) : null,
+        handleError: handleError != null
+            ? (error, stackTrace, sink) =>
+                handleError(error, stackTrace, sink)
+            : null,
+        handleDone: handleDone != null ? (sink) => handleDone(sink) : null,
+      );
+    });
+
+    // StreamTransformer.fromBind(Stream<T> Function(Stream<S>) bind)
+    // CFE resolves to _StreamSubscriptionTransformer::#1
+    registry.register('dart:async::_StreamSubscriptionTransformer::#1', (args) {
+      final bind = args[0] as Function;
+      return StreamTransformer.fromBind(
+        (stream) => bind(stream) as Stream,
+      );
+    });
+
+    // streamTransformer.bind(Stream<S> stream) → Stream<T>
+    registry.register('dart:async::StreamTransformer::bind#1', (args) {
+      final transformer = args[0] as StreamTransformer;
+      final stream = args[1] as Stream;
+      return transformer.bind(stream);
+    });
+
+    // streamTransformer.cast<RS, RT>() → StreamTransformer<RS, RT>
+    registry.register('dart:async::StreamTransformer::cast#0', (args) {
+      return (args[0] as StreamTransformer).cast();
+    });
+
+    // ══════════════════════════════════════════════════════════════════
+    // EventSink
+    // ══════════════════════════════════════════════════════════════════
+
+    // eventSink.add(T event)
+    registry.register('dart:async::EventSink::add#1', (args) {
+      (args[0] as EventSink).add(args[1]);
+      return null;
+    });
+
+    // eventSink.addError(Object error, [StackTrace? stackTrace])
+    registry.register('dart:async::EventSink::addError#2', (args) {
+      final sink = args[0] as EventSink;
+      final error = args[1] as Object;
+      final st = args.length > 2 ? args[2] as StackTrace? : null;
+      if (st != null) {
+        sink.addError(error, st);
+      } else {
+        sink.addError(error);
+      }
+      return null;
+    });
+
+    // eventSink.close()
+    registry.register('dart:async::EventSink::close#0', (args) {
+      (args[0] as EventSink).close();
+      return null;
+    });
+
+    // ══════════════════════════════════════════════════════════════════
+    // StreamSink
+    // ══════════════════════════════════════════════════════════════════
+
+    // streamSink.add(T event)
+    registry.register('dart:async::StreamSink::add#1', (args) {
+      (args[0] as StreamSink).add(args[1]);
+      return null;
+    });
+
+    // streamSink.addError(Object error, [StackTrace? stackTrace])
+    registry.register('dart:async::StreamSink::addError#2', (args) {
+      final sink = args[0] as StreamSink;
+      final error = args[1] as Object;
+      final st = args.length > 2 ? args[2] as StackTrace? : null;
+      if (st != null) {
+        sink.addError(error, st);
+      } else {
+        sink.addError(error);
+      }
+      return null;
+    });
+
+    // streamSink.close() → Future
+    registry.register('dart:async::StreamSink::close#0', (args) {
+      return (args[0] as StreamSink).close();
+    });
+
+    // streamSink.done → Future
+    registry.register('dart:async::StreamSink::done#0', (args) {
+      return (args[0] as StreamSink).done;
+    });
+
+    // streamSink.addStream(Stream<T> stream) → Future
+    registry.register('dart:async::StreamSink::addStream#1', (args) {
+      return (args[0] as StreamSink).addStream(args[1] as Stream);
+    });
+
+    // ══════════════════════════════════════════════════════════════════
+    // StreamConsumer
+    // ══════════════════════════════════════════════════════════════════
+
+    // streamConsumer.addStream(Stream<S> stream) → Future
+    registry.register('dart:async::StreamConsumer::addStream#1', (args) {
+      return (args[0] as StreamConsumer).addStream(args[1] as Stream);
+    });
+
+    // streamConsumer.close() → Future
+    registry.register('dart:async::StreamConsumer::close#0', (args) {
+      return (args[0] as StreamConsumer).close();
+    });
+
+    // ══════════════════════════════════════════════════════════════════
+    // MultiStreamController (extends StreamController)
+    // ══════════════════════════════════════════════════════════════════
+
+    // multiStreamController.add(T event)
+    registry.register('dart:async::MultiStreamController::add#1', (args) {
+      (args[0] as MultiStreamController).add(args[1]);
+      return null;
+    });
+
+    // multiStreamController.addError(Object error, [StackTrace? stackTrace])
+    registry.register('dart:async::MultiStreamController::addError#2', (args) {
+      final controller = args[0] as MultiStreamController;
+      final error = args[1] as Object;
+      final st = args.length > 2 ? args[2] as StackTrace? : null;
+      if (st != null) {
+        controller.addError(error, st);
+      } else {
+        controller.addError(error);
+      }
+      return null;
+    });
+
+    // multiStreamController.close() → Future
+    registry.register('dart:async::MultiStreamController::close#0', (args) {
+      return (args[0] as MultiStreamController).close();
+    });
+
+    // multiStreamController.addSync(T value)
+    registry.register('dart:async::MultiStreamController::addSync#1', (args) {
+      (args[0] as MultiStreamController).addSync(args[1]);
+      return null;
+    });
+
+    // multiStreamController.addErrorSync(Object error, [StackTrace? st])
+    registry.register('dart:async::MultiStreamController::addErrorSync#2',
+        (args) {
+      final controller = args[0] as MultiStreamController;
+      final error = args[1] as Object;
+      final st = args.length > 2 ? args[2] as StackTrace? : null;
+      if (st != null) {
+        controller.addErrorSync(error, st);
+      } else {
+        controller.addErrorSync(error);
+      }
+      return null;
+    });
+
+    // multiStreamController.closeSync()
+    registry.register('dart:async::MultiStreamController::closeSync#0',
+        (args) {
+      (args[0] as MultiStreamController).closeSync();
+      return null;
     });
   }
 }

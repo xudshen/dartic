@@ -378,6 +378,9 @@ class DarticInterpreter {
           1 => proxy.proxy1(),
           2 => proxy.proxy2(),
           3 => proxy.proxy3(),
+          4 => proxy.proxy4(),
+          5 => proxy.proxy5(),
+          6 => proxy.proxy6(),
           _ => throw DarticError(
               'DarticCallbackProxy: unsupported arity '
               '${arg.funcProto.paramCount}'),
@@ -1365,7 +1368,16 @@ class DarticInterpreter {
         case Op.dblToInt: // DBL_TO_INT A, B — intView[A] = doubleView[B].toInt()
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
-          vs.writeInt(vBase + a, vs.readDouble(vBase + b).toInt());
+          final dv = vs.readDouble(vBase + b);
+          if (dv.isNaN || dv.isInfinite) {
+            pc = unwindToHandler(
+              pc - 1,
+              UnsupportedError('Infinity or NaN toInt'),
+              StackTrace.current,
+            );
+          } else {
+            vs.writeInt(vBase + a, dv.toInt());
+          }
 
         // ── Comparison (0x30-0x3F) ──
 

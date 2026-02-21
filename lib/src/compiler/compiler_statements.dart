@@ -577,13 +577,11 @@ extension on DarticCompiler {
       // Handle stack kind mismatch: box value->ref when assigning a value-stack
       // result (e.g. int literal) to a ref-stack variable (e.g. int?).
       if (kind == StackKind.ref && initLoc == ResultLoc.value) {
-        // Box value->ref. Strip nullability to get the correct boxing op
-        // (e.g. double? → double → BOX_DOUBLE, not the default BOX_INT).
-        final baseType = decl.type is ir.InterfaceType
-            ? (decl.type as ir.InterfaceType)
-                .withDeclaredNullability(ir.Nullability.nonNullable)
-            : decl.type;
-        final refReg = _emitBoxToRef(initReg, baseType);
+        // Box value->ref. Use the *initializer's* inferred type to pick the
+        // correct boxing op. The declared type may be too broad (dynamic,
+        // Object, num) to distinguish int vs double on the value stack.
+        final exprType = _inferExprType(decl.initializer!);
+        final refReg = _emitBoxToRef(initReg, exprType);
         _scope.declareWithReg(decl, kind, refReg);
       } else if (kind.isValue && initLoc == ResultLoc.ref) {
         // The declared type says value-stack (e.g. `int`), but the initializer

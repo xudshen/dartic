@@ -22,35 +22,38 @@ abstract final class StreamIteratorBindings {
     // _StreamIterator(Stream stream)
     // Symbol: dart:async::_StreamIterator::#1
     // (Default constructor has empty name in Kernel AST)
-    registry.register('dart:async::_StreamIterator::#1', (args) {
-      final stream = args[0] as Stream;
-      return StreamIterator(stream);
-    });
+    StreamIterator<Object?> ctorFactory(List<Object?> args) {
+      return StreamIterator(args[0] as Stream);
+    }
+
+    registry.register('dart:async::_StreamIterator::#1', ctorFactory);
+    // Public constructor name for direct `new StreamIterator(stream)` calls.
+    registry.register('dart:async::StreamIterator::#1', ctorFactory);
 
     // ── Instance methods ──
 
     // moveNext() → Future<bool>
     // Symbol: dart:async::_StreamIterator::moveNext#0
-    registry.register('dart:async::_StreamIterator::moveNext#0', (args) {
-      final iter = args[0] as StreamIterator;
-      return iter.moveNext();
-    });
+    Object? moveNextFn(List<Object?> args) =>
+        (args[0] as StreamIterator).moveNext();
+    registry.register('dart:async::_StreamIterator::moveNext#0', moveNextFn);
+    registry.register('dart:async::StreamIterator::moveNext#0', moveNextFn);
 
     // cancel() → Future<void>
     // Symbol: dart:async::_StreamIterator::cancel#0
-    registry.register('dart:async::_StreamIterator::cancel#0', (args) {
-      final iter = args[0] as StreamIterator;
-      return iter.cancel();
-    });
+    Object? cancelFn(List<Object?> args) =>
+        (args[0] as StreamIterator).cancel();
+    registry.register('dart:async::_StreamIterator::cancel#0', cancelFn);
+    registry.register('dart:async::StreamIterator::cancel#0', cancelFn);
 
     // ── Getters ──
 
     // current → T
     // Symbol: dart:async::_StreamIterator::current#0
-    registry.register('dart:async::_StreamIterator::current#0', (args) {
-      final iter = args[0] as StreamIterator;
-      return iter.current;
-    });
+    Object? currentFn(List<Object?> args) =>
+        (args[0] as StreamIterator).current;
+    registry.register('dart:async::_StreamIterator::current#0', currentFn);
+    registry.register('dart:async::StreamIterator::current#0', currentFn);
 
     // _subscription → StreamSubscription?
     // The CFE desugaring checks `_subscription != null` to decide whether to

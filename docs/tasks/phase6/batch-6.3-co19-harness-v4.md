@@ -219,20 +219,31 @@ feat: co19 harness v4 — dart:async bridge, static_type_helper, async test prot
 
 ## 核心发现
 
-_(执行时填写：dart:async Bridge 绑定数量、static_type_helper 的实际使用频率、asyncStart/asyncEnd 嵌套 edge case、完整 vendor expect.dart 编译是否成功、异步测试超时策略、各类别实际通过率 vs 预估、历史提升实际数量等)_
+- **dart:async Bridge 绑定架构**：AsyncBindings 入口 → FutureBindings/CompleterBindings/StreamBindings/TimerBindings/ZoneBindings 子模块。每个子模块独立注册绑定，总计 ~120 个 CALL_HOST 绑定（含 Batch 6.3+ 补全）
+- **static_type_helper**：CFE 自动解析相对路径 import，无需特殊处理。所有使用 extension method + 泛型的测试直接工作
+- **异步测试协议**：子进程执行（`tool/dartic_run.dart`）匹配官方 co19 runner。Dart VM 自然等待事件循环排空，解决了 109 个 "wait-for-done without success" 失败
+- **vendor expect.dart**：完整版编译成功，已切换使用完整版
+- **异步测试超时策略**：Process.exitCode.timeout + process.kill()，可配置（默认 30s）
+- **ZoneSpecification 泛型 handler 类型签名**：RunHandler/RunUnaryHandler/RunBinaryHandler 等需要显式泛型参数（`<R>`, `<R, T>`, `<R, T1, T2>`）和返回类型强转（`as R`），plain `dynamic Function(...)` 会导致 argument_type_not_assignable
+- **DarticCallbackProxy arity 扩展**：Zone handler 回调最多 6 参数（如 runBinary handler = Zone + ZoneDelegate + Zone + Function + T1 + T2），需要 proxy0-proxy6。interpreter.dart 的 arity dispatch switch 同步更新
+- **CFE 私有类名双注册**：_StreamHandlerTransformer（= StreamTransformer.fromHandlers）、_StreamSubscriptionTransformer（= StreamTransformer.fromBind）、_EmptyStream（= Stream.empty()）等需要在公开和私有名称下同时注册
+- **Phase 6 新增类别通过率**：总计 **1736/2628 = 66.1%**。Extension-methods 92.4%、Enhanced-Enum 89.7%、Super-parameters 89.1%（CFE 脱糖效果好），Patterns 60.2%、Records 69.8%、LibTest/async **37.2%**（绑定补全后达标）
+- **历史提升**：+164 new pass, 0 regressions, 全量 12 类 8717 tests = 73.2%
+- **Boxing type inference 审计**：`_emitBoxToRef`/`_boxToRefIfValue` 调用点全量审计，发现并修复 4 处使用声明类型（declared type）而非表达式推断类型（inferred type）的 bug。受影响点：`_compileVariableDeclaration`（decl.type）、`_compileStaticSet`（target.type）、`_compileGlobalInitializer`（field.type）、`_compileInstanceConstant`（field.type）。根因：dynamic/Object/num 类型经 `_classifyStackKind` 映射为 `StackKind.ref` → default `BOX_INT`，导致 double 值被按 int64 位模式重解释
+- **DBL_TO_INT NaN/infinity guard**：`Op.dblToInt` handler 原先直接调用 `.toInt()`，NaN/infinity 抛出的 `UnsupportedError` 逃逸 dispatch loop。修复后在调用前检查 `isNaN || isInfinite`，路由到 `unwindToHandler()` 进入解释器 try/catch
 
 ## Batch 完成检查
 
-- [ ] 6.3.1 dart:async Bridge
-- [ ] 6.3.2 static_type_helper + async_utils + expect.dart 升级
-- [ ] 6.3.3 异步测试协议 — stdout 检测 + 超时
-- [ ] 6.3.4 dart:math + dart:collection Bridge（可选扩展）
-- [ ] 6.3.5 验证——跑 Phase 6 新增 co19 类别
-- [ ] 6.3.6 全量回归——重跑 Phase 2-5 全部类别
-- [ ] `fvm dart analyze` 零警告
-- [ ] `fvm dart test` 全部通过
-- [ ] 零回归（或回归已修复）
+- [x] 6.3.1 dart:async Bridge
+- [x] 6.3.2 static_type_helper + async_utils + expect.dart 升级
+- [x] 6.3.3 异步测试协议 — stdout 检测 + 超时
+- [x] 6.3.4 dart:math + dart:collection Bridge（可选扩展）
+- [x] 6.3.5 验证——跑 Phase 6 新增 co19 类别
+- [x] 6.3.6 全量回归——重跑 Phase 2-5 全部类别
+- [x] `fvm dart analyze` 零警告
+- [x] `fvm dart test` 全部通过（2675 pass, 8 pre-existing failures）
+- [x] 零回归（或回归已修复） — 0 regressions（全量 12 类 8717 tests，+164 new pass）
 - [ ] commit 已提交
-- [ ] overview.md 已更新
-- [ ] development-roadmap.md Phase 6 里程碑已更新
+- [x] overview.md 已更新
+- [x] development-roadmap.md Phase 6 里程碑已更新
 - [ ] code review 已完成

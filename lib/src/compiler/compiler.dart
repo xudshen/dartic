@@ -708,7 +708,9 @@ class DarticCompiler {
     _currentInitializingField = field;
 
     final (reg, loc) = _compileExpression(field.initializer!);
-    final refReg = _boxToRefIfValue(reg, loc, field.type);
+    // Use the *initializer's* inferred type for boxing — field.type may be
+    // too broad (dynamic, Object, num) to distinguish int vs double.
+    final refReg = _boxToRefIfValue(reg, loc, _inferExprType(field.initializer!));
     _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
     _currentInitializingField = null;
 

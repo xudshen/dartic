@@ -16,6 +16,12 @@ abstract final class FutureBindings {
   static void register(HostFunctionRegistry registry) {
     // ── Factory constructors ──
 
+    // Future(FutureOr<T> Function() computation) — the primary constructor
+    registry.register('dart:async::Future::#1', (args) {
+      final computation = args[0] as Function;
+      return Future(() => computation());
+    });
+
     // Future.value([value]) → Future<T>
     registry.register('dart:async::Future::value#1', (args) {
       return Future.value(args[0]);

@@ -13,6 +13,7 @@ abstract final class MiscBindings {
     _registerExpando(registry);
     _registerMapEntry(registry);
     _registerIterator(registry);
+    _registerFunction(registry);
   }
 
   static void _registerStopwatch(HostFunctionRegistry registry) {
@@ -61,6 +62,12 @@ abstract final class MiscBindings {
     });
     registry.register('dart:core::StackTrace::toString#0', (args) {
       return (args[0] as StackTrace).toString();
+    });
+
+    // _StringStackTrace(String stackTraceString) — internal StackTrace impl
+    // CFE uses this when constructing StackTrace from a string.
+    registry.register('dart:core::_StringStackTrace::#1', (args) {
+      return StackTrace.fromString(args[0] as String);
     });
   }
 
@@ -120,6 +127,21 @@ abstract final class MiscBindings {
     });
     registry.register('dart:core::MapEntry::toString#0', (args) {
       return (args[0] as MapEntry).toString();
+    });
+  }
+
+  static void _registerFunction(HostFunctionRegistry registry) {
+    // Function.apply(Function function, List? positionalArguments,
+    //   [Map<Symbol, dynamic>? namedArguments])
+    registry.register('dart:core::Function::apply#3', (args) {
+      final fn = args[0] as Function;
+      final positional = args.length > 1 ? args[1] as List? : null;
+      final named = args.length > 2 ? args[2] as Map? : null;
+      return Function.apply(
+        fn,
+        positional,
+        named?.cast<Symbol, dynamic>(),
+      );
     });
   }
 

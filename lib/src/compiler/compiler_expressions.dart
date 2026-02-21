@@ -587,7 +587,9 @@ extension on DarticCompiler {
         throw UnsupportedError('Unknown static field: ${target.name.text}');
       }
       final (srcReg, srcLoc) = _compileExpression(expr.value);
-      final refReg = _boxToRefIfValue(srcReg, srcLoc, target.type);
+      // Use expression type for boxing — target.type may be too broad
+      // (dynamic/Object/num) to distinguish int vs double on value stack.
+      final refReg = _boxToRefIfValue(srcReg, srcLoc, _inferExprType(expr.value));
       _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
       return (srcReg, srcLoc); // Assignment evaluates to the assigned value
     }
@@ -1862,7 +1864,7 @@ extension on DarticCompiler {
       // Compile the constant field value.
       var (valReg, valLoc) = value.accept(_constantVisitor);
 
-      _emitSetField(objReg, valReg, valLoc, layout, field.type);
+      _emitSetField(objReg, valReg, valLoc, layout, _inferConstantType(value));
     }
 
     return (objReg, ResultLoc.ref);

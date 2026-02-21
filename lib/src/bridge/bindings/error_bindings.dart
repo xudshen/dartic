@@ -16,6 +16,15 @@ library;
 
 import '../host_function_registry.dart';
 
+/// Minimal concrete Error subclass used as host backing for interpreter-defined
+/// Error subclasses. When the CFE emits `Error::#0` as a super() call, we
+/// return this instead of a specific subclass like ArgumentError so that
+/// `is Error` passes but `is ArgumentError` etc. do not.
+class _DarticErrorBacking extends Error {
+  @override
+  String toString() => 'Error';
+}
+
 /// Registers all `dart:core` error/exception host function bindings.
 abstract final class ErrorBindings {
   static void register(HostFunctionRegistry registry) {
@@ -174,6 +183,10 @@ abstract final class ErrorBindings {
     });
 
     // ── Error base ──
+    // Error() — base constructor (abstract, but CFE emits for subclass super)
+    registry.register('dart:core::Error::#0', (args) {
+      return _DarticErrorBacking();
+    });
     registry.register('dart:core::Error::toString#0', (args) {
       return (args[0] as Error).toString();
     });
