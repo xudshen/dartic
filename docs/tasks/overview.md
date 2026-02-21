@@ -193,6 +193,7 @@
 | fibonacci_30 | 56x | 102x | 递归调用密集 |
 | binary_tree_15 | 67x | N/A | OOP + 递归 |
 | method_dispatch | 83x | N/A | 虚调用 |
+| double_arithmetic | 148x | N/A | 混合 int/double 运算 |
 | int_arithmetic | 159x | 366x | 纯算术循环 |
 | loop_sum_100k | 191x | 157x | dart_eval 略快 |
 | quicksort_1k | 236x | N/A | List 操作密集 |
