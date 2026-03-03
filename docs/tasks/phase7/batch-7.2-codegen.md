@@ -204,17 +204,36 @@ feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runne
 
 ## 核心发现
 
-_(执行时填写：codegen 与手写 Bridge 的差异、package:analyzer 解析速度、生成代码的体积、操作符/泛型/命名构造函数等边界情况处理、CFE 内部方法覆盖策略等)_
+- **analyzer 8.4.1 API**：`element2.dart` 已废弃（仅 re-export `element.dart`）。正式 API 用 `LibraryElement.classes`、`Element.metadata.annotations`、`FormalParameterElement`（非 `ParameterElement`）、`InterfaceType.element`（非 `.element3`）
+- **操作符 name vs lookupName**：`MethodElement.name` 对 unary minus 返回 `-`，需用 `lookupName` 获取 `unary-`（区分一元和二元）
+- **构造函数命名**：analyzer 8.x 中无名构造函数的 `name` 为 `'new'`（非空字符串），codegen 需做映射
+- **dart:core 类型**：String/int/double/bool 是 `final class`（不可继承，仅生成 HostClassWrapper）。Duration/Iterable/Comparable 非 final（可生成 Bridge）
+- **codegen 覆盖率**：自测验证 codegen 生成的 String/int/List binding key 覆盖了手写版的全部核心绑定（length/isEmpty/substring/operator 等）
+- **`build` 包版本**：`package:build ^4.0.4` 才兼容 `analyzer ^8.0.0`（旧版 build 只支持 analyzer <8.0）
+- **`LibraryFragment` vs `LibraryElement`**：`importedLibraries` 在 `LibraryFragment` 上（通过 `library.firstFragment.importedLibraries` 访问），不在 `LibraryElement` 上
+
+### Code Review 修复
+
+| # | 严重性 | 问题 | 修复 |
+|---|--------|------|------|
+| 1 | CRITICAL | setter 委托无 super 回退 | 加 `bridgeNotOverridden` 检查 + `super.$name = value` 回退 |
+| 2 | CRITICAL | super 转发器闭包丢失所有参数 | 添加 `SuperForwarderKind` 枚举 + `argCount`，按 getter/setter/method 分发 |
+| 3 | CRITICAL | Bridge 构造函数不转发 super 参数 | `BridgeFactoryClosure` 携带 params，构造函数生成 `super(arg1, arg2)` |
+| 4 | IMPORTANT | `_buildParamDeclaration` 将可选/命名参数拉平为必选 | 保留 `[]` / `{}` 包装，命名参数加 `required` |
+| 5 | IMPORTANT | bridge_generator 对操作符用 `method.name` 而非 `lookupName` | 改用 `method.lookupName!`，与 wrapper_generator 一致 |
+| 6 | IMPORTANT | setter 转发器名 `$super$age=` 含非法字符 | 改为 `$super$age`（Dart `set` 关键字隐含 `=`） |
+| - | DEFERRED | 注解匹配仅按类名，未校验库 URI | 已知限制，测试 fixture 依赖本地注解定义，后续可加 |
+| - | DEFERRED | DarticBuilder 用相对路径而非 build_runner resolver | 影响 build_runner 实际使用时的路径解析，后续集成测试时修复 |
 
 ## Batch 完成检查
 
-- [ ] 7.2.1 dartic_annotation 包 — @DarticExport + @DarticHide
-- [ ] 7.2.2 BridgeGenerator 核心 — HostClassWrapper 自动生成
-- [ ] 7.2.3 BridgeGenerator — Bridge 类 + BridgeFactory 生成
-- [ ] 7.2.4 build_runner 集成 + DarticPlugin 生成
-- [ ] 7.2.5 自测 — codegen 重生成 dart:core Bridge 并验证功能等价
-- [ ] `fvm dart analyze` 零警告（所有包）
-- [ ] `fvm dart test` 全部通过（所有包）
+- [x] 7.2.1 dartic_annotation 包 — @DarticExport + @DarticHide
+- [x] 7.2.2 BridgeGenerator 核心 — HostClassWrapper 自动生成
+- [x] 7.2.3 BridgeGenerator — Bridge 类 + BridgeFactory 生成
+- [x] 7.2.4 build_runner 集成 + DarticPlugin 生成
+- [x] 7.2.5 自测 — codegen 重生成 dart:core Bridge 并验证功能等价
+- [x] `fvm dart analyze` 零警告（所有包）
+- [x] `fvm dart test` 全部通过（所有包：annotation 9 + generator 96 = 105）
+- [x] code review 修复完成（3 CRITICAL + 3 IMPORTANT）
 - [ ] commit 已提交
 - [ ] overview.md 已更新
-- [ ] code review 已完成
