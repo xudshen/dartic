@@ -16,7 +16,7 @@ DarticEngine 公开 API 层是 dartic 引擎面向宿主开发者的唯一入口
 | 依赖 | Ch5 编译器 | 消费 .darb 字节码（DarticModule），要求模块包含导出表（Phase 7 新增） |
 | 依赖 | Ch8 沙箱 | DarticConfig 的 fuel/timeout/callDepth 映射到 DarticVerifier 和执行引擎限制 |
 | 被依赖 | dartic_generator（Phase 7.2） | codegen 生成的 DarticPlugin 调用 DarticEngine 的注册 API |
-| 被依赖 | dartic_bridges_core | 预生成的 dart:core 绑定以 DarticPlugin 形式注册 |
+| 被依赖 | 内部 CorePlugin/AsyncPlugin/CollectionPlugin/MathPlugin | dart:core/async/collection/math 绑定作为内部 plugin 自动注册（不再是独立包） |
 | 契约 | Ch4 BridgeFactory | DarticEngine.registerClass 的 bridgeFactory 参数签名须匹配 Ch4 定义：`(DarticRuntime, DarticObject, List<Object?>) → Object` |
 
 ## 调研基础
@@ -63,16 +63,28 @@ DarticEngine 是宿主开发者的唯一入口，封装 DarticInterpreter 和所
 | 构造函数 | ({List\<DarticPlugin\> plugins, DarticConfig config}) | 创建引擎，注册插件，映射配置到内部组件 |
 | loadBytecode | (Uint8List bytes) → void | 加载 .darb 字节码，执行验证和绑定解析。第二次调用替换前一模块。所有插件须在此之前注册 |
 | call | (String function, [List\<Object?\> args]) → Object? | 按名称调用脚本顶层函数。async 函数返回 Future。支持重入 |
-| registerClass | ({required String name, required test, required methods, BridgeFactory? bridgeFactory}) → void | 一次性注册类的绑定/分发/Bridge |
+| registerClass | ({required String name, required Type type, bool Function(Object)? test, required Map\<String, Object? Function(List\<Object?\>)\> methods, List\<String\>? superclasses, BridgeFactory? bridgeFactory}) → void | 一次性注册类的绑定/分发/Bridge。type（必填）为精确类型标识用于 O(1) exactMap 查找；test（可选）用于泛型/多态子类型兜底匹配；superclasses 提供继承链 binding key 前缀 |
 | registerBinding | (String name, wrapper) → void | 注册顶层函数绑定 |
 | addPlugin | (DarticPlugin plugin) → void | 注册插件（须在 loadBytecode 前调用） |
 | dispose | () → void | 释放资源。取消运行中的执行，之后调用任何方法抛 StateError |
 
-**registerClass 参数详解**：
-- `name`：全限定类名（如 `"package:my_app/service.dart::MyService"`）
-- `test`：`bool Function(Object)` 类型判断闭包，动态分发时用于按类型路由
-- `methods`：`Map<String, Object? Function(List<Object?>)>`。key 格式为 `"methodName#argCount"`，其中 argCount 是**用户可见参数数量**（不含接收者）。wrapper 闭包接收 `[receiver, ...userArgs]`。codegen 须将继承链的所有方法展平到 methods map
-- `bridgeFactory`：可选。bridge 类才传，签名须匹配 Ch4 BridgeFactory 定义
+**registerClass 参数详解**（按语义分组）：
+
+**身份（Identity）**
+- `name`（必填）：全限定类名（如 `"package:my_app/service.dart::MyService"`）。同时作为动态分派的首选 binding key 前缀
+
+**类型匹配（Type matching）**
+- `type`（必填）：编译期已知的精确 Dart `Type` 字面量（如 `int`、`MyService`）。注册时直接写入 `_exactMap`，使该类型的 lookup 为 O(1) 且注册顺序无关——等价于 Dart VM 的 CID / JVM 的 klass 指针
+- `test`（可选）：`bool Function(Object)` 类型检测谓词，用于泛型/多态类型的子类型匹配。当 `type` 精确匹配失败时（如 `List<int>` 的 runtimeType 不等于 `List`），通过此谓词兜底。命中结果缓存到 `_exactMap`，后续同一 runtimeType 仍为 O(1)。非泛型类型无需提供
+
+**行为（Behavior）**
+- `methods`（必填）：`Map<String, Object? Function(List<Object?>)>`。key 格式为 `"methodName#argCount"`，其中 argCount 是**用户可见参数数量**（不含接收者）。wrapper 闭包接收 `[receiver, ...userArgs]`
+
+**继承（Inheritance）**
+- `superclasses`（可选）：父类全限定名列表，提供额外的 binding key 前缀。动态分派时按 `[name, ...superclasses]` 顺序查找方法
+
+**高级（Advanced）**
+- `bridgeFactory`（可选）：bridge 类才传，签名须匹配 Ch4 BridgeFactory 定义
 
 ### DarticConfig（引擎配置）
 
@@ -90,9 +102,9 @@ DarticEngine 是宿主开发者的唯一入口，封装 DarticInterpreter 和所
 | 属性/方法 | 签名 | 说明 |
 |----------|------|------|
 | name | String (getter) | 插件名称（调试用） |
-| register | (DarticEngine engine) → void | 注册所有绑定到引擎。引擎初始化时调用一次 |
+| register | (PluginContext context) → void | 注册所有绑定到引擎。引擎初始化时调用一次，接收 PluginContext（隔离注册方法与引擎生命周期） |
 
-codegen（代码生成器）为每个 @DarticExport 标注文件生成 DarticPlugin 实现，内部调用 engine.registerClass / registerBinding 完成注册。
+codegen（代码生成器）为每个 @DarticExport 标注文件生成 DarticPlugin 实现，内部调用 context.registerClass / registerBinding 完成注册。
 
 ### 注解 API（package:dartic_annotation）
 
@@ -208,8 +220,8 @@ package:dartic_annotation    ── @DarticExport, @DarticHide
 package:dartic_generator     ── build_runner 代码生成器
 │ （dev_dependency, 依赖 analyzer）
 │
-package:dartic_bridges_core  ── dart:core 生成绑定
-│ （DarticCorePlugin）
+（内部 CorePlugin/AsyncPlugin/CollectionPlugin/MathPlugin ── dart:core/async/collection/math 绑定，
+  自动注册，不再作为独立包）
 │
 package:dartic_bridges_flutter ── Flutter widget 生成绑定
   （DarticFlutterPlugin）
@@ -280,10 +292,10 @@ dev_dependencies:
 registerClass 是 codegen 最常用的注册入口，内部协调三个注册表：
 
 1. **绑定注册**：遍历 methods map，对每个条目调用 `HostFunctionRegistry.register('$name::$key', wrapper)`
-2. **动态分发注册**：调用 `HostDispatchRegistry.register(test, [name])`，使 `GET_FIELD_DYN` / `SET_FIELD_DYN` 指令能按类型路由到正确的分发器
+2. **动态分发注册**：调用 `HostDispatchRegistry.register(test, [name], exactType: type)`，使 `GET_FIELD_DYN` / `SET_FIELD_DYN` 指令能按类型路由到正确的分发器。若 `type` 非 null，dispatcher 同时写入 `_exactMap` 实现 O(1) 精确类型分发
 3. **Bridge 工厂注册**（可选）：若 bridgeFactory 非 null，存入 `BridgeFactoryRegistry(name → factory)`
 
-**Phase 7.1 变更**：当前 HostDispatchRegistry 是硬编码的类型链（仅覆盖 dart:core 内建类型），不支持动态注册。Phase 7.1 需重构为支持 `register(test, prefixes)` 方法，使用户宿主类也能参与动态分发。查找优先级：硬编码核心类型（性能快路径） → 动态注册类型（按注册顺序遍历）。同时 HostDispatchRegistry 的生命周期从 per-execute 创建改为由 DarticEngine 持有并传入解释器。
+**Phase 7.1 变更**：HostDispatchRegistry 重构为两层查找策略：① `_exactMap[runtimeType]` 精确匹配 O(1)（`register(type:)` 预填 + 运行时缓存） ② `_userEntries` predicate scan（反向遍历，子类型优先）。原三层中的硬编码核心类型 is 链已删除，core type dispatcher 改由内部 plugin（CorePlugin 等）动态注册，统一入口。新增 `register(List<String> prefixes, {required Type type, bool Function(Object)? test})` 方法，`type`（必填）在注册时写入 `_exactMap` 实现 O(1) 精确匹配（与业界 VM 精确类型标识对齐：Dart VM CID / JVM klass / CPython ob_type）；`test`（可选）用于泛型/多态子类型兜底。未匹配到 `type` 的子类型（如 `_GrowableList<int>` vs `List`）通过 predicate scan fallback 命中 `is List`，结果缓存后后续也是 O(1)。HostDispatchRegistry 生命周期从 per-execute 创建改为由 DarticEngine 持有并传入解释器。
 
 ### engine.call() 实现策略
 
@@ -395,8 +407,14 @@ engine.call() 内部检测当前是否处于活跃执行：
 
 | 组件 | 变更 | 说明 |
 |------|------|------|
-| HostDispatchRegistry | 新增 register(test, prefixes) 方法 | 支持用户宿主类的动态分发注册 |
+| HostDispatchRegistry | 简化为两层查找（exactMap + userEntries），删除硬编码 is-chain 和 10 个 late final 字段 | 新签名 `register(List<String> prefixes, {required Type type, bool Function(Object)? test})`；type 必填预热 _exactMap，test 可选用于泛型兜底 |
 | HostDispatchRegistry | 生命周期从 per-execute 改为引擎持有 | DarticInterpreter 接受外部传入 |
+| PluginContext | **新增** | 隔离 plugin 注册方法与引擎生命周期；提供 registerBinding/registerClass/config |
+| DarticPlugin | register 签名从 `(DarticEngine)` 改为 `(PluginContext)` | plugin 不再能访问 call/loadBytecode/dispose |
+| 内部 Plugin | **新增** CorePlugin/AsyncPlugin/CollectionPlugin/MathPlugin | 替代 CoreBindings/AsyncBindings 等 hub，与用户 plugin 走相同注册路径 |
+| XxxBindings (29 个) | 新增 `methodMap()` 静态方法 | 返回 `Map<String, Object? Function(List<Object?>)>` 供 registerClass 使用 |
+| DarticEngine | 移除 4 个 registry getter，构造函数使用内部 plugin | public API surface 缩窄 |
+| barrel file (dartic.dart) | 移除 HostFunctionRegistry/HostDispatchRegistry/BridgeFactoryRegistry/DarticProxyManager 导出 | 新增 PluginContext 导出 |
 | BridgeFactoryRegistry | **新增** | className → BridgeFactory 映射表 |
 | BridgeDispatch | **新增** | invoke / get / set 三个分发方法 + notOverridden 哨兵 |
 | CallDepthExceededError | 从通用 DarticError 提升为子类 | 专用异常类型 |
@@ -413,7 +431,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 | engine.call()（顶层） | executeFunction()（Phase 7 新增） | 按名查表 + 执行 |
 | engine.call()（重入） | _runNestedDispatch()（Ch3 现有机制） | HOST_BOUNDARY 帧 + 嵌套 drive |
 | registerClass(methods:) | HostFunctionRegistry 批量注册 | 展平继承链的所有方法 |
-| registerClass(test:) | HostDispatchRegistry.register()（Phase 7 新增） | 动态分发类型路由 |
+| registerClass(test:, type:) | HostDispatchRegistry.register(exactType:)（Phase 7 新增） | 动态分发类型路由；exactType 实现注册顺序无关 |
 | registerClass(bridgeFactory:) | BridgeFactoryRegistry（Phase 7 新增） | Bridge 工厂注册 |
 | @DarticExport codegen | Ch4 BridgeGenerator 输出：HostClassWrapper + Bridge 类 + 注册代码 | 详见 Ch4 |
 | DarticConfig.onPrint | CoreBindings.registerAll(printFn:) | print 桥接（参数类型 Object?） |
@@ -454,12 +472,13 @@ engine.call() 内部检测当前是否处于活跃执行：
 
 codegen 为 @DarticExport 标注文件生成 DarticPlugin 实现，register() 方法内部按标注类型分别处理：
 
-1. **普通导出类**（@DarticExport()）→ `engine.registerClass(name, test, methods)`
+1. **普通导出类**（@DarticExport()）→ `engine.registerClass(name, test, type, methods)`
    - methods map 包含该类及其继承链的所有公开方法/属性的 typed wrapper
    - test 闭包执行 `is` 类型检查
+   - type 为编译期已知的精确类型字面量（如 `MyService`），预热 `_exactMap` 实现注册顺序无关
 2. **顶层函数**（@DarticExport()）→ `engine.registerBinding(name, wrapper)`
    - name 格式：`"库URI::::函数名#参数数"`（类名为空表示顶层）
-3. **Bridge 类**（@DarticExport(bridge: true)）→ `engine.registerClass(name, test, methods, bridgeFactory: factory)`
+3. **Bridge 类**（@DarticExport(bridge: true)）→ `engine.registerClass(name, test, type, methods, bridgeFactory: factory)`
    - factory 签名匹配 Ch4 BridgeFactory：`(runtime, scriptObj, superArgs) → Bridge`
    - 额外生成 super 转发器方法，注册到 HostFunctionRegistry
 
