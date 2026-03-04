@@ -1,8 +1,5 @@
 import 'dart:collection';
 
-import 'package:dartic/src/bridge/bindings/collection_bindings.dart';
-import 'package:dartic/src/bridge/collection_bindings.dart';
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
@@ -14,8 +11,7 @@ void main() {
 
   setUp(() {
     registry = HostFunctionRegistry();
-    CoreBindings.registerAll(registry);
-    CollectionBindings.register(registry);
+    registerAllHostBindings(registry);
   });
 
   Object? invoke(String name, List<Object?> args) {
@@ -375,8 +371,7 @@ void main() {
       final printLog = <String>[];
       final module = await compileDart(source);
       final reg = HostFunctionRegistry();
-      CoreBindings.registerAll(reg, printFn: (v) => printLog.add('$v'));
-      CollectionBindingsHub.registerAll(reg);
+      registerAllHostBindings(reg, printFn: (v) => printLog.add('$v'));
       final interp = DarticInterpreter(
         hostFunctionRegistry: reg,
         fuelBudget: DarticInterpreter.defaultFuelBudget,

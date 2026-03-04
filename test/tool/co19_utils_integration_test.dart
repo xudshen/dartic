@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dartic/src/bridge/async_bindings.dart';
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
+
+import '../helpers/compile_helper.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:test/test.dart';
@@ -55,8 +55,7 @@ int main() {
         final module = DarticCompiler(component).compile();
 
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry);
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry);
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -92,7 +91,7 @@ bool main() {
         final module = DarticCompiler(component).compile();
 
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry);
+        registerAllHostBindings(registry);
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
         expect(interp.entryResult, true);
@@ -141,8 +140,7 @@ int main() {
 
         final printLog = <String>[];
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -179,8 +177,7 @@ int main() {
         final module = DarticCompiler(component).compile();
 
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry);
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry);
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -216,8 +213,7 @@ int main() {
         final module = DarticCompiler(component).compile();
 
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry);
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry);
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
 
         expect(() => interp.execute(module), throwsA(anything));
@@ -266,8 +262,7 @@ Future<void> main() async {
 
         final printLog = <String>[];
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
 
@@ -316,8 +311,7 @@ Future<void> main() async {
 
         final printLog = <String>[];
         final registry = HostFunctionRegistry();
-        CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
-        AsyncBindings.registerAll(registry);
+        registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         interp.execute(module);
 

@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dartic/src/bridge/async_bindings.dart';
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
@@ -13,8 +11,7 @@ void main() {
 
   setUp(() {
     registry = HostFunctionRegistry();
-    CoreBindings.registerAll(registry);
-    AsyncBindings.registerAll(registry);
+    registerAllHostBindings(registry);
   });
 
   // ── Helper to invoke a binding by symbolic name ──
@@ -534,8 +531,7 @@ void main() {
       final printLog = <String>[];
       final module = await compileDart(source);
       final reg = HostFunctionRegistry();
-      CoreBindings.registerAll(reg, printFn: (v) => printLog.add('$v'));
-      AsyncBindings.registerAll(reg);
+      registerAllHostBindings(reg, printFn: (v) => printLog.add('$v'));
       final interp = DarticInterpreter(
         hostFunctionRegistry: reg,
         fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,

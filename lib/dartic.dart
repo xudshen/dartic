@@ -13,10 +13,6 @@ export 'src/api/engine.dart';
 export 'src/api/plugin.dart';
 export 'src/api/plugin_context.dart';
 export 'src/bridge/bridge_factory_registry.dart'
-    show BridgeFactory, BridgeFactoryRegistry, DarticRuntime;
-export 'src/bridge/host_dispatch_registry.dart'
-    show HostDispatchRegistry, HostDispatcher;
-export 'src/bridge/host_function_registry.dart' show HostFunctionRegistry;
-export 'src/bridge/proxy_manager.dart' show DarticProxyManager;
+    show BridgeFactory, DarticRuntime;
 export 'src/runtime/error.dart';
 export 'src/sandbox/load_error.dart';

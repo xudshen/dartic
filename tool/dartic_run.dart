@@ -11,14 +11,9 @@ library;
 
 import 'dart:io';
 
-import 'package:dartic/src/bridge/async_bindings.dart';
-import 'package:dartic/src/bridge/collection_bindings.dart';
-import 'package:dartic/src/bridge/core_bindings.dart';
-import 'package:dartic/src/bridge/host_function_registry.dart';
-import 'package:dartic/src/bridge/math_bindings.dart';
-import 'package:dartic/src/bytecode/module.dart';
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
-import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 
@@ -32,36 +27,28 @@ Future<void> main(List<String> args) async {
   final component = ir.Component();
   BinaryBuilder(bytes).readComponent(component);
 
-  final DarticModule module;
+  final module = DarticCompiler(component).compile();
+  final serialized = DarticSerializer().serialize(module);
+
+  final engine = DarticEngine(
+    config: DarticConfig(onPrint: print),
+  );
+
   try {
-    module = DarticCompiler(component).compile();
+    engine.loadBytecode(serialized);
   } on Object catch (e) {
     stderr.writeln('$e');
     exit(1);
   }
 
-  final registry = HostFunctionRegistry();
-  CoreBindings.registerAll(registry);
-  AsyncBindings.registerAll(registry);
-  MathBindingsHub.registerAll(registry);
-  CollectionBindingsHub.registerAll(registry);
-  final interp = DarticInterpreter(hostFunctionRegistry: registry);
-
   try {
-    interp.execute(module);
-  } on Object catch (e) {
-    stderr.writeln('$e');
-    exit(1);
-  }
-
-  final result = interp.entryResult;
-  if (result is Future) {
-    try {
+    final result = engine.call('main');
+    if (result is Future) {
       await result;
-    } on Object catch (e) {
-      stderr.writeln('$e');
-      exit(1);
     }
+  } on Object catch (e) {
+    stderr.writeln('$e');
+    exit(1);
   }
 
   // Dart VM will wait for pending async operations (Futures, Timers)

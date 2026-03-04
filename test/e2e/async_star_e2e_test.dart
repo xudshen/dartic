@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
@@ -242,7 +241,7 @@ Stream<int> main() {
 Future<Stream<Object?>> _compileAndGetStream(String source) async {
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
-  CoreBindings.registerAll(registry);
+  registerAllHostBindings(registry);
   final interp = DarticInterpreter(
     hostFunctionRegistry: registry,
     fuelBudget: 200000,
@@ -264,7 +263,7 @@ Future<(Stream<Object?>, List<String>)> _compileAndGetStreamWithPrint(
   final printLog = <String>[];
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
-  CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
+  registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
   final interp = DarticInterpreter(
     hostFunctionRegistry: registry,
     fuelBudget: 200000,

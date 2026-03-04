@@ -1,6 +1,34 @@
 import 'dart:io';
 
-import 'package:dartic/src/bridge/core_bindings.dart';
+import 'package:dartic/src/bridge/bindings/big_int_bindings.dart';
+import 'package:dartic/src/bridge/bindings/bool_bindings.dart';
+import 'package:dartic/src/bridge/bindings/collection_bindings.dart';
+import 'package:dartic/src/bridge/bindings/completer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/date_time_bindings.dart';
+import 'package:dartic/src/bridge/bindings/double_bindings.dart';
+import 'package:dartic/src/bridge/bindings/duration_bindings.dart';
+import 'package:dartic/src/bridge/bindings/enum_bindings.dart';
+import 'package:dartic/src/bridge/bindings/error_bindings.dart';
+import 'package:dartic/src/bridge/bindings/future_bindings.dart';
+import 'package:dartic/src/bridge/bindings/int_bindings.dart';
+import 'package:dartic/src/bridge/bindings/invocation_bindings.dart';
+import 'package:dartic/src/bridge/bindings/iterable_bindings.dart';
+import 'package:dartic/src/bridge/bindings/list_bindings.dart';
+import 'package:dartic/src/bridge/bindings/map_bindings.dart';
+import 'package:dartic/src/bridge/bindings/math_bindings.dart';
+import 'package:dartic/src/bridge/bindings/misc_bindings.dart';
+import 'package:dartic/src/bridge/bindings/num_bindings.dart';
+import 'package:dartic/src/bridge/bindings/object_bindings.dart';
+import 'package:dartic/src/bridge/bindings/regexp_bindings.dart';
+import 'package:dartic/src/bridge/bindings/runes_bindings.dart';
+import 'package:dartic/src/bridge/bindings/set_bindings.dart';
+import 'package:dartic/src/bridge/bindings/stream_bindings.dart';
+import 'package:dartic/src/bridge/bindings/stream_iterator_bindings.dart';
+import 'package:dartic/src/bridge/bindings/string_bindings.dart';
+import 'package:dartic/src/bridge/bindings/string_buffer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/timer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/uri_bindings.dart';
+import 'package:dartic/src/bridge/bindings/zone_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/compiler/compiler.dart';
@@ -138,7 +166,7 @@ class BenchmarkRunner {
 
   Object? _executeDartic(DarticModule module) {
     final registry = HostFunctionRegistry();
-    CoreBindings.registerAll(registry);
+    _registerAllHostBindings(registry);
     final interp = DarticInterpreter(
       hostFunctionRegistry: registry,
       fuelBudget: 1 << 30,
@@ -198,4 +226,51 @@ class BenchmarkRunner {
       iterationsPerSample: iters,
     );
   }
+}
+
+/// Registers all host function bindings (dart:core + dart:async +
+/// dart:collection + dart:math). Replaces the old hub registrations.
+void _registerAllHostBindings(HostFunctionRegistry registry) {
+  // print
+  registry.register('dart:core::::print#1', (args) {
+    print(args[0]);
+    return null;
+  });
+
+  // dart:core
+  ObjectBindings.register(registry);
+  IntBindings.register(registry);
+  DoubleBindings.register(registry);
+  NumBindings.register(registry);
+  BoolBindings.register(registry);
+  StringBindings.register(registry);
+  ListBindings.register(registry);
+  IterableBindings.register(registry);
+  MapBindings.register(registry);
+  SetBindings.register(registry);
+  DurationBindings.register(registry);
+  EnumBindings.register(registry);
+  ErrorBindings.register(registry);
+  InvocationBindings.register(registry);
+  BigIntBindings.register(registry);
+  DateTimeBindings.register(registry);
+  MiscBindings.register(registry);
+  RegExpBindings.register(registry);
+  RunesBindings.register(registry);
+  StringBufferBindings.register(registry);
+  UriBindings.register(registry);
+
+  // dart:async
+  FutureBindings.register(registry);
+  CompleterBindings.register(registry);
+  StreamBindings.register(registry);
+  StreamIteratorBindings.register(registry);
+  TimerBindings.register(registry);
+  ZoneBindings.register(registry);
+
+  // dart:collection
+  CollectionBindings.register(registry);
+
+  // dart:math
+  MathBindings.register(registry);
 }

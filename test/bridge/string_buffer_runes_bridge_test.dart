@@ -1,4 +1,3 @@
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:test/test.dart';
 
@@ -9,7 +8,7 @@ void main() {
 
   setUp(() {
     registry = HostFunctionRegistry();
-    CoreBindings.registerAll(registry);
+    registerAllHostBindings(registry);
   });
 
   // ── Helper to invoke a binding by symbolic name ──

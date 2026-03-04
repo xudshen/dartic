@@ -8,13 +8,13 @@ library;
 
 import 'dart:typed_data';
 
-import '../bridge/async_bindings.dart';
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/collection_bindings.dart';
-import '../bridge/core_bindings.dart';
 import '../bridge/host_dispatch_registry.dart';
 import '../bridge/host_function_registry.dart';
-import '../bridge/math_bindings.dart';
+import '../bridge/plugins/async_plugin.dart';
+import '../bridge/plugins/collection_plugin.dart';
+import '../bridge/plugins/core_plugin.dart';
+import '../bridge/plugins/math_plugin.dart';
 import '../bridge/proxy_manager.dart';
 import '../bytecode/module.dart';
 import '../runtime/call_stack.dart';
@@ -63,22 +63,13 @@ class DarticEngine {
     List<DarticPlugin> plugins = const [],
     DarticConfig config = const DarticConfig(),
   }) : _config = config {
-    // Create the host function registry and register core bindings.
+    // 1. Create registries.
     _hostFunctionRegistry = HostFunctionRegistry();
-    CoreBindings.registerAll(
-      _hostFunctionRegistry,
-      printFn: config.onPrint,
-    );
-    CollectionBindingsHub.registerAll(_hostFunctionRegistry);
-    AsyncBindings.registerAll(_hostFunctionRegistry);
-    MathBindingsHub.registerAll(_hostFunctionRegistry);
-
-    // Create supporting registries with engine-level lifecycle.
     _hostDispatchRegistry = HostDispatchRegistry(_hostFunctionRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
     _proxyManager = DarticProxyManager();
 
-    // Create the plugin context for registration-only access.
+    // 2. Create the plugin context for registration-only access.
     _pluginContext = PluginContext(
       config: config,
       hostFunctionRegistry: _hostFunctionRegistry,
@@ -87,7 +78,22 @@ class DarticEngine {
       pendingBridgeFactories: _pendingBridgeFactories,
     );
 
-    // Create the interpreter with config-mapped parameters.
+    // 3. Register core lib plugins — same registration path as user plugins.
+    for (final p in [
+      CorePlugin(),
+      AsyncPlugin(),
+      CollectionPlugin(),
+      MathPlugin(),
+    ]) {
+      p.register(_pluginContext);
+    }
+
+    // 4. Register user plugins.
+    for (final plugin in plugins) {
+      plugin.register(_pluginContext);
+    }
+
+    // 5. Create the interpreter with config-mapped parameters.
     _interpreter = DarticInterpreter(
       hostFunctionRegistry: _hostFunctionRegistry,
       hostDispatchRegistry: _hostDispatchRegistry,
@@ -96,11 +102,6 @@ class DarticEngine {
       maxTotalFuel: config.maxTotalFuel,
       executionTimeout: config.executionTimeout,
     );
-
-    // Register plugins.
-    for (final plugin in plugins) {
-      plugin.register(_pluginContext);
-    }
   }
 
   final DarticConfig _config;
@@ -123,41 +124,6 @@ class DarticEngine {
 
   /// Provides access to the config (for testing/inspection).
   DarticConfig get config => _config;
-
-  /// Provides access to the host function registry for direct binding
-  /// registration.
-  ///
-  /// Exposed for [DarticPlugin] implementations that need low-level
-  /// access. Prefer [registerBinding] for simple cases.
-  HostFunctionRegistry get hostFunctionRegistry {
-    _checkNotDisposed();
-    return _hostFunctionRegistry;
-  }
-
-  /// Provides access to the host dispatch registry for dynamic dispatch
-  /// registration.
-  ///
-  /// Exposed for [DarticPlugin] implementations that need to register
-  /// custom type dispatchers.
-  HostDispatchRegistry get hostDispatchRegistry {
-    _checkNotDisposed();
-    return _hostDispatchRegistry;
-  }
-
-  /// Provides access to the bridge factory registry.
-  ///
-  /// Exposed for [DarticPlugin] implementations that need to register
-  /// bridge factories.
-  BridgeFactoryRegistry get bridgeFactoryRegistry {
-    _checkNotDisposed();
-    return _bridgeFactoryRegistry;
-  }
-
-  /// Provides access to the proxy manager.
-  DarticProxyManager get proxyManager {
-    _checkNotDisposed();
-    return _proxyManager;
-  }
 
   // ── Public API ──────────────────────────────────────────────────────
 

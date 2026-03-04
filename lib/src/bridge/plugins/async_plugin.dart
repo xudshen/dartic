@@ -13,6 +13,7 @@ import '../../api/plugin_context.dart';
 import '../bindings/completer_bindings.dart';
 import '../bindings/future_bindings.dart';
 import '../bindings/stream_bindings.dart';
+import '../bindings/stream_iterator_bindings.dart';
 import '../bindings/timer_bindings.dart';
 import '../bindings/zone_bindings.dart';
 
@@ -41,6 +42,7 @@ class AsyncPlugin extends DarticPlugin {
     _registerStreamSink(ctx);
     _registerStreamConsumer(ctx);
     _registerMultiStreamController(ctx);
+    _registerStreamIterator(ctx);
     _registerTimer(ctx);
     _registerZone(ctx);
     _registerTopLevelFunctions(ctx);
@@ -149,6 +151,23 @@ class AsyncPlugin extends DarticPlugin {
         in StreamBindings.multiStreamControllerMethodMap().entries) {
       ctx.registerBinding(
           'dart:async::MultiStreamController::${e.key}', e.value);
+    }
+  }
+
+  // ── StreamIterator / _StreamIterator ──────────────────────────────────
+
+  void _registerStreamIterator(PluginContext ctx) {
+    // _StreamIterator (internal class used by CFE await-for desugaring)
+    for (final e
+        in StreamIteratorBindings.streamIteratorInternalMethodMap().entries) {
+      ctx.registerBinding(
+          'dart:async::_StreamIterator::${e.key}', e.value);
+    }
+
+    // StreamIterator (public name)
+    for (final e in StreamIteratorBindings.streamIteratorMethodMap().entries) {
+      ctx.registerBinding(
+          'dart:async::StreamIterator::${e.key}', e.value);
     }
   }
 

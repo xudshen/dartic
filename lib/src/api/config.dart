@@ -63,7 +63,7 @@ class DarticConfig {
   /// instead of writing to stdout. When null, print output is silently
   /// discarded.
   ///
-  /// Maps to `CoreBindings.registerAll(printFn:)`.
+  /// Maps to [CorePlugin]'s print binding registration.
   final void Function(Object?)? onPrint;
 
   /// Callback for unhandled script exceptions.

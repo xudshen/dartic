@@ -1,4 +1,3 @@
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
@@ -153,7 +152,7 @@ Object main() {
 }
 ''');
       final registry = HostFunctionRegistry();
-      CoreBindings.registerAll(registry);
+      registerAllHostBindings(registry);
       final interp = DarticInterpreter(hostFunctionRegistry: registry);
       expect(
         () => interp.execute(module),
@@ -170,7 +169,7 @@ Object main() {
 }
 ''');
       final registry = HostFunctionRegistry();
-      CoreBindings.registerAll(registry);
+      registerAllHostBindings(registry);
       final interp = DarticInterpreter(hostFunctionRegistry: registry);
       expect(
         () => interp.execute(module),

@@ -1,6 +1,7 @@
-import 'package:dartic/src/bridge/core_bindings.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/bridge/host_dispatch_registry.dart';
+
+import '../helpers/compile_helper.dart';
 import 'package:test/test.dart';
 
 /// Helper class hierarchy for subtype safety tests.
@@ -25,7 +26,7 @@ void main() {
 
   setUp(() {
     fnRegistry = HostFunctionRegistry();
-    CoreBindings.registerAll(fnRegistry);
+    registerAllHostBindings(fnRegistry);
     registry = HostDispatchRegistry(fnRegistry);
 
     // Register core type dispatchers (previously hardcoded in constructor).

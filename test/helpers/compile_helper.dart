@@ -1,6 +1,34 @@
 import 'dart:io';
 
-import 'package:dartic/src/bridge/core_bindings.dart';
+import 'package:dartic/src/bridge/bindings/big_int_bindings.dart';
+import 'package:dartic/src/bridge/bindings/bool_bindings.dart';
+import 'package:dartic/src/bridge/bindings/collection_bindings.dart';
+import 'package:dartic/src/bridge/bindings/completer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/date_time_bindings.dart';
+import 'package:dartic/src/bridge/bindings/double_bindings.dart';
+import 'package:dartic/src/bridge/bindings/duration_bindings.dart';
+import 'package:dartic/src/bridge/bindings/enum_bindings.dart';
+import 'package:dartic/src/bridge/bindings/error_bindings.dart';
+import 'package:dartic/src/bridge/bindings/future_bindings.dart';
+import 'package:dartic/src/bridge/bindings/int_bindings.dart';
+import 'package:dartic/src/bridge/bindings/invocation_bindings.dart';
+import 'package:dartic/src/bridge/bindings/iterable_bindings.dart';
+import 'package:dartic/src/bridge/bindings/list_bindings.dart';
+import 'package:dartic/src/bridge/bindings/map_bindings.dart';
+import 'package:dartic/src/bridge/bindings/math_bindings.dart';
+import 'package:dartic/src/bridge/bindings/misc_bindings.dart';
+import 'package:dartic/src/bridge/bindings/num_bindings.dart';
+import 'package:dartic/src/bridge/bindings/object_bindings.dart';
+import 'package:dartic/src/bridge/bindings/regexp_bindings.dart';
+import 'package:dartic/src/bridge/bindings/runes_bindings.dart';
+import 'package:dartic/src/bridge/bindings/set_bindings.dart';
+import 'package:dartic/src/bridge/bindings/stream_bindings.dart';
+import 'package:dartic/src/bridge/bindings/stream_iterator_bindings.dart';
+import 'package:dartic/src/bridge/bindings/string_bindings.dart';
+import 'package:dartic/src/bridge/bindings/string_buffer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/timer_bindings.dart';
+import 'package:dartic/src/bridge/bindings/uri_bindings.dart';
+import 'package:dartic/src/bridge/bindings/zone_bindings.dart';
 import 'package:dartic/src/bridge/host_dispatch_registry.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
@@ -88,11 +116,11 @@ Future<Object?> compileAndRun(String source, {int? fuelBudget}) async {
   return interp.entryResult;
 }
 
-/// Compiles [source] and executes with [CoreBindings] host functions.
+/// Compiles [source] and executes with all host function bindings.
 Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
-  CoreBindings.registerAll(registry);
+  registerAllHostBindings(registry);
   final dispatchRegistry = HostDispatchRegistry(registry);
   registerCoreDispatchTypes(dispatchRegistry);
   final interp = DarticInterpreter(
@@ -111,7 +139,7 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
   final printLog = <String>[];
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
-  CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
+  registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
   final dispatchRegistry = HostDispatchRegistry(registry);
   registerCoreDispatchTypes(dispatchRegistry);
   final interp = DarticInterpreter(
@@ -184,6 +212,62 @@ Future<Object?> compileAndRunMultiFile(
   );
   interp.execute(module);
   return interp.entryResult;
+}
+
+/// Registers all host function bindings (dart:core + dart:async +
+/// dart:collection + dart:math).
+///
+/// Replaces the old CoreBindings.registerAll + AsyncBindings.registerAll +
+/// CollectionBindingsHub.registerAll + MathBindingsHub.registerAll hubs.
+///
+/// Used by test helpers that need a fully-wired HostFunctionRegistry without
+/// going through the plugin API.
+void registerAllHostBindings(
+  HostFunctionRegistry registry, {
+  void Function(Object?)? printFn,
+}) {
+  // print
+  registry.register('dart:core::::print#1', (args) {
+    (printFn ?? print)(args[0]);
+    return null;
+  });
+
+  // dart:core
+  ObjectBindings.register(registry);
+  IntBindings.register(registry);
+  DoubleBindings.register(registry);
+  NumBindings.register(registry);
+  BoolBindings.register(registry);
+  StringBindings.register(registry);
+  ListBindings.register(registry);
+  IterableBindings.register(registry);
+  MapBindings.register(registry);
+  SetBindings.register(registry);
+  DurationBindings.register(registry);
+  EnumBindings.register(registry);
+  ErrorBindings.register(registry);
+  InvocationBindings.register(registry);
+  BigIntBindings.register(registry);
+  DateTimeBindings.register(registry);
+  MiscBindings.register(registry);
+  RegExpBindings.register(registry);
+  RunesBindings.register(registry);
+  StringBufferBindings.register(registry);
+  UriBindings.register(registry);
+
+  // dart:async
+  FutureBindings.register(registry);
+  CompleterBindings.register(registry);
+  StreamBindings.register(registry);
+  StreamIteratorBindings.register(registry);
+  TimerBindings.register(registry);
+  ZoneBindings.register(registry);
+
+  // dart:collection
+  CollectionBindings.register(registry);
+
+  // dart:math
+  MathBindings.register(registry);
 }
 
 /// Registers core dart:core type dispatchers on a [HostDispatchRegistry].
