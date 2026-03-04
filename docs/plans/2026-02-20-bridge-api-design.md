@@ -63,9 +63,9 @@ DarticEngine 是宿主开发者的唯一入口，封装 DarticInterpreter 和所
 | 构造函数 | ({List\<DarticPlugin\> plugins, DarticConfig config}) | 创建引擎，注册插件，映射配置到内部组件 |
 | loadBytecode | (Uint8List bytes) → void | 加载 .darb 字节码，执行验证和绑定解析。第二次调用替换前一模块。所有插件须在此之前注册 |
 | call | (String function, [List\<Object?\> args]) → Object? | 按名称调用脚本顶层函数。async 函数返回 Future。支持重入 |
-| registerClass | ({required String name, required Type type, bool Function(Object)? test, required Map\<String, Object? Function(List\<Object?\>)\> methods, List\<String\>? superclasses, BridgeFactory? bridgeFactory}) → void | 一次性注册类的绑定/分发/Bridge。type（必填）为精确类型标识用于 O(1) exactMap 查找；test（可选）用于泛型/多态子类型兜底匹配；superclasses 提供继承链 binding key 前缀 |
-| registerBinding | (String name, wrapper) → void | 注册顶层函数绑定 |
-| addPlugin | (DarticPlugin plugin) → void | 注册插件（须在 loadBytecode 前调用） |
+| registerClass | ({required String name, required Type type, bool Function(Object)? test, required Map\<String, Object? Function(List\<Object?\>)\> methods, List\<String\>? superclasses, BridgeFactory? bridgeFactory}) → void | 一次性注册类的绑定/分发/Bridge。type（必填）为精确类型标识用于 O(1) exactMap 查找；test（可选）用于泛型/多态子类型兜底匹配；superclasses 提供继承链 binding key 前缀。须在 loadBytecode 前调用，否则抛 StateError |
+| registerBinding | (String name, wrapper) → void | 注册顶层函数绑定。须在 loadBytecode 前调用，否则抛 StateError |
+| addPlugin | (DarticPlugin plugin) → void | 注册插件（须在 loadBytecode 前调用，否则抛 StateError） |
 | dispose | () → void | 释放资源。取消运行中的执行，之后调用任何方法抛 StateError |
 
 **registerClass 参数详解**（按语义分组）：
@@ -279,7 +279,7 @@ dev_dependencies:
 ```
 
 1. **created**：构造函数完成，插件已注册。可调用 registerClass / registerBinding / addPlugin / loadBytecode
-2. **loaded**：字节码已加载验证，绑定已解析。可调用 call（一次或多次）、loadBytecode（替换模块）
+2. **loaded**：字节码已加载验证，绑定已解析。可调用 call（一次或多次）、loadBytecode（替换模块）。registerClass / registerBinding / addPlugin 均抛 StateError
 3. **disposed**：资源已释放。任何调用抛 StateError
 
 **渐进式复杂度**：
@@ -363,7 +363,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 | DarticProxy 类型检查 | 无法通过 VM 侧 `is` 检查 | Dart 类型系统限制，需 Bridge |
 | 引擎线程安全 | **非线程安全**，每个 Isolate 需创建独立 DarticEngine | DarticInterpreter 的栈和帧为可变状态 |
 | loadBytecode 语义 | 单模块，第二次调用替换前一模块 | 简化 Phase 7 实现 |
-| 插件注册顺序 | 所有插件须在 loadBytecode() 前注册 | loadBytecode 执行绑定解析 |
+| 注册时序 | 所有插件和绑定须在 loadBytecode() 前注册；registerBinding / registerClass / addPlugin 在 loaded 状态抛 StateError | loadBytecode 执行绑定解析，后续注册不会被模块感知 |
 | dispose 后行为 | 所有方法抛 StateError | 内部状态机 |
 | engine.call() 参数 | 仅支持位置参数 | Phase 7 限制 |
 | .darb 版本化 | Phase 7 无版本协商 | 宿主引擎与字节码须同版本构建 |

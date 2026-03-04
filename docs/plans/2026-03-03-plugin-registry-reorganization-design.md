@@ -384,7 +384,7 @@ DarticEngine({
 | 移除 | `get hostDispatchRegistry` |
 | 移除 | `get bridgeFactoryRegistry` |
 | 移除 | `get proxyManager` |
-| 保留 | `registerBinding()`, `registerClass()` — 作为便捷方法（内部委托 PluginContext 同等逻辑） |
+| 保留 | `registerBinding()`, `registerClass()` — 作为便捷方法（内部委托 PluginContext 同等逻辑）；须在 loadBytecode 前调用，loaded/disposed 状态抛 StateError |
 | 保留 | `loadBytecode()`, `call()`, `addPlugin()`, `dispose()`, `get config` |
 
 ### XxxBindings 适配策略
