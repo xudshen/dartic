@@ -11,6 +11,33 @@ import '../host_function_registry.dart';
 
 /// Registers all `dart:async::Timer` host function bindings.
 abstract final class TimerBindings {
+  /// Returns a map of all `Timer` bindings keyed by `"methodName#argCount"`.
+  ///
+  /// The keys match the suffix after `'dart:async::Timer::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        '#2': (args) {
+          final duration = args[0] as Duration;
+          final callback = args[1] as Function;
+          return Timer(duration, () => callback());
+        },
+        'periodic#2': (args) {
+          final duration = args[0] as Duration;
+          final callback = args[1] as Function;
+          return Timer.periodic(duration, (t) => callback(t));
+        },
+        'run#1': (args) {
+          final callback = args[0] as Function;
+          Timer.run(() => callback());
+          return null;
+        },
+        'cancel#0': (args) {
+          (args[0] as Timer).cancel();
+          return null;
+        },
+        'isActive#0': (args) => (args[0] as Timer).isActive,
+        'tick#0': (args) => (args[0] as Timer).tick,
+      };
+
   static void register(HostFunctionRegistry registry) {
     // ── Constructors ──
 

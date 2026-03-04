@@ -16,6 +16,29 @@ import '../host_function_registry.dart';
 
 /// Registers all `dart:async::_StreamIterator` host function bindings.
 abstract final class StreamIteratorBindings {
+  /// Returns a map of `_StreamIterator` bindings.
+  ///
+  /// The keys match the suffix after `'dart:async::_StreamIterator::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)>
+      streamIteratorInternalMethodMap() => {
+            '#1': (args) => StreamIterator(args[0] as Stream),
+            'moveNext#0': (args) => (args[0] as StreamIterator).moveNext(),
+            'cancel#0': (args) => (args[0] as StreamIterator).cancel(),
+            'current#0': (args) => (args[0] as StreamIterator).current,
+            '_subscription#0': (args) => args[0],
+          };
+
+  /// Returns a map of `StreamIterator` bindings.
+  ///
+  /// The keys match the suffix after `'dart:async::StreamIterator::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)>
+      streamIteratorMethodMap() => {
+            '#1': (args) => StreamIterator(args[0] as Stream),
+            'moveNext#0': (args) => (args[0] as StreamIterator).moveNext(),
+            'cancel#0': (args) => (args[0] as StreamIterator).cancel(),
+            'current#0': (args) => (args[0] as StreamIterator).current,
+          };
+
   static void register(HostFunctionRegistry registry) {
     // ── Constructor ──
 

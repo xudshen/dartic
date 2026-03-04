@@ -17,6 +17,30 @@ import '../host_function_registry.dart';
 
 /// Registers all enum-related host function bindings.
 abstract final class EnumBindings {
+  /// Returns a map of top-level enum bindings keyed by `"methodName#argCount"`.
+  ///
+  /// The keys match the suffix after `'dart:core::::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)> topLevelMethodMap() => {
+        'EnumName|get#name#1': (args) {
+          final obj = args[0] as DarticObject;
+          return obj.refFields[0] as String;
+        },
+      };
+
+  /// Returns a map of `_Enum` bindings keyed by `"methodName#argCount"`.
+  ///
+  /// The keys match the suffix after `'dart:core::_Enum::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)> enumMethodMap() => {
+        'index#0': (args) {
+          final obj = args[0] as DarticObject;
+          return obj.valueFields[0];
+        },
+        '_name#0': (args) {
+          final obj = args[0] as DarticObject;
+          return obj.refFields[0] as String;
+        },
+      };
+
   static void register(HostFunctionRegistry registry) {
     // EnumName|get#name — the `name` getter on enums.
     // Kernel compiles `myEnum.name` as a StaticInvocation to

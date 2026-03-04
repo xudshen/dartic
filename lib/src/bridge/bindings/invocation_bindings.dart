@@ -11,6 +11,23 @@ import '../host_function_registry.dart';
 
 /// Registers all `dart:core::Invocation` property bindings.
 abstract final class InvocationBindings {
+  /// Returns a map of all `Invocation` bindings keyed by `"methodName#argCount"`.
+  ///
+  /// The keys match the suffix after `'dart:core::Invocation::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'memberName#0': (args) => (args[0] as Invocation).memberName,
+        'positionalArguments#0': (args) =>
+            (args[0] as Invocation).positionalArguments,
+        'namedArguments#0': (args) =>
+            (args[0] as Invocation).namedArguments,
+        'typeArguments#0': (args) =>
+            (args[0] as Invocation).typeArguments,
+        'isMethod#0': (args) => (args[0] as Invocation).isMethod,
+        'isGetter#0': (args) => (args[0] as Invocation).isGetter,
+        'isSetter#0': (args) => (args[0] as Invocation).isSetter,
+        'isAccessor#0': (args) => (args[0] as Invocation).isAccessor,
+      };
+
   static void register(HostFunctionRegistry registry) {
     registry.register('dart:core::Invocation::memberName#0', (args) {
       return (args[0] as Invocation).memberName;

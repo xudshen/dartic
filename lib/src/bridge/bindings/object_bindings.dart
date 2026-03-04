@@ -11,6 +11,35 @@ import '../host_function_registry.dart';
 
 /// Registers all `dart:core::Object`, `Type`, and `identical` bindings.
 abstract final class ObjectBindings {
+  /// Returns a map of `Object` bindings.
+  ///
+  /// The keys match the suffix after `'dart:core::Object::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)>
+      objectMethodMap() => {
+            'toString#0': (args) => args[0].toString(),
+            'hashCode#0': (args) => args[0].hashCode,
+            '#0': (args) => Object(),
+            'runtimeType#0': (args) => args[0].runtimeType,
+            'noSuchMethod#1': (args) =>
+                (args[0] as Object).noSuchMethod(args[1] as Invocation),
+          };
+
+  /// Returns a map of top-level `dart:core` function bindings.
+  ///
+  /// The keys match the suffix after `'dart:core::::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)>
+      topLevelMethodMap() => {
+            'identical#2': (args) => identical(args[0], args[1]),
+          };
+
+  /// Returns a map of `Type` bindings.
+  ///
+  /// The keys match the suffix after `'dart:core::Type::'` used in [register].
+  static Map<String, Object? Function(List<Object?>)> typeMethodMap() => {
+        'toString#0': (args) => args[0].toString(),
+        'hashCode#0': (args) => args[0].hashCode,
+      };
+
   static void register(HostFunctionRegistry registry) {
     // ── Object core methods ──
 
