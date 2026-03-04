@@ -10,6 +10,9 @@ class _Dog extends _Animal {}
 
 class _Cat extends _Animal {}
 
+/// Subclass of _Dog for predicate fallback tests.
+class _Poodle extends _Dog {}
+
 /// Custom service class for dynamic registration tests.
 class _MyService {
   final String name;
@@ -24,6 +27,44 @@ void main() {
     fnRegistry = HostFunctionRegistry();
     CoreBindings.registerAll(fnRegistry);
     registry = HostDispatchRegistry(fnRegistry);
+
+    // Register core type dispatchers (previously hardcoded in constructor).
+    // This simulates what CorePlugin will do in Task 5.
+    registry.register(
+      ['dart:core::String::'],
+      type: String,
+    );
+    registry.register(
+      ['dart:core::int::', 'dart:core::num::'],
+      type: int,
+    );
+    registry.register(
+      ['dart:core::double::', 'dart:core::num::'],
+      type: double,
+    );
+    registry.register(
+      ['dart:core::bool::'],
+      type: bool,
+    );
+    registry.register(
+      ['dart:core::List::', 'dart:core::_GrowableList::', 'dart:core::Iterable::'],
+      type: List,
+      test: (o) => o is List,
+    );
+    registry.register(
+      ['dart:core::Map::', 'dart:collection::LinkedHashMap::'],
+      type: Map,
+      test: (o) => o is Map,
+    );
+    registry.register(
+      ['dart:core::Set::', 'dart:_compact_hash::_Set::', 'dart:core::Iterable::'],
+      type: Set,
+      test: (o) => o is Set,
+    );
+    registry.register(
+      ['dart:core::Duration::'],
+      type: Duration,
+    );
   });
 
   group('HostDispatchRegistry.lookup', () {
@@ -113,7 +154,7 @@ void main() {
     });
   });
 
-  // ── Phase 7.1.1 tests ──────────────────────────────────────────────
+  // ── 2-layer lookup tests ─────────────────────────────────────────
 
   group('runtimeType exact match cache', () {
     test('String lookup returns dispatcher and second lookup hits cache', () {
@@ -141,10 +182,10 @@ void main() {
     });
   });
 
-  group('is-chain fallback and caching', () {
-    test('growable list hits List is-check and caches to exactMap', () {
+  group('predicate fallback and caching', () {
+    test('growable list hits List predicate and caches to exactMap', () {
       // <int>[] creates a _GrowableList whose runtimeType != List.
-      // First lookup goes through is-chain (layer 2), caches result.
+      // First lookup goes through predicate scan (layer 2), caches result.
       final growable = <int>[1, 2, 3];
       final d1 = registry.lookup(growable);
       expect(d1, isNotNull);
@@ -153,10 +194,10 @@ void main() {
       final d2 = registry.lookup(<int>[4, 5]);
       expect(d2, isNotNull);
       expect(identical(d1, d2), isTrue,
-          reason: 'is-chain result should be cached to _exactMap');
+          reason: 'predicate result should be cached to _exactMap');
     });
 
-    test('Set subtype is resolved via is-chain and cached', () {
+    test('Set subtype is resolved via predicate and cached', () {
       final s1 = {1, 2, 3};
       final d1 = registry.lookup(s1);
       expect(d1, isNotNull);
@@ -167,11 +208,12 @@ void main() {
   });
 
   group('dynamic registration', () {
-    test('register custom class with test function', () {
-      // Register _MyService with a custom test and some dummy prefixes.
+    test('register custom class with type and test', () {
+      // Register _MyService with type and a test predicate.
       registry.register(
-        (obj) => obj is _MyService,
         ['custom::MyService::'],
+        type: _MyService,
+        test: (obj) => obj is _MyService,
       );
 
       final svc = _MyService('test');
@@ -182,8 +224,9 @@ void main() {
 
     test('registered dispatcher is a BindingLookupDispatcher', () {
       registry.register(
-        (obj) => obj is _MyService,
         ['custom::MyService::'],
+        type: _MyService,
+        test: (obj) => obj is _MyService,
       );
 
       final d = registry.lookup(_MyService('x'));
@@ -194,8 +237,9 @@ void main() {
 
     test('dynamic registration result is cached after first lookup', () {
       registry.register(
-        (obj) => obj is _MyService,
         ['custom::MyService::'],
+        type: _MyService,
+        test: (obj) => obj is _MyService,
       );
 
       final d1 = registry.lookup(_MyService('a'));
@@ -213,38 +257,39 @@ void main() {
   group('subtype safety', () {
     test('B instance matches B dispatcher, not A dispatcher', () {
       registry.register(
-        (obj) => obj is _Animal,
         ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
       );
       registry.register(
-        (obj) => obj is _Dog,
         ['custom::Dog::'],
+        type: _Dog,
+        test: (obj) => obj is _Dog,
       );
 
       final dogD = registry.lookup(_Dog());
       final animalD = registry.lookup(_Animal());
       expect(dogD, isNotNull);
       expect(animalD, isNotNull);
-      // Dog and Animal should get different dispatchers because _Dog's
-      // exact runtimeType matches the _Dog test before the _Animal test.
-      // (User entries are checked in reverse order, so later registrations
-      // take priority, or exact type caching ensures correct dispatch.)
+      // Dog has an exact type match, so it gets Dog dispatcher.
+      // Animal has its own exact type match.
       expect(identical(dogD, animalD), isFalse,
           reason: 'Dog should match Dog dispatcher, not Animal');
     });
 
     test('Cat instance matches Animal dispatcher (no Cat registered)', () {
       registry.register(
-        (obj) => obj is _Animal,
         ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
       );
 
       final catD = registry.lookup(_Cat());
       final animalD = registry.lookup(_Animal());
       expect(catD, isNotNull);
       expect(animalD, isNotNull);
-      // Cat has no dedicated registration, so it falls through to Animal.
-      // Both should get the same dispatcher (Animal's).
+      // Cat has no dedicated registration, so it falls through to Animal
+      // via the predicate scan.
       expect(identical(catD, animalD), isTrue,
           reason: 'Cat should fallback to Animal dispatcher');
     });
@@ -254,13 +299,15 @@ void main() {
     test('register A first then B — B instance matches B dispatcher', () {
       // Register Animal (supertype) first.
       registry.register(
-        (obj) => obj is _Animal,
         ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
       );
       // Register Dog (subtype) second.
       registry.register(
-        (obj) => obj is _Dog,
         ['custom::Dog::'],
+        type: _Dog,
+        test: (obj) => obj is _Dog,
       );
 
       final dogD = registry.lookup(_Dog());
@@ -269,27 +316,105 @@ void main() {
           reason: 'Dog should get Dog dispatcher regardless of order');
     });
 
-    test('register B first then A — uses last-registered matching entry', () {
-      // When Dog (subtype) is registered first and Animal (supertype) second,
-      // reverse traversal checks Animal first. Since `_Dog is _Animal` is
-      // true, Dog gets Animal's dispatcher. This is the expected behavior
-      // with opaque predicates — callers should register supertypes first
-      // and subtypes last for correct specificity.
+    test('register B first then A — type ensures order irrelevant', () {
+      // With the new register(), type always writes to _exactMap, so
+      // Dog gets its own dispatcher even when registered before Animal.
       registry.register(
-        (obj) => obj is _Dog,
         ['custom::Dog::'],
+        type: _Dog,
+        test: (obj) => obj is _Dog,
       );
       registry.register(
-        (obj) => obj is _Animal,
         ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
       );
 
       final dogD = registry.lookup(_Dog());
       final animalD = registry.lookup(_Animal());
-      // Both match Animal's entry (last registered), so they get the same
-      // dispatcher. This documents the "register subtypes last" convention.
-      expect(identical(dogD, animalD), isTrue,
-          reason: 'last-registered matching entry wins (reverse traversal)');
+      expect(dogD, isNotNull);
+      expect(animalD, isNotNull);
+      // Dog should get Dog dispatcher, not Animal's — order-independent.
+      expect(identical(dogD, animalD), isFalse,
+          reason: 'type ensures Dog gets Dog dispatcher regardless of order');
+    });
+  });
+
+  group('exact type preheat', () {
+    test('type populates _exactMap at registration time', () {
+      // Register with type — first lookup should be O(1) via _exactMap.
+      registry.register(
+        ['custom::MyService::'],
+        type: _MyService,
+      );
+
+      final d = registry.lookup(_MyService('x'));
+      expect(d, isNotNull,
+          reason: 'type should populate _exactMap immediately');
+    });
+
+    test('reversed order with type still dispatches correctly', () {
+      // Plugin B registers Dog first, Plugin A registers Animal second.
+      // With type, both get correct dispatchers.
+      registry.register(
+        ['custom::Dog::'],
+        type: _Dog,
+        test: (obj) => obj is _Dog,
+      );
+      registry.register(
+        ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
+      );
+
+      final dogD = registry.lookup(_Dog());
+      final animalD = registry.lookup(_Animal());
+      final catD = registry.lookup(_Cat());
+
+      // Dog and Animal each get their own dispatcher.
+      expect(identical(dogD, animalD), isFalse,
+          reason: 'Dog and Animal should have different dispatchers');
+
+      // Cat has no type registration, falls through to predicate
+      // scan and matches Animal's `is _Animal` test.
+      expect(catD, isNotNull);
+      expect(identical(catD, animalD), isTrue,
+          reason: 'Cat should fallback to Animal dispatcher via predicate');
+    });
+
+    test('Poodle (unregistered subtype) falls through to Dog predicate', () {
+      registry.register(
+        ['custom::Animal::'],
+        type: _Animal,
+        test: (obj) => obj is _Animal,
+      );
+      registry.register(
+        ['custom::Dog::'],
+        type: _Dog,
+        test: (obj) => obj is _Dog,
+      );
+
+      final poodleD = registry.lookup(_Poodle());
+      final dogD = registry.lookup(_Dog());
+
+      // Poodle has no type match, falls through to predicate scan.
+      // Dog's `is _Dog` predicate matches Poodle.
+      expect(poodleD, isNotNull);
+      expect(identical(poodleD, dogD), isTrue,
+          reason: 'Poodle should fallback to Dog dispatcher via predicate');
+    });
+
+    test('type without test still works for exact lookups', () {
+      // Register with type only — exact type is O(1), no predicate needed.
+      registry.register(
+        ['custom::MyService::'],
+        type: _MyService,
+      );
+
+      final d1 = registry.lookup(_MyService('a'));
+      final d2 = registry.lookup(_MyService('b'));
+      expect(identical(d1, d2), isTrue,
+          reason: 'same type should hit same preheated dispatcher');
     });
   });
 
@@ -332,6 +457,9 @@ void main() {
       // Simulate what DarticInterpreter would do: construct once, use
       // across multiple execute() calls.
       final reg1 = HostDispatchRegistry(fnRegistry);
+      // Register String so lookups work.
+      reg1.register(['dart:core::String::'], type: String);
+      reg1.register(['dart:core::int::', 'dart:core::num::'], type: int);
 
       // First "execution": lookup some types.
       final d1 = reg1.lookup('hello');
@@ -349,8 +477,9 @@ void main() {
     test('dynamic registrations persist across reuse', () {
       final reg = HostDispatchRegistry(fnRegistry);
       reg.register(
-        (obj) => obj is _MyService,
         ['custom::MyService::'],
+        type: _MyService,
+        test: (obj) => obj is _MyService,
       );
 
       // First use.

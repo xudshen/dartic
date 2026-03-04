@@ -112,8 +112,7 @@ class PluginContext {
       '$name::',
       if (superclasses != null) ...superclasses.map((s) => '$s::'),
     ];
-    final testFn = test ?? (Object o) => o.runtimeType == type;
-    _hostDispatchRegistry.register(testFn, prefixes, exactType: type);
+    _hostDispatchRegistry.register(prefixes, type: type, test: test);
 
     // 3. Register bridge factory (deferred resolution by name).
     if (bridgeFactory != null) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartic/src/bridge/core_bindings.dart';
+import 'package:dartic/src/bridge/host_dispatch_registry.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
@@ -92,8 +93,11 @@ Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
   CoreBindings.registerAll(registry);
+  final dispatchRegistry = HostDispatchRegistry(registry);
+  registerCoreDispatchTypes(dispatchRegistry);
   final interp = DarticInterpreter(
     hostFunctionRegistry: registry,
+    hostDispatchRegistry: dispatchRegistry,
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );
   interp.execute(module);
@@ -108,8 +112,11 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
   final module = await compileDart(source);
   final registry = HostFunctionRegistry();
   CoreBindings.registerAll(registry, printFn: (v) => printLog.add('$v'));
+  final dispatchRegistry = HostDispatchRegistry(registry);
+  registerCoreDispatchTypes(dispatchRegistry);
   final interp = DarticInterpreter(
     hostFunctionRegistry: registry,
+    hostDispatchRegistry: dispatchRegistry,
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );
   interp.execute(module);
@@ -177,4 +184,51 @@ Future<Object?> compileAndRunMultiFile(
   );
   interp.execute(module);
   return interp.entryResult;
+}
+
+/// Registers core dart:core type dispatchers on a [HostDispatchRegistry].
+///
+/// This simulates what CorePlugin will do in Task 5. Used by test helpers
+/// that need dynamic dispatch for core types (String, int, List, etc.).
+void registerCoreDispatchTypes(HostDispatchRegistry registry) {
+  registry.register(
+    ['dart:core::String::'],
+    type: String,
+  );
+  registry.register(
+    ['dart:core::int::', 'dart:core::num::'],
+    type: int,
+  );
+  registry.register(
+    ['dart:core::double::', 'dart:core::num::'],
+    type: double,
+  );
+  registry.register(
+    ['dart:core::bool::'],
+    type: bool,
+  );
+  registry.register(
+    ['dart:core::List::', 'dart:core::_GrowableList::', 'dart:core::Iterable::'],
+    type: List,
+    test: (o) => o is List,
+  );
+  registry.register(
+    ['dart:core::Map::', 'dart:collection::LinkedHashMap::'],
+    type: Map,
+    test: (o) => o is Map,
+  );
+  registry.register(
+    ['dart:core::Set::', 'dart:_compact_hash::_Set::', 'dart:core::Iterable::'],
+    type: Set,
+    test: (o) => o is Set,
+  );
+  registry.register(
+    ['dart:core::Duration::'],
+    type: Duration,
+  );
+  registry.register(
+    ['dart:core::Invocation::'],
+    type: Invocation,
+    test: (o) => o is Invocation,
+  );
 }
