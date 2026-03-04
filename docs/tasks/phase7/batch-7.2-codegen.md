@@ -140,9 +140,10 @@
 1. **读设计文档** — API 设计文档 "包结构"节、"codegen 生成的 DarticPlugin 结构"节、Ch4 "BridgeGenerator" 输出目录结构：
    - codegen 为每个 @DarticExport 标注文件生成 `.dartic.dart` 文件
    - 每个文件生成一个 DarticPlugin 实现类，register() 内部调用 registerClass/registerBinding
-   - 普通导出类 → registerClass(name, test, methods)
-   - Bridge 类 → registerClass(name, test, methods, bridgeFactory: factory) + super 转发器注册
+   - 普通导出类 → registerClass(name, test, type, methods)
+   - Bridge 类 → registerClass(name, test, type, methods, bridgeFactory: factory) + super 转发器注册
    - 顶层函数 → registerBinding(name, wrapper)
+   - 所有 registerClass 调用均包含 `type: ClassName` 参数（编译期精确类型字面量），预热 `_exactMap` 实现注册顺序无关
 
 2. **写测试** —
    - **Plugin 生成**：含 2 个 @DarticExport 类的文件 → 生成 Plugin 类含 register() → register() 内有 2 个 registerClass 调用
@@ -235,5 +236,5 @@ feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runne
 - [x] `fvm dart analyze` 零警告（所有包）
 - [x] `fvm dart test` 全部通过（所有包：annotation 9 + generator 96 = 105）
 - [x] code review 修复完成（3 CRITICAL + 3 IMPORTANT）
-- [ ] commit 已提交
+- [x] commit 已提交 (7aac8f3)
 - [ ] overview.md 已更新

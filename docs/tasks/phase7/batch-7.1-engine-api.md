@@ -25,7 +25,7 @@
    - 问题：用户注册自定义 host 类型时，`is` 检查有子类型传递性（B extends A 的实例对 `is A` 也返回 true），注册顺序不对会导致子类 dispatcher 永远不被命中
    - 按继承深度排序不可行（Dart 多接口 DAG 无法编码为单一深度值）
    - 方案：runtimeType 精确匹配 O(1) + is-chain fallback + 缓存（inline cache 思路：慢路径命中后写入 `_exactMap`，后续全 O(1)）
-   - 新增 `register(test, prefixes)` 方法，支持用户宿主类参与动态分发
+   - 新增 `register(test, prefixes, {Type? exactType})` 方法，支持用户宿主类参与动态分发。`exactType` 在注册时直接写入 `_exactMap`，使注册顺序无关（与业界 VM 的精确类型标识对齐）
    - 生命周期从 per-execute 内部创建改为外部传入（DarticEngine 持有）
 
 2. **写测试** —
@@ -33,7 +33,7 @@
    - **is-chain fallback**：传入一个 `_GrowableList` 实例（runtimeType 非 List）→ is List 匹配成功 → 缓存到 `_exactMap`
    - **动态注册**：注册自定义类 `class MyService` 的 test + prefixes → lookup 正确路由
    - **子类型安全**：注册 A 和 B（B extends A）→ B 实例 → 精确匹配 B dispatcher（不会误中 A）
-   - **注册顺序无关性**：先注册 A 再注册 B → B 实例仍正确匹配 B（runtimeType 精确匹配保证顺序无关）
+   - **注册顺序无关性**：无论先注册 A 还是先注册 B，只要传入 `exactType`，B 实例始终正确匹配 B dispatcher（`_exactMap` 预热保证顺序无关，与 Dart VM CID / JVM klass 精确类型标识对齐）
    - **核心类型快路径**：dart:core 类型保持原有 is 检查链作为 fallback，性能不退化
    - **外部传入生命周期**：构造 HostDispatchRegistry → 传入 DarticInterpreter → 多次 execute() 共享同一注册表
 
@@ -41,7 +41,7 @@
    - 重构 `lookup(Object receiver)` 为三层查找：① `_exactMap[receiver.runtimeType]` 精确匹配 ② 硬编码核心类型 is 链（快路径）③ 动态注册 is 链（`_userEntries`，按注册顺序遍历）。命中后缓存到 `_exactMap`
    - 新增 `_exactMap: Map<Type, HostDispatcher>` 缓存字段
    - 新增 `_userEntries: List<({bool Function(Object) test, HostDispatcher dispatcher})>` 动态注册列表
-   - 新增 `register(bool Function(Object) test, List<String> prefixes)` 方法：创建 BindingLookupDispatcher + 加入 `_userEntries`
+   - 新增 `register(bool Function(Object) test, List<String> prefixes, {Type? exactType})` 方法：创建 BindingLookupDispatcher + 加入 `_userEntries`；若 `exactType` 非 null，同时写入 `_exactMap` 实现注册时 O(1) 预热
    - 构造函数保持接受 `HostFunctionRegistry`，不再在 `DarticInterpreter.execute()` 中创建
    - 修改 DarticInterpreter：`_hostClassRegistry` 从内部创建改为构造函数接受外部传入（可选）
 
@@ -271,6 +271,7 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 - **onError 与 DarticError 分流**：`call()` 的 try-catch 链用 `on DarticError { rethrow; }` 保证资源错误（FuelExhaustedError/CallDepthExceededError/ExecutionTimeoutError）始终绕过 onError 传播到宿主。脚本异常走通用 `catch (e, st)` 路径交给 onError
 - **重入测试策略**：由于编译器只对 `dart:` 库生成 CALL_HOST，无法轻松注册自定义宿主函数让编译器识别。采用 `onPrint` 回调作为重入触发点——print() 是 CALL_HOST，onPrint 在宿主回调中调用 engine.call() 触发 `_isExecuting` 重入路径。支持多层嵌套重入
 - **InterfaceTypeTemplate 序列化限制**：async 函数在常量池中产生 `InterfaceTypeTemplate` 类型的 ref 常量，当前序列化器仅支持 null 和 String ref 类型，导致含 async 函数的模块无法通过 .darb 往返。async 函数的 engine.call() 测试需等待常量池序列化扩展
+- **注册顺序无关化（post-7.1 补丁）**：`register()` 新增 `{Type? exactType}` 可选参数，注册时直接写入 `_exactMap`。解决多 Plugin 跨模块注册时无法保证 "先超类后子类" 顺序的问题。与业界 7 个 VM/运行时对齐（Dart VM CID / JVM klass / V8 Hidden Class / CPython ob_type / Lua metatable / Wren class / Truffle @ExportLibrary），核心共识：精确类型标识做分发，不用谓词匹配。同步更新 `DarticEngine.registerClass()` 增加 `Type? type` 参数透传，codegen 生成 `type: ClassName` 参数
 
 ## Batch 完成检查
 

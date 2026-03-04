@@ -736,7 +736,7 @@ int main() => add(1, 2); // => 3
 
 ### Batch 7.1: DarticEngine 公开 API + 内部重构
 
-- [ ] 7.1.1 HostDispatchRegistry 重构 — 新增 `register(test, prefixes)` 方法支持动态注册用户宿主类；查找优先级：硬编码核心类型（快路径）→ 动态注册类型（按注册顺序遍历）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_dispatch_registry.dart`
+- [ ] 7.1.1 HostDispatchRegistry 重构 — 新增 `register(test, prefixes, {Type? exactType})` 方法支持动态注册用户宿主类；三层查找：`_exactMap[runtimeType]` O(1) → 硬编码核心类型 is 链 → 动态注册 predicate scan；`exactType` 注册时预热 `_exactMap` 实现注册顺序无关（与业界 VM 精确类型标识对齐）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_dispatch_registry.dart`
 - [ ] 7.1.2 BridgeFactoryRegistry + BridgeDispatch — BridgeFactoryRegistry（className → BridgeFactory 映射表），BridgeDispatch（invoke/get/set 三个分发方法 + `#_bridgeNotOverridden` 哨兵值），NEW_INSTANCE 指令查找 BridgeFactoryRegistry → 新增 `lib/src/bridge/bridge_factory_registry.dart`, `lib/src/bridge/bridge_dispatch.dart`
 - [ ] 7.1.3 DarticModule 导出表 — 编译器为顶层函数生成 `exportedFunctions: Map<String, int>`（名称→funcId）；.darb 序列化新增导出表段；DarticInterpreter 新增 `executeFunction(module, funcId, args)` → 扩展 `lib/src/compiler/compiler.dart`, `lib/src/bytecode/module.dart`, `lib/src/runtime/interpreter.dart`
 - [ ] 7.1.4 错误模型 — CallDepthExceededError 从通用 DarticError 提升为独立子类；DarticLoadError（字节码加载/校验/绑定解析失败）；DarticInternalError（解释器实现 bug） → `lib/src/api/errors.dart`
