@@ -85,6 +85,22 @@ int main() => f();
       expect(restored.entryFuncId, original.entryFuncId);
     });
 
+    test('TypeTemplate refs survive serialize/deserialize', () async {
+      // Compiling a program with `is` type checks produces InterfaceTypeTemplate
+      // in the constant pool. Verify the serializer does not throw.
+      final module = await compileDart('''
+bool main() {
+  Object x = 42;
+  return x is int;
+}
+''');
+      // This line used to throw StateError('Unsupported ref type: InterfaceTypeTemplate').
+      final restored = _roundtrip(module);
+
+      // Verify refs partition roundtrips (TypeTemplate has == defined).
+      expect(restored.constantPool.refs, module.constantPool.refs);
+    });
+
     test('tampered serialized data is detected by checksum', () async {
       final module = await compileDart('''
 int main() => 42;

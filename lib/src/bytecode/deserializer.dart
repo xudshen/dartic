@@ -3,6 +3,7 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
+import '../compiler/type_template.dart';
 import 'constant_pool.dart';
 import 'format.dart';
 import 'module.dart';
@@ -109,6 +110,7 @@ class DarticDeserializer {
 
   ConstantPool _readConstantPool(_ByteReader r) {
     // refs partition
+    // Tag encoding: 0=null, 1=String, 2=TypeTemplate, 3=List<Object> (record shape)
     final refCount = r.readUint32();
     final refs = <Object?>[];
     for (var i = 0; i < refCount; i++) {
@@ -118,6 +120,28 @@ class DarticDeserializer {
           refs.add(null);
         case 1:
           refs.add(r.readString());
+        case 2:
+          // TypeTemplate: length-prefixed array of uint32s
+          final intCount = r.readUint32();
+          final ints = List<int>.generate(intCount, (_) => r.readUint32());
+          final (template, _) = TypeTemplate.deserialize(ints, 0);
+          refs.add(template);
+        case 3:
+          // Record shape descriptor: [int|String, ...]
+          final elemCount = r.readUint32();
+          final shape = <Object>[];
+          for (var j = 0; j < elemCount; j++) {
+            final elemTag = r.readByte();
+            switch (elemTag) {
+              case 0:
+                shape.add(r.readUint32());
+              case 1:
+                shape.add(r.readString());
+              default:
+                throw FormatException('Unknown shape element tag: $elemTag');
+            }
+          }
+          refs.add(shape);
         default:
           throw FormatException('Unknown ref tag: $tag');
       }

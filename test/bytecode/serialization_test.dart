@@ -7,6 +7,7 @@ import 'package:dartic/src/bytecode/format.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic/src/compiler/type_template.dart';
 import 'package:test/test.dart';
 
 import '../helpers/module_helper.dart';
@@ -416,6 +417,149 @@ void main() {
         () => DarticDeserializer().deserialize(Uint8List(8)),
         throwsA(isA<FormatException>()),
       );
+    });
+  });
+
+  // ── TypeTemplate refs roundtrip ──
+
+  group('TypeTemplate refs roundtrip', () {
+    test('InterfaceTypeTemplate (no type args) roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(InterfaceTypeTemplate(classId: 42, typeArgs: []));
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      expect(result.constantPool.refCount, 1);
+      final ref = result.constantPool.getRef(0);
+      expect(ref, isA<InterfaceTypeTemplate>());
+      final t = ref as InterfaceTypeTemplate;
+      expect(t.classId, 42);
+      expect(t.typeArgs, isEmpty);
+    });
+
+    test('InterfaceTypeTemplate with type args roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(InterfaceTypeTemplate(classId: 10, typeArgs: [
+        InterfaceTypeTemplate(classId: 5, typeArgs: []),
+      ]));
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      final ref = result.constantPool.getRef(0) as InterfaceTypeTemplate;
+      expect(ref.classId, 10);
+      expect(ref.typeArgs.length, 1);
+      expect((ref.typeArgs[0] as InterfaceTypeTemplate).classId, 5);
+    });
+
+    test('NullableTemplate roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(NullableTemplate(
+        inner: InterfaceTypeTemplate(classId: 7, typeArgs: []),
+      ));
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      final ref = result.constantPool.getRef(0) as NullableTemplate;
+      expect((ref.inner as InterfaceTypeTemplate).classId, 7);
+    });
+
+    test('VoidTemplate, DynamicTemplate, NeverTemplate roundtrip', () {
+      final pool = ConstantPool();
+      pool.addRef(const VoidTemplate());
+      pool.addRef(const DynamicTemplate());
+      pool.addRef(const NeverTemplate());
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      expect(result.constantPool.refCount, 3);
+      expect(result.constantPool.getRef(0), isA<VoidTemplate>());
+      expect(result.constantPool.getRef(1), isA<DynamicTemplate>());
+      expect(result.constantPool.getRef(2), isA<NeverTemplate>());
+    });
+
+    test('FunctionTypeTemplate roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(FunctionTypeTemplate(
+        returnType: const VoidTemplate(),
+        positionalParams: [
+          InterfaceTypeTemplate(classId: 1, typeArgs: []),
+        ],
+        namedParams: [],
+        requiredParamCount: 1,
+      ));
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      final ref = result.constantPool.getRef(0) as FunctionTypeTemplate;
+      expect(ref.returnType, isA<VoidTemplate>());
+      expect(ref.positionalParams.length, 1);
+      expect(ref.requiredParamCount, 1);
+    });
+
+    test('TypeParameterTemplate roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(TypeParameterTemplate(index: 0, isFunctionTypeParam: false));
+      pool.addRef(TypeParameterTemplate(index: 2, isFunctionTypeParam: true));
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      final t0 = result.constantPool.getRef(0) as TypeParameterTemplate;
+      expect(t0.index, 0);
+      expect(t0.isFunctionTypeParam, false);
+
+      final t1 = result.constantPool.getRef(1) as TypeParameterTemplate;
+      expect(t1.index, 2);
+      expect(t1.isFunctionTypeParam, true);
+    });
+
+    test('mixed refs (null, String, TypeTemplate) roundtrip together', () {
+      final pool = ConstantPool();
+      pool.addRef(null);
+      pool.addRef('hello');
+      pool.addRef(InterfaceTypeTemplate(classId: 3, typeArgs: []));
+      pool.addRef('world');
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      expect(result.constantPool.refCount, 4);
+      expect(result.constantPool.getRef(0), isNull);
+      expect(result.constantPool.getRef(1), 'hello');
+      expect(result.constantPool.getRef(2), isA<InterfaceTypeTemplate>());
+      expect(result.constantPool.getRef(3), 'world');
+    });
+  });
+
+  // ── Record shape refs roundtrip ──
+
+  group('record shape refs roundtrip', () {
+    test('empty record shape [0] roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(<Object>[0]);
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      expect(result.constantPool.refCount, 1);
+      final ref = result.constantPool.getRef(0) as List<Object>;
+      expect(ref, [0]);
+    });
+
+    test('record shape with named fields roundtrips', () {
+      final pool = ConstantPool();
+      pool.addRef(<Object>[2, 'x', 'y']);
+
+      final module = buildModuleFrom(pool: pool);
+      final result = roundtripModule(module);
+
+      final ref = result.constantPool.getRef(0) as List<Object>;
+      expect(ref, [2, 'x', 'y']);
     });
   });
 }

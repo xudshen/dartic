@@ -3,6 +3,7 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
+import '../compiler/type_template.dart';
 import 'constant_pool.dart';
 import 'format.dart';
 import 'module.dart';
@@ -59,6 +60,7 @@ class DarticSerializer {
 
   void _writeConstantPool(_ByteWriter w, ConstantPool pool) {
     // refs partition
+    // Tag encoding: 0=null, 1=String, 2=TypeTemplate, 3=List<Object> (record shape)
     final refs = pool.refs;
     w.writeUint32(refs.length);
     for (final ref in refs) {
@@ -67,6 +69,30 @@ class DarticSerializer {
       } else if (ref is String) {
         w.addByte(1);
         w.writeString(ref);
+      } else if (ref is TypeTemplate) {
+        w.addByte(2);
+        final ints = ref.serialize();
+        w.writeUint32(ints.length);
+        for (final v in ints) {
+          w.writeUint32(v);
+        }
+      } else if (ref is List<Object>) {
+        // Record shape descriptor: [positionalCount, namedName1, ...]
+        w.addByte(3);
+        w.writeUint32(ref.length);
+        for (final elem in ref) {
+          if (elem is int) {
+            w.addByte(0);
+            w.writeUint32(elem);
+          } else if (elem is String) {
+            w.addByte(1);
+            w.writeString(elem);
+          } else {
+            throw StateError(
+              'Unsupported record shape element: ${elem.runtimeType}',
+            );
+          }
+        }
       } else {
         throw StateError('Unsupported ref type: ${ref.runtimeType}');
       }
