@@ -218,12 +218,12 @@ class DarticEngine {
   /// `"dart:core::::print#1"`.
   ///
   /// Must be called before [loadBytecode].
-  /// Throws [StateError] if the engine is disposed.
+  /// Throws [StateError] if the engine is loaded or disposed.
   void registerBinding(
     String name,
     Object? Function(List<Object?>) wrapper,
   ) {
-    _checkNotDisposed();
+    _checkNotLoadedOrDisposed();
     _pluginContext.registerBinding(name, wrapper);
   }
 
@@ -252,7 +252,7 @@ class DarticEngine {
   /// scripts can extend).
   ///
   /// Must be called before [loadBytecode].
-  /// Throws [StateError] if the engine is disposed.
+  /// Throws [StateError] if the engine is loaded or disposed.
   void registerClass({
     required String name,
     required Type type,
@@ -261,7 +261,7 @@ class DarticEngine {
     List<String>? superclasses,
     BridgeFactory? bridgeFactory,
   }) {
-    _checkNotDisposed();
+    _checkNotLoadedOrDisposed();
     _pluginContext.registerClass(
       name: name,
       type: type,
@@ -306,6 +306,18 @@ class DarticEngine {
   void _checkNotDisposed() {
     if (_state == _EngineState.disposed) {
       throw StateError('DarticEngine has been disposed.');
+    }
+  }
+
+  void _checkNotLoadedOrDisposed() {
+    if (_state == _EngineState.disposed) {
+      throw StateError('DarticEngine has been disposed.');
+    }
+    if (_state == _EngineState.loaded) {
+      throw StateError(
+        'Cannot register bindings after loadBytecode(). '
+        'All bindings must be registered before loading bytecode.',
+      );
     }
   }
 }

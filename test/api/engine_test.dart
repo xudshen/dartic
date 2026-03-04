@@ -92,6 +92,30 @@ void main() {
       );
       engine.dispose();
     });
+
+    test('registerBinding after loadBytecode throws StateError', () {
+      final engine = DarticEngine();
+      engine.loadBytecode(voidMainBytes);
+      expect(
+        () => engine.registerBinding('test::::foo#0', (_) => null),
+        throwsStateError,
+      );
+      engine.dispose();
+    });
+
+    test('registerClass after loadBytecode throws StateError', () {
+      final engine = DarticEngine();
+      engine.loadBytecode(voidMainBytes);
+      expect(
+        () => engine.registerClass(
+          name: 'test::Foo',
+          type: String,
+          methods: {'bar#0': (_) => null},
+        ),
+        throwsStateError,
+      );
+      engine.dispose();
+    });
   });
 
   group('DarticConfig', () {
