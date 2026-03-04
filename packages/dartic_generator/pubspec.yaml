@@ -1,6 +1,6 @@
 name: dartic_generator
-description: Code generator for dartic — produces HostClassWrapper, Bridge classes, and DarticPlugin registration code from @DarticExport annotations.
-version: 0.1.0
+description: CLI code generator for dartic bindings and plugins.
+version: 0.2.0
 publish_to: none
 
 environment:
@@ -8,7 +8,9 @@ environment:
 
 dependencies:
   analyzer: ^8.0.0
-  build: ^4.0.4
+  yaml: ^3.1.0
+  args: ^2.6.0
+  path: ^1.9.0
   dartic_annotation:
     path: ../dartic_annotation
 

@@ -1,8 +1,0 @@
-builders:
-  dartic_generator:
-    import: "package:dartic_generator/builder.dart"
-    builder_factories: ["darticBuilder"]
-    build_extensions: {".dart": [".dartic.dart"]}
-    auto_apply: dependents
-    build_to: source
-    applies_builders: []
