@@ -6,9 +6,9 @@
 /// The generated class:
 /// - Extends [DarticPlugin]
 /// - Has a `name` getter returning the source file path
-/// - Has a `register(DarticEngine engine)` method that calls
-///   `engine.registerClass(...)` for each exported class and
-///   `engine.registerBinding(...)` for each exported top-level function
+/// - Has a `register(PluginContext context)` method that calls
+///   `context.registerClass(...)` for each exported class and
+///   `context.registerBinding(...)` for each exported top-level function
 library;
 
 import 'package:analyzer/dart/element/element.dart';
@@ -61,7 +61,7 @@ String generatePluginSource(LibraryElement library, String filePath) {
   buf.writeln("  String get name => '$fileName';");
   buf.writeln();
   buf.writeln('  @override');
-  buf.writeln('  void register(DarticEngine engine) {');
+  buf.writeln('  void register(PluginContext context) {');
 
   // Register each exported class.
   for (final cls in exportedClasses) {
@@ -81,7 +81,7 @@ String generatePluginSource(LibraryElement library, String filePath) {
   // Register super forwarder bindings for bridge classes.
   for (final bridge in bridgeResults) {
     for (final fwd in bridge.superForwarders) {
-      buf.writeln("    engine.registerBinding(");
+      buf.writeln("    context.registerBinding(");
       buf.writeln("      '${fwd.bindingName}',");
       buf.writeln("      ${_superForwarderClosure(fwd, bridge)},");
       buf.writeln("    );");
@@ -102,9 +102,10 @@ void _writeClassRegistration(
   BridgeClassResult? bridge,
   String libraryUri,
 ) {
-  buf.writeln('    engine.registerClass(');
+  buf.writeln('    context.registerClass(');
   buf.writeln("      name: '${wrapper.qualifiedName}',");
   buf.writeln('      test: (o) => o is ${wrapper.className},');
+  buf.writeln('      type: ${wrapper.className},');
   buf.writeln('      methods: {');
 
   // Instance method wrappers.
@@ -124,7 +125,7 @@ void _writeClassRegistration(
 
   // Static method bindings.
   for (final entry in wrapper.staticEntries) {
-    buf.writeln("    engine.registerBinding('${entry.fullBindingName}', "
+    buf.writeln("    context.registerBinding('${entry.fullBindingName}', "
         '${entry.closureSource});');
   }
 }
@@ -143,7 +144,7 @@ void _writeTopLevelFunctionRegistration(
   for (final argCount in argCounts) {
     final bindingName = formatBindingName(libraryUri, '', name, argCount);
     final closure = _buildTopLevelClosure(name, params, argCount);
-    buf.writeln("    engine.registerBinding('$bindingName', $closure);");
+    buf.writeln("    context.registerBinding('$bindingName', $closure);");
   }
 }
 

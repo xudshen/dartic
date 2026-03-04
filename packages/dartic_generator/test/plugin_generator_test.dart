@@ -29,11 +29,11 @@ void main() {
     });
 
     test('has a register method', () {
-      expect(source, contains('void register(DarticEngine engine)'));
+      expect(source, contains('void register(PluginContext context)'));
     });
 
     test('registers Greeter class (non-bridge)', () {
-      expect(source, contains('engine.registerClass('));
+      expect(source, contains('context.registerClass('));
       expect(source, contains('::Greeter'));
       expect(source, contains('is Greeter'));
     });
@@ -42,6 +42,13 @@ void main() {
       expect(source, contains('bridgeFactory:'));
       expect(source, contains('::Animal'));
       expect(source, contains('is Animal'));
+    });
+
+    test('registers classes with type: parameter for exact dispatch', () {
+      // All registerClass calls should include type: ClassName for O(1)
+      // dispatch via _exactMap (registration order independence).
+      expect(source, contains('type: Greeter,'));
+      expect(source, contains('type: Animal,'));
     });
 
     test('does not include bridgeFactory for Greeter', () {
@@ -67,7 +74,7 @@ void main() {
     });
 
     test('registers formatGreeting as top-level binding', () {
-      expect(source, contains('engine.registerBinding('));
+      expect(source, contains('context.registerBinding('));
       expect(source, contains('formatGreeting'));
     });
 

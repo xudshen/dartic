@@ -11,6 +11,7 @@ library;
 export 'src/api/config.dart';
 export 'src/api/engine.dart';
 export 'src/api/plugin.dart';
+export 'src/api/plugin_context.dart';
 export 'src/bridge/bridge_factory_registry.dart'
     show BridgeFactory, BridgeFactoryRegistry, DarticRuntime;
 export 'src/bridge/host_dispatch_registry.dart'

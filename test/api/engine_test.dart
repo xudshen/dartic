@@ -18,14 +18,14 @@ Future<Uint8List> compileToDarb(String source) async {
 class _TestPlugin extends DarticPlugin {
   _TestPlugin({required this.onRegister, this.pluginName = 'test'});
 
-  final void Function(DarticEngine) onRegister;
+  final void Function(PluginContext) onRegister;
   final String pluginName;
 
   @override
   String get name => pluginName;
 
   @override
-  void register(DarticEngine engine) => onRegister(engine);
+  void register(PluginContext context) => onRegister(context);
 }
 
 void main() {
@@ -145,12 +145,12 @@ void main() {
       engine.dispose();
     });
 
-    test('plugin receives the engine instance', () {
-      DarticEngine? receivedEngine;
-      final plugin = _TestPlugin(onRegister: (e) => receivedEngine = e);
-      final engine = DarticEngine(plugins: [plugin]);
-      expect(receivedEngine, same(engine));
-      engine.dispose();
+    test('plugin receives a PluginContext', () {
+      PluginContext? receivedContext;
+      final plugin =
+          _TestPlugin(onRegister: (ctx) => receivedContext = ctx);
+      DarticEngine(plugins: [plugin]);
+      expect(receivedContext, isNotNull);
     });
 
     test('multiple plugins are all registered', () {

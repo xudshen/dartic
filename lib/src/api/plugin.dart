@@ -4,15 +4,15 @@
 /// into the engine. The codegen (dartic_generator) produces DarticPlugin
 /// implementations for @DarticExport-annotated classes.
 ///
-/// See: docs/plans/2026-02-20-bridge-api-design.md "DarticPlugin"
+/// See: docs/plans/2026-03-03-plugin-registry-reorganization-design.md
 library;
 
-import 'engine.dart';
+import 'plugin_context.dart';
 
 /// Abstract plugin interface for registering bindings into a [DarticEngine].
 ///
-/// Implementations call `engine.registerClass(...)` and/or
-/// `engine.registerBinding(...)` inside [register].
+/// Implementations call `context.registerClass(...)` and/or
+/// `context.registerBinding(...)` inside [register].
 ///
 /// Usage:
 /// ```dart
@@ -21,8 +21,8 @@ import 'engine.dart';
 ///   String get name => 'my_plugin';
 ///
 ///   @override
-///   void register(DarticEngine engine) {
-///     engine.registerBinding('myLib::::greet#1', (args) => 'Hello ${args[0]}');
+///   void register(PluginContext context) {
+///     context.registerBinding('myLib::::greet#1', (args) => 'Hello ${args[0]}');
 ///   }
 /// }
 /// ```
@@ -34,5 +34,5 @@ abstract class DarticPlugin {
   ///
   /// The engine guarantees this is called during construction or
   /// via [DarticEngine.addPlugin], before [DarticEngine.loadBytecode].
-  void register(DarticEngine engine);
+  void register(PluginContext context);
 }

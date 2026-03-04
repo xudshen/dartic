@@ -22,6 +22,7 @@ import '../runtime/error.dart';
 import '../runtime/interpreter.dart';
 import 'config.dart';
 import 'plugin.dart';
+import 'plugin_context.dart';
 
 /// Engine state machine states.
 enum _EngineState { created, loaded, disposed }
@@ -77,6 +78,15 @@ class DarticEngine {
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
     _proxyManager = DarticProxyManager();
 
+    // Create the plugin context for registration-only access.
+    _pluginContext = PluginContext(
+      config: config,
+      hostFunctionRegistry: _hostFunctionRegistry,
+      hostDispatchRegistry: _hostDispatchRegistry,
+      bridgeFactoryRegistry: _bridgeFactoryRegistry,
+      pendingBridgeFactories: _pendingBridgeFactories,
+    );
+
     // Create the interpreter with config-mapped parameters.
     _interpreter = DarticInterpreter(
       hostFunctionRegistry: _hostFunctionRegistry,
@@ -89,7 +99,7 @@ class DarticEngine {
 
     // Register plugins.
     for (final plugin in plugins) {
-      plugin.register(this);
+      plugin.register(_pluginContext);
     }
   }
 
@@ -100,6 +110,7 @@ class DarticEngine {
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
   late final DarticProxyManager _proxyManager;
   late final DarticInterpreter _interpreter;
+  late final PluginContext _pluginContext;
 
   _EngineState _state = _EngineState.created;
 
@@ -247,24 +258,29 @@ class DarticEngine {
     Object? Function(List<Object?>) wrapper,
   ) {
     _checkNotDisposed();
-    _hostFunctionRegistry.register(name, wrapper);
+    _pluginContext.registerBinding(name, wrapper);
   }
 
   /// Registers a host class with bindings, dynamic dispatch, and optional
   /// bridge factory.
   ///
-  /// Coordinates three internal registries:
+  /// Coordinates three internal registries via [PluginContext]:
   /// 1. **HostFunctionRegistry**: registers each method in [methods]
-  /// 2. **HostDispatchRegistry**: registers [test] + [name] for dynamic dispatch
+  /// 2. **HostDispatchRegistry**: registers dispatch for [type] (and optional [test])
   /// 3. **BridgeFactoryRegistry** (optional): registers [bridgeFactory]
   ///
   /// [name] is the fully-qualified class name
   /// (e.g. `"package:my_app/service.dart::MyService"`).
   ///
-  /// [test] is a type-check predicate for dynamic dispatch routing.
+  /// [type] is the Dart [Type] for O(1) exact dispatch lookup.
+  ///
+  /// [test] is an optional type-check predicate for generic/polymorphic types
+  /// where `runtimeType != type`.
   ///
   /// [methods] maps `"methodName#argCount"` to typed wrapper closures.
   /// Each wrapper receives `[receiver, ...userArgs]`.
+  ///
+  /// [superclasses] provides additional binding key prefixes for inheritance.
   ///
   /// [bridgeFactory] is the optional Bridge factory (for classes that
   /// scripts can extend).
@@ -273,26 +289,21 @@ class DarticEngine {
   /// Throws [StateError] if the engine is disposed.
   void registerClass({
     required String name,
-    required bool Function(Object) test,
+    required Type type,
+    bool Function(Object)? test,
     required Map<String, Object? Function(List<Object?>)> methods,
+    List<String>? superclasses,
     BridgeFactory? bridgeFactory,
   }) {
     _checkNotDisposed();
-
-    // 1. Register each method binding.
-    for (final entry in methods.entries) {
-      _hostFunctionRegistry.register('$name::${entry.key}', entry.value);
-    }
-
-    // 2. Register dynamic dispatch.
-    _hostDispatchRegistry.register(test, [name]);
-
-    // 3. Register bridge factory (if provided).
-    // BridgeFactoryRegistry uses int classId, which is only available after
-    // compilation. Store by name for deferred resolution during loadBytecode.
-    if (bridgeFactory != null) {
-      _pendingBridgeFactories[name] = bridgeFactory;
-    }
+    _pluginContext.registerClass(
+      name: name,
+      type: type,
+      test: test,
+      methods: methods,
+      superclasses: superclasses,
+      bridgeFactory: bridgeFactory,
+    );
   }
 
   /// Adds a plugin to the engine.
@@ -311,7 +322,7 @@ class DarticEngine {
         'All plugins must be registered before loading bytecode.',
       );
     }
-    plugin.register(this);
+    plugin.register(_pluginContext);
   }
 
   /// Releases all resources held by the engine.
