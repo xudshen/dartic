@@ -9,13 +9,9 @@
 /// See: docs/design/04-interop.md
 library;
 
-import '../host_function_registry.dart';
-
 /// Registers all `dart:core::Duration` host function bindings.
 abstract final class DurationBindings {
   /// Returns a map of all `Duration` bindings keyed by `"methodName#argCount"`.
-  ///
-  /// The keys match the suffix after `'dart:core::Duration::'` used in [register].
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         // ── Getters ──
         'inDays#0': (args) => (args[0] as Duration).inDays,
@@ -69,117 +65,4 @@ abstract final class DurationBindings {
         'minutesPerHour#0': (args) => Duration.minutesPerHour,
         'hoursPerDay#0': (args) => Duration.hoursPerDay,
       };
-
-  static void register(HostFunctionRegistry registry) {
-    // ── Getters ──
-    registry.register('dart:core::Duration::inDays#0', (args) {
-      return (args[0] as Duration).inDays;
-    });
-    registry.register('dart:core::Duration::inHours#0', (args) {
-      return (args[0] as Duration).inHours;
-    });
-    registry.register('dart:core::Duration::inMinutes#0', (args) {
-      return (args[0] as Duration).inMinutes;
-    });
-    registry.register('dart:core::Duration::inSeconds#0', (args) {
-      return (args[0] as Duration).inSeconds;
-    });
-    registry.register('dart:core::Duration::inMilliseconds#0', (args) {
-      return (args[0] as Duration).inMilliseconds;
-    });
-    registry.register('dart:core::Duration::inMicroseconds#0', (args) {
-      return (args[0] as Duration).inMicroseconds;
-    });
-    registry.register('dart:core::Duration::isNegative#0', (args) {
-      return (args[0] as Duration).isNegative;
-    });
-    registry.register('dart:core::Duration::hashCode#0', (args) {
-      return (args[0] as Duration).hashCode;
-    });
-
-    // ── Methods ──
-    registry.register('dart:core::Duration::abs#0', (args) {
-      return (args[0] as Duration).abs();
-    });
-    registry.register('dart:core::Duration::compareTo#1', (args) {
-      return (args[0] as Duration).compareTo(args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::toString#0', (args) {
-      return (args[0] as Duration).toString();
-    });
-
-    // ── Operators ──
-    registry.register('dart:core::Duration::+#1', (args) {
-      return (args[0] as Duration) + (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::-#1', (args) {
-      return (args[0] as Duration) - (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::*#1', (args) {
-      return (args[0] as Duration) * (args[1] as num);
-    });
-    registry.register('dart:core::Duration::~/#1', (args) {
-      return (args[0] as Duration) ~/ (args[1] as int);
-    });
-    registry.register('dart:core::Duration::<#1', (args) {
-      return (args[0] as Duration) < (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::>#1', (args) {
-      return (args[0] as Duration) > (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::<=#1', (args) {
-      return (args[0] as Duration) <= (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::>=#1', (args) {
-      return (args[0] as Duration) >= (args[1] as Duration);
-    });
-    registry.register('dart:core::Duration::unary-#0', (args) {
-      return -(args[0] as Duration);
-    });
-
-    // ── Constructor ──
-    // Duration({days, hours, minutes, seconds, milliseconds, microseconds})
-    // 6 named params → symbol: dart:core::Duration::#6
-    // Named args are passed in declaration order by the compiler.
-    // const Duration() is constant-folded by Kernel; only non-const goes here.
-    registry.register('dart:core::Duration::#6', (args) {
-      if (args.isEmpty) return Duration.zero;
-      return Duration(
-        days: args[0] as int? ?? 0,
-        hours: args.length > 1 ? (args[1] as int? ?? 0) : 0,
-        minutes: args.length > 2 ? (args[2] as int? ?? 0) : 0,
-        seconds: args.length > 3 ? (args[3] as int? ?? 0) : 0,
-        milliseconds: args.length > 4 ? (args[4] as int? ?? 0) : 0,
-        microseconds: args.length > 5 ? (args[5] as int? ?? 0) : 0,
-      );
-    });
-
-    // ── _#fromFields (platform InstanceConstant reconstruction) ──
-    // Duration has one field: `_duration` (microseconds as int).
-    // Sorted by name: [_duration] → 1 arg.
-    registry.register('dart:core::Duration::_#fromFields#1', (args) {
-      return Duration(microseconds: args[0] as int);
-    });
-
-    // ── Static getters / constants ──
-    registry.register('dart:core::Duration::zero#0', (args) {
-      return Duration.zero;
-    });
-    registry.register('dart:core::Duration::microsecondsPerMillisecond#0',
-        (args) {
-      return Duration.microsecondsPerMillisecond;
-    });
-    registry.register('dart:core::Duration::millisecondsPerSecond#0', (args) {
-      return Duration.millisecondsPerSecond;
-    });
-    registry.register('dart:core::Duration::secondsPerMinute#0', (args) {
-      return Duration.secondsPerMinute;
-    });
-    registry.register('dart:core::Duration::minutesPerHour#0', (args) {
-      return Duration.minutesPerHour;
-    });
-    registry.register('dart:core::Duration::hoursPerDay#0', (args) {
-      return Duration.hoursPerDay;
-    });
-  }
 }

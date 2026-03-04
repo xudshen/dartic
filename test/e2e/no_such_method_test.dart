@@ -1,4 +1,3 @@
-import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -151,9 +150,11 @@ Object main() {
   return obj.doesNotExist();
 }
 ''');
-      final registry = HostFunctionRegistry();
-      registerAllHostBindings(registry);
-      final interp = DarticInterpreter(hostFunctionRegistry: registry);
+      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+      final interp = DarticInterpreter(
+        hostFunctionRegistry: hostFunctionRegistry,
+        hostDispatchRegistry: hostDispatchRegistry,
+      );
       expect(
         () => interp.execute(module),
         throwsA(isA<NoSuchMethodError>()),
@@ -168,9 +169,11 @@ Object main() {
   return obj.nope;
 }
 ''');
-      final registry = HostFunctionRegistry();
-      registerAllHostBindings(registry);
-      final interp = DarticInterpreter(hostFunctionRegistry: registry);
+      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+      final interp = DarticInterpreter(
+        hostFunctionRegistry: hostFunctionRegistry,
+        hostDispatchRegistry: hostDispatchRegistry,
+      );
       expect(
         () => interp.execute(module),
         throwsA(isA<NoSuchMethodError>()),

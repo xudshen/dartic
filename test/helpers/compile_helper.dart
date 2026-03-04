@@ -1,45 +1,24 @@
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/bindings/big_int_bindings.dart';
-import 'package:dartic/src/bridge/bindings/bool_bindings.dart';
-import 'package:dartic/src/bridge/bindings/collection_bindings.dart';
-import 'package:dartic/src/bridge/bindings/completer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/date_time_bindings.dart';
-import 'package:dartic/src/bridge/bindings/double_bindings.dart';
-import 'package:dartic/src/bridge/bindings/duration_bindings.dart';
-import 'package:dartic/src/bridge/bindings/enum_bindings.dart';
-import 'package:dartic/src/bridge/bindings/error_bindings.dart';
-import 'package:dartic/src/bridge/bindings/future_bindings.dart';
-import 'package:dartic/src/bridge/bindings/int_bindings.dart';
-import 'package:dartic/src/bridge/bindings/invocation_bindings.dart';
-import 'package:dartic/src/bridge/bindings/iterable_bindings.dart';
-import 'package:dartic/src/bridge/bindings/list_bindings.dart';
-import 'package:dartic/src/bridge/bindings/map_bindings.dart';
-import 'package:dartic/src/bridge/bindings/math_bindings.dart';
-import 'package:dartic/src/bridge/bindings/misc_bindings.dart';
-import 'package:dartic/src/bridge/bindings/num_bindings.dart';
-import 'package:dartic/src/bridge/bindings/object_bindings.dart';
-import 'package:dartic/src/bridge/bindings/regexp_bindings.dart';
-import 'package:dartic/src/bridge/bindings/runes_bindings.dart';
-import 'package:dartic/src/bridge/bindings/set_bindings.dart';
-import 'package:dartic/src/bridge/bindings/stream_bindings.dart';
-import 'package:dartic/src/bridge/bindings/stream_iterator_bindings.dart';
-import 'package:dartic/src/bridge/bindings/string_bindings.dart';
-import 'package:dartic/src/bridge/bindings/string_buffer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/timer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/uri_bindings.dart';
-import 'package:dartic/src/bridge/bindings/zone_bindings.dart';
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_dispatch_registry.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/plugins/async_plugin.dart';
+import 'package:dartic/src/bridge/plugins/collection_plugin.dart';
+import 'package:dartic/src/bridge/plugins/core_plugin.dart';
+import 'package:dartic/src/bridge/plugins/math_plugin.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
+import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 
 /// Compiles a Dart source string to a [DarticModule] via the full pipeline:
-/// source → .dill (via `fvm dart compile kernel`) → Kernel AST → DarticCompiler.
+/// source -> .dill (via `fvm dart compile kernel`) -> Kernel AST -> DarticCompiler.
 ///
 /// Shared test helper for compiler tests.
 Future<DarticModule> compileDart(
@@ -89,7 +68,7 @@ DarticFuncProto findFunc(DarticModule module, String name) {
 
 /// Creates a dummy [ir.VariableDeclaration] for unit testing Scope.
 ///
-/// Uses a simple name and `dynamic` type — sufficient for Scope tests
+/// Uses a simple name and `dynamic` type -- sufficient for Scope tests
 /// that only care about identity-based binding lookup.
 ir.VariableDeclaration makeDummyVarDecl(String name) {
   return ir.VariableDeclaration(name, type: const ir.DynamicType());
@@ -116,17 +95,25 @@ Future<Object?> compileAndRun(String source, {int? fuelBudget}) async {
   return interp.entryResult;
 }
 
+/// Compiles a Dart source string to .darb bytes via the full pipeline:
+/// source -> .dill -> Kernel AST -> DarticCompiler -> DarticSerializer.
+Future<Uint8List> compileToDarb(String source) async {
+  final module = await compileDart(source);
+  return DarticSerializer().serialize(module);
+}
+
 /// Compiles [source] and executes with all host function bindings.
+///
+/// Uses [createTestRegistries] + [DarticInterpreter] directly to avoid the
+/// serialize→deserialize round-trip (the serializer doesn't yet handle all
+/// constant types).
 Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
-  final registry = HostFunctionRegistry();
-  registerAllHostBindings(registry);
-  final dispatchRegistry = HostDispatchRegistry(registry);
-  registerCoreDispatchTypes(dispatchRegistry);
+  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
   final interp = DarticInterpreter(
-    hostFunctionRegistry: registry,
-    hostDispatchRegistry: dispatchRegistry,
-    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
+    fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
   return interp.entryResult;
@@ -138,17 +125,49 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 ) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final registry = HostFunctionRegistry();
-  registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
-  final dispatchRegistry = HostDispatchRegistry(registry);
-  registerCoreDispatchTypes(dispatchRegistry);
+  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+    printFn: (v) => printLog.add('$v'),
+  );
   final interp = DarticInterpreter(
-    hostFunctionRegistry: registry,
-    hostDispatchRegistry: dispatchRegistry,
-    fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
+    fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
   return (interp.entryResult, printLog);
+}
+
+/// Creates fully-loaded registries for tests that need low-level registry
+/// access (e.g., bridge binding tests, manual interpreter setup).
+///
+/// Uses the internal plugin system (CorePlugin, AsyncPlugin, CollectionPlugin,
+/// MathPlugin) to populate both registries identically to [DarticEngine].
+({
+  HostFunctionRegistry hostFunctionRegistry,
+  HostDispatchRegistry hostDispatchRegistry,
+}) createTestRegistries({void Function(Object?)? printFn}) {
+  final hostFunctionRegistry = HostFunctionRegistry();
+  final hostDispatchRegistry = HostDispatchRegistry(hostFunctionRegistry);
+  final bridgeFactoryRegistry = BridgeFactoryRegistry();
+  final pluginContext = PluginContext(
+    config: DarticConfig(onPrint: printFn),
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
+    bridgeFactoryRegistry: bridgeFactoryRegistry,
+    pendingBridgeFactories: {},
+  );
+  for (final plugin in [
+    CorePlugin(),
+    AsyncPlugin(),
+    CollectionPlugin(),
+    MathPlugin(),
+  ]) {
+    plugin.register(pluginContext);
+  }
+  return (
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
+  );
 }
 
 /// Compiles multiple Dart source files and returns a [DarticModule].
@@ -212,107 +231,4 @@ Future<Object?> compileAndRunMultiFile(
   );
   interp.execute(module);
   return interp.entryResult;
-}
-
-/// Registers all host function bindings (dart:core + dart:async +
-/// dart:collection + dart:math).
-///
-/// Replaces the old CoreBindings.registerAll + AsyncBindings.registerAll +
-/// CollectionBindingsHub.registerAll + MathBindingsHub.registerAll hubs.
-///
-/// Used by test helpers that need a fully-wired HostFunctionRegistry without
-/// going through the plugin API.
-void registerAllHostBindings(
-  HostFunctionRegistry registry, {
-  void Function(Object?)? printFn,
-}) {
-  // print
-  registry.register('dart:core::::print#1', (args) {
-    (printFn ?? print)(args[0]);
-    return null;
-  });
-
-  // dart:core
-  ObjectBindings.register(registry);
-  IntBindings.register(registry);
-  DoubleBindings.register(registry);
-  NumBindings.register(registry);
-  BoolBindings.register(registry);
-  StringBindings.register(registry);
-  ListBindings.register(registry);
-  IterableBindings.register(registry);
-  MapBindings.register(registry);
-  SetBindings.register(registry);
-  DurationBindings.register(registry);
-  EnumBindings.register(registry);
-  ErrorBindings.register(registry);
-  InvocationBindings.register(registry);
-  BigIntBindings.register(registry);
-  DateTimeBindings.register(registry);
-  MiscBindings.register(registry);
-  RegExpBindings.register(registry);
-  RunesBindings.register(registry);
-  StringBufferBindings.register(registry);
-  UriBindings.register(registry);
-
-  // dart:async
-  FutureBindings.register(registry);
-  CompleterBindings.register(registry);
-  StreamBindings.register(registry);
-  StreamIteratorBindings.register(registry);
-  TimerBindings.register(registry);
-  ZoneBindings.register(registry);
-
-  // dart:collection
-  CollectionBindings.register(registry);
-
-  // dart:math
-  MathBindings.register(registry);
-}
-
-/// Registers core dart:core type dispatchers on a [HostDispatchRegistry].
-///
-/// This simulates what CorePlugin will do in Task 5. Used by test helpers
-/// that need dynamic dispatch for core types (String, int, List, etc.).
-void registerCoreDispatchTypes(HostDispatchRegistry registry) {
-  registry.register(
-    ['dart:core::String::'],
-    type: String,
-  );
-  registry.register(
-    ['dart:core::int::', 'dart:core::num::'],
-    type: int,
-  );
-  registry.register(
-    ['dart:core::double::', 'dart:core::num::'],
-    type: double,
-  );
-  registry.register(
-    ['dart:core::bool::'],
-    type: bool,
-  );
-  registry.register(
-    ['dart:core::List::', 'dart:core::_GrowableList::', 'dart:core::Iterable::'],
-    type: List,
-    test: (o) => o is List,
-  );
-  registry.register(
-    ['dart:core::Map::', 'dart:collection::LinkedHashMap::'],
-    type: Map,
-    test: (o) => o is Map,
-  );
-  registry.register(
-    ['dart:core::Set::', 'dart:_compact_hash::_Set::', 'dart:core::Iterable::'],
-    type: Set,
-    test: (o) => o is Set,
-  );
-  registry.register(
-    ['dart:core::Duration::'],
-    type: Duration,
-  );
-  registry.register(
-    ['dart:core::Invocation::'],
-    type: Invocation,
-    test: (o) => o is Invocation,
-  );
 }

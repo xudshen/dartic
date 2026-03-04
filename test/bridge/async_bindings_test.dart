@@ -10,8 +10,7 @@ void main() {
   late HostFunctionRegistry registry;
 
   setUp(() {
-    registry = HostFunctionRegistry();
-    registerAllHostBindings(registry);
+    registry = createTestRegistries().hostFunctionRegistry;
   });
 
   // ── Helper to invoke a binding by symbolic name ──
@@ -530,8 +529,7 @@ void main() {
         {int? fuelBudget}) async {
       final printLog = <String>[];
       final module = await compileDart(source);
-      final reg = HostFunctionRegistry();
-      registerAllHostBindings(reg, printFn: (v) => printLog.add('$v'));
+      final reg = createTestRegistries(printFn: (v) => printLog.add('$v')).hostFunctionRegistry;
       final interp = DarticInterpreter(
         hostFunctionRegistry: reg,
         fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,

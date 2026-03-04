@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dartic/src/bridge/host_function_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -203,10 +202,12 @@ Stream<String> main() {
 Future<(Object?, List<String>)> _compileAndRun(String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final registry = HostFunctionRegistry();
-  registerAllHostBindings(registry, printFn: (v) => printLog.add('$v'));
+  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+    printFn: (v) => printLog.add('$v'),
+  );
   final interp = DarticInterpreter(
-    hostFunctionRegistry: registry,
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
     fuelBudget: 200000,
   );
   interp.execute(module);
@@ -216,10 +217,10 @@ Future<(Object?, List<String>)> _compileAndRun(String source) async {
 /// Compiles Dart source, executes it, and returns the entry result as a Stream.
 Future<Stream<Object?>> _compileAndGetStream(String source) async {
   final module = await compileDart(source);
-  final registry = HostFunctionRegistry();
-  registerAllHostBindings(registry);
+  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
   final interp = DarticInterpreter(
-    hostFunctionRegistry: registry,
+    hostFunctionRegistry: hostFunctionRegistry,
+    hostDispatchRegistry: hostDispatchRegistry,
     fuelBudget: 200000,
   );
   interp.execute(module);

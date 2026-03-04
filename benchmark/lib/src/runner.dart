@@ -1,38 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/bindings/big_int_bindings.dart';
-import 'package:dartic/src/bridge/bindings/bool_bindings.dart';
-import 'package:dartic/src/bridge/bindings/collection_bindings.dart';
-import 'package:dartic/src/bridge/bindings/completer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/date_time_bindings.dart';
-import 'package:dartic/src/bridge/bindings/double_bindings.dart';
-import 'package:dartic/src/bridge/bindings/duration_bindings.dart';
-import 'package:dartic/src/bridge/bindings/enum_bindings.dart';
-import 'package:dartic/src/bridge/bindings/error_bindings.dart';
-import 'package:dartic/src/bridge/bindings/future_bindings.dart';
-import 'package:dartic/src/bridge/bindings/int_bindings.dart';
-import 'package:dartic/src/bridge/bindings/invocation_bindings.dart';
-import 'package:dartic/src/bridge/bindings/iterable_bindings.dart';
-import 'package:dartic/src/bridge/bindings/list_bindings.dart';
-import 'package:dartic/src/bridge/bindings/map_bindings.dart';
-import 'package:dartic/src/bridge/bindings/math_bindings.dart';
-import 'package:dartic/src/bridge/bindings/misc_bindings.dart';
-import 'package:dartic/src/bridge/bindings/num_bindings.dart';
-import 'package:dartic/src/bridge/bindings/object_bindings.dart';
-import 'package:dartic/src/bridge/bindings/regexp_bindings.dart';
-import 'package:dartic/src/bridge/bindings/runes_bindings.dart';
-import 'package:dartic/src/bridge/bindings/set_bindings.dart';
-import 'package:dartic/src/bridge/bindings/stream_bindings.dart';
-import 'package:dartic/src/bridge/bindings/stream_iterator_bindings.dart';
-import 'package:dartic/src/bridge/bindings/string_bindings.dart';
-import 'package:dartic/src/bridge/bindings/string_buffer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/timer_bindings.dart';
-import 'package:dartic/src/bridge/bindings/uri_bindings.dart';
-import 'package:dartic/src/bridge/bindings/zone_bindings.dart';
-import 'package:dartic/src/bridge/host_function_registry.dart';
-import 'package:dartic/src/bytecode/module.dart';
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
-import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:dart_eval/dart_eval.dart' as de;
@@ -57,7 +28,7 @@ class BenchmarkRunner {
 
       try {
         // --- Pre-compile dartic module ---
-        final darticModule = await _compileDartic(bc.dartSource);
+        final darbBytes = await _compileDartic(bc.dartSource);
 
         // --- Pre-compile dart_eval program (if enabled + supported) ---
         de.Program? dartEvalProgram;
@@ -72,7 +43,7 @@ class BenchmarkRunner {
         // --- Calibrate iteration count ---
         final hostIters = _calibrate(bc.hostFn);
         final darticIters = _calibrate(
-          () => _executeDartic(darticModule),
+          () => _executeDartic(darbBytes),
         );
         int? dartEvalIters;
         if (dartEvalProgram != null) {
@@ -88,7 +59,7 @@ class BenchmarkRunner {
 
         // --- Warmup ---
         _warmup(bc.hostFn, hostIters);
-        _warmup(() => _executeDartic(darticModule), darticIters);
+        _warmup(() => _executeDartic(darbBytes), darticIters);
         if (dartEvalProgram != null) {
           _warmup(() => _executeDartEval(dartEvalProgram!), dartEvalIters!);
         }
@@ -96,7 +67,7 @@ class BenchmarkRunner {
         // --- Measure ---
         final hostResult = _measure(bc.hostFn, hostIters);
         final darticResult = _measure(
-          () => _executeDartic(darticModule),
+          () => _executeDartic(darbBytes),
           darticIters,
         );
         ChannelResult? dartEvalResult;
@@ -126,7 +97,7 @@ class BenchmarkRunner {
   // Compilation
   // ---------------------------------------------------------------------------
 
-  Future<DarticModule> _compileDartic(String source) async {
+  Future<Uint8List> _compileDartic(String source) async {
     final dir = await Directory.systemTemp.createTemp('dartic_bench_');
     try {
       final dartFile = File('${dir.path}/input.dart');
@@ -147,7 +118,8 @@ class BenchmarkRunner {
       final bytes = File(dillPath).readAsBytesSync();
       final component = ir.Component();
       BinaryBuilder(bytes).readComponent(component);
-      return DarticCompiler(component).compile();
+      final module = DarticCompiler(component).compile();
+      return DarticSerializer().serialize(module);
     } finally {
       await dir.delete(recursive: true);
     }
@@ -164,15 +136,12 @@ class BenchmarkRunner {
   // Execution
   // ---------------------------------------------------------------------------
 
-  Object? _executeDartic(DarticModule module) {
-    final registry = HostFunctionRegistry();
-    _registerAllHostBindings(registry);
-    final interp = DarticInterpreter(
-      hostFunctionRegistry: registry,
-      fuelBudget: 1 << 30,
+  Object? _executeDartic(Uint8List darbBytes) {
+    final engine = DarticEngine(
+      config: DarticConfig(fuelBudget: 1 << 30),
     );
-    interp.execute(module);
-    return interp.entryResult;
+    engine.loadBytecode(darbBytes);
+    return engine.call('main');
   }
 
   Object? _executeDartEval(de.Program program) {
@@ -226,51 +195,4 @@ class BenchmarkRunner {
       iterationsPerSample: iters,
     );
   }
-}
-
-/// Registers all host function bindings (dart:core + dart:async +
-/// dart:collection + dart:math). Replaces the old hub registrations.
-void _registerAllHostBindings(HostFunctionRegistry registry) {
-  // print
-  registry.register('dart:core::::print#1', (args) {
-    print(args[0]);
-    return null;
-  });
-
-  // dart:core
-  ObjectBindings.register(registry);
-  IntBindings.register(registry);
-  DoubleBindings.register(registry);
-  NumBindings.register(registry);
-  BoolBindings.register(registry);
-  StringBindings.register(registry);
-  ListBindings.register(registry);
-  IterableBindings.register(registry);
-  MapBindings.register(registry);
-  SetBindings.register(registry);
-  DurationBindings.register(registry);
-  EnumBindings.register(registry);
-  ErrorBindings.register(registry);
-  InvocationBindings.register(registry);
-  BigIntBindings.register(registry);
-  DateTimeBindings.register(registry);
-  MiscBindings.register(registry);
-  RegExpBindings.register(registry);
-  RunesBindings.register(registry);
-  StringBufferBindings.register(registry);
-  UriBindings.register(registry);
-
-  // dart:async
-  FutureBindings.register(registry);
-  CompleterBindings.register(registry);
-  StreamBindings.register(registry);
-  StreamIteratorBindings.register(registry);
-  TimerBindings.register(registry);
-  ZoneBindings.register(registry);
-
-  // dart:collection
-  CollectionBindings.register(registry);
-
-  // dart:math
-  MathBindings.register(registry);
 }

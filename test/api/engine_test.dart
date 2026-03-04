@@ -1,17 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
-
-/// Compiles a Dart source string to .darb bytes (Uint8List) via the full
-/// pipeline: source -> Kernel AST -> DarticCompiler -> DarticSerializer.
-Future<Uint8List> compileToDarb(String source) async {
-  final module = await compileDart(source);
-  return DarticSerializer().serialize(module);
-}
 
 /// A simple DarticPlugin for testing that calls [onRegister] when
 /// [register] is invoked.

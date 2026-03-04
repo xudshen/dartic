@@ -25,8 +25,8 @@ void main() {
   late HostDispatchRegistry registry;
 
   setUp(() {
-    fnRegistry = HostFunctionRegistry();
-    registerAllHostBindings(fnRegistry);
+    final regs = createTestRegistries();
+    fnRegistry = regs.hostFunctionRegistry;
     registry = HostDispatchRegistry(fnRegistry);
 
     // Register core type dispatchers (previously hardcoded in constructor).

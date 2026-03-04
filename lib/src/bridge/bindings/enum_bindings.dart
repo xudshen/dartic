@@ -13,13 +13,10 @@
 library;
 
 import '../../runtime/object.dart';
-import '../host_function_registry.dart';
 
 /// Registers all enum-related host function bindings.
 abstract final class EnumBindings {
   /// Returns a map of top-level enum bindings keyed by `"methodName#argCount"`.
-  ///
-  /// The keys match the suffix after `'dart:core::::'` used in [register].
   static Map<String, Object? Function(List<Object?>)> topLevelMethodMap() => {
         'EnumName|get#name#1': (args) {
           final obj = args[0] as DarticObject;
@@ -28,8 +25,6 @@ abstract final class EnumBindings {
       };
 
   /// Returns a map of `_Enum` bindings keyed by `"methodName#argCount"`.
-  ///
-  /// The keys match the suffix after `'dart:core::_Enum::'` used in [register].
   static Map<String, Object? Function(List<Object?>)> enumMethodMap() => {
         'index#0': (args) {
           final obj = args[0] as DarticObject;
@@ -40,30 +35,4 @@ abstract final class EnumBindings {
           return obj.refFields[0] as String;
         },
       };
-
-  static void register(HostFunctionRegistry registry) {
-    // EnumName|get#name — the `name` getter on enums.
-    // Kernel compiles `myEnum.name` as a StaticInvocation to
-    // `dart:core::::EnumName|get#name` with 1 positional arg (the receiver).
-    // The function reads `_Enum._name` which is at refFields[0].
-    registry.register('dart:core::::EnumName|get#name#1', (args) {
-      final obj = args[0] as DarticObject;
-      return obj.refFields[0] as String;
-    });
-
-    // _Enum.index getter — accessed via InstanceGet targeting _Enum.index.
-    // Normally resolved via GET_FIELD_VAL (handled in compiler), but may
-    // also come through CALL_HOST when the compiler falls back to the
-    // platform path.
-    registry.register('dart:core::_Enum::index#0', (args) {
-      final obj = args[0] as DarticObject;
-      return obj.valueFields[0];
-    });
-
-    // _Enum._name getter — accessed via InstanceGet targeting _Enum._name.
-    registry.register('dart:core::_Enum::_name#0', (args) {
-      final obj = args[0] as DarticObject;
-      return obj.refFields[0] as String;
-    });
-  }
 }

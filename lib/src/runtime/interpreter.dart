@@ -3172,6 +3172,13 @@ class DarticInterpreter implements DarticRuntime {
           rs.sp = rBase;
           callStack.popFrame();
           _upvalueStack.removeLast();
+
+          // When executeFunction routes main() through _runNestedDispatch,
+          // HALT pops into the HOST_BOUNDARY sentinel. Propagate result to
+          // _callbackResult so _runNestedDispatch can return it.
+          if (callStack.depth > 0 && callStack.isHostBoundary) {
+            _callbackResult = _lastEntryResult;
+          }
           return;
 
         default:
