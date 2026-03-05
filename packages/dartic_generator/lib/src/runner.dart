@@ -3,6 +3,7 @@
 /// Entry points:
 /// - [Runner.runConfig] — process a single YAML file
 /// - [Runner.runConfigDirectory] — process a directory of YAML files
+/// - [Runner.runGeneratorConfig] — process a pre-built [GeneratorConfig]
 library;
 
 import 'dart:io';
@@ -25,6 +26,14 @@ class Runner {
   /// Runs the pipeline from a directory of YAML files.
   Future<void> runConfigDirectory(String dirPath) async {
     final config = parseConfigDirectory(dirPath);
+    await _processConfig(config);
+  }
+
+  /// Runs the pipeline from a pre-built [GeneratorConfig].
+  ///
+  /// Used by the `--scan` mode where the config is built from
+  /// `@DarticExport` annotations rather than YAML files.
+  Future<void> runGeneratorConfig(GeneratorConfig config) async {
     await _processConfig(config);
   }
 
