@@ -69,7 +69,11 @@ class FunctionConfig {
   /// 手写 override 闭包源码（不走 analyzer 自动生成）。
   final String? custom;
 
-  FunctionConfig({required this.name, this.custom});
+  /// Explicit arity for custom functions (where analyzer is not used).
+  /// If null, arity is derived from analyzer results.
+  final int? arity;
+
+  FunctionConfig({required this.name, this.custom, this.arity});
 }
 
 /// 类型的额外 override 配置。
@@ -80,8 +84,13 @@ class OverrideConfig {
   /// 跨命名空间注册的额外 binding 名。
   final List<String> extraBindings;
 
+  /// 额外代码，插入到生成文件的类定义之前。
+  /// 用于定义私有 helper 类等。
+  final String? preamble;
+
   OverrideConfig({
     this.extraMethods = const {},
     this.extraBindings = const [],
+    this.preamble,
   });
 }

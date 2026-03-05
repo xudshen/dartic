@@ -382,8 +382,11 @@ void main() {
 
       expect(source, contains('abstract final class ListBindings'));
       expect(source, contains("name: 'dart:core::List'"));
-      expect(source, contains("name: 'dart:core::_GrowableList'"));
-      expect(source, contains("name: 'dart:core::_List'"));
+      // Internal types use registerBinding loops (private types can't use registerClass)
+      expect(source, contains("// _GrowableList"));
+      expect(source, contains("'dart:core::_GrowableList::\${e.key}'"));
+      expect(source, contains("// _List"));
+      expect(source, contains("'dart:core::_List::\${e.key}'"));
       expect(source, contains("'_literal1#1':"));
     });
   });

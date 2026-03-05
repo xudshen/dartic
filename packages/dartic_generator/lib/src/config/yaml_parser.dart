@@ -112,6 +112,7 @@ FunctionConfig _parseFunction(dynamic value) {
   return FunctionConfig(
     name: map['name'] as String,
     custom: map['custom'] as String?,
+    arity: map['arity'] as int?,
   );
 }
 
@@ -131,5 +132,6 @@ OverrideConfig _parseOverride(YamlMap yaml) {
   return OverrideConfig(
     extraMethods: extraMethods,
     extraBindings: extraBindings,
+    preamble: yaml['preamble'] as String?,
   );
 }

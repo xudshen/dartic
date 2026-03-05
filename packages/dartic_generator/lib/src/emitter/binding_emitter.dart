@@ -18,23 +18,35 @@ import 'dart:io' show Platform;
 import '../analyzer/type_info.dart';
 
 /// Generates a complete `.g.dart` binding file for a single type.
-String emitBindingFile(TypeInfo info, {String? configPath}) {
-  final buf = StringBuffer();
-  _writeHeader(buf, configPath: configPath);
-  _writeImport(buf);
-  buf.writeln();
+String emitBindingFile(
+  TypeInfo info, {
+  String? configPath,
+  Map<String, String>? extraMethods,
+  List<String>? extraBindings,
+  String? preamble,
+}) {
+  // Build body first to detect required imports
+  final body = StringBuffer();
+
+  // Preamble (e.g. private helper classes)
+  if (preamble != null) {
+    body.writeln(preamble.trim());
+    body.writeln();
+  }
 
   final bindingsClassName = _toBindingsClassName(info.className);
-  buf.writeln('abstract final class $bindingsClassName {');
+  body.writeln('abstract final class $bindingsClassName {');
+  _writeRegisterMethod(body, info, extraBindings: extraBindings);
+  body.writeln();
+  _writeMethodMap(body, info, extraMethods: extraMethods);
+  body.writeln('}');
 
-  // -- register() --
-  _writeRegisterMethod(buf, info);
+  // Build final output with header + detected imports
+  final buf = StringBuffer();
+  _writeHeader(buf, configPath: configPath);
+  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
   buf.writeln();
-
-  // -- methodMap() --
-  _writeMethodMap(buf, info);
-
-  buf.writeln('}');
+  buf.write(body);
   return buf.toString();
 }
 
@@ -46,37 +58,38 @@ String emitBindingFileWithInternalTypes(
   String? configPath,
   Map<String, Map<String, String>>? extraMethods,
 }) {
-  final buf = StringBuffer();
-  _writeHeader(buf, configPath: configPath);
-  _writeImport(buf);
-  buf.writeln();
-
+  // Build body first to detect required imports
+  final body = StringBuffer();
   final bindingsClassName = _toBindingsClassName(mainInfo.className);
-  buf.writeln('abstract final class $bindingsClassName {');
+  body.writeln('abstract final class $bindingsClassName {');
 
-  // -- register() with main + internal types --
   _writeRegisterMethodWithInternalTypes(
-    buf,
+    body,
     mainInfo,
     internalInfos,
     extraMethods: extraMethods,
   );
-  buf.writeln();
+  body.writeln();
 
-  // -- methodMap() for main type --
-  _writeMethodMap(buf, mainInfo);
+  _writeMethodMap(body, mainInfo);
 
-  // -- method maps for internal types --
   for (final internal in internalInfos) {
-    buf.writeln();
+    body.writeln();
     _writeInternalMethodMap(
-      buf,
+      body,
       internal,
       extraMethods: extraMethods?[internal.className],
     );
   }
 
-  buf.writeln('}');
+  body.writeln('}');
+
+  // Build final output with header + detected imports
+  final buf = StringBuffer();
+  _writeHeader(buf, configPath: configPath);
+  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
+  buf.writeln();
+  buf.write(body);
   return buf.toString();
 }
 
@@ -87,24 +100,25 @@ String emitTopLevelBindingFile(
   List<FunctionInfo> functions, {
   String? configPath,
 }) {
-  final buf = StringBuffer();
-  _writeHeader(buf, configPath: configPath);
-  _writeImport(buf);
-  buf.writeln();
-
-  buf.writeln('abstract final class ${name}TopLevelBindings {');
-
-  // -- register() --
-  buf.writeln('  static void register(PluginContext ctx) {');
+  // Build body first to detect required imports
+  final body = StringBuffer();
+  body.writeln('abstract final class ${name}TopLevelBindings {');
+  body.writeln('  static void register(PluginContext ctx) {');
   for (final fn in functions) {
     final wrapper = _emitTopLevelFunctionWrapper(fn);
     for (final bindingName in fn.allBindingNames) {
-      buf.writeln("    ctx.registerBinding('$bindingName', $wrapper);");
+      body.writeln("    ctx.registerBinding('$bindingName', $wrapper);");
     }
   }
-  buf.writeln('  }');
+  body.writeln('  }');
+  body.writeln('}');
 
-  buf.writeln('}');
+  // Build final output with header + detected imports
+  final buf = StringBuffer();
+  _writeHeader(buf, configPath: configPath);
+  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
+  buf.writeln();
+  buf.write(body);
   return buf.toString();
 }
 
@@ -120,8 +134,31 @@ void _writeHeader(StringBuffer buf, {String? configPath}) {
   buf.writeln();
 }
 
-void _writeImport(StringBuffer buf) {
+void _writeImport(StringBuffer buf, {Set<String>? additionalImports}) {
   buf.writeln("import '../../api/plugin_context.dart';");
+  if (additionalImports != null) {
+    for (final imp in additionalImports) {
+      buf.writeln("import '$imp';");
+    }
+  }
+}
+
+/// Scans source code for known types that require additional imports.
+Set<String> _detectRequiredImports(String source) {
+  final imports = <String>{};
+  if (source.contains('DarticObject')) {
+    imports.add('../../runtime/object.dart');
+  }
+  if (source.contains('LinkedHashMap')) {
+    imports.add('dart:collection');
+  }
+  if (RegExp(r'\bRandom\b').hasMatch(source)) {
+    imports.add('dart:math');
+  }
+  if (RegExp(r'\bEncoding\b').hasMatch(source)) {
+    imports.add('dart:convert');
+  }
+  return imports;
 }
 
 // ── Class name conversion ───────────────────────────────────────────────
@@ -144,22 +181,48 @@ String _toBindingsClassName(String className) {
 
 // ── register() method ───────────────────────────────────────────────────
 
-void _writeRegisterMethod(StringBuffer buf, TypeInfo info) {
+void _writeRegisterMethod(
+  StringBuffer buf,
+  TypeInfo info, {
+  List<String>? extraBindings,
+}) {
   buf.writeln('  static void register(PluginContext ctx) {');
-  buf.writeln('    ctx.registerClass(');
-  buf.writeln("      name: '${info.qualifiedName}',");
-  buf.writeln('      type: ${info.className},');
-  buf.writeln('      test: (o) => o is ${info.className},');
-  buf.writeln('      methods: methodMap(),');
-  if (info.superclasses.isNotEmpty) {
-    final superList =
-        info.superclasses.map((s) => "'$s'").join(', ');
-    buf.writeln('      superclasses: [$superList],');
-  }
-  buf.writeln('    );');
 
-  // Static methods as registerBinding
-  _writeStaticMethodRegistrations(buf, info);
+  if (info.className.startsWith('_')) {
+    // Private class: can't use registerClass (type not accessible).
+    // Use registerBinding loop instead.
+    buf.writeln('    for (final e in methodMap().entries) {');
+    buf.writeln("      ctx.registerBinding('${info.qualifiedName}::\${e.key}', e.value);");
+    buf.writeln('    }');
+  } else {
+    buf.writeln('    ctx.registerClass(');
+    buf.writeln("      name: '${info.qualifiedName}',");
+    buf.writeln('      type: ${info.className},');
+    buf.writeln('      test: (o) => o is ${info.className},');
+    buf.writeln('      methods: methodMap(),');
+    if (info.superclasses.isNotEmpty) {
+      final superList =
+          info.superclasses.map((s) => "'$s'").join(', ');
+      buf.writeln('      superclasses: [$superList],');
+    }
+    buf.writeln('    );');
+
+    // Static methods as registerBinding
+    _writeStaticMethodRegistrations(buf, info);
+
+    // Static getters as registerBinding
+    _writeStaticGetterRegistrations(buf, info);
+  }
+
+  // Extra cross-namespace bindings (e.g. dart:_internal::Symbol::#1)
+  if (extraBindings != null) {
+    for (final bindingName in extraBindings) {
+      // Extract the method key from the binding name (last segment after ::)
+      final lastSep = bindingName.lastIndexOf('::');
+      final methodKey = lastSep >= 0 ? bindingName.substring(lastSep + 2) : bindingName;
+      buf.writeln("    ctx.registerBinding('$bindingName', methodMap()['$methodKey']!);");
+    }
+  }
 
   buf.writeln('  }');
 }
@@ -188,22 +251,17 @@ void _writeRegisterMethodWithInternalTypes(
   // Static methods for main type
   _writeStaticMethodRegistrations(buf, mainInfo);
 
-  // Internal types — each gets its own registerClass call
+  // Static getters for main type
+  _writeStaticGetterRegistrations(buf, mainInfo);
+
+  // Internal types — use registerBinding (private types can't use registerClass)
   for (final internal in internalInfos) {
     buf.writeln();
     final mapName = _toInternalMethodMapName(internal.className);
     buf.writeln("    // ${internal.className}");
-    buf.writeln('    ctx.registerClass(');
-    buf.writeln("      name: '${internal.qualifiedName}',");
-    buf.writeln('      type: ${internal.className},');
-    buf.writeln('      test: (o) => o is ${internal.className},');
-    buf.writeln('      methods: $mapName(),');
-    if (internal.superclasses.isNotEmpty) {
-      final superList =
-          internal.superclasses.map((s) => "'$s'").join(', ');
-      buf.writeln('      superclasses: [$superList],');
-    }
-    buf.writeln('    );');
+    buf.writeln('    for (final e in $mapName().entries) {');
+    buf.writeln("      ctx.registerBinding('${internal.qualifiedName}::\${e.key}', e.value);");
+    buf.writeln('    }');
   }
 
   buf.writeln('  }');
@@ -219,39 +277,80 @@ void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
   }
 }
 
+/// Writes static getter registrations as registerBinding calls.
+void _writeStaticGetterRegistrations(StringBuffer buf, TypeInfo info) {
+  for (final getter in info.staticGetters) {
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::${getter.bindingKey}', (args) => ${info.className}.${getter.name});");
+  }
+}
+
 // ── methodMap() ─────────────────────────────────────────────────────────
 
-void _writeMethodMap(StringBuffer buf, TypeInfo info) {
+void _writeMethodMap(
+  StringBuffer buf,
+  TypeInfo info, {
+  Map<String, String>? extraMethods,
+}) {
+  // Collect all analyzer-generated keys so extraMethods can override them.
+  final overrideKeys = extraMethods?.keys.toSet() ?? <String>{};
+
   buf.writeln(
       '  static Map<String, Object? Function(List<Object?>)> methodMap() => {');
 
   // Instance methods
   for (final method in info.methods) {
-    _writeInstanceMethodEntries(buf, info.className, method);
+    // Skip methods whose keys are overridden by extraMethods
+    if (!_anyKeyOverridden(method.allBindingKeys, overrideKeys)) {
+      _writeInstanceMethodEntries(buf, info.className, method);
+    }
   }
 
   // Getters
   for (final getter in info.getters) {
-    buf.writeln(
-        "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+    if (!overrideKeys.contains(getter.bindingKey)) {
+      buf.writeln(
+          "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+    }
   }
 
   // Setters
   for (final setter in info.setters) {
-    _writeSetterEntry(buf, info.className, setter);
+    if (!overrideKeys.contains(setter.bindingKey)) {
+      _writeSetterEntry(buf, info.className, setter);
+    }
   }
 
   // Operators
   for (final op in info.operators) {
-    _writeOperatorEntry(buf, info.className, op);
+    if (!overrideKeys.contains(op.bindingKey)) {
+      _writeOperatorEntry(buf, info.className, op);
+    }
   }
 
   // Constructors
   for (final ctor in info.constructors) {
-    _writeConstructorEntry(buf, info.className, ctor);
+    final key = ctor.name.isEmpty
+        ? '#${ctor.params.length}'
+        : '${ctor.name}#${ctor.params.length}';
+    if (!overrideKeys.contains(key)) {
+      _writeConstructorEntry(buf, info.className, ctor);
+    }
+  }
+
+  // Extra methods (custom overrides from YAML)
+  if (extraMethods != null) {
+    for (final entry in extraMethods.entries) {
+      buf.writeln("        '${entry.key}': ${entry.value},");
+    }
   }
 
   buf.writeln('      };');
+}
+
+/// Returns true if any of the given keys are in the override set.
+bool _anyKeyOverridden(List<String> keys, Set<String> overrideKeys) {
+  return keys.any(overrideKeys.contains);
 }
 
 void _writeInternalMethodMap(
@@ -314,34 +413,42 @@ void _writeInstanceMethodEntries(
   if (!hasOptional && keys.length == 1) {
     // Simple case: single arity
     final wrapper =
-        _emitSimpleInstanceMethodWrapper(className, method, method.paramTypes.length);
+        _emitInstanceMethodWrapper(className, method, method.paramTypes.length);
     buf.writeln("        '${keys.first}': $wrapper,");
   } else if (hasOptional) {
     // Multiple arity variants for optional positional params
     for (final key in keys) {
       final arity = int.parse(key.split('#').last);
-      final actualParamCount = arity; // arity includes receiver offset handled differently
       final wrapper =
-          _emitSimpleInstanceMethodWrapper(className, method, actualParamCount);
+          _emitInstanceMethodWrapper(className, method, arity);
       buf.writeln("        '$key': $wrapper,");
     }
   } else {
     // Named params: single arity with all params
-    final wrapper = _emitSimpleInstanceMethodWrapper(
+    final wrapper = _emitInstanceMethodWrapper(
         className, method, method.paramTypes.length);
     buf.writeln("        '${keys.first}': $wrapper,");
   }
 }
 
-String _emitSimpleInstanceMethodWrapper(
+/// Generates a wrapper closure for an instance method call.
+///
+/// Handles:
+/// - Named parameters (emits `name: args[N] as Type`)
+/// - Function-typed parameters (wraps with appropriate closure)
+/// - Void return types (wraps with `{ ...; return null; }`)
+String _emitInstanceMethodWrapper(
     String className, MethodInfo method, int paramCount) {
-  // For instance methods: args[0] is receiver, args[1..N] are params.
-  // paramCount = number of user params (matches the arity in the key).
   final receiver = '(args[0] as $className)';
   final args = <String>[];
   for (var i = 0; i < paramCount; i++) {
     final param = method.paramTypes[i];
-    args.add('args[${i + 1}] as ${param.type}');
+    final argExpr = _emitArgExpression(param, i + 1); // +1 for receiver
+    if (param.isNamed) {
+      args.add('${param.name}: $argExpr');
+    } else {
+      args.add(argExpr);
+    }
   }
   final call = '$receiver.${method.name}(${args.join(', ')})';
 
@@ -349,6 +456,86 @@ String _emitSimpleInstanceMethodWrapper(
     return '(args) { $call; return null; }';
   }
   return '(args) => $call';
+}
+
+/// Generates the argument expression for a parameter at the given args index.
+///
+/// For function-typed parameters, generates a wrapping closure:
+///   `(a, b) => (args[N] as Function)(a, b) as ReturnType`
+/// For regular parameters, generates a simple cast:
+///   `args[N] as Type`
+String _emitArgExpression(ParamInfo param, int argsIndex) {
+  if (param.isFunctionType) {
+    return _emitCallbackWrapper(param, argsIndex);
+  }
+  return 'args[$argsIndex] as ${param.type}';
+}
+
+/// Generates a callback wrapper for a function-typed parameter.
+///
+/// Examples:
+///   bool Function(E) → `(e0) => (args[N] as Function)(e0) as bool`
+///   void Function(E) → `(e0) { (args[N] as Function)(e0); }`  (but simpler: `(e0) => (args[N] as Function)(e0)`)
+///   T Function(T, E) → `(e0, e1) => (args[N] as Function)(e0, e1)`
+///   int Function(E, E)? → uses nullable check
+String _emitCallbackWrapper(ParamInfo param, int argsIndex) {
+  final arity = param.callbackArity!;
+  final returnType = param.callbackReturnType ?? 'dynamic';
+  final isNullable = param.type.endsWith('?');
+
+  // Build parameter names: e0, e1, e2, ...
+  final paramNames = [for (var i = 0; i < arity; i++) _callbackParamName(i)];
+  final paramList = paramNames.join(', ');
+  final fnRef = 'args[$argsIndex] as Function${isNullable ? '?' : ''}';
+
+  if (isNullable) {
+    // Nullable function: wrap with null-aware closure.
+    // Parentheses around the cast are crucial to avoid parse ambiguity
+    // between `Function?` (nullable type) and `? :` (ternary operator).
+    if (arity == 0) {
+      return '(args[$argsIndex] as Function?) == null ? null : () => (args[$argsIndex] as Function?)!()';
+    }
+    return '(args[$argsIndex] as Function?) == null ? null : ($paramList) => (args[$argsIndex] as Function?)!($paramList)';
+  }
+
+  // Generate the wrapper based on return type
+  if (returnType == 'void') {
+    // void callback: just call through
+    if (arity == 0) {
+      return '() => ($fnRef)()';
+    }
+    return '($paramList) => ($fnRef)($paramList)';
+  } else if (returnType == 'bool') {
+    // bool callback: cast return value
+    if (arity == 0) {
+      return '() => ($fnRef)() as bool';
+    }
+    return '($paramList) => ($fnRef)($paramList) as bool';
+  } else if (returnType == 'int') {
+    // int callback: cast return value
+    return '($paramList) => ($fnRef)($paramList) as int';
+  } else if (returnType == 'dynamic' || returnType == 'Object?') {
+    // dynamic callback: no cast needed
+    if (arity == 0) {
+      return '() => ($fnRef)()';
+    }
+    return '($paramList) => ($fnRef)($paramList)';
+  } else {
+    // Other return types: cast to the return type
+    if (arity == 0) {
+      return '() => ($fnRef)() as $returnType';
+    }
+    return '($paramList) => ($fnRef)($paramList) as $returnType';
+  }
+}
+
+/// Returns a parameter name for callback wrappers.
+String _callbackParamName(int index) {
+  // Use single letters for readability: a, b, c, ...
+  if (index < 26) {
+    return String.fromCharCode(0x61 + index); // 'a' + index
+  }
+  return 'p$index';
 }
 
 // ── Setter entries ──────────────────────────────────────────────────────
@@ -404,10 +591,11 @@ void _writeConstructorEntry(
   final args = <String>[];
   for (var i = 0; i < ctor.params.length; i++) {
     final param = ctor.params[i];
+    final argExpr = _emitArgExpression(param, i);
     if (param.isNamed) {
-      args.add('${param.name}: args[$i] as ${param.type}');
+      args.add('${param.name}: $argExpr');
     } else {
-      args.add('args[$i] as ${param.type}');
+      args.add(argExpr);
     }
   }
 
@@ -427,7 +615,12 @@ String _emitStaticMethodWrapper(
   final args = <String>[];
   for (var i = 0; i < arity; i++) {
     final param = method.paramTypes[i];
-    args.add('args[$i] as ${param.type}');
+    final argExpr = _emitArgExpression(param, i);
+    if (param.isNamed) {
+      args.add('${param.name}: $argExpr');
+    } else {
+      args.add(argExpr);
+    }
   }
   final call = '$className.${method.name}(${args.join(', ')})';
 

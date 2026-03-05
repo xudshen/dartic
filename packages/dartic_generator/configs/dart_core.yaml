@@ -14,8 +14,8 @@
 #   7. Runes/RuneIterator
 #   8. BigInt, DateTime, StringBuffer, Uri, Invocation
 
-output_bindings: "lib/src/bridge/bindings"
-output_plugins: "lib/src/bridge/plugins"
+output_bindings: "../../lib/src/bridge/bindings"
+output_plugins: "../../lib/src/bridge/plugins"
 
 libraries:
   - uri: dart:core
@@ -139,6 +139,7 @@ libraries:
       - identical
 
       - name: print
+        arity: 1
         custom: |
           (args) {
             (ctx.config.onPrint ?? print)(args[0]);
@@ -147,6 +148,7 @@ libraries:
 
       # EnumName|get#name -- extension getter used by .name on enums
       - name: "EnumName|get#name"
+        arity: 1
         custom: |
           (args) {
             final obj = args[0] as DarticObject;
@@ -251,6 +253,13 @@ libraries:
 
       # ── Error: uses custom _DarticErrorBacking for constructor ──
       Error:
+        preamble: |
+          /// Minimal concrete Error subclass used as host backing for
+          /// interpreter-defined Error subclasses.
+          class _DarticErrorBacking extends Error {
+            @override
+            String toString() => 'Error';
+          }
         extra_methods:
           "#0": "(args) => _DarticErrorBacking()"
 

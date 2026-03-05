@@ -13,8 +13,10 @@ class TypeInfo {
   final List<SetterInfo> setters;
   final List<OperatorInfo> operators;
   final List<MethodInfo> staticMethods;
+  final List<GetterInfo> staticGetters;
   final List<ConstructorInfo> constructors;
   final List<String> superclasses;
+  final bool isAbstract;
 
   TypeInfo({
     required this.className,
@@ -24,8 +26,10 @@ class TypeInfo {
     required this.setters,
     required this.operators,
     required this.staticMethods,
+    this.staticGetters = const [],
     required this.constructors,
     required this.superclasses,
+    this.isAbstract = false,
   });
 
   /// 完整限定名，如 'dart:core::int'。
@@ -40,13 +44,28 @@ class ParamInfo {
   final bool isNamed;
   final bool isRequired;
 
+  /// For function-typed parameters, the number of parameters the callback takes.
+  /// null if this is not a function-typed parameter.
+  final int? callbackArity;
+
+  /// For function-typed parameters, the return type of the callback
+  /// (used to generate wrapping closures). null if not a function-type param.
+  final String? callbackReturnType;
+
   ParamInfo({
     required this.name,
     required this.type,
     this.isOptional = false,
     this.isNamed = false,
     this.isRequired = false,
+    this.callbackArity,
+    this.callbackReturnType,
   });
+
+  /// Whether this parameter is a function type that needs a wrapper closure.
+  bool get isFunctionType =>
+      callbackArity != null &&
+      (type == 'Function' || type == 'Function?');
 }
 
 /// 实例方法信息。

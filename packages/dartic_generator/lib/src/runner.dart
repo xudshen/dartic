@@ -64,10 +64,28 @@ class Runner {
         final internalInfos = <TypeInfo>[];
         for (final internal in classConfig.internalTypes) {
           final internalUri = internal.source ?? library.uri;
-          final internalInfo = await analyzer.analyzeClass(
-            internalUri,
-            internal.name,
-          );
+          TypeInfo internalInfo;
+          try {
+            internalInfo = await analyzer.analyzeClass(
+              internalUri,
+              internal.name,
+            );
+          } catch (_) {
+            // VM-internal classes (e.g. _GrowableList, _List, _Set) are not
+            // visible to the analyzer. Create an empty TypeInfo — the actual
+            // methods come from YAML overrides (extra_methods).
+            internalInfo = TypeInfo(
+              className: internal.name,
+              libraryUri: internalUri,
+              methods: [],
+              getters: [],
+              setters: [],
+              operators: [],
+              staticMethods: [],
+              constructors: [],
+              superclasses: [],
+            );
+          }
           internalInfos.add(internalInfo);
         }
 
@@ -95,8 +113,55 @@ class Runner {
         bindingFileNames.add(fileName);
       } else {
         // Simple class (no internal types)
-        final info = await analyzer.analyzeClass(library.uri, resolvedName);
-        final source = binding_emitter.emitBindingFile(info);
+        TypeInfo info;
+        if (resolvedName.startsWith('_')) {
+          // Private classes (e.g. _Enum, _StringStackTrace) are not accessible
+          // from user code. Create an empty TypeInfo — methods come from YAML.
+          info = TypeInfo(
+            className: resolvedName,
+            libraryUri: library.uri,
+            methods: [],
+            getters: [],
+            setters: [],
+            operators: [],
+            staticMethods: [],
+            constructors: [],
+            superclasses: [],
+          );
+        } else {
+          try {
+            info = await analyzer.analyzeClass(library.uri, resolvedName);
+          } catch (_) {
+            // Classes not visible to analyzer.
+            // Create an empty TypeInfo — methods come from YAML overrides.
+            info = TypeInfo(
+              className: resolvedName,
+              libraryUri: library.uri,
+              methods: [],
+              getters: [],
+              setters: [],
+              operators: [],
+              staticMethods: [],
+              constructors: [],
+              superclasses: [],
+            );
+          }
+        }
+        // Check for overrides on this class
+        final overrides = library.overrides[resolvedName];
+        final extraMethods = overrides?.extraMethods;
+        final extraBindings = overrides?.extraBindings;
+        final preamble = overrides?.preamble;
+        final source = binding_emitter.emitBindingFile(
+          info,
+          extraMethods: extraMethods != null && extraMethods.isNotEmpty
+              ? extraMethods
+              : null,
+          extraBindings: extraBindings != null && extraBindings.isNotEmpty
+              ? extraBindings
+              : null,
+          preamble: preamble,
+        );
 
         final fileName = _classToFileName(className);
         _writeFile(config.outputBindings, fileName, source);
@@ -120,11 +185,16 @@ class Runner {
       final functionInfos = <FunctionInfo>[];
       for (final fnConfig in library.functions) {
         if (fnConfig.custom != null) {
-          // Custom source — skip analysis, create FunctionInfo with custom
+          // Custom source — skip analysis, create FunctionInfo with custom.
+          // Use explicit arity from config, or default to 0.
+          final arity = fnConfig.arity ?? 0;
           functionInfos.add(FunctionInfo(
             name: fnConfig.name,
             libraryUri: library.uri,
-            paramTypes: [],
+            paramTypes: [
+              for (var i = 0; i < arity; i++)
+                ParamInfo(name: 'arg$i', type: 'dynamic'),
+            ],
             returnType: 'dynamic',
             customSource: fnConfig.custom,
           ));

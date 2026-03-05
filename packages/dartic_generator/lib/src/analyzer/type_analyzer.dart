@@ -12,6 +12,8 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/session.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'type_info.dart';
 
 /// Analyzes Dart classes and functions from SDK or package libraries.
@@ -103,6 +105,9 @@ class TypeAnalyzer {
     // Collect the set of Object method names to exclude
     final objectMethodNames = _getObjectMemberNames(cls);
 
+    // Check if the class is abstract (interface, mixin, abstract class)
+    final isAbstract = cls is ClassElement && cls.isAbstract;
+
     // Separate methods into instance, static, and operators
     final methods = <MethodInfo>[];
     final staticMethods = <MethodInfo>[];
@@ -112,9 +117,17 @@ class TypeAnalyzer {
       final name = method.name;
       if (name == null) continue;
 
+      // Skip private methods — they can't be called from outside the library
+      if (name.startsWith('_')) continue;
+
       if (method.isStatic) {
-        staticMethods.add(_toMethodInfo(method));
+        // Skip methods with generic function params (can't wrap them)
+        if (!_hasGenericFunctionParam(method.formalParameters)) {
+          staticMethods.add(_toMethodInfo(method));
+        }
       } else if (method.isOperator) {
+        // Skip == operator — handled by opcodes in the VM
+        if (name == '==') continue;
         operators.add(_toOperatorInfo(method));
       } else {
         // Skip Object methods unless explicitly overridden in this class
@@ -126,46 +139,68 @@ class TypeAnalyzer {
       }
     }
 
-    // Extract getters (exclude Object getters)
+    // Extract getters — separate instance from static
     final getters = <GetterInfo>[];
+    final staticGetters = <GetterInfo>[];
     for (final getter in cls.getters) {
       final name = getter.name;
       if (name == null) continue;
-      // Skip synthetic getters from fields (they are already in fields)
-      // and Object getters unless overridden
-      if (objectMethodNames.contains(name) &&
-          !_isDeclaredInClass(getter, cls)) {
-        continue;
+      // Skip private getters
+      if (name.startsWith('_')) continue;
+
+      if (getter.isStatic) {
+        staticGetters.add(GetterInfo(
+          name: name,
+          returnType: _sanitizeType(getter.returnType),
+        ));
+      } else {
+        // Skip Object getters unless overridden
+        if (objectMethodNames.contains(name) &&
+            !_isDeclaredInClass(getter, cls)) {
+          continue;
+        }
+        getters.add(GetterInfo(
+          name: name,
+          returnType: _sanitizeType(getter.returnType),
+        ));
       }
-      getters.add(GetterInfo(
-        name: name,
-        returnType: getter.returnType.getDisplayString(),
-      ));
     }
 
-    // Extract setters
+    // Extract setters (exclude private setters)
     final setters = <SetterInfo>[];
     for (final setter in cls.setters) {
       final name = setter.name;
       if (name == null) continue;
+      // Skip private setters
+      if (name.startsWith('_')) continue;
+      // Skip static setters (rare but possible)
+      if (setter.isStatic) continue;
       // Setter name has trailing '=', remove it for the SetterInfo name
       final cleanName = name.endsWith('=')
           ? name.substring(0, name.length - 1)
           : name;
       final params = setter.formalParameters;
       final paramType =
-          params.isNotEmpty ? params.first.type.getDisplayString() : 'dynamic';
+          params.isNotEmpty ? _sanitizeType(params.first.type) : 'dynamic';
       setters.add(SetterInfo(name: cleanName, paramType: paramType));
     }
 
-    // Extract constructors
+    // Extract constructors — skip for abstract classes (can't be instantiated)
+    // Also skip private constructors
     final constructors = <ConstructorInfo>[];
-    for (final ctor in cls.constructors) {
-      constructors.add(ConstructorInfo(
-        name: ctor.name ?? 'new',
-        params: _toParamInfoList(ctor.formalParameters),
-        isFactory: ctor.isFactory,
-      ));
+    if (!isAbstract) {
+      for (final ctor in cls.constructors) {
+        final ctorName = ctor.name ?? '';
+        // Skip private constructors
+        if (ctorName.startsWith('_')) continue;
+        // 'new' is the unnamed constructor — normalize to empty string
+        final normalizedName = ctorName == 'new' ? '' : ctorName;
+        constructors.add(ConstructorInfo(
+          name: normalizedName,
+          params: _toParamInfoList(ctor.formalParameters),
+          isFactory: ctor.isFactory,
+        ));
+      }
     }
 
     // Build superclass chain (excluding Object)
@@ -196,8 +231,10 @@ class TypeAnalyzer {
       setters: setters,
       operators: operators,
       staticMethods: staticMethods,
+      staticGetters: staticGetters,
       constructors: constructors,
       superclasses: superclasses,
+      isAbstract: isAbstract,
     );
   }
 
@@ -229,6 +266,8 @@ class TypeAnalyzer {
 
       if (member is MethodElement) {
         if (member.isOperator) {
+          // Skip == operator — handled by opcodes
+          if (member.name == '==') continue;
           final lookupName = _operatorLookupName(member);
           if (!existingOperatorNames.contains(lookupName)) {
             operators.add(_toOperatorInfo(member));
@@ -245,7 +284,7 @@ class TypeAnalyzer {
         if (memberName != null && !existingGetterNames.contains(memberName)) {
           getters.add(GetterInfo(
             name: memberName,
-            returnType: member.returnType.getDisplayString(),
+            returnType: _sanitizeType(member.returnType),
           ));
           existingGetterNames.add(memberName);
         }
@@ -258,7 +297,7 @@ class TypeAnalyzer {
           if (!existingSetterNames.contains(cleanName)) {
             final params = member.formalParameters;
             final paramType = params.isNotEmpty
-                ? params.first.type.getDisplayString()
+                ? _sanitizeType(params.first.type)
                 : 'dynamic';
             setters.add(SetterInfo(name: cleanName, paramType: paramType));
             existingSetterNames.add(cleanName);
@@ -304,7 +343,7 @@ class TypeAnalyzer {
     return MethodInfo(
       name: method.name!,
       paramTypes: _toParamInfoList(method.formalParameters),
-      returnType: method.returnType.getDisplayString(),
+      returnType: _sanitizeType(method.returnType),
     );
   }
 
@@ -318,8 +357,8 @@ class TypeAnalyzer {
     return OperatorInfo(
       name: name,
       lookupName: lookupName,
-      paramType: isUnary ? null : params.first.type.getDisplayString(),
-      returnType: method.returnType.getDisplayString(),
+      paramType: isUnary ? null : _sanitizeType(params.first.type),
+      returnType: _sanitizeType(method.returnType),
     );
   }
 
@@ -342,14 +381,111 @@ class TypeAnalyzer {
   /// Converts a list of [FormalParameterElement] to [ParamInfo] list.
   List<ParamInfo> _toParamInfoList(List<FormalParameterElement> params) {
     return params.map((p) {
+      int? callbackArity;
+      String? callbackReturnType;
+
+      // If the parameter is a function type, extract callback info
+      final rawType = p.type;
+      if (rawType is FunctionType) {
+        // Skip generic function parameters (e.g. Set<R> Function<R>())
+        // These have their own type parameters and can't be wrapped.
+        if (rawType.typeParameters.isEmpty) {
+          callbackArity = rawType.formalParameters.length;
+          callbackReturnType = _sanitizeType(rawType.returnType);
+        }
+      }
+
       return ParamInfo(
         name: p.name ?? '',
-        type: p.type.getDisplayString(),
+        type: _sanitizeType(p.type),
         isOptional: p.isOptional,
         isNamed: p.isNamed,
         isRequired: p.isRequired,
+        callbackArity: callbackArity,
+        callbackReturnType: callbackReturnType,
       );
     }).toList();
+  }
+
+  /// Checks if any parameter has a generic function type (FunctionType with
+  /// its own type parameters), which can't be properly wrapped.
+  bool _hasGenericFunctionParam(List<FormalParameterElement> params) {
+    for (final p in params) {
+      final type = p.type;
+      if (type is FunctionType && type.typeParameters.isNotEmpty) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Sanitizes a [DartType] for use in generated code.
+  ///
+  /// Type parameters (E, T, K, V, etc.) are replaced with their bound or
+  /// with a suitable runtime type. Function types with type parameters
+  /// are simplified to `Function`.
+  String _sanitizeType(DartType type) {
+    // Type parameter -> use its bound, or fall back to dynamic
+    if (type is TypeParameterType) {
+      final bound = type.bound;
+      if (bound.isDartCoreObject || bound is DynamicType || bound is VoidType) {
+        return type.nullabilitySuffix == NullabilitySuffix.question
+            ? 'Object?'
+            : 'dynamic';
+      }
+      return _sanitizeType(bound);
+    }
+
+    // Function type -> simplify to Function
+    if (type is FunctionType) {
+      // Check if any param or return uses type parameters
+      final hasTypeParam = type.typeParameters.isNotEmpty ||
+          type.formalParameters.any((p) => _containsTypeParam(p.type)) ||
+          _containsTypeParam(type.returnType);
+      if (hasTypeParam) {
+        return type.nullabilitySuffix == NullabilitySuffix.question
+            ? 'Function?'
+            : 'Function';
+      }
+      return type.getDisplayString();
+    }
+
+    // Interface type with type arguments -> recursively sanitize type args
+    if (type is InterfaceType && type.typeArguments.isNotEmpty) {
+      if (type.typeArguments.any(_containsTypeParam)) {
+        final name = type.element.name;
+        // Recursively sanitize each type argument
+        final sanitizedArgs = type.typeArguments.map(_sanitizeType).toList();
+        // If all args become 'dynamic', use the raw type name
+        final allDynamic = sanitizedArgs.every((a) => a == 'dynamic');
+        if (allDynamic) {
+          return type.nullabilitySuffix == NullabilitySuffix.question
+              ? '$name?'
+              : name ?? 'dynamic';
+        }
+        // Otherwise, use the sanitized type args
+        final argsStr = sanitizedArgs.join(', ');
+        return type.nullabilitySuffix == NullabilitySuffix.question
+            ? '$name<$argsStr>?'
+            : '$name<$argsStr>';
+      }
+    }
+
+    return type.getDisplayString();
+  }
+
+  /// Returns true if a [DartType] contains (or is) a type parameter.
+  bool _containsTypeParam(DartType type) {
+    if (type is TypeParameterType) return true;
+    if (type is FunctionType) {
+      return type.typeParameters.isNotEmpty ||
+          type.formalParameters.any((p) => _containsTypeParam(p.type)) ||
+          _containsTypeParam(type.returnType);
+    }
+    if (type is InterfaceType) {
+      return type.typeArguments.any(_containsTypeParam);
+    }
+    return false;
   }
 
   /// Extracts [FunctionInfo] from a [TopLevelFunctionElement].
