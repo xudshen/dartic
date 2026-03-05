@@ -150,11 +150,43 @@ Set<String> _detectRequiredImports(String source) {
   if (source.contains('DarticObject')) {
     imports.add('../../runtime/object.dart');
   }
-  if (source.contains('LinkedHashMap')) {
-    imports.add('dart:collection');
+  // dart:collection types
+  const collectionTypes = [
+    'LinkedHashMap', 'LinkedHashSet', 'HashMap', 'HashSet',
+    'Queue', 'ListQueue', 'SplayTreeMap', 'SplayTreeSet',
+    'UnmodifiableListView', 'UnmodifiableMapView', 'UnmodifiableSetView',
+  ];
+  for (final type in collectionTypes) {
+    if (RegExp('\\b$type\\b').hasMatch(source)) {
+      imports.add('dart:collection');
+      break;
+    }
   }
-  if (RegExp(r'\bRandom\b').hasMatch(source)) {
-    imports.add('dart:math');
+  // dart:math types (class names) and top-level math functions (matched with
+  // call syntax `fn(` to avoid false positives on types that have methods
+  // named pow, log, etc.)
+  const mathTypes = [
+    'Random', 'Point', 'Rectangle', 'MutableRectangle',
+  ];
+  const mathFunctions = [
+    'min', 'max', 'sqrt', 'pow', 'sin', 'cos', 'tan',
+    'log', 'exp', 'atan2', 'asin', 'acos', 'atan',
+  ];
+  for (final type in mathTypes) {
+    if (RegExp('\\b$type\\b').hasMatch(source)) {
+      imports.add('dart:math');
+      break;
+    }
+  }
+  if (!imports.contains('dart:math')) {
+    // Check for top-level math function calls: `=> fn(` or `fn(args` at line
+    // start (not `.fn(` which would be method calls on an instance)
+    for (final fn in mathFunctions) {
+      if (RegExp('(?<![.])\\b$fn\\(').hasMatch(source)) {
+        imports.add('dart:math');
+        break;
+      }
+    }
   }
   if (RegExp(r'\bEncoding\b').hasMatch(source)) {
     imports.add('dart:convert');
