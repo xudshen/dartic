@@ -1,0 +1,265 @@
+# dart:core bindings configuration for dartic code generator.
+#
+# This file drives code generation for ALL dart:core types currently registered
+# in the hand-written binding files. The generator uses this YAML + dart analyzer
+# to produce equivalent .g.dart files.
+#
+# Types are organized by category:
+#   1. Non-generic types (type-only dispatcher, no test needed)
+#   2. Generic/polymorphic types (dispatcher + test predicate)
+#   3. Binding-only types (no dispatcher needed)
+#   4. Error/Exception hierarchy
+#   5. Misc types (Stopwatch, StackTrace, Symbol, Expando, MapEntry, etc.)
+#   6. RegExp/Match/RegExpMatch
+#   7. Runes/RuneIterator
+#   8. BigInt, DateTime, StringBuffer, Uri, Invocation
+
+output_bindings: "lib/src/bridge/bindings"
+output_plugins: "lib/src/bridge/plugins"
+
+libraries:
+  - uri: dart:core
+    classes:
+      # ── Non-generic types (type-only dispatcher, no test needed) ──────
+
+      # int -- dispatcher prefix chain: int, num
+      - int
+
+      # double -- dispatcher prefix chain: double, num
+      - double
+
+      # String (also registers Pattern bindings separately)
+      - String
+
+      # bool
+      - bool
+
+      # Duration
+      - Duration
+
+      # ── Generic/polymorphic types (need test predicate) ──────────────
+
+      # List -- dispatcher prefix chain: List, _GrowableList, Iterable
+      - name: List
+        internal_types:
+          - _GrowableList
+          - _List
+
+      # Map -- dispatcher prefix chain: Map, LinkedHashMap
+      - name: Map
+        internal_types:
+          - name: LinkedHashMap
+            source: dart:collection
+
+      # Set -- dispatcher prefix chain: Set, _Set, Iterable
+      - name: Set
+        internal_types:
+          - name: _Set
+            source: "dart:_compact_hash"
+
+      # Iterable -- binding-only with dispatcher for dynamic dispatch
+      - Iterable
+
+      # Invocation
+      - Invocation
+
+      # ── Binding-only types (no dispatcher needed) ────────────────────
+
+      # num -- no runtime instances; int/double dispatchers handle via superclasses
+      - num
+
+      # Object -- too generic as dispatcher (all types match)
+      - Object
+
+      # Type -- no dispatcher, just bindings
+      - Type
+
+      # _Enum -- abstract base for enums, no dispatcher
+      - name: Enum
+        source_name: _Enum
+
+      # Function -- no dispatcher for Function instances
+      - Function
+
+      # Iterator -- abstract, no dispatcher
+      - Iterator
+
+      # ── Error/Exception hierarchy ────────────────────────────────────
+
+      - Error
+      - ArgumentError
+      - RangeError
+      - IndexError
+      - StateError
+      - UnsupportedError
+      - UnimplementedError
+      - FormatException
+      - Exception
+      - ConcurrentModificationError
+      - StackOverflowError
+      - AssertionError
+      - TypeError
+      - NoSuchMethodError
+
+      # ── Misc types ──────────────────────────────────────────────────
+
+      - Stopwatch
+      - StackTrace
+      - name: _StringStackTrace
+        source_name: _StringStackTrace
+      - Symbol
+      - Expando
+      - MapEntry
+
+      # ── Pattern (String implements Pattern, Kernel may resolve to Pattern::) ──
+
+      - Pattern
+
+      # ── RegExp / Match / RegExpMatch ─────────────────────────────────
+
+      - RegExp
+      - Match
+      - RegExpMatch
+
+      # ── Runes / RuneIterator ─────────────────────────────────────────
+
+      - Runes
+      - RuneIterator
+
+      # ── Standalone types ─────────────────────────────────────────────
+
+      - BigInt
+      - DateTime
+      - StringBuffer
+      - Uri
+
+    # ── Top-level functions ──────────────────────────────────────────────
+
+    functions:
+      - identical
+
+      - name: print
+        custom: |
+          (args) {
+            (ctx.config.onPrint ?? print)(args[0]);
+            return null;
+          }
+
+      # EnumName|get#name -- extension getter used by .name on enums
+      - name: "EnumName|get#name"
+        custom: |
+          (args) {
+            final obj = args[0] as DarticObject;
+            return obj.refFields[0] as String;
+          }
+
+    # ── Overrides (things the analyzer can't auto-discover) ──────────────
+
+    overrides:
+
+      # ── _GrowableList: VM-internal literal constructors ──
+      _GrowableList:
+        extra_methods:
+          "#1": "(args) => List<dynamic>.filled(args[0] as int, null, growable: true)"
+          "_literal1#1": "(args) => <dynamic>[args[0]]"
+          "_literal2#2": "(args) => <dynamic>[args[0], args[1]]"
+          "_literal3#3": "(args) => <dynamic>[args[0], args[1], args[2]]"
+          "_literal4#4": "(args) => <dynamic>[args[0], args[1], args[2], args[3]]"
+          "_literal5#5": "(args) => <dynamic>[args[0], args[1], args[2], args[3], args[4]]"
+          "_literal6#6": "(args) => <dynamic>[args[0], args[1], args[2], args[3], args[4], args[5]]"
+          "_literal7#7": "(args) => <dynamic>[args[0], args[1], args[2], args[3], args[4], args[5], args[6]]"
+          "_literal8#8": "(args) => <dynamic>[args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]]"
+          "_literal#1": "(args) => List<dynamic>.from(args[0] as List)"
+          "filled#2": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: true)"
+          "empty#0": "(args) => <dynamic>[]"
+          "generate#3": |
+            (args) {
+              final length = args[0] as int;
+              final generator = args[1] as Function;
+              if (args.length > 2 && args[2] != null) {
+                return List.generate(length, (i) => generator(i), growable: args[2] as bool);
+              }
+              return List.generate(length, (i) => generator(i));
+            }
+          "generate#2": |
+            (args) {
+              final length = args[0] as int;
+              final generator = args[1] as Function;
+              return List.generate(length, (i) => generator(i));
+            }
+
+      # ── _List: VM-internal fixed-length list constructors ──
+      _List:
+        extra_methods:
+          "filled#2": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: false)"
+          "#1": "(args) => List<dynamic>.filled(args[0] as int, null, growable: false)"
+
+      # ── _Set: VM-internal compact set constructor ──
+      _Set:
+        extra_methods:
+          "#0": "(args) => <dynamic>{}"
+          "add#1": "(args) => (args[0] as Set).add(args[1])"
+          "cast#0": "(args) => (args[0] as Set).cast()"
+
+      # ── LinkedHashMap: CFE lowers map literals to LinkedHashMap ──
+      LinkedHashMap:
+        extra_methods:
+          "of#1": "(args) => LinkedHashMap<dynamic, dynamic>.of(args[0] as Map)"
+          "#0": "(args) => <dynamic, dynamic>{}"
+
+      # ── Pattern: String implements Pattern, registered separately ──
+      Pattern:
+        extra_methods:
+          "allMatches#2": |
+            (args) {
+              final self = args[0] as String;
+              final string = args[1] as String;
+              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
+              return self.allMatches(string, start);
+            }
+          "matchAsPrefix#2": |
+            (args) {
+              final self = args[0] as String;
+              final string = args[1] as String;
+              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
+              return self.matchAsPrefix(string, start);
+            }
+
+      # ── Symbol: cross-namespace binding (dart:_internal) ──
+      Symbol:
+        extra_bindings:
+          - "dart:_internal::Symbol::#1"
+
+      # ── _StringStackTrace: internal StackTrace implementation ──
+      _StringStackTrace:
+        extra_methods:
+          "#1": "(args) => StackTrace.fromString(args[0] as String)"
+
+      # ── _Enum: DarticObject field accessors ──
+      _Enum:
+        extra_methods:
+          "index#0": |
+            (args) {
+              final obj = args[0] as DarticObject;
+              return obj.valueFields[0];
+            }
+          "_name#0": |
+            (args) {
+              final obj = args[0] as DarticObject;
+              return obj.refFields[0] as String;
+            }
+
+      # ── Error: uses custom _DarticErrorBacking for constructor ──
+      Error:
+        extra_methods:
+          "#0": "(args) => _DarticErrorBacking()"
+
+      # ── MapEntry: private constructor variant ──
+      MapEntry:
+        extra_methods:
+          "_#2": "(args) => MapEntry(args[0], args[1])"
+
+      # ── Duration: internal _#fromFields constructor ──
+      Duration:
+        extra_methods:
+          "_#fromFields#1": "(args) => Duration(microseconds: args[0] as int)"
