@@ -57,6 +57,7 @@ String emitBindingFileWithInternalTypes(
   List<TypeInfo> internalInfos, {
   String? configPath,
   Map<String, Map<String, String>>? extraMethods,
+  Map<String, String>? mainExtraMethods,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -71,7 +72,7 @@ String emitBindingFileWithInternalTypes(
   );
   body.writeln();
 
-  _writeMethodMap(body, mainInfo);
+  _writeMethodMap(body, mainInfo, extraMethods: mainExtraMethods);
 
   for (final internal in internalInfos) {
     body.writeln();
@@ -157,6 +158,20 @@ Set<String> _detectRequiredImports(String source) {
   }
   if (RegExp(r'\bEncoding\b').hasMatch(source)) {
     imports.add('dart:convert');
+  }
+  // dart:async types used in custom binding closures
+  const asyncTypes = [
+    'Future', 'FutureOr', 'Completer', 'Stream', 'StreamController',
+    'StreamSubscription', 'StreamTransformer', 'StreamConsumer',
+    'StreamSink', 'EventSink', 'MultiStreamController', 'StreamIterator',
+    'Timer', 'Zone', 'ZoneDelegate', 'ZoneSpecification', 'AsyncError',
+    'scheduleMicrotask', 'runZoned', 'runZonedGuarded',
+  ];
+  for (final type in asyncTypes) {
+    if (RegExp('\\b$type\\b').hasMatch(source)) {
+      imports.add('dart:async');
+      break;
+    }
   }
   return imports;
 }

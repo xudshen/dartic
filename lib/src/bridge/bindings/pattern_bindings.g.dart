@@ -15,10 +15,6 @@ abstract final class PatternBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'allMatches#1': (args) => (args[0] as Pattern).allMatches(args[1] as String),
-        'allMatches#2': (args) => (args[0] as Pattern).allMatches(args[1] as String, args[2] as int),
-        'matchAsPrefix#1': (args) => (args[0] as Pattern).matchAsPrefix(args[1] as String),
-        'matchAsPrefix#2': (args) => (args[0] as Pattern).matchAsPrefix(args[1] as String, args[2] as int),
         'allMatches#2': (args) {
   final self = args[0] as String;
   final string = args[1] as String;

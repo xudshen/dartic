@@ -65,15 +65,9 @@ class Runner {
         for (final internal in classConfig.internalTypes) {
           final internalUri = internal.source ?? library.uri;
           TypeInfo internalInfo;
-          try {
-            internalInfo = await analyzer.analyzeClass(
-              internalUri,
-              internal.name,
-            );
-          } catch (_) {
-            // VM-internal classes (e.g. _GrowableList, _List, _Set) are not
-            // visible to the analyzer. Create an empty TypeInfo — the actual
-            // methods come from YAML overrides (extra_methods).
+          if (internal.name.startsWith('_')) {
+            // Private classes can't be used in type casts from external code.
+            // Create an empty TypeInfo — methods come from YAML overrides.
             internalInfo = TypeInfo(
               className: internal.name,
               libraryUri: internalUri,
@@ -85,6 +79,28 @@ class Runner {
               constructors: [],
               superclasses: [],
             );
+          } else {
+            try {
+              internalInfo = await analyzer.analyzeClass(
+                internalUri,
+                internal.name,
+              );
+            } catch (_) {
+              // VM-internal classes (e.g. _GrowableList, _List, _Set) are not
+              // visible to the analyzer. Create an empty TypeInfo — the actual
+              // methods come from YAML overrides (extra_methods).
+              internalInfo = TypeInfo(
+                className: internal.name,
+                libraryUri: internalUri,
+                methods: [],
+                getters: [],
+                setters: [],
+                operators: [],
+                staticMethods: [],
+                constructors: [],
+                superclasses: [],
+              );
+            }
           }
           internalInfos.add(internalInfo);
         }
@@ -100,10 +116,18 @@ class Runner {
           }
         }
 
+        // Main class overrides (extra_methods for the main type itself)
+        final mainOverrides = library.overrides[resolvedName];
+        final mainExtraMethods = mainOverrides?.extraMethods;
+
         final source = binding_emitter.emitBindingFileWithInternalTypes(
           mainInfo,
           internalInfos,
           extraMethods: extraMethods,
+          mainExtraMethods: mainExtraMethods != null &&
+                  mainExtraMethods.isNotEmpty
+              ? mainExtraMethods
+              : null,
         );
 
         final fileName = _classToFileName(className);
