@@ -236,9 +236,9 @@ DarticDispatch 的 `invoke` / `get` / `set` 方法接收两个参数：`receiver
 - `darticObject`（DarticObject）用于在 `DarticClassInfo.methods` 中查找方法、在 ConstantPool 中解析名称
 - `receiver`（Bridge 实例）需作为 `this` 传入解释器方法调用，使方法体内的 `this` 仍然是 Bridge 实例（保证后续字段访问和方法调用可正确路由）
 
-#### 解释器 _extractScriptObject 辅助函数
+#### 解释器 _extractDarticObject 辅助函数
 
-`_extractScriptObject` 是解释器中的内联辅助函数，在字段 opcode 执行时从引用栈中的对象提取 DarticObject：
+`_extractDarticObject` 是解释器中的内联辅助函数，在字段 opcode 执行时从引用栈中的对象提取 DarticObject：
 
 1. 若对象是 DarticObject → 直接返回
 2. 若对象实现 DarticObjectHolder → 返回 `$darticObject`
@@ -256,7 +256,7 @@ CALL_VIRTUAL 指令对接收者执行三路分发：
 | DarticObjectHolder（Bridge） | 提取 $darticObject → 从 DarticClassInfo.methods 查找 → 将 Bridge 实例作为 this 传入方法帧 |
 | 宿主对象 | 走 HostClassRegistry 动态分发 |
 
-Bridge 路径的关键在于：虽然方法查找基于 DarticObject 的 classId，但方法帧中的 `this`（寄存器 0）存储的是 Bridge 实例本身。这保证了方法体内对 `this` 的字段访问和后续方法调用仍能正确通过 _extractScriptObject 路由。
+Bridge 路径的关键在于：虽然方法查找基于 DarticObject 的 classId，但方法帧中的 `this`（寄存器 0）存储的是 Bridge 实例本身。这保证了方法体内对 `this` 的字段访问和后续方法调用仍能正确通过 _extractDarticObject 路由。
 
 #### CALL_SUPER Bridge 支持
 
@@ -525,7 +525,7 @@ case Op.newInstance:
 
 // 构造函数体内: STORE_SUPER_ARGS — 存储已求值的 super 参数
 case Op.storeSuperArgs:
-  final obj = _extractScriptObject(rs.read(rBase + 2)!);
+  final obj = _extractDarticObject(rs.read(rBase + 2)!);
   obj.pendingSuperArgs = List.generate(argCount, (i) => rs.read(rBase + b + i));
 
 // 阶段 2: WRAP_BRIDGE — 创建 Bridge 替换 DarticObject

@@ -40,8 +40,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         fooClassInfo.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _FieldTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _FieldTestBridge(dispatch, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) =
@@ -81,8 +81,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         counterClassInfo.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _FieldTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _FieldTestBridge(dispatch, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) =

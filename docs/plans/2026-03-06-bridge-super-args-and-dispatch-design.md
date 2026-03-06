@@ -105,7 +105,7 @@ class DarticObject {
 case Op.storeSuperArgs:
   final a = (instr >> 8) & 0xFF;  // this reg
   final b = (instr >> 16) & 0xFF; // arg count
-  final obj = _extractScriptObject(rs.read(rBase + a)!);
+  final obj = _extractDarticObject(rs.read(rBase + a)!);
   obj.pendingSuperArgs = List<Object?>.generate(
     b, (i) => rs.read(rBase + a + 1 + i),
   );

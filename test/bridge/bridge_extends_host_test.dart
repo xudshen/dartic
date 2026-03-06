@@ -1,9 +1,9 @@
-/// E2E tests for script classes extending host (platform) classes.
+/// E2E tests for dartic classes extending host (platform) classes.
 ///
-/// These tests verify the full pipeline: script code → compiler → bytecode →
+/// These tests verify the full pipeline: dartic code → compiler → bytecode →
 /// DarticEngine (with bridge factory resolution) → interpreter execution.
 ///
-/// Unlike the pure-script bridge tests (bridge_e2e_test.dart), these use the
+/// Unlike the pure-dartic bridge tests (bridge_e2e_test.dart), these use the
 /// GENERATED Bridge classes (_$Error, _$Duration, etc.) registered by the
 /// CorePlugin via PluginContext.registerClass(bridgeFactory: ...).
 ///
@@ -17,7 +17,7 @@
 ///
 /// Super constructor args (positional + named) are forwarded correctly.
 /// CALL_HOST Bridge intercept routes overridden methods through DarticDispatch.
-/// String interpolation and host-side toString() calls dispatch to script overrides.
+/// String interpolation and host-side toString() calls dispatch to dartic overrides.
 import 'package:dartic/dartic.dart';
 import 'package:test/test.dart';
 
@@ -28,11 +28,11 @@ final _printLog = <String>[];
 void main() {
   setUp(() => _printLog.clear());
 
-  group('Script extends Host class — working scenarios', () {
-    test('script class extending Error: is-check and toString override',
+  group('Dartic extends Host class — working scenarios', () {
+    test('dartic class extending Error: is-check and toString override',
         () async {
       // Error has a no-arg constructor, so empty superArgs works fine.
-      // Script's toString() override is called via DarticDispatch.
+      // Dartic's toString() override is called via DarticDispatch.
       final source = '''
 class MyError extends Error {
   final String detail;
@@ -60,11 +60,11 @@ void main() {
 
       // Bridge is a real Error → `is Error` should be true
       expect(_printLog[0], 'true');
-      // Script's toString override works via DarticDispatch
+      // Dartic's toString override works via DarticDispatch
       expect(_printLog[1], 'MyError: test');
     });
 
-    test('script class extending Stopwatch: is-check and custom field',
+    test('dartic class extending Stopwatch: is-check and custom field',
         () async {
       // Stopwatch has a no-arg constructor, so empty superArgs works.
       final source = '''
@@ -96,10 +96,10 @@ void main() {
       expect(_printLog[1], 'Stopwatch(timer1)');
     });
 
-    test('script class extending Error: throw and catch as Error', () async {
+    test('dartic class extending Error: throw and catch as Error', () async {
       // Verifies bridge Error can be thrown and caught with `on Error`.
       // In catch, `e` is typed as Error (host type), so e.toString() compiles
-      // to CALL_HOST. The bridge routes back to script's toString via dispatch.
+      // to CALL_HOST. The bridge routes back to dartic's toString via dispatch.
       final source = '''
 class AppError extends Error {
   final String code;
@@ -164,7 +164,7 @@ void main() {
     });
   });
 
-  group('Script extends Host class — pending runtime fixes', () {
+  group('Dartic extends Host class — pending runtime fixes', () {
     test(
       'super constructor args forwarded to host (StateError requires msg)',
       () async {
@@ -397,7 +397,7 @@ void main() {
 
   group('Host calls bridged — dispatch from host side', () {
     test(
-      'string interpolation calls script toString via host side',
+      'string interpolation calls dartic toString via host side',
       () async {
         // '$e' compiles to StringConcatenation which calls toString() on the
         // host object directly (not via CALL_HOST). The Bridge's override
@@ -425,7 +425,7 @@ void main() {
       },
       // String interpolation calls buf.write(part) which calls
       // part.toString() on the Dart side → Bridge._$Error.toString()
-      // → DarticDispatch.invoke() → script override.
+      // → DarticDispatch.invoke() → dartic override.
     );
 
     test('string concatenation with Bridge invokes toString', () async {
@@ -454,7 +454,7 @@ void main() {
     test('Bridge in List<Error> — iterate and call overridden method',
         () async {
       // Bridge instances stored in a host-typed collection.
-      // Iterating and calling toString() must dispatch to script overrides.
+      // Iterating and calling toString() must dispatch to dartic overrides.
       final source = '''
 class E1 extends Error {
   @override
@@ -484,8 +484,8 @@ void main() {
       expect(_printLog[1], 'E2');
     });
 
-    test('host-typed variable calls script-overridden getter', () async {
-      // Access a getter via host-typed variable. If the script overrides
+    test('host-typed variable calls dartic-overridden getter', () async {
+      // Access a getter via host-typed variable. If the dartic overrides
       // the getter, CALL_HOST should route through DarticDispatch.
       final source = '''
 class TaggedError extends Error {
@@ -567,8 +567,8 @@ void main() {
     });
   });
 
-  group('Host-specific method override via CALL_HOST (script-side)', () {
-    test('script overrides host-specific getter — CALL_HOST dispatches to script',
+  group('Host-specific method override via CALL_HOST (dartic-side)', () {
+    test('dartic overrides host-specific getter — CALL_HOST dispatches to dartic',
         () async {
       final source = '''
 class FixedStopwatch extends Stopwatch {
@@ -592,7 +592,7 @@ void main() {
       expect(_printLog[0], '999');
     });
 
-    test('script overrides host-specific getter — ArgumentError.message',
+    test('dartic overrides host-specific getter — ArgumentError.message',
         () async {
       final source = '''
 class CustomArgError extends ArgumentError {
@@ -618,7 +618,7 @@ void main() {
       expect(_printLog[0], 'overridden');
     });
 
-    test('script does NOT override host-specific getter — falls through to host',
+    test('dartic does NOT override host-specific getter — falls through to host',
         () async {
       final source = '''
 class MyStopwatch extends Stopwatch {}
@@ -644,7 +644,7 @@ void main() {
     // These tests verify that when the HOST Dart code holds a Bridge instance
     // (returned by engine.call) and calls methods on it directly, Dart's own
     // virtual dispatch routes through the Bridge override → DarticDispatch →
-    // script method. This path does NOT go through the interpreter's CALL_HOST.
+    // dartic method. This path does NOT go through the interpreter's CALL_HOST.
 
     test('host calls overridden toString on returned Bridge', () async {
       final source = '''
@@ -729,7 +729,7 @@ Object main() => AppError();
       final result = engine.call('main');
 
       final err = result as Error;
-      // Overridden → script value
+      // Overridden → dartic value
       expect(err.toString(), 'AppError!');
       // Not overridden → host default
       expect(err.stackTrace, isNull);

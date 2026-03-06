@@ -134,13 +134,13 @@
 
 1. **读设计文档** — API 设计文档 "Flutter 热更新端到端示例"节，完整流程：
    - 宿主应用：创建 DarticEngine → 注册 DarticCorePlugin + DarticFlutterPlugin → 配置 DarticConfig → 从 assets 或网络加载 .darb → engine.loadBytecode(bytes) → engine.call('createHomeScreen') → 获取 Widget 实例 → 放入 widget tree
-   - 脚本端：`class HomeScreen extends StatelessWidget { @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: Text('Hot Update!')), body: Center(child: Text('Hello from script!'))); }` + 导出函数 `Widget createHomeScreen() => HomeScreen();`
+   - 脚本端：`class HomeScreen extends StatelessWidget { @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: Text('Hot Update!')), body: Center(child: Text('Hello from dartic!'))); }` + 导出函数 `Widget createHomeScreen() => HomeScreen();`
    - 编译工具：Dart 源码 → CFE → .dill → dartic compiler → .darb → 存入 assets 或部署到 CDN
 
 2. **E2E 验证步骤**（手动验证，非自动测试）：
    - 编译脚本：`fvm dart run tool/compile_script.dart scripts/home_screen.dart -o assets/home_screen.darb`
    - 启动 Flutter 应用：`flutter run`
-   - 应用加载 .darb 并渲染 HomeScreen → 屏幕显示 "Hello from script!"
+   - 应用加载 .darb 并渲染 HomeScreen → 屏幕显示 "Hello from dartic!"
    - 修改脚本中的文字 → 重新编译 → 热重载资源 → 页面更新
 
 3. **实现** —

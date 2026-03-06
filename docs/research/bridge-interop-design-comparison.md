@@ -1,7 +1,7 @@
 # 业界 Bridge/Interop 设计对比分析
 
 > 调研日期：2026-03-06
-> 目的：对比 dartic 的 Bridge 架构与业界主流嵌入式语言的 host/script 互操作设计，识别设计优势与潜在风险
+> 目的：对比 dartic 的 Bridge 架构与业界主流嵌入式语言的 host/dartic 互操作设计，识别设计优势与潜在风险
 
 ---
 
@@ -24,7 +24,7 @@
 
 每个系统的 bridge 对象都需要同时被两个世界识别：
 
-| 系统 | Host 侧身份 | Script 侧身份 |
+| 系统 | Host 侧身份 | Dartic 侧身份 |
 |------|-------------|---------------|
 | JRuby | 生成的 Java 子类 (ASM bytecode)，synthetic field: `rubyObject →` | ConcreteJavaProxy (holds `.object → Java`) |
 | Jython | 生成的 Java 子类，implements PyProxy，field: `__pyInstance →` | PyInstance (holds `.javaProxy → Java`) |
@@ -40,7 +40,7 @@
 
 ### 2. 方法覆写检测（Sentinel Pattern）
 
-当 host 方法被调用时，Bridge 需要判断"script 有没有 override 这个方法"：
+当 host 方法被调用时，Bridge 需要判断"dartic 有没有 override 这个方法"：
 
 | 系统 | 检测机制 | 性能 |
 |------|---------|------|
@@ -54,7 +54,7 @@
 
 ### 3. `this` 绑定
 
-| 系统 | script 方法中的 this | 用途 |
+| 系统 | dartic 方法中的 this | 用途 |
 |------|---------------------|------|
 | JRuby | ConcreteJavaProxy | `self.hostMethod()` 可直接调用 |
 | Jython | PyInstance | self 走 Python dispatch |
@@ -78,7 +78,7 @@
 
 ### 5. 继承支持能力矩阵
 
-| 系统 | script extends host? | script 调 host super method? | host virtual → script override (双向分发)? |
+| 系统 | dartic extends host? | dartic 调 host super method? | host virtual → dartic override (双向分发)? |
 |------|---------------------|-----------------------------|-----------------------------------------|
 | LuaJ | ❌ (仅 interface) | N/A | N/A |
 | Wren | ❌ | N/A | N/A |
@@ -97,7 +97,7 @@
 
 ### LuaJ
 
-**对象表示**: 一切皆 `LuaValue`。Host 对象被包裹在 `LuaUserdata` → `JavaInstance` → `JavaClass` 层级中。Script 对象是 `LuaTable`。
+**对象表示**: 一切皆 `LuaValue`。Host 对象被包裹在 `LuaUserdata` → `JavaInstance` → `JavaClass` 层级中。Dartic 对象是 `LuaTable`。
 
 **继承限制**: 只能通过 `java.lang.reflect.Proxy` 实现 interface，不能 extend 具体类。这是 JVM `Proxy` 机制的硬限制。
 
@@ -173,7 +173,7 @@ public List myMethod() {
 
 **RData 模型**: `RData` = GC header + `iv_tbl` (Ruby ivars) + `mrb_data_type*` (类型标签) + `void* data` (C 数据)。
 
-**统一方法表**: C 方法和 Ruby 方法在同一张表中，分发完全统一。Script 子类的 override 自然生效。
+**统一方法表**: C 方法和 Ruby 方法在同一张表中，分发完全统一。Dartic 子类的 override 自然生效。
 
 **类型安全**: `mrb_data_get_ptr(mrb, self, &type)` 通过 `mrb_data_type*` 指针比较做类型检查。
 
@@ -185,7 +185,7 @@ public List myMethod() {
 
 **Typetag 链式查找**: `sq_getinstanceup` 沿 Squirrel 类层次向上检查 typetag，支持派生类。
 
-**单向分发**: C++ virtual 不自动分发到 script override。需手动写 trampoline。
+**单向分发**: C++ virtual 不自动分发到 dartic override。需手动写 trampoline。
 
 **`base.constructor()` 必须调用**: 不调用则 userpointer 为 null，后续 C++ 方法调用会 crash。
 
@@ -195,7 +195,7 @@ public List myMethod() {
 
 **覆写检测**: 使用 private sentinel object + `identical()` 检查。
 
-**bridgeCall()**: 创建 VM "子调用"执行 script 方法，然后返回到 host 调用者。
+**bridgeCall()**: 创建 VM "子调用"执行 dartic 方法，然后返回到 host 调用者。
 
 ### Haxe
 
@@ -225,9 +225,9 @@ public List myMethod() {
 | 1 | ~~CALL_VIRTUAL 尚不支持 Bridge~~ | ✅ 已解决：三路分发正确实现 | — |
 | 2 | ~~继承链方法查找~~ | ✅ 已修复：`invoke`/`get`/`set` 均沿 `superClassId` 链查找 | — |
 | 3 | **GC 生命周期** | 如果 Bridge 实例仅被 host 持有，`DarticObject` 可能被 GC | `DarticObjectHolder` 的 `final` field 已解决此问题 ✅ |
-| 4 | ~~`is` / `instanceof` 对 script 类型~~ | ✅ 已修复：`extractType` 识别 `DarticObjectHolder`，正确提取嵌套 `DarticObject` 的类型 | — |
-| 5 | **循环初始化** | 所有系统的共同陷阱：Bridge 构造器中调用 script 方法，而 script 字段尚未初始化 | 文档化不变量："host super 构造器先于 script 字段访问" |
-| 6 | **多层继承链** | Script A extends Bridge B extends Host C，`CALL_VIRTUAL` 需正确处理三层分发 | 添加针对多层继承的测试用例 |
+| 4 | ~~`is` / `instanceof` 对 dartic 类型~~ | ✅ 已修复：`extractType` 识别 `DarticObjectHolder`，正确提取嵌套 `DarticObject` 的类型 | — |
+| 5 | **循环初始化** | 所有系统的共同陷阱：Bridge 构造器中调用 dartic 方法，而 dartic 字段尚未初始化 | 文档化不变量："host super 构造器先于 dartic 字段访问" |
+| 6 | **多层继承链** | Dartic A extends Bridge B extends Host C，`CALL_VIRTUAL` 需正确处理三层分发 | 添加针对多层继承的测试用例 |
 
 ### ❌ 未发现重大设计缺陷
 
@@ -277,9 +277,9 @@ public List myMethod() {
 | 双重身份机制 | `rubyObject` ↔ `ConcreteJavaProxy.object` | `__pyInstance` ↔ `javaProxy` | `Value` wrapper ↔ guest object | `_$self` ↔ `$Bridge` | `DarticObject` ↔ Bridge via `DarticObjectHolder` |
 | Bridge 类生成 | ASM 运行时生成 | 类定义时字节码生成 | 不需要 (InteropLibrary) | codegen (`dart_eval bind`) | codegen (`@DarticExport(bridge: true)`) |
 | 覆写检测 | null / method-existence check | `__findattr__ == None` | N/A (协议) | private sentinel | `notOverridden` (typed sentinel) |
-| script 方法中的 this | ConcreteJavaProxy | PyInstance | guest language object | `$Bridge` 实例 | Bridge 实例 (`receiver` 参数) |
+| dartic 方法中的 this | ConcreteJavaProxy | PyInstance | guest language object | `$Bridge` 实例 | Bridge 实例 (`receiver` 参数) |
 | Super 构造器 | Split-super AST transform | 显式 `SuperClass.__init__` | N/A | `super(superArgs[0])` | `BridgeFactory` + `superArgs` |
-| 字段访问 | 直接 RubyObject fields | PyInstance instance dict | InteropLibrary `readMember` | `_$self` field dict | `_extractScriptObject()` → `DarticObject.refFields[i]` |
+| 字段访问 | 直接 RubyObject fields | PyInstance instance dict | InteropLibrary `readMember` | `_$self` field dict | `_extractDarticObject()` → `DarticObject.refFields[i]` |
 | 虚分发 | `DynamicMethod` + 2-level IC | Reflection (无 IC) | AST-rewriting polymorphic IC | `bridgeCall()` | IC table in `DarticFuncProto` + `notOverridden` fallback |
 | Host 类型 `is` 检查 | ✅ (真 JVM 类) | ✅ (真 Java 类) | ✅ (实际 host 对象) | ✅ (extends host) | ✅ (Bridge extends host) |
 
@@ -291,7 +291,7 @@ public List myMethod() {
 |--------|--------|------|
 | ~~P0~~ | ~~完成 Task 4: CALL_VIRTUAL 的 DarticObjectHolder 分支~~ | ✅ 已完成：三路分发正确实现 |
 | ~~P1~~ | ~~验证 DarticDispatch.invoke 的继承链查找~~ | ✅ 已修复：invoke/get/set 均沿 superClassId 链查找 |
-| **P1** | 添加多层继承测试 (Script→Bridge→Host) | 所有系统都在这个场景出过问题 |
+| **P1** | 添加多层继承测试 (Dartic→Bridge→Host) | 所有系统都在这个场景出过问题 |
 | ~~P2~~ | ~~INSTANCEOF/CAST 对 Bridge 的支持~~ | ✅ 已修复：extractType 识别 DarticObjectHolder |
 | **P2** | 文档化构造器不变量 | 避免循环初始化陷阱 |
 | **P3** | computed superArgs (非 no-arg super) | 签名已预留，Phase 2 实现 |

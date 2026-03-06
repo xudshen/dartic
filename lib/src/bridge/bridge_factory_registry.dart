@@ -13,7 +13,7 @@ import 'dartic_dispatch.dart';
 /// Factory signature for creating Bridge instances.
 ///
 /// - [dispatch]: DarticDispatch reference for $BridgeMixin delegation
-/// - [darticObject]: the DarticObject carrying script-defined fields
+/// - [darticObject]: the DarticObject carrying dartic-defined fields
 /// - [superArgs]: pre-evaluated super constructor arguments
 ///
 /// Returns a concrete Bridge instance (a real VM type subclass).

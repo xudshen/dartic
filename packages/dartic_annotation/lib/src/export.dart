@@ -23,7 +23,7 @@ class DarticExport {
   /// Custom binding name. If null, the declaration name is used.
   final String? name;
 
-  /// Whether to generate a Bridge subclass for script inheritance.
+  /// Whether to generate a Bridge subclass for dartic inheritance.
   final bool bridge;
 
   const DarticExport({this.name, this.bridge = false});

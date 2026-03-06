@@ -40,8 +40,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         subClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _SuperTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _SuperTestBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -79,8 +79,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         dogClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _SuperTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _SuperTestBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(

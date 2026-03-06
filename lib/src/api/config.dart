@@ -57,19 +57,19 @@ class DarticConfig {
   /// depth, the interpreter throws [CallDepthExceededError].
   final int maxCallDepth;
 
-  /// Callback for script `print()` calls.
+  /// Callback for dartic `print()` calls.
   ///
-  /// When non-null, the script's `print()` calls invoke this callback
+  /// When non-null, the dartic's `print()` calls invoke this callback
   /// instead of writing to stdout. When null, print output is silently
   /// discarded.
   ///
   /// Maps to [CorePlugin]'s print binding registration.
   final void Function(Object?)? onPrint;
 
-  /// Callback for unhandled script exceptions.
+  /// Callback for unhandled dartic exceptions.
   ///
-  /// When non-null and a script throws an exception that is not caught by
-  /// the script itself, this callback is invoked and `engine.call()` returns
+  /// When non-null and a dartic throws an exception that is not caught by
+  /// the dartic itself, this callback is invoked and `engine.call()` returns
   /// null. When null, the exception propagates to the host.
   ///
   /// **Resource errors** (FuelExhaustedError, ExecutionTimeoutError,

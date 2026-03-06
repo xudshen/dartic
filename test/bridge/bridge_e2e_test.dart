@@ -56,8 +56,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         personClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) =
@@ -102,8 +102,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         pairClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -122,7 +122,7 @@ void main() {
 
     test('method-to-method calls maintain Bridge as this', () async {
       // Inner method calls (getValue from doubleIt) must keep Bridge as this
-      // so field access via _extractScriptObject works correctly.
+      // so field access via _extractDarticObject works correctly.
       final source = '''
 class Calc {
   int base;
@@ -145,8 +145,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         calcClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -165,7 +165,7 @@ void main() {
 
     test('ref and value field access on Bridge', () async {
       // String (ref field) and int/double (value fields) must both work
-      // through the _extractScriptObject path.
+      // through the _extractDarticObject path.
       final source = '''
 class Profile {
   String name;
@@ -193,8 +193,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         profileClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -251,13 +251,13 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         dogClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
       bridgeFactoryRegistry.register(
         ownerClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _E2EBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _E2EBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(

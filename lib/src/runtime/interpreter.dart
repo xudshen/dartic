@@ -61,14 +61,14 @@ class DarticInterpreter {
   ///
   /// If [receiver] is already a [DarticObject], returns it directly.
   /// If [receiver] implements [DarticObjectHolder] (Bridge), extracts the
-  /// embedded script object.
+  /// embedded dartic object.
   /// Otherwise throws (field access opcodes should never hit this case).
   @pragma('vm:prefer-inline')
-  static DarticObject _extractScriptObject(Object receiver) {
+  static DarticObject _extractDarticObject(Object receiver) {
     if (receiver is DarticObject) return receiver;
     if (receiver is DarticObjectHolder) return receiver.$darticObject;
     throw DarticError(
-      'Field access on non-script object: ${receiver.runtimeType}',
+      'Field access on non-dartic object: ${receiver.runtimeType}',
     );
   }
 
@@ -1897,32 +1897,32 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
 
-          // Try script dispatch: works for DarticObject and Bridge.
+          // Try dartic dispatch: works for DarticObject and Bridge.
           // Bridge instances implement DarticObjectHolder, wrapping a
           // DarticObject whose classId drives IC method lookup.
-          final DarticObject? scriptObj;
+          final DarticObject? darticObj;
           if (receiver is DarticObject) {
-            scriptObj = receiver;
+            darticObj = receiver;
           } else if (receiver is DarticObjectHolder) {
-            scriptObj = receiver.$darticObject;
+            darticObj = receiver.$darticObject;
           } else {
-            scriptObj = null;
+            darticObj = null;
           }
 
-          if (scriptObj != null) {
-            // IC dispatch using scriptObj's classId.
+          if (darticObj != null) {
+            // IC dispatch using darticObj's classId.
             DarticFuncProto? callee;
-            if (ic.cachedClassId == scriptObj.classId) {
+            if (ic.cachedClassId == darticObj.classId) {
               // IC hit — fast path.
               callee = module.functions[ic.cachedFuncId];
             } else {
               // IC miss — slow path: look up method in class info.
-              final classInfo = module.classes[scriptObj.classId];
+              final classInfo = module.classes[darticObj.classId];
               final method = classInfo.methods[ic.methodNameIndex];
               if (method != null) {
                 callee = method;
                 // Update IC cache.
-                ic.cachedClassId = scriptObj.classId;
+                ic.cachedClassId = darticObj.classId;
                 ic.cachedFuncId = callee.funcId;
               }
             }
@@ -1959,16 +1959,16 @@ class DarticInterpreter {
               rs.sp += callee.refRegCount;
 
               // Place receiver at callee's rsp+2 (the `this` slot).
-              // For Bridge: write the Bridge itself (not scriptObj) so that
-              // within script methods, `this` is still the Bridge — enabling
+              // For Bridge: write the Bridge itself (not darticObj) so that
+              // within dartic methods, `this` is still the Bridge — enabling
               // subsequent CALL_VIRTUAL on `this` to re-enter this three-way
-              // dispatch and field access opcodes to extract scriptObj.
+              // dispatch and field access opcodes to extract darticObj.
               rs.write(rBase + 2, receiver);
 
-              // Auto-load ITA from scriptObj's runtimeType_ for generic
-              // classes. Use scriptObj (not receiver) because runtimeType_
+              // Auto-load ITA from darticObj's runtimeType_ for generic
+              // classes. Use darticObj (not receiver) because runtimeType_
               // is only available on DarticObject.
-              final rtType = scriptObj.runtimeType_;
+              final rtType = darticObj.runtimeType_;
               if (rtType is DarticInterfaceType &&
                   rtType.typeArgs.isNotEmpty) {
                 rs.write(rBase + 0, rtType.typeArgs);
@@ -1980,7 +1980,7 @@ class DarticInterpreter {
               continue;
             }
 
-            // Method not found in script class.
+            // Method not found in dartic class.
             if (receiver is DarticObject) {
               // Pure DarticObject — noSuchMethod.
               final name = cp.getName(ic.methodNameIndex);
@@ -2067,13 +2067,13 @@ class DarticInterpreter {
           // Bridge instances implement DarticObjectHolder, so unwrap to get
           // the underlying DarticObject for ITA extraction.
           final thisObj = rs.read(callerRBase + 2);
-          final scriptObj = (thisObj is DarticObject)
+          final darticObj = (thisObj is DarticObject)
               ? thisObj
               : (thisObj is DarticObjectHolder)
                   ? thisObj.$darticObject
                   : null;
-          if (scriptObj != null) {
-            final rtType = scriptObj.runtimeType_;
+          if (darticObj != null) {
+            final rtType = darticObj.runtimeType_;
             if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
               rs.write(rBase + 0, rtType.typeArgs);
             }
@@ -2207,28 +2207,28 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = _extractScriptObject(rs.read(rBase + b)!);
+          final obj = _extractDarticObject(rs.read(rBase + b)!);
           rs.write(rBase + a, obj.refFields[c]);
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = _extractScriptObject(rs.read(rBase + a)!);
+          final obj = _extractDarticObject(rs.read(rBase + a)!);
           obj.refFields[c] = rs.read(rBase + b);
 
         case Op.getFieldVal: // GET_FIELD_VAL A, B, C — valueStack[A] = refStack[B].valueFields[C]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = _extractScriptObject(rs.read(rBase + b)!);
+          final obj = _extractDarticObject(rs.read(rBase + b)!);
           vs.writeInt(vBase + a, obj.valueFields[c]);
 
         case Op.setFieldVal: // SET_FIELD_VAL A, B, C — refStack[A].valueFields[C] = valueStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = _extractScriptObject(rs.read(rBase + a)!);
+          final obj = _extractDarticObject(rs.read(rBase + a)!);
           obj.valueFields[c] = vs.readInt(vBase + b);
 
         case Op.newInstance: // NEW_INSTANCE A, Bx — refStack[A] = new DarticObject(class[Bx])
@@ -2240,7 +2240,7 @@ class DarticInterpreter {
         case Op.storeSuperArgs: // STORE_SUPER_ARGS A, B — store A args starting at ref[B] into this.pendingSuperArgs
           final a = (instr >> 8) & 0xFF; // arg count
           final b = (instr >> 16) & 0xFF; // first arg register
-          final obj = _extractScriptObject(rs.read(rBase + 2)!);
+          final obj = _extractDarticObject(rs.read(rBase + 2)!);
           obj.pendingSuperArgs = List<Object?>.generate(
             a, (i) => rs.read(rBase + b + i),
           );

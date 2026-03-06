@@ -45,22 +45,22 @@ DarticRuntime 是 BridgeFactory 的第一个参数（`docs/plans/2026-02-20-brid
 import '../runtime/object.dart';
 import 'bridge_dispatch.dart';
 
-/// Runtime interface provided to Bridge instances for script method delegation.
+/// Runtime interface provided to Bridge instances for dartic method delegation.
 ///
 /// Bridge instances receive a [DarticRuntime] through their factory. Overridden
 /// virtual methods/properties delegate to this interface, which routes back to
-/// the interpreter for script-defined methods.
+/// the interpreter for dartic-defined methods.
 ///
 /// The concrete implementation is [BridgeDispatch].
 abstract interface class DarticRuntime {
   /// Dispatches a virtual method/operator call on [self].
   ///
-  /// Returns [notOverridden] if the script has not overridden [method].
+  /// Returns [notOverridden] if the dartic has not overridden [method].
   Object? invoke(DarticObject self, String method, List<Object?> args);
 
   /// Dispatches a property getter on [self].
   ///
-  /// Returns [notOverridden] if the script has not overridden [property].
+  /// Returns [notOverridden] if the dartic has not overridden [property].
   Object? get(DarticObject self, String property);
 
   /// Dispatches a property setter on [self].
@@ -107,7 +107,7 @@ void main() {
     // We'll build a minimal module with one class that has a method 'greet'
     // and a getter 'name' and setter 'name='.
     late DarticModule module;
-    late DarticObject scriptObj;
+    late DarticObject darticObj;
     late List<(DarticModule, DarticFuncProto, Object, List<Object?>)> callLog;
     late BridgeDispatch dispatch;
 
@@ -148,7 +148,7 @@ void main() {
         globalInitializerIds: const [],
       );
 
-      scriptObj = DarticObject(classInfo);
+      darticObj = DarticObject(classInfo);
 
       dispatch = BridgeDispatch(
         module: module,
@@ -163,37 +163,37 @@ void main() {
     });
 
     test('invoke calls method and returns result', () {
-      final result = dispatch.invoke(scriptObj, 'greet', ['world']);
+      final result = dispatch.invoke(darticObj, 'greet', ['world']);
       expect(result, 'hello world');
       expect(callLog, hasLength(1));
-      expect(callLog.first.$3, same(scriptObj));
+      expect(callLog.first.$3, same(darticObj));
     });
 
     test('invoke returns notOverridden for unknown method', () {
-      final result = dispatch.invoke(scriptObj, 'unknown', []);
+      final result = dispatch.invoke(darticObj, 'unknown', []);
       expect(identical(result, notOverridden), isTrue);
       expect(callLog, isEmpty);
     });
 
     test('get calls getter and returns result', () {
-      final result = dispatch.get(scriptObj, 'name');
+      final result = dispatch.get(darticObj, 'name');
       expect(result, 'TestName');
       expect(callLog, hasLength(1));
     });
 
     test('get returns notOverridden for unknown property', () {
-      final result = dispatch.get(scriptObj, 'unknown');
+      final result = dispatch.get(darticObj, 'unknown');
       expect(identical(result, notOverridden), isTrue);
     });
 
     test('set calls setter method', () {
-      dispatch.set(scriptObj, 'name', 'NewName');
+      dispatch.set(darticObj, 'name', 'NewName');
       expect(callLog, hasLength(1));
       expect(callLog.first.$4, ['NewName']);
     });
 
     test('set silently ignores unknown property', () {
-      dispatch.set(scriptObj, 'unknown', 42);
+      dispatch.set(darticObj, 'unknown', 42);
       expect(callLog, isEmpty);
     });
   });
@@ -220,9 +220,9 @@ import '../runtime/class_info.dart';
 import '../runtime/object.dart';
 import 'bridge_factory_registry.dart';
 
-/// Sentinel value returned when a script method is not overridden.
+/// Sentinel value returned when a dartic method is not overridden.
 ///
-/// This is a private Symbol — `#_notOverridden` — which script code
+/// This is a private Symbol — `#_notOverridden` — which dartic code
 /// cannot construct. Using `identical()` to compare against this sentinel
 /// is reliable and has no false positives.
 ///
@@ -253,7 +253,7 @@ typedef InterpreterMethodCallback = Object? Function(
 /// interpreter.
 ///
 /// When a Bridge instance's overridden method is called from the VM side,
-/// [BridgeDispatch] checks whether the script has overridden that method
+/// [BridgeDispatch] checks whether the dartic has overridden that method
 /// by looking up the method name in the [DarticClassInfo.methods] table.
 /// If overridden, it delegates to the interpreter via [_callMethod];
 /// otherwise it returns [notOverridden] so the Bridge can fall back
@@ -352,15 +352,15 @@ import '../helpers/compile_helper.dart';
 /// A simple Bridge class for testing. In real usage, this would be generated
 /// by the Bridge codegen and extend a real host class.
 class TestBridge {
-  TestBridge(this.runtime, this.scriptObject);
+  TestBridge(this.runtime, this.darticObject);
   final DarticRuntime runtime;
-  final DarticObject scriptObject;
+  final DarticObject darticObject;
 }
 
 void main() {
   group('NEW_INSTANCE with BridgeFactory', () {
     test('class with registered BridgeFactory creates Bridge instance', () async {
-      // Compile a script that creates an instance of a class.
+      // Compile a dartic that creates an instance of a class.
       final source = '''
 class Foo {
   String greet() => 'hello';
@@ -378,11 +378,11 @@ Object? main() => Foo();
 
       // Register a BridgeFactory for Foo.
       late DarticRuntime capturedRuntime;
-      late DarticObject capturedScriptObj;
-      bridgeFactoryRegistry.register(fooClassId, (runtime, scriptObj, superArgs) {
+      late DarticObject capturedDarticObj;
+      bridgeFactoryRegistry.register(fooClassId, (runtime, darticObj, superArgs) {
         capturedRuntime = runtime;
-        capturedScriptObj = scriptObj;
-        return TestBridge(runtime, scriptObj);
+        capturedDarticObj = darticObj;
+        return TestBridge(runtime, darticObj);
       });
 
       final interp = DarticInterpreter(
@@ -395,7 +395,7 @@ Object? main() => Foo();
       // The entry result should be a TestBridge, not a DarticObject.
       final result = interp.entryResult;
       expect(result, isA<TestBridge>());
-      expect((result as TestBridge).scriptObject, isA<DarticObject>());
+      expect((result as TestBridge).darticObject, isA<DarticObject>());
       expect(capturedRuntime, isA<BridgeDispatch>());
     });
 
@@ -592,11 +592,11 @@ Object? main() => Animal();
       .indexWhere((c) => c.name == 'Animal');
 
   late DarticRuntime capturedRuntime;
-  late DarticObject capturedScriptObj;
-  bridgeFactoryRegistry.register(animalClassId, (runtime, scriptObj, superArgs) {
+  late DarticObject capturedDarticObj;
+  bridgeFactoryRegistry.register(animalClassId, (runtime, darticObj, superArgs) {
     capturedRuntime = runtime;
-    capturedScriptObj = scriptObj;
-    return TestBridge(runtime, scriptObj);
+    capturedDarticObj = darticObj;
+    return TestBridge(runtime, darticObj);
   });
 
   final interp = DarticInterpreter(
@@ -607,10 +607,10 @@ Object? main() => Animal();
   interp.execute(module);
 
   // Now use the captured runtime to dispatch method calls.
-  final speakResult = capturedRuntime.invoke(capturedScriptObj, 'speak', []);
+  final speakResult = capturedRuntime.invoke(capturedDarticObj, 'speak', []);
   expect(speakResult, 'generic sound');
 
-  final kindResult = capturedRuntime.get(capturedScriptObj, 'kind');
+  final kindResult = capturedRuntime.get(capturedDarticObj, 'kind');
   expect(kindResult, 'animal');
 });
 ```

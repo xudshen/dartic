@@ -17,7 +17,7 @@ class _VirtualTestBridge implements DarticObjectHolder {
 
 void main() {
   group('Bridge CALL_VIRTUAL', () {
-    test('dispatches script method on Bridge receiver', () async {
+    test('dispatches dartic method on Bridge receiver', () async {
       final source = '''
 class Greeter {
   String name;
@@ -36,8 +36,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         greeterClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _VirtualTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -74,8 +74,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         boxClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _VirtualTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
@@ -91,8 +91,8 @@ void main() {
       expect(printLog, ['42']);
     });
 
-    test('Bridge falls back to host dispatch for non-script methods', () async {
-      // toString() is not in the script class, so should fall through to
+    test('Bridge falls back to host dispatch for non-dartic methods', () async {
+      // toString() is not in the dartic class, so should fall through to
       // host dispatch path and produce the default toString result.
       final source = '''
 class Simple {
@@ -101,7 +101,7 @@ class Simple {
 }
 void main() {
   final s = Simple(5);
-  // toString() is inherited from Object (not script-defined) --
+  // toString() is inherited from Object (not dartic-defined) --
   // for a Bridge receiver, should fall through to host dispatch.
   print(s.x);
 }
@@ -113,8 +113,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         simpleClass.classId,
-        (dispatch, scriptObj, superArgs) =>
-            _VirtualTestBridge(dispatch, scriptObj, superArgs),
+        (dispatch, darticObj, superArgs) =>
+            _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
       final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(

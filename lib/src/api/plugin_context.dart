@@ -65,7 +65,7 @@ class PluginContext {
   /// 2. **HostClassRegistry** — registers a dynamic dispatch entry so
   ///    the interpreter can route `dynamic` calls to the correct methods.
   /// 3. **BridgeFactoryRegistry** — if [bridgeFactory] is provided,
-  ///    registers it for script-side `extends`.
+  ///    registers it for dartic-side `extends`.
   ///
   /// Parameters (grouped by purpose):
   ///
@@ -88,7 +88,7 @@ class PluginContext {
   ///   binding key prefixes. Dispatch looks up in `[name, ...superclasses]` order.
   ///
   /// **Advanced**
-  /// - [bridgeFactory]: optional Bridge factory for script-extensible classes.
+  /// - [bridgeFactory]: optional Bridge factory for dartic-extensible classes.
   void registerClass({
     // -- Identity --
     required String name,

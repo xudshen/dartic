@@ -98,12 +98,12 @@ Future<int> main() async => await f();
 
     setUpAll(() async {
       throwBytes = await _compileToDarb('''
-void boom() { throw 'script error'; }
+void boom() { throw 'dartic error'; }
 void main() {}
 ''');
     });
 
-    test('script throw uncaught, onUnhandledException called, call returns null', () {
+    test('dartic throw uncaught, onUnhandledException called, call returns null', () {
       Object? capturedError;
       StackTrace? capturedStack;
       final engine = DarticEngine(
@@ -117,17 +117,17 @@ void main() {}
       engine.loadBytecode(throwBytes);
       final result = engine.call('boom');
       expect(result, isNull);
-      expect(capturedError, 'script error');
+      expect(capturedError, 'dartic error');
       expect(capturedStack, isNotNull);
       engine.dispose();
     });
 
-    test('script throw uncaught, no onUnhandledException, exception propagates', () {
+    test('dartic throw uncaught, no onUnhandledException, exception propagates', () {
       final engine = DarticEngine();
       engine.loadBytecode(throwBytes);
       expect(
         () => engine.call('boom'),
-        throwsA('script error'),
+        throwsA('dartic error'),
       );
       engine.dispose();
     });
@@ -223,7 +223,7 @@ void main() {}
   });
 
   group('call() after error recovery', () {
-    test('engine remains usable after onUnhandledException handles script exception',
+    test('engine remains usable after onUnhandledException handles dartic exception',
         () async {
       final bytes = await _compileToDarb('''
 void boom() { throw 'oops'; }

@@ -22,7 +22,7 @@
 | Super 构造参数 | 暂用 `const []`（仅支持无参 super） | 设计文档标记为 Phase 2 特性，已覆盖最常见场景（默认 super 构造函数）。 |
 | 泛型 Bridge 类 | 不在范围内 | 设计文档标记为 Phase 2："泛型 Bridge 类型参数传递优化" |
 | Bridge 上的动态字段访问 | 不在范围内 | 类内静态字段访问可用。动态访问（`dynamic x = bridge; x.field`）为边缘场景，留 Phase 2。 |
-| Bridge 的 INSTANCEOF | 不在范围内 | `bridge is HostType` 通过 Dart 原生 `is` 工作。`bridge is ScriptType` 需后续支持。 |
+| Bridge 的 INSTANCEOF | 不在范围内 | `bridge is HostType` 通过 Dart 原生 `is` 工作。`bridge is DarticType` 需后续支持。 |
 | 宿主类型元数据 | `hostSuperClassName`（extends）+ `hostInterfaceNames`（implements）两个字段 | Engine 需要将脚本 classId → 宿主 BridgeFactory 匹配。编译器检测 extends/implements 的平台类型并记录名称。 |
 
 ---
@@ -221,11 +221,11 @@ void set(Object receiver, DarticObject darticObject, String property, Object? va
 
 **Step 3: 更新已有测试**
 
-在 `test/bridge/bridge_dispatch_test.dart` 中，将所有 `invoke` / `get` / `set` 调用更新为同时传递 `scriptObj` 作为 `receiver` 和 `darticObject`（这些单元测试没有 Bridge）：
+在 `test/bridge/bridge_dispatch_test.dart` 中，将所有 `invoke` / `get` / `set` 调用更新为同时传递 `darticObj` 作为 `receiver` 和 `darticObject`（这些单元测试没有 Bridge）：
 
 ```dart
-// 之前: dispatch.invoke(scriptObj, 'greet', ['Alice'])
-// 之后: dispatch.invoke(scriptObj, scriptObj, 'greet', ['Alice'])
+// 之前: dispatch.invoke(darticObj, 'greet', ['Alice'])
+// 之后: dispatch.invoke(darticObj, darticObj, 'greet', ['Alice'])
 ```
 
 同样更新 `test/bridge/bridge_new_instance_test.dart`。
@@ -306,7 +306,7 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         fooClassInfo.classId,
-        (runtime, scriptObj, superArgs) => _FieldTestBridge(runtime, scriptObj, superArgs),
+        (runtime, darticObj, superArgs) => _FieldTestBridge(runtime, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
@@ -347,7 +347,7 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         counterClassInfo.classId,
-        (runtime, scriptObj, superArgs) => _FieldTestBridge(runtime, scriptObj, superArgs),
+        (runtime, darticObj, superArgs) => _FieldTestBridge(runtime, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
@@ -392,44 +392,44 @@ import '../bridge/dartic_object_holder.dart';
 /// 若 [receiver] 实现了 [DarticObjectHolder]（Bridge），提取内嵌的脚本对象。
 /// 否则抛异常（字段访问指令码不应出现此情况）。
 @pragma('vm:prefer-inline')
-static DarticObject _extractScriptObject(Object receiver) {
+static DarticObject _extractDarticObject(Object receiver) {
   if (receiver is DarticObject) return receiver;
   if (receiver is DarticObjectHolder) return receiver.$darticObject;
   throw DarticError(
-    'Field access on non-script object: ${receiver.runtimeType}',
+    'Field access on non-dartic object: ${receiver.runtimeType}',
   );
 }
 ```
 
-3. 更新 4 个字段访问指令码（约 2166-2192 行），将 `as DarticObject` 替换为 `_extractScriptObject(...)`:
+3. 更新 4 个字段访问指令码（约 2166-2192 行），将 `as DarticObject` 替换为 `_extractDarticObject(...)`:
 
 ```dart
 case Op.getFieldRef:
   final a = (instr >> 8) & 0xFF;
   final b = (instr >> 16) & 0xFF;
   final c = (instr >> 24) & 0xFF;
-  final obj = _extractScriptObject(rs.read(rBase + b)!);
+  final obj = _extractDarticObject(rs.read(rBase + b)!);
   rs.write(rBase + a, obj.refFields[c]);
 
 case Op.setFieldRef:
   final a = (instr >> 8) & 0xFF;
   final b = (instr >> 16) & 0xFF;
   final c = (instr >> 24) & 0xFF;
-  final obj = _extractScriptObject(rs.read(rBase + a)!);
+  final obj = _extractDarticObject(rs.read(rBase + a)!);
   obj.refFields[c] = rs.read(rBase + b);
 
 case Op.getFieldVal:
   final a = (instr >> 8) & 0xFF;
   final b = (instr >> 16) & 0xFF;
   final c = (instr >> 24) & 0xFF;
-  final obj = _extractScriptObject(rs.read(rBase + b)!);
+  final obj = _extractDarticObject(rs.read(rBase + b)!);
   vs.writeInt(vBase + a, obj.valueFields[c]);
 
 case Op.setFieldVal:
   final a = (instr >> 8) & 0xFF;
   final b = (instr >> 16) & 0xFF;
   final c = (instr >> 24) & 0xFF;
-  final obj = _extractScriptObject(rs.read(rBase + a)!);
+  final obj = _extractDarticObject(rs.read(rBase + a)!);
   obj.valueFields[c] = vs.readInt(vBase + b);
 ```
 
@@ -506,7 +506,7 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         greeterClass.classId,
-        (runtime, scriptObj, superArgs) => _VirtualTestBridge(runtime, scriptObj, superArgs),
+        (runtime, darticObj, superArgs) => _VirtualTestBridge(runtime, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
@@ -546,7 +546,7 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         boxClass.classId,
-        (runtime, scriptObj, superArgs) => _VirtualTestBridge(runtime, scriptObj, superArgs),
+        (runtime, darticObj, superArgs) => _VirtualTestBridge(runtime, darticObj, superArgs),
       );
 
       final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
@@ -588,34 +588,34 @@ case Op.callVirtual:
   final ic = module.functions[callStack.funcId].icTable[c];
 
   // 尝试脚本分发：对 DarticObject 和 Bridge（DarticObjectHolder）均有效。
-  final DarticObject? scriptObj;
+  final DarticObject? darticObj;
   if (receiver is DarticObject) {
-    scriptObj = receiver;
+    darticObj = receiver;
   } else if (receiver is DarticObjectHolder) {
-    scriptObj = receiver.$darticObject;
+    darticObj = receiver.$darticObject;
   } else {
-    scriptObj = null;
+    darticObj = null;
   }
 
-  if (scriptObj != null) {
+  if (darticObj != null) {
     DarticFuncProto? callee;
-    if (ic.cachedClassId == scriptObj.classId) {
+    if (ic.cachedClassId == darticObj.classId) {
       // IC 命中。
       callee = module.functions[ic.cachedFuncId];
     } else {
       // IC 未命中 — 在类信息中查找方法。
-      final classInfo = module.classes[scriptObj.classId];
+      final classInfo = module.classes[darticObj.classId];
       final method = classInfo.methods[ic.methodNameIndex];
       if (method != null) {
         callee = method;
-        ic.cachedClassId = scriptObj.classId;
+        ic.cachedClassId = darticObj.classId;
         ic.cachedFuncId = callee.funcId;
       }
     }
     if (callee != null) {
       // --- 帧设置（与已有代码相同）---
       // 重要：传递 `receiver`（Bridge 或 DarticObject）作为 `this`，
-      // 而非 `scriptObj`。确保宿主方法调用在 `this` 上正常工作。
+      // 而非 `darticObj`。确保宿主方法调用在 `this` 上正常工作。
       // ...（已有帧设置代码，rBase+2 使用 `receiver`）...
       continue;
     }
@@ -653,8 +653,8 @@ case Op.callVirtual:
 ```
 
 关键点：
-- `scriptObj` 从 Bridge 提取或直接使用 DarticObject
-- IC 分发使用 `scriptObj.classId`，但传递 `receiver`（Bridge）作为 `this`
+- `darticObj` 从 Bridge 提取或直接使用 DarticObject
+- IC 分发使用 `darticObj.classId`，但传递 `receiver`（Bridge）作为 `this`
 - 方法不在脚本类 + 接收者是 Bridge → 落入宿主分发
 - 方法不在脚本类 + 接收者是 DarticObject → noSuchMethod（已有行为）
 - 宿主分发和 null 检查不变
@@ -690,7 +690,7 @@ git commit -m "feat(bridge): Bridge-aware CALL_VIRTUAL with IC dispatch and host
 - 修改：`lib/src/runtime/interpreter.dart`（CALL_SUPER handler）
 - 测试：`test/bridge/bridge_call_super_test.dart`
 
-**背景：** `CALL_SUPER` 会从 `this` 对象的 `runtimeType_` 自动加载 ITA（实例化类型参数）用于泛型类。当前检查 `if (thisObj is DarticObject)` —— Bridge 接收者被跳过。小修复：用 `_extractScriptObject` 风格的检查处理 Bridge。
+**背景：** `CALL_SUPER` 会从 `this` 对象的 `runtimeType_` 自动加载 ITA（实例化类型参数）用于泛型类。当前检查 `if (thisObj is DarticObject)` —— Bridge 接收者被跳过。小修复：用 `_extractDarticObject` 风格的检查处理 Bridge。
 
 **Step 1: 写失败测试**
 
@@ -718,13 +718,13 @@ if (thisObj is DarticObject) {
 
 // 之后：
 final thisObj = rs.read(callerRBase + 2);
-final scriptObj = (thisObj is DarticObject)
+final darticObj = (thisObj is DarticObject)
     ? thisObj
     : (thisObj is DarticObjectHolder)
         ? thisObj.$darticObject
         : null;
-if (scriptObj != null) {
-  final rtType = scriptObj.runtimeType_;
+if (darticObj != null) {
+  final rtType = darticObj.runtimeType_;
   if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
     rs.write(rBase + 0, rtType.typeArgs);
   }
@@ -758,7 +758,7 @@ git commit -m "fix(bridge): CALL_SUPER extracts ITA from Bridge via DarticObject
 - 修改：`lib/src/api/engine.dart`（BridgeFactory 解析扩展）
 - 测试：`test/bridge/bridge_factory_resolution_test.dart`
 
-**背景：** 当插件注册 `registerClass(name: 'dart:core::Comparable', bridgeFactory: factory)` 时，工厂存入 `_pendingBridgeFactories['dart:core::Comparable']`。`loadBytecode` 期间，引擎遍历 `module.classes` 按 classId 解析工厂。但 module.classes 包含的是脚本类（如 "ScriptB"），不是宿主类。引擎需要知道 ScriptB 继承或实现了哪些宿主类，才能将 ScriptB 的 classId 映射到对应的工厂。
+**背景：** 当插件注册 `registerClass(name: 'dart:core::Comparable', bridgeFactory: factory)` 时，工厂存入 `_pendingBridgeFactories['dart:core::Comparable']`。`loadBytecode` 期间，引擎遍历 `module.classes` 按 classId 解析工厂。但 module.classes 包含的是脚本类（如 "DarticB"），不是宿主类。引擎需要知道 DarticB 继承或实现了哪些宿主类，才能将 DarticB 的 classId 映射到对应的工厂。
 
 编译器在两个位置检测宿主类型：
 1. **`extends` 关系**：超类来自平台库 → 记录在 `hostSuperClassName`
@@ -786,7 +786,7 @@ void main() {
 
     test('hostSuperClassName 记录宿主超类名', () {
       final info = DarticClassInfo(
-        classId: 0, name: 'ScriptB', superClassId: -1,
+        classId: 0, name: 'DarticB', superClassId: -1,
         refFieldCount: 0, valueFieldCount: 0,
         hostSuperClassName: 'dart:core::Comparable',
       );
@@ -795,7 +795,7 @@ void main() {
 
     test('hostInterfaceNames 记录宿主接口名列表', () {
       final info = DarticClassInfo(
-        classId: 0, name: 'ScriptC', superClassId: -1,
+        classId: 0, name: 'DarticC', superClassId: -1,
         refFieldCount: 0, valueFieldCount: 0,
         hostInterfaceNames: ['dart:core::Comparable', 'dart:core::Pattern'],
       );

@@ -968,7 +968,7 @@ void _writeBridgeOperatorOverride(
 /// Writes super forwarder registrations for Bridge classes.
 ///
 /// Super forwarders allow the interpreter to call `super.method()` from
-/// script code. Each forwarder is registered as a binding with the key
+/// dartic code. Each forwarder is registered as a binding with the key
 /// `"qualifiedName::$super$methodName#arity"`.
 void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
   final bridgeClassName = '_\$${info.className}';

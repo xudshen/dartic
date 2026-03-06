@@ -210,7 +210,7 @@ git commit -m "feat(bridge): add BindingEntry.methodName for CALL_HOST Bridge in
         case Op.storeSuperArgs: // STORE_SUPER_ARGS A, B — store super args into DarticObject
           final a = (instr >> 8) & 0xFF;  // arg count
           final b = (instr >> 16) & 0xFF; // first arg register
-          final obj = _extractScriptObject(rs.read(rBase + 2)!); // this at rsp+2
+          final obj = _extractDarticObject(rs.read(rBase + 2)!); // this at rsp+2
           obj.pendingSuperArgs = List<Object?>.generate(
             a,
             (i) => rs.read(rBase + b + i),
@@ -499,7 +499,7 @@ git commit -m "fix(bridge): super constructor args forwarded to Bridge factory �
 
           // ── Bridge intercept ──
           // For instance methods, check if receiver is a Bridge.
-          // If so, try DarticDispatch first for script overrides.
+          // If so, try DarticDispatch first for dartic overrides.
           final bindingInfo = module.bindingNames[bx];
           final methodName = bindingInfo.methodName;
           if (methodName != null && _activeDarticDispatch != null) {
@@ -592,7 +592,7 @@ git commit -m "feat(bridge): CALL_HOST Bridge intercept via DarticDispatch"
 
 ```dart
     skip: 'CALL_HOST for e.toString() on Error-typed variable does not '
-        'route back to script override via DarticDispatch — '
+        'route back to dartic override via DarticDispatch — '
         'bridge falls through to super.toString()',
 ```
 
@@ -616,7 +616,7 @@ Expected: 所有 bridge 测试通过（无 skip 残留）
 
 ```bash
 git add test/bridge/bridge_extends_host_test.dart
-git commit -m "fix(bridge): CALL_HOST toString dispatches to script override — remove skip"
+git commit -m "fix(bridge): CALL_HOST toString dispatches to dartic override — remove skip"
 ```
 
 ---
@@ -816,7 +816,7 @@ void main() {
 
 ```dart
   group('Inheritance hierarchy and edge cases', () {
-    test('script class A extends Error, script class B extends A', () async {
+    test('dartic class A extends Error, dartic class B extends A', () async {
       final source = '''
 class BaseError extends Error {
   final String base;

@@ -161,7 +161,7 @@ class $Error$bridge extends Error implements DarticObjectHolder {
 
 **Phase 2**：预生成常见泛型集合的特化创建路径。
 
-### 问题 5：Script 异常无法被 host 按类型捕获（低）
+### 问题 5：Dartic 异常无法被 host 按类型捕获（低）
 
 **现状**：脚本 `throw MyException()` -> VM 收到 `DarticProxy`，`on MyException` 不匹配。
 

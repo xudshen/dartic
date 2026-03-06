@@ -8,9 +8,9 @@ import '../helpers/compile_helper.dart';
 
 /// A simple Bridge class for testing.
 class TestBridge {
-  TestBridge(this.dispatch, this.scriptObject);
+  TestBridge(this.dispatch, this.darticObject);
   final DarticDispatch dispatch;
-  final DarticObject scriptObject;
+  final DarticObject darticObject;
 }
 
 void main() {
@@ -36,12 +36,12 @@ Object? main() => Foo();
 
       // Register a BridgeFactory for Foo.
       late DarticDispatch capturedDispatch;
-      late DarticObject capturedScriptObj;
+      late DarticObject capturedDarticObj;
       bridgeFactoryRegistry.register(fooClassId,
-          (dispatch, scriptObj, superArgs) {
+          (dispatch, darticObj, superArgs) {
         capturedDispatch = dispatch;
-        capturedScriptObj = scriptObj;
-        return TestBridge(dispatch, scriptObj);
+        capturedDarticObj = darticObj;
+        return TestBridge(dispatch, darticObj);
       });
 
       final interp = DarticInterpreter(
@@ -54,9 +54,9 @@ Object? main() => Foo();
       // The entry result should be a TestBridge, not a DarticObject.
       final result = interp.entryResult;
       expect(result, isA<TestBridge>());
-      expect((result as TestBridge).scriptObject, isA<DarticObject>());
+      expect((result as TestBridge).darticObject, isA<DarticObject>());
       expect(capturedDispatch, isA<DarticDispatch>());
-      expect(capturedScriptObj.classId, equals(fooClassId));
+      expect(capturedDarticObj.classId, equals(fooClassId));
     });
 
     test('class without BridgeFactory creates DarticObject (unchanged)',
@@ -130,7 +130,7 @@ Object? main() {
       expect(animalClassId, greaterThanOrEqualTo(0));
 
       late DarticDispatch capturedDispatch;
-      late DarticObject capturedScriptObj;
+      late DarticObject capturedDarticObj;
 
       // Results captured inside the print callback (during execution).
       Object? speakResult;
@@ -138,10 +138,10 @@ Object? main() {
 
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(animalClassId,
-          (dispatch, scriptObj, superArgs) {
+          (dispatch, darticObj, superArgs) {
         capturedDispatch = dispatch;
-        capturedScriptObj = scriptObj;
-        return TestBridge(dispatch, scriptObj);
+        capturedDarticObj = darticObj;
+        return TestBridge(dispatch, darticObj);
       });
 
       // Use printFn callback to dispatch methods during execution.
@@ -150,9 +150,9 @@ Object? main() {
         printFn: (v) {
           // This runs while _isExecuting = true, so _callDarticMethod works.
           speakResult = capturedDispatch.invoke(
-              capturedScriptObj, capturedScriptObj, 'speak', []);
+              capturedDarticObj, capturedDarticObj, 'speak', []);
           kindResult = capturedDispatch.get(
-              capturedScriptObj, capturedScriptObj, 'kind');
+              capturedDarticObj, capturedDarticObj, 'kind');
         },
       );
 

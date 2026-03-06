@@ -18,11 +18,11 @@ void main() {
     test('onPrint callback calls engine.call() — reentry works correctly',
         () async {
       // Setup:
-      // 1. Compile a script with two functions:
-      //    - scriptHelper() => 99
+      // 1. Compile a dartic with two functions:
+      //    - darticHelper() => 99
       //    - callPrint() => print('trigger') — causes host callback
       // 2. Use onPrint as the host callback that re-enters the engine
-      //    by calling engine.call('scriptHelper')
+      //    by calling engine.call('darticHelper')
       // 3. Verify that the reentry call returns 99
       //
       // This tests the _isExecuting reentry path: when the host callback
@@ -30,7 +30,7 @@ void main() {
       // and delegates to _runNestedDispatch instead of full initialization.
 
       final bytes = await _compileToDarb('''
-int scriptHelper() => 99;
+int darticHelper() => 99;
 void callPrint() { print('trigger'); }
 void main() {}
 ''');
@@ -42,13 +42,13 @@ void main() {}
           onPrint: (v) {
             // This callback runs during callPrint() execution.
             // Calling engine.call() here triggers the reentry path.
-            reentryResult = engine.call('scriptHelper');
+            reentryResult = engine.call('darticHelper');
           },
         ),
       );
       engine.loadBytecode(bytes);
 
-      // Trigger the chain: callPrint -> print('trigger') -> onPrint -> engine.call('scriptHelper')
+      // Trigger the chain: callPrint -> print('trigger') -> onPrint -> engine.call('darticHelper')
       engine.call('callPrint');
       expect(reentryResult, 99);
       engine.dispose();
@@ -133,7 +133,7 @@ void main() {}
       // overriding the print binding with a function that calls back.
 
       final bytes = await _compileToDarb('''
-int scriptHelper() => 77;
+int darticHelper() => 77;
 int callHost() {
   print('trigger');
   return 10;
@@ -146,7 +146,7 @@ void main() {}
       engine = DarticEngine(
         config: DarticConfig(
           onPrint: (v) {
-            reentryResult = engine.call('scriptHelper');
+            reentryResult = engine.call('darticHelper');
           },
         ),
       );

@@ -2,7 +2,7 @@
 /// interpreter.
 ///
 /// When a Bridge instance's overridden method is called from the VM side,
-/// [DarticDispatch] checks whether the script has overridden that method
+/// [DarticDispatch] checks whether the dartic has overridden that method
 /// by looking up the method name in the [DarticClassInfo.methods] table.
 /// If overridden, it delegates to the interpreter via [_callMethod];
 /// otherwise it returns [notOverridden].
@@ -51,7 +51,7 @@ typedef InterpreterMethodCallback = Object? Function(
 /// interpreter.
 ///
 /// When a Bridge instance's overridden method is called from the VM side,
-/// [DarticDispatch] checks whether the script has overridden that method
+/// [DarticDispatch] checks whether the dartic has overridden that method
 /// by looking up the method name in the [DarticClassInfo.methods] table.
 /// If overridden, it delegates to the interpreter via [_callMethod];
 /// otherwise it returns [notOverridden].
@@ -67,15 +67,15 @@ class DarticDispatch {
 
   /// Dispatches a virtual method/operator call.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
+  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
   /// [darticObject] is the embedded DarticObject (used for classId / method
   /// lookup).
-  /// Returns [notOverridden] if the script has not overridden [method].
+  /// Returns [notOverridden] if the dartic has not overridden [method].
   Object? invoke(Object receiver, DarticObject darticObject, String method,
       List<Object?> args) {
     final nameIdx = _module.constantPool.lookupNameIndex(method);
     if (nameIdx < 0) return notOverridden;
-    // Walk the superClassId chain to find inherited script methods.
+    // Walk the superClassId chain to find inherited dartic methods.
     final classes = _module.classes;
     for (var cid = darticObject.classId; cid >= 0;
         cid = classes[cid].superClassId) {
@@ -87,10 +87,10 @@ class DarticDispatch {
 
   /// Dispatches a property getter.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
+  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
   /// [darticObject] is the embedded DarticObject (used for classId / method
   /// lookup).
-  /// Returns [notOverridden] if the script has not overridden [property].
+  /// Returns [notOverridden] if the dartic has not overridden [property].
   Object? get(Object receiver, DarticObject darticObject, String property) {
     final nameIdx = _module.constantPool.lookupNameIndex(property);
     if (nameIdx < 0) return notOverridden;
@@ -105,7 +105,7 @@ class DarticDispatch {
 
   /// Dispatches a property setter.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
+  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
   /// [darticObject] is the embedded DarticObject (used for classId / method
   /// lookup).
   void set(Object receiver, DarticObject darticObject, String property,

@@ -196,7 +196,7 @@ Expected: analyze clean, all tests pass.
 ```
 refactor(api): rename DarticConfig.onError → onUnhandledException
 
-Only handles unhandled script exceptions; resource errors (Fuel/Timeout/
+Only handles unhandled dartic exceptions; resource errors (Fuel/Timeout/
 CallDepth) always propagate. Old name implied all errors.
 ```
 

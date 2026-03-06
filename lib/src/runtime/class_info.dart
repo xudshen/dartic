@@ -102,16 +102,16 @@ class DarticClassInfo {
 
   /// Fully-qualified name of the host (platform) superclass, if any.
   ///
-  /// Set by the compiler when a script class `extends` a host class.
+  /// Set by the compiler when a dartic class `extends` a host class.
   /// Format: `'${importUri}::${className}'`, e.g., `'dart:core::Comparable'`.
   /// Used by [DarticEngine.loadBytecode] to resolve [BridgeFactory] by name.
-  /// Null when the class inherits from another script class or has no
+  /// Null when the class inherits from another dartic class or has no
   /// superclass.
   final String? hostSuperClassName;
 
   /// Fully-qualified names of host (platform) interfaces, if any.
   ///
-  /// Set by the compiler when a script class `implements` host interfaces.
+  /// Set by the compiler when a dartic class `implements` host interfaces.
   /// Each entry follows the same format as [hostSuperClassName].
   /// Used by [DarticEngine.loadBytecode] to resolve [BridgeFactory] by name.
   /// Null when the class has no host interfaces.

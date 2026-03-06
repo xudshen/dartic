@@ -20,7 +20,7 @@ void main() {
     test('hostSuperClassName records host superclass name', () {
       final info = DarticClassInfo(
         classId: 0,
-        name: 'ScriptB',
+        name: 'DarticB',
         superClassId: -1,
         refFieldCount: 0,
         valueFieldCount: 0,
@@ -32,7 +32,7 @@ void main() {
     test('hostInterfaceNames records host interface name list', () {
       final info = DarticClassInfo(
         classId: 0,
-        name: 'ScriptC',
+        name: 'DarticC',
         superClassId: -1,
         refFieldCount: 0,
         valueFieldCount: 0,
@@ -137,7 +137,7 @@ void main() {
         ),
       );
 
-      // Both are script classes — no host metadata.
+      // Both are dartic classes — no host metadata.
       expect(baseInfo.hostSuperClassName, isNull);
       expect(baseInfo.hostInterfaceNames, isNull);
       expect(childInfo.hostSuperClassName, isNull);

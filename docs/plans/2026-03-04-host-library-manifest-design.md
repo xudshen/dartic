@@ -120,7 +120,7 @@ class CoreUiPlugin extends DarticPlugin {
 1. 宿主 App 开发者
 
    // 编译 dartic 脚本
-   final component = await kernelCompile('script.dart');
+   final component = await kernelCompile('dartic.dart');
    final compiler = DarticCompiler(component, hostLibraryPrefixes: {
      ...CoreUiPlugin.hostLibraries,
      ...FlutterBindingsPlugin.hostLibraries,
@@ -162,7 +162,7 @@ class CoreUiPlugin extends DarticPlugin {
 │ ├── dart:core (library)         │    │ ├── CorePlugin                  │
 │ ├── package:core_ui_lib (lib)   │    │ │   └── registerBinding(...)    │
 │ ├── package:my_utils (library)  │    │ ├── CoreUiPlugin                │
-│ └── user script (library)       │    │ │   └── registerBinding(...)    │
+│ └── user dartic (library)       │    │ │   └── registerBinding(...)    │
 │                                 │    │ └── HostBindingRegistry        │
 │ DarticCompiler                  │    │     ├── dart:core::... → id 0   │
 │ ├── hostLibraryPrefixes:        │    │     ├── package:core_ui_lib::...│

@@ -162,7 +162,7 @@ class DarticEngine {
     // Resolve pending bridge factories: match class names → classIds.
     if (_pendingBridgeFactories.isNotEmpty) {
       for (final classInfo in module.classes) {
-        // Direct match (rare — script class name matches registered name).
+        // Direct match (rare — dartic class name matches registered name).
         var factory = _pendingBridgeFactories[classInfo.name];
 
         // Host superclass match (extends scenario).
@@ -188,7 +188,7 @@ class DarticEngine {
     _state = _EngineState.loaded;
   }
 
-  /// Calls an exported script function by name.
+  /// Calls an exported dartic function by name.
   ///
   /// Looks up [function] in the module's export table, then executes it
   /// with the given [args] (positional only). Returns the function's
@@ -201,7 +201,7 @@ class DarticEngine {
   /// - Resource errors ([FuelExhaustedError], [ExecutionTimeoutError],
   ///   [CallDepthExceededError]) always propagate to the host, bypassing
   ///   [DarticConfig.onUnhandledException].
-  /// - Script uncaught exceptions: if [DarticConfig.onUnhandledException] is set, it
+  /// - Dartic uncaught exceptions: if [DarticConfig.onUnhandledException] is set, it
   ///   is called and `call()` returns null. Otherwise, the exception
   ///   propagates to the host.
   ///
@@ -233,7 +233,7 @@ class DarticEngine {
       // CallDepthExceededError) always propagate — bypass onUnhandledException.
       rethrow;
     } catch (e, st) {
-      // Script uncaught exceptions.
+      // Dartic uncaught exceptions.
       final handler = _config.onUnhandledException;
       if (handler != null) {
         handler(e, st);
