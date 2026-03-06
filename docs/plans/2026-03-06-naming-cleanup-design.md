@@ -17,7 +17,7 @@
 | `lib/dartic.dart` 导出的公共类 → 必须 `Dartic` 前缀 | `DarticEngine`, `DarticConfig`, `DarticError` |
 | 被 2+ 个子系统 import 的领域核心类 → `Dartic` 前缀 | `DarticObject`, `DarticType`, `DarticModule`, `DarticClassInfo` |
 | Bridge 公共导出类 → `Dartic` 前缀 | `DarticDispatch`, `DarticProxy`, `DarticObjectHolder` |
-| Bridge 内部类 → 不带前缀 | `ClosureAdapter`, `ProxyManager`, `BindingLookupAdapter` |
+| Bridge 内部类 → 不带前缀（例外：跨子系统使用或出现在架构图中的保留前缀） | `ClosureAdapter`, `BindingLookupAdapter`；例外：`DarticProxyManager` |
 | 单子系统内部工具类 → 不带前缀 | `ValueStack`, `RefStack`, `CallStack`, `BytecodeEmitter`, `Scope` |
 
 判断标准："跨子系统" = 被 `api/`, `bridge/`, `bytecode/`, `compiler/`, `runtime/`, `sandbox/` 中 2 个以上目录的文件 import。
@@ -29,26 +29,25 @@
 | # | 当前名称 | 新名称 | 理由 | 文件 |
 |---|----------|--------|------|------|
 | 1 | `DarticCallbackProxy` | `ClosureAdapter` | 不是 Proxy（无缓存/identity）；实际是闭包→Function 适配器；纯内部类不需 Dartic 前缀 | `bridge/callback_proxy.dart` |
-| 2 | `DarticProxyManager` | `ProxyManager` | 纯内部类，只被 interpreter 使用 | `bridge/proxy_manager.dart` |
-| 3 | `bridgeNotOverridden` (const Symbol) | `notOverridden` (typed sentinel) | Symbol 哨兵有静默失败风险；改为 typed sentinel class `_NotOverridden` + 公共 const 实例 | `bridge/dartic_dispatch.dart` |
-| 4 | `CallDarticMethod` (typedef) | `InterpretedMethodCallback` | "CallDarticMethod" 啰嗦且方向不明；新名清楚表达"回调到解释器执行字节码方法" | `bridge/dartic_dispatch.dart` |
-| 5 | `DarticConfig.onError` | `DarticConfig.onUnhandledException` | 只处理未捕获异常，不处理资源错误（Fuel/Timeout/CallDepth）；现名暗示"所有错误" | `api/config.dart` |
+| 2 | `bridgeNotOverridden` (const Symbol) | `notOverridden` (typed sentinel) | Symbol 哨兵有静默失败风险；改为 typed sentinel class `_NotOverridden` + 公共 const 实例 | `bridge/dartic_dispatch.dart` |
+| 3 | `CallDarticMethod` (typedef) | `InterpreterMethodCallback` | "CallDarticMethod" 啰嗦且方向不明；"Interpreter" 明确回调方向是到解释器 | `bridge/dartic_dispatch.dart` |
+| 4 | `DarticConfig.onError` | `DarticConfig.onUnhandledException` | 只处理未捕获异常，不处理资源错误（Fuel/Timeout/CallDepth）；现名暗示"所有错误" | `api/config.dart` |
 
 ### B. 字段 / 参数名对齐（上次类重命名遗留）
 
 | # | 位置 | 当前名称 | 新名称 | 理由 |
 |---|------|----------|--------|------|
-| 6 | `DarticInterpreter` 构造器 + 字段 | `hostFunctionRegistry` | `hostBindingRegistry` | 类已改名 `HostBindingRegistry` |
-| 7 | `DarticInterpreter` 构造器 + 字段 | `hostDispatchRegistry` / `_externalHostDispatchRegistry` | `hostClassRegistry` / `_externalHostClassRegistry` | 类已改名 `HostClassRegistry` |
-| 8 | `PluginContext` 构造器 + 字段 | `hostFunctionRegistry` / `_hostFunctionRegistry` | `hostBindingRegistry` / `_hostBindingRegistry` | 同上 |
-| 9 | `PluginContext` 构造器 + 字段 | `hostDispatchRegistry` / `_hostDispatchRegistry` | `hostClassRegistry` / `_hostClassRegistry` | 同上 |
-| 10 | `DarticEngine` 字段 | `_hostFunctionRegistry` / `_hostDispatchRegistry` | `_hostBindingRegistry` / `_hostClassRegistry` | 同上 |
+| 5 | `DarticInterpreter` 构造器 + 字段 | `hostFunctionRegistry` | `hostBindingRegistry` | 类已改名 `HostBindingRegistry` |
+| 6 | `DarticInterpreter` 构造器 + 字段 | `hostDispatchRegistry` / `_externalHostDispatchRegistry` | `hostClassRegistry` / `_externalHostClassRegistry` | 类已改名 `HostClassRegistry` |
+| 7 | `PluginContext` 构造器 + 字段 | `hostFunctionRegistry` / `_hostFunctionRegistry` | `hostBindingRegistry` / `_hostBindingRegistry` | 同上 |
+| 8 | `PluginContext` 构造器 + 字段 | `hostDispatchRegistry` / `_hostDispatchRegistry` | `hostClassRegistry` / `_hostClassRegistry` | 同上 |
+| 9 | `DarticEngine` 字段 | `_hostFunctionRegistry` / `_hostDispatchRegistry` | `_hostBindingRegistry` / `_hostClassRegistry` | 同上 |
 
 ### C. 文件重命名
 
 | # | 当前文件名 | 新文件名 | 理由 |
 |---|-----------|----------|------|
-| 11 | `bridge/callback_proxy.dart` | `bridge/closure_adapter.dart` | 跟随类名 `ClosureAdapter` |
+| 10 | `bridge/callback_proxy.dart` | `bridge/closure_adapter.dart` | 跟随类名 `ClosureAdapter` |
 
 ### D. 确认保留的名称
 
@@ -56,6 +55,7 @@
 |----|----------|
 | `HostClassAdapter` | 设计上是 codegen 扩展点，GoF Adapter 模式合理 |
 | `HostBindingRegistry` / `HostClassRegistry` | 刚在 `2dddf01` 中重命名，名称已清晰 |
+| `DarticProxyManager` | 虽是内部类，但名字辨识度高且出现在架构图中；去掉前缀后太通用 |
 | `DarticDispatch` | 公共导出，Dartic 前缀合理 |
 | `DarticProxy` / `DarticObjectHolder` | 公共导出，Dartic 前缀合理 |
 | `BridgeFactory` / `BridgeFactoryRegistry` | "Bridge" 前缀准确描述用途 |
@@ -115,10 +115,17 @@ const notOverridden = _NotOverridden();
 
 | 变更类型 | 涉及文件数（估算） |
 |----------|-------------------|
-| 类/typedef 重命名 (#1-#4) | ~15（bridge + interpreter + tests） |
-| 字段/参数对齐 (#6-#10) | ~10（interpreter + engine + plugin_context + tests） |
-| `onError` → `onUnhandledException` (#5) | ~5（config + engine + tests + docs） |
-| 文件重命名 (#11) | ~5（import 路径更新） |
+| 类/typedef 重命名 (#1-#3) | ~10（bridge + interpreter + tests） |
+| 字段/参数对齐 (#5-#9) | ~10（interpreter + engine + plugin_context + tests） |
+| `onError` → `onUnhandledException` (#4) | ~5（config + engine + tests + docs） |
+| 文件重命名 (#10) | ~3（import 路径更新） |
 | typed sentinel (#E) | ~3（dartic_dispatch + interpreter + bridge tests） |
 
-总计约 **25-30 个文件**受影响，大部分是机械性 find-replace。
+总计约 **20-25 个文件**受影响，大部分是机械性 find-replace。
+
+## 审阅决策记录
+
+| 问题 | 决策 | 理由 |
+|------|------|------|
+| `DarticProxyManager` 是否去前缀？ | 保留 `DarticProxyManager` | 去掉后太通用，且出现在架构图中 |
+| `CallDarticMethod` 新名用 "Interpreted" 还是 "Interpreter"？ | `InterpreterMethodCallback` | "Interpreter" 明确回调方向是到解释器，避免 "Interpreted" 的被动语态歧义 |
