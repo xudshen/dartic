@@ -97,6 +97,7 @@ class DarticEngine {
     _interpreter = DarticInterpreter(
       hostFunctionRegistry: _hostFunctionRegistry,
       hostDispatchRegistry: _hostDispatchRegistry,
+      bridgeFactoryRegistry: _bridgeFactoryRegistry,
       callStack: CallStack(maxFrames: config.maxCallDepth),
       fuelBudget: config.fuelBudget,
       maxTotalFuel: config.maxTotalFuel,

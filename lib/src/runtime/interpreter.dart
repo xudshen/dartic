@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import '../bridge/bridge_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
 import '../bridge/host_function_registry.dart';
@@ -36,13 +37,14 @@ import 'value_stack.dart';
 /// on resume, and microtask scheduling drives the continuation.
 ///
 /// See: docs/design/03-execution-engine.md, docs/design/07-async.md
-class DarticInterpreter implements DarticRuntime {
+class DarticInterpreter {
   DarticInterpreter({
     ValueStack? valueStack,
     RefStack? refStack,
     CallStack? callStack,
     this.typeRegistry,
     this.hostFunctionRegistry,
+    this.bridgeFactoryRegistry,
     this.fuelBudget = defaultFuelBudget,
     this.maxTotalFuel,
     this.executionTimeout,
@@ -79,6 +81,10 @@ class DarticInterpreter implements DarticRuntime {
   /// Host function bindings for CALL_HOST. If null, CALL_HOST throws.
   final HostFunctionRegistry? hostFunctionRegistry;
 
+  /// Bridge factory registry for NEW_INSTANCE. If null, no Bridge instances
+  /// are created (all allocations produce plain DarticObject).
+  final BridgeFactoryRegistry? bridgeFactoryRegistry;
+
   /// Global variable table — initialized per-module in [execute].
   DarticGlobalTable? _globalTable;
 
@@ -113,6 +119,10 @@ class DarticInterpreter implements DarticRuntime {
 
   /// The currently executing module — set in [execute], used by [invokeClosure].
   DarticModule? _activeModule;
+
+  /// Bridge dispatch for the current execution, created when both
+  /// [bridgeFactoryRegistry] and [_activeModule] are available.
+  BridgeDispatch? _activeBridgeDispatch;
 
   /// Return value from a callback that exited via HOST_BOUNDARY RETURN.
   Object? _callbackResult;
@@ -257,6 +267,14 @@ class DarticInterpreter implements DarticRuntime {
       _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
     }
 
+    // Create bridge dispatch if factories are registered.
+    if (bridgeFactoryRegistry != null) {
+      _activeBridgeDispatch = BridgeDispatch(
+        module: module,
+        callMethod: _callDarticMethod,
+      );
+    }
+
     _isExecuting = true;
     try {
       // Set up global table and run initializers.
@@ -338,6 +356,14 @@ class DarticInterpreter implements DarticRuntime {
       _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
     }
 
+    // Create bridge dispatch if factories are registered.
+    if (bridgeFactoryRegistry != null) {
+      _activeBridgeDispatch = BridgeDispatch(
+        module: module,
+        callMethod: _callDarticMethod,
+      );
+    }
+
     _isExecuting = true;
     try {
       // Initialize globals if needed (only on first call for this module).
@@ -391,6 +417,7 @@ class DarticInterpreter implements DarticRuntime {
     _syncStarStatus = null;
     _syncStarSuspendedFrame = null;
     _activeModule = null;
+    _activeBridgeDispatch = null;
     _callbackResult = null;
   }
 
@@ -2168,7 +2195,15 @@ class DarticInterpreter implements DarticRuntime {
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           final classInfo = module.classes[bx];
-          rs.write(rBase + a, DarticObject(classInfo));
+          final obj = DarticObject(classInfo);
+          final bridgeFactory =
+              bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
+          if (bridgeFactory != null && _activeBridgeDispatch != null) {
+            rs.write(rBase + a,
+                bridgeFactory(_activeBridgeDispatch!, obj, const []));
+          } else {
+            rs.write(rBase + a, obj);
+          }
 
         // ── Type Operations (0x65-0x66) ──
 
