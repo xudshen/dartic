@@ -250,4 +250,76 @@ void main() {
       expect(fn('first', 'second'), equals('second'));
     });
   });
+
+  group('closure proxy identity cache', () {
+    test('same DarticClosure produces identical Function across calls', () {
+      final proto = _identityProto();
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+
+      final args1 = <Object?>[closure];
+      final args2 = <Object?>[closure];
+      interp.wrapClosureArgs(args1);
+      interp.wrapClosureArgs(args2);
+
+      expect(args1[0], isA<Function>());
+      expect(identical(args1[0], args2[0]), isTrue,
+          reason: 'same DarticClosure should produce identical Function');
+    });
+
+    test('different DarticClosures produce different Functions', () {
+      final proto = _identityProto();
+      final interp = _initInterpreter(proto);
+      final closureA = DarticClosure(funcProto: proto, upvalues: []);
+      final closureB = DarticClosure(funcProto: proto, upvalues: []);
+
+      final argsA = <Object?>[closureA];
+      final argsB = <Object?>[closureB];
+      interp.wrapClosureArgs(argsA);
+      interp.wrapClosureArgs(argsB);
+
+      expect(identical(argsA[0], argsB[0]), isFalse,
+          reason: 'different DarticClosures must produce different Functions');
+    });
+
+    test('cached proxy Function still works correctly', () {
+      final proto = _identityProto();
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+
+      final args = <Object?>[closure];
+      interp.wrapClosureArgs(args);
+      final fn = args[0] as Object? Function(Object?);
+
+      expect(fn('hello'), equals('hello'));
+      expect(fn(42), equals(42));
+
+      final args2 = <Object?>[closure];
+      interp.wrapClosureArgs(args2);
+      final fn2 = args2[0] as Object? Function(Object?);
+      expect(fn2('world'), equals('world'));
+      expect(identical(fn, fn2), isTrue);
+    });
+
+    test('addListener/removeListener pattern works', () {
+      final proto = _identityProto();
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+
+      final listeners = <Function>[];
+      void addListener(Function fn) => listeners.add(fn);
+      bool removeListener(Function fn) => listeners.remove(fn);
+
+      final args1 = <Object?>[closure];
+      interp.wrapClosureArgs(args1);
+      addListener(args1[0] as Function);
+      expect(listeners, hasLength(1));
+
+      final args2 = <Object?>[closure];
+      interp.wrapClosureArgs(args2);
+      final removed = removeListener(args2[0] as Function);
+      expect(removed, isTrue, reason: 'should find and remove the listener');
+      expect(listeners, isEmpty);
+    });
+  });
 }

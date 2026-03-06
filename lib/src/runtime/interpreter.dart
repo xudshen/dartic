@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:meta/meta.dart';
+
 import '../bridge/dartic_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/closure_adapter.dart';
@@ -123,6 +125,10 @@ class DarticInterpreter {
   /// or creates an entry here. When CLOSE_UPVALUE fires, matching entries
   /// are removed and their cells transition to closed state.
   final Map<int, Upvalue> _openUpvalues = {};
+
+  /// DarticClosure -> Dart Function identity cache.
+  /// Ensures the same DarticClosure produces the same Dart Function instance.
+  final _closureProxyCache = Expando<Function>('closureProxy');
 
   /// Parallel stack of upvalue lists for each call frame. Stores the
   /// current frame's closure upvalues (or null for non-closure calls).
@@ -616,12 +622,20 @@ class DarticInterpreter {
 
   /// Wraps any [DarticClosure] entries in [args] as Dart [Function] objects
   /// via [ClosureAdapter], mutating the list in place.
+  ///
+  /// Identity-cached: the same [DarticClosure] always produces the same
+  /// Dart [Function] instance, enabling addListener/removeListener patterns.
   void _wrapClosureArgs(List<Object?> args) {
     for (var i = 0; i < args.length; i++) {
       final arg = args[i];
       if (arg is DarticClosure) {
+        var cached = _closureProxyCache[arg];
+        if (cached != null) {
+          args[i] = cached;
+          continue;
+        }
         final proxy = ClosureAdapter(this, arg);
-        args[i] = switch (arg.funcProto.paramCount) {
+        cached = switch (arg.funcProto.paramCount) {
           0 => proxy.proxy0(),
           1 => proxy.proxy1(),
           2 => proxy.proxy2(),
@@ -633,9 +647,15 @@ class DarticInterpreter {
               'ClosureAdapter: unsupported arity '
               '${arg.funcProto.paramCount}'),
         };
+        _closureProxyCache[arg] = cached;
+        args[i] = cached;
       }
     }
   }
+
+  /// Exposes [_wrapClosureArgs] for testing closure identity caching.
+  @visibleForTesting
+  void wrapClosureArgs(List<Object?> args) => _wrapClosureArgs(args);
 
   /// Routes [args] to the correct stack positions based on [proto.paramKinds].
   ///
