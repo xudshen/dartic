@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import '../bridge/bridge_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
+import '../bridge/script_object_holder.dart';
 import '../bridge/host_function_registry.dart';
 import '../bridge/host_dispatch_registry.dart';
 import '../bytecode/deserializer.dart';
@@ -55,6 +56,21 @@ class DarticInterpreter {
         callStack = callStack ?? CallStack();
 
   static const int defaultFuelBudget = 50000;
+
+  /// Extracts [DarticObject] from a possible Bridge instance.
+  ///
+  /// If [receiver] is already a [DarticObject], returns it directly.
+  /// If [receiver] implements [ScriptObjectHolder] (Bridge), extracts the
+  /// embedded script object.
+  /// Otherwise throws (field access opcodes should never hit this case).
+  @pragma('vm:prefer-inline')
+  static DarticObject _extractScriptObject(Object receiver) {
+    if (receiver is DarticObject) return receiver;
+    if (receiver is ScriptObjectHolder) return receiver.$darticObject;
+    throw DarticError(
+      'Field access on non-script object: ${receiver.runtimeType}',
+    );
+  }
 
   final ValueStack valueStack;
   final RefStack refStack;
@@ -2167,28 +2183,28 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = rs.read(rBase + b) as DarticObject;
+          final obj = _extractScriptObject(rs.read(rBase + b)!);
           rs.write(rBase + a, obj.refFields[c]);
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = rs.read(rBase + a) as DarticObject;
+          final obj = _extractScriptObject(rs.read(rBase + a)!);
           obj.refFields[c] = rs.read(rBase + b);
 
         case Op.getFieldVal: // GET_FIELD_VAL A, B, C — valueStack[A] = refStack[B].valueFields[C]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = rs.read(rBase + b) as DarticObject;
+          final obj = _extractScriptObject(rs.read(rBase + b)!);
           vs.writeInt(vBase + a, obj.valueFields[c]);
 
         case Op.setFieldVal: // SET_FIELD_VAL A, B, C — refStack[A].valueFields[C] = valueStack[B]
           final a = (instr >> 8) & 0xFF;
           final b = (instr >> 16) & 0xFF;
           final c = (instr >> 24) & 0xFF;
-          final obj = rs.read(rBase + a) as DarticObject;
+          final obj = _extractScriptObject(rs.read(rBase + a)!);
           obj.valueFields[c] = vs.readInt(vBase + b);
 
         case Op.newInstance: // NEW_INSTANCE A, Bx — refStack[A] = new DarticObject(class[Bx])
