@@ -38,10 +38,10 @@
    - Timer(Duration(seconds: 1), callback) 延时回调
 3. **实现** —
    - **AsyncBindings 类**：参照 CoreBindings 模式，提供 `registerAll(HostBindings)` 方法
-   - **Future 绑定**：构造器（value/error/delayed/microtask/sync）、实例方法（then/catchError/whenComplete/timeout）、静态方法（wait/any/doWhile/forEach）。注意 then/catchError 的回调参数通过 DarticCallbackProxy 桥接
-   - **Stream 绑定**：listen（返回 StreamSubscription）、collection 方法（toList/first/last 等）、转换方法（map/where/expand 等）。listen 的回调参数通过 DarticCallbackProxy
+   - **Future 绑定**：构造器（value/error/delayed/microtask/sync）、实例方法（then/catchError/whenComplete/timeout）、静态方法（wait/any/doWhile/forEach）。注意 then/catchError 的回调参数通过 ClosureAdapter 桥接
+   - **Stream 绑定**：listen（返回 StreamSubscription）、collection 方法（toList/first/last 等）、转换方法（map/where/expand 等）。listen 的回调参数通过 ClosureAdapter
    - **Completer 绑定**：constructor/complete/completeError/future/isCompleted
-   - **StreamController 绑定**：constructor/broadcast/add/addError/close/stream/sink/done/hasListener。onListen/onPause/onResume/onCancel setter 的回调通过 DarticCallbackProxy
+   - **StreamController 绑定**：constructor/broadcast/add/addError/close/stream/sink/done/hasListener。onListen/onPause/onResume/onCancel setter 的回调通过 ClosureAdapter
    - **Timer 绑定**：constructor/run/periodic/cancel/tick/isActive
    - **Zone 绑定**：current/run/runGuarded（按需，仅在 co19 测试需要时）
    - co19_runner.dart：将 `'dart:async'` 加入 `_supportedDartLibraries`
@@ -225,7 +225,7 @@ feat: co19 harness v4 — dart:async bridge, static_type_helper, async test prot
 - **vendor expect.dart**：完整版编译成功，已切换使用完整版
 - **异步测试超时策略**：Process.exitCode.timeout + process.kill()，可配置（默认 30s）
 - **ZoneSpecification 泛型 handler 类型签名**：RunHandler/RunUnaryHandler/RunBinaryHandler 等需要显式泛型参数（`<R>`, `<R, T>`, `<R, T1, T2>`）和返回类型强转（`as R`），plain `dynamic Function(...)` 会导致 argument_type_not_assignable
-- **DarticCallbackProxy arity 扩展**：Zone handler 回调最多 6 参数（如 runBinary handler = Zone + ZoneDelegate + Zone + Function + T1 + T2），需要 proxy0-proxy6。interpreter.dart 的 arity dispatch switch 同步更新
+- **ClosureAdapter arity 扩展**：Zone handler 回调最多 6 参数（如 runBinary handler = Zone + ZoneDelegate + Zone + Function + T1 + T2），需要 proxy0-proxy6。interpreter.dart 的 arity dispatch switch 同步更新
 - **CFE 私有类名双注册**：_StreamHandlerTransformer（= StreamTransformer.fromHandlers）、_StreamSubscriptionTransformer（= StreamTransformer.fromBind）、_EmptyStream（= Stream.empty()）等需要在公开和私有名称下同时注册
 - **Phase 6 新增类别通过率**：总计 **1736/2628 = 66.1%**。Extension-methods 92.4%、Enhanced-Enum 89.7%、Super-parameters 89.1%（CFE 脱糖效果好），Patterns 60.2%、Records 69.8%、LibTest/async **37.2%**（绑定补全后达标）
 - **历史提升**：+164 new pass, 0 regressions, 全量 12 类 8717 tests = 73.2%

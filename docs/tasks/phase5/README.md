@@ -29,7 +29,7 @@
 |-------|-------------|-----------|
 | 5.1 Bridge 基础设施 + CALL_HOST | Ch4 互调, Ch3 执行引擎, Ch1 ISA, Ch5 编译器 | HostBindings 注册表、CALL_HOST 分发、绑定名称表 .darb 格式、编译器 Bridge 注册表查找 |
 | 5.2 dart:core Bridge | Ch4 互调 | HostClassWrapper 分发路由、类型映射（值类型直传、引用类型存 ref 栈）、操作符路由命名 |
-| 5.3 集合/字符串/回调 | Ch2 对象模型, Ch4 互调 | CREATE_LIST/MAP/SET 创建 VM 原生对象、STRING_INTERP、DarticCallbackProxy proxy0-3、DarticProxyManager 双向 Expando |
+| 5.3 集合/字符串/回调 | Ch2 对象模型, Ch4 互调 | CREATE_LIST/MAP/SET 创建 VM 原生对象、STRING_INTERP、ClosureAdapter proxy0-3、DarticProxyManager 双向 Expando |
 | 5.4 co19 Harness v3 | — | dart:core 导入路由、expect_common 完整接入、skip list、回归检测 |
 
 ## Batch 索引

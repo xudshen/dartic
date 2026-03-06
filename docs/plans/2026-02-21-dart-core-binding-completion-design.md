@@ -72,7 +72,7 @@ Phase 5 已完成 14 个 dart:core 类 ~245+ 个方法绑定（覆盖率 ~88%）
 
 ### 实现策略
 
-所有方法沿用现有 `registry.register('dart:core::Class::method#N', ...)` 模式。callback 方法的 DarticCallbackProxy 管线在 5.3 已验证（List.forEach/map/where/fold/any/every 已工作），这里只是扩面到 Map、Set。
+所有方法沿用现有 `registry.register('dart:core::Class::method#N', ...)` 模式。callback 方法的 ClosureAdapter 管线在 5.3 已验证（List.forEach/map/where/fold/any/every 已工作），这里只是扩面到 Map、Set。
 
 ---
 
@@ -135,7 +135,7 @@ String.allMatches ──► Match（Pattern 接口实现）
 ### 实现要点
 
 - Match/RegExpMatch 是 VM 原生对象（由 RegExp.firstMatch 等返回），直接走 HostBindingRegistry 注册
-- DarticCallbackProxy 已支持 1 参数回调（proxy1），`replaceAllMapped` 的 `String Function(Match)` 可直接工作
+- ClosureAdapter 已支持 1 参数回调（proxy1），`replaceAllMapped` 的 `String Function(Match)` 可直接工作
 - StringBuffer 是 mutable 对象，binding 需确保同一实例在多次调用间保持状态
 
 ---

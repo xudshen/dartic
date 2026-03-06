@@ -80,7 +80,7 @@
 |---|------|------|------|------|
 | 4 | **热更新缺字节码签名** | Ch7 | 无签名 = 远程代码执行漏洞 | Phase 1 即实现 Ed25519 签名验证 |
 | 5 | **跨边界 `List<dynamic>` 兜底** | Ch5 | VM 侧 `is List<int>` 检查失败 | 至少为高频泛型组合提供类型化创建路径 |
-| 6 | **DarticCallbackProxy 泛型签名丢失** | Ch5 | 回调传递可能触发运行时类型错误 | Bridge 预生成库提供类型化回调包装 |
+| 6 | **ClosureAdapter 泛型签名丢失** | Ch5 | 回调传递可能触发运行时类型错误 | Bridge 预生成库提供类型化回调包装 |
 | 7 | **频繁 await-resume 绕过 fuel 机制** | Ch6 | 大量 `await Future.value()` 可能饿死事件循环 | `_resumeFrame` 中也计入 fuel 消耗 |
 | 8 | **WIDE 前缀规格不完整** | Ch1 | 实现时可能出现歧义 | 明确定义扩展字格式 |
 | 9 | **回调重入时 fuel 机制行为未定义** | Ch7 | 回调中无限循环的处理不清晰 | 文档明确回调中的 fuel 语义 |
@@ -188,7 +188,7 @@
 **跨边界泛型是最大挑战**：
 - 解释器 → VM：`List<dynamic>.from()` 兜底破坏类型安全
 - Bridge 泛型实例化：Dart 无法在运行时动态决定泛型参数，需编译器静态分析所有组合
-- DarticCallbackProxy 使用 `Object? Function(Object?)` 通用签名，可能触发类型不匹配
+- ClosureAdapter 使用 `Object? Function(Object?)` 通用签名，可能触发类型不匹配
 
 ### Ch6 — 异步
 

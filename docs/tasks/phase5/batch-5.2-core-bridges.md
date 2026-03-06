@@ -164,7 +164,7 @@
    - List 修改: `list.add(4)` / `list.addAll([5,6])` / `list.insert(0, 0)` / `list.removeAt(0)` / `list.removeLast()` / `list.clear()`
    - List 查询: `list.contains(2)` → true / `list.indexOf(2)` → 1 / `list.lastIndexOf(2)`
    - List 变换: `list.reversed` / `list.sublist(1, 3)` / `list.getRange(0, 2)` / `list.join(',')` → `'1,2,3'`
-   - List 排序: `list.sort()` / `list.sort((a,b) => b.compareTo(a))` — 注意回调参数需要 DarticCallbackProxy（Batch 5.3.3 支持后补充测试）
+   - List 排序: `list.sort()` / `list.sort((a,b) => b.compareTo(a))` — 注意回调参数需要 ClosureAdapter（Batch 5.3.3 支持后补充测试）
    - List 构造: `List.filled(3, 0)` → `[0,0,0]` / `List.generate(3, (i) => i)` — 回调版 Batch 5.3.3 后测试
    - Iterable: `iterable.map((e) => e * 2)` / `iterable.where((e) => e > 1)` / `iterable.toList()` / `iterable.toSet()` — 回调版 Batch 5.3.3 后测试
    - 先测试不涉及回调的方法（length, [], []=, add, contains, indexOf, join, sublist, reversed, first, last, isEmpty）
@@ -178,7 +178,7 @@
      - 构造：List.filled, List.generate, List.of, List.from, List.empty, List.unmodifiable
    - Iterable Bridge：注册通用迭代器方法
      - map, where, expand, fold, reduce, forEach, toList, toSet, any, every, contains, join, take, skip, firstWhere, lastWhere, singleWhere, elementAt, cast, followedBy, whereType
-   - 含回调参数的方法：先注册绑定（直接将 VM 对象参数传递给 host 方法），回调包装逻辑在 5.3.3 DarticCallbackProxy 就绪后补充
+   - 含回调参数的方法：先注册绑定（直接将 VM 对象参数传递给 host 方法），回调包装逻辑在 5.3.3 ClosureAdapter 就绪后补充
 4. **运行** — `fvm dart analyze && fvm dart test test/bridge/list_iterable_bridge_test.dart`
 
 ---

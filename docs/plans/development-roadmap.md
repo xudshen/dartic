@@ -549,20 +549,20 @@ int main() => add(1, 2); // => 3
 > - `int.parse` 在 Kernel 中有 3 形参（source, radix, onError），非预期的 2 个
 > - CFE 将 List 字面量降级为 `_GrowableList._literalN()` 内部工厂调用，需同时注册内部绑定名
 > - Duration 构造器命名参数在 CALL_HOST 中无法传递参数名，是已知设计局限
-> - 回调方法（forEach/map/sort 等）延迟到 Batch 5.3 的 DarticCallbackProxy
+> - 回调方法（forEach/map/sort 等）延迟到 Batch 5.3 的 ClosureAdapter
 
 ### Batch 5.3: 集合字面量、字符串插值与回调代理 ✅
 
 - [x] 5.3.1 CREATE_LIST/MAP/SET 解释器 + 编译器
 - [x] 5.3.2 STRING_INTERP 解释器 + 编译器
-- [x] 5.3.3 DarticCallbackProxy + DarticProxyManager
+- [x] 5.3.3 ClosureAdapter + DarticProxyManager
 - [x] 5.3.4 HostClassWrapper 动态分发 + Spread 编译
 
 **commit:** `feat: support collection literals, string interpolation, and spread`
 
 > **核心发现：**
 > - HOST_BOUNDARY 哨兵帧（funcId=0xFFFFFFFF）标记 VM→解释器回调边界
-> - DarticCallbackProxy proxy0()-proxy3() 覆盖 forEach/map/where/sort/fold 全部回调场景
+> - ClosureAdapter proxy0()-proxy3() 覆盖 forEach/map/where/sort/fold 全部回调场景
 > - CFE 降糖：`[a,b,c]` → `_GrowableList._literalN()`，`{a,b,c}` (Set) → `_Set()..add()`
 > - Spread/if/for 均为 CFE 降糖，编译器无需特殊处理
 
@@ -737,7 +737,7 @@ int main() => add(1, 2); // => 3
 ### Batch 7.1: DarticEngine 公开 API + 内部重构
 
 - [ ] 7.1.1 HostClassRegistry 重构 — 新增 `register(test, prefixes, {Type? exactType})` 方法支持动态注册用户宿主类；三层查找：`_exactMap[runtimeType]` O(1) → 硬编码核心类型 is 链 → 动态注册 predicate scan；`exactType` 注册时预热 `_exactMap` 实现注册顺序无关（与业界 VM 精确类型标识对齐）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_class_registry.dart`
-- [ ] 7.1.2 BridgeFactoryRegistry + DarticDispatch — BridgeFactoryRegistry（className → BridgeFactory 映射表），DarticDispatch（invoke/get/set 三个分发方法 + `#_bridgeNotOverridden` 哨兵值），NEW_INSTANCE 指令查找 BridgeFactoryRegistry → 新增 `lib/src/bridge/bridge_factory_registry.dart`, `lib/src/bridge/dartic_dispatch.dart`
+- [ ] 7.1.2 BridgeFactoryRegistry + DarticDispatch — BridgeFactoryRegistry（className → BridgeFactory 映射表），DarticDispatch（invoke/get/set 三个分发方法 + `notOverridden` typed sentinel），NEW_INSTANCE 指令查找 BridgeFactoryRegistry → 新增 `lib/src/bridge/bridge_factory_registry.dart`, `lib/src/bridge/dartic_dispatch.dart`
 - [ ] 7.1.3 DarticModule 导出表 — 编译器为顶层函数生成 `exportedFunctions: Map<String, int>`（名称→funcId）；.darb 序列化新增导出表段；DarticInterpreter 新增 `executeFunction(module, funcId, args)` → 扩展 `lib/src/compiler/compiler.dart`, `lib/src/bytecode/module.dart`, `lib/src/runtime/interpreter.dart`
 - [ ] 7.1.4 错误模型 — CallDepthExceededError 从通用 DarticError 提升为独立子类；DarticLoadError（字节码加载/校验/绑定解析失败）；DarticInternalError（解释器实现 bug） → `lib/src/api/errors.dart`
 - [ ] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 接口 — DarticEngine 封装 DarticInterpreter + 所有注册表，状态机 `created → loaded → disposed`；DarticConfig 映射 fuelBudget/maxTotalFuel/executionTimeout/maxCallDepth/onPrint/onUnhandledException；DarticPlugin（name getter + register 方法） → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`

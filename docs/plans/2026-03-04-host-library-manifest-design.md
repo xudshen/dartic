@@ -186,4 +186,4 @@ class CoreUiPlugin extends DarticPlugin {
 | **中** | CALL_VIRTUAL 对 host 对象只支持 zero-arg getter | interpreter.dart:1876-1880 | 扩展为支持带参方法调用（读取 IC 的 argCount） |
 | **低** | symbolName `#N` 与 BindingEntry.argCount 双重语义 | compiler.dart:1130, module.dart | 文档明确约定：`#N` = 形参数（不含 receiver），argCount = 实际传参数（含 receiver） |
 | **低** | invokeMethod +3 arity 暴力搜索 | host_class_registry.dart:58 | 改为从 registry 查询已注册的最大 arity，或让 plugin 注册时声明 |
-| **低** | DarticCallbackProxy 最多支持 3 参数 | interpreter.dart _wrapClosureArgs | 扩展到 5-6 参数或使用可变参数方案 |
+| **低** | ClosureAdapter 最多支持 3 参数 | interpreter.dart _wrapClosureArgs | 扩展到 5-6 参数或使用可变参数方案 |

@@ -435,7 +435,7 @@ void processItems<T>(List<T> items, void Function(T) callback) {
 
 // 解释器需要为 callback 创建代理
 // 但解释器只能创建 void Function(dynamic) 类型的代理
-class DarticCallbackProxy {
+class ClosureAdapter {
   final Interpreter interpreter;
   final InterpreterClosure closure;
   

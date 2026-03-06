@@ -48,9 +48,9 @@
 | Jython | `__findattr__(name) != None` | Dict lookup |
 | dart_eval | 返回 private sentinel object | `identical()` |
 | GraalVM | 查 JS delegate 是否有该 property | Property get |
-| **dartic** | 返回 `#_bridgeNotOverridden` (Symbol) | `identical()` |
+| **dartic** | 返回 `notOverridden` (typed sentinel) | `identical()` |
 
-**dartic 评估**: ✅ 最优方案之一。Private `Symbol` 不可被脚本代码构造，`identical()` 是 O(1) 指针比较。JRuby 的 null-check 有误判风险（Ruby 方法可合法返回 nil）。
+**dartic 评估**: ✅ 最优方案之一。Typed sentinel (`_NotOverridden` 私有类) 不可被脚本代码构造，`identical()` 是 O(1) 指针比较。JRuby 的 null-check 有误判风险（Ruby 方法可合法返回 nil）。
 
 ### 3. `this` 绑定
 
@@ -276,11 +276,11 @@ public List myMethod() {
 |---------|-------|--------|-----------------|-----------|--------|
 | 双重身份机制 | `rubyObject` ↔ `ConcreteJavaProxy.object` | `__pyInstance` ↔ `javaProxy` | `Value` wrapper ↔ guest object | `_$self` ↔ `$Bridge` | `DarticObject` ↔ Bridge via `DarticObjectHolder` |
 | Bridge 类生成 | ASM 运行时生成 | 类定义时字节码生成 | 不需要 (InteropLibrary) | codegen (`dart_eval bind`) | codegen (`@DarticExport(bridge: true)`) |
-| 覆写检测 | null / method-existence check | `__findattr__ == None` | N/A (协议) | private sentinel | `#_bridgeNotOverridden` (private Symbol) |
+| 覆写检测 | null / method-existence check | `__findattr__ == None` | N/A (协议) | private sentinel | `notOverridden` (typed sentinel) |
 | script 方法中的 this | ConcreteJavaProxy | PyInstance | guest language object | `$Bridge` 实例 | Bridge 实例 (`receiver` 参数) |
 | Super 构造器 | Split-super AST transform | 显式 `SuperClass.__init__` | N/A | `super(superArgs[0])` | `BridgeFactory` + `superArgs` |
 | 字段访问 | 直接 RubyObject fields | PyInstance instance dict | InteropLibrary `readMember` | `_$self` field dict | `_extractScriptObject()` → `DarticObject.refFields[i]` |
-| 虚分发 | `DynamicMethod` + 2-level IC | Reflection (无 IC) | AST-rewriting polymorphic IC | `bridgeCall()` | IC table in `DarticFuncProto` + `bridgeNotOverridden` fallback |
+| 虚分发 | `DynamicMethod` + 2-level IC | Reflection (无 IC) | AST-rewriting polymorphic IC | `bridgeCall()` | IC table in `DarticFuncProto` + `notOverridden` fallback |
 | Host 类型 `is` 检查 | ✅ (真 JVM 类) | ✅ (真 Java 类) | ✅ (实际 host 对象) | ✅ (extends host) | ✅ (Bridge extends host) |
 
 ---

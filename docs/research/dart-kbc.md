@@ -538,11 +538,11 @@ class BindingGenerator extends RecursiveVisitor {
 
 ```dart
 /// 将解释器中的函数包装为宿主 Dart 可调用的闭包
-class DarticCallbackProxy {
+class ClosureAdapter {
   final Interpreter _interpreter;
   final ClosureObject _closure;
 
-  DarticCallbackProxy(this._interpreter, this._closure);
+  ClosureAdapter(this._interpreter, this._closure);
 
   /// 生成不同签名的代理闭包
   Object? Function() proxy0() {
@@ -573,13 +573,13 @@ class DarticCallbackProxy {
 }
 ```
 
-当解释器编译后的代码将闭包传递给宿主 API 时（如 `list.where(callback)`），`CALL_HOST` 指令的绑定实现需要识别参数中的闭包对象，自动创建 `DarticCallbackProxy` 并传递给宿主方法：
+当解释器编译后的代码将闭包传递给宿主 API 时（如 `list.where(callback)`），`CALL_HOST` 指令的绑定实现需要识别参数中的闭包对象，自动创建 `ClosureAdapter` 并传递给宿主方法：
 
 ```dart
 // ListWrapper.invokeMethod 中的 'where' 处理
 case 'where':
   final closure = args[0] as ClosureObject;
-  final proxy = DarticCallbackProxy(interpreter, closure);
+  final proxy = ClosureAdapter(interpreter, closure);
   return hostObject.where(proxy.typedProxy<bool Function(dynamic)>());
 ```
 
@@ -645,7 +645,7 @@ interpreter.hostBindings
 // 4. CALL_METHOD 'split'           → StringWrapper.invokeMethod('split', [","])
 //    → 返回 List<String> → 新句柄推入
 // 5. CALL_METHOD 'where'           → 参数是解释器闭包
-//    → ListWrapper 创建 DarticCallbackProxy
+//    → ListWrapper 创建 ClosureAdapter
 //    → 宿主 List.where 每次迭代回调 proxy → proxy 调用 interpreter.invokeClosure
 //    → 解释器执行闭包体 → 返回 bool 给宿主
 ```

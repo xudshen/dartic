@@ -6,7 +6,7 @@
 
 **设计参考：** `docs/plans/2026-02-21-dart-core-binding-completion-design.md`
 
-**依赖：** Batch 5.1-5.3, 5.5（CALL_HOST 管线 + 已有 Bridge + DarticCallbackProxy 全部就绪）
+**依赖：** Batch 5.1-5.3, 5.5（CALL_HOST 管线 + 已有 Bridge + ClosureAdapter 全部就绪）
 
 ---
 
@@ -18,7 +18,7 @@
 
 **TDD 步骤：**
 
-1. **读设计文档** — 当前 MapBindings 缺 forEach, map, updateAll, removeWhere 四个 callback 方法。callback 参数是 `(K, V)` 两参数形式，DarticCallbackProxy.proxy2 可覆盖。参照 `list_bindings.dart` 中 `List::forEach#1` 的实现模式
+1. **读设计文档** — 当前 MapBindings 缺 forEach, map, updateAll, removeWhere 四个 callback 方法。callback 参数是 `(K, V)` 两参数形式，ClosureAdapter.proxy2 可覆盖。参照 `list_bindings.dart` 中 `List::forEach#1` 的实现模式
 2. **写测试** —
    - 直接 binding invoke 测试（沿用已有的 `invoke` helper）：
      - `Map::forEach#1`：遍历 `{'a':1, 'b':2}` 用 callback 收集所有键值对，验证遍历完整
@@ -198,7 +198,7 @@
 
 **TDD 步骤：**
 
-1. **读设计文档** — String 上依赖 Match 的方法：replaceAllMapped (Pattern, String Function(Match))、replaceFirstMapped (Pattern, String Function(Match), [int])、splitMapJoin (Pattern, {onMatch, onNonMatch})。Pattern 接口方法：allMatches (String, [int])、matchAsPrefix (String, [int])。runes getter 返回 Runes 对象（Task 5.6.5 Runes 绑定已就绪）。DarticCallbackProxy.proxy1 覆盖 `String Function(Match)` 回调
+1. **读设计文档** — String 上依赖 Match 的方法：replaceAllMapped (Pattern, String Function(Match))、replaceFirstMapped (Pattern, String Function(Match), [int])、splitMapJoin (Pattern, {onMatch, onNonMatch})。Pattern 接口方法：allMatches (String, [int])、matchAsPrefix (String, [int])。runes getter 返回 Runes 对象（Task 5.6.5 Runes 绑定已就绪）。ClosureAdapter.proxy1 覆盖 `String Function(Match)` 回调
 2. **写测试** —
    - `String::replaceAllMapped#2`：`'abc123def456'.replaceAllMapped(RegExp(r'\d+'), (m) => '[${m.group(0)}]')` → `'abc[123]def[456]'`
    - `String::replaceFirstMapped#3`：只替换第一个匹配

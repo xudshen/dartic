@@ -17,7 +17,7 @@
 | `lib/dartic.dart` 导出的公共类 → 必须 `Dartic` 前缀 | `DarticEngine`, `DarticConfig`, `DarticError` |
 | 被 2+ 个子系统 import 的领域核心类 → `Dartic` 前缀 | `DarticObject`, `DarticType`, `DarticModule`, `DarticClassInfo` |
 | Bridge 公共导出类 → `Dartic` 前缀 | `DarticDispatch`, `DarticProxy`, `DarticObjectHolder` |
-| Bridge 内部类 → 不带前缀（例外：跨子系统使用或出现在架构图中的保留前缀） | `ClosureAdapter`, `BindingLookupAdapter`；例外：`DarticProxyManager` |
+| Bridge 内部类 → 不带前缀（例外：跨子系统使用或出现在架构图中的保留前缀） | `ClosureAdapter`, `_HostAdapter`；例外：`DarticProxyManager` |
 | 单子系统内部工具类 → 不带前缀 | `ValueStack`, `RefStack`, `CallStack`, `BytecodeEmitter`, `Scope` |
 
 判断标准："跨子系统" = 被 `api/`, `bridge/`, `bytecode/`, `compiler/`, `runtime/`, `sandbox/` 中 2 个以上目录的文件 import。
