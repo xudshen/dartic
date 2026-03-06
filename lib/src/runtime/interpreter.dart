@@ -249,14 +249,11 @@ class DarticInterpreter {
     }
   }
 
-  /// Executes [module] starting from its entry function.
+  /// Shared initialization for [execute] and [executeFunction].
   ///
-  /// Runs the dispatch loop until HALT is reached or fuel is exhausted.
-  /// When [maxTotalFuel] or [executionTimeout] is set, resource limit
-  /// violations throw [FuelExhaustedError] or [ExecutionTimeoutError]
-  /// respectively. After either error, the interpreter state is reset
-  /// and the instance remains usable for subsequent calls.
-  void execute(DarticModule module) {
+  /// Resets fuel, clears stacks, provisions type system and bindings,
+  /// and initializes dispatch registries.
+  void _initExecution(DarticModule module) {
     _fuel = fuelBudget;
     _totalFuelConsumed = 0;
     _executionStopwatch = executionTimeout != null
@@ -276,12 +273,10 @@ class DarticInterpreter {
 
     // Initialize dynamic dispatch registry for host objects.
     // Use external registry if provided; otherwise create per-execution.
-    if (_externalHostClassRegistry != null) {
-      _hostClassRegistry = _externalHostClassRegistry;
-    } else {
-      final hfr = hostBindingRegistry;
-      _hostClassRegistry = hfr != null ? HostClassRegistry(hfr) : null;
-    }
+    _hostClassRegistry = _externalHostClassRegistry ??
+        (hostBindingRegistry != null
+            ? HostClassRegistry(hostBindingRegistry!)
+            : null);
 
     // Create bridge dispatch if factories are registered.
     if (bridgeFactoryRegistry != null) {
@@ -290,6 +285,17 @@ class DarticInterpreter {
         callMethod: _callDarticMethod,
       );
     }
+  }
+
+  /// Executes [module] starting from its entry function.
+  ///
+  /// Runs the dispatch loop until HALT is reached or fuel is exhausted.
+  /// When [maxTotalFuel] or [executionTimeout] is set, resource limit
+  /// violations throw [FuelExhaustedError] or [ExecutionTimeoutError]
+  /// respectively. After either error, the interpreter state is reset
+  /// and the instance remains usable for subsequent calls.
+  void execute(DarticModule module) {
+    _initExecution(module);
 
     _isExecuting = true;
     try {
@@ -307,13 +313,7 @@ class DarticInterpreter {
 
       // Run main.
       _executeEntry(module, module.entryFuncId);
-    } on DarticError {
-      // Resource limit errors (FuelExhaustedError, ExecutionTimeoutError)
-      // and other DarticErrors — clean up interpreter state for reuse.
-      _resetState();
-      rethrow;
     } catch (_) {
-      // Script uncaught exceptions (e.g. `throw 'boom'`) — also reset state.
       _resetState();
       rethrow;
     } finally {
@@ -349,36 +349,7 @@ class DarticInterpreter {
     }
 
     // Top-level path — initialize interpreter state and execute.
-    _fuel = fuelBudget;
-    _totalFuelConsumed = 0;
-    _executionStopwatch = executionTimeout != null
-        ? (Stopwatch()..start())
-        : null;
-    _lastEntryResult = null;
-    _activeModule = module;
-    _openUpvalues.clear();
-    _upvalueStack.clear();
-    _currentAsyncFrame = null;
-
-    // Provision type system + resolve bindings.
-    _provisionTypeSystem(module);
-    _resolveBindings(module);
-
-    // Initialize dynamic dispatch registry for host objects.
-    if (_externalHostClassRegistry != null) {
-      _hostClassRegistry = _externalHostClassRegistry;
-    } else {
-      final hfr = hostBindingRegistry;
-      _hostClassRegistry = hfr != null ? HostClassRegistry(hfr) : null;
-    }
-
-    // Create bridge dispatch if factories are registered.
-    if (bridgeFactoryRegistry != null) {
-      _activeDarticDispatch = DarticDispatch(
-        module: module,
-        callMethod: _callDarticMethod,
-      );
-    }
+    _initExecution(module);
 
     _isExecuting = true;
     try {
@@ -402,9 +373,6 @@ class DarticInterpreter {
         proto: proto,
         args: args,
       );
-    } on DarticError {
-      _resetState();
-      rethrow;
     } catch (_) {
       _resetState();
       rethrow;
@@ -2876,26 +2844,16 @@ class DarticInterpreter {
             // with a copy of the function arguments.
             final vSize = vs.sp - vBase;
             final rSize = rs.sp - rBase;
-            final valueSlots = <int>[];
-            for (var i = 0; i < vSize; i++) {
-              valueSlots.add(vs.readInt(vBase + i));
-            }
-            final refSlots = List<Object?>.filled(rSize, null);
-            for (var i = 0; i < rSize; i++) {
-              refSlots[i] = rs.read(rBase + i);
-            }
 
             // Build upvalue list from current context.
-            final upvalueList = <Upvalue>[];
-            final uv = currentUpvalues;
-            if (uv != null) {
-              upvalueList.addAll(uv);
-            }
+            final upvalues = currentUpvalues != null
+                ? List<Upvalue>.of(currentUpvalues!)
+                : <Upvalue>[];
 
             // Create a DarticFrame to hold the async* state.
             final frame = DarticFrame(
               funcProto: funcProto,
-              upvalues: upvalueList,
+              upvalues: upvalues,
             );
             frame.pc = bodyStartPC;
             frame.capturedZone = Zone.current;
@@ -2903,19 +2861,24 @@ class DarticInterpreter {
             // path (the stream was returned synchronously, not via AWAIT).
             frame.futureReturned = true;
 
-            // Save the argument snapshot on the frame for initial startup.
+            // Save the argument snapshot directly on the frame.
             frame.savedVBase = 0;
             frame.savedRBase = 0;
             frame.savedVSP = vSize;
             frame.savedRSP = rSize;
             if (vSize > 0) {
-              frame.savedValueSlots = Int64List(vSize);
+              final slots = Int64List(vSize);
               for (var i = 0; i < vSize; i++) {
-                frame.savedValueSlots![i] = valueSlots[i];
+                slots[i] = vs.readInt(vBase + i);
               }
+              frame.savedValueSlots = slots;
             }
             if (rSize > 0) {
-              frame.savedRefSlots = List<Object?>.of(refSlots);
+              final slots = List<Object?>.filled(rSize, null);
+              for (var i = 0; i < rSize; i++) {
+                slots[i] = rs.read(rBase + i);
+              }
+              frame.savedRefSlots = slots;
             }
 
             // Create the StreamController with lifecycle callbacks.
@@ -2980,21 +2943,15 @@ class DarticInterpreter {
             // with a copy of the function arguments.
             final vSize = vs.sp - vBase;
             final rSize = rs.sp - rBase;
-            final valueSlots = <int>[];
-            for (var i = 0; i < vSize; i++) {
-              valueSlots.add(vs.readInt(vBase + i));
-            }
-            final refSlots = List<Object?>.filled(rSize, null);
-            for (var i = 0; i < rSize; i++) {
-              refSlots[i] = rs.read(rBase + i);
-            }
+            final valueSlots = List<int>.generate(
+                vSize, (i) => vs.readInt(vBase + i));
+            final refSlots = List<Object?>.generate(
+                rSize, (i) => rs.read(rBase + i));
 
             // Build upvalue list from current context (same as CLOSURE).
-            final upvalues = <Upvalue>[];
-            final uv = currentUpvalues;
-            if (uv != null) {
-              upvalues.addAll(uv);
-            }
+            final upvalues = currentUpvalues != null
+                ? List<Upvalue>.of(currentUpvalues!)
+                : <Upvalue>[];
 
             final iterable = SyncStarIterable<Object?>(
               interpreter: this,

@@ -15,7 +15,6 @@ import '../bridge/plugins/async_plugin.g.dart';
 import '../bridge/plugins/collection_plugin.g.dart';
 import '../bridge/plugins/core_plugin.g.dart';
 import '../bridge/plugins/math_plugin.g.dart';
-import '../bridge/proxy_manager.dart';
 import '../bytecode/module.dart';
 import '../runtime/call_stack.dart';
 import '../runtime/error.dart';
@@ -67,8 +66,6 @@ class DarticEngine {
     _hostBindingRegistry = HostBindingRegistry();
     _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
-    _proxyManager = DarticProxyManager();
-
     // 2. Create the plugin context for registration-only access.
     _pluginContext = PluginContext(
       config: config,
@@ -110,7 +107,6 @@ class DarticEngine {
   late final HostBindingRegistry _hostBindingRegistry;
   late final HostClassRegistry _hostClassRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
-  late final DarticProxyManager _proxyManager;
   late final DarticInterpreter _interpreter;
   late final PluginContext _pluginContext;
 

@@ -10,6 +10,7 @@ library;
 import '../bytecode/constant_pool.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
+import '../compiler/type_template.dart';
 
 /// Validates a [DarticModule] for structural integrity.
 ///
@@ -32,7 +33,7 @@ class DarticVerifier {
   bool verify(DarticModule module) {
     errors.clear();
     _verifyEntryPoint(module);
-    _verifyConstantPool(module.constantPool);
+    _verifyConstantPool(module.constantPool, module);
     for (final func in module.functions) {
       _verifyFunction(func, module);
     }
@@ -167,17 +168,59 @@ class DarticVerifier {
     }
   }
 
-  // ── Check 1: Constant pool internal bounds ──
+  // ── Check 1: Constant pool structural integrity ──
 
-  void _verifyConstantPool(ConstantPool pool) {
-    // The four-partition pool (refs, ints, doubles, names) uses independent
-    // index spaces. Partition lengths are non-negative by construction.
-    //
-    // Per-instruction constant pool index bounds are validated in
-    // _verifyConstantPoolRefs (LOAD_CONST, LOAD_CONST_INT, LOAD_CONST_DBL).
-    //
-    // Known gap: cross-partition references (e.g., TypeTemplate entries in
-    // the refs partition referencing class IDs) are not validated here.
+  void _verifyConstantPool(ConstantPool pool, DarticModule module) {
+    final classCount = module.classes.length;
+
+    // Validate TypeTemplate entries in the refs partition.
+    // Per-instruction index bounds are checked in _verifyConstantPoolRefs;
+    // here we validate the *content* of constant pool entries — specifically
+    // that InterfaceTypeTemplate.classId references a valid class.
+    for (var i = 0; i < pool.refCount; i++) {
+      final entry = pool.getRef(i);
+      if (entry is TypeTemplate) {
+        _verifyTypeTemplateClassIds(entry, classCount, 'constPool.refs[$i]');
+      }
+    }
+  }
+
+  /// Recursively validates that all [InterfaceTypeTemplate.classId] values
+  /// in [template] are within [0, classCount).
+  void _verifyTypeTemplateClassIds(
+    TypeTemplate template,
+    int classCount,
+    String context,
+  ) {
+    switch (template) {
+      case InterfaceTypeTemplate():
+        if (template.classId < 0 || template.classId >= classCount) {
+          errors.add(
+            '$context: InterfaceTypeTemplate.classId '
+            '${template.classId} out of range [0, $classCount)',
+          );
+        }
+        for (final arg in template.typeArgs) {
+          _verifyTypeTemplateClassIds(arg, classCount, context);
+        }
+      case NullableTemplate():
+        _verifyTypeTemplateClassIds(template.inner, classCount, context);
+      case FunctionTypeTemplate():
+        _verifyTypeTemplateClassIds(template.returnType, classCount, context);
+        for (final param in template.positionalParams) {
+          _verifyTypeTemplateClassIds(param, classCount, context);
+        }
+        for (final named in template.namedParams) {
+          _verifyTypeTemplateClassIds(named.type, classCount, context);
+        }
+        for (final bound in template.typeParamBounds) {
+          _verifyTypeTemplateClassIds(bound, classCount, context);
+        }
+      case VoidTemplate() || DynamicTemplate() || NeverTemplate():
+        break; // no classId references
+      case TypeParameterTemplate():
+        break; // index into ITA/FTA, not class table
+    }
   }
 
   // ── Check 10: Class table ──
@@ -326,15 +369,7 @@ class DarticVerifier {
       }
 
       // Names pool references (getFieldDyn, setFieldDyn, invokeDyn).
-      if (op == Op.getFieldDyn || op == Op.setFieldDyn) {
-        if (c >= pool.nameCount) {
-          errors.add(
-            '$prefix names pool index C=$c >= nameCount '
-            '${pool.nameCount} at pc=$pc',
-          );
-        }
-      }
-      if (op == Op.invokeDyn) {
+      if (op == Op.getFieldDyn || op == Op.setFieldDyn || op == Op.invokeDyn) {
         if (c >= pool.nameCount) {
           errors.add(
             '$prefix names pool index C=$c >= nameCount '

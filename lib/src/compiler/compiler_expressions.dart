@@ -698,35 +698,32 @@ extension on DarticCompiler {
     return _emitCallHost(compiledArgs, bindingIndex);
   }
 
-  /// Compiles a factory constructor invocation as CALL_HOST.
+  /// Compiles host call arguments with null-padding for optional/named params.
   ///
-  /// Factory constructors are Procedures in Kernel IR but need all named
-  /// params padded with null (in declaration order) so the binding key
-  /// uses max arity — matching the methodMap entry that handles variable
-  /// args via `args.length > N && args[N] != null` checks.
-  (int, ResultLoc) _compileHostFactoryInvocation(ir.StaticInvocation expr) {
-    final target = expr.target;
-    final func = target.function;
+  /// Produces a flat arg list matching the full parameter count of [func],
+  /// with missing optional positional and named params filled with null.
+  /// This ensures the binding key uses max arity, matching the methodMap
+  /// entry that checks `args.length > N && args[N] != null`.
+  List<(int, ResultLoc, ir.DartType?)> _compileHostArgsWithPadding(
+    ir.Arguments arguments,
+    ir.FunctionNode func,
+  ) {
     final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
 
-    // Compile provided positional args.
-    for (final arg in expr.arguments.positional) {
+    for (final arg in arguments.positional) {
       final (reg, loc) = _compileExpression(arg);
       compiledArgs.add((reg, loc, _inferExprType(arg)));
     }
 
-    // Pad missing optional positional params with null.
-    for (var i = expr.arguments.positional.length;
+    for (var i = arguments.positional.length;
         i < func.positionalParameters.length;
         i++) {
       final (reg, loc) = _loadNull();
       compiledArgs.add((reg, loc, null));
     }
 
-    // Compile ALL declared named params in declaration order.
-    // Missing named params are filled with null.
     final namedProvided = <String, ir.Expression>{
-      for (final n in expr.arguments.named) n.name: n.value,
+      for (final n in arguments.named) n.name: n.value,
     };
     for (final param in func.namedParameters) {
       final value = namedProvided[param.name];
@@ -738,6 +735,20 @@ extension on DarticCompiler {
         compiledArgs.add((reg, loc, null));
       }
     }
+
+    return compiledArgs;
+  }
+
+  /// Compiles a factory constructor invocation as CALL_HOST.
+  ///
+  /// Factory constructors are Procedures in Kernel IR but need all named
+  /// params padded with null (in declaration order) so the binding key
+  /// uses max arity — matching the methodMap entry that handles variable
+  /// args via `args.length > N && args[N] != null` checks.
+  (int, ResultLoc) _compileHostFactoryInvocation(ir.StaticInvocation expr) {
+    final target = expr.target;
+    final compiledArgs =
+        _compileHostArgsWithPadding(expr.arguments, target.function);
 
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -1348,40 +1359,8 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileHostConstructorInvocation(
     ir.ConstructorInvocation expr,
   ) {
-    final func = expr.target.function;
-    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
-
-    // Compile provided positional args.
-    for (final arg in expr.arguments.positional) {
-      final (reg, loc) = _compileExpression(arg);
-      compiledArgs.add((reg, loc, _inferExprType(arg)));
-    }
-
-    // Pad missing optional positional params with null.
-    for (var i = expr.arguments.positional.length;
-        i < func.positionalParameters.length;
-        i++) {
-      final (reg, loc) = _loadNull();
-      compiledArgs.add((reg, loc, null));
-    }
-
-    // Compile ALL declared named params in declaration order.
-    // Missing named params are filled with null so the args list always has
-    // the full param count, matching the generated methodMap entry which
-    // accesses params by positional index.
-    final namedProvided = <String, ir.Expression>{
-      for (final n in expr.arguments.named) n.name: n.value,
-    };
-    for (final param in func.namedParameters) {
-      final value = namedProvided[param.name];
-      if (value != null) {
-        final (reg, loc) = _compileExpression(value);
-        compiledArgs.add((reg, loc, _inferExprType(value)));
-      } else {
-        final (reg, loc) = _loadNull();
-        compiledArgs.add((reg, loc, null));
-      }
-    }
+    final compiledArgs =
+        _compileHostArgsWithPadding(expr.arguments, expr.target.function);
 
     final symbolName = _hostSymbolName(expr.target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);

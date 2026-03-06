@@ -18,9 +18,6 @@ class DarticProxyManager {
   /// Interpreter object → VM proxy (ephemeron cache).
   final _interpToProxy = Expando<DarticProxy>('interpToProxy');
 
-  /// VM proxy → interpreter object (reverse lookup).
-  final _proxyToInterp = Expando<DarticObject>('proxyToInterp');
-
   /// Wraps a [DarticObject] as a [DarticProxy] for host VM consumption.
   ///
   /// Returns the cached proxy if one already exists (identity guarantee).
@@ -32,7 +29,6 @@ class DarticProxyManager {
       if (proxy != null) return proxy;
       proxy = DarticProxy(obj);
       _interpToProxy[obj] = proxy;
-      _proxyToInterp[proxy] = obj;
       return proxy;
     }
     return obj;
