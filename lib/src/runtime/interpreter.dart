@@ -1908,7 +1908,106 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
 
-          if (receiver is! DarticObject) {
+          // Try script dispatch: works for DarticObject and Bridge.
+          // Bridge instances implement ScriptObjectHolder, wrapping a
+          // DarticObject whose classId drives IC method lookup.
+          final DarticObject? scriptObj;
+          if (receiver is DarticObject) {
+            scriptObj = receiver;
+          } else if (receiver is ScriptObjectHolder) {
+            scriptObj = receiver.$darticObject;
+          } else {
+            scriptObj = null;
+          }
+
+          if (scriptObj != null) {
+            // IC dispatch using scriptObj's classId.
+            DarticFuncProto? callee;
+            if (ic.cachedClassId == scriptObj.classId) {
+              // IC hit — fast path.
+              callee = module.functions[ic.cachedFuncId];
+            } else {
+              // IC miss — slow path: look up method in class info.
+              final classInfo = module.classes[scriptObj.classId];
+              final method = classInfo.methods[ic.methodNameIndex];
+              if (method != null) {
+                callee = method;
+                // Update IC cache.
+                ic.cachedClassId = scriptObj.classId;
+                ic.cachedFuncId = callee.funcId;
+              }
+            }
+
+            if (callee != null) {
+              // Overflow and call depth checks.
+              if (vs.sp + callee.valueRegCount > vs.capacity ||
+                  rs.sp + callee.refRegCount > rs.capacity) {
+                throw DarticError('Stack overflow');
+              }
+              if (callStack.depth >= callStack.maxFrames) {
+                throw CallDepthExceededError(
+                    depth: callStack.depth, limit: callStack.maxFrames);
+              }
+
+              // Push frame — save caller state.
+              callStack.pushFrame(
+                funcId: callee.funcId,
+                returnPC: pc,
+                savedFP: callStack.fp,
+                savedVSP: vBase,
+                savedRSP: rBase,
+                resultReg: a,
+              );
+
+              // Save caller's upvalues.
+              _upvalueStack.add(currentUpvalues);
+              currentUpvalues = null;
+
+              // Advance to callee frame.
+              vBase = vs.sp;
+              rBase = rs.sp;
+              vs.sp += callee.valueRegCount;
+              rs.sp += callee.refRegCount;
+
+              // Place receiver at callee's rsp+2 (the `this` slot).
+              // For Bridge: write the Bridge itself (not scriptObj) so that
+              // within script methods, `this` is still the Bridge — enabling
+              // subsequent CALL_VIRTUAL on `this` to re-enter this three-way
+              // dispatch and field access opcodes to extract scriptObj.
+              rs.write(rBase + 2, receiver);
+
+              // Auto-load ITA from scriptObj's runtimeType_ for generic
+              // classes. Use scriptObj (not receiver) because runtimeType_
+              // is only available on DarticObject.
+              final rtType = scriptObj.runtimeType_;
+              if (rtType is DarticInterfaceType &&
+                  rtType.typeArgs.isNotEmpty) {
+                rs.write(rBase + 0, rtType.typeArgs);
+              }
+
+              // Switch to callee bytecode.
+              code = callee.bytecode;
+              pc = 0;
+              continue;
+            }
+
+            // Method not found in script class.
+            if (receiver is DarticObject) {
+              // Pure DarticObject — noSuchMethod.
+              final name = cp.getName(ic.methodNameIndex);
+              final nsmInvocation = _buildVirtualInvocation(
+                  ic, name, rBase + b, rs);
+              final (nsmPushed, nsmHandlerPC) =
+                  dispatchNoSuchMethod(receiver, nsmInvocation, a);
+              if (nsmPushed) continue;
+              pc = nsmHandlerPC;
+              continue;
+            }
+            // Bridge — fall through to host dispatch below.
+          }
+
+          // Host dispatch (Bridge fallback + pure host objects).
+          {
             final methodName = cp.getName(ic.methodNameIndex);
             if (receiver == null) {
               throw DarticError(
@@ -1939,75 +2038,6 @@ class DarticInterpreter {
             pc = nsmHandlerPC;
             continue;
           }
-
-          // IC dispatch.
-          DarticFuncProto callee;
-          if (ic.cachedClassId == receiver.classId) {
-            // IC hit — fast path.
-            callee = module.functions[ic.cachedFuncId];
-          } else {
-            // IC miss — slow path: look up method in class info.
-            final classInfo = module.classes[receiver.classId];
-            final method = classInfo.methods[ic.methodNameIndex];
-            if (method == null) {
-              // noSuchMethod fallback for DarticObject.
-              final name = cp.getName(ic.methodNameIndex);
-              final nsmInvocation = _buildVirtualInvocation(
-                  ic, name, rBase + b, rs);
-              final (nsmPushed, nsmHandlerPC) =
-                  dispatchNoSuchMethod(receiver, nsmInvocation, a);
-              if (nsmPushed) continue;
-              pc = nsmHandlerPC;
-              continue;
-            }
-            callee = method;
-            // Update IC cache.
-            ic.cachedClassId = receiver.classId;
-            ic.cachedFuncId = callee.funcId;
-          }
-
-          // Overflow and call depth checks.
-          if (vs.sp + callee.valueRegCount > vs.capacity ||
-              rs.sp + callee.refRegCount > rs.capacity) {
-            throw DarticError('Stack overflow');
-          }
-          if (callStack.depth >= callStack.maxFrames) {
-            throw CallDepthExceededError(
-                depth: callStack.depth, limit: callStack.maxFrames);
-          }
-
-          // Push frame — save caller state.
-          callStack.pushFrame(
-            funcId: callee.funcId,
-            returnPC: pc,
-            savedFP: callStack.fp,
-            savedVSP: vBase,
-            savedRSP: rBase,
-            resultReg: a,
-          );
-
-          // Save caller's upvalues.
-          _upvalueStack.add(currentUpvalues);
-          currentUpvalues = null;
-
-          // Advance to callee frame.
-          vBase = vs.sp;
-          rBase = rs.sp;
-          vs.sp += callee.valueRegCount;
-          rs.sp += callee.refRegCount;
-
-          // Place receiver at callee's rsp+2 (the `this` slot).
-          rs.write(rBase + 2, receiver);
-
-          // Auto-load ITA from receiver's runtimeType_ for generic classes.
-          final rtType = receiver.runtimeType_;
-          if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
-            rs.write(rBase + 0, rtType.typeArgs);
-          }
-
-          // Switch to callee bytecode.
-          code = callee.bytecode;
-          pc = 0;
 
         case Op.callSuper: // CALL_SUPER A, Bx — call super method functions[Bx], result→reg A
           final a = (instr >> 8) & 0xFF;
