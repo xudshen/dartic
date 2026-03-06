@@ -1190,6 +1190,15 @@ class DarticCompiler {
 
   bool _isPlatformLibrary(ir.Library lib) => lib.importUri.isScheme('dart');
 
+  /// Builds the fully-qualified name for a platform class.
+  ///
+  /// Format matches `registerClass(name:)`: `'${importUri}::${className}'`.
+  /// Example: `'dart:core::Comparable'`, `'dart:async::Stream'`.
+  String _hostTypeName(ir.Class cls) {
+    final uri = cls.enclosingLibrary.importUri;
+    return '$uri::${cls.name}';
+  }
+
   /// Resolves the receiver expression's class node, if it can be determined
   /// statically. Used to look up field layouts when the interface target's
   /// enclosing class differs from the receiver's actual class (e.g., enum

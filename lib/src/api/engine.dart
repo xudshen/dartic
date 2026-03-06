@@ -146,7 +146,22 @@ class DarticEngine {
     // Resolve pending bridge factories: match class names → classIds.
     if (_pendingBridgeFactories.isNotEmpty) {
       for (final classInfo in module.classes) {
-        final factory = _pendingBridgeFactories[classInfo.name];
+        // Direct match (rare — script class name matches registered name).
+        var factory = _pendingBridgeFactories[classInfo.name];
+
+        // Host superclass match (extends scenario).
+        if (factory == null && classInfo.hostSuperClassName != null) {
+          factory = _pendingBridgeFactories[classInfo.hostSuperClassName];
+        }
+
+        // Host interface match (implements scenario).
+        if (factory == null && classInfo.hostInterfaceNames != null) {
+          for (final ifaceName in classInfo.hostInterfaceNames!) {
+            factory = _pendingBridgeFactories[ifaceName];
+            if (factory != null) break;
+          }
+        }
+
         if (factory != null) {
           _bridgeFactoryRegistry.register(classInfo.classId, factory);
         }

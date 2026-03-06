@@ -74,6 +74,8 @@ class DarticClassInfo {
     required this.valueFieldCount,
     this.typeParamCount = 0,
     this.modifiers = ClassModifiers.none,
+    this.hostSuperClassName,
+    this.hostInterfaceNames,
   });
 
   /// Unique class identifier.
@@ -97,6 +99,23 @@ class DarticClassInfo {
   /// Dart 3 class modifier flags (sealed / base / final / interface / mixin / abstract).
   /// See [ClassModifiers] for bit constants.
   final int modifiers;
+
+  /// Fully-qualified name of the host (platform) superclass, if any.
+  ///
+  /// Set by the compiler when a script class `extends` a host class.
+  /// Format: `'${importUri}::${className}'`, e.g., `'dart:core::Comparable'`.
+  /// Used by [DarticEngine.loadBytecode] to resolve [BridgeFactory] by name.
+  /// Null when the class inherits from another script class or has no
+  /// superclass.
+  final String? hostSuperClassName;
+
+  /// Fully-qualified names of host (platform) interfaces, if any.
+  ///
+  /// Set by the compiler when a script class `implements` host interfaces.
+  /// Each entry follows the same format as [hostSuperClassName].
+  /// Used by [DarticEngine.loadBytecode] to resolve [BridgeFactory] by name.
+  /// Null when the class has no host interfaces.
+  final List<String>? hostInterfaceNames;
 
   /// Method name index -> DarticFuncProto.
   /// Phase 1: simple Map. Phase 3: dual-strategy (sorted list / hash map).

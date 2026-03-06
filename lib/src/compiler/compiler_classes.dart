@@ -152,6 +152,25 @@ extension on DarticCompiler {
     if (cls.isMixinClass) modifiers |= ClassModifiers.mixin_;
     if (cls.isAbstract) modifiers |= ClassModifiers.abstract_;
 
+    // Detect host superclass (extends platform class).
+    String? hostSuperClassName;
+    if (superClass != null &&
+        _isPlatformLibrary(superClass.enclosingLibrary)) {
+      // Skip Object — all classes implicitly extend Object, no Bridge needed.
+      if (superClass.name != 'Object') {
+        hostSuperClassName = _hostTypeName(superClass);
+      }
+    }
+
+    // Detect host interfaces (implements platform types).
+    List<String>? hostInterfaceNames;
+    for (final implemented in cls.implementedTypes) {
+      final implClass = implemented.classNode;
+      if (_isPlatformLibrary(implClass.enclosingLibrary)) {
+        (hostInterfaceNames ??= []).add(_hostTypeName(implClass));
+      }
+    }
+
     final classInfo = DarticClassInfo(
       classId: classId,
       name: cls.name,
@@ -160,6 +179,8 @@ extension on DarticCompiler {
       valueFieldCount: valOffset, // Total including inherited
       typeParamCount: cls.typeParameters.length,
       modifiers: modifiers,
+      hostSuperClassName: hostSuperClassName,
+      hostInterfaceNames: hostInterfaceNames,
     );
 
     // Build supertypeIds: self + transitive closure of all supertypes.
