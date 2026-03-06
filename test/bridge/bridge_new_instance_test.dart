@@ -99,5 +99,73 @@ Object? main() => Baz();
 
       expect(interp.entryResult, isA<DarticObject>());
     });
+
+    test('BridgeDispatch routes method calls back to interpreter', () async {
+      // This test verifies the full e2e flow:
+      // 1. NEW_INSTANCE creates Bridge via factory, capturing DarticRuntime
+      // 2. During execution (via print callback), we use the captured runtime
+      //    to dispatch method calls back to the interpreter
+      // 3. The interpreter executes the bytecode for speak() and kind getter
+      //
+      // The callback pattern is necessary because BridgeDispatch._callMethod
+      // uses _runNestedDispatch, which requires _isExecuting = true.
+      final source = '''
+class Animal {
+  String speak() => 'generic sound';
+  String get kind => 'animal';
+}
+Object? main() {
+  final a = Animal();
+  print('trigger');
+  return a;
+}
+''';
+      final module = await compileDart(source);
+
+      final animalClassId =
+          module.classes.indexWhere((c) => c.name == 'Animal');
+      expect(animalClassId, greaterThanOrEqualTo(0));
+
+      late DarticRuntime capturedRuntime;
+      late DarticObject capturedScriptObj;
+
+      // Results captured inside the print callback (during execution).
+      Object? speakResult;
+      Object? kindResult;
+
+      final bridgeFactoryRegistry = BridgeFactoryRegistry();
+      bridgeFactoryRegistry.register(animalClassId,
+          (runtime, scriptObj, superArgs) {
+        capturedRuntime = runtime;
+        capturedScriptObj = scriptObj;
+        return TestBridge(runtime, scriptObj);
+      });
+
+      // Use printFn callback to dispatch methods during execution.
+      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+          createTestRegistries(
+        printFn: (v) {
+          // This runs while _isExecuting = true, so _callDarticMethod works.
+          speakResult =
+              capturedRuntime.invoke(capturedScriptObj, 'speak', []);
+          kindResult = capturedRuntime.get(capturedScriptObj, 'kind');
+        },
+      );
+
+      final interp = DarticInterpreter(
+        hostFunctionRegistry: hostFunctionRegistry,
+        hostDispatchRegistry: hostDispatchRegistry,
+        bridgeFactoryRegistry: bridgeFactoryRegistry,
+      );
+      interp.execute(module);
+
+      // Verify the dispatch results.
+      expect(speakResult, 'generic sound');
+      expect(kindResult, 'animal');
+
+      // Also verify the entry result is the TestBridge.
+      final result = interp.entryResult;
+      expect(result, isA<TestBridge>());
+    });
   });
 }

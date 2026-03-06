@@ -272,6 +272,7 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 - **重入测试策略**：由于编译器只对 `dart:` 库生成 CALL_HOST，无法轻松注册自定义宿主函数让编译器识别。采用 `onPrint` 回调作为重入触发点——print() 是 CALL_HOST，onPrint 在宿主回调中调用 engine.call() 触发 `_isExecuting` 重入路径。支持多层嵌套重入
 - **InterfaceTypeTemplate 序列化限制**：async 函数在常量池中产生 `InterfaceTypeTemplate` 类型的 ref 常量，当前序列化器仅支持 null 和 String ref 类型，导致含 async 函数的模块无法通过 .darb 往返。async 函数的 engine.call() 测试需等待常量池序列化扩展
 - **注册顺序无关化（post-7.1 补丁）**：`register()` 新增 `{Type? exactType}` 可选参数，注册时直接写入 `_exactMap`。解决多 Plugin 跨模块注册时无法保证 "先超类后子类" 顺序的问题。与业界 7 个 VM/运行时对齐（Dart VM CID / JVM klass / V8 Hidden Class / CPython ob_type / Lua metatable / Wren class / Truffle @ExportLibrary），核心共识：精确类型标识做分发，不用谓词匹配。同步更新 `DarticEngine.registerClass()` 增加 `Type? type` 参数透传，codegen 生成 `type: ClassName` 参数
+- **BridgeDispatch 补全**：Task 7.1.2 遗留的 BridgeDispatch 占位实现已补全。DarticRuntime 接口定义 invoke/get/set，BridgeDispatch 通过 ConstantPool.lookupNameIndex 解析方法名，通过 CallDarticMethod 回调执行。NEW_INSTANCE 集成 BridgeFactoryRegistry 查找。e2e 测试通过 print 回调在执行期间验证 BridgeDispatch 可正确路由 speak() 方法调用和 kind getter 回到解释器并获取正确结果
 
 ## Batch 完成检查
 
