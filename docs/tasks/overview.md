@@ -156,7 +156,7 @@
 | Batch | 描述 | Task 数 | 状态 |
 |-------|------|---------|------|
 | [7.1](phase7/batch-7.1-engine-api.md) | DarticEngine 公开 API + 内部重构 | 6 | ✅ |
-| [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | |
+| [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | ✅ |
 | [7.3](phase7/batch-7.3-plugin-registry-reorg.md) | Plugin 与 Registry 重组 | 8 | ✅ |
 | [7.4](phase7/batch-7.3-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | |
 
@@ -164,7 +164,7 @@
 - [x] DarticEngine 3 行代码加载执行 .darb 脚本
 - [x] engine.call() 支持重入（宿主回调内再次调用）
 - [x] registerClass 可一次性注册类的绑定/分发/Bridge（含 `type:` 参数实现注册顺序无关）
-- [ ] @DarticExport 生成的 Bridge 与手写 Bridge 功能等价
+- [x] @DarticExport 生成的 Bridge 与手写 Bridge 功能等价
 - [ ] Flutter 热更新 demo 端到端运行
 - [ ] Phase 2-6 全量零回归
 

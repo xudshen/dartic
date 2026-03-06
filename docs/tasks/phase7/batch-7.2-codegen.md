@@ -237,4 +237,4 @@ feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runne
 - [x] `fvm dart test` 全部通过（所有包：annotation 9 + generator 96 = 105）
 - [x] code review 修复完成（3 CRITICAL + 3 IMPORTANT）
 - [x] commit 已提交 (7aac8f3)
-- [ ] overview.md 已更新
+- [x] overview.md 已更新
