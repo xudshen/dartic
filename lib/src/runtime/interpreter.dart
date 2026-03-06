@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import '../bridge/dartic_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/callback_proxy.dart';
+import '../bridge/closure_adapter.dart';
 import '../bridge/dartic_object_holder.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_class_registry.dart';
@@ -511,7 +511,7 @@ class DarticInterpreter {
 
   /// Invokes an interpreter [closure] with [args] from the host VM.
   ///
-  /// Used by [DarticCallbackProxy] to bridge VM callbacks (e.g. list.map)
+  /// Used by [ClosureAdapter] to bridge VM callbacks (e.g. list.map)
   /// back into the interpreter. Pushes a HOST_BOUNDARY sentinel frame,
   /// executes the closure's bytecode, and returns the result.
   ///
@@ -647,12 +647,12 @@ class DarticInterpreter {
   }
 
   /// Wraps any [DarticClosure] entries in [args] as Dart [Function] objects
-  /// via [DarticCallbackProxy], mutating the list in place.
+  /// via [ClosureAdapter], mutating the list in place.
   void _wrapClosureArgs(List<Object?> args) {
     for (var i = 0; i < args.length; i++) {
       final arg = args[i];
       if (arg is DarticClosure) {
-        final proxy = DarticCallbackProxy(this, arg);
+        final proxy = ClosureAdapter(this, arg);
         args[i] = switch (arg.funcProto.paramCount) {
           0 => proxy.proxy0(),
           1 => proxy.proxy1(),
@@ -662,7 +662,7 @@ class DarticInterpreter {
           5 => proxy.proxy5(),
           6 => proxy.proxy6(),
           _ => throw DarticError(
-              'DarticCallbackProxy: unsupported arity '
+              'ClosureAdapter: unsupported arity '
               '${arg.funcProto.paramCount}'),
         };
       }

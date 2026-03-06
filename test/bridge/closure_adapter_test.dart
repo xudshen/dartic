@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/callback_proxy.dart';
+import 'package:dartic/src/bridge/closure_adapter.dart';
 import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
@@ -196,7 +196,7 @@ void main() {
     });
   });
 
-  group('DarticCallbackProxy', () {
+  group('ClosureAdapter', () {
     late DarticInterpreter interp;
     late DarticClosure identityClosure;
 
@@ -207,7 +207,7 @@ void main() {
     });
 
     test('proxy1 creates a callable one-argument function', () {
-      final proxy = DarticCallbackProxy(interp, identityClosure);
+      final proxy = ClosureAdapter(interp, identityClosure);
       final fn = proxy.proxy1();
       expect(fn('test'), equals('test'));
       expect(fn(42), equals(42));
@@ -226,7 +226,7 @@ void main() {
       );
 
       final closure = DarticClosure(funcProto: closureProto, upvalues: []);
-      final proxy = DarticCallbackProxy(interp, closure);
+      final proxy = ClosureAdapter(interp, closure);
       final fn = proxy.proxy0();
       expect(fn(), isNull);
     });
@@ -245,7 +245,7 @@ void main() {
       );
 
       final closure = DarticClosure(funcProto: closureProto, upvalues: []);
-      final proxy = DarticCallbackProxy(interp, closure);
+      final proxy = ClosureAdapter(interp, closure);
       final fn = proxy.proxy2();
       expect(fn('first', 'second'), equals('second'));
     });
