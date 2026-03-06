@@ -1,0 +1,124 @@
+# Dartic 命名清理方案
+
+> 日期：2026-03-06
+> 状态：待执行
+> 前置：commit `2dddf01` 已完成 Host* 类名重命名
+
+## 目标
+
+1. 修复分析中发现的命名不一致、歧义、语义不准确问题
+2. 确立 `Dartic` 前缀规则并写入 CLAUDE.md
+3. 列出 God Class / 过早抽象问题供后续参考（本轮不执行）
+
+## 前缀策略
+
+| 规则 | 示例 |
+|------|------|
+| `lib/dartic.dart` 导出的公共类 → 必须 `Dartic` 前缀 | `DarticEngine`, `DarticConfig`, `DarticError` |
+| 被 2+ 个子系统 import 的领域核心类 → `Dartic` 前缀 | `DarticObject`, `DarticType`, `DarticModule`, `DarticClassInfo` |
+| Bridge 公共导出类 → `Dartic` 前缀 | `DarticDispatch`, `DarticProxy`, `DarticObjectHolder` |
+| Bridge 内部类 → 不带前缀 | `ClosureAdapter`, `ProxyManager`, `BindingLookupAdapter` |
+| 单子系统内部工具类 → 不带前缀 | `ValueStack`, `RefStack`, `CallStack`, `BytecodeEmitter`, `Scope` |
+
+判断标准："跨子系统" = 被 `api/`, `bridge/`, `bytecode/`, `compiler/`, `runtime/`, `sandbox/` 中 2 个以上目录的文件 import。
+
+## 重命名清单
+
+### A. 类 / 类型重命名
+
+| # | 当前名称 | 新名称 | 理由 | 文件 |
+|---|----------|--------|------|------|
+| 1 | `DarticCallbackProxy` | `ClosureAdapter` | 不是 Proxy（无缓存/identity）；实际是闭包→Function 适配器；纯内部类不需 Dartic 前缀 | `bridge/callback_proxy.dart` |
+| 2 | `DarticProxyManager` | `ProxyManager` | 纯内部类，只被 interpreter 使用 | `bridge/proxy_manager.dart` |
+| 3 | `bridgeNotOverridden` (const Symbol) | `notOverridden` (typed sentinel) | Symbol 哨兵有静默失败风险；改为 typed sentinel class `_NotOverridden` + 公共 const 实例 | `bridge/dartic_dispatch.dart` |
+| 4 | `CallDarticMethod` (typedef) | `InterpretedMethodCallback` | "CallDarticMethod" 啰嗦且方向不明；新名清楚表达"回调到解释器执行字节码方法" | `bridge/dartic_dispatch.dart` |
+| 5 | `DarticConfig.onError` | `DarticConfig.onUnhandledException` | 只处理未捕获异常，不处理资源错误（Fuel/Timeout/CallDepth）；现名暗示"所有错误" | `api/config.dart` |
+
+### B. 字段 / 参数名对齐（上次类重命名遗留）
+
+| # | 位置 | 当前名称 | 新名称 | 理由 |
+|---|------|----------|--------|------|
+| 6 | `DarticInterpreter` 构造器 + 字段 | `hostFunctionRegistry` | `hostBindingRegistry` | 类已改名 `HostBindingRegistry` |
+| 7 | `DarticInterpreter` 构造器 + 字段 | `hostDispatchRegistry` / `_externalHostDispatchRegistry` | `hostClassRegistry` / `_externalHostClassRegistry` | 类已改名 `HostClassRegistry` |
+| 8 | `PluginContext` 构造器 + 字段 | `hostFunctionRegistry` / `_hostFunctionRegistry` | `hostBindingRegistry` / `_hostBindingRegistry` | 同上 |
+| 9 | `PluginContext` 构造器 + 字段 | `hostDispatchRegistry` / `_hostDispatchRegistry` | `hostClassRegistry` / `_hostClassRegistry` | 同上 |
+| 10 | `DarticEngine` 字段 | `_hostFunctionRegistry` / `_hostDispatchRegistry` | `_hostBindingRegistry` / `_hostClassRegistry` | 同上 |
+
+### C. 文件重命名
+
+| # | 当前文件名 | 新文件名 | 理由 |
+|---|-----------|----------|------|
+| 11 | `bridge/callback_proxy.dart` | `bridge/closure_adapter.dart` | 跟随类名 `ClosureAdapter` |
+
+### D. 确认保留的名称
+
+| 类 | 保留理由 |
+|----|----------|
+| `HostClassAdapter` | 设计上是 codegen 扩展点，GoF Adapter 模式合理 |
+| `HostBindingRegistry` / `HostClassRegistry` | 刚在 `2dddf01` 中重命名，名称已清晰 |
+| `DarticDispatch` | 公共导出，Dartic 前缀合理 |
+| `DarticProxy` / `DarticObjectHolder` | 公共导出，Dartic 前缀合理 |
+| `BridgeFactory` / `BridgeFactoryRegistry` | "Bridge" 前缀准确描述用途 |
+| `TypeRegistry` / `SubtypeChecker` | 内部类，不带前缀符合策略 |
+| `ValueStack` / `RefStack` / `CallStack` | 内部类，不带前缀符合策略 |
+| `FuelExhaustedError` / `CallDepthExceededError` / `ExecutionTimeoutError` | 子类通过 `extends DarticError` 表达归属；加前缀太长且改动成本大 |
+
+## 结构修复（随重命名一起执行）
+
+### E. `bridgeNotOverridden` → typed sentinel
+
+```dart
+// 当前
+const Symbol bridgeNotOverridden = #_bridgeNotOverridden;
+
+// 改为
+class _NotOverridden {
+  const _NotOverridden();
+  @override
+  String toString() => 'notOverridden';
+}
+
+/// Sentinel returned by [DarticDispatch] when the method is not overridden.
+///
+/// Use `identical(result, notOverridden)` to check.
+const notOverridden = _NotOverridden();
+```
+
+## God Class / 抽象问题（仅记录，不执行）
+
+### God Class
+
+| 类 | 行数 | 职责数 | 潜在拆分方向 |
+|----|------|--------|-------------|
+| `DarticInterpreter` | ~3355 | 11+ | async 帧管理 → `AsyncFrameDriver`；类型系统初始化 → 显式 `provisionTypeSystem()`；bridge 状态管理可进一步收敛 |
+| `DarticCompiler` | ~1200+ (含 part) | 12+ | 函数收集 → `FunctionTableBuilder`；类注册 → `ClassRegistrar`；闭包分析 → `ClosureAnalyzer` |
+| `DarticFrame` | ~114 | 混合 sync/async/generator | 核心帧 + `AsyncState` + `GeneratorState` 组合拆分 |
+
+### 过早抽象
+
+| 抽象 | 现状 | 建议 |
+|------|------|------|
+| `HostClassAdapter` (abstract) | 只有 `BindingLookupAdapter` 一个实现 | 等 codegen 产生第二个实现再评估 |
+| `DarticType` (sealed, 2 子类) | `DarticInterfaceType` + `DarticFunctionType` | 合理，RecordType 会是第三个 |
+| `SubtypeChecker` (独立类) | 无状态，只持有 TypeRegistry 引用 | 可考虑合并为 TypeRegistry 方法，优先级低 |
+
+### 其他结构备忘
+
+| 问题 | 说明 |
+|------|------|
+| Interpreter 自动创建 TypeRegistry / SubtypeChecker | 隐式副作用，可改为显式 API |
+| Upvalue 双轨追踪 (`_openUpvalues` + `_upvalueStack`) | 同步风险，可合并为单一数据结构 |
+| `BindingLookupAdapter` arity 扩展 (+0~+3) | 无文档的启发式，需补充注释 |
+| `HostClassRegistry` 谓词反向遍历顺序 | 需补充代码注释说明原因 |
+
+## 影响范围估算
+
+| 变更类型 | 涉及文件数（估算） |
+|----------|-------------------|
+| 类/typedef 重命名 (#1-#4) | ~15（bridge + interpreter + tests） |
+| 字段/参数对齐 (#6-#10) | ~10（interpreter + engine + plugin_context + tests） |
+| `onError` → `onUnhandledException` (#5) | ~5（config + engine + tests + docs） |
+| 文件重命名 (#11) | ~5（import 路径更新） |
+| typed sentinel (#E) | ~3（dartic_dispatch + interpreter + bridge tests） |
+
+总计约 **25-30 个文件**受影响，大部分是机械性 find-replace。
