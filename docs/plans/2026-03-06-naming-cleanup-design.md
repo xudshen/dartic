@@ -53,7 +53,6 @@
 
 | 类 | 保留理由 |
 |----|----------|
-| `HostClassAdapter` | 设计上是 codegen 扩展点，GoF Adapter 模式合理 |
 | `HostBindingRegistry` / `HostClassRegistry` | 刚在 `2dddf01` 中重命名，名称已清晰 |
 | `DarticProxyManager` | 虽是内部类，但名字辨识度高且出现在架构图中；去掉前缀后太通用 |
 | `DarticDispatch` | 公共导出，Dartic 前缀合理 |
@@ -65,7 +64,50 @@
 
 ## 结构修复（随重命名一起执行）
 
-### E. `bridgeNotOverridden` → typed sentinel
+### E. 消除 `HostClassAdapter` 过早抽象
+
+`HostClassAdapter` (abstract) + `BindingLookupAdapter` (唯一实现) 是确认的过早抽象：
+- 注释声称 "BridgeGenerator will produce hardcoded-switch subclasses"，但实际 codegen 不会生成 Adapter 子类
+- `2026-03-03-plugin-registry-reorganization-design.md` 已删除旧的 `_InvocationDispatcher`（曾是第二个实现）
+- 同一设计还计划从公共 API 中移除 `HostClassAdapter`
+
+**改法**：将 `BindingLookupAdapter` 的逻辑内联到 `HostClassRegistry` 中，删除 `HostClassAdapter` abstract class。
+
+```dart
+// 当前：两个类
+abstract class HostClassAdapter {
+  Object? getProperty(Object host, String name);
+  Object? invokeMethod(Object host, String name, List<Object?> args);
+}
+
+class BindingLookupAdapter implements HostClassAdapter { ... }
+
+class HostClassRegistry {
+  final Map<Type, HostClassAdapter> _exactMap = {};
+  ...
+}
+
+// 改为：内联到 HostClassRegistry，用私有 _HostAdapter 替代
+class _HostAdapter {
+  _HostAdapter(this._registry, this._prefixes);
+  final HostBindingRegistry _registry;
+  final List<String> _prefixes;
+
+  static const notFound = #_hostAdapterNotFound;
+
+  Object? getProperty(Object host, String name) { ... }
+  Object? invokeMethod(Object host, String name, List<Object?> args) { ... }
+}
+
+class HostClassRegistry {
+  final Map<Type, _HostAdapter> _exactMap = {};
+  ...
+}
+```
+
+影响范围：`host_class_registry.dart`（合并两个类）+ `interpreter.dart`（调用处 `HostClassAdapter?` → `_HostAdapter?`，但因为 interpreter 只通过 `HostClassRegistry.lookup()` 获取，返回类型改为内部类型即可）。
+
+### F. `bridgeNotOverridden` → typed sentinel
 
 ```dart
 // 当前
@@ -98,7 +140,7 @@ const notOverridden = _NotOverridden();
 
 | 抽象 | 现状 | 建议 |
 |------|------|------|
-| `HostClassAdapter` (abstract) | 只有 `BindingLookupAdapter` 一个实现 | 等 codegen 产生第二个实现再评估 |
+| ~~`HostClassAdapter` (abstract)~~ | ~~只有 `BindingLookupAdapter` 一个实现~~ | **已移入执行清单 §E**：确认 codegen 不会产生第二个实现，内联消除 |
 | `DarticType` (sealed, 2 子类) | `DarticInterfaceType` + `DarticFunctionType` | 合理，RecordType 会是第三个 |
 | `SubtypeChecker` (独立类) | 无状态，只持有 TypeRegistry 引用 | 可考虑合并为 TypeRegistry 方法，优先级低 |
 
@@ -119,7 +161,8 @@ const notOverridden = _NotOverridden();
 | 字段/参数对齐 (#5-#9) | ~10（interpreter + engine + plugin_context + tests） |
 | `onError` → `onUnhandledException` (#4) | ~5（config + engine + tests + docs） |
 | 文件重命名 (#10) | ~3（import 路径更新） |
-| typed sentinel (#E) | ~3（dartic_dispatch + interpreter + bridge tests） |
+| 消除 HostClassAdapter 抽象 (#E) | ~3（host_class_registry + interpreter + tests） |
+| typed sentinel (#F) | ~3（dartic_dispatch + interpreter + bridge tests） |
 
 总计约 **20-25 个文件**受影响，大部分是机械性 find-replace。
 
@@ -129,3 +172,4 @@ const notOverridden = _NotOverridden();
 |------|------|------|
 | `DarticProxyManager` 是否去前缀？ | 保留 `DarticProxyManager` | 去掉后太通用，且出现在架构图中 |
 | `CallDarticMethod` 新名用 "Interpreted" 还是 "Interpreter"？ | `InterpreterMethodCallback` | "Interpreter" 明确回调方向是到解释器，避免 "Interpreted" 的被动语态歧义 |
+| `HostClassAdapter` 保留还是消除？ | 消除（内联到 `HostClassRegistry`） | 确认 codegen 不会生成第二个实现；旧注释是遗留产物；设计文档已计划移除 |
