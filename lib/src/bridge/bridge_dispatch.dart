@@ -2,12 +2,18 @@
 /// interpreter.
 ///
 /// When a Bridge instance's overridden method is called from the VM side,
-/// [BridgeDispatch] checks whether the script has overridden that method.
-/// If overridden, it delegates to the interpreter; otherwise it returns the
-/// [bridgeNotOverridden] sentinel so the Bridge can fall back to `super.xxx()`.
+/// [BridgeDispatch] checks whether the script has overridden that method
+/// by looking up the method name in the [DarticClassInfo.methods] table.
+/// If overridden, it delegates to the interpreter via [_callMethod];
+/// otherwise it returns [bridgeNotOverridden].
 ///
 /// See: docs/plans/2026-02-20-bridge-api-design.md "BridgeDispatch" section
 library;
+
+import '../bytecode/module.dart';
+import '../runtime/class_info.dart';
+import '../runtime/object.dart';
+import 'bridge_factory_registry.dart';
 
 /// Sentinel value returned when a script method is not overridden.
 ///
@@ -26,22 +32,62 @@ library;
 /// ```
 const Symbol bridgeNotOverridden = #_bridgeNotOverridden;
 
-/// Placeholder for Bridge virtual method/property dispatch.
+/// Callback type for invoking a DarticObject method through the interpreter.
 ///
-/// Full implementation requires [DarticInterpreter.executeFunction()] from
-/// Task 7.1.4. The complete BridgeDispatch will provide:
+/// Matches [DarticInterpreter._callDarticMethod] signature.
+typedef CallDarticMethod = Object? Function(
+  DarticModule module,
+  DarticFuncProto method,
+  Object receiver,
+  List<Object?> args,
+);
+
+/// Bridge dispatch for routing virtual method/property calls back to the
+/// interpreter.
 ///
-/// - `invoke(DarticObject self, String method, List<Object?> args) → Object?`
-///   Dispatches virtual method/operator calls. Returns [bridgeNotOverridden]
-///   if the script has not overridden the method.
-///
-/// - `get(DarticObject self, String property) → Object?`
-///   Dispatches property getter. Returns [bridgeNotOverridden] if not
-///   overridden.
-///
-/// - `set(DarticObject self, String property, Object? value) → void`
-///   Dispatches property setter.
-class BridgeDispatch {
-  // Full invoke/get/set implementation will be added in Task 7.1.4
-  // when executeFunction() and _runNestedDispatch() are available.
+/// When a Bridge instance's overridden method is called from the VM side,
+/// [BridgeDispatch] checks whether the script has overridden that method
+/// by looking up the method name in the [DarticClassInfo.methods] table.
+/// If overridden, it delegates to the interpreter via [_callMethod];
+/// otherwise it returns [bridgeNotOverridden].
+class BridgeDispatch implements DarticRuntime {
+  BridgeDispatch({
+    required DarticModule module,
+    required CallDarticMethod callMethod,
+  })  : _module = module,
+        _callMethod = callMethod;
+
+  final DarticModule _module;
+  final CallDarticMethod _callMethod;
+
+  @override
+  Object? invoke(DarticObject self, String method, List<Object?> args) {
+    final nameIdx = _module.constantPool.lookupNameIndex(method);
+    if (nameIdx < 0) return bridgeNotOverridden;
+    final classInfo = _module.classes[self.classId];
+    final proto = classInfo.methods[nameIdx];
+    if (proto == null) return bridgeNotOverridden;
+    return _callMethod(_module, proto, self, args);
+  }
+
+  @override
+  Object? get(DarticObject self, String property) {
+    final nameIdx = _module.constantPool.lookupNameIndex(property);
+    if (nameIdx < 0) return bridgeNotOverridden;
+    final classInfo = _module.classes[self.classId];
+    final proto = classInfo.methods[nameIdx];
+    if (proto == null) return bridgeNotOverridden;
+    return _callMethod(_module, proto, self, const []);
+  }
+
+  @override
+  void set(DarticObject self, String property, Object? value) {
+    final setterName = '$property=';
+    final nameIdx = _module.constantPool.lookupNameIndex(setterName);
+    if (nameIdx < 0) return;
+    final classInfo = _module.classes[self.classId];
+    final proto = classInfo.methods[nameIdx];
+    if (proto == null) return;
+    _callMethod(_module, proto, self, [value]);
+  }
 }

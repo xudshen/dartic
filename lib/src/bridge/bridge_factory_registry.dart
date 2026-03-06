@@ -14,7 +14,18 @@ import '../runtime/object.dart';
 /// DarticInterpreter will implement this interface (or it will be adapted)
 /// so Bridge instances can invoke script-defined methods through the
 /// interpreter's dispatch loop.
-abstract interface class DarticRuntime {}
+abstract interface class DarticRuntime {
+  /// Dispatches a virtual method/operator call on [self].
+  /// Returns [bridgeNotOverridden] if the script has not overridden [method].
+  Object? invoke(DarticObject self, String method, List<Object?> args);
+
+  /// Dispatches a property getter on [self].
+  /// Returns [bridgeNotOverridden] if the script has not overridden [property].
+  Object? get(DarticObject self, String property);
+
+  /// Dispatches a property setter on [self].
+  void set(DarticObject self, String property, Object? value);
+}
 
 /// Factory signature for creating Bridge instances.
 ///
