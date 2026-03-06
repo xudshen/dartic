@@ -8,7 +8,7 @@ import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
 
 class _$Duration extends Duration implements DarticObjectHolder {
-  _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs);
+  _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(days: superArgs[0] as int, hours: superArgs[1] as int, minutes: superArgs[2] as int, seconds: superArgs[3] as int, milliseconds: superArgs[4] as int, microseconds: superArgs[5] as int);
 
   final DarticDispatch _dispatch;
 
@@ -153,6 +153,13 @@ class _$Duration extends Duration implements DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, 'unary-', const []);
     if (identical(r, notOverridden)) return -super;
     return r as Duration;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
   }
 }
 

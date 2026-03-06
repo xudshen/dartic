@@ -29,7 +29,7 @@
 
 ## 已知限制（Phase 2）
 
-- Super 构造参数（非默认 super）
+- ~~Super 构造参数（非默认 super）~~ — ✅ 已修复（2026-03-07，见 `2026-03-06-bridge-super-args-and-dispatch.md`）
 - 泛型 Bridge 类型参数传播
 - Bridge 实例的动态字段访问（`GET_FIELD_DYN` / `SET_FIELD_DYN`）
 - Bridge 实例的 `INSTANCEOF` / `CAST` 脚本类型检查

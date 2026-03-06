@@ -1067,12 +1067,17 @@ class DarticCompiler {
   /// [argCount] is the total number of args the CALL_HOST instruction will
   /// pass (includes receiver for instance methods).  Must fit in a uint8
   /// (max 255) since the .darb binding table serialises it as a single byte.
-  int _allocBinding(String symbolName, int argCount) {
+  int _allocBinding(String symbolName, int argCount,
+      {String? methodName}) {
     assert(argCount >= 0 && argCount <= 255,
         'argCount $argCount out of uint8 range for binding "$symbolName"');
     return _bindingNameToIndex.putIfAbsent(symbolName, () {
       final index = _bindingNames.length;
-      _bindingNames.add(BindingEntry(name: symbolName, argCount: argCount));
+      _bindingNames.add(BindingEntry(
+        name: symbolName,
+        argCount: argCount,
+        methodName: methodName,
+      ));
       return index;
     });
   }

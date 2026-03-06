@@ -38,6 +38,10 @@ class DarticObject {
   /// creating a simple type from [classId].
   DarticType? runtimeType_;
 
+  /// Pending super constructor args for Bridge creation.
+  /// Set by STORE_SUPER_ARGS, consumed by WRAP_BRIDGE.
+  List<Object?>? pendingSuperArgs;
+
   @override
   String toString() => 'DarticObject(cls=$classId, '
       'refs=${refFields.length}, vals=${valueFields.length})';

@@ -18,7 +18,7 @@
 |------|------|------|
 | BridgeDispatch 如何调用解释器 | 通过函数回调 `Object? Function(DarticModule, DarticFuncProto, Object, List<Object?>)` | 避免跨 library 访问私有方法 `_callDarticMethod`，保持松耦合 |
 | DarticRuntime 与 BridgeDispatch 关系 | `BridgeDispatch implements DarticRuntime` | 设计文档定义 BridgeFactory 接收 DarticRuntime，BridgeDispatch 是唯一实现 |
-| NEW_INSTANCE 的 superArgs | 传 `const []`（占位） | 当前无 Bridge codegen，super args 的实际传递需要编译器配合，留给 Bridge codegen 阶段完善 |
+| NEW_INSTANCE 的 superArgs | ~~传 `const []`（占位）~~ → ✅ 已修复：两阶段创建（STORE_SUPER_ARGS + WRAP_BRIDGE） | 初期占位，后续通过 `2026-03-06-bridge-super-args-and-dispatch` 计划完整实现 |
 | setter 命名约定 | `'$name='`（如 `length=`） | 与解释器 SET_FIELD_DYN 保持一致（`interpreter.dart:2511`） |
 
 ---

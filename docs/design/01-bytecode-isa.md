@@ -145,7 +145,7 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 | 0x30-0x3F | 比较 | 12 | 4 |
 | 0x40-0x4F | 控制流 | 6 | 10 |
 | 0x50-0x5F | 调用与返回 | 8 | 8 |
-| 0x60-0x6F | 对象操作 | 9 | 7 |
+| 0x60-0x6F | 对象操作 | 11 | 5 |
 | 0x70-0x77 | 闭包 | 2 | 6 |
 | 0x78-0x7F | 泛型与类型 | 7 | 1 |
 | 0x80-0x8F | 异步与生成器 | 9 | 7 |
@@ -288,7 +288,9 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 0x66  CAST          A, B, C       refStack[A] = refStack[B] as type[C]; throw if fail (C 为类型常量池索引)
 0x67  GET_FIELD_DYN A, B, C       refStack[A] = refStack[B].getProperty(names[C]) (C 为 names 常量池索引)
 0x68  SET_FIELD_DYN A, B, C       refStack[A].setProperty(names[C], refStack[B])
-0x69-0x6F 预留
+0x69  STORE_SUPER_ARGS A, B, _   将 A 个参数（从 refStack[rBase+B] 起）存入 this(rBase+2).pendingSuperArgs
+0x6A  WRAP_BRIDGE   A, Bx        查 BridgeFactoryRegistry[class[Bx].classId]，命中则用 Bridge 替换 refStack[A]（ABx 格式）
+0x6B-0x6F 预留
 ```
 
 > 注意：`INSTANCEOF`/`CAST`/`GET_FIELD_DYN`/`SET_FIELD_DYN` 的 C 操作数在 ABC 格式下仅 8 位（0-255）。当类型常量池或 names 常量池索引超过 255 时，需使用 WIDE 前缀扩展。

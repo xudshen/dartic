@@ -1835,6 +1835,27 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
 
+          // Bridge interception: if the binding is an instance method and the
+          // receiver is a Bridge, try dispatching through DarticDispatch first.
+          final bindingInfo = module.bindingNames[bx];
+          final methodName = bindingInfo.methodName;
+          if (methodName != null && _activeDarticDispatch != null) {
+            final receiver = rs.read(rBase + a + 1);
+            if (receiver is DarticObjectHolder) {
+              final argCount = bindingInfo.argCount;
+              final remaining = List<Object?>.generate(
+                argCount - 1, (i) => rs.read(rBase + a + 2 + i),
+              );
+              final result = _activeDarticDispatch!.invoke(
+                receiver, receiver.$darticObject, methodName, remaining,
+              );
+              if (!identical(result, notOverridden)) {
+                rs.write(rBase + a, result);
+                break;
+              }
+            }
+          }
+
           // Look up the runtime binding ID from the resolved map.
           final bindingMap = _bindingIdMap;
           if (bx >= bindingMap.length) {
@@ -2214,14 +2235,26 @@ class DarticInterpreter {
           final a = (instr >> 8) & 0xFF;
           final bx = (instr >> 16) & 0xFFFF;
           final classInfo = module.classes[bx];
-          final obj = DarticObject(classInfo);
-          final bridgeFactory =
-              bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
-          if (bridgeFactory != null && _activeDarticDispatch != null) {
-            rs.write(rBase + a,
-                bridgeFactory(_activeDarticDispatch!, obj, const []));
-          } else {
-            rs.write(rBase + a, obj);
+          rs.write(rBase + a, DarticObject(classInfo));
+
+        case Op.storeSuperArgs: // STORE_SUPER_ARGS A, B — store A args starting at ref[B] into this.pendingSuperArgs
+          final a = (instr >> 8) & 0xFF; // arg count
+          final b = (instr >> 16) & 0xFF; // first arg register
+          final obj = _extractScriptObject(rs.read(rBase + 2)!);
+          obj.pendingSuperArgs = List<Object?>.generate(
+            a, (i) => rs.read(rBase + b + i),
+          );
+
+        case Op.wrapBridge: // WRAP_BRIDGE A, Bx — wrap DarticObject in Bridge if factory exists
+          final a = (instr >> 8) & 0xFF;
+          final bx = (instr >> 16) & 0xFFFF;
+          final classInfo = module.classes[bx];
+          final factory = bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
+          if (factory != null && _activeDarticDispatch != null) {
+            final obj = rs.read(rBase + a) as DarticObject;
+            final superArgs = obj.pendingSuperArgs ?? const <Object?>[];
+            obj.pendingSuperArgs = null;
+            rs.write(rBase + a, factory(_activeDarticDispatch!, obj, superArgs));
           }
 
         // ── Type Operations (0x65-0x66) ──

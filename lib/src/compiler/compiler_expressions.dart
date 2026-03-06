@@ -1191,7 +1191,8 @@ extension on DarticCompiler {
     // This differs from static methods/constructors where separate
     // registerBinding calls exist for each arity variant.
     final symbolName = _hostSymbolName(target);
-    final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
+    final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
+        methodName: target.name.text);
     return _emitCallHost(compiledArgs, bindingIndex);
   }
 
@@ -1444,7 +1445,14 @@ extension on DarticCompiler {
     final dummyResult = _allocRefReg();
     _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
 
-    // 5. The expression result is the object, not the call result.
+    // 5. If class extends a host class, emit WRAP_BRIDGE to create Bridge.
+    final classInfo = _classInfos[classId];
+    if (classInfo.hostSuperClassName != null ||
+        classInfo.hostInterfaceNames != null) {
+      _emitter.emit(encodeABx(Op.wrapBridge, objReg, classId));
+    }
+
+    // 6. The expression result is the object, not the call result.
     return (objReg, ResultLoc.ref);
   }
 
@@ -1512,7 +1520,8 @@ extension on DarticCompiler {
     final compiledArgs = _compileHostExprArgs(expr.receiver);
 
     final symbolName = _hostSymbolName(expr.interfaceTarget);
-    final bindingIndex = _allocBinding(symbolName, 1);
+    final bindingIndex = _allocBinding(symbolName, 1,
+        methodName: expr.interfaceTarget.name.text);
     return _emitCallHost(compiledArgs, bindingIndex);
   }
 
@@ -1609,7 +1618,8 @@ extension on DarticCompiler {
       nameOverride: '${expr.name.text}=',
       paramCountOverride: 1,
     );
-    final bindingIndex = _allocBinding(symbolName, 2);
+    final bindingIndex = _allocBinding(symbolName, 2,
+        methodName: '${expr.name.text}=');
 
     _emitCallHost(compiledArgs, bindingIndex);
 

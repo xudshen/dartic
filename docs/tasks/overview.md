@@ -172,6 +172,33 @@
 
 ---
 
+## 跨阶段修复：Bridge Super Args + CALL_HOST 分发 — ✅ 已完成
+
+**目标：** 修复 Bridge 运行时两个核心问题——super 构造参数转发（位置 + 命名参数）和 CALL_HOST 对 Bridge 实例的方法分发路由
+
+**设计参考：** [`docs/plans/2026-03-06-bridge-super-args-and-dispatch-design.md`](../plans/2026-03-06-bridge-super-args-and-dispatch-design.md)
+
+**实现计划：** [`docs/plans/2026-03-06-bridge-super-args-and-dispatch.md`](../plans/2026-03-06-bridge-super-args-and-dispatch.md)
+
+| 修复项 | 涉及模块 | 说明 |
+|-------|---------|------|
+| 两阶段 Bridge 创建 | opcodes, object, interpreter, compiler | NEW_INSTANCE → STORE_SUPER_ARGS → WRAP_BRIDGE |
+| CALL_HOST Bridge 拦截 | module, serializer, interpreter | BindingEntry.methodName + DarticDispatch 优先路由 |
+| Generator Object 方法覆盖 | binding_emitter, 13 个 .g.dart | 自动生成 toString/hashCode/== 覆盖 |
+| 测试覆盖 | bridge_extends_host_test | 6 → 18 tests，含 host-calls-bridged 场景 |
+
+**关键成果：**
+- [x] super 构造参数正确转发（StateError 位置参数、Duration 命名参数、ArgumentError 可选参数）
+- [x] CALL_HOST 对 Bridge 实例的方法分发路由到脚本覆盖
+- [x] 字符串插值等宿主侧 toString() 调用正确分发
+- [x] Generator 自动生成 Object 方法覆盖，解决 hash_and_equals lint
+- [x] 全量 2941 tests pass，0 skip，0 fail
+
+**已知残留限制：**
+- `SuperPropertyGet`（如 `super.message`）宿主字段访问不支持——编译器独立问题
+
+---
+
 ## 基础设施：Performance Benchmark Suite — ✅ 已完成
 
 **目标：** 三通道性能基准测试（host / dartic / dart_eval），量化 dartic 在性能谱系中的位置

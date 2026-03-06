@@ -98,6 +98,8 @@ abstract final class Op {
   static const cast = 0x66;
   static const getFieldDyn = 0x67;
   static const setFieldDyn = 0x68;
+  static const storeSuperArgs = 0x69;
+  static const wrapBridge = 0x6A;
 
   // ── Closure (0x70-0x77) ──
   static const closure = 0x70;

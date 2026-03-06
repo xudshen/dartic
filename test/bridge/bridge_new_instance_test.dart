@@ -17,8 +17,10 @@ void main() {
   group('NEW_INSTANCE with BridgeFactory', () {
     test('class with registered BridgeFactory creates Bridge instance',
         () async {
+      // Foo extends Error (a host class), so WRAP_BRIDGE is emitted and the
+      // bridge factory is invoked after the constructor runs.
       final source = '''
-class Foo {
+class Foo extends Error {
   String greet() => 'hello';
 }
 Object? main() => Foo();
@@ -102,15 +104,16 @@ Object? main() => Baz();
 
     test('DarticDispatch routes method calls back to interpreter', () async {
       // This test verifies the full e2e flow:
-      // 1. NEW_INSTANCE creates Bridge via factory, capturing DarticDispatch
+      // 1. WRAP_BRIDGE creates Bridge via factory, capturing DarticDispatch
       // 2. During execution (via print callback), we use the captured dispatch
       //    to dispatch method calls back to the interpreter
       // 3. The interpreter executes the bytecode for speak() and kind getter
       //
       // The callback pattern is necessary because DarticDispatch._callMethod
       // uses _runNestedDispatch, which requires _isExecuting = true.
+      // Animal extends Error (host class) so WRAP_BRIDGE is emitted.
       final source = '''
-class Animal {
+class Animal extends Error {
   String speak() => 'generic sound';
   String get kind => 'animal';
 }

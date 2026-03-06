@@ -1,5 +1,7 @@
 # Bridge Super Args 转发 + CALL_HOST 分发修复 设计方案
 
+> ✅ **已实现** — 2026-03-07。实现计划见 `2026-03-06-bridge-super-args-and-dispatch.md`。
+
 **目标：** 修复 Bridge 运行时两个核心问题，使 VM 脚本类继承宿主类的完整场景可用。
 
 **前置条件：** Bridge 基础设施已完成（DarticObjectHolder、DarticDispatch、BridgeFactoryRegistry、CALL_VIRTUAL Bridge 分发、字段访问、Bridge codegen）。

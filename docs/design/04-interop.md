@@ -62,7 +62,7 @@
 
 ### HostBindings（宿主函数注册表）
 
-HostBindings 将宿主 VM 的函数和方法映射为符号名到整数 ID 的注册表。Bridge 预生成库在初始化时批量注册绑定，运行时通过整数 ID 进行 O(1) 调用分发。编译器将宿主方法调用编译为 `CALL_HOST A, Bx`（Ch1 ABx 编码格式），其中 Bx 指向 .darb 绑定名称表条目（含符号名和 argCount，编译期生成详见 Ch5），加载时通过符号解析映射为运行时 ID（加载流程详见 Ch3 模块加载）。
+HostBindings 将宿主 VM 的函数和方法映射为符号名到整数 ID 的注册表。Bridge 预生成库在初始化时批量注册绑定，运行时通过整数 ID 进行 O(1) 调用分发。编译器将宿主方法调用编译为 `CALL_HOST A, Bx`（Ch1 ABx 编码格式），其中 Bx 指向 .darb 绑定名称表条目（含符号名、argCount 和可选的 methodName，编译期生成详见 Ch5），加载时通过符号解析映射为运行时 ID（加载流程详见 Ch3 模块加载）。`methodName` 仅对实例方法/getter/setter 非空，供 CALL_HOST Bridge 拦截判断是否需要检查 DarticDispatch 路由（详见下方 DarticDispatch 节）。
 
 | 属性 | 类型 | 说明 |
 |------|------|------|
@@ -203,7 +203,15 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 
 **`notOverridden` 哨兵**：`const Symbol #_notOverridden`，是包内私有 Symbol，脚本代码无法构造。Bridge 生成代码通过 `identical(result, notOverridden)` 判断脚本是否重写了该方法——若未重写则回退到 `super.method()` 调用。
 
-**NEW_INSTANCE 集成**：`NEW_INSTANCE` 指令创建 `DarticObject` 后，以 `classId` 在 `BridgeFactoryRegistry` 中查找工厂。命中时，将当前活跃的 `DarticDispatch` 实例和 `DarticObject` 传递给工厂，工厂返回 Bridge 实例。引用栈中存储 Bridge 实例（替代 DarticObject）。
+**两阶段 Bridge 创建**：Bridge 创建分为两个阶段，通过 `NEW_INSTANCE` + `WRAP_BRIDGE` 两条指令协作完成：
+
+1. `NEW_INSTANCE` 只创建 DarticObject（不查 BridgeFactoryRegistry）
+2. 构造函数体执行：字段初始化（SET_FIELD）→ super 初始化（STORE_SUPER_ARGS 存储 super 参数到 `DarticObject.pendingSuperArgs`）→ RETURN_NULL
+3. `WRAP_BRIDGE` 以 `classId` 查找 BridgeFactoryRegistry，命中时将 `DarticDispatch`、`DarticObject` 和已求值的 `pendingSuperArgs` 传递给工厂，工厂返回 Bridge 实例替换引用栈中的 DarticObject
+
+此设计确保 super 构造参数在 Bridge 创建前已求值，支持任意宿主类构造函数签名（位置参数、命名参数、可选参数）。
+
+**CALL_HOST Bridge 拦截**：当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)` 中的 `e`），方法调用编译为 `CALL_HOST`。CALL_HOST handler 在调用宿主绑定之前检查接收者是否为 `DarticObjectHolder`，若是则优先通过 `DarticDispatch` 路由脚本覆盖，`notOverridden` 时降级到宿主绑定。此拦截依赖 `BindingEntry.methodName` 字段区分实例方法和静态方法/构造函数。
 
 ### Bridge 运行时集成
 
@@ -343,22 +351,34 @@ package:dartic_bridges_flutter/
 
 ### Bridge 实例创建流程
 
-当解释器执行 `NEW_INSTANCE` 创建一个继承宿主类的对象时：
+当解释器执行包含继承宿主类的对象创建时，通过两阶段流程（NEW_INSTANCE + WRAP_BRIDGE）完成：
 
+```
+// 字节码序列（有 hostSuperClassName 的类）：
+NEW_INSTANCE objReg, classId        // 阶段 1：只创建 DarticObject
+MOVE objReg → arg[2]
+CALL_STATIC constructorFuncId       // 构造函数内部：
+                                    //   字段初始化 → SET_FIELD
+                                    //   super 初始化 → STORE_SUPER_ARGS
+                                    //   RETURN_NULL
+WRAP_BRIDGE objReg, classId         // 阶段 2：创建 Bridge，替换 objReg
+```
+
+**阶段 1 — NEW_INSTANCE**：
 1. 创建 DarticObject，分配 `classId`、`DarticType`、引用字段和值字段存储空间
-2. 以 `classId` 查找 Bridge 工厂（`_bridgeFactories[classId]`）
-3. 若工厂不存在（纯内部类），直接返回 DarticObject
-4. 若工厂存在（解释器类 extends/implements 宿主类），进入 Bridge 构造流程
+2. 不查 BridgeFactoryRegistry——所有类统一只创建 DarticObject
 
-**Bridge 构造流程**（步骤 4 展开）：
+**构造函数执行**：
+3. 字段初始化器通过 `SET_FIELD_REF` / `SET_FIELD_VAL` 设置 DarticObject 的字段
+4. super 初始化器通过 `STORE_SUPER_ARGS` 将求值后的 super 参数存入 `DarticObject.pendingSuperArgs`（位置参数 + 命名参数，按目标声明顺序排列，缺省参数填充默认值）
 
-Bridge 的创建需要与 VM 超类构造函数协调——Dart 要求 `super()` 在构造函数初始化列表中调用，无法延迟到对象创建之后。编译器和运行时通过以下流程配合：
-
-1. 编译器将 `SuperInitializer` 的参数求值指令**提前**到 `NEW_INSTANCE` 之前发射
-2. `NEW_INSTANCE` 指令执行时，运行时从引用栈取出已求值的 super 参数
-3. BridgeFactory（详见上方核心概念）接收 super 参数，创建 Bridge 实例——Bridge 构造函数在初始化列表中调用 `super(superArgs)`
-4. 返回 Bridge 实例。**引用栈中存储的是 Bridge 实例**（而非内部的 DarticObject），使 VM 侧 `is` 类型检查成立
-5. 后续的构造函数体字节码（字段初始化器、构造函数体语句）正常执行，通过 `SET_FIELD_REF` / `SET_FIELD_VAL` 设置 DarticObject 的字段
+**阶段 2 — WRAP_BRIDGE**：
+5. 以 `classId` 查找 Bridge 工厂（`BridgeFactoryRegistry.lookupByClassId`）
+6. 若工厂不存在（纯脚本类），DarticObject 保持不变
+7. 若工厂存在，创建 Bridge 实例：`factory(dispatch, darticObject, pendingSuperArgs ?? const [])`
+8. Bridge 构造函数在初始化列表中调用 `super(superArgs[0], superArgs[1], ...)`——此时 super 参数已经求值完毕
+9. **引用栈中的 DarticObject 被替换为 Bridge 实例**，使 VM 侧 `is` 类型检查成立
+10. 清空 `pendingSuperArgs`（瞬态字段，仅在 STORE_SUPER_ARGS → WRAP_BRIDGE 之间非 null）
 
 **不变式**：Bridge 创建完成后，DarticObject 的 `classId` 和 Bridge 实例的 Dart 类型保持一致——同一个解释器类始终使用同一个 Bridge 类。
 
@@ -496,19 +516,27 @@ Object wrapForVM(Object obj) {
 </details>
 
 <details>
-<summary>Bridge 实例创建伪代码</summary>
+<summary>Bridge 实例创建伪代码（两阶段）</summary>
 
 ```dart
-Object createInstance(int classId, DarticType type, List<Object?> superArgs) {
-  final interp = DarticObject(
-    classId: classId, runtimeType: type,
-    refFieldCount: classInfo.refFieldCount,
-    valueFieldCount: classInfo.valueFieldCount,
-  );
-  final bridgeFactory = _bridgeFactories[classId];
-  if (bridgeFactory != null) return bridgeFactory(this, interp, superArgs);
-  return interp;
-}
+// 阶段 1: NEW_INSTANCE — 只创建 DarticObject
+case Op.newInstance:
+  rs.write(rBase + a, DarticObject(classInfo));
+
+// 构造函数体内: STORE_SUPER_ARGS — 存储已求值的 super 参数
+case Op.storeSuperArgs:
+  final obj = _extractScriptObject(rs.read(rBase + 2)!);
+  obj.pendingSuperArgs = List.generate(argCount, (i) => rs.read(rBase + b + i));
+
+// 阶段 2: WRAP_BRIDGE — 创建 Bridge 替换 DarticObject
+case Op.wrapBridge:
+  final obj = rs.read(rBase + a) as DarticObject;
+  final factory = bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
+  if (factory != null) {
+    final superArgs = obj.pendingSuperArgs ?? const [];
+    obj.pendingSuperArgs = null;
+    rs.write(rBase + a, factory(dispatch, obj, superArgs));
+  }
 ```
 
 </details>

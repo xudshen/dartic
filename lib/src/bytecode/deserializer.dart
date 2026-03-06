@@ -102,7 +102,13 @@ class DarticDeserializer {
     return List.generate(count, (_) {
       final name = r.readString();
       final argCount = r.readByte();
-      return BindingEntry(name: name, argCount: argCount);
+      final methodNameRaw = r.readString();
+      final methodName = methodNameRaw.isEmpty ? null : methodNameRaw;
+      return BindingEntry(
+        name: name,
+        argCount: argCount,
+        methodName: methodName,
+      );
     });
   }
 

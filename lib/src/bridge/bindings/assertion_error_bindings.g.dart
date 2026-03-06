@@ -8,7 +8,7 @@ import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
 
 class _$AssertionError extends AssertionError implements DarticObjectHolder {
-  _$AssertionError(this._dispatch, this.$darticObject, List<Object?> superArgs);
+  _$AssertionError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Object?);
 
   final DarticDispatch _dispatch;
 
@@ -34,6 +34,20 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
     final r = _dispatch.get(this, $darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
   }
 }
 

@@ -8,7 +8,7 @@ import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
 
 class _$FormatException extends FormatException implements DarticObjectHolder {
-  _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs);
+  _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as dynamic, superArgs[2] as int?);
 
   final DarticDispatch _dispatch;
 
@@ -41,6 +41,20 @@ class _$FormatException extends FormatException implements DarticObjectHolder {
     final r = _dispatch.get(this, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
     return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
   }
 }
 

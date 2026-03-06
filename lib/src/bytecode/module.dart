@@ -94,13 +94,21 @@ class CoreTypeIds {
 ///
 /// Contains the symbolic name and argument count for a host function binding.
 class BindingEntry {
-  const BindingEntry({required this.name, required this.argCount});
+  const BindingEntry({
+    required this.name,
+    required this.argCount,
+    this.methodName,
+  });
 
   /// Symbolic binding name, e.g. `"dart:core::::print#1"`.
   final String name;
 
   /// Number of arguments expected by the host function.
   final int argCount;
+
+  /// Method name for instance method bindings (e.g. "toString").
+  /// Null for static methods, constructors, top-level functions.
+  final String? methodName;
 
   @override
   String toString() => 'BindingEntry($name, args=$argCount)';

@@ -753,17 +753,27 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
       'class $bridgeClassName extends ${info.className} implements DarticObjectHolder {');
 
   // Constructor — takes dispatch, darticObject, superArgs.
-  // Pass superArgs to super() if the parent has required constructor params.
+  // Pass superArgs to super() for ALL constructor params (positional first,
+  // then named in declaration order). The compiler emits STORE_SUPER_ARGS
+  // in the same order, so indices match.
   final unnamedCtor = info.constructors
       .where((c) => c.name.isEmpty && !c.isFactory)
       .firstOrNull;
-  final superParams = unnamedCtor?.params
-      .where((p) => !p.isOptional)
-      .toList();
-  if (superParams != null && superParams.isNotEmpty) {
-    final superCall = superParams.indexed
-        .map((e) => 'superArgs[${e.$1}] as ${e.$2.type}')
-        .join(', ');
+  final allParams = unnamedCtor?.params ?? const <ParamInfo>[];
+  final positionalParams = allParams.where((p) => !p.isNamed).toList();
+  final namedParams = allParams.where((p) => p.isNamed).toList();
+  if (positionalParams.isNotEmpty || namedParams.isNotEmpty) {
+    final parts = <String>[];
+    var idx = 0;
+    for (final p in positionalParams) {
+      parts.add('superArgs[$idx] as ${p.type}');
+      idx++;
+    }
+    for (final p in namedParams) {
+      parts.add('${p.name}: superArgs[$idx] as ${p.type}');
+      idx++;
+    }
+    final superCall = parts.join(', ');
     buf.writeln(
         '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs) : super($superCall);');
   } else {
@@ -777,13 +787,17 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
   buf.writeln('  final DarticObject \$darticObject;');
 
   // Override instance methods with dispatch delegation
+  final overriddenMethods = <String>{};
   for (final method in info.methods) {
+    overriddenMethods.add(method.name);
     buf.writeln();
     _writeBridgeMethodOverride(buf, info.className, method);
   }
 
   // Override getters with dispatch delegation
+  final overriddenGetters = <String>{};
   for (final getter in info.getters) {
+    overriddenGetters.add(getter.name);
     buf.writeln();
     _writeBridgeGetterOverride(buf, getter);
   }
@@ -798,6 +812,47 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
   for (final op in info.operators) {
     buf.writeln();
     _writeBridgeOperatorOverride(buf, info.className, op);
+  }
+
+  // Always generate Object method overrides for Bridge classes.
+  // Scripts may override toString() or hashCode even if the host class
+  // doesn't declare them. Without these, Dart-side calls (e.g. string
+  // interpolation calling toString()) bypass DarticDispatch entirely.
+  if (!overriddenMethods.contains('toString')) {
+    buf.writeln();
+    buf.writeln('  @override');
+    buf.writeln('  String toString() {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, 'toString', const []);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super.toString();');
+    buf.writeln('    return r as String;');
+    buf.writeln('  }');
+  }
+  if (!overriddenGetters.contains('hashCode')) {
+    buf.writeln();
+    buf.writeln('  @override');
+    buf.writeln('  int get hashCode {');
+    buf.writeln(
+        "    final r = _dispatch.get(this, \$darticObject, 'hashCode');");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super.hashCode;');
+    buf.writeln('    return r as int;');
+    buf.writeln('  }');
+  }
+  // Generate == override to satisfy hash_and_equals lint (paired with
+  // hashCode) and allow scripts to override equality.
+  final overriddenOperators = info.operators.map((o) => o.name).toSet();
+  if (!overriddenOperators.contains('==')) {
+    buf.writeln();
+    buf.writeln('  @override');
+    buf.writeln('  bool operator ==(Object other) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '==', [other]);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super == other;');
+    buf.writeln('    return r as bool;');
+    buf.writeln('  }');
   }
 
   buf.writeln('}');

@@ -53,6 +53,7 @@ class DarticSerializer {
     for (final entry in bindings) {
       w.writeString(entry.name);
       w.addByte(entry.argCount);
+      w.writeString(entry.methodName ?? '');
     }
   }
 

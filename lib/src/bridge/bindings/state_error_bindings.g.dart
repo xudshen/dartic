@@ -35,6 +35,20 @@ class _$StateError extends StateError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
   }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
 }
 
 abstract final class StateErrorBindings {

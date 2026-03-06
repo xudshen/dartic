@@ -1,5 +1,7 @@
 # Bridge Super Args 转发 + CALL_HOST 分发修复 Implementation Plan
 
+> ✅ **已完成** — 2026-03-07。全部 9 个 Task 完成，2941 tests pass，0 skip，0 fail。
+
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** 修复 Bridge 运行时两个核心问题：(1) super 构造参数转发，(2) CALL_HOST 对 Bridge 实例的方法分发路由。

@@ -8,7 +8,7 @@ import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
 
 class _$IndexError extends IndexError implements DarticObjectHolder {
-  _$IndexError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as int, superArgs[1] as dynamic);
+  _$IndexError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as int, superArgs[1] as dynamic, superArgs[2] as String?, superArgs[3] as String?, superArgs[4] as int?);
 
   final DarticDispatch _dispatch;
 
@@ -69,6 +69,27 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
     final r = _dispatch.get(this, $darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
   }
 }
 

@@ -383,8 +383,9 @@ extension on DarticCompiler {
   void _compileSuperInitializer(ir.SuperInitializer init) {
     final funcId = _constructorToFuncId[init.targetReference];
     if (funcId == null) {
-      // Super constructor is in a platform class (e.g., Object()).
-      // Platform constructors are no-ops for our purposes -- skip.
+      // Super constructor is in a platform class.
+      // Compile super args and store them for WRAP_BRIDGE.
+      _compileHostSuperArgs(init);
       return;
     }
 
@@ -470,6 +471,79 @@ extension on DarticCompiler {
     _pendingArgMoves.add(
       (pc: thisMovePC, srcReg: thisReg, argIdx: 2, loc: ResultLoc.ref),
     );
+  }
+
+  /// Compiles super constructor args for a host (platform) super class and
+  /// emits STORE_SUPER_ARGS so the interpreter can pass them to the Bridge
+  /// factory when WRAP_BRIDGE executes later.
+  void _compileHostSuperArgs(ir.SuperInitializer init) {
+    final args = init.arguments;
+    final targetFn = init.target.function;
+    final targetPosParams = targetFn.positionalParameters;
+    final targetNamedParams = targetFn.namedParameters;
+
+    if (targetPosParams.isEmpty && targetNamedParams.isEmpty) return;
+
+    final argRegs = <int>[];
+
+    // Positional args — emit ALL in declaration order (matching codegen).
+    // Compile explicitly passed args, then fill missing optional ones
+    // with defaults so superArgs length always matches codegen expectations.
+    for (var i = 0; i < targetPosParams.length; i++) {
+      if (i < args.positional.length) {
+        final expr = args.positional[i];
+        final (reg, loc) = _compileExpression(expr);
+        if (loc == ResultLoc.value) {
+          argRegs.add(_emitBoxToRef(reg, _inferExprType(expr)));
+        } else {
+          argRegs.add(reg);
+        }
+      } else {
+        final (reg, loc) = _compileDefaultValue(targetPosParams[i]);
+        if (loc == ResultLoc.value) {
+          argRegs.add(_emitBoxToRef(reg, targetPosParams[i].type));
+        } else {
+          argRegs.add(reg);
+        }
+      }
+    }
+
+    // Named args — emit ALL in target declaration order (matching codegen).
+    // For params not explicitly passed, compile the default value.
+    if (targetNamedParams.isNotEmpty) {
+      final namedArgMap = <String, ir.Expression>{
+        for (final na in args.named) na.name: na.value,
+      };
+      for (final param in targetNamedParams) {
+        final expr = namedArgMap[param.name];
+        if (expr != null) {
+          final (reg, loc) = _compileExpression(expr);
+          if (loc == ResultLoc.value) {
+            argRegs.add(_emitBoxToRef(reg, _inferExprType(expr)));
+          } else {
+            argRegs.add(reg);
+          }
+        } else {
+          final (reg, loc) = _compileDefaultValue(param);
+          if (loc == ResultLoc.value) {
+            argRegs.add(_emitBoxToRef(reg, param.type));
+          } else {
+            argRegs.add(reg);
+          }
+        }
+      }
+    }
+
+    // Move to consecutive ref registers.
+    final firstReg = _allocRefReg();
+    for (var i = 0; i < argRegs.length; i++) {
+      final targetReg = i == 0 ? firstReg : _allocRefReg();
+      if (argRegs[i] != targetReg) {
+        _emitter.emit(encodeABC(Op.moveRef, targetReg, argRegs[i], 0));
+      }
+    }
+
+    _emitter.emit(encodeABC(Op.storeSuperArgs, argRegs.length, firstReg, 0));
   }
 }
 
