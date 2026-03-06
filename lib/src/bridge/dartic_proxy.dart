@@ -1,7 +1,7 @@
 /// Generic proxy wrapping an interpreter [DarticObject] for host VM use.
 ///
 /// Provides identity-correct `==`, `hashCode`, and a basic `toString()`.
-/// Property/method forwarding via DarticRuntime.invokeMethod is deferred
+/// Property/method forwarding via DarticDispatch.invokeMethod is deferred
 /// to Task 5.3.4 (HostClassAdapter dynamic dispatch).
 ///
 /// See: docs/design/04-interop.md "DarticProxy"

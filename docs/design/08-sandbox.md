@@ -291,7 +291,7 @@ class DarticVerifier {
 }
 
 // 宿主应用错误隔离模式
-Future<void> runPlugin(DarticRuntime runtime, String path) async {
+Future<void> runPlugin(DarticDispatch dispatch, String path) async {
   try {
     final module = runtime.loadModule(File(path).readAsBytesSync());
     await runtime.execute(module);

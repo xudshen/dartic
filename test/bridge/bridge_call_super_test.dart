@@ -1,4 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
@@ -9,7 +10,7 @@ import '../helpers/compile_helper.dart';
 /// Minimal Bridge class for CALL_SUPER dispatch tests.
 class _SuperTestBridge implements DarticObjectHolder {
   _SuperTestBridge(
-      DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
+      DarticDispatch dispatch, this.$darticObject, List<Object?> superArgs);
   @override
   final DarticObject $darticObject;
 }
@@ -39,8 +40,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         subClass.classId,
-        (runtime, scriptObj, superArgs) =>
-            _SuperTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _SuperTestBridge(dispatch, scriptObj, superArgs),
       );
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
           createTestRegistries(
@@ -78,8 +79,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         dogClass.classId,
-        (runtime, scriptObj, superArgs) =>
-            _SuperTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _SuperTestBridge(dispatch, scriptObj, superArgs),
       );
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
           createTestRegistries(

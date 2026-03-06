@@ -1,8 +1,9 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:test/test.dart';
 
 Object _factoryReturning(String value) {
-  return (DarticRuntime runtime, dynamic darticObject, List<Object?> superArgs) {
+  return (DarticDispatch dispatch, dynamic darticObject, List<Object?> superArgs) {
     return value;
   };
 }

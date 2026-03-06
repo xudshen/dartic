@@ -1,4 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
@@ -9,7 +10,7 @@ import '../helpers/compile_helper.dart';
 /// Minimal Bridge class for CALL_VIRTUAL dispatch tests.
 class _VirtualTestBridge implements DarticObjectHolder {
   _VirtualTestBridge(
-      DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
+      DarticDispatch dispatch, this.$darticObject, List<Object?> superArgs);
   @override
   final DarticObject $darticObject;
 }
@@ -35,8 +36,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         greeterClass.classId,
-        (runtime, scriptObj, superArgs) =>
-            _VirtualTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _VirtualTestBridge(dispatch, scriptObj, superArgs),
       );
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
           createTestRegistries(
@@ -73,8 +74,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         boxClass.classId,
-        (runtime, scriptObj, superArgs) =>
-            _VirtualTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _VirtualTestBridge(dispatch, scriptObj, superArgs),
       );
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
           createTestRegistries(
@@ -112,8 +113,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         simpleClass.classId,
-        (runtime, scriptObj, superArgs) =>
-            _VirtualTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _VirtualTestBridge(dispatch, scriptObj, superArgs),
       );
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
           createTestRegistries(

@@ -452,7 +452,7 @@ DarticClosure _buildClosure(DarticFuncProto proto) {
 <summary>DarticGlobalTable 惰性初始化实现</summary>
 
 ```dart
-Object? load(int index, DarticRuntime runtime) {
+Object? load(int index, DarticDispatch dispatch) {
   final value = slots[index];
   if (identical(value, _initializing)) {
     throw DarticError('Circular dependency: global variable $index');

@@ -4,7 +4,7 @@
 
 在现有内部组件（DarticInterpreter、HostBindingRegistry、HostClassRegistry、DarticProxyManager）之上，封装面向宿主开发者的统一公开 API——DarticEngine。同时重构内部基础设施以支持用户自定义宿主类注册、按名调用脚本函数、Bridge 工厂管理。
 
-核心变更：① HostClassRegistry 重构为 runtimeType 精确匹配 + is-chain fallback + 缓存，支持动态注册用户宿主类，生命周期改为 DarticEngine 持有；② 新增 BridgeFactoryRegistry（className → BridgeFactory）和 BridgeDispatch（invoke/get/set 三方法分发 + notOverridden 哨兵）；③ DarticModule 新增导出表（name → funcId）并扩展 .darb 序列化格式；④ DarticInterpreter 新增 executeFunction() 方法并接受外部传入的 HostClassRegistry；⑤ 封装 DarticEngine / DarticConfig / DarticPlugin 公开 API；⑥ engine.call() 端到端管线集成。
+核心变更：① HostClassRegistry 重构为 runtimeType 精确匹配 + is-chain fallback + 缓存，支持动态注册用户宿主类，生命周期改为 DarticEngine 持有；② 新增 BridgeFactoryRegistry（className → BridgeFactory）和 DarticDispatch（invoke/get/set 三方法分发 + notOverridden 哨兵）；③ DarticModule 新增导出表（name → funcId）并扩展 .darb 序列化格式；④ DarticInterpreter 新增 executeFunction() 方法并接受外部传入的 HostClassRegistry；⑤ 封装 DarticEngine / DarticConfig / DarticPlugin 公开 API；⑥ engine.call() 端到端管线集成。
 
 **设计参考：** `docs/plans/2026-02-20-bridge-api-design.md`（完整 API 设计，含 registerClass 参数、call() 重入策略、错误模型、数据交换规则）、`docs/design/04-interop.md`（Bridge 内部架构）、`docs/design/03-execution-engine.md`（_runNestedDispatch 重入机制）、`docs/design/08-sandbox.md`（资源限制参数映射）
 
@@ -49,20 +49,20 @@
 
 ---
 
-### Task 7.1.2: BridgeFactoryRegistry + BridgeDispatch
+### Task 7.1.2: BridgeFactoryRegistry + DarticDispatch
 
 **产出文件：**
 - Create: `lib/src/bridge/bridge_factory_registry.dart`
-- Create: `lib/src/bridge/bridge_dispatch.dart`
+- Create: `lib/src/bridge/dartic_dispatch.dart`
 - Modify: `lib/src/runtime/interpreter.dart`（NEW_INSTANCE 查找 BridgeFactoryRegistry）
 - Test: `test/bridge/bridge_factory_registry_test.dart`
-- Test: `test/bridge/bridge_dispatch_test.dart`
+- Test: `test/bridge/dartic_dispatch_test.dart`
 
 **TDD 步骤：**
 
-1. **读设计文档** — API 设计文档 "BridgeFactory" 节和 "BridgeDispatch" 节，Ch4 "Bridge 实例创建流程"节：
-   - BridgeFactoryRegistry：className → BridgeFactory 映射表。签名 `(DarticRuntime, DarticObject, List<Object?> superArgs) → Object`
-   - BridgeDispatch：invoke/get/set 三个分发方法，将虚方法/属性调用路由回解释器。脚本未 override → 返回 `#_bridgeNotOverridden` 哨兵
+1. **读设计文档** — API 设计文档 "BridgeFactory" 节和 "DarticDispatch" 节，Ch4 "Bridge 实例创建流程"节：
+   - BridgeFactoryRegistry：className → BridgeFactory 映射表。签名 `(DarticDispatch, DarticObject, List<Object?> superArgs) → Object`
+   - DarticDispatch：invoke/get/set 三个分发方法，将虚方法/属性调用路由回解释器。脚本未 override → 返回 `#_bridgeNotOverridden` 哨兵
    - `#_bridgeNotOverridden` 是 dartic 包内的私有 Symbol，脚本代码无法构造，`identical()` 比较无误报
    - NEW_INSTANCE 创建 DarticObject 后，以 classId 查找 BridgeFactoryRegistry，命中则调用 factory 创建 Bridge 实例
 
@@ -71,7 +71,7 @@
      - 注册一个 BridgeFactory → lookupByClassId 返回正确 factory
      - 查找未注册 classId → 返回 null
      - 注册时同一 classId 覆盖旧 factory
-   - **BridgeDispatch**：
+   - **DarticDispatch**：
      - invoke 调用已 override 的方法 → 返回解释器执行结果
      - invoke 调用未 override 的方法 → 返回 notOverridden 哨兵
      - get 属性读取已 override 的 getter → 返回值
@@ -84,7 +84,7 @@
 
 3. **实现** —
    - **BridgeFactoryRegistry**：`Map<int, BridgeFactory> _factories`（classId → factory），提供 `register(int classId, BridgeFactory factory)` 和 `BridgeFactory? lookup(int classId)` 方法
-   - **BridgeDispatch**：持有对 DarticInterpreter 的引用。invoke/get/set 通过方法表查找目标方法 → 未找到返回 `notOverridden`，找到则通过 `_runNestedDispatch()` 执行解释器方法。`notOverridden` 定义为包内顶层 `const Symbol _bridgeNotOverridden = #_bridgeNotOverridden;`
+   - **DarticDispatch**：持有对 DarticInterpreter 的引用。invoke/get/set 通过方法表查找目标方法 → 未找到返回 `notOverridden`，找到则通过 `_runNestedDispatch()` 执行解释器方法。`notOverridden` 定义为包内顶层 `const Symbol _bridgeNotOverridden = #_bridgeNotOverridden;`
    - **NEW_INSTANCE 修改**：`case Op.newInstance` 末尾增加 BridgeFactoryRegistry 查找，命中则调用 factory 并替换引用栈中的 DarticObject 为 Bridge 实例
 
 4. **运行** — `fvm dart analyze && fvm dart test test/bridge/`
@@ -258,7 +258,7 @@
 feat(api): add DarticEngine public embedding API with internal refactoring
 ```
 
-**提交文件：** `lib/src/api/`（新目录）+ `lib/src/bridge/host_class_registry.dart`（重构）+ `lib/src/bridge/bridge_factory_registry.dart`（新）+ `lib/src/bridge/bridge_dispatch.dart`（新）+ `lib/src/bytecode/module.dart`（导出表）+ `lib/src/bytecode/serializer.dart`（导出表序列化）+ `lib/src/compiler/compiler.dart`（导出表生成）+ `lib/src/runtime/interpreter.dart`（executeFunction + 外部 registry）+ `lib/src/runtime/error.dart`（CallDepthExceededError）+ `lib/dartic.dart`（导出）+ 全部新测试
+**提交文件：** `lib/src/api/`（新目录）+ `lib/src/bridge/host_class_registry.dart`（重构）+ `lib/src/bridge/bridge_factory_registry.dart`（新）+ `lib/src/bridge/dartic_dispatch.dart`（新）+ `lib/src/bytecode/module.dart`（导出表）+ `lib/src/bytecode/serializer.dart`（导出表序列化）+ `lib/src/compiler/compiler.dart`（导出表生成）+ `lib/src/runtime/interpreter.dart`（executeFunction + 外部 registry）+ `lib/src/runtime/error.dart`（CallDepthExceededError）+ `lib/dartic.dart`（导出）+ 全部新测试
 
 ## 文档更新
 
@@ -272,13 +272,13 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 - **重入测试策略**：由于编译器只对 `dart:` 库生成 CALL_HOST，无法轻松注册自定义宿主函数让编译器识别。采用 `onPrint` 回调作为重入触发点——print() 是 CALL_HOST，onPrint 在宿主回调中调用 engine.call() 触发 `_isExecuting` 重入路径。支持多层嵌套重入
 - **InterfaceTypeTemplate 序列化限制**：async 函数在常量池中产生 `InterfaceTypeTemplate` 类型的 ref 常量，当前序列化器仅支持 null 和 String ref 类型，导致含 async 函数的模块无法通过 .darb 往返。async 函数的 engine.call() 测试需等待常量池序列化扩展
 - **注册顺序无关化（post-7.1 补丁）**：`register()` 新增 `{Type? exactType}` 可选参数，注册时直接写入 `_exactMap`。解决多 Plugin 跨模块注册时无法保证 "先超类后子类" 顺序的问题。与业界 7 个 VM/运行时对齐（Dart VM CID / JVM klass / V8 Hidden Class / CPython ob_type / Lua metatable / Wren class / Truffle @ExportLibrary），核心共识：精确类型标识做分发，不用谓词匹配。同步更新 `DarticEngine.registerClass()` 增加 `Type? type` 参数透传，codegen 生成 `type: ClassName` 参数
-- **BridgeDispatch 补全**：Task 7.1.2 遗留的 BridgeDispatch 占位实现已补全。DarticRuntime 接口定义 invoke/get/set，BridgeDispatch 通过 ConstantPool.lookupNameIndex 解析方法名，通过 CallDarticMethod 回调执行。NEW_INSTANCE 集成 BridgeFactoryRegistry 查找。e2e 测试通过 print 回调在执行期间验证 BridgeDispatch 可正确路由 speak() 方法调用和 kind getter 回到解释器并获取正确结果
+- **DarticDispatch 补全**：Task 7.1.2 遗留的 DarticDispatch 占位实现已补全。DarticDispatch 具体类定义 invoke/get/set，通过 ConstantPool.lookupNameIndex 解析方法名，通过 CallDarticMethod 回调执行。NEW_INSTANCE 集成 BridgeFactoryRegistry 查找。e2e 测试通过 print 回调在执行期间验证 DarticDispatch 可正确路由 speak() 方法调用和 kind getter 回到解释器并获取正确结果
 - **Bridge 运行时集成完成**：DarticObjectHolder 接口使解释器通过 `$darticObject` getter 从 Bridge 中提取 DarticObject，用于字段访问（4 个字段 opcode 均经 `_extractScriptObject` 路由）。CALL_VIRTUAL 三路分发（DarticObject / DarticObjectHolder / 宿主对象）保证 Bridge 接收者的方法分发回到解释器，且 `this` 保持为 Bridge 实例。宿主类型元数据（hostSuperClassName / hostInterfaceNames）在编译器检测 platform 超类/接口后写入 DarticClassInfo，Engine 通过三级解析链（直接名 → hostSuperClassName → hostInterfaceNames）自动匹配 BridgeFactory。E2E 测试覆盖构造函数字段初始化、ref/value 字段读写、跨方法调用 this 保持、多 Bridge 实例交互
 
 ## Batch 完成检查
 
 - [x] 7.1.1 HostClassRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
-- [x] 7.1.2 BridgeFactoryRegistry + BridgeDispatch
+- [x] 7.1.2 BridgeFactoryRegistry + DarticDispatch
 - [x] 7.1.3 DarticModule 导出表 + .darb 序列化
 - [x] 7.1.4 DarticInterpreter 重构 — executeFunction() + 错误模型完善
 - [x] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 公开 API

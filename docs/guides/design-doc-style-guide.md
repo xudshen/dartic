@@ -168,7 +168,7 @@ class ValueStack {
 ### 不合格：流程用完整方法实现
 
 ```dart
-Object? load(int index, DarticRuntime runtime) {
+Object? load(int index, DarticDispatch dispatch) {
   final value = slots[index];
   if (identical(value, _initializing)) {
     throw DarticError('Circular dependency...');

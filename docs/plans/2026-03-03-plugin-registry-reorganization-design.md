@@ -373,7 +373,7 @@ DarticEngine({
 | 移除 | `BridgeFactoryRegistry`（plugin 不再直接访问） |
 | 移除 | `DarticProxyManager`（plugin 不再直接访问） |
 | 保留 | `DarticEngine`, `DarticConfig`, `DarticPlugin` |
-| 保留 | `BridgeFactory`, `DarticRuntime`（plugin 定义 bridge factory 仍需要） |
+| 保留 | `BridgeFactory`, `DarticDispatch`（plugin 定义 bridge factory 仍需要） |
 | 保留 | Error types |
 
 **DarticEngine 公开方法变更：**

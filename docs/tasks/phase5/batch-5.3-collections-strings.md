@@ -101,10 +101,10 @@
    - 端到端：`[3,1,2].sort((a, b) => a.compareTo(b))` — sort 双参数比较器
    - 端到端：`List.generate(3, (i) => i * 10)` → `[0, 10, 20]` — 工厂回调
 3. **实现** —
-   - DarticCallbackProxy：持有 DarticClosure + DarticRuntime 引用。proxy0() 返回 `() => _invoke([])`，proxy1() 返回 `(a) => _invoke([a])`，...proxy3() 返回 `(a,b,c) => _invoke([a,b,c])`。_invoke 内部：对每个参数 unwrap → invokeClosure → wrapForVM 返回值
-   - DarticRuntime 接口：定义 invokeClosure(DarticClosure, args) 方法。由 DarticInterpreter 实现。invokeClosure 需要在 CallStack 上建立回调帧，执行闭包字节码，返回结果。参考 Ch4"VM -> 解释器回调流程"中的 HOST_BOUNDARY 哨兵帧
+   - DarticCallbackProxy：持有 DarticClosure + DarticDispatch 引用。proxy0() 返回 `() => _invoke([])`，proxy1() 返回 `(a) => _invoke([a])`，...proxy3() 返回 `(a,b,c) => _invoke([a,b,c])`。_invoke 内部：对每个参数 unwrap → invokeClosure → wrapForVM 返回值
+   - DarticDispatch 接口：定义 invokeClosure(DarticClosure, args) 方法。由 DarticInterpreter 实现。invokeClosure 需要在 CallStack 上建立回调帧，执行闭包字节码，返回结果。参考 Ch4"VM -> 解释器回调流程"中的 HOST_BOUNDARY 哨兵帧
    - DarticProxyManager：`_interpToProxy` Expando + `_proxyToInterp` Expando。wrapForVM/unwrapForInterpreter 实现
-   - DarticProxy：持有 target DarticObject + DarticRuntime。重写 operator ==（比较 target 身份）、hashCode（identityHashCode(target)）、toString()（委托给 _runtime.invokeMethod）
+   - DarticProxy：持有 target DarticObject + DarticDispatch。重写 operator ==（比较 target 身份）、hashCode（identityHashCode(target)）、toString()（委托给 _runtime.invokeMethod）
    - 修改含回调参数的 Bridge 方法：在 HostClassWrapper 的 invokeMethod 中，检测参数是否为 DarticClosure → 自动创建 DarticCallbackProxy → 按回调参数数量选择 proxyN()
 4. **运行** — `fvm dart analyze && fvm dart test test/bridge/callback_proxy_test.dart test/e2e/callback_bridge_test.dart`
 

@@ -8,43 +8,11 @@
 library;
 
 import '../runtime/object.dart';
-
-/// Runtime interface provided to Bridge instances for script method delegation.
-///
-/// DarticInterpreter will implement this interface (or it will be adapted)
-/// so Bridge instances can invoke script-defined methods through the
-/// interpreter's dispatch loop.
-abstract interface class DarticRuntime {
-  /// Dispatches a virtual method/operator call.
-  ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
-  /// Returns [bridgeNotOverridden] if the script has not overridden [method].
-  Object? invoke(
-      Object receiver, DarticObject darticObject, String method,
-      List<Object?> args);
-
-  /// Dispatches a property getter.
-  ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
-  /// Returns [bridgeNotOverridden] if the script has not overridden [property].
-  Object? get(Object receiver, DarticObject darticObject, String property);
-
-  /// Dispatches a property setter.
-  ///
-  /// [receiver] is the Bridge instance (set as `this` in script methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
-  void set(Object receiver, DarticObject darticObject, String property,
-      Object? value);
-}
+import 'dartic_dispatch.dart';
 
 /// Factory signature for creating Bridge instances.
 ///
-/// - [runtime]: DarticRuntime reference for $BridgeMixin delegation
+/// - [dispatch]: DarticDispatch reference for $BridgeMixin delegation
 /// - [darticObject]: the DarticObject carrying script-defined fields
 /// - [superArgs]: pre-evaluated super constructor arguments
 ///
@@ -52,7 +20,7 @@ abstract interface class DarticRuntime {
 /// The return type is `Object` (not `Object?`) because a Bridge must always
 /// be a concrete instance.
 typedef BridgeFactory = Object Function(
-  DarticRuntime runtime,
+  DarticDispatch dispatch,
   DarticObject darticObject,
   List<Object?> superArgs,
 );

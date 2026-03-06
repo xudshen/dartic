@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/bridge_dispatch.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/runtime/class_info.dart';
@@ -8,7 +8,7 @@ import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('BridgeDispatch', () {
+  group('DarticDispatch', () {
     group('bridgeNotOverridden sentinel', () {
       test('is a Symbol', () {
         expect(bridgeNotOverridden, isA<Symbol>());
@@ -60,7 +60,7 @@ void main() {
       late DarticFuncProto nameSetterProto;
       late DarticModule module;
       late DarticObject obj;
-      late BridgeDispatch dispatch;
+      late DarticDispatch dispatch;
 
       // Call log for the mock callMethod callback.
       late List<_CallRecord> callLog;
@@ -123,7 +123,7 @@ void main() {
 
         callLog = [];
 
-        dispatch = BridgeDispatch(
+        dispatch = DarticDispatch(
           module: module,
           callMethod: (mod, method, receiver, args) {
             callLog.add(_CallRecord(
@@ -142,7 +142,7 @@ void main() {
       });
 
       test('invoke calls method and returns result', () {
-        final result = dispatch.invoke(obj, 'greet', ['Bob']);
+        final result = dispatch.invoke(obj, obj, 'greet', ['Bob']);
 
         expect(result, equals('hello world'));
         expect(callLog, hasLength(1));
@@ -153,14 +153,14 @@ void main() {
       });
 
       test('invoke returns bridgeNotOverridden for unknown method', () {
-        final result = dispatch.invoke(obj, 'unknownMethod', []);
+        final result = dispatch.invoke(obj, obj, 'unknownMethod', []);
 
         expect(identical(result, bridgeNotOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
       test('get calls getter and returns result', () {
-        final result = dispatch.get(obj, 'name');
+        final result = dispatch.get(obj, obj, 'name');
 
         expect(result, equals('Alice'));
         expect(callLog, hasLength(1));
@@ -171,14 +171,14 @@ void main() {
       });
 
       test('get returns bridgeNotOverridden for unknown property', () {
-        final result = dispatch.get(obj, 'unknownProperty');
+        final result = dispatch.get(obj, obj, 'unknownProperty');
 
         expect(identical(result, bridgeNotOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
       test('set calls setter method', () {
-        dispatch.set(obj, 'name', 'Bob');
+        dispatch.set(obj, obj, 'name', 'Bob');
 
         expect(callLog, hasLength(1));
         expect(identical(callLog[0].module, module), isTrue);
@@ -189,7 +189,7 @@ void main() {
 
       test('set silently ignores unknown property', () {
         // Should not throw and should not call the callback.
-        dispatch.set(obj, 'unknownProperty', 42);
+        dispatch.set(obj, obj, 'unknownProperty', 42);
 
         expect(callLog, isEmpty);
       });
@@ -198,7 +198,7 @@ void main() {
           'but not in class methods', () {
         // Add a name to the pool that the class does not have a method for.
         cp.addName('toString');
-        final result = dispatch.invoke(obj, 'toString', []);
+        final result = dispatch.invoke(obj, obj, 'toString', []);
 
         expect(identical(result, bridgeNotOverridden), isTrue);
         expect(callLog, isEmpty);
@@ -207,7 +207,7 @@ void main() {
       test('get returns bridgeNotOverridden when name exists in pool '
           'but not in class methods', () {
         cp.addName('hashCode');
-        final result = dispatch.get(obj, 'hashCode');
+        final result = dispatch.get(obj, obj, 'hashCode');
 
         expect(identical(result, bridgeNotOverridden), isTrue);
         expect(callLog, isEmpty);
@@ -216,7 +216,7 @@ void main() {
       test('set ignores when setter name exists in pool '
           'but not in class methods', () {
         cp.addName('age=');
-        dispatch.set(obj, 'age', 25);
+        dispatch.set(obj, obj, 'age', 25);
 
         expect(callLog, isEmpty);
       });

@@ -1,4 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
@@ -9,7 +10,7 @@ import '../helpers/compile_helper.dart';
 /// Wraps a DarticObject — minimal Bridge for testing field access opcodes.
 class _FieldTestBridge implements DarticObjectHolder {
   _FieldTestBridge(
-      DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
+      DarticDispatch dispatch, this.$darticObject, List<Object?> superArgs);
   @override
   final DarticObject $darticObject;
 }
@@ -39,8 +40,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         fooClassInfo.classId,
-        (runtime, scriptObj, superArgs) =>
-            _FieldTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _FieldTestBridge(dispatch, scriptObj, superArgs),
       );
 
       final (:hostFunctionRegistry, :hostDispatchRegistry) =
@@ -80,8 +81,8 @@ void main() {
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(
         counterClassInfo.classId,
-        (runtime, scriptObj, superArgs) =>
-            _FieldTestBridge(runtime, scriptObj, superArgs),
+        (dispatch, scriptObj, superArgs) =>
+            _FieldTestBridge(dispatch, scriptObj, superArgs),
       );
 
       final (:hostFunctionRegistry, :hostDispatchRegistry) =

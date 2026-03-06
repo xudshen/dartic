@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import '../bridge/bridge_dispatch.dart';
+import '../bridge/dartic_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
 import '../bridge/dartic_object_holder.dart';
@@ -138,7 +138,7 @@ class DarticInterpreter {
 
   /// Bridge dispatch for the current execution, created when both
   /// [bridgeFactoryRegistry] and [_activeModule] are available.
-  BridgeDispatch? _activeBridgeDispatch;
+  DarticDispatch? _activeDarticDispatch;
 
   /// Return value from a callback that exited via HOST_BOUNDARY RETURN.
   Object? _callbackResult;
@@ -285,7 +285,7 @@ class DarticInterpreter {
 
     // Create bridge dispatch if factories are registered.
     if (bridgeFactoryRegistry != null) {
-      _activeBridgeDispatch = BridgeDispatch(
+      _activeDarticDispatch = DarticDispatch(
         module: module,
         callMethod: _callDarticMethod,
       );
@@ -374,7 +374,7 @@ class DarticInterpreter {
 
     // Create bridge dispatch if factories are registered.
     if (bridgeFactoryRegistry != null) {
-      _activeBridgeDispatch = BridgeDispatch(
+      _activeDarticDispatch = DarticDispatch(
         module: module,
         callMethod: _callDarticMethod,
       );
@@ -433,7 +433,7 @@ class DarticInterpreter {
     _syncStarStatus = null;
     _syncStarSuspendedFrame = null;
     _activeModule = null;
-    _activeBridgeDispatch = null;
+    _activeDarticDispatch = null;
     _callbackResult = null;
   }
 
@@ -2251,9 +2251,9 @@ class DarticInterpreter {
           final obj = DarticObject(classInfo);
           final bridgeFactory =
               bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
-          if (bridgeFactory != null && _activeBridgeDispatch != null) {
+          if (bridgeFactory != null && _activeDarticDispatch != null) {
             rs.write(rBase + a,
-                bridgeFactory(_activeBridgeDispatch!, obj, const []));
+                bridgeFactory(_activeDarticDispatch!, obj, const []));
           } else {
             rs.write(rBase + a, obj);
           }

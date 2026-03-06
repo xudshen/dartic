@@ -88,7 +88,7 @@
 **产出文件：**
 - Create: `packages/dartic_generator/lib/src/bridge_generator.dart`
 - Create: `packages/dartic_generator/lib/src/bridge_mixin.dart`（$BridgeMixin 定义，放在 dartic 主包）
-- Modify: `lib/src/bridge/bridge_dispatch.dart`（确保 $BridgeMixin 可引用 BridgeDispatch）
+- Modify: `lib/src/bridge/dartic_dispatch.dart`（确保 $BridgeMixin 可引用 DarticDispatch）
 - Test: `packages/dartic_generator/test/bridge_generator_test.dart`
 
 **TDD 步骤：**
@@ -96,12 +96,12 @@
 1. **读设计文档** — Ch4 "Bridge 类与 $BridgeMixin" 节、"BridgeFactory" 节、"Bridge 实例创建流程"节：
    - Bridge 类跳过 `final` 和 `sealed` 类
    - Bridge 类 = extends 宿主类 + mixin $BridgeMixin
-   - $BridgeMixin 提供 `$_invoke(method, args)`、`$_get(property)`、`$_set(property, value)` 委托方法，内部调用 BridgeDispatch
+   - $BridgeMixin 提供 `$_invoke(method, args)`、`$_get(property)`、`$_set(property, value)` 委托方法，内部调用 DarticDispatch
    - 每个可重写方法 → 委托重写（调用 $_invoke，检查 notOverridden 后 call super）
    - 每个可重写属性 → getter/setter 委托
    - 每个非抽象可重写方法 → super 转发器 `$super$methodName()`
    - 每个可用构造函数 → BridgeFactory 变体
-   - BridgeFactory 签名：`(DarticRuntime, DarticObject, List<Object?> superArgs) → Object`
+   - BridgeFactory 签名：`(DarticDispatch, DarticObject, List<Object?> superArgs) → Object`
 
 2. **写测试** —
    - **Bridge 类生成**：`@DarticExport(bridge: true) class Animal { String speak() => 'generic'; }` → 生成 `class $Animal extends Animal with $BridgeMixin { ... }`
@@ -114,7 +114,7 @@
    - **多构造函数**：类含默认 + 命名构造函数 → 生成多个 BridgeFactory 变体
 
 3. **实现** —
-   - **$BridgeMixin**：定义在 dartic 主包 `lib/src/bridge/bridge_mixin.dart`。提供 `DarticObject get $_darticObject`、`BridgeDispatch get $_dispatch`、委托方法 `$_invoke`/`$_get`/`$_set`。字段由 Bridge 构造函数初始化
+   - **$BridgeMixin**：定义在 dartic 主包 `lib/src/bridge/bridge_mixin.dart`。提供 `DarticObject get $_darticObject`、`DarticDispatch get $_dispatch`、委托方法 `$_invoke`/`$_get`/`$_set`。字段由 Bridge 构造函数初始化
    - **bridge_generator.dart**：
      - 检查类是否可继承（非 final、非 sealed）
      - 遍历可重写方法（含操作符）→ 生成委托重写代码

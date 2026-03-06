@@ -1,4 +1,4 @@
-import 'package:dartic/src/bridge/bridge_dispatch.dart';
+import 'package:dartic/src/bridge/dartic_dispatch.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
@@ -8,8 +8,8 @@ import '../helpers/compile_helper.dart';
 
 /// A simple Bridge class for testing.
 class TestBridge {
-  TestBridge(this.runtime, this.scriptObject);
-  final DarticRuntime runtime;
+  TestBridge(this.dispatch, this.scriptObject);
+  final DarticDispatch dispatch;
   final DarticObject scriptObject;
 }
 
@@ -33,13 +33,13 @@ Object? main() => Foo();
       expect(fooClassId, greaterThanOrEqualTo(0));
 
       // Register a BridgeFactory for Foo.
-      late DarticRuntime capturedRuntime;
+      late DarticDispatch capturedDispatch;
       late DarticObject capturedScriptObj;
       bridgeFactoryRegistry.register(fooClassId,
-          (runtime, scriptObj, superArgs) {
-        capturedRuntime = runtime;
+          (dispatch, scriptObj, superArgs) {
+        capturedDispatch = dispatch;
         capturedScriptObj = scriptObj;
-        return TestBridge(runtime, scriptObj);
+        return TestBridge(dispatch, scriptObj);
       });
 
       final interp = DarticInterpreter(
@@ -53,7 +53,7 @@ Object? main() => Foo();
       final result = interp.entryResult;
       expect(result, isA<TestBridge>());
       expect((result as TestBridge).scriptObject, isA<DarticObject>());
-      expect(capturedRuntime, isA<BridgeDispatch>());
+      expect(capturedDispatch, isA<DarticDispatch>());
       expect(capturedScriptObj.classId, equals(fooClassId));
     });
 
@@ -100,14 +100,14 @@ Object? main() => Baz();
       expect(interp.entryResult, isA<DarticObject>());
     });
 
-    test('BridgeDispatch routes method calls back to interpreter', () async {
+    test('DarticDispatch routes method calls back to interpreter', () async {
       // This test verifies the full e2e flow:
-      // 1. NEW_INSTANCE creates Bridge via factory, capturing DarticRuntime
-      // 2. During execution (via print callback), we use the captured runtime
+      // 1. NEW_INSTANCE creates Bridge via factory, capturing DarticDispatch
+      // 2. During execution (via print callback), we use the captured dispatch
       //    to dispatch method calls back to the interpreter
       // 3. The interpreter executes the bytecode for speak() and kind getter
       //
-      // The callback pattern is necessary because BridgeDispatch._callMethod
+      // The callback pattern is necessary because DarticDispatch._callMethod
       // uses _runNestedDispatch, which requires _isExecuting = true.
       final source = '''
 class Animal {
@@ -126,7 +126,7 @@ Object? main() {
           module.classes.indexWhere((c) => c.name == 'Animal');
       expect(animalClassId, greaterThanOrEqualTo(0));
 
-      late DarticRuntime capturedRuntime;
+      late DarticDispatch capturedDispatch;
       late DarticObject capturedScriptObj;
 
       // Results captured inside the print callback (during execution).
@@ -135,10 +135,10 @@ Object? main() {
 
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
       bridgeFactoryRegistry.register(animalClassId,
-          (runtime, scriptObj, superArgs) {
-        capturedRuntime = runtime;
+          (dispatch, scriptObj, superArgs) {
+        capturedDispatch = dispatch;
         capturedScriptObj = scriptObj;
-        return TestBridge(runtime, scriptObj);
+        return TestBridge(dispatch, scriptObj);
       });
 
       // Use printFn callback to dispatch methods during execution.
@@ -146,9 +146,10 @@ Object? main() {
           createTestRegistries(
         printFn: (v) {
           // This runs while _isExecuting = true, so _callDarticMethod works.
-          speakResult =
-              capturedRuntime.invoke(capturedScriptObj, 'speak', []);
-          kindResult = capturedRuntime.get(capturedScriptObj, 'kind');
+          speakResult = capturedDispatch.invoke(
+              capturedScriptObj, capturedScriptObj, 'speak', []);
+          kindResult = capturedDispatch.get(
+              capturedScriptObj, capturedScriptObj, 'kind');
         },
       );
 
