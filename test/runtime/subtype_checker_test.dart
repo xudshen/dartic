@@ -1,3 +1,4 @@
+import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/compiler/type_template.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';
@@ -312,5 +313,30 @@ void main() {
       final result = extractType(<int>[1, 2, 3], registry, classes);
       expect(identical(result, registry.dynamicType), isTrue);
     });
+
+    test('DarticObjectHolder extracts from embedded DarticObject classId', () {
+      final obj = DarticObject(classes[animalCid]);
+      final holder = _MockDarticObjectHolder(obj);
+      final result = extractType(holder, registry, classes);
+      expect(result, isA<DarticInterfaceType>());
+      expect((result as DarticInterfaceType).classId, animalCid);
+    });
+
+    test('DarticObjectHolder with runtimeType_ uses runtimeType', () {
+      final obj = DarticObject(classes[listCid]);
+      final listIntType = registry.intern(listCid, [registry.intType]);
+      obj.runtimeType_ = listIntType;
+      final holder = _MockDarticObjectHolder(obj);
+      final result = extractType(holder, registry, classes);
+      expect(identical(result, listIntType), isTrue);
+    });
   });
+}
+
+/// Mock [DarticObjectHolder] for testing Bridge extractType behavior.
+class _MockDarticObjectHolder implements DarticObjectHolder {
+  _MockDarticObjectHolder(this.$darticObject);
+
+  @override
+  final DarticObject $darticObject;
 }

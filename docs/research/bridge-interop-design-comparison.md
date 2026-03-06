@@ -88,7 +88,7 @@
 | Jython | ✅ | ✅ | ✅ (生成 stub) |
 | GraalVM | ✅ | ✅ | ✅ (adapter) |
 | dart_eval | ✅ | ✅ | ✅ (bridgeCall) |
-| dartic (Phase 1) | ✅ | ⚠️ (CALL_VIRTUAL 对 Bridge 的 DarticObjectHolder 检查尚未实现, Task 4) | ✅ (DarticDispatch) |
+| dartic (Phase 1) | ✅ | ✅ (CALL_VIRTUAL 三路分发 + DarticObjectHolder 检查) | ✅ (DarticDispatch) |
 | dartic (Phase 2) | ✅ | ✅ | ✅ |
 
 ---
@@ -222,10 +222,10 @@ public List myMethod() {
 
 | # | 风险 | 业界教训 | 建议 |
 |---|------|---------|------|
-| 1 | **CALL_VIRTUAL 尚不支持 Bridge** | Squirrel 同样有此问题（host virtual 不分发到 script），导致 Bridge 对象的 script 方法从 script 侧调用时会错误走 host dispatch | Task 4 是关键路径，需优先完成 |
-| 2 | **继承链方法查找** | JRuby Issue #7270: module mixin 的方法未正确 override Java 方法。dartic 的 `classInfo.methods[nameIdx]` 需确保包含从父类继承的 script 方法 | 验证 `DarticDispatch.invoke` 是否沿 `superClassId` 链查找 |
+| 1 | ~~CALL_VIRTUAL 尚不支持 Bridge~~ | ✅ 已解决：三路分发正确实现 | — |
+| 2 | ~~继承链方法查找~~ | ✅ 已修复：`invoke`/`get`/`set` 均沿 `superClassId` 链查找 | — |
 | 3 | **GC 生命周期** | 如果 Bridge 实例仅被 host 持有，`DarticObject` 可能被 GC | `DarticObjectHolder` 的 `final` field 已解决此问题 ✅ |
-| 4 | **`is` / `instanceof` 对 script 类型** | JRuby 在 reification 前无法通过 `instanceof ScriptClass` 检查。dartic 的 `INSTANCEOF`/`CAST` 需对 Bridge 做特殊处理 | 计划在 Phase 2，优先级合理 |
+| 4 | ~~`is` / `instanceof` 对 script 类型~~ | ✅ 已修复：`extractType` 识别 `DarticObjectHolder`，正确提取嵌套 `DarticObject` 的类型 | — |
 | 5 | **循环初始化** | 所有系统的共同陷阱：Bridge 构造器中调用 script 方法，而 script 字段尚未初始化 | 文档化不变量："host super 构造器先于 script 字段访问" |
 | 6 | **多层继承链** | Script A extends Bridge B extends Host C，`CALL_VIRTUAL` 需正确处理三层分发 | 添加针对多层继承的测试用例 |
 
@@ -258,7 +258,7 @@ public List myMethod() {
                                        ┌──────────────┐
                                        │  ★ dartic ★  │
                                        │ (Bridge +    │
-                                       │  ScriptObj   │
+                                       │  DarticObject│
                                        │  Holder)     │
                                        └──────────────┘
 
@@ -289,10 +289,10 @@ public List myMethod() {
 
 | 优先级 | 行动项 | 原因 |
 |--------|--------|------|
-| **P0** | 完成 Task 4: CALL_VIRTUAL 的 DarticObjectHolder 分支 | 当前 Bridge 实例调 script 方法会走错路径，这是功能阻断性 bug |
-| **P1** | 验证 DarticDispatch.invoke 的继承链查找 | JRuby #7270 教训：必须沿 superClassId 链查找，不能只查当前 classId |
+| ~~P0~~ | ~~完成 Task 4: CALL_VIRTUAL 的 DarticObjectHolder 分支~~ | ✅ 已完成：三路分发正确实现 |
+| ~~P1~~ | ~~验证 DarticDispatch.invoke 的继承链查找~~ | ✅ 已修复：invoke/get/set 均沿 superClassId 链查找 |
 | **P1** | 添加多层继承测试 (Script→Bridge→Host) | 所有系统都在这个场景出过问题 |
-| **P2** | INSTANCEOF/CAST 对 Bridge 的支持 | 不影响方法分发，但影响类型检查正确性 |
+| ~~P2~~ | ~~INSTANCEOF/CAST 对 Bridge 的支持~~ | ✅ 已修复：extractType 识别 DarticObjectHolder |
 | **P2** | 文档化构造器不变量 | 避免循环初始化陷阱 |
 | **P3** | computed superArgs (非 no-arg super) | 签名已预留，Phase 2 实现 |
 

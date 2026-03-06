@@ -142,7 +142,27 @@ class DarticEngine {
   void loadBytecode(Uint8List bytes) {
     _checkNotDisposed();
     final module = _interpreter.loadAndVerify(bytes);
+    _installModule(module);
+  }
 
+  /// Loads a pre-compiled [DarticModule] directly, bypassing serialization.
+  ///
+  /// Use this when compiling and running in the same process (e.g., the
+  /// co19 test runner). The module is installed as-is without any
+  /// deserialization or structural verification — callers must ensure the
+  /// module is well-formed.
+  ///
+  /// On success, the engine transitions to the `loaded` state and [call]
+  /// becomes available.
+  ///
+  /// Throws [StateError] if the engine is disposed.
+  void loadModule(DarticModule module) {
+    _checkNotDisposed();
+    _installModule(module);
+  }
+
+  /// Shared module-installation logic for [loadBytecode] and [loadModule].
+  void _installModule(DarticModule module) {
     // Resolve pending bridge factories: match class names → classIds.
     if (_pendingBridgeFactories.isNotEmpty) {
       for (final classInfo in module.classes) {

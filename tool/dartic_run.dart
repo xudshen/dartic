@@ -12,7 +12,6 @@ library;
 import 'dart:io';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
@@ -28,14 +27,16 @@ Future<void> main(List<String> args) async {
   BinaryBuilder(bytes).readComponent(component);
 
   final module = DarticCompiler(component).compile();
-  final serialized = DarticSerializer().serialize(module);
 
   final engine = DarticEngine(
     config: DarticConfig(onPrint: print),
   );
 
   try {
-    engine.loadBytecode(serialized);
+    // Use loadModule directly to bypass serialization.
+    // The serializer doesn't yet serialize the class table, so the
+    // serialize→deserialize round-trip loses class information.
+    engine.loadModule(module);
   } on Object catch (e) {
     stderr.writeln('$e');
     exit(1);

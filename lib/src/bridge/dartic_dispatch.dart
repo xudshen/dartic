@@ -69,10 +69,14 @@ class DarticDispatch {
       List<Object?> args) {
     final nameIdx = _module.constantPool.lookupNameIndex(method);
     if (nameIdx < 0) return bridgeNotOverridden;
-    final classInfo = _module.classes[darticObject.classId];
-    final proto = classInfo.methods[nameIdx];
-    if (proto == null) return bridgeNotOverridden;
-    return _callMethod(_module, proto, receiver, args);
+    // Walk the superClassId chain to find inherited script methods.
+    final classes = _module.classes;
+    for (var cid = darticObject.classId; cid >= 0;
+        cid = classes[cid].superClassId) {
+      final proto = classes[cid].methods[nameIdx];
+      if (proto != null) return _callMethod(_module, proto, receiver, args);
+    }
+    return bridgeNotOverridden;
   }
 
   /// Dispatches a property getter.
@@ -84,10 +88,13 @@ class DarticDispatch {
   Object? get(Object receiver, DarticObject darticObject, String property) {
     final nameIdx = _module.constantPool.lookupNameIndex(property);
     if (nameIdx < 0) return bridgeNotOverridden;
-    final classInfo = _module.classes[darticObject.classId];
-    final proto = classInfo.methods[nameIdx];
-    if (proto == null) return bridgeNotOverridden;
-    return _callMethod(_module, proto, receiver, const []);
+    final classes = _module.classes;
+    for (var cid = darticObject.classId; cid >= 0;
+        cid = classes[cid].superClassId) {
+      final proto = classes[cid].methods[nameIdx];
+      if (proto != null) return _callMethod(_module, proto, receiver, const []);
+    }
+    return bridgeNotOverridden;
   }
 
   /// Dispatches a property setter.
@@ -100,9 +107,14 @@ class DarticDispatch {
     final setterName = '$property=';
     final nameIdx = _module.constantPool.lookupNameIndex(setterName);
     if (nameIdx < 0) return;
-    final classInfo = _module.classes[darticObject.classId];
-    final proto = classInfo.methods[nameIdx];
-    if (proto == null) return;
-    _callMethod(_module, proto, receiver, [value]);
+    final classes = _module.classes;
+    for (var cid = darticObject.classId; cid >= 0;
+        cid = classes[cid].superClassId) {
+      final proto = classes[cid].methods[nameIdx];
+      if (proto != null) {
+        _callMethod(_module, proto, receiver, [value]);
+        return;
+      }
+    }
   }
 }

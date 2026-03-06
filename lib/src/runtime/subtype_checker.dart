@@ -6,6 +6,7 @@
 /// See: docs/design/06-generics.md "isSubtypeOf"
 library;
 
+import '../bridge/dartic_object_holder.dart';
 import 'class_info.dart';
 import 'dartic_type.dart';
 import 'object.dart';
@@ -307,6 +308,13 @@ DarticType extractType(
     if (rt != null) return rt;
     // Non-generic object: create a simple type from classId.
     return registry.intern(value.classId, const []);
+  }
+  if (value is DarticObjectHolder) {
+    // Bridge instances: extract the embedded DarticObject for type checking.
+    final obj = value.$darticObject;
+    final rt = obj.runtimeType_;
+    if (rt != null) return rt;
+    return registry.intern(obj.classId, const []);
   }
   return registry.dynamicType;
 }

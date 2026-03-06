@@ -221,6 +221,158 @@ void main() {
         expect(callLog, isEmpty);
       });
     });
+
+    group('inheritance chain lookup', () {
+      late ConstantPool cp;
+      late DarticClassInfo parentInfo;
+      late DarticClassInfo childInfo;
+      late DarticFuncProto parentMethodProto;
+      late DarticFuncProto childMethodProto;
+      late DarticFuncProto parentGetterProto;
+      late DarticFuncProto parentSetterProto;
+      late DarticModule module;
+      late DarticDispatch dispatch;
+      late List<_CallRecord> callLog;
+
+      setUp(() {
+        cp = ConstantPool();
+        final greetIdx = cp.addName('greet');
+        final helloIdx = cp.addName('hello');
+        final nameIdx = cp.addName('name');
+        final nameSetIdx = cp.addName('name=');
+
+        // Parent class (classId 0) has 'greet', 'name' getter, 'name=' setter.
+        parentInfo = DarticClassInfo(
+          classId: 0,
+          name: 'Parent',
+          superClassId: -1,
+          refFieldCount: 0,
+          valueFieldCount: 0,
+        );
+
+        // Child class (classId 1) extends Parent, only has 'hello'.
+        childInfo = DarticClassInfo(
+          classId: 1,
+          name: 'Child',
+          superClassId: 0,
+          refFieldCount: 0,
+          valueFieldCount: 0,
+        );
+
+        parentMethodProto = DarticFuncProto(
+          funcId: 0,
+          name: 'greet',
+          bytecode: Uint32List(0),
+          valueRegCount: 0,
+          refRegCount: 0,
+          paramCount: 1,
+        );
+
+        childMethodProto = DarticFuncProto(
+          funcId: 1,
+          name: 'hello',
+          bytecode: Uint32List(0),
+          valueRegCount: 0,
+          refRegCount: 0,
+          paramCount: 1,
+        );
+
+        parentGetterProto = DarticFuncProto(
+          funcId: 2,
+          name: 'name',
+          bytecode: Uint32List(0),
+          valueRegCount: 0,
+          refRegCount: 0,
+          paramCount: 0,
+        );
+
+        parentSetterProto = DarticFuncProto(
+          funcId: 3,
+          name: 'name=',
+          bytecode: Uint32List(0),
+          valueRegCount: 0,
+          refRegCount: 0,
+          paramCount: 1,
+        );
+
+        parentInfo.methods[greetIdx] = parentMethodProto;
+        parentInfo.methods[nameIdx] = parentGetterProto;
+        parentInfo.methods[nameSetIdx] = parentSetterProto;
+        childInfo.methods[helloIdx] = childMethodProto;
+
+        module = DarticModule(
+          functions: [
+            parentMethodProto,
+            childMethodProto,
+            parentGetterProto,
+            parentSetterProto,
+          ],
+          constantPool: cp,
+          entryFuncId: 0,
+          globalCount: 0,
+          globalInitializerIds: const [],
+          classes: [parentInfo, childInfo],
+        );
+
+        callLog = [];
+        dispatch = DarticDispatch(
+          module: module,
+          callMethod: (mod, method, receiver, args) {
+            callLog.add(_CallRecord(
+              module: mod,
+              method: method,
+              receiver: receiver,
+              args: args,
+            ));
+            return 'called:${method.name}';
+          },
+        );
+      });
+
+      test('invoke finds method in parent class via superClassId chain', () {
+        final childObj = DarticObject(childInfo);
+        final result = dispatch.invoke(childObj, childObj, 'greet', ['arg']);
+
+        expect(result, equals('called:greet'));
+        expect(callLog, hasLength(1));
+        expect(identical(callLog[0].method, parentMethodProto), isTrue);
+      });
+
+      test('invoke prefers child method over parent method', () {
+        final childObj = DarticObject(childInfo);
+        final result = dispatch.invoke(childObj, childObj, 'hello', ['arg']);
+
+        expect(result, equals('called:hello'));
+        expect(callLog, hasLength(1));
+        expect(identical(callLog[0].method, childMethodProto), isTrue);
+      });
+
+      test('invoke returns bridgeNotOverridden for truly missing method', () {
+        final childObj = DarticObject(childInfo);
+        final result = dispatch.invoke(childObj, childObj, 'missing', []);
+
+        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(callLog, isEmpty);
+      });
+
+      test('get finds getter in parent class via superClassId chain', () {
+        final childObj = DarticObject(childInfo);
+        final result = dispatch.get(childObj, childObj, 'name');
+
+        expect(result, equals('called:name'));
+        expect(callLog, hasLength(1));
+        expect(identical(callLog[0].method, parentGetterProto), isTrue);
+      });
+
+      test('set finds setter in parent class via superClassId chain', () {
+        final childObj = DarticObject(childInfo);
+        dispatch.set(childObj, childObj, 'name', 'Bob');
+
+        expect(callLog, hasLength(1));
+        expect(identical(callLog[0].method, parentSetterProto), isTrue);
+        expect(callLog[0].args, equals(['Bob']));
+      });
+    });
   });
 }
 
