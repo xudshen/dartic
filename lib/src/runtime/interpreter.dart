@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import '../bridge/bridge_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
-import '../bridge/script_object_holder.dart';
+import '../bridge/dartic_object_holder.dart';
 import '../bridge/host_function_registry.dart';
 import '../bridge/host_dispatch_registry.dart';
 import '../bytecode/deserializer.dart';
@@ -60,13 +60,13 @@ class DarticInterpreter {
   /// Extracts [DarticObject] from a possible Bridge instance.
   ///
   /// If [receiver] is already a [DarticObject], returns it directly.
-  /// If [receiver] implements [ScriptObjectHolder] (Bridge), extracts the
+  /// If [receiver] implements [DarticObjectHolder] (Bridge), extracts the
   /// embedded script object.
   /// Otherwise throws (field access opcodes should never hit this case).
   @pragma('vm:prefer-inline')
   static DarticObject _extractScriptObject(Object receiver) {
     if (receiver is DarticObject) return receiver;
-    if (receiver is ScriptObjectHolder) return receiver.$darticObject;
+    if (receiver is DarticObjectHolder) return receiver.$darticObject;
     throw DarticError(
       'Field access on non-script object: ${receiver.runtimeType}',
     );
@@ -1909,12 +1909,12 @@ class DarticInterpreter {
           final ic = module.functions[callStack.funcId].icTable[c];
 
           // Try script dispatch: works for DarticObject and Bridge.
-          // Bridge instances implement ScriptObjectHolder, wrapping a
+          // Bridge instances implement DarticObjectHolder, wrapping a
           // DarticObject whose classId drives IC method lookup.
           final DarticObject? scriptObj;
           if (receiver is DarticObject) {
             scriptObj = receiver;
-          } else if (receiver is ScriptObjectHolder) {
+          } else if (receiver is DarticObjectHolder) {
             scriptObj = receiver.$darticObject;
           } else {
             scriptObj = null;
@@ -2077,12 +2077,12 @@ class DarticInterpreter {
 
           // Auto-load ITA from caller's `this` (rsp+2) runtimeType_ for
           // generic classes, so super methods can access class type params.
-          // Bridge instances implement ScriptObjectHolder, so unwrap to get
+          // Bridge instances implement DarticObjectHolder, so unwrap to get
           // the underlying DarticObject for ITA extraction.
           final thisObj = rs.read(callerRBase + 2);
           final scriptObj = (thisObj is DarticObject)
               ? thisObj
-              : (thisObj is ScriptObjectHolder)
+              : (thisObj is DarticObjectHolder)
                   ? thisObj.$darticObject
                   : null;
           if (scriptObj != null) {

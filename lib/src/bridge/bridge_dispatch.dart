@@ -25,7 +25,7 @@ import 'bridge_factory_registry.dart';
 /// ```dart
 /// @override
 /// int get length {
-///   final result = _dispatch.get(_scriptObject, 'length');
+///   final result = _dispatch.get(_darticObject, 'length');
 ///   if (identical(result, bridgeNotOverridden)) return super.length;
 ///   return result as int;
 /// }
@@ -61,33 +61,35 @@ class BridgeDispatch implements DarticRuntime {
   final CallDarticMethod _callMethod;
 
   @override
-  Object? invoke(DarticObject self, String method, List<Object?> args) {
+  Object? invoke(Object receiver, DarticObject darticObject, String method,
+      List<Object?> args) {
     final nameIdx = _module.constantPool.lookupNameIndex(method);
     if (nameIdx < 0) return bridgeNotOverridden;
-    final classInfo = _module.classes[self.classId];
+    final classInfo = _module.classes[darticObject.classId];
     final proto = classInfo.methods[nameIdx];
     if (proto == null) return bridgeNotOverridden;
-    return _callMethod(_module, proto, self, args);
+    return _callMethod(_module, proto, receiver, args);
   }
 
   @override
-  Object? get(DarticObject self, String property) {
+  Object? get(Object receiver, DarticObject darticObject, String property) {
     final nameIdx = _module.constantPool.lookupNameIndex(property);
     if (nameIdx < 0) return bridgeNotOverridden;
-    final classInfo = _module.classes[self.classId];
+    final classInfo = _module.classes[darticObject.classId];
     final proto = classInfo.methods[nameIdx];
     if (proto == null) return bridgeNotOverridden;
-    return _callMethod(_module, proto, self, const []);
+    return _callMethod(_module, proto, receiver, const []);
   }
 
   @override
-  void set(DarticObject self, String property, Object? value) {
+  void set(Object receiver, DarticObject darticObject, String property,
+      Object? value) {
     final setterName = '$property=';
     final nameIdx = _module.constantPool.lookupNameIndex(setterName);
     if (nameIdx < 0) return;
-    final classInfo = _module.classes[self.classId];
+    final classInfo = _module.classes[darticObject.classId];
     final proto = classInfo.methods[nameIdx];
     if (proto == null) return;
-    _callMethod(_module, proto, self, [value]);
+    _callMethod(_module, proto, receiver, [value]);
   }
 }

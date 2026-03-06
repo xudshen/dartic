@@ -1,5 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
-import 'package:dartic/src/bridge/script_object_holder.dart';
+import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';
@@ -8,9 +8,9 @@ import '../helpers/compile_helper.dart';
 
 /// Minimal Bridge class for E2E integration tests.
 ///
-/// Implements [ScriptObjectHolder] so the interpreter can extract the
+/// Implements [DarticObjectHolder] so the interpreter can extract the
 /// embedded [DarticObject] for field access and method dispatch.
-class _E2EBridge implements ScriptObjectHolder {
+class _E2EBridge implements DarticObjectHolder {
   _E2EBridge(
       DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
   @override

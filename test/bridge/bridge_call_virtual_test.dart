@@ -1,5 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
-import 'package:dartic/src/bridge/script_object_holder.dart';
+import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';
@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import '../helpers/compile_helper.dart';
 
 /// Minimal Bridge class for CALL_VIRTUAL dispatch tests.
-class _VirtualTestBridge implements ScriptObjectHolder {
+class _VirtualTestBridge implements DarticObjectHolder {
   _VirtualTestBridge(
       DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
   @override

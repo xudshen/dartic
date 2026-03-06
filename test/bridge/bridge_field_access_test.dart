@@ -1,5 +1,5 @@
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
-import 'package:dartic/src/bridge/script_object_holder.dart';
+import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';
@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import '../helpers/compile_helper.dart';
 
 /// Wraps a DarticObject — minimal Bridge for testing field access opcodes.
-class _FieldTestBridge implements ScriptObjectHolder {
+class _FieldTestBridge implements DarticObjectHolder {
   _FieldTestBridge(
       DarticRuntime runtime, this.$darticObject, List<Object?> superArgs);
   @override

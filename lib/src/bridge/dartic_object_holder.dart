@@ -8,13 +8,13 @@ import '../runtime/object.dart';
 /// 用于字段访问和方法分发。
 ///
 /// ```dart
-/// class $MyServiceBridge extends MyService implements ScriptObjectHolder {
+/// class $MyServiceBridge extends MyService implements DarticObjectHolder {
 ///   @override
 ///   final DarticObject $darticObject;
 ///   // ...
 /// }
 /// ```
-abstract interface class ScriptObjectHolder {
+abstract interface class DarticObjectHolder {
   /// 承载脚本定义字段的内嵌 [DarticObject]。
   DarticObject get $darticObject;
 }

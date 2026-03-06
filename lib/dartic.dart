@@ -14,6 +14,6 @@ export 'src/api/plugin.dart';
 export 'src/api/plugin_context.dart';
 export 'src/bridge/bridge_factory_registry.dart'
     show BridgeFactory, DarticRuntime;
-export 'src/bridge/script_object_holder.dart';
+export 'src/bridge/dartic_object_holder.dart';
 export 'src/runtime/error.dart';
 export 'src/sandbox/load_error.dart';
