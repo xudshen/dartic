@@ -9,27 +9,21 @@ import 'package:test/test.dart';
 
 void main() {
   group('DarticDispatch', () {
-    group('bridgeNotOverridden sentinel', () {
-      test('is a Symbol', () {
-        expect(bridgeNotOverridden, isA<Symbol>());
+    group('notOverridden sentinel', () {
+      test('is a typed sentinel (not a Symbol)', () {
+        expect(notOverridden, isNot(isA<Symbol>()));
+        expect(notOverridden.toString(), equals('notOverridden'));
       });
 
       test('identical() check works correctly', () {
         // The sentinel should be identical to itself.
-        expect(identical(bridgeNotOverridden, bridgeNotOverridden), isTrue);
-      });
-
-      test('is not equal to any other Symbol', () {
-        // A regular public Symbol should not match the sentinel.
-        expect(bridgeNotOverridden == #somePublicSymbol, isFalse);
-        expect(bridgeNotOverridden == Symbol('bridgeNotOverridden'), isFalse);
-        expect(bridgeNotOverridden == Symbol('_bridgeNotOverridden'), isFalse);
+        expect(identical(notOverridden, notOverridden), isTrue);
       });
 
       test('is not equal to other values when compared via identical()', () {
         // Verify the sentinel is distinguishable from common values
         // when stored as Object? and compared with identical().
-        final Object sentinel = bridgeNotOverridden;
+        final Object sentinel = notOverridden;
         expect(identical(sentinel, null), isFalse);
         expect(identical(sentinel, 0), isFalse);
         expect(identical(sentinel, false), isFalse);
@@ -41,14 +35,14 @@ void main() {
         // overridden, or a real value if overridden.
         Object? simulateDispatch(bool isOverridden) {
           if (isOverridden) return 42;
-          return bridgeNotOverridden;
+          return notOverridden;
         }
 
         final overridden = simulateDispatch(true);
-        final notOverridden = simulateDispatch(false);
+        final notOverriddenResult = simulateDispatch(false);
 
-        expect(identical(overridden, bridgeNotOverridden), isFalse);
-        expect(identical(notOverridden, bridgeNotOverridden), isTrue);
+        expect(identical(overridden, notOverridden), isFalse);
+        expect(identical(notOverriddenResult, notOverridden), isTrue);
       });
     });
 
@@ -152,10 +146,10 @@ void main() {
         expect(callLog[0].args, equals(['Bob']));
       });
 
-      test('invoke returns bridgeNotOverridden for unknown method', () {
+      test('invoke returns notOverridden for unknown method', () {
         final result = dispatch.invoke(obj, obj, 'unknownMethod', []);
 
-        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
@@ -170,10 +164,10 @@ void main() {
         expect(callLog[0].args, equals(const []));
       });
 
-      test('get returns bridgeNotOverridden for unknown property', () {
+      test('get returns notOverridden for unknown property', () {
         final result = dispatch.get(obj, obj, 'unknownProperty');
 
-        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
@@ -194,22 +188,22 @@ void main() {
         expect(callLog, isEmpty);
       });
 
-      test('invoke returns bridgeNotOverridden when name exists in pool '
+      test('invoke returns notOverridden when name exists in pool '
           'but not in class methods', () {
         // Add a name to the pool that the class does not have a method for.
         cp.addName('toString');
         final result = dispatch.invoke(obj, obj, 'toString', []);
 
-        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
-      test('get returns bridgeNotOverridden when name exists in pool '
+      test('get returns notOverridden when name exists in pool '
           'but not in class methods', () {
         cp.addName('hashCode');
         final result = dispatch.get(obj, obj, 'hashCode');
 
-        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
@@ -347,11 +341,11 @@ void main() {
         expect(identical(callLog[0].method, childMethodProto), isTrue);
       });
 
-      test('invoke returns bridgeNotOverridden for truly missing method', () {
+      test('invoke returns notOverridden for truly missing method', () {
         final childObj = DarticObject(childInfo);
         final result = dispatch.invoke(childObj, childObj, 'missing', []);
 
-        expect(identical(result, bridgeNotOverridden), isTrue);
+        expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
@@ -376,7 +370,7 @@ void main() {
   });
 }
 
-/// Records a single call to the mock [CallDarticMethod] callback.
+/// Records a single call to the mock [InterpreterMethodCallback] callback.
 class _CallRecord {
   _CallRecord({
     required this.module,

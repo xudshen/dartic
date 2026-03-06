@@ -7,7 +7,7 @@ void main() {
   late HostBindingRegistry registry;
 
   setUp(() {
-    registry = createTestRegistries().hostFunctionRegistry;
+    registry = createTestRegistries().hostBindingRegistry;
   });
 
   // ── Helper to invoke a binding by symbolic name ──

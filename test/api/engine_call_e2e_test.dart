@@ -93,7 +93,7 @@ Future<int> main() async => await f();
     });
   });
 
-  group('onError handling', () {
+  group('onUnhandledException handling', () {
     late Uint8List throwBytes;
 
     setUpAll(() async {
@@ -103,12 +103,12 @@ void main() {}
 ''');
     });
 
-    test('script throw uncaught, onError called, call returns null', () {
+    test('script throw uncaught, onUnhandledException called, call returns null', () {
       Object? capturedError;
       StackTrace? capturedStack;
       final engine = DarticEngine(
         config: DarticConfig(
-          onError: (e, st) {
+          onUnhandledException: (e, st) {
             capturedError = e;
             capturedStack = st;
           },
@@ -122,7 +122,7 @@ void main() {}
       engine.dispose();
     });
 
-    test('script throw uncaught, no onError, exception propagates', () {
+    test('script throw uncaught, no onUnhandledException, exception propagates', () {
       final engine = DarticEngine();
       engine.loadBytecode(throwBytes);
       expect(
@@ -132,8 +132,8 @@ void main() {}
       engine.dispose();
     });
 
-    test('resource error (FuelExhaustedError) bypasses onError', () async {
-      var onErrorCalled = false;
+    test('resource error (FuelExhaustedError) bypasses onUnhandledException', () async {
+      var onExceptionCalled = false;
       final infiniteLoopBytes = await _compileToDarb('''
 void loop() { while (true) {} }
 void main() {}
@@ -141,8 +141,8 @@ void main() {}
       final engine = DarticEngine(
         config: DarticConfig(
           maxTotalFuel: 100,
-          onError: (e, st) {
-            onErrorCalled = true;
+          onUnhandledException: (e, st) {
+            onExceptionCalled = true;
           },
         ),
       );
@@ -151,12 +151,12 @@ void main() {}
         () => engine.call('loop'),
         throwsA(isA<FuelExhaustedError>()),
       );
-      expect(onErrorCalled, isFalse);
+      expect(onExceptionCalled, isFalse);
       engine.dispose();
     });
 
-    test('resource error (CallDepthExceededError) bypasses onError', () async {
-      var onErrorCalled = false;
+    test('resource error (CallDepthExceededError) bypasses onUnhandledException', () async {
+      var onExceptionCalled = false;
       // Use a simpler recursive function that avoids verifier issues.
       final recursiveBytes = await _compileToDarb('''
 Object recurse() => recurse();
@@ -165,8 +165,8 @@ void main() {}
       final engine = DarticEngine(
         config: DarticConfig(
           maxCallDepth: 10,
-          onError: (e, st) {
-            onErrorCalled = true;
+          onUnhandledException: (e, st) {
+            onExceptionCalled = true;
           },
         ),
       );
@@ -175,7 +175,7 @@ void main() {}
         () => engine.call('recurse'),
         throwsA(isA<CallDepthExceededError>()),
       );
-      expect(onErrorCalled, isFalse);
+      expect(onExceptionCalled, isFalse);
       engine.dispose();
     });
   });
@@ -223,7 +223,7 @@ void main() {}
   });
 
   group('call() after error recovery', () {
-    test('engine remains usable after onError handles script exception',
+    test('engine remains usable after onUnhandledException handles script exception',
         () async {
       final bytes = await _compileToDarb('''
 void boom() { throw 'oops'; }
@@ -231,10 +231,10 @@ int add(int a, int b) => a + b;
 void main() {}
 ''');
       final engine = DarticEngine(
-        config: DarticConfig(onError: (e, st) {}),
+        config: DarticConfig(onUnhandledException: (e, st) {}),
       );
       engine.loadBytecode(bytes);
-      // First call throws (handled by onError)
+      // First call throws (handled by onUnhandledException)
       engine.call('boom');
       // Second call should still work
       final result = engine.call('add', [3, 4]);

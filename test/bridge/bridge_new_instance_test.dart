@@ -24,7 +24,7 @@ class Foo {
 Object? main() => Foo();
 ''';
       final module = await compileDart(source);
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries();
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
 
@@ -43,8 +43,8 @@ Object? main() => Foo();
       });
 
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
       );
       interp.execute(module);
@@ -66,13 +66,13 @@ class Bar {
 Object? main() => Bar();
 ''';
       final module = await compileDart(source);
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries();
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
 
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
       );
       interp.execute(module);
@@ -87,13 +87,13 @@ class Baz {}
 Object? main() => Baz();
 ''';
       final module = await compileDart(source);
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries();
 
       // No bridgeFactoryRegistry passed — should behave as before.
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
       );
       interp.execute(module);
 
@@ -142,7 +142,7 @@ Object? main() {
       });
 
       // Use printFn callback to dispatch methods during execution.
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
         printFn: (v) {
           // This runs while _isExecuting = true, so _callDarticMethod works.
@@ -154,8 +154,8 @@ Object? main() {
       );
 
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
       );
       interp.execute(module);

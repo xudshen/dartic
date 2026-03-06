@@ -217,7 +217,7 @@ feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runne
 
 | # | 严重性 | 问题 | 修复 |
 |---|--------|------|------|
-| 1 | CRITICAL | setter 委托无 super 回退 | 加 `bridgeNotOverridden` 检查 + `super.$name = value` 回退 |
+| 1 | CRITICAL | setter 委托无 super 回退 | 加 `notOverridden` 检查 + `super.$name = value` 回退 |
 | 2 | CRITICAL | super 转发器闭包丢失所有参数 | 添加 `SuperForwarderKind` 枚举 + `argCount`，按 getter/setter/method 分发 |
 | 3 | CRITICAL | Bridge 构造函数不转发 super 参数 | `BridgeFactoryClosure` 携带 params，构造函数生成 `super(arg1, arg2)` |
 | 4 | IMPORTANT | `_buildParamDeclaration` 将可选/命名参数拉平为必选 | 保留 `[]` / `{}` 包装，命名参数加 `required` |

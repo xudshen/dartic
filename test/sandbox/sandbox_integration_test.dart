@@ -130,7 +130,7 @@ void main() {
 
         // Interpreter with an empty registry (no bindings registered).
         final registry = HostBindingRegistry();
-        final interp = DarticInterpreter(hostFunctionRegistry: registry);
+        final interp = DarticInterpreter(hostBindingRegistry: registry);
         expect(
           () => interp.loadAndVerify(bytes),
           throwsA(isA<DarticLoadError>().having(
@@ -178,7 +178,7 @@ void main() {
 
         final registry = HostBindingRegistry();
         registry.register('dart:core::::myFunc#1', (args) => null);
-        final interp = DarticInterpreter(hostFunctionRegistry: registry);
+        final interp = DarticInterpreter(hostBindingRegistry: registry);
 
         final verified = interp.loadAndVerify(bytes);
         expect(verified, isA<DarticModule>());

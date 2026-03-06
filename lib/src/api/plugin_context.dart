@@ -27,19 +27,19 @@ class PluginContext {
   /// effectively impossible.
   PluginContext({
     required DarticConfig config,
-    required HostBindingRegistry hostFunctionRegistry,
-    required HostClassRegistry hostDispatchRegistry,
+    required HostBindingRegistry hostBindingRegistry,
+    required HostClassRegistry hostClassRegistry,
     required BridgeFactoryRegistry bridgeFactoryRegistry,
     required Map<String, BridgeFactory> pendingBridgeFactories,
   })  : _config = config,
-        _hostFunctionRegistry = hostFunctionRegistry,
-        _hostDispatchRegistry = hostDispatchRegistry,
+        _hostBindingRegistry = hostBindingRegistry,
+        _hostClassRegistry = hostClassRegistry,
         _bridgeFactoryRegistry = bridgeFactoryRegistry,
         _pendingBridgeFactories = pendingBridgeFactories;
 
   final DarticConfig _config;
-  final HostBindingRegistry _hostFunctionRegistry;
-  final HostClassRegistry _hostDispatchRegistry;
+  final HostBindingRegistry _hostBindingRegistry;
+  final HostClassRegistry _hostClassRegistry;
   // ignore: unused_field — will be used in later tasks for bridge factory resolution
   final BridgeFactoryRegistry _bridgeFactoryRegistry;
   final Map<String, BridgeFactory> _pendingBridgeFactories;
@@ -55,7 +55,7 @@ class PluginContext {
     String name,
     Object? Function(List<Object?>) wrapper,
   ) {
-    _hostFunctionRegistry.register(name, wrapper);
+    _hostBindingRegistry.register(name, wrapper);
   }
 
   /// Registers a host class, coordinating three internal registries.
@@ -104,7 +104,7 @@ class PluginContext {
   }) {
     // 1. Register each method binding.
     for (final entry in methods.entries) {
-      _hostFunctionRegistry.register('$name::${entry.key}', entry.value);
+      _hostBindingRegistry.register('$name::${entry.key}', entry.value);
     }
 
     // 2. Register dynamic dispatch.
@@ -112,7 +112,7 @@ class PluginContext {
       '$name::',
       if (superclasses != null) ...superclasses.map((s) => '$s::'),
     ];
-    _hostDispatchRegistry.register(prefixes, type: type, test: test);
+    _hostClassRegistry.register(prefixes, type: type, test: test);
 
     // 3. Register bridge factory (deferred resolution by name).
     if (bridgeFactory != null) {

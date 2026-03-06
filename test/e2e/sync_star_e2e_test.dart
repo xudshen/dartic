@@ -182,12 +182,12 @@ void main() {
 Future<(Object?, List<String>)> _compileAndRun(String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     fuelBudget: 200000,
   );
   interp.execute(module);

@@ -10,7 +10,7 @@ void main() {
   late HostBindingRegistry registry;
 
   setUp(() {
-    registry = createTestRegistries().hostFunctionRegistry;
+    registry = createTestRegistries().hostBindingRegistry;
   });
 
   Object? invoke(String name, List<Object?> args) {
@@ -369,9 +369,9 @@ void main() {
         String source) async {
       final printLog = <String>[];
       final module = await compileDart(source);
-      final reg = createTestRegistries(printFn: (v) => printLog.add('$v')).hostFunctionRegistry;
+      final reg = createTestRegistries(printFn: (v) => printLog.add('$v')).hostBindingRegistry;
       final interp = DarticInterpreter(
-        hostFunctionRegistry: reg,
+        hostBindingRegistry: reg,
         fuelBudget: DarticInterpreter.defaultFuelBudget,
       );
       interp.execute(module);

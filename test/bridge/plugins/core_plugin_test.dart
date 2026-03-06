@@ -22,8 +22,8 @@ void main() {
     dispatchRegistry = HostClassRegistry(hostRegistry);
     ctx = PluginContext(
       config: const DarticConfig(),
-      hostFunctionRegistry: hostRegistry,
-      hostDispatchRegistry: dispatchRegistry,
+      hostBindingRegistry: hostRegistry,
+      hostClassRegistry: dispatchRegistry,
       bridgeFactoryRegistry: BridgeFactoryRegistry(),
       pendingBridgeFactories: {},
     );
@@ -44,8 +44,8 @@ void main() {
       final log = <String>[];
       final customCtx = PluginContext(
         config: DarticConfig(onPrint: (v) => log.add('$v')),
-        hostFunctionRegistry: hostRegistry,
-        hostDispatchRegistry: dispatchRegistry,
+        hostBindingRegistry: hostRegistry,
+        hostClassRegistry: dispatchRegistry,
         bridgeFactoryRegistry: BridgeFactoryRegistry(),
         pendingBridgeFactories: {},
       );
@@ -116,63 +116,59 @@ void main() {
     test('dispatchers are registered for core types', () {
       CorePlugin().register(ctx);
 
-      // Non-generic types — exact type dispatch
-      expect(dispatchRegistry.lookup('hello'), isNotNull,
+      // Non-generic types — exact type dispatch (getProperty returns non-null)
+      expect(dispatchRegistry.getProperty('hello', 'length'), isNotNull,
           reason: 'String dispatcher');
-      expect(dispatchRegistry.lookup(42), isNotNull,
+      expect(dispatchRegistry.getProperty(42, 'isEven'), isNotNull,
           reason: 'int dispatcher');
-      expect(dispatchRegistry.lookup(3.14), isNotNull,
+      expect(dispatchRegistry.getProperty(3.14, 'isNaN'), isNotNull,
           reason: 'double dispatcher');
-      expect(dispatchRegistry.lookup(true), isNotNull,
+      expect(dispatchRegistry.getProperty(true, 'hashCode'), isNotNull,
           reason: 'bool dispatcher');
       expect(
-          dispatchRegistry.lookup(const Duration(seconds: 1)), isNotNull,
+          dispatchRegistry.getProperty(const Duration(seconds: 1), 'inMilliseconds'), isNotNull,
           reason: 'Duration dispatcher');
 
       // Generic types — predicate dispatch
-      expect(dispatchRegistry.lookup([1, 2, 3]), isNotNull,
+      expect(dispatchRegistry.getProperty([1, 2, 3], 'length'), isNotNull,
           reason: 'List dispatcher');
-      expect(dispatchRegistry.lookup({'a': 1}), isNotNull,
+      expect(dispatchRegistry.getProperty({'a': 1}, 'length'), isNotNull,
           reason: 'Map dispatcher');
-      expect(dispatchRegistry.lookup({1, 2, 3}), isNotNull,
+      expect(dispatchRegistry.getProperty({1, 2, 3}, 'length'), isNotNull,
           reason: 'Set dispatcher');
     });
 
     test('dispatcher method lookup works for int', () {
       CorePlugin().register(ctx);
 
-      final dispatcher = dispatchRegistry.lookup(42)!;
-
       // int.isEven getter
-      expect(dispatcher.getProperty(42, 'isEven'), true);
-      expect(dispatcher.getProperty(43, 'isEven'), false);
+      expect(dispatchRegistry.getProperty(42, 'isEven'), true);
+      expect(dispatchRegistry.getProperty(43, 'isEven'), false);
 
       // int.toString() method
-      expect(dispatcher.invokeMethod(42, 'toString', []), '42');
+      expect(dispatchRegistry.invokeMethod(42, 'toString', []), '42');
 
       // num.abs() via superclass prefix chain
-      expect(dispatcher.invokeMethod(-5, 'abs', []), 5);
+      expect(dispatchRegistry.invokeMethod(-5, 'abs', []), 5);
     });
 
     test('dispatcher method lookup works for List', () {
       CorePlugin().register(ctx);
 
       final list = [1, 2, 3];
-      final dispatcher = dispatchRegistry.lookup(list)!;
 
-      expect(dispatcher.getProperty(list, 'length'), 3);
-      expect(dispatcher.invokeMethod(list, 'contains', [2]), true);
-      expect(dispatcher.invokeMethod(list, 'contains', [99]), false);
+      expect(dispatchRegistry.getProperty(list, 'length'), 3);
+      expect(dispatchRegistry.invokeMethod(list, 'contains', [2]), true);
+      expect(dispatchRegistry.invokeMethod(list, 'contains', [99]), false);
     });
 
     test('dispatcher method lookup works for Map', () {
       CorePlugin().register(ctx);
 
       final map = {'a': 1, 'b': 2};
-      final dispatcher = dispatchRegistry.lookup(map)!;
 
-      expect(dispatcher.getProperty(map, 'length'), 2);
-      expect(dispatcher.invokeMethod(map, 'containsKey', ['a']), true);
+      expect(dispatchRegistry.getProperty(map, 'length'), 2);
+      expect(dispatchRegistry.invokeMethod(map, 'containsKey', ['a']), true);
     });
   });
 }

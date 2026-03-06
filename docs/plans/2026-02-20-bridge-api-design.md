@@ -44,7 +44,7 @@ DarticEngine 公开 API 层是 dartic 引擎面向宿主开发者的唯一入口
 | 绑定注册 | 声明式注解 @DarticExport + build_runner | 手写绑定注册：冗长易错；运行时反射：AOT 不可用 | 类型安全、可扩展、IDE 友好 |
 | 执行模型 | 预编译 .darb 字节码 | JIT：设备端编译开销；源码解释：启动慢 | 设备端零编译开销，支持热更新分发 |
 | 值传递 | 原生 Dart 值直接跨边界 | $Value 包装（dart_eval 风格）：API 冗长，额外分配 | 零包装开销，API 更自然 |
-| 错误模型 | 标准 Dart 异常 + 可选 onError 回调 | Result 类型：与 Dart 生态不一致 | 与 Dart 异常惯例一致 |
+| 错误模型 | 标准 Dart 异常 + 可选 onUnhandledException 回调 | Result 类型：与 Dart 生态不一致 | 与 Dart 异常惯例一致 |
 | 包结构 | 分包（annotation / generator / bridges） | 单包：强制引入不需要的依赖 | 最小化依赖 |
 | BridgeDispatch 方法标识 | 字符串方法名 | 常量池索引：与 .darb 布局强耦合，换模块即失效 | 字符串查找性能可接受，解耦模块与生成代码 |
 | BridgeFactory 签名 | (DarticRuntime, DarticObject, List\<Object?\> superArgs) → Object | (DarticObject, BridgeDispatch)：无 super 参数，无法处理带参 super 构造函数 | 与 Ch4 定义对齐，支持 super 构造参数 |
@@ -95,7 +95,7 @@ DarticEngine 是宿主开发者的唯一入口，封装 DarticInterpreter 和所
 | executionTimeout | Duration? | null（无限制） | 最大挂钟执行时间，在 fuel 边界检查，不引入逐指令开销 |
 | maxCallDepth | int | 512 | 最大调用栈深度 → 映射到 CallStack(maxFrames:) |
 | onPrint | void Function(Object?)? | null（静默丢弃） | 脚本 print() 的处理器 → 映射到 CoreBindings.registerAll(printFn:) |
-| onError | void Function(Object, StackTrace)? | null（直接抛出） | **仅处理脚本未捕获异常**（详见错误模型节） |
+| onUnhandledException | void Function(Object, StackTrace)? | null（直接抛出） | **仅处理脚本未捕获异常**（详见错误模型节） |
 
 ### DarticPlugin（插件接口）
 
@@ -145,7 +145,7 @@ Bridge 模式允许脚本类继承宿主类——解决"实例需同时是真正
 | get | (DarticObject self, String property) → Object? | 分发属性 getter。脚本未 override → 返回 notOverridden |
 | set | (DarticObject self, String property, Object? value) → void | 分发属性 setter |
 
-**notOverridden 哨兵值**：`#_bridgeNotOverridden`（dartic 包内的私有 Symbol）。因为是私有符号，脚本代码无法构造此值，`identical()` 比较无误报。Bridge 委托方法检测到 notOverridden 后调用 `super.xxx()` 回退到宿主实现。
+**notOverridden 哨兵值**：`#_notOverridden`（dartic 包内的私有 Symbol）。因为是私有符号，脚本代码无法构造此值，`identical()` 比较无误报。Bridge 委托方法检测到 notOverridden 后调用 `super.xxx()` 回退到宿主实现。
 
 **Bridge 生成物**（codegen 为 @DarticExport(bridge: true) 类生成，详见 Ch4 BridgeGenerator）：
 
@@ -166,7 +166,7 @@ Bridge 模式允许脚本类继承宿主类——解决"实例需同时是真正
 | @DarticExport 标注类 | 脚本使用 | 宿主→脚本 | HostBindingRegistry 绑定 + HostClassRegistry 动态分发 |
 | 脚本定义类 | 宿主接收 | 脚本→宿主 | DarticProxy（自动，Expando 缓存保证身份一致性） |
 | 宿主 Function | 脚本调用 | 宿主→脚本 | HostBindingRegistry 注册 |
-| 脚本闭包 | 宿主调用 | 脚本→宿主 | DarticCallbackProxy（proxy0 ~ proxy6，详见 Ch4） |
+| 脚本闭包 | 宿主调用 | 脚本→宿主 | ClosureAdapter（proxy0 ~ proxy6，详见 Ch4） |
 | @DarticExport(bridge: true) | 脚本 extends | 双向 | Bridge 类（codegen 生成，VM `is` 检查通过） |
 | Future\<T\>（async 函数） | engine.call() 返回 | 脚本→宿主 | 返回 VM Future（Completer 桥接，详见 Ch7） |
 
@@ -193,11 +193,11 @@ Bridge 模式允许脚本类继承宿主类——解决"实例需同时是真正
 
 | 场景 | 行为 |
 |------|------|
-| 脚本 throw，脚本未捕获 | 若 onError 非 null → 调用 onError，engine.call() 返回 null；否则原始异常传播到宿主 |
+| 脚本 throw，脚本未捕获 | 若 onUnhandledException 非 null → 调用 onUnhandledException，engine.call() 返回 null；否则原始异常传播到宿主 |
 | 宿主函数 throw | 脚本 catch 可捕获（VM 异常类型保留，`on FormatException` 可匹配） |
-| fuel 耗尽 | FuelExhaustedError **始终传播**到宿主（绕过 onError） |
-| 超时 | ExecutionTimeoutError **始终传播**到宿主（绕过 onError） |
-| 栈溢出 | CallDepthExceededError **始终传播**到宿主（绕过 onError） |
+| fuel 耗尽 | FuelExhaustedError **始终传播**到宿主（绕过 onUnhandledException） |
+| 超时 | ExecutionTimeoutError **始终传播**到宿主（绕过 onUnhandledException） |
+| 栈溢出 | CallDepthExceededError **始终传播**到宿主（绕过 onUnhandledException） |
 | 字节码无效 / 绑定缺失 | DarticLoadError 在 loadBytecode() 阶段抛出 |
 
 **抛出时机**：
@@ -205,7 +205,7 @@ Bridge 模式允许脚本类继承宿主类——解决"实例需同时是真正
 | 方法 | 可能的错误 |
 |------|-----------|
 | loadBytecode() | DarticLoadError |
-| call() | DarticError 子类（资源限制）、脚本异常（经 onError 或直接传播） |
+| call() | DarticError 子类（资源限制）、脚本异常（经 onUnhandledException 或直接传播） |
 | 不应发生 | DarticInternalError |
 
 ### 包结构
@@ -358,7 +358,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 | 约束 | 值 | 来源 |
 |------|-----|------|
 | 最大绑定数 | 65536 | Ch1 ABx 编码 Bx 宽度 16 位 |
-| DarticCallbackProxy 参数上限 | 0-6 个（proxy0 ~ proxy6） | 当前实现；7+ 参数走 Function.apply |
+| ClosureAdapter 参数上限 | 0-6 个（proxy0 ~ proxy6） | 当前实现；7+ 参数走 Function.apply |
 | Bridge 覆盖限制 | 仅 extends / implements，不含 mixin | Phase 1 范围限制（详见 Ch4 已知局限） |
 | DarticProxy 类型检查 | 无法通过 VM 侧 `is` 检查 | Dart 类型系统限制，需 Bridge |
 | 引擎线程安全 | **非线程安全**，每个 Isolate 需创建独立 DarticEngine | DarticInterpreter 的栈和帧为可变状态 |
@@ -381,7 +381,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 
 > **Phase 2**：热更新安全。.darb 字节码签名验证（HMAC / Ed25519），engine.loadBytecode 校验完整性后再加载。触发条件：生产环境 CDN 分发 .darb 需要防篡改保证。
 
-> **Phase 2**：DarticCallbackProxy 身份缓存。详见 Ch4 已知局限。触发条件：addListener/removeListener 场景因闭包身份不一致导致监听器泄漏。
+> **Phase 2**：ClosureAdapter 身份缓存。详见 Ch4 已知局限。触发条件：addListener/removeListener 场景因闭包身份不一致导致监听器泄漏。
 
 > **Phase 2**：泛型 Bridge 类型参数传递优化。详见 Ch4 泛型 Bridge 类。触发条件：Flutter State\<T\> 等泛型宿主类的 Bridge 使用。
 
@@ -393,7 +393,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 |-------|-------|------|---------|
 | **5** | 5.1 | Bridge 内部基础设施 + CALL_HOST 管线 | HostBindingRegistry、CALL_HOST 指令、DarticProxy |
 | **5** | 5.2 | dart:core 手写桥接 | int/String/List/Map 等绑定注册（手写，发现模式） |
-| **5** | 5.3 | 集合字面量、字符串插值与回调 | DarticCallbackProxy、DarticProxyManager |
+| **5** | 5.3 | 集合字面量、字符串插值与回调 | ClosureAdapter、DarticProxyManager |
 | **5** | 5.4 | co19 harness v3 验证 | 端到端测试、回归检测 |
 | **6** | 6.1 | async/await（生产环境必需） | 帧快照续体、Completer 桥接 |
 | **6** | 6.4 | 沙箱（DarticConfig.maxTotalFuel 依赖） | 字节码验证、fuel 计数、调用深度限制 |
@@ -440,7 +440,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 | DarticConfig.executionTimeout | DarticInterpreter.executionTimeout | 挂钟超时 |
 | DarticConfig.maxCallDepth | CallStack(maxFrames:) | 调用栈帧上限 |
 | DarticProxy（自动） | DarticProxyManager.wrapForVM() | 脚本对象跨边界代理 |
-| DarticCallbackProxy（自动） | DarticCallbackProxy.proxy0()..proxy6() | 脚本闭包跨边界回调代理 |
+| ClosureAdapter（自动） | ClosureAdapter.proxy0()..proxy6() | 脚本闭包跨边界回调代理 |
 
 ## 附录：用例示例
 

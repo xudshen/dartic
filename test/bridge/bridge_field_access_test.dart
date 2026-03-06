@@ -44,13 +44,13 @@ void main() {
             _FieldTestBridge(dispatch, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );
@@ -85,13 +85,13 @@ void main() {
             _FieldTestBridge(dispatch, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );

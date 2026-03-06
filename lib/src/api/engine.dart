@@ -64,16 +64,16 @@ class DarticEngine {
     DarticConfig config = const DarticConfig(),
   }) : _config = config {
     // 1. Create registries.
-    _hostFunctionRegistry = HostBindingRegistry();
-    _hostDispatchRegistry = HostClassRegistry(_hostFunctionRegistry);
+    _hostBindingRegistry = HostBindingRegistry();
+    _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
     _proxyManager = DarticProxyManager();
 
     // 2. Create the plugin context for registration-only access.
     _pluginContext = PluginContext(
       config: config,
-      hostFunctionRegistry: _hostFunctionRegistry,
-      hostDispatchRegistry: _hostDispatchRegistry,
+      hostBindingRegistry: _hostBindingRegistry,
+      hostClassRegistry: _hostClassRegistry,
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
       pendingBridgeFactories: _pendingBridgeFactories,
     );
@@ -95,8 +95,8 @@ class DarticEngine {
 
     // 5. Create the interpreter with config-mapped parameters.
     _interpreter = DarticInterpreter(
-      hostFunctionRegistry: _hostFunctionRegistry,
-      hostDispatchRegistry: _hostDispatchRegistry,
+      hostBindingRegistry: _hostBindingRegistry,
+      hostClassRegistry: _hostClassRegistry,
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
       callStack: CallStack(maxFrames: config.maxCallDepth),
       fuelBudget: config.fuelBudget,
@@ -107,8 +107,8 @@ class DarticEngine {
 
   final DarticConfig _config;
 
-  late final HostBindingRegistry _hostFunctionRegistry;
-  late final HostClassRegistry _hostDispatchRegistry;
+  late final HostBindingRegistry _hostBindingRegistry;
+  late final HostClassRegistry _hostClassRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
   late final DarticProxyManager _proxyManager;
   late final DarticInterpreter _interpreter;
@@ -204,8 +204,8 @@ class DarticEngine {
   /// **Error handling:**
   /// - Resource errors ([FuelExhaustedError], [ExecutionTimeoutError],
   ///   [CallDepthExceededError]) always propagate to the host, bypassing
-  ///   [DarticConfig.onError].
-  /// - Script uncaught exceptions: if [DarticConfig.onError] is set, it
+  ///   [DarticConfig.onUnhandledException].
+  /// - Script uncaught exceptions: if [DarticConfig.onUnhandledException] is set, it
   ///   is called and `call()` returns null. Otherwise, the exception
   ///   propagates to the host.
   ///
@@ -234,13 +234,13 @@ class DarticEngine {
       return _interpreter.executeFunction(module, funcId, args);
     } on DarticError {
       // Resource errors (FuelExhaustedError, ExecutionTimeoutError,
-      // CallDepthExceededError) always propagate — bypass onError.
+      // CallDepthExceededError) always propagate — bypass onUnhandledException.
       rethrow;
     } catch (e, st) {
       // Script uncaught exceptions.
-      final onError = _config.onError;
-      if (onError != null) {
-        onError(e, st);
+      final handler = _config.onUnhandledException;
+      if (handler != null) {
+        handler(e, st);
         return null;
       }
       rethrow;

@@ -38,7 +38,7 @@ void main() {
         entryFuncId: 0,
         bindingNames: bindingNames,
       );
-      final interp = DarticInterpreter(hostFunctionRegistry: registry);
+      final interp = DarticInterpreter(hostBindingRegistry: registry);
       interp.execute(module);
       return interp.entryResult;
     }
@@ -47,7 +47,7 @@ void main() {
       // Register a no-arg function that returns 42.
       registry.register('test::noarg#0', (args) => 42);
 
-      // CALL_HOST A=0, Bx=0  →  refStack[0] = hostFunctionRegistry.invoke(0, [])
+      // CALL_HOST A=0, Bx=0  →  refStack[0] = hostBindingRegistry.invoke(0, [])
       // HALT A=0, B=1(ref)
       final code = Uint32List.fromList([
         encodeABx(Op.callHost, 0, 0), // callHost r0, binding#0
@@ -151,7 +151,7 @@ void main() {
         bindingNames: [BindingEntry(name: 'test::throws#0', argCount: 0)],
       );
 
-      final interp = DarticInterpreter(hostFunctionRegistry: registry);
+      final interp = DarticInterpreter(hostBindingRegistry: registry);
       interp.execute(module);
       expect(interp.entryResult, equals(99));
     });
@@ -181,7 +181,7 @@ void main() {
       );
 
       // With fuel = 2, both instructions should execute fine.
-      final interp = DarticInterpreter(hostFunctionRegistry: registry, fuelBudget: 2);
+      final interp = DarticInterpreter(hostBindingRegistry: registry, fuelBudget: 2);
       interp.execute(module);
       // If fuel were consumed as >1 per CALL_HOST, this would fail.
     });
@@ -232,8 +232,8 @@ void main() {
       expect(result, isNull);
     });
 
-    test('works without hostFunctionRegistry (no CALL_HOST instructions)', () {
-      // Modules without CALL_HOST should work even without hostFunctionRegistry.
+    test('works without hostBindingRegistry (no CALL_HOST instructions)', () {
+      // Modules without CALL_HOST should work even without hostBindingRegistry.
       final code = Uint32List.fromList([
         encodeAsBx(Op.loadInt, 0, 7),
         encodeABC(Op.halt, 0, 3, 0),

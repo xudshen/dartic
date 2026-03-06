@@ -202,12 +202,12 @@ Stream<String> main() {
 Future<(Object?, List<String>)> _compileAndRun(String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     fuelBudget: 200000,
   );
   interp.execute(module);
@@ -217,10 +217,10 @@ Future<(Object?, List<String>)> _compileAndRun(String source) async {
 /// Compiles Dart source, executes it, and returns the entry result as a Stream.
 Future<Stream<Object?>> _compileAndGetStream(String source) async {
   final module = await compileDart(source);
-  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
   final interp = DarticInterpreter(
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     fuelBudget: 200000,
   );
   interp.execute(module);

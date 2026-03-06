@@ -150,10 +150,10 @@ Object main() {
   return obj.doesNotExist();
 }
 ''');
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
       );
       expect(
         () => interp.execute(module),
@@ -169,10 +169,10 @@ Object main() {
   return obj.nope;
 }
 ''');
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
       );
       expect(
         () => interp.execute(module),

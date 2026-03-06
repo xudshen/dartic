@@ -26,7 +26,7 @@ void main() {
 
   setUp(() {
     final regs = createTestRegistries();
-    fnRegistry = regs.hostFunctionRegistry;
+    fnRegistry = regs.hostBindingRegistry;
     registry = HostClassRegistry(fnRegistry);
 
     // Register core type dispatchers (previously hardcoded in constructor).
@@ -68,143 +68,94 @@ void main() {
     );
   });
 
-  group('HostClassRegistry.lookup', () {
-    test('returns wrapper for String', () {
-      expect(registry.lookup('hello'), isNotNull);
-    });
-    test('returns wrapper for int', () {
-      expect(registry.lookup(42), isNotNull);
-    });
-    test('returns wrapper for double', () {
-      expect(registry.lookup(3.14), isNotNull);
-    });
-    test('returns wrapper for bool', () {
-      expect(registry.lookup(true), isNotNull);
-    });
-    test('returns wrapper for List', () {
-      expect(registry.lookup([1, 2, 3]), isNotNull);
-    });
-    test('returns wrapper for Map', () {
-      expect(registry.lookup({'a': 1}), isNotNull);
-    });
-    test('returns wrapper for Set', () {
-      expect(registry.lookup({1, 2, 3}), isNotNull);
-    });
-    test('returns wrapper for Duration', () {
-      expect(registry.lookup(const Duration(seconds: 1)), isNotNull);
+  group('HostClassRegistry.getProperty', () {
+    test('returns non-null for registered type', () {
+      final result = registry.getProperty('hello', 'length');
+      expect(result, isNotNull);
     });
     test('returns null for unregistered type', () {
-      expect(registry.lookup(Object()), isNull);
+      expect(registry.getProperty(Object(), 'length'), isNull);
     });
-  });
-
-  group('BindingLookupAdapter.getProperty', () {
     test('String.length', () {
-      final wrapper = registry.lookup('hello')!;
-      expect(wrapper.getProperty('hello', 'length'), equals(5));
+      expect(registry.getProperty('hello', 'length'), equals(5));
     });
     test('List.length', () {
-      final wrapper = registry.lookup([1, 2, 3])!;
-      expect(wrapper.getProperty([1, 2, 3], 'length'), equals(3));
+      expect(registry.getProperty([1, 2, 3], 'length'), equals(3));
     });
     test('List.isEmpty', () {
-      final wrapper = registry.lookup(<int>[])!;
-      expect(wrapper.getProperty(<int>[], 'isEmpty'), equals(true));
+      expect(registry.getProperty(<int>[], 'isEmpty'), equals(true));
     });
     test('Map.isEmpty', () {
-      final wrapper = registry.lookup(<String, int>{})!;
-      expect(wrapper.getProperty(<String, int>{}, 'isEmpty'), equals(true));
+      expect(registry.getProperty(<String, int>{}, 'isEmpty'), equals(true));
     });
     test('Map.length', () {
-      final wrapper = registry.lookup({'a': 1, 'b': 2})!;
-      expect(wrapper.getProperty({'a': 1, 'b': 2}, 'length'), equals(2));
+      expect(registry.getProperty({'a': 1, 'b': 2}, 'length'), equals(2));
     });
     test('int.isEven', () {
-      final wrapper = registry.lookup(42)!;
-      expect(wrapper.getProperty(42, 'isEven'), equals(true));
+      expect(registry.getProperty(42, 'isEven'), equals(true));
     });
     test('int.isOdd', () {
-      final wrapper = registry.lookup(3)!;
-      expect(wrapper.getProperty(3, 'isOdd'), equals(true));
+      expect(registry.getProperty(3, 'isOdd'), equals(true));
+    });
+    test('returns notFound for unknown property', () {
+      expect(
+        identical(registry.getProperty('hello', 'noSuchProp'),
+            HostClassRegistry.notFound),
+        isTrue,
+      );
     });
   });
 
-  group('BindingLookupAdapter.invokeMethod', () {
+  group('HostClassRegistry.invokeMethod', () {
     test('List.contains', () {
       final list = [1, 2, 3];
-      final wrapper = registry.lookup(list)!;
-      expect(wrapper.invokeMethod(list, 'contains', [2]), equals(true));
-      expect(wrapper.invokeMethod(list, 'contains', [5]), equals(false));
+      expect(registry.invokeMethod(list, 'contains', [2]), equals(true));
+      expect(registry.invokeMethod(list, 'contains', [5]), equals(false));
     });
     test('Map.containsKey', () {
       final map = {'a': 1};
-      final wrapper = registry.lookup(map)!;
-      expect(wrapper.invokeMethod(map, 'containsKey', ['a']), equals(true));
-      expect(wrapper.invokeMethod(map, 'containsKey', ['b']), equals(false));
+      expect(registry.invokeMethod(map, 'containsKey', ['a']), equals(true));
+      expect(registry.invokeMethod(map, 'containsKey', ['b']), equals(false));
     });
     test('String.substring', () {
-      final wrapper = registry.lookup('hello world')!;
-      expect(wrapper.invokeMethod('hello world', 'substring', [0, 5]),
+      expect(registry.invokeMethod('hello world', 'substring', [0, 5]),
           equals('hello'));
     });
     test('String.contains', () {
-      final wrapper = registry.lookup('hello')!;
       // contains is registered with #2 (Pattern other, [int startIndex])
       expect(
-          wrapper.invokeMethod('hello', 'contains', ['ell', 0]), equals(true));
+          registry.invokeMethod('hello', 'contains', ['ell', 0]), equals(true));
+    });
+    test('returns null for unregistered type', () {
+      expect(registry.invokeMethod(Object(), 'toString', []), isNull);
+    });
+    test('returns notFound for unknown method', () {
+      expect(
+        identical(registry.invokeMethod('hello', 'noSuchMethod', []),
+            HostClassRegistry.notFound),
+        isTrue,
+      );
     });
   });
 
   // ── 2-layer lookup tests ─────────────────────────────────────────
 
-  group('runtimeType exact match cache', () {
-    test('String lookup returns dispatcher and second lookup hits cache', () {
-      final d1 = registry.lookup('hello');
-      expect(d1, isNotNull);
-
-      // Second lookup for a different String instance should return the
-      // exact same dispatcher object (from _exactMap cache).
-      final d2 = registry.lookup('world');
-      expect(d2, isNotNull);
-      expect(identical(d1, d2), isTrue,
-          reason: 'second lookup should return cached dispatcher');
-    });
-
-    test('int lookup is cached across different int values', () {
-      final d1 = registry.lookup(1);
-      final d2 = registry.lookup(999);
-      expect(identical(d1, d2), isTrue);
-    });
-
-    test('List lookup is cached across different list instances', () {
-      final d1 = registry.lookup([1, 2]);
-      final d2 = registry.lookup([3, 4, 5]);
-      expect(identical(d1, d2), isTrue);
-    });
-  });
-
   group('predicate fallback and caching', () {
-    test('growable list hits List predicate and caches to exactMap', () {
+    test('growable list hits List predicate and dispatches correctly', () {
       // <int>[] creates a _GrowableList whose runtimeType != List.
       // First lookup goes through predicate scan (layer 2), caches result.
       final growable = <int>[1, 2, 3];
-      final d1 = registry.lookup(growable);
-      expect(d1, isNotNull);
+      expect(registry.getProperty(growable, 'length'), equals(3));
 
       // Second lookup for same runtimeType should hit _exactMap cache.
-      final d2 = registry.lookup(<int>[4, 5]);
-      expect(d2, isNotNull);
-      expect(identical(d1, d2), isTrue,
-          reason: 'predicate result should be cached to _exactMap');
+      expect(registry.getProperty(<int>[4, 5], 'length'), equals(2));
     });
 
-    test('Set subtype is resolved via predicate and cached', () {
+    test('Set subtype is resolved via predicate', () {
       final s1 = {1, 2, 3};
-      final d1 = registry.lookup(s1);
-      expect(d1, isNotNull);
+      expect(registry.getProperty(s1, 'length'), equals(3));
 
-      final d2 = registry.lookup({4, 5});
-      expect(identical(d1, d2), isTrue);
+      expect(registry.getProperty({4, 5}, 'length'), equals(2));
     });
   });
 
@@ -218,172 +169,53 @@ void main() {
       );
 
       final svc = _MyService('test');
-      final d = registry.lookup(svc);
-      expect(d, isNotNull,
+      // getProperty returns notFound (not null) — meaning the adapter was found.
+      final result = registry.getProperty(svc, 'someProp');
+      expect(result, isNotNull,
           reason: 'dynamically registered type should be found');
-    });
-
-    test('registered dispatcher is a BindingLookupAdapter', () {
-      registry.register(
-        ['custom::MyService::'],
-        type: _MyService,
-        test: (obj) => obj is _MyService,
-      );
-
-      final d = registry.lookup(_MyService('x'));
-      // The dispatcher should be a BindingLookupAdapter created
-      // internally by register().
-      expect(d, isA<BindingLookupAdapter>());
-    });
-
-    test('dynamic registration result is cached after first lookup', () {
-      registry.register(
-        ['custom::MyService::'],
-        type: _MyService,
-        test: (obj) => obj is _MyService,
-      );
-
-      final d1 = registry.lookup(_MyService('a'));
-      final d2 = registry.lookup(_MyService('b'));
-      expect(identical(d1, d2), isTrue,
-          reason: 'dynamic registration result should be cached');
     });
 
     test('unregistered custom type still returns null', () {
       // _Animal is not registered anywhere.
-      expect(registry.lookup(_Animal()), isNull);
+      expect(registry.getProperty(_Animal(), 'name'), isNull);
     });
   });
 
   group('subtype safety', () {
-    test('B instance matches B dispatcher, not A dispatcher', () {
-      registry.register(
-        ['custom::Animal::'],
-        type: _Animal,
-        test: (obj) => obj is _Animal,
-      );
-      registry.register(
-        ['custom::Dog::'],
-        type: _Dog,
-        test: (obj) => obj is _Dog,
-      );
-
-      final dogD = registry.lookup(_Dog());
-      final animalD = registry.lookup(_Animal());
-      expect(dogD, isNotNull);
-      expect(animalD, isNotNull);
-      // Dog has an exact type match, so it gets Dog dispatcher.
-      // Animal has its own exact type match.
-      expect(identical(dogD, animalD), isFalse,
-          reason: 'Dog should match Dog dispatcher, not Animal');
-    });
-
     test('Cat instance matches Animal dispatcher (no Cat registered)', () {
+      // Register Animal with a binding for 'kind' getter.
+      fnRegistry.register(
+          'custom::Animal::kind#0', (args) => 'animal');
       registry.register(
         ['custom::Animal::'],
         type: _Animal,
         test: (obj) => obj is _Animal,
       );
 
-      final catD = registry.lookup(_Cat());
-      final animalD = registry.lookup(_Animal());
-      expect(catD, isNotNull);
-      expect(animalD, isNotNull);
       // Cat has no dedicated registration, so it falls through to Animal
       // via the predicate scan.
-      expect(identical(catD, animalD), isTrue,
-          reason: 'Cat should fallback to Animal dispatcher');
-    });
-  });
-
-  group('registration order independence', () {
-    test('register A first then B — B instance matches B dispatcher', () {
-      // Register Animal (supertype) first.
-      registry.register(
-        ['custom::Animal::'],
-        type: _Animal,
-        test: (obj) => obj is _Animal,
-      );
-      // Register Dog (subtype) second.
-      registry.register(
-        ['custom::Dog::'],
-        type: _Dog,
-        test: (obj) => obj is _Dog,
-      );
-
-      final dogD = registry.lookup(_Dog());
-      final animalD = registry.lookup(_Animal());
-      expect(identical(dogD, animalD), isFalse,
-          reason: 'Dog should get Dog dispatcher regardless of order');
-    });
-
-    test('register B first then A — type ensures order irrelevant', () {
-      // With the new register(), type always writes to _exactMap, so
-      // Dog gets its own dispatcher even when registered before Animal.
-      registry.register(
-        ['custom::Dog::'],
-        type: _Dog,
-        test: (obj) => obj is _Dog,
-      );
-      registry.register(
-        ['custom::Animal::'],
-        type: _Animal,
-        test: (obj) => obj is _Animal,
-      );
-
-      final dogD = registry.lookup(_Dog());
-      final animalD = registry.lookup(_Animal());
-      expect(dogD, isNotNull);
-      expect(animalD, isNotNull);
-      // Dog should get Dog dispatcher, not Animal's — order-independent.
-      expect(identical(dogD, animalD), isFalse,
-          reason: 'type ensures Dog gets Dog dispatcher regardless of order');
+      expect(registry.getProperty(_Cat(), 'kind'), equals('animal'));
+      expect(registry.getProperty(_Animal(), 'kind'), equals('animal'));
     });
   });
 
   group('exact type preheat', () {
     test('type populates _exactMap at registration time', () {
       // Register with type — first lookup should be O(1) via _exactMap.
+      fnRegistry.register(
+          'custom::MyService::name#0', (args) => (args[0] as _MyService).name);
       registry.register(
         ['custom::MyService::'],
         type: _MyService,
       );
 
-      final d = registry.lookup(_MyService('x'));
-      expect(d, isNotNull,
-          reason: 'type should populate _exactMap immediately');
-    });
-
-    test('reversed order with type still dispatches correctly', () {
-      // Plugin B registers Dog first, Plugin A registers Animal second.
-      // With type, both get correct dispatchers.
-      registry.register(
-        ['custom::Dog::'],
-        type: _Dog,
-        test: (obj) => obj is _Dog,
-      );
-      registry.register(
-        ['custom::Animal::'],
-        type: _Animal,
-        test: (obj) => obj is _Animal,
-      );
-
-      final dogD = registry.lookup(_Dog());
-      final animalD = registry.lookup(_Animal());
-      final catD = registry.lookup(_Cat());
-
-      // Dog and Animal each get their own dispatcher.
-      expect(identical(dogD, animalD), isFalse,
-          reason: 'Dog and Animal should have different dispatchers');
-
-      // Cat has no type registration, falls through to predicate
-      // scan and matches Animal's `is _Animal` test.
-      expect(catD, isNotNull);
-      expect(identical(catD, animalD), isTrue,
-          reason: 'Cat should fallback to Animal dispatcher via predicate');
+      expect(
+          registry.getProperty(_MyService('x'), 'name'), equals('x'));
     });
 
     test('Poodle (unregistered subtype) falls through to Dog predicate', () {
+      fnRegistry.register(
+          'custom::Dog::breed#0', (args) => 'unknown');
       registry.register(
         ['custom::Animal::'],
         type: _Animal,
@@ -395,61 +227,31 @@ void main() {
         test: (obj) => obj is _Dog,
       );
 
-      final poodleD = registry.lookup(_Poodle());
-      final dogD = registry.lookup(_Dog());
-
       // Poodle has no type match, falls through to predicate scan.
       // Dog's `is _Dog` predicate matches Poodle.
-      expect(poodleD, isNotNull);
-      expect(identical(poodleD, dogD), isTrue,
-          reason: 'Poodle should fallback to Dog dispatcher via predicate');
-    });
-
-    test('type without test still works for exact lookups', () {
-      // Register with type only — exact type is O(1), no predicate needed.
-      registry.register(
-        ['custom::MyService::'],
-        type: _MyService,
-      );
-
-      final d1 = registry.lookup(_MyService('a'));
-      final d2 = registry.lookup(_MyService('b'));
-      expect(identical(d1, d2), isTrue,
-          reason: 'same type should hit same preheated dispatcher');
+      expect(registry.getProperty(_Poodle(), 'breed'), equals('unknown'));
     });
   });
 
   group('core type fast path (no regression)', () {
     test('all core types still resolve correctly after refactoring', () {
-      expect(registry.lookup('str'), isNotNull, reason: 'String');
-      expect(registry.lookup(42), isNotNull, reason: 'int');
-      expect(registry.lookup(3.14), isNotNull, reason: 'double');
-      expect(registry.lookup(true), isNotNull, reason: 'bool');
-      expect(registry.lookup([1]), isNotNull, reason: 'List');
-      expect(registry.lookup({'k': 'v'}), isNotNull, reason: 'Map');
-      expect(registry.lookup({1, 2}), isNotNull, reason: 'Set');
-      expect(registry.lookup(const Duration(seconds: 1)), isNotNull,
-          reason: 'Duration');
-    });
-
-    test('core type dispatchers actually work for getProperty', () {
-      final strD = registry.lookup('abc')!;
-      expect(strD.getProperty('abc', 'length'), equals(3));
-
-      final listD = registry.lookup([10, 20])!;
-      expect(listD.getProperty([10, 20], 'length'), equals(2));
-
-      final intD = registry.lookup(7)!;
-      expect(intD.getProperty(7, 'isOdd'), equals(true));
+      // Verify getProperty returns non-null (meaning adapter found)
+      // for all core types. Use 'length' or similar known properties.
+      expect(registry.getProperty('str', 'length'), equals(3));
+      expect(registry.getProperty(42, 'isEven'), equals(true));
+      expect(registry.getProperty(3.14, 'isNaN'), equals(false));
+      expect(registry.getProperty([1], 'length'), equals(1));
+      expect(registry.getProperty({'k': 'v'}, 'length'), equals(1));
+      expect(registry.getProperty({1, 2}, 'length'), equals(2));
+      expect(registry.getProperty(const Duration(seconds: 1), 'inMilliseconds'),
+          equals(1000));
     });
 
     test('core type dispatchers work for invokeMethod', () {
-      final strD = registry.lookup('hello world')!;
-      expect(strD.invokeMethod('hello world', 'substring', [0, 5]),
+      expect(registry.invokeMethod('hello world', 'substring', [0, 5]),
           equals('hello'));
 
-      final listD = registry.lookup([1, 2, 3])!;
-      expect(listD.invokeMethod([1, 2, 3], 'contains', [2]), equals(true));
+      expect(registry.invokeMethod([1, 2, 3], 'contains', [2]), equals(true));
     });
   });
 
@@ -463,19 +265,18 @@ void main() {
       reg1.register(['dart:core::int::', 'dart:core::num::'], type: int);
 
       // First "execution": lookup some types.
-      final d1 = reg1.lookup('hello');
-      expect(d1, isNotNull);
+      expect(reg1.getProperty('hello', 'length'), equals(5));
 
       // Second "execution": same registry, same cached dispatchers.
-      final d2 = reg1.lookup('world');
-      expect(identical(d1, d2), isTrue);
+      expect(reg1.getProperty('world', 'length'), equals(5));
 
       // Third "execution": different type also works.
-      final d3 = reg1.lookup(42);
-      expect(d3, isNotNull);
+      expect(reg1.getProperty(42, 'isEven'), equals(true));
     });
 
     test('dynamic registrations persist across reuse', () {
+      fnRegistry.register(
+          'custom::MyService::name#0', (args) => (args[0] as _MyService).name);
       final reg = HostClassRegistry(fnRegistry);
       reg.register(
         ['custom::MyService::'],
@@ -484,13 +285,28 @@ void main() {
       );
 
       // First use.
-      final d1 = reg.lookup(_MyService('first'));
-      expect(d1, isNotNull);
+      expect(reg.getProperty(_MyService('first'), 'name'), equals('first'));
 
       // Second use — registration still present.
-      final d2 = reg.lookup(_MyService('second'));
-      expect(d2, isNotNull);
-      expect(identical(d1, d2), isTrue);
+      expect(reg.getProperty(_MyService('second'), 'name'), equals('second'));
+    });
+  });
+
+  group('notFound sentinel', () {
+    test('HostClassRegistry.notFound is a Symbol sentinel', () {
+      expect(HostClassRegistry.notFound, isA<Symbol>());
+    });
+
+    test('getProperty returns notFound for registered type with unknown prop',
+        () {
+      final result = registry.getProperty('hello', 'unknownProp');
+      expect(identical(result, HostClassRegistry.notFound), isTrue);
+    });
+
+    test('invokeMethod returns notFound for registered type with unknown method',
+        () {
+      final result = registry.invokeMethod('hello', 'unknownMethod', []);
+      expect(identical(result, HostClassRegistry.notFound), isTrue);
     });
   });
 }

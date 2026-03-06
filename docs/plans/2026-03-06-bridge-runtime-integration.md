@@ -171,7 +171,7 @@ abstract interface class DarticRuntime {
   ///
   /// [receiver] 是 Bridge 实例（设为脚本方法中的 `this`）。
   /// [darticObject] 是内嵌的 DarticObject（用于 classId/方法查找）。
-  /// 脚本未覆写 [method] 时返回 [bridgeNotOverridden]。
+  /// 脚本未覆写 [method] 时返回 [notOverridden]。
   Object? invoke(Object receiver, DarticObject darticObject, String method, List<Object?> args);
 
   /// 分发属性 getter。
@@ -190,20 +190,20 @@ abstract interface class DarticRuntime {
 @override
 Object? invoke(Object receiver, DarticObject darticObject, String method, List<Object?> args) {
   final nameIdx = _module.constantPool.lookupNameIndex(method);
-  if (nameIdx < 0) return bridgeNotOverridden;
+  if (nameIdx < 0) return notOverridden;
   final classInfo = _module.classes[darticObject.classId];
   final proto = classInfo.methods[nameIdx];
-  if (proto == null) return bridgeNotOverridden;
+  if (proto == null) return notOverridden;
   return _callMethod(_module, proto, receiver, args);
 }
 
 @override
 Object? get(Object receiver, DarticObject darticObject, String property) {
   final nameIdx = _module.constantPool.lookupNameIndex(property);
-  if (nameIdx < 0) return bridgeNotOverridden;
+  if (nameIdx < 0) return notOverridden;
   final classInfo = _module.classes[darticObject.classId];
   final proto = classInfo.methods[nameIdx];
-  if (proto == null) return bridgeNotOverridden;
+  if (proto == null) return notOverridden;
   return _callMethod(_module, proto, receiver, const []);
 }
 
@@ -309,12 +309,12 @@ void main() {
         (runtime, scriptObj, superArgs) => _FieldTestBridge(runtime, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );
@@ -350,12 +350,12 @@ void main() {
         (runtime, scriptObj, superArgs) => _FieldTestBridge(runtime, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );
@@ -509,12 +509,12 @@ void main() {
         (runtime, scriptObj, superArgs) => _VirtualTestBridge(runtime, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );
@@ -549,12 +549,12 @@ void main() {
         (runtime, scriptObj, superArgs) => _VirtualTestBridge(runtime, scriptObj, superArgs),
       );
 
-      final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
       final interp = DarticInterpreter(
-        hostFunctionRegistry: hostFunctionRegistry,
-        hostDispatchRegistry: hostDispatchRegistry,
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
         bridgeFactoryRegistry: bridgeFactoryRegistry,
         fuelBudget: 50000,
       );
@@ -638,7 +638,7 @@ case Op.callVirtual:
   if (hostWrapper != null) {
     final methodName = cp.getName(ic.methodNameIndex);
     final hostResult = hostWrapper.getProperty(receiver, methodName);
-    if (!identical(hostResult, BindingLookupAdapter.notFound)) {
+    if (!identical(hostResult, _HostAdapter.notFound)) {
       rs.write(rBase + a, hostResult);
       continue;
     }

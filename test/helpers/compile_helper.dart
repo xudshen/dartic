@@ -109,10 +109,10 @@ Future<Uint8List> compileToDarb(String source) async {
 /// constant types).
 Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget}) async {
   final module = await compileDart(source);
-  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
   final interp = DarticInterpreter(
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
@@ -125,12 +125,12 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 ) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
@@ -143,16 +143,16 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 /// Uses the internal plugin system (CorePlugin, AsyncPlugin, CollectionPlugin,
 /// MathPlugin) to populate both registries identically to [DarticEngine].
 ({
-  HostBindingRegistry hostFunctionRegistry,
-  HostClassRegistry hostDispatchRegistry,
+  HostBindingRegistry hostBindingRegistry,
+  HostClassRegistry hostClassRegistry,
 }) createTestRegistries({void Function(Object?)? printFn}) {
-  final hostFunctionRegistry = HostBindingRegistry();
-  final hostDispatchRegistry = HostClassRegistry(hostFunctionRegistry);
+  final hostBindingRegistry = HostBindingRegistry();
+  final hostClassRegistry = HostClassRegistry(hostBindingRegistry);
   final bridgeFactoryRegistry = BridgeFactoryRegistry();
   final pluginContext = PluginContext(
     config: DarticConfig(onPrint: printFn),
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
     bridgeFactoryRegistry: bridgeFactoryRegistry,
     pendingBridgeFactories: {},
   );
@@ -165,8 +165,8 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     plugin.register(pluginContext);
   }
   return (
-    hostFunctionRegistry: hostFunctionRegistry,
-    hostDispatchRegistry: hostDispatchRegistry,
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
   );
 }
 

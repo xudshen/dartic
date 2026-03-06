@@ -53,10 +53,10 @@ int main() {
         BinaryBuilder(bytes).readComponent(component);
         final module = DarticCompiler(component).compile();
 
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -91,10 +91,10 @@ bool main() {
         BinaryBuilder(bytes).readComponent(component);
         final module = DarticCompiler(component).compile();
 
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
         expect(interp.entryResult, true);
@@ -142,12 +142,12 @@ int main() {
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
           printFn: (v) => printLog.add('$v'),
         );
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -183,10 +183,10 @@ int main() {
         BinaryBuilder(bytes).readComponent(component);
         final module = DarticCompiler(component).compile();
 
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
         expect(interp.entryResult, 0);
@@ -221,10 +221,10 @@ int main() {
         BinaryBuilder(bytes).readComponent(component);
         final module = DarticCompiler(component).compile();
 
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries();
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
 
         expect(() => interp.execute(module), throwsA(anything));
@@ -272,12 +272,12 @@ Future<void> main() async {
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
           printFn: (v) => printLog.add('$v'),
         );
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
 
@@ -325,12 +325,12 @@ Future<void> main() async {
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];
-        final (:hostFunctionRegistry, :hostDispatchRegistry) = createTestRegistries(
+        final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
           printFn: (v) => printLog.add('$v'),
         );
         final interp = DarticInterpreter(
-          hostFunctionRegistry: hostFunctionRegistry,
-          hostDispatchRegistry: hostDispatchRegistry,
+          hostBindingRegistry: hostBindingRegistry,
+          hostClassRegistry: hostClassRegistry,
         );
         interp.execute(module);
 

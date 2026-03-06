@@ -118,7 +118,7 @@ void main() {
       expect(config.executionTimeout, isNull);
       expect(config.maxCallDepth, 512);
       expect(config.onPrint, isNull);
-      expect(config.onError, isNull);
+      expect(config.onUnhandledException, isNull);
     });
 
     test('custom config values are preserved', () {
@@ -130,14 +130,14 @@ void main() {
         executionTimeout: const Duration(seconds: 5),
         maxCallDepth: 256,
         onPrint: myPrint,
-        onError: myError,
+        onUnhandledException: myError,
       );
       expect(config.fuelBudget, 10000);
       expect(config.maxTotalFuel, 100000);
       expect(config.executionTimeout, const Duration(seconds: 5));
       expect(config.maxCallDepth, 256);
       expect(config.onPrint, myPrint);
-      expect(config.onError, myError);
+      expect(config.onUnhandledException, myError);
     });
 
     test('onPrint callback is invoked', () {

@@ -14,10 +14,10 @@
 
 ```
 路径 A（硬编码 core lib）：
-  CoreBindings.registerAll(hostFunctionRegistry)     ← 直接操作底层 registry
-  CollectionBindingsHub.registerAll(hostFunctionRegistry)
-  AsyncBindings.registerAll(hostFunctionRegistry)
-  MathBindingsHub.registerAll(hostFunctionRegistry)
+  CoreBindings.registerAll(hostBindingRegistry)     ← 直接操作底层 registry
+  CollectionBindingsHub.registerAll(hostBindingRegistry)
+  AsyncBindings.registerAll(hostBindingRegistry)
+  MathBindingsHub.registerAll(hostBindingRegistry)
 
 路径 B（用户 plugin）：
   plugin.register(engine)                            ← 通过 DarticEngine 高层 API
@@ -27,7 +27,7 @@
 
 同时，HostClassRegistry 构造函数硬编码了 10 个 core type 的 dispatcher（List/Map/Set/String/int/double/bool/Duration/Iterable/Invocation），独立于两条注册路径之外，构成隐含的第三条初始化逻辑。
 
-此外，DarticEngine 向 plugin 暴露了 5 个底层 registry getter（hostFunctionRegistry、hostDispatchRegistry、bridgeFactoryRegistry、proxyManager、config），public API surface 过大，plugin 可直接操作内部组件。
+此外，DarticEngine 向 plugin 暴露了 5 个底层 registry getter（hostBindingRegistry、hostClassRegistry、bridgeFactoryRegistry、proxyManager、config），public API surface 过大，plugin 可直接操作内部组件。
 
 ## 设计决策
 
@@ -164,11 +164,11 @@ abstract class DarticPlugin {
 
 | 删除 | 说明 |
 |------|------|
-| `late final HostClassAdapter _list/_map/_set/_string/_int/_double/_bool/_iterable/_duration` | 10 个硬编码字段 |
-| `final HostClassAdapter _invocation = _InvocationDispatcher()` | 特殊分派器 |
+| `late final HostClassRegistry (internal _HostAdapter) _list/_map/_set/_string/_int/_double/_bool/_iterable/_duration` | 10 个硬编码字段 |
+| `final HostClassRegistry (internal _HostAdapter) _invocation = _InvocationDispatcher()` | 特殊分派器 |
 | `class _InvocationDispatcher` | 整个类 |
-| `HostClassAdapter? _lookupCore(Object receiver)` | 硬编码 is 链方法 |
-| 构造函数中的 9 个 `BindingLookupAdapter(...)` 初始化 | 硬编码分派器创建 |
+| `HostClassRegistry (internal _HostAdapter)? _lookupCore(Object receiver)` | 硬编码 is 链方法 |
+| 构造函数中的 9 个 `_HostAdapter(...)` 初始化 | 硬编码分派器创建 |
 
 构造函数简化为：
 
@@ -180,7 +180,7 @@ HostClassRegistry(HostBindingRegistry registry) : _registry = registry;
 `lookup()` 简化为：
 
 ```dart
-HostClassAdapter? lookup(Object receiver) {
+HostClassRegistry (internal _HostAdapter)? lookup(Object receiver) {
   // Layer 1: exact runtimeType cache — O(1)
   final type = receiver.runtimeType;
   final cached = _exactMap[type];
@@ -331,8 +331,8 @@ DarticEngine({
   DarticConfig config = const DarticConfig(),
 }) : _config = config {
   // 创建底层注册表
-  _hostFunctionRegistry = HostBindingRegistry();
-  _hostDispatchRegistry = HostClassRegistry(_hostFunctionRegistry);
+  _hostBindingRegistry = HostBindingRegistry();
+  _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
   _bridgeFactoryRegistry = BridgeFactoryRegistry();
   _proxyManager = DarticProxyManager();
 
@@ -351,8 +351,8 @@ DarticEngine({
 
   // 创建 interpreter（传入已填充的注册表）
   _interpreter = DarticInterpreter(
-    hostFunctionRegistry: _hostFunctionRegistry,
-    hostDispatchRegistry: _hostDispatchRegistry,
+    hostBindingRegistry: _hostBindingRegistry,
+    hostClassRegistry: _hostClassRegistry,
     callStack: CallStack(maxFrames: config.maxCallDepth),
     fuelBudget: config.fuelBudget,
     maxTotalFuel: config.maxTotalFuel,
@@ -369,7 +369,7 @@ DarticEngine({
 |------|------|
 | 新增 | `PluginContext` |
 | 移除 | `HostBindingRegistry`（plugin 不再直接访问） |
-| 移除 | `HostClassRegistry`, `HostClassAdapter`（plugin 不再直接访问） |
+| 移除 | `HostClassRegistry`, `HostClassRegistry (internal _HostAdapter)`（plugin 不再直接访问） |
 | 移除 | `BridgeFactoryRegistry`（plugin 不再直接访问） |
 | 移除 | `DarticProxyManager`（plugin 不再直接访问） |
 | 保留 | `DarticEngine`, `DarticConfig`, `DarticPlugin` |
@@ -380,8 +380,8 @@ DarticEngine({
 
 | 操作 | 方法/属性 |
 |------|----------|
-| 移除 | `get hostFunctionRegistry` |
-| 移除 | `get hostDispatchRegistry` |
+| 移除 | `get hostBindingRegistry` |
+| 移除 | `get hostClassRegistry` |
 | 移除 | `get bridgeFactoryRegistry` |
 | 移除 | `get proxyManager` |
 | 保留 | `registerBinding()`, `registerClass()` — 作为便捷方法（内部委托 PluginContext 同等逻辑）；须在 loadBytecode 前调用，loaded/disposed 状态抛 StateError |

@@ -7,7 +7,7 @@ void main() {
   late HostBindingRegistry registry;
 
   setUp(() {
-    registry = createTestRegistries().hostFunctionRegistry;
+    registry = createTestRegistries().hostBindingRegistry;
   });
 
   Object? invoke(String name, List<Object?> args) {

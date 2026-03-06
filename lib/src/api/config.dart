@@ -9,7 +9,7 @@ library;
 /// Configuration for the DarticEngine.
 ///
 /// Provides resource limits (fuel, timeout, call depth), output handling
-/// (onPrint), and error callbacks (onError). All fields have sensible
+/// (onPrint), and error callbacks (onUnhandledException). All fields have sensible
 /// defaults so that `const DarticConfig()` produces a usable config.
 ///
 /// Usage:
@@ -27,7 +27,7 @@ class DarticConfig {
     this.executionTimeout,
     this.maxCallDepth = 512,
     this.onPrint,
-    this.onError,
+    this.onUnhandledException,
   });
 
   /// Single-round instruction budget.
@@ -75,5 +75,5 @@ class DarticConfig {
   /// **Resource errors** (FuelExhaustedError, ExecutionTimeoutError,
   /// CallDepthExceededError) always propagate to the host and bypass
   /// this callback.
-  final void Function(Object, StackTrace)? onError;
+  final void Function(Object, StackTrace)? onUnhandledException;
 }
