@@ -27,8 +27,6 @@ abstract final class MapBindings {
         'containsKey#1': (args) => (args[0] as Map).containsKey(args[1] as Object?),
         'map#1': (args) => (args[0] as Map).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
         'addEntries#1': (args) { (args[0] as Map).addEntries(args[1] as Iterable<MapEntry>); return null; },
-        'update#3': (args) => (args[0] as Map).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
-        'updateAll#1': (args) { (args[0] as Map).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'removeWhere#1': (args) { (args[0] as Map).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'putIfAbsent#2': (args) => (args[0] as Map).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),
         'addAll#1': (args) { (args[0] as Map).addAll(args[1] as Map); return null; },
@@ -43,6 +41,27 @@ abstract final class MapBindings {
         'isNotEmpty#0': (args) => (args[0] as Map).isNotEmpty,
         '[]#1': (args) => (args[0] as Map)[(args[1] as Object?)],
         '[]=#2': (args) { (args[0] as Map)[args[1] as dynamic] = args[2]; return args[2]; },
+        'fromEntries#1': (args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>()),
+        'toString#0': (args) => (args[0] as Map).toString(),
+        'updateAll#1': (args) {
+  final fn = args[1] as Function;
+  final map = args[0] as Map;
+  for (final key in map.keys.toList()) {
+    map[key] = fn(key, map[key]);
+  }
+  return null;
+}
+,
+        'update#3': (args) {
+  final updateFn = args[2] as Function;
+  final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
+  return (args[0] as Map).update(
+    args[1],
+    (v) => updateFn(v),
+    ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
+  );
+}
+,
       };
 
   static Map<String, Object? Function(List<Object?>)> linkedHashMapMethodMap() => {

@@ -13,7 +13,9 @@ abstract final class BigIntBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
     );
+    ctx.registerBinding('dart:core::BigInt::parse#1', (args) => BigInt.parse(args[0] as String));
     ctx.registerBinding('dart:core::BigInt::parse#2', (args) => BigInt.parse(args[0] as String, radix: args[1] as int?));
+    ctx.registerBinding('dart:core::BigInt::tryParse#1', (args) => BigInt.tryParse(args[0] as String));
     ctx.registerBinding('dart:core::BigInt::tryParse#2', (args) => BigInt.tryParse(args[0] as String, radix: args[1] as int?));
     ctx.registerBinding('dart:core::BigInt::zero#0', (args) => BigInt.zero);
     ctx.registerBinding('dart:core::BigInt::one#0', (args) => BigInt.one);
@@ -57,5 +59,8 @@ abstract final class BigIntBindings {
         '<=#1': (args) => (args[0] as BigInt) <= (args[1] as BigInt),
         '>#1': (args) => (args[0] as BigInt) > (args[1] as BigInt),
         '>=#1': (args) => (args[0] as BigInt) >= (args[1] as BigInt),
+        'from#1': (args) => BigInt.from(args[0] as num),
+        '==#1': (args) => args[0] == args[1],
+        'hashCode#0': (args) => (args[0] as BigInt).hashCode,
       };
 }

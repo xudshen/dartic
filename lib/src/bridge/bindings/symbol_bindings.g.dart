@@ -19,5 +19,8 @@ abstract final class SymbolBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hashCode#0': (args) => (args[0] as Symbol).hashCode,
+        '#1': (args) => Symbol(args[0] as String),
+        '==#1': (args) => args[0] == args[1],
+        'toString#0': (args) => args[0].toString(),
       };
 }

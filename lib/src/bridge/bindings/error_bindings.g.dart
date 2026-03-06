@@ -26,5 +26,6 @@ abstract final class ErrorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'stackTrace#0': (args) => (args[0] as Error).stackTrace,
         '#0': (args) => _DarticErrorBacking(),
+        'toString#0': (args) => (args[0] as Error).toString(),
       };
 }

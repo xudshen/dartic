@@ -238,6 +238,8 @@ libraries:
               }
               return future.timeout(timeLimit);
             }
+        extra_bindings:
+          - "dart:async::Future::wait#3"
 
       # ── Completer ───────────────────────────────────────────────────────
       Completer:

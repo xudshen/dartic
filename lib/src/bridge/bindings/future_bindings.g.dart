@@ -13,10 +13,13 @@ abstract final class FutureBindings {
       test: (o) => o is Future,
       methods: methodMap(),
     );
+    ctx.registerBinding('dart:async::Future::wait#1', (args) => Future.wait(args[0] as Iterable<Future>));
+    ctx.registerBinding('dart:async::Future::wait#2', (args) => Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool));
     ctx.registerBinding('dart:async::Future::wait#3', (args) => Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool, cleanUp: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
     ctx.registerBinding('dart:async::Future::any#1', (args) => Future.any(args[0] as Iterable<Future>));
     ctx.registerBinding('dart:async::Future::forEach#2', (args) => Future.forEach(args[0] as Iterable, (a) => (args[1] as Function)(a) as FutureOr<dynamic>));
     ctx.registerBinding('dart:async::Future::doWhile#1', (args) => Future.doWhile(args[0] as FutureOr<bool> Function()));
+    ctx.registerBinding('dart:async::Future::wait#3', methodMap()['wait#3']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

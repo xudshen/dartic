@@ -52,7 +52,15 @@ abstract final class DurationBindings {
         '<=#1': (args) => (args[0] as Duration) <= (args[1] as Duration),
         '>=#1': (args) => (args[0] as Duration) >= (args[1] as Duration),
         'unary-#0': (args) => -(args[0] as Duration),
-        '#6': (args) => Duration(days: args[0] as int, hours: args[1] as int, minutes: args[2] as int, seconds: args[3] as int, milliseconds: args[4] as int, microseconds: args[5] as int),
+        '#6': (args) => Duration(
+  days: args[0] != null ? args[0] as int : 0,
+  hours: args[1] != null ? args[1] as int : 0,
+  minutes: args[2] != null ? args[2] as int : 0,
+  seconds: args[3] != null ? args[3] as int : 0,
+  milliseconds: args[4] != null ? args[4] as int : 0,
+  microseconds: args[5] != null ? args[5] as int : 0,
+)
+,
         '_#fromFields#1': (args) => Duration(microseconds: args[0] as int),
       };
 }

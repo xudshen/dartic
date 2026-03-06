@@ -9,7 +9,7 @@ import 'package:dartic/src/api/plugin_context.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_dispatch_registry.dart';
 import 'package:dartic/src/bridge/host_function_registry.dart';
-import 'package:dartic/src/bridge/plugins/core_plugin.dart';
+import 'package:dartic/src/bridge/plugins/core_plugin.g.dart';
 import 'package:test/test.dart';
 
 void main() {

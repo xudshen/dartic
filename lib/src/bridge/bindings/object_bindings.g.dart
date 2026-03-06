@@ -9,7 +9,6 @@ abstract final class ObjectBindings {
     ctx.registerClass(
       name: 'dart:core::Object',
       type: Object,
-      test: (o) => o is Object,
       methods: methodMap(),
     );
     ctx.registerBinding('dart:core::Object::hash#2', (args) => Object.hash(args[0] as Object?, args[1] as Object?));
@@ -36,10 +35,11 @@ abstract final class ObjectBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as Object).toString(),
         'noSuchMethod#1': (args) => (args[0] as Object).noSuchMethod(args[1] as Invocation),
-        'hashCode#0': (args) => (args[0] as Object).hashCode,
         'runtimeType#0': (args) => (args[0] as Object).runtimeType,
         '#0': (args) => Object(),
+        'toString#0': (args) => args[0].toString(),
+        'hashCode#0': (args) => args[0].hashCode,
+        '==#1': (args) => args[0] == args[1],
       };
 }

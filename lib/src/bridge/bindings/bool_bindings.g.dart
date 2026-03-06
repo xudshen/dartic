@@ -12,7 +12,9 @@ abstract final class BoolBindings {
       test: (o) => o is bool,
       methods: methodMap(),
     );
+    ctx.registerBinding('dart:core::bool::parse#1', (args) => bool.parse(args[0] as String));
     ctx.registerBinding('dart:core::bool::parse#2', (args) => bool.parse(args[0] as String, caseSensitive: args[1] as bool));
+    ctx.registerBinding('dart:core::bool::tryParse#1', (args) => bool.tryParse(args[0] as String));
     ctx.registerBinding('dart:core::bool::tryParse#2', (args) => bool.tryParse(args[0] as String, caseSensitive: args[1] as bool));
   }
 

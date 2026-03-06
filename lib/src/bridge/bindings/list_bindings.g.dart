@@ -39,14 +39,10 @@ abstract final class ListBindings {
         'sort#1': (args) { (args[0] as List).sort((args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)); return null; },
         'shuffle#0': (args) { (args[0] as List).shuffle(); return null; },
         'shuffle#1': (args) { (args[0] as List).shuffle(args[1] as Random?); return null; },
-        'indexOf#1': (args) => (args[0] as List).indexOf(args[1] as dynamic),
-        'indexOf#2': (args) => (args[0] as List).indexOf(args[1] as dynamic, args[2] as int),
         'indexWhere#1': (args) => (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool),
         'indexWhere#2': (args) => (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int),
         'lastIndexWhere#1': (args) => (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool),
         'lastIndexWhere#2': (args) => (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int?),
-        'lastIndexOf#1': (args) => (args[0] as List).lastIndexOf(args[1] as dynamic),
-        'lastIndexOf#2': (args) => (args[0] as List).lastIndexOf(args[1] as dynamic, args[2] as int?),
         'clear#0': (args) { (args[0] as List).clear(); return null; },
         'insert#2': (args) { (args[0] as List).insert(args[1] as int, args[2] as dynamic); return null; },
         'insertAll#2': (args) { (args[0] as List).insertAll(args[1] as int, args[2] as Iterable); return null; },
@@ -76,10 +72,7 @@ abstract final class ListBindings {
         'reduce#1': (args) => (args[0] as List).reduce((a, b) => (args[1] as Function)(a, b)),
         'fold#2': (args) => (args[0] as List).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as List).every((a) => (args[1] as Function)(a) as bool),
-        'join#0': (args) => (args[0] as List).join(),
-        'join#1': (args) => (args[0] as List).join(args[1] as String),
         'any#1': (args) => (args[0] as List).any((a) => (args[1] as Function)(a) as bool),
-        'toList#1': (args) => (args[0] as List).toList(growable: args[1] as bool),
         'toSet#0': (args) => (args[0] as List).toSet(),
         'take#1': (args) => (args[0] as List).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as List).takeWhile((a) => (args[1] as Function)(a) as bool),
@@ -103,9 +96,40 @@ abstract final class ListBindings {
         '[]#1': (args) => (args[0] as List)[(args[1] as int)],
         '[]=#2': (args) { (args[0] as List)[args[1] as int] = args[2]; return args[2]; },
         '+#1': (args) => (args[0] as List) + (args[1] as List),
+        'indexOf#2': (args) {
+  final list = args[0] as List;
+  if (args.length > 2 && args[2] != null) {
+    return list.indexOf(args[1], args[2] as int);
+  }
+  return list.indexOf(args[1]);
+}
+,
+        'lastIndexOf#2': (args) {
+  final list = args[0] as List;
+  if (args.length > 2 && args[2] != null) {
+    return list.lastIndexOf(args[1], args[2] as int);
+  }
+  return list.lastIndexOf(args[1]);
+}
+,
+        'toList#1': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return (args[0] as List).toList(growable: args[1] as bool);
+  }
+  return (args[0] as List).toList();
+}
+,
+        'join#1': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return (args[0] as List).join(args[1] as String);
+  }
+  return (args[0] as List).join();
+}
+,
       };
 
   static Map<String, Object? Function(List<Object?>)> growableListMethodMap() => {
+        'cast#0': (args) => (args[0] as List).cast(),
         '#1': (args) => List<dynamic>.filled(args[0] as int, null, growable: true),
         '_literal1#1': (args) => <dynamic>[args[0]],
         '_literal2#2': (args) => <dynamic>[args[0], args[1]],

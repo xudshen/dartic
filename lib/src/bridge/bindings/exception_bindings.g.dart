@@ -15,5 +15,7 @@ abstract final class ExceptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        '#1': (args) => Exception(args.isNotEmpty ? args[0] : null),
+        'toString#0': (args) => args[0].toString(),
       };
 }

@@ -245,7 +245,12 @@ void _writeRegisterMethod(
     buf.writeln('    ctx.registerClass(');
     buf.writeln("      name: '${info.qualifiedName}',");
     buf.writeln('      type: ${info.className},');
-    buf.writeln('      test: (o) => o is ${info.className},');
+    // Object is the root type — its "o is Object" test matches everything and
+    // would shadow all more-specific types in HostDispatchRegistry's reverse
+    // scan. _exactMap[Object] already handles the only relevant case.
+    if (info.className != 'Object') {
+      buf.writeln('      test: (o) => o is ${info.className},');
+    }
     buf.writeln('      methods: methodMap(),');
     if (info.superclasses.isNotEmpty) {
       final superList =
@@ -286,7 +291,9 @@ void _writeRegisterMethodWithInternalTypes(
   buf.writeln('    ctx.registerClass(');
   buf.writeln("      name: '${mainInfo.qualifiedName}',");
   buf.writeln('      type: ${mainInfo.className},');
-  buf.writeln('      test: (o) => o is ${mainInfo.className},');
+  if (mainInfo.className != 'Object') {
+    buf.writeln('      test: (o) => o is ${mainInfo.className},');
+  }
   buf.writeln('      methods: methodMap(),');
   if (mainInfo.superclasses.isNotEmpty) {
     final superList =
@@ -316,12 +323,27 @@ void _writeRegisterMethodWithInternalTypes(
 
 void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
   for (final method in info.staticMethods) {
-    for (final key in method.allBindingKeys) {
+    // Generate per-arity registerBinding calls for ALL optional params
+    // (both positional and named). The compiler emits the actual provided
+    // arg count, so each arity variant must exist as a separate binding.
+    final keys = _allStaticBindingKeys(method);
+    for (final key in keys) {
       final wrapper = _emitStaticMethodWrapper(info.className, method, key);
       buf.writeln(
           "    ctx.registerBinding('${info.qualifiedName}::$key', $wrapper);");
     }
   }
+}
+
+/// Returns per-arity binding keys for a static method.
+///
+/// Unlike [MethodInfo.allBindingKeys] (which only generates per-arity keys
+/// for positional optional params), this also handles named params by
+/// treating them as additional optional params for arity calculation.
+List<String> _allStaticBindingKeys(MethodInfo method) {
+  final required = method.paramTypes.where((p) => !p.isOptional).length;
+  final total = method.paramTypes.length;
+  return [for (var i = required; i <= total; i++) '${method.name}#$i'];
 }
 
 /// Writes static getter registrations as registerBinding calls.

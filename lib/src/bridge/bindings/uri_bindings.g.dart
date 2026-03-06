@@ -20,11 +20,14 @@ abstract final class UriBindings {
     ctx.registerBinding('dart:core::Uri::tryParse#2', (args) => Uri.tryParse(args[0] as String, args[1] as int));
     ctx.registerBinding('dart:core::Uri::tryParse#3', (args) => Uri.tryParse(args[0] as String, args[1] as int, args[2] as int?));
     ctx.registerBinding('dart:core::Uri::encodeComponent#1', (args) => Uri.encodeComponent(args[0] as String));
+    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#1', (args) => Uri.encodeQueryComponent(args[0] as String));
     ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', (args) => Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding));
     ctx.registerBinding('dart:core::Uri::decodeComponent#1', (args) => Uri.decodeComponent(args[0] as String));
+    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#1', (args) => Uri.decodeQueryComponent(args[0] as String));
     ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', (args) => Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding));
     ctx.registerBinding('dart:core::Uri::encodeFull#1', (args) => Uri.encodeFull(args[0] as String));
     ctx.registerBinding('dart:core::Uri::decodeFull#1', (args) => Uri.decodeFull(args[0] as String));
+    ctx.registerBinding('dart:core::Uri::splitQueryString#1', (args) => Uri.splitQueryString(args[0] as String));
     ctx.registerBinding('dart:core::Uri::splitQueryString#2', (args) => Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding));
     ctx.registerBinding('dart:core::Uri::parseIPv4Address#1', (args) => Uri.parseIPv4Address(args[0] as String));
     ctx.registerBinding('dart:core::Uri::parseIPv4Address#2', (args) => Uri.parseIPv4Address(args[0] as String, args[1] as int));
@@ -33,11 +36,18 @@ abstract final class UriBindings {
     ctx.registerBinding('dart:core::Uri::parseIPv6Address#2', (args) => Uri.parseIPv6Address(args[0] as String, args[1] as int));
     ctx.registerBinding('dart:core::Uri::parseIPv6Address#3', (args) => Uri.parseIPv6Address(args[0] as String, args[1] as int, args[2] as int?));
     ctx.registerBinding('dart:core::Uri::base#0', (args) => Uri.base);
+    ctx.registerBinding('dart:core::Uri::http#3', methodMap()['http#3']!);
+    ctx.registerBinding('dart:core::Uri::https#3', methodMap()['https#3']!);
+    ctx.registerBinding('dart:core::Uri::file#2', methodMap()['file#2']!);
+    ctx.registerBinding('dart:core::Uri::directory#2', methodMap()['directory#2']!);
+    ctx.registerBinding('dart:core::Uri::dataFromString#5', methodMap()['dataFromString#5']!);
+    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', methodMap()['encodeQueryComponent#2']!);
+    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', methodMap()['decodeQueryComponent#2']!);
+    ctx.registerBinding('dart:core::Uri::splitQueryString#2', methodMap()['splitQueryString#2']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isScheme#1': (args) => (args[0] as Uri).isScheme(args[1] as String),
-        'toFilePath#1': (args) => (args[0] as Uri).toFilePath(windows: args[1] as bool?),
         'toString#0': (args) => (args[0] as Uri).toString(),
         'replace#9': (args) => (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?, query: args[7] as String?, queryParameters: args[8] as Map<String, dynamic>?, fragment: args[9] as String?),
         'removeFragment#0': (args) => (args[0] as Uri).removeFragment(),
@@ -66,5 +76,73 @@ abstract final class UriBindings {
         'origin#0': (args) => (args[0] as Uri).origin,
         'data#0': (args) => (args[0] as Uri).data,
         'hashCode#0': (args) => (args[0] as Uri).hashCode,
+        '==#1': (args) => args[0] == args[1],
+        'http#3': (args) {
+  final authority = args[0] as String;
+  final path = args[1] as String;
+  if (args.length > 2 && args[2] != null) {
+    return Uri.http(authority, path, (args[2] as Map).cast<String, dynamic>());
+  }
+  return Uri.http(authority, path);
+}
+,
+        'https#3': (args) {
+  final authority = args[0] as String;
+  final path = args[1] as String;
+  if (args.length > 2 && args[2] != null) {
+    return Uri.https(authority, path, (args[2] as Map).cast<String, dynamic>());
+  }
+  return Uri.https(authority, path);
+}
+,
+        'file#2': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return Uri.file(args[0] as String, windows: args[1] as bool);
+  }
+  return Uri.file(args[0] as String);
+}
+,
+        'directory#2': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return Uri.directory(args[0] as String, windows: args[1] as bool);
+  }
+  return Uri.directory(args[0] as String);
+}
+,
+        'dataFromString#5': (args) => Uri.dataFromString(
+  args[0] as String,
+  mimeType: args.length > 1 && args[1] != null ? args[1] as String : null,
+  parameters: args.length > 3 && args[3] != null ? (args[3] as Map).cast<String, String>() : null,
+  base64: args.length > 4 && args[4] != null ? args[4] as bool : false,
+)
+,
+        'encodeQueryComponent#2': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+  }
+  return Uri.encodeQueryComponent(args[0] as String);
+}
+,
+        'decodeQueryComponent#2': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+  }
+  return Uri.decodeQueryComponent(args[0] as String);
+}
+,
+        'splitQueryString#2': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
+  }
+  return Uri.splitQueryString(args[0] as String);
+}
+,
+        'toFilePath#1': (args) {
+  if (args.length > 1 && args[1] != null) {
+    return (args[0] as Uri).toFilePath(windows: args[1] as bool);
+  }
+  return (args[0] as Uri).toFilePath();
+}
+,
       };
 }

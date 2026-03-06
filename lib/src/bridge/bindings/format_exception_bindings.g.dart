@@ -20,6 +20,12 @@ abstract final class FormatExceptionBindings {
         'message#0': (args) => (args[0] as FormatException).message,
         'source#0': (args) => (args[0] as FormatException).source,
         'offset#0': (args) => (args[0] as FormatException).offset,
-        '#3': (args) => FormatException(args[0] as String, args[1] as dynamic, args[2] as int?),
+        '#3': (args) {
+  final msg = args.isNotEmpty && args[0] != null ? args[0] as String : '';
+  final source = args.length > 1 ? args[1] : null;
+  final offset = args.length > 2 ? args[2] as int? : null;
+  return FormatException(msg, source, offset);
+}
+,
       };
 }

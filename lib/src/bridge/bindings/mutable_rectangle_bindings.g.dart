@@ -39,5 +39,7 @@ abstract final class MutableRectangleBindings {
         '#4': (args) => MutableRectangle(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
         'fromPoints#2': (args) => MutableRectangle.fromPoints(args[0] as Point<num>, args[1] as Point<num>),
         '==#1': (args) => args[0] == args[1],
+        'toString#0': (args) => (args[0] as MutableRectangle).toString(),
+        'hashCode#0': (args) => (args[0] as MutableRectangle).hashCode,
       };
 }

@@ -24,7 +24,10 @@ abstract final class ArgumentErrorBindings {
         'message#0': (args) => (args[0] as ArgumentError).message,
         'stackTrace#0': (args) => (args[0] as ArgumentError).stackTrace,
         '#2': (args) => ArgumentError(args[0] as dynamic, args[1] as String?),
-        'value#3': (args) => ArgumentError.value(args[0] as dynamic, args[1] as String?, args[2] as dynamic),
         'notNull#1': (args) => ArgumentError.notNull(args[0] as String?),
+        '#1': (args) => ArgumentError(args[0]),
+        'value#1': (args) => ArgumentError.value(args[0]),
+        'value#2': (args) => ArgumentError.value(args[0], args[1] as String?),
+        'value#3': (args) => ArgumentError.value(args[0], args[1] as String?, args[2]),
       };
 }

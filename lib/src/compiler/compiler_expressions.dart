@@ -670,11 +670,74 @@ extension on DarticCompiler {
 
   /// Compiles a [StaticInvocation] targeting a platform library function
   /// as a CALL_HOST instruction.
+  ///
+  /// Both regular static methods and factory constructors come through here
+  /// (factory constructors are Procedures in Kernel IR).
   (int, ResultLoc) _compileHostStaticInvocation(ir.StaticInvocation expr) {
     final target = expr.target;
 
+    if (target.isFactory) {
+      // Factory constructors: pad ALL declared named params with null so
+      // the arity always equals max. The methodMap entry uses
+      // `args.length > N && args[N] != null` checks to route correctly.
+      // This avoids the named-param ambiguity issue where different named
+      // params at the same arity are indistinguishable by arity alone.
+      return _compileHostFactoryInvocation(expr);
+    }
+
     final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
     _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
+
+    // Regular static methods: use actual provided arg count so the binding
+    // key matches per-arity registerBinding calls (e.g., parse#1, #2).
+    final symbolName = _hostSymbolName(
+      target,
+      paramCountOverride: compiledArgs.length,
+    );
+    final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
+    return _emitCallHost(compiledArgs, bindingIndex);
+  }
+
+  /// Compiles a factory constructor invocation as CALL_HOST.
+  ///
+  /// Factory constructors are Procedures in Kernel IR but need all named
+  /// params padded with null (in declaration order) so the binding key
+  /// uses max arity — matching the methodMap entry that handles variable
+  /// args via `args.length > N && args[N] != null` checks.
+  (int, ResultLoc) _compileHostFactoryInvocation(ir.StaticInvocation expr) {
+    final target = expr.target;
+    final func = target.function;
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
+
+    // Compile provided positional args.
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+
+    // Pad missing optional positional params with null.
+    for (var i = expr.arguments.positional.length;
+        i < func.positionalParameters.length;
+        i++) {
+      final (reg, loc) = _loadNull();
+      compiledArgs.add((reg, loc, null));
+    }
+
+    // Compile ALL declared named params in declaration order.
+    // Missing named params are filled with null.
+    final namedProvided = <String, ir.Expression>{
+      for (final n in expr.arguments.named) n.name: n.value,
+    };
+    for (final param in func.namedParameters) {
+      final value = namedProvided[param.name];
+      if (value != null) {
+        final (reg, loc) = _compileExpression(value);
+        compiledArgs.add((reg, loc, _inferExprType(value)));
+      } else {
+        final (reg, loc) = _loadNull();
+        compiledArgs.add((reg, loc, null));
+      }
+    }
 
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -1111,6 +1174,11 @@ extension on DarticCompiler {
     final compiledArgs = _compileHostExprArgs(expr.receiver);
     _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
 
+    // Instance methods: the generated methodMap entries handle optional
+    // params via args.length checks, so we use the declared total param
+    // count (from _hostSymbolName) — NOT the actual provided arg count.
+    // This differs from static methods/constructors where separate
+    // registerBinding calls exist for each arity variant.
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
     return _emitCallHost(compiledArgs, bindingIndex);
@@ -1280,8 +1348,40 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileHostConstructorInvocation(
     ir.ConstructorInvocation expr,
   ) {
+    final func = expr.target.function;
     final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
-    _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
+
+    // Compile provided positional args.
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+
+    // Pad missing optional positional params with null.
+    for (var i = expr.arguments.positional.length;
+        i < func.positionalParameters.length;
+        i++) {
+      final (reg, loc) = _loadNull();
+      compiledArgs.add((reg, loc, null));
+    }
+
+    // Compile ALL declared named params in declaration order.
+    // Missing named params are filled with null so the args list always has
+    // the full param count, matching the generated methodMap entry which
+    // accesses params by positional index.
+    final namedProvided = <String, ir.Expression>{
+      for (final n in expr.arguments.named) n.name: n.value,
+    };
+    for (final param in func.namedParameters) {
+      final value = namedProvided[param.name];
+      if (value != null) {
+        final (reg, loc) = _compileExpression(value);
+        compiledArgs.add((reg, loc, _inferExprType(value)));
+      } else {
+        final (reg, loc) = _loadNull();
+        compiledArgs.add((reg, loc, null));
+      }
+    }
 
     final symbolName = _hostSymbolName(expr.target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);

@@ -18,5 +18,6 @@ abstract final class TypeErrorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'stackTrace#0': (args) => (args[0] as TypeError).stackTrace,
         '#0': (args) => TypeError(),
+        'toString#0': (args) => (args[0] as TypeError).toString(),
       };
 }
