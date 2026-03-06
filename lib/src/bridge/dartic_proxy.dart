@@ -2,7 +2,7 @@
 ///
 /// Provides identity-correct `==`, `hashCode`, and a basic `toString()`.
 /// Property/method forwarding via DarticRuntime.invokeMethod is deferred
-/// to Task 5.3.4 (HostDispatcher dynamic dispatch).
+/// to Task 5.3.4 (HostClassAdapter dynamic dispatch).
 ///
 /// See: docs/design/04-interop.md "DarticProxy"
 library;

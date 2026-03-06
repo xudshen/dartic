@@ -149,7 +149,7 @@ class CoreUiPlugin extends DarticPlugin {
 
 3. 运行时行为（无变化）
 
-   CALL_HOST → _bindingIdMap[bx] → HostFunctionRegistry.invoke(id, args)
+   CALL_HOST → _bindingIdMap[bx] → HostBindingRegistry.invoke(id, args)
    与当前完全一致，不区分 dart:core 绑定还是 core_ui_lib 绑定。
 ```
 
@@ -163,7 +163,7 @@ class CoreUiPlugin extends DarticPlugin {
 │ ├── package:core_ui_lib (lib)   │    │ │   └── registerBinding(...)    │
 │ ├── package:my_utils (library)  │    │ ├── CoreUiPlugin                │
 │ └── user script (library)       │    │ │   └── registerBinding(...)    │
-│                                 │    │ └── HostFunctionRegistry        │
+│                                 │    │ └── HostBindingRegistry        │
 │ DarticCompiler                  │    │     ├── dart:core::... → id 0   │
 │ ├── hostLibraryPrefixes:        │    │     ├── package:core_ui_lib::...│
 │ │   { package:core_ui_lib/ }    │    │     │                → id 42    │
@@ -185,5 +185,5 @@ class CoreUiPlugin extends DarticPlugin {
 | **高** | INVOKE_DYN / CALL_VIRTUAL host 路径缺少 try/catch | interpreter.dart:2607-2613, 1881-1887 | 对 `invokeMethod` / `getProperty` 调用包裹 try/catch + `unwindToHandler` |
 | **中** | CALL_VIRTUAL 对 host 对象只支持 zero-arg getter | interpreter.dart:1876-1880 | 扩展为支持带参方法调用（读取 IC 的 argCount） |
 | **低** | symbolName `#N` 与 BindingEntry.argCount 双重语义 | compiler.dart:1130, module.dart | 文档明确约定：`#N` = 形参数（不含 receiver），argCount = 实际传参数（含 receiver） |
-| **低** | invokeMethod +3 arity 暴力搜索 | host_dispatch_registry.dart:58 | 改为从 registry 查询已注册的最大 arity，或让 plugin 注册时声明 |
+| **低** | invokeMethod +3 arity 暴力搜索 | host_class_registry.dart:58 | 改为从 registry 查询已注册的最大 arity，或让 plugin 注册时声明 |
 | **低** | DarticCallbackProxy 最多支持 3 参数 | interpreter.dart _wrapClosureArgs | 扩展到 5-6 参数或使用可变参数方案 |

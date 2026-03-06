@@ -134,7 +134,7 @@ String.allMatches ──► Match（Pattern 接口实现）
 
 ### 实现要点
 
-- Match/RegExpMatch 是 VM 原生对象（由 RegExp.firstMatch 等返回），直接走 HostFunctionRegistry 注册
+- Match/RegExpMatch 是 VM 原生对象（由 RegExp.firstMatch 等返回），直接走 HostBindingRegistry 注册
 - DarticCallbackProxy 已支持 1 参数回调（proxy1），`replaceAllMapped` 的 `String Function(Match)` 可直接工作
 - StringBuffer 是 mutable 对象，binding 需确保同一实例在多次调用间保持状态
 

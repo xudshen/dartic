@@ -107,7 +107,7 @@
 
 2. **写测试** —
    - **BuildContext 绑定**：通过 HostClassWrapper 路由 `context.findAncestorWidgetOfExactType` 等方法
-   - **Navigator 绑定**：Navigator.push/pop/pushNamed 通过 HostFunctionRegistry 注册
+   - **Navigator 绑定**：Navigator.push/pop/pushNamed 通过 HostBindingRegistry 注册
    - **MaterialApp 绑定**：MaterialApp 构造函数参数（home, title, theme）正确传递
    - **基础 widget 绑定**：Scaffold, AppBar, Text, ElevatedButton, Column, Row 的构造函数和关键属性
 

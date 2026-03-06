@@ -464,7 +464,7 @@ Expected: FAIL — `runner.dart` has no BenchmarkRunner
 import 'dart:io';
 
 import 'package:dartic/src/bridge/core_bindings.dart';
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
@@ -588,7 +588,7 @@ class BenchmarkRunner {
 
   /// Executes a pre-compiled DarticModule once and returns the result.
   Object? _executeDartic(DarticModule module) {
-    final registry = HostFunctionRegistry();
+    final registry = HostBindingRegistry();
     CoreBindings.registerAll(registry);
     final interp = DarticInterpreter(
       hostFunctionRegistry: registry,

@@ -9,8 +9,8 @@ library;
 import 'dart:typed_data';
 
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/host_dispatch_registry.dart';
-import '../bridge/host_function_registry.dart';
+import '../bridge/host_class_registry.dart';
+import '../bridge/host_binding_registry.dart';
 import '../bridge/plugins/async_plugin.g.dart';
 import '../bridge/plugins/collection_plugin.g.dart';
 import '../bridge/plugins/core_plugin.g.dart';
@@ -64,8 +64,8 @@ class DarticEngine {
     DarticConfig config = const DarticConfig(),
   }) : _config = config {
     // 1. Create registries.
-    _hostFunctionRegistry = HostFunctionRegistry();
-    _hostDispatchRegistry = HostDispatchRegistry(_hostFunctionRegistry);
+    _hostFunctionRegistry = HostBindingRegistry();
+    _hostDispatchRegistry = HostClassRegistry(_hostFunctionRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
     _proxyManager = DarticProxyManager();
 
@@ -107,8 +107,8 @@ class DarticEngine {
 
   final DarticConfig _config;
 
-  late final HostFunctionRegistry _hostFunctionRegistry;
-  late final HostDispatchRegistry _hostDispatchRegistry;
+  late final HostBindingRegistry _hostFunctionRegistry;
+  late final HostClassRegistry _hostDispatchRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
   late final DarticProxyManager _proxyManager;
   late final DarticInterpreter _interpreter;
@@ -247,8 +247,8 @@ class DarticEngine {
   /// bridge factory.
   ///
   /// Coordinates three internal registries via [PluginContext]:
-  /// 1. **HostFunctionRegistry**: registers each method in [methods]
-  /// 2. **HostDispatchRegistry**: registers dispatch for [type] (and optional [test])
+  /// 1. **HostBindingRegistry**: registers each method in [methods]
+  /// 2. **HostClassRegistry**: registers dispatch for [type] (and optional [test])
   /// 3. **BridgeFactoryRegistry** (optional): registers [bridgeFactory]
   ///
   /// [name] is the fully-qualified class name

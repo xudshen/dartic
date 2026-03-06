@@ -5,8 +5,8 @@ import '../bridge/bridge_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/callback_proxy.dart';
 import '../bridge/dartic_object_holder.dart';
-import '../bridge/host_function_registry.dart';
-import '../bridge/host_dispatch_registry.dart';
+import '../bridge/host_binding_registry.dart';
+import '../bridge/host_class_registry.dart';
 import '../bytecode/deserializer.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
@@ -49,7 +49,7 @@ class DarticInterpreter {
     this.fuelBudget = defaultFuelBudget,
     this.maxTotalFuel,
     this.executionTimeout,
-    HostDispatchRegistry? hostDispatchRegistry,
+    HostClassRegistry? hostDispatchRegistry,
   })  : _externalHostDispatchRegistry = hostDispatchRegistry,
         valueStack = valueStack ?? ValueStack(),
         refStack = refStack ?? RefStack(),
@@ -95,7 +95,7 @@ class DarticInterpreter {
   final TypeRegistry? typeRegistry;
 
   /// Host function bindings for CALL_HOST. If null, CALL_HOST throws.
-  final HostFunctionRegistry? hostFunctionRegistry;
+  final HostBindingRegistry? hostFunctionRegistry;
 
   /// Bridge factory registry for NEW_INSTANCE. If null, no Bridge instances
   /// are created (all allocations produce plain DarticObject).
@@ -150,20 +150,20 @@ class DarticInterpreter {
   /// Reset in a finally block to ensure correct behavior after errors.
   bool _isExecuting = false;
 
-  /// Runtime-resolved binding ID map: local index → HostFunctionRegistry runtime ID.
+  /// Runtime-resolved binding ID map: local index → HostBindingRegistry runtime ID.
   ///
-  /// Filled during [execute] via `HostFunctionRegistry.resolveBindingTable`.
+  /// Filled during [execute] via `HostBindingRegistry.resolveBindingTable`.
   /// Read by CALL_HOST in the dispatch loop.
   List<int> _bindingIdMap = const [];
 
   /// Externally provided host dispatch registry for reuse across executions.
   /// When non-null, [execute] uses this instead of creating a new one.
-  final HostDispatchRegistry? _externalHostDispatchRegistry;
+  final HostClassRegistry? _externalHostDispatchRegistry;
 
   /// Dynamic dispatch registry for host (VM-native) objects.
   /// Initialized per-execution from [hostFunctionRegistry], or set to the
   /// external registry if one was provided at construction time.
-  HostDispatchRegistry? _hostClassRegistry;
+  HostClassRegistry? _hostClassRegistry;
 
   /// The current async frame being executed. Set when an async function is
   /// entered via INIT_ASYNC. Used by AWAIT/ASYNC_RETURN/ASYNC_THROW to
@@ -232,7 +232,7 @@ class DarticInterpreter {
     if (hfr == null) {
       throw DarticLoadError([
         'Module requires ${module.bindingNames.length} host binding(s) '
-            'but no HostFunctionRegistry is configured',
+            'but no HostBindingRegistry is configured',
       ]);
     }
 
@@ -280,7 +280,7 @@ class DarticInterpreter {
       _hostClassRegistry = _externalHostDispatchRegistry;
     } else {
       final hfr = hostFunctionRegistry;
-      _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
+      _hostClassRegistry = hfr != null ? HostClassRegistry(hfr) : null;
     }
 
     // Create bridge dispatch if factories are registered.
@@ -369,7 +369,7 @@ class DarticInterpreter {
       _hostClassRegistry = _externalHostDispatchRegistry;
     } else {
       final hfr = hostFunctionRegistry;
-      _hostClassRegistry = hfr != null ? HostDispatchRegistry(hfr) : null;
+      _hostClassRegistry = hfr != null ? HostClassRegistry(hfr) : null;
     }
 
     // Create bridge dispatch if factories are registered.
@@ -469,14 +469,14 @@ class DarticInterpreter {
   /// Resolves the module's binding name table using [hostFunctionRegistry].
   ///
   /// Maps each symbolic name in [module.bindingNames] to a runtime ID via
-  /// [HostFunctionRegistry.resolveBindingTable]. Unresolved names get -1.
+  /// [HostBindingRegistry.resolveBindingTable]. Unresolved names get -1.
   void _resolveBindings(DarticModule module) {
     if (module.bindingNames.isEmpty) return;
     final hb = hostFunctionRegistry;
     if (hb == null) {
       throw DarticError(
         'Module has ${module.bindingNames.length} host bindings '
-        'but no HostFunctionRegistry provided',
+        'but no HostBindingRegistry provided',
       );
     }
     _bindingIdMap = hb.resolveBindingTable(
@@ -2014,7 +2014,7 @@ class DarticInterpreter {
                 'NoSuchMethodError: method "$methodName" called on null',
               );
             }
-            // Non-DarticObject: try HostDispatcher dynamic dispatch.
+            // Non-DarticObject: try HostClassAdapter dynamic dispatch.
             // NOTE: only zero-arg getters are supported here — method calls on
             // host objects with arguments should go through CALL_HOST (compiler
             // routes them there for statically-typed receivers) or INVOKE_DYN
@@ -2024,7 +2024,7 @@ class DarticInterpreter {
             if (hostWrapper != null) {
               final hostResult =
                   hostWrapper.getProperty(receiver, methodName);
-              if (!identical(hostResult, BindingLookupDispatcher.notFound)) {
+              if (!identical(hostResult, BindingLookupAdapter.notFound)) {
                 rs.write(rBase + a, hostResult);
                 continue;
               }
@@ -2542,11 +2542,11 @@ class DarticInterpreter {
             continue;
           }
 
-          // Host object: try HostDispatcher.
+          // Host object: try HostClassAdapter.
           final hostWrapper = _hostClassRegistry?.lookup(receiver);
           if (hostWrapper != null) {
             final hostResult = hostWrapper.getProperty(receiver, name);
-            if (!identical(hostResult, BindingLookupDispatcher.notFound)) {
+            if (!identical(hostResult, BindingLookupAdapter.notFound)) {
               rs.write(rBase + a, hostResult);
               continue;
             }
@@ -2619,12 +2619,12 @@ class DarticInterpreter {
             continue;
           }
 
-          // Host object: dynamic set dispatches through HostDispatcher.
+          // Host object: dynamic set dispatches through HostClassAdapter.
           final hostWrapper = _hostClassRegistry?.lookup(receiver);
           if (hostWrapper != null) {
             final hostResult =
                 hostWrapper.invokeMethod(receiver, '$name=', [value]);
-            if (!identical(hostResult, BindingLookupDispatcher.notFound)) {
+            if (!identical(hostResult, BindingLookupAdapter.notFound)) {
               continue;
             }
           }
@@ -2686,7 +2686,7 @@ class DarticInterpreter {
             continue;
           }
 
-          // Host object: try HostDispatcher, then noSuchMethod fallback.
+          // Host object: try HostClassAdapter, then noSuchMethod fallback.
           final hostArgs = List<Object?>.generate(
             explicitArgCount,
             (i) => rs.read(rBase + a + 2 + i),
@@ -2696,7 +2696,7 @@ class DarticInterpreter {
             _wrapClosureArgs(hostArgs);
             final hostResult =
                 hostWrapper.invokeMethod(receiver, name, hostArgs);
-            if (!identical(hostResult, BindingLookupDispatcher.notFound)) {
+            if (!identical(hostResult, BindingLookupAdapter.notFound)) {
               rs.write(rBase + a, hostResult);
               continue;
             }

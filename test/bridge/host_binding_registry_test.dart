@@ -1,12 +1,12 @@
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('HostFunctionRegistry', () {
-    late HostFunctionRegistry registry;
+  group('HostBindingRegistry', () {
+    late HostBindingRegistry registry;
 
     setUp(() {
-      registry = HostFunctionRegistry();
+      registry = HostBindingRegistry();
     });
 
     test('register returns allocated ID', () {

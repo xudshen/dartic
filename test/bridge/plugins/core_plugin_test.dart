@@ -7,19 +7,19 @@ library;
 import 'package:dartic/src/api/config.dart';
 import 'package:dartic/src/api/plugin_context.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
-import 'package:dartic/src/bridge/host_dispatch_registry.dart';
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_class_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bridge/plugins/core_plugin.g.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late HostFunctionRegistry hostRegistry;
-  late HostDispatchRegistry dispatchRegistry;
+  late HostBindingRegistry hostRegistry;
+  late HostClassRegistry dispatchRegistry;
   late PluginContext ctx;
 
   setUp(() {
-    hostRegistry = HostFunctionRegistry();
-    dispatchRegistry = HostDispatchRegistry(hostRegistry);
+    hostRegistry = HostBindingRegistry();
+    dispatchRegistry = HostClassRegistry(hostRegistry);
     ctx = PluginContext(
       config: const DarticConfig(),
       hostFunctionRegistry: hostRegistry,
@@ -57,7 +57,7 @@ void main() {
       expect(log, ['hello']);
     });
 
-    test('core bindings are registered in HostFunctionRegistry', () {
+    test('core bindings are registered in HostBindingRegistry', () {
       CorePlugin().register(ctx);
 
       // Spot-check a selection of binding keys

@@ -109,7 +109,7 @@
    - **方法委托**：`speak()` 方法 → 生成 `@override String speak() { final r = $_invoke('speak', []); if (identical(r, notOverridden)) return super.speak(); return r as String; }`
    - **属性委托**：`int get age` → 生成 getter 委托，检查 notOverridden 后 return super.age
    - **操作符委托**：`operator ==(other)` → 生成 `@override bool operator ==(Object other) { final r = $_invoke('==', [other]); ... }`
-   - **super 转发器**：`speak()` → 生成 `String $super$speak() => super.speak();` 并注册到 HostFunctionRegistry
+   - **super 转发器**：`speak()` → 生成 `String $super$speak() => super.speak();` 并注册到 HostBindingRegistry
    - **BridgeFactory**：默认构造函数 → 生成工厂闭包，内部创建 $Animal 实例
    - **多构造函数**：类含默认 + 命名构造函数 → 生成多个 BridgeFactory 变体
 
@@ -175,8 +175,8 @@
 1. **目标确认** — 用 codegen 为 dart:core 核心类型（int, String, List, Map, Set, Duration 等）生成 Bridge 代码，与 Phase 5 手写的 `lib/src/bridge/bindings/*.dart` 进行功能等价验证。验证维度：绑定注册数量、动态分发路由正确性、端到端测试行为一致性
 
 2. **写测试** —
-   - **绑定数量对比**：codegen 生成的 DarticCorePlugin → 注册到 HostFunctionRegistry → 统计绑定数 ≥ 手写版绑定数
-   - **动态分发对比**：对每个 dart:core 类型，通过 HostDispatchRegistry 路由 getter/method → 结果与手写版一致
+   - **绑定数量对比**：codegen 生成的 DarticCorePlugin → 注册到 HostBindingRegistry → 统计绑定数 ≥ 手写版绑定数
+   - **动态分发对比**：对每个 dart:core 类型，通过 HostClassRegistry 路由 getter/method → 结果与手写版一致
    - **端到端等价**：选取 10 个代表性 co19 测试（涵盖 int/String/List/Map 操作）→ 分别用手写 Bridge 和 codegen Bridge 执行 → 结果完全相同
    - **缺失绑定检测**：codegen 遗漏的手写绑定（如 CFE 内部方法 `_GrowableList._literalN`）→ 记录差异列表，手动补充
 

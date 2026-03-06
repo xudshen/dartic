@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
-import 'package:dartic/src/bridge/host_dispatch_registry.dart';
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_class_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bridge/plugins/async_plugin.g.dart';
 import 'package:dartic/src/bridge/plugins/collection_plugin.g.dart';
 import 'package:dartic/src/bridge/plugins/core_plugin.g.dart';
@@ -143,11 +143,11 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 /// Uses the internal plugin system (CorePlugin, AsyncPlugin, CollectionPlugin,
 /// MathPlugin) to populate both registries identically to [DarticEngine].
 ({
-  HostFunctionRegistry hostFunctionRegistry,
-  HostDispatchRegistry hostDispatchRegistry,
+  HostBindingRegistry hostFunctionRegistry,
+  HostClassRegistry hostDispatchRegistry,
 }) createTestRegistries({void Function(Object?)? printFn}) {
-  final hostFunctionRegistry = HostFunctionRegistry();
-  final hostDispatchRegistry = HostDispatchRegistry(hostFunctionRegistry);
+  final hostFunctionRegistry = HostBindingRegistry();
+  final hostDispatchRegistry = HostClassRegistry(hostFunctionRegistry);
   final bridgeFactoryRegistry = BridgeFactoryRegistry();
   final pluginContext = PluginContext(
     config: DarticConfig(onPrint: printFn),

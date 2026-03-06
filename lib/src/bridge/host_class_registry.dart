@@ -2,20 +2,20 @@
 ///
 /// When the interpreter encounters a dynamic property access or method call
 /// on a non-DarticObject receiver (e.g., `dynamic x = [1,2]; x.length`),
-/// the [HostDispatchRegistry] resolves the receiver's type to a dispatcher,
-/// which routes by property/method name through the existing [HostFunctionRegistry].
+/// the [HostClassRegistry] resolves the receiver's type to an adapter,
+/// which routes by property/method name through the existing [HostBindingRegistry].
 ///
 /// See: docs/design/04-interop.md "HostClassWrapper"
 library;
 
-import 'host_function_registry.dart';
+import 'host_binding_registry.dart';
 
 /// Abstract base for host class property/method dispatch.
 ///
 /// Each implementation handles one or more host types. Phase 7's
 /// BridgeGenerator will produce hardcoded-switch subclasses; the current
-/// [BindingLookupDispatcher] uses name-based HostFunctionRegistry lookup.
-abstract class HostDispatcher {
+/// [BindingLookupAdapter] uses name-based HostBindingRegistry lookup.
+abstract class HostClassAdapter {
   /// Gets a named property from [host] (getter dispatch).
   Object? getProperty(Object host, String name);
 
@@ -23,22 +23,22 @@ abstract class HostDispatcher {
   Object? invokeMethod(Object host, String name, List<Object?> args);
 }
 
-/// [HostDispatcher] backed by HostFunctionRegistry name lookup.
+/// [HostClassAdapter] backed by HostBindingRegistry name lookup.
 ///
 /// Constructs binding keys from a list of class name prefixes and looks up
-/// methods/getters in the existing HostFunctionRegistry registry. This avoids
+/// methods/getters in the existing HostBindingRegistry registry. This avoids
 /// duplicating dispatch logic that's already in the binding registrations.
-class BindingLookupDispatcher implements HostDispatcher {
-  BindingLookupDispatcher(this._registry, this._prefixes);
+class BindingLookupAdapter implements HostClassAdapter {
+  BindingLookupAdapter(this._registry, this._prefixes);
 
-  final HostFunctionRegistry _registry;
+  final HostBindingRegistry _registry;
 
   /// Binding key prefixes to try, e.g. `['dart:core::List::', 'dart:core::_GrowableList::']`.
   /// Tried in order; first match wins.
   final List<String> _prefixes;
 
   /// Sentinel used to distinguish "method not found" from "method returned null".
-  static const notFound = #_bindingLookupDispatcherNotFound;
+  static const notFound = #_bindingLookupAdapterNotFound;
 
   @override
   Object? getProperty(Object host, String name) {
@@ -64,10 +64,10 @@ class BindingLookupDispatcher implements HostDispatcher {
   }
 }
 
-/// Entry for a dynamically registered type test + dispatcher pair.
-typedef _UserEntry = ({bool Function(Object) test, HostDispatcher dispatcher});
+/// Entry for a dynamically registered type test + adapter pair.
+typedef _UserEntry = ({bool Function(Object) test, HostClassAdapter adapter});
 
-/// Registry mapping receiver types to [HostDispatcher] instances.
+/// Registry mapping receiver types to [HostClassAdapter] instances.
 ///
 /// Uses a 2-layer lookup strategy:
 ///   1. **Exact cache** (`_exactMap`): O(1) lookup by `runtimeType`.
@@ -76,28 +76,28 @@ typedef _UserEntry = ({bool Function(Object) test, HostDispatcher dispatcher});
 /// On any hit from layer 2, the result is cached into `_exactMap` so
 /// subsequent lookups for the same `runtimeType` are O(1).
 ///
-/// All type dispatchers (including core dart:core types) are registered
+/// All type adapters (including core dart:core types) are registered
 /// dynamically via [register]. There is no hardcoded is-chain.
-class HostDispatchRegistry {
-  HostDispatchRegistry(HostFunctionRegistry registry) : _registry = registry;
+class HostClassRegistry {
+  HostClassRegistry(HostBindingRegistry registry) : _registry = registry;
 
-  final HostFunctionRegistry _registry;
+  final HostBindingRegistry _registry;
 
   // ── Layer 1: exact runtimeType cache ───────────────────────────────
 
-  /// Cache from `runtimeType` to dispatcher. Populated at registration
+  /// Cache from `runtimeType` to adapter. Populated at registration
   /// time for exact types and on first lookup for predicate-matched types,
   /// providing O(1) dispatch on subsequent calls.
-  final Map<Type, HostDispatcher> _exactMap = {};
+  final Map<Type, HostClassAdapter> _exactMap = {};
 
   // ── Layer 2: dynamically registered user entries ───────────────────
 
-  /// Registered type test + dispatcher pairs. Later registrations are
+  /// Registered type test + adapter pairs. Later registrations are
   /// checked first (reverse traversal) so that more-specific subtypes
   /// registered after supertypes win.
   final List<_UserEntry> _userEntries = [];
 
-  /// Registers a dynamic type dispatcher.
+  /// Registers a dynamic type adapter.
   ///
   /// [prefixes] are binding key prefixes for method/property lookup
   /// (e.g. `['dart:core::int::', 'dart:core::num::']`).
@@ -116,21 +116,21 @@ class HostDispatchRegistry {
     required Type type,
     bool Function(Object)? test,
   }) {
-    final dispatcher = BindingLookupDispatcher(_registry, prefixes);
-    _exactMap[type] = dispatcher;
+    final adapter = BindingLookupAdapter(_registry, prefixes);
+    _exactMap[type] = adapter;
     if (test != null) {
-      _userEntries.add((test: test, dispatcher: dispatcher));
+      _userEntries.add((test: test, adapter: adapter));
     }
   }
 
-  /// Looks up the [HostDispatcher] for [receiver] based on its runtime type.
+  /// Looks up the [HostClassAdapter] for [receiver] based on its runtime type.
   ///
   /// Uses a 2-layer strategy:
   ///   1. Exact `runtimeType` cache — O(1).
   ///   2. User-registered type tests — predicate scan for generic/polymorphic types.
   ///
-  /// Returns null if no dispatcher is registered for the receiver's type.
-  HostDispatcher? lookup(Object receiver) {
+  /// Returns null if no adapter is registered for the receiver's type.
+  HostClassAdapter? lookup(Object receiver) {
     final type = receiver.runtimeType;
     final cached = _exactMap[type];
     if (cached != null) return cached;
@@ -138,8 +138,8 @@ class HostDispatchRegistry {
     for (var i = _userEntries.length - 1; i >= 0; i--) {
       final entry = _userEntries[i];
       if (entry.test(receiver)) {
-        _exactMap[type] = entry.dispatcher;
-        return entry.dispatcher;
+        _exactMap[type] = entry.adapter;
+        return entry.adapter;
       }
     }
     return null;

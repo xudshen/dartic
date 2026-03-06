@@ -9,15 +9,15 @@
 library;
 
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/host_dispatch_registry.dart';
-import '../bridge/host_function_registry.dart';
+import '../bridge/host_class_registry.dart';
+import '../bridge/host_binding_registry.dart';
 import 'config.dart';
 
 /// Registration-only context for [DarticPlugin] implementations.
 ///
 /// Coordinates three internal registries behind a clean API:
-/// - [HostFunctionRegistry] for CALL_HOST bindings
-/// - [HostDispatchRegistry] for dynamic dispatch routing
+/// - [HostBindingRegistry] for CALL_HOST bindings
+/// - [HostClassRegistry] for dynamic dispatch routing
 /// - [BridgeFactoryRegistry] for Bridge class construction
 class PluginContext {
   /// @nodoc — Internal constructor for [DarticEngine] only.
@@ -27,8 +27,8 @@ class PluginContext {
   /// effectively impossible.
   PluginContext({
     required DarticConfig config,
-    required HostFunctionRegistry hostFunctionRegistry,
-    required HostDispatchRegistry hostDispatchRegistry,
+    required HostBindingRegistry hostFunctionRegistry,
+    required HostClassRegistry hostDispatchRegistry,
     required BridgeFactoryRegistry bridgeFactoryRegistry,
     required Map<String, BridgeFactory> pendingBridgeFactories,
   })  : _config = config,
@@ -38,8 +38,8 @@ class PluginContext {
         _pendingBridgeFactories = pendingBridgeFactories;
 
   final DarticConfig _config;
-  final HostFunctionRegistry _hostFunctionRegistry;
-  final HostDispatchRegistry _hostDispatchRegistry;
+  final HostBindingRegistry _hostFunctionRegistry;
+  final HostClassRegistry _hostDispatchRegistry;
   // ignore: unused_field — will be used in later tasks for bridge factory resolution
   final BridgeFactoryRegistry _bridgeFactoryRegistry;
   final Map<String, BridgeFactory> _pendingBridgeFactories;
@@ -60,9 +60,9 @@ class PluginContext {
 
   /// Registers a host class, coordinating three internal registries.
   ///
-  /// 1. **HostFunctionRegistry** — registers each entry in [methods] as
+  /// 1. **HostBindingRegistry** — registers each entry in [methods] as
   ///    `"$name::$methodKey"`.
-  /// 2. **HostDispatchRegistry** — registers a dynamic dispatch entry so
+  /// 2. **HostClassRegistry** — registers a dynamic dispatch entry so
   ///    the interpreter can route `dynamic` calls to the correct methods.
   /// 3. **BridgeFactoryRegistry** — if [bridgeFactory] is provided,
   ///    registers it for script-side `extends`.

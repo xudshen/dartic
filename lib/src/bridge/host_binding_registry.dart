@@ -1,16 +1,16 @@
-/// Host function registry for cross-boundary calls.
+/// Host binding registry for cross-boundary calls.
 ///
 /// Maps symbolic binding names (e.g. `"dart:core::::print#1"`) to integer IDs
 /// and stores typed wrapper closures for O(1) dispatch at runtime.
 ///
-/// See: docs/design/04-interop.md "HostFunctionRegistry（宿主函数注册表）"
+/// See: docs/design/04-interop.md "HostBindingRegistry（宿主函数注册表）"
 library;
 
 /// Registry of host VM functions callable from the interpreter via CALL_HOST.
 ///
 /// Binding names follow the format: `"libraryURI::className::methodName#argCount"`.
 /// For top-level functions, className is empty: `"dart:core::::print#1"`.
-class HostFunctionRegistry {
+class HostBindingRegistry {
   /// Typed wrapper closures indexed by runtime ID.
   final List<Object? Function(List<Object?>)> _functions = [];
 

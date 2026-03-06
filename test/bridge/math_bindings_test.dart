@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
 
 void main() {
-  late HostFunctionRegistry registry;
+  late HostBindingRegistry registry;
 
   setUp(() {
     registry = createTestRegistries().hostFunctionRegistry;

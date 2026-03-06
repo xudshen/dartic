@@ -1,5 +1,5 @@
-import 'package:dartic/src/bridge/host_function_registry.dart';
-import 'package:dartic/src/bridge/host_dispatch_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
+import 'package:dartic/src/bridge/host_class_registry.dart';
 
 import '../helpers/compile_helper.dart';
 import 'package:test/test.dart';
@@ -21,13 +21,13 @@ class _MyService {
 }
 
 void main() {
-  late HostFunctionRegistry fnRegistry;
-  late HostDispatchRegistry registry;
+  late HostBindingRegistry fnRegistry;
+  late HostClassRegistry registry;
 
   setUp(() {
     final regs = createTestRegistries();
     fnRegistry = regs.hostFunctionRegistry;
-    registry = HostDispatchRegistry(fnRegistry);
+    registry = HostClassRegistry(fnRegistry);
 
     // Register core type dispatchers (previously hardcoded in constructor).
     // This simulates what CorePlugin will do in Task 5.
@@ -68,7 +68,7 @@ void main() {
     );
   });
 
-  group('HostDispatchRegistry.lookup', () {
+  group('HostClassRegistry.lookup', () {
     test('returns wrapper for String', () {
       expect(registry.lookup('hello'), isNotNull);
     });
@@ -98,7 +98,7 @@ void main() {
     });
   });
 
-  group('BindingLookupDispatcher.getProperty', () {
+  group('BindingLookupAdapter.getProperty', () {
     test('String.length', () {
       final wrapper = registry.lookup('hello')!;
       expect(wrapper.getProperty('hello', 'length'), equals(5));
@@ -129,7 +129,7 @@ void main() {
     });
   });
 
-  group('BindingLookupDispatcher.invokeMethod', () {
+  group('BindingLookupAdapter.invokeMethod', () {
     test('List.contains', () {
       final list = [1, 2, 3];
       final wrapper = registry.lookup(list)!;
@@ -223,7 +223,7 @@ void main() {
           reason: 'dynamically registered type should be found');
     });
 
-    test('registered dispatcher is a BindingLookupDispatcher', () {
+    test('registered dispatcher is a BindingLookupAdapter', () {
       registry.register(
         ['custom::MyService::'],
         type: _MyService,
@@ -231,9 +231,9 @@ void main() {
       );
 
       final d = registry.lookup(_MyService('x'));
-      // The dispatcher should be a BindingLookupDispatcher created
+      // The dispatcher should be a BindingLookupAdapter created
       // internally by register().
-      expect(d, isA<BindingLookupDispatcher>());
+      expect(d, isA<BindingLookupAdapter>());
     });
 
     test('dynamic registration result is cached after first lookup', () {
@@ -454,10 +454,10 @@ void main() {
   });
 
   group('external lifecycle', () {
-    test('HostDispatchRegistry can be constructed once and reused', () {
+    test('HostClassRegistry can be constructed once and reused', () {
       // Simulate what DarticInterpreter would do: construct once, use
       // across multiple execute() calls.
-      final reg1 = HostDispatchRegistry(fnRegistry);
+      final reg1 = HostClassRegistry(fnRegistry);
       // Register String so lookups work.
       reg1.register(['dart:core::String::'], type: String);
       reg1.register(['dart:core::int::', 'dart:core::num::'], type: int);
@@ -476,7 +476,7 @@ void main() {
     });
 
     test('dynamic registrations persist across reuse', () {
-      final reg = HostDispatchRegistry(fnRegistry);
+      final reg = HostClassRegistry(fnRegistry);
       reg.register(
         ['custom::MyService::'],
         type: _MyService,

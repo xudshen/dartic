@@ -246,7 +246,7 @@ void _writeRegisterMethod(
     buf.writeln("      name: '${info.qualifiedName}',");
     buf.writeln('      type: ${info.className},');
     // Object is the root type — its "o is Object" test matches everything and
-    // would shadow all more-specific types in HostDispatchRegistry's reverse
+    // would shadow all more-specific types in HostClassRegistry's reverse
     // scan. _exactMap[Object] already handles the only relevant case.
     if (info.className != 'Object') {
       buf.writeln('      test: (o) => o is ${info.className},');

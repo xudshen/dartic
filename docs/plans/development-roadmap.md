@@ -736,17 +736,17 @@ int main() => add(1, 2); // => 3
 
 ### Batch 7.1: DarticEngine 公开 API + 内部重构
 
-- [ ] 7.1.1 HostDispatchRegistry 重构 — 新增 `register(test, prefixes, {Type? exactType})` 方法支持动态注册用户宿主类；三层查找：`_exactMap[runtimeType]` O(1) → 硬编码核心类型 is 链 → 动态注册 predicate scan；`exactType` 注册时预热 `_exactMap` 实现注册顺序无关（与业界 VM 精确类型标识对齐）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_dispatch_registry.dart`
+- [ ] 7.1.1 HostClassRegistry 重构 — 新增 `register(test, prefixes, {Type? exactType})` 方法支持动态注册用户宿主类；三层查找：`_exactMap[runtimeType]` O(1) → 硬编码核心类型 is 链 → 动态注册 predicate scan；`exactType` 注册时预热 `_exactMap` 实现注册顺序无关（与业界 VM 精确类型标识对齐）；生命周期从 per-execute 内部创建改为 DarticEngine 持有、传入 DarticInterpreter → 扩展 `lib/src/bridge/host_class_registry.dart`
 - [ ] 7.1.2 BridgeFactoryRegistry + BridgeDispatch — BridgeFactoryRegistry（className → BridgeFactory 映射表），BridgeDispatch（invoke/get/set 三个分发方法 + `#_bridgeNotOverridden` 哨兵值），NEW_INSTANCE 指令查找 BridgeFactoryRegistry → 新增 `lib/src/bridge/bridge_factory_registry.dart`, `lib/src/bridge/bridge_dispatch.dart`
 - [ ] 7.1.3 DarticModule 导出表 — 编译器为顶层函数生成 `exportedFunctions: Map<String, int>`（名称→funcId）；.darb 序列化新增导出表段；DarticInterpreter 新增 `executeFunction(module, funcId, args)` → 扩展 `lib/src/compiler/compiler.dart`, `lib/src/bytecode/module.dart`, `lib/src/runtime/interpreter.dart`
 - [ ] 7.1.4 错误模型 — CallDepthExceededError 从通用 DarticError 提升为独立子类；DarticLoadError（字节码加载/校验/绑定解析失败）；DarticInternalError（解释器实现 bug） → `lib/src/api/errors.dart`
 - [ ] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 接口 — DarticEngine 封装 DarticInterpreter + 所有注册表，状态机 `created → loaded → disposed`；DarticConfig 映射 fuelBudget/maxTotalFuel/executionTimeout/maxCallDepth/onPrint/onError；DarticPlugin（name getter + register 方法） → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
-- [ ] 7.1.6 engine.call() 端到端管线 — loadBytecode 加载验证 + 绑定解析；call() 按名查导出表 + 区分顶层调用(executeFunction)/重入调用(_runNestedDispatch)；registerClass 协调三注册表（HostFunctionRegistry 绑定 + HostDispatchRegistry 动态分发 + BridgeFactoryRegistry 工厂）；registerBinding 注册顶层函数；onPrint 映射到 CoreBindings.registerAll(printFn:)；onError 仅处理脚本未捕获异常（资源错误始终传播） → 集成测试
+- [ ] 7.1.6 engine.call() 端到端管线 — loadBytecode 加载验证 + 绑定解析；call() 按名查导出表 + 区分顶层调用(executeFunction)/重入调用(_runNestedDispatch)；registerClass 协调三注册表（HostBindingRegistry 绑定 + HostClassRegistry 动态分发 + BridgeFactoryRegistry 工厂）；registerBinding 注册顶层函数；onPrint 映射到 CoreBindings.registerAll(printFn:)；onError 仅处理脚本未捕获异常（资源错误始终传播） → 集成测试
 
 **commit:** `feat(api): add DarticEngine public embedding API with internal refactoring`
 
 > **核心发现：**
-> _(执行时填写：HostDispatchRegistry 动态注册的性能影响、BridgeFactoryRegistry 查找频率、exportedFunctions 序列化格式、call() 重入状态检测机制等)_
+> _(执行时填写：HostClassRegistry 动态注册的性能影响、BridgeFactoryRegistry 查找频率、exportedFunctions 序列化格式、call() 重入状态检测机制等)_
 
 ### Batch 7.2: @DarticExport 代码生成
 

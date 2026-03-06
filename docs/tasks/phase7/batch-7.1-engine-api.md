@@ -2,9 +2,9 @@
 
 ## 概览
 
-在现有内部组件（DarticInterpreter、HostFunctionRegistry、HostDispatchRegistry、DarticProxyManager）之上，封装面向宿主开发者的统一公开 API——DarticEngine。同时重构内部基础设施以支持用户自定义宿主类注册、按名调用脚本函数、Bridge 工厂管理。
+在现有内部组件（DarticInterpreter、HostBindingRegistry、HostClassRegistry、DarticProxyManager）之上，封装面向宿主开发者的统一公开 API——DarticEngine。同时重构内部基础设施以支持用户自定义宿主类注册、按名调用脚本函数、Bridge 工厂管理。
 
-核心变更：① HostDispatchRegistry 重构为 runtimeType 精确匹配 + is-chain fallback + 缓存，支持动态注册用户宿主类，生命周期改为 DarticEngine 持有；② 新增 BridgeFactoryRegistry（className → BridgeFactory）和 BridgeDispatch（invoke/get/set 三方法分发 + notOverridden 哨兵）；③ DarticModule 新增导出表（name → funcId）并扩展 .darb 序列化格式；④ DarticInterpreter 新增 executeFunction() 方法并接受外部传入的 HostDispatchRegistry；⑤ 封装 DarticEngine / DarticConfig / DarticPlugin 公开 API；⑥ engine.call() 端到端管线集成。
+核心变更：① HostClassRegistry 重构为 runtimeType 精确匹配 + is-chain fallback + 缓存，支持动态注册用户宿主类，生命周期改为 DarticEngine 持有；② 新增 BridgeFactoryRegistry（className → BridgeFactory）和 BridgeDispatch（invoke/get/set 三方法分发 + notOverridden 哨兵）；③ DarticModule 新增导出表（name → funcId）并扩展 .darb 序列化格式；④ DarticInterpreter 新增 executeFunction() 方法并接受外部传入的 HostClassRegistry；⑤ 封装 DarticEngine / DarticConfig / DarticPlugin 公开 API；⑥ engine.call() 端到端管线集成。
 
 **设计参考：** `docs/plans/2026-02-20-bridge-api-design.md`（完整 API 设计，含 registerClass 参数、call() 重入策略、错误模型、数据交换规则）、`docs/design/04-interop.md`（Bridge 内部架构）、`docs/design/03-execution-engine.md`（_runNestedDispatch 重入机制）、`docs/design/08-sandbox.md`（资源限制参数映射）
 
@@ -12,16 +12,16 @@
 
 ---
 
-### Task 7.1.1: HostDispatchRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
+### Task 7.1.1: HostClassRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
 
 **产出文件：**
-- Modify: `lib/src/bridge/host_dispatch_registry.dart`
+- Modify: `lib/src/bridge/host_class_registry.dart`
 - Test: `test/bridge/dynamic_dispatch_test.dart`（扩展已有测试）
 
 **TDD 步骤：**
 
 1. **读设计文档** — API 设计文档 "registerClass 内部行为"节和 "Phase 7.1 变更"节：
-   - 当前 HostDispatchRegistry 在 `lookup()` 中用硬编码 `is` 检查链分发，仅覆盖 dart:core 固定类型
+   - 当前 HostClassRegistry 在 `lookup()` 中用硬编码 `is` 检查链分发，仅覆盖 dart:core 固定类型
    - 问题：用户注册自定义 host 类型时，`is` 检查有子类型传递性（B extends A 的实例对 `is A` 也返回 true），注册顺序不对会导致子类 dispatcher 永远不被命中
    - 按继承深度排序不可行（Dart 多接口 DAG 无法编码为单一深度值）
    - 方案：runtimeType 精确匹配 O(1) + is-chain fallback + 缓存（inline cache 思路：慢路径命中后写入 `_exactMap`，后续全 O(1)）
@@ -35,14 +35,14 @@
    - **子类型安全**：注册 A 和 B（B extends A）→ B 实例 → 精确匹配 B dispatcher（不会误中 A）
    - **注册顺序无关性**：无论先注册 A 还是先注册 B，只要传入 `exactType`，B 实例始终正确匹配 B dispatcher（`_exactMap` 预热保证顺序无关，与 Dart VM CID / JVM klass 精确类型标识对齐）
    - **核心类型快路径**：dart:core 类型保持原有 is 检查链作为 fallback，性能不退化
-   - **外部传入生命周期**：构造 HostDispatchRegistry → 传入 DarticInterpreter → 多次 execute() 共享同一注册表
+   - **外部传入生命周期**：构造 HostClassRegistry → 传入 DarticInterpreter → 多次 execute() 共享同一注册表
 
 3. **实现** —
    - 重构 `lookup(Object receiver)` 为三层查找：① `_exactMap[receiver.runtimeType]` 精确匹配 ② 硬编码核心类型 is 链（快路径）③ 动态注册 is 链（`_userEntries`，按注册顺序遍历）。命中后缓存到 `_exactMap`
-   - 新增 `_exactMap: Map<Type, HostDispatcher>` 缓存字段
-   - 新增 `_userEntries: List<({bool Function(Object) test, HostDispatcher dispatcher})>` 动态注册列表
-   - 新增 `register(bool Function(Object) test, List<String> prefixes, {Type? exactType})` 方法：创建 BindingLookupDispatcher + 加入 `_userEntries`；若 `exactType` 非 null，同时写入 `_exactMap` 实现注册时 O(1) 预热
-   - 构造函数保持接受 `HostFunctionRegistry`，不再在 `DarticInterpreter.execute()` 中创建
+   - 新增 `_exactMap: Map<Type, HostClassAdapter>` 缓存字段
+   - 新增 `_userEntries: List<({bool Function(Object) test, HostClassAdapter dispatcher})>` 动态注册列表
+   - 新增 `register(bool Function(Object) test, List<String> prefixes, {Type? exactType})` 方法：创建 BindingLookupAdapter + 加入 `_userEntries`；若 `exactType` 非 null，同时写入 `_exactMap` 实现注册时 O(1) 预热
+   - 构造函数保持接受 `HostBindingRegistry`，不再在 `DarticInterpreter.execute()` 中创建
    - 修改 DarticInterpreter：`_hostClassRegistry` 从内部创建改为构造函数接受外部传入（可选）
 
 4. **运行** — `fvm dart analyze && fvm dart test test/bridge/dynamic_dispatch_test.dart`
@@ -130,7 +130,7 @@
 ### Task 7.1.4: DarticInterpreter 重构 — executeFunction() + 错误模型完善
 
 **产出文件：**
-- Modify: `lib/src/runtime/interpreter.dart`（新增 executeFunction、接受外部 HostDispatchRegistry）
+- Modify: `lib/src/runtime/interpreter.dart`（新增 executeFunction、接受外部 HostClassRegistry）
 - Modify: `lib/src/runtime/error.dart`（CallDepthExceededError 子类）
 - Test: `test/runtime/execute_function_test.dart`
 
@@ -148,13 +148,13 @@
    - **executeFunction ref 类型返回**：编译 `String greet() => 'hello';` → executeFunction → 返回 'hello'
    - **executeFunction async 函数**：编译 `Future<int> f() async => 42;` → executeFunction → 返回 Future<int>
    - **重入检测**：模拟在宿主回调内调用 executeFunction → 自动走 _runNestedDispatch 路径
-   - **外部 HostDispatchRegistry**：构造时传入 HostDispatchRegistry → execute()/executeFunction() 使用此实例（不再内部创建）
+   - **外部 HostClassRegistry**：构造时传入 HostClassRegistry → execute()/executeFunction() 使用此实例（不再内部创建）
    - **CallDepthExceededError**：递归超过 maxCallDepth → 抛 CallDepthExceededError（非通用 DarticError）→ 验证 depth/limit 字段
 
 3. **实现** —
    - **executeFunction()**：按 funcId 取 DarticFuncProto → 构造无 upvalue 的 DarticClosure → 检查 `_isExecuting`（① 空闲时走 executeFunction 路径：初始化栈/fuel/stopwatch → 执行 → 清理；② 活跃时走 `_runNestedDispatch` 路径）→ 通过 `_routeArgs()` 将 args 按 paramKinds 分流到值栈/引用栈 → 执行 → 收集返回值
    - **_isExecuting 标志**：execute() 入口设 true，正常/异常退出设 false。executeFunction() 读此标志判断路径
-   - **外部 HostDispatchRegistry**：构造函数新增可选参数 `HostDispatchRegistry? hostDispatchRegistry`。execute() 中若外部传入则使用，否则从 HostFunctionRegistry 自动创建（向后兼容）
+   - **外部 HostClassRegistry**：构造函数新增可选参数 `HostClassRegistry? hostDispatchRegistry`。execute() 中若外部传入则使用，否则从 HostBindingRegistry 自动创建（向后兼容）
    - **CallDepthExceededError**：`class CallDepthExceededError extends DarticError { final int depth; final int limit; }`。修改 CallStack.pushFrame 中的深度检查，抛此异常替代通用 DarticError
 
 4. **运行** — `fvm dart analyze && fvm dart test test/runtime/execute_function_test.dart`
@@ -200,7 +200,7 @@
    - **DarticConfig**：纯数据类，包含 API 设计文档定义的 6 个属性 + 默认值。const 构造函数
    - **DarticPlugin**：抽象接口 `abstract class DarticPlugin { String get name; void register(DarticEngine engine); }`
    - **DarticEngine**：
-     - 内部持有 DarticInterpreter、HostFunctionRegistry、HostDispatchRegistry、BridgeFactoryRegistry、DarticProxyManager
+     - 内部持有 DarticInterpreter、HostBindingRegistry、HostClassRegistry、BridgeFactoryRegistry、DarticProxyManager
      - 状态机枚举 `_EngineState { created, loaded, disposed }`
      - 构造函数接收 `{List<DarticPlugin> plugins, DarticConfig config}`，创建内部组件，注册插件，映射 config
      - `loadBytecode(Uint8List bytes)`：调用 loadAndVerify → 绑定解析 → 状态转 loaded
@@ -245,8 +245,8 @@
      - 调用 `_interpreter.executeFunction(_module, funcId, args ?? [])`
      - 捕获脚本异常：若 onError 非 null → 调用 onError → 返回 null；否则 rethrow
      - 资源错误（DarticError 子类 FuelExhaustedError/ExecutionTimeoutError/CallDepthExceededError）始终 rethrow（不走 onError）
-   - **registerClass()**：协调三注册表——遍历 methods 调用 HostFunctionRegistry.register → 调用 HostDispatchRegistry.register(test, [name]) → 若 bridgeFactory 非 null 则 BridgeFactoryRegistry.register
-   - **registerBinding()**：委托 HostFunctionRegistry.register
+   - **registerClass()**：协调三注册表——遍历 methods 调用 HostBindingRegistry.register → 调用 HostClassRegistry.register(test, [name]) → 若 bridgeFactory 非 null 则 BridgeFactoryRegistry.register
+   - **registerBinding()**：委托 HostBindingRegistry.register
 
 4. **运行** — `fvm dart analyze && fvm dart test test/api/`
 
@@ -258,7 +258,7 @@
 feat(api): add DarticEngine public embedding API with internal refactoring
 ```
 
-**提交文件：** `lib/src/api/`（新目录）+ `lib/src/bridge/host_dispatch_registry.dart`（重构）+ `lib/src/bridge/bridge_factory_registry.dart`（新）+ `lib/src/bridge/bridge_dispatch.dart`（新）+ `lib/src/bytecode/module.dart`（导出表）+ `lib/src/bytecode/serializer.dart`（导出表序列化）+ `lib/src/compiler/compiler.dart`（导出表生成）+ `lib/src/runtime/interpreter.dart`（executeFunction + 外部 registry）+ `lib/src/runtime/error.dart`（CallDepthExceededError）+ `lib/dartic.dart`（导出）+ 全部新测试
+**提交文件：** `lib/src/api/`（新目录）+ `lib/src/bridge/host_class_registry.dart`（重构）+ `lib/src/bridge/bridge_factory_registry.dart`（新）+ `lib/src/bridge/bridge_dispatch.dart`（新）+ `lib/src/bytecode/module.dart`（导出表）+ `lib/src/bytecode/serializer.dart`（导出表序列化）+ `lib/src/compiler/compiler.dart`（导出表生成）+ `lib/src/runtime/interpreter.dart`（executeFunction + 外部 registry）+ `lib/src/runtime/error.dart`（CallDepthExceededError）+ `lib/dartic.dart`（导出）+ 全部新测试
 
 ## 文档更新
 
@@ -277,7 +277,7 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 
 ## Batch 完成检查
 
-- [x] 7.1.1 HostDispatchRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
+- [x] 7.1.1 HostClassRegistry 重构 — runtimeType 缓存 + 动态注册 + 生命周期
 - [x] 7.1.2 BridgeFactoryRegistry + BridgeDispatch
 - [x] 7.1.3 DarticModule 导出表 + .darb 序列化
 - [x] 7.1.4 DarticInterpreter 重构 — executeFunction() + 错误模型完善

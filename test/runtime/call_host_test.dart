@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
@@ -10,10 +10,10 @@ import 'package:test/test.dart';
 
 void main() {
   group('CALL_HOST', () {
-    late HostFunctionRegistry registry;
+    late HostBindingRegistry registry;
 
     setUp(() {
-      registry = HostFunctionRegistry();
+      registry = HostBindingRegistry();
     });
 
     /// Helper to build a module with binding names and execute it.

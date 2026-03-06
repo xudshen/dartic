@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dartic/src/bridge/host_function_registry.dart';
+import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/module.dart';
@@ -129,7 +129,7 @@ void main() {
         final bytes = DarticSerializer().serialize(module);
 
         // Interpreter with an empty registry (no bindings registered).
-        final registry = HostFunctionRegistry();
+        final registry = HostBindingRegistry();
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
         expect(
           () => interp.loadAndVerify(bytes),
@@ -176,7 +176,7 @@ void main() {
         );
         final bytes = DarticSerializer().serialize(module);
 
-        final registry = HostFunctionRegistry();
+        final registry = HostBindingRegistry();
         registry.register('dart:core::::myFunc#1', (args) => null);
         final interp = DarticInterpreter(hostFunctionRegistry: registry);
 
@@ -210,7 +210,7 @@ void main() {
         expect(
           () => interp.loadAndVerify(bytes),
           throwsA(isA<DarticLoadError>().having(
-            (e) => e.errors.any((msg) => msg.contains('HostFunctionRegistry')),
+            (e) => e.errors.any((msg) => msg.contains('HostBindingRegistry')),
             'reports missing registry',
             isTrue,
           )),
