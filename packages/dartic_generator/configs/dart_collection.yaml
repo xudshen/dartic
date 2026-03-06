@@ -19,8 +19,8 @@
 # Note: Some dart:collection::LinkedHashMap bindings overlap with dart:core's
 # Map internal types — this is intentional for coverage completeness.
 
-output_bindings: "../../lib/src/bridge/bindings"
-output_plugins: "../../lib/src/bridge/plugins"
+output_bindings: "../../../lib/src/bridge/bindings"
+output_plugins: "../../../lib/src/bridge/plugins"
 
 libraries:
   - uri: dart:collection

@@ -3,6 +3,53 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
+  _$ArgumentError(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  dynamic get invalidValue {
+    final r = _dispatch.get(this, $darticObject, 'invalidValue');
+    if (identical(r, notOverridden)) return super.invalidValue;
+    return r as dynamic;
+  }
+
+  @override
+  String? get name {
+    final r = _dispatch.get(this, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String?;
+  }
+
+  @override
+  dynamic get message {
+    final r = _dispatch.get(this, $darticObject, 'message');
+    if (identical(r, notOverridden)) return super.message;
+    return r as dynamic;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+}
 
 abstract final class ArgumentErrorBindings {
   static void register(PluginContext ctx) {
@@ -12,9 +59,16 @@ abstract final class ArgumentErrorBindings {
       test: (o) => o is ArgumentError,
       methods: methodMap(),
       superclasses: ['dart:core::Error'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ArgumentError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::ArgumentError::checkNotNull#1', (args) => ArgumentError.checkNotNull(args[0] as Object?));
     ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) => ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?));
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError).toString());
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as ArgumentError).invalidValue);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as ArgumentError).name);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$message#0', (args) => (args[0] as ArgumentError).message);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$stackTrace#0', (args) => (args[0] as ArgumentError).stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

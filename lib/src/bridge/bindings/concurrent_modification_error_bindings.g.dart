@@ -3,6 +3,39 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$ConcurrentModificationError extends ConcurrentModificationError implements DarticObjectHolder {
+  _$ConcurrentModificationError(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Object? get modifiedObject {
+    final r = _dispatch.get(this, $darticObject, 'modifiedObject');
+    if (identical(r, notOverridden)) return super.modifiedObject;
+    return r as Object?;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+}
 
 abstract final class ConcurrentModificationErrorBindings {
   static void register(PluginContext ctx) {
@@ -12,7 +45,12 @@ abstract final class ConcurrentModificationErrorBindings {
       test: (o) => o is ConcurrentModificationError,
       methods: methodMap(),
       superclasses: ['dart:core::Error'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ConcurrentModificationError(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$toString#0', (args) => (args[0] as _$ConcurrentModificationError).toString());
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$modifiedObject#0', (args) => (args[0] as ConcurrentModificationError).modifiedObject);
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$stackTrace#0', (args) => (args[0] as ConcurrentModificationError).stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

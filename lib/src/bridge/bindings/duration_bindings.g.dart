@@ -3,6 +3,158 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$Duration extends Duration implements DarticObjectHolder {
+  _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  int compareTo(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, 'compareTo', [other]);
+    if (identical(r, notOverridden)) return super.compareTo(other);
+    return r as int;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Duration abs() {
+    final r = _dispatch.invoke(this, $darticObject, 'abs', const []);
+    if (identical(r, notOverridden)) return super.abs();
+    return r as Duration;
+  }
+
+  @override
+  int get inDays {
+    final r = _dispatch.get(this, $darticObject, 'inDays');
+    if (identical(r, notOverridden)) return super.inDays;
+    return r as int;
+  }
+
+  @override
+  int get inHours {
+    final r = _dispatch.get(this, $darticObject, 'inHours');
+    if (identical(r, notOverridden)) return super.inHours;
+    return r as int;
+  }
+
+  @override
+  int get inMinutes {
+    final r = _dispatch.get(this, $darticObject, 'inMinutes');
+    if (identical(r, notOverridden)) return super.inMinutes;
+    return r as int;
+  }
+
+  @override
+  int get inSeconds {
+    final r = _dispatch.get(this, $darticObject, 'inSeconds');
+    if (identical(r, notOverridden)) return super.inSeconds;
+    return r as int;
+  }
+
+  @override
+  int get inMilliseconds {
+    final r = _dispatch.get(this, $darticObject, 'inMilliseconds');
+    if (identical(r, notOverridden)) return super.inMilliseconds;
+    return r as int;
+  }
+
+  @override
+  int get inMicroseconds {
+    final r = _dispatch.get(this, $darticObject, 'inMicroseconds');
+    if (identical(r, notOverridden)) return super.inMicroseconds;
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool get isNegative {
+    final r = _dispatch.get(this, $darticObject, 'isNegative');
+    if (identical(r, notOverridden)) return super.isNegative;
+    return r as bool;
+  }
+
+  @override
+  Duration operator +(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '+', [other]);
+    if (identical(r, notOverridden)) return super + other;
+    return r as Duration;
+  }
+
+  @override
+  Duration operator -(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '-', [other]);
+    if (identical(r, notOverridden)) return super - other;
+    return r as Duration;
+  }
+
+  @override
+  Duration operator *(num other) {
+    final r = _dispatch.invoke(this, $darticObject, '*', [other]);
+    if (identical(r, notOverridden)) return super * other;
+    return r as Duration;
+  }
+
+  @override
+  Duration operator ~/(int other) {
+    final r = _dispatch.invoke(this, $darticObject, '~/', [other]);
+    if (identical(r, notOverridden)) return super ~/ other;
+    return r as Duration;
+  }
+
+  @override
+  bool operator <(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '<', [other]);
+    if (identical(r, notOverridden)) return super < other;
+    return r as bool;
+  }
+
+  @override
+  bool operator >(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '>', [other]);
+    if (identical(r, notOverridden)) return super > other;
+    return r as bool;
+  }
+
+  @override
+  bool operator <=(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '<=', [other]);
+    if (identical(r, notOverridden)) return super <= other;
+    return r as bool;
+  }
+
+  @override
+  bool operator >=(Duration other) {
+    final r = _dispatch.invoke(this, $darticObject, '>=', [other]);
+    if (identical(r, notOverridden)) return super >= other;
+    return r as bool;
+  }
+
+  @override
+  Duration operator -() {
+    final r = _dispatch.invoke(this, $darticObject, 'unary-', const []);
+    if (identical(r, notOverridden)) return -super;
+    return r as Duration;
+  }
+}
 
 abstract final class DurationBindings {
   static void register(PluginContext ctx) {
@@ -12,6 +164,8 @@ abstract final class DurationBindings {
       test: (o) => o is Duration,
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Duration(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::Duration::microsecondsPerMillisecond#0', (args) => Duration.microsecondsPerMillisecond);
     ctx.registerBinding('dart:core::Duration::millisecondsPerSecond#0', (args) => Duration.millisecondsPerSecond);
@@ -29,6 +183,17 @@ abstract final class DurationBindings {
     ctx.registerBinding('dart:core::Duration::secondsPerDay#0', (args) => Duration.secondsPerDay);
     ctx.registerBinding('dart:core::Duration::minutesPerDay#0', (args) => Duration.minutesPerDay);
     ctx.registerBinding('dart:core::Duration::zero#0', (args) => Duration.zero);
+    ctx.registerBinding('dart:core::Duration::\$super\$compareTo#1', (args) => (args[0] as _$Duration).compareTo(args[1] as Duration));
+    ctx.registerBinding('dart:core::Duration::\$super\$toString#0', (args) => (args[0] as _$Duration).toString());
+    ctx.registerBinding('dart:core::Duration::\$super\$abs#0', (args) => (args[0] as _$Duration).abs());
+    ctx.registerBinding('dart:core::Duration::\$super\$inDays#0', (args) => (args[0] as Duration).inDays);
+    ctx.registerBinding('dart:core::Duration::\$super\$inHours#0', (args) => (args[0] as Duration).inHours);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMinutes#0', (args) => (args[0] as Duration).inMinutes);
+    ctx.registerBinding('dart:core::Duration::\$super\$inSeconds#0', (args) => (args[0] as Duration).inSeconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMilliseconds#0', (args) => (args[0] as Duration).inMilliseconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMicroseconds#0', (args) => (args[0] as Duration).inMicroseconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$hashCode#0', (args) => (args[0] as Duration).hashCode);
+    ctx.registerBinding('dart:core::Duration::\$super\$isNegative#0', (args) => (args[0] as Duration).isNegative);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

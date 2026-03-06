@@ -9,8 +9,10 @@ void main() {
       final path = '${Directory.current.path}/test/fixtures/simple_config.yaml';
       final config = parseConfigFile(path);
 
-      expect(config.outputBindings, 'lib/src/bridge/bindings');
-      expect(config.outputPlugins, 'lib/src/bridge/plugins');
+      // Paths are resolved relative to the config file's directory.
+      final fixtureDir = '${Directory.current.path}/test/fixtures';
+      expect(config.outputBindings, '$fixtureDir/lib/src/bridge/bindings');
+      expect(config.outputPlugins, '$fixtureDir/lib/src/bridge/plugins');
       expect(config.libraries, hasLength(1));
     });
 
@@ -391,9 +393,8 @@ void main() {
       final config = parseConfigFile(path);
       final lib = config.libraries.first;
 
-      // _GrowableList, _List, _Set, LinkedHashMap, Pattern, Symbol,
-      // _StringStackTrace, _Enum, Error, MapEntry, Duration = 11
-      expect(lib.overrides, hasLength(11));
+      // Count all override entries in dart_core.yaml
+      expect(lib.overrides, hasLength(31));
     });
   });
 }

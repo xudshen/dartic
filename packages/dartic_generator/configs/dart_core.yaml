@@ -14,8 +14,8 @@
 #   7. Runes/RuneIterator
 #   8. BigInt, DateTime, StringBuffer, Uri, Invocation
 
-output_bindings: "../../lib/src/bridge/bindings"
-output_plugins: "../../lib/src/bridge/plugins"
+output_bindings: "../../../lib/src/bridge/bindings"
+output_plugins: "../../../lib/src/bridge/plugins"
 
 libraries:
   - uri: dart:core
@@ -34,8 +34,9 @@ libraries:
       # bool
       - bool
 
-      # Duration
-      - Duration
+      # Duration (non-final, bridgeable)
+      - name: Duration
+        bridge: true
 
       # ── Generic/polymorphic types (need test predicate) ──────────────
       # NOTE: Supertypes MUST come before subtypes here. The dispatch
@@ -89,25 +90,39 @@ libraries:
       - Iterator
 
       # ── Error/Exception hierarchy ────────────────────────────────────
+      # Non-final error/exception types get bridge: true so scripts can
+      # define custom error/exception subclasses.
 
-      - Error
-      - ArgumentError
-      - RangeError
-      - IndexError
-      - StateError
-      - UnsupportedError
-      - UnimplementedError
-      - FormatException
+      - name: Error
+        bridge: true
+      - name: ArgumentError
+        bridge: true
+      - name: RangeError
+        bridge: true
+      - name: IndexError
+        bridge: true
+      - name: StateError
+        bridge: true
+      - name: UnsupportedError
+        bridge: true
+      - name: UnimplementedError
+        bridge: true
+      - name: FormatException
+        bridge: true
       - Exception
-      - ConcurrentModificationError
+      - name: ConcurrentModificationError
+        bridge: true
       - StackOverflowError
-      - AssertionError
-      - TypeError
-      - NoSuchMethodError
+      - name: AssertionError
+        bridge: true
+      - name: TypeError
+        bridge: true
+      - NoSuchMethodError  # factory-only constructors, can't be bridged
 
       # ── Misc types ──────────────────────────────────────────────────
 
-      - Stopwatch
+      - name: Stopwatch
+        bridge: true
       - StackTrace
       - name: _StringStackTrace
         source_name: _StringStackTrace

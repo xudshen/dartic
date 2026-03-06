@@ -194,6 +194,7 @@ class Runner {
               ? extraBindings
               : null,
           preamble: preamble,
+          bridge: classConfig.bridge,
         );
 
         final fileName = _classToFileName(className);

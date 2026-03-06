@@ -8,10 +8,15 @@ import 'package:yaml/yaml.dart';
 import 'binding_config.dart';
 
 /// 解析单个 YAML 配置文件。
+///
+/// Output paths in the YAML are resolved relative to the config file's
+/// directory, so the generator produces correct results regardless of CWD.
 GeneratorConfig parseConfigFile(String path) {
-  final content = File(path).readAsStringSync();
+  final file = File(path);
+  final content = file.readAsStringSync();
   final yaml = loadYaml(content) as YamlMap;
-  return _parseConfig(yaml);
+  final configDir = file.absolute.parent.path;
+  return _parseConfig(yaml, configDir);
 }
 
 /// 解析目录下所有 YAML 文件，合并为一个 [GeneratorConfig]。
@@ -38,15 +43,24 @@ GeneratorConfig parseConfigDirectory(String dirPath) {
   );
 }
 
-GeneratorConfig _parseConfig(YamlMap yaml) {
+GeneratorConfig _parseConfig(YamlMap yaml, [String? configDir]) {
   final libraries = (yaml['libraries'] as YamlList?)
           ?.map((e) => _parseLibrary(e as YamlMap))
           .toList() ??
       [];
 
+  var outputBindings = yaml['output_bindings'] as String;
+  var outputPlugins = yaml['output_plugins'] as String;
+
+  // Resolve relative paths against the config file's directory.
+  if (configDir != null) {
+    outputBindings = _resolvePath(configDir, outputBindings);
+    outputPlugins = _resolvePath(configDir, outputPlugins);
+  }
+
   return GeneratorConfig(
-    outputBindings: yaml['output_bindings'] as String,
-    outputPlugins: yaml['output_plugins'] as String,
+    outputBindings: outputBindings,
+    outputPlugins: outputPlugins,
     libraries: libraries,
   );
 }
@@ -88,6 +102,7 @@ ClassConfig _parseClass(dynamic value) {
     name: map['name'] as String,
     sourceName: map['source_name'] as String?,
     internalTypes: internalTypes,
+    bridge: map['bridge'] as bool? ?? false,
   );
 }
 
@@ -114,6 +129,12 @@ FunctionConfig _parseFunction(dynamic value) {
     custom: map['custom'] as String?,
     arity: map['arity'] as int?,
   );
+}
+
+/// Resolves [relativePath] against [baseDir], canonicalizing `..` segments.
+String _resolvePath(String baseDir, String relativePath) {
+  if (File(relativePath).isAbsolute) return relativePath;
+  return Uri.directory(baseDir).resolve(relativePath).toFilePath();
 }
 
 OverrideConfig _parseOverride(YamlMap yaml) {

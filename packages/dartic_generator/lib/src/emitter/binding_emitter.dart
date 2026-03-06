@@ -24,6 +24,7 @@ String emitBindingFile(
   Map<String, String>? extraMethods,
   List<String>? extraBindings,
   String? preamble,
+  bool bridge = false,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -35,8 +36,23 @@ String emitBindingFile(
   }
 
   final bindingsClassName = _toBindingsClassName(info.className);
+
+  // Effective bridge flag: skip final, private, or factory-only classes.
+  final hasGenerativeCtor =
+      info.constructors.any((c) => !c.isFactory) || info.isAbstract;
+  final effectiveBridge = bridge &&
+      !info.isFinal &&
+      !info.className.startsWith('_') &&
+      hasGenerativeCtor;
+
+  if (effectiveBridge) {
+    _writeBridgeClass(body, info);
+    body.writeln();
+  }
+
   body.writeln('abstract final class $bindingsClassName {');
-  _writeRegisterMethod(body, info, extraBindings: extraBindings);
+  _writeRegisterMethod(body, info,
+      extraBindings: extraBindings, bridge: effectiveBridge);
   body.writeln();
   _writeMethodMap(body, info, extraMethods: extraMethods);
   body.writeln('}');
@@ -44,7 +60,9 @@ String emitBindingFile(
   // Build final output with header + detected imports
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
-  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
+  _writeImport(buf,
+      additionalImports: _detectRequiredImports(body.toString()),
+      bridge: effectiveBridge);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -135,10 +153,18 @@ void _writeHeader(StringBuffer buf, {String? configPath}) {
   buf.writeln();
 }
 
-void _writeImport(StringBuffer buf, {Set<String>? additionalImports}) {
+void _writeImport(StringBuffer buf,
+    {Set<String>? additionalImports, bool bridge = false}) {
   buf.writeln("import '../../api/plugin_context.dart';");
+  if (bridge) {
+    buf.writeln("import '../dartic_dispatch.dart';");
+    buf.writeln("import '../dartic_object_holder.dart';");
+    buf.writeln("import '../../runtime/object.dart';");
+  }
   if (additionalImports != null) {
     for (final imp in additionalImports) {
+      // Skip imports already added by bridge mode
+      if (bridge && imp == '../../runtime/object.dart') continue;
       buf.writeln("import '$imp';");
     }
   }
@@ -232,6 +258,7 @@ void _writeRegisterMethod(
   StringBuffer buf,
   TypeInfo info, {
   List<String>? extraBindings,
+  bool bridge = false,
 }) {
   buf.writeln('  static void register(PluginContext ctx) {');
 
@@ -257,6 +284,12 @@ void _writeRegisterMethod(
           info.superclasses.map((s) => "'$s'").join(', ');
       buf.writeln('      superclasses: [$superList],');
     }
+    // Bridge factory — only for non-final, non-private classes
+    if (bridge && !info.isFinal) {
+      final bridgeClassName = '_\$${info.className}';
+      buf.writeln('      bridgeFactory: (dispatch, darticObject, superArgs) =>');
+      buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
+    }
     buf.writeln('    );');
 
     // Static methods as registerBinding
@@ -264,6 +297,11 @@ void _writeRegisterMethod(
 
     // Static getters as registerBinding
     _writeStaticGetterRegistrations(buf, info);
+
+    // Super forwarders for Bridge classes
+    if (bridge && !info.isFinal) {
+      _writeSuperForwarderRegistrations(buf, info);
+    }
   }
 
   // Extra cross-namespace bindings (e.g. dart:_internal::Symbol::#1)
@@ -697,6 +735,224 @@ String _emitStaticMethodWrapper(
     return '(args) { $call; return null; }';
   }
   return '(args) => $call';
+}
+
+// ── Bridge class generation ─────────────────────────────────────────────
+
+/// Generates a Bridge class that extends the host type and delegates
+/// overridable methods to [DarticDispatch].
+///
+/// The generated class:
+/// - `extends HostClass implements DarticObjectHolder`
+/// - Holds `DarticDispatch` and `DarticObject`
+/// - Overrides all non-static public methods/getters/setters/operators
+///   with dispatch delegation (check `notOverridden` → call super)
+void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
+  final bridgeClassName = '_\$${info.className}';
+  buf.writeln(
+      'class $bridgeClassName extends ${info.className} implements DarticObjectHolder {');
+
+  // Constructor — takes dispatch, darticObject, superArgs.
+  // Pass superArgs to super() if the parent has required constructor params.
+  final unnamedCtor = info.constructors
+      .where((c) => c.name.isEmpty && !c.isFactory)
+      .firstOrNull;
+  final superParams = unnamedCtor?.params
+      .where((p) => !p.isOptional)
+      .toList();
+  if (superParams != null && superParams.isNotEmpty) {
+    final superCall = superParams.indexed
+        .map((e) => 'superArgs[${e.$1}] as ${e.$2.type}')
+        .join(', ');
+    buf.writeln(
+        '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs) : super($superCall);');
+  } else {
+    buf.writeln(
+        '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs);');
+  }
+  buf.writeln();
+  buf.writeln('  final DarticDispatch _dispatch;');
+  buf.writeln();
+  buf.writeln('  @override');
+  buf.writeln('  final DarticObject \$darticObject;');
+
+  // Override instance methods with dispatch delegation
+  for (final method in info.methods) {
+    buf.writeln();
+    _writeBridgeMethodOverride(buf, info.className, method);
+  }
+
+  // Override getters with dispatch delegation
+  for (final getter in info.getters) {
+    buf.writeln();
+    _writeBridgeGetterOverride(buf, getter);
+  }
+
+  // Override setters with dispatch delegation
+  for (final setter in info.setters) {
+    buf.writeln();
+    _writeBridgeSetterOverride(buf, setter);
+  }
+
+  // Override operators with dispatch delegation
+  for (final op in info.operators) {
+    buf.writeln();
+    _writeBridgeOperatorOverride(buf, info.className, op);
+  }
+
+  buf.writeln('}');
+}
+
+/// Generates a dispatch-delegating method override for Bridge.
+void _writeBridgeMethodOverride(
+    StringBuffer buf, String className, MethodInfo method) {
+  // Build parameter list with types
+  final params = <String>[];
+  final argNames = <String>[];
+  for (final p in method.paramTypes) {
+    if (p.isNamed) {
+      params.add('${p.type} ${p.name}');
+      argNames.add(p.name);
+    } else {
+      params.add('${p.type} ${p.name}');
+      argNames.add(p.name);
+    }
+  }
+
+  final paramStr = params.join(', ');
+  final argsListStr = argNames.isEmpty ? 'const []' : '[${argNames.join(', ')}]';
+
+  buf.writeln('  @override');
+  if (method.isVoid) {
+    buf.writeln('  void ${method.name}($paramStr) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) { super.${method.name}(${argNames.join(', ')}); return; }');
+    buf.writeln('  }');
+  } else {
+    buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super.${method.name}(${argNames.join(', ')});');
+    buf.writeln('    return r as ${method.returnType};');
+    buf.writeln('  }');
+  }
+}
+
+/// Generates a dispatch-delegating getter override for Bridge.
+void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter) {
+  buf.writeln('  @override');
+  buf.writeln('  ${getter.returnType} get ${getter.name} {');
+  buf.writeln(
+      "    final r = _dispatch.get(this, \$darticObject, '${getter.name}');");
+  buf.writeln(
+      '    if (identical(r, notOverridden)) return super.${getter.name};');
+  buf.writeln('    return r as ${getter.returnType};');
+  buf.writeln('  }');
+}
+
+/// Generates a dispatch-delegating setter override for Bridge.
+void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter) {
+  buf.writeln('  @override');
+  buf.writeln('  set ${setter.name}(${setter.paramType} value) {');
+  buf.writeln(
+      "    _dispatch.set(this, \$darticObject, '${setter.name}', value);");
+  buf.writeln('  }');
+}
+
+/// Generates a dispatch-delegating operator override for Bridge.
+void _writeBridgeOperatorOverride(
+    StringBuffer buf, String className, OperatorInfo op) {
+  buf.writeln('  @override');
+  if (op.isUnary) {
+    if (op.name == '~') {
+      buf.writeln('  ${op.returnType} operator ~() {');
+      buf.writeln(
+          "    final r = _dispatch.invoke(this, \$darticObject, '~', const []);");
+      buf.writeln('    if (identical(r, notOverridden)) return ~super;');
+    } else {
+      // unary -
+      buf.writeln('  ${op.returnType} operator -() {');
+      buf.writeln(
+          "    final r = _dispatch.invoke(this, \$darticObject, 'unary-', const []);");
+      buf.writeln('    if (identical(r, notOverridden)) return -super;');
+    }
+    buf.writeln('    return r as ${op.returnType};');
+    buf.writeln('  }');
+  } else if (op.name == '[]') {
+    buf.writeln('  ${op.returnType} operator [](${op.paramType} index) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '[]', [index]);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super[index];');
+    buf.writeln('    return r as ${op.returnType};');
+    buf.writeln('  }');
+  } else if (op.name == '[]=') {
+    buf.writeln(
+        '  void operator []=(${op.paramType} index, dynamic value) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '[]=', [index, value]);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) { super[index] = value; return; }');
+    buf.writeln('  }');
+  } else {
+    // Binary operator
+    buf.writeln(
+        '  ${op.returnType} operator ${op.name}(${op.paramType} other) {');
+    buf.writeln(
+        "    final r = _dispatch.invoke(this, \$darticObject, '${op.name}', [other]);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super ${op.name} other;');
+    buf.writeln('    return r as ${op.returnType};');
+    buf.writeln('  }');
+  }
+}
+
+/// Writes super forwarder registrations for Bridge classes.
+///
+/// Super forwarders allow the interpreter to call `super.method()` from
+/// script code. Each forwarder is registered as a binding with the key
+/// `"qualifiedName::$super$methodName#arity"`.
+void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
+  final bridgeClassName = '_\$${info.className}';
+
+  // Instance methods
+  for (final method in info.methods) {
+    for (final key in method.allBindingKeys) {
+      final arity = int.parse(key.split('#').last);
+      final castArgs = <String>[];
+      for (var i = 0; i < arity; i++) {
+        final param = method.paramTypes[i];
+        if (param.isNamed) {
+          castArgs.add('${param.name}: args[${i + 1}] as ${param.type}');
+        } else {
+          castArgs.add('args[${i + 1}] as ${param.type}');
+        }
+      }
+      final callArgs = castArgs.join(', ');
+      if (method.isVoid) {
+        buf.writeln(
+            "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${method.name}#$arity', (args) { (args[0] as $bridgeClassName).${method.name}($callArgs); return null; });");
+      } else {
+        buf.writeln(
+            "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${method.name}#$arity', (args) => (args[0] as $bridgeClassName).${method.name}($callArgs));");
+      }
+    }
+  }
+
+  // Getters
+  for (final getter in info.getters) {
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${getter.name}#0', (args) => (args[0] as ${info.className}).${getter.name});");
+  }
+
+  // Setters
+  for (final setter in info.setters) {
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as ${info.className}).${setter.name} = args[1] as ${setter.paramType}; return args[1]; });");
+  }
 }
 
 // ── Top-level function wrappers ─────────────────────────────────────────

@@ -422,6 +422,169 @@ void main() {
       expect(source, contains('print(args[0])'));
     });
   });
+
+  group('bridge mode', () {
+    test('generates Bridge class with DarticObjectHolder', () {
+      final info = TypeInfo(
+        className: 'Duration',
+        libraryUri: 'dart:core',
+        methods: [
+          MethodInfo(
+            name: 'toString',
+            paramTypes: [],
+            returnType: 'String',
+          ),
+        ],
+        getters: [
+          GetterInfo(name: 'inDays', returnType: 'int'),
+        ],
+        setters: [],
+        operators: [
+          OperatorInfo(
+            name: '+',
+            lookupName: '+',
+            paramType: 'Duration',
+            returnType: 'Duration',
+          ),
+        ],
+        staticMethods: [],
+        constructors: [ConstructorInfo(name: '', params: [])],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      // Bridge class generated
+      expect(source,
+          contains('class _\$Duration extends Duration implements DarticObjectHolder'));
+      expect(source, contains('final DarticDispatch _dispatch'));
+      expect(source, contains('final DarticObject \$darticObject'));
+
+      // Bridge imports
+      expect(source, contains("import '../dartic_dispatch.dart'"));
+      expect(source, contains("import '../dartic_object_holder.dart'"));
+      expect(source, contains("import '../../runtime/object.dart'"));
+
+      // Method override with dispatch delegation
+      expect(source, contains("_dispatch.invoke(this, \$darticObject, 'toString'"));
+      expect(source, contains('if (identical(r, notOverridden))'));
+      expect(source, contains('return super.toString()'));
+
+      // Getter override
+      expect(source, contains("_dispatch.get(this, \$darticObject, 'inDays')"));
+      expect(source, contains('return super.inDays'));
+
+      // Operator override
+      expect(source, contains("operator +(Duration other)"));
+      expect(source,
+          contains("_dispatch.invoke(this, \$darticObject, '+', [other])"));
+      expect(source, contains('return super + other'));
+
+      // registerClass includes bridgeFactory
+      expect(source, contains('bridgeFactory:'));
+      expect(source, contains('_\$Duration(dispatch, darticObject, superArgs)'));
+    });
+
+    test('skips Bridge for final classes', () {
+      final info = TypeInfo(
+        className: 'int',
+        libraryUri: 'dart:core',
+        methods: [],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [],
+        constructors: [],
+        superclasses: [],
+        isFinal: true,
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      // Should NOT generate bridge class for final types
+      expect(source, isNot(contains('class _\$int')));
+      expect(source, isNot(contains('bridgeFactory:')));
+      expect(source, isNot(contains('DarticObjectHolder')));
+    });
+
+    test('generates super forwarder registrations', () {
+      final info = TypeInfo(
+        className: 'Duration',
+        libraryUri: 'dart:core',
+        methods: [
+          MethodInfo(
+            name: 'toString',
+            paramTypes: [],
+            returnType: 'String',
+          ),
+        ],
+        getters: [
+          GetterInfo(name: 'inDays', returnType: 'int'),
+        ],
+        setters: [
+          SetterInfo(name: 'length', paramType: 'int'),
+        ],
+        operators: [],
+        staticMethods: [],
+        constructors: [ConstructorInfo(name: '', params: [])],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      // Super forwarder for method ($ escaped in generated source)
+      expect(source, contains(r"'dart:core::Duration::\$super\$toString#0'"));
+      // Super forwarder for getter
+      expect(source, contains(r"'dart:core::Duration::\$super\$inDays#0'"));
+      // Super forwarder for setter
+      expect(source, contains(r"'dart:core::Duration::\$super\$length=#1'"));
+    });
+
+    test('generates void method override correctly', () {
+      final info = TypeInfo(
+        className: 'MyClass',
+        libraryUri: 'package:test',
+        methods: [
+          MethodInfo(
+            name: 'doSomething',
+            paramTypes: [
+              ParamInfo(name: 'value', type: 'int'),
+            ],
+            returnType: 'void',
+          ),
+        ],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [],
+        constructors: [ConstructorInfo(name: '', params: [])],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      // Void method uses block body with early return
+      expect(source, contains('void doSomething(int value)'));
+      expect(source,
+          contains('super.doSomething(value); return;'));
+    });
+
+    test('generates setter override with dispatch.set', () {
+      final info = TypeInfo(
+        className: 'MyClass',
+        libraryUri: 'package:test',
+        methods: [],
+        getters: [],
+        setters: [
+          SetterInfo(name: 'count', paramType: 'int'),
+        ],
+        operators: [],
+        staticMethods: [],
+        constructors: [ConstructorInfo(name: '', params: [])],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      expect(source, contains('set count(int value)'));
+      expect(source, contains("_dispatch.set(this, \$darticObject, 'count', value)"));
+    });
+  });
 }
 
 TypeInfo _makeTypeInfo(String name, String uri) => TypeInfo(

@@ -3,6 +3,46 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$FormatException extends FormatException implements DarticObjectHolder {
+  _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get message {
+    final r = _dispatch.get(this, $darticObject, 'message');
+    if (identical(r, notOverridden)) return super.message;
+    return r as String;
+  }
+
+  @override
+  dynamic get source {
+    final r = _dispatch.get(this, $darticObject, 'source');
+    if (identical(r, notOverridden)) return super.source;
+    return r as dynamic;
+  }
+
+  @override
+  int? get offset {
+    final r = _dispatch.get(this, $darticObject, 'offset');
+    if (identical(r, notOverridden)) return super.offset;
+    return r as int?;
+  }
+}
 
 abstract final class FormatExceptionBindings {
   static void register(PluginContext ctx) {
@@ -12,7 +52,13 @@ abstract final class FormatExceptionBindings {
       test: (o) => o is FormatException,
       methods: methodMap(),
       superclasses: ['dart:core::Exception'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FormatException(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:core::FormatException::\$super\$toString#0', (args) => (args[0] as _$FormatException).toString());
+    ctx.registerBinding('dart:core::FormatException::\$super\$message#0', (args) => (args[0] as FormatException).message);
+    ctx.registerBinding('dart:core::FormatException::\$super\$source#0', (args) => (args[0] as FormatException).source);
+    ctx.registerBinding('dart:core::FormatException::\$super\$offset#0', (args) => (args[0] as FormatException).offset);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -108,6 +108,10 @@ class TypeAnalyzer {
     // Check if the class is abstract (interface, mixin, abstract class)
     final isAbstract = cls is ClassElement && cls.isAbstract;
 
+    // Check if the class is final or sealed (can't be extended)
+    final isFinal = cls is ClassElement &&
+        (cls.isFinal || cls.isSealed);
+
     // Separate methods into instance, static, and operators
     final methods = <MethodInfo>[];
     final staticMethods = <MethodInfo>[];
@@ -235,6 +239,7 @@ class TypeAnalyzer {
       constructors: constructors,
       superclasses: superclasses,
       isAbstract: isAbstract,
+      isFinal: isFinal,
     );
   }
 

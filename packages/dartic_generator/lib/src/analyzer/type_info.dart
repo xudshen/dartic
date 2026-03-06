@@ -18,6 +18,9 @@ class TypeInfo {
   final List<String> superclasses;
   final bool isAbstract;
 
+  /// 类是否为 final 或 sealed（不可被继承）。
+  final bool isFinal;
+
   TypeInfo({
     required this.className,
     required this.libraryUri,
@@ -30,6 +33,7 @@ class TypeInfo {
     required this.constructors,
     required this.superclasses,
     this.isAbstract = false,
+    this.isFinal = false,
   });
 
   /// 完整限定名，如 'dart:core::int'。

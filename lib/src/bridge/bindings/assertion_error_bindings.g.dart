@@ -3,6 +3,39 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$AssertionError extends AssertionError implements DarticObjectHolder {
+  _$AssertionError(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Object? get message {
+    final r = _dispatch.get(this, $darticObject, 'message');
+    if (identical(r, notOverridden)) return super.message;
+    return r as Object?;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+}
 
 abstract final class AssertionErrorBindings {
   static void register(PluginContext ctx) {
@@ -12,7 +45,12 @@ abstract final class AssertionErrorBindings {
       test: (o) => o is AssertionError,
       methods: methodMap(),
       superclasses: ['dart:core::Error'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AssertionError(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:core::AssertionError::\$super\$toString#0', (args) => (args[0] as _$AssertionError).toString());
+    ctx.registerBinding('dart:core::AssertionError::\$super\$message#0', (args) => (args[0] as AssertionError).message);
+    ctx.registerBinding('dart:core::AssertionError::\$super\$stackTrace#0', (args) => (args[0] as AssertionError).stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

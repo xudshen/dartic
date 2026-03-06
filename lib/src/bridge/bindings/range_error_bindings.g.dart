@@ -3,6 +3,60 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$RangeError extends RangeError implements DarticObjectHolder {
+  _$RangeError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as dynamic);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  num? get start {
+    final r = _dispatch.get(this, $darticObject, 'start');
+    if (identical(r, notOverridden)) return super.start;
+    return r as num?;
+  }
+
+  @override
+  num? get end {
+    final r = _dispatch.get(this, $darticObject, 'end');
+    if (identical(r, notOverridden)) return super.end;
+    return r as num?;
+  }
+
+  @override
+  num? get invalidValue {
+    final r = _dispatch.get(this, $darticObject, 'invalidValue');
+    if (identical(r, notOverridden)) return super.invalidValue;
+    return r as num?;
+  }
+
+  @override
+  String? get name {
+    final r = _dispatch.get(this, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String?;
+  }
+
+  @override
+  dynamic get message {
+    final r = _dispatch.get(this, $darticObject, 'message');
+    if (identical(r, notOverridden)) return super.message;
+    return r as dynamic;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+}
 
 abstract final class RangeErrorBindings {
   static void register(PluginContext ctx) {
@@ -12,6 +66,8 @@ abstract final class RangeErrorBindings {
       test: (o) => o is RangeError,
       methods: methodMap(),
       superclasses: ['dart:core::ArgumentError', 'dart:core::Error'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RangeError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::RangeError::checkValueInInterval#3', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int));
     ctx.registerBinding('dart:core::RangeError::checkValueInInterval#4', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, args[3] as String?));
@@ -27,6 +83,12 @@ abstract final class RangeErrorBindings {
     ctx.registerBinding('dart:core::RangeError::checkNotNegative#1', (args) => RangeError.checkNotNegative(args[0] as int));
     ctx.registerBinding('dart:core::RangeError::checkNotNegative#2', (args) => RangeError.checkNotNegative(args[0] as int, args[1] as String?));
     ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) => RangeError.checkNotNegative(args[0] as int, args[1] as String?, args[2] as String?));
+    ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as RangeError).start);
+    ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as RangeError).end);
+    ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as RangeError).invalidValue);
+    ctx.registerBinding('dart:core::RangeError::\$super\$name#0', (args) => (args[0] as RangeError).name);
+    ctx.registerBinding('dart:core::RangeError::\$super\$message#0', (args) => (args[0] as RangeError).message);
+    ctx.registerBinding('dart:core::RangeError::\$super\$stackTrace#0', (args) => (args[0] as RangeError).stackTrace);
     ctx.registerBinding('dart:core::RangeError::value#3', methodMap()['value#3']!);
     ctx.registerBinding('dart:core::RangeError::range#5', methodMap()['range#5']!);
     ctx.registerBinding('dart:core::RangeError::index#5', methodMap()['index#5']!);

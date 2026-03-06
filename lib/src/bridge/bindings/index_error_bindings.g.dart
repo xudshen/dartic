@@ -3,6 +3,74 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$IndexError extends IndexError implements DarticObjectHolder {
+  _$IndexError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as int, superArgs[1] as dynamic);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Object? get indexable {
+    final r = _dispatch.get(this, $darticObject, 'indexable');
+    if (identical(r, notOverridden)) return super.indexable;
+    return r as Object?;
+  }
+
+  @override
+  int get length {
+    final r = _dispatch.get(this, $darticObject, 'length');
+    if (identical(r, notOverridden)) return super.length;
+    return r as int;
+  }
+
+  @override
+  int get invalidValue {
+    final r = _dispatch.get(this, $darticObject, 'invalidValue');
+    if (identical(r, notOverridden)) return super.invalidValue;
+    return r as int;
+  }
+
+  @override
+  int get start {
+    final r = _dispatch.get(this, $darticObject, 'start');
+    if (identical(r, notOverridden)) return super.start;
+    return r as int;
+  }
+
+  @override
+  int get end {
+    final r = _dispatch.get(this, $darticObject, 'end');
+    if (identical(r, notOverridden)) return super.end;
+    return r as int;
+  }
+
+  @override
+  String? get name {
+    final r = _dispatch.get(this, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String?;
+  }
+
+  @override
+  dynamic get message {
+    final r = _dispatch.get(this, $darticObject, 'message');
+    if (identical(r, notOverridden)) return super.message;
+    return r as dynamic;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+}
 
 abstract final class IndexErrorBindings {
   static void register(PluginContext ctx) {
@@ -12,11 +80,21 @@ abstract final class IndexErrorBindings {
       test: (o) => o is IndexError,
       methods: methodMap(),
       superclasses: ['dart:core::ArgumentError', 'dart:core::Error', 'dart:core::RangeError'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$IndexError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::IndexError::check#2', (args) => IndexError.check(args[0] as int, args[1] as int));
     ctx.registerBinding('dart:core::IndexError::check#3', (args) => IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?));
     ctx.registerBinding('dart:core::IndexError::check#4', (args) => IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?));
     ctx.registerBinding('dart:core::IndexError::check#5', (args) => IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?, message: args[4] as String?));
+    ctx.registerBinding('dart:core::IndexError::\$super\$indexable#0', (args) => (args[0] as IndexError).indexable);
+    ctx.registerBinding('dart:core::IndexError::\$super\$length#0', (args) => (args[0] as IndexError).length);
+    ctx.registerBinding('dart:core::IndexError::\$super\$invalidValue#0', (args) => (args[0] as IndexError).invalidValue);
+    ctx.registerBinding('dart:core::IndexError::\$super\$start#0', (args) => (args[0] as IndexError).start);
+    ctx.registerBinding('dart:core::IndexError::\$super\$end#0', (args) => (args[0] as IndexError).end);
+    ctx.registerBinding('dart:core::IndexError::\$super\$name#0', (args) => (args[0] as IndexError).name);
+    ctx.registerBinding('dart:core::IndexError::\$super\$message#0', (args) => (args[0] as IndexError).message);
+    ctx.registerBinding('dart:core::IndexError::\$super\$stackTrace#0', (args) => (args[0] as IndexError).stackTrace);
     ctx.registerBinding('dart:core::IndexError::#5', methodMap()['#5']!);
   }
 

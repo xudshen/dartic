@@ -19,8 +19,8 @@
 #  11. ZoneSpecification + _ZoneSpecification
 #  12. Top-level functions: scheduleMicrotask, runZoned, runZonedGuarded
 
-output_bindings: "../../lib/src/bridge/bindings"
-output_plugins: "../../lib/src/bridge/plugins"
+output_bindings: "../../../lib/src/bridge/bindings"
+output_plugins: "../../../lib/src/bridge/plugins"
 
 libraries:
   - uri: dart:async

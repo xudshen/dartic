@@ -42,10 +42,19 @@ class ClassConfig {
   /// VM 内部实现类列表。
   final List<InternalTypeConfig> internalTypes;
 
+  /// 是否生成 Bridge 类和 BridgeFactory。
+  ///
+  /// 当为 true 时，代码生成器会：
+  /// 1. 生成 `_$ClassName` Bridge 类（extends 宿主类 + implements DarticObjectHolder）
+  /// 2. 在 registerClass 中添加 bridgeFactory 参数
+  /// 3. 注册 super 转发器到 HostBindingRegistry
+  final bool bridge;
+
   ClassConfig({
     required this.name,
     this.sourceName,
     this.internalTypes = const [],
+    this.bridge = false,
   });
 
   /// 用于 analyzer 查找的实际类名。
