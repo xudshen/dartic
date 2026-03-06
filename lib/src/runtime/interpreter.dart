@@ -2077,9 +2077,16 @@ class DarticInterpreter {
 
           // Auto-load ITA from caller's `this` (rsp+2) runtimeType_ for
           // generic classes, so super methods can access class type params.
+          // Bridge instances implement ScriptObjectHolder, so unwrap to get
+          // the underlying DarticObject for ITA extraction.
           final thisObj = rs.read(callerRBase + 2);
-          if (thisObj is DarticObject) {
-            final rtType = thisObj.runtimeType_;
+          final scriptObj = (thisObj is DarticObject)
+              ? thisObj
+              : (thisObj is ScriptObjectHolder)
+                  ? thisObj.$darticObject
+                  : null;
+          if (scriptObj != null) {
+            final rtType = scriptObj.runtimeType_;
             if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
               rs.write(rBase + 0, rtType.typeArgs);
             }
