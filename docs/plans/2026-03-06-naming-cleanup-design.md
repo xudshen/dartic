@@ -107,6 +107,10 @@ class HostClassRegistry {
 
 影响范围：`host_class_registry.dart`（合并两个类）+ `interpreter.dart`（调用处 `HostClassAdapter?` → `_HostAdapter?`，但因为 interpreter 只通过 `HostClassRegistry.lookup()` 获取，返回类型改为内部类型即可）。
 
+内联时顺带补两处代码注释：
+1. **arity 扩展 (+0~+3)**：在 `_HostAdapter.invokeMethod` 中补充注释说明为何尝试 arity+1/+2/+3（覆盖可选参数场景，binding 函数内部已保护缺省值）
+2. **谓词反向遍历**：在 `HostClassRegistry.lookup` 的 `for (var i = _userEntries.length - 1; ...)` 处补注释说明反向遍历保证后注册的更具体子类型优先匹配
+
 ### F. `bridgeNotOverridden` → typed sentinel
 
 ```dart
@@ -150,8 +154,8 @@ const notOverridden = _NotOverridden();
 |------|------|
 | Interpreter 自动创建 TypeRegistry / SubtypeChecker | 隐式副作用，可改为显式 API |
 | Upvalue 双轨追踪 (`_openUpvalues` + `_upvalueStack`) | 同步风险，可合并为单一数据结构 |
-| `BindingLookupAdapter` arity 扩展 (+0~+3) | 无文档的启发式，需补充注释 |
-| `HostClassRegistry` 谓词反向遍历顺序 | 需补充代码注释说明原因 |
+| ~~`BindingLookupAdapter` arity 扩展 (+0~+3)~~ | **已移入 §E**：内联时顺带补注释 |
+| ~~`HostClassRegistry` 谓词反向遍历顺序~~ | **已移入 §E**：内联时顺带补注释 |
 
 ## 影响范围估算
 
