@@ -109,7 +109,8 @@ libraries:
         bridge: true
       - name: FormatException
         bridge: true
-      - Exception
+      - name: Exception
+        bridge: true
       - name: ConcurrentModificationError
         bridge: true
       - StackOverflowError

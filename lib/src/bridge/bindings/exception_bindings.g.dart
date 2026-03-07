@@ -3,6 +3,39 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import '../dartic_dispatch.dart';
+import '../dartic_object_holder.dart';
+import '../../runtime/object.dart';
+
+class _$Exception implements Exception, DarticObjectHolder {
+  _$Exception(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+}
 
 abstract final class ExceptionBindings {
   static void register(PluginContext ctx) {
@@ -11,6 +44,8 @@ abstract final class ExceptionBindings {
       type: Exception,
       test: (o) => o is Exception,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Exception(dispatch, darticObject, superArgs),
     );
   }
 
