@@ -25,6 +25,7 @@ abstract final class ScaffoldBindings {
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::Scaffold::of#1', (args) => Scaffold.of(args[0] as BuildContext));
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::Scaffold::maybeOf#1', (args) => Scaffold.maybeOf(args[0] as BuildContext));
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::Scaffold::geometryOf#1', (args) => Scaffold.geometryOf(args[0] as BuildContext));
+    ctx.registerBinding('package:flutter/src/material/scaffold.dart::Scaffold::hasDrawer#1', (args) => Scaffold.hasDrawer(args[0] as BuildContext));
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::Scaffold::hasDrawer#2', (args) => Scaffold.hasDrawer(args[0] as BuildContext, registerForUpdates: args[1] as bool));
   }
 

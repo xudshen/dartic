@@ -392,15 +392,33 @@ void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
   }
 }
 
-/// Returns the max-arity binding key for a static method.
+/// Returns per-arity binding keys for a static method.
 ///
-/// The compiler always pads optional/named params to max arity via
-/// `_compileHostArgsWithPadding`, so only the max-arity key is needed.
-/// Emitting sub-arity variants would create dead code and can cause
-/// compile errors when required named params are omitted at lower arities.
+/// The compiler uses actual provided arg count for regular static methods
+/// (NOT max-arity padding — that's only for factory constructors and
+/// instance method dispatch via methodMap). So we must emit sub-arity
+/// variants for optional params, BUT skip any arity that would omit a
+/// required named parameter (which would fail to compile).
 List<String> _allStaticBindingKeys(MethodInfo method) {
+  final required = method.paramTypes.where((p) => !p.isOptional).length;
   final total = method.paramTypes.length;
-  return ['${method.name}#$total'];
+  final keys = <String>[];
+  for (var arity = required; arity <= total; arity++) {
+    // Check that no required named param is beyond this arity slice.
+    // Params are ordered: positional first, then named (in declaration order).
+    // A sub-arity variant includes params[0..arity-1]; if any param beyond
+    // that range is required-named, this arity would produce invalid code.
+    final hasOmittedRequired = method.paramTypes
+        .skip(arity)
+        .any((p) => p.isNamed && p.isRequired);
+    if (hasOmittedRequired) continue;
+    keys.add('${method.name}#$arity');
+  }
+  // Always include max-arity as fallback.
+  if (keys.isEmpty || keys.last != '${method.name}#$total') {
+    keys.add('${method.name}#$total');
+  }
+  return keys;
 }
 
 /// Writes static getter registrations as registerBinding calls.

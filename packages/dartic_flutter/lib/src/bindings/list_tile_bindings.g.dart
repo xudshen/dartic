@@ -22,6 +22,7 @@ abstract final class ListTileBindings {
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
     );
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::divideTiles#2', (args) => ListTile.divideTiles(context: args[0] as BuildContext?, tiles: args[1] as Iterable<Widget>));
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::divideTiles#3', (args) => ListTile.divideTiles(context: args[0] as BuildContext?, tiles: args[1] as Iterable<Widget>, color: args[2] as Color?));
   }
 

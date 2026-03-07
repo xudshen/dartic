@@ -272,18 +272,20 @@ libraries:
           "hashCode#0": "(args) => (args[0] as State).hashCode"
           "==#1": "(args) => args[0] == args[1]"
 
-      # ── BuildContext: remove unusable generic methods ──────────────────
+      # ── BuildContext: suppress unusable generic methods ────────────────
+      # These generic methods require reified type arguments the interpreter
+      # can't provide. Override with throwing stubs so the auto-generated
+      # (type-erased) versions are suppressed.
       BuildContext:
         extra_methods:
-          # findAncestorWidgetOfExactType<T>() and findAncestorStateOfType<T>()
-          # require reified type arguments the interpreter can't provide.
-          # Override with comment-only entries to suppress auto-generation.
+          "findAncestorWidgetOfExactType#0": "(args) => throw UnsupportedError('findAncestorWidgetOfExactType requires reified type argument')"
+          "findAncestorStateOfType#0": "(args) => throw UnsupportedError('findAncestorStateOfType requires reified type argument')"
+          "findRootAncestorStateOfType#0": "(args) => throw UnsupportedError('findRootAncestorStateOfType requires reified type argument')"
+          "getInheritedWidgetOfExactType#0": "(args) => throw UnsupportedError('getInheritedWidgetOfExactType requires reified type argument')"
+          "getElementForInheritedWidgetOfExactType#0": "(args) => throw UnsupportedError('getElementForInheritedWidgetOfExactType requires reified type argument')"
+          "findAncestorRenderObjectOfType#0": "(args) => throw UnsupportedError('findAncestorRenderObjectOfType requires reified type argument')"
 
-      # ── Navigator: only max-arity static method variants ──────────────
-      Navigator:
-        extra_methods:
-          # Method map operates on NavigatorState (returned by Navigator.of).
-          # Only max-arity variants — compiler pads to max arity.
+      # ── Navigator: no extra overrides needed ─────────────────────────
 
   # ── Material widgets (from package:flutter/material.dart) ─────────────
 

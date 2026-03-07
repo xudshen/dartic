@@ -201,7 +201,9 @@ class Runner {
           preamble: preamble,
           bridge: classConfig.bridge,
           customBridge: overrides?.customBridge ?? false,
-          ignoreForFile: _mergeIgnoreForFile(overrides?.ignoreForFile),
+          ignoreForFile: config.customImports.isNotEmpty
+              ? _mergeIgnoreForFile(overrides?.ignoreForFile)
+              : overrides?.ignoreForFile,
           customImports: config.customImports.isNotEmpty
               ? config.customImports
               : null,
