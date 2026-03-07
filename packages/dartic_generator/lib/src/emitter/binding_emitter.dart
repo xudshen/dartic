@@ -749,36 +749,47 @@ String _emitStaticMethodWrapper(
 ///   with dispatch delegation (check `notOverridden` → call super)
 void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
   final bridgeClassName = '_\$${info.className}';
-  buf.writeln(
-      'class $bridgeClassName extends ${info.className} implements DarticObjectHolder {');
+  if (info.isInterface) {
+    buf.writeln(
+        'class $bridgeClassName implements ${info.className}, DarticObjectHolder {');
+  } else {
+    buf.writeln(
+        'class $bridgeClassName extends ${info.className} implements DarticObjectHolder {');
+  }
 
   // Constructor — takes dispatch, darticObject, superArgs.
   // Pass superArgs to super() for ALL constructor params (positional first,
   // then named in declaration order). The compiler emits STORE_SUPER_ARGS
   // in the same order, so indices match.
-  final unnamedCtor = info.constructors
-      .where((c) => c.name.isEmpty && !c.isFactory)
-      .firstOrNull;
-  final allParams = unnamedCtor?.params ?? const <ParamInfo>[];
-  final positionalParams = allParams.where((p) => !p.isNamed).toList();
-  final namedParams = allParams.where((p) => p.isNamed).toList();
-  if (positionalParams.isNotEmpty || namedParams.isNotEmpty) {
-    final parts = <String>[];
-    var idx = 0;
-    for (final p in positionalParams) {
-      parts.add('superArgs[$idx] as ${p.type}');
-      idx++;
-    }
-    for (final p in namedParams) {
-      parts.add('${p.name}: superArgs[$idx] as ${p.type}');
-      idx++;
-    }
-    final superCall = parts.join(', ');
-    buf.writeln(
-        '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs) : super($superCall);');
-  } else {
+  if (info.isInterface) {
+    // Interface Bridge: no super() call since we use `implements`.
     buf.writeln(
         '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs);');
+  } else {
+    final unnamedCtor = info.constructors
+        .where((c) => c.name.isEmpty && !c.isFactory)
+        .firstOrNull;
+    final allParams = unnamedCtor?.params ?? const <ParamInfo>[];
+    final positionalParams = allParams.where((p) => !p.isNamed).toList();
+    final namedParams = allParams.where((p) => p.isNamed).toList();
+    if (positionalParams.isNotEmpty || namedParams.isNotEmpty) {
+      final parts = <String>[];
+      var idx = 0;
+      for (final p in positionalParams) {
+        parts.add('superArgs[$idx] as ${p.type}');
+        idx++;
+      }
+      for (final p in namedParams) {
+        parts.add('${p.name}: superArgs[$idx] as ${p.type}');
+        idx++;
+      }
+      final superCall = parts.join(', ');
+      buf.writeln(
+          '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs) : super($superCall);');
+    } else {
+      buf.writeln(
+          '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs);');
+    }
   }
   buf.writeln();
   buf.writeln('  final DarticDispatch _dispatch;');
