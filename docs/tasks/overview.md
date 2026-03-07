@@ -162,12 +162,13 @@
 | — | Host Library Manifest（编译器 hostPackages + dartic.manifest 自动发现） | — | ✅ |
 
 **里程碑：**
-- [x] DarticEngine 3 行代码加载执行 .darb 脚本
+- [x] DarticEngine 3 行代码加载执行 .darb 字节码
 - [x] engine.call() 支持重入（宿主回调内再次调用）
 - [x] registerClass 可一次性注册类的绑定/分发/Bridge（含 `type:` 参数实现注册顺序无关）
 - [x] dartic_generator CLI 生成的 Bridge 与手写 Bridge 功能等价（75+ .g.dart 替换全部手写绑定）
 - [x] DarticPluginContext 统一注册路径，core lib 与用户 plugin 同路径
 - [x] Flutter 热更新 demo 端到端编译通过（.dart → .dill → .darb，2531 bytes）
+- [x] Serializer v2 + Verifier 修复：.darb 加载→验证→执行→渲染完整通路（2999 + 30 tests pass）
 - [ ] Phase 2-6 全量零回归
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)
@@ -191,7 +192,7 @@
 
 **关键成果：**
 - [x] super 构造参数正确转发（StateError 位置参数、Duration 命名参数、ArgumentError 可选参数）
-- [x] CALL_HOST 对 Bridge 实例的方法分发路由到脚本覆盖
+- [x] CALL_HOST 对 Bridge 实例的方法分发路由到 dartic 覆盖
 - [x] 字符串插值等宿主侧 toString() 调用正确分发
 - [x] Generator 自动生成 Object 方法覆盖，解决 hash_and_equals lint
 - [x] 全量 2941 tests pass，0 skip，0 fail
