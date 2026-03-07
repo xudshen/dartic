@@ -914,4 +914,176 @@ Object main() {
       expect(fe.toString(), 'ParseError: unexpected token at 4 in "x + = 3"');
     });
   });
+
+  group('Host-side catch of Bridge errors', () {
+    test('host catches dartic Error with on Error catch', () async {
+      final source = '''
+class AppError extends Error {
+  @override
+  String toString() => 'AppError!';
+}
+
+Object main() {
+  throw AppError();
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on Error catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<Error>());
+      expect(caught.toString(), 'AppError!');
+    });
+
+    test('host catches dartic StateError with on StateError catch', () async {
+      final source = '''
+class BadState extends StateError {
+  BadState(String msg) : super(msg);
+
+  @override
+  String toString() => 'BadState: \$message';
+}
+
+Object main() {
+  throw BadState('no elements');
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on StateError catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<StateError>());
+      expect((caught as StateError).message, 'no elements');
+      expect(caught.toString(), 'BadState: no elements');
+    });
+
+    test('host catches dartic ArgumentError with on ArgumentError catch',
+        () async {
+      final source = '''
+class BadArg extends ArgumentError {
+  BadArg(Object? val) : super(val);
+
+  @override
+  String toString() => 'BadArg: \$message';
+}
+
+Object main() {
+  throw BadArg('invalid');
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on ArgumentError catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<ArgumentError>());
+      expect((caught as ArgumentError).message, 'invalid');
+      expect(caught.toString(), 'BadArg: invalid');
+    });
+
+    test('host catches dartic UnsupportedError with on UnsupportedError catch',
+        () async {
+      final source = '''
+class NotSupported extends UnsupportedError {
+  NotSupported(String msg) : super(msg);
+}
+
+Object main() {
+  throw NotSupported('feature X');
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on UnsupportedError catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<UnsupportedError>());
+      expect((caught as UnsupportedError).message, 'feature X');
+    });
+
+    test('host catches dartic UnimplementedError with on UnimplementedError catch',
+        () async {
+      final source = '''
+class Todo extends UnimplementedError {
+  Todo(String feature) : super(feature);
+}
+
+Object main() {
+  throw Todo('login');
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on UnimplementedError catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<UnimplementedError>());
+      expect((caught as UnimplementedError).message, 'login');
+    });
+
+    test('host accesses stackTrace on caught dartic Error', () async {
+      final source = '''
+class AppError extends Error {
+  @override
+  String toString() => 'AppError';
+}
+
+Object main() {
+  throw AppError();
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine();
+      engine.loadModule(module);
+
+      Error? caught;
+      try {
+        engine.call('main');
+      } on Error catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isNotNull);
+      // Bridge Error is a real Error — stackTrace is available after catch
+      expect(caught!.stackTrace, isNotNull);
+    });
+  });
 }
