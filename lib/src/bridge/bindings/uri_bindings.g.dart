@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:convert';
 
 abstract final class UriBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::Uri',
       type: Uri,

@@ -58,7 +58,7 @@ class CorePlugin extends DarticPlugin {
   String get name => 'dart:core';
 
   @override
-  void register(PluginContext ctx) {
+  void register(DarticPluginContext ctx) {
     IntBindings.register(ctx);
     DoubleBindings.register(ctx);
     StringBindings.register(ctx);

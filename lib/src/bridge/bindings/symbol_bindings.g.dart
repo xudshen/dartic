@@ -5,7 +5,7 @@
 import '../../api/plugin_context.dart';
 
 abstract final class SymbolBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::Symbol',
       type: Symbol,

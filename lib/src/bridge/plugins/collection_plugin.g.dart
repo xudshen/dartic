@@ -22,7 +22,7 @@ class CollectionPlugin extends DarticPlugin {
   String get name => 'dart:collection';
 
   @override
-  void register(PluginContext ctx) {
+  void register(DarticPluginContext ctx) {
     LinkedHashMapBindings.register(ctx);
     LinkedHashSetBindings.register(ctx);
     HashMapBindings.register(ctx);

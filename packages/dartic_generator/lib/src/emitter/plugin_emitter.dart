@@ -69,7 +69,7 @@ String emitPluginFile({
 
   // register method
   buf.writeln('  @override');
-  buf.writeln('  void register(PluginContext ctx) {');
+  buf.writeln('  void register(DarticPluginContext ctx) {');
 
   for (final className in bindingClassNames) {
     buf.writeln('    $className.register(ctx);');

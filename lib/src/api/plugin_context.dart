@@ -19,13 +19,13 @@ import 'config.dart';
 /// - [HostBindingRegistry] for CALL_HOST bindings
 /// - [HostClassRegistry] for dynamic dispatch routing
 /// - [BridgeFactoryRegistry] for Bridge class construction
-class PluginContext {
+class DarticPluginContext {
   /// @nodoc — Internal constructor for [DarticEngine] only.
   ///
-  /// The barrel file (`dartic.dart`) exports [PluginContext] without exporting
+  /// The barrel file (`dartic.dart`) exports [DarticPluginContext] without exporting
   /// the registry types used in these parameters, making external construction
   /// effectively impossible.
-  PluginContext({
+  DarticPluginContext({
     required DarticConfig config,
     required HostBindingRegistry hostBindingRegistry,
     required HostClassRegistry hostClassRegistry,

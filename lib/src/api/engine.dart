@@ -67,7 +67,7 @@ class DarticEngine {
     _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
     // 2. Create the plugin context for registration-only access.
-    _pluginContext = PluginContext(
+    _pluginContext = DarticPluginContext(
       config: config,
       hostBindingRegistry: _hostBindingRegistry,
       hostClassRegistry: _hostClassRegistry,
@@ -108,7 +108,7 @@ class DarticEngine {
   late final HostClassRegistry _hostClassRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
   late final DarticInterpreter _interpreter;
-  late final PluginContext _pluginContext;
+  late final DarticPluginContext _pluginContext;
 
   _EngineState _state = _EngineState.created;
 
@@ -236,7 +236,13 @@ class DarticEngine {
       // Dartic uncaught exceptions.
       final handler = _config.onUnhandledException;
       if (handler != null) {
-        handler(e, st);
+        try {
+          handler(e, st);
+        } catch (_) {
+          // Prevent a faulty handler from crashing the engine.
+          // The original exception is swallowed as intended by the handler
+          // contract; the handler's own error is discarded.
+        }
         return null;
       }
       rethrow;
@@ -262,7 +268,7 @@ class DarticEngine {
   /// Registers a host class with bindings, dynamic dispatch, and optional
   /// bridge factory.
   ///
-  /// Coordinates three internal registries via [PluginContext]:
+  /// Coordinates three internal registries via [DarticPluginContext]:
   /// 1. **HostBindingRegistry**: registers each method in [methods]
   /// 2. **HostClassRegistry**: registers dispatch for [type] (and optional [test])
   /// 3. **BridgeFactoryRegistry** (optional): registers [bridgeFactory]
@@ -311,15 +317,7 @@ class DarticEngine {
   ///
   /// Throws [StateError] if the engine is loaded or disposed.
   void addPlugin(DarticPlugin plugin) {
-    if (_state == _EngineState.disposed) {
-      throw StateError('Cannot addPlugin() after dispose().');
-    }
-    if (_state == _EngineState.loaded) {
-      throw StateError(
-        'Cannot addPlugin() after loadBytecode(). '
-        'All plugins must be registered before loading bytecode.',
-      );
-    }
+    _checkNotLoadedOrDisposed();
     plugin.register(_pluginContext);
   }
 

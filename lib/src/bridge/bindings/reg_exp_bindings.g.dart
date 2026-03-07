@@ -5,7 +5,7 @@
 import '../../api/plugin_context.dart';
 
 abstract final class RegExpBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::RegExp',
       type: RegExp,

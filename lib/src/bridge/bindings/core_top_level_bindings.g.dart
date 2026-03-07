@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import '../../runtime/object.dart';
 
 abstract final class CoreTopLevelBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerBinding('dart:core::::identical#2', (args) => identical(args[0], args[1]));
     ctx.registerBinding('dart:core::::print#1', (args) {
   (ctx.config.onPrint ?? print)(args[0]);

@@ -7,7 +7,7 @@ import 'dart:collection';
 import 'dart:math';
 
 abstract final class UnmodifiableListViewBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:collection::UnmodifiableListView',
       type: UnmodifiableListView,

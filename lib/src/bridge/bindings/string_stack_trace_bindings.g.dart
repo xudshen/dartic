@@ -5,7 +5,7 @@
 import '../../api/plugin_context.dart';
 
 abstract final class StringStackTraceBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     for (final e in methodMap().entries) {
       ctx.registerBinding('dart:core::_StringStackTrace::${e.key}', e.value);
     }

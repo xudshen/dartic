@@ -121,6 +121,8 @@ class DarticVerifier {
     Op.cast,
     Op.getFieldDyn,
     Op.setFieldDyn,
+    Op.storeSuperArgs,
+    Op.wrapBridge,
     Op.closure,
     Op.closeUpvalue,
     Op.pushIta,
@@ -721,6 +723,16 @@ class DarticVerifier {
       // assert_: A=val (condition bool on value stack), Bx=refs pool
       case Op.assert_:
         _checkVal(a, vrc, 'A', prefix, pc, op);
+
+      // storeSuperArgs: A=argCount (immediate), B=ref(firstArg), C unused
+      // Compiler packs args into consecutive ref registers starting at B.
+      case Op.storeSuperArgs:
+        // B is the base ref register; A consecutive refs are read.
+        if (a > 0) _checkRef(b, rrc, 'B', prefix, pc, op);
+
+      // wrapBridge: A=ref (DarticObject/Bridge result), no other register operands
+      case Op.wrapBridge:
+        _checkRef(a, rrc, 'A', prefix, pc, op);
 
       // nop, returnNull, halt, wide: no register operands
       case Op.nop:

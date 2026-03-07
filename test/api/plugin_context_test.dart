@@ -2,7 +2,7 @@ import 'package:dartic/dartic.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('PluginContext', () {
+  group('DarticPluginContext', () {
     test('registerBinding registers a host function', () {
       final engine = DarticEngine();
       String? captured;
@@ -32,7 +32,7 @@ void main() {
       engine.dispose();
     });
 
-    test('config is accessible from PluginContext', () {
+    test('config is accessible from DarticPluginContext', () {
       DarticConfig? capturedConfig;
       final config = DarticConfig(fuelBudget: 99999);
       final plugin = _TestPlugin((ctx) {
@@ -47,13 +47,13 @@ void main() {
 
 class _TestPlugin extends DarticPlugin {
   _TestPlugin(this._onRegister);
-  final void Function(PluginContext) _onRegister;
+  final void Function(DarticPluginContext) _onRegister;
 
   @override
   String get name => 'test';
 
   @override
-  void register(PluginContext context) => _onRegister(context);
+  void register(DarticPluginContext context) => _onRegister(context);
 }
 
 class _MyClass {

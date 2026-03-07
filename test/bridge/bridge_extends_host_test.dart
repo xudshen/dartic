@@ -5,7 +5,7 @@
 ///
 /// Unlike the pure-dartic bridge tests (bridge_e2e_test.dart), these use the
 /// GENERATED Bridge classes (_$Error, _$Duration, etc.) registered by the
-/// CorePlugin via PluginContext.registerClass(bridgeFactory: ...).
+/// CorePlugin via DarticPluginContext.registerClass(bridgeFactory: ...).
 ///
 /// The key flow:
 /// 1. CorePlugin registers bridgeFactory for 'dart:core::Error' → pendingBridgeFactories

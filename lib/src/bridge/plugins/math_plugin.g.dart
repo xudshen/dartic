@@ -16,7 +16,7 @@ class MathPlugin extends DarticPlugin {
   String get name => 'dart:math';
 
   @override
-  void register(PluginContext ctx) {
+  void register(DarticPluginContext ctx) {
     RandomBindings.register(ctx);
     PointBindings.register(ctx);
     RectangleBindings.register(ctx);

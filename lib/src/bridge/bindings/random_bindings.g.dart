@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:math';
 
 abstract final class RandomBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:math::Random',
       type: Random,

@@ -49,8 +49,16 @@ GeneratorConfig _parseConfig(YamlMap yaml, [String? configDir]) {
           .toList() ??
       [];
 
-  var outputBindings = yaml['output_bindings'] as String;
-  var outputPlugins = yaml['output_plugins'] as String;
+  final rawBindings = yaml['output_bindings'];
+  final rawPlugins = yaml['output_plugins'];
+  if (rawBindings is! String) {
+    throw ArgumentError("Missing or invalid required field 'output_bindings'");
+  }
+  if (rawPlugins is! String) {
+    throw ArgumentError("Missing or invalid required field 'output_plugins'");
+  }
+  var outputBindings = rawBindings;
+  var outputPlugins = rawPlugins;
 
   // Resolve relative paths against the config file's directory.
   if (configDir != null) {
@@ -79,8 +87,13 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
     }
   }
 
+  final uri = yaml['uri'];
+  if (uri is! String) {
+    throw ArgumentError("Missing or invalid required field 'uri' in library");
+  }
+
   return LibraryConfig(
-    uri: yaml['uri'] as String,
+    uri: uri,
     classes: classes,
     functions: functions,
     overrides: overrides,
@@ -141,7 +154,14 @@ OverrideConfig _parseOverride(YamlMap yaml) {
   final extraMethods = <String, String>{};
   if (yaml['extra_methods'] is YamlMap) {
     for (final entry in (yaml['extra_methods'] as YamlMap).entries) {
-      extraMethods[entry.key as String] = entry.value as String;
+      final key = entry.key;
+      final value = entry.value;
+      if (key is! String || value is! String) {
+        throw ArgumentError(
+          "extra_methods entries must be String→String, got: $key → $value",
+        );
+      }
+      extraMethods[key] = value;
     }
   }
 

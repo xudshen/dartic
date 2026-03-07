@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import '../../runtime/object.dart';
 
 abstract final class EnumBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     for (final e in methodMap().entries) {
       ctx.registerBinding('dart:core::_Enum::${e.key}', e.value);
     }

@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:async';
 
 abstract final class EventSinkBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:async::EventSink',
       type: EventSink,

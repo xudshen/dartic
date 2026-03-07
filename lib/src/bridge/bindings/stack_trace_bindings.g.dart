@@ -5,7 +5,7 @@
 import '../../api/plugin_context.dart';
 
 abstract final class StackTraceBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::StackTrace',
       type: StackTrace,

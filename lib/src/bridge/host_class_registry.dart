@@ -5,6 +5,11 @@
 /// the [HostClassRegistry] resolves the receiver's type to an adapter,
 /// which routes by property/method name through the existing [HostBindingRegistry].
 ///
+/// **Thread safety:** This registry is NOT thread-safe. All registrations must
+/// complete before any lookups are performed. In practice, registrations happen
+/// during engine construction (via plugin.register()), and lookups happen during
+/// bytecode execution — these phases never overlap within a single engine.
+///
 /// See: docs/design/04-interop.md "HostClassWrapper"
 library;
 

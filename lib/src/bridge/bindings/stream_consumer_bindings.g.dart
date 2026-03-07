@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:async';
 
 abstract final class StreamConsumerBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:async::StreamConsumer',
       type: StreamConsumer,

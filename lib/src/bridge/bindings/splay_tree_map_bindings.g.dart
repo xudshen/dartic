@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:collection';
 
 abstract final class SplayTreeMapBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:collection::SplayTreeMap',
       type: SplayTreeMap,

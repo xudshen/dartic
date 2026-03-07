@@ -1,7 +1,7 @@
 # Dartic 命名清理方案
 
 > 日期：2026-03-06
-> 状态：待执行
+> 状态：已部分完成（A1-A3 ClosureAdapter/notOverridden/InterpreterMethodCallback, C1 script→dartic, C2 PluginContext→DarticPluginContext 已完成；A4/E/剩余项待执行）
 > 前置：commit `2dddf01` 已完成 Host* 类名重命名
 
 ## 目标

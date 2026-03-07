@@ -72,7 +72,7 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   bool get isRunning {
     final r = _dispatch.get(this, $darticObject, 'isRunning');
     if (identical(r, notOverridden)) return super.isRunning;
-    return r as bool;
+    return r == true;
   }
 
   @override
@@ -93,12 +93,12 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    return r == true;
   }
 }
 
 abstract final class StopwatchBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::Stopwatch',
       type: Stopwatch,

@@ -534,10 +534,12 @@ extension on DarticCompiler {
       }
     }
 
-    // Move to consecutive ref registers.
+    // Move to consecutive ref registers (STORE_SUPER_ARGS requires
+    // contiguous layout starting at firstReg).
     final firstReg = _allocRefReg();
     for (var i = 0; i < argRegs.length; i++) {
       final targetReg = i == 0 ? firstReg : _allocRefReg();
+      assert(targetReg == firstReg + i, 'Super arg registers must be consecutive');
       if (argRegs[i] != targetReg) {
         _emitter.emit(encodeABC(Op.moveRef, targetReg, argRegs[i], 0));
       }

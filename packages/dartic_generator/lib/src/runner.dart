@@ -94,7 +94,7 @@ class Runner {
                 internalUri,
                 internal.name,
               );
-            } catch (_) {
+            } on StateError {
               // VM-internal classes (e.g. _GrowableList, _List, _Set) are not
               // visible to the analyzer. Create an empty TypeInfo — the actual
               // methods come from YAML overrides (extra_methods).
@@ -164,7 +164,7 @@ class Runner {
         } else {
           try {
             info = await analyzer.analyzeClass(library.uri, resolvedName);
-          } catch (_) {
+          } on StateError {
             // Classes not visible to analyzer.
             // Create an empty TypeInfo — methods come from YAML overrides.
             info = TypeInfo(

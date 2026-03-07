@@ -201,7 +201,7 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 | `get(self, property)` | 同 invoke 流程，以空参数列表调用 getter |
 | `set(self, property, value)` | 将属性名转换为 `'$name='` 格式（与 `SET_FIELD_DYN` 的 setter 命名约定一致），查找并调用 setter 方法 |
 
-**`notOverridden` 哨兵**：`const Symbol #_notOverridden`，是包内私有 Symbol，脚本代码无法构造。Bridge 生成代码通过 `identical(result, notOverridden)` 判断脚本是否重写了该方法——若未重写则回退到 `super.method()` 调用。
+**`notOverridden` 哨兵**：使用 typed sentinel 模式——私有类 `_NotOverridden` 的 `const` 实例，通过公开的 `notOverridden` 常量暴露。比 Symbol 更安全：类型系统保证外部代码无法构造等价值。Bridge 生成代码通过 `identical(result, notOverridden)` 判断脚本是否重写了该方法——若未重写则回退到 `super.method()` 调用。
 
 **两阶段 Bridge 创建**：Bridge 创建分为两个阶段，通过 `NEW_INSTANCE` + `WRAP_BRIDGE` 两条指令协作完成：
 

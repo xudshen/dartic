@@ -10,14 +10,14 @@ import '../helpers/compile_helper.dart';
 class _TestPlugin extends DarticPlugin {
   _TestPlugin({required this.onRegister, this.pluginName = 'test'});
 
-  final void Function(PluginContext) onRegister;
+  final void Function(DarticPluginContext) onRegister;
   final String pluginName;
 
   @override
   String get name => pluginName;
 
   @override
-  void register(PluginContext context) => onRegister(context);
+  void register(DarticPluginContext context) => onRegister(context);
 }
 
 void main() {
@@ -161,8 +161,8 @@ void main() {
       engine.dispose();
     });
 
-    test('plugin receives a PluginContext', () {
-      PluginContext? receivedContext;
+    test('plugin receives a DarticPluginContext', () {
+      DarticPluginContext? receivedContext;
       final plugin =
           _TestPlugin(onRegister: (ctx) => receivedContext = ctx);
       DarticEngine(plugins: [plugin]);

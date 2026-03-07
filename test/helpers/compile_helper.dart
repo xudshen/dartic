@@ -149,7 +149,7 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
   final hostBindingRegistry = HostBindingRegistry();
   final hostClassRegistry = HostClassRegistry(hostBindingRegistry);
   final bridgeFactoryRegistry = BridgeFactoryRegistry();
-  final pluginContext = PluginContext(
+  final pluginContext = DarticPluginContext(
     config: DarticConfig(onPrint: printFn),
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,

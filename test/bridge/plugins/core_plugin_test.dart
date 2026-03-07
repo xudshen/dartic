@@ -15,12 +15,12 @@ import 'package:test/test.dart';
 void main() {
   late HostBindingRegistry hostRegistry;
   late HostClassRegistry dispatchRegistry;
-  late PluginContext ctx;
+  late DarticPluginContext ctx;
 
   setUp(() {
     hostRegistry = HostBindingRegistry();
     dispatchRegistry = HostClassRegistry(hostRegistry);
-    ctx = PluginContext(
+    ctx = DarticPluginContext(
       config: const DarticConfig(),
       hostBindingRegistry: hostRegistry,
       hostClassRegistry: dispatchRegistry,
@@ -42,7 +42,7 @@ void main() {
 
     test('print binding is registered and uses config.onPrint', () {
       final log = <String>[];
-      final customCtx = PluginContext(
+      final customCtx = DarticPluginContext(
         config: DarticConfig(onPrint: (v) => log.add('$v')),
         hostBindingRegistry: hostRegistry,
         hostClassRegistry: dispatchRegistry,

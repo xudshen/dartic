@@ -26,7 +26,7 @@ class AsyncPlugin extends DarticPlugin {
   String get name => 'dart:async';
 
   @override
-  void register(PluginContext ctx) {
+  void register(DarticPluginContext ctx) {
     FutureBindings.register(ctx);
     CompleterBindings.register(ctx);
     StreamBindings.register(ctx);

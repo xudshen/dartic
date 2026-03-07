@@ -7,7 +7,7 @@
 ///
 /// The generated code follows the hand-written binding pattern:
 /// - `abstract final class XxxBindings`
-/// - `static void register(PluginContext ctx)` calls registerClass/registerBinding
+/// - `static void register(DarticPluginContext ctx)` calls registerClass/registerBinding
 /// - `static Map<String, Object? Function(List<Object?>)> methodMap()` returns closures
 ///
 /// See: lib/src/bridge/bindings/int_bindings.dart for reference.
@@ -122,7 +122,7 @@ String emitTopLevelBindingFile(
   // Build body first to detect required imports
   final body = StringBuffer();
   body.writeln('abstract final class ${name}TopLevelBindings {');
-  body.writeln('  static void register(PluginContext ctx) {');
+  body.writeln('  static void register(DarticPluginContext ctx) {');
   for (final fn in functions) {
     final wrapper = _emitTopLevelFunctionWrapper(fn);
     for (final bindingName in fn.allBindingNames) {
@@ -260,7 +260,7 @@ void _writeRegisterMethod(
   List<String>? extraBindings,
   bool bridge = false,
 }) {
-  buf.writeln('  static void register(PluginContext ctx) {');
+  buf.writeln('  static void register(DarticPluginContext ctx) {');
 
   if (info.className.startsWith('_')) {
     // Private class: can't use registerClass (type not accessible).
@@ -323,7 +323,7 @@ void _writeRegisterMethodWithInternalTypes(
   List<TypeInfo> internalInfos, {
   Map<String, Map<String, String>>? extraMethods,
 }) {
-  buf.writeln('  static void register(PluginContext ctx) {');
+  buf.writeln('  static void register(DarticPluginContext ctx) {');
 
   // Main type
   buf.writeln('    ctx.registerClass(');
@@ -862,7 +862,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
         "    final r = _dispatch.invoke(this, \$darticObject, '==', [other]);");
     buf.writeln(
         '    if (identical(r, notOverridden)) return super == other;');
-    buf.writeln('    return r as bool;');
+    buf.writeln('    return r == true;');
     buf.writeln('  }');
   }
 

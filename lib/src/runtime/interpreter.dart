@@ -2270,7 +2270,13 @@ class DarticInterpreter {
           final bx = (instr >> 16) & 0xFFFF;
           final classInfo = module.classes[bx];
           final factory = bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
-          if (factory != null && _activeDarticDispatch != null) {
+          if (factory != null) {
+            if (_activeDarticDispatch == null) {
+              throw DarticError(
+                'WRAP_BRIDGE: bridge factory exists for '
+                '${classInfo.name} but DarticDispatch is not available',
+              );
+            }
             final obj = rs.read(rBase + a) as DarticObject;
             final superArgs = obj.pendingSuperArgs ?? const <Object?>[];
             obj.pendingSuperArgs = null;

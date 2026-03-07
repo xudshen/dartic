@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:collection';
 
 abstract final class HashMapBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:collection::HashMap',
       type: HashMap,

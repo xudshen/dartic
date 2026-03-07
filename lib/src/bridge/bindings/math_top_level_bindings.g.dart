@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:math';
 
 abstract final class MathTopLevelBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerBinding('dart:math::::min#2', (args) => min(args[0] as num, args[1] as num));
     ctx.registerBinding('dart:math::::max#2', (args) => max(args[0] as num, args[1] as num));
     ctx.registerBinding('dart:math::::sqrt#1', (args) => sqrt(args[0] as num));

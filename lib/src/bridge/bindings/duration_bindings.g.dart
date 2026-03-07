@@ -89,7 +89,7 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool get isNegative {
     final r = _dispatch.get(this, $darticObject, 'isNegative');
     if (identical(r, notOverridden)) return super.isNegative;
-    return r as bool;
+    return r == true;
   }
 
   @override
@@ -124,28 +124,28 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool operator <(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '<', [other]);
     if (identical(r, notOverridden)) return super < other;
-    return r as bool;
+    return r == true;
   }
 
   @override
   bool operator >(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '>', [other]);
     if (identical(r, notOverridden)) return super > other;
-    return r as bool;
+    return r == true;
   }
 
   @override
   bool operator <=(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '<=', [other]);
     if (identical(r, notOverridden)) return super <= other;
-    return r as bool;
+    return r == true;
   }
 
   @override
   bool operator >=(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '>=', [other]);
     if (identical(r, notOverridden)) return super >= other;
-    return r as bool;
+    return r == true;
   }
 
   @override
@@ -159,12 +159,12 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    return r == true;
   }
 }
 
 abstract final class DurationBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::Duration',
       type: Duration,

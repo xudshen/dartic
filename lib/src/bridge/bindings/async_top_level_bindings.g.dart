@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:async';
 
 abstract final class AsyncTopLevelBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerBinding('dart:async::::scheduleMicrotask#1', (args) {
   final callback = args[0] as Function;
   scheduleMicrotask(() => callback());

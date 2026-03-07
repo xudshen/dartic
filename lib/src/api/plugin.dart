@@ -21,7 +21,7 @@ import 'plugin_context.dart';
 ///   String get name => 'my_plugin';
 ///
 ///   @override
-///   void register(PluginContext context) {
+///   void register(DarticPluginContext context) {
 ///     context.registerBinding('myLib::::greet#1', (args) => 'Hello ${args[0]}');
 ///   }
 /// }
@@ -34,5 +34,5 @@ abstract class DarticPlugin {
   ///
   /// The engine guarantees this is called during construction or
   /// via [DarticEngine.addPlugin], before [DarticEngine.loadBytecode].
-  void register(PluginContext context);
+  void register(DarticPluginContext context);
 }

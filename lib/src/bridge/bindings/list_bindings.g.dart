@@ -6,7 +6,7 @@ import '../../api/plugin_context.dart';
 import 'dart:math';
 
 abstract final class ListBindings {
-  static void register(PluginContext ctx) {
+  static void register(DarticPluginContext ctx) {
     ctx.registerClass(
       name: 'dart:core::List',
       type: List,
