@@ -223,7 +223,7 @@ package:dartic_generator     ── build_runner 代码生成器
 （内部 CorePlugin/AsyncPlugin/CollectionPlugin/MathPlugin ── dart:core/async/collection/math 绑定，
   自动注册，不再作为独立包）
 │
-package:dartic_bridges_flutter ── Flutter widget 生成绑定
+package:dartic_flutter ── Flutter widget 生成绑定
   （DarticFlutterPlugin）
 ```
 
@@ -245,7 +245,7 @@ dartic ◀──── 核心引擎     生成的 *Plugin
 dartic_bridges_core ──────────┘
   DarticCorePlugin
 
-dartic_bridges_flutter
+dartic_flutter
   DarticFlutterPlugin
 ```
 
@@ -399,7 +399,7 @@ engine.call() 内部检测当前是否处于活跃执行：
 | **6** | 6.4 | 沙箱（DarticConfig.maxTotalFuel 依赖） | 字节码验证、fuel 计数、调用深度限制 |
 | **7** | 7.1 | DarticEngine 公开 API 封装 | DarticEngine、DarticConfig、DarticPlugin 接口 |
 | **7** | 7.2 | @DarticExport 代码生成 | dartic_annotation + dartic_generator（BridgeGenerator） |
-| **7** | 7.3 | Flutter Bridge + 热更新 Demo | dartic_bridges_flutter 包、端到端 demo |
+| **7** | 7.3 | Flutter Bridge + 热更新 Demo | dartic_flutter 包、端到端 demo |
 
 **设计原则**：Phase 5 手写 Bridge 发现真实模式 → Phase 6 补全 async/sandbox → Phase 7 基于稳定内部实现封装公开 API + codegen。
 

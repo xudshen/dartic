@@ -763,7 +763,7 @@ int main() => add(1, 2); // => 3
 
 ### Batch 7.3: Flutter Bridge + 热更新 Demo
 
-- [ ] 7.3.1 dartic_bridges_flutter 包骨架 → `packages/dartic_bridges_flutter/`
+- [ ] 7.3.1 dartic_flutter 包骨架 → `packages/dartic_flutter/`
 - [ ] 7.3.2 Widget / StatelessWidget / StatefulWidget Bridge 生成 → 基础 widget 绑定
 - [ ] 7.3.3 BuildContext / Navigator / MaterialApp Bridge → 导航与主题绑定
 - [ ] 7.3.4 Flutter 热更新端到端 demo（服务端编译 .darb → 设备端加载执行 → 渲染 UI） → `example/flutter_hot_update/`

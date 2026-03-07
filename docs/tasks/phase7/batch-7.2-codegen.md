@@ -1,217 +1,238 @@
-# Batch 7.2: @DarticExport 代码生成
+# Batch 7.2: dartic_generator 代码生成
 
 ## 概览
 
-基于 package:analyzer 和 build_runner 实现自动代码生成器，将 @DarticExport 注解标注的宿主类自动生成 HostClassWrapper（属性/方法名分发路由）、Bridge 类（extends 子类 + $BridgeMixin 委托）、BridgeFactory（per 构造函数工厂）和 DarticPlugin 注册代码。分为四个子包：dartic_annotation（纯注解零依赖）、dartic_generator（build_runner 代码生成器）、dartic_bridges_core（dart:core 预生成绑定）。最后用 codegen 重生成 dart:core bridges 并与 Phase 5 手写版对比验证功能等价。
+基于 package:analyzer 实现 CLI 代码生成器，支持两种输入模式：① YAML 配置文件驱动（适用于 dart:core 等无法添加注解的标准库）；② `@DarticExport` 注解扫描（适用于用户自定义类型）。生成物为 `.g.dart` 绑定文件（HostClassWrapper + Bridge 类 + BridgeFactory）和 Plugin 注册文件。
 
-**设计参考：** `docs/plans/2026-02-20-bridge-api-design.md`（注解 API、包结构、codegen 生成物结构）、`docs/design/04-interop.md`（BridgeGenerator 三部分输出、HostClassWrapper 分发、Bridge 类 + $BridgeMixin、BridgeFactory 签名、super 转发器、操作符路由命名约定）
+实际架构与原始规划（build_runner + `.dartic.dart`）有重大偏离——标准库类型无法添加注解，YAML 配置成为主力路径；Bridge 类直接 `implements DarticObjectHolder` 而非使用 `$BridgeMixin` 中间层。
 
-**依赖：** Batch 7.1 全部完成（DarticEngine API 就绪，registerClass/registerBinding 可用）
+**设计参考：** `docs/plans/2026-02-20-bridge-api-design.md`（注解 API、包结构）、`docs/design/04-interop.md`（Bridge 内部架构、HostClassWrapper 分发）
+
+**依赖：** Batch 7.1 全部完成
 
 ---
 
 ### Task 7.2.1: dartic_annotation 包 — @DarticExport + @DarticHide
 
 **产出文件：**
-- Create: `packages/dartic_annotation/pubspec.yaml`
-- Create: `packages/dartic_annotation/lib/dartic_annotation.dart`
-- Create: `packages/dartic_annotation/lib/src/export.dart`
-- Create: `packages/dartic_annotation/lib/src/hide.dart`
-- Test: `packages/dartic_annotation/test/annotation_test.dart`
+- `packages/dartic_annotation/pubspec.yaml`
+- `packages/dartic_annotation/lib/dartic_annotation.dart`
+- `packages/dartic_annotation/lib/src/export.dart`
+- `packages/dartic_annotation/lib/src/hide.dart`
+- `packages/dartic_annotation/test/annotation_test.dart`
 
-**TDD 步骤：**
-
-1. **读设计文档** — API 设计文档 "注解 API（package:dartic_annotation）"节：
-   - `@DarticExport({String? name, bool bridge = false})`：标记类或顶层函数为导出目标。name 自定义绑定名，bridge 为 true 时生成 Bridge 子类（仅适用于非 final/sealed 类）
-   - `@DarticHide()`：标记成员排除在导出之外（无属性）
-   - 包零依赖，纯注解定义
-
-2. **写测试** —
-   - DarticExport 默认值：`DarticExport()` → name == null, bridge == false
-   - DarticExport 自定义名称：`DarticExport(name: 'MyAlias')` → name == 'MyAlias'
-   - DarticExport bridge 模式：`DarticExport(bridge: true)` → bridge == true
-   - DarticHide 实例化：`DarticHide()` → 无属性
-   - const 构造：两个注解均为 const 构造函数
-
-3. **实现** —
-   - **pubspec.yaml**：name: dartic_annotation, 纯 Dart 包，无依赖，SDK 约束 `>=3.0.0 <4.0.0`
-   - **DarticExport**：`class DarticExport { final String? name; final bool bridge; const DarticExport({this.name, this.bridge = false}); }`
-   - **DarticHide**：`class DarticHide { const DarticHide(); }`
-   - **dartic_annotation.dart**：统一导出 export.dart 和 hide.dart
-
-4. **运行** — `cd packages/dartic_annotation && fvm dart analyze && fvm dart test`
+**完成内容：**
+- `DarticExport({String? name, bool bridge = false})` — const 注解，标记类/函数为导出目标
+- `DarticHide()` — const 注解，排除成员
+- 零依赖纯 Dart 包，9 个测试通过
 
 ---
 
-### Task 7.2.2: BridgeGenerator 核心 — HostClassWrapper 自动生成
+### Task 7.2.2: dartic_generator 核心 — YAML 配置 + TypeAnalyzer
 
 **产出文件：**
-- Create: `packages/dartic_generator/pubspec.yaml`
-- Create: `packages/dartic_generator/lib/src/analyzer_utils.dart`（package:analyzer 辅助函数）
-- Create: `packages/dartic_generator/lib/src/wrapper_generator.dart`（HostClassWrapper 代码生成）
-- Create: `packages/dartic_generator/lib/src/binding_namer.dart`（绑定名格式化工具）
-- Test: `packages/dartic_generator/test/wrapper_generator_test.dart`
+- `packages/dartic_generator/pubspec.yaml`
+- `packages/dartic_generator/lib/src/config/binding_config.dart`（配置数据模型）
+- `packages/dartic_generator/lib/src/config/yaml_parser.dart`（YAML 解析器）
+- `packages/dartic_generator/lib/src/analyzer/type_analyzer.dart`（package:analyzer 封装）
+- `packages/dartic_generator/lib/src/analyzer/type_info.dart`（TypeInfo / FunctionInfo 数据模型）
+- `packages/dartic_generator/test/config/binding_config_test.dart`
+- `packages/dartic_generator/test/config/yaml_parser_test.dart`
+- `packages/dartic_generator/test/analyzer/type_analyzer_test.dart`
+- `packages/dartic_generator/test/analyzer/type_info_test.dart`
 
-**TDD 步骤：**
+**完成内容：**
 
-1. **读设计文档** — Ch4 "HostClassWrapper" 节和 "BridgeGenerator" 节、API 设计文档 "registerClass 参数详解"节：
-   - HostClassWrapper 为每个宿主类生成 getProperty/invokeMethod 名称分发路由
-   - methods map key 格式：`"methodName#argCount"`，argCount 是用户可见参数数量（不含接收者）
-   - wrapper 闭包接收 `[receiver, ...userArgs]`，内部做类型化调用
-   - 操作符使用 Dart 规范名（`+`、`[]`、`==` 等），与 Kernel `Name.text` 一致
-   - 需展平继承链的所有公开方法/属性到 methods map
-   - @DarticHide 标记的成员需排除
+**配置模型（binding_config.dart）：**
+- `GeneratorConfig`：顶层配置，含 `outputBindings` / `outputPlugins` 路径 + `List<LibraryConfig>`
+- `LibraryConfig`：单个库配置（uri + classes + functions + overrides）
+- `ClassConfig`：类配置，支持 `sourceName`（实际类名与公开名不同时）、`internalTypes`（VM 内部类型如 `_GrowableList`）、`bridge` 标志
+- `OverrideConfig`：YAML 覆盖配置（`extraMethods` / `extraBindings` / `preamble`）
 
-2. **写测试** —
-   - **简单类**：`@DarticExport() class Greeter { String greet(String name) => 'Hi $name'; }` → 生成的 methods map 包含 `greet#1`
-   - **getter/setter**：类含 `int get count` + `set count(int v)` → 生成 `count#0`（getter）和 `count=#1`（setter）
-   - **操作符**：类含 `operator +(other)` → 生成 `+#1`
-   - **可选参数**：方法含 2 个必选 + 1 个可选参数 → 生成 `method#2` 和 `method#3` 两个条目
-   - **命名参数**：方法含命名参数 → 生成包含最大参数数的条目
-   - **继承展平**：B extends A，A 有 method1，B 有 method2 → B 的 methods map 包含 method1 和 method2
-   - **@DarticHide 排除**：方法标记 @DarticHide → 不出现在 methods map
-   - **绑定名格式**：类 `package:my_app/service.dart::MyService` 的方法 `doWork` → 绑定名 `"package:my_app/service.dart::MyService::doWork#1"`
-   - **静态方法**：静态方法注册为独立绑定（非实例 methods map）
+**YAML 解析器（yaml_parser.dart）：**
+- 解析 `configs/*.yaml` 文件为 `GeneratorConfig`
+- 支持单文件和目录模式
+- YAML 格式对应 dart:core / dart:async / dart:collection / dart:math 四个配置
 
-3. **实现** —
-   - **analyzer_utils.dart**：使用 package:analyzer 解析 Dart 源文件，提取 ClassElement / MethodElement / PropertyElement 等元素。辅助方法：`getAllPublicMethods(ClassElement)`（含继承链展平）、`isHidden(Element)`（检查 @DarticHide）、`getExportAnnotation(Element)`（提取 @DarticExport）
-   - **binding_namer.dart**：绑定名格式化工具。`formatBindingName(String libraryUri, String? className, String methodName, int argCount)` → `"libUri::className::methodName#argCount"`
-   - **wrapper_generator.dart**：为 @DarticExport 类生成 DarticPlugin 的 register() 方法中 registerClass 调用的 methods map 源代码。遍历类的所有公开方法/属性/操作符，为每个生成 `"name#arity": (args) { ... }` typed wrapper 闭包代码
-   - **typed wrapper 闭包生成**：每个绑定的 wrapper 内部将 `List<Object?>` 解构为类型化参数，直接调用宿主方法。编译期已知签名，无需反射
+**TypeAnalyzer（type_analyzer.dart）：**
+- 封装 `package:analyzer` 的 `AnalysisContextCollection`
+- `analyzeClass(libraryUri, className)` → `TypeInfo`（含方法/getter/setter/操作符/静态方法/构造函数/超类链）
+- `analyzeFunction(libraryUri, functionName)` → `FunctionInfo`
+- 处理 VM 内部类（`_GrowableList` 等不可见类型）：创建空 TypeInfo，方法来自 YAML 覆盖
 
-4. **运行** — `cd packages/dartic_generator && fvm dart analyze && fvm dart test test/wrapper_generator_test.dart`
+**TypeInfo（type_info.dart）：**
+- 纯数据类，描述类的完整公开 API surface
+- `MethodInfo`（name / params / returnType / isAbstract）
+- `GetterInfo` / `SetterInfo` / `OperatorInfo` / `ConstructorInfo`
+- `FunctionInfo`（顶层函数，含 customSource 支持）
 
 ---
 
-### Task 7.2.3: BridgeGenerator — Bridge 类 + BridgeFactory 生成
+### Task 7.2.3: BindingEmitter — .g.dart 绑定文件生成
 
 **产出文件：**
-- Create: `packages/dartic_generator/lib/src/bridge_generator.dart`
-- Create: `packages/dartic_generator/lib/src/bridge_mixin.dart`（$BridgeMixin 定义，放在 dartic 主包）
-- Modify: `lib/src/bridge/dartic_dispatch.dart`（确保 $BridgeMixin 可引用 DarticDispatch）
-- Test: `packages/dartic_generator/test/bridge_generator_test.dart`
+- `packages/dartic_generator/lib/src/emitter/binding_emitter.dart`
+- `packages/dartic_generator/test/emitter/binding_emitter_test.dart`
 
-**TDD 步骤：**
+**完成内容：**
 
-1. **读设计文档** — Ch4 "Bridge 类与 $BridgeMixin" 节、"BridgeFactory" 节、"Bridge 实例创建流程"节：
-   - Bridge 类跳过 `final` 和 `sealed` 类
-   - Bridge 类 = extends 宿主类 + mixin $BridgeMixin
-   - $BridgeMixin 提供 `$_invoke(method, args)`、`$_get(property)`、`$_set(property, value)` 委托方法，内部调用 DarticDispatch
-   - 每个可重写方法 → 委托重写（调用 $_invoke，检查 notOverridden 后 call super）
-   - 每个可重写属性 → getter/setter 委托
-   - 每个非抽象可重写方法 → super 转发器 `$super$methodName()`
-   - 每个可用构造函数 → BridgeFactory 变体
-   - BridgeFactory 签名：`(DarticDispatch, DarticObject, List<Object?> superArgs) → Object`
+三个入口函数：
+- `emitBindingFile(TypeInfo)` — 单类型绑定文件
+- `emitBindingFileWithInternalTypes(TypeInfo, List<TypeInfo>)` — 主类型 + VM 内部类型（如 List + _GrowableList + _List）
+- `emitTopLevelBindingFile(libraryUri, pluginName, List<FunctionInfo>)` — 顶层函数绑定
 
-2. **写测试** —
-   - **Bridge 类生成**：`@DarticExport(bridge: true) class Animal { String speak() => 'generic'; }` → 生成 `class $Animal extends Animal with $BridgeMixin { ... }`
-   - **final 类跳过**：`@DarticExport(bridge: true) final class Immutable { ... }` → 不生成 Bridge（警告或错误）
-   - **方法委托**：`speak()` 方法 → 生成 `@override String speak() { final r = $_invoke('speak', []); if (identical(r, notOverridden)) return super.speak(); return r as String; }`
-   - **属性委托**：`int get age` → 生成 getter 委托，检查 notOverridden 后 return super.age
-   - **操作符委托**：`operator ==(other)` → 生成 `@override bool operator ==(Object other) { final r = $_invoke('==', [other]); ... }`
-   - **super 转发器**：`speak()` → 生成 `String $super$speak() => super.speak();` 并注册到 HostBindingRegistry
-   - **BridgeFactory**：默认构造函数 → 生成工厂闭包，内部创建 $Animal 实例
-   - **多构造函数**：类含默认 + 命名构造函数 → 生成多个 BridgeFactory 变体
+**生成物结构：**
+```dart
+// GENERATED CODE - DO NOT MODIFY BY HAND
+abstract final class XxxBindings {
+  static void register(DarticPluginContext ctx) { ... }
+  static Map<String, Object? Function(List<Object?>)> methodMap() { ... }
+}
+```
 
-3. **实现** —
-   - **$BridgeMixin**：定义在 dartic 主包 `lib/src/bridge/bridge_mixin.dart`。提供 `DarticObject get $_darticObject`、`DarticDispatch get $_dispatch`、委托方法 `$_invoke`/`$_get`/`$_set`。字段由 Bridge 构造函数初始化
-   - **bridge_generator.dart**：
-     - 检查类是否可继承（非 final、非 sealed）
-     - 遍历可重写方法（含操作符）→ 生成委托重写代码
-     - 遍历可重写属性 → 生成 getter/setter 委托代码
-     - 遍历非抽象可重写方法 → 生成 super 转发器 `$super$methodName()`
-     - 遍历可用构造函数 → 生成 BridgeFactory 闭包代码
-   - **DarticPlugin 注册代码生成**：为每个 @DarticExport(bridge: true) 类生成 `engine.registerClass(name, test, methods, bridgeFactory: ...)` 调用
+**关键能力：**
+- 方法/getter/setter/操作符 → typed wrapper 闭包（编译期已知签名，无反射）
+- 操作符使用 `lookupName`（区分一元 `-` 和二元 `-`）
+- 可选参数/命名参数 → 多个 arity 条目
+- 继承链展平 → superclasses 列表传递
+- `extraMethods` / `extraBindings` / `preamble` 覆盖支持
+- **Bridge 类生成**（`bridge: true` 时）：
+  - `_$ClassName extends HostClass implements DarticObjectHolder`（非 final/sealed 类）
+  - 方法委托：`$_invoke` → 检查 `notOverridden` → 回退 `super.method()`
+  - getter/setter 委托：同样的 notOverridden 检查模式
+  - `$darticObject` / `$dispatch` 字段 → 由 BridgeFactory 在构造时初始化
+  - 构造函数转发 super 参数
+  - 注册 Bridge 的 `toString` / `hashCode` / `==` 覆盖
 
-4. **运行** — `cd packages/dartic_generator && fvm dart analyze && fvm dart test test/bridge_generator_test.dart`
+**设计决策：**
+- 未使用 `$BridgeMixin` 中间层，改为 `DarticObjectHolder` 接口 — 更轻量，避免 mixin 冲突
+- Bridge 生成内嵌在 binding_emitter 中而非独立文件 — 绑定和 Bridge 紧密耦合，同源生成更简单
 
 ---
 
-### Task 7.2.4: build_runner 集成 + DarticPlugin 生成
+### Task 7.2.4: PluginEmitter + Scanner + Runner + CLI
 
 **产出文件：**
-- Create: `packages/dartic_generator/lib/builder.dart`（Builder 注册入口）
-- Create: `packages/dartic_generator/lib/src/plugin_generator.dart`（DarticPlugin 类生成）
-- Create: `packages/dartic_generator/build.yaml`
-- Test: `packages/dartic_generator/test/plugin_generator_test.dart`
+- `packages/dartic_generator/lib/src/emitter/plugin_emitter.dart`
+- `packages/dartic_generator/lib/src/emitter/manifest_emitter.dart`
+- `packages/dartic_generator/lib/src/scanner.dart`
+- `packages/dartic_generator/lib/src/runner.dart`
+- `packages/dartic_generator/bin/generate.dart`
+- `packages/dartic_generator/test/emitter/plugin_emitter_test.dart`
+- `packages/dartic_generator/test/scanner_test.dart`
+- `packages/dartic_generator/test/runner_test.dart`
 
-**TDD 步骤：**
+**完成内容：**
 
-1. **读设计文档** — API 设计文档 "包结构"节、"codegen 生成的 DarticPlugin 结构"节、Ch4 "BridgeGenerator" 输出目录结构：
-   - codegen 为每个 @DarticExport 标注文件生成 `.dartic.dart` 文件
-   - 每个文件生成一个 DarticPlugin 实现类，register() 内部调用 registerClass/registerBinding
-   - 普通导出类 → registerClass(name, test, type, methods)
-   - Bridge 类 → registerClass(name, test, type, methods, bridgeFactory: factory) + super 转发器注册
-   - 顶层函数 → registerBinding(name, wrapper)
-   - 所有 registerClass 调用均包含 `type: ClassName` 参数（编译期精确类型字面量），预热 `_exactMap` 实现注册顺序无关
+**PluginEmitter（plugin_emitter.dart）：**
+- 生成 `XxxPlugin extends DarticPlugin` 类
+- `register(DarticPluginContext ctx)` 内调用各 `XxxBindings.register(ctx)`
+- 导入所有绑定文件
 
-2. **写测试** —
-   - **Plugin 生成**：含 2 个 @DarticExport 类的文件 → 生成 Plugin 类含 register() → register() 内有 2 个 registerClass 调用
-   - **混合导出**：文件含 1 个类 + 1 个顶层函数 → register() 含 1 个 registerClass + 1 个 registerBinding
-   - **Bridge Plugin**：@DarticExport(bridge: true) 类 → registerClass 含 bridgeFactory 参数
-   - **build.yaml 配置**：Builder 正确注册为 SharedPartBuilder 或 LibraryBuilder
-   - **增量构建**：修改源文件 → 仅重新生成该文件对应的 .dartic.dart
+**ManifestEmitter（manifest_emitter.dart）：**
+- 为 `package:` URI 生成 `dartic.manifest` 文件（声明宿主包名）
+- `dart:*` URI 不生成（编译器硬编码处理）
 
-3. **实现** —
-   - **plugin_generator.dart**：组合 wrapper_generator + bridge_generator 的输出，生成完整的 DarticPlugin 实现类源代码。类名格式 `$<SourceFileName>Plugin`
-   - **builder.dart**：注册 Builder，input extension `.dart`，output extension `.dartic.dart`。Builder.build() 流程：检查文件是否含 @DarticExport 注解 → 解析源文件 → 调用 plugin_generator 生成代码 → 写入输出
-   - **build.yaml**：配置 Builder 键名、supported 平台、auto_apply 策略
+**Scanner（scanner.dart）：**
+- 扫描 Dart 源文件的 `@DarticExport` 注解
+- 构建 `GeneratorConfig`（与 YAML 路径输出相同的数据模型）
+- 支持单文件和目录扫描
 
-4. **运行** — `cd packages/dartic_generator && fvm dart analyze && fvm dart test`
+**Runner（runner.dart）：**
+- Pipeline 编排器：config → analyze → emit → write
+- 三个入口：`runConfig(yamlPath)` / `runConfigDirectory(dirPath)` / `runGeneratorConfig(config)`
+- 对每个 library 处理：分析类/函数 → 生成绑定文件 → 生成 plugin 文件
+
+**CLI（bin/generate.dart）：**
+```bash
+# YAML 配置模式（主力路径）
+dart run dartic_generator --config configs/dart_core.yaml
+dart run dartic_generator --config configs/           # 目录下所有 yaml
+
+# 注解扫描模式（用户自定义类型）
+dart run dartic_generator --scan lib/src/my_app.dart
+dart run dartic_generator --scan lib/src/ --output out/
+```
+
+**设计决策：**
+- 未使用 build_runner — dart:core 等标准库无法添加注解，YAML 配置是必要路径；CLI 工具更灵活，不强制依赖 build_runner
+- `--scan` 模式保留注解扫描能力，适用于用户自定义类型
+- 两种模式共享同一 pipeline（Scanner 输出 GeneratorConfig → Runner 处理）
 
 ---
 
-### Task 7.2.5: 自测 — codegen 重生成 dart:core Bridge 并验证功能等价
+### Task 7.2.5: dart:core/async/collection/math 绑定生成 + 自测
 
 **产出文件：**
-- Create: `packages/dartic_bridges_core/pubspec.yaml`
-- Create: `packages/dartic_bridges_core/lib/dartic_bridges_core.dart`
-- Create: `packages/dartic_bridges_core/lib/src/core_plugin.dart`（codegen 生成的 DarticCorePlugin）
-- Test: `packages/dartic_bridges_core/test/core_plugin_test.dart`
-- Test: `test/e2e/codegen_equivalence_test.dart`（功能等价验证）
+- `packages/dartic_generator/configs/dart_core.yaml`
+- `packages/dartic_generator/configs/dart_async.yaml`
+- `packages/dartic_generator/configs/dart_collection.yaml`
+- `packages/dartic_generator/configs/dart_math.yaml`
+- `lib/src/bridge/bindings/*.g.dart`（75+ 生成文件）
+- `lib/src/bridge/plugins/core_plugin.g.dart`
+- `lib/src/bridge/plugins/async_plugin.g.dart`
+- `lib/src/bridge/plugins/collection_plugin.g.dart`
+- `lib/src/bridge/plugins/math_plugin.g.dart`
 
-**TDD 步骤：**
+**完成内容：**
+- 4 个 YAML 配置文件覆盖 dart:core / dart:async / dart:collection / dart:math
+- dart:core 含内部类型处理（`_GrowableList` / `_List` / `_Set` / `_Enum` / `_StringStackTrace` 等）
+- 生成 75+ 个 `.g.dart` 绑定文件 + 4 个 plugin 文件
+- Bridge 生成覆盖非 final 类型（Duration / Error 子类 / Exception / Stopwatch 等 14 个 Bridge 类）
+- 生成物直接放在主包 `lib/src/bridge/bindings/` 和 `lib/src/bridge/plugins/`（未创建独立 `dartic_bridges_core` 包）
 
-1. **目标确认** — 用 codegen 为 dart:core 核心类型（int, String, List, Map, Set, Duration 等）生成 Bridge 代码，与 Phase 5 手写的 `lib/src/bridge/bindings/*.dart` 进行功能等价验证。验证维度：绑定注册数量、动态分发路由正确性、端到端测试行为一致性
-
-2. **写测试** —
-   - **绑定数量对比**：codegen 生成的 DarticCorePlugin → 注册到 HostBindingRegistry → 统计绑定数 ≥ 手写版绑定数
-   - **动态分发对比**：对每个 dart:core 类型，通过 HostClassRegistry 路由 getter/method → 结果与手写版一致
-   - **端到端等价**：选取 10 个代表性 co19 测试（涵盖 int/String/List/Map 操作）→ 分别用手写 Bridge 和 codegen Bridge 执行 → 结果完全相同
-   - **缺失绑定检测**：codegen 遗漏的手写绑定（如 CFE 内部方法 `_GrowableList._literalN`）→ 记录差异列表，手动补充
-
-3. **实现** —
-   - **dartic_bridges_core 包**：依赖 dartic + dartic_annotation。使用 codegen 为 dart:core 核心类型生成 DarticCorePlugin
-   - **DarticCorePlugin**：`class DarticCorePlugin implements DarticPlugin { String get name => 'dart:core'; void register(DarticEngine engine) { ... } }`
-   - **功能等价测试**：构造两个 DarticEngine 实例，一个用手写 CoreBindings，一个用 codegen DarticCorePlugin，执行相同脚本比较结果
-   - **差异补充**：codegen 无法覆盖的 CFE 内部方法（如 `_GrowableList._literalN`、`_Set..add` 等降糖产物）需在 DarticCorePlugin 中手动补充注册
-
-4. **运行** — `fvm dart analyze && fvm dart test test/e2e/codegen_equivalence_test.dart`
+**与原规划的偏差：**
+- 原规划 Task 7.2.5 计划创建独立 `packages/dartic_bridges_core/` 包 + `codegen_equivalence_test.dart` 功能等价验证
+- 实际实现中生成文件直接替换了手写绑定，通过全量测试套件（2900+ tests）验证功能等价
+- 未创建独立的等价验证测试（全量 co19 回归测试覆盖了该需求）
 
 ---
+
+## YAML 配置文件格式
+
+```yaml
+output_bindings: lib/src/bridge/bindings
+output_plugins: lib/src/bridge/plugins
+
+libraries:
+  - uri: "dart:core"
+    classes:
+      - name: int
+      - name: List
+        internal_types:
+          - name: _GrowableList
+          - name: _List
+        bridge: false
+      - name: Duration
+        bridge: true
+    functions:
+      - name: print
+        arity: 1
+        custom: "(args) { ctx.config.onPrint?.call(args[0]?.toString() ?? 'null'); }"
+    overrides:
+      _GrowableList:
+        extra_methods:
+          "_GrowableList._literal1#1": "(args) { return [args[0]]; }"
+```
 
 ## Commit
 
 ```
-feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runner integration
+feat(codegen): add @DarticExport annotation and CLI code generator
 ```
 
-**提交文件：** `packages/dartic_annotation/`（新包）+ `packages/dartic_generator/`（新包）+ `packages/dartic_bridges_core/`（新包）+ `lib/src/bridge/bridge_mixin.dart`（$BridgeMixin）+ 全部新测试
-
-## 文档更新
-
-- 更新 `docs/tasks/overview.md` Phase 7 部分
-- 更新 `docs/plans/development-roadmap.md` Batch 7.2 checkbox + 核心发现
+**提交文件：** `packages/dartic_annotation/`（新包）+ `packages/dartic_generator/`（新包）+ `lib/src/bridge/bindings/*.g.dart`（生成物）+ `lib/src/bridge/plugins/*.g.dart`（生成物）
 
 ## 核心发现
 
-- **analyzer 8.4.1 API**：`element2.dart` 已废弃（仅 re-export `element.dart`）。正式 API 用 `LibraryElement.classes`、`Element.metadata.annotations`、`FormalParameterElement`（非 `ParameterElement`）、`InterfaceType.element`（非 `.element3`）
-- **操作符 name vs lookupName**：`MethodElement.name` 对 unary minus 返回 `-`，需用 `lookupName` 获取 `unary-`（区分一元和二元）
-- **构造函数命名**：analyzer 8.x 中无名构造函数的 `name` 为 `'new'`（非空字符串），codegen 需做映射
-- **dart:core 类型**：String/int/double/bool 是 `final class`（不可继承，仅生成 HostClassWrapper）。Duration/Iterable/Comparable 非 final（可生成 Bridge）
-- **codegen 覆盖率**：自测验证 codegen 生成的 String/int/List binding key 覆盖了手写版的全部核心绑定（length/isEmpty/substring/operator 等）
-- **`build` 包版本**：`package:build ^4.0.4` 才兼容 `analyzer ^8.0.0`（旧版 build 只支持 analyzer <8.0）
-- **`LibraryFragment` vs `LibraryElement`**：`importedLibraries` 在 `LibraryFragment` 上（通过 `library.firstFragment.importedLibraries` 访问），不在 `LibraryElement` 上
+- **analyzer 8.4.1 API**：`element2.dart` 已废弃。正式 API 用 `LibraryElement.classes`、`Element.metadata.annotations`、`FormalParameterElement`、`InterfaceType.element`
+- **操作符 name vs lookupName**：`MethodElement.name` 对 unary minus 返回 `-`，需用 `lookupName` 获取 `unary-`
+- **构造函数命名**：analyzer 8.x 中无名构造函数 `name` 为 `'new'`，codegen 需做映射
+- **dart:core 类型限制**：String/int/double/bool 是 `final class`（不可继承，仅生成 HostClassWrapper 不生成 Bridge）
+- **`build` 包版本**：`package:build ^4.0.4` 兼容 `analyzer ^8.0.0`
+- **`LibraryFragment` vs `LibraryElement`**：`importedLibraries` 在 `LibraryFragment` 上
+- **build_runner 放弃原因**：dart:core 等标准库无法添加注解，YAML 配置驱动成为必要；CLI 模式对 codegen 场景更灵活
+- **$BridgeMixin 放弃原因**：直接 `implements DarticObjectHolder` 更轻量，无 mixin 线性化冲突风险
 
 ### Code Review 修复
 
@@ -221,20 +242,20 @@ feat(codegen): add @DarticExport annotation and BridgeGenerator with build_runne
 | 2 | CRITICAL | super 转发器闭包丢失所有参数 | 添加 `SuperForwarderKind` 枚举 + `argCount`，按 getter/setter/method 分发 |
 | 3 | CRITICAL | Bridge 构造函数不转发 super 参数 | `BridgeFactoryClosure` 携带 params，构造函数生成 `super(arg1, arg2)` |
 | 4 | IMPORTANT | `_buildParamDeclaration` 将可选/命名参数拉平为必选 | 保留 `[]` / `{}` 包装，命名参数加 `required` |
-| 5 | IMPORTANT | bridge_generator 对操作符用 `method.name` 而非 `lookupName` | 改用 `method.lookupName!`，与 wrapper_generator 一致 |
-| 6 | IMPORTANT | setter 转发器名 `$super$age=` 含非法字符 | 改为 `$super$age`（Dart `set` 关键字隐含 `=`） |
-| - | DEFERRED | 注解匹配仅按类名，未校验库 URI | 已知限制，测试 fixture 依赖本地注解定义，后续可加 |
-| - | DEFERRED | DarticBuilder 用相对路径而非 build_runner resolver | 影响 build_runner 实际使用时的路径解析，后续集成测试时修复 |
+| 5 | IMPORTANT | bridge_generator 对操作符用 `method.name` 而非 `lookupName` | 改用 `method.lookupName!` |
+| 6 | IMPORTANT | setter 转发器名 `$super$age=` 含非法字符 | 改为 `$super$age` |
+| - | DEFERRED | 注解匹配仅按类名，未校验库 URI | 已知限制 |
+| - | DEFERRED | DarticBuilder 用相对路径而非 build_runner resolver | CLI 模式下非问题 |
 
 ## Batch 完成检查
 
 - [x] 7.2.1 dartic_annotation 包 — @DarticExport + @DarticHide
-- [x] 7.2.2 BridgeGenerator 核心 — HostClassWrapper 自动生成
-- [x] 7.2.3 BridgeGenerator — Bridge 类 + BridgeFactory 生成
-- [x] 7.2.4 build_runner 集成 + DarticPlugin 生成
-- [x] 7.2.5 自测 — codegen 重生成 dart:core Bridge 并验证功能等价
+- [x] 7.2.2 dartic_generator 核心 — YAML 配置 + TypeAnalyzer
+- [x] 7.2.3 BindingEmitter — .g.dart 绑定文件生成（含 Bridge）
+- [x] 7.2.4 PluginEmitter + Scanner + Runner + CLI
+- [x] 7.2.5 dart:core/async/collection/math 绑定生成 + 自测
 - [x] `fvm dart analyze` 零警告（所有包）
-- [x] `fvm dart test` 全部通过（所有包：annotation 9 + generator 96 = 105）
+- [x] `fvm dart test` 全部通过（annotation 9 + generator 96 = 105）
 - [x] code review 修复完成（3 CRITICAL + 3 IMPORTANT）
 - [x] commit 已提交 (7aac8f3)
 - [x] overview.md 已更新

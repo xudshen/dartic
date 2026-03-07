@@ -1,0 +1,82 @@
+# Flutter widget bindings configuration for dartic code generator.
+#
+# NOTE: The dartic_generator CLI currently cannot resolve Flutter SDK types
+# (analyzer needs a Flutter project context). These bridges are hand-written
+# in packages/dartic_flutter/lib/src/bindings/ following the .g.dart pattern.
+#
+# This config serves as the authoritative source of truth for which Flutter
+# types are bridged and documents the intended codegen configuration.
+#
+# Types covered:
+#   1. Widget (abstract, binding-only — scripts don't directly extend Widget)
+#   2. StatelessWidget (bridge: true — scripts extend this)
+#   3. StatefulWidget (bridge: true — scripts extend this)
+#   4. State (bridge: true — scripts extend this)
+#   5. Key / ValueKey / GlobalKey (binding-only)
+#   6. BuildContext (binding-only — passed to build(), not extended)
+#   7. Navigator (binding-only — static methods + instance methods)
+#   8. Material widgets (binding-only — MaterialApp, Scaffold, AppBar, Text, etc.)
+
+output_bindings: "../../dartic_flutter/lib/src/bindings"
+output_plugins: "../../dartic_flutter/lib/src/plugins"
+
+libraries:
+  - uri: package:flutter/widgets.dart
+    classes:
+      # ── Core widget types (bridgeable) ─────────────────────────────────
+
+      # Widget — abstract base, binding-only (no bridge needed)
+      - Widget
+
+      # StatelessWidget — scripts extend this to define custom widgets
+      - name: StatelessWidget
+        bridge: true
+
+      # StatefulWidget — scripts extend this for stateful widgets
+      - name: StatefulWidget
+        bridge: true
+
+      # State — scripts extend this for widget state management
+      - name: State
+        bridge: true
+
+      # ── Key hierarchy (binding-only) ───────────────────────────────────
+
+      - Key
+      - ValueKey
+      - GlobalKey
+
+      # ── BuildContext (binding-only) ────────────────────────────────────
+
+      - BuildContext
+
+      # ── Navigator (binding-only) ──────────────────────────────────────
+
+      - Navigator
+
+      # ── Layout widgets (binding-only) ──────────────────────────────────
+
+      - Center
+      - Container
+      - SizedBox
+      - Padding
+      - Column
+      - Row
+      - Expanded
+      - Align
+
+  - uri: package:flutter/material.dart
+    classes:
+      # ── Material widgets (binding-only) ────────────────────────────────
+
+      - MaterialApp
+      - Scaffold
+      - AppBar
+      - Text
+      - ElevatedButton
+      - TextButton
+      - FloatingActionButton
+      - Icon
+      - IconButton
+      - Card
+      - ListTile

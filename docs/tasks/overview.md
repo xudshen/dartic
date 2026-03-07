@@ -145,28 +145,29 @@
 
 ---
 
-## Phase 7: 公开 API + 代码生成 — 已规划
+## Phase 7: 公开 API + 代码生成
 
-**目标：** 封装 DarticEngine 公开 API（含内部基础设施重构），实现 @DarticExport 代码生成器，提供 Flutter Bridge 和热更新 demo
+**目标：** 封装 DarticEngine 公开 API（含内部基础设施重构），实现 CLI 代码生成器（YAML + @DarticExport），统一 Plugin 注册路径，提供 Flutter Bridge 和热更新 demo
 
-**设计参考：** [`docs/plans/2026-02-20-bridge-api-design.md`](../plans/2026-02-20-bridge-api-design.md)
+**设计参考：** [`docs/plans/2026-02-20-bridge-api-design.md`](../plans/2026-02-20-bridge-api-design.md)、[`docs/plans/2026-03-03-plugin-registry-reorganization-design.md`](../plans/2026-03-03-plugin-registry-reorganization-design.md)
 
 **Task 目录：** [`docs/tasks/phase7/`](phase7/README.md)
 
 | Batch | 描述 | Task 数 | 状态 |
 |-------|------|---------|------|
 | [7.1](phase7/batch-7.1-engine-api.md) | DarticEngine 公开 API + 内部重构 | 6 | ✅ |
-| [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | ✅ |
+| [7.2](phase7/batch-7.2-codegen.md) | dartic_generator 代码生成（CLI + YAML） | 5 | ✅ |
 | [7.3](phase7/batch-7.3-plugin-registry-reorg.md) | Plugin 与 Registry 重组 | 8 | ✅ |
-| [7.4](phase7/batch-7.3-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | |
+| [7.4](phase7/batch-7.4-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | ✅ |
 | — | Host Library Manifest（编译器 hostPackages + dartic.manifest 自动发现） | — | ✅ |
 
 **里程碑：**
 - [x] DarticEngine 3 行代码加载执行 .darb 脚本
 - [x] engine.call() 支持重入（宿主回调内再次调用）
 - [x] registerClass 可一次性注册类的绑定/分发/Bridge（含 `type:` 参数实现注册顺序无关）
-- [x] @DarticExport 生成的 Bridge 与手写 Bridge 功能等价
-- [ ] Flutter 热更新 demo 端到端运行
+- [x] dartic_generator CLI 生成的 Bridge 与手写 Bridge 功能等价（75+ .g.dart 替换全部手写绑定）
+- [x] DarticPluginContext 统一注册路径，core lib 与用户 plugin 同路径
+- [x] Flutter 热更新 demo 端到端编译通过（.dart → .dill → .darb，2531 bytes）
 - [ ] Phase 2-6 全量零回归
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)

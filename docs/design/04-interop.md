@@ -318,13 +318,13 @@ package:dartic_bridges_core/
         $stream.dart
     dartic_bridges_core.dart  // 统一导出 + 注册入口
 
-package:dartic_bridges_flutter/
+package:dartic_flutter/
   lib/
     src/
       widgets/
         $stateless_widget.dart
         $stateful_widget.dart
-    dartic_bridges_flutter.dart
+    dartic_flutter.dart
 ```
 
 ## 工作流程

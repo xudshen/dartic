@@ -1,0 +1,4 @@
+# Host packages for dartic compiler.
+# These packages are treated as platform libraries — their types are not
+# compiled into dartic bytecode but are instead bridged via DarticFlutterPlugin.
+flutter

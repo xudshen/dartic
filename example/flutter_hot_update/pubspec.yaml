@@ -1,0 +1,26 @@
+name: flutter_hot_update
+description: Dartic Flutter hot update demo — load .darb bytecode and render Flutter widgets.
+publish_to: none
+
+environment:
+  sdk: ^3.10.7
+  flutter: '>=3.38.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dartic:
+    path: ../../
+  dartic_flutter:
+    path: ../../packages/dartic_flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # Kernel is needed by the compile tool only.
+  kernel:
+    path: ../../vendor/dart-sdk/pkg/kernel
+
+flutter:
+  assets:
+    - assets/home_screen.darb
