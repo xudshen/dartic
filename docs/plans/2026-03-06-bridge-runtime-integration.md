@@ -2,9 +2,9 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**目标：** 让 Bridge 实例（脚本类通过 `extends` 或 `implements` 关联宿主类）在解释器中端到端运行——字段访问、虚方法分发、类型参数传播均正确处理 Bridge 接收者。
+**目标：** 让 Bridge 实例（dartic 类通过 `extends` 或 `implements` 关联宿主类）在解释器中端到端运行——字段访问、虚方法分发、类型参数传播均正确处理 Bridge 接收者。
 
-**架构：** Bridge 实例将 `DarticObject`（脚本字段存储）包裹在真正的 VM 类型中。解释器通过 `DarticObjectHolder` 提取 DarticObject 来访问字段和分发方法，同时保持 Bridge 作为 `this`，使宿主方法调用正常工作。`DarticRuntime` 同时传递 Bridge 接收者和 DarticObject 以实现正确的分发。
+**架构：** Bridge 实例将 `DarticObject`（dartic 字段存储）包裹在真正的 VM 类型中。解释器通过 `DarticObjectHolder` 提取 DarticObject 来访问字段和分发方法，同时保持 Bridge 作为 `this`，使宿主方法调用正常工作。`DarticRuntime` 同时传递 Bridge 接收者和 DarticObject 以实现正确的分发。
 
 **技术栈：** Dart, DarticInterpreter, BridgeDispatch, BridgeFactoryRegistry, DarticCompiler
 
@@ -17,13 +17,13 @@
 | 问题 | 决策 | 理由 |
 |---|---|---|
 | 如何从 Bridge 提取 DarticObject？ | `DarticObjectHolder` 接口，提供 `$darticObject` getter | 编译期安全，对非 Bridge 零开销（单次 `is` 检查），自文档化。所有生成的 Bridge 类实现此接口。 |
-| 脚本方法中 `this` 是什么？ | Bridge 实例（非 DarticObject） | 宿主方法调用必须工作——Bridge 就是真正的宿主类型。`this.hostMethod()` 在真实 VM 对象上分发。 |
-| DarticRuntime API | `invoke(Object receiver, DarticObject darticObject, ...)` — 双参数 | Bridge 需要同时传递自身（作为脚本方法的 `this`）和 DarticObject（用于 classId/方法查找）。 |
+| dartic 方法中 `this` 是什么？ | Bridge 实例（非 DarticObject） | 宿主方法调用必须工作——Bridge 就是真正的宿主类型。`this.hostMethod()` 在真实 VM 对象上分发。 |
+| DarticRuntime API | `invoke(Object receiver, DarticObject darticObject, ...)` — 双参数 | Bridge 需要同时传递自身（作为dartic 方法的 `this`）和 DarticObject（用于 classId/方法查找）。 |
 | Super 构造参数 | 暂用 `const []`（仅支持无参 super） | 设计文档标记为 Phase 2 特性，已覆盖最常见场景（默认 super 构造函数）。 |
 | 泛型 Bridge 类 | 不在范围内 | 设计文档标记为 Phase 2："泛型 Bridge 类型参数传递优化" |
 | Bridge 上的动态字段访问 | 不在范围内 | 类内静态字段访问可用。动态访问（`dynamic x = bridge; x.field`）为边缘场景，留 Phase 2。 |
 | Bridge 的 INSTANCEOF | 不在范围内 | `bridge is HostType` 通过 Dart 原生 `is` 工作。`bridge is DarticType` 需后续支持。 |
-| 宿主类型元数据 | `hostSuperClassName`（extends）+ `hostInterfaceNames`（implements）两个字段 | Engine 需要将脚本 classId → 宿主 BridgeFactory 匹配。编译器检测 extends/implements 的平台类型并记录名称。 |
+| 宿主类型元数据 | `hostSuperClassName`（extends）+ `hostInterfaceNames`（implements）两个字段 | Engine 需要将dartic classId → 宿主 BridgeFactory 匹配。编译器检测 extends/implements 的平台类型并记录名称。 |
 
 ---
 
@@ -32,8 +32,8 @@
 - ~~Super 构造参数（非默认 super）~~ — ✅ 已修复（2026-03-07，见 `2026-03-06-bridge-super-args-and-dispatch.md`）
 - 泛型 Bridge 类型参数传播
 - Bridge 实例的动态字段访问（`GET_FIELD_DYN` / `SET_FIELD_DYN`）
-- Bridge 实例的 `INSTANCEOF` / `CAST` 脚本类型检查
-- `ALLOC_GENERIC` Bridge 支持（泛型脚本类继承宿主）
+- Bridge 实例的 `INSTANCEOF` / `CAST` dartic 类型检查
+- `ALLOC_GENERIC` Bridge 支持（泛型dartic 类继承宿主）
 
 ---
 
@@ -111,7 +111,7 @@ import '../runtime/object.dart';
 
 /// 包裹 [DarticObject] 的 Bridge 实例接口。
 ///
-/// 所有生成的 Bridge 类实现此接口，使解释器能提取内嵌的脚本对象
+/// 所有生成的 Bridge 类实现此接口，使解释器能提取内嵌的dartic 对象
 /// 用于字段访问和方法分发。
 ///
 /// ```dart
@@ -122,7 +122,7 @@ import '../runtime/object.dart';
 /// }
 /// ```
 abstract interface class DarticObjectHolder {
-  /// 承载脚本定义字段的内嵌 [DarticObject]。
+  /// 承载dartic 定义字段的内嵌 [DarticObject]。
   DarticObject get $darticObject;
 }
 ```
@@ -159,7 +159,7 @@ git commit -m "feat(bridge): add DarticObjectHolder interface for DarticObject e
 - 修改：`test/bridge/bridge_dispatch_test.dart`（更新测试）
 - 修改：`test/bridge/bridge_new_instance_test.dart`（更新测试）
 
-**背景：** DarticRuntime 当前仅接受 `DarticObject self`。Bridge 的覆写方法调用 `_runtime.invoke(_darticObject, method, args)`，将 DarticObject 作为接收者传给 `_callMethod`。但脚本方法中的 `this` 需要是 Bridge（使宿主方法调用正常）。我们添加 `receiver` 参数以便 Bridge 传递自身。
+**背景：** DarticRuntime 当前仅接受 `DarticObject self`。Bridge 的覆写方法调用 `_runtime.invoke(_darticObject, method, args)`，将 DarticObject 作为接收者传给 `_callMethod`。但dartic 方法中的 `this` 需要是 Bridge（使宿主方法调用正常）。我们添加 `receiver` 参数以便 Bridge 传递自身。
 
 **Step 1: 更新 DarticRuntime 接口**
 
@@ -169,9 +169,9 @@ git commit -m "feat(bridge): add DarticObjectHolder interface for DarticObject e
 abstract interface class DarticRuntime {
   /// 分发虚方法/操作符调用。
   ///
-  /// [receiver] 是 Bridge 实例（设为脚本方法中的 `this`）。
+  /// [receiver] 是 Bridge 实例（设为dartic 方法中的 `this`）。
   /// [darticObject] 是内嵌的 DarticObject（用于 classId/方法查找）。
-  /// 脚本未覆写 [method] 时返回 [notOverridden]。
+  /// dartic 未覆写 [method] 时返回 [notOverridden]。
   Object? invoke(Object receiver, DarticObject darticObject, String method, List<Object?> args);
 
   /// 分发属性 getter。
@@ -285,7 +285,7 @@ class _FieldTestBridge implements DarticObjectHolder {
 void main() {
   group('Bridge 字段访问', () {
     test('GET_FIELD_REF 和 SET_FIELD_REF 在 Bridge 接收者上正常工作', () async {
-      // 脚本定义一个包含 ref 字段的类并访问它。
+      // dartic 定义一个包含 ref 字段的类并访问它。
       final source = '''
 class Foo {
   String name = 'hello';
@@ -389,7 +389,7 @@ import '../bridge/dartic_object_holder.dart';
 /// 从可能是 Bridge 实例的接收者中提取 [DarticObject]。
 ///
 /// 若 [receiver] 已是 [DarticObject]，直接返回。
-/// 若 [receiver] 实现了 [DarticObjectHolder]（Bridge），提取内嵌的脚本对象。
+/// 若 [receiver] 实现了 [DarticObjectHolder]（Bridge），提取内嵌的dartic 对象。
 /// 否则抛异常（字段访问指令码不应出现此情况）。
 @pragma('vm:prefer-inline')
 static DarticObject _extractDarticObject(Object receiver) {
@@ -464,7 +464,7 @@ git commit -m "feat(bridge): Bridge-aware field access via DarticObjectHolder ex
 - 修改：`lib/src/runtime/interpreter.dart`（CALL_VIRTUAL handler）
 - 测试：`test/bridge/bridge_call_virtual_test.dart`
 
-**背景：** `CALL_VIRTUAL` 当前分为两条路径：`DarticObject`（IC 分发）和非 DarticObject（宿主分发）。Bridge 实例不是 DarticObject，会落入宿主分发路径，找不到脚本定义的方法。我们添加第三条路径：Bridge 接收者通过 `$darticObject.classId` 走 IC 分发，若方法不在脚本类中则回退到宿主分发。
+**背景：** `CALL_VIRTUAL` 当前分为两条路径：`DarticObject`（IC 分发）和非 DarticObject（宿主分发）。Bridge 实例不是 DarticObject，会落入宿主分发路径，找不到dartic 定义的方法。我们添加第三条路径：Bridge 接收者通过 `$darticObject.classId` 走 IC 分发，若方法不在dartic 类中则回退到宿主分发。
 
 **Step 1: 写失败测试**
 
@@ -486,7 +486,7 @@ class _VirtualTestBridge implements DarticObjectHolder {
 
 void main() {
   group('Bridge 上的 CALL_VIRTUAL', () {
-    test('在 Bridge 接收者上分发脚本方法', () async {
+    test('在 Bridge 接收者上分发dartic 方法', () async {
       final source = '''
 class Greeter {
   String name;
@@ -572,7 +572,7 @@ void main() {
 fvm dart test test/bridge/bridge_call_virtual_test.dart -r compact
 ```
 
-预期：FAIL — Bridge 接收者落入宿主分发路径，脚本方法未找到
+预期：FAIL — Bridge 接收者落入宿主分发路径，dartic 方法未找到
 
 **Step 3: 更新 CALL_VIRTUAL handler**
 
@@ -587,7 +587,7 @@ case Op.callVirtual:
   final receiver = rs.read(rBase + b);
   final ic = module.functions[callStack.funcId].icTable[c];
 
-  // 尝试脚本分发：对 DarticObject 和 Bridge（DarticObjectHolder）均有效。
+  // 尝试dartic 分发：对 DarticObject 和 Bridge（DarticObjectHolder）均有效。
   final DarticObject? darticObj;
   if (receiver is DarticObject) {
     darticObj = receiver;
@@ -619,7 +619,7 @@ case Op.callVirtual:
       // ...（已有帧设置代码，rBase+2 使用 `receiver`）...
       continue;
     }
-    // 方法不在脚本类中。
+    // 方法不在dartic 类中。
     if (receiver is DarticObject) {
       // 纯 DarticObject — noSuchMethod。
       final name = cp.getName(ic.methodNameIndex);
@@ -655,8 +655,8 @@ case Op.callVirtual:
 关键点：
 - `darticObj` 从 Bridge 提取或直接使用 DarticObject
 - IC 分发使用 `darticObj.classId`，但传递 `receiver`（Bridge）作为 `this`
-- 方法不在脚本类 + 接收者是 Bridge → 落入宿主分发
-- 方法不在脚本类 + 接收者是 DarticObject → noSuchMethod（已有行为）
+- 方法不在dartic 类 + 接收者是 Bridge → 落入宿主分发
+- 方法不在dartic 类 + 接收者是 DarticObject → noSuchMethod（已有行为）
 - 宿主分发和 null 检查不变
 
 **Step 4: 运行测试确认通过**
@@ -694,7 +694,7 @@ git commit -m "feat(bridge): Bridge-aware CALL_VIRTUAL with IC dispatch and host
 
 **Step 1: 写失败测试**
 
-编写一个有 super 方法调用的脚本类层次测试。验证 CALL_SUPER 在 `this` 为 Bridge 时正确传播类型参数。
+编写一个有 super 方法调用的dartic 类层次测试。验证 CALL_SUPER 在 `this` 为 Bridge 时正确传播类型参数。
 
 ```dart
 // test/bridge/bridge_call_super_test.dart
@@ -758,7 +758,7 @@ git commit -m "fix(bridge): CALL_SUPER extracts ITA from Bridge via DarticObject
 - 修改：`lib/src/api/engine.dart`（BridgeFactory 解析扩展）
 - 测试：`test/bridge/bridge_factory_resolution_test.dart`
 
-**背景：** 当插件注册 `registerClass(name: 'dart:core::Comparable', bridgeFactory: factory)` 时，工厂存入 `_pendingBridgeFactories['dart:core::Comparable']`。`loadBytecode` 期间，引擎遍历 `module.classes` 按 classId 解析工厂。但 module.classes 包含的是脚本类（如 "DarticB"），不是宿主类。引擎需要知道 DarticB 继承或实现了哪些宿主类，才能将 DarticB 的 classId 映射到对应的工厂。
+**背景：** 当插件注册 `registerClass(name: 'dart:core::Comparable', bridgeFactory: factory)` 时，工厂存入 `_pendingBridgeFactories['dart:core::Comparable']`。`loadBytecode` 期间，引擎遍历 `module.classes` 按 classId 解析工厂。但 module.classes 包含的是dartic 类（如 "DarticB"），不是宿主类。引擎需要知道 DarticB 继承或实现了哪些宿主类，才能将 DarticB 的 classId 映射到对应的工厂。
 
 编译器在两个位置检测宿主类型：
 1. **`extends` 关系**：超类来自平台库 → 记录在 `hostSuperClassName`
@@ -831,15 +831,15 @@ class DarticClassInfo {
 
   /// 宿主（平台）超类的完全限定名，若有。
   ///
-  /// 编译器在脚本类 `extends` 宿主类时设置。
+  /// 编译器在dartic 类 `extends` 宿主类时设置。
   /// 格式：`'${importUri}::${className}'`，如 `'dart:core::Comparable'`。
   /// [DarticEngine.loadBytecode] 用此字段按名称解析 [BridgeFactory]。
-  /// 继承其他脚本类或无超类时为 `null`。
+  /// 继承其他dartic 类或无超类时为 `null`。
   final String? hostSuperClassName;
 
   /// 宿主（平台）接口的完全限定名列表，若有。
   ///
-  /// 编译器在脚本类 `implements` 宿主接口时设置。
+  /// 编译器在dartic 类 `implements` 宿主接口时设置。
   /// 每项格式与 [hostSuperClassName] 相同。
   /// [DarticEngine.loadBytecode] 用此字段按名称解析 [BridgeFactory]。
   /// 无宿主接口时为 `null`。
@@ -926,7 +926,7 @@ final hostInterfaceNames = interfaceCount > 0
 // 解析待处理的 bridge 工厂。
 if (_pendingBridgeFactories.isNotEmpty) {
   for (final classInfo in module.classes) {
-    // 直接匹配（少见——脚本类恰好就是注册的类）。
+    // 直接匹配（少见——dartic 类恰好就是注册的类）。
     var factory = _pendingBridgeFactories[classInfo.name];
 
     // 宿主超类匹配（extends 场景）。
@@ -976,13 +976,13 @@ git commit -m "feat(bridge): host type metadata (extends + implements) for Bridg
 - 修改：`docs/design/04-interop.md`（更新 Bridge 运行时章节）
 - 修改：`docs/tasks/phase7/batch-7.1-engine-api.md`（更新进度）
 
-**背景：** 完整集成测试验证：BridgeFactory 创建 Bridge → Bridge 上字段访问 → CALL_VIRTUAL 脚本方法分发 → `this` 保持为 Bridge → 多个方法相互调用。
+**背景：** 完整集成测试验证：BridgeFactory 创建 Bridge → Bridge 上字段访问 → CALL_VIRTUAL dartic 方法分发 → `this` 保持为 Bridge → 多个方法相互调用。
 
 **Step 1: 写 E2E 测试**
 
 ```dart
 // test/bridge/bridge_e2e_test.dart
-// 综合测试：编译脚本类，注册 BridgeFactory，执行，验证：
+// 综合测试：编译dartic 类，注册 BridgeFactory，执行，验证：
 // 1. 构造函数在 Bridge 的 DarticObject 上初始化字段
 // 2. 方法调用通过 CALL_VIRTUAL 正确分发
 // 3. 字段访问正常（ref 和 value 字段）

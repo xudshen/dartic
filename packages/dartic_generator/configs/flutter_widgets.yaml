@@ -10,9 +10,9 @@
 # can resolve package:flutter/* types.
 #
 # Types covered:
-#   Bridge classes (scripts can extend):
+#   Bridge classes (dartic code can extend):
 #     - StatelessWidget, StatefulWidget, State
-#   Binding-only (scripts use, not extend):
+#   Binding-only (dartic code uses, not extends):
 #     - Widget, BuildContext, Navigator
 #     - Material: MaterialApp, Scaffold, AppBar, Text, ElevatedButton, etc.
 
@@ -78,7 +78,7 @@ libraries:
           - implementation_imports
           - invalid_use_of_protected_member
         preamble: |
-          /// Bridge class that allows dartic scripts to extend StatelessWidget.
+          /// Bridge class that allows dartic code to extend StatelessWidget.
           ///
           /// Widget marks `hashCode` and `==` as `@nonVirtual`, so this Bridge
           /// cannot override them (unlike standard dart:core Bridge classes).
@@ -96,7 +96,7 @@ libraries:
               final r = _dispatch.invoke(this, $darticObject, 'build', [context]);
               if (identical(r, notOverridden)) {
                 throw FlutterError(
-                    'StatelessWidget.build() must be overridden in dartic script');
+                    'StatelessWidget.build() must be overridden in dartic code');
               }
               return r as Widget;
             }
@@ -131,7 +131,7 @@ libraries:
           - invalid_use_of_protected_member
           - no_logic_in_create_state
         preamble: |
-          /// Bridge class that allows dartic scripts to extend StatefulWidget.
+          /// Bridge class that allows dartic code to extend StatefulWidget.
           class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
             _$StatefulWidget(this._dispatch, this.$darticObject, List<Object?> superArgs)
                 : super(key: superArgs.isNotEmpty ? superArgs[0] as Key? : null);
@@ -146,7 +146,7 @@ libraries:
               final r = _dispatch.invoke(this, $darticObject, 'createState', const []);
               if (identical(r, notOverridden)) {
                 throw FlutterError(
-                    'StatefulWidget.createState() must be overridden in dartic script');
+                    'StatefulWidget.createState() must be overridden in dartic code');
               }
               return r as State;
             }
@@ -180,7 +180,7 @@ libraries:
           - implementation_imports
           - invalid_use_of_protected_member
         preamble: |
-          /// Bridge class that allows dartic scripts to extend State.
+          /// Bridge class that allows dartic code to extend State.
           ///
           /// Lifecycle method delegation uses wrapped delegation pattern:
           /// - `build()` — required override: throws if not overridden
@@ -205,7 +205,7 @@ libraries:
               final r = _dispatch.invoke(this, $darticObject, 'build', [context]);
               if (identical(r, notOverridden)) {
                 throw FlutterError(
-                    'State.build() must be overridden in dartic script');
+                    'State.build() must be overridden in dartic code');
               }
               return r as Widget;
             }

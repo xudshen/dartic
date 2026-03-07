@@ -2,7 +2,7 @@
 
 > ✅ **已实现** — 2026-03-07。实现计划见 `2026-03-06-bridge-super-args-and-dispatch.md`。
 
-**目标：** 修复 Bridge 运行时两个核心问题，使 VM 脚本类继承宿主类的完整场景可用。
+**目标：** 修复 Bridge 运行时两个核心问题，使 VM dartic 类继承宿主类的完整场景可用。
 
 **前置条件：** Bridge 基础设施已完成（DarticObjectHolder、DarticDispatch、BridgeFactoryRegistry、CALL_VIRTUAL Bridge 分发、字段访问、Bridge codegen）。
 
@@ -132,7 +132,7 @@ case Op.wrapBridge:
 
 ### 问题
 
-当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)`），`e.toString()` 编译成 CALL_HOST。CALL_HOST 直接调用宿主绑定，不查询脚本覆盖。
+当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)`），`e.toString()` 编译成 CALL_HOST。CALL_HOST 直接调用宿主绑定，不查询dartic 覆盖。
 
 ### 方案：CALL_HOST handler 加 Bridge 分支
 
@@ -162,7 +162,7 @@ case Op.callHost:
 
   // ── Bridge 拦截 ──
   // 实例方法的第一个参数是 receiver。
-  // 如果 receiver 是 Bridge，先尝试 DarticDispatch 路由脚本覆盖。
+  // 如果 receiver 是 Bridge，先尝试 DarticDispatch 路由dartic 覆盖。
   final methodName = bindingInfo.methodName;
   if (methodName != null && argCount > 0 && _activeDarticDispatch != null) {
     final receiver = rs.read(rBase + a + 1);
@@ -199,7 +199,7 @@ case Op.callHost:
 
 | # | 场景 | 修复依赖 |
 |---|------|----------|
-| 4 | catch 中 e.toString() 走脚本覆盖 | 修复 2 |
+| 4 | catch 中 e.toString() 走dartic 覆盖 | 修复 2 |
 | 5 | StateError 位置参数 super | 修复 1 |
 | 6 | Duration 命名参数 super | 修复 1 |
 
@@ -216,16 +216,16 @@ case Op.callHost:
 
 | # | 场景 | 验证点 |
 |---|------|--------|
-| B1 | catch 中 e.toString() 走脚本覆盖 | 输出脚本 toString |
-| B2 | 宿主类型变量调脚本覆盖的 getter | 走脚本覆盖 |
+| B1 | catch 中 e.toString() 走dartic 覆盖 | 输出 dartic toString |
+| B2 | 宿主类型变量调dartic 覆盖的 getter | 走dartic 覆盖 |
 | B3 | 宿主类型变量调未覆盖的方法 | 降级到宿主实现 |
-| B4 | 字符串插值中的隐式 toString | `'$e'` 走脚本覆盖 |
+| B4 | 字符串插值中的隐式 toString | `'$e'` 走dartic 覆盖 |
 
 ### 新增测试：继承层次与多态（C 组）
 
 | # | 场景 | 验证点 |
 |---|------|--------|
-| C1 | 脚本 A extends Error，脚本 B extends A | B 的 is-check、字段继承 |
+| C1 | dartic A extends Error，dartic B extends A | B 的 is-check、字段继承 |
 | C2 | Bridge 实例放入 List\<Error\>，遍历调方法 | 多态分发正确 |
 | C3 | Bridge 实例作为函数参数（静态类型宿主类） | 参数传递不丢 Bridge 身份 |
 | C4 | Bridge 实例的 == 和 hashCode | 默认或覆盖行为 |

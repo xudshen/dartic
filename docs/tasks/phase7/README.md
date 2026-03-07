@@ -27,7 +27,7 @@
 
 ## 里程碑
 
-- [x] DarticEngine 3 行代码可加载执行 .darb 脚本
+- [x] DarticEngine 3 行代码可加载执行 .darb 字节码
 - [x] engine.call() 支持重入（宿主回调内再次调用 engine.call()）
 - [x] registerClass 一次性注册类的绑定/分发/Bridge（协调三注册表）
 - [x] @DarticExport 生成的 Bridge 与手写 Bridge 功能等价

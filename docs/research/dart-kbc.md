@@ -1,6 +1,6 @@
 # 基于 Dart Kernel 的高性能字节码解释器与 Dart VM 互调方案
 
-**Dart 语言的 Common Front End（CFE）将源码编译为 Kernel AST 中间表示（.dill 文件），这为构建一个运行于 Dart VM 内部的自定义字节码解释器提供了坚实的基础设施。** 本报告提出一种完整的技术架构：以 `package:kernel` 解析 .dill 文件，将 Kernel AST 编译为自定义 32 位寄存器式字节码，在纯 Dart 实现的高性能分发循环中执行，并通过基于句柄的对象映射机制实现与宿主 Dart VM 之间的双向互操作。该方案的核心价值在于为 Dart 生态引入安全可控的动态代码执行能力——无需修改 Dart VM 本身，即可实现热更新、插件化和沙箱化脚本执行。与现有方案（dart_eval、hetu_script、d4rt）相比，本设计聚焦于字节码层面的性能优化和系统级的互调架构，而非仅仅提供 AST 解释或脚本引擎。
+**Dart 语言的 Common Front End（CFE）将源码编译为 Kernel AST 中间表示（.dill 文件），这为构建一个运行于 Dart VM 内部的自定义字节码解释器提供了坚实的基础设施。** 本报告提出一种完整的技术架构：以 `package:kernel` 解析 .dill 文件，将 Kernel AST 编译为自定义 32 位寄存器式字节码，在纯 Dart 实现的高性能分发循环中执行，并通过基于句柄的对象映射机制实现与宿主 Dart VM 之间的双向互操作。该方案的核心价值在于为 Dart 生态引入安全可控的动态代码执行能力——无需修改 Dart VM 本身，即可实现热更新、插件化和沙箱化代码执行。与现有方案（dart_eval、hetu_script、d4rt）相比，本设计聚焦于字节码层面的性能优化和系统级的互调架构，而非仅仅提供 AST 解释或脚本引擎。
 
 ---
 
@@ -631,7 +631,7 @@ final interpreter = BytecodeInterpreter();
 interpreter.hostBindings
   ..register('fetchData', (String url) async => await http.get(Uri.parse(url)));
 
-// 解释器执行的脚本（编译前的源码）
+// 解释器执行的 dartic 代码（编译前的源码）
 // var result = fetchData("https://api.example.com/data");
 // var items = result.body.split(",");
 // items.where((item) => item.length > 3);
@@ -772,7 +772,7 @@ Future<Object?> executeAsync(Uint32List code) async {
       }
       continue; // 恢复执行
     }
-    return result; // 脚本执行完毕
+    return result; // dartic 执行完毕
   }
 }
 ```

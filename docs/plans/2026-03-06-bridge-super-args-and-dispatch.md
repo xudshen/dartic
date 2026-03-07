@@ -602,7 +602,7 @@ git commit -m "feat(bridge): CALL_HOST Bridge intercept via DarticDispatch"
 fvm dart test test/bridge/bridge_extends_host_test.dart -r compact --name "throw and catch as Error"
 ```
 
-Expected: PASS — `e.toString()` 返回脚本的 `'AppError(E001)'`
+Expected: PASS — `e.toString()` 返回 dartic 的 `'AppError(E001)'`
 
 **Step 3: 运行全量 bridge 测试确认无回归**
 

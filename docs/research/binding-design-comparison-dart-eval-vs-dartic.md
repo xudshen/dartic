@@ -129,17 +129,17 @@ class $Error$bridge extends Error implements DarticObjectHolder {
 
 **现状**：`WRAP_BRIDGE` 传给 `BridgeFactory` 的 `superArgs` 是 `const []`，导致带参数的 super 构造函数（如 `StateError(String message)`）无法正常工作。
 
-**影响**：所有 `extends` 带必需参数的 host 类的脚本类都会崩溃。
+**影响**：所有 `extends` 带必需参数的 host 类的 dartic 类都会崩溃。
 
 **对比**：dart_eval 通过 `PushBridgeSuperShim` 字节码正确收集和转发 super 参数。
 
 **状态**：已有设计方案 (`docs/plans/2026-03-06-bridge-super-args-and-dispatch-design.md`)，需实现 `STORE_SUPER_ARGS` 阶段。
 
-### 问题 2：CALL_HOST 不经过 Bridge 的脚本覆写（严重）
+### 问题 2：CALL_HOST 不经过 Bridge 的 dartic 覆写（严重）
 
 **现状**：当 VM 代码调用 Bridge 实例的方法（静态类型已知），`CALL_HOST` 不检查 `DarticDispatch`，直接调 host 实现。
 
-**影响**：`catch (e) { print(e.toString()); }` 中脚本覆写的 `toString()` 不会被调用，破坏了多态性。
+**影响**：`catch (e) { print(e.toString()); }` 中 dartic 覆写的 `toString()` 不会被调用，破坏了多态性。
 
 **对比**：dart_eval 通过 `$_invoke` 在每个 override 方法中强制经过 eval VM 分发，不存在这个问题。dartic 的 Bridge 类 override 方法本身也会路由到 `DarticDispatch`——但问题出在 CALL_HOST 字节码绕过了 Bridge 的虚分发路径。
 
@@ -163,7 +163,7 @@ class $Error$bridge extends Error implements DarticObjectHolder {
 
 ### 问题 5：Dartic 异常无法被 host 按类型捕获（低）
 
-**现状**：脚本 `throw MyException()` -> VM 收到 `DarticProxy`，`on MyException` 不匹配。
+**现状**：dartic `throw MyException()` -> VM 收到 `DarticProxy`，`on MyException` 不匹配。
 
 **对比**：dart_eval 通过 `$Value` 统一表示也面临类似问题，但 eval 端有完整类型系统可在内部做类型匹配。
 

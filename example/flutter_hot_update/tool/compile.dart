@@ -1,8 +1,8 @@
-// Compile tool — compiles a Dart script to .darb bytecode.
+// Compile tool — compiles dartic source to .darb bytecode.
 //
 // Usage:
 //   cd example/flutter_hot_update
-//   fvm dart run tool/compile_script.dart scripts/home_screen.dart
+//   fvm dart run tool/compile.dart dartic_src/home_screen.dart
 //
 // Output: assets/home_screen.darb
 //
@@ -22,23 +22,23 @@ import 'package:kernel/binary/ast_from_binary.dart';
 
 Future<void> main(List<String> args) async {
   if (args.isEmpty) {
-    print('Usage: dart run tool/compile_script.dart <script.dart> [output.darb]');
+    print('Usage: dart run tool/compile.dart <source.dart> [output.darb]');
     exit(1);
   }
 
-  final scriptPath = args[0];
-  final scriptFile = File(scriptPath);
-  if (!scriptFile.existsSync()) {
-    print('Error: Script file not found: $scriptPath');
+  final sourcePath = args[0];
+  final sourceFile = File(sourcePath);
+  if (!sourceFile.existsSync()) {
+    print('Error: Dartic source file not found: $sourcePath');
     exit(1);
   }
 
   // Determine output path.
   final outputPath = args.length > 1
       ? args[1]
-      : 'assets/${_baseName(scriptPath).replaceAll('.dart', '.darb')}';
+      : 'assets/${_baseName(sourcePath).replaceAll('.dart', '.darb')}';
 
-  print('Compiling $scriptPath → $outputPath');
+  print('Compiling $sourcePath → $outputPath');
 
   // ── Stage 1: Dart → .dill via Flutter frontend server ──────────────
   //
@@ -67,7 +67,7 @@ Future<void> main(List<String> args) async {
     '--target=flutter',
     if (packageConfig != null) '--packages=$packageConfig',
     '--output-dill=$tempDill',
-    scriptFile.absolute.path,
+    sourceFile.absolute.path,
   ]);
 
   // The frontend server outputs a result token, not a standard exit code.
@@ -87,7 +87,7 @@ Future<void> main(List<String> args) async {
 
   // Mark ALL packages from package_config.json as host packages.
   // The Flutter .dill includes all transitive dependencies, but the
-  // DarticCompiler should only compile the user's script — everything
+  // DarticCompiler should only compile the user's dartic source — everything
   // else is host code available in the Flutter runtime.
   final hostPackages = <String>{'flutter'};
   if (packageConfig != null) {

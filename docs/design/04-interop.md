@@ -201,7 +201,7 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 | `get(self, property)` | 同 invoke 流程，以空参数列表调用 getter |
 | `set(self, property, value)` | 将属性名转换为 `'$name='` 格式（与 `SET_FIELD_DYN` 的 setter 命名约定一致），查找并调用 setter 方法 |
 
-**`notOverridden` 哨兵**：使用 typed sentinel 模式——私有类 `_NotOverridden` 的 `const` 实例，通过公开的 `notOverridden` 常量暴露。比 Symbol 更安全：类型系统保证外部代码无法构造等价值。Bridge 生成代码通过 `identical(result, notOverridden)` 判断脚本是否重写了该方法——若未重写则回退到 `super.method()` 调用。
+**`notOverridden` 哨兵**：使用 typed sentinel 模式——私有类 `_NotOverridden` 的 `const` 实例，通过公开的 `notOverridden` 常量暴露。比 Symbol 更安全：类型系统保证外部代码无法构造等价值。Bridge 生成代码通过 `identical(result, notOverridden)` 判断 dartic 是否重写了该方法——若未重写则回退到 `super.method()` 调用。
 
 **两阶段 Bridge 创建**：Bridge 创建分为两个阶段，通过 `NEW_INSTANCE` + `WRAP_BRIDGE` 两条指令协作完成：
 
@@ -211,7 +211,7 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 
 此设计确保 super 构造参数在 Bridge 创建前已求值，支持任意宿主类构造函数签名（位置参数、命名参数、可选参数）。
 
-**CALL_HOST Bridge 拦截**：当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)` 中的 `e`），方法调用编译为 `CALL_HOST`。CALL_HOST handler 在调用宿主绑定之前检查接收者是否为 `DarticObjectHolder`，若是则优先通过 `DarticDispatch` 路由脚本覆盖，`notOverridden` 时降级到宿主绑定。此拦截依赖 `BindingEntry.methodName` 字段区分实例方法和静态方法/构造函数。
+**CALL_HOST Bridge 拦截**：当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)` 中的 `e`），方法调用编译为 `CALL_HOST`。CALL_HOST handler 在调用宿主绑定之前检查接收者是否为 `DarticObjectHolder`，若是则优先通过 `DarticDispatch` 路由 dartic 覆盖，`notOverridden` 时降级到宿主绑定。此拦截依赖 `BindingEntry.methodName` 字段区分实例方法和静态方法/构造函数。
 
 ### Bridge 运行时集成
 
@@ -227,7 +227,7 @@ abstract interface class DarticObjectHolder {
 }
 ```
 
-该接口是 Bridge 与解释器之间的契约——解释器不需要知道具体的 Bridge 类型，只需通过 `is DarticObjectHolder` 检查即可提取脚本对象。
+该接口是 Bridge 与解释器之间的契约——解释器不需要知道具体的 Bridge 类型，只需通过 `is DarticObjectHolder` 检查即可提取 dartic 对象。
 
 #### DarticDispatch API（双参数设计）
 
@@ -252,7 +252,7 @@ CALL_VIRTUAL 指令对接收者执行三路分发：
 
 | 接收者类型 | 分发路径 |
 |-----------|---------|
-| DarticObject | 直接从 DarticClassInfo.methods 查找脚本方法 → 执行 |
+| DarticObject | 直接从 DarticClassInfo.methods 查找 dartic 方法 → 执行 |
 | DarticObjectHolder（Bridge） | 提取 $darticObject → 从 DarticClassInfo.methods 查找 → 将 Bridge 实例作为 this 传入方法帧 |
 | 宿主对象 | 走 HostClassRegistry 动态分发 |
 
@@ -268,8 +268,8 @@ DarticClassInfo 新增两个字段用于 Engine BridgeFactory 解析：
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| hostSuperClassName | String? | 脚本类 extends 的宿主类名（如 `'dart:core::_Enum'`） |
-| hostInterfaceNames | List\<String\>? | 脚本类 implements 的宿主接口名列表 |
+| hostSuperClassName | String? | dartic 类 extends 的宿主类名（如 `'dart:core::_Enum'`） |
+| hostInterfaceNames | List\<String\>? | dartic 类 implements 的宿主接口名列表 |
 
 编译器在编译类声明时检测 superclass 和 interfaces 是否为 platform 类（非用户定义），若是则记录到对应字段。
 
@@ -281,7 +281,7 @@ Engine 加载模块时，对每个 DarticClassInfo 按以下优先级匹配 Brid
 2. **hostSuperClassName**：按宿主超类名查找（如 enum 类匹配 `_Enum` 的 factory）
 3. **hostInterfaceNames**：遍历宿主接口名列表，首个命中即停止
 
-此三级解析链使 BridgeFactory 注册无需知道脚本类名——只需注册宿主类型名即可自动匹配所有继承/实现该类型的脚本类。
+此三级解析链使 BridgeFactory 注册无需知道 dartic 类名——只需注册宿主类型名即可自动匹配所有继承/实现该类型的 dartic 类。
 
 ### BridgeGenerator（编译期代码生成器）
 
@@ -374,7 +374,7 @@ WRAP_BRIDGE objReg, classId         // 阶段 2：创建 Bridge，替换 objReg
 
 **阶段 2 — WRAP_BRIDGE**：
 5. 以 `classId` 查找 Bridge 工厂（`BridgeFactoryRegistry.lookupByClassId`）
-6. 若工厂不存在（纯脚本类），DarticObject 保持不变
+6. 若工厂不存在（纯 dartic 类），DarticObject 保持不变
 7. 若工厂存在，创建 Bridge 实例：`factory(dispatch, darticObject, pendingSuperArgs ?? const [])`
 8. Bridge 构造函数在初始化列表中调用 `super(superArgs[0], superArgs[1], ...)`——此时 super 参数已经求值完毕
 9. **引用栈中的 DarticObject 被替换为 Bridge 实例**，使 VM 侧 `is` 类型检查成立

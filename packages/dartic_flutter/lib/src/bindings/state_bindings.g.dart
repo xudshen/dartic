@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Bridge class that allows dartic scripts to extend State.
+/// Bridge class that allows dartic code to extend State.
 ///
 /// Lifecycle method delegation uses wrapped delegation pattern:
 /// - `build()` — required override: throws if not overridden
@@ -38,7 +38,7 @@ class _$State extends State<StatefulWidget> implements DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, 'build', [context]);
     if (identical(r, notOverridden)) {
       throw FlutterError(
-          'State.build() must be overridden in dartic script');
+          'State.build() must be overridden in dartic code');
     }
     return r as Widget;
   }

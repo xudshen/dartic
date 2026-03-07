@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// To regenerate the fixture:
 ///   cd example/flutter_hot_update
-///   fvm dart run tool/compile_script.dart \
+///   fvm dart run tool/compile.dart \
 ///     ../../packages/dartic_flutter/test/fixtures/simple_widget.dart \
 ///     ../../packages/dartic_flutter/test/fixtures/simple_widget.darb
 void main() {

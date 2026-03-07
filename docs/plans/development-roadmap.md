@@ -730,7 +730,7 @@ int main() => add(1, 2); // => 3
 
 **设计章节：** [`docs/plans/2026-02-20-bridge-api-design.md`](2026-02-20-bridge-api-design.md)（公开 API 设计）
 
-**里程碑：** 宿主应用可通过 `DarticEngine` 3 行代码加载并执行 .darb 脚本，engine.call() 支持重入，registerClass 一次性注册类的绑定/分发/Bridge，@DarticExport 注解自动生成 Bridge，Flutter 热更新 demo 端到端运行
+**里程碑：** 宿主应用可通过 `DarticEngine` 3 行代码加载并执行 .darb 字节码，engine.call() 支持重入，registerClass 一次性注册类的绑定/分发/Bridge，@DarticExport 注解自动生成 Bridge，Flutter 热更新 demo 端到端运行
 
 **依赖：** Phase 5（内部 Bridge 基础设施）、Phase 6 Batch 6.1（async/await，生产环境必需）、Phase 6 Batch 6.4（沙箱，DarticConfig.maxTotalFuel）
 
@@ -741,7 +741,7 @@ int main() => add(1, 2); // => 3
 - [ ] 7.1.3 DarticModule 导出表 — 编译器为顶层函数生成 `exportedFunctions: Map<String, int>`（名称→funcId）；.darb 序列化新增导出表段；DarticInterpreter 新增 `executeFunction(module, funcId, args)` → 扩展 `lib/src/compiler/compiler.dart`, `lib/src/bytecode/module.dart`, `lib/src/runtime/interpreter.dart`
 - [ ] 7.1.4 错误模型 — CallDepthExceededError 从通用 DarticError 提升为独立子类；DarticLoadError（字节码加载/校验/绑定解析失败）；DarticInternalError（解释器实现 bug） → `lib/src/api/errors.dart`
 - [ ] 7.1.5 DarticEngine / DarticConfig / DarticPlugin 接口 — DarticEngine 封装 DarticInterpreter + 所有注册表，状态机 `created → loaded → disposed`；DarticConfig 映射 fuelBudget/maxTotalFuel/executionTimeout/maxCallDepth/onPrint/onUnhandledException；DarticPlugin（name getter + register 方法） → `lib/src/api/engine.dart`, `lib/src/api/config.dart`, `lib/src/api/plugin.dart`
-- [ ] 7.1.6 engine.call() 端到端管线 — loadBytecode 加载验证 + 绑定解析；call() 按名查导出表 + 区分顶层调用(executeFunction)/重入调用(_runNestedDispatch)；registerClass 协调三注册表（HostBindingRegistry 绑定 + HostClassRegistry 动态分发 + BridgeFactoryRegistry 工厂）；registerBinding 注册顶层函数；onPrint 映射到 CoreBindings.registerAll(printFn:)；onUnhandledException 仅处理脚本未捕获异常（资源错误始终传播） → 集成测试
+- [ ] 7.1.6 engine.call() 端到端管线 — loadBytecode 加载验证 + 绑定解析；call() 按名查导出表 + 区分顶层调用(executeFunction)/重入调用(_runNestedDispatch)；registerClass 协调三注册表（HostBindingRegistry 绑定 + HostClassRegistry 动态分发 + BridgeFactoryRegistry 工厂）；registerBinding 注册顶层函数；onPrint 映射到 CoreBindings.registerAll(printFn:)；onUnhandledException 仅处理 dartic 未捕获异常（资源错误始终传播） → 集成测试
 
 **commit:** `feat(api): add DarticEngine public embedding API with internal refactoring`
 
@@ -775,7 +775,7 @@ int main() => add(1, 2); // => 3
 
 ### Phase 7 里程碑验证
 
-- [ ] DarticEngine 3 行代码可加载执行 .darb 脚本
+- [ ] DarticEngine 3 行代码可加载执行 .darb 字节码
 - [ ] engine.call() 支持重入（宿主回调内再次调用 engine.call()）
 - [ ] registerClass 一次性注册类的绑定/分发/Bridge（协调三注册表）
 - [ ] @DarticExport 生成的 Bridge 与 Phase 5 手写 Bridge 功能等价

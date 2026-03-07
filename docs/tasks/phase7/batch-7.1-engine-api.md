@@ -2,7 +2,7 @@
 
 ## 概览
 
-在现有内部组件（DarticInterpreter、HostBindingRegistry、HostClassRegistry、DarticProxyManager）之上，封装面向宿主开发者的统一公开 API——DarticEngine。同时重构内部基础设施以支持用户自定义宿主类注册、按名调用脚本函数、Bridge 工厂管理。
+在现有内部组件（DarticInterpreter、HostBindingRegistry、HostClassRegistry、DarticProxyManager）之上，封装面向宿主开发者的统一公开 API——DarticEngine。同时重构内部基础设施以支持用户自定义宿主类注册、按名调用 dartic 函数、Bridge 工厂管理。
 
 核心变更：① HostClassRegistry 重构为 runtimeType 精确匹配 + is-chain fallback + 缓存，支持动态注册用户宿主类，生命周期改为 DarticEngine 持有；② 新增 BridgeFactoryRegistry（className → BridgeFactory）和 DarticDispatch（invoke/get/set 三方法分发 + notOverridden 哨兵）；③ DarticModule 新增导出表（name → funcId）并扩展 .darb 序列化格式；④ DarticInterpreter 新增 executeFunction() 方法并接受外部传入的 HostClassRegistry；⑤ 封装 DarticEngine / DarticConfig / DarticPlugin 公开 API；⑥ engine.call() 端到端管线集成。
 
@@ -62,8 +62,8 @@
 
 1. **读设计文档** — API 设计文档 "BridgeFactory" 节和 "DarticDispatch" 节，Ch4 "Bridge 实例创建流程"节：
    - BridgeFactoryRegistry：className → BridgeFactory 映射表。签名 `(DarticDispatch, DarticObject, List<Object?> superArgs) → Object`
-   - DarticDispatch：invoke/get/set 三个分发方法，将虚方法/属性调用路由回解释器。脚本未 override → 返回 `#_notOverridden` 哨兵
-   - `#_notOverridden` 是 dartic 包内的私有 Symbol，脚本代码无法构造，`identical()` 比较无误报
+   - DarticDispatch：invoke/get/set 三个分发方法，将虚方法/属性调用路由回解释器。dartic 未 override → 返回 `#_notOverridden` 哨兵
+   - `#_notOverridden` 是 dartic 包内的私有 Symbol，dartic 代码无法构造，`identical()` 比较无误报
    - NEW_INSTANCE 创建 DarticObject 后，以 classId 查找 BridgeFactoryRegistry，命中则调用 factory 创建 Bridge 实例
 
 2. **写测试** —
@@ -224,7 +224,7 @@
 1. **读设计文档** — API 设计文档 "engine.call() 实现策略"节、"重入调用"节、"错误模型 - 传播规则"节：
    - call(name, args) 流程：查导出表 → 取 funcId → 区分顶层/重入 → 执行 → async 返回 Future，sync 返回值
    - 查找失败 → 抛 ArgumentError
-   - onUnhandledException 仅处理脚本未捕获异常；资源错误（fuel/timeout/callDepth）始终传播到宿主（绕过 onUnhandledException）
+   - onUnhandledException 仅处理dartic 未捕获异常；资源错误（fuel/timeout/callDepth）始终传播到宿主（绕过 onUnhandledException）
    - 重入：宿主回调内可再次 call()，走 _runNestedDispatch 路径
 
 2. **写测试** —
@@ -232,18 +232,18 @@
    - **多次调用**：同一 engine 多次 call('main') → 均正常
    - **未知函数**：call('nonExistent') → 抛 ArgumentError
    - **async 函数返回 Future**：编译 `Future<int> f() async => 42;` → call('f') → 返回 Future<int> → await 得 42
-   - **onUnhandledException 处理**：脚本 throw 'boom' 未捕获 → onUnhandledException 被调用 → call() 返回 null
+   - **onUnhandledException 处理**：dartic throw 'boom' 未捕获 → onUnhandledException 被调用 → call() 返回 null
    - **资源错误绕过 onUnhandledException**：maxTotalFuel 超限 → onUnhandledException 不被调用 → FuelExhaustedError 直接传播
-   - **重入调用**：注册宿主函数 `hostCall(DarticEngine engine)` 内部调用 `engine.call('helper')` → 脚本调用 hostCall → helper 被正确执行
-   - **onPrint 集成**：编译含 `print('hello')` 的脚本 → DarticConfig(onPrint: ...) → 验证 onPrint 被调用且参数正确
-   - **registerClass 三注册表协调**：注册一个自定义类（test + methods + bridgeFactory）→ 编译使用该类的脚本 → 三种路径（CALL_HOST / GET_FIELD_DYN / NEW_INSTANCE）均正确
+   - **重入调用**：注册宿主函数 `hostCall(DarticEngine engine)` 内部调用 `engine.call('helper')` → dartic 调用 hostCall → helper 被正确执行
+   - **onPrint 集成**：编译含 `print('hello')` 的 dartic 代码 → DarticConfig(onPrint: ...) → 验证 onPrint 被调用且参数正确
+   - **registerClass 三注册表协调**：注册一个自定义类（test + methods + bridgeFactory）→ 编译使用该类的 dartic 代码 → 三种路径（CALL_HOST / GET_FIELD_DYN / NEW_INSTANCE）均正确
 
 3. **实现** —
    - **call()**：
      - 检查状态 == loaded
      - 在 `_module.exportedFunctions` 中查找 name → funcId（未找到抛 ArgumentError）
      - 调用 `_interpreter.executeFunction(_module, funcId, args ?? [])`
-     - 捕获脚本异常：若 onUnhandledException 非 null → 调用 onUnhandledException → 返回 null；否则 rethrow
+     - 捕获 dartic 异常：若 onUnhandledException 非 null → 调用 onUnhandledException → 返回 null；否则 rethrow
      - 资源错误（DarticError 子类 FuelExhaustedError/ExecutionTimeoutError/CallDepthExceededError）始终 rethrow（不走 onUnhandledException）
    - **registerClass()**：协调三注册表——遍历 methods 调用 HostBindingRegistry.register → 调用 HostClassRegistry.register(test, [name]) → 若 bridgeFactory 非 null 则 BridgeFactoryRegistry.register
    - **registerBinding()**：委托 HostBindingRegistry.register
@@ -268,7 +268,7 @@ feat(api): add DarticEngine public embedding API with internal refactoring
 ## 核心发现
 
 - **paramKinds/returnKind 序列化缺失**：.darb 序列化器未持久化 `DarticFuncProto.paramKinds` 和 `returnKind` 字段，导致 DarticEngine 通过序列化路径加载的模块丢失参数和返回值的栈类型信息（所有参数错误地路由到 ref 栈，value 栈参数读取为 0）。在 Task 7.1.6 中修复，在 `_writeFunction` / `_readFunction` 末尾新增 paramKinds（1 字节标志 + N 字节数据）和 returnKind（1 字节）
-- **onUnhandledException 与 DarticError 分流**：`call()` 的 try-catch 链用 `on DarticError { rethrow; }` 保证资源错误（FuelExhaustedError/CallDepthExceededError/ExecutionTimeoutError）始终绕过 onUnhandledException 传播到宿主。脚本异常走通用 `catch (e, st)` 路径交给 onUnhandledException
+- **onUnhandledException 与 DarticError 分流**：`call()` 的 try-catch 链用 `on DarticError { rethrow; }` 保证资源错误（FuelExhaustedError/CallDepthExceededError/ExecutionTimeoutError）始终绕过 onUnhandledException 传播到宿主。dartic 异常走通用 `catch (e, st)` 路径交给 onUnhandledException
 - **重入测试策略**：由于编译器只对 `dart:` 库生成 CALL_HOST，无法轻松注册自定义宿主函数让编译器识别。采用 `onPrint` 回调作为重入触发点——print() 是 CALL_HOST，onPrint 在宿主回调中调用 engine.call() 触发 `_isExecuting` 重入路径。支持多层嵌套重入
 - **InterfaceTypeTemplate 序列化限制**：async 函数在常量池中产生 `InterfaceTypeTemplate` 类型的 ref 常量，当前序列化器仅支持 null 和 String ref 类型，导致含 async 函数的模块无法通过 .darb 往返。async 函数的 engine.call() 测试需等待常量池序列化扩展
 - **注册顺序无关化（post-7.1 补丁）**：`register()` 新增 `{Type? exactType}` 可选参数，注册时直接写入 `_exactMap`。解决多 Plugin 跨模块注册时无法保证 "先超类后子类" 顺序的问题。与业界 7 个 VM/运行时对齐（Dart VM CID / JVM klass / V8 Hidden Class / CPython ob_type / Lua metatable / Wren class / Truffle @ExportLibrary），核心共识：精确类型标识做分发，不用谓词匹配。同步更新 `DarticEngine.registerClass()` 增加 `Type? type` 参数透传，codegen 生成 `type: ClassName` 参数

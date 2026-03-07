@@ -9,15 +9,15 @@ void main() {
   runApp(const DarticHotUpdateApp());
 }
 
-/// Host Flutter application that loads and renders dartic scripts.
+/// Host Flutter application that loads and renders dartic code.
 ///
 /// The flow:
 /// 1. Load pre-compiled .darb bytecode from assets
 /// 2. Create DarticEngine with DarticFlutterPlugin
-/// 3. Call the script's `createHomeScreen()` entry point
+/// 3. Call the dartic `createHomeScreen()` entry point
 /// 4. Use the returned Widget directly in the widget tree
 ///
-/// To update the UI, re-compile the script and replace the .darb asset.
+/// To update the UI, re-compile the dartic source and replace the .darb asset.
 class DarticHotUpdateApp extends StatefulWidget {
   const DarticHotUpdateApp({super.key});
 
@@ -27,16 +27,16 @@ class DarticHotUpdateApp extends StatefulWidget {
 
 class _DarticHotUpdateAppState extends State<DarticHotUpdateApp> {
   DarticEngine? _engine;
-  Widget? _scriptWidget;
+  Widget? _darticWidget;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    _loadScript();
+    _loadDarticCode();
   }
 
-  Future<void> _loadScript() async {
+  Future<void> _loadDarticCode() async {
     try {
       // Load .darb bytecode from assets.
       final ByteData data = await rootBundle.load('assets/home_screen.darb');
@@ -57,11 +57,11 @@ class _DarticHotUpdateAppState extends State<DarticHotUpdateApp> {
 
       setState(() {
         _engine = engine;
-        _scriptWidget = widget;
+        _darticWidget = widget;
       });
     } catch (e, st) {
       setState(() {
-        _error = 'Failed to load script:\n$e\n$st';
+        _error = 'Failed to load dartic code:\n$e\n$st';
       });
     }
   }
@@ -92,13 +92,13 @@ class _DarticHotUpdateAppState extends State<DarticHotUpdateApp> {
       );
     }
 
-    if (_scriptWidget == null) {
+    if (_darticWidget == null) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    // The script widget IS a real StatelessWidget — it can be used directly.
-    return _scriptWidget!;
+    // The dartic widget IS a real StatelessWidget — it can be used directly.
+    return _darticWidget!;
   }
 }

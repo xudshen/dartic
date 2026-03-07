@@ -1,14 +1,14 @@
-// Dartic script — compiled to .darb bytecode and loaded at runtime.
+// Dartic source — compiled to .darb bytecode and loaded at runtime.
 //
 // This file is NOT part of the Flutter app's build — it is compiled
-// separately using the compile tool (tool/compile_script.dart) and
+// separately using the compile tool (tool/compile.dart) and
 // loaded as a .darb asset.
 //
 // To update: edit this file → re-compile → replace assets/home_screen.darb
 
 import 'package:flutter/material.dart';
 
-/// Script-defined widget that extends the host's StatelessWidget.
+/// Dartic-defined widget that extends the host's StatelessWidget.
 ///
 /// Through the Bridge pattern, this creates a real StatelessWidget instance
 /// that passes `is StatelessWidget` checks and participates in the
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                print('Button pressed in dartic script!');
+                print('Button pressed in dartic code!');
               },
               child: Text('Press Me'),
             ),

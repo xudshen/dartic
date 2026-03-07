@@ -573,7 +573,7 @@ git commit -m "feat(bridge): integrate BridgeFactoryRegistry into NEW_INSTANCE o
 
 **Step 1: 写测试**
 
-验证 Bridge 实例的 DarticRuntime 能正确分发脚本方法：
+验证 Bridge 实例的 DarticRuntime 能正确分发 dartic 方法：
 
 ```dart
 test('BridgeDispatch routes method calls back to interpreter', () async {

@@ -69,7 +69,7 @@ class PluginContext {
   /// 2. **HostClassRegistry** — 注册动态分派入口，使 interpreter
   ///    能在 `dynamic` 调用时路由到正确的方法。
   /// 3. **BridgeFactoryRegistry** — 若提供 [bridgeFactory]，注册
-  ///    Bridge 工厂（用于脚本 extends 宿主类）。
+  ///    Bridge 工厂（用于 dartic extends 宿主类）。
   ///
   /// 参数（按语义分组）：
   ///

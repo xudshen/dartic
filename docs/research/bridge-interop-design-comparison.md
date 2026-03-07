@@ -50,7 +50,7 @@
 | GraalVM | 查 JS delegate 是否有该 property | Property get |
 | **dartic** | 返回 `notOverridden` (typed sentinel) | `identical()` |
 
-**dartic 评估**: ✅ 最优方案之一。Typed sentinel (`_NotOverridden` 私有类) 不可被脚本代码构造，`identical()` 是 O(1) 指针比较。JRuby 的 null-check 有误判风险（Ruby 方法可合法返回 nil）。
+**dartic 评估**: ✅ 最优方案之一。Typed sentinel (`_NotOverridden` 私有类) 不可被 dartic 代码构造，`identical()` 是 O(1) 指针比较。JRuby 的 null-check 有误判风险（Ruby 方法可合法返回 nil）。
 
 ### 3. `this` 绑定
 

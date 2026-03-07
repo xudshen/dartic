@@ -119,8 +119,8 @@
 **产出文件：**
 - `example/flutter_hot_update/pubspec.yaml`
 - `example/flutter_hot_update/lib/main.dart`（宿主 Flutter 应用）
-- `example/flutter_hot_update/scripts/home_screen.dart`（dartic 端 Dart 源码）
-- `example/flutter_hot_update/tool/compile_script.dart`（编译 dartic 源码为 .darb）
+- `example/flutter_hot_update/dartic_src/home_screen.dart`（dartic 端 Dart 源码）
+- `example/flutter_hot_update/tool/compile.dart`（编译 dartic 源码为 .darb）
 - `example/flutter_hot_update/README.md`
 
 **实现要点：**

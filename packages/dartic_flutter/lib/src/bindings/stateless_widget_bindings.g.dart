@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Bridge class that allows dartic scripts to extend StatelessWidget.
+/// Bridge class that allows dartic code to extend StatelessWidget.
 ///
 /// Widget marks `hashCode` and `==` as `@nonVirtual`, so this Bridge
 /// cannot override them (unlike standard dart:core Bridge classes).
@@ -31,7 +31,7 @@ class _$StatelessWidget extends StatelessWidget implements DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, 'build', [context]);
     if (identical(r, notOverridden)) {
       throw FlutterError(
-          'StatelessWidget.build() must be overridden in dartic script');
+          'StatelessWidget.build() must be overridden in dartic code');
     }
     return r as Widget;
   }

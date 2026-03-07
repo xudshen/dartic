@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// Bridge class that allows dartic scripts to extend StatefulWidget.
+/// Bridge class that allows dartic code to extend StatefulWidget.
 class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
   _$StatefulWidget(this._dispatch, this.$darticObject, List<Object?> superArgs)
       : super(key: superArgs.isNotEmpty ? superArgs[0] as Key? : null);
@@ -28,7 +28,7 @@ class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, 'createState', const []);
     if (identical(r, notOverridden)) {
       throw FlutterError(
-          'StatefulWidget.createState() must be overridden in dartic script');
+          'StatefulWidget.createState() must be overridden in dartic code');
     }
     return r as State;
   }
