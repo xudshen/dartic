@@ -543,8 +543,10 @@ class DarticVerifier {
         _checkVal(a, vrc, 'A', prefix, pc, op);
         _checkVal(b, vrc, 'B', prefix, pc, op);
 
-      // Format AB: value-to-value (A=val, B=val)
+      // Format AB: value-to-value (A=val dest, B=val src)
+      // moveVal: A may exceed vrc for outgoing call args (regCount + argIdx).
       case Op.moveVal:
+        _checkVal(b, vrc, 'B', prefix, pc, op);
       case Op.negInt:
       case Op.bitNot:
       case Op.negDbl:
@@ -555,8 +557,8 @@ class DarticVerifier {
         _checkVal(b, vrc, 'B', prefix, pc, op);
 
       // Format AB: ref-to-ref
+      // moveRef: A may exceed rrc for outgoing call args (regCount + argIdx).
       case Op.moveRef:
-        _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // Box: A=ref(result), B=val(source)
@@ -652,11 +654,15 @@ class DarticVerifier {
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
-      // getFieldVal/setFieldVal: A=val, B=ref, C=field offset
+      // getFieldVal: A=val(result), B=ref(object), C=field offset
       case Op.getFieldVal:
-      case Op.setFieldVal:
         _checkVal(a, vrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
+
+      // setFieldVal: A=ref(object), B=val(value), C=field offset
+      case Op.setFieldVal:
+        _checkRef(a, rrc, 'A', prefix, pc, op);
+        _checkVal(b, vrc, 'B', prefix, pc, op);
 
       // instanceOf: A=val(result), B=ref, C=type pool (not register)
       case Op.instanceOf:

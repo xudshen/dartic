@@ -19,9 +19,6 @@ void main() {
   group('End-to-end bytecode → Widget rendering', () {
     testWidgets(
       'loads .darb and renders widget via pumpWidget',
-      // skip: compiler register allocation bug — createWidget() bytecode
-      // declares refRegCount=5 but uses register 7 (host class instantiation)
-      skip: true,
       (tester) async {
         final darbFile = File('test/fixtures/simple_widget.darb');
         expect(darbFile.existsSync(), isTrue,
