@@ -21,6 +21,10 @@ class TypeInfo {
   /// 类是否为 final 或 sealed（不可被继承）。
   final bool isFinal;
 
+  /// Whether the class is an abstract interface class (e.g. Exception).
+  /// Interface Bridges use `implements` instead of `extends`.
+  final bool isInterface;
+
   TypeInfo({
     required this.className,
     required this.libraryUri,
@@ -34,6 +38,7 @@ class TypeInfo {
     required this.superclasses,
     this.isAbstract = false,
     this.isFinal = false,
+    this.isInterface = false,
   });
 
   /// 完整限定名，如 'dart:core::int'。

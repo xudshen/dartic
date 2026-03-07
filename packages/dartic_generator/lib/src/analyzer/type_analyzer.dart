@@ -112,6 +112,14 @@ class TypeAnalyzer {
     final isFinal = cls is ClassElement &&
         (cls.isFinal || cls.isSealed);
 
+    // Check if the class is an interface class (abstract interface class).
+    // Interface Bridges use `implements` instead of `extends`.
+    final isInterface = cls is ClassElement &&
+        cls.isAbstract &&
+        !cls.isSealed &&
+        !cls.isMixinClass &&
+        cls.constructors.every((c) => c.isFactory || c.isSynthetic);
+
     // Separate methods into instance, static, and operators
     final methods = <MethodInfo>[];
     final staticMethods = <MethodInfo>[];
@@ -240,6 +248,7 @@ class TypeAnalyzer {
       superclasses: superclasses,
       isAbstract: isAbstract,
       isFinal: isFinal,
+      isInterface: isInterface,
     );
   }
 
