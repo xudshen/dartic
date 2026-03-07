@@ -171,5 +171,5 @@ feat(flutter): add Flutter widget bridges and hot update demo
 - [x] `flutter analyze` 零警告（Flutter 包）
 - [x] `flutter test` 全部通过（Flutter 包 24 tests + 主包 2976 tests）
 - [ ] demo 端到端运行验证通过（需设备上手动验证）
-- [ ] commit 已提交
-- [ ] overview.md 已更新
+- [x] commit 已提交
+- [x] overview.md 已更新
