@@ -4,18 +4,23 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import '../compiler/type_template.dart';
+import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 import 'format.dart';
 import 'module.dart';
 
 /// Serializes a [DarticModule] to the `.darb` binary format.
 ///
-/// Binary layout:
+/// Binary layout (v2):
 /// - Header (12 bytes): magic (UInt32) + version (UInt32) + CRC32 checksum (UInt32)
 /// - Binding name table: count (UInt16) + entries (symbolName + argCount)
 /// - Constant pool: refs, ints, doubles, names
 /// - Function table: count + each function's metadata, bytecode, tables
 /// - Entry point: funcId (UInt32)
+/// - Export table: count (UInt16) + entries (name + funcId)
+/// - Class table: count (UInt32) + each class's metadata, methods, fields, supertypes
+/// - Global table: globalCount (UInt32) + initializerIds (Int32 each)
+/// - CoreTypeIds: flag (byte) + if present: 6 × UInt32
 ///
 /// All multi-byte values are little-endian.
 ///
@@ -31,6 +36,9 @@ class DarticSerializer {
     _writeFunctionTable(w, module.functions);
     w.writeUint32(module.entryFuncId);
     _writeExportTable(w, module.exportedFunctions);
+    _writeClassTable(w, module.classes);
+    _writeGlobalTable(w, module.globalCount, module.globalInitializerIds);
+    _writeCoreTypeIds(w, module.coreTypeIds);
 
     // Build payload and compute checksum.
     final payload = w.toBytes();
@@ -137,6 +145,105 @@ class DarticSerializer {
     for (final entry in exports.entries) {
       w.writeString(entry.key);
       w.writeUint32(entry.value);
+    }
+  }
+
+  // ── Class Table ──
+
+  void _writeClassTable(_ByteWriter w, List<DarticClassInfo> classes) {
+    w.writeUint32(classes.length);
+    for (final cls in classes) {
+      _writeClassInfo(w, cls);
+    }
+  }
+
+  void _writeClassInfo(_ByteWriter w, DarticClassInfo cls) {
+    w.writeUint32(cls.classId);
+    w.writeString(cls.name);
+    w.writeInt32(cls.superClassId);
+    w.writeUint32(cls.refFieldCount);
+    w.writeUint32(cls.valueFieldCount);
+    w.writeUint32(cls.typeParamCount);
+    w.writeUint32(cls.modifiers);
+
+    // hostSuperClassName: 0=null, 1=present+string
+    if (cls.hostSuperClassName != null) {
+      w.addByte(1);
+      w.writeString(cls.hostSuperClassName!);
+    } else {
+      w.addByte(0);
+    }
+
+    // hostInterfaceNames: 0=null, 1=present+count+strings
+    if (cls.hostInterfaceNames != null) {
+      w.addByte(1);
+      w.writeUint32(cls.hostInterfaceNames!.length);
+      for (final name in cls.hostInterfaceNames!) {
+        w.writeString(name);
+      }
+    } else {
+      w.addByte(0);
+    }
+
+    // methods: Map<int, DarticFuncProto>
+    w.writeUint32(cls.methods.length);
+    for (final entry in cls.methods.entries) {
+      w.writeUint32(entry.key); // nameIndex
+      _writeFunction(w, entry.value);
+    }
+
+    // fields: Map<int, FieldLayout>
+    w.writeUint32(cls.fields.length);
+    for (final entry in cls.fields.entries) {
+      w.writeUint32(entry.key); // nameIndex
+      w.writeUint32(entry.value.offset);
+      w.addByte(entry.value.kind.index);
+    }
+
+    // supertypeIds: Set<int>
+    w.writeUint32(cls.supertypeIds.length);
+    for (final id in cls.supertypeIds) {
+      w.writeUint32(id);
+    }
+
+    // superTypeArgs: Map<int, List<TypeTemplate>>
+    w.writeUint32(cls.superTypeArgs.length);
+    for (final entry in cls.superTypeArgs.entries) {
+      w.writeUint32(entry.key); // classId
+      w.writeUint32(entry.value.length);
+      for (final tmpl in entry.value) {
+        final ints = tmpl.serialize();
+        w.writeUint32(ints.length);
+        for (final v in ints) {
+          w.writeUint32(v);
+        }
+      }
+    }
+  }
+
+  // ── Global Table ──
+
+  void _writeGlobalTable(
+      _ByteWriter w, int globalCount, List<int> initializerIds) {
+    w.writeUint32(globalCount);
+    for (final id in initializerIds) {
+      w.writeInt32(id);
+    }
+  }
+
+  // ── CoreTypeIds ──
+
+  void _writeCoreTypeIds(_ByteWriter w, CoreTypeIds? ids) {
+    if (ids != null) {
+      w.addByte(1);
+      w.writeUint32(ids.intId);
+      w.writeUint32(ids.doubleId);
+      w.writeUint32(ids.stringId);
+      w.writeUint32(ids.boolId);
+      w.writeUint32(ids.objectId);
+      w.writeUint32(ids.numId);
+    } else {
+      w.addByte(0);
     }
   }
 

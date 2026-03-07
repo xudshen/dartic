@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import '../compiler/type_template.dart';
+import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 import 'format.dart';
 import 'module.dart';
@@ -66,12 +67,10 @@ class DarticDeserializer {
     final functions = _readFunctionTable(reader);
     final entryFuncId = reader.readUint32();
 
-    // Export table + paramKinds/returnKind (added in 7.1).
-    // No backward compatibility with pre-7.1 .darb files — the design
-    // constraint is "host engine and bytecode must be built with the same
-    // version." If bytes remain, read the export table; this is always the
-    // case for 7.1+ files since the serializer always writes this section.
     final exportedFunctions = _readExportTable(reader);
+    final classes = _readClassTable(reader);
+    final (globalCount, globalInitializerIds) = _readGlobalTable(reader);
+    final coreTypeIds = _readCoreTypeIds(reader);
 
     return DarticModule(
       functions: functions,
@@ -79,6 +78,10 @@ class DarticDeserializer {
       entryFuncId: entryFuncId,
       bindingNames: bindingNames,
       exportedFunctions: exportedFunctions,
+      classes: classes,
+      globalCount: globalCount,
+      globalInitializerIds: globalInitializerIds,
+      coreTypeIds: coreTypeIds,
     );
   }
 
@@ -184,6 +187,113 @@ class DarticDeserializer {
   List<DarticFuncProto> _readFunctionTable(_ByteReader r) {
     final count = r.readUint32();
     return List.generate(count, (_) => _readFunction(r));
+  }
+
+  // ── Class Table ──
+
+  List<DarticClassInfo> _readClassTable(_ByteReader r) {
+    final count = r.readUint32();
+    return List.generate(count, (_) => _readClassInfo(r));
+  }
+
+  DarticClassInfo _readClassInfo(_ByteReader r) {
+    final classId = r.readUint32();
+    final name = r.readString();
+    final superClassId = r.readInt32();
+    final refFieldCount = r.readUint32();
+    final valueFieldCount = r.readUint32();
+    final typeParamCount = r.readUint32();
+    final modifiers = r.readUint32();
+
+    // hostSuperClassName
+    final hasHostSuper = r.readByte();
+    final hostSuperClassName = hasHostSuper == 1 ? r.readString() : null;
+
+    // hostInterfaceNames
+    final hasHostInterfaces = r.readByte();
+    List<String>? hostInterfaceNames;
+    if (hasHostInterfaces == 1) {
+      final ifaceCount = r.readUint32();
+      hostInterfaceNames =
+          List.generate(ifaceCount, (_) => r.readString());
+    }
+
+    final cls = DarticClassInfo(
+      classId: classId,
+      name: name,
+      superClassId: superClassId,
+      refFieldCount: refFieldCount,
+      valueFieldCount: valueFieldCount,
+      typeParamCount: typeParamCount,
+      modifiers: modifiers,
+      hostSuperClassName: hostSuperClassName,
+      hostInterfaceNames: hostInterfaceNames,
+    );
+
+    // methods
+    final methodCount = r.readUint32();
+    for (var i = 0; i < methodCount; i++) {
+      final nameIndex = r.readUint32();
+      cls.methods[nameIndex] = _readFunction(r);
+    }
+
+    // fields
+    final fieldCount = r.readUint32();
+    for (var i = 0; i < fieldCount; i++) {
+      final nameIndex = r.readUint32();
+      final offset = r.readUint32();
+      final kindIndex = r.readByte();
+      cls.fields[nameIndex] = FieldLayout(
+        offset: offset,
+        kind: StackKind.values[kindIndex],
+      );
+    }
+
+    // supertypeIds
+    final stCount = r.readUint32();
+    for (var i = 0; i < stCount; i++) {
+      cls.supertypeIds.add(r.readUint32());
+    }
+
+    // superTypeArgs
+    final staCount = r.readUint32();
+    for (var i = 0; i < staCount; i++) {
+      final key = r.readUint32();
+      final tmplCount = r.readUint32();
+      final templates = <TypeTemplate>[];
+      for (var j = 0; j < tmplCount; j++) {
+        final intCount = r.readUint32();
+        final ints = List<int>.generate(intCount, (_) => r.readUint32());
+        final (tmpl, _) = TypeTemplate.deserialize(ints, 0);
+        templates.add(tmpl);
+      }
+      cls.superTypeArgs[key] = templates;
+    }
+
+    return cls;
+  }
+
+  // ── Global Table ──
+
+  (int, List<int>) _readGlobalTable(_ByteReader r) {
+    final count = r.readUint32();
+    final ids = List<int>.generate(count, (_) => r.readInt32());
+    return (count, ids);
+  }
+
+  // ── CoreTypeIds ──
+
+  CoreTypeIds? _readCoreTypeIds(_ByteReader r) {
+    final flag = r.readByte();
+    if (flag == 0) return null;
+    return CoreTypeIds(
+      intId: r.readUint32(),
+      doubleId: r.readUint32(),
+      stringId: r.readUint32(),
+      boolId: r.readUint32(),
+      objectId: r.readUint32(),
+      numId: r.readUint32(),
+    );
   }
 
   DarticFuncProto _readFunction(_ByteReader r) {

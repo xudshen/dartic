@@ -14,7 +14,10 @@ abstract final class DarbFormat {
   static const int magic = 0x44415242;
 
   /// Current format version.
-  static const int version = 1;
+  ///
+  /// v1: binding table, constant pool, function table, entryFuncId, export table.
+  /// v2: + class table, global table, coreTypeIds.
+  static const int version = 2;
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;
