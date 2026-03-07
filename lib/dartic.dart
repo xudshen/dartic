@@ -5,13 +5,15 @@
 /// - [DarticConfig] — engine configuration (resource limits, callbacks)
 /// - [DarticPlugin] — plugin interface for registering bindings
 ///
-/// Plus error types for handling runtime failures.
+/// Plus error types for handling runtime failures,
+/// and [discoverHostPackages] for compile-time host library detection.
 library;
 
 export 'src/api/config.dart';
 export 'src/api/engine.dart';
 export 'src/api/plugin.dart';
 export 'src/api/plugin_context.dart';
+export 'src/compiler/host_package_discovery.dart';
 export 'src/bridge/bridge_factory_registry.dart' show BridgeFactory;
 export 'src/bridge/dartic_dispatch.dart'
     show DarticDispatch, InterpreterMethodCallback, notOverridden;

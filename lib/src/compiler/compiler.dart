@@ -37,9 +37,11 @@ enum ResultLoc { value, ref }
 ///
 /// See: docs/design/05-compiler.md
 class DarticCompiler {
-  DarticCompiler(this._component);
+  DarticCompiler(this._component, {Set<String> hostPackages = const {}})
+      : _hostPackages = hostPackages;
 
   final ir.Component _component;
+  final Set<String> _hostPackages;
 
   // ── Global compilation state ──
 
@@ -210,7 +212,7 @@ class DarticCompiler {
   DarticModule compile() {
     // Pass 1a: assign funcIds to all user-defined procedures.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final proc in lib.procedures) {
         _reserveProcFuncId(proc);
       }
@@ -229,7 +231,7 @@ class DarticCompiler {
     // Only non-private, non-getter, non-setter top-level procedures are
     // exported. Class methods and static methods are excluded.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final proc in lib.procedures) {
         if (proc.kind != ir.ProcedureKind.Method) continue; // skip getters/setters
         final name = proc.name.text;
@@ -243,7 +245,7 @@ class DarticCompiler {
 
     // Pass 1b: assign global indices to top-level and static class fields.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final field in lib.fields) {
         _registerGlobalField(field);
       }
@@ -264,7 +266,7 @@ class DarticCompiler {
     // NOTE: Relies on Kernel CFE emitting classes in dependency order within
     // each library (superclasses and interfaces before their subtypes).
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final cls in lib.classes) {
         _registerClass(cls);
       }
@@ -277,7 +279,7 @@ class DarticCompiler {
     // buildSuperTypeEntries uses _typeClassIdLookup (core + user classes) to
     // resolve supertype classIds for both platform and user-defined types.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final cls in lib.classes) {
         final classId = _classToClassId[cls]!;
         final entries = buildSuperTypeEntries(cls, _typeClassIdLookup);
@@ -300,7 +302,7 @@ class DarticCompiler {
 
     // Pass 2a: compile each top-level procedure and static class procedures.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final proc in lib.procedures) {
         _compileProcedure(proc);
       }
@@ -314,7 +316,7 @@ class DarticCompiler {
 
     // Pass 2b: compile global initializers.
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final field in lib.fields) {
         _compileFieldInitializerIfPresent(field);
       }
@@ -328,7 +330,7 @@ class DarticCompiler {
 
     // Pass 2c: compile class members (constructors and instance methods).
     for (final lib in _component.libraries) {
-      if (_isPlatformLibrary(lib)) continue;
+      if (_isHostLibrary(lib)) continue;
       for (final cls in lib.classes) {
         for (final ctor in cls.constructors) {
           _compileConstructor(ctor);
@@ -1150,7 +1152,14 @@ class DarticCompiler {
         _compileGlobalInitializer(field, globalIndex);
   }
 
-  bool _isPlatformLibrary(ir.Library lib) => lib.importUri.isScheme('dart');
+  bool _isHostLibrary(ir.Library lib) {
+    final uri = lib.importUri;
+    if (uri.isScheme('dart')) return true;
+    if (uri.isScheme('package')) {
+      return _hostPackages.contains(uri.pathSegments.first);
+    }
+    return false;
+  }
 
   /// Builds the fully-qualified name for a platform class.
   ///

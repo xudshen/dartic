@@ -159,6 +159,7 @@
 | [7.2](phase7/batch-7.2-codegen.md) | @DarticExport 代码生成 | 5 | ✅ |
 | [7.3](phase7/batch-7.3-plugin-registry-reorg.md) | Plugin 与 Registry 重组 | 8 | ✅ |
 | [7.4](phase7/batch-7.3-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | |
+| — | Host Library Manifest（编译器 hostPackages + dartic.manifest 自动发现） | — | ✅ |
 
 **里程碑：**
 - [x] DarticEngine 3 行代码加载执行 .darb 脚本

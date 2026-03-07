@@ -491,7 +491,7 @@ extension on DarticCompiler {
     final target = expr.targetReference.asMember;
 
     // Platform library static field/getter → CALL_HOST.
-    if (_isPlatformLibrary(target.enclosingLibrary)) {
+    if (_isHostLibrary(target.enclosingLibrary)) {
       return _compileHostStaticGet(target);
     }
 
@@ -577,7 +577,7 @@ extension on DarticCompiler {
     final target = expr.targetReference.asMember;
 
     // Platform library static field/setter → CALL_HOST.
-    if (_isPlatformLibrary(target.enclosingLibrary)) {
+    if (_isHostLibrary(target.enclosingLibrary)) {
       return _compileHostStaticSet(expr, target);
     }
 
@@ -639,7 +639,7 @@ extension on DarticCompiler {
     final target = expr.target;
 
     // Platform library target → CALL_HOST (host function dispatch).
-    if (_isPlatformLibrary(target.enclosingLibrary)) {
+    if (_isHostLibrary(target.enclosingLibrary)) {
       return _compileHostStaticInvocation(expr);
     }
 
@@ -1161,7 +1161,7 @@ extension on DarticCompiler {
     // Exception: enum instances are DarticObjects, not host objects, so
     // calls targeting _Enum methods must go through virtual dispatch.
     if (targetClass != null &&
-        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+        _isHostLibrary(targetClass.enclosingLibrary)) {
       final receiverClass = _resolveReceiverClass(expr.receiver);
       if (receiverClass != null && receiverClass.isEnum &&
           _classToClassId.containsKey(receiverClass)) {
@@ -1380,7 +1380,7 @@ extension on DarticCompiler {
     final cls = target.enclosingClass;
 
     // Platform class constructor → CALL_HOST.
-    if (_isPlatformLibrary(cls.enclosingLibrary)) {
+    if (_isHostLibrary(cls.enclosingLibrary)) {
       return _compileHostConstructorInvocation(expr);
     }
 
@@ -1478,7 +1478,7 @@ extension on DarticCompiler {
       // but the actual receiver is a user-defined enum class. Look up the
       // field in the receiver's class layout instead.
       if (layouts == null && targetClass != null &&
-          _isPlatformLibrary(targetClass.enclosingLibrary)) {
+          _isHostLibrary(targetClass.enclosingLibrary)) {
         final receiverClass = _resolveReceiverClass(expr.receiver);
         if (receiverClass != null) {
           layouts = _instanceFieldLayouts[receiverClass];
@@ -1498,7 +1498,7 @@ extension on DarticCompiler {
 
     // Platform class property → CALL_HOST.
     if (targetClass != null &&
-        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+        _isHostLibrary(targetClass.enclosingLibrary)) {
       return _compileHostGetterCall(expr);
     }
 
@@ -1574,7 +1574,7 @@ extension on DarticCompiler {
 
     // Platform class property set → CALL_HOST.
     if (targetClass != null &&
-        _isPlatformLibrary(targetClass.enclosingLibrary)) {
+        _isHostLibrary(targetClass.enclosingLibrary)) {
       return _compileHostSetterCall(expr);
     }
 
@@ -1886,7 +1886,7 @@ extension on DarticCompiler {
     final cls = constant.classNode;
     final classId = _classToClassId[cls];
     if (classId == null) {
-      if (_isPlatformLibrary(cls.enclosingLibrary)) {
+      if (_isHostLibrary(cls.enclosingLibrary)) {
         return _compilePlatformInstanceConstant(constant);
       }
       throw UnsupportedError(

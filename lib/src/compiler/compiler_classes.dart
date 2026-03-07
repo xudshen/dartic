@@ -30,7 +30,7 @@ extension on DarticCompiler {
     final superClass = cls.superclass;
     if (superClass != null &&
         !_classToClassId.containsKey(superClass) &&
-        !_isPlatformLibrary(superClass.enclosingLibrary)) {
+        !_isHostLibrary(superClass.enclosingLibrary)) {
       _registerClass(superClass);
     }
 
@@ -38,7 +38,7 @@ extension on DarticCompiler {
     for (final implemented in cls.implementedTypes) {
       final implClass = implemented.classNode;
       if (!_classToClassId.containsKey(implClass) &&
-          !_isPlatformLibrary(implClass.enclosingLibrary)) {
+          !_isHostLibrary(implClass.enclosingLibrary)) {
         _registerClass(implClass);
       }
     }
@@ -67,7 +67,7 @@ extension on DarticCompiler {
     // 1. InstanceConstant field values can be set correctly
     // 2. InstanceGet on _Enum.index / _Enum._name resolves to GET_FIELD
     final isEnumClass = cls.isEnum && superClass != null
-        && _isPlatformLibrary(superClass.enclosingLibrary);
+        && _isHostLibrary(superClass.enclosingLibrary);
     // Compute field layout: offsets start after inherited fields.
     var refOffset = inheritedRefFields;
     var valOffset = inheritedValFields;
@@ -155,7 +155,7 @@ extension on DarticCompiler {
     // Detect host superclass (extends platform class).
     String? hostSuperClassName;
     if (superClass != null &&
-        _isPlatformLibrary(superClass.enclosingLibrary)) {
+        _isHostLibrary(superClass.enclosingLibrary)) {
       // Skip Object — all classes implicitly extend Object, no Bridge needed.
       if (superClass.name != 'Object') {
         hostSuperClassName = _hostTypeName(superClass);
@@ -166,7 +166,7 @@ extension on DarticCompiler {
     List<String>? hostInterfaceNames;
     for (final implemented in cls.implementedTypes) {
       final implClass = implemented.classNode;
-      if (_isPlatformLibrary(implClass.enclosingLibrary)) {
+      if (_isHostLibrary(implClass.enclosingLibrary)) {
         (hostInterfaceNames ??= []).add(_hostTypeName(implClass));
       }
     }
