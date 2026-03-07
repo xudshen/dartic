@@ -33,6 +33,7 @@ String emitPluginFile({
   required bool hasTopLevel,
   String? topLevelBindingClassName,
   String? topLevelFileName,
+  List<String>? customImports,
 }) {
   assert(bindingClassNames.length == bindingFileNames.length);
 
@@ -45,9 +46,19 @@ String emitPluginFile({
   buf.writeln('// Generator: dartic_generator');
   buf.writeln();
 
+  // ── Lint suppressions for generated code ────────────────────────────
+  buf.writeln('// ignore_for_file: unused_import, unnecessary_import, implementation_imports');
+  buf.writeln();
+
   // ── Imports ─────────────────────────────────────────────────────────
-  buf.writeln("import '../../api/plugin.dart';");
-  buf.writeln("import '../../api/plugin_context.dart';");
+  if (customImports != null && customImports.isNotEmpty) {
+    for (final imp in customImports) {
+      buf.writeln("import '$imp';");
+    }
+  } else {
+    buf.writeln("import '../../api/plugin.dart';");
+    buf.writeln("import '../../api/plugin_context.dart';");
+  }
 
   for (final fileName in bindingFileNames) {
     buf.writeln("import '../bindings/$fileName';");

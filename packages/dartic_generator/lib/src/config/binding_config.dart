@@ -9,10 +9,18 @@ class GeneratorConfig {
   final String outputPlugins;
   final List<LibraryConfig> libraries;
 
+  /// Custom import lines to use instead of default relative imports.
+  ///
+  /// When non-empty, these replace the hardcoded relative imports
+  /// (e.g. `../../api/plugin_context.dart`). Useful for external packages
+  /// like `dartic_flutter` that need `package:dartic/dartic.dart`.
+  final List<String> customImports;
+
   GeneratorConfig({
     required this.outputBindings,
     required this.outputPlugins,
     required this.libraries,
+    this.customImports = const [],
   });
 }
 
@@ -97,9 +105,20 @@ class OverrideConfig {
   /// 用于定义私有 helper 类等。
   final String? preamble;
 
+  /// When true, the preamble provides a hand-written Bridge class.
+  /// The auto-generated Bridge class is skipped, but bridgeFactory
+  /// registration is still emitted.
+  final bool customBridge;
+
+  /// List of lint rules to suppress via `// ignore_for_file:` in the
+  /// generated file header.
+  final List<String> ignoreForFile;
+
   OverrideConfig({
     this.extraMethods = const {},
     this.extraBindings = const [],
     this.preamble,
+    this.customBridge = false,
+    this.ignoreForFile = const [],
   });
 }

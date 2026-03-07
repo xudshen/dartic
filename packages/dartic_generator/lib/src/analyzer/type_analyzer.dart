@@ -27,12 +27,16 @@ class TypeAnalyzer {
   ///
   /// Uses the Dart SDK from the running VM. A temporary directory is used
   /// as the analysis root so that SDK libraries can be resolved.
-  static Future<TypeAnalyzer> create() async {
-    // Use a temp directory as the analysis root. The analyzer will auto-detect
-    // the Dart SDK from the running VM.
-    final tempDir = Directory.systemTemp.createTempSync('dartic_analyzer_');
+  ///
+  /// When [analysisRoot] is provided, that path is used as the analysis root
+  /// instead of a temp directory. This is useful for resolving Flutter SDK
+  /// types that require a project with Flutter dependencies.
+  static Future<TypeAnalyzer> create({String? analysisRoot}) async {
+    final rootDir = analysisRoot != null
+        ? Directory(Directory(analysisRoot).resolveSymbolicLinksSync())
+        : Directory.systemTemp.createTempSync('dartic_analyzer_');
     final collection = AnalysisContextCollection(
-      includedPaths: [tempDir.path],
+      includedPaths: [rootDir.path],
     );
     final context = collection.contexts.first;
     final session = context.currentSession;
@@ -83,11 +87,15 @@ class TypeAnalyzer {
     return _extractFunctionInfo(func, libraryUri);
   }
 
-  /// Finds a class by name, including private classes across all fragments.
+  /// Finds a class by name, including exported and private classes.
   InterfaceElement? _findClass(LibraryElement library, String className) {
-    // Try public API first
+    // Try public API first (declared in this library)
     final cls = library.getClass(className);
     if (cls != null) return cls;
+
+    // Try exported namespace (for barrel libraries that re-export from src/)
+    final exported = library.exportNamespace.definedNames2[className];
+    if (exported is InterfaceElement) return exported;
 
     // For private classes, search through all library fragments
     for (final fragment in library.fragments) {
@@ -101,7 +109,19 @@ class TypeAnalyzer {
   }
 
   /// Extracts complete [TypeInfo] from an [InterfaceElement].
+  ///
+  /// Uses the class's actual declaration library URI for binding names.
+  /// This correctly handles barrel libraries (e.g. `package:flutter/widgets.dart`)
+  /// where the class is actually defined in a `src/` file — the binding name
+  /// must match what the Kernel compiler emits.
   TypeInfo _extractTypeInfo(InterfaceElement cls, String libraryUri) {
+    // Use the actual declaration URI for correct binding name resolution.
+    // For dart:core, this is dart:core (no change). For barrel exports like
+    // package:flutter/widgets.dart, this resolves to the real src/ path.
+    final actualUri = cls.library.uri.toString();
+    if (actualUri != libraryUri) {
+      libraryUri = actualUri;
+    }
     // Collect the set of Object method names to exclude
     final objectMethodNames = _getObjectMemberNames(cls);
 

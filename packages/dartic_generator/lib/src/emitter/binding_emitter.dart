@@ -25,6 +25,9 @@ String emitBindingFile(
   List<String>? extraBindings,
   String? preamble,
   bool bridge = false,
+  bool customBridge = false,
+  List<String>? ignoreForFile,
+  List<String>? customImports,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -45,7 +48,9 @@ String emitBindingFile(
       !info.className.startsWith('_') &&
       hasGenerativeCtor;
 
-  if (effectiveBridge) {
+  // If customBridge is set, the preamble provides a hand-written Bridge class.
+  // Skip auto-generation but still emit bridgeFactory registration.
+  if (effectiveBridge && !customBridge) {
     _writeBridgeClass(body, info);
     body.writeln();
   }
@@ -60,9 +65,14 @@ String emitBindingFile(
   // Build final output with header + detected imports
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
+  if (ignoreForFile != null && ignoreForFile.isNotEmpty) {
+    buf.writeln('// ignore_for_file: ${ignoreForFile.join(', ')}');
+    buf.writeln();
+  }
   _writeImport(buf,
       additionalImports: _detectRequiredImports(body.toString()),
-      bridge: effectiveBridge);
+      bridge: effectiveBridge,
+      customImports: customImports);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -154,18 +164,27 @@ void _writeHeader(StringBuffer buf, {String? configPath}) {
 }
 
 void _writeImport(StringBuffer buf,
-    {Set<String>? additionalImports, bool bridge = false}) {
-  buf.writeln("import '../../api/plugin_context.dart';");
-  if (bridge) {
-    buf.writeln("import '../dartic_dispatch.dart';");
-    buf.writeln("import '../dartic_object_holder.dart';");
-    buf.writeln("import '../../runtime/object.dart';");
-  }
-  if (additionalImports != null) {
-    for (final imp in additionalImports) {
-      // Skip imports already added by bridge mode
-      if (bridge && imp == '../../runtime/object.dart') continue;
+    {Set<String>? additionalImports,
+    bool bridge = false,
+    List<String>? customImports}) {
+  if (customImports != null && customImports.isNotEmpty) {
+    // Use custom imports instead of default relative imports.
+    for (final imp in customImports) {
       buf.writeln("import '$imp';");
+    }
+  } else {
+    buf.writeln("import '../../api/plugin_context.dart';");
+    if (bridge) {
+      buf.writeln("import '../dartic_dispatch.dart';");
+      buf.writeln("import '../dartic_object_holder.dart';");
+      buf.writeln("import '../../runtime/object.dart';");
+    }
+    if (additionalImports != null) {
+      for (final imp in additionalImports) {
+        // Skip imports already added by bridge mode
+        if (bridge && imp == '../../runtime/object.dart') continue;
+        buf.writeln("import '$imp';");
+      }
     }
   }
 }
@@ -373,15 +392,15 @@ void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
   }
 }
 
-/// Returns per-arity binding keys for a static method.
+/// Returns the max-arity binding key for a static method.
 ///
-/// Unlike [MethodInfo.allBindingKeys] (which only generates per-arity keys
-/// for positional optional params), this also handles named params by
-/// treating them as additional optional params for arity calculation.
+/// The compiler always pads optional/named params to max arity via
+/// `_compileHostArgsWithPadding`, so only the max-arity key is needed.
+/// Emitting sub-arity variants would create dead code and can cause
+/// compile errors when required named params are omitted at lower arities.
 List<String> _allStaticBindingKeys(MethodInfo method) {
-  final required = method.paramTypes.where((p) => !p.isOptional).length;
   final total = method.paramTypes.length;
-  return [for (var i = required; i <= total; i++) '${method.name}#$i'];
+  return ['${method.name}#$total'];
 }
 
 /// Writes static getter registrations as registerBinding calls.

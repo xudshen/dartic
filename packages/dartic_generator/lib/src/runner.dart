@@ -17,6 +17,11 @@ import 'emitter/plugin_emitter.dart' as plugin_emitter;
 
 /// Orchestrates the code generation pipeline.
 class Runner {
+  /// Analysis root directory for type resolution (e.g. Flutter project root).
+  final String? analysisRoot;
+
+  Runner({this.analysisRoot});
+
   /// Runs the pipeline from a single YAML config file.
   Future<void> runConfig(String yamlPath) async {
     final config = parseConfigFile(yamlPath);
@@ -39,7 +44,7 @@ class Runner {
 
   /// Core pipeline: config → analyze → emit → write.
   Future<void> _processConfig(GeneratorConfig config) async {
-    final analyzer = await TypeAnalyzer.create();
+    final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
     try {
       for (final library in config.libraries) {
         await _processLibrary(config, library, analyzer);
@@ -195,6 +200,11 @@ class Runner {
               : null,
           preamble: preamble,
           bridge: classConfig.bridge,
+          customBridge: overrides?.customBridge ?? false,
+          ignoreForFile: _mergeIgnoreForFile(overrides?.ignoreForFile),
+          customImports: config.customImports.isNotEmpty
+              ? config.customImports
+              : null,
         );
 
         final fileName = _classToFileName(className);
@@ -261,10 +271,32 @@ class Runner {
       hasTopLevel: hasTopLevel,
       topLevelBindingClassName: topLevelBindingClassName,
       topLevelFileName: topLevelFileName,
+      customImports: config.customImports.isNotEmpty
+          ? config.customImports
+          : null,
     );
 
     final pluginFileName = '${_libraryShortName(library.uri)}_plugin.g.dart';
     _writeFile(config.outputPlugins, pluginFileName, pluginSource);
+  }
+
+  // ── Lint suppression helpers ──────────────────────────────────────────
+
+  /// Standard lint suppressions for generated code.
+  static const _defaultIgnoreForFile = [
+    'implementation_imports',
+    'unused_import',
+    'unnecessary_import',
+    'unnecessary_cast',
+    'invalid_use_of_protected_member',
+    'deprecated_member_use',
+    'sort_child_properties_last',
+  ];
+
+  /// Merges per-class ignoreForFile with default generated-code suppressions.
+  List<String> _mergeIgnoreForFile(List<String>? perClass) {
+    if (perClass == null || perClass.isEmpty) return _defaultIgnoreForFile;
+    return {..._defaultIgnoreForFile, ...perClass}.toList();
   }
 
   // ── File naming helpers ──────────────────────────────────────────────

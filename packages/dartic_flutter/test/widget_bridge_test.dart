@@ -5,9 +5,9 @@ import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
-import 'package:dartic_flutter/src/bindings/stateless_widget_bindings.dart';
-import 'package:dartic_flutter/src/bindings/stateful_widget_bindings.dart';
-import 'package:dartic_flutter/src/bindings/state_bindings.dart';
+import 'package:dartic_flutter/src/bindings/stateless_widget_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/stateful_widget_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/state_bindings.g.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

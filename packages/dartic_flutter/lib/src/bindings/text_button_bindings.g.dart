@@ -1,0 +1,57 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/runtime/object.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+
+abstract final class TextButtonBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/material/text_button.dart::TextButton',
+      type: TextButton,
+      test: (o) => o is TextButton,
+      methods: methodMap(),
+      superclasses: ['package:flutter/src/material/button_style_button.dart::ButtonStyleButton', 'package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+    );
+    ctx.registerBinding('package:flutter/src/material/text_button.dart::TextButton::styleFrom#29', (args) => TextButton.styleFrom(foregroundColor: args[0] as Color?, backgroundColor: args[1] as Color?, disabledForegroundColor: args[2] as Color?, disabledBackgroundColor: args[3] as Color?, shadowColor: args[4] as Color?, surfaceTintColor: args[5] as Color?, iconColor: args[6] as Color?, iconSize: args[7] as double?, iconAlignment: args[8] as IconAlignment?, disabledIconColor: args[9] as Color?, overlayColor: args[10] as Color?, elevation: args[11] as double?, textStyle: args[12] as TextStyle?, padding: args[13] as EdgeInsetsGeometry?, minimumSize: args[14] as Size?, fixedSize: args[15] as Size?, maximumSize: args[16] as Size?, side: args[17] as BorderSide?, shape: args[18] as OutlinedBorder?, enabledMouseCursor: args[19] as MouseCursor?, disabledMouseCursor: args[20] as MouseCursor?, visualDensity: args[21] as VisualDensity?, tapTargetSize: args[22] as MaterialTapTargetSize?, animationDuration: args[23] as Duration?, enableFeedback: args[24] as bool?, alignment: args[25] as AlignmentGeometry?, splashFactory: args[26] as InteractiveInkFeatureFactory?, backgroundBuilder: args[27] as Widget Function(BuildContext, Set<WidgetState>, Widget?)?, foregroundBuilder: args[28] as Widget Function(BuildContext, Set<WidgetState>, Widget?)?));
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'defaultStyleOf#1': (args) => (args[0] as TextButton).defaultStyleOf(args[1] as BuildContext),
+        'themeStyleOf#1': (args) => (args[0] as TextButton).themeStyleOf(args[1] as BuildContext),
+        'createState#0': (args) => (args[0] as TextButton).createState(),
+        'debugFillProperties#1': (args) { (args[0] as TextButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'createElement#0': (args) => (args[0] as TextButton).createElement(),
+        'toStringShort#0': (args) => (args[0] as TextButton).toStringShort(),
+        'toStringShallow#2': (args) => (args[0] as TextButton).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as TextButton).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as TextButton).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'debugDescribeChildren#0': (args) => (args[0] as TextButton).debugDescribeChildren(),
+        'onPressed#0': (args) => (args[0] as TextButton).onPressed,
+        'onLongPress#0': (args) => (args[0] as TextButton).onLongPress,
+        'onHover#0': (args) => (args[0] as TextButton).onHover,
+        'onFocusChange#0': (args) => (args[0] as TextButton).onFocusChange,
+        'style#0': (args) => (args[0] as TextButton).style,
+        'clipBehavior#0': (args) => (args[0] as TextButton).clipBehavior,
+        'focusNode#0': (args) => (args[0] as TextButton).focusNode,
+        'autofocus#0': (args) => (args[0] as TextButton).autofocus,
+        'statesController#0': (args) => (args[0] as TextButton).statesController,
+        'isSemanticButton#0': (args) => (args[0] as TextButton).isSemanticButton,
+        'iconAlignment#0': (args) => (args[0] as TextButton).iconAlignment,
+        'tooltip#0': (args) => (args[0] as TextButton).tooltip,
+        'child#0': (args) => (args[0] as TextButton).child,
+        'enabled#0': (args) => (args[0] as TextButton).enabled,
+        'key#0': (args) => (args[0] as TextButton).key,
+        '#12': (args) => TextButton(key: args[0] as Key?, onPressed: args[1] as void Function()?, onLongPress: args[2] as void Function()?, onHover: args[3] as void Function(bool)?, onFocusChange: args[4] as void Function(bool)?, style: args[5] as ButtonStyle?, focusNode: args[6] as FocusNode?, autofocus: args[7] as bool, clipBehavior: args[8] as Clip?, statesController: args[9] as WidgetStatesController?, isSemanticButton: args[10] as bool?, child: args[11] as Widget),
+        'icon#13': (args) => TextButton.icon(key: args[0] as Key?, onPressed: args[1] as void Function()?, onLongPress: args[2] as void Function()?, onHover: args[3] as void Function(bool)?, onFocusChange: args[4] as void Function(bool)?, style: args[5] as ButtonStyle?, focusNode: args[6] as FocusNode?, autofocus: args[7] as bool?, clipBehavior: args[8] as Clip?, statesController: args[9] as WidgetStatesController?, icon: args[10] as Widget?, label: args[11] as Widget, iconAlignment: args[12] as IconAlignment?),
+      };
+}

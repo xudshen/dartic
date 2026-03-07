@@ -9,6 +9,7 @@ void main(List<String> args) async {
     ..addOption('config', abbr: 'c', help: 'YAML 配置文件或目录路径')
     ..addOption('scan', abbr: 's', help: '扫描 @DarticExport 注解的源文件或目录')
     ..addOption('output', abbr: 'o', help: '输出目录（仅 --scan 模式）')
+    ..addOption('analysis-root', help: 'Analysis root directory (for Flutter type resolution)')
     ..addFlag('help', abbr: 'h', negatable: false, help: '显示帮助');
 
   final results = parser.parse(args);
@@ -27,7 +28,7 @@ void main(List<String> args) async {
     exit(results['help'] as bool ? 0 : 1);
   }
 
-  final runner = Runner();
+  final runner = Runner(analysisRoot: results['analysis-root'] as String?);
 
   if (results['config'] != null) {
     final path = results['config'] as String;

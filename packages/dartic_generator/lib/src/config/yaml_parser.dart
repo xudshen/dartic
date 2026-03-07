@@ -66,10 +66,16 @@ GeneratorConfig _parseConfig(YamlMap yaml, [String? configDir]) {
     outputPlugins = _resolvePath(configDir, outputPlugins);
   }
 
+  final customImports = (yaml['custom_imports'] as YamlList?)
+          ?.map((e) => e as String)
+          .toList() ??
+      [];
+
   return GeneratorConfig(
     outputBindings: outputBindings,
     outputPlugins: outputPlugins,
     libraries: libraries,
+    customImports: customImports,
   );
 }
 
@@ -174,5 +180,10 @@ OverrideConfig _parseOverride(YamlMap yaml) {
     extraMethods: extraMethods,
     extraBindings: extraBindings,
     preamble: yaml['preamble'] as String?,
+    customBridge: yaml['custom_bridge'] as bool? ?? false,
+    ignoreForFile: (yaml['ignore_for_file'] as YamlList?)
+            ?.map((e) => e as String)
+            .toList() ??
+        [],
   );
 }
