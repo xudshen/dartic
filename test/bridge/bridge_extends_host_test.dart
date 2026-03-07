@@ -739,4 +739,179 @@ Object main() => AppError();
       engine.dispose();
     });
   });
+
+  group('Error Bridge — additional coverage', () {
+    test('dartic extends FormatException: 3-param super args', () async {
+      final source = '''
+class MyFormatEx extends FormatException {
+  final int code;
+  MyFormatEx(this.code) : super('bad format', 'input_text', 5);
+
+  @override
+  String toString() => 'MyFormatEx(\$code): \$message at \$offset';
+}
+
+void main() {
+  final e = MyFormatEx(42);
+  print(e is FormatException);
+  print(e.message);
+  print(e.source);
+  print(e.offset);
+  print(e.toString());
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine(
+        config: DarticConfig(
+          onPrint: (v) => _printLog.add('$v'),
+        ),
+      );
+      engine.loadModule(module);
+      engine.call('main');
+      engine.dispose();
+
+      expect(_printLog[0], 'true');
+      expect(_printLog[1], 'bad format');
+      expect(_printLog[2], 'input_text');
+      expect(_printLog[3], '5');
+      expect(_printLog[4], 'MyFormatEx(42): bad format at 5');
+    });
+
+    test('dartic extends UnimplementedError: super msg forwarded', () async {
+      final source = '''
+class TodoError extends UnimplementedError {
+  TodoError(String feature) : super('TODO: \$feature');
+
+  @override
+  String toString() => message!;
+}
+
+void main() {
+  final e = TodoError('login');
+  print(e is UnimplementedError);
+  print(e is UnsupportedError);
+  print(e is Error);
+  print(e.toString());
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine(
+        config: DarticConfig(
+          onPrint: (v) => _printLog.add('$v'),
+        ),
+      );
+      engine.loadModule(module);
+      engine.call('main');
+      engine.dispose();
+
+      expect(_printLog[0], 'true');
+      expect(_printLog[1], 'true'); // UnimplementedError extends UnsupportedError
+      expect(_printLog[2], 'true');
+      expect(_printLog[3], 'TODO: login');
+    });
+
+    test('dartic extends StateError: caught by on StateError', () async {
+      final source = '''
+class DetailedStateError extends StateError {
+  DetailedStateError(String msg) : super(msg);
+
+  @override
+  String toString() => 'Detailed: \$message';
+}
+
+void main() {
+  try {
+    throw DetailedStateError('bad');
+  } on StateError catch (e) {
+    print('caught: \${e.message}');
+  }
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine(
+        config: DarticConfig(
+          onPrint: (v) => _printLog.add('$v'),
+        ),
+      );
+      engine.loadModule(module);
+      engine.call('main');
+      engine.dispose();
+
+      expect(_printLog[0], 'caught: bad');
+    });
+
+    test('Error and Exception Bridges both work in same program', () async {
+      final source = '''
+class MyError extends Error {
+  @override
+  String toString() => 'MyError';
+}
+
+class MyException implements Exception {
+  @override
+  String toString() => 'MyException';
+}
+
+void main() {
+  final err = MyError();
+  final ex = MyException();
+  print(err is Error);
+  print(ex is Exception);
+  print(err.toString());
+  print(ex.toString());
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine(
+        config: DarticConfig(
+          onPrint: (v) => _printLog.add('$v'),
+        ),
+      );
+      engine.loadModule(module);
+      engine.call('main');
+      engine.dispose();
+
+      expect(_printLog[0], 'true');   // err is Error
+      expect(_printLog[1], 'true');   // ex is Exception
+      expect(_printLog[2], 'MyError');
+      expect(_printLog[3], 'MyException');
+    });
+
+    test('FormatException throw and host catch with getters', () async {
+      final source = '''
+class ParseError extends FormatException {
+  ParseError(String msg, String src, int pos) : super(msg, src, pos);
+
+  @override
+  String toString() => 'ParseError: \$message at \$offset in "\$source"';
+}
+
+Object main() {
+  throw ParseError('unexpected token', 'x + = 3', 4);
+}
+''';
+      final module = await compileDart(source);
+      final engine = DarticEngine(
+        config: DarticConfig(
+          onPrint: (v) => _printLog.add('$v'),
+        ),
+      );
+      engine.loadModule(module);
+
+      Object? caught;
+      try {
+        engine.call('main');
+      } on FormatException catch (e) {
+        caught = e;
+      }
+      engine.dispose();
+
+      expect(caught, isA<FormatException>());
+      final fe = caught as FormatException;
+      expect(fe.message, 'unexpected token');
+      expect(fe.source, 'x + = 3');
+      expect(fe.offset, 4);
+      expect(fe.toString(), 'ParseError: unexpected token at 4 in "x + = 3"');
+    });
+  });
 }
