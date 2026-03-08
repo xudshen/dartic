@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic/dartic.dart'
@@ -99,7 +100,7 @@ class RunCommand extends Command<int> {
 
     try {
       // Step 1: Get .darb bytes (compile if .dart, read if .darb).
-      final List<int> darbBytes;
+      final Uint8List darbBytes;
       if (extension == 'dart') {
         darbBytes = await _compileDartFile(filePath);
       } else {
@@ -115,7 +116,7 @@ class RunCommand extends Command<int> {
       );
 
       final engine = DarticEngine(config: config);
-      engine.loadBytecode(darbBytes as dynamic);
+      engine.loadBytecode(darbBytes);
 
       final result = engine.call('main');
       if (result is Future) {
@@ -138,7 +139,7 @@ class RunCommand extends Command<int> {
     }
   }
 
-  Future<List<int>> _compileDartFile(String sourcePath) async {
+  Future<Uint8List> _compileDartFile(String sourcePath) async {
     // Determine target.
     final targetFlag = argResults!['target'] as String?;
     final DarticTarget target;
@@ -169,7 +170,7 @@ class RunCommand extends Command<int> {
     return bytes;
   }
 
-  List<int> _readDarbFile(String filePath) {
+  Uint8List _readDarbFile(String filePath) {
     final file = File(filePath);
     if (!file.existsSync()) {
       throw DarticCliError('File not found: $filePath');
