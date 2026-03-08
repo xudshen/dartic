@@ -20,3 +20,7 @@ export 'src/bridge/dartic_dispatch.dart'
 export 'src/bridge/dartic_object_holder.dart';
 export 'src/runtime/error.dart';
 export 'src/sandbox/load_error.dart';
+export 'src/toolchain/compile_pipeline.dart';
+export 'src/toolchain/sdk_resolver.dart';
+export 'src/toolchain/target.dart';
+export 'src/toolchain/version.dart';
