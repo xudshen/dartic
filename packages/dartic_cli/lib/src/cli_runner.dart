@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic/dartic.dart' show darticVersion;
+import 'package:dartic_cli/src/commands/doctor_command.dart';
+import 'package:dartic_cli/src/commands/version_command.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 /// The main command runner for the dartic CLI.
@@ -26,6 +28,9 @@ class DarticCliRunner extends CommandRunner<int> {
         help: 'Print the dartic version.',
         negatable: false,
       );
+
+    addCommand(VersionCommand(logger: _logger));
+    addCommand(DoctorCommand(logger: _logger));
   }
 
   final Logger _logger;
