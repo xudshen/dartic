@@ -2,7 +2,7 @@
 #
 # Run with:
 #   fvm dart run packages/dartic_cli/bin/dartic.dart gen \
-#     --config packages/dartic_generator/configs/dart_ui.yaml \
+#     --config packages/dartic_flutter/configs/dart_ui.yaml \
 #     --analysis-root packages/dartic_flutter
 #
 # The --analysis-root must point to a Flutter project so the analyzer
@@ -13,8 +13,8 @@
 #   P1 (layout/gesture/animation/text): Offset, Size, Rect, Radius,
 #       FontWeight, FontStyle, TextAlign
 
-output_bindings: "../../dartic_flutter/lib/src/bindings"
-output_plugins: "../../dartic_flutter/lib/src/plugins"
+output_bindings: "../lib/src/bindings"
+output_plugins: "../lib/src/plugins"
 
 custom_imports:
   - "package:dartic/dartic.dart"
