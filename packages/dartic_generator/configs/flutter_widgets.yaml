@@ -2,9 +2,9 @@
 #
 # Run with:
 #   cd packages/dartic_generator
-#   fvm dart run bin/generate.dart \
-#     --config configs/flutter_widgets.yaml \
-#     --analysis-root ../dartic_flutter
+#   fvm dart run dartic generate \
+#     --config packages/dartic_generator/configs/flutter_widgets.yaml \
+#     --analysis-root packages/dartic_flutter
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.

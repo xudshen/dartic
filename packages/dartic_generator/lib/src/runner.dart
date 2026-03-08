@@ -78,44 +78,8 @@ class Runner {
         final internalInfos = <TypeInfo>[];
         for (final internal in classConfig.internalTypes) {
           final internalUri = internal.source ?? library.uri;
-          TypeInfo internalInfo;
-          if (internal.name.startsWith('_')) {
-            // Private classes can't be used in type casts from external code.
-            // Create an empty TypeInfo — methods come from YAML overrides.
-            internalInfo = TypeInfo(
-              className: internal.name,
-              libraryUri: internalUri,
-              methods: [],
-              getters: [],
-              setters: [],
-              operators: [],
-              staticMethods: [],
-              constructors: [],
-              superclasses: [],
-            );
-          } else {
-            try {
-              internalInfo = await analyzer.analyzeClass(
-                internalUri,
-                internal.name,
-              );
-            } on StateError {
-              // VM-internal classes (e.g. _GrowableList, _List, _Set) are not
-              // visible to the analyzer. Create an empty TypeInfo — the actual
-              // methods come from YAML overrides (extra_methods).
-              internalInfo = TypeInfo(
-                className: internal.name,
-                libraryUri: internalUri,
-                methods: [],
-                getters: [],
-                setters: [],
-                operators: [],
-                staticMethods: [],
-                constructors: [],
-                superclasses: [],
-              );
-            }
-          }
+          final internalInfo =
+              await _analyzeOrEmpty(analyzer, internalUri, internal.name);
           internalInfos.add(internalInfo);
         }
 
@@ -138,10 +102,7 @@ class Runner {
           mainInfo,
           internalInfos,
           extraMethods: extraMethods,
-          mainExtraMethods: mainExtraMethods != null &&
-                  mainExtraMethods.isNotEmpty
-              ? mainExtraMethods
-              : null,
+          mainExtraMethods: _nullIfEmpty(mainExtraMethods),
         );
 
         final fileName = _classToFileName(className);
@@ -151,40 +112,8 @@ class Runner {
         bindingFileNames.add(fileName);
       } else {
         // Simple class (no internal types)
-        TypeInfo info;
-        if (resolvedName.startsWith('_')) {
-          // Private classes (e.g. _Enum, _StringStackTrace) are not accessible
-          // from user code. Create an empty TypeInfo — methods come from YAML.
-          info = TypeInfo(
-            className: resolvedName,
-            libraryUri: library.uri,
-            methods: [],
-            getters: [],
-            setters: [],
-            operators: [],
-            staticMethods: [],
-            constructors: [],
-            superclasses: [],
-          );
-        } else {
-          try {
-            info = await analyzer.analyzeClass(library.uri, resolvedName);
-          } on StateError {
-            // Classes not visible to analyzer.
-            // Create an empty TypeInfo — methods come from YAML overrides.
-            info = TypeInfo(
-              className: resolvedName,
-              libraryUri: library.uri,
-              methods: [],
-              getters: [],
-              setters: [],
-              operators: [],
-              staticMethods: [],
-              constructors: [],
-              superclasses: [],
-            );
-          }
-        }
+        final info =
+            await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
         // Check for overrides on this class
         final overrides = library.overrides[resolvedName];
         final extraMethods = overrides?.extraMethods;
@@ -192,21 +121,15 @@ class Runner {
         final preamble = overrides?.preamble;
         final source = binding_emitter.emitBindingFile(
           info,
-          extraMethods: extraMethods != null && extraMethods.isNotEmpty
-              ? extraMethods
-              : null,
-          extraBindings: extraBindings != null && extraBindings.isNotEmpty
-              ? extraBindings
-              : null,
+          extraMethods: _nullIfEmpty(extraMethods),
+          extraBindings: _nullIfEmpty(extraBindings),
           preamble: preamble,
           bridge: classConfig.bridge,
           customBridge: overrides?.customBridge ?? false,
           ignoreForFile: config.customImports.isNotEmpty
               ? _mergeIgnoreForFile(overrides?.ignoreForFile)
               : overrides?.ignoreForFile,
-          customImports: config.customImports.isNotEmpty
-              ? config.customImports
-              : null,
+          customImports: _nullIfEmpty(config.customImports),
         );
 
         final fileName = _classToFileName(className);
@@ -273,13 +196,55 @@ class Runner {
       hasTopLevel: hasTopLevel,
       topLevelBindingClassName: topLevelBindingClassName,
       topLevelFileName: topLevelFileName,
-      customImports: config.customImports.isNotEmpty
-          ? config.customImports
-          : null,
+      customImports: _nullIfEmpty(config.customImports),
     );
 
     final pluginFileName = '${_libraryShortName(library.uri)}_plugin.g.dart';
     _writeFile(config.outputPlugins, pluginFileName, pluginSource);
+  }
+
+  // ── TypeInfo helpers ─────────────────────────────────────────────────
+
+  /// Creates an empty [TypeInfo] for classes that can't be analyzed
+  /// (private classes, VM-internal classes, etc.).
+  /// Methods come from YAML overrides (extra_methods) instead.
+  TypeInfo _emptyTypeInfo(String className, String libraryUri) {
+    return TypeInfo(
+      className: className,
+      libraryUri: libraryUri,
+      methods: [],
+      getters: [],
+      setters: [],
+      operators: [],
+      staticMethods: [],
+      constructors: [],
+      superclasses: [],
+    );
+  }
+
+  /// Attempts to analyze a class; returns an empty [TypeInfo] if the class
+  /// is private (starts with `_`) or not visible to the analyzer.
+  Future<TypeInfo> _analyzeOrEmpty(
+    TypeAnalyzer analyzer,
+    String libraryUri,
+    String className,
+  ) async {
+    if (className.startsWith('_')) {
+      return _emptyTypeInfo(className, libraryUri);
+    }
+    try {
+      return await analyzer.analyzeClass(libraryUri, className);
+    } on StateError {
+      return _emptyTypeInfo(className, libraryUri);
+    }
+  }
+
+  /// Returns null if [collection] is null or empty; otherwise returns it.
+  static T? _nullIfEmpty<T>(T? collection) {
+    if (collection == null) return null;
+    if (collection is List && collection.isEmpty) return null;
+    if (collection is Map && collection.isEmpty) return null;
+    return collection;
   }
 
   // ── Lint suppression helpers ──────────────────────────────────────────

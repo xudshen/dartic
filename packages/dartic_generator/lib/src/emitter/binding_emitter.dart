@@ -551,27 +551,10 @@ String _toInternalMethodMapName(String className) {
 
 void _writeInstanceMethodEntries(
     StringBuffer buf, String className, MethodInfo method) {
-  final keys = method.allBindingKeys;
-  final hasOptional = method.paramTypes.any((p) => p.isOptional && !p.isNamed);
-
-  if (!hasOptional && keys.length == 1) {
-    // Simple case: single arity
-    final wrapper =
-        _emitInstanceMethodWrapper(className, method, method.paramTypes.length);
-    buf.writeln("        '${keys.first}': $wrapper,");
-  } else if (hasOptional) {
-    // Multiple arity variants for optional positional params
-    for (final key in keys) {
-      final arity = int.parse(key.split('#').last);
-      final wrapper =
-          _emitInstanceMethodWrapper(className, method, arity);
-      buf.writeln("        '$key': $wrapper,");
-    }
-  } else {
-    // Named params: single arity with all params
-    final wrapper = _emitInstanceMethodWrapper(
-        className, method, method.paramTypes.length);
-    buf.writeln("        '${keys.first}': $wrapper,");
+  for (final key in method.allBindingKeys) {
+    final arity = int.parse(key.split('#').last);
+    final wrapper = _emitInstanceMethodWrapper(className, method, arity);
+    buf.writeln("        '$key': $wrapper,");
   }
 }
 
@@ -642,35 +625,13 @@ String _emitCallbackWrapper(ParamInfo param, int argsIndex) {
     return '(args[$argsIndex] as Function?) == null ? null : ($paramList) => (args[$argsIndex] as Function?)!($paramList)';
   }
 
-  // Generate the wrapper based on return type
-  if (returnType == 'void') {
-    // void callback: just call through
-    if (arity == 0) {
-      return '() => ($fnRef)()';
-    }
-    return '($paramList) => ($fnRef)($paramList)';
-  } else if (returnType == 'bool') {
-    // bool callback: cast return value
-    if (arity == 0) {
-      return '() => ($fnRef)() as bool';
-    }
-    return '($paramList) => ($fnRef)($paramList) as bool';
-  } else if (returnType == 'int') {
-    // int callback: cast return value
-    return '($paramList) => ($fnRef)($paramList) as int';
-  } else if (returnType == 'dynamic' || returnType == 'Object?') {
-    // dynamic callback: no cast needed
-    if (arity == 0) {
-      return '() => ($fnRef)()';
-    }
-    return '($paramList) => ($fnRef)($paramList)';
-  } else {
-    // Other return types: cast to the return type
-    if (arity == 0) {
-      return '() => ($fnRef)() as $returnType';
-    }
-    return '($paramList) => ($fnRef)($paramList) as $returnType';
-  }
+  // Build the call expression, adding a cast only for concrete return types
+  final needsCast =
+      returnType != 'void' && returnType != 'dynamic' && returnType != 'Object?';
+  final call = '($fnRef)($paramList)';
+  final callExpr = needsCast ? '$call as $returnType' : call;
+
+  return '($paramList) => $callExpr';
 }
 
 /// Returns a parameter name for callback wrappers.
@@ -913,13 +874,8 @@ void _writeBridgeMethodOverride(
   final params = <String>[];
   final argNames = <String>[];
   for (final p in method.paramTypes) {
-    if (p.isNamed) {
-      params.add('${p.type} ${p.name}');
-      argNames.add(p.name);
-    } else {
-      params.add('${p.type} ${p.name}');
-      argNames.add(p.name);
-    }
+    params.add('${p.type} ${p.name}');
+    argNames.add(p.name);
   }
 
   final paramStr = params.join(', ');
