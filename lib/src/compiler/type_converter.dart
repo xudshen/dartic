@@ -49,6 +49,13 @@ ir.DartType? _toNonNullable(ir.DartType type) {
   if (type is ir.NeverType && type.nullability == ir.Nullability.nullable) {
     return const ir.NeverType.nonNullable();
   }
+  if (type is ir.RecordType && type.nullability == ir.Nullability.nullable) {
+    return type.withDeclaredNullability(ir.Nullability.nonNullable);
+  }
+  if (type is ir.ExtensionType &&
+      type.nullability == ir.Nullability.nullable) {
+    return type.withDeclaredNullability(ir.Nullability.nonNullable);
+  }
   return null;
 }
 
@@ -97,6 +104,13 @@ TypeTemplate _convert(
       _resolveStructuralParam(type.parameter, structuralParams),
     ir.IntersectionType() => _convert(
         type.right, classIdLookup, classParams, funcParams, structuralParams),
+    // RecordType and ExtensionType are not yet supported by the runtime.
+    // Degrade to DynamicTemplate so host-side types in signatures
+    // don't block compilation.
+    ir.RecordType() => const DynamicTemplate(),
+    ir.ExtensionType() => _convert(
+        type.extensionTypeErasure, classIdLookup, classParams, funcParams,
+        structuralParams),
     _ => throw UnsupportedError(
         'Unsupported DartType for type template conversion: '
         '${type.runtimeType}',
