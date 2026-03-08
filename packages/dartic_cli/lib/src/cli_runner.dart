@@ -50,6 +50,10 @@ class DarticCliRunner extends CommandRunner<int> {
       return 0;
     }
 
+    if (results['verbose'] as bool) {
+      _logger.level = Level.verbose;
+    }
+
     // Auto-disable progress when not in a terminal.
     if ((results['no-progress'] as bool) || !stdout.hasTerminal) {
       _logger.progressOptions = const ProgressOptions(

@@ -175,6 +175,30 @@
 
 ---
 
+## Phase 8: dartic CLI
+
+**目标：** 将零散的编译/执行工具脚本统一为正式 CLI（`dartic compile` / `dartic run` / `dartic gen` / `dartic doctor` / `dartic version`），支持 Dart 和 Flutter 两种编译模式
+
+**设计参考：** [`docs/plans/2026-03-08-dartic-cli-design.md`](../plans/2026-03-08-dartic-cli-design.md)
+
+**Task 目录：** [`docs/tasks/phase8/`](phase8/)
+
+| Batch | 描述 | Task 数 | 状态 |
+|-------|------|---------|------|
+| [8.1](phase8/batch-8.1-toolchain-core.md) | Toolchain 核心层（version/target/sdk_resolver/compile_pipeline） | 5 | ✅ |
+| [8.2](phase8/batch-8.2-cli-shell.md) | CLI 壳子包（5 个命令 + 信号处理） | 6 | ✅ |
+| [8.3](phase8/batch-8.3-e2e-cleanup.md) | E2E 验收 + 旧脚本 deprecated + 文档更新 | 4 | |
+
+**里程碑：**
+- [ ] `dartic compile` Dart 模式端到端（.dart → .darb）
+- [ ] `dartic run` 支持 .dart 和 .darb 输入
+- [ ] `dartic gen` 整合 dartic_generator
+- [ ] `dartic doctor` + `dartic version` 环境诊断
+- [ ] 旧脚本 `tool/dartic_run.dart` 和 `dartic_generator/bin/generate.dart` 标记 deprecated
+- [ ] Flutter 模式编译验收（需 dart:ui P0+P1 binding 前置）
+
+---
+
 ## 跨阶段修复：Bridge Super Args + CALL_HOST 分发 — ✅ 已完成
 
 **目标：** 修复 Bridge 运行时两个核心问题——super 构造参数转发（位置 + 命名参数）和 CALL_HOST 对 Bridge 实例的方法分发路由
