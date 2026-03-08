@@ -49,7 +49,7 @@
 - **公共导出类**（`lib/dartic.dart` 中 export 的）→ 必须 `Dartic` 前缀
 - **跨子系统核心类**（被 2+ 个子系统目录 import）→ `Dartic` 前缀
 - **单子系统内部工具类** → 不带前缀
-- 判断标准：子系统 = `api/`, `bridge/`, `bytecode/`, `compiler/`, `runtime/`, `sandbox/`
+- 判断标准：子系统 = `api/`, `bridge/`, `bytecode/`, `compiler/`, `runtime/`, `sandbox/`, `toolchain/`
 
 ## 初始化
 
@@ -72,4 +72,11 @@ fvm dart pub get
 
 ```bash
 fvm dart *                 # Pure Dart 包
+
+# dartic CLI（packages/dartic_cli/）
+fvm dart run packages/dartic_cli/bin/dartic.dart compile lib/app.dart -o app.darb
+fvm dart run packages/dartic_cli/bin/dartic.dart run app.darb
+fvm dart run packages/dartic_cli/bin/dartic.dart gen dartic_export.yaml
+fvm dart run packages/dartic_cli/bin/dartic.dart doctor
+fvm dart run packages/dartic_cli/bin/dartic.dart version
 ```
