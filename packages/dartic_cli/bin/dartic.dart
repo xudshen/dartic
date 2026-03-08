@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
@@ -6,8 +7,11 @@ import 'package:dartic_cli/src/cli_runner.dart';
 
 Future<void> main(List<String> args) async {
   // Register SIGINT handler (Ctrl+C).
+  // Must cancel before exiting to prevent the subscription from keeping
+  // the event loop alive.
+  StreamSubscription<ProcessSignal>? sigintSub;
   try {
-    ProcessSignal.sigint.watch().listen((_) {
+    sigintSub = ProcessSignal.sigint.watch().listen((_) {
       exit(130); // Standard SIGINT exit code
     });
   } on SignalException catch (_) {
@@ -28,5 +32,7 @@ Future<void> main(List<String> args) async {
   } catch (e) {
     stderr.writeln('Unexpected error: $e');
     exitCode = 2;
+  } finally {
+    await sigintSub?.cancel();
   }
 }
