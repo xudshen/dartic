@@ -130,8 +130,9 @@ abstract final class XxxBindings {
 - 导入所有绑定文件
 
 **ManifestEmitter（manifest_emitter.dart）：**
-- 为 `package:` URI 生成 `dartic.manifest` 文件（声明宿主包名）
+- 为 plugin 包生成 `dartic.manifest` 文件（YAML 格式：`role: plugin`）
 - `dart:*` URI 不生成（编译器硬编码处理）
+- 新模型下编译器默认跳过无 manifest 的包，`role: compilable` 的包才编译为字节码
 
 **Scanner（scanner.dart）：**
 - 扫描 Dart 源文件的 `@DarticExport` 注解
