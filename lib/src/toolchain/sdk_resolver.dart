@@ -211,14 +211,19 @@ class SdkResolver {
     // Check embedded Dart SDK version.
     final dartSdkPath = '$sdkPath/bin/cache/dart-sdk';
     final dartVersion = readSdkVersion(dartSdkPath);
-    if (dartVersion != null) {
-      if (!satisfiesConstraint(dartVersion, _requiredDartSdk)) {
-        throw SdkVersionMismatchError(
-          actual: dartVersion,
-          required: _requiredDartSdk,
-          sdkLabel: 'Dart (embedded in Flutter)',
-        );
-      }
+    if (dartVersion == null) {
+      throw SdkNotFoundError(
+        'No Dart SDK found in Flutter SDK cache at $dartSdkPath. '
+        'Run "flutter doctor" to initialize the cache.',
+      );
+    }
+
+    if (!satisfiesConstraint(dartVersion, _requiredDartSdk)) {
+      throw SdkVersionMismatchError(
+        actual: dartVersion,
+        required: _requiredDartSdk,
+        sdkLabel: 'Dart (embedded in Flutter)',
+      );
     }
 
     // Check Flutter SDK version if available.
@@ -272,8 +277,8 @@ class SdkResolver {
           return File(resolved).parent.parent.path;
         }
       }
-    } on ProcessException catch (_) {
-      // which/where not available.
+    } on Object catch (_) {
+      // which/where not available, or broken symlink.
     }
 
     return null;
@@ -316,8 +321,8 @@ class SdkResolver {
           return File(resolved).parent.parent.path;
         }
       }
-    } on ProcessException catch (_) {
-      // which/where not available.
+    } on Object catch (_) {
+      // which/where not available, or broken symlink.
     }
 
     return null;

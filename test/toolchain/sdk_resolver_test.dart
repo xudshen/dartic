@@ -67,6 +67,13 @@ void main() {
     test('two-part version is treated as x.y.0', () {
       expect(satisfiesConstraint('3.11', '^3.10.7'), isTrue);
     });
+
+    test('throws ArgumentError on non-caret constraint', () {
+      expect(
+        () => satisfiesConstraint('3.10.7', '>=3.10.7'),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
   });
 
   group('SdkResolver', () {
