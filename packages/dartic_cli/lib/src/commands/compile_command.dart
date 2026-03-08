@@ -5,15 +5,14 @@ import 'package:dartic/dartic.dart'
     show
         CompileError,
         CompilePipeline,
-        DarticTarget,
         SdkNotFoundError,
         SdkResolver,
-        SdkVersionMismatchError,
-        detectTarget;
+        SdkVersionMismatchError;
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
 import '../cli_error.dart';
+import 'resolve_target.dart';
 
 /// Compiles Dart source to `.darb` bytecode.
 class CompileCommand extends Command<int> {
@@ -68,16 +67,8 @@ class CompileCommand extends Command<int> {
 
     final sourcePath = rest.first;
 
-    // Determine target.
     final targetFlag = argResults!['target'] as String?;
-    final DarticTarget target;
-    if (targetFlag != null) {
-      target = targetFlag == 'flutter'
-          ? DarticTarget.flutter
-          : DarticTarget.dart;
-    } else {
-      target = detectTarget(sourcePath);
-    }
+    final target = resolveTarget(targetFlag, sourcePath);
 
     // Resolve output path.
     final outputFlag = argResults!['output'] as String?;

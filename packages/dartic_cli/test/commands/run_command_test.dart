@@ -1,69 +1,29 @@
-import 'dart:typed_data';
-
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart'
-    show CompilePipeline, DarticTarget, SdkResolver;
+import 'package:dartic/dartic.dart' show CompilePipeline;
 import 'package:dartic_cli/src/commands/run_command.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:test/test.dart';
 
-/// A fake CompilePipeline that returns fixed bytes.
-class _FakeCompilePipeline extends CompilePipeline {
-  _FakeCompilePipeline()
-      : super(sdkResolver: _FakeSuccessSdkResolver());
-
-  String? lastSourcePath;
-  DarticTarget? lastTarget;
-  String? lastSdkPath;
-
-  @override
-  Future<Uint8List> compile({
-    required String sourcePath,
-    required DarticTarget target,
-    String? sdkPath,
-    void Function(String stage)? onProgress,
-  }) async {
-    lastSourcePath = sourcePath;
-    lastTarget = target;
-    lastSdkPath = sdkPath;
-
-    onProgress?.call('Compiling...');
-    return Uint8List.fromList([0x44, 0x41, 0x52, 0x42]);
-  }
-}
-
-class _FakeSuccessSdkResolver extends SdkResolver {
-  _FakeSuccessSdkResolver() : super();
-
-  @override
-  String resolveDartSdk({String? explicitPath}) =>
-      explicitPath ?? '/fake/dart-sdk';
-
-  @override
-  String resolveFlutterSdk({String? explicitPath}) =>
-      explicitPath ?? '/fake/flutter-sdk';
-}
+import '../helpers/fake_compile_pipeline.dart';
 
 void main() {
   group('RunCommand', () {
     late Logger logger;
-    late _FakeCompilePipeline fakePipeline;
+    late FakeCompilePipeline fakePipeline;
 
     setUp(() {
       logger = Logger();
       logger.level = Level.quiet;
-      fakePipeline = _FakeCompilePipeline();
+      fakePipeline = FakeCompilePipeline();
     });
 
-    CommandRunner<int> _createRunner({
+    CommandRunner<int> createRunner({
       CompilePipeline? pipeline,
-      SdkResolver? sdkResolver,
     }) {
       return CommandRunner<int>('dartic', 'test runner')
         ..addCommand(RunCommand(
           logger: logger,
           pipeline: pipeline ?? fakePipeline,
-          sdkResolver: sdkResolver,
         ));
     }
 
@@ -77,7 +37,7 @@ void main() {
     });
 
     test('throws UsageException when no file arg provided', () async {
-      final runner = _createRunner();
+      final runner = createRunner();
 
       expect(
         () => runner.run(['run']),
@@ -91,7 +51,6 @@ void main() {
         pipeline: fakePipeline,
       );
       final runner = CommandRunner<int>('dartic', 'test')..addCommand(cmd);
-      // Parse args to verify the option is registered and accepted.
       final result = runner.parse(['run', '--fuel=100000', 'test.darb']);
       final runResult = result.command!;
       expect(runResult['fuel'], equals('100000'));
@@ -121,7 +80,7 @@ void main() {
 
     test('.dart detection: file ending in .dart triggers compilation path',
         () async {
-      final runner = _createRunner();
+      final runner = createRunner();
 
       // This will fail at the engine.loadBytecode step since we're not
       // providing real bytecode, but we can verify compilation was triggered
@@ -136,7 +95,7 @@ void main() {
     });
 
     test('.darb detection: file ending in .darb skips compilation', () async {
-      final runner = _createRunner();
+      final runner = createRunner();
 
       // .darb file should NOT trigger compilation.
       // It will fail trying to read the file, but pipeline should not be called.
@@ -149,8 +108,8 @@ void main() {
       expect(fakePipeline.lastSourcePath, isNull);
     });
 
-    test('unsupported extension throws DarticCliError', () async {
-      final runner = _createRunner();
+    test('unsupported extension throws UsageException', () async {
+      final runner = createRunner();
 
       expect(
         () => runner.run(['run', 'test.txt']),

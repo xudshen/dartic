@@ -9,14 +9,14 @@ import 'package:dartic/dartic.dart'
         DarticConfig,
         DarticEngine,
         DarticError,
-        DarticTarget,
         SdkNotFoundError,
         SdkResolver,
-        SdkVersionMismatchError,
-        detectTarget;
+        SdkVersionMismatchError;
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart' as p;
 
 import '../cli_error.dart';
+import 'resolve_target.dart';
 
 /// Runs a .darb bytecode file or compiles and runs a .dart file.
 class RunCommand extends Command<int> {
@@ -79,11 +79,11 @@ class RunCommand extends Command<int> {
     }
 
     final filePath = rest.first;
-    final extension = filePath.split('.').last.toLowerCase();
+    final ext = p.extension(filePath).toLowerCase();
 
-    if (extension != 'dart' && extension != 'darb') {
+    if (ext != '.dart' && ext != '.darb') {
       throw UsageException(
-        'Unsupported file extension ".$extension". '
+        'Unsupported file extension "$ext". '
         'Expected .dart or .darb.',
         usage,
       );
@@ -101,7 +101,7 @@ class RunCommand extends Command<int> {
     try {
       // Step 1: Get .darb bytes (compile if .dart, read if .darb).
       final Uint8List darbBytes;
-      if (extension == 'dart') {
+      if (ext == '.dart') {
         darbBytes = await _compileDartFile(filePath);
       } else {
         darbBytes = _readDarbFile(filePath);
@@ -140,20 +140,9 @@ class RunCommand extends Command<int> {
   }
 
   Future<Uint8List> _compileDartFile(String sourcePath) async {
-    // Determine target.
     final targetFlag = argResults!['target'] as String?;
-    final DarticTarget target;
-    if (targetFlag != null) {
-      target =
-          targetFlag == 'flutter' ? DarticTarget.flutter : DarticTarget.dart;
-    } else {
-      target = detectTarget(sourcePath);
-    }
-
-    // SDK path override.
+    final target = resolveTarget(targetFlag, sourcePath);
     final sdkPath = argResults!['sdk-path'] as String?;
-
-    // Create pipeline if not injected.
     final pipeline = _pipeline ?? CompilePipeline(sdkResolver: _sdkResolver);
 
     final progress = _logger.progress('Compiling $sourcePath');

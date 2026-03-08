@@ -6,47 +6,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-/// Resolves the Dart binary path from FVM configuration.
-String _findDartBin() {
-  var dir = Directory.current;
-  while (true) {
-    final fvmConfig = File('${dir.path}/.fvm/fvm_config.json');
-    if (fvmConfig.existsSync()) {
-      final content = fvmConfig.readAsStringSync();
-      final match =
-          RegExp(r'"flutterSdkVersion":\s*"([^"]+)"').firstMatch(content);
-      if (match != null) {
-        final version = match.group(1)!;
-        final home = Platform.environment['HOME'] ?? '';
-        final dartBin =
-            '$home/.fvm_cache/versions/$version/bin/cache/dart-sdk/bin/dart';
-        if (File(dartBin).existsSync()) return dartBin;
-      }
-      break;
-    }
-    final parent = dir.parent;
-    if (parent.path == dir.path) break;
-    dir = parent;
-  }
-  return Platform.resolvedExecutable;
-}
-
-String _findDartSdkPath() {
-  final dartBin = _findDartBin();
-  return File(dartBin).parent.parent.path;
-}
-
-String _findProjectRoot() {
-  var dir = Directory.current;
-  while (true) {
-    final fvmDir = Directory('${dir.path}/.fvm');
-    if (fvmDir.existsSync()) return dir.path;
-    final parent = dir.parent;
-    if (parent.path == dir.path) break;
-    dir = parent;
-  }
-  throw StateError('Cannot find project root (no .fvm/ directory found)');
-}
+import 'e2e_helpers.dart';
 
 void main() {
   late String dartBin;
@@ -59,9 +19,9 @@ void main() {
   late Directory snapshotDir;
 
   setUpAll(() async {
-    dartBin = _findDartBin();
-    dartSdkPath = _findDartSdkPath();
-    final root = _findProjectRoot();
+    dartBin = findDartBin();
+    dartSdkPath = findDartSdkPath();
+    final root = findProjectRoot();
     cliDir = '$root/packages/dartic_cli';
     final cliEntry = '$cliDir/bin/dartic.dart';
 

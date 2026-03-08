@@ -6,66 +6,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-/// Resolves the Dart binary path from FVM configuration.
-String _findDartBin() {
-  var dir = Directory.current;
-  while (true) {
-    final fvmConfig = File('${dir.path}/.fvm/fvm_config.json');
-    if (fvmConfig.existsSync()) {
-      final content = fvmConfig.readAsStringSync();
-      final match =
-          RegExp(r'"flutterSdkVersion":\s*"([^"]+)"').firstMatch(content);
-      if (match != null) {
-        final version = match.group(1)!;
-        final home = Platform.environment['HOME'] ?? '';
-        final dartBin =
-            '$home/.fvm_cache/versions/$version/bin/cache/dart-sdk/bin/dart';
-        if (File(dartBin).existsSync()) return dartBin;
-      }
-      break;
-    }
-    final parent = dir.parent;
-    if (parent.path == dir.path) break;
-    dir = parent;
-  }
-  return Platform.resolvedExecutable;
-}
-
-/// Finds the Flutter SDK path from FVM config.
-String? _findFlutterSdkPath() {
-  var dir = Directory.current;
-  while (true) {
-    final fvmConfig = File('${dir.path}/.fvm/fvm_config.json');
-    if (fvmConfig.existsSync()) {
-      final content = fvmConfig.readAsStringSync();
-      final match =
-          RegExp(r'"flutterSdkVersion":\s*"([^"]+)"').firstMatch(content);
-      if (match != null) {
-        final version = match.group(1)!;
-        final home = Platform.environment['HOME'] ?? '';
-        final sdkPath = '$home/.fvm_cache/versions/$version';
-        if (Directory(sdkPath).existsSync()) return sdkPath;
-      }
-      break;
-    }
-    final parent = dir.parent;
-    if (parent.path == dir.path) break;
-    dir = parent;
-  }
-  return null;
-}
-
-String _findProjectRoot() {
-  var dir = Directory.current;
-  while (true) {
-    final fvmDir = Directory('${dir.path}/.fvm');
-    if (fvmDir.existsSync()) return dir.path;
-    final parent = dir.parent;
-    if (parent.path == dir.path) break;
-    dir = parent;
-  }
-  throw StateError('Cannot find project root');
-}
+import 'e2e_helpers.dart';
 
 void main() {
   late String dartBin;
@@ -76,10 +17,10 @@ void main() {
   String? flutterSdkPath;
 
   setUpAll(() async {
-    dartBin = _findDartBin();
-    projectRoot = _findProjectRoot();
+    dartBin = findDartBin();
+    projectRoot = findProjectRoot();
     cliDir = '$projectRoot/packages/dartic_cli';
-    flutterSdkPath = _findFlutterSdkPath();
+    flutterSdkPath = findFlutterSdkPath();
 
     // Check Flutter SDK availability.
     if (flutterSdkPath == null) {
@@ -119,11 +60,8 @@ void main() {
       return;
     }
 
-    // Use a minimal Dart source compiled via Flutter frontend_server.
-    // We avoid importing flutter/material.dart because the dartic compiler
-    // doesn't yet support all types in the Flutter framework (e.g. RecordType).
-    // This test validates the CLI's Flutter compile pipeline works end-to-end.
-    final tempDir = await Directory.systemTemp.createTemp('dartic_flutter_e2e_');
+    final tempDir =
+        await Directory.systemTemp.createTemp('dartic_flutter_e2e_');
     try {
       final source = File('${tempDir.path}/main.dart');
       await source.writeAsString("void main() { print('flutter compile'); }");
@@ -158,7 +96,8 @@ void main() {
       return;
     }
 
-    final tempDir = await Directory.systemTemp.createTemp('dartic_flutter_e2e_');
+    final tempDir =
+        await Directory.systemTemp.createTemp('dartic_flutter_e2e_');
     try {
       // Create a minimal pubspec with flutter dependency.
       final pubspec = File('${tempDir.path}/pubspec.yaml');
@@ -169,22 +108,14 @@ dependencies:
     sdk: flutter
 ''');
 
-      // Create a simple Dart source (no actual Flutter imports needed for
-      // target detection test — we just verify the auto-detection logic).
       final source = File('${tempDir.path}/lib/main.dart');
       await source.parent.create(recursive: true);
       await source.writeAsString("void main() { print('flutter detected'); }");
 
-      // Run compile WITHOUT --target flag — should auto-detect flutter.
-      // We pass --target=dart to override since we don't actually want
-      // Flutter compilation (source doesn't import Flutter), but we can
-      // test the detectTarget logic separately.
-      //
-      // Actually, auto-detect would try Flutter frontend_server which
-      // requires proper Flutter project setup. Just verify that dart mode
-      // works as a baseline.
+      // Compile with --target=dart as a baseline (auto-detect would try
+      // Flutter frontend_server which requires proper Flutter project setup).
       final darbPath = '${tempDir.path}/main.darb';
-      final dartSdkPath = File(dartBin).parent.parent.path;
+      final dartSdkPath = findDartSdkPath();
       final result = await Process.run(
         dartBin,
         [

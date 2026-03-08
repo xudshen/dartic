@@ -1,34 +1,9 @@
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart' show SdkResolver, SdkNotFoundError;
 import 'package:dartic_cli/src/commands/doctor_command.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:test/test.dart';
 
-/// A fake SdkResolver that succeeds for both SDKs.
-class _FakeSuccessSdkResolver extends SdkResolver {
-  _FakeSuccessSdkResolver() : super();
-
-  @override
-  String resolveDartSdk({String? explicitPath}) => '/fake/dart-sdk';
-
-  @override
-  String resolveFlutterSdk({String? explicitPath}) => '/fake/flutter-sdk';
-}
-
-/// A fake SdkResolver that fails for both SDKs.
-class _FakeFailSdkResolver extends SdkResolver {
-  _FakeFailSdkResolver() : super();
-
-  @override
-  String resolveDartSdk({String? explicitPath}) {
-    throw SdkNotFoundError('Dart SDK not found');
-  }
-
-  @override
-  String resolveFlutterSdk({String? explicitPath}) {
-    throw SdkNotFoundError('Flutter SDK not found');
-  }
-}
+import '../helpers/fake_sdk_resolver.dart';
 
 void main() {
   group('DoctorCommand', () {
@@ -42,7 +17,7 @@ void main() {
     test('returns 0 with successful SDK resolution', () async {
       final runner = CommandRunner<int>('dartic', 'test runner')
         ..addCommand(DoctorCommand(
-          sdkResolver: _FakeSuccessSdkResolver(),
+          sdkResolver: FakeSuccessSdkResolver(),
           logger: logger,
         ));
 
@@ -53,7 +28,7 @@ void main() {
     test('returns 0 with failed SDK resolution', () async {
       final runner = CommandRunner<int>('dartic', 'test runner')
         ..addCommand(DoctorCommand(
-          sdkResolver: _FakeFailSdkResolver(),
+          sdkResolver: FakeFailSdkResolver(),
           logger: logger,
         ));
 
