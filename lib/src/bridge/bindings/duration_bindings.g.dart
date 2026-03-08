@@ -89,7 +89,7 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool get isNegative {
     final r = _dispatch.get(this, $darticObject, 'isNegative');
     if (identical(r, notOverridden)) return super.isNegative;
-    return r == true;
+    return r as bool;
   }
 
   @override
@@ -124,28 +124,28 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool operator <(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '<', [other]);
     if (identical(r, notOverridden)) return super < other;
-    return r == true;
+    return r as bool;
   }
 
   @override
   bool operator >(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '>', [other]);
     if (identical(r, notOverridden)) return super > other;
-    return r == true;
+    return r as bool;
   }
 
   @override
   bool operator <=(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '<=', [other]);
     if (identical(r, notOverridden)) return super <= other;
-    return r == true;
+    return r as bool;
   }
 
   @override
   bool operator >=(Duration other) {
     final r = _dispatch.invoke(this, $darticObject, '>=', [other]);
     if (identical(r, notOverridden)) return super >= other;
-    return r == true;
+    return r as bool;
   }
 
   @override

@@ -3,6 +3,8 @@
 // Dart SDK: 3.10.7
 // Generator: dartic_generator
 
+// ignore_for_file: unused_import, unnecessary_import, implementation_imports
+
 import '../../api/plugin.dart';
 import '../../api/plugin_context.dart';
 import '../bindings/future_bindings.g.dart';

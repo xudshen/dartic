@@ -72,7 +72,7 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   bool get isRunning {
     final r = _dispatch.get(this, $darticObject, 'isRunning');
     if (identical(r, notOverridden)) return super.isRunning;
-    return r == true;
+    return r as bool;
   }
 
   @override
