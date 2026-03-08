@@ -24,7 +24,7 @@ import 'package:kernel/binary/ast_from_binary.dart';
 Future<DarticModule> compileDart(
   String source, {
   Directory? tempDir,
-  Set<String> hostPackages = const {},
+  Set<String> compilablePackages = const {},
 }) async {
   final dir = tempDir ?? await Directory.systemTemp.createTemp('dartic_test_');
   try {
@@ -48,7 +48,7 @@ Future<DarticModule> compileDart(
     final component = ir.Component();
     BinaryBuilder(bytes).readComponent(component);
 
-    return DarticCompiler(component, compilablePackages: hostPackages).compile();
+    return DarticCompiler(component, compilablePackages: compilablePackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);
   }
@@ -87,8 +87,8 @@ int findOp(List<int> code, int op, {int start = 0}) {
 }
 
 /// Compiles [source], executes it, and returns the entry result.
-Future<Object?> compileAndRun(String source, {int? fuelBudget, Set<String> hostPackages = const {}}) async {
-  final module = await compileDart(source, hostPackages: hostPackages);
+Future<Object?> compileAndRun(String source, {int? fuelBudget, Set<String> compilablePackages = const {}}) async {
+  final module = await compileDart(source, compilablePackages: compilablePackages);
   final interp = DarticInterpreter(
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );
@@ -98,8 +98,8 @@ Future<Object?> compileAndRun(String source, {int? fuelBudget, Set<String> hostP
 
 /// Compiles a Dart source string to .darb bytes via the full pipeline:
 /// source -> .dill -> Kernel AST -> DarticCompiler -> DarticSerializer.
-Future<Uint8List> compileToDarb(String source, {Set<String> hostPackages = const {}}) async {
-  final module = await compileDart(source, hostPackages: hostPackages);
+Future<Uint8List> compileToDarb(String source, {Set<String> compilablePackages = const {}}) async {
+  final module = await compileDart(source, compilablePackages: compilablePackages);
   return DarticSerializer().serialize(module);
 }
 
@@ -108,8 +108,8 @@ Future<Uint8List> compileToDarb(String source, {Set<String> hostPackages = const
 /// Uses [createTestRegistries] + [DarticInterpreter] directly to avoid the
 /// serialize→deserialize round-trip (the serializer doesn't yet handle all
 /// constant types).
-Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<String> hostPackages = const {}}) async {
-  final module = await compileDart(source, hostPackages: hostPackages);
+Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<String> compilablePackages = const {}}) async {
+  final module = await compileDart(source, compilablePackages: compilablePackages);
   final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
@@ -122,10 +122,10 @@ Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<Strin
 
 /// Like [compileAndRunWithHost] but captures print output.
 Future<(Object?, List<String>)> compileAndCapturePrint(
-  String source, {int? fuelBudget, Set<String> hostPackages = const {}}
+  String source, {int? fuelBudget, Set<String> compilablePackages = const {}}
 ) async {
   final printLog = <String>[];
-  final module = await compileDart(source, hostPackages: hostPackages);
+  final module = await compileDart(source, compilablePackages: compilablePackages);
   final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
@@ -179,7 +179,7 @@ Future<DarticModule> compileDartMultiFile(
   Map<String, String> sources, {
   String? mainFile,
   Directory? tempDir,
-  Set<String> hostPackages = const {},
+  Set<String> compilablePackages = const {},
 }) async {
   final dir = tempDir ?? await Directory.systemTemp.createTemp('dartic_test_');
   try {
@@ -211,7 +211,7 @@ Future<DarticModule> compileDartMultiFile(
     final component = ir.Component();
     BinaryBuilder(bytes).readComponent(component);
 
-    return DarticCompiler(component, compilablePackages: hostPackages).compile();
+    return DarticCompiler(component, compilablePackages: compilablePackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);
   }
@@ -226,9 +226,9 @@ Future<Object?> compileAndRunMultiFile(
   Map<String, String> sources, {
   String? mainFile,
   int? fuelBudget,
-  Set<String> hostPackages = const {},
+  Set<String> compilablePackages = const {},
 }) async {
-  final module = await compileDartMultiFile(sources, mainFile: mainFile, hostPackages: hostPackages);
+  final module = await compileDartMultiFile(sources, mainFile: mainFile, compilablePackages: compilablePackages);
   final interp = DarticInterpreter(
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );

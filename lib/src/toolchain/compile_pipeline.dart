@@ -71,13 +71,13 @@ class CompilePipeline {
       onStderr: onStderr,
     );
 
-    // Discover host packages from the project's package_config.json.
-    onProgress?.call('Discovering host packages...');
-    final hostPackages = _discoverHostPackages(sourcePath);
+    // Discover compilable packages from the project's package_config.json.
+    onProgress?.call('Discovering compilable packages...');
+    final compilablePackages = _discoverCompilablePackages(sourcePath);
 
     // Stage 2+3: .dill → .darb
     onProgress?.call('Compiling to darb...');
-    return compileFromDill(dillBytes, hostPackages: hostPackages);
+    return compileFromDill(dillBytes, compilablePackages: compilablePackages);
   }
 
   /// Stage 1: `.dart → .dill` via subprocess.
@@ -117,17 +117,17 @@ class CompilePipeline {
   /// Stage 2+3: `.dill → .darb` (synchronous, in-process).
   ///
   /// [dillBytes] must be valid Kernel binary format.
-  /// [hostPackages] are passed to [DarticCompiler] to mark packages as host.
+  /// [compilablePackages] are passed to [DarticCompiler] to mark packages as compilable.
   Uint8List compileFromDill(
     Uint8List dillBytes, {
-    Set<String> hostPackages = const {},
+    Set<String> compilablePackages = const {},
   }) {
     try {
       // Stage 2: Parse .dill and compile to DarticModule.
       final component = ir.Component();
       BinaryBuilder(dillBytes).readComponent(component);
       final module =
-          DarticCompiler(component, compilablePackages: hostPackages).compile();
+          DarticCompiler(component, compilablePackages: compilablePackages).compile();
 
       // Stage 3: Serialize DarticModule to .darb bytes.
       return DarticSerializer().serialize(module);
@@ -218,11 +218,11 @@ class CompilePipeline {
     if (stderr.isNotEmpty) onStderr?.call(stderr);
   }
 
-  /// Discovers host packages from the project containing [sourcePath].
+  /// Discovers compilable packages from the project containing [sourcePath].
   ///
   /// Walks up to find the nearest `pubspec.yaml`, then reads
   /// `.dart_tool/package_config.json` for `dartic.manifest` entries.
-  Set<String> _discoverHostPackages(String sourcePath) {
+  Set<String> _discoverCompilablePackages(String sourcePath) {
     final pubspec = findNearestPubspec(sourcePath);
     if (pubspec == null) return {};
 

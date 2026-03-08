@@ -1,7 +1,7 @@
 # Host Library Manifest 设计
 
 **日期：** 2026-03-07
-**状态：** 已确认
+**状态：** 已被 `2026-03-08-compilable-package-discovery-design.md` 替代
 **前置文档：** `docs/design/04-interop.md`, `docs/design/05-compiler.md`
 
 ## 目标

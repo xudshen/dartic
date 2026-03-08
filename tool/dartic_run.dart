@@ -29,9 +29,9 @@ Future<void> main(List<String> args) async {
   final component = ir.Component();
   BinaryBuilder(bytes).readComponent(component);
 
-  // For host library support (e.g., package:flutter), use:
-  //   final hostPackages = discoverHostPackages(packageConfigUri);
-  //   final module = DarticCompiler(component, hostPackages: hostPackages).compile();
+  // For compilable package support (e.g., package:flutter), use:
+  //   final compilablePackages = discoverCompilablePackages(packageConfigUri);
+  //   final module = DarticCompiler(component, compilablePackages: compilablePackages).compile();
   final module = DarticCompiler(component).compile();
 
   final engine = DarticEngine(
