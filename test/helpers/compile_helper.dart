@@ -48,7 +48,7 @@ Future<DarticModule> compileDart(
     final component = ir.Component();
     BinaryBuilder(bytes).readComponent(component);
 
-    return DarticCompiler(component, hostPackages: hostPackages).compile();
+    return DarticCompiler(component, compilablePackages: hostPackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);
   }
@@ -211,7 +211,7 @@ Future<DarticModule> compileDartMultiFile(
     final component = ir.Component();
     BinaryBuilder(bytes).readComponent(component);
 
-    return DarticCompiler(component, hostPackages: hostPackages).compile();
+    return DarticCompiler(component, compilablePackages: hostPackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);
   }

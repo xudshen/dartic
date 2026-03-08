@@ -16,7 +16,7 @@ import 'package:kernel/binary/ast_from_binary.dart';
 
 import '../bytecode/serializer.dart';
 import '../compiler/compiler.dart';
-import '../compiler/host_package_discovery.dart';
+import '../compiler/package_discovery.dart';
 import 'sdk_resolver.dart';
 import 'target.dart';
 
@@ -127,7 +127,7 @@ class CompilePipeline {
       final component = ir.Component();
       BinaryBuilder(dillBytes).readComponent(component);
       final module =
-          DarticCompiler(component, hostPackages: hostPackages).compile();
+          DarticCompiler(component, compilablePackages: hostPackages).compile();
 
       // Stage 3: Serialize DarticModule to .darb bytes.
       return DarticSerializer().serialize(module);
@@ -230,6 +230,6 @@ class CompilePipeline {
         File('${pubspec.parent.path}/.dart_tool/package_config.json');
     if (!packageConfigFile.existsSync()) return {};
 
-    return discoverHostPackages(Uri.file(packageConfigFile.absolute.path));
+    return discoverCompilablePackages(Uri.file(packageConfigFile.absolute.path));
   }
 }

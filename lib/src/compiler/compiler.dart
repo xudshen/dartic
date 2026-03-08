@@ -37,11 +37,11 @@ enum ResultLoc { value, ref }
 ///
 /// See: docs/design/05-compiler.md
 class DarticCompiler {
-  DarticCompiler(this._component, {Set<String> hostPackages = const {}})
-      : _hostPackages = hostPackages;
+  DarticCompiler(this._component, {Set<String> compilablePackages = const {}})
+      : _compilablePackages = compilablePackages;
 
   final ir.Component _component;
-  final Set<String> _hostPackages;
+  final Set<String> _compilablePackages;
 
   // ── Global compilation state ──
 
@@ -1155,10 +1155,11 @@ class DarticCompiler {
   bool _isHostLibrary(ir.Library lib) {
     final uri = lib.importUri;
     if (uri.isScheme('dart')) return true;
+    if (uri.isScheme('file')) return false;
     if (uri.isScheme('package')) {
-      return _hostPackages.contains(uri.pathSegments.first);
+      return !_compilablePackages.contains(uri.pathSegments.first);
     }
-    return false;
+    return true; // Unknown scheme, conservatively skip
   }
 
   /// Builds the fully-qualified name for a platform class.

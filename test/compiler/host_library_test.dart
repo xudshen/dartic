@@ -17,7 +17,7 @@ void main() {
       );
     });
 
-    test('default hostPackages (empty) preserves existing behavior', () async {
+    test('default compilablePackages (empty) preserves existing behavior', () async {
       final module = await compileDart('''
 void main() {
   print('hello');
