@@ -25,6 +25,7 @@ class FakeCompilePipeline extends CompilePipeline {
     required DarticTarget target,
     String? sdkPath,
     void Function(String stage)? onProgress,
+    void Function(String stderr)? onStderr,
   }) async {
     lastSourcePath = sourcePath;
     lastTarget = target;
