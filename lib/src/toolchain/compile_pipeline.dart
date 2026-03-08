@@ -54,6 +54,7 @@ class CompilePipeline {
     required DarticTarget target,
     String? sdkPath,
     void Function(String stage)? onProgress,
+    void Function(String stderr)? onStderr,
   }) async {
     // Validate source file exists.
     final sourceFile = File(sourcePath);
@@ -67,6 +68,7 @@ class CompilePipeline {
       sourcePath: sourcePath,
       target: target,
       sdkPath: sdkPath,
+      onStderr: onStderr,
     );
 
     // Discover host packages from the project's package_config.json.
@@ -86,15 +88,18 @@ class CompilePipeline {
     required String sourcePath,
     required DarticTarget target,
     String? sdkPath,
+    void Function(String stderr)? onStderr,
   }) async {
     final tempDir = Directory.systemTemp.createTempSync('dartic_compile_');
     final tempDill = '${tempDir.path}/output.dill';
     try {
       switch (target) {
         case DarticTarget.dart:
-          await _compileDartDill(sourcePath, tempDill, sdkPath: sdkPath);
+          await _compileDartDill(sourcePath, tempDill,
+              sdkPath: sdkPath, onStderr: onStderr);
         case DarticTarget.flutter:
-          await _compileFlutterDill(sourcePath, tempDill, sdkPath: sdkPath);
+          await _compileFlutterDill(sourcePath, tempDill,
+              sdkPath: sdkPath, onStderr: onStderr);
       }
 
       final dillFile = File(tempDill);
@@ -138,6 +143,7 @@ class CompilePipeline {
     String sourcePath,
     String outputDill, {
     String? sdkPath,
+    void Function(String stderr)? onStderr,
   }) async {
     final dartSdk = sdkResolver.resolveDartSdk(explicitPath: sdkPath);
     final dartBin = '$dartSdk/bin/dart';
@@ -156,6 +162,10 @@ class CompilePipeline {
         '${result.stderr}',
       );
     }
+
+    // On success, forward stderr (warnings) to callback if provided.
+    final stderr = result.stderr as String;
+    if (stderr.isNotEmpty) onStderr?.call(stderr);
   }
 
   /// Compiles `.dart → .dill` using Flutter's frontend_server.
@@ -163,6 +173,7 @@ class CompilePipeline {
     String sourcePath,
     String outputDill, {
     String? sdkPath,
+    void Function(String stderr)? onStderr,
   }) async {
     final flutterSdk = sdkResolver.resolveFlutterSdk(explicitPath: sdkPath);
 
@@ -201,6 +212,10 @@ class CompilePipeline {
         '${result.stdout}\n${result.stderr}',
       );
     }
+
+    // On success, forward stderr (warnings) to callback if provided.
+    final stderr = result.stderr as String;
+    if (stderr.isNotEmpty) onStderr?.call(stderr);
   }
 
   /// Discovers host packages from the project containing [sourcePath].

@@ -92,6 +92,9 @@ class CompileCommand extends Command<int> {
         onProgress: (stage) {
           progress.update(stage);
         },
+        onStderr: (stderr) {
+          _logger.detail(stderr);
+        },
       );
       progress.complete('Compilation complete');
 
