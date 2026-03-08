@@ -187,15 +187,15 @@
 |-------|------|---------|------|
 | [8.1](phase8/batch-8.1-toolchain-core.md) | Toolchain 核心层（version/target/sdk_resolver/compile_pipeline） | 5 | ✅ |
 | [8.2](phase8/batch-8.2-cli-shell.md) | CLI 壳子包（5 个命令 + 信号处理） | 6 | ✅ |
-| [8.3](phase8/batch-8.3-e2e-cleanup.md) | E2E 验收 + 旧脚本 deprecated + 文档更新 | 4 | |
+| [8.3](phase8/batch-8.3-e2e-cleanup.md) | E2E 验收 + 旧脚本 deprecated + 文档更新 | 4 | ✅ |
 
 **里程碑：**
-- [ ] `dartic compile` Dart 模式端到端（.dart → .darb）
-- [ ] `dartic run` 支持 .dart 和 .darb 输入
-- [ ] `dartic gen` 整合 dartic_generator
-- [ ] `dartic doctor` + `dartic version` 环境诊断
-- [ ] 旧脚本 `tool/dartic_run.dart` 和 `dartic_generator/bin/generate.dart` 标记 deprecated
-- [ ] Flutter 模式编译验收（需 dart:ui P0+P1 binding 前置）
+- [x] `dartic compile` Dart 模式端到端（.dart → .darb）
+- [x] `dartic run` 支持 .dart 和 .darb 输入
+- [x] `dartic gen` 整合 dartic_generator
+- [x] `dartic doctor` + `dartic version` 环境诊断
+- [x] 旧脚本 `tool/dartic_run.dart` 和 `dartic_generator/bin/generate.dart` 标记 deprecated
+- [x] Flutter 模式编译验收（简单源码通过，复杂 Flutter 源码需 RecordType 支持）
 
 ---
 
