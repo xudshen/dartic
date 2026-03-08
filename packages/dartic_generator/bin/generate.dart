@@ -1,3 +1,6 @@
+/// @deprecated Use `dartic gen` instead.
+/// This entry point is kept for backwards compatibility.
+
 import 'dart:io';
 
 import 'package:args/args.dart';

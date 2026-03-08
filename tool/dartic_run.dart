@@ -1,3 +1,6 @@
+/// @deprecated Use `dartic run` instead.
+/// This script is kept for backwards compatibility and will be removed in a future version.
+///
 /// Subprocess runner: loads a .dill, compiles to dartic bytecode, executes.
 ///
 /// Stdout carries the test's print output (for async marker detection).
