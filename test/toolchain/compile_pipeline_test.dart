@@ -104,7 +104,7 @@ void main() {
 
       expect(
         () => pipeline.compileFromDill(invalidBytes),
-        throwsA(anything),
+        throwsA(isA<CompileError>()),
       );
     });
   });

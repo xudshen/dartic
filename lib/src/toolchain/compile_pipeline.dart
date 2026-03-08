@@ -8,7 +8,6 @@
 /// See: docs/plans/2026-03-08-dartic-cli-design.md §5.1
 library;
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -88,8 +87,8 @@ class CompilePipeline {
     required DarticTarget target,
     String? sdkPath,
   }) async {
-    final tempDill =
-        '${Directory.systemTemp.path}/dartic_compile_${DateTime.now().millisecondsSinceEpoch}.dill';
+    final tempDir = Directory.systemTemp.createTempSync('dartic_compile_');
+    final tempDill = '${tempDir.path}/output.dill';
     try {
       switch (target) {
         case DarticTarget.dart:
@@ -105,7 +104,7 @@ class CompilePipeline {
       return dillFile.readAsBytesSync();
     } finally {
       try {
-        File(tempDill).deleteSync();
+        tempDir.deleteSync(recursive: true);
       } catch (_) {}
     }
   }
@@ -118,14 +117,20 @@ class CompilePipeline {
     Uint8List dillBytes, {
     Set<String> hostPackages = const {},
   }) {
-    // Stage 2: Parse .dill and compile to DarticModule.
-    final component = ir.Component();
-    BinaryBuilder(dillBytes).readComponent(component);
-    final module =
-        DarticCompiler(component, hostPackages: hostPackages).compile();
+    try {
+      // Stage 2: Parse .dill and compile to DarticModule.
+      final component = ir.Component();
+      BinaryBuilder(dillBytes).readComponent(component);
+      final module =
+          DarticCompiler(component, hostPackages: hostPackages).compile();
 
-    // Stage 3: Serialize DarticModule to .darb bytes.
-    return DarticSerializer().serialize(module);
+      // Stage 3: Serialize DarticModule to .darb bytes.
+      return DarticSerializer().serialize(module);
+    } on CompileError {
+      rethrow;
+    } catch (e) {
+      throw CompileError('Failed to compile from dill: $e');
+    }
   }
 
   /// Compiles `.dart → .dill` using the Dart SDK's `dart compile kernel`.
@@ -210,26 +215,6 @@ class CompilePipeline {
         File('${pubspec.parent.path}/.dart_tool/package_config.json');
     if (!packageConfigFile.existsSync()) return {};
 
-    final hostPackages =
-        discoverHostPackages(Uri.file(packageConfigFile.absolute.path));
-
-    // Also include all package names from package_config.json as host
-    // packages (for Flutter mode where the runtime has all dependencies).
-    hostPackages.addAll(_allPackageNames(packageConfigFile.path));
-
-    return hostPackages;
-  }
-
-  /// Reads all package names from a package_config.json file.
-  static Set<String> _allPackageNames(String packageConfigPath) {
-    final file = File(packageConfigPath);
-    if (!file.existsSync()) return {};
-    final json =
-        jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
-    final packages = json['packages'] as List<dynamic>? ?? [];
-    return {
-      for (final pkg in packages)
-        if ((pkg as Map<String, dynamic>)['name'] case final String name) name,
-    };
+    return discoverHostPackages(Uri.file(packageConfigFile.absolute.path));
   }
 }
