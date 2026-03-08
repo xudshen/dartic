@@ -532,7 +532,7 @@ class CompileCommand extends Command<int> {
 
 ---
 
-## 10. dart:ui Binding（CLI 前置阻塞项）
+## 10. dart:ui Binding（CLI 前置阻塞项）— ✅ P0+P1 已完成
 
 ### 10.1 为什么需要
 

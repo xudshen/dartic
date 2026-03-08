@@ -196,6 +196,8 @@
 - [x] `dartic doctor` + `dartic version` 环境诊断
 - [x] 旧脚本 `tool/dartic_run.dart` 和 `dartic_generator/bin/generate.dart` 标记 deprecated
 - [x] Flutter 模式编译验收（简单源码通过，复杂 Flutter 源码需 RecordType 支持）
+- [x] dart:ui P0+P1 binding（Color, TextDirection, Offset, Size, Rect, Radius, FontWeight, FontStyle, TextAlign）
+- [x] subprocess stderr 过滤（verbose 模式输出，非 verbose 静默）
 
 ---
 
