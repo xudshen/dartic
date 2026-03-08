@@ -12,5 +12,8 @@ pubspec.lock
 # Generated test artifacts
 *.dill
 
+# Flutter build artifacts
+build/
+
 # Vendored dependencies
 vendor/
