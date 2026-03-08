@@ -77,6 +77,9 @@ fvm dart *                 # Pure Dart 包
 # dartic CLI（packages/dartic_cli/）
 fvm dart run packages/dartic_cli/bin/dartic.dart compile lib/app.dart -o app.darb
 fvm dart run packages/dartic_cli/bin/dartic.dart run app.darb
+fvm dart run packages/dartic_cli/bin/dartic.dart dump app.darb
+fvm dart run packages/dartic_cli/bin/dartic.dart dump app.darb --full
+fvm dart run packages/dartic_cli/bin/dartic.dart dump app.darb --full --function main
 fvm dart run packages/dartic_cli/bin/dartic.dart gen dartic_export.yaml
 fvm dart run packages/dartic_cli/bin/dartic.dart doctor
 fvm dart run packages/dartic_cli/bin/dartic.dart version

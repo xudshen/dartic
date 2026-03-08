@@ -4,6 +4,7 @@ import 'package:args/command_runner.dart';
 import 'package:dartic/dartic.dart' show darticVersion;
 import 'package:dartic_cli/src/commands/compile_command.dart';
 import 'package:dartic_cli/src/commands/doctor_command.dart';
+import 'package:dartic_cli/src/commands/dump_command.dart';
 import 'package:dartic_cli/src/commands/gen_command.dart';
 import 'package:dartic_cli/src/commands/run_command.dart';
 import 'package:dartic_cli/src/commands/version_command.dart';
@@ -37,6 +38,7 @@ class DarticCliRunner extends CommandRunner<int> {
     addCommand(RunCommand(logger: _logger));
     addCommand(VersionCommand(logger: _logger));
     addCommand(DoctorCommand(logger: _logger));
+    addCommand(DumpCommand());
   }
 
   final Logger _logger;
