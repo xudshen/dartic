@@ -11,7 +11,6 @@
 // Stage 2: Uses DarticCompiler to compile .dill → .darb
 
 // ignore_for_file: implementation_imports
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartic/dartic.dart';
@@ -85,20 +84,16 @@ Future<void> main(List<String> args) async {
   final component = ir.Component();
   BinaryBuilder(dillBytes).readComponent(component);
 
-  // Mark ALL packages from package_config.json as host packages.
-  // The Flutter .dill includes all transitive dependencies, but the
-  // DarticCompiler should only compile the user's dartic source — everything
-  // else is host code available in the Flutter runtime.
-  final hostPackages = <String>{'flutter'};
-  if (packageConfig != null) {
-    hostPackages.addAll(discoverHostPackages(Uri.file(packageConfig)));
-    hostPackages.addAll(_allPackageNames(packageConfig));
-  }
+  // Discover compilable packages from dartic.manifest files.
+  // With the reversed model, packages without role: compilable default to host.
+  final compilablePackages = packageConfig != null
+      ? discoverCompilablePackages(Uri.file(packageConfig))
+      : <String>{};
 
-  print('Host packages: $hostPackages');
+  print('Compilable packages: $compilablePackages');
 
   final module =
-      DarticCompiler(component, hostPackages: hostPackages).compile();
+      DarticCompiler(component, compilablePackages: compilablePackages).compile();
 
   // Serialize to .darb.
   final darbBytes = DarticSerializer().serialize(module);
@@ -163,14 +158,3 @@ String _baseName(String path) {
   return path.contains(sep) ? path.split(sep).last : path;
 }
 
-/// Reads all package names from a package_config.json file.
-Set<String> _allPackageNames(String packageConfigPath) {
-  final file = File(packageConfigPath);
-  if (!file.existsSync()) return {};
-  final json = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
-  final packages = json['packages'] as List<dynamic>? ?? [];
-  return {
-    for (final pkg in packages)
-      if ((pkg as Map<String, dynamic>)['name'] case final String name) name,
-  };
-}
