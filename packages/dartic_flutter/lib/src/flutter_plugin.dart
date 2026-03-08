@@ -1,5 +1,6 @@
 import 'package:dartic/dartic.dart';
 
+import 'plugins/ui_plugin.g.dart';
 import 'plugins/widgets_plugin.g.dart';
 import 'plugins/material_plugin.g.dart';
 
@@ -19,6 +20,7 @@ class DarticFlutterPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext context) {
+    UiPlugin().register(context);
     WidgetsPlugin().register(context);
     MaterialPlugin().register(context);
   }
