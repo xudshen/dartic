@@ -1,0 +1,14 @@
+/// Dartic version, kept in sync with `pubspec.yaml`.
+const String darticVersion = '1.0.0';
+
+/// Minimum Dart SDK version required by dartic (caret constraint).
+const String requiredDartSdk = '^3.10.7';
+
+/// Minimum Flutter SDK version required by dartic (caret constraint).
+const String requiredFlutterSdk = '^3.38.7';
+
+/// Kernel binary format version that dartic targets.
+///
+/// Must match `Tag.BinaryFormatVersion` in
+/// `package:kernel/binary/tag.dart` of the vendored Dart SDK.
+const int kernelFormatVersion = 125;
