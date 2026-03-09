@@ -2341,7 +2341,7 @@ class DarticInterpreter {
           final bx = decodeBx(instr);
           if (vs.readInt(vBase + a) == 0) {
             final message =
-                bx != 0xFFFF ? module.constantPool.getRef(bx) : null;
+                bx != 0xFFFFFFFF ? module.constantPool.getRef(bx) : null;
             final exception = AssertionError(message?.toString());
             pc = unwindToHandler(pc - 1, exception, StackTrace.current);
           }

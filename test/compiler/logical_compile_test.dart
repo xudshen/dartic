@@ -478,7 +478,7 @@ void main() {}
 
       // The jump should skip the right operand code.
       // sBx is the PC-relative offset (target - (jumpPC + 1)).
-      final sBx = decodeWideJumpSBx(code, jumpIdx);
+      final sBx = decodeJumpSBx(code, jumpIdx);
       final targetPC = jumpIdx + 1 + sBx;
       // Target should be after the jump and within bounds.
       expect(targetPC, greaterThan(jumpIdx));
@@ -495,7 +495,7 @@ void main() {}
       final jumpIdx = findOp(code, Op.jumpIfTrue);
       expect(jumpIdx, isNot(-1));
 
-      final sBx = decodeWideJumpSBx(code, jumpIdx);
+      final sBx = decodeJumpSBx(code, jumpIdx);
       final targetPC = jumpIdx + 1 + sBx;
       expect(targetPC, greaterThan(jumpIdx));
       expect(targetPC, lessThanOrEqualTo(code.length));

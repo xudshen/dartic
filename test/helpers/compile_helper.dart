@@ -88,9 +88,12 @@ int findOp(List<int> code, int op, {int start = 0}) {
 }
 
 /// Decodes the sBx offset from an AsBx jump instruction at [pc].
-int decodeWideJumpSBx(List<int> code, int pc) {
+int decodeJumpSBx(List<int> code, int pc) {
   return decodesBx(code[pc]);
 }
+
+@Deprecated('Use decodeJumpSBx instead')
+int decodeWideJumpSBx(List<int> code, int pc) => decodeJumpSBx(code, pc);
 
 /// Compiles [source], executes it, and returns the entry result.
 Future<Object?> compileAndRun(String source, {int? fuelBudget, Set<String> compilablePackages = const {}}) async {

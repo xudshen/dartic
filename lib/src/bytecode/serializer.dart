@@ -11,7 +11,7 @@ import 'module.dart';
 
 /// Serializes a [DarticModule] to the `.darb` binary format.
 ///
-/// Binary layout (v2):
+/// Binary layout (v3):
 /// - Header (12 bytes): magic (UInt32) + version (UInt32) + CRC32 checksum (UInt32)
 /// - Binding name table: count (UInt16) + entries (symbolName + argCount)
 /// - Constant pool: refs, ints, doubles, names

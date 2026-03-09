@@ -388,8 +388,8 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // Determine message constant pool index.
-    // 0xFFFF = sentinel for "no message".
-    int msgIdx = 0xFFFF;
+    // 0xFFFFFFFF = sentinel for "no message" (max 32-bit Bx).
+    int msgIdx = 0xFFFFFFFF;
     if (stmt.message != null) {
       final msgExpr = stmt.message!;
       if (msgExpr is ir.StringLiteral) {
@@ -414,7 +414,7 @@ extension on DarticCompiler {
     final opcode = stmt.isYieldStar ? Op.yieldStar : Op.yield_;
 
     // YIELD/YIELD_STAR A, Bx — A = yielded value/iterable/stream (ref),
-    // Bx = resume PC. Always uses 3-word WIDE encoding so Bx can hold any PC.
+    // Bx = resume PC (32-bit in 64-bit ISA, fits any PC natively).
     _emitter.emitWithResumePCInBx(opcode, reg);
   }
 

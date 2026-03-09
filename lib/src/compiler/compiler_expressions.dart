@@ -18,8 +18,8 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _loadInt(int value) {
     final reg = _allocValueReg();
-    // sBx uses excess-K encoding (K=0x7FFF): asymmetric range [-32767, +32768].
-    if (value >= -32767 && value <= 32768) {
+    // sBx uses excess-K encoding (K=0x7FFFFFFF): range [-2147483647, +2147483648].
+    if (value >= -2147483647 && value <= 2147483648) {
       _emitter.emitAsBx(Op.loadInt, reg, value);
     } else {
       final idx = _constantPool.addInt(value);
@@ -470,7 +470,7 @@ extension on DarticCompiler {
         _inferExprType(expr.operand));
 
     // AWAIT A, Bx where Bx = resume PC (instruction after the AWAIT).
-    // Always uses 3-word WIDE encoding so Bx can hold any PC.
+    // Bx is 32-bit in the 64-bit ISA, so any PC fits natively.
     _emitter.emitWithResumePCInBx(Op.await_, operandReg);
 
     // After resume, the result is in refStack[A] (same register).
@@ -2386,9 +2386,8 @@ extension on DarticCompiler {
       // Empty record: shape = [0], no field registers needed.
       final shape = <Object>[0];
       final shapeIdx = _constantPool.addRef(shape);
-      assert(shapeIdx <= 0xFF,
-          'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-          'WIDE prefix not yet supported for this opcode');
+      assert(shapeIdx <= 0xFFFF,
+          'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
       _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
@@ -2412,7 +2411,7 @@ extension on DarticCompiler {
       ...named.map((n) => n.name),
     ];
     final shapeIdx = _constantPool.addRef(shape);
-    assert(shapeIdx <= 0xFF,
+    assert(shapeIdx <= 0xFFFF,
         'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
         'WIDE prefix not yet supported for this opcode');
 
@@ -2484,9 +2483,8 @@ extension on DarticCompiler {
     if (totalFields == 0) {
       final shape = <Object>[0];
       final shapeIdx = _constantPool.addRef(shape);
-      assert(shapeIdx <= 0xFF,
-          'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-          'WIDE prefix not yet supported for this opcode');
+      assert(shapeIdx <= 0xFFFF,
+          'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
       _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
@@ -2512,7 +2510,7 @@ extension on DarticCompiler {
       ...namedEntries.map((e) => e.key),
     ];
     final shapeIdx = _constantPool.addRef(shape);
-    assert(shapeIdx <= 0xFF,
+    assert(shapeIdx <= 0xFFFF,
         'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
         'WIDE prefix not yet supported for this opcode');
 

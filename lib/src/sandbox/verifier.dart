@@ -298,12 +298,8 @@ class DarticVerifier {
 
     final prefix = '[func ${func.name}#${func.funcId}]';
 
-    // Build valid instruction start PCs (first pass).
-    // With 64-bit ISA, every instruction is exactly 1 word.
-    final validPCs = <int>{};
-    for (var scanPC = 0; scanPC < codeLength; scanPC++) {
-      validPCs.add(scanPC);
-    }
+    // With 64-bit ISA, every instruction is exactly 1 word, so every
+    // index in [0, codeLength) is a valid instruction boundary.
 
     for (var pc = 0; pc < codeLength; pc++) {
       final instr = code[pc];
@@ -332,11 +328,6 @@ class DarticVerifier {
           errors.add(
             '$prefix Jump target $target out of range '
             '[0, $codeLength) at pc=$pc',
-          );
-        } else if (!validPCs.contains(target)) {
-          errors.add(
-            '$prefix Jump target $target is not at an instruction '
-            'boundary at pc=$pc',
           );
         }
       }
