@@ -696,12 +696,12 @@ extension on DarticCompiler {
     return _emitCallHost(compiledArgs, bindingIndex);
   }
 
-  /// Compiles host call arguments with null-padding for optional/named params.
+  /// Compiles host call arguments with LOAD_ABSENT padding for optional/named params.
   ///
   /// Produces a flat arg list matching the full parameter count of [func],
-  /// with missing optional positional and named params filled with null.
+  /// with missing optional positional and named params filled with darticAbsent.
   /// This ensures the binding key uses max arity, matching the methodMap
-  /// entry that checks `args.length > N && args[N] != null`.
+  /// entry that checks `identical(args[i], darticAbsent)`.
   List<(int, ResultLoc, ir.DartType?)> _compileHostArgsWithPadding(
     ir.Arguments arguments,
     ir.FunctionNode func,
@@ -740,9 +740,9 @@ extension on DarticCompiler {
   /// Compiles a factory constructor invocation as CALL_HOST.
   ///
   /// Factory constructors are Procedures in Kernel IR but need all named
-  /// params padded with null (in declaration order) so the binding key
+  /// params padded with darticAbsent (in declaration order) so the binding key
   /// uses max arity — matching the methodMap entry that handles variable
-  /// args via `args.length > N && args[N] != null` checks.
+  /// args via `identical(args[i], darticAbsent)` checks.
   (int, ResultLoc) _compileHostFactoryInvocation(ir.StaticInvocation expr) {
     final target = expr.target;
     final compiledArgs =
