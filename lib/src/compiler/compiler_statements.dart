@@ -206,9 +206,9 @@ extension on DarticCompiler {
       for (final caseExpr in switchCase.expressions) {
         final (caseReg, _) = _compileExpression(caseExpr);
         if (isValueSwitch) {
-          _emitter.emit(encodeABC(Op.eqInt, resultReg, switchReg, caseReg));
+          _emitter.emitABC(Op.eqInt, resultReg, switchReg, caseReg);
         } else {
-          _emitter.emit(encodeABC(Op.eqRef, resultReg, switchReg, caseReg));
+          _emitter.emitABC(Op.eqRef, resultReg, switchReg, caseReg);
         }
         matchJumps.add(_emitter.emitPlaceholder()); // JUMP_IF_TRUE -> body
       }
@@ -410,7 +410,7 @@ extension on DarticCompiler {
     _compileStatement(stmt.finalizer);
 
     // RETHROW to continue propagating the exception.
-    _emitter.emit(encodeABC(Op.rethrow_, exceptionReg, stackTraceReg, 0));
+    _emitter.emitABC(Op.rethrow_, exceptionReg, stackTraceReg, 0);
 
     // 5. Add exception handler.
     _exceptionHandlers.add(ExceptionHandler(
@@ -452,7 +452,7 @@ extension on DarticCompiler {
     }
 
     // Emit ASSERT A, Bx -- instruction checks condition and throws if false.
-    _emitter.emit(encodeABx(Op.assert_, condReg, msgIdx));
+    _emitter.emitABx(Op.assert_, condReg, msgIdx);
   }
 
   // ── Yield statement ──
@@ -469,7 +469,7 @@ extension on DarticCompiler {
     // Bx = resume PC. Bx is a placeholder that will be patched to point to
     // the next instruction after the yield (the resume point).
     final yieldPC = _emitter.currentPC;
-    _emitter.emit(encodeABx(opcode, reg, 0)); // placeholder Bx=0
+    _emitter.emitABx(opcode, reg, 0); // placeholder Bx=0
 
     // The resume PC is the instruction immediately after YIELD/YIELD_STAR.
     final resumePC = _emitter.currentPC;
@@ -492,7 +492,7 @@ extension on DarticCompiler {
         _compileExpression(expr);
       }
       _emitCloseUpvaluesIfNeeded();
-      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
     }
 
@@ -500,15 +500,15 @@ extension on DarticCompiler {
     if (_currentAsyncMarker == ir.AsyncMarker.Async) {
       if (expr == null) {
         final nullReg = _allocRefReg();
-        _emitter.emit(encodeABC(Op.loadNull, nullReg, 0, 0));
+        _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
         _emitCloseUpvaluesIfNeeded();
-        _emitter.emit(encodeABC(Op.asyncReturn, nullReg, 0, 0));
+        _emitter.emitABC(Op.asyncReturn, nullReg, 0, 0);
       } else {
         var (reg, loc) = _compileExpression(expr);
         // ASYNC_RETURN always operates on the ref stack.
         reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
         _emitCloseUpvaluesIfNeeded();
-        _emitter.emit(encodeABC(Op.asyncReturn, reg, 0, 0));
+        _emitter.emitABC(Op.asyncReturn, reg, 0, 0);
       }
       return;
     }
@@ -524,16 +524,16 @@ extension on DarticCompiler {
         final kind = loc == ResultLoc.ref
             ? StackKind.ref
             : _inferStackKind(expr);
-        _emitter.emit(encodeABC(Op.halt, reg, kind.index + 1, 0));
+        _emitter.emitABC(Op.halt, reg, kind.index + 1, 0);
       } else {
-        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
+        _emitter.emitABC(Op.halt, 0, 0, 0);
       }
       return;
     }
 
     if (expr == null) {
       _emitCloseUpvaluesIfNeeded();
-      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
     }
 
@@ -563,7 +563,7 @@ extension on DarticCompiler {
       }
     }
     if (minReg != -1) {
-      _emitter.emit(encodeABC(Op.closeUpvalue, minReg, 0, 0));
+      _emitter.emitABC(Op.closeUpvalue, minReg, 0, 0);
     }
   }
 
@@ -617,9 +617,9 @@ extension on DarticCompiler {
       // No initializer -- allocate a register and load a default value.
       final binding = _scope.declare(decl, kind);
       if (kind == StackKind.ref) {
-        _emitter.emit(encodeABC(Op.loadNull, binding.reg, 0, 0));
+        _emitter.emitABC(Op.loadNull, binding.reg, 0, 0);
       } else {
-        _emitter.emit(encodeAsBx(Op.loadInt, binding.reg, 0));
+        _emitter.emitAsBx(Op.loadInt, binding.reg, 0);
       }
     }
   }

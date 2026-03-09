@@ -183,7 +183,7 @@ extension on DarticCompiler {
 
     // Emit CLOSURE instruction in the enclosing function.
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, innerFuncId));
+    _emitter.emitABx(Op.closure, closureReg, innerFuncId);
 
     return (closureReg, innerFuncId);
   }
@@ -226,7 +226,7 @@ extension on DarticCompiler {
       );
     }
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+    _emitter.emitABx(Op.closure, closureReg, funcId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -244,7 +244,7 @@ extension on DarticCompiler {
       );
     }
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+    _emitter.emitABx(Op.closure, closureReg, funcId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -272,7 +272,7 @@ extension on DarticCompiler {
         );
       }
       final closureReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      _emitter.emitABx(Op.closure, closureReg, funcId);
       return (closureReg, ResultLoc.ref);
     }
 
@@ -351,7 +351,7 @@ extension on DarticCompiler {
 
     // 1. Allocate object.
     final objReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+    _emitter.emitABx(Op.newInstance, objReg, classId);
 
     // 2. Emit pending MOVE for `this` at ref argIdx 2.
     final thisMovePC = _emitter.emitPlaceholder();
@@ -364,7 +364,7 @@ extension on DarticCompiler {
     _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
 
     // 4. RETURN_REF objReg.
-    _emitter.emit(encodeABC(Op.returnRef, objReg, 0, 0));
+    _emitter.emitABC(Op.returnRef, objReg, 0, 0);
 
     _patchPendingArgMoves();
 
@@ -387,7 +387,7 @@ extension on DarticCompiler {
 
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -528,8 +528,8 @@ extension on DarticCompiler {
     );
     final templateIdx = _constantPool.addRef(typeTemplate);
     final typeReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
-    _emitter.emit(encodeABC(Op.allocGeneric, objReg, typeReg, 0));
+    _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
+    _emitter.emitABC(Op.allocGeneric, objReg, typeReg, 0);
 
     // 2. Emit pending MOVE for `this` at ref argIdx 2.
     final thisMovePC = _emitter.emitPlaceholder();
@@ -542,7 +542,7 @@ extension on DarticCompiler {
     _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
 
     // 4. RETURN_REF objReg.
-    _emitter.emit(encodeABC(Op.returnRef, objReg, 0, 0));
+    _emitter.emitABC(Op.returnRef, objReg, 0, 0);
 
     _patchPendingArgMoves();
 
@@ -567,7 +567,7 @@ extension on DarticCompiler {
 
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -590,7 +590,7 @@ extension on DarticCompiler {
         );
       }
       final closureReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      _emitter.emitABx(Op.closure, closureReg, funcId);
       return (closureReg, ResultLoc.ref);
     }
     throw UnsupportedError(
@@ -638,7 +638,7 @@ extension on DarticCompiler {
         );
       }
       final closureReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.closure, closureReg, funcId));
+      _emitter.emitABx(Op.closure, closureReg, funcId);
       return (closureReg, ResultLoc.ref);
     }
     throw UnsupportedError(
@@ -734,7 +734,7 @@ extension on DarticCompiler {
 
     // 4. Load receiver from upvalue[0] into a ref register.
     final receiverReg = _allocRefReg();
-    _emitter.emit(encodeABC(Op.loadUpvalue, receiverReg, 0, 0));
+    _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
 
     // 5. Allocate result register based on return type.
     final retType = fn.returnType;
@@ -752,9 +752,9 @@ extension on DarticCompiler {
 
     // 8. Emit RETURN.
     if (retLoc == ResultLoc.value) {
-      _emitter.emit(encodeABC(Op.returnVal, resultReg, 0, 0));
+      _emitter.emitABC(Op.returnVal, resultReg, 0, 0);
     } else {
-      _emitter.emit(encodeABC(Op.returnRef, resultReg, 0, 0));
+      _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
     _patchPendingArgMoves();
@@ -786,7 +786,7 @@ extension on DarticCompiler {
     // The CLOSURE instruction automatically captures upvalues according
     // to the FuncProto's upvalueDescriptors.
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -829,7 +829,7 @@ extension on DarticCompiler {
         StackKind.boolVal   => Op.boxBool,
         _                   => Op.boxInt,
       };
-      _emitter.emit(encodeABC(boxOp, refReg, binding.reg, 0));
+      _emitter.emitABC(boxOp, refReg, binding.reg, 0);
 
       _capturedVarRefRegs[varDecl] = refReg;
 

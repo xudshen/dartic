@@ -322,7 +322,7 @@ extension on DarticCompiler {
 
     // Safety net: RETURN_NULL.
     _emitCloseUpvaluesIfNeeded();
-    _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+    _emitter.emitABC(Op.returnNull, 0, 0, 0);
 
     _patchPendingArgMoves();
 
@@ -541,11 +541,11 @@ extension on DarticCompiler {
       final targetReg = i == 0 ? firstReg : _allocRefReg();
       assert(targetReg == firstReg + i, 'Super arg registers must be consecutive');
       if (argRegs[i] != targetReg) {
-        _emitter.emit(encodeABC(Op.moveRef, targetReg, argRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, targetReg, argRegs[i], 0);
       }
     }
 
-    _emitter.emit(encodeABC(Op.storeSuperArgs, argRegs.length, firstReg, 0));
+    _emitter.emitABC(Op.storeSuperArgs, argRegs.length, firstReg, 0);
   }
 }
 

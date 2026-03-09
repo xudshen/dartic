@@ -522,8 +522,8 @@ class DarticCompiler {
         'is not yet implemented. This will be added in Phase 6.';
     final reg = _allocRefReg();
     final idx = _constantPool.addRef(msg);
-    _emitter.emit(encodeABx(Op.loadConst, reg, idx));
-    _emitter.emit(encodeABC(Op.throw_, reg, 0, 0));
+    _emitter.emitABx(Op.loadConst, reg, idx);
+    _emitter.emitABC(Op.throw_, reg, 0, 0);
   }
 
   // ── Function body compilation ──
@@ -557,69 +557,69 @@ class DarticCompiler {
       _currentAsyncMarker = ir.AsyncMarker.Async;
       final typeBx = _emitValueTypeTemplate(fn);
       final futureReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.initAsync, futureReg, typeBx));
+      _emitter.emitABx(Op.initAsync, futureReg, typeBx);
       if (fn.body != null) _compileStatement(fn.body!);
       // Safety net: if no explicit return, emit ASYNC_RETURN null.
       // For async entry functions, INIT_ASYNC stores the future in
       // _lastEntryResult (handled in the interpreter), so no HALT needed.
       final nullReg = _allocRefReg();
-      _emitter.emit(encodeABC(Op.loadNull, nullReg, 0, 0));
+      _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
       _emitCloseUpvaluesIfNeeded();
-      _emitter.emit(encodeABC(Op.asyncReturn, nullReg, 0, 0));
+      _emitter.emitABC(Op.asyncReturn, nullReg, 0, 0);
     } else if (asyncMarker == ir.AsyncMarker.SyncStar) {
       _currentAsyncMarker = ir.AsyncMarker.SyncStar;
       final typeBx = _emitValueTypeTemplate(fn);
       final iterableReg = _allocRefReg();
       // INIT_SYNC_STAR creates the lazy iterable.
-      _emitter.emit(encodeABx(Op.initSyncStar, iterableReg, typeBx));
+      _emitter.emitABx(Op.initSyncStar, iterableReg, typeBx);
       // Return the iterable synchronously; entry functions use HALT.
       if (_isEntryFunction) {
-        _emitter.emit(
-          encodeABC(Op.halt, iterableReg, StackKind.refDefault + 1, 0),
+        _emitter.emitABC(
+          Op.halt, iterableReg, StackKind.refDefault + 1, 0,
         );
       } else {
-        _emitter.emit(encodeABC(Op.returnRef, iterableReg, 0, 0));
+        _emitter.emitABC(Op.returnRef, iterableReg, 0, 0);
       }
       // Body bytecode follows — executed by SyncStarIterator.moveNext
       // via drive().
       if (fn.body != null) _compileStatement(fn.body!);
       // RETURN_NULL signals generator done.
       _emitCloseUpvaluesIfNeeded();
-      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      _emitter.emitABC(Op.returnNull, 0, 0, 0);
     } else if (asyncMarker == ir.AsyncMarker.AsyncStar) {
       _currentAsyncMarker = ir.AsyncMarker.AsyncStar;
       final typeBx = _emitValueTypeTemplate(fn);
       final streamReg = _allocRefReg();
       // INIT_ASYNC_STAR creates StreamController and stores stream.
-      _emitter.emit(encodeABx(Op.initAsyncStar, streamReg, typeBx));
+      _emitter.emitABx(Op.initAsyncStar, streamReg, typeBx);
       // Return the stream synchronously; entry functions use HALT.
       if (_isEntryFunction) {
-        _emitter.emit(
-          encodeABC(Op.halt, streamReg, StackKind.refDefault + 1, 0),
+        _emitter.emitABC(
+          Op.halt, streamReg, StackKind.refDefault + 1, 0,
         );
       } else {
-        _emitter.emit(encodeABC(Op.returnRef, streamReg, 0, 0));
+        _emitter.emitABC(Op.returnRef, streamReg, 0, 0);
       }
       // Body bytecode follows — executed when the stream gets a listener.
       if (fn.body != null) _compileStatement(fn.body!);
       // RETURN_NULL signals generator done → controller.close().
       _emitCloseUpvaluesIfNeeded();
-      _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+      _emitter.emitABC(Op.returnNull, 0, 0, 0);
     } else if (asyncMarker != ir.AsyncMarker.Sync) {
       _emitAsyncStub(asyncMarker, funcName);
       if (_isEntryFunction) {
-        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
+        _emitter.emitABC(Op.halt, 0, 0, 0);
       } else {
         _emitCloseUpvaluesIfNeeded();
-        _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+        _emitter.emitABC(Op.returnNull, 0, 0, 0);
       }
     } else {
       if (fn.body != null) _compileStatement(fn.body!);
       if (_isEntryFunction) {
-        _emitter.emit(encodeABC(Op.halt, 0, 0, 0));
+        _emitter.emitABC(Op.halt, 0, 0, 0);
       } else {
         _emitCloseUpvaluesIfNeeded();
-        _emitter.emit(encodeABC(Op.returnNull, 0, 0, 0));
+        _emitter.emitABC(Op.returnNull, 0, 0, 0);
       }
     }
   }
@@ -691,13 +691,13 @@ class DarticCompiler {
       // too broad (dynamic, Object, num) to distinguish int vs double.
       final refReg =
           _boxToRefIfValue(reg, loc, _inferExprType(field.initializer!));
-      _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
+      _emitter.emitABx(Op.storeGlobal, refReg, globalIndex);
     } finally {
       _currentInitializingField = null;
     }
 
     // HALT (end of initializer).
-    _emitter.emit(encodeAx(Op.halt, 0));
+    _emitter.emitAx(Op.halt, 0);
 
     _patchPendingArgMoves();
 
@@ -727,7 +727,7 @@ class DarticCompiler {
   /// Emits a MOVE instruction (value or ref) from [srcReg] to [destReg].
   void _emitMove(int destReg, int srcReg, ResultLoc loc) {
     final op = loc == ResultLoc.ref ? Op.moveRef : Op.moveVal;
-    _emitter.emit(encodeABC(op, destReg, srcReg, 0));
+    _emitter.emitABC(op, destReg, srcReg, 0);
   }
 
   /// Compiles a binary value-stack operation with mixed-type auto-promotion.
@@ -777,12 +777,12 @@ class DarticCompiler {
     rhsReg = _coerceToValueKind(rhsReg, rhsLoc, rhsKind, targetKind);
 
     var resultReg = _allocValueReg();
-    _emitter.emit(encodeABC(op, resultReg, lhsReg, rhsReg));
+    _emitter.emitABC(op, resultReg, lhsReg, rhsReg);
 
     // divInt promoted to divDbl → truncate back to int.
     if (truncateResult) {
       final intResult = _allocValueReg();
-      _emitter.emit(encodeABC(Op.dblToInt, intResult, resultReg, 0));
+      _emitter.emitABC(Op.dblToInt, intResult, resultReg, 0);
       resultReg = intResult;
     }
 
@@ -800,7 +800,7 @@ class DarticCompiler {
         ? StackKind.doubleVal : StackKind.intVal;
     srcReg = _ensureValue(srcReg, srcLoc, kind);
     final resultReg = _allocValueReg();
-    _emitter.emit(encodeABC(op, resultReg, srcReg, 0));
+    _emitter.emitABC(op, resultReg, srcReg, 0);
     return (resultReg, ResultLoc.value);
   }
 
@@ -813,7 +813,7 @@ class DarticCompiler {
       _                   => Op.unboxInt,
     };
     final valReg = _allocValueReg();
-    _emitter.emit(encodeABC(unboxOp, valReg, refReg, 0));
+    _emitter.emitABC(unboxOp, valReg, refReg, 0);
     return valReg;
   }
 
@@ -836,12 +836,12 @@ class DarticCompiler {
     }
     if (actualKind == StackKind.intVal && targetKind == StackKind.doubleVal) {
       final converted = _allocValueReg();
-      _emitter.emit(encodeABC(Op.intToDbl, converted, reg, 0));
+      _emitter.emitABC(Op.intToDbl, converted, reg, 0);
       return converted;
     }
     if (actualKind == StackKind.doubleVal && targetKind == StackKind.intVal) {
       final converted = _allocValueReg();
-      _emitter.emit(encodeABC(Op.dblToInt, converted, reg, 0));
+      _emitter.emitABC(Op.dblToInt, converted, reg, 0);
       return converted;
     }
     return reg;
@@ -939,11 +939,11 @@ class DarticCompiler {
     final kind = type != null ? _classifyStackKind(type) : StackKind.intVal;
     switch (kind) {
       case StackKind.doubleVal:
-        _emitter.emit(encodeABC(Op.boxDouble, refReg, valueReg, 0));
+        _emitter.emitABC(Op.boxDouble, refReg, valueReg, 0);
       case StackKind.boolVal:
-        _emitter.emit(encodeABC(Op.boxBool, refReg, valueReg, 0));
+        _emitter.emitABC(Op.boxBool, refReg, valueReg, 0);
       default:
-        _emitter.emit(encodeABC(Op.boxInt, refReg, valueReg, 0));
+        _emitter.emitABC(Op.boxInt, refReg, valueReg, 0);
     }
     return refReg;
   }
@@ -959,12 +959,12 @@ class DarticCompiler {
       FieldLayout layout, ir.DartType? boxingType) {
     if (layout.kind.isValue) {
       valReg = _ensureValue(valReg, valLoc, layout.kind);
-      _emitter.emit(
-          encodeABC(Op.setFieldVal, receiverReg, valReg, layout.offset));
+      _emitter.emitABC(
+          Op.setFieldVal, receiverReg, valReg, layout.offset);
     } else {
       valReg = _boxToRefIfValue(valReg, valLoc, boxingType);
-      _emitter.emit(
-          encodeABC(Op.setFieldRef, receiverReg, valReg, layout.offset));
+      _emitter.emitABC(
+          Op.setFieldRef, receiverReg, valReg, layout.offset);
     }
     return valReg;
   }
@@ -973,13 +973,13 @@ class DarticCompiler {
   (int, ResultLoc) _emitGetField(int receiverReg, FieldLayout layout) {
     if (layout.kind.isValue) {
       final resultReg = _allocValueReg();
-      _emitter.emit(
-          encodeABC(Op.getFieldVal, resultReg, receiverReg, layout.offset));
+      _emitter.emitABC(
+          Op.getFieldVal, resultReg, receiverReg, layout.offset);
       return (resultReg, ResultLoc.value);
     } else {
       final resultReg = _allocRefReg();
-      _emitter.emit(
-          encodeABC(Op.getFieldRef, resultReg, receiverReg, layout.offset));
+      _emitter.emitABC(
+          Op.getFieldRef, resultReg, receiverReg, layout.offset);
       return (resultReg, ResultLoc.ref);
     }
   }
@@ -1006,7 +1006,7 @@ class DarticCompiler {
   /// closed before the frame is deallocated.
   void _emitCloseUpvaluesIfNeeded() {
     if (_capturedVarRefRegs.isNotEmpty) {
-      _emitter.emit(encodeABC(Op.closeUpvalue, 0, 0, 0));
+      _emitter.emitABC(Op.closeUpvalue, 0, 0, 0);
     }
   }
 
@@ -1021,14 +1021,14 @@ class DarticCompiler {
       int reg, ResultLoc loc, StackKind targetKind, ir.DartType? boxingType) {
     if (loc == ResultLoc.ref && targetKind.isValue) {
       final valReg = _emitUnbox(reg, targetKind);
-      _emitter.emit(encodeABC(Op.returnVal, valReg, 0, 0));
+      _emitter.emitABC(Op.returnVal, valReg, 0, 0);
     } else if (loc == ResultLoc.value && targetKind == StackKind.ref) {
       final refReg = _emitBoxToRef(reg, boxingType);
-      _emitter.emit(encodeABC(Op.returnRef, refReg, 0, 0));
+      _emitter.emitABC(Op.returnRef, refReg, 0, 0);
     } else if (loc == ResultLoc.value) {
-      _emitter.emit(encodeABC(Op.returnVal, reg, 0, 0));
+      _emitter.emitABC(Op.returnVal, reg, 0, 0);
     } else {
-      _emitter.emit(encodeABC(Op.returnRef, reg, 0, 0));
+      _emitter.emitABC(Op.returnRef, reg, 0, 0);
     }
   }
 
@@ -1054,10 +1054,10 @@ class DarticCompiler {
     final targetRegs = List.generate(srcRegs.length, (_) => _allocRefReg());
     for (var i = 0; i < srcRegs.length; i++) {
       if (srcRegs[i] != targetRegs[i]) {
-        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], srcRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, targetRegs[i], srcRegs[i], 0);
       }
     }
-    _emitter.emit(encodeABC(op, destReg, targetRegs.first, count));
+    _emitter.emitABC(op, destReg, targetRegs.first, count);
   }
 
   // ── Host binding helpers ──
