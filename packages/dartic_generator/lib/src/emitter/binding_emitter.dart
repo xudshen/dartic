@@ -383,46 +383,14 @@ void _writeRegisterMethodWithInternalTypes(
 
 void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
   for (final method in info.staticMethods) {
-    // Generate per-arity registerBinding calls for ALL optional params
-    // (both positional and named). The compiler emits the actual provided
-    // arg count, so each arity variant must exist as a separate binding.
-    final keys = _allStaticBindingKeys(method);
-    for (final key in keys) {
-      final wrapper = _emitStaticMethodWrapper(info.className, method, key);
-      buf.writeln(
-          "    ctx.registerBinding('${info.qualifiedName}::$key', $wrapper);");
-    }
+    // 統一：単一 max-arity binding key。
+    final key = '${method.name}#${method.paramTypes.length}';
+    final wrapper = _emitStaticMethodWrapper(info.className, method);
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::$key', $wrapper);");
   }
 }
 
-/// Returns per-arity binding keys for a static method.
-///
-/// The compiler uses actual provided arg count for regular static methods
-/// (NOT max-arity padding — that's only for factory constructors and
-/// instance method dispatch via methodMap). So we must emit sub-arity
-/// variants for optional params, BUT skip any arity that would omit a
-/// required named parameter (which would fail to compile).
-List<String> _allStaticBindingKeys(MethodInfo method) {
-  final required = method.paramTypes.where((p) => !p.isOptional).length;
-  final total = method.paramTypes.length;
-  final keys = <String>[];
-  for (var arity = required; arity <= total; arity++) {
-    // Check that no required named param is beyond this arity slice.
-    // Params are ordered: positional first, then named (in declaration order).
-    // A sub-arity variant includes params[0..arity-1]; if any param beyond
-    // that range is required-named, this arity would produce invalid code.
-    final hasOmittedRequired = method.paramTypes
-        .skip(arity)
-        .any((p) => p.isNamed && p.isRequired);
-    if (hasOmittedRequired) continue;
-    keys.add('${method.name}#$arity');
-  }
-  // Always include max-arity as fallback.
-  if (keys.isEmpty || keys.last != '${method.name}#$total') {
-    keys.add('${method.name}#$total');
-  }
-  return keys;
-}
 
 /// Writes static getter registrations as registerBinding calls.
 void _writeStaticGetterRegistrations(StringBuffer buf, TypeInfo info) {
@@ -850,26 +818,71 @@ void _writeConstructorEntry(
 
 // ── Static method wrappers ──────────────────────────────────────────────
 
-String _emitStaticMethodWrapper(
-    String className, MethodInfo method, String key) {
-  final arity = int.parse(key.split('#').last);
-  // Static methods: args[0..N-1] are params (no receiver)
-  final args = <String>[];
-  for (var i = 0; i < arity; i++) {
-    final param = method.paramTypes[i];
-    final argExpr = _emitArgExpression(param, i);
-    if (param.isNamed) {
-      args.add('${param.name}: $argExpr');
+String _emitStaticMethodWrapper(String className, MethodInfo method) {
+  final hasOptional = method.paramTypes.any((p) => p.isOptional);
+  final params = method.paramTypes;
+  final isVoid = method.isVoid;
+
+  if (!hasOptional) {
+    // 無可選參數 — 簡單直接調用。
+    final args = <String>[];
+    for (var i = 0; i < params.length; i++) {
+      final param = params[i];
+      final argExpr = _emitArgExpression(param, i);
+      if (param.isNamed) {
+        args.add('${param.name}: $argExpr');
+      } else {
+        args.add(argExpr);
+      }
+    }
+    final call = '$className.${method.name}(${args.join(', ')})';
+    if (isVoid) return '(args) { $call; return null; }';
+    return '(args) => $call';
+  }
+
+  // 有可選參數 — 級聯 absent 檢查。
+  // 注意靜態方法無 receiver，參數從 args[0] 開始。
+  final firstOptional = params.indexWhere((p) => p.isOptional);
+  final lines = <String>['(args) {'];
+
+  for (var cut = firstOptional; cut < params.length; cut++) {
+    final argsUpToCut = <String>[];
+    for (var j = 0; j < cut; j++) {
+      final param = params[j];
+      final argExpr = _emitArgExpression(param, j);
+      if (param.isNamed) {
+        argsUpToCut.add('${param.name}: $argExpr');
+      } else {
+        argsUpToCut.add(argExpr);
+      }
+    }
+    final call = '$className.${method.name}(${argsUpToCut.join(', ')})';
+    if (isVoid) {
+      lines.add('  if (identical(args[$cut], darticAbsent)) { $call; return null; }');
     } else {
-      args.add(argExpr);
+      lines.add('  if (identical(args[$cut], darticAbsent)) return $call;');
     }
   }
-  final call = '$className.${method.name}(${args.join(', ')})';
 
-  if (method.isVoid) {
-    return '(args) { $call; return null; }';
+  // 全參數調用。
+  final allArgs = <String>[];
+  for (var j = 0; j < params.length; j++) {
+    final param = params[j];
+    final argExpr = _emitArgExpression(param, j);
+    if (param.isNamed) {
+      allArgs.add('${param.name}: $argExpr');
+    } else {
+      allArgs.add(argExpr);
+    }
   }
-  return '(args) => $call';
+  final fullCall = '$className.${method.name}(${allArgs.join(', ')})';
+  if (isVoid) {
+    lines.add('  $fullCall; return null;');
+  } else {
+    lines.add('  return $fullCall;');
+  }
+  lines.add('}');
+  return lines.join('\n');
 }
 
 // ── Bridge class generation ─────────────────────────────────────────────

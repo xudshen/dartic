@@ -594,6 +594,34 @@ void main() {
           contains('super.doSomething(value); return;'));
     });
 
+    test('static method with optional positional uses single max-arity binding', () {
+      final info = TypeInfo(
+        className: 'int',
+        libraryUri: 'dart:core',
+        methods: [],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [
+          MethodInfo(
+            name: 'parse',
+            paramTypes: [
+              ParamInfo(name: 'source', type: 'String'),
+              ParamInfo(name: 'radix', type: 'int?', isOptional: true),
+            ],
+            returnType: 'int',
+          ),
+        ],
+        constructors: [],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info);
+
+      expect(source, contains("'dart:core::int::parse#2'"));
+      expect(source, isNot(contains("'dart:core::int::parse#1'")));
+      expect(source, contains('darticAbsent'));
+    });
+
     test('generates setter override with dispatch.set', () {
       final info = TypeInfo(
         className: 'MyClass',
