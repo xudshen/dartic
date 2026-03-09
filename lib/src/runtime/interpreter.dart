@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 
+import '../api/dartic_absent.dart';
 import '../bridge/dartic_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/closure_adapter.dart';
@@ -1417,6 +1418,9 @@ class DarticInterpreter {
 
         case Op.loadNull: // LOAD_NULL A — refStack[A] = null
           rs.write(rBase + ((instr >> 8) & 0xFF), null);
+
+        case Op.loadAbsent: // LOAD_ABSENT A — refStack[A] = darticAbsent
+          rs.write(rBase + ((instr >> 8) & 0xFF), darticAbsent);
 
         case Op.loadTrue: // LOAD_TRUE A — valueStack[A] = 1
           vs.writeInt(vBase + ((instr >> 8) & 0xFF), 1);

@@ -7,7 +7,7 @@
 library;
 
 abstract final class Op {
-  // ── Load/Store (0x00-0x0B) ──
+  // ── Load/Store (0x00-0x0C) ──
   static const nop = 0x00;
   static const loadConst = 0x01;
   static const loadNull = 0x02;
@@ -20,6 +20,7 @@ abstract final class Op {
   static const moveVal = 0x09;
   static const loadUpvalue = 0x0A;
   static const storeUpvalue = 0x0B;
+  static const loadAbsent = 0x0C;
 
   // ── Integer Arithmetic (0x10-0x1F) ──
   static const addInt = 0x10;

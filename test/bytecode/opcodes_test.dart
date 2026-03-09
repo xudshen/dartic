@@ -17,6 +17,7 @@ void main() {
       expect(Op.moveVal, 0x09);
       expect(Op.loadUpvalue, 0x0A);
       expect(Op.storeUpvalue, 0x0B);
+      expect(Op.loadAbsent, 0x0C);
     });
 
     // Integer arithmetic group: 0x10-0x1F

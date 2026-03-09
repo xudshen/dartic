@@ -57,6 +57,7 @@ class DarticVerifier {
     Op.moveVal,
     Op.loadUpvalue,
     Op.storeUpvalue,
+    Op.loadAbsent,
     Op.addInt,
     Op.subInt,
     Op.mulInt,
@@ -584,6 +585,7 @@ class DarticVerifier {
 
       // Format A only: ref register
       case Op.loadNull:
+      case Op.loadAbsent:
       case Op.returnRef:
       case Op.throw_:
       case Op.nullCheck:
