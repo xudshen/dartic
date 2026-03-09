@@ -106,6 +106,60 @@ int main() => f(c: 3, a: 1, b: 2);
     });
   });
 
+  group('null vs absent (LOAD_ABSENT sentinel)', () {
+    test('host method: nullable param with non-null default — omitted uses default', () async {
+      // StringBuffer.writeln([Object? obj = ""]) — omitting uses default ""
+      final result = await compileAndRunWithHost('''
+String main() {
+  final sb = StringBuffer();
+  sb.writeln();
+  return sb.toString();
+}
+''');
+      expect(result, '\n');
+    });
+
+    test('host method: nullable param with non-null default — explicit null', () async {
+      // StringBuffer.writeln(null) should print "null\n"
+      final result = await compileAndRunWithHost('''
+String main() {
+  final sb = StringBuffer();
+  sb.writeln(null);
+  return sb.toString();
+}
+''');
+      expect(result, 'null\n');
+    });
+
+    test('host method: String.substring with one arg', () async {
+      final result = await compileAndRunWithHost('''
+String main() => 'hello world'.substring(6);
+''');
+      expect(result, 'world');
+    });
+
+    test('host method: String.substring with two args', () async {
+      final result = await compileAndRunWithHost('''
+String main() => 'hello world'.substring(0, 5);
+''');
+      expect(result, 'hello');
+    });
+
+    test('host method: String.indexOf with default start', () async {
+      final result = await compileAndRunWithHost('''
+int main() => 'abcabc'.indexOf('bc');
+''');
+      expect(result, 1);
+    });
+
+    test('host method: String.indexOf with explicit start', () async {
+      final result = await compileAndRunWithHost('''
+int main() => 'abcabc'.indexOf('bc', 2);
+''');
+      expect(result, 4);
+    });
+  });
+
   group('mixed positional and named', () {
     test('required positional + named param', () async {
       final result = await compileAndRun('''
