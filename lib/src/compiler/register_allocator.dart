@@ -30,11 +30,32 @@ class RegisterAllocator {
     return r;
   }
 
+  /// Allocates [n] consecutive registers, returning the start index.
+  ///
+  /// Bypasses the free pool (which may be fragmented after recycling)
+  /// to guarantee consecutiveness. Used by CALL_HOST which requires
+  /// result + arg slots in a contiguous block.
+  int allocConsecutive(int n) {
+    final start = _next;
+    _next += n;
+    if (_next > _max) _max = _next;
+    return start;
+  }
+
   /// Returns a register to the free pool for reuse.
-  void free(int reg) => _freePool.add(reg);
+  void free(int reg) {
+    assert(!_freePool.contains(reg), 'Double-free of register $reg');
+    _freePool.add(reg);
+  }
 
   /// Batch-returns multiple registers to the free pool.
-  void freeAll(List<int> regs) => _freePool.addAll(regs);
+  void freeAll(List<int> regs) {
+    assert(
+      regs.every((r) => !_freePool.contains(r)),
+      'Double-free detected in batch: $regs',
+    );
+    _freePool.addAll(regs);
+  }
 
   /// High-water mark: the total number of register slots needed to size
   /// the stack frame (count, not max-index).
