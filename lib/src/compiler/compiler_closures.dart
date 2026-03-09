@@ -28,6 +28,8 @@ extension on DarticCompiler {
       upvalueDescriptors: _upvalueDescriptors,
       upvalueIndices: _upvalueIndices,
       capturedVarRefRegs: _capturedVarRefRegs,
+      thisUpvalueIdx: _thisUpvalueIdx,
+      thisCapturedByInner: _thisCapturedByInner,
     ));
 
     _emitter = BytecodeEmitter();
@@ -44,6 +46,8 @@ extension on DarticCompiler {
     _upvalueDescriptors = [];
     _upvalueIndices = {};
     _capturedVarRefRegs = {};
+    _thisUpvalueIdx = -1;
+    _thisCapturedByInner = false;
   }
 
   /// Restores the previous compilation context from [_contextStack].
@@ -65,6 +69,8 @@ extension on DarticCompiler {
     _upvalueDescriptors = ctx.upvalueDescriptors;
     _upvalueIndices = ctx.upvalueIndices;
     _capturedVarRefRegs = ctx.capturedVarRefRegs;
+    _thisUpvalueIdx = ctx.thisUpvalueIdx;
+    _thisCapturedByInner = ctx.thisCapturedByInner;
   }
 
   /// Restores a mutable list's contents from a saved snapshot.
@@ -115,14 +121,14 @@ extension on DarticCompiler {
     ));
 
     // Step 1: Pre-analyze which outer variables the inner function captures.
-    final capturedVars = _analyzeCapturedVars(fn, _scope);
+    final (:vars, :capturesThis) = _analyzeCapturedVars(fn, _scope);
 
     // Step 2: For each captured variable, ensure it's accessible from the
     // current function. Variables local to this function get promoted (boxed)
     // to the ref stack. Variables that are themselves upvalues in this function
     // need to be resolved as upvalues first (so the nested function can
     // capture them transitively).
-    for (final varDecl in capturedVars) {
+    for (final varDecl in vars) {
       if (_contextStack.isNotEmpty && _isUpvalueAccess(varDecl)) {
         _resolveUpvalue(varDecl);
       } else {
@@ -130,12 +136,37 @@ extension on DarticCompiler {
       }
     }
 
+    // Step 2b: Track whether `this` is captured by the inner function.
+    // The enclosing function's _thisUpvalueIdx is saved in _pushContext below,
+    // so we capture the value now for use after _pushContext.
+    final outerThisUpvalueIdx = _thisUpvalueIdx;
+
     // Step 3: Save the enclosing function scope (need it for upvalue resolution).
     final outerScope = _scope;
 
     // Step 4: Compile the inner function.
     _pushContext();
     _currentReturnType = fn.returnType;
+
+    // Step 4b: Set up `this` upvalue if captured by the inner function.
+    if (capturesThis) {
+      final idx = _upvalueDescriptors.length;
+      if (outerThisUpvalueIdx >= 0) {
+        // Transitive capture: `this` was already an upvalue in the enclosing
+        // closure. Chain through the enclosing upvalue.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: false,
+          index: outerThisUpvalueIdx,
+        ));
+      } else {
+        // Direct capture: `this` is at rsp+2 of the enclosing method.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: true,
+          index: 2,
+        ));
+      }
+      _thisUpvalueIdx = idx;
+    }
 
     // Create a new scope for the inner function. Its parent is the
     // outer scope so that upvalue resolution can walk up.
@@ -180,6 +211,12 @@ extension on DarticCompiler {
 
     // Restore enclosing context.
     _popContext();
+
+    // Mark the enclosing function if `this` was directly captured
+    // (isLocal=true). This ensures CLOSE_UPVALUE is emitted on return.
+    if (capturesThis && outerThisUpvalueIdx < 0) {
+      _thisCapturedByInner = true;
+    }
 
     // Emit CLOSURE instruction in the enclosing function.
     final closureReg = _allocRefReg();
@@ -794,8 +831,8 @@ extension on DarticCompiler {
 
   /// Pre-analyzes the function body to find all outer variables that are
   /// referenced (captured). Returns the set of VariableDeclarations that
-  /// need to be captured as upvalues.
-  Set<ir.VariableDeclaration> _analyzeCapturedVars(
+  /// need to be captured as upvalues, and whether `this` is captured.
+  ({Set<ir.VariableDeclaration> vars, bool capturesThis}) _analyzeCapturedVars(
     ir.FunctionNode fn,
     Scope outerScope,
   ) {
@@ -806,8 +843,9 @@ extension on DarticCompiler {
       ...fn.namedParameters,
     };
 
-    fn.body?.accept(_CapturedVarVisitor(captured, localParams, outerScope));
-    return captured;
+    final visitor = _CapturedVarVisitor(captured, localParams, outerScope);
+    fn.body?.accept(visitor);
+    return (vars: captured, capturesThis: visitor.capturesThis);
   }
 
   /// Promotes a value-stack variable to a ref-stack (boxed) register so it
@@ -950,6 +988,8 @@ class _CompilationContext {
     required this.upvalueDescriptors,
     required this.upvalueIndices,
     required this.capturedVarRefRegs,
+    required this.thisUpvalueIdx,
+    required this.thisCapturedByInner,
   });
 
   final BytecodeEmitter emitter;
@@ -968,6 +1008,8 @@ class _CompilationContext {
   final List<UpvalueDescriptor> upvalueDescriptors;
   final Map<ir.VariableDeclaration, int> upvalueIndices;
   final Map<ir.VariableDeclaration, int> capturedVarRefRegs;
+  final int thisUpvalueIdx;
+  final bool thisCapturedByInner;
 }
 
 /// AST visitor that collects references to outer-scope variables.
@@ -981,8 +1023,16 @@ class _CapturedVarVisitor extends ir.RecursiveVisitor {
   final Set<ir.VariableDeclaration> _localParams;
   final Scope _outerScope;
 
+  /// True if any [ThisExpression] was found in the inner function body.
+  bool capturesThis = false;
+
   /// Variables declared locally within the inner function body.
   final Set<ir.VariableDeclaration> _localDecls = {};
+
+  @override
+  void visitThisExpression(ir.ThisExpression node) {
+    capturesThis = true;
+  }
 
   @override
   void visitVariableDeclaration(ir.VariableDeclaration node) {

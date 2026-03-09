@@ -459,4 +459,105 @@ int main() {
       expect(result, 15);
     });
   });
+
+  group('this captured in closures', () {
+    test('this field access inside closure', () async {
+      final result = await compileAndRun('''
+class Counter {
+  int count;
+  Counter(this.count);
+  Function makeIncrementer() {
+    return () {
+      count = count + 1;
+    };
+  }
+  int getCount() => count;
+}
+int main() {
+  Counter c = Counter(10);
+  Function inc = c.makeIncrementer();
+  inc();
+  inc();
+  return c.getCount();
+}
+''');
+      // Closure captures `this` to access `count` field.
+      expect(result, 12);
+    });
+
+    test('this method call inside closure', () async {
+      final result = await compileAndRun('''
+class Adder {
+  int value;
+  Adder(this.value);
+  int add(int x) => value + x;
+  int runAdder(int x) {
+    int result = 0;
+    Function f = () {
+      result = add(x);
+    };
+    f();
+    return result;
+  }
+}
+int main() {
+  Adder a = Adder(10);
+  return a.runAdder(32);
+}
+''');
+      // Closure captures `this` to call `add` method.
+      expect(result, 42);
+    });
+
+    test('this captured in nested closures (transitive)', () async {
+      final result = await compileAndRun('''
+class Box {
+  int x;
+  Box(this.x);
+  int readViaNestedClosure() {
+    int result = 0;
+    Function f = () {
+      Function g = () {
+        result = x;
+      };
+      g();
+    };
+    f();
+    return result;
+  }
+}
+int main() {
+  Box b = Box(42);
+  return b.readViaNestedClosure();
+}
+''');
+      // `this` is transitively captured through two closure levels.
+      expect(result, 42);
+    });
+
+    test('this captured with mutable field update in closure', () async {
+      final result = await compileAndRun('''
+class Accumulator {
+  int total;
+  Accumulator() : total = 0;
+  Function makeAccumulator() {
+    return (int n) {
+      total = total + n;
+    };
+  }
+  int getTotal() => total;
+}
+int main() {
+  Accumulator acc = Accumulator();
+  Function add = acc.makeAccumulator();
+  add(10);
+  add(20);
+  add(12);
+  return acc.getTotal();
+}
+''');
+      // Closure captures `this` and mutates `total` field.
+      expect(result, 42);
+    });
+  });
 }

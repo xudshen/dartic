@@ -180,6 +180,19 @@ class DarticCompiler {
   /// reads/writes in the enclosing function use this ref register.
   Map<ir.VariableDeclaration, int> _capturedVarRefRegs = {};
 
+  /// Upvalue index for `this` in the current inner function (-1 = not captured).
+  ///
+  /// When a closure references `this` (via ThisExpression), the enclosing
+  /// method's `this` (rsp+2) must be captured as an upvalue. This field
+  /// tracks the upvalue index so [_compileThisExpression] can emit
+  /// LOAD_UPVALUE instead of directly reading rsp+2.
+  int _thisUpvalueIdx = -1;
+
+  /// True when an inner closure directly captures `this` from the current
+  /// function. Used to ensure CLOSE_UPVALUE is emitted on return, even when
+  /// no local variables are captured (only `this`).
+  bool _thisCapturedByInner = false;
+
   // ── Core types (lazily initialized) ──
 
   late final CoreTypes _coreTypes = CoreTypes(_component);
@@ -1005,7 +1018,7 @@ class DarticCompiler {
   /// function. This must be called before RETURN to ensure open upvalues are
   /// closed before the frame is deallocated.
   void _emitCloseUpvaluesIfNeeded() {
-    if (_capturedVarRefRegs.isNotEmpty) {
+    if (_capturedVarRefRegs.isNotEmpty || _thisCapturedByInner) {
       _emitter.emitABC(Op.closeUpvalue, 0, 0, 0);
     }
   }

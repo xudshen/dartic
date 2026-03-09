@@ -1480,9 +1480,19 @@ extension on DarticCompiler {
 
   // ── ThisExpression ──
 
-  /// Compiles [ThisExpression]: returns ref register at rsp+2.
+  /// Compiles [ThisExpression]: returns `this` from rsp+2 or via upvalue.
+  ///
+  /// Inside a closure that captures `this`, the enclosing method's `this`
+  /// is stored as an upvalue. [_thisUpvalueIdx] tracks which upvalue slot
+  /// holds it (-1 means we're directly inside the method, so rsp+2 works).
   (int, ResultLoc) _compileThisExpression() {
-    // `this` is always at ref register 2 (rsp+2) per Ch2 convention.
+    if (_thisUpvalueIdx >= 0) {
+      // `this` was captured as an upvalue — load it.
+      final reg = _allocRefReg();
+      _emitter.emitABx(Op.loadUpvalue, reg, _thisUpvalueIdx);
+      return (reg, ResultLoc.ref);
+    }
+    // `this` is at ref register 2 (rsp+2) per Ch2 convention.
     return (2, ResultLoc.ref);
   }
 
