@@ -553,7 +553,8 @@ extension on DarticCompiler {
       paramCountOverride: 1,
     );
     final bindingIndex = _allocBinding(symbolName, 1);
-    _emitCallHost(compiledArgs, bindingIndex);
+    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _refAlloc.free(unusedResultReg);
 
     return (savedReg, valLoc);
   }
@@ -1004,15 +1005,21 @@ extension on DarticCompiler {
     int bindingIndex,
   ) {
     // Phase 1: ensure all args are on the ref stack.
-    final refArgRegs = <int>[
-      for (final (srcReg, srcLoc, srcType) in compiledArgs)
-        _boxToRefIfValue(srcReg, srcLoc, srcType),
-    ];
+    // Track newly allocated boxing registers for Phase 5 recycling.
+    final boxedRegs = <int>[];
+    final refArgRegs = <int>[];
+    for (final (srcReg, srcLoc, srcType) in compiledArgs) {
+      final refReg = _boxToRefIfValue(srcReg, srcLoc, srcType);
+      refArgRegs.add(refReg);
+      if (refReg != srcReg) boxedRegs.add(refReg);
+    }
 
     // Phase 2: allocate consecutive ref registers — result + arg slots.
-    final resultReg = _allocRefReg();
-    final targetArgRegs =
-        List.generate(refArgRegs.length, (_) => _allocRefReg());
+    // Uses allocConsecutive to guarantee contiguity (free pool may be
+    // fragmented after previous recycling rounds).
+    final argCount = refArgRegs.length;
+    final resultReg = _refAlloc.allocConsecutive(1 + argCount);
+    final targetArgRegs = List.generate(argCount, (i) => resultReg + 1 + i);
 
     // Phase 3: MOVE each arg into its consecutive target slot.
     for (var i = 0; i < refArgRegs.length; i++) {
@@ -1023,6 +1030,13 @@ extension on DarticCompiler {
 
     // Phase 4: emit CALL_HOST A=resultReg, Bx=bindingIndex.
     _emitter.emitABx(Op.callHost, resultReg, bindingIndex);
+
+    // Phase 5: recycle dead registers.
+    // After CALL_HOST, targetArgRegs and boxedRegs are dead — only
+    // resultReg survives (returned to caller).
+    _refAlloc.freeAll(targetArgRegs);
+    _refAlloc.freeAll(boxedRegs);
+
     return (resultReg, ResultLoc.ref);
   }
 
@@ -1606,7 +1620,8 @@ extension on DarticCompiler {
     final bindingIndex = _allocBinding(symbolName, 2,
         methodName: '${expr.name.text}=');
 
-    _emitCallHost(compiledArgs, bindingIndex);
+    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _refAlloc.free(unusedResultReg);
 
     // InstanceSet evaluates to the assigned value.
     return (savedReg, valLoc);

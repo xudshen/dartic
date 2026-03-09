@@ -36,6 +36,7 @@ class RegisterAllocator {
   /// to guarantee consecutiveness. Used by CALL_HOST which requires
   /// result + arg slots in a contiguous block.
   int allocConsecutive(int n) {
+    assert(n > 0, 'allocConsecutive requires n > 0');
     final start = _next;
     _next += n;
     if (_next > _max) _max = _next;
@@ -49,7 +50,11 @@ class RegisterAllocator {
   }
 
   /// Batch-returns multiple registers to the free pool.
+  ///
+  /// Debug assertions check for double-free (O(n×m) where m = pool size).
   void freeAll(List<int> regs) {
+    assert(regs.length == regs.toSet().length,
+        'Duplicate registers in batch: $regs');
     assert(
       regs.every((r) => !_freePool.contains(r)),
       'Double-free detected in batch: $regs',

@@ -120,5 +120,23 @@ void main() {
       alloc.free(r0);
       expect(() => alloc.freeAll([r1, r0]), throwsA(isA<AssertionError>()));
     });
+
+    test('freeAll detects duplicate registers within batch', () {
+      alloc.alloc(); // r0
+      alloc.alloc(); // r1
+      expect(() => alloc.freeAll([0, 0]), throwsA(isA<AssertionError>()));
+    });
+
+    test('allocConsecutive after freeAll does not reuse freed regs', () {
+      // Simulates _emitCallHost round-trip: allocConsecutive → freeAll → allocConsecutive
+      final start1 = alloc.allocConsecutive(3); // r0, r1, r2
+      alloc.freeAll([start1 + 1, start1 + 2]); // free r1, r2 (keep r0 as "result")
+      final start2 = alloc.allocConsecutive(3); // should be r3, r4, r5
+      expect(start2, 3);
+    });
+
+    test('allocConsecutive(0) is rejected', () {
+      expect(() => alloc.allocConsecutive(0), throwsA(isA<AssertionError>()));
+    });
   });
 }
