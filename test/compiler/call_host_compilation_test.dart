@@ -201,5 +201,37 @@ void main() {
       // Binding table should have at least 2 entries.
       expect(module.bindingNames.length, greaterThanOrEqualTo(2));
     });
+
+    test('nested CALL_HOST reuses registers (register recycling)', () async {
+      // Two nested platform calls: print(42.toString())
+      // Without recycling: each CALL_HOST accumulates target regs.
+      // With recycling: inner call's target regs are freed, outer reuses them.
+      final module = await compileDart('''
+void main() {
+  print(42.toString());
+}
+''');
+
+      final main = findFunc(module, 'main');
+      // After recycling, refRegCount should be significantly less than
+      // the sum of all CALL_HOST allocations.
+      expect(main.refRegCount, lessThan(20),
+          reason: 'Register recycling should keep refRegCount low');
+    });
+
+    test('deeply nested CALL_HOST keeps registers under control', () async {
+      // Chain of platform calls to stress-test recycling.
+      final module = await compileDart('''
+String main() {
+  return 1.toString().toString().toString();
+}
+''');
+
+      final main = findFunc(module, 'main');
+      // Each .toString() is a CALL_HOST. Without recycling, regs accumulate.
+      // With recycling, target regs are freed after each call.
+      expect(main.refRegCount, lessThan(30),
+          reason: 'Chained CALL_HOST should recycle target regs');
+    });
   });
 }

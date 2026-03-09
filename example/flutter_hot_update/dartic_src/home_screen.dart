@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Hello from dartic!'),
             SizedBox(height: 16),

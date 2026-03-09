@@ -192,8 +192,9 @@ void main() {}
       final jumpIfFalseIdx = findOp(code, Op.jumpIfFalse);
       expect(jumpIfFalseIdx, isNot(-1));
 
-      final sBx = decodesBx(code[jumpIfFalseIdx]);
-      final targetPC = jumpIfFalseIdx + 1 + sBx;
+      // All jumps now use 3-word WIDE encoding.
+      final sBx = decodeWideJumpSBx(code, jumpIfFalseIdx);
+      final targetPC = jumpIfFalseIdx + 3 + sBx;
       // Target should be past the then branch and jump instruction.
       expect(targetPC, greaterThan(jumpIfFalseIdx));
       expect(targetPC, lessThanOrEqualTo(code.length));
@@ -210,8 +211,9 @@ void main() {}
       final jumpIdx = findOp(code, Op.jump);
       expect(jumpIdx, isNot(-1));
 
-      final sBx = decodesBx(code[jumpIdx]);
-      final targetPC = jumpIdx + 1 + sBx;
+      // All jumps now use 3-word WIDE encoding.
+      final sBx = decodeWideJumpSBx(code, jumpIdx);
+      final targetPC = jumpIdx + 3 + sBx;
       // Target should be past the else branch.
       expect(targetPC, greaterThan(jumpIdx));
       expect(targetPC, lessThanOrEqualTo(code.length));

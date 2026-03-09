@@ -20,40 +20,40 @@ extension on DarticCompiler {
     final reg = _allocValueReg();
     // sBx uses excess-K encoding (K=0x7FFF): asymmetric range [-32767, +32768].
     if (value >= -32767 && value <= 32768) {
-      _emitter.emit(encodeAsBx(Op.loadInt, reg, value));
+      _emitter.emitAsBx(Op.loadInt, reg, value);
     } else {
       final idx = _constantPool.addInt(value);
-      _emitter.emit(encodeABx(Op.loadConstInt, reg, idx));
+      _emitter.emitABx(Op.loadConstInt, reg, idx);
     }
     return (reg, ResultLoc.value);
   }
 
   (int, ResultLoc) _loadBool(bool value) {
     final reg = _allocValueReg();
-    _emitter.emit(encodeABC(
+    _emitter.emitABC(
       value ? Op.loadTrue : Op.loadFalse,
       reg, 0, 0,
-    ));
+    );
     return (reg, ResultLoc.value);
   }
 
   (int, ResultLoc) _loadDouble(double value) {
     final reg = _allocValueReg();
     final idx = _constantPool.addDouble(value);
-    _emitter.emit(encodeABx(Op.loadConstDbl, reg, idx));
+    _emitter.emitABx(Op.loadConstDbl, reg, idx);
     return (reg, ResultLoc.value);
   }
 
   (int, ResultLoc) _loadString(String value) {
     final reg = _allocRefReg();
     final idx = _constantPool.addRef(value);
-    _emitter.emit(encodeABx(Op.loadConst, reg, idx));
+    _emitter.emitABx(Op.loadConst, reg, idx);
     return (reg, ResultLoc.ref);
   }
 
   (int, ResultLoc) _loadNull() {
     final reg = _allocRefReg();
-    _emitter.emit(encodeABC(Op.loadNull, reg, 0, 0));
+    _emitter.emitABC(Op.loadNull, reg, 0, 0);
     return (reg, ResultLoc.ref);
   }
 
@@ -113,12 +113,12 @@ extension on DarticCompiler {
     // Phase 3: Move each part result into its consecutive slot.
     for (var i = 0; i < partRegs.length; i++) {
       if (partRegs[i] != baseReg + i) {
-        _emitter.emit(encodeABC(Op.moveRef, baseReg + i, partRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, baseReg + i, partRegs[i], 0);
       }
     }
 
     // Phase 4: Emit STRING_INTERP A=destReg, B=baseReg, C=partCount.
-    _emitter.emit(encodeABC(Op.stringInterp, destReg, baseReg, parts.length));
+    _emitter.emitABC(Op.stringInterp, destReg, baseReg, parts.length);
     return (destReg, ResultLoc.ref);
   }
 
@@ -133,7 +133,7 @@ extension on DarticCompiler {
     var (operandReg, operandLoc) = _compileExpression(expr.operand);
     operandReg = _ensureBoolValue(operandReg, operandLoc);
     final resultReg = _allocValueReg();
-    _emitter.emit(encodeABC(Op.notBool, resultReg, operandReg, 0));
+    _emitter.emitABC(Op.notBool, resultReg, operandReg, 0);
     return (resultReg, ResultLoc.value);
   }
 
@@ -148,19 +148,15 @@ extension on DarticCompiler {
         ? Op.jumpIfFalse
         : Op.jumpIfTrue;
 
-    final jumpPC = _emitter.emitPlaceholder();
+    final jumpPC = _emitter.emitJumpPlaceholder();
     var (rightReg, rightLoc) = _compileExpression(expr.right);
     rightReg = _ensureBoolValue(rightReg, rightLoc);
 
     if (rightReg != leftReg) {
-      _emitter.emit(encodeABC(Op.moveVal, leftReg, rightReg, 0));
+      _emitter.emitABC(Op.moveVal, leftReg, rightReg, 0);
     }
 
-    final targetPC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpPC,
-      encodeAsBx(jumpOp, leftReg, targetPC - jumpPC - 1),
-    );
+    _emitter.patchJumpAsBx(jumpPC, jumpOp, leftReg, _emitter.currentPC);
 
     return (leftReg, ResultLoc.value);
   }
@@ -184,30 +180,22 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // 2. JUMP_IF_FALSE condReg -> else (placeholder).
-    final jumpToElse = _emitter.emitPlaceholder();
+    final jumpToElse = _emitter.emitJumpPlaceholder();
 
     // 3. Compile the then branch -> move result to resultReg.
     _compileBranchInto(expr.then, resultReg, resultLoc);
 
     // 4. JUMP -> end (placeholder, skip else branch).
-    final jumpToEnd = _emitter.emitPlaceholder();
+    final jumpToEnd = _emitter.emitJumpPlaceholder();
 
     // 5. Backpatch else label.
-    final elsePC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpToElse,
-      encodeAsBx(Op.jumpIfFalse, condReg, elsePC - jumpToElse - 1),
-    );
+    _emitter.patchJumpAsBx(jumpToElse, Op.jumpIfFalse, condReg, _emitter.currentPC);
 
     // 6. Compile the else branch -> move result to resultReg.
     _compileBranchInto(expr.otherwise, resultReg, resultLoc);
 
     // 7. Backpatch end label.
-    final endPC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpToEnd,
-      encodeAsBx(Op.jump, 0, endPC - jumpToEnd - 1),
-    );
+    _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);
 
     return (resultReg, resultLoc);
   }
@@ -222,15 +210,16 @@ extension on DarticCompiler {
       // This can happen in CFE-desugared chained `??` where an intermediate
       // Let variable has non-nullable type but is still tested with EqualsNull.
       // Just emit LOAD_FALSE — the result is always "not null".
-      _emitter.emit(encodeABC(Op.loadFalse, resultReg, 0, 0));
+      _emitter.emitABC(Op.loadFalse, resultReg, 0, 0);
       return (resultReg, ResultLoc.value);
     }
     // EqualsNull always represents `x == null` (no isNot flag).
     // CFE expresses `x != null` as `Not(EqualsNull(x))`.
-    // Pattern: LOAD_FALSE -> JUMP_IF_NNULL +1 -> LOAD_TRUE
-    _emitter.emit(encodeABC(Op.loadFalse, resultReg, 0, 0));
-    _emitter.emit(encodeAsBx(Op.jumpIfNnull, reg, 1));
-    _emitter.emit(encodeABC(Op.loadTrue, resultReg, 0, 0));
+    // Pattern: LOAD_FALSE -> JUMP_IF_NNULL -> LOAD_TRUE
+    _emitter.emitABC(Op.loadFalse, resultReg, 0, 0);
+    final jumpPC = _emitter.emitJumpPlaceholder();
+    _emitter.emitABC(Op.loadTrue, resultReg, 0, 0);
+    _emitter.patchJumpAsBx(jumpPC, Op.jumpIfNnull, reg, _emitter.currentPC);
     return (resultReg, ResultLoc.value);
   }
 
@@ -262,22 +251,22 @@ extension on DarticCompiler {
         // bool uses intView (0/1), so EQ_INT works for both int and bool.
         lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
         rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
-        _emitter.emit(encodeABC(Op.eqInt, resultReg, lhsReg, rhsReg));
+        _emitter.emitABC(Op.eqInt, resultReg, lhsReg, rhsReg);
       case (StackKind.doubleVal, StackKind.doubleVal):
         lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.doubleVal);
         rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.doubleVal);
-        _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
+        _emitter.emitABC(Op.eqDbl, resultReg, lhsReg, rhsReg);
       case (StackKind.intVal, StackKind.doubleVal) ||
            (StackKind.doubleVal, StackKind.intVal):
         // Mixed int/double: promote int to double, compare as doubles.
         lhsReg = _coerceToValueKind(lhsReg, lhsLoc, leftKind, StackKind.doubleVal);
         rhsReg = _coerceToValueKind(rhsReg, rhsLoc, rightKind, StackKind.doubleVal);
-        _emitter.emit(encodeABC(Op.eqDbl, resultReg, lhsReg, rhsReg));
+        _emitter.emitABC(Op.eqDbl, resultReg, lhsReg, rhsReg);
       case _:
         // Mixed or ref kinds — EQ_GENERIC on the ref stack.
         lhsReg = _boxToRefIfValue(lhsReg, lhsLoc, _inferExprType(expr.left));
         rhsReg = _boxToRefIfValue(rhsReg, rhsLoc, _inferExprType(expr.right));
-        _emitter.emit(encodeABC(Op.eqGeneric, resultReg, lhsReg, rhsReg));
+        _emitter.emitABC(Op.eqGeneric, resultReg, lhsReg, rhsReg);
     }
     return (resultReg, ResultLoc.value);
   }
@@ -311,7 +300,7 @@ extension on DarticCompiler {
     // Value-stack values (int, bool, double) can never be null at runtime,
     // so only emit NULL_CHECK for ref-stack operands.
     if (loc == ResultLoc.ref) {
-      _emitter.emit(encodeABC(Op.nullCheck, reg, 0, 0));
+      _emitter.emitABC(Op.nullCheck, reg, 0, 0);
       // If the underlying type (ignoring nullability) is a value type,
       // unbox after the null check so the result is on the value stack.
       final type = _inferExprType(expr.operand);
@@ -378,7 +367,7 @@ extension on DarticCompiler {
     if (_contextStack.isNotEmpty && _isUpvalueAccess(expr.variable)) {
       final uvIdx = _resolveUpvalue(expr.variable);
       final refReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.loadUpvalue, refReg, uvIdx));
+      _emitter.emitABx(Op.loadUpvalue, refReg, uvIdx);
 
       // Unbox if the variable's declared type is a value type.
       // Upvalues always store boxed values on the ref stack, but downstream
@@ -416,7 +405,7 @@ extension on DarticCompiler {
       var (srcReg, srcLoc) = _compileExpression(expr.value);
       // Ensure the value is on the ref stack (upvalues always use ref stack).
       srcReg = _boxToRefIfValue(srcReg, srcLoc, _inferExprType(expr.value));
-      _emitter.emit(encodeABx(Op.storeUpvalue, srcReg, uvIdx));
+      _emitter.emitABx(Op.storeUpvalue, srcReg, uvIdx);
       return (srcReg, ResultLoc.ref);
     }
 
@@ -480,13 +469,9 @@ extension on DarticCompiler {
     operandReg = _boxToRefIfValue(operandReg, operandLoc,
         _inferExprType(expr.operand));
 
-    // The resume PC is the instruction AFTER the AWAIT instruction.
-    // AWAIT A, Bx where Bx = currentPC + 1 (the next instruction).
-    final awaitPC = _emitter.currentPC;
-    final resumePC = awaitPC + 1;
-
-    // Emit AWAIT A, Bx.
-    _emitter.emit(encodeABx(Op.await_, operandReg, resumePC));
+    // AWAIT A, Bx where Bx = resume PC (instruction after the AWAIT).
+    // Always uses 3-word WIDE encoding so Bx can hold any PC.
+    _emitter.emitWithResumePCInBx(Op.await_, operandReg);
 
     // After resume, the result is in refStack[A] (same register).
     return (operandReg, ResultLoc.ref);
@@ -508,7 +493,7 @@ extension on DarticCompiler {
         throw UnsupportedError('Unknown static field: ${target.name.text}');
       }
       final refReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.loadGlobal, refReg, globalIndex));
+      _emitter.emitABx(Op.loadGlobal, refReg, globalIndex);
 
       // Unbox if the field type is a value type.
       final kind = _classifyStackKind(target.type);
@@ -531,7 +516,7 @@ extension on DarticCompiler {
           _allocResultReg(target.function.returnType);
 
       // No arguments — emit CALL_STATIC directly.
-      _emitter.emit(encodeABx(Op.callStatic, resultReg, funcId));
+      _emitter.emitABx(Op.callStatic, resultReg, funcId);
       return (resultReg, retLoc);
     }
 
@@ -575,7 +560,8 @@ extension on DarticCompiler {
       paramCountOverride: 1,
     );
     final bindingIndex = _allocBinding(symbolName, 1);
-    _emitCallHost(compiledArgs, bindingIndex);
+    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _refAlloc.free(unusedResultReg);
 
     return (savedReg, valLoc);
   }
@@ -597,7 +583,7 @@ extension on DarticCompiler {
       // Use expression type for boxing — target.type may be too broad
       // (dynamic/Object/num) to distinguish int vs double on value stack.
       final refReg = _boxToRefIfValue(srcReg, srcLoc, _inferExprType(expr.value));
-      _emitter.emit(encodeABx(Op.storeGlobal, refReg, globalIndex));
+      _emitter.emitABx(Op.storeGlobal, refReg, globalIndex);
       return (srcReg, srcLoc); // Assignment evaluates to the assigned value
     }
 
@@ -972,8 +958,8 @@ extension on DarticCompiler {
     final methodNameIdx = _constantPool.addName(methodName);
     final icIndex = _icEntries.length;
     _icEntries.add(ICEntry(methodNameIndex: methodNameIdx, argCount: argCount));
-    _emitter.emit(
-        encodeABC(Op.callVirtual, resultReg, receiverReg, icIndex));
+    _emitter.emitABC(
+        Op.callVirtual, resultReg, receiverReg, icIndex);
   }
 
   /// Compiles a single expression into a host-arg tuple list.
@@ -1017,25 +1003,38 @@ extension on DarticCompiler {
     int bindingIndex,
   ) {
     // Phase 1: ensure all args are on the ref stack.
-    final refArgRegs = <int>[
-      for (final (srcReg, srcLoc, srcType) in compiledArgs)
-        _boxToRefIfValue(srcReg, srcLoc, srcType),
-    ];
+    // Track newly allocated boxing registers for Phase 5 recycling.
+    final boxedRegs = <int>[];
+    final refArgRegs = <int>[];
+    for (final (srcReg, srcLoc, srcType) in compiledArgs) {
+      final refReg = _boxToRefIfValue(srcReg, srcLoc, srcType);
+      refArgRegs.add(refReg);
+      if (refReg != srcReg) boxedRegs.add(refReg);
+    }
 
     // Phase 2: allocate consecutive ref registers — result + arg slots.
-    final resultReg = _allocRefReg();
-    final targetArgRegs =
-        List.generate(refArgRegs.length, (_) => _allocRefReg());
+    // Uses allocConsecutive to guarantee contiguity (free pool may be
+    // fragmented after previous recycling rounds).
+    final argCount = refArgRegs.length;
+    final resultReg = _refAlloc.allocConsecutive(1 + argCount);
+    final targetArgRegs = List.generate(argCount, (i) => resultReg + 1 + i);
 
     // Phase 3: MOVE each arg into its consecutive target slot.
     for (var i = 0; i < refArgRegs.length; i++) {
       if (refArgRegs[i] != targetArgRegs[i]) {
-        _emitter.emit(encodeABC(Op.moveRef, targetArgRegs[i], refArgRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, targetArgRegs[i], refArgRegs[i], 0);
       }
     }
 
     // Phase 4: emit CALL_HOST A=resultReg, Bx=bindingIndex.
-    _emitter.emit(encodeABx(Op.callHost, resultReg, bindingIndex));
+    _emitter.emitABx(Op.callHost, resultReg, bindingIndex);
+
+    // Phase 5: recycle dead registers.
+    // After CALL_HOST, targetArgRegs and boxedRegs are dead — only
+    // resultReg survives (returned to caller).
+    _refAlloc.freeAll(targetArgRegs);
+    _refAlloc.freeAll(boxedRegs);
+
     return (resultReg, ResultLoc.ref);
   }
 
@@ -1065,9 +1064,9 @@ extension on DarticCompiler {
     }
 
     if (callOp == Op.callStatic || callOp == Op.callSuper) {
-      _emitter.emit(encodeABx(callOp, resultReg, callOperandB));
+      _emitter.emitABx(callOp, resultReg, callOperandB);
     } else {
-      _emitter.emit(encodeABC(callOp, resultReg, callOperandB, 0));
+      _emitter.emitABC(callOp, resultReg, callOperandB, 0);
     }
   }
 
@@ -1089,7 +1088,7 @@ extension on DarticCompiler {
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
     );
     final templateIdx0 = _constantPool.addRef(template0);
-    _emitter.emit(encodeABx(Op.instantiateType, firstTypeReg, templateIdx0));
+    _emitter.emitABx(Op.instantiateType, firstTypeReg, templateIdx0);
 
     // Allocate consecutive ref registers for remaining type args.
     for (var i = 1; i < typeArgs.length; i++) {
@@ -1102,13 +1101,13 @@ extension on DarticCompiler {
         enclosingFunctionTypeParams: _currentFunctionTypeParams,
       );
       final templateIdx = _constantPool.addRef(template);
-      _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+      _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
     }
 
     // CREATE_TYPE_ARGS: bundle resolved types into a List<DarticType>.
     final ftaReg = _allocRefReg();
-    _emitter.emit(
-        encodeABC(Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg));
+    _emitter.emitABC(
+        Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg);
 
     // Emit pending MOVE to place FTA at callee's rsp+1 (FTA slot).
     final ftaMovePC = _emitter.emitPlaceholder();
@@ -1283,7 +1282,7 @@ extension on DarticCompiler {
     // Ensure it's on the ref stack -- exceptions are always objects.
     reg = _boxToRefIfValue(reg, loc, _inferExprType(expr.expression));
 
-    _emitter.emit(encodeABC(Op.throw_, reg, 0, 0));
+    _emitter.emitABC(Op.throw_, reg, 0, 0);
 
     // Throw has type Never -- return a dummy ref register.
     return (reg, ResultLoc.ref);
@@ -1291,8 +1290,8 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileRethrow(ir.Rethrow expr) {
     assert(_catchExceptionReg >= 0, 'Rethrow outside of catch clause');
-    _emitter.emit(
-        encodeABC(Op.rethrow_, _catchExceptionReg, _catchStackTraceReg, 0));
+    _emitter.emitABC(
+        Op.rethrow_, _catchExceptionReg, _catchStackTraceReg, 0);
 
     // Rethrow has type Never -- return a dummy ref register.
     return (_catchExceptionReg, ResultLoc.ref);
@@ -1311,7 +1310,7 @@ extension on DarticCompiler {
     final typeReg = _emitInstantiateType(expr.type);
 
     final resultReg = _allocValueReg();
-    _emitter.emit(encodeABC(Op.instanceOf, resultReg, operandReg, typeReg));
+    _emitter.emitABC(Op.instanceOf, resultReg, operandReg, typeReg);
 
     return (resultReg, ResultLoc.value);
   }
@@ -1351,7 +1350,7 @@ extension on DarticCompiler {
     final typeReg = _emitInstantiateType(expr.type);
 
     final resultReg = _allocRefReg();
-    _emitter.emit(encodeABC(Op.cast, resultReg, operandReg, typeReg));
+    _emitter.emitABC(Op.cast, resultReg, operandReg, typeReg);
 
     return (resultReg, ResultLoc.ref);
   }
@@ -1370,7 +1369,7 @@ extension on DarticCompiler {
     );
     final templateIdx = _constantPool.addRef(template);
     final typeReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+    _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
     return typeReg;
   }
 
@@ -1444,10 +1443,10 @@ extension on DarticCompiler {
       );
       final templateIdx = _constantPool.addRef(typeTemplate);
       final typeReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
-      _emitter.emit(encodeABC(Op.allocGeneric, objReg, typeReg, 0));
+      _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
+      _emitter.emitABC(Op.allocGeneric, objReg, typeReg, 0);
     } else {
-      _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+      _emitter.emitABx(Op.newInstance, objReg, classId);
     }
 
     // 2. Compile arguments.
@@ -1472,7 +1471,7 @@ extension on DarticCompiler {
     final classInfo = _classInfos[classId];
     if (classInfo.hostSuperClassName != null ||
         classInfo.hostInterfaceNames != null) {
-      _emitter.emit(encodeABx(Op.wrapBridge, objReg, classId));
+      _emitter.emitABx(Op.wrapBridge, objReg, classId);
     }
 
     // 6. The expression result is the object, not the call result.
@@ -1644,7 +1643,8 @@ extension on DarticCompiler {
     final bindingIndex = _allocBinding(symbolName, 2,
         methodName: '${expr.name.text}=');
 
-    _emitCallHost(compiledArgs, bindingIndex);
+    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _refAlloc.free(unusedResultReg);
 
     // InstanceSet evaluates to the assigned value.
     return (savedReg, valLoc);
@@ -1704,7 +1704,7 @@ extension on DarticCompiler {
 
     // 3. Add property name to names partition and emit GET_FIELD_DYN.
     final nameIdx = _constantPool.addName(expr.name.text);
-    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+    _emitter.emitABC(Op.getFieldDyn, resultReg, recvReg, nameIdx);
 
     return (resultReg, ResultLoc.ref);
   }
@@ -1722,7 +1722,7 @@ extension on DarticCompiler {
 
     // 3. Add property name to names partition and emit SET_FIELD_DYN.
     final nameIdx = _constantPool.addName(expr.name.text);
-    _emitter.emit(encodeABC(Op.setFieldDyn, recvReg, valReg, nameIdx));
+    _emitter.emitABC(Op.setFieldDyn, recvReg, valReg, nameIdx);
 
     // DynamicSet evaluates to the assigned value.
     return (valReg, ResultLoc.ref);
@@ -1753,18 +1753,18 @@ extension on DarticCompiler {
 
     // 4. MOVE receiver and args into consecutive slots.
     if (recvReg != recvSlot) {
-      _emitter.emit(encodeABC(Op.moveRef, recvSlot, recvReg, 0));
+      _emitter.emitABC(Op.moveRef, recvSlot, recvReg, 0);
     }
     for (var i = 0; i < argRegs.length; i++) {
       if (argRegs[i] != argSlots[i]) {
-        _emitter.emit(encodeABC(Op.moveRef, argSlots[i], argRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, argSlots[i], argRegs[i], 0);
       }
     }
 
     // 5. Emit INVOKE_DYN A=result, B=totalArgCount, C=nameIdx.
     final nameIdx = _constantPool.addName(expr.name.text);
     final totalArgCount = 1 + argRegs.length; // receiver + explicit args
-    _emitter.emit(encodeABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx));
+    _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx);
 
     return (resultReg, ResultLoc.ref);
   }
@@ -1927,7 +1927,7 @@ extension on DarticCompiler {
       final globalIndex = _findEnumConstantGlobal(cls, constant);
       if (globalIndex != null) {
         final refReg = _allocRefReg();
-        _emitter.emit(encodeABx(Op.loadGlobal, refReg, globalIndex));
+        _emitter.emitABx(Op.loadGlobal, refReg, globalIndex);
         return (refReg, ResultLoc.ref);
       }
     }
@@ -1951,10 +1951,10 @@ extension on DarticCompiler {
       );
       final templateIdx = _constantPool.addRef(typeTemplate);
       final typeReg = _allocRefReg();
-      _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
-      _emitter.emit(encodeABC(Op.allocGeneric, objReg, typeReg, 0));
+      _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
+      _emitter.emitABC(Op.allocGeneric, objReg, typeReg, 0);
     } else {
-      _emitter.emit(encodeABx(Op.newInstance, objReg, classId));
+      _emitter.emitABx(Op.newInstance, objReg, classId);
     }
 
     // 2. Set each field from the constant's fieldValues map.
@@ -2044,7 +2044,7 @@ extension on DarticCompiler {
     );
     final templateIdx = _constantPool.addRef(template);
     final typeReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.instantiateType, typeReg, templateIdx));
+    _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
     return (typeReg, ResultLoc.ref);
   }
 
@@ -2244,7 +2244,7 @@ extension on DarticCompiler {
 
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     final closureReg = _allocRefReg();
-    _emitter.emit(encodeABx(Op.closure, closureReg, thunkFuncId));
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -2274,7 +2274,7 @@ extension on DarticCompiler {
     final destReg = _allocRefReg();
 
     if (entries.isEmpty) {
-      _emitter.emit(encodeABC(Op.createMap, destReg, 0, 0));
+      _emitter.emitABC(Op.createMap, destReg, 0, 0);
       return (destReg, ResultLoc.ref);
     }
 
@@ -2308,7 +2308,7 @@ extension on DarticCompiler {
     final destReg = _allocRefReg();
 
     if (elements.isEmpty) {
-      _emitter.emit(encodeABC(op, destReg, 0, 0));
+      _emitter.emitABC(op, destReg, 0, 0);
       return (destReg, ResultLoc.ref);
     }
 
@@ -2335,7 +2335,7 @@ extension on DarticCompiler {
     final destReg = _allocRefReg();
 
     if (entries.isEmpty) {
-      _emitter.emit(encodeABC(Op.createMap, destReg, 0, 0));
+      _emitter.emitABC(Op.createMap, destReg, 0, 0);
       return (destReg, ResultLoc.ref);
     }
 
@@ -2385,7 +2385,7 @@ extension on DarticCompiler {
       assert(shapeIdx <= 0xFF,
           'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
           'WIDE prefix not yet supported for this opcode');
-      _emitter.emit(encodeABC(Op.createRecord, destReg, 0, shapeIdx));
+      _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
 
@@ -2416,12 +2416,12 @@ extension on DarticCompiler {
     final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
     for (var i = 0; i < fieldRegs.length; i++) {
       if (fieldRegs[i] != targetRegs[i]) {
-        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0);
       }
     }
 
-    _emitter.emit(
-        encodeABC(Op.createRecord, destReg, targetRegs.first, shapeIdx));
+    _emitter.emitABC(
+        Op.createRecord, destReg, targetRegs.first, shapeIdx);
     return (destReg, ResultLoc.ref);
   }
 
@@ -2445,7 +2445,7 @@ extension on DarticCompiler {
     final nameIdx = _constantPool.addName(fieldName);
 
     // 4. Emit GET_FIELD_DYN.
-    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+    _emitter.emitABC(Op.getFieldDyn, resultReg, recvReg, nameIdx);
     return (resultReg, ResultLoc.ref);
   }
 
@@ -2463,7 +2463,7 @@ extension on DarticCompiler {
 
     // 3. Add field name to names partition and emit GET_FIELD_DYN.
     final nameIdx = _constantPool.addName(expr.name);
-    _emitter.emit(encodeABC(Op.getFieldDyn, resultReg, recvReg, nameIdx));
+    _emitter.emitABC(Op.getFieldDyn, resultReg, recvReg, nameIdx);
     return (resultReg, ResultLoc.ref);
   }
 
@@ -2483,7 +2483,7 @@ extension on DarticCompiler {
       assert(shapeIdx <= 0xFF,
           'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
           'WIDE prefix not yet supported for this opcode');
-      _emitter.emit(encodeABC(Op.createRecord, destReg, 0, shapeIdx));
+      _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
 
@@ -2516,12 +2516,12 @@ extension on DarticCompiler {
     final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
     for (var i = 0; i < fieldRegs.length; i++) {
       if (fieldRegs[i] != targetRegs[i]) {
-        _emitter.emit(encodeABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0));
+        _emitter.emitABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0);
       }
     }
 
-    _emitter.emit(
-        encodeABC(Op.createRecord, destReg, targetRegs.first, shapeIdx));
+    _emitter.emitABC(
+        Op.createRecord, destReg, targetRegs.first, shapeIdx);
     return (destReg, ResultLoc.ref);
   }
 
@@ -2534,7 +2534,7 @@ extension on DarticCompiler {
     final destReg = _allocRefReg();
 
     if (entries.isEmpty) {
-      _emitter.emit(encodeABC(op, destReg, 0, 0));
+      _emitter.emitABC(op, destReg, 0, 0);
       return (destReg, ResultLoc.ref);
     }
 

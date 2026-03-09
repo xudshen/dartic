@@ -33,8 +33,8 @@ void main() {}
       final jumpIdx = findOp(code, Op.jump, start: jifIdx + 1);
       expect(jumpIdx, isNot(-1), reason: 'Backward JUMP not found');
 
-      // The backward jump should have a negative offset.
-      final sbx = decodesBx(code[jumpIdx]);
+      // The backward jump should have a negative offset (3-word WIDE encoding).
+      final sbx = decodeWideJumpSBx(code, jumpIdx);
       expect(sbx, isNegative, reason: 'Loop JUMP should be backward (negative)');
     });
 
@@ -76,7 +76,7 @@ void main() {}
       // There should be a backward JUMP.
       final jumpIdx = findOp(code, Op.jump, start: jifIdx + 1);
       expect(jumpIdx, isNot(-1), reason: 'Backward JUMP not found');
-      expect(decodesBx(code[jumpIdx]), isNegative,
+      expect(decodeWideJumpSBx(code, jumpIdx), isNegative,
           reason: 'Loop JUMP should be backward');
     });
 
@@ -123,8 +123,8 @@ void main() {}
       final jitIdx = findOp(code, Op.jumpIfTrue);
       expect(jitIdx, isNot(-1), reason: 'JUMP_IF_TRUE not found');
 
-      // The jump should be backward.
-      final sbx = decodesBx(code[jitIdx]);
+      // The jump should be backward (3-word WIDE encoding).
+      final sbx = decodeWideJumpSBx(code, jitIdx);
       expect(sbx, isNegative,
           reason: 'Do-while JUMP_IF_TRUE should be backward');
     });

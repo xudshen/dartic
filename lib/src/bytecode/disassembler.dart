@@ -548,7 +548,7 @@ class DarticDisassembler {
 
     // Jump instructions show absolute target
     if (_isJumpAsBx(op)) {
-      final target = pc + sbx;
+      final target = pc + 1 + sbx;
       return ('r$a, @${_pcStr(target)}', '');
     }
     return ('r$a, s$sbx', '');
@@ -566,7 +566,7 @@ class DarticDisassembler {
   ) {
     final sax = decodesAx(instr);
     if (op == Op.jumpAx) {
-      final target = pc + sax;
+      final target = pc + 1 + sax;
       return ('@${_pcStr(target)}', '');
     }
     return ('s$sax', '');
@@ -597,7 +597,7 @@ class DarticDisassembler {
       InstrFormat.asBx => () {
           final (a, sbx) = decodeWideAsBx(extWord, origWord);
           if (_isJumpAsBx(realOp)) {
-            final target = pc + sbx;
+            final target = pc + 3 + sbx;
             return ('r$a, @${_pcStr(target)}', '');
           }
           return ('r$a, s$sbx', '');
@@ -609,7 +609,7 @@ class DarticDisassembler {
       InstrFormat.sAx => () {
           final sax = decodeWidesAx(extWord, origWord);
           if (realOp == Op.jumpAx) {
-            final target = pc + sax;
+            final target = pc + 3 + sax;
             return ('@${_pcStr(target)}', '');
           }
           return ('s$sax', '');
