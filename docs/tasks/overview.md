@@ -169,7 +169,7 @@
 - [x] DarticPluginContext 统一注册路径，core lib 与用户 plugin 同路径
 - [x] Flutter 热更新 demo 端到端编译通过（.dart → .dill → .darb，2531 bytes）
 - [x] Serializer v2 + Verifier 修复：.darb 加载→验证→执行→渲染完整通路（2999 + 30 tests pass）
-- [ ] Phase 2-6 全量零回归
+- [ ] Phase 2-6 全量零回归 — 23→9 regressions（14 fixed via per-arity strategy; 残留：RC2 DarticType×6, RC4-generic×2, RC4-closure×1）
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)
 
