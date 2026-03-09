@@ -374,7 +374,7 @@ void main() {
 
     test('formats jump targets as absolute PC', () {
       final code = Uint32List(2);
-      // JUMP r0, sBx=+3 → at pc=0, target = 0+3 = 3
+      // JUMP r0, sBx=+3 → at pc=0, target = 0+1+3 = 4
       code[0] = encodeAsBx(Op.jump, 0, 3);
       code[1] = encodeABC(Op.halt, 0, 0, 0);
 
@@ -392,8 +392,8 @@ void main() {
       );
       final output = DarticDisassembler.disassemble(module, full: true);
 
-      // pc=0, offset=+3 → target @0003
-      expect(output, contains('@0003'));
+      // pc=0, offset=+3 → target @0004
+      expect(output, contains('@0004'));
     });
 
     test('shows constant pool contents section', () {
@@ -512,7 +512,7 @@ void main() {
 
     test('jumpAx formats absolute PC target', () {
       final code = Uint32List(2);
-      // JUMP_AX sAx=+5 → at pc=0, target = 0+5 = 5
+      // JUMP_AX sAx=+5 → at pc=0, target = 0+1+5 = 6
       code[0] = encodesAx(Op.jumpAx, 5);
       code[1] = encodeABC(Op.halt, 0, 0, 0);
 
@@ -530,7 +530,7 @@ void main() {
       );
       final output = DarticDisassembler.disassemble(module, full: true);
 
-      expect(output, contains('@0005'));
+      expect(output, contains('@0006'));
     });
 
     test('PC is 4-digit zero-padded', () {
