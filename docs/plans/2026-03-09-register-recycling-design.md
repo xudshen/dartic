@@ -87,6 +87,18 @@ Total: ~75 ref regs (峰值 = 单次最大调用 + 少量活跃变量)
 
 峰值由**单个最大构造函数**决定（AppBar 的 ~70），而非所有构造函数之和。
 
+### 实测数据
+
+Flutter 热更新 example（`example/flutter_hot_update/dartic_src/home_screen.dart`）的 `build()` 方法（含 Scaffold/AppBar/Column/Text/ElevatedButton 嵌套）：
+
+| 指标 | 回收前 | 回收后 | 变化 |
+|------|--------|--------|------|
+| refRegCount | 343 | 219 | -36% |
+| .darb 体积 | 4465 bytes | 4331 bytes | -3% |
+| WIDE 指令数 | 0（溢出） | 0（安全） | 回收后 reg 已 < 255 |
+
+实测 219 高于预估 ~75，原因：预估假设所有嵌套是线性的，但实际 widget 树有**并列兄弟节点**（如 Column.children 中的多个 Text/SizedBox），它们的 resultReg 同时存活。后续回收 padding null reg（`_compileHostArgsWithPadding` 中 `_loadNull()` 分配的临时 reg）可进一步降低。
+
 ---
 
 ## API 变更
