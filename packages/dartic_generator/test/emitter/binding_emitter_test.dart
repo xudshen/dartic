@@ -227,9 +227,38 @@ void main() {
       );
       final source = emitBindingFile(info);
 
-      // Should generate two arity wrappers
-      expect(source, contains("'substring#1':"));
-      expect(source, contains("'substring#2':"));
+      // Single max-arity key with darticAbsent cascade
+      expect(source, contains("'substring#2'"));
+      expect(source, isNot(contains("'substring#1'")));
+      expect(source, contains('darticAbsent'));
+    });
+
+    test('optional positional param generates darticAbsent cascade', () {
+      final info = TypeInfo(
+        className: 'String',
+        libraryUri: 'dart:core',
+        methods: [
+          MethodInfo(
+            name: 'substring',
+            paramTypes: [
+              ParamInfo(name: 'start', type: 'int'),
+              ParamInfo(name: 'end', type: 'int?', isOptional: true),
+            ],
+            returnType: 'String',
+          ),
+        ],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [],
+        constructors: [],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info);
+
+      expect(source, contains('darticAbsent'));
+      expect(source, contains("'substring#2'"));
+      expect(source, isNot(contains("'substring#1'")));
     });
 
     test('generates void method with return null', () {

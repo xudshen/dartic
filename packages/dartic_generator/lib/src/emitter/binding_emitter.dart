@@ -250,6 +250,9 @@ Set<String> _detectRequiredImports(String source) {
       break;
     }
   }
+  if (RegExp(r'\bdarticAbsent\b').hasMatch(source)) {
+    imports.add('package:dartic/src/api/dartic_absent.dart');
+  }
   return imports;
 }
 
@@ -622,26 +625,30 @@ String _toInternalMethodMapName(String className) {
 
 void _writeInstanceMethodEntries(
     StringBuffer buf, String className, MethodInfo method) {
-  for (final key in method.allBindingKeys) {
-    final arity = int.parse(key.split('#').last);
-    final wrapper = _emitInstanceMethodWrapper(className, method, arity);
-    buf.writeln("        '$key': $wrapper,");
-  }
+  // 统一：单一 max-arity key。
+  final key = method.allBindingKeys.single;
+  final wrapper = _emitInstanceMethodWrapper(className, method);
+  buf.writeln("        '$key': $wrapper,");
 }
 
-/// Generates a wrapper closure for an instance method call.
+/// 为实例方法生成 wrapper 闭包。
 ///
-/// Handles:
-/// - Named parameters (emits `name: args[N] as Type`)
-/// - Function-typed parameters (wraps with appropriate closure)
-/// - Void return types (wraps with `{ ...; return null; }`)
-String _emitInstanceMethodWrapper(
-    String className, MethodInfo method, int paramCount) {
+/// 有可选参数时，生成级联 `identical(args[i], darticAbsent)` 检查，
+/// 调用更短的 Dart 重载，让 Dart 自己填充默认值。
+String _emitInstanceMethodWrapper(String className, MethodInfo method) {
+  final hasOptional = method.paramTypes.any((p) => p.isOptional);
+  if (!hasOptional) {
+    return _emitSimpleInstanceWrapper(className, method);
+  }
+  return _emitCascadingInstanceWrapper(className, method);
+}
+
+String _emitSimpleInstanceWrapper(String className, MethodInfo method) {
   final receiver = '(args[0] as $className)';
   final args = <String>[];
-  for (var i = 0; i < paramCount; i++) {
+  for (var i = 0; i < method.paramTypes.length; i++) {
     final param = method.paramTypes[i];
-    final argExpr = _emitArgExpression(param, i + 1); // +1 for receiver
+    final argExpr = _emitArgExpression(param, i + 1);
     if (param.isNamed) {
       args.add('${param.name}: $argExpr');
     } else {
@@ -649,11 +656,70 @@ String _emitInstanceMethodWrapper(
     }
   }
   final call = '$receiver.${method.name}(${args.join(', ')})';
-
-  if (method.isVoid) {
-    return '(args) { $call; return null; }';
-  }
+  if (method.isVoid) return '(args) { $call; return null; }';
   return '(args) => $call';
+}
+
+String _emitCascadingInstanceWrapper(String className, MethodInfo method) {
+  final receiver = '(args[0] as $className)';
+  final params = method.paramTypes;
+  final firstOptional = params.indexWhere((p) => p.isOptional);
+  final isVoid = method.isVoid;
+
+  // 构建必选参数（始终存在）。
+  final requiredArgs = <String>[];
+  for (var i = 0; i < firstOptional; i++) {
+    final param = params[i];
+    final argExpr = _emitArgExpression(param, i + 1);
+    if (param.isNamed) {
+      requiredArgs.add('${param.name}: $argExpr');
+    } else {
+      requiredArgs.add(argExpr);
+    }
+  }
+
+  final lines = <String>['(args) {'];
+
+  // 从第一个可选参数开始级联检查
+  for (var cut = firstOptional; cut < params.length; cut++) {
+    final argsUpToCut = <String>[...requiredArgs];
+    for (var j = firstOptional; j < cut; j++) {
+      final param = params[j];
+      final argExpr = _emitArgExpression(param, j + 1);
+      if (param.isNamed) {
+        argsUpToCut.add('${param.name}: $argExpr');
+      } else {
+        argsUpToCut.add(argExpr);
+      }
+    }
+    final checkIdx = cut + 1; // +1 因为 receiver 在 args[0]
+    final call = '$receiver.${method.name}(${argsUpToCut.join(', ')})';
+    if (isVoid) {
+      lines.add('  if (identical(args[$checkIdx], darticAbsent)) { $call; return null; }');
+    } else {
+      lines.add('  if (identical(args[$checkIdx], darticAbsent)) return $call;');
+    }
+  }
+
+  // 全参数调用
+  final allArgs = <String>[...requiredArgs];
+  for (var j = firstOptional; j < params.length; j++) {
+    final param = params[j];
+    final argExpr = _emitArgExpression(param, j + 1);
+    if (param.isNamed) {
+      allArgs.add('${param.name}: $argExpr');
+    } else {
+      allArgs.add(argExpr);
+    }
+  }
+  final fullCall = '$receiver.${method.name}(${allArgs.join(', ')})';
+  if (isVoid) {
+    lines.add('  $fullCall; return null;');
+  } else {
+    lines.add('  return $fullCall;');
+  }
+  lines.add('}');
+  return lines.join('\n');
 }
 
 /// Generates the argument expression for a parameter at the given args index.
