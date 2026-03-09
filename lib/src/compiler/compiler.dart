@@ -1064,13 +1064,13 @@ class DarticCompiler {
   /// [count] is the element/entry count for the C operand.
   void _emitCreateCollection(
       int op, int destReg, List<int> srcRegs, int count) {
-    final targetRegs = List.generate(srcRegs.length, (_) => _allocRefReg());
+    final baseReg = _refAlloc.allocConsecutive(srcRegs.length);
     for (var i = 0; i < srcRegs.length; i++) {
-      if (srcRegs[i] != targetRegs[i]) {
-        _emitter.emitABC(Op.moveRef, targetRegs[i], srcRegs[i], 0);
+      if (srcRegs[i] != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, srcRegs[i], 0);
       }
     }
-    _emitter.emitABC(op, destReg, targetRegs.first, count);
+    _emitter.emitABC(op, destReg, baseReg, count);
   }
 
   // ── Host binding helpers ──

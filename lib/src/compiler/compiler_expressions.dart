@@ -1079,21 +1079,9 @@ extension on DarticCompiler {
   void _emitFTAForCall(List<ir.DartType> typeArgs) {
     if (typeArgs.isEmpty) return;
 
-    // Resolve each type argument to a DarticType ref register.
-    final firstTypeReg = _allocRefReg();
-    final template0 = dartTypeToTemplate(
-      typeArgs[0],
-      _typeClassIdLookup,
-      enclosingClassTypeParams: _currentClassTypeParams,
-      enclosingFunctionTypeParams: _currentFunctionTypeParams,
-    );
-    final templateIdx0 = _constantPool.addRef(template0);
-    _emitter.emitABx(Op.instantiateType, firstTypeReg, templateIdx0);
-
-    // Allocate consecutive ref registers for remaining type args.
-    for (var i = 1; i < typeArgs.length; i++) {
-      final typeReg = _allocRefReg();
-      assert(typeReg == firstTypeReg + i);
+    // Resolve each type argument to consecutive DarticType ref registers.
+    final firstTypeReg = _refAlloc.allocConsecutive(typeArgs.length);
+    for (var i = 0; i < typeArgs.length; i++) {
       final template = dartTypeToTemplate(
         typeArgs[i],
         _typeClassIdLookup,
@@ -1101,7 +1089,7 @@ extension on DarticCompiler {
         enclosingFunctionTypeParams: _currentFunctionTypeParams,
       );
       final templateIdx = _constantPool.addRef(template);
-      _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
+      _emitter.emitABx(Op.instantiateType, firstTypeReg + i, templateIdx);
     }
 
     // CREATE_TYPE_ARGS: bundle resolved types into a List<DarticType>.
@@ -2426,15 +2414,15 @@ extension on DarticCompiler {
         'WIDE prefix not yet supported for this opcode');
 
     // Move all field values into consecutive ref registers.
-    final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
+    final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);
     for (var i = 0; i < fieldRegs.length; i++) {
-      if (fieldRegs[i] != targetRegs[i]) {
-        _emitter.emitABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0);
+      if (fieldRegs[i] != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, fieldRegs[i], 0);
       }
     }
 
     _emitter.emitABC(
-        Op.createRecord, destReg, targetRegs.first, shapeIdx);
+        Op.createRecord, destReg, baseReg, shapeIdx);
     return (destReg, ResultLoc.ref);
   }
 
@@ -2526,15 +2514,15 @@ extension on DarticCompiler {
         'WIDE prefix not yet supported for this opcode');
 
     // Move into consecutive ref registers.
-    final targetRegs = List.generate(fieldRegs.length, (_) => _allocRefReg());
+    final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);
     for (var i = 0; i < fieldRegs.length; i++) {
-      if (fieldRegs[i] != targetRegs[i]) {
-        _emitter.emitABC(Op.moveRef, targetRegs[i], fieldRegs[i], 0);
+      if (fieldRegs[i] != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, fieldRegs[i], 0);
       }
     }
 
     _emitter.emitABC(
-        Op.createRecord, destReg, targetRegs.first, shapeIdx);
+        Op.createRecord, destReg, baseReg, shapeIdx);
     return (destReg, ResultLoc.ref);
   }
 
