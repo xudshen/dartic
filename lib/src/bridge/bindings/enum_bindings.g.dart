@@ -14,14 +14,12 @@ abstract final class EnumBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'index#0': (args) {
-  final obj = args[0] as DarticObject;
-  return obj.valueFields[0];
-}
-,
+            final obj = args[0] as DarticObject;
+            return obj.valueFields[0];
+        },
         '_name#0': (args) {
-  final obj = args[0] as DarticObject;
-  return obj.refFields[0] as String;
-}
-,
+            final obj = args[0] as DarticObject;
+            return obj.refFields[0] as String;
+        },
       };
 }

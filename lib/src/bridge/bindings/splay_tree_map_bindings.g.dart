@@ -38,23 +38,17 @@ abstract final class SplayTreeMapBindings {
         'fromIterable#5': (args) => SplayTreeMap.fromIterable(args[0] as Iterable<dynamic>, key: (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), value: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), compare: (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), isValidKey: args[4] as bool Function(dynamic)?),
         'fromIterables#4': (args) => SplayTreeMap.fromIterables(args[0] as Iterable, args[1] as Iterable, (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), args[3] as bool Function(dynamic)?),
         '#2': (args) {
-  final compare =
-      args.isNotEmpty ? args[0] as Function? : null;
-  final isValidKey =
-      args.length > 1 ? args[1] as Function? : null;
-  return SplayTreeMap<Object?, Object?>(
-    compare != null ? (a, b) => compare(a, b) as int : null,
-    isValidKey != null ? (k) => isValidKey(k) as bool : null,
-  );
-}
-,
+            final compare =
+                args.isNotEmpty ? args[0] as Function? : null;
+            final isValidKey =
+                args.length > 1 ? args[1] as Function? : null;
+            return SplayTreeMap<Object?, Object?>(
+              compare != null ? (a, b) => compare(a, b) as int : null,
+              isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         'from#3': (args) => SplayTreeMap.from(args[0] as Map),
         '[]#1': (args) => (args[0] as SplayTreeMap)[args[1]],
-        '[]=#2': (args) {
-  (args[0] as SplayTreeMap)[args[1]] = args[2];
-  return args[2];
-}
-,
         'firstKey#0': (args) => (args[0] as SplayTreeMap).firstKey(),
         'lastKey#0': (args) => (args[0] as SplayTreeMap).lastKey(),
         'remove#1': (args) => (args[0] as SplayTreeMap).remove(args[1]),

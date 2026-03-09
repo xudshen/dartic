@@ -153,5 +153,38 @@ int main() => classify(2);
 ''');
       expect(result, 20);
     });
+
+    // 12. List pattern with rest element (exercises sublist with 1 arg)
+    test('list pattern with rest element', () async {
+      final result = await compileAndRunWithHost('''
+Object main() {
+  var [first, ...rest] = [1, 2, 3, 4];
+  return rest;
+}
+''');
+      expect(result, [2, 3, 4]);
+    });
+
+    // 13. Host instance method with optional positional parameter
+    test('List.sublist with one arg (optional end omitted)', () async {
+      final result = await compileAndRunWithHost('''
+Object main() {
+  var list = [10, 20, 30, 40, 50];
+  return list.sublist(2);
+}
+''');
+      expect(result, [30, 40, 50]);
+    });
+
+    // 14. Host instance method with all args provided
+    test('List.sublist with both args', () async {
+      final result = await compileAndRunWithHost('''
+Object main() {
+  var list = [10, 20, 30, 40, 50];
+  return list.sublist(1, 3);
+}
+''');
+      expect(result, [20, 30]);
+    });
   });
 }

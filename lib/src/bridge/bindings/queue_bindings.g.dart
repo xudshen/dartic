@@ -56,26 +56,22 @@ abstract final class QueueBindings {
         'from#1': (args) => Queue.from(args[0] as Iterable),
         'of#1': (args) => Queue.of(args[0] as Iterable),
         'add#1': (args) {
-  (args[0] as Queue).add(args[1]);
-  return null;
-}
-,
+            (args[0] as Queue).add(args[1]);
+            return null;
+        },
         'addFirst#1': (args) {
-  (args[0] as Queue).addFirst(args[1]);
-  return null;
-}
-,
+            (args[0] as Queue).addFirst(args[1]);
+            return null;
+        },
         'addLast#1': (args) {
-  (args[0] as Queue).addLast(args[1]);
-  return null;
-}
-,
+            (args[0] as Queue).addLast(args[1]);
+            return null;
+        },
         'removeFirst#0': (args) => (args[0] as Queue).removeFirst(),
         'removeLast#0': (args) => (args[0] as Queue).removeLast(),
         'clear#0': (args) {
-  (args[0] as Queue).clear();
-  return null;
-}
-,
+            (args[0] as Queue).clear();
+            return null;
+        },
       };
 }

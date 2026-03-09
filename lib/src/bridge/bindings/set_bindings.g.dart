@@ -47,6 +47,7 @@ abstract final class SetBindings {
         'join#0': (args) => (args[0] as Set).join(),
         'join#1': (args) => (args[0] as Set).join(args[1] as String),
         'any#1': (args) => (args[0] as Set).any((a) => (args[1] as Function)(a) as bool),
+        'toList#1': (args) => (args[0] as Set).toList(growable: args[1] as bool),
         'take#1': (args) => (args[0] as Set).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as Set).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as Set).skip(args[1] as int),
@@ -62,46 +63,35 @@ abstract final class SetBindings {
         'last#0': (args) => (args[0] as Set).last,
         'single#0': (args) => (args[0] as Set).single,
         'toString#0': (args) => (args[0] as Set).toString(),
-        'toList#1': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return (args[0] as Set).toList(growable: args[1] as bool);
-  }
-  return (args[0] as Set).toList();
-}
-,
         'symmetricDifference#1': (args) {
-  final a = args[0] as Set;
-  final b = args[1] as Set;
-  return a.union(b).difference(a.intersection(b));
-}
-,
+            final a = args[0] as Set;
+            final b = args[1] as Set;
+            return a.union(b).difference(a.intersection(b));
+        },
         'where#1': (args) {
-  final fn = args[1] as Function;
-  return (args[0] as Set).where((e) => fn(e) as bool);
-}
-,
+            final fn = args[1] as Function;
+            return (args[0] as Set).where((e) => fn(e) as bool);
+        },
         'firstWhere#2': (args) {
-  final fn = args[1] as Function;
-  final orElse = (args.length > 2 && args[2] != null) ? args[2] as Function : null;
-  for (final e in args[0] as Set) {
-    if (fn(e) as bool) return e;
-  }
-  if (orElse != null) return orElse();
-  throw StateError('No element');
-}
-,
+            final fn = args[1] as Function;
+            final orElse = (args.length > 2 && args[2] != null) ? args[2] as Function : null;
+            for (final e in args[0] as Set) {
+              if (fn(e) as bool) return e;
+            }
+            if (orElse != null) return orElse();
+            throw StateError('No element');
+        },
         'reduce#1': (args) {
-  final fn = args[1] as Function;
-  final set = args[0] as Set;
-  final iter = set.iterator;
-  if (!iter.moveNext()) throw StateError('No element');
-  var value = iter.current;
-  while (iter.moveNext()) {
-    value = fn(value, iter.current);
-  }
-  return value;
-}
-,
+            final fn = args[1] as Function;
+            final set = args[0] as Set;
+            final iter = set.iterator;
+            if (!iter.moveNext()) throw StateError('No element');
+            var value = iter.current;
+            while (iter.moveNext()) {
+              value = fn(value, iter.current);
+            }
+            return value;
+        },
       };
 
   static Map<String, Object? Function(List<Object?>)> setMethodMap() => {

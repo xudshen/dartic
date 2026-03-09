@@ -41,27 +41,26 @@ abstract final class MapBindings {
         'isNotEmpty#0': (args) => (args[0] as Map).isNotEmpty,
         '[]#1': (args) => (args[0] as Map)[(args[1] as Object?)],
         '[]=#2': (args) { (args[0] as Map)[args[1] as dynamic] = args[2]; return args[2]; },
+        '#0': (args) => <dynamic, dynamic>{},
         'fromEntries#1': (args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>()),
         'toString#0': (args) => (args[0] as Map).toString(),
         'updateAll#1': (args) {
-  final fn = args[1] as Function;
-  final map = args[0] as Map;
-  for (final key in map.keys.toList()) {
-    map[key] = fn(key, map[key]);
-  }
-  return null;
-}
-,
+            final fn = args[1] as Function;
+            final map = args[0] as Map;
+            for (final key in map.keys.toList()) {
+              map[key] = fn(key, map[key]);
+            }
+            return null;
+        },
         'update#3': (args) {
-  final updateFn = args[2] as Function;
-  final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
-  return (args[0] as Map).update(
-    args[1],
-    (v) => updateFn(v),
-    ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
-  );
-}
-,
+            final updateFn = args[2] as Function;
+            final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
+            return (args[0] as Map).update(
+              args[1],
+              (v) => updateFn(v),
+              ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
+            );
+        },
       };
 
   static Map<String, Object? Function(List<Object?>)> linkedHashMapMethodMap() => {

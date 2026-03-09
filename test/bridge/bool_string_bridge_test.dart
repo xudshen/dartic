@@ -326,10 +326,9 @@ int main() {
     });
 
     test('allMatches returns all occurrences', () {
-      final matches = invoke('dart:core::String::allMatches#2', [
+      final matches = invoke('dart:core::String::allMatches#1', [
         'hello',
         'hello world hello',
-        null,
       ]) as Iterable;
       expect(matches.length, 2);
     });
@@ -344,19 +343,17 @@ int main() {
     });
 
     test('matchAsPrefix matches at start', () {
-      final match = invoke('dart:core::String::matchAsPrefix#2', [
+      final match = invoke('dart:core::String::matchAsPrefix#1', [
         'hello',
         'hello world',
-        null,
       ]) as Match;
       expect(match.group(0), 'hello');
     });
 
     test('matchAsPrefix returns null when no match at start', () {
-      final result = invoke('dart:core::String::matchAsPrefix#2', [
+      final result = invoke('dart:core::String::matchAsPrefix#1', [
         'hello',
         'world hello',
-        null,
       ]);
       expect(result, isNull);
     });

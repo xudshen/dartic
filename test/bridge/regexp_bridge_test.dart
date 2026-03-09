@@ -176,7 +176,7 @@ void main() {
     test('allMatches without start', () {
       final re = RegExp(r'\d+');
       final matches = invoke(
-              'dart:core::RegExp::allMatches#2', [re, 'a1b22c333'])
+              'dart:core::RegExp::allMatches#1', [re, 'a1b22c333'])
           as Iterable<RegExpMatch>;
       expect(matches.length, 3);
     });
@@ -193,7 +193,7 @@ void main() {
     test('allMatches with null start defaults to 0', () {
       final re = RegExp(r'\d+');
       final matches =
-          invoke('dart:core::RegExp::allMatches#2', [re, 'a1b22c333', null])
+          invoke('dart:core::RegExp::allMatches#1', [re, 'a1b22c333'])
               as Iterable<RegExpMatch>;
       expect(matches.length, 3);
     });
@@ -212,7 +212,7 @@ void main() {
     test('matchAsPrefix without start', () {
       final re = RegExp(r'\d+');
       final m =
-          invoke('dart:core::RegExp::matchAsPrefix#2', [re, '123abc']) as Match;
+          invoke('dart:core::RegExp::matchAsPrefix#1', [re, '123abc']) as Match;
       expect(m.group(0), '123');
     });
 
@@ -226,7 +226,7 @@ void main() {
 
     test('matchAsPrefix returns null on no match at start', () {
       final re = RegExp(r'\d+');
-      expect(invoke('dart:core::RegExp::matchAsPrefix#2', [re, 'abc123']),
+      expect(invoke('dart:core::RegExp::matchAsPrefix#1', [re, 'abc123']),
           isNull);
     });
 

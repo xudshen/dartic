@@ -78,71 +78,62 @@ abstract final class UriBindings {
         'hashCode#0': (args) => (args[0] as Uri).hashCode,
         '==#1': (args) => args[0] == args[1],
         'http#3': (args) {
-  final authority = args[0] as String;
-  final path = args[1] as String;
-  if (args.length > 2 && args[2] != null) {
-    return Uri.http(authority, path, (args[2] as Map).cast<String, dynamic>());
-  }
-  return Uri.http(authority, path);
-}
-,
+            final authority = args[0] as String;
+            final path = args[1] as String;
+            if (args.length > 2 && args[2] != null) {
+              return Uri.http(authority, path, (args[2] as Map).cast<String, dynamic>());
+            }
+            return Uri.http(authority, path);
+        },
         'https#3': (args) {
-  final authority = args[0] as String;
-  final path = args[1] as String;
-  if (args.length > 2 && args[2] != null) {
-    return Uri.https(authority, path, (args[2] as Map).cast<String, dynamic>());
-  }
-  return Uri.https(authority, path);
-}
-,
+            final authority = args[0] as String;
+            final path = args[1] as String;
+            if (args.length > 2 && args[2] != null) {
+              return Uri.https(authority, path, (args[2] as Map).cast<String, dynamic>());
+            }
+            return Uri.https(authority, path);
+        },
         'file#2': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return Uri.file(args[0] as String, windows: args[1] as bool);
-  }
-  return Uri.file(args[0] as String);
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return Uri.file(args[0] as String, windows: args[1] as bool);
+            }
+            return Uri.file(args[0] as String);
+        },
         'directory#2': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return Uri.directory(args[0] as String, windows: args[1] as bool);
-  }
-  return Uri.directory(args[0] as String);
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return Uri.directory(args[0] as String, windows: args[1] as bool);
+            }
+            return Uri.directory(args[0] as String);
+        },
         'dataFromString#5': (args) => Uri.dataFromString(
-  args[0] as String,
-  mimeType: args.length > 1 && args[1] != null ? args[1] as String : null,
-  parameters: args.length > 3 && args[3] != null ? (args[3] as Map).cast<String, String>() : null,
-  base64: args.length > 4 && args[4] != null ? args[4] as bool : false,
-)
-,
+            args[0] as String,
+            mimeType: args.length > 1 && args[1] != null ? args[1] as String : null,
+            parameters: args.length > 3 && args[3] != null ? (args[3] as Map).cast<String, String>() : null,
+            base64: args.length > 4 && args[4] != null ? args[4] as bool : false,
+        ),
         'encodeQueryComponent#2': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
-  }
-  return Uri.encodeQueryComponent(args[0] as String);
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+            }
+            return Uri.encodeQueryComponent(args[0] as String);
+        },
         'decodeQueryComponent#2': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
-  }
-  return Uri.decodeQueryComponent(args[0] as String);
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+            }
+            return Uri.decodeQueryComponent(args[0] as String);
+        },
         'splitQueryString#2': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
-  }
-  return Uri.splitQueryString(args[0] as String);
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
+            }
+            return Uri.splitQueryString(args[0] as String);
+        },
         'toFilePath#1': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return (args[0] as Uri).toFilePath(windows: args[1] as bool);
-  }
-  return (args[0] as Uri).toFilePath();
-}
-,
+            if (args.length > 1 && args[1] != null) {
+              return (args[0] as Uri).toFilePath(windows: args[1] as bool);
+            }
+            return (args[0] as Uri).toFilePath();
+        },
       };
 }

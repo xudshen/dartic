@@ -482,14 +482,73 @@ void _writeMethodMap(
     }
   }
 
-  // Extra methods (custom overrides from YAML)
+  // Extra methods (custom overrides from YAML).
+  // When an extra_method overrides a method with optional positional params,
+  // register the same closure under all valid arity keys so the compiler
+  // can look up by actual provided arg count.
   if (extraMethods != null) {
     for (final entry in extraMethods.entries) {
-      buf.writeln("        '${entry.key}': ${entry.value},");
+      _writeExtraMethodEntry(buf, entry.key, entry.value);
+
+      // Find the analyzer-generated method this key overrides and register
+      // additional lower-arity aliases if the method has optional positional
+      // params (no named params — named uses single max-arity).
+      final keyName = entry.key.split('#').first;
+      final matchingMethod = info.methods.where((m) => m.name == keyName);
+      if (matchingMethod.isNotEmpty) {
+        final method = matchingMethod.first;
+        final allKeys = method.allBindingKeys;
+        for (final altKey in allKeys) {
+          if (altKey != entry.key) {
+            _writeExtraMethodEntry(buf, altKey, entry.value);
+          }
+        }
+      }
     }
   }
 
   buf.writeln('      };');
+}
+
+/// Writes a single extra_method entry with proper indentation.
+///
+/// Multi-line closures from YAML are re-indented to align with surrounding
+/// methodMap entries, preserving the relative indentation structure of the
+/// original source (e.g., nested if/for blocks stay indented relative to
+/// the closure body).
+void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
+  const indent = '        '; // 8 spaces: map entry level
+  final trimmed = source.trim();
+  final lines = trimmed.split('\n');
+  if (lines.length == 1) {
+    buf.writeln("$indent'$key': $trimmed,");
+    return;
+  }
+
+  // Find minimum indentation of body lines (lines 1..n-1) to use as base.
+  var minIndent = 999;
+  for (var i = 1; i < lines.length; i++) {
+    final line = lines[i];
+    if (line.trim().isEmpty) continue;
+    final leading = line.length - line.trimLeft().length;
+    if (leading < minIndent) minIndent = leading;
+  }
+  if (minIndent == 999) minIndent = 0;
+
+  // First line: opening of closure.
+  buf.writeln("$indent'$key': ${lines.first.trim()}");
+  // Body lines: re-indent relative to map entry level + 2.
+  for (var i = 1; i < lines.length - 1; i++) {
+    final line = lines[i];
+    if (line.trim().isEmpty) {
+      buf.writeln();
+    } else {
+      final relative = line.substring(minIndent);
+      buf.writeln('$indent  $relative');
+    }
+  }
+  // Last line: closing brace at map entry level.
+  buf.writeln('$indent${lines.last.trim()},');
 }
 
 /// Returns true if any of the given keys are in the override set.
@@ -527,10 +586,22 @@ void _writeInternalMethodMap(
     _writeOperatorEntry(buf, info.className, op);
   }
 
-  // Extra methods (custom overrides)
+  // Extra methods (custom overrides) — same per-arity alias logic.
   if (extraMethods != null) {
     for (final entry in extraMethods.entries) {
-      buf.writeln("        '${entry.key}': ${entry.value},");
+      _writeExtraMethodEntry(buf, entry.key, entry.value);
+
+      final keyName = entry.key.split('#').first;
+      final matchingMethod = info.methods.where((m) => m.name == keyName);
+      if (matchingMethod.isNotEmpty) {
+        final method = matchingMethod.first;
+        final allKeys = method.allBindingKeys;
+        for (final altKey in allKeys) {
+          if (altKey != entry.key) {
+            _writeExtraMethodEntry(buf, altKey, entry.value);
+          }
+        }
+      }
     }
   }
 

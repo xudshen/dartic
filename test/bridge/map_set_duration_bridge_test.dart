@@ -222,7 +222,7 @@ void main() {
     });
 
     test('Set.toList', () {
-      expect(invoke('dart:core::Set::toList#1', [{1, 2, 3}]), [1, 2, 3]);
+      expect(invoke('dart:core::Set::toList#1', [{1, 2, 3}, true]), [1, 2, 3]);
     });
 
     test('Set.clear', () {

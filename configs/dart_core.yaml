@@ -202,6 +202,12 @@ libraries:
           "_literal#1": "(args) => List<dynamic>.from(args[0] as List)"
           "filled#2": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: true)"
           "empty#0": "(args) => <dynamic>[]"
+          "generate#2": |
+            (args) {
+              final length = args[0] as int;
+              final generator = args[1] as Function;
+              return List.generate(length, (i) => generator(i));
+            }
           "generate#3": |
             (args) {
               final length = args[0] as int;
@@ -209,12 +215,6 @@ libraries:
               if (args.length > 2 && args[2] != null) {
                 return List.generate(length, (i) => generator(i), growable: args[2] as bool);
               }
-              return List.generate(length, (i) => generator(i));
-            }
-          "generate#2": |
-            (args) {
-              final length = args[0] as int;
-              final generator = args[1] as Function;
               return List.generate(length, (i) => generator(i));
             }
 
@@ -236,24 +236,6 @@ libraries:
         extra_methods:
           "of#1": "(args) => LinkedHashMap<dynamic, dynamic>.of(args[0] as Map)"
           "#0": "(args) => <dynamic, dynamic>{}"
-
-      # ── Pattern: String implements Pattern, registered separately ──
-      Pattern:
-        extra_methods:
-          "allMatches#2": |
-            (args) {
-              final self = args[0] as String;
-              final string = args[1] as String;
-              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
-              return self.allMatches(string, start);
-            }
-          "matchAsPrefix#2": |
-            (args) {
-              final self = args[0] as String;
-              final string = args[1] as String;
-              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
-              return self.matchAsPrefix(string, start);
-            }
 
       # ── Symbol: cross-namespace binding (dart:_internal) ──
       Symbol:
@@ -451,24 +433,6 @@ libraries:
             )
           "hashCode#0": "(args) => (args[0] as RegExp).hashCode"
           "toString#0": "(args) => (args[0] as RegExp).toString()"
-          "allMatches#2": |
-            (args) {
-              final re = args[0] as RegExp;
-              final str = args[1] as String;
-              if (args.length > 2 && args[2] != null) {
-                return re.allMatches(str, args[2] as int);
-              }
-              return re.allMatches(str);
-            }
-          "matchAsPrefix#2": |
-            (args) {
-              final re = args[0] as RegExp;
-              final str = args[1] as String;
-              if (args.length > 2 && args[2] != null) {
-                return re.matchAsPrefix(str, args[2] as int);
-              }
-              return re.matchAsPrefix(str);
-            }
 
       # ── Iterable: generate factory + callback methods + optional params ──
       Iterable:
@@ -549,43 +513,13 @@ libraries:
               return value;
             }
 
-      # ── List: optional param methods ──
-      List:
-        extra_methods:
-          "indexOf#2": |
-            (args) {
-              final list = args[0] as List;
-              if (args.length > 2 && args[2] != null) {
-                return list.indexOf(args[1], args[2] as int);
-              }
-              return list.indexOf(args[1]);
-            }
-          "lastIndexOf#2": |
-            (args) {
-              final list = args[0] as List;
-              if (args.length > 2 && args[2] != null) {
-                return list.lastIndexOf(args[1], args[2] as int);
-              }
-              return list.lastIndexOf(args[1]);
-            }
-          "toList#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                return (args[0] as List).toList(growable: args[1] as bool);
-              }
-              return (args[0] as List).toList();
-            }
-          "join#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                return (args[0] as List).join(args[1] as String);
-              }
-              return (args[0] as List).join();
-            }
+      # ── List: extra methods removed — per-arity auto-generated ──
+      # indexOf, lastIndexOf, toList, join: generator creates per-arity entries
 
       # ── Map: fromEntries + callback methods + toString ──
       Map:
         extra_methods:
+          "#0": "(args) => <dynamic, dynamic>{}"
           "fromEntries#1": "(args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>())"
           "toString#0": "(args) => (args[0] as Map).toString()"
           "updateAll#1": |
@@ -612,13 +546,6 @@ libraries:
       Set:
         extra_methods:
           "toString#0": "(args) => (args[0] as Set).toString()"
-          "toList#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                return (args[0] as Set).toList(growable: args[1] as bool);
-              }
-              return (args[0] as Set).toList();
-            }
           "symmetricDifference#1": |
             (args) {
               final a = args[0] as Set;
@@ -658,33 +585,6 @@ libraries:
         extra_methods:
           "hashCode#0": "(args) => (args[0] as Runes).hashCode"
           "toString#0": "(args) => (args[0] as Runes).toString()"
-          "toList#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                return (args[0] as Runes).toList(growable: args[1] as bool);
-              }
-              return (args[0] as Runes).toList();
-            }
-          "join#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                return (args[0] as Runes).join(args[1] as String);
-              }
-              return (args[0] as Runes).join();
-            }
-
-      # ── RuneIterator: optional param methods ──
-      RuneIterator:
-        extra_methods:
-          "reset#1": |
-            (args) {
-              if (args.length > 1 && args[1] != null) {
-                (args[0] as RuneIterator).reset(args[1] as int);
-              } else {
-                (args[0] as RuneIterator).reset();
-              }
-              return null;
-            }
 
       # ── StringBuffer: optional param constructors/methods ──
       StringBuffer:
@@ -857,51 +757,6 @@ libraries:
               }
               return String.fromCharCodes(codes);
             }
-          "indexOf#2": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              if (args.length > 2) {
-                return self.indexOf(pattern, args[2] as int);
-              }
-              return self.indexOf(pattern);
-            }
-          "lastIndexOf#2": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              if (args.length > 2 && args[2] != null) {
-                return self.lastIndexOf(pattern, args[2] as int);
-              }
-              return self.lastIndexOf(pattern);
-            }
-          "contains#2": |
-            (args) {
-              final self = args[0] as String;
-              final other = args[1] as Pattern;
-              if (args.length > 2) {
-                return self.contains(other, args[2] as int);
-              }
-              return self.contains(other);
-            }
-          "startsWith#2": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              if (args.length > 2) {
-                return self.startsWith(pattern, args[2] as int);
-              }
-              return self.startsWith(pattern);
-            }
-          "substring#2": |
-            (args) {
-              final self = args[0] as String;
-              final start = args[1] as int;
-              if (args.length > 2 && args[2] != null) {
-                return self.substring(start, args[2] as int);
-              }
-              return self.substring(start);
-            }
           "replaceAllMapped#2": |
             (args) {
               final self = args[0] as String;
@@ -916,18 +771,4 @@ libraries:
               final fn = args[2] as Function;
               final start = (args.length > 3 && args[3] != null) ? args[3] as int : 0;
               return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
-            }
-          "allMatches#2": |
-            (args) {
-              final self = args[0] as String;
-              final string = args[1] as String;
-              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
-              return self.allMatches(string, start);
-            }
-          "matchAsPrefix#2": |
-            (args) {
-              final self = args[0] as String;
-              final string = args[1] as String;
-              final start = (args.length > 2 && args[2] != null) ? args[2] as int : 0;
-              return self.matchAsPrefix(string, start);
             }

@@ -72,12 +72,11 @@ abstract final class IntBindings {
         '>#1': (args) => (args[0] as int) > (args[1] as num),
         '>=#1': (args) => (args[0] as int) >= (args[1] as num),
         'parse#3': (args) {
-  final source = args[0] as String;
-  if (args.length > 1 && args[1] != null) {
-    return int.parse(source, radix: args[1] as int);
-  }
-  return int.parse(source);
-}
-,
+            final source = args[0] as String;
+            if (args.length > 1 && args[1] != null) {
+              return int.parse(source, radix: args[1] as int);
+            }
+            return int.parse(source);
+        },
       };
 }

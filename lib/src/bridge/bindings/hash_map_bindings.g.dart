@@ -39,18 +39,17 @@ abstract final class HashMapBindings {
         '[]#1': (args) => (args[0] as HashMap)[(args[1] as Object?)],
         '[]=#2': (args) { (args[0] as HashMap)[args[1] as dynamic] = args[2]; return args[2]; },
         '#3': (args) {
-  final equals = args.isNotEmpty ? args[0] as Function? : null;
-  final hashCodeFn = args.length > 1 ? args[1] as Function? : null;
-  final isValidKey = args.length > 2 ? args[2] as Function? : null;
-  return HashMap<Object?, Object?>(
-    equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-    hashCode:
-        hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
-    isValidKey:
-        isValidKey != null ? (k) => isValidKey(k) as bool : null,
-  );
-}
-,
+            final equals = args.isNotEmpty ? args[0] as Function? : null;
+            final hashCodeFn = args.length > 1 ? args[1] as Function? : null;
+            final isValidKey = args.length > 2 ? args[2] as Function? : null;
+            return HashMap<Object?, Object?>(
+              equals: equals != null ? (a, b) => equals(a, b) as bool : null,
+              hashCode:
+                  hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
+              isValidKey:
+                  isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         'from#1': (args) => HashMap.from(args[0] as Map),
         'of#1': (args) => HashMap.of(args[0] as Map),
       };

@@ -27,7 +27,10 @@ abstract final class RunesBindings {
         'reduce#1': (args) => (args[0] as Runes).reduce(args[1] as int Function(int, int)),
         'fold#2': (args) => (args[0] as Runes).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as Runes).every(args[1] as bool Function(int)),
+        'join#0': (args) => (args[0] as Runes).join(),
+        'join#1': (args) => (args[0] as Runes).join(args[1] as String),
         'any#1': (args) => (args[0] as Runes).any(args[1] as bool Function(int)),
+        'toList#1': (args) => (args[0] as Runes).toList(growable: args[1] as bool),
         'toSet#0': (args) => (args[0] as Runes).toSet(),
         'take#1': (args) => (args[0] as Runes).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as Runes).takeWhile(args[1] as bool Function(int)),
@@ -48,19 +51,5 @@ abstract final class RunesBindings {
         '#1': (args) => Runes(args[0] as String),
         'hashCode#0': (args) => (args[0] as Runes).hashCode,
         'toString#0': (args) => (args[0] as Runes).toString(),
-        'toList#1': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return (args[0] as Runes).toList(growable: args[1] as bool);
-  }
-  return (args[0] as Runes).toList();
-}
-,
-        'join#1': (args) {
-  if (args.length > 1 && args[1] != null) {
-    return (args[0] as Runes).join(args[1] as String);
-  }
-  return (args[0] as Runes).join();
-}
-,
       };
 }

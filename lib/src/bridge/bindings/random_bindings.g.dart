@@ -20,10 +20,9 @@ abstract final class RandomBindings {
         'nextDouble#0': (args) => (args[0] as Random).nextDouble(),
         'nextBool#0': (args) => (args[0] as Random).nextBool(),
         '#1': (args) {
-  final seed = args.isNotEmpty ? args[0] as int? : null;
-  return Random(seed);
-}
-,
+            final seed = args.isNotEmpty ? args[0] as int? : null;
+            return Random(seed);
+        },
         'secure#0': (args) => Random.secure(),
       };
 }

@@ -62,13 +62,12 @@ abstract final class ListQueueBindings {
         'from#1': (args) => ListQueue.from(args[0] as Iterable<dynamic>),
         'of#1': (args) => ListQueue.of(args[0] as Iterable),
         '#1': (args) {
-  final initialCapacity =
-      args.isNotEmpty ? args[0] as int? : null;
-  if (initialCapacity != null) {
-    return ListQueue<Object?>(initialCapacity);
-  }
-  return ListQueue<Object?>();
-}
-,
+            final initialCapacity =
+                args.isNotEmpty ? args[0] as int? : null;
+            if (initialCapacity != null) {
+              return ListQueue<Object?>(initialCapacity);
+            }
+            return ListQueue<Object?>();
+        },
       };
 }

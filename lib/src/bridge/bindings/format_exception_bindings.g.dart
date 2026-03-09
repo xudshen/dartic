@@ -81,11 +81,10 @@ abstract final class FormatExceptionBindings {
         'source#0': (args) => (args[0] as FormatException).source,
         'offset#0': (args) => (args[0] as FormatException).offset,
         '#3': (args) {
-  final msg = args.isNotEmpty && args[0] != null ? args[0] as String : '';
-  final source = args.length > 1 ? args[1] : null;
-  final offset = args.length > 2 ? args[2] as int? : null;
-  return FormatException(msg, source, offset);
-}
-,
+            final msg = args.isNotEmpty && args[0] != null ? args[0] as String : '';
+            final source = args.length > 1 ? args[1] : null;
+            final offset = args.length > 2 ? args[2] as int? : null;
+            return FormatException(msg, source, offset);
+        },
       };
 }

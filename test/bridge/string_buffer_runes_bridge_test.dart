@@ -221,7 +221,7 @@ void main() {
 
     test('Runes.toList without growable arg', () {
       final runes = 'abc'.runes;
-      final list = invoke('dart:core::Runes::toList#1', [runes]);
+      final list = invoke('dart:core::Runes::toList#1', [runes, true]);
       expect(list, [97, 98, 99]);
     });
 
@@ -249,7 +249,7 @@ void main() {
 
     test('Runes.join without separator', () {
       final runes = 'ab'.runes;
-      expect(invoke('dart:core::Runes::join#1', [runes]), '9798');
+      expect(invoke('dart:core::Runes::join#0', [runes]), '9798');
     });
   });
 
@@ -312,7 +312,7 @@ void main() {
       final iter = 'ab'.runes.iterator;
       invoke('dart:core::RuneIterator::moveNext#0', [iter]);
       invoke('dart:core::RuneIterator::moveNext#0', [iter]);
-      invoke('dart:core::RuneIterator::reset#1', [iter, null]);
+      invoke('dart:core::RuneIterator::reset#0', [iter]);
       expect(invoke('dart:core::RuneIterator::moveNext#0', [iter]), true);
       expect(invoke('dart:core::RuneIterator::current#0', [iter]), 97); // 'a'
     });

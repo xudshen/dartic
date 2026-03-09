@@ -176,11 +176,6 @@ libraries:
             }
           "from#3": "(args) => SplayTreeMap.from(args[0] as Map)"
           "[]#1": "(args) => (args[0] as SplayTreeMap)[args[1]]"
-          "[]=#2": |
-            (args) {
-              (args[0] as SplayTreeMap)[args[1]] = args[2];
-              return args[2];
-            }
           "firstKey#0": "(args) => (args[0] as SplayTreeMap).firstKey()"
           "lastKey#0": "(args) => (args[0] as SplayTreeMap).lastKey()"
           "remove#1": "(args) => (args[0] as SplayTreeMap).remove(args[1])"

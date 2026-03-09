@@ -33,46 +33,65 @@ abstract final class MultiStreamControllerBindings {
         'onResume=#1': (args) { (args[0] as MultiStreamController).onResume = args[1] as void Function()?; return args[1]; },
         'onCancel=#1': (args) { (args[0] as MultiStreamController).onCancel = args[1] as FutureOr<void> Function()?; return args[1]; },
         'add#1': (args) {
-  (args[0] as MultiStreamController).add(args[1]);
-  return null;
-}
-,
+            (args[0] as MultiStreamController).add(args[1]);
+            return null;
+        },
         'addError#2': (args) {
-  final controller = args[0] as MultiStreamController;
-  final error = args[1] as Object;
-  final st =
-      args.length > 2 ? args[2] as StackTrace? : null;
-  if (st != null) {
-    controller.addError(error, st);
-  } else {
-    controller.addError(error);
-  }
-  return null;
-}
-,
+            final controller = args[0] as MultiStreamController;
+            final error = args[1] as Object;
+            final st =
+                args.length > 2 ? args[2] as StackTrace? : null;
+            if (st != null) {
+              controller.addError(error, st);
+            } else {
+              controller.addError(error);
+            }
+            return null;
+        },
+        'addError#1': (args) {
+            final controller = args[0] as MultiStreamController;
+            final error = args[1] as Object;
+            final st =
+                args.length > 2 ? args[2] as StackTrace? : null;
+            if (st != null) {
+              controller.addError(error, st);
+            } else {
+              controller.addError(error);
+            }
+            return null;
+        },
         'close#0': (args) => (args[0] as MultiStreamController).close(),
         'addSync#1': (args) {
-  (args[0] as MultiStreamController).addSync(args[1]);
-  return null;
-}
-,
+            (args[0] as MultiStreamController).addSync(args[1]);
+            return null;
+        },
         'addErrorSync#2': (args) {
-  final controller = args[0] as MultiStreamController;
-  final error = args[1] as Object;
-  final st =
-      args.length > 2 ? args[2] as StackTrace? : null;
-  if (st != null) {
-    controller.addErrorSync(error, st);
-  } else {
-    controller.addErrorSync(error);
-  }
-  return null;
-}
-,
+            final controller = args[0] as MultiStreamController;
+            final error = args[1] as Object;
+            final st =
+                args.length > 2 ? args[2] as StackTrace? : null;
+            if (st != null) {
+              controller.addErrorSync(error, st);
+            } else {
+              controller.addErrorSync(error);
+            }
+            return null;
+        },
+        'addErrorSync#1': (args) {
+            final controller = args[0] as MultiStreamController;
+            final error = args[1] as Object;
+            final st =
+                args.length > 2 ? args[2] as StackTrace? : null;
+            if (st != null) {
+              controller.addErrorSync(error, st);
+            } else {
+              controller.addErrorSync(error);
+            }
+            return null;
+        },
         'closeSync#0': (args) {
-  (args[0] as MultiStreamController).closeSync();
-  return null;
-}
-,
+            (args[0] as MultiStreamController).closeSync();
+            return null;
+        },
       };
 }

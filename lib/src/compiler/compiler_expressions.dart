@@ -676,20 +676,24 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileHostStaticInvocation(ir.StaticInvocation expr) {
     final target = expr.target;
 
-    if (target.isFactory) {
-      // Factory constructors: pad ALL declared named params with null so
-      // the arity always equals max. The methodMap entry uses
-      // `args.length > N && args[N] != null` checks to route correctly.
-      // This avoids the named-param ambiguity issue where different named
-      // params at the same arity are indistinguishable by arity alone.
+    final hasNamedParams = target.function.namedParameters.isNotEmpty;
+
+    if (target.isFactory || hasNamedParams) {
+      // Factory constructors and functions with named params: pad ALL
+      // declared named params with null so the arity always equals max.
+      // The binding entry uses `args.length > N && args[N] != null` checks
+      // to route correctly. This avoids the named-param ambiguity issue
+      // where different named params at the same arity are
+      // indistinguishable by arity alone.
       return _compileHostFactoryInvocation(expr);
     }
 
     final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
     _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
 
-    // Regular static methods: use actual provided arg count so the binding
-    // key matches per-arity registerBinding calls (e.g., parse#1, #2).
+    // Regular static methods (positional-only): use actual provided arg
+    // count so the binding key matches per-arity registerBinding calls
+    // (e.g., parse#1, #2).
     final symbolName = _hostSymbolName(
       target,
       paramCountOverride: compiledArgs.length,
@@ -1180,17 +1184,53 @@ extension on DarticCompiler {
   /// The receiver is the first arg (index 0), followed by explicit args.
   (int, ResultLoc) _compileHostInstanceCall(ir.InstanceInvocation expr) {
     final target = expr.interfaceTarget;
+    final func = target is ir.Procedure ? target.function : null;
+    final hasNamedParams = func != null && func.namedParameters.isNotEmpty;
 
-    // Compile receiver + arguments into host-arg tuples.
+    // Compile receiver first.
     final compiledArgs = _compileHostExprArgs(expr.receiver);
-    _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
 
-    // Instance methods: the generated methodMap entries handle optional
-    // params via args.length checks, so we use the declared total param
-    // count (from _hostSymbolName) — NOT the actual provided arg count.
-    // This differs from static methods/constructors where separate
-    // registerBinding calls exist for each arity variant.
-    final symbolName = _hostSymbolName(target);
+    if (hasNamedParams) {
+      // Named params: pad to max arity. Generator emits a single max-arity
+      // entry for named-param methods (different named param combinations
+      // at the same arity are ambiguous without padding).
+      for (final arg in expr.arguments.positional) {
+        final (reg, loc) = _compileExpression(arg);
+        compiledArgs.add((reg, loc, _inferExprType(arg)));
+      }
+      for (var i = expr.arguments.positional.length;
+          i < func!.positionalParameters.length;
+          i++) {
+        final (reg, loc) = _loadNull();
+        compiledArgs.add((reg, loc, null));
+      }
+      final namedProvided = <String, ir.Expression>{
+        for (final n in expr.arguments.named) n.name: n.value,
+      };
+      for (final param in func.namedParameters) {
+        final value = namedProvided[param.name];
+        if (value != null) {
+          final (reg, loc) = _compileExpression(value);
+          compiledArgs.add((reg, loc, _inferExprType(value)));
+        } else {
+          final (reg, loc) = _loadNull();
+          compiledArgs.add((reg, loc, null));
+        }
+      }
+      // Use max arity (from _hostSymbolName default).
+      final symbolName = _hostSymbolName(target);
+      final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
+          methodName: target.name.text);
+      return _emitCallHost(compiledArgs, bindingIndex);
+    }
+
+    // Positional-only params: use actual provided arg count. Generator
+    // emits per-arity entries (e.g., sublist#1 and sublist#2).
+    _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
+    final symbolName = _hostSymbolName(
+      target,
+      paramCountOverride: compiledArgs.length - 1, // -1 for receiver
+    );
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
         methodName: target.name.text);
     return _emitCallHost(compiledArgs, bindingIndex);
