@@ -93,18 +93,8 @@ class MethodInfo {
   /// 主 binding key（总参数数），如 'gcd#1'。
   String get bindingKey => '$name#${paramTypes.length}';
 
-  /// 所有有效 arity 的 binding key 列表。
-  ///
-  /// 对于可选位置参数，每个有效 arity 生成一个 key。
-  /// 对于命名参数，只生成总参数数一个 key。
-  List<String> get allBindingKeys {
-    final hasNamed = paramTypes.any((p) => p.isNamed);
-    if (hasNamed) return ['$name#${paramTypes.length}'];
-
-    final required = paramTypes.where((p) => !p.isOptional).length;
-    final total = paramTypes.length;
-    return [for (var i = required; i <= total; i++) '$name#$i'];
-  }
+  /// Binding key：始终 max-arity（统一策略）。
+  List<String> get allBindingKeys => ['$name#${paramTypes.length}'];
 }
 
 /// Getter 信息。
@@ -177,13 +167,6 @@ class FunctionInfo {
   /// 完整 binding 名，如 'dart:core::::identical#2'。
   String get bindingName => '$libraryUri::::$name#${paramTypes.length}';
 
-  /// 所有有效 arity 的 binding 名列表。
-  List<String> get allBindingNames {
-    final hasNamed = paramTypes.any((p) => p.isNamed);
-    if (hasNamed) return [bindingName];
-
-    final required = paramTypes.where((p) => !p.isOptional).length;
-    final total = paramTypes.length;
-    return [for (var i = required; i <= total; i++) '$libraryUri::::$name#$i'];
-  }
+  /// Binding name：始终 max-arity（统一策略）。
+  List<String> get allBindingNames => [bindingName];
 }

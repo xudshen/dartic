@@ -67,7 +67,7 @@ void main() {
       expect(substring, isNotEmpty);
       // substring has one required param and one optional param
       final sub = substring.first;
-      expect(sub.allBindingKeys, containsAll(['substring#1', 'substring#2']));
+      expect(sub.allBindingKeys, ['substring#2']);
     });
 
     test('analyzes List methods', () async {

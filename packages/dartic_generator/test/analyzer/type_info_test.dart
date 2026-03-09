@@ -65,7 +65,7 @@ void main() {
         ],
         returnType: 'String',
       );
-      expect(m.allBindingKeys, ['substring#1', 'substring#2']);
+      expect(m.allBindingKeys, ['substring#2']);
     });
 
     test('named params produce single binding key with total count', () {
