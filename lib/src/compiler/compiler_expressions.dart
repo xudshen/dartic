@@ -1756,10 +1756,13 @@ extension on DarticCompiler {
       argRegs.add(argReg);
     }
 
-    // 3. Allocate consecutive ref registers: result, receiver, args.
-    final resultReg = _allocRefReg();
-    final recvSlot = _allocRefReg();
-    final argSlots = List.generate(argRegs.length, (_) => _allocRefReg());
+    // 3. Allocate consecutive ref registers: result(A), receiver(A+1), args(A+2...).
+    // Must use allocConsecutive to bypass the free pool — individual alloc()
+    // calls may return non-adjacent registers from the recycling pool.
+    final slotCount = 1 + 1 + argRegs.length; // result + receiver + args
+    final resultReg = _refAlloc.allocConsecutive(slotCount);
+    final recvSlot = resultReg + 1;
+    final argSlots = List.generate(argRegs.length, (i) => resultReg + 2 + i);
 
     // 4. MOVE receiver and args into consecutive slots.
     if (recvReg != recvSlot) {
