@@ -71,7 +71,7 @@ dartic version                             # 版本信息
 ├─────────────────────────────────────────────────┤
 │  内存模型与对象    双视图栈 · DarticObject · 栈帧    │  Ch2
 ├─────────────────────────────────────────────────┤
-│  字节码 ISA       32 位定宽指令 · 类型特化操作码     │  Ch1
+│  字节码 ISA       64 位定宽指令 · 类型特化操作码     │  Ch1
 └─────────────────────────────────────────────────┘
 ```
 
@@ -80,7 +80,7 @@ dartic version                             # 版本信息
 | Chapter | 文件 | 内容 | 输入 | 输出 |
 |---------|------|------|------|------|
 | Ch0 | `docs/design/00-overview.md` | 架构总览、目标场景、跨章依赖 | — | 全局约束、设计不变式 |
-| Ch1 | `docs/design/01-bytecode-isa.md` | 32 位定宽指令集、操作码、常量池 | — | 指令编码规范 |
+| Ch1 | `docs/design/01-bytecode-isa.md` | 64 位定宽指令集、操作码、常量池 | — | 指令编码规范 |
 | Ch2 | `docs/design/02-object-model.md` | 三栈模型、DarticObject、DarticFrame、栈帧布局 | Ch1 指令集 | 内存模型与对象表示 |
 | Ch3 | `docs/design/03-execution-engine.md` | 分发循环、IC、模块加载、异常分发、GC | Ch2 数据结构 | 运行时 API |
 | Ch4 | `docs/design/04-interop.md` | Bridge、代理缓存、回调代理、跨边界泛型 | Ch3 运行时 API | 宿主互调能力 |

@@ -119,8 +119,8 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 | 0xA0-0xA3 | 全局变量 | 2 | 2 |
 | 0xA4-0xA7 | 异常处理与断言 | 4 | 0 |
 | 0xA8-0xFD | 预留（Superinstruction 等） | 0 | 86 |
-| 0xFE-0xFF | 系统 | 2 | 0 |
-| **合计** | | **106** | **150** |
+| 0xFE-0xFF | 系统 | 1 | 1 |
+| **合计** | | **105** | **151** |
 
 ## 操作码分类
 
@@ -159,7 +159,7 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 0x1A  SHL           A, B, C       valueStack[A] = valueStack[B] << valueStack[C]
 0x1B  SHR           A, B, C       valueStack[A] = valueStack[B] >> valueStack[C]
 0x1C  USHR          A, B, C       valueStack[A] = valueStack[B] >>> valueStack[C]
-0x1D  ADD_INT_IMM   A, B, C       valueStack[A] = valueStack[B] + C (C 为无符号 8 位立即数 [0, 255])
+0x1D  ADD_INT_IMM   A, B, C       valueStack[A] = valueStack[B] + C (C 为无符号 16 位立即数 [0, 65535])
 0x1E-0x1F 预留
 ```
 
@@ -213,7 +213,7 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 0x42  JUMP_IF_FALSE A, sBx        if valueStack[A] == 0 then PC += sBx
 0x43  JUMP_IF_NULL  A, sBx        if refStack[A] == null then PC += sBx
 0x44  JUMP_IF_NNULL A, sBx        if refStack[A] != null then PC += sBx
-0x45  JUMP_AX       sAx           PC += sAx (大范围跳转，Ax 格式，有符号 24 位，excess-K 编码，K = 0x7FFFFF)
+0x45  JUMP_AX       sAx           PC += sAx (大范围跳转，sAx 格式，有符号 48 位，excess-K 编码，K = 0x7FFFFFFFFFFF)
 0x46-0x4F 预留
 ```
 
@@ -259,7 +259,7 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 0x6B-0x6F 预留
 ```
 
-> 注意：`INSTANCEOF`/`CAST`/`GET_FIELD_DYN`/`SET_FIELD_DYN` 的 C 操作数在 ABC 格式下仅 8 位（0-255）。当类型常量池或 names 常量池索引超过 255 时，需使用 WIDE 前缀扩展。
+> 注意：`INSTANCEOF`/`CAST`/`GET_FIELD_DYN`/`SET_FIELD_DYN` 的 C 操作数在 ABC 格式下为 16 位（0-65535），原生支持大容量类型常量池和 names 常量池索引，无需额外前缀扩展。
 
 ### 闭包 (0x70-0x77)
 
@@ -342,13 +342,13 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 ### 系统 (0xFE-0xFF)
 
 ```
-0xFE  WIDE                        下一条指令使用扩展操作数
+0xFE  （预留）
 0xFF  HALT          A, B, C       停机并记录入口函数返回值
 ```
 
 **HALT 编码**：使用 ABC 格式。A = 结果寄存器编号，B = 结果类型（0=void/无返回值，1=int，2=double，3=ref），C = 保留。解释器在重置栈指针前根据 B 字段从对应栈读取返回值，存入 `entryResult`。`encodeABC(Op.halt, 0, 0, 0)` 与旧的 `encodeAx(Op.halt, 0)` 二进制兼容（均为 `0x000000FF`）。
 
-**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。当前已定义 106 个操作码（含 WIDE 和 HALT），预留 86 个槽位。
+**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。当前已定义 105 个操作码（含 HALT），预留 87 个槽位（0xA8-0xFD + 0xFE）。
 
 > **Phase 2**：具体特化 opcode 留待 profiling 数据确定。触发条件：基准测试显示指令分发成为瓶颈。
 
@@ -356,54 +356,52 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 
 | 约束 | 值 | 来源 |
 |------|-----|------|
-| Opcode 空间 | 0-255（8 位） | 32 位指令编码，低 8 位为 opcode |
-| 当前已定义 opcode | 106 个 | ISA 定义（含 WIDE 和 HALT） |
-| 预留 opcode 槽位 | 86 个（0xA8-0xFD） | 供 Superinstruction 使用 |
-| 标准寄存器上限 | 256（8 位 A/B/C） | ABC 编码格式 |
-| WIDE 扩展后寄存器上限 | 65536（16 位） | WIDE 前缀组合 |
-| 标准 Bx 范围 | 0-65535（16 位无符号） | ABx 编码格式 |
-| 标准 sBx 范围 | -32767 ~ +32768 | AsBx excess-K 编码（0 − 0x7FFF = −32767, 0xFFFF − 0x7FFF = +32768） |
-| 标准 sAx 范围 | -8388607 ~ +8388608 | sAx excess-K 编码（0 − 0x7FFFFF = −8388607, 0xFFFFFF − 0x7FFFFF = +8388608） |
-| WIDE 指令宽度 | 3 个字（前缀 + 扩展字 + 原指令） | WIDE 规范 |
+| Opcode 空间 | 0-255（8 位） | 64 位指令编码，低 8 位为 opcode |
+| 当前已定义 opcode | 105 个 | ISA 定义（含 HALT） |
+| 预留 opcode 槽位 | 87 个（0xA8-0xFE） | 供 Superinstruction 使用 |
+| 寄存器上限 | 65536（16 位 A/B/C） | ABC 编码格式 |
+| Bx 范围 | 0 ~ 4294967295（32 位无符号） | ABx 编码格式 |
+| sBx 范围 | -2147483647 ~ +2147483648 | AsBx excess-K 编码（K = 0x7FFFFFFF） |
+| Ax 范围 | 0 ~ 281474976710655（48 位无符号） | Ax 编码格式 |
+| sAx 范围 | -140737488355327 ~ +140737488355328 | sAx excess-K 编码（K = 0x7FFFFFFFFFFF） |
 
 ## 已知局限与演进路径
 
 | 局限 | 影响 | 演进计划 |
 |------|------|---------|
 | 无 `NOT` 指令（逻辑非） | 需用 `BIT_XOR A, B, #1` 间接实现 | Phase 2 可添加专用 opcode |
-| WIDE 前缀规格 | 实现时需仔细处理扩展字位域拆分 | 本文档已明确各格式布局 |
-| `ADD_INT_IMM` 的 C 操作数 | 定义为无符号 [0, 255]，不支持负立即数 | 负立即数通过 `SUB_INT` 或常量池加载 |
+| `ADD_INT_IMM` 的 C 操作数 | 定义为无符号 16 位 [0, 65535]，不支持负立即数 | 负立即数通过 `SUB_INT` 或常量池加载 |
 | Quickening 未实现 | 编译器已做静态特化，运行时快化留待 profiling | Phase 2。触发条件：profiling 显示需要运行时 profile-guided 优化 |
 
 <details>
 <summary>附录：编解码参考实现</summary>
 
 ```dart
-// 编码
+// 编码（64 位指令：[op:8][_:8][A:16][B:16][C:16]）
 int encodeABC(int op, int a, int b, int c) =>
-    op | (a << 8) | (b << 16) | (c << 24);
+    op | (a << 16) | (b << 32) | (c << 48);
 
 int encodeABx(int op, int a, int bx) =>
-    op | (a << 8) | (bx << 16);
+    op | (a << 16) | (bx << 32);
 
 int encodeAsBx(int op, int a, int sbx) =>
-    op | (a << 8) | ((sbx + 0x7FFF) << 16);
+    op | (a << 16) | ((sbx + 0x7FFFFFFF) << 32);
 
 int encodeAx(int op, int ax) =>
-    op | (ax << 8);
+    op | (ax << 16);
 
 int encodesAx(int op, int sax) =>
-    op | ((sax + 0x7FFFFF) << 8);
+    op | ((sax + 0x7FFFFFFFFFFF) << 16);
 
-// 解码
+// 解码（使用无符号右移 >>> 避免符号扩展）
 int decodeOp(int instr) => instr & 0xFF;
-int decodeA(int instr) => (instr >> 8) & 0xFF;
-int decodeB(int instr) => (instr >> 16) & 0xFF;
-int decodeC(int instr) => (instr >> 24) & 0xFF;
-int decodeBx(int instr) => (instr >> 16) & 0xFFFF;
-int decodesBx(int instr) => decodeBx(instr) - 0x7FFF;
-int decodeAx(int instr) => (instr >> 8) & 0xFFFFFF;
-int decodesAx(int instr) => decodeAx(instr) - 0x7FFFFF;
+int decodeA(int instr) => (instr >>> 16) & 0xFFFF;
+int decodeB(int instr) => (instr >>> 32) & 0xFFFF;
+int decodeC(int instr) => (instr >>> 48) & 0xFFFF;
+int decodeBx(int instr) => (instr >>> 32) & 0xFFFFFFFF;
+int decodesBx(int instr) => decodeBx(instr) - 0x7FFFFFFF;
+int decodeAx(int instr) => (instr >>> 16) & 0xFFFFFFFFFFFF;
+int decodesAx(int instr) => decodeAx(instr) - 0x7FFFFFFFFFFF;
 ```
 
 </details>
