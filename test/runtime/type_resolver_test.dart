@@ -208,4 +208,90 @@ void main() {
       expect(identical(fType.positionalParams[0], registry.stringType), isTrue);
     });
   });
+
+  group('resolveType — RecordTypeTemplate', () {
+    test('positional-only record resolves to DarticRecordType', () {
+      // (int, String)
+      final template = RecordTypeTemplate(
+        positionalTypes: [
+          InterfaceTypeTemplate(classId: intCid, typeArgs: []),
+          InterfaceTypeTemplate(classId: stringCid, typeArgs: []),
+        ],
+        namedTypes: const [],
+      );
+      final result = resolveType(template, null, null, registry);
+      expect(result, isA<DarticRecordType>());
+      final rType = result as DarticRecordType;
+      expect(rType.positionalTypes, hasLength(2));
+      expect(identical(rType.positionalTypes[0], registry.intType), isTrue);
+      expect(identical(rType.positionalTypes[1], registry.stringType), isTrue);
+      expect(rType.namedTypes, isEmpty);
+      expect(rType.nullability, Nullability.nonNullable);
+    });
+
+    test('named fields record resolves to DarticRecordType', () {
+      // ({int x, String y})
+      final template = RecordTypeTemplate(
+        positionalTypes: const [],
+        namedTypes: [
+          (
+            name: 'x',
+            type: InterfaceTypeTemplate(classId: intCid, typeArgs: []),
+          ),
+          (
+            name: 'y',
+            type: InterfaceTypeTemplate(classId: stringCid, typeArgs: []),
+          ),
+        ],
+      );
+      final result = resolveType(template, null, null, registry);
+      expect(result, isA<DarticRecordType>());
+      final rType = result as DarticRecordType;
+      expect(rType.positionalTypes, isEmpty);
+      expect(rType.namedTypes, hasLength(2));
+      expect(rType.namedTypes[0].name, 'x');
+      expect(identical(rType.namedTypes[0].type, registry.intType), isTrue);
+      expect(rType.namedTypes[1].name, 'y');
+      expect(identical(rType.namedTypes[1].type, registry.stringType), isTrue);
+    });
+
+    test('NullableTemplate(RecordTypeTemplate) resolves to nullable record',
+        () {
+      // (int, String)?
+      final template = NullableTemplate(
+        inner: RecordTypeTemplate(
+          positionalTypes: [
+            InterfaceTypeTemplate(classId: intCid, typeArgs: []),
+            InterfaceTypeTemplate(classId: stringCid, typeArgs: []),
+          ],
+          namedTypes: const [],
+        ),
+      );
+      final result = resolveType(template, null, null, registry);
+      expect(result, isA<DarticRecordType>());
+      final rType = result as DarticRecordType;
+      expect(rType.nullability, Nullability.nullable);
+      expect(rType.positionalTypes, hasLength(2));
+      expect(identical(rType.positionalTypes[0], registry.intType), isTrue);
+      expect(identical(rType.positionalTypes[1], registry.stringType), isTrue);
+    });
+
+    test('TypeParameterTemplate in record field gets substituted via ITA', () {
+      // (T, String) with ITA=[int] → (int, String)
+      final ita = [registry.intType];
+      final template = RecordTypeTemplate(
+        positionalTypes: [
+          TypeParameterTemplate(index: 0, isFunctionTypeParam: false),
+          InterfaceTypeTemplate(classId: stringCid, typeArgs: []),
+        ],
+        namedTypes: const [],
+      );
+      final result = resolveType(template, ita, null, registry);
+      expect(result, isA<DarticRecordType>());
+      final rType = result as DarticRecordType;
+      expect(rType.positionalTypes, hasLength(2));
+      expect(identical(rType.positionalTypes[0], registry.intType), isTrue);
+      expect(identical(rType.positionalTypes[1], registry.stringType), isTrue);
+    });
+  });
 }

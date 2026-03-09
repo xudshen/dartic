@@ -104,10 +104,22 @@ TypeTemplate _convert(
       _resolveStructuralParam(type.parameter, structuralParams),
     ir.IntersectionType() => _convert(
         type.right, classIdLookup, classParams, funcParams, structuralParams),
-    // RecordType and ExtensionType are not yet supported by the runtime.
-    // Degrade to DynamicTemplate so host-side types in signatures
-    // don't block compilation.
-    ir.RecordType() => const DynamicTemplate(),
+    ir.RecordType() => RecordTypeTemplate(
+        positionalTypes: [
+          for (final p in type.positional)
+            _convert(p, classIdLookup, classParams, funcParams,
+                structuralParams),
+        ],
+        namedTypes: [
+          for (final n in type.named)
+            (
+              name: n.name,
+              type: _convert(n.type, classIdLookup, classParams, funcParams,
+                  structuralParams),
+            ),
+        ],
+      ),
+    // ExtensionType is erased to its representation type.
     ir.ExtensionType() => _convert(
         type.extensionTypeErasure, classIdLookup, classParams, funcParams,
         structuralParams),

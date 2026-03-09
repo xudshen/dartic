@@ -2475,7 +2475,22 @@ class DarticInterpreter {
           for (var i = 0; i < namedNames.length; i++) {
             named[namedNames[i]] = rs.read(rBase + b + positionalCount + i);
           }
-          rs.write(rBase + a, DarticRecord(positional, named));
+          final record = DarticRecord(positional, named);
+          // Compute and cache the record's runtime type.
+          final reg = _activeTypeRegistry!;
+          final positionalTypes = <DarticType>[
+            for (final v in positional) extractType(v, reg, module.classes),
+          ];
+          final sortedKeys = named.keys.toList()..sort();
+          final namedTypes = <({String name, DarticType type})>[
+            for (final key in sortedKeys)
+              (name: key, type: extractType(named[key], reg, module.classes)),
+          ];
+          record.runtimeType_ = reg.internRecord(
+            positionalTypes: positionalTypes,
+            namedTypes: namedTypes,
+          );
+          rs.write(rBase + a, record);
 
         // ── String & Dynamic (0x98-0x9F) ──
 

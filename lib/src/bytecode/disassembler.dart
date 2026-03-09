@@ -319,6 +319,7 @@ class DarticDisassembler {
       NeverTemplate() => 'Never',
       InterfaceTypeTemplate() => _formatInterfaceType(t, module),
       FunctionTypeTemplate() => _formatFunctionType(t, module),
+      RecordTypeTemplate() => _formatRecordType(t, module),
       TypeParameterTemplate() =>
         t.isFunctionTypeParam ? 'F${t.index}' : 'T${t.index}',
       NullableTemplate() => '${_formatTypeTemplate(t.inner, module)}?',
@@ -351,6 +352,23 @@ class DarticDisassembler {
       params.add('$req${n.name}: ${_formatTypeTemplate(n.type, module)}');
     }
     return '$ret Function(${params.join(', ')})';
+  }
+
+  static String _formatRecordType(
+    RecordTypeTemplate t,
+    DarticModule module,
+  ) {
+    final parts = <String>[
+      for (final p in t.positionalTypes) _formatTypeTemplate(p, module),
+    ];
+    if (t.namedTypes.isNotEmpty) {
+      final namedParts = [
+        for (final n in t.namedTypes)
+          '${n.name}: ${_formatTypeTemplate(n.type, module)}',
+      ];
+      parts.add('{${namedParts.join(', ')}}');
+    }
+    return '(${parts.join(', ')})';
   }
 
   // ── Per-Function Instruction Disassembly ──

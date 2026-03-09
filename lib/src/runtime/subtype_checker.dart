@@ -8,6 +8,7 @@ library;
 
 import '../bridge/dartic_object_holder.dart';
 import 'class_info.dart';
+import 'dartic_record.dart';
 import 'dartic_type.dart';
 import 'object.dart';
 import 'type_resolver.dart';
@@ -24,7 +25,7 @@ import 'type_resolver.dart';
 ///   7. FutureOr as supertype
 ///   8. FutureOr as subtype
 ///   9. function type dispatch
-///  10. Record type dispatch (stub → false)
+///  10. Record type dispatch
 ///  11. SuperTypeMap lookup
 ///  12. type argument recursive check
 class SubtypeChecker {
@@ -115,8 +116,10 @@ class SubtypeChecker {
       return _checkFunctionTypeSubtype(sub, sup);
     }
 
-    // Rule 10: Record type dispatch (stub — Phase 6).
-    // No RecordType class exists yet. Fall through to interface checks.
+    // Rule 10: Record type dispatch.
+    if (sub is DarticRecordType || sup is DarticRecordType) {
+      return _checkRecordSubtype(sub, sup);
+    }
 
     // Rules 11-12: interface type subtype checking via supertypeIds + type args.
     if (sub is DarticInterfaceType && sup is DarticInterfaceType) {
@@ -150,6 +153,10 @@ class SubtypeChecker {
           namedParams: type.namedParams,
           returnType: type.returnType,
         ),
+      DarticRecordType() => registry.internRecord(
+          positionalTypes: type.positionalTypes,
+          namedTypes: type.namedTypes,
+        ),
     };
   }
 
@@ -171,6 +178,49 @@ class SubtypeChecker {
       return false;
     }
     return false;
+  }
+
+  /// Rule 10: record type dispatch.
+  bool _checkRecordSubtype(DarticType sub, DarticType sup) {
+    if (sub is DarticRecordType && sup is DarticRecordType) {
+      // Both are record types → structural check.
+      return _isRecordSubtype(sub, sup);
+    }
+    if (sub is DarticRecordType && sup is DarticInterfaceType) {
+      // RecordType <: Record class or Object → true.
+      if (sup.classId == registry.recordClassId) return true;
+      if (sup.classId == registry.objectType.classId) return true;
+      // RecordType <: other InterfaceType → false.
+      return false;
+    }
+    // InterfaceType/FunctionType <: RecordType → false.
+    return false;
+  }
+
+  /// Structural record subtype check (covariant fields).
+  bool _isRecordSubtype(DarticRecordType sub, DarticRecordType sup) {
+    // Shape match: positional count must be equal.
+    if (sub.positionalTypes.length != sup.positionalTypes.length) return false;
+    // Shape match: named field name sets must be equal.
+    if (sub.namedTypes.length != sup.namedTypes.length) return false;
+
+    // Covariance: each positional field.
+    for (var i = 0; i < sub.positionalTypes.length; i++) {
+      if (!isSubtypeOf(sub.positionalTypes[i], sup.positionalTypes[i])) {
+        return false;
+      }
+    }
+
+    // Named covariance: named fields are sorted by name, so we can compare
+    // in lockstep.
+    for (var i = 0; i < sub.namedTypes.length; i++) {
+      final subNamed = sub.namedTypes[i];
+      final supNamed = sup.namedTypes[i];
+      if (subNamed.name != supNamed.name) return false;
+      if (!isSubtypeOf(subNamed.type, supNamed.type)) return false;
+    }
+
+    return true;
   }
 
   /// Structural function subtype check (9 rules).
@@ -302,6 +352,9 @@ DarticType extractType(
   if (value is double) return registry.doubleType;
   if (value is bool) return registry.boolType;
   if (value is String) return registry.stringType;
+  if (value is DarticRecord) {
+    return value.runtimeType_ ?? registry.dynamicType;
+  }
   if (value is DarticObject) {
     // If the object has a runtime type (set by ALLOC_GENERIC), use it.
     final rt = value.runtimeType_;

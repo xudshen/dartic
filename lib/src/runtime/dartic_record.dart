@@ -9,6 +9,8 @@
 /// See: docs/design/01-bytecode-isa.md "Collection (0x90-0x97)"
 library;
 
+import 'dartic_type.dart';
+
 /// A dartic runtime record with structural equality.
 ///
 /// Positional fields are accessed by zero-based index.
@@ -22,6 +24,9 @@ class DarticRecord {
 
   /// Named field values keyed by field name.
   final Map<String, Object?> named;
+
+  /// Cached runtime type, set once after creation by CREATE_RECORD.
+  DarticRecordType? runtimeType_;
 
   /// Returns the positional field at [index].
   Object? getPositional(int index) => positional[index];

@@ -228,6 +228,32 @@
 
 ---
 
+## 跨阶段修复：RecordType 类型系统 — ✅ 已完成
+
+**目标：** 让 dartic 运行时完整支持 Record 类型的 `is`/`as` 类型检查和子类型判定
+
+**设计参考：** [`docs/plans/2026-03-08-record-type-system-design.md`](../plans/2026-03-08-record-type-system-design.md)
+
+**执行记录：** [`docs/tasks/record-type-system.md`](record-type-system.md)
+
+| 修复项 | 涉及模块 | 说明 |
+|-------|---------|------|
+| RecordTypeTemplate | compiler (type_template, type_converter) | 编译器侧 Record 类型模板，支持序列化/反序列化 |
+| DarticRecordType + internRecord | runtime (dartic_type, type_registry) | 运行时 Record 类型表示与 bucket-hash 驻留 |
+| TypeResolver Record 分支 | runtime (type_resolver) | RecordTypeTemplate → DarticRecordType 解析 |
+| SubtypeChecker Rule 10 | runtime (subtype_checker) | Record 子类型检查：shape match + 字段协变递归 |
+| extractType Record 分支 | runtime (subtype_checker, interpreter) | DarticRecord.runtimeType_ 缓存 + CREATE_RECORD 指令设置 |
+| E2E 测试 | test/e2e | 9 个 Record 类型检查场景（is/as/nullable/nested） |
+
+**关键成果：**
+- [x] RecordTypeTemplate 编译器侧完整支持（序列化 roundtrip）
+- [x] DarticRecordType 运行时驻留（TypeRegistry.internRecord）
+- [x] SubtypeChecker Rule 10 实现（Record 子类型判定 + Record 基类 + FutureOr 规范化）
+- [x] extractType 支持 DarticRecord（runtimeType_ 缓存 + CREATE_RECORD 指令设置）
+- [x] E2E 测试全部通过（is/as 类型检查、协变、shape 匹配、嵌套 Record）
+
+---
+
 ## 基础设施：Performance Benchmark Suite — ✅ 已完成
 
 **目标：** 三通道性能基准测试（host / dartic / dart_eval），量化 dartic 在性能谱系中的位置

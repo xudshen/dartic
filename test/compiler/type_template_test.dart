@@ -245,6 +245,80 @@ void main() {
     });
   });
 
+  group('RecordTypeTemplate', () {
+    test('positional-only record creation and field verification', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final stringType = InterfaceTypeTemplate(classId: 1, typeArgs: []);
+      final record = RecordTypeTemplate(
+        positionalTypes: [intType, stringType],
+        namedTypes: [],
+      );
+      expect(record.positionalTypes.length, 2);
+      expect(record.positionalTypes[0], equals(intType));
+      expect(record.positionalTypes[1], equals(stringType));
+      expect(record.namedTypes, isEmpty);
+    });
+
+    test('named fields record creation and field verification', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final stringType = InterfaceTypeTemplate(classId: 1, typeArgs: []);
+      final record = RecordTypeTemplate(
+        positionalTypes: [intType],
+        namedTypes: [
+          (name: 'label', type: stringType),
+          (name: 'count', type: intType),
+        ],
+      );
+      expect(record.positionalTypes.length, 1);
+      expect(record.namedTypes.length, 2);
+      expect(record.namedTypes[0].name, 'label');
+      expect(record.namedTypes[0].type, equals(stringType));
+      expect(record.namedTypes[1].name, 'count');
+      expect(record.namedTypes[1].type, equals(intType));
+    });
+
+    test('equality and hashCode — same structure are equal', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final a = RecordTypeTemplate(
+        positionalTypes: [intType],
+        namedTypes: [(name: 'x', type: intType)],
+      );
+      final b = RecordTypeTemplate(
+        positionalTypes: [intType],
+        namedTypes: [(name: 'x', type: intType)],
+      );
+      expect(a, equals(b));
+      expect(a.hashCode, equals(b.hashCode));
+    });
+
+    test('equality — different named names are not equal', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final a = RecordTypeTemplate(
+        positionalTypes: [],
+        namedTypes: [(name: 'x', type: intType)],
+      );
+      final b = RecordTypeTemplate(
+        positionalTypes: [],
+        namedTypes: [(name: 'y', type: intType)],
+      );
+      expect(a, isNot(equals(b)));
+    });
+
+    test('equality — different positional types are not equal', () {
+      final intType = InterfaceTypeTemplate(classId: 0, typeArgs: []);
+      final stringType = InterfaceTypeTemplate(classId: 1, typeArgs: []);
+      final a = RecordTypeTemplate(
+        positionalTypes: [intType],
+        namedTypes: [],
+      );
+      final b = RecordTypeTemplate(
+        positionalTypes: [stringType],
+        namedTypes: [],
+      );
+      expect(a, isNot(equals(b)));
+    });
+  });
+
   group('Serialization roundtrip', () {
     test('VoidTemplate roundtrip', () {
       final original = VoidTemplate();
@@ -391,6 +465,57 @@ void main() {
             ),
           ],
         ),
+      );
+      final bytes = original.serialize();
+      final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);
+      expect(deserialized, equals(original));
+      expect(offset, bytes.length);
+    });
+
+    test('RecordTypeTemplate roundtrip — positional-only', () {
+      final original = RecordTypeTemplate(
+        positionalTypes: [
+          InterfaceTypeTemplate(classId: 0, typeArgs: []),
+          InterfaceTypeTemplate(classId: 1, typeArgs: []),
+        ],
+        namedTypes: [],
+      );
+      final bytes = original.serialize();
+      final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);
+      expect(deserialized, equals(original));
+      expect(offset, bytes.length);
+    });
+
+    test('RecordTypeTemplate roundtrip — with named fields', () {
+      final original = RecordTypeTemplate(
+        positionalTypes: [
+          InterfaceTypeTemplate(classId: 0, typeArgs: []),
+        ],
+        namedTypes: [
+          (name: 'label', type: InterfaceTypeTemplate(classId: 1, typeArgs: [])),
+          (name: 'count', type: InterfaceTypeTemplate(classId: 0, typeArgs: [])),
+        ],
+      );
+      final bytes = original.serialize();
+      final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);
+      expect(deserialized, equals(original));
+      expect(offset, bytes.length);
+      final rt = deserialized as RecordTypeTemplate;
+      expect(rt.namedTypes.length, 2);
+      expect(rt.namedTypes[0].name, 'label');
+      expect(rt.namedTypes[1].name, 'count');
+    });
+
+    test('RecordTypeTemplate roundtrip — nested record type', () {
+      final innerRecord = RecordTypeTemplate(
+        positionalTypes: [InterfaceTypeTemplate(classId: 0, typeArgs: [])],
+        namedTypes: [],
+      );
+      final original = RecordTypeTemplate(
+        positionalTypes: [innerRecord],
+        namedTypes: [
+          (name: 'nested', type: innerRecord),
+        ],
       );
       final bytes = original.serialize();
       final (deserialized, offset) = TypeTemplate.deserialize(bytes, 0);

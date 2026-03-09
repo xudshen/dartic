@@ -31,7 +31,8 @@ abstract final class SpecialClassId {
 
 /// Base type for all runtime type representations.
 ///
-/// Sealed: only [DarticInterfaceType] and [DarticFunctionType] exist.
+/// Sealed: [DarticInterfaceType], [DarticFunctionType], and
+/// [DarticRecordType] exist.
 sealed class DarticType {
   /// The nullability of this type.
   Nullability get nullability;
@@ -135,5 +136,46 @@ final class DarticFunctionType extends DarticType {
       ...namedParams.map((n) => '${n.isRequired ? "required " : ""}${n.type} ${n.name}'),
     ];
     return 'DarticFunctionType($returnType Function(${params.join(', ')})$nullSuffix)';
+  }
+}
+
+/// A structural record type, fully described by its positional and named fields.
+///
+/// After interning, all nested types are interned and lists are unmodifiable.
+final class DarticRecordType extends DarticType {
+  DarticRecordType._({
+    required List<DarticType> positionalTypes,
+    required List<({String name, DarticType type})> namedTypes,
+    required this.nullability,
+  })  : positionalTypes = positionalTypes.isEmpty
+            ? const []
+            : List<DarticType>.unmodifiable(positionalTypes),
+        namedTypes = namedTypes.isEmpty
+            ? const []
+            : List<({String name, DarticType type})>.unmodifiable(namedTypes);
+
+  /// Positional field types. Unmodifiable after interning.
+  final List<DarticType> positionalTypes;
+
+  /// Named field pairs `(name, type)`, sorted by name. Unmodifiable after interning.
+  final List<({String name, DarticType type})> namedTypes;
+
+  @override
+  final Nullability nullability;
+
+  /// Set by [TypeRegistry] during interning.
+  int _canonicalHash = 0;
+
+  @override
+  int get canonicalHash => _canonicalHash;
+
+  @override
+  String toString() {
+    final nullSuffix = nullability == Nullability.nullable ? '?' : '';
+    final fields = <String>[
+      ...positionalTypes.map((t) => '$t'),
+      ...namedTypes.map((n) => '${n.type} ${n.name}'),
+    ];
+    return 'DarticRecordType((${fields.join(', ')})$nullSuffix)';
   }
 }

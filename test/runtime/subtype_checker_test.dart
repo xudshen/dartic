@@ -1,6 +1,7 @@
 import 'package:dartic/src/bridge/dartic_object_holder.dart';
 import 'package:dartic/src/compiler/type_template.dart';
 import 'package:dartic/src/runtime/class_info.dart';
+import 'package:dartic/src/runtime/dartic_record.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:dartic/src/runtime/subtype_checker.dart';
@@ -268,6 +269,170 @@ void main() {
     });
   });
 
+  group('Rule 10: Record type subtype', () {
+    test('same shape subtype: (int, String) <: (int, String)', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(a, b), isTrue);
+    });
+
+    test('covariant positional: (int, String) <: (num, Object)', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.numType, registry.objectType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isTrue);
+    });
+
+    test('not subtype: (num,) NOT <: (int,)', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.numType],
+        namedTypes: const [],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isFalse);
+    });
+
+    test('shape mismatch: different positional count', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isFalse);
+    });
+
+    test('covariant named fields: ({int x}) <: ({num x})', () {
+      final sub = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [(name: 'x', type: registry.intType)],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [(name: 'x', type: registry.numType)],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isTrue);
+    });
+
+    test('different named names: ({int x}) NOT <: ({int y})', () {
+      final sub = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [(name: 'x', type: registry.intType)],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [(name: 'y', type: registry.intType)],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isFalse);
+    });
+
+    test('mixed covariance: (int, {String x}) <: (num, {Object x})', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: [(name: 'x', type: registry.stringType)],
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.numType],
+        namedTypes: [(name: 'x', type: registry.objectType)],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isTrue);
+    });
+
+    test('RecordType <: Object', () {
+      final rec = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(rec, registry.objectType), isTrue);
+    });
+
+    test('RecordType <: dynamic (caught by Rule 2 top type)', () {
+      final rec = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(rec, registry.dynamicType), isTrue);
+    });
+
+    test('nullable record subtype: (int,)? <: (num,)?', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+        nullability: Nullability.nullable,
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.numType],
+        namedTypes: const [],
+        nullability: Nullability.nullable,
+      );
+      expect(checker.isSubtypeOf(sub, sup), isTrue);
+    });
+
+    test('RecordType? NOT <: RecordType (caught by Rule 4)', () {
+      final sub = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+        nullability: Nullability.nullable,
+      );
+      final sup = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(sub, sup), isFalse);
+    });
+
+    test('InterfaceType NOT <: RecordType', () {
+      final sup = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(registry.intType, sup), isFalse);
+    });
+
+    test('FunctionType NOT <: RecordType', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 0,
+        positionalParams: const [],
+        namedParams: const [],
+        returnType: registry.voidType,
+      );
+      final recType = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      expect(checker.isSubtypeOf(fnType, recType), isFalse);
+      // Also: RecordType NOT <: FunctionType
+      expect(checker.isSubtypeOf(recType, fnType), isFalse);
+    });
+
+    test('RecordType <: Record base class', () {
+      final rec = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      // Record base class type (using recordClassId from registry).
+      final recordBaseType = registry.intern(registry.recordClassId, const []);
+      expect(checker.isSubtypeOf(rec, recordBaseType), isTrue);
+    });
+  });
+
   group('extractType', () {
     test('null extracts to Null type', () {
       final result = extractType(null, registry, classes);
@@ -329,6 +494,23 @@ void main() {
       final holder = _MockDarticObjectHolder(obj);
       final result = extractType(holder, registry, classes);
       expect(identical(result, listIntType), isTrue);
+    });
+
+    test('DarticRecord with runtimeType_ returns cached DarticRecordType', () {
+      final record = DarticRecord([42, 'hello'], {});
+      final recordType = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      record.runtimeType_ = recordType;
+      final result = extractType(record, registry, classes);
+      expect(identical(result, recordType), isTrue);
+    });
+
+    test('DarticRecord without runtimeType_ returns dynamicType', () {
+      final record = DarticRecord([42], {});
+      final result = extractType(record, registry, classes);
+      expect(identical(result, registry.dynamicType), isTrue);
     });
   });
 }

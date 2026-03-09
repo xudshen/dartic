@@ -39,6 +39,7 @@ DarticType resolveType(
       _resolveInterface(template, ita, fta, registry),
     FunctionTypeTemplate() =>
       _resolveFunction(template, ita, fta, registry),
+    RecordTypeTemplate() => _resolveRecord(template, ita, fta, registry),
   };
 }
 
@@ -75,6 +76,11 @@ DarticType _resolveNullable(
         positionalParams: inner.positionalParams,
         namedParams: inner.namedParams,
         returnType: inner.returnType,
+        nullability: Nullability.nullable,
+      ),
+    DarticRecordType() => registry.internRecord(
+        positionalTypes: inner.positionalTypes,
+        namedTypes: inner.namedTypes,
         nullability: Nullability.nullable,
       ),
   };
@@ -133,5 +139,29 @@ DarticFunctionType _resolveFunction(
     positionalParams: resolvedPos,
     namedParams: resolvedNamed,
     returnType: resolvedReturn,
+  );
+}
+
+/// Resolves a record type template by resolving all nested field types.
+DarticRecordType _resolveRecord(
+  RecordTypeTemplate template,
+  List<DarticType>? ita,
+  List<DarticType>? fta,
+  TypeRegistry registry,
+) {
+  final resolvedPos = <DarticType>[
+    for (final p in template.positionalTypes)
+      resolveType(p, ita, fta, registry),
+  ];
+  final resolvedNamed = <({String name, DarticType type})>[
+    for (final n in template.namedTypes)
+      (
+        name: n.name,
+        type: resolveType(n.type, ita, fta, registry),
+      ),
+  ];
+  return registry.internRecord(
+    positionalTypes: resolvedPos,
+    namedTypes: resolvedNamed,
   );
 }

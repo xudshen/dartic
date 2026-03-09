@@ -20,6 +20,7 @@ abstract final class _TypeTag {
   static const int functionType = 4;
   static const int typeParameter = 5;
   static const int nullableType = 6;
+  static const int recordType = 7;
 }
 
 // ── Base class ──
@@ -50,6 +51,7 @@ sealed class TypeTemplate {
       _TypeTag.functionType => _deserializeFunction(data, offset),
       _TypeTag.typeParameter => _deserializeTypeParameter(data, offset),
       _TypeTag.nullableType => _deserializeNullable(data, offset),
+      _TypeTag.recordType => _deserializeRecord(data, offset),
       _ => throw FormatException('Unknown TypeTemplate tag: $tag'),
     };
   }
@@ -141,6 +143,43 @@ sealed class TypeTemplate {
       TypeParameterTemplate(
         index: index,
         isFunctionTypeParam: isFunctionTypeParam,
+      ),
+      offset,
+    );
+  }
+
+  static (RecordTypeTemplate, int) _deserializeRecord(
+    List<int> data,
+    int offset,
+  ) {
+    // Positional types
+    final posCount = data[offset++];
+    final positionalTypes = <TypeTemplate>[];
+    for (var i = 0; i < posCount; i++) {
+      final (type, newOffset) = deserialize(data, offset);
+      positionalTypes.add(type);
+      offset = newOffset;
+    }
+
+    // Named types
+    final namedCount = data[offset++];
+    final namedTypes = <({String name, TypeTemplate type})>[];
+    for (var i = 0; i < namedCount; i++) {
+      // Name is encoded as length + codeUnits
+      final nameLen = data[offset++];
+      final codeUnits = data.sublist(offset, offset + nameLen);
+      offset += nameLen;
+      final name = String.fromCharCodes(codeUnits);
+
+      final (type, newOffset) = deserialize(data, offset);
+      offset = newOffset;
+      namedTypes.add((name: name, type: type));
+    }
+
+    return (
+      RecordTypeTemplate(
+        positionalTypes: positionalTypes,
+        namedTypes: namedTypes,
       ),
       offset,
     );
@@ -404,6 +443,76 @@ class TypeParameterTemplate extends TypeTemplate {
   String toString() => 'TypeParameterTemplate('
       'index: $index, '
       '${isFunctionTypeParam ? "FTA" : "ITA"})';
+}
+
+/// Represents a Dart record type with positional and named fields.
+///
+/// Examples:
+/// - `(int, String)` : positionalTypes = [int, String], namedTypes = []
+/// - `(int, {String label})` : positionalTypes = [int], namedTypes = [{label: String}]
+class RecordTypeTemplate extends TypeTemplate {
+  RecordTypeTemplate({
+    required this.positionalTypes,
+    required this.namedTypes,
+  });
+
+  /// Types for positional fields.
+  final List<TypeTemplate> positionalTypes;
+
+  /// Named field descriptors, each with a name and type (no isRequired flag,
+  /// unlike [FunctionTypeTemplate] named params).
+  final List<({String name, TypeTemplate type})> namedTypes;
+
+  @override
+  List<int> serialize() {
+    final result = <int>[_TypeTag.recordType];
+
+    // Positional types
+    result.add(positionalTypes.length);
+    for (final type in positionalTypes) {
+      result.addAll(type.serialize());
+    }
+
+    // Named types
+    result.add(namedTypes.length);
+    for (final named in namedTypes) {
+      // Encode name as length + codeUnits
+      final codeUnits = named.name.codeUnits;
+      result.add(codeUnits.length);
+      result.addAll(codeUnits);
+      result.addAll(named.type.serialize());
+    }
+
+    return result;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! RecordTypeTemplate) return false;
+    if (!_listEquals(positionalTypes, other.positionalTypes)) return false;
+    if (namedTypes.length != other.namedTypes.length) return false;
+    for (var i = 0; i < namedTypes.length; i++) {
+      if (namedTypes[i].name != other.namedTypes[i].name ||
+          namedTypes[i].type != other.namedTypes[i].type) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    var h = Object.hashAll(positionalTypes);
+    for (final named in namedTypes) {
+      h = Object.hash(h, named.name, named.type);
+    }
+    return h;
+  }
+
+  @override
+  String toString() => 'RecordTypeTemplate('
+      'pos: $positionalTypes, '
+      'named: [${namedTypes.map((n) => '${n.name}: ${n.type}').join(', ')}])';
 }
 
 /// Wraps an inner [TypeTemplate] to represent its nullable variant (e.g. `int?`).

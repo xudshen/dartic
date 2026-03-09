@@ -218,6 +218,13 @@ class DarticVerifier {
         for (final bound in template.typeParamBounds) {
           _verifyTypeTemplateClassIds(bound, classCount, context);
         }
+      case RecordTypeTemplate():
+        for (final pos in template.positionalTypes) {
+          _verifyTypeTemplateClassIds(pos, classCount, context);
+        }
+        for (final named in template.namedTypes) {
+          _verifyTypeTemplateClassIds(named.type, classCount, context);
+        }
       case VoidTemplate() || DynamicTemplate() || NeverTemplate():
         break; // no classId references
       case TypeParameterTemplate():

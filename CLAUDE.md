@@ -16,7 +16,7 @@
 
 **写方案（writing-plan）注意**：
 - 方案产出放 `docs/plans/`，从方案拆出的执行记录放 `docs/tasks/<topic>/`
-- plan文件不要包含具体代码，而是方案指导
+- plan和task文件不要包含具体代码，而是方案指导
 - 方案中的决策用"决策记录"表格（问题 / 决策 / 理由），留空的决策标注"先试后决定"并说明何时回填
 - Task 文件中每个 task 必须写明：依赖关系、产出文件列表、TDD 步骤
 - 在合适的Task位置添加commit要求
@@ -44,6 +44,7 @@
 
 - **排查不动时加日志** — 静态读代码超过 2 轮没定位到根因，立刻在关键路径（guard 条件、async 衔接点、回调触发点）加 `debugPrint`，用实际运行数据定位，不要靠猜
 - **双栈 coercion：`_compileExpression` 返回的 `ResultLoc` 不能随意丢弃** — 编译器采用 value/ref 双栈架构，`_compileExpression` 返回 `(reg, ResultLoc)` 表示结果所在栈。在以下消费端必须检查 loc 并做 coercion（unbox 或 box）：条件跳转（if/while/for/do/assert/not/logical/conditional）、函数参数传递、变量赋值、接收者表达式（虚调用/getter/setter 分发）。只有**确定结果一定在 ref 栈**的场景（闭包、常量 case 表达式）才可以安全丢弃 loc
+- 所有g.dart不应该手动修改
 
 ## 命名前缀策略
 

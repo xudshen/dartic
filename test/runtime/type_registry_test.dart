@@ -254,4 +254,117 @@ void main() {
       expect(a.canonicalHash, b.canonicalHash);
     });
   });
+
+  group('internRecord — record type interning', () {
+    test('same structure returns identical instance', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      expect(identical(a, b), isTrue);
+    });
+
+    test('different positional types return different instances', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.stringType, registry.intType],
+        namedTypes: const [],
+      );
+      expect(identical(a, b), isFalse);
+    });
+
+    test('named fields interning works', () {
+      final a = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [
+          (name: 'x', type: registry.intType),
+          (name: 'y', type: registry.stringType),
+        ],
+      );
+      final b = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [
+          (name: 'x', type: registry.intType),
+          (name: 'y', type: registry.stringType),
+        ],
+      );
+      expect(identical(a, b), isTrue);
+    });
+
+    test('different named field names return different instances', () {
+      final a = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [
+          (name: 'x', type: registry.intType),
+        ],
+      );
+      final b = registry.internRecord(
+        positionalTypes: const [],
+        namedTypes: [
+          (name: 'y', type: registry.intType),
+        ],
+      );
+      expect(identical(a, b), isFalse);
+    });
+
+    test('nullable vs nonNullable distinction', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+        nullability: Nullability.nullable,
+      );
+      expect(identical(a, b), isFalse);
+      expect(a.nullability, Nullability.nonNullable);
+      expect(b.nullability, Nullability.nullable);
+    });
+
+    test('mixed positional and named fields', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: [
+          (name: 'label', type: registry.stringType),
+        ],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: [
+          (name: 'label', type: registry.stringType),
+        ],
+      );
+      expect(identical(a, b), isTrue);
+    });
+
+    test('different positional count returns different instance', () {
+      final a = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: const [],
+      );
+      final b = registry.internRecord(
+        positionalTypes: [registry.intType, registry.intType],
+        namedTypes: const [],
+      );
+      expect(identical(a, b), isFalse);
+    });
+
+    test('toString includes positional and named info', () {
+      final t = registry.internRecord(
+        positionalTypes: [registry.intType],
+        namedTypes: [
+          (name: 'name', type: registry.stringType),
+        ],
+      );
+      expect(t.toString(), contains('DarticRecordType'));
+    });
+  });
 }

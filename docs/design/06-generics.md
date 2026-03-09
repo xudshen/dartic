@@ -60,7 +60,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 | `TypeParameterType` | 引用类/方法级 `TypeParameter`，使用 de Bruijn 风格索引，运行时从 ITA/FTA 查找 |
 | `StructuralParameterType` | 引用 `FunctionType` 内部的 `StructuralParameter`，索引方式同 `TypeParameterType`（详见 Ch5 DartType 分类表） |
 | `FutureOrType` | `FutureOr<T>` 特殊处理（驻留时规范化，子类型判定特殊规则） |
-| `RecordType` | Dart 3 记录类型（positional + named 字段），Phase 2 支持 |
+| `RecordType` | Dart 3 记录类型（positional + named 字段），已实现 RecordTypeTemplate |
 | `DynamicType` | 编译为 `TypeTemplate(DYNAMIC)`，isSubtypeOf 顶类型规则处理 |
 | `VoidType` | 编译为 `TypeTemplate(VOID)`，语义与 dynamic 类似 |
 | `NeverType` | 编译为 `TypeTemplate(NEVER)`，isSubtypeOf 底类型规则处理 |
@@ -104,7 +104,16 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 | nullability | Nullability | 函数类型自身的可空性 |
 | _canonicalHash | int | 驻留时计算的结构哈希，用于桶定位 |
 
-两者共享 `nullability` 和 `_canonicalHash` 字段。isSubtypeOf 通过类型判断（`is DarticFunctionType`）分发到不同的检查路径。
+**DarticRecordType**（Record 类型，结构化类型，无 classId）：
+
+| 属性 | 类型 | 说明 |
+|------|------|------|
+| positionalTypes | `List<DarticType>` | 位置字段类型列表（已驻留，不可变） |
+| namedTypes | `List<({String name, DarticType type})>` | 命名字段列表，按 name 字典序（已驻留） |
+| nullability | Nullability | Record 类型自身的可空性 |
+| _canonicalHash | int | 驻留时计算的结构哈希，用于桶定位 |
+
+三者共享 `nullability` 和 `_canonicalHash` 字段。isSubtypeOf 通过类型判断（`is DarticFunctionType` / `is DarticRecordType`）分发到不同的检查路径。
 
 **Nullability 映射**：Kernel 的 `Nullability` 枚举有三个值——`nonNullable`、`nullable`、`undetermined`。`undetermined` 出现在类型参数边界中（如 `T extends Object?` 时 `T` 的可空性取决于实例化），运行时 resolveType 将类型参数替换为实际类型后，`undetermined` 不再出现。对于尚未解析的 TypeParameterTemplate，保留 `undetermined` 标记，resolveType 时由实际类型参数的 nullability 替代。
 
@@ -120,6 +129,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 | TypeParameterTemplate | 对作用域内类型参数的引用（de Bruijn 索引） | 按 isClassTypeParam 标志从 ITA 或 FTA 中按 index 查找 |
 | GenericTypeTemplate | 含类型参数引用的参数化接口类型（如 `List<T>`） | 递归 resolveType 每个 typeArgTemplate，然后 intern 为 DarticInterfaceType |
 | FunctionTypeTemplate | 函数类型（如 `void Function(T)`），保留完整参数签名 | 递归 resolveType 所有内嵌 TypeTemplate，然后 intern 为 DarticFunctionType |
+| RecordTypeTemplate | Record 类型（如 `(int, {String name})`），保留 positional + named 字段签名 | 递归 resolveType 所有字段 TypeTemplate，然后 intern 为 DarticRecordType |
 
 #### FunctionTypeTemplate 编码
 
@@ -138,7 +148,7 @@ resolveType 处理 FunctionTypeTemplate 时，递归解析所有内嵌 TypeTempl
 
 ### TypeRegistry（驻留表）
 
-采用 bucket-hash 方案，桶内线性扫描。TypeRegistry 提供两个驻留入口：`intern(classId, typeArgs, nullability)` 驻留接口类型（DarticInterfaceType），`internFunction(...)` 驻留函数类型（DarticFunctionType）。两者共享同一哈希桶空间，以 `_structuralHash(...)` 为键分桶。碰撞率低（典型程序的类型组合有限），查找接近 O(1)。
+采用 bucket-hash 方案，桶内线性扫描。TypeRegistry 提供三个驻留入口：`intern(classId, typeArgs, nullability)` 驻留接口类型（DarticInterfaceType），`internFunction(...)` 驻留函数类型（DarticFunctionType），`internRecord(...)` 驻留 Record 类型（DarticRecordType）。三者共享同一哈希桶空间，以 `_structuralHash(...)` 为键分桶。碰撞率低（典型程序的类型组合有限），查找接近 O(1)。
 
 **三个不变式**：
 
@@ -189,12 +199,13 @@ resolveType 处理 FunctionTypeTemplate 时，递归解析所有内嵌 TypeTempl
 
 `INSTANCEOF` / `CAST` 指令的目标类型编码为 TypeTemplate（可能含 TypeParameterTemplate），运行时必须在调用 isSubtypeOf 之前解析为具体 DarticType。
 
-**解析四分支**：
+**解析五分支**：
 
 1. **ConcreteTypeTemplate** → 直接返回预驻留的 DarticType（O(1)）
 2. **TypeParameterTemplate** → 读取 isClassTypeParam 标志，从当前帧的 ITA（类类型参数）或 FTA（函数类型参数）中按 index 取值（O(1)）
 3. **GenericTypeTemplate** → 对每个 typeArgTemplate 递归调用 resolveType，收集解析后的类型参数列表，调用 `TypeRegistry.intern(classId, resolvedArgs, nullability)` 驻留并返回 DarticInterfaceType
 4. **FunctionTypeTemplate** → 递归 resolveType 所有内嵌 TypeTemplate（参数类型、返回类型、类型参数边界），调用 `TypeRegistry.internFunction(...)` 驻留并返回 DarticFunctionType
+5. **RecordTypeTemplate** → 递归 resolveType 所有字段 TypeTemplate（positional + named），调用 `TypeRegistry.internRecord(...)` 驻留并返回 DarticRecordType
 
 **INSTANCEOF 指令执行流**（以 `value is T` 为例）：
 
@@ -232,7 +243,7 @@ Kernel 的 `Instantiation` 节点表示泛型函数的类型实例化（如 `ide
 | 7 | FutureOr 作为超类型 | sup.classId 为 FutureOr | `sub <: Future<T> \|\| sub <: T` |
 | 8 | FutureOr 作为子类型 | sub.classId 为 FutureOr | `Future<T> <: sup && T <: sup` |
 | 9 | 函数类型分发 | sub 或 sup 为 FunctionType | 详见下方分发逻辑 |
-| 10 | Record 类型分发 | sub 或 sup 为 RecordType | 详见下方分发逻辑（Phase 2） |
+| 10 | Record 类型分发 | sub 或 sup 为 RecordType | 详见下方分发逻辑（已实现） |
 | 11 | 超类型参数查找 | 查 `SuperTypeMap[sub.classId][sup.classId]` 获取 `List<TypeArgTemplate>` | 无映射 → false |
 | 12 | 类型参数递归检查 | 解析每个 TypeArgTemplate（Concrete → 对应 DarticType，TypeParam(i) → sub.typeArgs[i]），得到 sub 视角下的超类型参数列表，逐参数与 sup.typeArgs 递归 isSubtypeOf | 全部通过 → true |
 
@@ -247,7 +258,7 @@ Kernel 的 `Instantiation` 节点表示泛型函数的类型实例化（如 `ide
 | 非 FunctionType | FunctionType | false |
 | FunctionType | 其他 InterfaceType | false |
 
-**规则 10 Record 类型分发逻辑**（Phase 2）：
+**规则 10 Record 类型分发逻辑**（已实现）：
 
 | sub | sup | 处理 |
 |-----|-----|------|
@@ -356,7 +367,6 @@ CFE 生成的 forwarding stub（`AsExpression`）在字节码中表现为 `CHECK
 | 无 SubtypeTestCache | 重复的相同类型对检查每次递归计算 | Phase 2：添加 `(sub, sup) → bool` 全局缓存。触发条件：profiling 显示 isSubtypeOf 成为热点 |
 | 无实例化缓存 | TypeTemplate 含 TypeParameterType 时每次 resolveType 都重新计算 | Phase 2：缓存 `(template, ITA, FTA) → DarticType`。触发条件：profiling 显示类型实例化成为热点 |
 | 跨边界集合类型丢失 | 解释器创建的 `List<dynamic>` 在 VM 侧无法通过 `is List<int>` | Phase 2：预生成类型化工厂（详见"跨边界泛型"节） |
-| Record 类型检查未实现 | `is (int, String)` 等结构化类型检查不支持 | Phase 2：补充 RuntimeRecordType、isRecordSubtype 和 RecordShape 映射。触发条件：业务代码需要 Record 类型检查 |
 | 值类型接收者虚分发 | 泛型字段返回 `int`/`double`/`bool` 时结果在 ref 栈，若需调用非特化虚方法（`CALL_VIRTUAL`）可正常工作；但若结果在 value 栈（非泛型场景），缺少 boxing 到 ref 栈的逻辑 | 当前 `int`/`double`/`bool` 方法均由宿主绑定特化（`CALL_HOST`），暂不触发。若未来新增值类型虚分发路径需补充接收者 boxing（详见 Ch5 ResultLoc 与双栈协调） |
 | 静态消除未实现 | 未使用的 FTA 传递和冗余类型检查仍在执行 | Phase 2：编译器优化遍消除。触发条件：profiling 显示类型传递开销显著 |
 | Type 对象表示未定义 | `runtimeType` 返回值和 `TypeLiteral` 的运行时表示未明确 | Phase 2：定义 Type 包装对象（包装 DarticType），实现 `==`（驻留后 identical）和 `toString`。触发条件：业务代码需要 `runtimeType` 反射 |

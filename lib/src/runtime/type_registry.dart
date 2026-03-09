@@ -8,8 +8,9 @@ part of 'dartic_type.dart';
 
 /// Interns [DarticType] instances using a bucket-hash table.
 ///
-/// Two entry points: [intern] for interface types, [internFunction] for
-/// function types. Both share the same bucket space.
+/// Three entry points: [intern] for interface types, [internFunction] for
+/// function types, [internRecord] for record types. All share the same
+/// bucket space.
 ///
 /// Pre-registers common types at construction time for O(1) access.
 class TypeRegistry {
@@ -23,9 +24,11 @@ class TypeRegistry {
     int futureClassId = -100,
     int futureOrClassId = -101,
     int functionClassId = -102,
+    int recordClassId = -103,
   })  : _futureClassId = futureClassId,
         _futureOrClassId = futureOrClassId,
         _functionClassId = functionClassId,
+        _recordClassId = recordClassId,
         _objectClassId = objectClassId,
         _buckets = List<List<DarticType>?>.filled(_initialBucketCount, null) {
     // Pre-register special types (negative classIds).
@@ -61,6 +64,7 @@ class TypeRegistry {
   final int _futureClassId;
   final int _futureOrClassId;
   final int _functionClassId;
+  final int _recordClassId;
   final int _objectClassId;
 
   /// Class ID for `Future` (dart:async).
@@ -71,6 +75,9 @@ class TypeRegistry {
 
   /// Class ID for `Function` (dart:core).
   int get functionClassId => _functionClassId;
+
+  /// Class ID for `Record` (dart:core).
+  int get recordClassId => _recordClassId;
 
   // ── Bucket table ──
 
@@ -137,6 +144,17 @@ class TypeRegistry {
       returnType,
       nullability,
     );
+  }
+
+  /// Interns a record type. Returns the canonical instance.
+  ///
+  /// All nested types must be already-interned [DarticType] instances.
+  DarticRecordType internRecord({
+    required List<DarticType> positionalTypes,
+    required List<({String name, DarticType type})> namedTypes,
+    Nullability nullability = Nullability.nonNullable,
+  }) {
+    return _internRecord(positionalTypes, namedTypes, nullability);
   }
 
   // ── Internal: FutureOr normalization ──
@@ -213,6 +231,18 @@ class TypeRegistry {
         typeArg.positionalParams,
         typeArg.namedParams,
         typeArg.returnType,
+        Nullability.nonNullable,
+      );
+      return _internInterface(
+          _futureOrClassId, [innerBase], Nullability.nullable);
+    }
+
+    // FutureOr<RecordType?> → FutureOr<RecordType>? (record type with nullable)
+    if (typeArg is DarticRecordType &&
+        typeArg.nullability == Nullability.nullable) {
+      final innerBase = _internRecord(
+        typeArg.positionalTypes,
+        typeArg.namedTypes,
         Nullability.nonNullable,
       );
       return _internInterface(
@@ -407,6 +437,77 @@ class TypeRegistry {
       if (!identical(existing.typeParamBounds[i], typeParamBounds[i])) {
         return false;
       }
+    }
+    return true;
+  }
+
+  // ── Internal: record type interning ──
+
+  DarticRecordType _internRecord(
+    List<DarticType> positionalTypes,
+    List<({String name, DarticType type})> namedTypes,
+    Nullability nullability,
+  ) {
+    final hash = _hashRecord(positionalTypes, namedTypes, nullability);
+    final bucketIndex = hash & _bucketMask;
+    final bucket = _buckets[bucketIndex];
+    if (bucket != null) {
+      for (final existing in bucket) {
+        if (existing is DarticRecordType &&
+            _equalsRecord(
+                existing, positionalTypes, namedTypes, nullability)) {
+          return existing;
+        }
+      }
+    }
+    final type = DarticRecordType._(
+      positionalTypes: positionalTypes,
+      namedTypes: namedTypes,
+      nullability: nullability,
+    );
+    type._canonicalHash = hash;
+    (_buckets[bucketIndex] ??= []).add(type);
+    return type;
+  }
+
+  static int _hashRecord(
+    List<DarticType> positionalTypes,
+    List<({String name, DarticType type})> namedTypes,
+    Nullability nullability,
+  ) {
+    var h = _combine(0x7a6d4e2b, nullability.index);
+    h = _combine(h, positionalTypes.length);
+    for (final p in positionalTypes) {
+      h = _combine(h, p.canonicalHash);
+    }
+    for (final n in namedTypes) {
+      h = _combine(h, n.name.hashCode);
+      h = _combine(h, n.type.canonicalHash);
+    }
+    return _finish(h);
+  }
+
+  static bool _equalsRecord(
+    DarticRecordType existing,
+    List<DarticType> positionalTypes,
+    List<({String name, DarticType type})> namedTypes,
+    Nullability nullability,
+  ) {
+    if (existing.nullability != nullability) return false;
+    if (existing.positionalTypes.length != positionalTypes.length) {
+      return false;
+    }
+    for (var i = 0; i < positionalTypes.length; i++) {
+      if (!identical(existing.positionalTypes[i], positionalTypes[i])) {
+        return false;
+      }
+    }
+    if (existing.namedTypes.length != namedTypes.length) return false;
+    for (var i = 0; i < namedTypes.length; i++) {
+      final a = existing.namedTypes[i];
+      final b = namedTypes[i];
+      if (a.name != b.name) return false;
+      if (!identical(a.type, b.type)) return false;
     }
     return true;
   }
