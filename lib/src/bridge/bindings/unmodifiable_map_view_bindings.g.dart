@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:collection';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class UnmodifiableMapViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -26,7 +27,10 @@ abstract final class UnmodifiableMapViewBindings {
         'remove#1': (args) => (args[0] as UnmodifiableMapView).remove(args[1] as Object?),
         'addEntries#1': (args) { (args[0] as UnmodifiableMapView).addEntries(args[1] as Iterable<MapEntry>); return null; },
         'map#1': (args) => (args[0] as UnmodifiableMapView).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
-        'update#3': (args) => (args[0] as UnmodifiableMapView).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
+        'update#3': (args) {
+  if (identical(args[3], darticAbsent)) return (args[0] as UnmodifiableMapView).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
+  return (args[0] as UnmodifiableMapView).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
+},
         'updateAll#1': (args) { (args[0] as UnmodifiableMapView).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'removeWhere#1': (args) { (args[0] as UnmodifiableMapView).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'isEmpty#0': (args) => (args[0] as UnmodifiableMapView).isEmpty,

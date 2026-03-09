@@ -75,18 +75,6 @@ abstract final class StreamControllerBindings {
             }
             return null;
         },
-        'addError#1': (args) {
-            final controller = args[0] as StreamController;
-            final error = args[1] as Object;
-            final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
-            if (st != null) {
-              controller.addError(error, st);
-            } else {
-              controller.addError(error);
-            }
-            return null;
-        },
         'close#0': (args) => (args[0] as StreamController).close(),
         'stream#0': (args) => (args[0] as StreamController).stream,
         'sink#0': (args) => (args[0] as StreamController).sink,

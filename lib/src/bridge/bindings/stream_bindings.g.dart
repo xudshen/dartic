@@ -111,7 +111,6 @@ abstract final class StreamBindings {
             return stream.forEach((e) => action(e));
         },
         'drain#1': (args) => (args[0] as Stream).drain(args.length > 1 ? args[1] : null),
-        'drain#0': (args) => (args[0] as Stream).drain(args.length > 1 ? args[1] : null),
         'handleError#2': (args) {
             final stream = args[0] as Stream;
             final onError = args[1] as Function;
@@ -138,11 +137,6 @@ abstract final class StreamBindings {
             final sep = args.length > 1 ? args[1] as String? : null;
             return stream.join(sep ?? '');
         },
-        'join#0': (args) {
-            final stream = args[0] as Stream;
-            final sep = args.length > 1 ? args[1] as String? : null;
-            return stream.join(sep ?? '');
-        },
         'reduce#1': (args) {
             final stream = args[0] as Stream;
             final combine = args[1] as Function;
@@ -156,14 +150,6 @@ abstract final class StreamBindings {
         },
         'toSet#0': (args) => (args[0] as Stream).toSet(),
         'distinct#1': (args) {
-            final stream = args[0] as Stream;
-            final equals = args.length > 1 ? args[1] as Function? : null;
-            if (equals != null) {
-              return stream.distinct((a, b) => equals(a, b) as bool);
-            }
-            return stream.distinct();
-        },
-        'distinct#0': (args) {
             final stream = args[0] as Stream;
             final equals = args.length > 1 ? args[1] as Function? : null;
             if (equals != null) {

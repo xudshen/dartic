@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class FunctionBindings {
   static void register(DarticPluginContext ctx) {
@@ -12,8 +13,10 @@ abstract final class FunctionBindings {
       test: (o) => o is Function,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:core::Function::apply#2', (args) => Function.apply(args[0] as Function, args[1] as List<dynamic>?));
-    ctx.registerBinding('dart:core::Function::apply#3', (args) => Function.apply(args[0] as Function, args[1] as List<dynamic>?, args[2] as Map<Symbol, dynamic>?));
+    ctx.registerBinding('dart:core::Function::apply#3', (args) {
+  if (identical(args[2], darticAbsent)) return Function.apply(args[0] as Function, args[1] as List<dynamic>?);
+  return Function.apply(args[0] as Function, args[1] as List<dynamic>?, args[2] as Map<Symbol, dynamic>?);
+});
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:collection';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class HashMapBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,7 +23,10 @@ abstract final class HashMapBindings {
         'containsKey#1': (args) => (args[0] as HashMap).containsKey(args[1] as Object?),
         'map#1': (args) => (args[0] as HashMap).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
         'addEntries#1': (args) { (args[0] as HashMap).addEntries(args[1] as Iterable<MapEntry>); return null; },
-        'update#3': (args) => (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
+        'update#3': (args) {
+  if (identical(args[3], darticAbsent)) return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
+  return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
+},
         'updateAll#1': (args) { (args[0] as HashMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'removeWhere#1': (args) { (args[0] as HashMap).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'putIfAbsent#2': (args) => (args[0] as HashMap).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),

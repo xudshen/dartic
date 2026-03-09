@@ -33,18 +33,6 @@ abstract final class EventSinkBindings {
             }
             return null;
         },
-        'addError#1': (args) {
-            final sink = args[0] as EventSink;
-            final error = args[1] as Object;
-            final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
-            if (st != null) {
-              sink.addError(error, st);
-            } else {
-              sink.addError(error);
-            }
-            return null;
-        },
         'close#0': (args) {
             (args[0] as EventSink).close();
             return null;

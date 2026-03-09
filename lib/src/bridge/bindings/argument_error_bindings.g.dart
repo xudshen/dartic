@@ -6,6 +6,7 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   _$ArgumentError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as dynamic, superArgs[1] as String?);
@@ -76,8 +77,10 @@ abstract final class ArgumentErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$ArgumentError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::ArgumentError::checkNotNull#1', (args) => ArgumentError.checkNotNull(args[0] as Object?));
-    ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) => ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?));
+    ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) {
+  if (identical(args[1], darticAbsent)) return ArgumentError.checkNotNull(args[0] as Object?);
+  return ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?);
+});
     ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError).toString());
     ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as ArgumentError).invalidValue);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as ArgumentError).name);

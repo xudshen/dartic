@@ -33,18 +33,6 @@ abstract final class StreamSinkBindings {
             }
             return null;
         },
-        'addError#1': (args) {
-            final sink = args[0] as StreamSink;
-            final error = args[1] as Object;
-            final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
-            if (st != null) {
-              sink.addError(error, st);
-            } else {
-              sink.addError(error);
-            }
-            return null;
-        },
         'close#0': (args) => (args[0] as StreamSink).close(),
         'done#0': (args) => (args[0] as StreamSink).done,
         'addStream#1': (args) => (args[0] as StreamSink).addStream(args[1] as Stream),

@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class MultiStreamControllerBindings {
   static void register(DarticPluginContext ctx) {
@@ -17,7 +18,10 @@ abstract final class MultiStreamControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'addStream#2': (args) => (args[0] as MultiStreamController).addStream(args[1] as Stream, cancelOnError: args[2] as bool?),
+        'addStream#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as MultiStreamController).addStream(args[1] as Stream);
+  return (args[0] as MultiStreamController).addStream(args[1] as Stream, cancelOnError: args[2] as bool?);
+},
         'stream#0': (args) => (args[0] as MultiStreamController).stream,
         'onListen#0': (args) => (args[0] as MultiStreamController).onListen,
         'onPause#0': (args) => (args[0] as MultiStreamController).onPause,
@@ -48,36 +52,12 @@ abstract final class MultiStreamControllerBindings {
             }
             return null;
         },
-        'addError#1': (args) {
-            final controller = args[0] as MultiStreamController;
-            final error = args[1] as Object;
-            final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
-            if (st != null) {
-              controller.addError(error, st);
-            } else {
-              controller.addError(error);
-            }
-            return null;
-        },
         'close#0': (args) => (args[0] as MultiStreamController).close(),
         'addSync#1': (args) {
             (args[0] as MultiStreamController).addSync(args[1]);
             return null;
         },
         'addErrorSync#2': (args) {
-            final controller = args[0] as MultiStreamController;
-            final error = args[1] as Object;
-            final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
-            if (st != null) {
-              controller.addErrorSync(error, st);
-            } else {
-              controller.addErrorSync(error);
-            }
-            return null;
-        },
-        'addErrorSync#1': (args) {
             final controller = args[0] as MultiStreamController;
             final error = args[1] as Object;
             final st =

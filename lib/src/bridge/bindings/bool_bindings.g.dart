@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class BoolBindings {
   static void register(DarticPluginContext ctx) {
@@ -12,10 +13,14 @@ abstract final class BoolBindings {
       test: (o) => o is bool,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:core::bool::parse#1', (args) => bool.parse(args[0] as String));
-    ctx.registerBinding('dart:core::bool::parse#2', (args) => bool.parse(args[0] as String, caseSensitive: args[1] as bool));
-    ctx.registerBinding('dart:core::bool::tryParse#1', (args) => bool.tryParse(args[0] as String));
-    ctx.registerBinding('dart:core::bool::tryParse#2', (args) => bool.tryParse(args[0] as String, caseSensitive: args[1] as bool));
+    ctx.registerBinding('dart:core::bool::parse#2', (args) {
+  if (identical(args[1], darticAbsent)) return bool.parse(args[0] as String);
+  return bool.parse(args[0] as String, caseSensitive: args[1] as bool);
+});
+    ctx.registerBinding('dart:core::bool::tryParse#2', (args) {
+  if (identical(args[1], darticAbsent)) return bool.tryParse(args[0] as String);
+  return bool.tryParse(args[0] as String, caseSensitive: args[1] as bool);
+});
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

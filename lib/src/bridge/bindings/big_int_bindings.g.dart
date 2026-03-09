@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class BigIntBindings {
   static void register(DarticPluginContext ctx) {
@@ -13,10 +14,14 @@ abstract final class BigIntBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
     );
-    ctx.registerBinding('dart:core::BigInt::parse#1', (args) => BigInt.parse(args[0] as String));
-    ctx.registerBinding('dart:core::BigInt::parse#2', (args) => BigInt.parse(args[0] as String, radix: args[1] as int?));
-    ctx.registerBinding('dart:core::BigInt::tryParse#1', (args) => BigInt.tryParse(args[0] as String));
-    ctx.registerBinding('dart:core::BigInt::tryParse#2', (args) => BigInt.tryParse(args[0] as String, radix: args[1] as int?));
+    ctx.registerBinding('dart:core::BigInt::parse#2', (args) {
+  if (identical(args[1], darticAbsent)) return BigInt.parse(args[0] as String);
+  return BigInt.parse(args[0] as String, radix: args[1] as int?);
+});
+    ctx.registerBinding('dart:core::BigInt::tryParse#2', (args) {
+  if (identical(args[1], darticAbsent)) return BigInt.tryParse(args[0] as String);
+  return BigInt.tryParse(args[0] as String, radix: args[1] as int?);
+});
     ctx.registerBinding('dart:core::BigInt::zero#0', (args) => BigInt.zero);
     ctx.registerBinding('dart:core::BigInt::one#0', (args) => BigInt.one);
     ctx.registerBinding('dart:core::BigInt::two#0', (args) => BigInt.two);

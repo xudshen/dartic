@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:convert';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class UriBindings {
   static void register(DarticPluginContext ctx) {
@@ -13,28 +14,42 @@ abstract final class UriBindings {
       test: (o) => o is Uri,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:core::Uri::parse#1', (args) => Uri.parse(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::parse#2', (args) => Uri.parse(args[0] as String, args[1] as int));
-    ctx.registerBinding('dart:core::Uri::parse#3', (args) => Uri.parse(args[0] as String, args[1] as int, args[2] as int?));
-    ctx.registerBinding('dart:core::Uri::tryParse#1', (args) => Uri.tryParse(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::tryParse#2', (args) => Uri.tryParse(args[0] as String, args[1] as int));
-    ctx.registerBinding('dart:core::Uri::tryParse#3', (args) => Uri.tryParse(args[0] as String, args[1] as int, args[2] as int?));
+    ctx.registerBinding('dart:core::Uri::parse#3', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.parse(args[0] as String);
+  if (identical(args[2], darticAbsent)) return Uri.parse(args[0] as String, args[1] as int);
+  return Uri.parse(args[0] as String, args[1] as int, args[2] as int?);
+});
+    ctx.registerBinding('dart:core::Uri::tryParse#3', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.tryParse(args[0] as String);
+  if (identical(args[2], darticAbsent)) return Uri.tryParse(args[0] as String, args[1] as int);
+  return Uri.tryParse(args[0] as String, args[1] as int, args[2] as int?);
+});
     ctx.registerBinding('dart:core::Uri::encodeComponent#1', (args) => Uri.encodeComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#1', (args) => Uri.encodeQueryComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', (args) => Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding));
+    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.encodeQueryComponent(args[0] as String);
+  return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+});
     ctx.registerBinding('dart:core::Uri::decodeComponent#1', (args) => Uri.decodeComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#1', (args) => Uri.decodeQueryComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', (args) => Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding));
+    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.decodeQueryComponent(args[0] as String);
+  return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+});
     ctx.registerBinding('dart:core::Uri::encodeFull#1', (args) => Uri.encodeFull(args[0] as String));
     ctx.registerBinding('dart:core::Uri::decodeFull#1', (args) => Uri.decodeFull(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::splitQueryString#1', (args) => Uri.splitQueryString(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::splitQueryString#2', (args) => Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding));
-    ctx.registerBinding('dart:core::Uri::parseIPv4Address#1', (args) => Uri.parseIPv4Address(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::parseIPv4Address#2', (args) => Uri.parseIPv4Address(args[0] as String, args[1] as int));
-    ctx.registerBinding('dart:core::Uri::parseIPv4Address#3', (args) => Uri.parseIPv4Address(args[0] as String, args[1] as int, args[2] as int?));
-    ctx.registerBinding('dart:core::Uri::parseIPv6Address#1', (args) => Uri.parseIPv6Address(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::parseIPv6Address#2', (args) => Uri.parseIPv6Address(args[0] as String, args[1] as int));
-    ctx.registerBinding('dart:core::Uri::parseIPv6Address#3', (args) => Uri.parseIPv6Address(args[0] as String, args[1] as int, args[2] as int?));
+    ctx.registerBinding('dart:core::Uri::splitQueryString#2', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.splitQueryString(args[0] as String);
+  return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
+});
+    ctx.registerBinding('dart:core::Uri::parseIPv4Address#3', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.parseIPv4Address(args[0] as String);
+  if (identical(args[2], darticAbsent)) return Uri.parseIPv4Address(args[0] as String, args[1] as int);
+  return Uri.parseIPv4Address(args[0] as String, args[1] as int, args[2] as int?);
+});
+    ctx.registerBinding('dart:core::Uri::parseIPv6Address#3', (args) {
+  if (identical(args[1], darticAbsent)) return Uri.parseIPv6Address(args[0] as String);
+  if (identical(args[2], darticAbsent)) return Uri.parseIPv6Address(args[0] as String, args[1] as int);
+  return Uri.parseIPv6Address(args[0] as String, args[1] as int, args[2] as int?);
+});
     ctx.registerBinding('dart:core::Uri::base#0', (args) => Uri.base);
     ctx.registerBinding('dart:core::Uri::http#3', methodMap()['http#3']!);
     ctx.registerBinding('dart:core::Uri::https#3', methodMap()['https#3']!);
@@ -49,7 +64,18 @@ abstract final class UriBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isScheme#1': (args) => (args[0] as Uri).isScheme(args[1] as String),
         'toString#0': (args) => (args[0] as Uri).toString(),
-        'replace#9': (args) => (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?, query: args[7] as String?, queryParameters: args[8] as Map<String, dynamic>?, fragment: args[9] as String?),
+        'replace#9': (args) {
+  if (identical(args[1], darticAbsent)) return (args[0] as Uri).replace();
+  if (identical(args[2], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?);
+  if (identical(args[3], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?);
+  if (identical(args[4], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?);
+  if (identical(args[5], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?);
+  if (identical(args[6], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?);
+  if (identical(args[7], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?);
+  if (identical(args[8], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?, query: args[7] as String?);
+  if (identical(args[9], darticAbsent)) return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?, query: args[7] as String?, queryParameters: args[8] as Map<String, dynamic>?);
+  return (args[0] as Uri).replace(scheme: args[1] as String?, userInfo: args[2] as String?, host: args[3] as String?, port: args[4] as int?, path: args[5] as String?, pathSegments: args[6] as Iterable<String>?, query: args[7] as String?, queryParameters: args[8] as Map<String, dynamic>?, fragment: args[9] as String?);
+},
         'removeFragment#0': (args) => (args[0] as Uri).removeFragment(),
         'resolve#1': (args) => (args[0] as Uri).resolve(args[1] as String),
         'resolveUri#1': (args) => (args[0] as Uri).resolveUri(args[1] as Uri),

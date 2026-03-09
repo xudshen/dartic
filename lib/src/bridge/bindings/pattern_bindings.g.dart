@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class PatternBindings {
   static void register(DarticPluginContext ctx) {
@@ -15,9 +16,13 @@ abstract final class PatternBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'allMatches#1': (args) => (args[0] as Pattern).allMatches(args[1] as String),
-        'allMatches#2': (args) => (args[0] as Pattern).allMatches(args[1] as String, args[2] as int),
-        'matchAsPrefix#1': (args) => (args[0] as Pattern).matchAsPrefix(args[1] as String),
-        'matchAsPrefix#2': (args) => (args[0] as Pattern).matchAsPrefix(args[1] as String, args[2] as int),
+        'allMatches#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as Pattern).allMatches(args[1] as String);
+  return (args[0] as Pattern).allMatches(args[1] as String, args[2] as int);
+},
+        'matchAsPrefix#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as Pattern).matchAsPrefix(args[1] as String);
+  return (args[0] as Pattern).matchAsPrefix(args[1] as String, args[2] as int);
+},
       };
 }

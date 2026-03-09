@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:collection';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class ListQueueBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,7 +21,10 @@ abstract final class ListQueueBindings {
         'cast#0': (args) => (args[0] as ListQueue).cast(),
         'forEach#1': (args) { (args[0] as ListQueue).forEach((a) => (args[1] as Function)(a)); return null; },
         'elementAt#1': (args) => (args[0] as ListQueue).elementAt(args[1] as int),
-        'toList#1': (args) => (args[0] as ListQueue).toList(growable: args[1] as bool),
+        'toList#1': (args) {
+  if (identical(args[1], darticAbsent)) return (args[0] as ListQueue).toList();
+  return (args[0] as ListQueue).toList(growable: args[1] as bool);
+},
         'add#1': (args) { (args[0] as ListQueue).add(args[1] as dynamic); return null; },
         'addAll#1': (args) { (args[0] as ListQueue).addAll(args[1] as Iterable); return null; },
         'remove#1': (args) => (args[0] as ListQueue).remove(args[1] as Object?),
@@ -35,11 +39,22 @@ abstract final class ListQueueBindings {
         'contains#1': (args) => (args[0] as ListQueue).contains(args[1] as Object?),
         'every#1': (args) => (args[0] as ListQueue).every((a) => (args[1] as Function)(a) as bool),
         'any#1': (args) => (args[0] as ListQueue).any((a) => (args[1] as Function)(a) as bool),
-        'firstWhere#2': (args) => (args[0] as ListQueue).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
-        'lastWhere#2': (args) => (args[0] as ListQueue).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
-        'singleWhere#2': (args) => (args[0] as ListQueue).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
-        'join#0': (args) => (args[0] as ListQueue).join(),
-        'join#1': (args) => (args[0] as ListQueue).join(args[1] as String),
+        'firstWhere#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as ListQueue).firstWhere((a) => (args[1] as Function)(a) as bool);
+  return (args[0] as ListQueue).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+},
+        'lastWhere#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as ListQueue).lastWhere((a) => (args[1] as Function)(a) as bool);
+  return (args[0] as ListQueue).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+},
+        'singleWhere#2': (args) {
+  if (identical(args[2], darticAbsent)) return (args[0] as ListQueue).singleWhere((a) => (args[1] as Function)(a) as bool);
+  return (args[0] as ListQueue).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+},
+        'join#1': (args) {
+  if (identical(args[1], darticAbsent)) return (args[0] as ListQueue).join();
+  return (args[0] as ListQueue).join(args[1] as String);
+},
         'where#1': (args) => (args[0] as ListQueue).where((a) => (args[1] as Function)(a) as bool),
         'map#1': (args) => (args[0] as ListQueue).map((a) => (args[1] as Function)(a)),
         'reduce#1': (args) => (args[0] as ListQueue).reduce((a, b) => (args[1] as Function)(a, b)),

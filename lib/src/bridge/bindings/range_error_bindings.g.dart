@@ -6,6 +6,7 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$RangeError extends RangeError implements DarticObjectHolder {
   _$RangeError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as dynamic);
@@ -90,20 +91,28 @@ abstract final class RangeErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$RangeError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::RangeError::checkValueInInterval#3', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int));
-    ctx.registerBinding('dart:core::RangeError::checkValueInInterval#4', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, args[3] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValueInInterval#5', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, args[3] as String?, args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#2', (args) => RangeError.checkValidIndex(args[0] as int, args[1] as dynamic));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#3', (args) => RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#4', (args) => RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?, args[3] as int?));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', (args) => RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?, args[3] as int?, args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#3', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int));
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#4', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#5', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?, args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?, args[4] as String?, args[5] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#1', (args) => RangeError.checkNotNegative(args[0] as int));
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#2', (args) => RangeError.checkNotNegative(args[0] as int, args[1] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) => RangeError.checkNotNegative(args[0] as int, args[1] as String?, args[2] as String?));
+    ctx.registerBinding('dart:core::RangeError::checkValueInInterval#5', (args) {
+  if (identical(args[3], darticAbsent)) return RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int);
+  if (identical(args[4], darticAbsent)) return RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, args[3] as String?);
+  return RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, args[3] as String?, args[4] as String?);
+});
+    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', (args) {
+  if (identical(args[2], darticAbsent)) return RangeError.checkValidIndex(args[0] as int, args[1] as dynamic);
+  if (identical(args[3], darticAbsent)) return RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?);
+  if (identical(args[4], darticAbsent)) return RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?, args[3] as int?);
+  return RangeError.checkValidIndex(args[0] as int, args[1] as dynamic, args[2] as String?, args[3] as int?, args[4] as String?);
+});
+    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', (args) {
+  if (identical(args[3], darticAbsent)) return RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int);
+  if (identical(args[4], darticAbsent)) return RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?);
+  if (identical(args[5], darticAbsent)) return RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?, args[4] as String?);
+  return RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, args[3] as String?, args[4] as String?, args[5] as String?);
+});
+    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) {
+  if (identical(args[1], darticAbsent)) return RangeError.checkNotNegative(args[0] as int);
+  if (identical(args[2], darticAbsent)) return RangeError.checkNotNegative(args[0] as int, args[1] as String?);
+  return RangeError.checkNotNegative(args[0] as int, args[1] as String?, args[2] as String?);
+});
     ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as RangeError).start);
     ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as RangeError).end);
     ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as RangeError).invalidValue);

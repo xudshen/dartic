@@ -24,13 +24,6 @@ abstract final class StreamSubscriptionBindings {
             sub.pause(resumeSignal);
             return null;
         },
-        'pause#0': (args) {
-            final sub = args[0] as StreamSubscription;
-            final resumeSignal =
-                args.length > 1 ? args[1] as Future<void>? : null;
-            sub.pause(resumeSignal);
-            return null;
-        },
         'resume#0': (args) {
             (args[0] as StreamSubscription).resume();
             return null;
@@ -54,6 +47,5 @@ abstract final class StreamSubscriptionBindings {
             return null;
         },
         'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(args.length > 1 ? args[1] : null),
-        'asFuture#0': (args) => (args[0] as StreamSubscription).asFuture(args.length > 1 ? args[1] : null),
       };
 }

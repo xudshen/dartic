@@ -37,25 +37,7 @@ abstract final class StringBufferBindings {
             }
             return null;
         },
-        'writeln#0': (args) {
-            if (args.length > 1 && args[1] != null) {
-              (args[0] as StringBuffer).writeln(args[1]);
-            } else {
-              (args[0] as StringBuffer).writeln();
-            }
-            return null;
-        },
         'writeAll#2': (args) {
-            final sb = args[0] as StringBuffer;
-            final objects = args[1] as Iterable;
-            if (args.length > 2 && args[2] != null) {
-              sb.writeAll(objects, args[2] as String);
-            } else {
-              sb.writeAll(objects);
-            }
-            return null;
-        },
-        'writeAll#1': (args) {
             final sb = args[0] as StringBuffer;
             final objects = args[1] as Iterable;
             if (args.length > 2 && args[2] != null) {
