@@ -2412,8 +2412,7 @@ extension on DarticCompiler {
     ];
     final shapeIdx = _constantPool.addRef(shape);
     assert(shapeIdx <= 0xFFFF,
-        'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-        'WIDE prefix not yet supported for this opcode');
+        'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
 
     // Move all field values into consecutive ref registers.
     final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);
@@ -2511,8 +2510,7 @@ extension on DarticCompiler {
     ];
     final shapeIdx = _constantPool.addRef(shape);
     assert(shapeIdx <= 0xFFFF,
-        'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-        'WIDE prefix not yet supported for this opcode');
+        'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
 
     // Move into consecutive ref registers.
     final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);

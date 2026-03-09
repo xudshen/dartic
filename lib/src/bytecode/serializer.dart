@@ -269,8 +269,8 @@ class DarticSerializer {
       w.writeInt32(handler.catchType);
       w.writeUint32(handler.valStackDP);
       w.writeUint32(handler.refStackDP);
-      w.writeUint32(handler.exceptionReg);
-      w.writeUint32(handler.stackTraceReg);
+      w.writeInt32(handler.exceptionReg);
+      w.writeInt32(handler.stackTraceReg);
     }
 
     // IC table -- methodNameIndex + argCount persisted; runtime state resets

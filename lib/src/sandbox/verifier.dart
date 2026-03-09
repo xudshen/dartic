@@ -693,10 +693,9 @@ class DarticVerifier {
         _checkRef(b, rrc, 'B', prefix, pc, op);
         _checkRef(c, rrc, 'C', prefix, pc, op);
 
-      // invokeDyn: A=ref, B=ref, C=names pool index
+      // invokeDyn: A=ref (result/receiver base), B=arg count, C=names pool index
       case Op.invokeDyn:
         _checkRef(a, rrc, 'A', prefix, pc, op);
-        _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // rethrow_: A=ref, B=ref
       case Op.rethrow_:
