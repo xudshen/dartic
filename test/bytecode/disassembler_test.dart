@@ -23,7 +23,7 @@ DarticModule _makeModule({
       [
         DarticFuncProto(
           funcId: 0,
-          bytecode: Uint32List(4),
+          bytecode: Uint64List(4),
           valueRegCount: 2,
           refRegCount: 1,
           paramCount: 1,
@@ -51,7 +51,7 @@ void main() {
       );
       final output = DarticDisassembler.disassemble(module, fileSize: 1024);
 
-      expect(output, contains('DARB v2'));
+      expect(output, contains('DARB v3'));
       expect(output, contains('1024 bytes'));
       expect(output, contains('Constants:'));
       expect(output, contains('Functions:'));
@@ -68,7 +68,7 @@ void main() {
       final module = _makeModule();
       final output = DarticDisassembler.disassemble(module);
 
-      expect(output, contains('DARB v2'));
+      expect(output, contains('DARB v3'));
       expect(output, isNot(contains('bytes')));
     });
 
@@ -94,7 +94,7 @@ void main() {
       final funcs = [
         DarticFuncProto(
           funcId: 0,
-          bytecode: Uint32List(2),
+          bytecode: Uint64List(2),
           valueRegCount: 4,
           refRegCount: 3,
           paramCount: 1,
@@ -103,7 +103,7 @@ void main() {
         ),
         DarticFuncProto(
           funcId: 1,
-          bytecode: Uint32List(8),
+          bytecode: Uint64List(8),
           valueRegCount: 2,
           refRegCount: 1,
           paramCount: 0,
@@ -112,7 +112,7 @@ void main() {
         ),
         DarticFuncProto(
           funcId: 2,
-          bytecode: Uint32List(3),
+          bytecode: Uint64List(3),
           valueRegCount: 1,
           refRegCount: 0,
           paramCount: 2,
@@ -144,7 +144,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List(1),
+            bytecode: Uint64List(1),
             valueRegCount: 0,
             refRegCount: 0,
             paramCount: 0,
@@ -152,7 +152,7 @@ void main() {
           ),
           DarticFuncProto(
             funcId: 1,
-            bytecode: Uint32List(1),
+            bytecode: Uint64List(1),
             valueRegCount: 0,
             refRegCount: 0,
             paramCount: 0,
@@ -202,7 +202,7 @@ void main() {
       // Add some methods and fields to verify counts
       cls.methods[0] = DarticFuncProto(
         funcId: 10,
-        bytecode: Uint32List(1),
+        bytecode: Uint64List(1),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -210,7 +210,7 @@ void main() {
       );
       cls.methods[1] = DarticFuncProto(
         funcId: 11,
-        bytecode: Uint32List(1),
+        bytecode: Uint64List(1),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -248,7 +248,7 @@ void main() {
       final funcs = [
         DarticFuncProto(
           funcId: 0,
-          bytecode: Uint32List(1),
+          bytecode: Uint64List(1),
           valueRegCount: 1,
           refRegCount: 0,
           paramCount: 0,
@@ -266,7 +266,7 @@ void main() {
       final funcs = [
         DarticFuncProto(
           funcId: 0,
-          bytecode: Uint32List(1),
+          bytecode: Uint64List(1),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 0,
@@ -274,7 +274,7 @@ void main() {
         ),
         DarticFuncProto(
           funcId: 1,
-          bytecode: Uint32List(1),
+          bytecode: Uint64List(1),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 0,
@@ -294,7 +294,7 @@ void main() {
       final cp = ConstantPool();
       cp.addRef('hello');
 
-      final code = Uint32List(2);
+      final code = Uint64List(2);
       code[0] = encodeABx(Op.loadConst, 0, 0); // LOAD_CONST r0, #0
       code[1] = encodeABC(Op.halt, 0, 1, 0); // HALT r0, r1, r0
 
@@ -321,7 +321,7 @@ void main() {
       final cp = ConstantPool();
       cp.addRef('hello');
 
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABx(Op.loadConst, 0, 0);
 
       final module = _makeModule(
@@ -344,7 +344,7 @@ void main() {
     });
 
     test('shows function header with separator line', () {
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.halt, 0, 0, 0);
 
       final module = _makeModule(
@@ -373,7 +373,7 @@ void main() {
     });
 
     test('formats jump targets as absolute PC', () {
-      final code = Uint32List(2);
+      final code = Uint64List(2);
       // JUMP r0, sBx=+3 → at pc=0, target = 0+1+3 = 4
       code[0] = encodeAsBx(Op.jump, 0, 3);
       code[1] = encodeABC(Op.halt, 0, 0, 0);
@@ -424,7 +424,7 @@ void main() {
       cp.addInt(42);
       cp.addInt(-1);
 
-      final code = Uint32List(2);
+      final code = Uint64List(2);
       code[0] = encodeABx(Op.loadConstInt, 1, 0); // LOAD_CONST_INT r1, #0 → 42
       code[1] = encodeABx(Op.loadConstInt, 2, 1); // LOAD_CONST_INT r2, #1 → -1
 
@@ -448,7 +448,7 @@ void main() {
     });
 
     test('CALL_STATIC annotates with function name and param count', () {
-      final code = Uint32List(2);
+      final code = Uint64List(2);
       code[0] = encodeABx(Op.callStatic, 0, 1); // CALL_STATIC r0, f1
       code[1] = encodeABC(Op.halt, 0, 0, 0);
 
@@ -464,7 +464,7 @@ void main() {
           ),
           DarticFuncProto(
             funcId: 1,
-            bytecode: Uint32List(1),
+            bytecode: Uint64List(1),
             valueRegCount: 0,
             refRegCount: 0,
             paramCount: 2,
@@ -511,7 +511,7 @@ void main() {
     });
 
     test('jumpAx formats absolute PC target', () {
-      final code = Uint32List(2);
+      final code = Uint64List(2);
       // JUMP_AX sAx=+5 → at pc=0, target = 0+1+5 = 6
       code[0] = encodesAx(Op.jumpAx, 5);
       code[1] = encodeABC(Op.halt, 0, 0, 0);
@@ -534,7 +534,7 @@ void main() {
     });
 
     test('PC is 4-digit zero-padded', () {
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.nop, 0, 0, 0);
 
       final module = _makeModule(
@@ -555,7 +555,7 @@ void main() {
     });
 
     test('exception handlers shown after instructions', () {
-      final code = Uint32List(8);
+      final code = Uint64List(8);
       code[0] = encodeABC(Op.nop, 0, 0, 0);
       code[5] = encodeABC(Op.nop, 0, 0, 0);
       code[6] = encodeABC(Op.halt, 0, 0, 0);
@@ -604,7 +604,7 @@ void main() {
     });
 
     test('upvalue descriptors shown after instructions', () {
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.halt, 0, 0, 0);
 
       final module = _makeModule(
@@ -635,7 +635,7 @@ void main() {
       cp.addName('toString');
       cp.addName('hashCode');
 
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.halt, 0, 0, 0);
 
       final module = _makeModule(
@@ -676,7 +676,7 @@ void main() {
 
       final greetFunc = DarticFuncProto(
         funcId: 5,
-        bytecode: Uint32List(1),
+        bytecode: Uint64List(1),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -699,7 +699,7 @@ void main() {
 
       final mainFunc = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List(1),
+        bytecode: Uint64List(1),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -724,7 +724,7 @@ void main() {
     });
 
     test('function filter by name shows only matching function', () {
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.halt, 0, 0, 0);
 
       final module = _makeModule(
@@ -767,7 +767,7 @@ void main() {
     });
 
     test('function filter by funcId shows only matching function', () {
-      final code = Uint32List(1);
+      final code = Uint64List(1);
       code[0] = encodeABC(Op.halt, 0, 0, 0);
 
       final module = _makeModule(
