@@ -216,12 +216,12 @@ void main() {}
 
       final jumpIdx = findOp(code, Op.jumpIfNnull, start: falseIdx + 1);
       expect(jumpIdx, isNot(-1));
-      // Jump uses 3-word WIDE encoding; sBx should be +1 to skip LOAD_TRUE.
+      // sBx should be +1 to skip LOAD_TRUE (1-word jump in 64-bit ISA).
       expect(decodeWideJumpSBx(code, jumpIdx), 1,
           reason: 'sBx should be +1 to skip LOAD_TRUE');
 
-      // LOAD_TRUE follows the 3-word jump.
-      final trueIdx = findOp(code, Op.loadTrue, start: jumpIdx + 3);
+      // LOAD_TRUE follows the 1-word jump.
+      final trueIdx = findOp(code, Op.loadTrue, start: jumpIdx + 1);
       expect(trueIdx, isNot(-1));
       expect(decodeA(code[trueIdx]), resultReg,
           reason: 'LOAD_TRUE should target same result register');

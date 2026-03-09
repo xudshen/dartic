@@ -42,7 +42,7 @@ void main() {
       final templateIdx = cp.addRef(template);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           // INSTANTIATE_TYPE A=3, Bx=templateIdx
           encodeABx(Op.instantiateType, 3, templateIdx),
           encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
@@ -69,7 +69,7 @@ void main() {
       final itaIdx = cp.addRef(ita);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 = ITA
           encodeABx(Op.instantiateType, 3, templateIdx), // resolve T → string
           encodeABC(Op.halt, 3, 1, 0),
@@ -96,7 +96,7 @@ void main() {
       final itaIdx = cp.addRef(ita);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 = ITA = [intType]
           encodeABx(Op.instantiateType, 3, templateIdx), // List<int>
           encodeABC(Op.halt, 3, 1, 0),
@@ -125,7 +125,7 @@ void main() {
       final strIdx = cp.addRef(strTemplate);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           // Instantiate two types into consecutive registers (3, 4).
           encodeABx(Op.instantiateType, 3, intIdx), // reg 3 = intType
           encodeABx(Op.instantiateType, 4, strIdx), // reg 4 = stringType
@@ -151,7 +151,7 @@ void main() {
       final dblIdx = cp.addRef(dblTemplate);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.instantiateType, 3, dblIdx), // reg 3 = doubleType
           // CREATE_TYPE_ARGS count=1, start=3, dest=4
           encodeABC(Op.createTypeArgs, 1, 3, 4),

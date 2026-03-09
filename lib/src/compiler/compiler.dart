@@ -673,7 +673,7 @@ class DarticCompiler {
     _functions[funcId] = DarticFuncProto(
       funcId: funcId,
       name: proc.name.text,
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: valRegCount,
       refRegCount: refRegCount,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
@@ -722,7 +722,7 @@ class DarticCompiler {
     _functions.add(DarticFuncProto(
       funcId: funcId,
       name: '__init_${field.name.text}',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: valRegCount,
       refRegCount: refRegCount,
       paramCount: 0,
@@ -1225,5 +1225,5 @@ class DarticCompiler {
   }
 
   static final _haltBytecode =
-      Uint32List.fromList([encodeAx(Op.halt, 0)]);
+      Uint64List.fromList([encodeAx(Op.halt, 0)]);
 }

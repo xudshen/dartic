@@ -26,7 +26,7 @@ void main() {
 
   group('DarticFuncProto', () {
     test('holds bytecode and register counts', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.addInt, 0, 1, 2),
         encodeAx(Op.halt, 0),
       ]);
@@ -49,7 +49,7 @@ void main() {
     test('holds IC table', () {
       final proto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -67,7 +67,7 @@ void main() {
     test('IC table defaults to empty', () {
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -78,7 +78,7 @@ void main() {
     test('exception table defaults to empty', () {
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -89,7 +89,7 @@ void main() {
     test('upvalue descriptors defaults to empty', () {
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -105,7 +105,7 @@ void main() {
 
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
@@ -128,14 +128,14 @@ void main() {
       final protos = [
         DarticFuncProto(
           funcId: 0,
-          bytecode: Uint32List(1),
+          bytecode: Uint64List(1),
           valueRegCount: 2,
           refRegCount: 0,
           paramCount: 0,
         ),
         DarticFuncProto(
           funcId: 1,
-          bytecode: Uint32List(3),
+          bytecode: Uint64List(3),
           valueRegCount: 5,
           refRegCount: 1,
           paramCount: 2,
@@ -159,7 +159,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List(1),
+            bytecode: Uint64List(1),
             valueRegCount: 0,
             refRegCount: 0,
             paramCount: 0,

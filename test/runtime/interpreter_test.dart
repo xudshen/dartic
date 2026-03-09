@@ -18,7 +18,7 @@ void main() {
   group('HALT', () {
     test('stops execution immediately', () {
       final module = buildModule(
-        Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        Uint64List.fromList([encodeAx(Op.halt, 0)]),
       );
       // Should complete without error.
       interpreter.execute(module);
@@ -26,7 +26,7 @@ void main() {
 
     test('pops the root frame from CallStack', () {
       final module = buildModule(
-        Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 4,
         refRegCount: 2,
       );
@@ -41,7 +41,7 @@ void main() {
   group('NOP', () {
     test('is skipped without side effects', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.nop, 0, 0, 0),
           encodeAx(Op.halt, 0),
         ]),
@@ -51,7 +51,7 @@ void main() {
 
     test('multiple NOPs advance PC correctly', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.nop, 0, 0, 0),
           encodeABC(Op.nop, 0, 0, 0),
           encodeABC(Op.nop, 0, 0, 0),
@@ -67,7 +67,7 @@ void main() {
     test('throws DarticError for reserved opcode', () {
       final module = buildModule(
         // 0xA8 is in the reserved/superinstruction range.
-        Uint32List.fromList([encodeABC(0xA8, 0, 0, 0)]),
+        Uint64List.fromList([encodeABC(0xA8, 0, 0, 0)]),
       );
       expect(
         () => interpreter.execute(module),
@@ -77,7 +77,7 @@ void main() {
 
     test('error message contains the opcode value', () {
       final module = buildModule(
-        Uint32List.fromList([encodeABC(0xB0, 0, 0, 0)]),
+        Uint64List.fromList([encodeABC(0xB0, 0, 0, 0)]),
       );
       expect(
         () => interpreter.execute(module),
@@ -103,7 +103,7 @@ void main() {
       instrs.add(encodeAx(Op.halt, 0));
 
       final module = buildModule(
-        Uint32List.fromList(instrs),
+        Uint64List.fromList(instrs),
         valueRegCount: 2,
         refRegCount: 1,
       );

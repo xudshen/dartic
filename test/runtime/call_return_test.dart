@@ -231,7 +231,7 @@ void main() {
 
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 3, 10), // callee arg0
           encodeAsBx(Op.loadInt, 4, 20), // callee arg1
           encodeABx(Op.callStatic, 0, 1), // call add, result→v0
@@ -244,7 +244,7 @@ void main() {
 
       final addProto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.addInt, 2, 0, 1), // v2 = v0 + v1
           encodeABC(Op.returnVal, 2, 0, 0), // return v2
         ]),
@@ -272,7 +272,7 @@ void main() {
 
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 1), // call getStr, result→r0
           encodeAx(Op.halt, 0),
         ]),
@@ -283,7 +283,7 @@ void main() {
 
       final getStrProto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx), // r0 = 'hello'
           encodeABC(Op.returnRef, 0, 0, 0), // return r0
         ]),
@@ -310,7 +310,7 @@ void main() {
 
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           // Pre-fill r0 with non-null to verify it gets overwritten
           encodeABx(Op.loadConst, 0, 0),
           encodeABx(Op.callStatic, 0, 1), // call, result→r0
@@ -323,7 +323,7 @@ void main() {
 
       final nullFuncProto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAx(Op.returnNull, 0), // return null
         ]),
         valueRegCount: 0,
@@ -357,7 +357,7 @@ void main() {
 
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 1), // call f1, result→v0
           encodeAx(Op.halt, 0),
         ]),
@@ -368,7 +368,7 @@ void main() {
 
       final f1Proto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 40), // v0 = 40
           encodeABx(Op.callStatic, 1, 2), // call f2, result→v1
           encodeABC(Op.addInt, 0, 0, 1), // v0 = v0 + v1 = 40 + 2
@@ -381,7 +381,7 @@ void main() {
 
       final f2Proto = DarticFuncProto(
         funcId: 2,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 2), // v0 = 2
           encodeABC(Op.returnVal, 0, 0, 0), // return v0
         ]),
@@ -406,7 +406,7 @@ void main() {
       // Create function with huge valueRegCount that exceeds stack capacity
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 1),
           encodeAx(Op.halt, 0),
         ]),
@@ -417,7 +417,7 @@ void main() {
 
       final bigProto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
         valueRegCount: 100000, // exceeds default capacity of 10240
@@ -450,7 +450,7 @@ void main() {
 
       final mainProto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 1),
           encodeAx(Op.halt, 0),
         ]),
@@ -461,7 +461,7 @@ void main() {
 
       final recurseProto = DarticFuncProto(
         funcId: 1,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 1), // call self
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),

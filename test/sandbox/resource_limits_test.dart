@@ -60,7 +60,7 @@ void main() {
   group('maxTotalFuel', () {
     test('infinite loop exceeds fuel limit and throws FuelExhaustedError', () {
       // JUMP -1 at instruction 0: pc increments to 1, then += -1 → back to 0.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -1),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('normal program completes under maxTotalFuel', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -88,7 +88,7 @@ void main() {
     });
 
     test('default maxTotalFuel is null (unlimited)', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -102,7 +102,7 @@ void main() {
     test('fuel limit just above consumption completes normally', () {
       // A program that HALTs after a few NOPs — should complete
       // well within the default fuelBudget.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABC(Op.nop, 0, 0, 0),
         encodeABC(Op.nop, 0, 0, 0),
         encodeABC(Op.nop, 0, 0, 0),
@@ -118,7 +118,7 @@ void main() {
 
   group('executionTimeout', () {
     test('infinite loop exceeds timeout and throws ExecutionTimeoutError', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -1),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -137,7 +137,7 @@ void main() {
     });
 
     test('normal program completes within timeout', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -156,7 +156,7 @@ void main() {
 
   group('error recovery', () {
     test('interpreter reusable after FuelExhaustedError', () {
-      final loopCode = Uint32List.fromList([
+      final loopCode = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -1),
       ]);
       final loopModule =
@@ -176,7 +176,7 @@ void main() {
       expect(interp.callStack.depth, 0);
 
       // Second execution: normal program should succeed.
-      final haltCode = Uint32List.fromList([
+      final haltCode = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final haltModule =
@@ -185,7 +185,7 @@ void main() {
     });
 
     test('interpreter reusable after ExecutionTimeoutError', () {
-      final loopCode = Uint32List.fromList([
+      final loopCode = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -1),
       ]);
       final loopModule =
@@ -203,7 +203,7 @@ void main() {
       );
 
       // Second execution: normal program should succeed.
-      final haltCode = Uint32List.fromList([
+      final haltCode = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final haltModule =
@@ -213,7 +213,7 @@ void main() {
 
     test('stacks are properly reset after DarticError', () {
       // Use an illegal opcode to trigger DarticError.
-      final badCode = Uint32List.fromList([
+      final badCode = Uint64List.fromList([
         encodeABC(0xB0, 0, 0, 0), // Reserved/unimplemented opcode
       ]);
       final badModule =
@@ -231,7 +231,7 @@ void main() {
       expect(interp.callStack.depth, 0);
 
       // Should be reusable.
-      final haltCode = Uint32List.fromList([
+      final haltCode = Uint64List.fromList([
         encodeAx(Op.halt, 0),
       ]);
       final haltModule =
@@ -244,7 +244,7 @@ void main() {
     test('deep recursion throws CallDepthExceededError', () {
       // Function 0 calls itself (CALL_STATIC funcId=0), then HALTs.
       // The call depth check will trigger before HALT is ever reached.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callStatic, 0, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -261,7 +261,7 @@ void main() {
 
   group('combined limits', () {
     test('maxTotalFuel and executionTimeout both set — fuel hits first', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -1),
       ]);
       final module = buildModule(code, valueRegCount: 1, refRegCount: 1);

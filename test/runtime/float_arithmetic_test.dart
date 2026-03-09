@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 /// Uses [constantPool] for double literals (since doubles can't be encoded
 /// inline like sBx ints).
 DarticModule _module(
-  Uint32List bytecode, {
+  Uint64List bytecode, {
   int valueRegCount = 4,
   ConstantPool? constantPool,
 }) {
@@ -33,12 +33,12 @@ DarticModule _module(
 
 /// Builds a binary double op: LOAD_CONST_DBL slot0=a, LOAD_CONST_DBL slot1=b,
 /// op slot2=slot0 op slot1, HALT.
-(Uint32List, ConstantPool) _binaryDblOp(int opcode, double a, double b) {
+(Uint64List, ConstantPool) _binaryDblOp(int opcode, double a, double b) {
   final cp = ConstantPool();
   final idxA = cp.addDouble(a);
   final idxB = cp.addDouble(b);
   return (
-    Uint32List.fromList([
+    Uint64List.fromList([
       encodeABx(Op.loadConstDbl, 0, idxA),
       encodeABx(Op.loadConstDbl, 1, idxB),
       encodeABC(opcode, 2, 0, 1),
@@ -49,11 +49,11 @@ DarticModule _module(
 }
 
 /// Builds a unary double op: LOAD_CONST_DBL slot0=a, op slot1=op(slot0), HALT.
-(Uint32List, ConstantPool) _unaryDblOp(int opcode, double a) {
+(Uint64List, ConstantPool) _unaryDblOp(int opcode, double a) {
   final cp = ConstantPool();
   final idxA = cp.addDouble(a);
   return (
-    Uint32List.fromList([
+    Uint64List.fromList([
       encodeABx(Op.loadConstDbl, 0, idxA),
       encodeABC(opcode, 1, 0, 0),
       encodeAx(Op.halt, 0),
@@ -244,7 +244,7 @@ void main() {
 
   group('INT_TO_DBL', () {
     test('positive int to double', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),
         encodeABC(Op.intToDbl, 1, 0, 0), // doubleView[1] = intView[0].toDouble()
         encodeAx(Op.halt, 0),
@@ -254,7 +254,7 @@ void main() {
     });
 
     test('negative int to double', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, -7),
         encodeABC(Op.intToDbl, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -264,7 +264,7 @@ void main() {
     });
 
     test('zero to double', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 0),
         encodeABC(Op.intToDbl, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -278,7 +278,7 @@ void main() {
       final cp = ConstantPool();
       // 2^53 = 9007199254740992 (exact in double)
       final idx = cp.addInt(9007199254740992);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstInt, 0, idx),
         encodeABC(Op.intToDbl, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -294,7 +294,7 @@ void main() {
     test('truncates positive', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(3.7);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0), // intView[1] = doubleView[0].toInt()
         encodeAx(Op.halt, 0),
@@ -306,7 +306,7 @@ void main() {
     test('truncates negative toward zero', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(-3.7);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -318,7 +318,7 @@ void main() {
     test('exact integer value', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(5.0);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -330,7 +330,7 @@ void main() {
     test('negative zero → 0', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(-0.0);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -342,7 +342,7 @@ void main() {
     test('NaN.toInt() throws UnsupportedError', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(double.nan);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -356,7 +356,7 @@ void main() {
     test('Infinity.toInt() throws UnsupportedError', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(double.infinity);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -370,7 +370,7 @@ void main() {
     test('negativeInfinity.toInt() throws UnsupportedError', () {
       final cp = ConstantPool();
       final idx = cp.addDouble(double.negativeInfinity);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idx),
         encodeABC(Op.dblToInt, 1, 0, 0),
         encodeAx(Op.halt, 0),

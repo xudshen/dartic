@@ -11,7 +11,7 @@ import 'package:dartic/src/bytecode/serializer.dart';
 ///
 /// Shared helper used across runtime tests.
 DarticModule buildModule(
-  Uint32List bytecode, {
+  Uint64List bytecode, {
   int valueRegCount = 0,
   int refRegCount = 0,
   int paramCount = 0,
@@ -59,7 +59,7 @@ DarticFuncProto buildFuncProto({
   int valueRegCount = 1,
   int refRegCount = 0,
   int paramCount = 0,
-  Uint32List? bytecode,
+  Uint64List? bytecode,
   List<ICEntry> icTable = const [],
   List<ExceptionHandler> exceptionTable = const [],
   List<UpvalueDescriptor> upvalueDescriptors = const [],
@@ -67,7 +67,7 @@ DarticFuncProto buildFuncProto({
   return DarticFuncProto(
     funcId: funcId,
     name: name,
-    bytecode: bytecode ?? Uint32List.fromList([encodeAx(Op.halt, 0)]),
+    bytecode: bytecode ?? Uint64List.fromList([encodeAx(Op.halt, 0)]),
     valueRegCount: valueRegCount,
     refRegCount: refRegCount,
     paramCount: paramCount,

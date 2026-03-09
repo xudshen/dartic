@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 
 /// Builds a single-function module for float comparison tests.
 DarticModule _module(
-  Uint32List bytecode, {
+  Uint64List bytecode, {
   int valueRegCount = 4,
   int refRegCount = 0,
   ConstantPool? constantPool,
@@ -31,12 +31,12 @@ DarticModule _module(
 
 /// Builds: LOAD_CONST_DBL slot0=a, LOAD_CONST_DBL slot1=b, cmp slot2, HALT.
 /// Result is in valueStack[2] (intView, 0 or 1).
-(Uint32List, ConstantPool) _cmpDbl(int opcode, double a, double b) {
+(Uint64List, ConstantPool) _cmpDbl(int opcode, double a, double b) {
   final cp = ConstantPool();
   final idxA = cp.addDouble(a);
   final idxB = cp.addDouble(b);
   return (
-    Uint32List.fromList([
+    Uint64List.fromList([
       encodeABx(Op.loadConstDbl, 0, idxA),
       encodeABx(Op.loadConstDbl, 1, idxB),
       encodeABC(opcode, 2, 0, 1),
@@ -255,7 +255,7 @@ void main() {
   group('EQ_GENERIC', () {
     test('boxed ints equal -> 1', () {
       // BOX_INT r0 = v0(42), BOX_INT r1 = v1(42), EQ_GENERIC v2 = r0 == r1
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
         encodeAsBx(Op.loadInt, 1, 42), // v1 = 42
         encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(v0)
@@ -269,7 +269,7 @@ void main() {
     });
 
     test('boxed ints not equal -> 0', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
         encodeAsBx(Op.loadInt, 1, 99), // v1 = 99
         encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(v0)
@@ -283,7 +283,7 @@ void main() {
     });
 
     test('both null -> 1', () {
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABC(Op.loadNull, 0, 0, 0), // r0 = null
         encodeABC(Op.loadNull, 1, 0, 0), // r1 = null
         encodeABC(Op.eqGeneric, 0, 0, 1), // v0 = r0 == r1
@@ -297,7 +297,7 @@ void main() {
     test('null vs non-null -> 0', () {
       final cp = ConstantPool();
       final idx = cp.addRef('hello');
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABC(Op.loadNull, 0, 0, 0), // r0 = null
         encodeABx(Op.loadConst, 1, idx), // r1 = 'hello'
         encodeABC(Op.eqGeneric, 0, 0, 1), // v0 = r0 == r1
@@ -311,7 +311,7 @@ void main() {
     test('same string reference -> 1', () {
       final cp = ConstantPool();
       final idx = cp.addRef('hello');
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idx), // r0 = 'hello'
         encodeABx(Op.loadConst, 1, idx), // r1 = 'hello'
         encodeABC(Op.eqGeneric, 0, 0, 1), // v0 = r0 == r1
@@ -326,7 +326,7 @@ void main() {
       final cp = ConstantPool();
       final idx0 = cp.addRef('hello');
       final idx1 = cp.addRef('world');
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idx0), // r0 = 'hello'
         encodeABx(Op.loadConst, 1, idx1), // r1 = 'world'
         encodeABC(Op.eqGeneric, 0, 0, 1), // v0 = r0 == r1
@@ -341,7 +341,7 @@ void main() {
       final cp = ConstantPool();
       final idxA = cp.addDouble(3.14);
       final idxB = cp.addDouble(3.14);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idxA), // v0 = 3.14
         encodeABx(Op.loadConstDbl, 1, idxB), // v1 = 3.14
         encodeABC(Op.boxDouble, 0, 0, 0), // r0 = box(v0)
@@ -358,7 +358,7 @@ void main() {
       final cp = ConstantPool();
       final idxA = cp.addDouble(3.14);
       final idxB = cp.addDouble(2.71);
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, idxA), // v0 = 3.14
         encodeABx(Op.loadConstDbl, 1, idxB), // v1 = 2.71
         encodeABC(Op.boxDouble, 0, 0, 0), // r0 = box(v0)

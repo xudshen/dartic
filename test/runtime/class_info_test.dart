@@ -58,7 +58,7 @@ void main() {
 
       final proto = DarticFuncProto(
         funcId: 10,
-        bytecode: Uint32List(1),
+        bytecode: Uint64List(1),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,

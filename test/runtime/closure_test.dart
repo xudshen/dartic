@@ -52,7 +52,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 1,
         name: 'inner',
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -71,7 +71,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 5,
         name: 'myClosure',
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -86,7 +86,7 @@ void main() {
       final shared = Upvalue.closed(100);
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List(0),
+        bytecode: Uint64List(0),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -123,7 +123,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 1,
         name: 'inner',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -136,7 +136,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.closure, 0, 1), // r0 = closure(funcProto[1])
           encodeABC(Op.call, 0, 0, 0), // call r0, result → v0
           encodeAx(Op.halt, 0),
@@ -177,7 +177,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 1,
         name: 'inner',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadUpvalue, 0, 0), // r0 = upvalue[0]
           encodeABC(Op.unboxInt, 0, 0, 0), // v0 = unbox(r0)
           encodeABC(Op.returnVal, 0, 0, 0), // return v0
@@ -193,7 +193,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 99), // v0 = 99
           encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(v0)
           encodeABx(Op.closure, 1, 1), // r1 = closure(funcProto[1], upvals)
@@ -246,7 +246,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 1,
         name: 'inc',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadUpvalue, 0, 0), // r0 = upvalue[0]
           encodeABC(Op.unboxInt, 0, 0, 0), // v0 = unbox(r0)
           encodeABC(Op.addIntImm, 0, 0, 1), // v0 = v0 + 1
@@ -265,7 +265,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 0), // v0 = 0
           encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(0)
           encodeABx(Op.closure, 1, 1), // r1 = closure(funcProto[1])
@@ -316,7 +316,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 1,
         name: 'inner',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadUpvalue, 0, 0), // r0 = upvalue[0]
           encodeABC(Op.unboxInt, 0, 0, 0), // v0 = unbox(r0)
           encodeABC(Op.returnVal, 0, 0, 0),
@@ -332,7 +332,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 77), // v0 = 77
           encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(77)
           encodeABx(Op.closure, 1, 1), // r1 = closure
@@ -383,7 +383,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 2,
         name: 'inner',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadUpvalue, 0, 0), // r0 = upvalue[0]
           encodeABC(Op.unboxInt, 0, 0, 0), // v0 = unbox(r0)
           encodeABC(Op.returnVal, 0, 0, 0),
@@ -399,7 +399,7 @@ void main() {
       final midProto = DarticFuncProto(
         funcId: 1,
         name: 'mid',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.closure, 0, 2), // r0 = closure(funcProto[2])
           encodeABC(Op.call, 0, 0, 0), // call r0, result → v0
           encodeABC(Op.returnVal, 0, 0, 0),
@@ -415,7 +415,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 55), // v0 = 55
           encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(55)
           encodeABx(Op.closure, 1, 1), // r1 = closure(funcProto[1])
@@ -468,7 +468,7 @@ void main() {
       final innerProto = DarticFuncProto(
         funcId: 1,
         name: 'add_captured',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadUpvalue, 0, 0), // r0 = upvalue[0]
           encodeABC(Op.unboxInt, 1, 0, 0), // v1 = unbox(r0)
           encodeABC(Op.addInt, 0, 0, 1), // v0 = param + captured
@@ -485,7 +485,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 10), // v0 = 10
           encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(10)
           encodeABx(Op.closure, 1, 1), // r1 = closure(funcProto[1])

@@ -9,12 +9,12 @@ import 'package:test/test.dart';
 
 import '../helpers/module_helper.dart';
 
-DarticModule _module(Uint32List bytecode, {int valueRegCount = 4}) =>
+DarticModule _module(Uint64List bytecode, {int valueRegCount = 4}) =>
     buildModule(bytecode, valueRegCount: valueRegCount);
 
 /// Builds: LOAD_INT slot0=a, LOAD_INT slot1=b, op slot2=slot0 op slot1, HALT.
-Uint32List _binaryOp(int opcode, int a, int b) {
-  return Uint32List.fromList([
+Uint64List _binaryOp(int opcode, int a, int b) {
+  return Uint64List.fromList([
     encodeAsBx(Op.loadInt, 0, a),
     encodeAsBx(Op.loadInt, 1, b),
     encodeABC(opcode, 2, 0, 1),
@@ -23,8 +23,8 @@ Uint32List _binaryOp(int opcode, int a, int b) {
 }
 
 /// Builds: LOAD_INT slot0=a, unary-op slot1=op(slot0), HALT.
-Uint32List _unaryOp(int opcode, int a) {
-  return Uint32List.fromList([
+Uint64List _unaryOp(int opcode, int a) {
+  return Uint64List.fromList([
     encodeAsBx(Op.loadInt, 0, a),
     encodeABC(opcode, 1, 0, 0),
     encodeAx(Op.halt, 0),
@@ -64,7 +64,7 @@ void main() {
 
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConstInt, 0, maxIdx),
           encodeABx(Op.loadConstInt, 1, oneIdx),
           encodeABC(Op.addInt, 2, 0, 1),
@@ -256,7 +256,7 @@ void main() {
 
   group('ADD_INT_IMM', () {
     test('adds immediate 0', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 10),
         encodeABC(Op.addIntImm, 1, 0, 0),
         encodeAx(Op.halt, 0),
@@ -266,7 +266,7 @@ void main() {
     });
 
     test('adds immediate 255', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 100),
         encodeABC(Op.addIntImm, 1, 0, 255),
         encodeAx(Op.halt, 0),
@@ -276,7 +276,7 @@ void main() {
     });
 
     test('adds immediate 1 (common increment)', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),
         encodeABC(Op.addIntImm, 1, 0, 1),
         encodeAx(Op.halt, 0),

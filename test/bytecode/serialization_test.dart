@@ -29,7 +29,7 @@ void main() {
 
   group('simple function roundtrip', () {
     test('module with one function preserves all fields', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.addInt, 0, 1, 2),
         encodeAx(Op.halt, 0),
       ]);
@@ -65,7 +65,7 @@ void main() {
       final f0 = DarticFuncProto(
         funcId: 0,
         name: 'add',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.addInt, 0, 1, 2),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -77,7 +77,7 @@ void main() {
       final f1 = DarticFuncProto(
         funcId: 1,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]),
         valueRegCount: 1,
@@ -184,7 +184,7 @@ void main() {
         (i) => DarticFuncProto(
           funcId: i,
           name: 'f$i',
-          bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+          bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 0,
@@ -203,7 +203,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         name: 'tryFunc',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 4,
         refRegCount: 2,
         paramCount: 0,
@@ -262,7 +262,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         name: 'dispatch',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 0,
         refRegCount: 0,
         paramCount: 0,
@@ -296,7 +296,7 @@ void main() {
       final proto = DarticFuncProto(
         funcId: 0,
         name: 'closure',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 0,
         refRegCount: 1,
         paramCount: 0,
@@ -329,7 +329,7 @@ void main() {
           DarticFuncProto(
             funcId: 0,
             name: 'f',
-            bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+            bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
             valueRegCount: 1,
             refRegCount: 0,
             paramCount: 0,

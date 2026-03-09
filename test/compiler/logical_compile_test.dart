@@ -477,10 +477,9 @@ void main() {}
       expect(jumpIdx, isNot(-1));
 
       // The jump should skip the right operand code.
-      // All jumps now use 3-word WIDE encoding.
-      // sBx is the PC-relative offset (target - (jumpPC + 3)).
+      // sBx is the PC-relative offset (target - (jumpPC + 1)).
       final sBx = decodeWideJumpSBx(code, jumpIdx);
-      final targetPC = jumpIdx + 3 + sBx;
+      final targetPC = jumpIdx + 1 + sBx;
       // Target should be after the jump and within bounds.
       expect(targetPC, greaterThan(jumpIdx));
       expect(targetPC, lessThanOrEqualTo(code.length));
@@ -497,7 +496,7 @@ void main() {}
       expect(jumpIdx, isNot(-1));
 
       final sBx = decodeWideJumpSBx(code, jumpIdx);
-      final targetPC = jumpIdx + 3 + sBx;
+      final targetPC = jumpIdx + 1 + sBx;
       expect(targetPC, greaterThan(jumpIdx));
       expect(targetPC, lessThanOrEqualTo(code.length));
     });

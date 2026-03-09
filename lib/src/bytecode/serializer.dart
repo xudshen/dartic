@@ -254,10 +254,10 @@ class DarticSerializer {
     w.writeUint32(func.valueRegCount);
     w.writeUint32(func.refRegCount);
 
-    // bytecode
+    // bytecode (64-bit instructions, serialized as uint64 little-endian)
     w.writeUint32(func.bytecode.length);
     for (final instr in func.bytecode) {
-      w.writeUint32(instr);
+      w.writeUint64(instr);
     }
 
     // exception table
@@ -328,6 +328,11 @@ class _ByteWriter {
 
   void writeInt32(int value) {
     final bd = ByteData(4)..setInt32(0, value, Endian.little);
+    _builder.add(bd.buffer.asUint8List());
+  }
+
+  void writeUint64(int value) {
+    final bd = ByteData(8)..setUint64(0, value, Endian.little);
     _builder.add(bd.buffer.asUint8List());
   }
 

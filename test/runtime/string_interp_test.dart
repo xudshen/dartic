@@ -25,7 +25,7 @@ void main() {
       // STRING_INTERP r2, r0, 2  → r2 = "hello world"
       // HALT r2 (ref kind=3)
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, helloIdx),
           encodeABx(Op.loadConst, 1, worldIdx),
           encodeABC(Op.stringInterp, 2, 0, 2),
@@ -43,7 +43,7 @@ void main() {
       final prefixIdx = cp.addRef('value=');
 
       // r0 = "value=", r1 = box(42), STRING_INTERP r2, r0, 2 → "value=42"
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, prefixIdx), // r0 = "value="
         encodeAsBx(Op.loadInt, 0, 42), // v0 = 42
         encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) = 42
@@ -69,7 +69,7 @@ void main() {
       // STRING_INTERP r1, r0, 1  → r1 = "solo"
       // HALT r1 (ref)
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx),
           encodeABC(Op.stringInterp, 1, 0, 1),
           encodeABC(Op.halt, 1, 1, 0),
@@ -85,7 +85,7 @@ void main() {
       // STRING_INTERP r0, r0, 0  → r0 = ""
       // HALT r0 (ref)
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.stringInterp, 0, 0, 0),
           encodeABC(Op.halt, 0, 1, 0),
         ]),
@@ -103,7 +103,7 @@ void main() {
       // r0 = "count=", r1 = boxed 3, r2 = " items"
       // STRING_INTERP r3, r0, 3  → "count=3 items"
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, partAIdx), // r0 = "count="
           encodeAsBx(Op.loadInt, 0, 3), // v0 = 3
           encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) = 3
@@ -126,7 +126,7 @@ void main() {
       // r0 = "val=", r1 = null
       // STRING_INTERP r2, r0, 2  → "val=null"
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, prefixIdx), // r0 = "val="
           encodeABC(Op.loadNull, 1, 0, 0), // r1 = null
           encodeABC(Op.stringInterp, 2, 0, 2), // r2 = "val=null"

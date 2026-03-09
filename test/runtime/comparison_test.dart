@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 import '../helpers/module_helper.dart';
 
 DarticModule _module(
-  Uint32List bytecode, {
+  Uint64List bytecode, {
   int valueRegCount = 4,
   int refRegCount = 0,
   ConstantPool? constantPool,
@@ -21,8 +21,8 @@ DarticModule _module(
         constantPool: constantPool);
 
 /// Builds: LOAD_INT slot0=a, LOAD_INT slot1=b, cmp slot2, HALT.
-Uint32List _cmpInt(int opcode, int a, int b) {
-  return Uint32List.fromList([
+Uint64List _cmpInt(int opcode, int a, int b) {
+  return Uint64List.fromList([
     encodeAsBx(Op.loadInt, 0, a),
     encodeAsBx(Op.loadInt, 1, b),
     encodeABC(opcode, 2, 0, 1),
@@ -130,7 +130,7 @@ void main() {
       final idx = cp.addRef('same');
 
       final module = _module(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx), // refStack[0] = 'same'
           encodeABx(Op.loadConst, 1, idx), // refStack[1] = 'same'
           encodeABC(Op.eqRef, 0, 0, 1), // valueStack[0] = identical?
@@ -150,7 +150,7 @@ void main() {
       final idx1 = cp.addRef('bbb');
 
       final module = _module(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx0),
           encodeABx(Op.loadConst, 1, idx1),
           encodeABC(Op.eqRef, 0, 0, 1),
@@ -166,7 +166,7 @@ void main() {
 
     test('both null → 1', () {
       final module = _module(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.loadNull, 0, 0, 0),
           encodeABC(Op.loadNull, 1, 0, 0),
           encodeABC(Op.eqRef, 0, 0, 1),

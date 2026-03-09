@@ -18,7 +18,7 @@ void main() {
 
     /// Helper to build a module with binding names and execute it.
     Object? runWithBindings(
-      Uint32List bytecode, {
+      Uint64List bytecode, {
       required List<BindingEntry> bindingNames,
       int valueRegCount = 4,
       int refRegCount = 4,
@@ -49,7 +49,7 @@ void main() {
 
       // CALL_HOST A=0, Bx=0  →  refStack[0] = hostBindingRegistry.invoke(0, [])
       // HALT A=0, B=1(ref)
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0), // callHost r0, binding#0
         encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
@@ -70,7 +70,7 @@ void main() {
       // MOVE_REF r1 = r0  (arg[0] into position)
       // CALL_HOST r0, binding#0 (reads 1 arg starting at r1)
       // HALT r0, kind=ref
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 41), // v0 = 41
         encodeABC(Op.boxInt, 0, 0, 0), // r0 = box(v0)
         // For CALL_HOST, args are in ref stack positions AFTER the result reg.
@@ -94,7 +94,7 @@ void main() {
         return (args[0] as int) + (args[1] as int);
       });
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 10), // v0 = 10
         encodeAsBx(Op.loadInt, 1, 32), // v1 = 32
         encodeABC(Op.boxInt, 1, 0, 0), // r1 = box(v0) → arg0
@@ -116,7 +116,7 @@ void main() {
       });
 
       // try { callHost } catch (e) { result = 99 }
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0), // PC=0: callHost r0, binding#0
         encodeABC(Op.halt, 0, 1, 0), // PC=1: halt (unreachable)
         // handler at PC=2:
@@ -160,7 +160,7 @@ void main() {
       registry.register('test::noop#0', (args) => null);
 
       // Execute with fuel=2: one for callHost, one for halt.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0),
         encodeABC(Op.halt, 0, 0, 0),
       ]);
@@ -188,7 +188,7 @@ void main() {
 
     test('binding table index out of bounds throws DarticError', () {
       // No registry registered, but CALL_HOST references binding#0.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 5), // binding#5 doesn't exist
         encodeABC(Op.halt, 0, 0, 0),
       ]);
@@ -205,7 +205,7 @@ void main() {
     test('host function returning String (ref type)', () {
       registry.register('test::greet#0', (args) => 'hello');
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0),
         encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
@@ -220,7 +220,7 @@ void main() {
     test('host function returning null', () {
       registry.register('test::nullfn#0', (args) => null);
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0),
         encodeABC(Op.halt, 0, 1, 0), // halt r0, kind=ref
       ]);
@@ -234,7 +234,7 @@ void main() {
 
     test('works without hostBindingRegistry (no CALL_HOST instructions)', () {
       // Modules without CALL_HOST should work even without hostBindingRegistry.
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 7),
         encodeABC(Op.halt, 0, 3, 0),
       ]);

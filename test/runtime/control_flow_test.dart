@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 import '../helpers/module_helper.dart';
 
 DarticModule _module(
-  Uint32List bytecode, {
+  Uint64List bytecode, {
   int valueRegCount = 4,
   int refRegCount = 2,
 }) =>
@@ -34,7 +34,7 @@ void main() {
       //   2: LOAD_INT v0=99 (skipped)
       //   3: LOAD_INT v0=42
       //   4: HALT
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeAsBx(Op.jump, 0, 2), // pc=0, after fetch pc=1, +2→3
         encodeAsBx(Op.loadInt, 0, 99),
         encodeAsBx(Op.loadInt, 0, 99),
@@ -64,7 +64,7 @@ void main() {
       //   4: SUB_INT  v1=v1-v2     (counter -= 1)
       //   5: JUMP_IF_TRUE v1, -3   if v1!=0 → pc=5+1+(-3)=3 (loop body)
       //   6: HALT
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 0), // v0 = 0
         encodeAsBx(Op.loadInt, 1, 3), // v1 = 3
         encodeAsBx(Op.loadInt, 2, 1), // v2 = 1
@@ -88,7 +88,7 @@ void main() {
       //   2: LOAD_INT v1=99       (skipped)
       //   3: LOAD_INT v1=42
       //   4: HALT
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadTrue, 0, 0, 0),
         encodeAsBx(Op.jumpIfTrue, 0, 1),
         encodeAsBx(Op.loadInt, 1, 99),
@@ -104,7 +104,7 @@ void main() {
       //   1: JUMP_IF_TRUE v0, +1  → no jump
       //   2: LOAD_INT v1=42       (executed)
       //   3: HALT
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadFalse, 0, 0, 0),
         encodeAsBx(Op.jumpIfTrue, 0, 1),
         encodeAsBx(Op.loadInt, 1, 42),
@@ -119,7 +119,7 @@ void main() {
 
   group('JUMP_IF_FALSE', () {
     test('jumps when condition is false (zero)', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadFalse, 0, 0, 0),
         encodeAsBx(Op.jumpIfFalse, 0, 1),
         encodeAsBx(Op.loadInt, 1, 99),
@@ -131,7 +131,7 @@ void main() {
     });
 
     test('falls through when condition is true (non-zero)', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadTrue, 0, 0, 0),
         encodeAsBx(Op.jumpIfFalse, 0, 1),
         encodeAsBx(Op.loadInt, 1, 42),
@@ -146,7 +146,7 @@ void main() {
 
   group('JUMP_IF_NULL', () {
     test('jumps when ref is null', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadNull, 0, 0, 0),
         encodeAsBx(Op.jumpIfNull, 0, 1),
         encodeAsBx(Op.loadInt, 0, 99),
@@ -162,7 +162,7 @@ void main() {
       // Build module manually to inject a custom constantPool.
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConst, 0, 0),
           encodeAsBx(Op.jumpIfNull, 0, 1),
           encodeAsBx(Op.loadInt, 0, 42),
@@ -190,7 +190,7 @@ void main() {
       final cp = ConstantPool()..addRef('x');
       final proto = DarticFuncProto(
         funcId: 0,
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConst, 0, 0),
           encodeAsBx(Op.jumpIfNnull, 0, 1),
           encodeAsBx(Op.loadInt, 0, 99),
@@ -211,7 +211,7 @@ void main() {
     });
 
     test('falls through when ref is null', () {
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodeABC(Op.loadNull, 0, 0, 0),
         encodeAsBx(Op.jumpIfNnull, 0, 1),
         encodeAsBx(Op.loadInt, 0, 42),
@@ -231,7 +231,7 @@ void main() {
       //   2: LOAD_INT v0=99
       //   3: LOAD_INT v0=42
       //   4: HALT
-      final module = _module(Uint32List.fromList([
+      final module = _module(Uint64List.fromList([
         encodesAx(Op.jumpAx, 2),
         encodeAsBx(Op.loadInt, 0, 99),
         encodeAsBx(Op.loadInt, 0, 99),
@@ -266,7 +266,7 @@ void main() {
       //   6: JUMP_IF_TRUE v3, -4  if v3 → pc = 6+1+(-4) = 3
       //   7: HALT
       final module = _module(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 0), // v0 = 0 (sum)
           encodeAsBx(Op.loadInt, 1, 1), // v1 = 1 (i)
           encodeAsBx(Op.loadInt, 2, 10), // v2 = 10

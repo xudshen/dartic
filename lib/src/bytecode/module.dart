@@ -142,8 +142,8 @@ class DarticFuncProto {
   /// and global function table indexing.
   final int funcId;
 
-  /// 32-bit fixed-width instruction sequence.
-  final Uint32List bytecode;
+  /// 64-bit fixed-width instruction sequence.
+  final Uint64List bytecode;
 
   /// Value stack frame space requirement (params + locals + temporaries).
   final int valueRegCount;

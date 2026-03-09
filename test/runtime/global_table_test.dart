@@ -107,7 +107,7 @@ void main() {
       //   LOAD_GLOBAL r1, 0     (r1 = globals[0])
       //   UNBOX_INT v1, r1      (v1 = unbox(r1))
       //   HALT
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeABx(Op.storeGlobal, 0, 0),
@@ -138,7 +138,7 @@ void main() {
     });
 
     test('LOAD_GLOBAL to uninitialized slot throws DarticError', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadGlobal, 0, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -172,7 +172,7 @@ void main() {
 
     test('multiple globals with different values', () {
       // Store different values in globals[0] and globals[1], then read both.
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         // Store 10 into globals[0]
         encodeAsBx(Op.loadInt, 0, 10),
         encodeABC(Op.boxInt, 0, 0, 0),
@@ -216,7 +216,7 @@ void main() {
       final cp = ConstantPool();
       final strIdx = cp.addRef('hello');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, strIdx),
         encodeABx(Op.storeGlobal, 0, 0),
         encodeABx(Op.loadGlobal, 1, 0),
@@ -246,7 +246,7 @@ void main() {
 
     test('global initializer function runs before main', () {
       // Initializer function (funcId 0): stores 42 into globals[0], then HALT.
-      final initBytecode = Uint32List.fromList([
+      final initBytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeABx(Op.storeGlobal, 0, 0),
@@ -261,7 +261,7 @@ void main() {
       );
 
       // Main function (funcId 1): loads globals[0], unboxes, HALT.
-      final mainBytecode = Uint32List.fromList([
+      final mainBytecode = Uint64List.fromList([
         encodeABx(Op.loadGlobal, 0, 0),
         encodeABC(Op.unboxInt, 0, 0, 0),
         encodeAx(Op.halt, 0),

@@ -44,7 +44,7 @@ void main() {
     group('checksum tampering detection', () {
       test('modified payload byte triggers CRC mismatch', () {
         // Build a valid module, serialize it, then tamper with the payload.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]);
         final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -68,7 +68,7 @@ void main() {
       test('illegal opcode rejected', () {
         // Build a module with a reserved opcode (0xB0), serialize, load.
         // 0xFF is halt (valid), so use 0xB0 which is in the undefined gap.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeABC(0xB0, 0, 0, 0),
         ]);
         final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -87,7 +87,7 @@ void main() {
 
       test('out-of-bounds jump rejected', () {
         // JUMP with offset that goes past code length.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAsBx(Op.jump, 0, 999), // jumps way past end
         ]);
         final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -108,7 +108,7 @@ void main() {
     group('bridge dependency checking', () {
       test('module with unregistered binding throws DarticLoadError', () {
         // Build a module that declares a binding not in the registry.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]);
         final proto = DarticFuncProto(
@@ -143,7 +143,7 @@ void main() {
       });
 
       test('module with no bindings passes bridge check', () {
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]);
         final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -156,7 +156,7 @@ void main() {
       });
 
       test('module with all bindings registered passes', () {
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]);
         final proto = DarticFuncProto(
@@ -185,7 +185,7 @@ void main() {
       });
 
       test('module with bindings but no registry throws DarticLoadError', () {
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAx(Op.halt, 0),
         ]);
         final proto = DarticFuncProto(
@@ -220,7 +220,7 @@ void main() {
 
     group('resource limits end-to-end', () {
       test('infinite loop terminates via maxTotalFuel', () {
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAsBx(Op.jump, 0, -1),
         ]);
         final module = buildModule(code, valueRegCount: 1, refRegCount: 1);
@@ -236,7 +236,7 @@ void main() {
 
       test('infinite recursion terminates via call depth', () {
         // Function 0 calls itself.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeABx(Op.callStatic, 0, 0),
           encodeAx(Op.halt, 0),
         ]);
@@ -256,7 +256,7 @@ void main() {
       test('valid module: load → verify → execute → correct result', () {
         // Simple program: LOAD_INT r0=42 → HALT r0 (int result).
         // HALT ABC: A=resultReg, B=StackKind.intDefault+1=3, C=0.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42),
           encodeABC(Op.halt, 0, 3, 0),
         ]);
@@ -281,7 +281,7 @@ void main() {
         );
 
         // Second: load and execute a valid module → success.
-        final code = Uint32List.fromList([
+        final code = Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 99),
           encodeABC(Op.halt, 0, 3, 0),
         ]);
@@ -294,7 +294,7 @@ void main() {
 
       test('interpreter reusable after execution error', () {
         // Load a valid infinite loop, execute with fuel limit → error.
-        final loopCode = Uint32List.fromList([
+        final loopCode = Uint64List.fromList([
           encodeAsBx(Op.jump, 0, -1),
         ]);
         final loopModule =
@@ -309,7 +309,7 @@ void main() {
         );
 
         // Load and execute a normal module → success.
-        final haltCode = Uint32List.fromList([
+        final haltCode = Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 7),
           encodeABC(Op.halt, 0, 3, 0),
         ]);

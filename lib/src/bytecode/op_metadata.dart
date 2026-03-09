@@ -179,7 +179,6 @@ const Map<int, OpMeta> opTable = {
   Op.nullCheck: OpMeta('NULL_CHECK', InstrFormat.abc),
 
   // ── System ──
-  Op.wide: OpMeta('WIDE', InstrFormat.ax),
   Op.halt: OpMeta('HALT', InstrFormat.abc),
 };
 

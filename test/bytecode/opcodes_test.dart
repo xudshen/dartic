@@ -171,8 +171,7 @@ void main() {
     });
 
     // System opcodes
-    test('system opcodes WIDE and HALT at correct positions', () {
-      expect(Op.wide, 0xFE);
+    test('system opcode HALT at correct position', () {
       expect(Op.halt, 0xFF);
     });
   });

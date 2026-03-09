@@ -51,7 +51,7 @@ void main() {
         // Exception & assert
         Op.throw_, Op.rethrow_, Op.assert_, Op.nullCheck,
         // System
-        Op.wide, Op.halt,
+        Op.halt,
       ];
 
       for (final op in allOpcodes) {
@@ -61,8 +61,8 @@ void main() {
     });
 
     test('opTable contains no extra entries beyond valid opcodes', () {
-      // Verify count matches expected number of opcodes (112 in total).
-      expect(opTable.length, 112);
+      // Verify count matches expected number of opcodes (111 in total).
+      expect(opTable.length, 111);
     });
   });
 
@@ -78,7 +78,6 @@ void main() {
       expect(opName(Op.callVirtual), 'CALL_VIRTUAL');
       expect(opName(Op.returnNull), 'RETURN_NULL');
       expect(opName(Op.halt), 'HALT');
-      expect(opName(Op.wide), 'WIDE');
     });
 
     test('returns null for unknown opcodes', () {
@@ -123,8 +122,5 @@ void main() {
       expect(opTable[Op.jumpAx]!.format, InstrFormat.sAx);
     });
 
-    test('wide uses ax placeholder', () {
-      expect(opTable[Op.wide]!.format, InstrFormat.ax);
-    });
   });
 }

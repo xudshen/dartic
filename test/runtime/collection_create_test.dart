@@ -22,7 +22,7 @@ void main() {
       final idxB = cp.addRef('b');
       final idxC = cp.addRef('c');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idxA),
         encodeABx(Op.loadConst, 1, idxB),
         encodeABx(Op.loadConst, 2, idxC),
@@ -47,7 +47,7 @@ void main() {
       // Program:
       //   CREATE_LIST r0, 0, 0  → r0 = []
       //   HALT r0, kind=1 (ref)
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.createList, 0, 0, 0),
         encodeABC(Op.halt, 0, 1, 0),
       ]);
@@ -69,7 +69,7 @@ void main() {
       //   BOX_INT r1, v1
       //   CREATE_LIST r2, 0, 2  → r2 = [10, 20]
       //   HALT r2, kind=1 (ref)
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 10),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeAsBx(Op.loadInt, 1, 20),
@@ -95,7 +95,7 @@ void main() {
       final cp = ConstantPool();
       final idx = cp.addRef('only');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idx),
         encodeABC(Op.createList, 1, 0, 1),
         encodeABC(Op.halt, 1, 1, 0),
@@ -128,7 +128,7 @@ void main() {
       final idxY = cp.addRef('y');
       final idx2 = cp.addRef('2');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idxX),
         encodeABx(Op.loadConst, 1, idx1),
         encodeABx(Op.loadConst, 2, idxY),
@@ -151,7 +151,7 @@ void main() {
     });
 
     test('creates empty map with C=0', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.createMap, 0, 0, 0),
         encodeABC(Op.halt, 0, 1, 0),
       ]);
@@ -167,7 +167,7 @@ void main() {
 
     test('creates map with boxed int keys and values', () {
       // key=10, value=100, key=20, value=200
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 10),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeAsBx(Op.loadInt, 1, 100),
@@ -207,7 +207,7 @@ void main() {
       final idxB = cp.addRef('b');
       final idxC = cp.addRef('c');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idxA),
         encodeABx(Op.loadConst, 1, idxB),
         encodeABx(Op.loadConst, 2, idxC),
@@ -229,7 +229,7 @@ void main() {
     });
 
     test('creates empty set with C=0', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.createSet, 0, 0, 0),
         encodeABC(Op.halt, 0, 1, 0),
       ]);
@@ -248,7 +248,7 @@ void main() {
       final idxA = cp.addRef('a');
       final idxB = cp.addRef('a'); // duplicate
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, idxA),
         encodeABx(Op.loadConst, 1, idxB),
         encodeABC(Op.createSet, 2, 0, 2),
