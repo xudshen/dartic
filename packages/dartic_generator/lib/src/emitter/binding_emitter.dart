@@ -453,28 +453,10 @@ void _writeMethodMap(
     }
   }
 
-  // Extra methods (custom overrides from YAML).
-  // When an extra_method overrides a method with optional positional params,
-  // register the same closure under all valid arity keys so the compiler
-  // can look up by actual provided arg count.
+  // Extra methods（来自 YAML 的自定义覆盖）。
   if (extraMethods != null) {
     for (final entry in extraMethods.entries) {
       _writeExtraMethodEntry(buf, entry.key, entry.value);
-
-      // Find the analyzer-generated method this key overrides and register
-      // additional lower-arity aliases if the method has optional positional
-      // params (no named params — named uses single max-arity).
-      final keyName = entry.key.split('#').first;
-      final matchingMethod = info.methods.where((m) => m.name == keyName);
-      if (matchingMethod.isNotEmpty) {
-        final method = matchingMethod.first;
-        final allKeys = method.allBindingKeys;
-        for (final altKey in allKeys) {
-          if (altKey != entry.key) {
-            _writeExtraMethodEntry(buf, altKey, entry.value);
-          }
-        }
-      }
     }
   }
 
@@ -557,22 +539,10 @@ void _writeInternalMethodMap(
     _writeOperatorEntry(buf, info.className, op);
   }
 
-  // Extra methods (custom overrides) — same per-arity alias logic.
+  // Extra methods（自定义覆盖）。
   if (extraMethods != null) {
     for (final entry in extraMethods.entries) {
       _writeExtraMethodEntry(buf, entry.key, entry.value);
-
-      final keyName = entry.key.split('#').first;
-      final matchingMethod = info.methods.where((m) => m.name == keyName);
-      if (matchingMethod.isNotEmpty) {
-        final method = matchingMethod.first;
-        final allKeys = method.allBindingKeys;
-        for (final altKey in allKeys) {
-          if (altKey != entry.key) {
-            _writeExtraMethodEntry(buf, altKey, entry.value);
-          }
-        }
-      }
     }
   }
 
