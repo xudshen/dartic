@@ -1314,7 +1314,10 @@ class DarticInterpreter {
           }
           return handler.handlerPC;
         }
-        if (callStack.depth <= 1) throw exception!;
+        if (callStack.depth <= 1) {
+          Error.throwWithStackTrace(exception!,
+              stackTrace is StackTrace ? stackTrace : StackTrace.current);
+        }
         rs.clearRange(rBase, rs.sp);
         vs.sp = vBase;
         rs.sp = rBase;
@@ -1332,7 +1335,8 @@ class DarticInterpreter {
         // HOST_BOUNDARY: exception propagates to VM caller.
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
-          throw exception!;
+          Error.throwWithStackTrace(exception!,
+              stackTrace is StackTrace ? stackTrace : StackTrace.current);
         }
         vBase = callerVSP;
         rBase = callerRSP;

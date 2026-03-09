@@ -96,6 +96,7 @@ abstract final class XxxBindings {
 - 可选参数/命名参数 → 多个 arity 条目
 - 继承链展平 → superclasses 列表传递
 - `extraMethods` / `extraBindings` / `preamble` 覆盖支持
+- 泛型集合参数自动 `.cast<T>()`：`_emitCast()` 检测 `List<T>`/`Set<T>`/`Map<K,V>`/`Iterable<T>` 参数类型，生成 `(args[i] as List).cast<Widget>()` 而非 `args[i] as List<Widget>`，解决解释器 `List<dynamic>` 跨边界传递的 reified generics 类型错误。覆盖所有参数消费路径（方法/构造函数参数、setter、操作符、Bridge super args、`$super$` setter）
 - **Bridge 类生成**（`bridge: true` 时）：
   - `_$ClassName extends HostClass implements DarticObjectHolder`（非 final/sealed 类）
   - 方法委托：`$_invoke` → 检查 `notOverridden` → 回退 `super.method()`
