@@ -17,3 +17,6 @@ build/
 
 # Vendored dependencies
 vendor/
+
+# Git worktrees
+.worktrees/
