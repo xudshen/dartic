@@ -143,6 +143,43 @@ int main() {
           reason: 'User function should not use CALL_HOST');
     });
 
+    test('static method with optional positional param uses max-arity binding key', () async {
+      final module = await compileDart('''
+int main() => int.parse('42');
+''');
+      final parseBindings = module.bindingNames
+          .where((b) => b.name.contains('parse'))
+          .toList();
+      expect(parseBindings.any((b) => b.name.endsWith('parse#3')), isTrue,
+          reason: 'Expected max-arity binding key parse#3');
+      expect(parseBindings.any((b) => b.name.endsWith('parse#1')), isFalse,
+          reason: 'Should not have per-arity key parse#1');
+    });
+
+    test('instance method with optional positional param uses max-arity binding key', () async {
+      final module = await compileDart('''
+String main() => 'hello'.substring(1);
+''');
+      final bindings = module.bindingNames
+          .where((b) => b.name.contains('substring'))
+          .toList();
+      expect(bindings.any((b) => b.name.endsWith('substring#2')), isTrue,
+          reason: 'Expected max-arity binding key substring#2');
+      expect(bindings.any((b) => b.name.endsWith('substring#1')), isFalse,
+          reason: 'Should not have per-arity key substring#1');
+    });
+
+    test('LOAD_ABSENT emitted for omitted optional args', () async {
+      final module = await compileDart('''
+int main() => int.parse('42');
+''');
+      final main = findFunc(module, 'main');
+      final code = main.bytecode.toList();
+      final absentIdx = findOp(code, Op.loadAbsent);
+      expect(absentIdx, isNot(-1),
+          reason: 'Expected LOAD_ABSENT for omitted optional param');
+    });
+
     test('multiple distinct platform calls create separate binding entries',
         () async {
       final module = await compileDart('''

@@ -57,6 +57,13 @@ extension on DarticCompiler {
     return (reg, ResultLoc.ref);
   }
 
+  /// 将 [darticAbsent] 哨兵压入 ref 栈。
+  (int, ResultLoc) _loadAbsent() {
+    final reg = _allocRefReg();
+    _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+    return (reg, ResultLoc.ref);
+  }
+
   // ── Literal visitors ──
 
   (int, ResultLoc) _compileIntLiteral(ir.IntLiteral lit) => _loadInt(lit.value);
@@ -676,28 +683,15 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileHostStaticInvocation(ir.StaticInvocation expr) {
     final target = expr.target;
 
-    final hasNamedParams = target.function.namedParameters.isNotEmpty;
-
-    if (target.isFactory || hasNamedParams) {
-      // Factory constructors and functions with named params: pad ALL
-      // declared named params with null so the arity always equals max.
-      // The binding entry uses `args.length > N && args[N] != null` checks
-      // to route correctly. This avoids the named-param ambiguity issue
-      // where different named params at the same arity are
-      // indistinguishable by arity alone.
+    if (target.isFactory) {
       return _compileHostFactoryInvocation(expr);
     }
 
-    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
-    _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
+    // 统一：所有静态方法都填充到 max arity。
+    final compiledArgs =
+        _compileHostArgsWithPadding(expr.arguments, target.function);
 
-    // Regular static methods (positional-only): use actual provided arg
-    // count so the binding key matches per-arity registerBinding calls
-    // (e.g., parse#1, #2).
-    final symbolName = _hostSymbolName(
-      target,
-      paramCountOverride: compiledArgs.length,
-    );
+    final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
     return _emitCallHost(compiledArgs, bindingIndex);
   }
@@ -722,7 +716,7 @@ extension on DarticCompiler {
     for (var i = arguments.positional.length;
         i < func.positionalParameters.length;
         i++) {
-      final (reg, loc) = _loadNull();
+      final (reg, loc) = _loadAbsent();
       compiledArgs.add((reg, loc, null));
     }
 
@@ -735,7 +729,7 @@ extension on DarticCompiler {
         final (reg, loc) = _compileExpression(value);
         compiledArgs.add((reg, loc, _inferExprType(value)));
       } else {
-        final (reg, loc) = _loadNull();
+        final (reg, loc) = _loadAbsent();
         compiledArgs.add((reg, loc, null));
       }
     }
@@ -1185,23 +1179,20 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileHostInstanceCall(ir.InstanceInvocation expr) {
     final target = expr.interfaceTarget;
     final func = target is ir.Procedure ? target.function : null;
-    final hasNamedParams = func != null && func.namedParameters.isNotEmpty;
 
-    // Compile receiver first.
+    // 先编译 receiver。
     final compiledArgs = _compileHostExprArgs(expr.receiver);
 
-    if (hasNamedParams) {
-      // Named params: pad to max arity. Generator emits a single max-arity
-      // entry for named-param methods (different named param combinations
-      // at the same arity are ambiguous without padding).
+    if (func != null) {
+      // 统一：始终将位置 + 命名参数填充到 max arity。
       for (final arg in expr.arguments.positional) {
         final (reg, loc) = _compileExpression(arg);
         compiledArgs.add((reg, loc, _inferExprType(arg)));
       }
       for (var i = expr.arguments.positional.length;
-          i < func!.positionalParameters.length;
+          i < func.positionalParameters.length;
           i++) {
-        final (reg, loc) = _loadNull();
+        final (reg, loc) = _loadAbsent();
         compiledArgs.add((reg, loc, null));
       }
       final namedProvided = <String, ir.Expression>{
@@ -1213,24 +1204,16 @@ extension on DarticCompiler {
           final (reg, loc) = _compileExpression(value);
           compiledArgs.add((reg, loc, _inferExprType(value)));
         } else {
-          final (reg, loc) = _loadNull();
+          final (reg, loc) = _loadAbsent();
           compiledArgs.add((reg, loc, null));
         }
       }
-      // Use max arity (from _hostSymbolName default).
-      final symbolName = _hostSymbolName(target);
-      final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
-          methodName: target.name.text);
-      return _emitCallHost(compiledArgs, bindingIndex);
+    } else {
+      // Getter/field — 无 function 节点，直接传位置参数。
+      _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
     }
 
-    // Positional-only params: use actual provided arg count. Generator
-    // emits per-arity entries (e.g., sublist#1 and sublist#2).
-    _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
-    final symbolName = _hostSymbolName(
-      target,
-      paramCountOverride: compiledArgs.length - 1, // -1 for receiver
-    );
+    final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
         methodName: target.name.text);
     return _emitCallHost(compiledArgs, bindingIndex);
