@@ -15,13 +15,13 @@ abstract final class BigIntBindings {
       superclasses: ['dart:core::Comparable'],
     );
     ctx.registerBinding('dart:core::BigInt::parse#2', (args) {
-  if (identical(args[1], darticAbsent)) return BigInt.parse(args[0] as String);
-  return BigInt.parse(args[0] as String, radix: args[1] as int?);
-});
+      if (identical(args[1], darticAbsent)) return BigInt.parse(args[0] as String);
+      return BigInt.parse(args[0] as String, radix: args[1] as int?);
+    });
     ctx.registerBinding('dart:core::BigInt::tryParse#2', (args) {
-  if (identical(args[1], darticAbsent)) return BigInt.tryParse(args[0] as String);
-  return BigInt.tryParse(args[0] as String, radix: args[1] as int?);
-});
+      if (identical(args[1], darticAbsent)) return BigInt.tryParse(args[0] as String);
+      return BigInt.tryParse(args[0] as String, radix: args[1] as int?);
+    });
     ctx.registerBinding('dart:core::BigInt::zero#0', (args) => BigInt.zero);
     ctx.registerBinding('dart:core::BigInt::one#0', (args) => BigInt.one);
     ctx.registerBinding('dart:core::BigInt::two#0', (args) => BigInt.two);

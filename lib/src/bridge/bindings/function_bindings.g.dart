@@ -14,9 +14,9 @@ abstract final class FunctionBindings {
       methods: methodMap(),
     );
     ctx.registerBinding('dart:core::Function::apply#3', (args) {
-  if (identical(args[2], darticAbsent)) return Function.apply(args[0] as Function, args[1] as List<dynamic>?);
-  return Function.apply(args[0] as Function, args[1] as List<dynamic>?, args[2] as Map<Symbol, dynamic>?);
-});
+      if (identical(args[2], darticAbsent)) return Function.apply(args[0] as Function, args[1] as List<dynamic>?);
+      return Function.apply(args[0] as Function, args[1] as List<dynamic>?, args[2] as Map<Symbol, dynamic>?);
+    });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -386,8 +386,9 @@ void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
     // 統一：単一 max-arity binding key。
     final key = '${method.name}#${method.paramTypes.length}';
     final wrapper = _emitStaticMethodWrapper(info.className, method);
+    final indented = wrapper.replaceAll('\n', '\n    ');
     buf.writeln(
-        "    ctx.registerBinding('${info.qualifiedName}::$key', $wrapper);");
+        "    ctx.registerBinding('${info.qualifiedName}::$key', $indented);");
   }
 }
 
@@ -566,7 +567,9 @@ void _writeInstanceMethodEntries(
   // 统一：单一 max-arity key。
   final key = method.allBindingKeys.single;
   final wrapper = _emitInstanceMethodWrapper(className, method);
-  buf.writeln("        '$key': $wrapper,");
+  // 多行闭包需要缩进对齐 methodMap 内部（8 空格）。
+  final indented = wrapper.replaceAll('\n', '\n        ');
+  buf.writeln("        '$key': $indented,");
 }
 
 /// 为实例方法生成 wrapper 闭包。

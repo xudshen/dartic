@@ -15,15 +15,15 @@ abstract final class IterableBindings {
     );
     ctx.registerBinding('dart:core::Iterable::castFrom#1', (args) => Iterable.castFrom(args[0] as Iterable));
     ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) {
-  if (identical(args[1], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>);
-  if (identical(args[2], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String);
-  return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
-});
+      if (identical(args[1], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>);
+      if (identical(args[2], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String);
+      return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
+    });
     ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) {
-  if (identical(args[1], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>);
-  if (identical(args[2], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String);
-  return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
-});
+      if (identical(args[1], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>);
+      if (identical(args[2], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String);
+      return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
+    });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -15,13 +15,13 @@ abstract final class IntBindings {
       superclasses: ['dart:core::num', 'dart:core::Comparable'],
     );
     ctx.registerBinding('dart:core::int::parse#2', (args) {
-  if (identical(args[1], darticAbsent)) return int.parse(args[0] as String);
-  return int.parse(args[0] as String, radix: args[1] as int?);
-});
+      if (identical(args[1], darticAbsent)) return int.parse(args[0] as String);
+      return int.parse(args[0] as String, radix: args[1] as int?);
+    });
     ctx.registerBinding('dart:core::int::tryParse#2', (args) {
-  if (identical(args[1], darticAbsent)) return int.tryParse(args[0] as String);
-  return int.tryParse(args[0] as String, radix: args[1] as int?);
-});
+      if (identical(args[1], darticAbsent)) return int.tryParse(args[0] as String);
+      return int.tryParse(args[0] as String, radix: args[1] as int?);
+    });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -48,9 +48,9 @@ abstract final class IntBindings {
         'toDouble#0': (args) => (args[0] as int).toDouble(),
         'toStringAsFixed#1': (args) => (args[0] as int).toStringAsFixed(args[1] as int),
         'toStringAsExponential#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as int).toStringAsExponential();
-  return (args[0] as int).toStringAsExponential(args[1] as int?);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as int).toStringAsExponential();
+          return (args[0] as int).toStringAsExponential(args[1] as int?);
+        },
         'toStringAsPrecision#1': (args) => (args[0] as int).toStringAsPrecision(args[1] as int),
         'isEven#0': (args) => (args[0] as int).isEven,
         'isOdd#0': (args) => (args[0] as int).isOdd,

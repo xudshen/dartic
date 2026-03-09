@@ -78,9 +78,9 @@ abstract final class ArgumentErrorBindings {
           _$ArgumentError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) {
-  if (identical(args[1], darticAbsent)) return ArgumentError.checkNotNull(args[0] as Object?);
-  return ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?);
-});
+      if (identical(args[1], darticAbsent)) return ArgumentError.checkNotNull(args[0] as Object?);
+      return ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?);
+    });
     ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError).toString());
     ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as ArgumentError).invalidValue);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as ArgumentError).name);

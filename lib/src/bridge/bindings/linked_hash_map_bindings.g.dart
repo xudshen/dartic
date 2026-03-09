@@ -25,9 +25,9 @@ abstract final class LinkedHashMapBindings {
         'map#1': (args) => (args[0] as LinkedHashMap).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
         'addEntries#1': (args) { (args[0] as LinkedHashMap).addEntries(args[1] as Iterable<MapEntry>); return null; },
         'update#3': (args) {
-  if (identical(args[3], darticAbsent)) return (args[0] as LinkedHashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
-  return (args[0] as LinkedHashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
-},
+          if (identical(args[3], darticAbsent)) return (args[0] as LinkedHashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
+          return (args[0] as LinkedHashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
+        },
         'updateAll#1': (args) { (args[0] as LinkedHashMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'removeWhere#1': (args) { (args[0] as LinkedHashMap).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'putIfAbsent#2': (args) => (args[0] as LinkedHashMap).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),

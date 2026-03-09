@@ -106,11 +106,11 @@ abstract final class IndexErrorBindings {
           _$IndexError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::IndexError::check#5', (args) {
-  if (identical(args[2], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int);
-  if (identical(args[3], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?);
-  if (identical(args[4], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?);
-  return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?, message: args[4] as String?);
-});
+      if (identical(args[2], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int);
+      if (identical(args[3], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?);
+      if (identical(args[4], darticAbsent)) return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?);
+      return IndexError.check(args[0] as int, args[1] as int, indexable: args[2] as Object?, name: args[3] as String?, message: args[4] as String?);
+    });
     ctx.registerBinding('dart:core::IndexError::\$super\$indexable#0', (args) => (args[0] as IndexError).indexable);
     ctx.registerBinding('dart:core::IndexError::\$super\$length#0', (args) => (args[0] as IndexError).length);
     ctx.registerBinding('dart:core::IndexError::\$super\$invalidValue#0', (args) => (args[0] as IndexError).invalidValue);

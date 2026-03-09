@@ -18,9 +18,9 @@ abstract final class RuneIteratorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'reset#1': (args) {
-  if (identical(args[1], darticAbsent)) { (args[0] as RuneIterator).reset(); return null; }
-  (args[0] as RuneIterator).reset(args[1] as int); return null;
-},
+          if (identical(args[1], darticAbsent)) { (args[0] as RuneIterator).reset(); return null; }
+          (args[0] as RuneIterator).reset(args[1] as int); return null;
+        },
         'moveNext#0': (args) => (args[0] as RuneIterator).moveNext(),
         'movePrevious#0': (args) => (args[0] as RuneIterator).movePrevious(),
         'string#0': (args) => (args[0] as RuneIterator).string,

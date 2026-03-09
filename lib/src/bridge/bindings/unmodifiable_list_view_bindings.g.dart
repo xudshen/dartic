@@ -27,21 +27,21 @@ abstract final class UnmodifiableListViewBindings {
         'every#1': (args) => (args[0] as UnmodifiableListView).every((a) => (args[1] as Function)(a) as bool),
         'any#1': (args) => (args[0] as UnmodifiableListView).any((a) => (args[1] as Function)(a) as bool),
         'firstWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).firstWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableListView).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).firstWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableListView).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'lastWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableListView).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableListView).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'singleWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).singleWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableListView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).singleWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableListView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'join#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableListView).join();
-  return (args[0] as UnmodifiableListView).join(args[1] as String);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableListView).join();
+          return (args[0] as UnmodifiableListView).join(args[1] as String);
+        },
         'where#1': (args) => (args[0] as UnmodifiableListView).where((a) => (args[1] as Function)(a) as bool),
         'whereType#0': (args) => (args[0] as UnmodifiableListView).whereType(),
         'map#1': (args) => (args[0] as UnmodifiableListView).map((a) => (args[1] as Function)(a)),
@@ -53,9 +53,9 @@ abstract final class UnmodifiableListViewBindings {
         'take#1': (args) => (args[0] as UnmodifiableListView).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as UnmodifiableListView).takeWhile((a) => (args[1] as Function)(a) as bool),
         'toList#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableListView).toList();
-  return (args[0] as UnmodifiableListView).toList(growable: args[1] as bool);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableListView).toList();
+          return (args[0] as UnmodifiableListView).toList(growable: args[1] as bool);
+        },
         'toSet#0': (args) => (args[0] as UnmodifiableListView).toSet(),
         'add#1': (args) { (args[0] as UnmodifiableListView).add(args[1] as dynamic); return null; },
         'addAll#1': (args) { (args[0] as UnmodifiableListView).addAll(args[1] as Iterable); return null; },
@@ -65,45 +65,45 @@ abstract final class UnmodifiableListViewBindings {
         'clear#0': (args) { (args[0] as UnmodifiableListView).clear(); return null; },
         'removeLast#0': (args) => (args[0] as UnmodifiableListView).removeLast(),
         'sort#1': (args) {
-  if (identical(args[1], darticAbsent)) { (args[0] as UnmodifiableListView).sort(); return null; }
-  (args[0] as UnmodifiableListView).sort((args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)); return null;
-},
+          if (identical(args[1], darticAbsent)) { (args[0] as UnmodifiableListView).sort(); return null; }
+          (args[0] as UnmodifiableListView).sort((args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)); return null;
+        },
         'shuffle#1': (args) {
-  if (identical(args[1], darticAbsent)) { (args[0] as UnmodifiableListView).shuffle(); return null; }
-  (args[0] as UnmodifiableListView).shuffle(args[1] as Random?); return null;
-},
+          if (identical(args[1], darticAbsent)) { (args[0] as UnmodifiableListView).shuffle(); return null; }
+          (args[0] as UnmodifiableListView).shuffle(args[1] as Random?); return null;
+        },
         'asMap#0': (args) => (args[0] as UnmodifiableListView).asMap(),
         'sublist#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).sublist(args[1] as int);
-  return (args[0] as UnmodifiableListView).sublist(args[1] as int, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).sublist(args[1] as int);
+          return (args[0] as UnmodifiableListView).sublist(args[1] as int, args[2] as int?);
+        },
         'getRange#2': (args) => (args[0] as UnmodifiableListView).getRange(args[1] as int, args[2] as int),
         'removeRange#2': (args) { (args[0] as UnmodifiableListView).removeRange(args[1] as int, args[2] as int); return null; },
         'fillRange#3': (args) {
-  if (identical(args[3], darticAbsent)) { (args[0] as UnmodifiableListView).fillRange(args[1] as int, args[2] as int); return null; }
-  (args[0] as UnmodifiableListView).fillRange(args[1] as int, args[2] as int, args[3] as Object?); return null;
-},
+          if (identical(args[3], darticAbsent)) { (args[0] as UnmodifiableListView).fillRange(args[1] as int, args[2] as int); return null; }
+          (args[0] as UnmodifiableListView).fillRange(args[1] as int, args[2] as int, args[3] as Object?); return null;
+        },
         'setRange#4': (args) {
-  if (identical(args[4], darticAbsent)) { (args[0] as UnmodifiableListView).setRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; }
-  (args[0] as UnmodifiableListView).setRange(args[1] as int, args[2] as int, args[3] as Iterable, args[4] as int); return null;
-},
+          if (identical(args[4], darticAbsent)) { (args[0] as UnmodifiableListView).setRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; }
+          (args[0] as UnmodifiableListView).setRange(args[1] as int, args[2] as int, args[3] as Iterable, args[4] as int); return null;
+        },
         'replaceRange#3': (args) { (args[0] as UnmodifiableListView).replaceRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; },
         'indexOf#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).indexOf(args[1] as Object?);
-  return (args[0] as UnmodifiableListView).indexOf(args[1] as Object?, args[2] as int);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).indexOf(args[1] as Object?);
+          return (args[0] as UnmodifiableListView).indexOf(args[1] as Object?, args[2] as int);
+        },
         'indexWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).indexWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableListView).indexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).indexWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableListView).indexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int);
+        },
         'lastIndexOf#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastIndexOf(args[1] as Object?);
-  return (args[0] as UnmodifiableListView).lastIndexOf(args[1] as Object?, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastIndexOf(args[1] as Object?);
+          return (args[0] as UnmodifiableListView).lastIndexOf(args[1] as Object?, args[2] as int?);
+        },
         'lastIndexWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastIndexWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableListView).lastIndexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableListView).lastIndexWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableListView).lastIndexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int?);
+        },
         'insert#2': (args) { (args[0] as UnmodifiableListView).insert(args[1] as int, args[2] as dynamic); return null; },
         'removeAt#1': (args) => (args[0] as UnmodifiableListView).removeAt(args[1] as int),
         'insertAll#2': (args) { (args[0] as UnmodifiableListView).insertAll(args[1] as int, args[2] as Iterable); return null; },

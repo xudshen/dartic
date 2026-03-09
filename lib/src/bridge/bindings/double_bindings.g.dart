@@ -41,9 +41,9 @@ abstract final class DoubleBindings {
         'toDouble#0': (args) => (args[0] as double).toDouble(),
         'toStringAsFixed#1': (args) => (args[0] as double).toStringAsFixed(args[1] as int),
         'toStringAsExponential#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as double).toStringAsExponential();
-  return (args[0] as double).toStringAsExponential(args[1] as int?);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as double).toStringAsExponential();
+          return (args[0] as double).toStringAsExponential(args[1] as int?);
+        },
         'toStringAsPrecision#1': (args) => (args[0] as double).toStringAsPrecision(args[1] as int),
         'sign#0': (args) => (args[0] as double).sign,
         'isNaN#0': (args) => (args[0] as double).isNaN,

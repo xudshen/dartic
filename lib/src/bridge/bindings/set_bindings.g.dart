@@ -46,26 +46,26 @@ abstract final class SetBindings {
         'fold#2': (args) => (args[0] as Set).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as Set).every((a) => (args[1] as Function)(a) as bool),
         'join#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as Set).join();
-  return (args[0] as Set).join(args[1] as String);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as Set).join();
+          return (args[0] as Set).join(args[1] as String);
+        },
         'any#1': (args) => (args[0] as Set).any((a) => (args[1] as Function)(a) as bool),
         'toList#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as Set).toList();
-  return (args[0] as Set).toList(growable: args[1] as bool);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as Set).toList();
+          return (args[0] as Set).toList(growable: args[1] as bool);
+        },
         'take#1': (args) => (args[0] as Set).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as Set).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as Set).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as Set).skipWhile((a) => (args[1] as Function)(a) as bool),
         'lastWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as Set).lastWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as Set).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as Set).lastWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as Set).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'singleWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as Set).singleWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as Set).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as Set).singleWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as Set).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'elementAt#1': (args) => (args[0] as Set).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as Set).iterator,
         'length#0': (args) => (args[0] as Set).length,

@@ -17,10 +17,10 @@ abstract final class ListBindings {
     );
     ctx.registerBinding('dart:core::List::castFrom#1', (args) => List.castFrom(args[0] as List));
     ctx.registerBinding('dart:core::List::copyRange#5', (args) {
-  if (identical(args[3], darticAbsent)) { List.copyRange(args[0] as List, args[1] as int, args[2] as List); return null; }
-  if (identical(args[4], darticAbsent)) { List.copyRange(args[0] as List, args[1] as int, args[2] as List, args[3] as int?); return null; }
-  List.copyRange(args[0] as List, args[1] as int, args[2] as List, args[3] as int?, args[4] as int?); return null;
-});
+      if (identical(args[3], darticAbsent)) { List.copyRange(args[0] as List, args[1] as int, args[2] as List); return null; }
+      if (identical(args[4], darticAbsent)) { List.copyRange(args[0] as List, args[1] as int, args[2] as List, args[3] as int?); return null; }
+      List.copyRange(args[0] as List, args[1] as int, args[2] as List, args[3] as int?, args[4] as int?); return null;
+    });
     ctx.registerBinding('dart:core::List::writeIterable#3', (args) { List.writeIterable(args[0] as List, args[1] as int, args[2] as Iterable); return null; });
 
     // _GrowableList
@@ -39,29 +39,29 @@ abstract final class ListBindings {
         'add#1': (args) { (args[0] as List).add(args[1] as dynamic); return null; },
         'addAll#1': (args) { (args[0] as List).addAll(args[1] as Iterable); return null; },
         'sort#1': (args) {
-  if (identical(args[1], darticAbsent)) { (args[0] as List).sort(); return null; }
-  (args[0] as List).sort((args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)); return null;
-},
+          if (identical(args[1], darticAbsent)) { (args[0] as List).sort(); return null; }
+          (args[0] as List).sort((args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)); return null;
+        },
         'shuffle#1': (args) {
-  if (identical(args[1], darticAbsent)) { (args[0] as List).shuffle(); return null; }
-  (args[0] as List).shuffle(args[1] as Random?); return null;
-},
+          if (identical(args[1], darticAbsent)) { (args[0] as List).shuffle(); return null; }
+          (args[0] as List).shuffle(args[1] as Random?); return null;
+        },
         'indexOf#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).indexOf(args[1] as dynamic);
-  return (args[0] as List).indexOf(args[1] as dynamic, args[2] as int);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).indexOf(args[1] as dynamic);
+          return (args[0] as List).indexOf(args[1] as dynamic, args[2] as int);
+        },
         'indexWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as List).indexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int);
+        },
         'lastIndexWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as List).lastIndexWhere((a) => (args[1] as Function)(a) as bool, args[2] as int?);
+        },
         'lastIndexOf#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).lastIndexOf(args[1] as dynamic);
-  return (args[0] as List).lastIndexOf(args[1] as dynamic, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).lastIndexOf(args[1] as dynamic);
+          return (args[0] as List).lastIndexOf(args[1] as dynamic, args[2] as int?);
+        },
         'clear#0': (args) { (args[0] as List).clear(); return null; },
         'insert#2': (args) { (args[0] as List).insert(args[1] as int, args[2] as dynamic); return null; },
         'insertAll#2': (args) { (args[0] as List).insertAll(args[1] as int, args[2] as Iterable); return null; },
@@ -72,19 +72,19 @@ abstract final class ListBindings {
         'removeWhere#1': (args) { (args[0] as List).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as List).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'sublist#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).sublist(args[1] as int);
-  return (args[0] as List).sublist(args[1] as int, args[2] as int?);
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).sublist(args[1] as int);
+          return (args[0] as List).sublist(args[1] as int, args[2] as int?);
+        },
         'getRange#2': (args) => (args[0] as List).getRange(args[1] as int, args[2] as int),
         'setRange#4': (args) {
-  if (identical(args[4], darticAbsent)) { (args[0] as List).setRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; }
-  (args[0] as List).setRange(args[1] as int, args[2] as int, args[3] as Iterable, args[4] as int); return null;
-},
+          if (identical(args[4], darticAbsent)) { (args[0] as List).setRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; }
+          (args[0] as List).setRange(args[1] as int, args[2] as int, args[3] as Iterable, args[4] as int); return null;
+        },
         'removeRange#2': (args) { (args[0] as List).removeRange(args[1] as int, args[2] as int); return null; },
         'fillRange#3': (args) {
-  if (identical(args[3], darticAbsent)) { (args[0] as List).fillRange(args[1] as int, args[2] as int); return null; }
-  (args[0] as List).fillRange(args[1] as int, args[2] as int, args[3] as Object?); return null;
-},
+          if (identical(args[3], darticAbsent)) { (args[0] as List).fillRange(args[1] as int, args[2] as int); return null; }
+          (args[0] as List).fillRange(args[1] as int, args[2] as int, args[3] as Object?); return null;
+        },
         'replaceRange#3': (args) { (args[0] as List).replaceRange(args[1] as int, args[2] as int, args[3] as Iterable); return null; },
         'asMap#0': (args) => (args[0] as List).asMap(),
         'followedBy#1': (args) => (args[0] as List).followedBy(args[1] as Iterable),
@@ -98,31 +98,31 @@ abstract final class ListBindings {
         'fold#2': (args) => (args[0] as List).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as List).every((a) => (args[1] as Function)(a) as bool),
         'join#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as List).join();
-  return (args[0] as List).join(args[1] as String);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as List).join();
+          return (args[0] as List).join(args[1] as String);
+        },
         'any#1': (args) => (args[0] as List).any((a) => (args[1] as Function)(a) as bool),
         'toList#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as List).toList();
-  return (args[0] as List).toList(growable: args[1] as bool);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as List).toList();
+          return (args[0] as List).toList(growable: args[1] as bool);
+        },
         'toSet#0': (args) => (args[0] as List).toSet(),
         'take#1': (args) => (args[0] as List).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as List).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as List).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as List).skipWhile((a) => (args[1] as Function)(a) as bool),
         'firstWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).firstWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as List).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).firstWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as List).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'lastWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).lastWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as List).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).lastWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as List).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'singleWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as List).singleWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as List).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as List).singleWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as List).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'elementAt#1': (args) => (args[0] as List).elementAt(args[1] as int),
         'length#0': (args) => (args[0] as List).length,
         'reversed#0': (args) => (args[0] as List).reversed,

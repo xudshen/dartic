@@ -20,9 +20,9 @@ abstract final class SplayTreeMapBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'putIfAbsent#2': (args) => (args[0] as SplayTreeMap).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),
         'update#3': (args) {
-  if (identical(args[3], darticAbsent)) return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
-  return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
-},
+          if (identical(args[3], darticAbsent)) return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
+          return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
+        },
         'updateAll#1': (args) { (args[0] as SplayTreeMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'addAll#1': (args) { (args[0] as SplayTreeMap).addAll(args[1] as Map); return null; },
         'forEach#1': (args) { (args[0] as SplayTreeMap).forEach((a, b) => (args[1] as Function)(a, b)); return null; },

@@ -34,9 +34,9 @@ abstract final class UnmodifiableSetViewBindings {
         'intersection#1': (args) => (args[0] as UnmodifiableSetView).intersection(args[1] as Set<Object?>),
         'difference#1': (args) => (args[0] as UnmodifiableSetView).difference(args[1] as Set<Object?>),
         'toList#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableSetView).toList();
-  return (args[0] as UnmodifiableSetView).toList(growable: args[1] as bool);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableSetView).toList();
+          return (args[0] as UnmodifiableSetView).toList(growable: args[1] as bool);
+        },
         'map#1': (args) => (args[0] as UnmodifiableSetView).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as UnmodifiableSetView).where((a) => (args[1] as Function)(a) as bool),
         'expand#1': (args) => (args[0] as UnmodifiableSetView).expand((a) => (args[1] as Function)(a) as Iterable),
@@ -45,26 +45,26 @@ abstract final class UnmodifiableSetViewBindings {
         'fold#2': (args) => (args[0] as UnmodifiableSetView).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as UnmodifiableSetView).every((a) => (args[1] as Function)(a) as bool),
         'join#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableSetView).join();
-  return (args[0] as UnmodifiableSetView).join(args[1] as String);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as UnmodifiableSetView).join();
+          return (args[0] as UnmodifiableSetView).join(args[1] as String);
+        },
         'any#1': (args) => (args[0] as UnmodifiableSetView).any((a) => (args[1] as Function)(a) as bool),
         'take#1': (args) => (args[0] as UnmodifiableSetView).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as UnmodifiableSetView).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as UnmodifiableSetView).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as UnmodifiableSetView).skipWhile((a) => (args[1] as Function)(a) as bool),
         'firstWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).firstWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableSetView).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).firstWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableSetView).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'lastWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).lastWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableSetView).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).lastWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableSetView).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'singleWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).singleWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as UnmodifiableSetView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as UnmodifiableSetView).singleWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as UnmodifiableSetView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'elementAt#1': (args) => (args[0] as UnmodifiableSetView).elementAt(args[1] as int),
         'isEmpty#0': (args) => (args[0] as UnmodifiableSetView).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as UnmodifiableSetView).isNotEmpty,

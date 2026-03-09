@@ -15,10 +15,10 @@ abstract final class FutureBindings {
       methods: methodMap(),
     );
     ctx.registerBinding('dart:async::Future::wait#3', (args) {
-  if (identical(args[1], darticAbsent)) return Future.wait(args[0] as Iterable<Future>);
-  if (identical(args[2], darticAbsent)) return Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool);
-  return Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool, cleanUp: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a));
-});
+      if (identical(args[1], darticAbsent)) return Future.wait(args[0] as Iterable<Future>);
+      if (identical(args[2], darticAbsent)) return Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool);
+      return Future.wait(args[0] as Iterable<Future>, eagerError: args[1] as bool, cleanUp: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a));
+    });
     ctx.registerBinding('dart:async::Future::any#1', (args) => Future.any(args[0] as Iterable<Future>));
     ctx.registerBinding('dart:async::Future::forEach#2', (args) => Future.forEach(args[0] as Iterable, (a) => (args[1] as Function)(a) as FutureOr<dynamic>));
     ctx.registerBinding('dart:async::Future::doWhile#1', (args) => Future.doWhile(args[0] as FutureOr<bool> Function()));

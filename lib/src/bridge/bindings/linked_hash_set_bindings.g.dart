@@ -45,30 +45,30 @@ abstract final class LinkedHashSetBindings {
         'fold#2': (args) => (args[0] as LinkedHashSet).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as LinkedHashSet).every((a) => (args[1] as Function)(a) as bool),
         'join#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as LinkedHashSet).join();
-  return (args[0] as LinkedHashSet).join(args[1] as String);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as LinkedHashSet).join();
+          return (args[0] as LinkedHashSet).join(args[1] as String);
+        },
         'any#1': (args) => (args[0] as LinkedHashSet).any((a) => (args[1] as Function)(a) as bool),
         'toList#1': (args) {
-  if (identical(args[1], darticAbsent)) return (args[0] as LinkedHashSet).toList();
-  return (args[0] as LinkedHashSet).toList(growable: args[1] as bool);
-},
+          if (identical(args[1], darticAbsent)) return (args[0] as LinkedHashSet).toList();
+          return (args[0] as LinkedHashSet).toList(growable: args[1] as bool);
+        },
         'take#1': (args) => (args[0] as LinkedHashSet).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as LinkedHashSet).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as LinkedHashSet).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as LinkedHashSet).skipWhile((a) => (args[1] as Function)(a) as bool),
         'firstWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).firstWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as LinkedHashSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).firstWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as LinkedHashSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'lastWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).lastWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as LinkedHashSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).lastWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as LinkedHashSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'singleWhere#2': (args) {
-  if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).singleWhere((a) => (args[1] as Function)(a) as bool);
-  return (args[0] as LinkedHashSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-},
+          if (identical(args[2], darticAbsent)) return (args[0] as LinkedHashSet).singleWhere((a) => (args[1] as Function)(a) as bool);
+          return (args[0] as LinkedHashSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
+        },
         'elementAt#1': (args) => (args[0] as LinkedHashSet).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as LinkedHashSet).iterator,
         'length#0': (args) => (args[0] as LinkedHashSet).length,

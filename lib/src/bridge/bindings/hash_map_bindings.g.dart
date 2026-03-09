@@ -24,9 +24,9 @@ abstract final class HashMapBindings {
         'map#1': (args) => (args[0] as HashMap).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
         'addEntries#1': (args) { (args[0] as HashMap).addEntries(args[1] as Iterable<MapEntry>); return null; },
         'update#3': (args) {
-  if (identical(args[3], darticAbsent)) return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
-  return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
-},
+          if (identical(args[3], darticAbsent)) return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
+          return (args[0] as HashMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
+        },
         'updateAll#1': (args) { (args[0] as HashMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'removeWhere#1': (args) { (args[0] as HashMap).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'putIfAbsent#2': (args) => (args[0] as HashMap).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),
