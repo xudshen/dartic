@@ -18,29 +18,26 @@ abstract final class SplayTreeMapBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'putIfAbsent#2': (args) => (args[0] as SplayTreeMap).putIfAbsent(args[1] as dynamic, () => (args[2] as Function)()),
-        'update#3': (args) {
-          if (identical(args[3], darticAbsent)) return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a));
-          return (args[0] as SplayTreeMap).update(args[1] as dynamic, (a) => (args[2] as Function)(a), ifAbsent: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!());
-        },
+        'putIfAbsent#2': (args) => (args[0] as SplayTreeMap).putIfAbsent(args[1], () => (args[2] as Function)()),
+        'update#3': (args) => (args[0] as SplayTreeMap).update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         'updateAll#1': (args) { (args[0] as SplayTreeMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'addAll#1': (args) { (args[0] as SplayTreeMap).addAll(args[1] as Map); return null; },
         'forEach#1': (args) { (args[0] as SplayTreeMap).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
         'clear#0': (args) { (args[0] as SplayTreeMap).clear(); return null; },
-        'containsValue#1': (args) => (args[0] as SplayTreeMap).containsValue(args[1] as Object?),
-        'lastKeyBefore#1': (args) => (args[0] as SplayTreeMap).lastKeyBefore(args[1] as dynamic),
-        'firstKeyAfter#1': (args) => (args[0] as SplayTreeMap).firstKeyAfter(args[1] as dynamic),
+        'containsValue#1': (args) => (args[0] as SplayTreeMap).containsValue(args[1]),
+        'lastKeyBefore#1': (args) => (args[0] as SplayTreeMap).lastKeyBefore(args[1]),
+        'firstKeyAfter#1': (args) => (args[0] as SplayTreeMap).firstKeyAfter(args[1]),
         'cast#0': (args) => (args[0] as SplayTreeMap).cast(),
         'map#1': (args) => (args[0] as SplayTreeMap).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
-        'addEntries#1': (args) { (args[0] as SplayTreeMap).addEntries(args[1] as Iterable<MapEntry>); return null; },
+        'addEntries#1': (args) { (args[0] as SplayTreeMap).addEntries((args[1] as Iterable).cast<MapEntry>()); return null; },
         'removeWhere#1': (args) { (args[0] as SplayTreeMap).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'isEmpty#0': (args) => (args[0] as SplayTreeMap).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SplayTreeMap).isNotEmpty,
         'entries#0': (args) => (args[0] as SplayTreeMap).entries,
-        '[]=#2': (args) { (args[0] as SplayTreeMap)[args[1] as dynamic] = args[2]; return args[2]; },
-        'of#3': (args) => SplayTreeMap.of(args[0] as Map, (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), args[2] as bool Function(dynamic)?),
-        'fromIterable#5': (args) => SplayTreeMap.fromIterable(args[0] as Iterable<dynamic>, key: (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), value: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), compare: (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), isValidKey: args[4] as bool Function(dynamic)?),
-        'fromIterables#4': (args) => SplayTreeMap.fromIterables(args[0] as Iterable, args[1] as Iterable, (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), args[3] as bool Function(dynamic)?),
+        '[]=#2': (args) { (args[0] as SplayTreeMap)[args[1]] = args[2]; return args[2]; },
+        'of#3': (args) => SplayTreeMap.of(args[0] as Map, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : args[2] as bool Function(dynamic)?),
+        'fromIterable#5': (args) => SplayTreeMap.fromIterable(args[0] as Iterable<dynamic>, key: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), value: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), compare: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), isValidKey: identical(args[4], darticAbsent) ? null : args[4] as bool Function(dynamic)?),
+        'fromIterables#4': (args) => SplayTreeMap.fromIterables(args[0] as Iterable, args[1] as Iterable, identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), identical(args[3], darticAbsent) ? null : args[3] as bool Function(dynamic)?),
         '#2': (args) {
             final compare =
                 identical(args[0], darticAbsent) ? null : args[0] as Function?;

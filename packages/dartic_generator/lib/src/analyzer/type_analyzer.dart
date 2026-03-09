@@ -217,10 +217,11 @@ class TypeAnalyzer {
       setters.add(SetterInfo(name: cleanName, paramType: paramType));
     }
 
-    // Extract constructors — skip for abstract classes (can't be instantiated)
+    // Extract constructors — skip for abstract classes and enums
     // Also skip private constructors
     final constructors = <ConstructorInfo>[];
-    if (!isAbstract) {
+    final isEnum = cls is EnumElement;
+    if (!isAbstract && !isEnum) {
       for (final ctor in cls.constructors) {
         final ctorName = ctor.name ?? '';
         // Skip private constructors
@@ -437,6 +438,7 @@ class TypeAnalyzer {
         isRequired: p.isRequired,
         callbackArity: callbackArity,
         callbackReturnType: callbackReturnType,
+        defaultValueCode: p.isOptional ? p.defaultValueCode : null,
       );
     }).toList();
   }

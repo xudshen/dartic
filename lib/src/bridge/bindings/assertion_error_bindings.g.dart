@@ -6,9 +6,10 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$AssertionError extends AssertionError implements DarticObjectHolder {
-  _$AssertionError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Object?);
+  _$AssertionError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(identical(superArgs[0], darticAbsent) ? null : superArgs[0]);
 
   final DarticDispatch _dispatch;
 
@@ -71,6 +72,6 @@ abstract final class AssertionErrorBindings {
         'toString#0': (args) => (args[0] as AssertionError).toString(),
         'message#0': (args) => (args[0] as AssertionError).message,
         'stackTrace#0': (args) => (args[0] as AssertionError).stackTrace,
-        '#1': (args) => AssertionError(args[0] as Object?),
+        '#1': (args) => AssertionError(identical(args[0], darticAbsent) ? null : args[0]),
       };
 }

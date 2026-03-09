@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -31,9 +32,9 @@ abstract final class ExpandedBindings {
         'debugIsValidRenderObject#1': (args) => (args[0] as Expanded).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as Expanded).debugCanApplyOutOfTurn(),
         'toStringShort#0': (args) => (args[0] as Expanded).toStringShort(),
-        'toStringShallow#2': (args) => (args[0] as Expanded).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as Expanded).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as Expanded).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as Expanded).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as Expanded).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as Expanded).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Expanded).debugDescribeChildren(),
         'flex#0': (args) => (args[0] as Expanded).flex,
         'fit#0': (args) => (args[0] as Expanded).fit,
@@ -41,6 +42,6 @@ abstract final class ExpandedBindings {
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as Expanded).debugTypicalAncestorWidgetDescription,
         'child#0': (args) => (args[0] as Expanded).child,
         'key#0': (args) => (args[0] as Expanded).key,
-        '#3': (args) => Expanded(key: args[0] as Key?, flex: args[1] as int, child: args[2] as Widget),
+        '#3': (args) => Expanded(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int, child: args[2] as Widget),
       };
 }

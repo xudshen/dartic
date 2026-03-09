@@ -278,13 +278,17 @@ libraries:
           "#0": "(args) => _DarticErrorBacking()"
           "toString#0": "(args) => (args[0] as Error).toString()"
 
-      # ── ArgumentError: constructor variants with optional params ──
+      # ── ArgumentError: constructor aliases + factory with optional params ──
       ArgumentError:
         extra_methods:
           "#1": "(args) => ArgumentError(args[0])"
           "value#1": "(args) => ArgumentError.value(args[0])"
-          "value#2": "(args) => ArgumentError.value(args[0], args[1] as String?)"
-          "value#3": "(args) => ArgumentError.value(args[0], args[1] as String?, args[2])"
+          "value#3": |
+            (args) => ArgumentError.value(
+              args[0],
+              identical(args[1], darticAbsent) ? null : args[1] as String?,
+              identical(args[2], darticAbsent) ? null : args[2],
+            )
 
       # ── RangeError: factory constructors with optional params ──
       # extra_bindings override auto-generated registerBinding calls that

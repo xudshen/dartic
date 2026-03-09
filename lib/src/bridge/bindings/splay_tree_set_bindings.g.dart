@@ -22,7 +22,7 @@ abstract final class SplayTreeSetBindings {
         'addAll#1': (args) { (args[0] as SplayTreeSet).addAll(args[1] as Iterable); return null; },
         'removeAll#1': (args) { (args[0] as SplayTreeSet).removeAll(args[1] as Iterable<Object?>); return null; },
         'retainAll#1': (args) { (args[0] as SplayTreeSet).retainAll(args[1] as Iterable<Object?>); return null; },
-        'lookup#1': (args) => (args[0] as SplayTreeSet).lookup(args[1] as Object?),
+        'lookup#1': (args) => (args[0] as SplayTreeSet).lookup(args[1]),
         'intersection#1': (args) => (args[0] as SplayTreeSet).intersection(args[1] as Set<Object?>),
         'difference#1': (args) => (args[0] as SplayTreeSet).difference(args[1] as Set<Object?>),
         'union#1': (args) => (args[0] as SplayTreeSet).union(args[1] as Set),
@@ -36,33 +36,18 @@ abstract final class SplayTreeSetBindings {
         'expand#1': (args) => (args[0] as SplayTreeSet).expand((a) => (args[1] as Function)(a) as Iterable),
         'forEach#1': (args) { (args[0] as SplayTreeSet).forEach((a) => (args[1] as Function)(a)); return null; },
         'reduce#1': (args) => (args[0] as SplayTreeSet).reduce((a, b) => (args[1] as Function)(a, b)),
-        'fold#2': (args) => (args[0] as SplayTreeSet).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
+        'fold#2': (args) => (args[0] as SplayTreeSet).fold(args[1], (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as SplayTreeSet).every((a) => (args[1] as Function)(a) as bool),
-        'join#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as SplayTreeSet).join();
-          return (args[0] as SplayTreeSet).join(args[1] as String);
-        },
+        'join#1': (args) => (args[0] as SplayTreeSet).join(identical(args[1], darticAbsent) ? "" : args[1] as String),
         'any#1': (args) => (args[0] as SplayTreeSet).any((a) => (args[1] as Function)(a) as bool),
-        'toList#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as SplayTreeSet).toList();
-          return (args[0] as SplayTreeSet).toList(growable: args[1] as bool);
-        },
+        'toList#1': (args) => (args[0] as SplayTreeSet).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'take#1': (args) => (args[0] as SplayTreeSet).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as SplayTreeSet).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as SplayTreeSet).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as SplayTreeSet).skipWhile((a) => (args[1] as Function)(a) as bool),
-        'firstWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as SplayTreeSet).firstWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as SplayTreeSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'lastWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as SplayTreeSet).lastWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as SplayTreeSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'singleWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as SplayTreeSet).singleWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as SplayTreeSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
+        'firstWhere#2': (args) => (args[0] as SplayTreeSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'lastWhere#2': (args) => (args[0] as SplayTreeSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'singleWhere#2': (args) => (args[0] as SplayTreeSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as SplayTreeSet).elementAt(args[1] as int),
         'removeWhere#1': (args) { (args[0] as SplayTreeSet).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as SplayTreeSet).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
@@ -71,7 +56,7 @@ abstract final class SplayTreeSetBindings {
         'isEmpty#0': (args) => (args[0] as SplayTreeSet).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SplayTreeSet).isNotEmpty,
         'single#0': (args) => (args[0] as SplayTreeSet).single,
-        'of#3': (args) => SplayTreeSet.of(args[0] as Iterable, (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), args[2] as bool Function(dynamic)?),
+        'of#3': (args) => SplayTreeSet.of(args[0] as Iterable, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : args[2] as bool Function(dynamic)?),
         '#2': (args) {
             final compare =
                 identical(args[0], darticAbsent) ? null : args[0] as Function?;

@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -32,9 +33,9 @@ abstract final class ColumnBindings {
         'createElement#0': (args) => (args[0] as Column).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Column).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Column).toStringShort(),
-        'toStringShallow#2': (args) => (args[0] as Column).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as Column).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as Column).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as Column).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as Column).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as Column).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Column).debugDescribeChildren(),
         'direction#0': (args) => (args[0] as Column).direction,
         'mainAxisAlignment#0': (args) => (args[0] as Column).mainAxisAlignment,
@@ -47,6 +48,6 @@ abstract final class ColumnBindings {
         'spacing#0': (args) => (args[0] as Column).spacing,
         'children#0': (args) => (args[0] as Column).children,
         'key#0': (args) => (args[0] as Column).key,
-        '#9': (args) => Column(key: args[0] as Key?, mainAxisAlignment: args[1] as MainAxisAlignment, mainAxisSize: args[2] as MainAxisSize, crossAxisAlignment: args[3] as CrossAxisAlignment, textDirection: args[4] as TextDirection?, verticalDirection: args[5] as VerticalDirection, textBaseline: args[6] as TextBaseline?, spacing: args[7] as double, children: args[8] as List<Widget>),
+        '#9': (args) => Column(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxisAlignment: identical(args[1], darticAbsent) ? MainAxisAlignment.start : args[1] as MainAxisAlignment, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, crossAxisAlignment: identical(args[3], darticAbsent) ? CrossAxisAlignment.center : args[3] as CrossAxisAlignment, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?, verticalDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textBaseline: identical(args[6], darticAbsent) ? null : args[6] as TextBaseline?, spacing: identical(args[7], darticAbsent) ? 0.0 : args[7] as double, children: identical(args[8], darticAbsent) ? const <Widget>[] : (args[8] as List).cast<Widget>()),
       };
 }

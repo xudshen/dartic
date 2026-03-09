@@ -21,6 +21,7 @@ output_plugins: "../lib/src/plugins"
 # Use package: imports instead of relative imports (external package).
 custom_imports:
   - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
   - "package:dartic/src/runtime/object.dart"
   - "package:flutter/foundation.dart"
   - "package:flutter/rendering.dart"
@@ -83,7 +84,7 @@ libraries:
           /// cannot override them (unlike standard dart:core Bridge classes).
           class _$StatelessWidget extends StatelessWidget implements DarticObjectHolder {
             _$StatelessWidget(this._dispatch, this.$darticObject, List<Object?> superArgs)
-                : super(key: superArgs.isNotEmpty ? superArgs[0] as Key? : null);
+                : super(key: superArgs.isNotEmpty && !identical(superArgs[0], darticAbsent) ? superArgs[0] as Key? : null);
 
             final DarticDispatch _dispatch;
 
@@ -133,7 +134,7 @@ libraries:
           /// Bridge class that allows dartic code to extend StatefulWidget.
           class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
             _$StatefulWidget(this._dispatch, this.$darticObject, List<Object?> superArgs)
-                : super(key: superArgs.isNotEmpty ? superArgs[0] as Key? : null);
+                : super(key: superArgs.isNotEmpty && !identical(superArgs[0], darticAbsent) ? superArgs[0] as Key? : null);
 
             final DarticDispatch _dispatch;
 

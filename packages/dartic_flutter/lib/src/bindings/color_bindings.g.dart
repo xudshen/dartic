@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:ui';
 
@@ -23,7 +24,7 @@ abstract final class ColorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toARGB32#0': (args) => (args[0] as Color).toARGB32(),
-        'withValues#5': (args) => (args[0] as Color).withValues(alpha: args[1] as double?, red: args[2] as double?, green: args[3] as double?, blue: args[4] as double?, colorSpace: args[5] as ColorSpace?),
+        'withValues#5': (args) => (args[0] as Color).withValues(alpha: identical(args[1], darticAbsent) ? null : args[1] as double?, red: identical(args[2], darticAbsent) ? null : args[2] as double?, green: identical(args[3], darticAbsent) ? null : args[3] as double?, blue: identical(args[4], darticAbsent) ? null : args[4] as double?, colorSpace: identical(args[5], darticAbsent) ? null : args[5] as ColorSpace?),
         'withAlpha#1': (args) => (args[0] as Color).withAlpha(args[1] as int),
         'withOpacity#1': (args) => (args[0] as Color).withOpacity(args[1] as double),
         'withRed#1': (args) => (args[0] as Color).withRed(args[1] as int),
@@ -44,7 +45,7 @@ abstract final class ColorBindings {
         'blue#0': (args) => (args[0] as Color).blue,
         'hashCode#0': (args) => (args[0] as Color).hashCode,
         '#1': (args) => Color(args[0] as int),
-        'from#5': (args) => Color.from(alpha: args[0] as double, red: args[1] as double, green: args[2] as double, blue: args[3] as double, colorSpace: args[4] as ColorSpace),
+        'from#5': (args) => Color.from(alpha: args[0] as double, red: args[1] as double, green: args[2] as double, blue: args[3] as double, colorSpace: identical(args[4], darticAbsent) ? ColorSpace.sRGB : args[4] as ColorSpace),
         'fromARGB#4': (args) => Color.fromARGB(args[0] as int, args[1] as int, args[2] as int, args[3] as int),
         'fromRGBO#4': (args) => Color.fromRGBO(args[0] as int, args[1] as int, args[2] as int, args[3] as double),
       };

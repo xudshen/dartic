@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -19,7 +20,7 @@ import 'package:flutter/material.dart';
 /// cannot override them (unlike standard dart:core Bridge classes).
 class _$StatelessWidget extends StatelessWidget implements DarticObjectHolder {
   _$StatelessWidget(this._dispatch, this.$darticObject, List<Object?> superArgs)
-      : super(key: superArgs.isNotEmpty ? superArgs[0] as Key? : null);
+      : super(key: superArgs.isNotEmpty && !identical(superArgs[0], darticAbsent) ? superArgs[0] as Key? : null);
 
   final DarticDispatch _dispatch;
 
@@ -67,9 +68,9 @@ abstract final class StatelessWidgetBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$build#1', (args) => (args[0] as _$StatelessWidget).build(args[1] as BuildContext));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringShort#0', (args) => (args[0] as _$StatelessWidget).toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$debugFillProperties#1', (args) { (args[0] as _$StatelessWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatelessWidget).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel));
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringDeep#4', (args) => (args[0] as _$StatelessWidget).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int));
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StatelessWidget).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatelessWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringDeep#4', (args) => (args[0] as _$StatelessWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StatelessWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$StatelessWidget).debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$key#0', (args) => (args[0] as StatelessWidget).key);
   }
@@ -78,9 +79,9 @@ abstract final class StatelessWidgetBindings {
         'createElement#0': (args) => (args[0] as StatelessWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as StatelessWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StatelessWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toStringShallow#2': (args) => (args[0] as StatelessWidget).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as StatelessWidget).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as StatelessWidget).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as StatelessWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as StatelessWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as StatelessWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as StatelessWidget).debugDescribeChildren(),
         'build#1': (args) => (args[0] as _$StatelessWidget).build(args[1] as BuildContext),
         'toString#0': (args) => (args[0] as StatelessWidget).toString(),

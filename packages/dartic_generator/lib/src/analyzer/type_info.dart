@@ -61,6 +61,11 @@ class ParamInfo {
   /// (used to generate wrapping closures). null if not a function-type param.
   final String? callbackReturnType;
 
+  /// The source code of the default value for optional params (e.g. 'false',
+  /// 'AlignmentDirectional.centerEnd'). null if no default or if the default
+  /// is implicitly null.
+  final String? defaultValueCode;
+
   ParamInfo({
     required this.name,
     required this.type,
@@ -69,6 +74,7 @@ class ParamInfo {
     this.isRequired = false,
     this.callbackArity,
     this.callbackReturnType,
+    this.defaultValueCode,
   });
 
   /// Whether this parameter is a function type that needs a wrapper closure.

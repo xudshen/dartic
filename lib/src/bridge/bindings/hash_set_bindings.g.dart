@@ -19,11 +19,11 @@ abstract final class HashSetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as HashSet).cast(),
-        'contains#1': (args) => (args[0] as HashSet).contains(args[1] as Object?),
-        'add#1': (args) => (args[0] as HashSet).add(args[1] as dynamic),
+        'contains#1': (args) => (args[0] as HashSet).contains(args[1]),
+        'add#1': (args) => (args[0] as HashSet).add(args[1]),
         'addAll#1': (args) { (args[0] as HashSet).addAll(args[1] as Iterable); return null; },
-        'remove#1': (args) => (args[0] as HashSet).remove(args[1] as Object?),
-        'lookup#1': (args) => (args[0] as HashSet).lookup(args[1] as Object?),
+        'remove#1': (args) => (args[0] as HashSet).remove(args[1]),
+        'lookup#1': (args) => (args[0] as HashSet).lookup(args[1]),
         'removeAll#1': (args) { (args[0] as HashSet).removeAll(args[1] as Iterable<Object?>); return null; },
         'retainAll#1': (args) { (args[0] as HashSet).retainAll(args[1] as Iterable<Object?>); return null; },
         'removeWhere#1': (args) { (args[0] as HashSet).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
@@ -41,33 +41,18 @@ abstract final class HashSetBindings {
         'expand#1': (args) => (args[0] as HashSet).expand((a) => (args[1] as Function)(a) as Iterable),
         'forEach#1': (args) { (args[0] as HashSet).forEach((a) => (args[1] as Function)(a)); return null; },
         'reduce#1': (args) => (args[0] as HashSet).reduce((a, b) => (args[1] as Function)(a, b)),
-        'fold#2': (args) => (args[0] as HashSet).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
+        'fold#2': (args) => (args[0] as HashSet).fold(args[1], (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as HashSet).every((a) => (args[1] as Function)(a) as bool),
-        'join#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as HashSet).join();
-          return (args[0] as HashSet).join(args[1] as String);
-        },
+        'join#1': (args) => (args[0] as HashSet).join(identical(args[1], darticAbsent) ? "" : args[1] as String),
         'any#1': (args) => (args[0] as HashSet).any((a) => (args[1] as Function)(a) as bool),
-        'toList#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as HashSet).toList();
-          return (args[0] as HashSet).toList(growable: args[1] as bool);
-        },
+        'toList#1': (args) => (args[0] as HashSet).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'take#1': (args) => (args[0] as HashSet).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as HashSet).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as HashSet).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as HashSet).skipWhile((a) => (args[1] as Function)(a) as bool),
-        'firstWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as HashSet).firstWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as HashSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'lastWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as HashSet).lastWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as HashSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'singleWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as HashSet).singleWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as HashSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
+        'firstWhere#2': (args) => (args[0] as HashSet).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'lastWhere#2': (args) => (args[0] as HashSet).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'singleWhere#2': (args) => (args[0] as HashSet).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as HashSet).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as HashSet).iterator,
         'length#0': (args) => (args[0] as HashSet).length,

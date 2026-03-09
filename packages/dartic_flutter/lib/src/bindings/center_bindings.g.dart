@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -31,15 +32,15 @@ abstract final class CenterBindings {
         'createElement#0': (args) => (args[0] as Center).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Center).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Center).toStringShort(),
-        'toStringShallow#2': (args) => (args[0] as Center).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as Center).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as Center).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as Center).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as Center).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as Center).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Center).debugDescribeChildren(),
         'alignment#0': (args) => (args[0] as Center).alignment,
         'widthFactor#0': (args) => (args[0] as Center).widthFactor,
         'heightFactor#0': (args) => (args[0] as Center).heightFactor,
         'child#0': (args) => (args[0] as Center).child,
         'key#0': (args) => (args[0] as Center).key,
-        '#4': (args) => Center(key: args[0] as Key?, widthFactor: args[1] as double?, heightFactor: args[2] as double?, child: args[3] as Widget?),
+        '#4': (args) => Center(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, widthFactor: identical(args[1], darticAbsent) ? null : args[1] as double?, heightFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
       };
 }

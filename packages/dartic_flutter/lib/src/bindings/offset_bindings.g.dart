@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:ui';
 
@@ -47,6 +48,6 @@ abstract final class OffsetBindings {
         '>#1': (args) => (args[0] as Offset) > (args[1] as OffsetBase),
         '>=#1': (args) => (args[0] as Offset) >= (args[1] as OffsetBase),
         '#2': (args) => Offset(args[0] as double, args[1] as double),
-        'fromDirection#2': (args) => Offset.fromDirection(args[0] as double, args[1] as double),
+        'fromDirection#2': (args) => Offset.fromDirection(args[0] as double, identical(args[1], darticAbsent) ? 1.0 : args[1] as double),
       };
 }

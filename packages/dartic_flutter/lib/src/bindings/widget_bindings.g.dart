@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -29,9 +30,9 @@ abstract final class WidgetBindings {
         'createElement#0': (args) => (args[0] as Widget).createElement(),
         'toStringShort#0': (args) => (args[0] as Widget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Widget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toStringShallow#2': (args) => (args[0] as Widget).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as Widget).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as Widget).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as Widget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as Widget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as Widget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Widget).debugDescribeChildren(),
         'key#0': (args) => (args[0] as Widget).key,
         'hashCode#0': (args) => (args[0] as Widget).hashCode,

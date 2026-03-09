@@ -9,7 +9,7 @@ import '../../runtime/object.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$FormatException extends FormatException implements DarticObjectHolder {
-  _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as dynamic, superArgs[2] as int?);
+  _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1], identical(superArgs[2], darticAbsent) ? null : superArgs[2] as int?);
 
   final DarticDispatch _dispatch;
 

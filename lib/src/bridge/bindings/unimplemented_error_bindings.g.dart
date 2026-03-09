@@ -6,9 +6,10 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$UnimplementedError extends UnimplementedError implements DarticObjectHolder {
-  _$UnimplementedError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String?);
+  _$UnimplementedError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(identical(superArgs[0], darticAbsent) ? null : superArgs[0] as String?);
 
   final DarticDispatch _dispatch;
 
@@ -71,6 +72,6 @@ abstract final class UnimplementedErrorBindings {
         'toString#0': (args) => (args[0] as UnimplementedError).toString(),
         'message#0': (args) => (args[0] as UnimplementedError).message,
         'stackTrace#0': (args) => (args[0] as UnimplementedError).stackTrace,
-        '#1': (args) => UnimplementedError(args[0] as String?),
+        '#1': (args) => UnimplementedError(identical(args[0], darticAbsent) ? null : args[0] as String?),
       };
 }

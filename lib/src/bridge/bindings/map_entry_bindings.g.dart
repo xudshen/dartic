@@ -18,7 +18,7 @@ abstract final class MapEntryBindings {
         'toString#0': (args) => (args[0] as MapEntry).toString(),
         'key#0': (args) => (args[0] as MapEntry).key,
         'value#0': (args) => (args[0] as MapEntry).value,
-        '#2': (args) => MapEntry(args[0] as dynamic, args[1] as dynamic),
+        '#2': (args) => MapEntry(args[0], args[1]),
         '_#2': (args) => MapEntry(args[0], args[1]),
       };
 }

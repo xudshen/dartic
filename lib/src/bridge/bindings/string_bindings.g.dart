@@ -20,59 +20,25 @@ abstract final class StringBindings {
         'codeUnitAt#1': (args) => (args[0] as String).codeUnitAt(args[1] as int),
         'compareTo#1': (args) => (args[0] as String).compareTo(args[1] as String),
         'endsWith#1': (args) => (args[0] as String).endsWith(args[1] as String),
-        'startsWith#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).startsWith(args[1] as Pattern);
-          return (args[0] as String).startsWith(args[1] as Pattern, args[2] as int);
-        },
-        'indexOf#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).indexOf(args[1] as Pattern);
-          return (args[0] as String).indexOf(args[1] as Pattern, args[2] as int);
-        },
-        'lastIndexOf#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).lastIndexOf(args[1] as Pattern);
-          return (args[0] as String).lastIndexOf(args[1] as Pattern, args[2] as int?);
-        },
-        'substring#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).substring(args[1] as int);
-          return (args[0] as String).substring(args[1] as int, args[2] as int?);
-        },
+        'startsWith#2': (args) => (args[0] as String).startsWith(args[1] as Pattern, identical(args[2], darticAbsent) ? 0 : args[2] as int),
+        'indexOf#2': (args) => (args[0] as String).indexOf(args[1] as Pattern, identical(args[2], darticAbsent) ? 0 : args[2] as int),
+        'lastIndexOf#2': (args) => (args[0] as String).lastIndexOf(args[1] as Pattern, identical(args[2], darticAbsent) ? null : args[2] as int?),
+        'substring#2': (args) => (args[0] as String).substring(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?),
         'trim#0': (args) => (args[0] as String).trim(),
         'trimLeft#0': (args) => (args[0] as String).trimLeft(),
         'trimRight#0': (args) => (args[0] as String).trimRight(),
-        'padLeft#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).padLeft(args[1] as int);
-          return (args[0] as String).padLeft(args[1] as int, args[2] as String);
-        },
-        'padRight#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).padRight(args[1] as int);
-          return (args[0] as String).padRight(args[1] as int, args[2] as String);
-        },
-        'contains#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).contains(args[1] as Pattern);
-          return (args[0] as String).contains(args[1] as Pattern, args[2] as int);
-        },
-        'replaceFirst#3': (args) {
-          if (identical(args[3], darticAbsent)) return (args[0] as String).replaceFirst(args[1] as Pattern, args[2] as String);
-          return (args[0] as String).replaceFirst(args[1] as Pattern, args[2] as String, args[3] as int);
-        },
+        'padLeft#2': (args) => (args[0] as String).padLeft(args[1] as int, identical(args[2], darticAbsent) ? ' ' : args[2] as String),
+        'padRight#2': (args) => (args[0] as String).padRight(args[1] as int, identical(args[2], darticAbsent) ? ' ' : args[2] as String),
+        'contains#2': (args) => (args[0] as String).contains(args[1] as Pattern, identical(args[2], darticAbsent) ? 0 : args[2] as int),
+        'replaceFirst#3': (args) => (args[0] as String).replaceFirst(args[1] as Pattern, args[2] as String, identical(args[3], darticAbsent) ? 0 : args[3] as int),
         'replaceAll#2': (args) => (args[0] as String).replaceAll(args[1] as Pattern, args[2] as String),
         'replaceRange#3': (args) => (args[0] as String).replaceRange(args[1] as int, args[2] as int?, args[3] as String),
         'split#1': (args) => (args[0] as String).split(args[1] as Pattern),
-        'splitMapJoin#3': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).splitMapJoin(args[1] as Pattern);
-          if (identical(args[3], darticAbsent)) return (args[0] as String).splitMapJoin(args[1] as Pattern, onMatch: args[2] as String Function(Match)?);
-          return (args[0] as String).splitMapJoin(args[1] as Pattern, onMatch: args[2] as String Function(Match)?, onNonMatch: args[3] as String Function(String)?);
-        },
+        'splitMapJoin#3': (args) => (args[0] as String).splitMapJoin(args[1] as Pattern, onMatch: identical(args[2], darticAbsent) ? null : args[2] as String Function(Match)?, onNonMatch: identical(args[3], darticAbsent) ? null : args[3] as String Function(String)?),
         'toLowerCase#0': (args) => (args[0] as String).toLowerCase(),
         'toUpperCase#0': (args) => (args[0] as String).toUpperCase(),
-        'allMatches#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).allMatches(args[1] as String);
-          return (args[0] as String).allMatches(args[1] as String, args[2] as int);
-        },
-        'matchAsPrefix#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as String).matchAsPrefix(args[1] as String);
-          return (args[0] as String).matchAsPrefix(args[1] as String, args[2] as int);
-        },
+        'allMatches#2': (args) => (args[0] as String).allMatches(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int),
+        'matchAsPrefix#2': (args) => (args[0] as String).matchAsPrefix(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int),
         'length#0': (args) => (args[0] as String).length,
         'hashCode#0': (args) => (args[0] as String).hashCode,
         'isEmpty#0': (args) => (args[0] as String).isEmpty,

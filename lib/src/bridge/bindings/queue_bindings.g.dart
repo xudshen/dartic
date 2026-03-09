@@ -20,7 +20,7 @@ abstract final class QueueBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as Queue).cast(),
-        'remove#1': (args) => (args[0] as Queue).remove(args[1] as Object?),
+        'remove#1': (args) => (args[0] as Queue).remove(args[1]),
         'addAll#1': (args) { (args[0] as Queue).addAll(args[1] as Iterable); return null; },
         'removeWhere#1': (args) { (args[0] as Queue).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as Queue).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
@@ -29,37 +29,22 @@ abstract final class QueueBindings {
         'where#1': (args) => (args[0] as Queue).where((a) => (args[1] as Function)(a) as bool),
         'whereType#0': (args) => (args[0] as Queue).whereType(),
         'expand#1': (args) => (args[0] as Queue).expand((a) => (args[1] as Function)(a) as Iterable),
-        'contains#1': (args) => (args[0] as Queue).contains(args[1] as Object?),
+        'contains#1': (args) => (args[0] as Queue).contains(args[1]),
         'forEach#1': (args) { (args[0] as Queue).forEach((a) => (args[1] as Function)(a)); return null; },
         'reduce#1': (args) => (args[0] as Queue).reduce((a, b) => (args[1] as Function)(a, b)),
-        'fold#2': (args) => (args[0] as Queue).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
+        'fold#2': (args) => (args[0] as Queue).fold(args[1], (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as Queue).every((a) => (args[1] as Function)(a) as bool),
-        'join#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as Queue).join();
-          return (args[0] as Queue).join(args[1] as String);
-        },
+        'join#1': (args) => (args[0] as Queue).join(identical(args[1], darticAbsent) ? "" : args[1] as String),
         'any#1': (args) => (args[0] as Queue).any((a) => (args[1] as Function)(a) as bool),
-        'toList#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as Queue).toList();
-          return (args[0] as Queue).toList(growable: args[1] as bool);
-        },
+        'toList#1': (args) => (args[0] as Queue).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'toSet#0': (args) => (args[0] as Queue).toSet(),
         'take#1': (args) => (args[0] as Queue).take(args[1] as int),
         'takeWhile#1': (args) => (args[0] as Queue).takeWhile((a) => (args[1] as Function)(a) as bool),
         'skip#1': (args) => (args[0] as Queue).skip(args[1] as int),
         'skipWhile#1': (args) => (args[0] as Queue).skipWhile((a) => (args[1] as Function)(a) as bool),
-        'firstWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as Queue).firstWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as Queue).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'lastWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as Queue).lastWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as Queue).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
-        'singleWhere#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as Queue).singleWhere((a) => (args[1] as Function)(a) as bool);
-          return (args[0] as Queue).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!());
-        },
+        'firstWhere#2': (args) => (args[0] as Queue).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'lastWhere#2': (args) => (args[0] as Queue).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'singleWhere#2': (args) => (args[0] as Queue).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as Queue).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as Queue).iterator,
         'length#0': (args) => (args[0] as Queue).length,

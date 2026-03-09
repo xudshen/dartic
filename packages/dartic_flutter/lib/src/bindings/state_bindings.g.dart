@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -111,7 +112,7 @@ abstract final class StateBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$didChangeDependencies#0', (args) { (args[0] as _$State).didChangeDependencies(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$debugFillProperties#1', (args) { (args[0] as _$State).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$toStringShort#0', (args) => (args[0] as _$State).toStringShort());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$State).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$State).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$widget#0', (args) => (args[0] as State).widget);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$context#0', (args) => (args[0] as State).context);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$mounted#0', (args) => (args[0] as State).mounted);
@@ -125,16 +126,15 @@ abstract final class StateBindings {
         'didChangeDependencies#0': (args) { (args[0] as State).didChangeDependencies(); return null; },
         'debugFillProperties#1': (args) { (args[0] as State).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as State).toStringShort(),
-        'toDiagnosticsNode#2': (args) => (args[0] as State).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toDiagnosticsNode#2': (args) => (args[0] as State).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'build#1': (args) => (args[0] as _$State).build(args[1] as BuildContext),
         'initState#0': (args) { (args[0] as _$State).initState(); return null; },
         'dispose#0': (args) { (args[0] as _$State).dispose(); return null; },
         'setState#1': (args) {
-  final fn = args[1] as Function;
-  (args[0] as State).setState(() { fn(); });
-  return null;
-}
-,
+            final fn = args[1] as Function;
+            (args[0] as State).setState(() { fn(); });
+            return null;
+        },
         'mounted#0': (args) => (args[0] as State).mounted,
         'widget#0': (args) => (args[0] as State).widget,
         'context#0': (args) => (args[0] as State).context,

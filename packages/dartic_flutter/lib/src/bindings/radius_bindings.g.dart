@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:ui';
 
@@ -21,8 +22,8 @@ abstract final class RadiusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'clamp#2': (args) => (args[0] as Radius).clamp(minimum: args[1] as Radius?, maximum: args[2] as Radius?),
-        'clampValues#4': (args) => (args[0] as Radius).clampValues(minimumX: args[1] as double?, minimumY: args[2] as double?, maximumX: args[3] as double?, maximumY: args[4] as double?),
+        'clamp#2': (args) => (args[0] as Radius).clamp(minimum: identical(args[1], darticAbsent) ? null : args[1] as Radius?, maximum: identical(args[2], darticAbsent) ? null : args[2] as Radius?),
+        'clampValues#4': (args) => (args[0] as Radius).clampValues(minimumX: identical(args[1], darticAbsent) ? null : args[1] as double?, minimumY: identical(args[2], darticAbsent) ? null : args[2] as double?, maximumX: identical(args[3], darticAbsent) ? null : args[3] as double?, maximumY: identical(args[4], darticAbsent) ? null : args[4] as double?),
         'toString#0': (args) => (args[0] as Radius).toString(),
         'x#0': (args) => (args[0] as Radius).x,
         'y#0': (args) => (args[0] as Radius).y,

@@ -16,7 +16,7 @@ abstract final class MatchBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'group#1': (args) => (args[0] as Match).group(args[1] as int),
-        'groups#1': (args) => (args[0] as Match).groups(args[1] as List<int>),
+        'groups#1': (args) => (args[0] as Match).groups((args[1] as List).cast<int>()),
         'start#0': (args) => (args[0] as Match).start,
         'end#0': (args) => (args[0] as Match).end,
         'groupCount#0': (args) => (args[0] as Match).groupCount,

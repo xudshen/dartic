@@ -9,7 +9,7 @@ import '../../runtime/object.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
-  _$ArgumentError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as dynamic, superArgs[1] as String?);
+  _$ArgumentError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0], identical(superArgs[1], darticAbsent) ? null : superArgs[1] as String?);
 
   final DarticDispatch _dispatch;
 
@@ -77,10 +77,7 @@ abstract final class ArgumentErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$ArgumentError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) {
-      if (identical(args[1], darticAbsent)) return ArgumentError.checkNotNull(args[0] as Object?);
-      return ArgumentError.checkNotNull(args[0] as Object?, args[1] as String?);
-    });
+    ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) => ArgumentError.checkNotNull(args[0], identical(args[1], darticAbsent) ? null : args[1] as String?));
     ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError).toString());
     ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as ArgumentError).invalidValue);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as ArgumentError).name);
@@ -94,11 +91,14 @@ abstract final class ArgumentErrorBindings {
         'name#0': (args) => (args[0] as ArgumentError).name,
         'message#0': (args) => (args[0] as ArgumentError).message,
         'stackTrace#0': (args) => (args[0] as ArgumentError).stackTrace,
-        '#2': (args) => ArgumentError(args[0] as dynamic, args[1] as String?),
-        'notNull#1': (args) => ArgumentError.notNull(args[0] as String?),
+        '#2': (args) => ArgumentError(identical(args[0], darticAbsent) ? null : args[0], identical(args[1], darticAbsent) ? null : args[1] as String?),
+        'notNull#1': (args) => ArgumentError.notNull(identical(args[0], darticAbsent) ? null : args[0] as String?),
         '#1': (args) => ArgumentError(args[0]),
         'value#1': (args) => ArgumentError.value(args[0]),
-        'value#2': (args) => ArgumentError.value(args[0], args[1] as String?),
-        'value#3': (args) => ArgumentError.value(args[0], args[1] as String?, args[2]),
+        'value#3': (args) => ArgumentError.value(
+            args[0],
+            identical(args[1], darticAbsent) ? null : args[1] as String?,
+            identical(args[2], darticAbsent) ? null : args[2],
+        ),
       };
 }

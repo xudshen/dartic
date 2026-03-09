@@ -14,24 +14,16 @@ abstract final class IterableBindings {
       methods: methodMap(),
     );
     ctx.registerBinding('dart:core::Iterable::castFrom#1', (args) => Iterable.castFrom(args[0] as Iterable));
-    ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) {
-      if (identical(args[1], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>);
-      if (identical(args[2], darticAbsent)) return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String);
-      return Iterable.iterableToShortString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
-    });
-    ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) {
-      if (identical(args[1], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>);
-      if (identical(args[2], darticAbsent)) return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String);
-      return Iterable.iterableToFullString(args[0] as Iterable<dynamic>, args[1] as String, args[2] as String);
-    });
+    ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) => Iterable.iterableToShortString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
+    ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) => Iterable.iterableToFullString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as Iterable).cast(),
         'whereType#0': (args) => (args[0] as Iterable).whereType(),
-        'contains#1': (args) => (args[0] as Iterable).contains(args[1] as Object?),
+        'contains#1': (args) => (args[0] as Iterable).contains(args[1]),
         'forEach#1': (args) { (args[0] as Iterable).forEach((a) => (args[1] as Function)(a)); return null; },
-        'fold#2': (args) => (args[0] as Iterable).fold(args[1] as dynamic, (a, b) => (args[2] as Function)(a, b)),
+        'fold#2': (args) => (args[0] as Iterable).fold(args[1], (a, b) => (args[2] as Function)(a, b)),
         'every#1': (args) => (args[0] as Iterable).every((a) => (args[1] as Function)(a) as bool),
         'any#1': (args) => (args[0] as Iterable).any((a) => (args[1] as Function)(a) as bool),
         'toSet#0': (args) => (args[0] as Iterable).toSet(),

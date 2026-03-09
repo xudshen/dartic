@@ -581,7 +581,43 @@ String _emitInstanceMethodWrapper(String className, MethodInfo method) {
   if (!hasOptional) {
     return _emitSimpleInstanceWrapper(className, method);
   }
-  return _emitCascadingInstanceWrapper(className, method);
+  return _emitTernaryInstanceWrapper(className, method);
+}
+
+String _emitTernaryInstanceWrapper(String className, MethodInfo method) {
+  final params = method.paramTypes;
+  final receiver = '(args[0] as $className)';
+  final callPrefix = '$receiver.${method.name}';
+
+  // Identify params needing omission branching.
+  final branchIndices = <int>[
+    for (var i = 0; i < params.length; i++)
+      if (_needsOmissionBranching(params[i])) i,
+  ];
+
+  if (branchIndices.isEmpty) {
+    // Simple single-call ternary.
+    final args = <String>[];
+    for (var i = 0; i < params.length; i++) {
+      final param = params[i];
+      final argExpr = _emitAbsentAwareArgExpression(param, i + 1);
+      if (param.isNamed) {
+        args.add('${param.name}: $argExpr');
+      } else {
+        args.add(argExpr);
+      }
+    }
+    final call = '$callPrefix(${args.join(', ')})';
+    if (method.isVoid) return '(args) { $call; return null; }';
+    return '(args) => $call';
+  }
+
+  // Some params have private defaults — generate branching.
+  final buf = StringBuffer('(args) {\n');
+  _writeBranchCalls(buf, callPrefix, params, 1, branchIndices, 0, {},
+      isVoid: method.isVoid);
+  buf.write('        }');
+  return buf.toString();
 }
 
 String _emitSimpleInstanceWrapper(String className, MethodInfo method) {
@@ -601,79 +637,88 @@ String _emitSimpleInstanceWrapper(String className, MethodInfo method) {
   return '(args) => $call';
 }
 
-String _emitCascadingInstanceWrapper(String className, MethodInfo method) {
-  final receiver = '(args[0] as $className)';
-  final params = method.paramTypes;
-  final firstOptional = params.indexWhere((p) => p.isOptional);
-  final isVoid = method.isVoid;
-
-  // 构建必选参数（始终存在）。
-  final requiredArgs = <String>[];
-  for (var i = 0; i < firstOptional; i++) {
-    final param = params[i];
-    final argExpr = _emitArgExpression(param, i + 1);
-    if (param.isNamed) {
-      requiredArgs.add('${param.name}: $argExpr');
-    } else {
-      requiredArgs.add(argExpr);
-    }
-  }
-
-  final lines = <String>['(args) {'];
-
-  // 从第一个可选参数开始级联检查
-  for (var cut = firstOptional; cut < params.length; cut++) {
-    final argsUpToCut = <String>[...requiredArgs];
-    for (var j = firstOptional; j < cut; j++) {
-      final param = params[j];
-      final argExpr = _emitArgExpression(param, j + 1);
-      if (param.isNamed) {
-        argsUpToCut.add('${param.name}: $argExpr');
-      } else {
-        argsUpToCut.add(argExpr);
-      }
-    }
-    final checkIdx = cut + 1; // +1 因为 receiver 在 args[0]
-    final call = '$receiver.${method.name}(${argsUpToCut.join(', ')})';
-    if (isVoid) {
-      lines.add('  if (identical(args[$checkIdx], darticAbsent)) { $call; return null; }');
-    } else {
-      lines.add('  if (identical(args[$checkIdx], darticAbsent)) return $call;');
-    }
-  }
-
-  // 全参数调用
-  final allArgs = <String>[...requiredArgs];
-  for (var j = firstOptional; j < params.length; j++) {
-    final param = params[j];
-    final argExpr = _emitArgExpression(param, j + 1);
-    if (param.isNamed) {
-      allArgs.add('${param.name}: $argExpr');
-    } else {
-      allArgs.add(argExpr);
-    }
-  }
-  final fullCall = '$receiver.${method.name}(${allArgs.join(', ')})';
-  if (isVoid) {
-    lines.add('  $fullCall; return null;');
-  } else {
-    lines.add('  return $fullCall;');
-  }
-  lines.add('}');
-  return lines.join('\n');
-}
-
 /// Generates the argument expression for a parameter at the given args index.
 ///
 /// For function-typed parameters, generates a wrapping closure:
 ///   `(a, b) => (args[N] as Function)(a, b) as ReturnType`
+/// For generic collection types (List<T>, Set<T>, Map<K,V>, Iterable<T>),
+/// generates a `.cast<T>()` call to handle runtime `List<dynamic>` → `List<T>`:
+///   `(args[N] as List).cast<Widget>()`
 /// For regular parameters, generates a simple cast:
 ///   `args[N] as Type`
 String _emitArgExpression(ParamInfo param, int argsIndex) {
   if (param.isFunctionType) {
     return _emitCallbackWrapper(param, argsIndex);
   }
-  return 'args[$argsIndex] as ${param.type}';
+  return _emitCast('args[$argsIndex]', param.type);
+}
+
+/// Generates a cast expression for [expr] to the given [type].
+///
+/// For generic collection types (`List<T>`, `Set<T>`, `Map<K,V>`,
+/// `Iterable<T>`) whose type argument is not `dynamic`/`Object?`, generates
+/// `(expr as List).cast<T>()` instead of `expr as List<T>`.
+///
+/// This is necessary because the dartic interpreter produces `List<dynamic>`
+/// at runtime, and Dart's reified generics reject `as List<Widget>` unless
+/// the list was originally created with that exact type argument.
+String _emitCast(String expr, String type) {
+  // Skip cast for dynamic and Object? — already Object?.
+  if (type == 'dynamic' || type == 'Object?') return expr;
+
+  // Check for nullable generic collection.
+  final isNullable = type.endsWith('?');
+  final baseType = isNullable ? type.substring(0, type.length - 1) : type;
+
+  // Match: List<T>, Set<T>, Iterable<T>, Map<K, V>
+  final match =
+      RegExp(r'^(List|Set|Iterable|Map)<(.+)>$').firstMatch(baseType);
+  if (match != null) {
+    final collection = match.group(1)!;
+    final typeArgs = match.group(2)!;
+
+    // Skip if type args are already dynamic/Object? (no cast needed).
+    if (typeArgs == 'dynamic' || typeArgs == 'Object?') {
+      return '$expr as $type';
+    }
+    if (collection == 'Map') {
+      final parts = _splitTopLevelTypeArgs(typeArgs);
+      if (parts.length == 2 &&
+          parts.every(
+              (p) => p.trim() == 'dynamic' || p.trim() == 'Object?')) {
+        return '$expr as $type';
+      }
+    }
+
+    if (isNullable) {
+      return '$expr == null ? null : ($expr as $collection).cast<$typeArgs>()';
+    }
+    return '($expr as $collection).cast<$typeArgs>()';
+  }
+
+  return '$expr as $type';
+}
+
+/// Splits a comma-separated type argument string at the top level only,
+/// respecting nested angle brackets.
+/// E.g. `"String, List<int>"` → `["String", " List<int>"]`.
+List<String> _splitTopLevelTypeArgs(String typeArgs) {
+  final parts = <String>[];
+  var depth = 0;
+  var start = 0;
+  for (var i = 0; i < typeArgs.length; i++) {
+    final c = typeArgs[i];
+    if (c == '<') {
+      depth++;
+    } else if (c == '>') {
+      depth--;
+    } else if (c == ',' && depth == 0) {
+      parts.add(typeArgs.substring(start, i));
+      start = i + 1;
+    }
+  }
+  parts.add(typeArgs.substring(start));
+  return parts;
 }
 
 /// Generates a callback wrapper for a function-typed parameter.
@@ -725,8 +770,9 @@ String _callbackParamName(int index) {
 
 void _writeSetterEntry(StringBuffer buf, String className, SetterInfo setter) {
   final receiver = '(args[0] as $className)';
+  final valueCast = _emitCast('args[1]', setter.paramType);
   buf.writeln(
-      "        '${setter.bindingKey}': (args) { $receiver.${setter.name} = args[1] as ${setter.paramType}; return args[1]; },");
+      "        '${setter.bindingKey}': (args) { $receiver.${setter.name} = $valueCast; return args[1]; },");
 }
 
 // ── Operator entries ────────────────────────────────────────────────────
@@ -747,18 +793,21 @@ void _writeOperatorEntry(
     }
   } else if (op.name == '[]') {
     // Index operator: receiver[index]
+    final keyCast = _emitCast('args[1]', op.paramType!);
     buf.writeln(
-        "        '${op.bindingKey}': (args) => $receiver[(args[1] as ${op.paramType})],");
+        "        '${op.bindingKey}': (args) => $receiver[($keyCast)],");
   } else if (op.name == '[]=') {
     // Index assignment operator: receiver[index] = value
     // Special key: []=#2 (receiver + index + value = 3 args, arity 2)
     final key = '${op.lookupName}#2';
+    final keyCast = _emitCast('args[1]', op.paramType!);
     buf.writeln(
-        "        '$key': (args) { $receiver[args[1] as ${op.paramType!}] = args[2]; return args[2]; },");
+        "        '$key': (args) { $receiver[$keyCast] = args[2]; return args[2]; },");
   } else {
     // Binary operator
+    final paramCast = _emitCast('args[1]', op.paramType!);
     buf.writeln(
-        "        '${op.bindingKey}': (args) => $receiver ${op.name} (args[1] as ${op.paramType}),");
+        "        '${op.bindingKey}': (args) => $receiver ${op.name} ($paramCast),");
   }
 }
 
@@ -769,24 +818,194 @@ void _writeConstructorEntry(
   final name = ctor.name.isEmpty ? '' : ctor.name;
   final key = '#${ctor.params.length}';
   final bindingKey = name.isEmpty ? key : '$name$key';
+  final hasOptional = ctor.params.any((p) => p.isOptional);
+  final ctorName = name.isEmpty ? className : '$className.$name';
 
-  // Constructor args are positional: args[0..N-1] are params (no receiver)
+  if (!hasOptional) {
+    // No optional params — simple direct call.
+    final args = <String>[];
+    for (var i = 0; i < ctor.params.length; i++) {
+      final param = ctor.params[i];
+      final argExpr = _emitArgExpression(param, i);
+      if (param.isNamed) {
+        args.add('${param.name}: $argExpr');
+      } else {
+        args.add(argExpr);
+      }
+    }
+    buf.writeln("        '$bindingKey': (args) => $ctorName(${args.join(', ')}),");
+    return;
+  }
+
+  // Has optional params — per-param ternary absent check.
+  _writeConstructorEntryTernary(buf, bindingKey, ctorName, ctor.params, 0);
+}
+
+/// Generates a constructor binding using per-param ternary absent checks.
+///
+/// Each optional named param gets an independent absent check:
+///   `paramName: identical(args[i], darticAbsent) ? DEFAULT : args[i] as Type`
+/// This handles named params being independently omitted (unlike cascading).
+void _writeConstructorEntryTernary(StringBuffer buf, String bindingKey,
+    String ctorName, List<ParamInfo> params, int argsOffset) {
+  // Identify params that need omission branching (private/unknown defaults).
+  final branchIndices = <int>[
+    for (var i = 0; i < params.length; i++)
+      if (_needsOmissionBranching(params[i])) i,
+  ];
+
+  if (branchIndices.isEmpty) {
+    // Simple single-call ternary — all defaults are accessible.
+    final args = <String>[];
+    for (var i = 0; i < params.length; i++) {
+      final param = params[i];
+      final idx = i + argsOffset;
+      final argExpr = _emitAbsentAwareArgExpression(param, idx);
+      if (param.isNamed) {
+        args.add('${param.name}: $argExpr');
+      } else {
+        args.add(argExpr);
+      }
+    }
+    buf.writeln(
+        "        '$bindingKey': (args) => $ctorName(${args.join(', ')}),");
+    return;
+  }
+
+  // Some params have private defaults — generate if/else branches.
+  buf.writeln("        '$bindingKey': (args) {");
+  _writeBranchCalls(buf, ctorName, params, argsOffset, branchIndices, 0, {});
+  buf.writeln('        },');
+}
+
+/// Generates an absent-aware argument expression for an optional param.
+///
+/// For nullable types: `identical(args[i], darticAbsent) ? null : args[i] as T`
+/// For non-nullable types with accessible defaults:
+///   `identical(args[i], darticAbsent) ? DEFAULT : args[i] as T`
+/// For required params: just the normal cast.
+///
+/// Params that [_needsOmissionBranching] returns true for should NOT be
+/// passed to this function — they are handled by the branching generator
+/// (omitting the param entirely when absent).
+String _emitAbsentAwareArgExpression(ParamInfo param, int argsIndex) {
+  if (!param.isOptional) {
+    return _emitArgExpression(param, argsIndex);
+  }
+  final argExpr = _emitArgExpression(param, argsIndex);
+  final type = param.type;
+  if (type.endsWith('?') || type == 'dynamic') {
+    return 'identical(args[$argsIndex], darticAbsent) ? null : $argExpr';
+  }
+  // Non-nullable optional param — use extracted default value if accessible.
+  final defaultVal = param.defaultValueCode;
+  if (defaultVal != null && !_containsPrivateIdentifier(defaultVal)) {
+    return 'identical(args[$argsIndex], darticAbsent) ? $defaultVal : $argExpr';
+  }
+  // Fallback: should not be reached if caller uses _needsOmissionBranching
+  // correctly, but return a plain cast as a safe default.
+  return argExpr;
+}
+
+/// Whether a private identifier (starting with `_`) appears in [code].
+///
+/// Used to detect default value expressions that reference private symbols
+/// (e.g. `_defaultBottomSheetScrimBuilder`) which cannot be used in
+/// generated code outside of the defining library.
+bool _containsPrivateIdentifier(String code) {
+  // Match `_identifier` not preceded by a letter/digit (word boundary),
+  // so `AlignmentDirectional.centerEnd` won't false-positive.
+  return RegExp(r'(?<![a-zA-Z0-9])_[a-zA-Z]').hasMatch(code);
+}
+
+/// Whether an optional param requires omission branching instead of ternary.
+///
+/// Returns true for non-nullable optional params whose default value is
+/// either unknown or contains private identifiers. These params must be
+/// conditionally omitted from the call entirely (letting Dart apply the
+/// real default) rather than substituted via ternary.
+bool _needsOmissionBranching(ParamInfo param) {
+  if (!param.isOptional) return false;
+  final type = param.type;
+  // Nullable/dynamic can always use ternary with null fallback.
+  if (type.endsWith('?') || type == 'dynamic') return false;
+  // Public accessible default → ternary is fine.
+  final defaultVal = param.defaultValueCode;
+  if (defaultVal != null && !_containsPrivateIdentifier(defaultVal)) {
+    return false;
+  }
+  // Non-nullable with private/unknown default → must branch.
+  return true;
+}
+
+/// Builds the argument list for a call, respecting omitted and branch params.
+///
+/// [omitted] — param indices to skip entirely (not passed to the call).
+/// [branchIndices] — param indices handled by branching (use plain cast,
+///   not absent-aware, since the branch already guards for absent).
+List<String> _buildCallArgs(List<ParamInfo> params, int argsOffset,
+    Set<int> omitted, Set<int> branchIndices) {
   final args = <String>[];
-  for (var i = 0; i < ctor.params.length; i++) {
-    final param = ctor.params[i];
-    final argExpr = _emitArgExpression(param, i);
+  for (var i = 0; i < params.length; i++) {
+    if (omitted.contains(i)) continue;
+    final param = params[i];
+    final idx = i + argsOffset;
+    final String argExpr;
+    if (branchIndices.contains(i)) {
+      // Branch param that's included — we already checked it's not absent.
+      argExpr = _emitArgExpression(param, idx);
+    } else {
+      argExpr = _emitAbsentAwareArgExpression(param, idx);
+    }
     if (param.isNamed) {
       args.add('${param.name}: $argExpr');
     } else {
       args.add(argExpr);
     }
   }
+  return args;
+}
 
-  final ctorCall = name.isEmpty
-      ? '$className(${args.join(', ')})'
-      : '$className.$name(${args.join(', ')})';
+/// Recursively generates if/else branches for params with private defaults.
+///
+/// Each branch param gets a binary choice: omit (absent) or include.
+/// For N branch params, this produces 2^N leaf calls.
+void _writeBranchCalls(
+  StringBuffer buf,
+  String callExpr,
+  List<ParamInfo> params,
+  int argsOffset,
+  List<int> branchIndices,
+  int depth,
+  Set<int> omitted, {
+  bool isVoid = false,
+  String indent = '          ',
+}) {
+  if (depth >= branchIndices.length) {
+    // Leaf: emit actual call with current omitted set.
+    final args = _buildCallArgs(
+        params, argsOffset, omitted, branchIndices.toSet());
+    final call = '$callExpr(${args.join(', ')})';
+    if (isVoid) {
+      buf.writeln('$indent$call;');
+      buf.writeln('${indent}return null;');
+    } else {
+      buf.writeln('${indent}return $call;');
+    }
+    return;
+  }
 
-  buf.writeln("        '$bindingKey': (args) => $ctorCall,");
+  final paramIdx = branchIndices[depth];
+  final argsIdx = paramIdx + argsOffset;
+  buf.writeln('${indent}if (identical(args[$argsIdx], darticAbsent)) {');
+  _writeBranchCalls(buf, callExpr, params, argsOffset, branchIndices,
+      depth + 1, {...omitted, paramIdx},
+      isVoid: isVoid, indent: '$indent  ');
+  buf.writeln('$indent} else {');
+  _writeBranchCalls(buf, callExpr, params, argsOffset, branchIndices,
+      depth + 1, omitted,
+      isVoid: isVoid, indent: '$indent  ');
+  buf.writeln('$indent}');
 }
 
 // ── Static method wrappers ──────────────────────────────────────────────
@@ -795,9 +1014,10 @@ String _emitStaticMethodWrapper(String className, MethodInfo method) {
   final hasOptional = method.paramTypes.any((p) => p.isOptional);
   final params = method.paramTypes;
   final isVoid = method.isVoid;
+  final callPrefix = '$className.${method.name}';
 
   if (!hasOptional) {
-    // 無可選參數 — 簡單直接調用。
+    // No optional params — simple direct call.
     final args = <String>[];
     for (var i = 0; i < params.length; i++) {
       final param = params[i];
@@ -808,54 +1028,40 @@ String _emitStaticMethodWrapper(String className, MethodInfo method) {
         args.add(argExpr);
       }
     }
-    final call = '$className.${method.name}(${args.join(', ')})';
+    final call = '$callPrefix(${args.join(', ')})';
     if (isVoid) return '(args) { $call; return null; }';
     return '(args) => $call';
   }
 
-  // 有可選參數 — 級聯 absent 檢查。
-  // 注意靜態方法無 receiver，參數從 args[0] 開始。
-  final firstOptional = params.indexWhere((p) => p.isOptional);
-  final lines = <String>['(args) {'];
+  // Has optional params — per-param ternary with omission branching.
+  final branchIndices = <int>[
+    for (var i = 0; i < params.length; i++)
+      if (_needsOmissionBranching(params[i])) i,
+  ];
 
-  for (var cut = firstOptional; cut < params.length; cut++) {
-    final argsUpToCut = <String>[];
-    for (var j = 0; j < cut; j++) {
-      final param = params[j];
-      final argExpr = _emitArgExpression(param, j);
+  if (branchIndices.isEmpty) {
+    // Simple single-call ternary.
+    final args = <String>[];
+    for (var i = 0; i < params.length; i++) {
+      final param = params[i];
+      final argExpr = _emitAbsentAwareArgExpression(param, i);
       if (param.isNamed) {
-        argsUpToCut.add('${param.name}: $argExpr');
+        args.add('${param.name}: $argExpr');
       } else {
-        argsUpToCut.add(argExpr);
+        args.add(argExpr);
       }
     }
-    final call = '$className.${method.name}(${argsUpToCut.join(', ')})';
-    if (isVoid) {
-      lines.add('  if (identical(args[$cut], darticAbsent)) { $call; return null; }');
-    } else {
-      lines.add('  if (identical(args[$cut], darticAbsent)) return $call;');
-    }
+    final call = '$callPrefix(${args.join(', ')})';
+    if (isVoid) return '(args) { $call; return null; }';
+    return '(args) => $call';
   }
 
-  // 全參數調用。
-  final allArgs = <String>[];
-  for (var j = 0; j < params.length; j++) {
-    final param = params[j];
-    final argExpr = _emitArgExpression(param, j);
-    if (param.isNamed) {
-      allArgs.add('${param.name}: $argExpr');
-    } else {
-      allArgs.add(argExpr);
-    }
-  }
-  final fullCall = '$className.${method.name}(${allArgs.join(', ')})';
-  if (isVoid) {
-    lines.add('  $fullCall; return null;');
-  } else {
-    lines.add('  return $fullCall;');
-  }
-  lines.add('}');
-  return lines.join('\n');
+  // Some params have private defaults — generate branching.
+  final buf = StringBuffer('(args) {\n');
+  _writeBranchCalls(buf, callPrefix, params, 0, branchIndices, 0, {},
+      isVoid: isVoid);
+  buf.write('        }');
+  return buf.toString();
 }
 
 // ── Bridge class generation ─────────────────────────────────────────────
@@ -897,11 +1103,23 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
       final parts = <String>[];
       var idx = 0;
       for (final p in positionalParams) {
-        parts.add('superArgs[$idx] as ${p.type}');
+        final cast = _emitCast('superArgs[$idx]', p.type);
+        if (p.isOptional && p.type.endsWith('?')) {
+          parts.add(
+              'identical(superArgs[$idx], darticAbsent) ? null : $cast');
+        } else {
+          parts.add(cast);
+        }
         idx++;
       }
       for (final p in namedParams) {
-        parts.add('${p.name}: superArgs[$idx] as ${p.type}');
+        final cast = _emitCast('superArgs[$idx]', p.type);
+        if (!p.isRequired && p.type.endsWith('?')) {
+          parts.add(
+              '${p.name}: identical(superArgs[$idx], darticAbsent) ? null : $cast');
+        } else {
+          parts.add('${p.name}: $cast');
+        }
         idx++;
       }
       final superCall = parts.join(', ');
@@ -1100,28 +1318,13 @@ void _writeBridgeOperatorOverride(
 void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
   final bridgeClassName = '_\$${info.className}';
 
-  // Instance methods
+  // Instance methods — reuse absent-aware wrapper generation.
   for (final method in info.methods) {
-    for (final key in method.allBindingKeys) {
-      final arity = int.parse(key.split('#').last);
-      final castArgs = <String>[];
-      for (var i = 0; i < arity; i++) {
-        final param = method.paramTypes[i];
-        if (param.isNamed) {
-          castArgs.add('${param.name}: args[${i + 1}] as ${param.type}');
-        } else {
-          castArgs.add('args[${i + 1}] as ${param.type}');
-        }
-      }
-      final callArgs = castArgs.join(', ');
-      if (method.isVoid) {
-        buf.writeln(
-            "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${method.name}#$arity', (args) { (args[0] as $bridgeClassName).${method.name}($callArgs); return null; });");
-      } else {
-        buf.writeln(
-            "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${method.name}#$arity', (args) => (args[0] as $bridgeClassName).${method.name}($callArgs));");
-      }
-    }
+    final key = method.allBindingKeys[0];
+    final wrapper = _emitInstanceMethodWrapper(bridgeClassName, method);
+    final indented = wrapper.replaceAll('\n', '\n    ');
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$$key', $indented);");
   }
 
   // Getters
@@ -1132,8 +1335,9 @@ void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
 
   // Setters
   for (final setter in info.setters) {
+    final valueCast = _emitCast('args[1]', setter.paramType);
     buf.writeln(
-        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as ${info.className}).${setter.name} = args[1] as ${setter.paramType}; return args[1]; });");
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as ${info.className}).${setter.name} = $valueCast; return args[1]; });");
   }
 }
 

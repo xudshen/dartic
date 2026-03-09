@@ -18,10 +18,7 @@ abstract final class MultiStreamControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'addStream#2': (args) {
-          if (identical(args[2], darticAbsent)) return (args[0] as MultiStreamController).addStream(args[1] as Stream);
-          return (args[0] as MultiStreamController).addStream(args[1] as Stream, cancelOnError: args[2] as bool?);
-        },
+        'addStream#2': (args) => (args[0] as MultiStreamController).addStream(args[1] as Stream, cancelOnError: identical(args[2], darticAbsent) ? null : args[2] as bool?),
         'stream#0': (args) => (args[0] as MultiStreamController).stream,
         'onListen#0': (args) => (args[0] as MultiStreamController).onListen,
         'onPause#0': (args) => (args[0] as MultiStreamController).onPause,

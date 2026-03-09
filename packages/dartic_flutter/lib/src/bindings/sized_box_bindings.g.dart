@@ -5,6 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -31,18 +32,18 @@ abstract final class SizedBoxBindings {
         'debugFillProperties#1': (args) { (args[0] as SizedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as SizedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SizedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
-        'toStringShallow#2': (args) => (args[0] as SizedBox).toStringShallow(joiner: args[1] as String, minLevel: args[2] as DiagnosticLevel),
-        'toStringDeep#4': (args) => (args[0] as SizedBox).toStringDeep(prefixLineOne: args[1] as String, prefixOtherLines: args[2] as String?, minLevel: args[3] as DiagnosticLevel, wrapWidth: args[4] as int),
-        'toDiagnosticsNode#2': (args) => (args[0] as SizedBox).toDiagnosticsNode(name: args[1] as String?, style: args[2] as DiagnosticsTreeStyle?),
+        'toStringShallow#2': (args) => (args[0] as SizedBox).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as SizedBox).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as SizedBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SizedBox).debugDescribeChildren(),
         'width#0': (args) => (args[0] as SizedBox).width,
         'height#0': (args) => (args[0] as SizedBox).height,
         'child#0': (args) => (args[0] as SizedBox).child,
         'key#0': (args) => (args[0] as SizedBox).key,
-        '#4': (args) => SizedBox(key: args[0] as Key?, width: args[1] as double?, height: args[2] as double?, child: args[3] as Widget?),
-        'expand#2': (args) => SizedBox.expand(key: args[0] as Key?, child: args[1] as Widget?),
-        'shrink#2': (args) => SizedBox.shrink(key: args[0] as Key?, child: args[1] as Widget?),
-        'fromSize#3': (args) => SizedBox.fromSize(key: args[0] as Key?, child: args[1] as Widget?, size: args[2] as Size?),
-        'square#3': (args) => SizedBox.square(key: args[0] as Key?, child: args[1] as Widget?, dimension: args[2] as double?),
+        '#4': (args) => SizedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, width: identical(args[1], darticAbsent) ? null : args[1] as double?, height: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
+        'expand#2': (args) => SizedBox.expand(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
+        'shrink#2': (args) => SizedBox.shrink(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
+        'fromSize#3': (args) => SizedBox.fromSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, size: identical(args[2], darticAbsent) ? null : args[2] as Size?),
+        'square#3': (args) => SizedBox.square(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, dimension: identical(args[2], darticAbsent) ? null : args[2] as double?),
       };
 }

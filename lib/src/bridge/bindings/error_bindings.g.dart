@@ -61,7 +61,7 @@ abstract final class ErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$Error(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::Error::safeToString#1', (args) => Error.safeToString(args[0] as Object?));
+    ctx.registerBinding('dart:core::Error::safeToString#1', (args) => Error.safeToString(args[0]));
     ctx.registerBinding('dart:core::Error::throwWithStackTrace#2', (args) => Error.throwWithStackTrace(args[0] as Object, args[1] as StackTrace));
     ctx.registerBinding('dart:core::Error::\$super\$stackTrace#0', (args) => (args[0] as Error).stackTrace);
   }

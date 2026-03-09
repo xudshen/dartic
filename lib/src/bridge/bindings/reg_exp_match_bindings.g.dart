@@ -18,7 +18,7 @@ abstract final class RegExpMatchBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'namedGroup#1': (args) => (args[0] as RegExpMatch).namedGroup(args[1] as String),
         'group#1': (args) => (args[0] as RegExpMatch).group(args[1] as int),
-        'groups#1': (args) => (args[0] as RegExpMatch).groups(args[1] as List<int>),
+        'groups#1': (args) => (args[0] as RegExpMatch).groups((args[1] as List).cast<int>()),
         'groupNames#0': (args) => (args[0] as RegExpMatch).groupNames,
         'pattern#0': (args) => (args[0] as RegExpMatch).pattern,
         'start#0': (args) => (args[0] as RegExpMatch).start,

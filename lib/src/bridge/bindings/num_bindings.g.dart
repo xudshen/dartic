@@ -14,10 +14,7 @@ abstract final class NumBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
     );
-    ctx.registerBinding('dart:core::num::parse#2', (args) {
-      if (identical(args[1], darticAbsent)) return num.parse(args[0] as String);
-      return num.parse(args[0] as String, args[1] as num Function(String)?);
-    });
+    ctx.registerBinding('dart:core::num::parse#2', (args) => num.parse(args[0] as String, identical(args[1], darticAbsent) ? null : args[1] as num Function(String)?));
     ctx.registerBinding('dart:core::num::tryParse#1', (args) => num.tryParse(args[0] as String));
   }
 
@@ -37,10 +34,7 @@ abstract final class NumBindings {
         'toInt#0': (args) => (args[0] as num).toInt(),
         'toDouble#0': (args) => (args[0] as num).toDouble(),
         'toStringAsFixed#1': (args) => (args[0] as num).toStringAsFixed(args[1] as int),
-        'toStringAsExponential#1': (args) {
-          if (identical(args[1], darticAbsent)) return (args[0] as num).toStringAsExponential();
-          return (args[0] as num).toStringAsExponential(args[1] as int?);
-        },
+        'toStringAsExponential#1': (args) => (args[0] as num).toStringAsExponential(identical(args[1], darticAbsent) ? null : args[1] as int?),
         'toStringAsPrecision#1': (args) => (args[0] as num).toStringAsPrecision(args[1] as int),
         'toString#0': (args) => (args[0] as num).toString(),
         'hashCode#0': (args) => (args[0] as num).hashCode,

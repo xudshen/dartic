@@ -17,7 +17,7 @@ abstract final class StringBufferBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'write#1': (args) { (args[0] as StringBuffer).write(args[1] as Object?); return null; },
+        'write#1': (args) { (args[0] as StringBuffer).write(args[1]); return null; },
         'writeCharCode#1': (args) { (args[0] as StringBuffer).writeCharCode(args[1] as int); return null; },
         'clear#0': (args) { (args[0] as StringBuffer).clear(); return null; },
         'toString#0': (args) => (args[0] as StringBuffer).toString(),
