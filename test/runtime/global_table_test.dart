@@ -137,7 +137,9 @@ void main() {
       expect(interp.valueStack.readInt(1), 42);
     });
 
-    test('LOAD_GLOBAL to uninitialized slot throws DarticError', () {
+    test('LOAD_GLOBAL to no-initializer slot returns null', () {
+      // Dart spec: `var x;` (no initializer) defaults to null.
+      // With lazy init, LOAD_GLOBAL stores null for globals without initializers.
       final bytecode = Uint64List.fromList([
         encodeABx(Op.loadGlobal, 0, 0),
         encodeAx(Op.halt, 0),
@@ -160,14 +162,9 @@ void main() {
       );
 
       final interp = DarticInterpreter();
-      expect(
-        () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('Uninitialized'),
-        )),
-      );
+      interp.execute(module);
+      // Global loaded as null → refStack[0] = null.
+      expect(interp.refStack.read(0), isNull);
     });
 
     test('multiple globals with different values', () {
@@ -244,7 +241,7 @@ void main() {
       expect(interp.refStack.read(1), 'hello');
     });
 
-    test('global initializer function runs before main', () {
+    test('global initializer runs lazily on first LOAD_GLOBAL', () {
       // Initializer function (funcId 0): stores 42 into globals[0], then HALT.
       final initBytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),

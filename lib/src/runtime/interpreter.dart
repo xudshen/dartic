@@ -307,16 +307,9 @@ class DarticInterpreter {
 
     _isExecuting = true;
     try {
-      // Set up global table and run initializers.
+      // Allocate global table (lazy — initializers run on first access).
       if (module.globalCount > 0) {
         _globalTable = DarticGlobalTable(module.globalCount);
-        // Run initializers (each ends with STORE_GLOBAL + HALT).
-        for (var i = 0; i < module.globalCount; i++) {
-          final initFuncId = module.globalInitializerIds[i];
-          if (initFuncId >= 0) {
-            _executeEntry(module, initFuncId);
-          }
-        }
       }
 
       // Run main.
@@ -361,15 +354,9 @@ class DarticInterpreter {
 
     _isExecuting = true;
     try {
-      // Initialize globals if needed (only on first call for this module).
+      // Allocate global table if needed (lazy — initializers run on first access).
       if (module.globalCount > 0 && _globalTable == null) {
         _globalTable = DarticGlobalTable(module.globalCount);
-        for (var i = 0; i < module.globalCount; i++) {
-          final initFuncId = module.globalInitializerIds[i];
-          if (initFuncId >= 0) {
-            _executeEntry(module, initFuncId);
-          }
-        }
       }
 
       // Execute the target function via nested dispatch (HOST_BOUNDARY).
@@ -2223,7 +2210,28 @@ class DarticInterpreter {
         case Op.loadGlobal: // LOAD_GLOBAL A, Bx — refStack[A] = globals[Bx]
           final a = decodeA(instr);
           final bx = decodeBx(instr);
-          rs.write(rBase + a, _globalTable!.load(bx));
+          final gt = _globalTable!;
+          if (!gt.isInitialized(bx)) {
+            // Lazy initialization: run the initializer on first access.
+            final initFuncId = module.globalInitializerIds[bx];
+            if (initFuncId >= 0) {
+              gt.markInitializing(bx);
+              try {
+                _runNestedDispatch(
+                  module: module,
+                  proto: module.functions[initFuncId],
+                  args: const [],
+                );
+              } catch (_) {
+                gt.resetToUninitialized(bx);
+                rethrow;
+              }
+            } else {
+              // No initializer — default to null.
+              gt.store(bx, null);
+            }
+          }
+          rs.write(rBase + a, gt.load(bx));
 
         case Op.storeGlobal: // STORE_GLOBAL A, Bx — globals[Bx] = refStack[A]
           final a = decodeA(instr);
