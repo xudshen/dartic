@@ -11,6 +11,7 @@ import '../bridge/dartic_object_holder.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bytecode/deserializer.dart';
+import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../sandbox/load_error.dart';
@@ -31,34 +32,6 @@ import 'subtype_checker.dart';
 import 'sync_star.dart';
 import 'type_resolver.dart';
 import 'value_stack.dart';
-
-// ── WIDE prefix operand decoders ──
-//
-// These extract widened operands from the (extension, instruction) pair.
-// When ext == 0 (no WIDE prefix), use normal extraction; otherwise call these.
-// See: lib/src/bytecode/encoding.dart for the WIDE encoding format.
-
-@pragma('vm:prefer-inline')
-int _wideA(int ext, int instr) =>
-    ((ext >> 8) & 0xFF) << 8 | ((instr >> 8) & 0xFF);
-
-@pragma('vm:prefer-inline')
-int _wideB(int ext, int instr) =>
-    ((ext >> 16) & 0xFF) << 8 | ((instr >> 16) & 0xFF);
-
-@pragma('vm:prefer-inline')
-int _wideC(int ext, int instr) =>
-    ((ext >> 24) & 0xFF) << 8 | ((instr >> 24) & 0xFF);
-
-@pragma('vm:prefer-inline')
-int _wideBx(int ext, int instr) =>
-    ((ext >> 16) & 0xFFFF) << 16 | ((instr >> 16) & 0xFFFF);
-
-@pragma('vm:prefer-inline')
-int _wideSBx(int ext, int instr) {
-  final bx = ((ext >> 16) & 0xFFFF) << 16 | ((instr >> 16) & 0xFFFF);
-  return bx - 0x7FFFFFFF;
-}
 
 /// Bytecode interpreter with register-based dispatch loop.
 ///
@@ -334,16 +307,9 @@ class DarticInterpreter {
 
     _isExecuting = true;
     try {
-      // Set up global table and run initializers.
+      // Allocate global table (lazy — initializers run on first access).
       if (module.globalCount > 0) {
         _globalTable = DarticGlobalTable(module.globalCount);
-        // Run initializers (each ends with STORE_GLOBAL + HALT).
-        for (var i = 0; i < module.globalCount; i++) {
-          final initFuncId = module.globalInitializerIds[i];
-          if (initFuncId >= 0) {
-            _executeEntry(module, initFuncId);
-          }
-        }
       }
 
       // Run main.
@@ -388,15 +354,9 @@ class DarticInterpreter {
 
     _isExecuting = true;
     try {
-      // Initialize globals if needed (only on first call for this module).
+      // Allocate global table if needed (lazy — initializers run on first access).
       if (module.globalCount > 0 && _globalTable == null) {
         _globalTable = DarticGlobalTable(module.globalCount);
-        for (var i = 0; i < module.globalCount; i++) {
-          final initFuncId = module.globalInitializerIds[i];
-          if (initFuncId >= 0) {
-            _executeEntry(module, initFuncId);
-          }
-        }
       }
 
       // Execute the target function via nested dispatch (HOST_BOUNDARY).
@@ -854,7 +814,7 @@ class DarticInterpreter {
   /// Returns the caller's loop state (vBase, rBase, code, pc, upvalues) if
   /// the caller's dispatch loop should continue, or `null` if `_executeLoop`
   /// should return (entry function or host boundary).
-  ({int vBase, int rBase, Uint32List code, int pc, List<Upvalue>? upvalues})?
+  ({int vBase, int rBase, Uint64List code, int pc, List<Upvalue>? upvalues})?
       _deliverFutureToCaller(
     DarticFrame frame,
     Object? future,
@@ -1281,7 +1241,7 @@ class DarticInterpreter {
     DarticModule module,
     int vBase,
     int rBase,
-    Uint32List code,
+    Uint64List code,
     int pc,
     List<Upvalue>? currentUpvalues,
   ) {
@@ -1434,15 +1394,8 @@ class DarticInterpreter {
     for (;;) {
     // Inner fuel-bounded dispatch loop.
     while (_fuel-- > 0) {
-      final raw = code[pc++];
-      var op = raw & 0xFF;
-      var instr = raw;
-      int ext = 0;
-      if (op == Op.wide) {
-        ext = code[pc++];
-        instr = code[pc++];
-        op = instr & 0xFF;
-      }
+      final instr = code[pc++];
+      final op = instr & 0xFF;
 
       switch (op) {
         // ── Load/Store (0x00-0x0B) ──
@@ -1451,52 +1404,50 @@ class DarticInterpreter {
           break;
 
         case Op.loadConst: // LOAD_CONST A, Bx — refStack[A] = constPool.refs[Bx]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           rs.write(rBase + a, cp.getRef(bx));
 
         case Op.loadNull: // LOAD_NULL A — refStack[A] = null
-          rs.write(rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)), null);
+          rs.write(rBase + (decodeA(instr)), null);
 
         case Op.loadAbsent: // LOAD_ABSENT A — refStack[A] = darticAbsent
-          rs.write(rBase + ((instr >> 8) & 0xFF), darticAbsent);
+          rs.write(rBase + decodeA(instr), darticAbsent);
 
         case Op.loadTrue: // LOAD_TRUE A — valueStack[A] = 1
-          vs.writeInt(vBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)), 1);
+          vs.writeInt(vBase + (decodeA(instr)), 1);
 
         case Op.loadFalse: // LOAD_FALSE A — valueStack[A] = 0
-          vs.writeInt(vBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)), 0);
+          vs.writeInt(vBase + (decodeA(instr)), 0);
 
         case Op.loadInt: // LOAD_INT A, sBx — valueStack[A] = sBx
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final sbx = ext == 0
-              ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-              : _wideSBx(ext, instr);
+          final a = decodeA(instr);
+          final sbx = decodesBx(instr);
           vs.writeInt(vBase + a, sbx);
 
         case Op.loadConstInt: // LOAD_CONST_INT A, Bx — valueStack[A] = intPool[Bx]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           vs.writeInt(vBase + a, cp.getInt(bx));
 
         case Op.loadConstDbl: // LOAD_CONST_DBL A, Bx — doubleView[A] = dblPool[Bx]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           vs.writeDouble(vBase + a, cp.getDouble(bx));
 
         case Op.moveRef: // MOVE_REF A, B — refStack[A] = refStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           rs.write(rBase + a, rs.read(rBase + b));
 
         case Op.moveVal: // MOVE_VAL A, B — valueStack[A] = valueStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b));
 
         case Op.loadUpvalue: // LOAD_UPVALUE A, Bx — refStack[A] = upvalue[Bx]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final uv = currentUpvalues![bx];
           rs.write(
             rBase + a,
@@ -1504,8 +1455,8 @@ class DarticInterpreter {
           );
 
         case Op.storeUpvalue: // STORE_UPVALUE A, Bx — upvalue[Bx] = refStack[A]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final uv = currentUpvalues![bx];
           final val = rs.read(rBase + a);
           if (uv.isOpen) {
@@ -1518,178 +1469,178 @@ class DarticInterpreter {
         // (intToDbl/dblToInt handled below in Float Arithmetic section)
 
         case Op.boxInt: // BOX_INT A, B — refStack[A] = valueStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           rs.write(rBase + a, vs.readInt(vBase + b));
 
         case Op.boxDouble: // BOX_DOUBLE A, B — refStack[A] = doubleView[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           rs.write(rBase + a, vs.readDouble(vBase + b));
 
         case Op.boxBool: // BOX_BOOL A, B — refStack[A] = (valueStack[B] != 0)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           rs.write(rBase + a, vs.readInt(vBase + b) != 0);
 
         case Op.unboxInt: // UNBOX_INT A, B — valueStack[A] = refStack[B] as int
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, rs.read(rBase + b) as int);
 
         case Op.unboxDouble: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeDouble(vBase + a, rs.read(rBase + b) as double);
 
         case Op.unboxBool: // UNBOX_BOOL A, B — valueStack[A] = (refStack[B] as bool) ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, (rs.read(rBase + b) as bool) ? 1 : 0);
 
         case Op.notBool: // NOT_BOOL A, B — valueStack[A] = valueStack[B] ^ 1
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) ^ 1);
 
         // ── Integer Arithmetic (0x10-0x1F) ──
 
         case Op.addInt: // ADD_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) + vs.readInt(vBase + c));
 
         case Op.subInt: // SUB_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) - vs.readInt(vBase + c));
 
         case Op.mulInt: // MUL_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) * vs.readInt(vBase + c));
 
         case Op.divInt: // DIV_INT A, B, C (truncating ~/)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) ~/ vs.readInt(vBase + c));
 
         case Op.modInt: // MOD_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) % vs.readInt(vBase + c));
 
         case Op.negInt: // NEG_INT A, B
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, -vs.readInt(vBase + b));
 
         case Op.bitAnd: // BIT_AND A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) & vs.readInt(vBase + c));
 
         case Op.bitOr: // BIT_OR A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) | vs.readInt(vBase + c));
 
         case Op.bitXor: // BIT_XOR A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) ^ vs.readInt(vBase + c));
 
         case Op.bitNot: // BIT_NOT A, B
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeInt(vBase + a, ~vs.readInt(vBase + b));
 
         case Op.shl: // SHL A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
 
         case Op.shr: // SHR A, B, C (arithmetic)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
 
         case Op.ushr: // USHR A, B, C (unsigned / logical)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
 
         case Op.addIntImm: // ADD_INT_IMM A, B, C (C is unsigned 8-bit immediate)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a, vs.readInt(vBase + b) + c);
 
         // ── Float Arithmetic (0x20-0x2F) ──
 
         case Op.addDbl: // ADD_DBL A, B, C — doubleView[A] = doubleView[B] + doubleView[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeDouble(
               vBase + a, vs.readDouble(vBase + b) + vs.readDouble(vBase + c));
 
         case Op.subDbl: // SUB_DBL A, B, C — doubleView[A] = doubleView[B] - doubleView[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeDouble(
               vBase + a, vs.readDouble(vBase + b) - vs.readDouble(vBase + c));
 
         case Op.mulDbl: // MUL_DBL A, B, C — doubleView[A] = doubleView[B] * doubleView[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeDouble(
               vBase + a, vs.readDouble(vBase + b) * vs.readDouble(vBase + c));
 
         case Op.divDbl: // DIV_DBL A, B, C — doubleView[A] = doubleView[B] / doubleView[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeDouble(
               vBase + a, vs.readDouble(vBase + b) / vs.readDouble(vBase + c));
 
         case Op.modDbl: // MOD_DBL A, B, C — doubleView[A] = doubleView[B] % doubleView[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeDouble(
               vBase + a, vs.readDouble(vBase + b) % vs.readDouble(vBase + c));
 
         case Op.negDbl: // NEG_DBL A, B — doubleView[A] = -doubleView[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeDouble(vBase + a, -vs.readDouble(vBase + b));
 
         case Op.intToDbl: // INT_TO_DBL A, B — doubleView[A] = intView[B].toDouble()
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           vs.writeDouble(vBase + a, vs.readInt(vBase + b).toDouble());
 
         case Op.dblToInt: // DBL_TO_INT A, B — intView[A] = doubleView[B].toInt()
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           final dv = vs.readDouble(vBase + b);
           if (dv.isNaN || dv.isInfinite) {
             pc = unwindToHandler(
@@ -1704,133 +1655,122 @@ class DarticInterpreter {
         // ── Comparison (0x30-0x3F) ──
 
         case Op.ltInt: // LT_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) < vs.readInt(vBase + c) ? 1 : 0);
 
         case Op.leInt: // LE_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) <= vs.readInt(vBase + c) ? 1 : 0);
 
         case Op.gtInt: // GT_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(
               vBase + a, vs.readInt(vBase + b) > vs.readInt(vBase + c) ? 1 : 0);
 
         case Op.geInt: // GE_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) >= vs.readInt(vBase + c) ? 1 : 0);
 
         case Op.eqInt: // EQ_INT A, B, C
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readInt(vBase + b) == vs.readInt(vBase + c) ? 1 : 0);
 
         case Op.ltDbl: // LT_DBL A, B, C — valueStack[A] = doubleView[B] < doubleView[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readDouble(vBase + b) < vs.readDouble(vBase + c) ? 1 : 0);
 
         case Op.leDbl: // LE_DBL A, B, C — valueStack[A] = doubleView[B] <= doubleView[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readDouble(vBase + b) <= vs.readDouble(vBase + c) ? 1 : 0);
 
         case Op.gtDbl: // GT_DBL A, B, C — valueStack[A] = doubleView[B] > doubleView[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readDouble(vBase + b) > vs.readDouble(vBase + c) ? 1 : 0);
 
         case Op.geDbl: // GE_DBL A, B, C — valueStack[A] = doubleView[B] >= doubleView[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readDouble(vBase + b) >= vs.readDouble(vBase + c) ? 1 : 0);
 
         case Op.eqDbl: // EQ_DBL A, B, C — valueStack[A] = doubleView[B] == doubleView[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               vs.readDouble(vBase + b) == vs.readDouble(vBase + c) ? 1 : 0);
 
         case Op.eqRef: // EQ_REF A, B, C — identical(refStack[B], refStack[C])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               identical(rs.read(rBase + b), rs.read(rBase + c)) ? 1 : 0);
 
         case Op.eqGeneric: // EQ_GENERIC A, B, C — valueStack[A] = refStack[B] == refStack[C] ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           vs.writeInt(vBase + a,
               rs.read(rBase + b) == rs.read(rBase + c) ? 1 : 0);
 
         // ── Control Flow (0x40-0x4F) ──
 
         case Op.jump: // JUMP sBx — PC += sBx (A unused)
-          pc += ext == 0
-              ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-              : _wideSBx(ext, instr);
+          pc += decodesBx(instr);
 
         case Op.jumpIfTrue: // JUMP_IF_TRUE A, sBx — if valueStack[A] != 0
-          if (vs.readInt(vBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr))) != 0) {
-            pc += ext == 0
-                ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-                : _wideSBx(ext, instr);
+          if (vs.readInt(vBase + (decodeA(instr))) != 0) {
+            pc += decodesBx(instr);
           }
 
         case Op.jumpIfFalse: // JUMP_IF_FALSE A, sBx — if valueStack[A] == 0
-          if (vs.readInt(vBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr))) == 0) {
-            pc += ext == 0
-                ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-                : _wideSBx(ext, instr);
+          if (vs.readInt(vBase + (decodeA(instr))) == 0) {
+            pc += decodesBx(instr);
           }
 
         case Op.jumpIfNull: // JUMP_IF_NULL A, sBx — if refStack[A] == null
-          if (rs.read(rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr))) == null) {
-            pc += ext == 0
-                ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-                : _wideSBx(ext, instr);
+          if (rs.read(rBase + (decodeA(instr))) == null) {
+            pc += decodesBx(instr);
           }
 
         case Op.jumpIfNnull: // JUMP_IF_NNULL A, sBx — if refStack[A] != null
-          if (rs.read(rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr))) != null) {
-            pc += ext == 0
-                ? ((instr >> 16) & 0xFFFF) - 0x7FFF
-                : _wideSBx(ext, instr);
+          if (rs.read(rBase + (decodeA(instr))) != null) {
+            pc += decodesBx(instr);
           }
 
-        case Op.jumpAx: // JUMP_AX sAx — PC += sAx (24-bit signed)
-          // WIDE for Ax format not yet needed; keep original decoding.
-          pc += ((instr >> 8) & 0xFFFFFF) - 0x7FFFFF;
+        case Op.jumpAx: // JUMP_AX sAx — PC += sAx
+          pc += decodesAx(instr);
 
         // ── Call/Return (0x50-0x5F) ──
 
         case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           final closure = rs.read(rBase + b) as DarticClosure;
           final callee = closure.funcProto;
 
@@ -1869,8 +1809,8 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callStatic: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final callee = module.functions[bx];
 
           // Overflow and call depth checks.
@@ -1908,8 +1848,8 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callHost: // CALL_HOST A, Bx — host function call (no frame push)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
 
           // Bridge interception: if the binding is an instance method and the
           // receiver is a Bridge, try dispatching through DarticDispatch first.
@@ -1965,9 +1905,9 @@ class DarticInterpreter {
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr); // result register
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr); // receiver register
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr); // IC table index
+          final a = decodeA(instr); // result register
+          final b = decodeB(instr); // receiver register
+          final c = decodeC(instr); // IC table index
 
           // Read receiver and IC entry up front.
           final receiver = rs.read(rBase + b);
@@ -2103,8 +2043,8 @@ class DarticInterpreter {
           }
 
         case Op.callSuper: // CALL_SUPER A, Bx — call super method functions[Bx], result→reg A
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final callee = module.functions[bx];
 
           // Overflow and call depth checks.
@@ -2199,12 +2139,12 @@ class DarticInterpreter {
           final int retVal;
           final int retValIdx; // absolute value-stack index for HOST_BOUNDARY reads
           if (op == Op.returnRef) {
-            retRef = rs.read(rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)));
+            retRef = rs.read(rBase + (decodeA(instr)));
             retVal = 0;
             retValIdx = 0;
           } else if (op == Op.returnVal) {
             retRef = null;
-            retValIdx = vBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr));
+            retValIdx = vBase + (decodeA(instr));
             retVal = vs.readInt(retValIdx);
           } else {
             retRef = null;
@@ -2268,62 +2208,83 @@ class DarticInterpreter {
         // ── Global Variables (0xA0-0xA1) ──
 
         case Op.loadGlobal: // LOAD_GLOBAL A, Bx — refStack[A] = globals[Bx]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
-          rs.write(rBase + a, _globalTable!.load(bx));
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
+          final gt = _globalTable!;
+          if (!gt.isInitialized(bx)) {
+            // Lazy initialization: run the initializer on first access.
+            final initFuncId = module.globalInitializerIds[bx];
+            if (initFuncId >= 0) {
+              gt.markInitializing(bx);
+              try {
+                _runNestedDispatch(
+                  module: module,
+                  proto: module.functions[initFuncId],
+                  args: const [],
+                );
+              } catch (_) {
+                gt.resetToUninitialized(bx);
+                rethrow;
+              }
+            } else {
+              // No initializer — default to null.
+              gt.store(bx, null);
+            }
+          }
+          rs.write(rBase + a, gt.load(bx));
 
         case Op.storeGlobal: // STORE_GLOBAL A, Bx — globals[Bx] = refStack[A]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           _globalTable!.store(bx, rs.read(rBase + a));
 
         // ── Object Operations (0x60-0x64) ──
 
         case Op.getFieldRef: // GET_FIELD_REF A, B, C — refStack[A] = refStack[B].refFields[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + b)!);
           rs.write(rBase + a, obj.refFields[c]);
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + a)!);
           obj.refFields[c] = rs.read(rBase + b);
 
         case Op.getFieldVal: // GET_FIELD_VAL A, B, C — valueStack[A] = refStack[B].valueFields[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + b)!);
           vs.writeInt(vBase + a, obj.valueFields[c]);
 
         case Op.setFieldVal: // SET_FIELD_VAL A, B, C — refStack[A].valueFields[C] = valueStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + a)!);
           obj.valueFields[c] = vs.readInt(vBase + b);
 
         case Op.newInstance: // NEW_INSTANCE A, Bx — refStack[A] = new DarticObject(class[Bx])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final classInfo = module.classes[bx];
           rs.write(rBase + a, DarticObject(classInfo));
 
         case Op.storeSuperArgs: // STORE_SUPER_ARGS A, B — store A args starting at ref[B] into this.pendingSuperArgs
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr); // arg count
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr); // first arg register
+          final a = decodeA(instr); // arg count
+          final b = decodeB(instr); // first arg register
           final obj = _extractDarticObject(rs.read(rBase + 2)!);
           obj.pendingSuperArgs = List<Object?>.generate(
             a, (i) => rs.read(rBase + b + i),
           );
 
         case Op.wrapBridge: // WRAP_BRIDGE A, Bx — wrap DarticObject in Bridge if factory exists
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final classInfo = module.classes[bx];
           final factory = bridgeFactoryRegistry?.lookupByClassId(classInfo.classId);
           if (factory != null) {
@@ -2342,9 +2303,9 @@ class DarticInterpreter {
         // ── Type Operations (0x65-0x66) ──
 
         case Op.instanceOf: // INSTANCEOF A, B, C — valStack[A] = isSubtypeOf(extractType(refStack[B]), refStack[C]) ? 1 : 0
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final targetType = rs.read(rBase + c) as DarticType;
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
@@ -2353,9 +2314,9 @@ class DarticInterpreter {
           vs.writeInt(vBase + a, checker.isSubtypeOf(objType, targetType) ? 1 : 0);
 
         case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final targetType = rs.read(rBase + c) as DarticType;
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
@@ -2370,13 +2331,13 @@ class DarticInterpreter {
         // ── Exception Handling (0xA4-0xA5) ──
 
         case Op.throw_: // THROW A — throw refStack[A]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
+          final a = decodeA(instr);
           final exception = rs.read(rBase + a);
           pc = unwindToHandler(pc - 1, exception, StackTrace.current);
 
         case Op.rethrow_: // RETHROW A, B — rethrow refStack[A] with stackTrace refStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           final exception = rs.read(rBase + a);
           // Read stackTrace BEFORE unwinding — the source register may fall
           // within the range that gets nullified during stack unwinding.
@@ -2384,11 +2345,11 @@ class DarticInterpreter {
           pc = unwindToHandler(pc - 1, exception, stackTrace);
 
         case Op.assert_: // ASSERT A, Bx — if valueStack[A] == 0 → throw AssertionError
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           if (vs.readInt(vBase + a) == 0) {
             final message =
-                bx != 0xFFFF ? module.constantPool.getRef(bx) : null;
+                bx != 0xFFFFFFFF ? module.constantPool.getRef(bx) : null;
             final exception = AssertionError(message?.toString());
             pc = unwindToHandler(pc - 1, exception, StackTrace.current);
           }
@@ -2396,8 +2357,8 @@ class DarticInterpreter {
         // ── Closure (0x70-0x71) ──
 
         case Op.closure: // CLOSURE A, Bx — refStack[A] = DarticClosure(funcProto[Bx])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final proto = module.functions[bx];
           final upvalues = <Upvalue>[];
           for (final desc in proto.upvalueDescriptors) {
@@ -2417,7 +2378,7 @@ class DarticInterpreter {
           );
 
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
-          final minIndex = rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr));
+          final minIndex = rBase + (decodeA(instr));
           _openUpvalues.removeWhere((stackIndex, uv) {
             if (stackIndex >= minIndex) {
               uv.close(rs.read(stackIndex));
@@ -2430,26 +2391,26 @@ class DarticInterpreter {
 
         case Op.pushIta: // PUSH_ITA A — refStack[A] = refStack[0] (ITA slot)
           rs.write(
-            rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)),
+            rBase + (decodeA(instr)),
             rs.read(rBase + 0),
           );
 
         case Op.pushFta: // PUSH_FTA A — refStack[A] = refStack[1] (FTA slot)
           rs.write(
-            rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr)),
+            rBase + (decodeA(instr)),
             rs.read(rBase + 1),
           );
 
         case Op.loadTypeArg: // LOAD_TYPE_ARG A, B, C — refStack[A] = (refStack[B] as List<DarticType>)[C]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final typeArgs = rs.read(rBase + b) as List<DarticType>;
           rs.write(rBase + a, typeArgs[c]);
 
         case Op.instantiateType: // INSTANTIATE_TYPE A, Bx — refStack[A] = resolveType(constPool.refs[Bx], ITA, FTA)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+          final a = decodeA(instr);
+          final bx = decodeBx(instr);
           final template = cp.getRef(bx) as TypeTemplate;
           final ita = rs.read(rBase + 0) as List<DarticType>?;
           final fta = rs.read(rBase + 1) as List<DarticType>?;
@@ -2457,9 +2418,9 @@ class DarticInterpreter {
               rBase + a, resolveType(template, ita, fta, _activeTypeRegistry!));
 
         case Op.createTypeArgs: // CREATE_TYPE_ARGS A, B, C — refStack[C] = [refStack[B]..refStack[B+A-1]]
-          final count = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final startReg = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final destReg = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final count = decodeA(instr);
+          final startReg = decodeB(instr);
+          final destReg = decodeC(instr);
           final typeArgs = <DarticType>[
             for (var i = 0; i < count; i++)
               rs.read(rBase + startReg + i) as DarticType,
@@ -2467,8 +2428,8 @@ class DarticInterpreter {
           rs.write(rBase + destReg, typeArgs);
 
         case Op.allocGeneric: // ALLOC_GENERIC A, B — refStack[A] = new DarticObject with runtimeType from refStack[B]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           final type = rs.read(rBase + b) as DarticInterfaceType;
           final classInfo = module.classes[type.classId];
           final obj = DarticObject(classInfo);
@@ -2478,7 +2439,7 @@ class DarticInterpreter {
         // ── Null Safety (0xA7) ──
 
         case Op.nullCheck: // NULL_CHECK A — if refStack[A] == null → throw
-          if (rs.read(rBase + (ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr))) == null) {
+          if (rs.read(rBase + (decodeA(instr))) == null) {
             throw DarticError(
                 'Null check operator used on a null value');
           }
@@ -2486,16 +2447,16 @@ class DarticInterpreter {
         // ── Collection Creation (0x90-0x92) ──
 
         case Op.createList: // CREATE_LIST A, B, C — refStack[A] = List from refStack[B..B+C-1]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final list = List<Object?>.generate(c, (i) => rs.read(rBase + b + i));
           rs.write(rBase + a, list);
 
         case Op.createMap: // CREATE_MAP A, B, C — refStack[A] = Map from C key/value pairs starting at B
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final map = <Object?, Object?>{};
           for (var i = 0; i < c; i++) {
             final key = rs.read(rBase + b + i * 2);
@@ -2505,9 +2466,9 @@ class DarticInterpreter {
           rs.write(rBase + a, map);
 
         case Op.createSet: // CREATE_SET A, B, C — refStack[A] = Set from refStack[B..B+C-1]
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final set = <Object?>{};
           for (var i = 0; i < c; i++) {
             set.add(rs.read(rBase + b + i));
@@ -2515,9 +2476,9 @@ class DarticInterpreter {
           rs.write(rBase + a, set);
 
         case Op.createRecord: // CREATE_RECORD A, B, C — refStack[A] = Record from shape cp.refs[C], fields at B
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final shape = cp.getRef(c) as List;
           final positionalCount = shape[0] as int;
           final namedNames = <String>[
@@ -2551,9 +2512,9 @@ class DarticInterpreter {
         // ── String & Dynamic (0x98-0x9F) ──
 
         case Op.stringInterp: // STRING_INTERP A, B, C — refStack[A] = concat(refStack[B..B+C-1])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final buf = StringBuffer();
           for (var i = 0; i < c; i++) {
             final part = rs.read(rBase + b + i);
@@ -2564,9 +2525,9 @@ class DarticInterpreter {
         // ── Dynamic Dispatch (0x67-0x68, 0x9A) ──
 
         case Op.getFieldDyn: // GET_FIELD_DYN A, B, C — refStack[A] = refStack[B].getProperty(names[C])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final receiver = rs.read(rBase + b);
           final name = cp.getName(c);
           if (receiver == null) {
@@ -2654,9 +2615,9 @@ class DarticInterpreter {
           continue;
 
         case Op.setFieldDyn: // SET_FIELD_DYN A, B, C — refStack[A].setProperty(names[C], refStack[B])
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
           final receiver = rs.read(rBase + a);
           final value = rs.read(rBase + b);
           final name = cp.getName(c);
@@ -2729,9 +2690,9 @@ class DarticInterpreter {
           continue;
 
         case Op.invokeDyn: // INVOKE_DYN A, B, C — refStack[A] = dynamicDispatch(refStack[A+1], names[C], args)
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr); // arg count (including receiver)
-          final c = ext == 0 ? (instr >> 24) & 0xFF : _wideC(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr); // arg count (including receiver)
+          final c = decodeC(instr);
           final receiver = rs.read(rBase + a + 1);
           final name = cp.getName(c);
           if (receiver == null) {
@@ -2806,10 +2767,10 @@ class DarticInterpreter {
 
         case Op.initAsync: // INIT_ASYNC A, Bx — create Completer<T>, refStack[A] = completer.future
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
+            final a = decodeA(instr);
             // Bx = constant pool index for emittedValueType TypeTemplate.
             // Phase 1: use Completer<dynamic> (typed Completer deferred).
-            // final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            // final bx = decodeBx(instr);
             final completer = Completer<Object?>();
 
             // Create a DarticFrame to hold the async state.
@@ -2830,8 +2791,8 @@ class DarticInterpreter {
 
         case Op.await_: // AWAIT A, Bx — suspend frame, register callbacks on future
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-            final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            final a = decodeA(instr);
+            final bx = decodeBx(instr);
 
             final frame = _currentAsyncFrame!;
             frame.awaitDestReg = a;
@@ -2890,7 +2851,7 @@ class DarticInterpreter {
 
         case Op.asyncReturn: // ASYNC_RETURN A — completer.complete(refStack[A])
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
+            final a = decodeA(instr);
             final frame = _currentAsyncFrame!;
             final result = rs.read(rBase + a);
             frame.resultCompleter!.complete(result);
@@ -2921,8 +2882,8 @@ class DarticInterpreter {
 
         case Op.asyncThrow: // ASYNC_THROW A, B — completer.completeError(refStack[A], refStack[B])
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-            final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+            final a = decodeA(instr);
+            final b = decodeB(instr);
             final frame = _currentAsyncFrame!;
             final error = rs.read(rBase + a);
             final stackTrace = rs.read(rBase + b);
@@ -2958,10 +2919,10 @@ class DarticInterpreter {
 
         case Op.initAsyncStar: // INIT_ASYNC_STAR A, Bx — create StreamController
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
+            final a = decodeA(instr);
             // Bx = constant pool index for emittedValueType TypeTemplate.
             // (reserved for future typed StreamController; currently unused).
-            // final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            // final bx = decodeBx(instr);
 
             final funcProto = module.functions[callStack.funcId];
 
@@ -3054,10 +3015,10 @@ class DarticInterpreter {
 
         case Op.initSyncStar: // INIT_SYNC_STAR A, Bx — create lazy SyncStarIterable
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
+            final a = decodeA(instr);
             // Bx = constant pool index for emittedValueType TypeTemplate
             // (reserved for future typed iterable; currently unused).
-            // final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            // final bx = decodeBx(instr);
 
             final funcProto = module.functions[callStack.funcId];
 
@@ -3099,8 +3060,8 @@ class DarticInterpreter {
 
         case Op.yield_: // YIELD A, Bx — yield refStack[A], resume at Bx
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-            final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            final a = decodeA(instr);
+            final bx = decodeBx(instr);
 
             final syncIter = _activeSyncStarIterator;
             if (syncIter != null) {
@@ -3209,8 +3170,8 @@ class DarticInterpreter {
 
         case Op.yieldStar: // YIELD_STAR A, Bx — yield* refStack[A], resume at Bx
           {
-            final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-            final bx = ext == 0 ? (instr >> 16) & 0xFFFF : _wideBx(ext, instr);
+            final a = decodeA(instr);
+            final bx = decodeBx(instr);
 
             final delegateValue = rs.read(rBase + a);
 
@@ -3319,8 +3280,8 @@ class DarticInterpreter {
         case Op.halt: // HALT ABC: A=resultReg, B=kind+1, C=unused
           // Extract result BEFORE resetting stack pointers.
           // B encodes StackKind.index + 1, where 0 means void/no result.
-          final a = ext == 0 ? (instr >> 8) & 0xFF : _wideA(ext, instr);
-          final b = ext == 0 ? (instr >> 16) & 0xFF : _wideB(ext, instr);
+          final a = decodeA(instr);
+          final b = decodeB(instr);
           if (b == 0) {
             _lastEntryResult = null; // void
           } else {

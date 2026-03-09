@@ -22,13 +22,13 @@ void main() {
       expect(emitter.currentPC, 2);
     });
 
-    test('toUint32List returns emitted instructions in order', () {
+    test('toUint64List returns emitted instructions in order', () {
       final emitter = BytecodeEmitter();
       emitter.emit(0x01);
       emitter.emit(0x02);
       emitter.emit(0x03);
-      final result = emitter.toUint32List();
-      expect(result, isA<Uint32List>());
+      final result = emitter.toUint64List();
+      expect(result, isA<Uint64List>());
       expect(result, [0x01, 0x02, 0x03]);
     });
 
@@ -38,7 +38,7 @@ void main() {
       emitter.emit(0x02); // will be patched
       emitter.emit(0x03);
       emitter.patchJump(1, 0xFF);
-      final result = emitter.toUint32List();
+      final result = emitter.toUint64List();
       expect(result[0], 0x01);
       expect(result[1], 0xFF);
       expect(result[2], 0x03);
@@ -53,12 +53,12 @@ void main() {
       expect(emitter.currentPC, 3);
       // Patch the placeholder
       emitter.patchJump(offset, 0xAA);
-      expect(emitter.toUint32List()[1], 0xAA);
+      expect(emitter.toUint64List()[1], 0xAA);
     });
 
-    test('empty emitter produces empty Uint32List', () {
+    test('empty emitter produces empty Uint64List', () {
       final emitter = BytecodeEmitter();
-      expect(emitter.toUint32List(), isEmpty);
+      expect(emitter.toUint64List(), isEmpty);
     });
   });
 

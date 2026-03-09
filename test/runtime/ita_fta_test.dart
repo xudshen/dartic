@@ -41,7 +41,7 @@ void main() {
       // Frame layout: reg 0=ITA, reg 1=FTA, reg 2=this, reg 3=temp
       // Load ITA into slot 0, PUSH_ITA copies to slot 3, halt returns slot 3.
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 (ITA slot) = ita
           encodeABx(Op.pushIta, 3, 0), // reg 3 = ITA (from reg 0)
           encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
@@ -57,7 +57,7 @@ void main() {
     test('returns null when ITA is not set (non-generic frame)', () {
       // Without loading anything into reg 0, ITA is null by default.
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.pushIta, 3, 0), // reg 3 = ITA (reg 0 = null)
           encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
         ]),
@@ -77,7 +77,7 @@ void main() {
 
       // Load FTA into slot 1, PUSH_FTA copies to slot 4.
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 1, ftaIdx), // reg 1 (FTA slot) = fta
           encodeABx(Op.pushFta, 4, 0), // reg 4 = FTA (from reg 1)
           encodeABC(Op.halt, 4, 1, 0), // return ref reg 4
@@ -92,7 +92,7 @@ void main() {
 
     test('returns null when FTA is not set (non-generic frame)', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.pushFta, 3, 0), // reg 3 = FTA (reg 1 = null)
           encodeABC(Op.halt, 3, 1, 0),
         ]),
@@ -112,7 +112,7 @@ void main() {
 
       // Load typeArgs list into reg 2, extract index 0 into reg 3.
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 2, taIdx), // reg 2 = typeArgs list
           encodeABC(Op.loadTypeArg, 3, 2, 0), // reg 3 = typeArgs[0]
           encodeABC(Op.halt, 3, 1, 0), // return ref reg 3
@@ -131,7 +131,7 @@ void main() {
       final taIdx = cp.addRef(typeArgs);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 2, taIdx),
           encodeABC(Op.loadTypeArg, 3, 2, 1), // reg 3 = typeArgs[1]
           encodeABC(Op.halt, 3, 1, 0),
@@ -151,7 +151,7 @@ void main() {
       final itaIdx = cp.addRef(ita);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, itaIdx), // reg 0 (ITA) = [boolType]
           encodeABC(Op.loadTypeArg, 3, 0, 0), // reg 3 = ITA[0] = boolType
           encodeABC(Op.halt, 3, 1, 0),

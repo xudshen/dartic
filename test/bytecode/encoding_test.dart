@@ -13,11 +13,11 @@ void main() {
     });
 
     test('roundtrip with max values', () {
-      final instr = encodeABC(0xFF, 0xFF, 0xFF, 0xFF);
+      final instr = encodeABC(0xFF, 0xFFFF, 0xFFFF, 0xFFFF);
       expect(decodeOp(instr), 0xFF);
-      expect(decodeA(instr), 0xFF);
-      expect(decodeB(instr), 0xFF);
-      expect(decodeC(instr), 0xFF);
+      expect(decodeA(instr), 0xFFFF);
+      expect(decodeB(instr), 0xFFFF);
+      expect(decodeC(instr), 0xFFFF);
     });
 
     test('operands are independent', () {
@@ -28,10 +28,18 @@ void main() {
       expect(decodeC(instr), 3);
     });
 
-    test('bit layout: op in low 8 bits, A next 8, B next 8, C top 8', () {
-      // op=0x10, A=0x20, B=0x30, C=0x40
-      final instr = encodeABC(0x10, 0x20, 0x30, 0x40);
-      expect(instr, 0x40302010);
+    test('bit layout: op in [0:8], A in [16:32], B in [32:48], C in [48:64]',
+        () {
+      // op=0x10, A=0x2000, B=0x3000, C=0x4000
+      final instr = encodeABC(0x10, 0x2000, 0x3000, 0x4000);
+      expect(instr, 0x4000300020000010);
+    });
+
+    test('boundary: A=65535, B=0, C=0', () {
+      final instr = encodeABC(Op.nop, 65535, 0, 0);
+      expect(decodeA(instr), 65535);
+      expect(decodeB(instr), 0);
+      expect(decodeC(instr), 0);
     });
   });
 
@@ -44,21 +52,26 @@ void main() {
     });
 
     test('roundtrip with max values', () {
-      final instr = encodeABx(0xFF, 0xFF, 0xFFFF);
+      final instr = encodeABx(0xFF, 0xFFFF, 0xFFFFFFFF);
       expect(decodeOp(instr), 0xFF);
-      expect(decodeA(instr), 0xFF);
-      expect(decodeBx(instr), 0xFFFF);
+      expect(decodeA(instr), 0xFFFF);
+      expect(decodeBx(instr), 0xFFFFFFFF);
     });
 
-    test('Bx uses full 16-bit range', () {
-      final instr = encodeABx(Op.loadConstInt, 5, 12345);
+    test('Bx uses full 32-bit range', () {
+      final instr = encodeABx(Op.loadConstInt, 5, 12345678);
       expect(decodeOp(instr), Op.loadConstInt);
       expect(decodeA(instr), 5);
-      expect(decodeBx(instr), 12345);
+      expect(decodeBx(instr), 12345678);
+    });
+
+    test('boundary: Bx=0xFFFFFFFF', () {
+      final instr = encodeABx(Op.loadConst, 0, 0xFFFFFFFF);
+      expect(decodeBx(instr), 0xFFFFFFFF);
     });
   });
 
-  group('AsBx encoding (excess-K, K=0x7FFF)', () {
+  group('AsBx encoding (excess-K, K=0x7FFFFFFF)', () {
     test('roundtrip zero', () {
       final instr = encodeAsBx(Op.jump, 0, 0);
       expect(decodeOp(instr), Op.jump);
@@ -66,14 +79,14 @@ void main() {
       expect(decodesBx(instr), 0);
     });
 
-    test('roundtrip positive max: +32768', () {
-      final instr = encodeAsBx(Op.jumpIfTrue, 1, 32768);
-      expect(decodesBx(instr), 32768);
+    test('roundtrip positive max: +2147483647', () {
+      final instr = encodeAsBx(Op.jumpIfTrue, 1, 2147483647);
+      expect(decodesBx(instr), 2147483647);
     });
 
-    test('roundtrip negative min: -32767', () {
-      final instr = encodeAsBx(Op.jumpIfFalse, 2, -32767);
-      expect(decodesBx(instr), -32767);
+    test('roundtrip negative min: -2147483647', () {
+      final instr = encodeAsBx(Op.jumpIfFalse, 2, -2147483647);
+      expect(decodesBx(instr), -2147483647);
     });
 
     test('roundtrip negative one', () {
@@ -81,19 +94,29 @@ void main() {
       expect(decodesBx(instr), -1);
     });
 
-    test('excess-K encoding: value 0 encodes as 0x7FFF', () {
+    test('excess-K encoding: value 0 encodes as 0x7FFFFFFF', () {
       final instr = encodeAsBx(Op.jump, 0, 0);
-      expect(decodeBx(instr), 0x7FFF);
+      expect(decodeBx(instr), 0x7FFFFFFF);
     });
 
-    test('excess-K encoding: value -32767 encodes as 0', () {
-      final instr = encodeAsBx(Op.jump, 0, -32767);
+    test('excess-K encoding: value -2147483647 encodes as 0', () {
+      final instr = encodeAsBx(Op.jump, 0, -2147483647);
       expect(decodeBx(instr), 0);
     });
 
-    test('excess-K encoding: value +32768 encodes as 0xFFFF', () {
-      final instr = encodeAsBx(Op.jump, 0, 32768);
-      expect(decodeBx(instr), 0xFFFF);
+    test('excess-K encoding: value +2147483647 encodes as 0xFFFFFFFE', () {
+      final instr = encodeAsBx(Op.jump, 0, 2147483647);
+      expect(decodeBx(instr), 0xFFFFFFFE);
+    });
+
+    test('boundary: sBx=±2147483647 with A=0xFFFF', () {
+      final instrPos = encodeAsBx(Op.jump, 0xFFFF, 2147483647);
+      expect(decodeA(instrPos), 0xFFFF);
+      expect(decodesBx(instrPos), 2147483647);
+
+      final instrNeg = encodeAsBx(Op.jump, 0xFFFF, -2147483647);
+      expect(decodeA(instrNeg), 0xFFFF);
+      expect(decodesBx(instrNeg), -2147483647);
     });
   });
 
@@ -104,32 +127,37 @@ void main() {
       expect(decodeAx(instr), 0);
     });
 
-    test('roundtrip max: 0xFFFFFF (16777215)', () {
-      final instr = encodeAx(0x01, 0xFFFFFF);
-      expect(decodeAx(instr), 0xFFFFFF);
+    test('roundtrip max: 0xFFFFFFFFFFFF', () {
+      final instr = encodeAx(0x01, 0xFFFFFFFFFFFF);
+      expect(decodeAx(instr), 0xFFFFFFFFFFFF);
     });
 
     test('roundtrip mid value', () {
-      final instr = encodeAx(Op.nop, 123456);
-      expect(decodeAx(instr), 123456);
+      final instr = encodeAx(Op.nop, 123456789);
+      expect(decodeAx(instr), 123456789);
+    });
+
+    test('boundary: Ax=0xFFFFFFFFFFFF (281474976710655)', () {
+      final instr = encodeAx(Op.nop, 0xFFFFFFFFFFFF);
+      expect(decodeAx(instr), 0xFFFFFFFFFFFF);
     });
   });
 
-  group('sAx encoding (excess-K, K=0x7FFFFF)', () {
+  group('sAx encoding (excess-K, K=0x7FFFFFFFFFFF)', () {
     test('roundtrip zero', () {
       final instr = encodesAx(Op.jumpAx, 0);
       expect(decodeOp(instr), Op.jumpAx);
       expect(decodesAx(instr), 0);
     });
 
-    test('roundtrip positive max: +8388608', () {
-      final instr = encodesAx(Op.jumpAx, 8388608);
-      expect(decodesAx(instr), 8388608);
+    test('roundtrip positive max: +140737488355327', () {
+      final instr = encodesAx(Op.jumpAx, 0x7FFFFFFFFFFF);
+      expect(decodesAx(instr), 0x7FFFFFFFFFFF);
     });
 
-    test('roundtrip negative min: -8388607', () {
-      final instr = encodesAx(Op.jumpAx, -8388607);
-      expect(decodesAx(instr), -8388607);
+    test('roundtrip negative min: -140737488355327', () {
+      final instr = encodesAx(Op.jumpAx, -0x7FFFFFFFFFFF);
+      expect(decodesAx(instr), -0x7FFFFFFFFFFF);
     });
 
     test('roundtrip negative one', () {
@@ -137,19 +165,20 @@ void main() {
       expect(decodesAx(instr), -1);
     });
 
-    test('excess-K encoding: value 0 encodes as 0x7FFFFF', () {
+    test('excess-K encoding: value 0 encodes as 0x7FFFFFFFFFFF', () {
       final instr = encodesAx(Op.jumpAx, 0);
-      expect(decodeAx(instr), 0x7FFFFF);
+      expect(decodeAx(instr), 0x7FFFFFFFFFFF);
     });
 
-    test('excess-K encoding: value -8388607 encodes as 0', () {
-      final instr = encodesAx(Op.jumpAx, -8388607);
+    test('excess-K encoding: value -0x7FFFFFFFFFFF encodes as 0', () {
+      final instr = encodesAx(Op.jumpAx, -0x7FFFFFFFFFFF);
       expect(decodeAx(instr), 0);
     });
 
-    test('excess-K encoding: value +8388608 encodes as 0xFFFFFF', () {
-      final instr = encodesAx(Op.jumpAx, 8388608);
-      expect(decodeAx(instr), 0xFFFFFF);
+    test('excess-K encoding: value +0x7FFFFFFFFFFF encodes as 0xFFFFFFFFFFFE',
+        () {
+      final instr = encodesAx(Op.jumpAx, 0x7FFFFFFFFFFF);
+      expect(decodeAx(instr), 0xFFFFFFFFFFFE);
     });
   });
 
@@ -163,8 +192,18 @@ void main() {
 
     test('decodeOp extracts low 8 bits only', () {
       // Even with all other bits set, op should be just low 8
-      final instr = 0xFFFFFFFF;
+      final instr = 0xFFFFFFFFFFFFFFFF;
       expect(decodeOp(instr), 0xFF);
+    });
+
+    test('reserved padding bits [8:16] are ignored on decode', () {
+      // Manually set padding bits — decoders should skip them
+      final instr = encodeABC(0x10, 100, 200, 300);
+      // Verify A, B, C are correct despite padding area
+      expect(decodeOp(instr), 0x10);
+      expect(decodeA(instr), 100);
+      expect(decodeB(instr), 200);
+      expect(decodeC(instr), 300);
     });
   });
 }

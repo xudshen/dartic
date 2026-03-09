@@ -270,7 +270,7 @@ void main() {
       pool.addName('toString');
       pool.addName('hashCode');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.addInt, 0, 1, 2),
         encodeABC(Op.subInt, 3, 4, 5),
         encodeABC(Op.returnVal, 0, 0, 0),

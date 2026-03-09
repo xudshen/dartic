@@ -14,7 +14,7 @@ import 'package:test/test.dart';
 /// Creates a minimal valid DarticModule with a single function containing
 /// the given bytecode. Defaults to a single HALT instruction.
 DarticModule makeModule({
-  Uint32List? bytecode,
+  Uint64List? bytecode,
   int valueRegCount = 1,
   int refRegCount = 1,
   int paramCount = 0,
@@ -29,7 +29,7 @@ DarticModule makeModule({
   int globalCount = 0,
   List<int> globalInitializerIds = const [],
 }) {
-  bytecode ??= Uint32List.fromList([encodeAx(Op.halt, 0)]);
+  bytecode ??= Uint64List.fromList([encodeAx(Op.halt, 0)]);
   final pool = constantPool ?? ConstantPool();
 
   final mainFunc = DarticFuncProto(
@@ -90,7 +90,7 @@ void main() {
         doubles: Float64List.fromList([3.14]),
         names: ['toString'],
       );
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, 0), // loadConst r0, refs[0]
         encodeABx(Op.loadConstInt, 0, 0), // loadConstInt v0, ints[0]
         encodeABx(Op.loadConstDbl, 0, 0), // loadConstDbl v0, doubles[0]
@@ -108,7 +108,7 @@ void main() {
 
     // ── 2. Invalid opcode detected ──
     test('detects invalid opcode', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         0x000000AA, // invalid opcode 0xAA
         encodeAx(Op.halt, 0),
       ]);
@@ -123,7 +123,7 @@ void main() {
     test('detects jump target past end of code', () {
       // jump with sBx = +100, code length = 2
       // target = pc + 1 + 100 = 101, far past code end
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, 100),
         encodeAx(Op.halt, 0),
       ]);
@@ -136,7 +136,7 @@ void main() {
     // ── 4. Jump target negative (before 0) ──
     test('detects jump target before start of code', () {
       // At pc=0: jump with sBx = -10 => target = 0 + 1 + (-10) = -9
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, -10),
         encodeAx(Op.halt, 0),
       ]);
@@ -147,7 +147,7 @@ void main() {
     });
 
     test('detects jumpIfTrue target out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jumpIfTrue, 0, 100),
         encodeAx(Op.halt, 0),
       ]);
@@ -158,7 +158,7 @@ void main() {
     });
 
     test('detects jumpIfFalse target out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jumpIfFalse, 0, 100),
         encodeAx(Op.halt, 0),
       ]);
@@ -168,7 +168,7 @@ void main() {
     });
 
     test('detects jumpIfNull target out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jumpIfNull, 0, 100),
         encodeAx(Op.halt, 0),
       ]);
@@ -178,7 +178,7 @@ void main() {
     });
 
     test('detects jumpIfNnull target out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jumpIfNnull, 0, 100),
         encodeAx(Op.halt, 0),
       ]);
@@ -188,7 +188,7 @@ void main() {
     });
 
     test('detects jumpAx target out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodesAx(Op.jumpAx, 1000),
         encodeAx(Op.halt, 0),
       ]);
@@ -200,7 +200,7 @@ void main() {
 
     test('valid jump targets pass', () {
       // jump forward by 1 (skip one instruction)
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.jump, 0, 1), // target = 0 + 1 + 1 = 2
         encodeAx(Op.nop, 0), // skipped
         encodeAx(Op.halt, 0), // target
@@ -214,7 +214,7 @@ void main() {
     test('detects value register A out of range for addInt', () {
       // addInt: A=val, B=val, C=val — all must be < valueRegCount
       // valueRegCount = 2, but A = 5
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.addInt, 5, 0, 1),
         encodeAx(Op.halt, 0),
       ]);
@@ -232,7 +232,7 @@ void main() {
         names: [],
       );
       // loadConst: A=ref, Bx=refs pool index. refRegCount = 1, A = 5
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 5, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -248,7 +248,7 @@ void main() {
 
     test('detects ref register B out of range for moveRef', () {
       // moveRef: A=ref, B=ref — both must be < refRegCount
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.moveRef, 0, 10, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -260,7 +260,7 @@ void main() {
     // ── 6. Constant pool index out of range ──
     test('detects LOAD_CONST Bx out of range', () {
       // empty constant pool, but Bx = 5
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -271,7 +271,7 @@ void main() {
     });
 
     test('detects LOAD_CONST_INT Bx out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConstInt, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -282,7 +282,7 @@ void main() {
     });
 
     test('detects LOAD_CONST_DBL Bx out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConstDbl, 0, 3),
         encodeAx(Op.halt, 0),
       ]);
@@ -292,55 +292,10 @@ void main() {
       expect(verifier.errors[0], contains('Constant pool'));
     });
 
-    // ── 7. WIDE at end of code ──
-    test('detects WIDE prefix at end of code (last position)', () {
-      final bytecode = Uint32List.fromList([
-        encodeAx(Op.nop, 0),
-        Op.wide, // WIDE at position 1, but code only has 2 words
-      ]);
-      final module = makeModule(bytecode: bytecode);
-      expect(verifier.verify(module), isFalse);
-      expect(verifier.errors, isNotEmpty);
-      expect(verifier.errors[0], contains('WIDE'));
-    });
-
-    test('detects WIDE prefix at second-to-last position', () {
-      final bytecode = Uint32List.fromList([
-        Op.wide, // WIDE at position 0, needs 2 more words but only 1 available
-        0x00000000, // extension word, but no original instruction after
-      ]);
-      final module = makeModule(bytecode: bytecode);
-      expect(verifier.verify(module), isFalse);
-      expect(verifier.errors, isNotEmpty);
-      expect(verifier.errors[0], contains('WIDE'));
-    });
-
-    test('valid WIDE prefix passes', () {
-      // WIDE + extension + loadConst instruction (3 words)
-      final pool = ConstantPool.from(
-        refs: ['val'],
-        ints: Int64List(0),
-        doubles: Float64List(0),
-        names: [],
-      );
-      final wideWords = encodeWideABx(Op.loadConst, 0, 0);
-      final bytecode = Uint32List.fromList([
-        ...wideWords,
-        encodeAx(Op.halt, 0),
-      ]);
-      final module = makeModule(
-        bytecode: bytecode,
-        constantPool: pool,
-        refRegCount: 2,
-      );
-      expect(verifier.verify(module), isTrue);
-      expect(verifier.errors, isEmpty);
-    });
-
-    // ── 8. CALL_STATIC Bx out of range ──
+    // ── 7. CALL_STATIC Bx out of range ──
     test('detects CALL_STATIC Bx out of range', () {
       // functions.length = 1 (only main), but callStatic references funcId 5
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.callStatic, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -354,12 +309,12 @@ void main() {
       final targetFunc = DarticFuncProto(
         funcId: 1,
         name: 'target',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 1,
         refRegCount: 1,
         paramCount: 0,
       );
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.callStatic, 0, 1), // call function at index 1
         encodeAx(Op.halt, 0),
       ]);
@@ -373,7 +328,7 @@ void main() {
 
     // ── 9. Exception handler invalid range ──
     test('detects exception handler with startPC >= endPC', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
@@ -397,7 +352,7 @@ void main() {
 
     // ── 10. Exception handler PC out of range ──
     test('detects exception handler handlerPC out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -419,7 +374,7 @@ void main() {
     });
 
     test('detects exception handler exceptionReg out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
@@ -443,7 +398,7 @@ void main() {
 
     // ── 11. Upvalue descriptor out of range ──
     test('detects upvalue descriptor isLocal index out of range', () {
-      final bytecode = Uint32List.fromList([encodeAx(Op.halt, 0)]);
+      final bytecode = Uint64List.fromList([encodeAx(Op.halt, 0)]);
       final module = makeModule(
         bytecode: bytecode,
         refRegCount: 2,
@@ -515,7 +470,7 @@ void main() {
     // ── 14. IC table nameIndex out of range ──
     test('detects IC table methodNameIndex out of range', () {
       final pool = ConstantPool(); // empty names
-      final bytecode = Uint32List.fromList([encodeAx(Op.halt, 0)]);
+      final bytecode = Uint64List.fromList([encodeAx(Op.halt, 0)]);
       final module = makeModule(
         bytecode: bytecode,
         constantPool: pool,
@@ -533,7 +488,7 @@ void main() {
         doubles: Float64List(0),
         names: ['toString', 'hashCode'],
       );
-      final bytecode = Uint32List.fromList([encodeAx(Op.halt, 0)]);
+      final bytecode = Uint64List.fromList([encodeAx(Op.halt, 0)]);
       final module = makeModule(
         bytecode: bytecode,
         constantPool: pool,
@@ -545,7 +500,7 @@ void main() {
 
     // ── 15. Multiple errors collected ──
     test('collects multiple errors in a single pass', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         0x000000AA, // invalid opcode
         encodeABx(Op.loadConst, 0, 99), // const pool out of range
         encodeAsBx(Op.jump, 0, 500), // jump out of range
@@ -564,7 +519,7 @@ void main() {
     // ── 16. CALL_HOST Bx out of range ──
     test('detects CALL_HOST Bx out of range', () {
       // bindingNames is empty, but callHost references index 3
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 3),
         encodeAx(Op.halt, 0),
       ]);
@@ -575,7 +530,7 @@ void main() {
     });
 
     test('valid CALL_HOST passes', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.callHost, 0, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -597,7 +552,7 @@ void main() {
         names: ['method'],
       );
       // callVirtual: A=ref, B=ref, C=IC index
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.callVirtual, 0, 0, 5), // icTable has 0 entries
         encodeAx(Op.halt, 0),
       ]);
@@ -612,7 +567,7 @@ void main() {
     });
 
     test('CALL_SUPER Bx out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.callSuper, 0, 99),
         encodeAx(Op.halt, 0),
       ]);
@@ -623,7 +578,7 @@ void main() {
     });
 
     test('closure Bx out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.closure, 0, 99),
         encodeAx(Op.halt, 0),
       ]);
@@ -634,7 +589,7 @@ void main() {
     });
 
     test('newInstance Bx out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.newInstance, 0, 99),
         encodeAx(Op.halt, 0),
       ]);
@@ -648,7 +603,7 @@ void main() {
       final targetFunc = DarticFuncProto(
         funcId: 1,
         name: 'method',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 1,
         refRegCount: 1,
         paramCount: 0,
@@ -674,7 +629,7 @@ void main() {
       final invalidFunc = DarticFuncProto(
         funcId: 99, // not in module.functions
         name: 'ghost',
-        bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
         valueRegCount: 1,
         refRegCount: 1,
         paramCount: 0,
@@ -696,7 +651,7 @@ void main() {
 
     test('getFieldDyn C >= names.length', () {
       final pool = ConstantPool(); // no names
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.getFieldDyn, 0, 0, 5), // names pool index 5, but empty
         encodeAx(Op.halt, 0),
       ]);
@@ -711,7 +666,7 @@ void main() {
 
     test('setFieldDyn C >= names.length', () {
       final pool = ConstantPool();
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.setFieldDyn, 0, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -726,7 +681,7 @@ void main() {
 
     test('invokeDyn C >= names.length', () {
       final pool = ConstantPool();
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.invokeDyn, 0, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -740,7 +695,7 @@ void main() {
     });
 
     test('loadGlobal Bx >= globalCount', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadGlobal, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -754,7 +709,7 @@ void main() {
     });
 
     test('storeGlobal Bx >= globalCount', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.storeGlobal, 0, 5),
         encodeAx(Op.halt, 0),
       ]);
@@ -768,7 +723,7 @@ void main() {
     });
 
     test('valid loadGlobal/storeGlobal passes', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadGlobal, 0, 0),
         encodeABx(Op.storeGlobal, 0, 1),
         encodeAx(Op.halt, 0),
@@ -782,7 +737,7 @@ void main() {
     });
 
     test('exception handler endPC > codeLength', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -818,7 +773,7 @@ void main() {
     test('assert_ register A is checked against valueRegCount', () {
       // ASSERT A=5, Bx=0 — A should be on value stack.
       // valueRegCount=2, so reg 5 is out of bounds.
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.assert_, 5, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -839,7 +794,7 @@ void main() {
     });
 
     test('assert_ valid when A within valueRegCount', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.assert_, 0, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -856,7 +811,7 @@ void main() {
     // ── C2 fix: exception handler valStackDP/refStackDP ──
 
     test('exception handler valStackDP out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -883,7 +838,7 @@ void main() {
     });
 
     test('exception handler refStackDP out of range', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -912,7 +867,7 @@ void main() {
     // ── I4 fix: stackTraceReg sentinel validation ──
 
     test('exception handler stackTraceReg -1 is valid (sentinel)', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -932,7 +887,7 @@ void main() {
     });
 
     test('exception handler stackTraceReg -2 is invalid', () {
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
         encodeAx(Op.halt, 0),
       ]);
@@ -955,38 +910,5 @@ void main() {
       );
     });
 
-    // ── I1 fix: WIDE nested detection ──
-
-    test('nested WIDE is rejected', () {
-      // WIDE + extension + WIDE is invalid.
-      final bytecode = Uint32List.fromList([
-        encodeABC(Op.wide, 0, 0, 0), // outer WIDE
-        0, // extension word
-        encodeABC(Op.wide, 0, 0, 0), // nested WIDE (invalid)
-        0, // extension word
-        encodeAx(Op.halt, 0),
-      ]);
-      final module = makeModule(bytecode: bytecode);
-      expect(verifier.verify(module), isFalse);
-      expect(
-        verifier.errors.any((e) => e.contains('nested WIDE')),
-        isTrue,
-      );
-    });
-
-    test('WIDE with invalid widened opcode is rejected', () {
-      final bytecode = Uint32List.fromList([
-        encodeABC(Op.wide, 0, 0, 0), // WIDE prefix
-        0, // extension word
-        encodeABC(0xB0, 0, 0, 0), // reserved opcode 0xB0
-        encodeAx(Op.halt, 0),
-      ]);
-      final module = makeModule(bytecode: bytecode);
-      expect(verifier.verify(module), isFalse);
-      expect(
-        verifier.errors.any((e) => e.contains('widened opcode')),
-        isTrue,
-      );
-    });
   });
 }

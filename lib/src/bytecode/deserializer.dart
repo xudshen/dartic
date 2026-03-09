@@ -303,11 +303,11 @@ class DarticDeserializer {
     final valueRegCount = r.readUint32();
     final refRegCount = r.readUint32();
 
-    // bytecode
+    // bytecode (64-bit instructions, deserialized as uint64 little-endian)
     final bytecodeLen = r.readUint32();
-    final bytecode = Uint32List(bytecodeLen);
+    final bytecode = Uint64List(bytecodeLen);
     for (var i = 0; i < bytecodeLen; i++) {
-      bytecode[i] = r.readUint32();
+      bytecode[i] = r.readUint64();
     }
 
     // exception table
@@ -321,8 +321,8 @@ class DarticDeserializer {
         catchType: r.readInt32(),
         valStackDP: r.readUint32(),
         refStackDP: r.readUint32(),
-        exceptionReg: r.readUint32(),
-        stackTraceReg: r.readUint32(),
+        exceptionReg: r.readInt32(),
+        stackTraceReg: r.readInt32(),
       ),
     );
 
@@ -408,6 +408,13 @@ class _ByteReader {
     _checkBounds(4);
     final value = _bd.getInt32(_offset, Endian.little);
     _offset += 4;
+    return value;
+  }
+
+  int readUint64() {
+    _checkBounds(8);
+    final value = _bd.getUint64(_offset, Endian.little);
+    _offset += 8;
     return value;
   }
 

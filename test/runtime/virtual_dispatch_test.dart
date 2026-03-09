@@ -28,7 +28,7 @@ void main() {
       final barProto = DarticFuncProto(
         funcId: 1,
         name: 'bar',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -54,7 +54,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.newInstance, 3, 0), // r3 = new Foo
           encodeABC(Op.callVirtual, 0, 3, 0), // v0 = r3.bar() via IC[0]
           encodeAx(Op.halt, 0),
@@ -86,7 +86,7 @@ void main() {
       final barProto = DarticFuncProto(
         funcId: 1,
         name: 'bar',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 99),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -113,7 +113,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.newInstance, 3, 0), // r3 = new Foo
           encodeABC(Op.callVirtual, 0, 3, 0), // v0 = r3.bar()
           encodeABx(Op.newInstance, 4, 0), // r4 = new Foo
@@ -149,7 +149,7 @@ void main() {
       final valueA = DarticFuncProto(
         funcId: 1,
         name: 'A.value',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 10),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -162,7 +162,7 @@ void main() {
       final valueB = DarticFuncProto(
         funcId: 2,
         name: 'B.value',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 32),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -195,7 +195,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.newInstance, 3, 0), // r3 = new A (classId=0)
           encodeABC(Op.callVirtual, 0, 3, 0), // v0 = r3.value()
           encodeABx(Op.newInstance, 4, 1), // r4 = new B (classId=1)
@@ -233,7 +233,7 @@ void main() {
       final addProto = DarticFuncProto(
         funcId: 1,
         name: 'add',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.addInt, 2, 0, 1), // v2 = v0 + v1
           encodeABC(Op.returnVal, 2, 0, 0),
         ]),
@@ -262,7 +262,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.newInstance, 3, 0), // r3 = new Calc
           encodeAsBx(Op.loadInt, 3, 10), // callee arg0 at valueRegCount+0
           encodeAsBx(Op.loadInt, 4, 32), // callee arg1 at valueRegCount+1
@@ -295,7 +295,7 @@ void main() {
       final greetProto = DarticFuncProto(
         funcId: 1,
         name: 'greet',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConst, 3, helloIdx), // r3 = 'hello'
           encodeABC(Op.returnRef, 3, 0, 0),
         ]),
@@ -320,7 +320,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.newInstance, 3, 0), // r3 = new Greeter
           encodeABC(Op.callVirtual, 4, 3, 0), // r4 = r3.greet()
           encodeAx(Op.halt, 0),
@@ -349,7 +349,7 @@ void main() {
       final barProto = DarticFuncProto(
         funcId: 1,
         name: 'bar',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -373,7 +373,7 @@ void main() {
       final mainProto = DarticFuncProto(
         funcId: 0,
         name: 'main',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.loadNull, 3, 0, 0), // r3 = null
           encodeABC(Op.callVirtual, 0, 3, 0), // v0 = null.bar()
           encodeAx(Op.halt, 0),

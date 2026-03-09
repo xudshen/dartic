@@ -393,36 +393,6 @@ class DarticDisassembler {
       final instr = code[pc];
       final op = decodeOp(instr);
 
-      if (op == Op.wide) {
-        // WIDE prefix: 3-word sequence
-        if (pc + 2 >= code.length) {
-          buf.writeln('${_pcStr(pc)}: WIDE              <incomplete>');
-          pc++;
-          continue;
-        }
-        final extWord = code[pc + 1];
-        final origWord = code[pc + 2];
-        final realOp = decodeOp(origWord);
-        final meta = opTable[realOp];
-        if (meta == null) {
-          buf.writeln('${_pcStr(pc)}: WIDE UNKNOWN(0x${realOp.toRadixString(16).padLeft(2, '0')})');
-          pc += 3;
-          continue;
-        }
-
-        final opStr = 'WIDE ${meta.name}'.padRight(16);
-        final (operands, annotation) = _decodeWideOperands(
-          meta.format, extWord, origWord, realOp, pc, module,
-        );
-        final line = StringBuffer('${_pcStr(pc)}: $opStr$operands');
-        if (annotation.isNotEmpty) {
-          line.write('  ; $annotation');
-        }
-        buf.writeln(line);
-        pc += 3;
-        continue;
-      }
-
       final meta = opTable[op];
       if (meta == null) {
         buf.writeln('${_pcStr(pc)}: UNKNOWN(0x${op.toRadixString(16).padLeft(2, '0')})');
@@ -570,51 +540,6 @@ class DarticDisassembler {
       return ('@${_pcStr(target)}', '');
     }
     return ('s$sax', '');
-  }
-
-  // ── WIDE operand decoding ──
-
-  static (String operands, String annotation) _decodeWideOperands(
-    InstrFormat format,
-    int extWord,
-    int origWord,
-    int realOp,
-    int pc,
-    DarticModule module,
-  ) {
-    return switch (format) {
-      InstrFormat.abc => () {
-          final (a, b, c) = decodeWideABC(extWord, origWord);
-          final operands = 'r$a, r$b, r$c';
-          final annotation = _annotateABC(realOp, a, b, c, module);
-          return (operands, annotation);
-        }(),
-      InstrFormat.aBx => () {
-          final (a, bx) = decodeWideABx(extWord, origWord);
-          final (prefix, annotation) = _annotateABx(realOp, a, bx, module);
-          return ('r$a, $prefix$bx', annotation);
-        }(),
-      InstrFormat.asBx => () {
-          final (a, sbx) = decodeWideAsBx(extWord, origWord);
-          if (_isJumpAsBx(realOp)) {
-            final target = pc + 3 + sbx;
-            return ('r$a, @${_pcStr(target)}', '');
-          }
-          return ('r$a, s$sbx', '');
-        }(),
-      InstrFormat.ax => () {
-          final ax = decodeWideAx(extWord, origWord);
-          return ('#$ax', '');
-        }(),
-      InstrFormat.sAx => () {
-          final sax = decodeWidesAx(extWord, origWord);
-          if (realOp == Op.jumpAx) {
-            final target = pc + 3 + sax;
-            return ('@${_pcStr(target)}', '');
-          }
-          return ('s$sax', '');
-        }(),
-    };
   }
 
   // ── Annotation helpers ──

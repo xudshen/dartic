@@ -17,7 +17,8 @@ abstract final class DarbFormat {
   ///
   /// v1: binding table, constant pool, function table, entryFuncId, export table.
   /// v2: + class table, global table, coreTypeIds.
-  static const int version = 2;
+  /// v3: 64-bit ISA (removed WIDE prefix opcode).
+  static const int version = 3;
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;

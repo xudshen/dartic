@@ -334,7 +334,7 @@ extension on DarticCompiler {
     _functions[funcId] = DarticFuncProto(
       funcId: funcId,
       name: displayName,
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,

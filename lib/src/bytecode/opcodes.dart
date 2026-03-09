@@ -147,7 +147,6 @@ abstract final class Op {
   static const assert_ = 0xA6;
   static const nullCheck = 0xA7;
 
-  // ── System (0xFE-0xFF) ──
-  static const wide = 0xFE;
+  // ── System (0xFF) ──
   static const halt = 0xFF;
 }

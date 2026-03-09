@@ -76,7 +76,7 @@ void main() {
         greetProto = DarticFuncProto(
           funcId: 0,
           name: 'greet',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 1,
@@ -85,7 +85,7 @@ void main() {
         nameGetterProto = DarticFuncProto(
           funcId: 1,
           name: 'name',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 0,
@@ -94,7 +94,7 @@ void main() {
         nameSetterProto = DarticFuncProto(
           funcId: 2,
           name: 'name=',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 1,
@@ -256,7 +256,7 @@ void main() {
         parentMethodProto = DarticFuncProto(
           funcId: 0,
           name: 'greet',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 1,
@@ -265,7 +265,7 @@ void main() {
         childMethodProto = DarticFuncProto(
           funcId: 1,
           name: 'hello',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 1,
@@ -274,7 +274,7 @@ void main() {
         parentGetterProto = DarticFuncProto(
           funcId: 2,
           name: 'name',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 0,
@@ -283,7 +283,7 @@ void main() {
         parentSetterProto = DarticFuncProto(
           funcId: 3,
           name: 'name=',
-          bytecode: Uint32List(0),
+          bytecode: Uint64List(0),
           valueRegCount: 0,
           refRegCount: 0,
           paramCount: 1,

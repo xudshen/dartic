@@ -10,7 +10,6 @@ library;
 import '../bytecode/constant_pool.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
-import '../bytecode/op_metadata.dart';
 import '../bytecode/opcodes.dart';
 import '../compiler/type_template.dart';
 
@@ -157,7 +156,6 @@ class DarticVerifier {
     Op.rethrow_,
     Op.assert_,
     Op.nullCheck,
-    Op.wide,
     Op.halt,
   };
 
@@ -300,18 +298,8 @@ class DarticVerifier {
 
     final prefix = '[func ${func.name}#${func.funcId}]';
 
-    // Build valid instruction start PCs (first pass).
-    final validPCs = <int>{};
-    var scanPC = 0;
-    while (scanPC < codeLength) {
-      validPCs.add(scanPC);
-      final scanOp = code[scanPC] & 0xFF;
-      if (scanOp == Op.wide) {
-        scanPC += 3; // skip WIDE prefix + ext + instr
-      } else {
-        scanPC += 1;
-      }
-    }
+    // With 64-bit ISA, every instruction is exactly 1 word, so every
+    // index in [0, codeLength) is a valid instruction boundary.
 
     for (var pc = 0; pc < codeLength; pc++) {
       final instr = code[pc];
@@ -325,141 +313,13 @@ class DarticVerifier {
         continue;
       }
 
-      // Check 6: WIDE prefix handling.
-      if (op == Op.wide) {
-        if (pc + 2 >= codeLength) {
-          errors.add(
-            '$prefix WIDE prefix at pc=$pc needs 2 more words but '
-            'only ${codeLength - pc - 1} available',
-          );
-          break; // can't safely continue
-        }
-
-        final extWord = code[pc + 1];
-        final widenedInstr = code[pc + 2];
-        final widenedOp = widenedInstr & 0xFF;
-
-        // Validate the widened instruction's opcode.
-        if (!_validOpcodes.contains(widenedOp)) {
-          errors.add(
-            '$prefix WIDE at pc=$pc: widened opcode '
-            '0x${widenedOp.toRadixString(16)} is invalid',
-          );
-          pc += 2;
-          continue;
-        } else if (widenedOp == Op.wide) {
-          errors.add(
-            '$prefix WIDE at pc=$pc: nested WIDE is not allowed',
-          );
-          pc += 2;
-          continue;
-        }
-
-        // Determine instruction format and decode wide operands.
-        final meta = opTable[widenedOp];
-        if (meta != null) {
-          switch (meta.format) {
-            case InstrFormat.abc:
-              final (wa, wb, wc) = decodeWideABC(extWord, widenedInstr);
-              _verifyRegisterBounds(widenedOp, wa, wb, wc, func, prefix, pc);
-              _verifyFunctionRefs(
-                widenedOp, wa, wb, wc, 0, func, module, prefix, pc,
-              );
-              if (widenedOp == Op.callVirtual) {
-                if (wc >= func.icTable.length) {
-                  errors.add(
-                    '$prefix CALL_VIRTUAL C=$wc >= icTable.length '
-                    '${func.icTable.length} at pc=$pc',
-                  );
-                }
-              }
-              if (widenedOp == Op.getFieldDyn ||
-                  widenedOp == Op.setFieldDyn ||
-                  widenedOp == Op.invokeDyn) {
-                if (wc >= pool.nameCount) {
-                  errors.add(
-                    '$prefix names pool index C=$wc >= nameCount '
-                    '${pool.nameCount} at pc=$pc',
-                  );
-                }
-              }
-
-            case InstrFormat.aBx:
-              final (wa, wbx) = decodeWideABx(extWord, widenedInstr);
-              _verifyRegisterBounds(
-                widenedOp, wa, 0, 0, func, prefix, pc,
-              );
-              _verifyConstantPoolRefs(widenedOp, wbx, pool, prefix, pc);
-              _verifyFunctionRefs(
-                widenedOp, wa, 0, 0, wbx, func, module, prefix, pc,
-              );
-              if (widenedOp == Op.loadGlobal ||
-                  widenedOp == Op.storeGlobal) {
-                if (wbx >= module.globalCount) {
-                  errors.add(
-                    '$prefix global index Bx=$wbx >= globalCount '
-                    '${module.globalCount} at pc=$pc',
-                  );
-                }
-              }
-
-            case InstrFormat.asBx:
-              final (wa, wsbx) = decodeWideAsBx(extWord, widenedInstr);
-              _verifyRegisterBounds(
-                widenedOp, wa, 0, 0, func, prefix, pc,
-              );
-              // Jump target validation for WIDE: target = pc + 3 + wsbx
-              if (_isJumpOp(widenedOp)) {
-                final target = pc + 3 + wsbx;
-                if (target < 0 || target >= codeLength) {
-                  errors.add(
-                    '$prefix Jump target $target out of range '
-                    '[0, $codeLength) at pc=$pc',
-                  );
-                } else if (!validPCs.contains(target)) {
-                  errors.add(
-                    '$prefix Jump target $target is inside a '
-                    'WIDE sequence at pc=$pc',
-                  );
-                }
-              }
-
-            case InstrFormat.ax:
-              // No register/pool validation needed for Ax format.
-              break;
-
-            case InstrFormat.sAx:
-              final wsax = decodeWidesAx(extWord, widenedInstr);
-              // Jump target validation for WIDE sAx: target = pc + 3 + wsax
-              if (widenedOp == Op.jumpAx) {
-                final target = pc + 3 + wsax;
-                if (target < 0 || target >= codeLength) {
-                  errors.add(
-                    '$prefix Jump target $target out of range '
-                    '[0, $codeLength) at pc=$pc',
-                  );
-                } else if (!validPCs.contains(target)) {
-                  errors.add(
-                    '$prefix Jump target $target is inside a '
-                    'WIDE sequence at pc=$pc',
-                  );
-                }
-              }
-          }
-        }
-
-        pc += 2;
-        continue;
-      }
-
-      // Decode common operands.
-      final a = (instr >> 8) & 0xFF;
-      final b = (instr >> 16) & 0xFF;
-      final c = (instr >> 24) & 0xFF;
-      final bx = (instr >> 16) & 0xFFFF;
-      final sbx = bx - 0x7FFF;
-      final ax = (instr >> 8) & 0xFFFFFF;
-      final sax = ax - 0x7FFFFF;
+      // Decode common operands (64-bit ISA layout).
+      final a = decodeA(instr);
+      final b = decodeB(instr);
+      final c = decodeC(instr);
+      final bx = decodeBx(instr);
+      final sbx = decodesBx(instr);
+      final sax = decodesAx(instr);
 
       // Check 3: Jump targets.
       if (_isJumpOp(op)) {
@@ -468,11 +328,6 @@ class DarticVerifier {
           errors.add(
             '$prefix Jump target $target out of range '
             '[0, $codeLength) at pc=$pc',
-          );
-        } else if (!validPCs.contains(target)) {
-          errors.add(
-            '$prefix Jump target $target is inside a '
-            'WIDE sequence at pc=$pc',
           );
         }
       }
@@ -838,10 +693,9 @@ class DarticVerifier {
         _checkRef(b, rrc, 'B', prefix, pc, op);
         _checkRef(c, rrc, 'C', prefix, pc, op);
 
-      // invokeDyn: A=ref, B=ref, C=names pool index
+      // invokeDyn: A=ref (result/receiver base), B=arg count, C=names pool index
       case Op.invokeDyn:
         _checkRef(a, rrc, 'A', prefix, pc, op);
-        _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // rethrow_: A=ref, B=ref
       case Op.rethrow_:
@@ -867,11 +721,10 @@ class DarticVerifier {
       case Op.wrapBridge:
         _checkRef(a, rrc, 'A', prefix, pc, op);
 
-      // nop, returnNull, halt, wide: no register operands
+      // nop, returnNull, halt: no register operands
       case Op.nop:
       case Op.returnNull:
       case Op.halt:
-      case Op.wide:
         break;
     }
   }

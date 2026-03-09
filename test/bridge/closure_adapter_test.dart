@@ -13,7 +13,7 @@ import 'package:test/test.dart';
 /// The standard entry function: a single HALT instruction.
 final _entryProto = DarticFuncProto(
   funcId: 0,
-  bytecode: Uint32List.fromList([encodeABC(Op.halt, 0, 0, 0)]),
+  bytecode: Uint64List.fromList([encodeABC(Op.halt, 0, 0, 0)]),
   valueRegCount: 0,
   refRegCount: 1,
   paramCount: 0,
@@ -40,7 +40,7 @@ DarticFuncProto _identityProto({String name = 'identity'}) {
   return DarticFuncProto(
     funcId: 1,
     name: name,
-    bytecode: Uint32List.fromList([
+    bytecode: Uint64List.fromList([
       encodeABC(Op.moveRef, 0, 2, 0), // refStack[0] = refStack[2] (arg0)
       encodeABC(Op.returnRef, 0, 0, 0),
     ]),
@@ -56,7 +56,7 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'closure',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConst, 0, 0),
           encodeABC(Op.returnRef, 0, 0, 0),
         ]),
@@ -119,8 +119,8 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'intReturn',
-        bytecode: Uint32List.fromList([
-          encodeABx(Op.loadInt, 0, 99 + 0x7FFF),
+        bytecode: Uint64List.fromList([
+          encodeAsBx(Op.loadInt, 0, 99),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
         valueRegCount: 1,
@@ -140,7 +140,7 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'dblReturn',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABx(Op.loadConstDbl, 0, 0),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
@@ -161,8 +161,8 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'boolReturn',
-        bytecode: Uint32List.fromList([
-          encodeABx(Op.loadInt, 0, 1 + 0x7FFF),
+        bytecode: Uint64List.fromList([
+          encodeAsBx(Op.loadInt, 0, 1),
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
         valueRegCount: 1,
@@ -182,7 +182,7 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'nullReturn',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.returnNull, 0, 0, 0),
         ]),
         valueRegCount: 0,
@@ -217,7 +217,7 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'nullFn',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.returnNull, 0, 0, 0),
         ]),
         valueRegCount: 0,
@@ -235,7 +235,7 @@ void main() {
       final closureProto = DarticFuncProto(
         funcId: 1,
         name: 'second',
-        bytecode: Uint32List.fromList([
+        bytecode: Uint64List.fromList([
           encodeABC(Op.moveRef, 0, 3, 0), // refStack[0] = refStack[3] (arg1)
           encodeABC(Op.returnRef, 0, 0, 0),
         ]),

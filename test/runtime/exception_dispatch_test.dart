@@ -23,7 +23,7 @@ void main() {
       final cp = ConstantPool();
       final errIdx = cp.addRef('error');
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, errIdx), // 0: load "error" → r0
         encodeABC(Op.throw_, 0, 0, 0), // 1: throw r0
         encodeAx(Op.halt, 0), // 2: unreachable
@@ -67,7 +67,7 @@ void main() {
       final cp = ConstantPool();
       final errIdx = cp.addRef('unhandled');
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, errIdx),
         encodeABC(Op.throw_, 0, 0, 0),
         encodeAx(Op.halt, 0),
@@ -97,7 +97,7 @@ void main() {
       final cp = ConstantPool();
       final errIdx = cp.addRef('hello');
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, errIdx), // 0: load "hello" → r0
         encodeABC(Op.throw_, 0, 0, 0), // 1: throw r0
         encodeAx(Op.halt, 0), // 2: unreachable
@@ -141,7 +141,7 @@ void main() {
       final cp = ConstantPool();
       final errIdx = cp.addRef('error');
 
-      final code = Uint32List.fromList([
+      final code = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, errIdx), // 0: load error → r0
         encodeABx(Op.loadConst, 1, errIdx), // 1: load into r1 (extra ref)
         encodeABC(Op.throw_, 0, 0, 0), // 2: throw r0

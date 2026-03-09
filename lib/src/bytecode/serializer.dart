@@ -11,7 +11,7 @@ import 'module.dart';
 
 /// Serializes a [DarticModule] to the `.darb` binary format.
 ///
-/// Binary layout (v2):
+/// Binary layout (v3):
 /// - Header (12 bytes): magic (UInt32) + version (UInt32) + CRC32 checksum (UInt32)
 /// - Binding name table: count (UInt16) + entries (symbolName + argCount)
 /// - Constant pool: refs, ints, doubles, names
@@ -254,10 +254,10 @@ class DarticSerializer {
     w.writeUint32(func.valueRegCount);
     w.writeUint32(func.refRegCount);
 
-    // bytecode
+    // bytecode (64-bit instructions, serialized as uint64 little-endian)
     w.writeUint32(func.bytecode.length);
     for (final instr in func.bytecode) {
-      w.writeUint32(instr);
+      w.writeUint64(instr);
     }
 
     // exception table
@@ -269,8 +269,8 @@ class DarticSerializer {
       w.writeInt32(handler.catchType);
       w.writeUint32(handler.valStackDP);
       w.writeUint32(handler.refStackDP);
-      w.writeUint32(handler.exceptionReg);
-      w.writeUint32(handler.stackTraceReg);
+      w.writeInt32(handler.exceptionReg);
+      w.writeInt32(handler.stackTraceReg);
     }
 
     // IC table -- methodNameIndex + argCount persisted; runtime state resets
@@ -328,6 +328,11 @@ class _ByteWriter {
 
   void writeInt32(int value) {
     final bd = ByteData(4)..setInt32(0, value, Endian.little);
+    _builder.add(bd.buffer.asUint8List());
+  }
+
+  void writeUint64(int value) {
+    final bd = ByteData(8)..setUint64(0, value, Endian.little);
     _builder.add(bd.buffer.asUint8List());
   }
 

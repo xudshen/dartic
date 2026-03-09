@@ -98,9 +98,10 @@ void main() {}
     });
 
     test('large const int → LOAD_CONST_INT', () async {
+      // 3000000000 exceeds 32-bit sBx range, requires constant pool.
       final module = await compileDart('''
 int f() {
-  const x = 100000;
+  const x = 3000000000;
   return x;
 }
 void main() {}
@@ -111,7 +112,7 @@ void main() {}
       final loadIdx = findOp(code, Op.loadConstInt);
       expect(loadIdx, isNot(-1), reason: 'LOAD_CONST_INT not found');
       final bx = decodeBx(code[loadIdx]);
-      expect(module.constantPool.getInt(bx), 100000);
+      expect(module.constantPool.getInt(bx), 3000000000);
     });
   });
 
@@ -216,12 +217,12 @@ void main() {}
 
       final jumpIdx = findOp(code, Op.jumpIfNnull, start: falseIdx + 1);
       expect(jumpIdx, isNot(-1));
-      // Jump uses 3-word WIDE encoding; sBx should be +1 to skip LOAD_TRUE.
-      expect(decodeWideJumpSBx(code, jumpIdx), 1,
+      // sBx should be +1 to skip LOAD_TRUE (1-word jump in 64-bit ISA).
+      expect(decodeJumpSBx(code, jumpIdx), 1,
           reason: 'sBx should be +1 to skip LOAD_TRUE');
 
-      // LOAD_TRUE follows the 3-word jump.
-      final trueIdx = findOp(code, Op.loadTrue, start: jumpIdx + 3);
+      // LOAD_TRUE follows the 1-word jump.
+      final trueIdx = findOp(code, Op.loadTrue, start: jumpIdx + 1);
       expect(trueIdx, isNot(-1));
       expect(decodeA(code[trueIdx]), resultReg,
           reason: 'LOAD_TRUE should target same result register');

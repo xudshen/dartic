@@ -23,7 +23,7 @@ void main() {
       final idx = cp.addRef('hello');
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx),
           encodeAx(Op.halt, 0),
         ]),
@@ -39,7 +39,7 @@ void main() {
       final idx = cp.addRef(null);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx),
           encodeAx(Op.halt, 0),
         ]),
@@ -60,7 +60,7 @@ void main() {
       interp.refStack.sp = 1;
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.loadNull, 0, 0, 0),
           encodeAx(Op.halt, 0),
         ]),
@@ -81,7 +81,7 @@ void main() {
   group('LOAD_TRUE / LOAD_FALSE', () {
     test('LOAD_TRUE writes 1 to valueStack', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.loadTrue, 0, 0, 0),
           encodeAx(Op.halt, 0),
         ]),
@@ -96,7 +96,7 @@ void main() {
       interp.valueStack.writeInt(0, 99);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABC(Op.loadFalse, 0, 0, 0),
           encodeAx(Op.halt, 0),
         ]),
@@ -112,7 +112,7 @@ void main() {
   group('LOAD_INT', () {
     test('loads positive immediate', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42),
           encodeAx(Op.halt, 0),
         ]),
@@ -124,7 +124,7 @@ void main() {
 
     test('loads negative immediate', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, -100),
           encodeAx(Op.halt, 0),
         ]),
@@ -136,7 +136,7 @@ void main() {
 
     test('loads zero', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 0),
           encodeAx(Op.halt, 0),
         ]),
@@ -148,7 +148,7 @@ void main() {
 
     test('loads max sBx value (+32768)', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 32768),
           encodeAx(Op.halt, 0),
         ]),
@@ -160,7 +160,7 @@ void main() {
 
     test('loads min sBx value (-32767)', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, -32767),
           encodeAx(Op.halt, 0),
         ]),
@@ -179,7 +179,7 @@ void main() {
       final idx = cp.addInt(9999999999);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConstInt, 0, idx),
           encodeAx(Op.halt, 0),
         ]),
@@ -199,7 +199,7 @@ void main() {
       final idx = cp.addDouble(3.14);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConstDbl, 0, idx),
           encodeAx(Op.halt, 0),
         ]),
@@ -216,7 +216,7 @@ void main() {
   group('MOVE_REF', () {
     test('copies reference between slots', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 1, 0), // load 'world' to slot 1
           encodeABC(Op.moveRef, 0, 1, 0), // copy slot 1 → slot 0
           encodeAx(Op.halt, 0),
@@ -235,7 +235,7 @@ void main() {
   group('MOVE_VAL', () {
     test('copies value between slots', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 1, 77), // slot 1 = 77
           encodeABC(Op.moveVal, 0, 1, 0), // copy slot 1 → slot 0
           encodeAx(Op.halt, 0),
@@ -252,7 +252,7 @@ void main() {
       final idx = cp.addDouble(3.14);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConstDbl, 1, idx), // slot 1 = 3.14
           encodeABC(Op.moveVal, 0, 1, 0), // copy slot 1 → slot 0
           encodeAx(Op.halt, 0),
@@ -270,7 +270,7 @@ void main() {
   group('BOX_INT', () {
     test('boxes int from valueStack to refStack', () {
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeAsBx(Op.loadInt, 0, 42), // valueStack[0] = 42
           encodeABC(Op.boxInt, 0, 0, 0), // refStack[0] = box(42)
           encodeAx(Op.halt, 0),
@@ -292,7 +292,7 @@ void main() {
       final idx = cp.addDouble(2.718);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConstDbl, 0, idx), // doubleView[0] = 2.718
           encodeABC(Op.boxDouble, 0, 0, 0), // refStack[0] = box(2.718)
           encodeAx(Op.halt, 0),
@@ -315,7 +315,7 @@ void main() {
       final idx = cp.addRef(123);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx), // refStack[0] = 123
           encodeABC(Op.unboxInt, 0, 0, 0), // valueStack[0] = 123
           encodeAx(Op.halt, 0),
@@ -333,7 +333,7 @@ void main() {
       final idx = cp.addRef('not_an_int');
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx),
           encodeABC(Op.unboxInt, 0, 0, 0),
           encodeAx(Op.halt, 0),
@@ -357,7 +357,7 @@ void main() {
       final idx = cp.addRef(1.5);
 
       final module = buildModule(
-        Uint32List.fromList([
+        Uint64List.fromList([
           encodeABx(Op.loadConst, 0, idx), // refStack[0] = 1.5
           encodeABC(Op.unboxDouble, 0, 0, 0), // doubleView[0] = 1.5
           encodeAx(Op.halt, 0),

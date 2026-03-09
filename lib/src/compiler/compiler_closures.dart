@@ -196,7 +196,7 @@ extension on DarticCompiler {
     _functions[innerFuncId] = DarticFuncProto(
       funcId: innerFuncId,
       name: name ?? '<anonymous>',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: valRegCount,
       refRegCount: refRegCount,
       paramCount:
@@ -409,7 +409,7 @@ extension on DarticCompiler {
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<constructor-tearoff:${cls.name}.${target.name.text}>',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount:
@@ -587,7 +587,7 @@ extension on DarticCompiler {
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<generic-constructor-tearoff:${cls.name}<${typeArgs.join(', ')}>.${target.name.text}>',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount:
@@ -800,7 +800,7 @@ extension on DarticCompiler {
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instance-tearoff:$methodName>',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount:

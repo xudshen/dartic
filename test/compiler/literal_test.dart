@@ -25,8 +25,10 @@ void main() {}
     });
 
     test('int literal (large) → LOAD_CONST_INT + RETURN_VAL', () async {
+      // 3000000000 exceeds 32-bit sBx range [-2147483647, +2147483648],
+      // so it must use LOAD_CONST_INT via the constant pool.
       final module = await compileDart('''
-int f() => 100000;
+int f() => 3000000000;
 void main() {}
 ''');
       final f = findFunc(module, 'f');
@@ -36,7 +38,7 @@ void main() {}
       expect(decodeOp(code[0]), Op.loadConstInt);
       final reg = decodeA(code[0]);
       final bx = decodeBx(code[0]);
-      expect(module.constantPool.getInt(bx), 100000);
+      expect(module.constantPool.getInt(bx), 3000000000);
 
       // RETURN_VAL reg
       expect(decodeOp(code[1]), Op.returnVal);

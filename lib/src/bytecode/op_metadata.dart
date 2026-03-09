@@ -9,19 +9,19 @@ import 'opcodes.dart';
 
 /// The five instruction encoding formats used by the dartic bytecode ISA.
 enum InstrFormat {
-  /// Three-operand format: op A B C (8+8+8+8 bits).
+  /// Three-operand format: [op:8][_:8][A:16][B:16][C:16].
   abc,
 
-  /// Two-operand format: op A Bx (8+8+16 bits, unsigned).
+  /// Two-operand format: [op:8][_:8][A:16][Bx:32] (unsigned).
   aBx,
 
-  /// Two-operand format: op A sBx (8+8+16 bits, signed).
+  /// Two-operand format: [op:8][_:8][A:16][sBx:32] (signed, excess-K).
   asBx,
 
-  /// Single-operand format: op Ax (8+24 bits, unsigned).
+  /// Single-operand format: [op:8][_:8][Ax:48] (unsigned).
   ax,
 
-  /// Single-operand format: op sAx (8+24 bits, signed).
+  /// Single-operand format: [op:8][_:8][sAx:48] (signed, excess-K).
   sAx,
 }
 
@@ -179,7 +179,6 @@ const Map<int, OpMeta> opTable = {
   Op.nullCheck: OpMeta('NULL_CHECK', InstrFormat.abc),
 
   // ── System ──
-  Op.wide: OpMeta('WIDE', InstrFormat.ax),
   Op.halt: OpMeta('HALT', InstrFormat.abc),
 };
 

@@ -18,8 +18,8 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _loadInt(int value) {
     final reg = _allocValueReg();
-    // sBx uses excess-K encoding (K=0x7FFF): asymmetric range [-32767, +32768].
-    if (value >= -32767 && value <= 32768) {
+    // sBx uses excess-K encoding (K=0x7FFFFFFF): range [-2147483647, +2147483648].
+    if (value >= -2147483647 && value <= 2147483648) {
       _emitter.emitAsBx(Op.loadInt, reg, value);
     } else {
       final idx = _constantPool.addInt(value);
@@ -470,7 +470,7 @@ extension on DarticCompiler {
         _inferExprType(expr.operand));
 
     // AWAIT A, Bx where Bx = resume PC (instruction after the AWAIT).
-    // Always uses 3-word WIDE encoding so Bx can hold any PC.
+    // Bx is 32-bit in the 64-bit ISA, so any PC fits natively.
     _emitter.emitWithResumePCInBx(Op.await_, operandReg);
 
     // After resume, the result is in refStack[A] (same register).
@@ -1278,8 +1278,11 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileRethrow(ir.Rethrow expr) {
     assert(_catchExceptionReg >= 0, 'Rethrow outside of catch clause');
-    _emitter.emitABC(
-        Op.rethrow_, _catchExceptionReg, _catchStackTraceReg, 0);
+    // B=0 signals "no stack trace" to the interpreter (b > 0 check).
+    // _catchStackTraceReg is -1 when the catch clause has no stackTrace var;
+    // passing -1 directly would wrap to 0xFFFF in the 16-bit B field.
+    final stReg = _catchStackTraceReg >= 0 ? _catchStackTraceReg : 0;
+    _emitter.emitABC(Op.rethrow_, _catchExceptionReg, stReg, 0);
 
     // Rethrow has type Never -- return a dummy ref register.
     return (_catchExceptionReg, ResultLoc.ref);
@@ -2228,7 +2231,7 @@ extension on DarticCompiler {
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instantiation-thunk>',
-      bytecode: _emitter.toUint32List(),
+      bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,
       paramCount:
@@ -2383,9 +2386,8 @@ extension on DarticCompiler {
       // Empty record: shape = [0], no field registers needed.
       final shape = <Object>[0];
       final shapeIdx = _constantPool.addRef(shape);
-      assert(shapeIdx <= 0xFF,
-          'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-          'WIDE prefix not yet supported for this opcode');
+      assert(shapeIdx <= 0xFFFF,
+          'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
       _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
@@ -2409,9 +2411,8 @@ extension on DarticCompiler {
       ...named.map((n) => n.name),
     ];
     final shapeIdx = _constantPool.addRef(shape);
-    assert(shapeIdx <= 0xFF,
-        'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-        'WIDE prefix not yet supported for this opcode');
+    assert(shapeIdx <= 0xFFFF,
+        'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
 
     // Move all field values into consecutive ref registers.
     final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);
@@ -2481,9 +2482,8 @@ extension on DarticCompiler {
     if (totalFields == 0) {
       final shape = <Object>[0];
       final shapeIdx = _constantPool.addRef(shape);
-      assert(shapeIdx <= 0xFF,
-          'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-          'WIDE prefix not yet supported for this opcode');
+      assert(shapeIdx <= 0xFFFF,
+          'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
       _emitter.emitABC(Op.createRecord, destReg, 0, shapeIdx);
       return (destReg, ResultLoc.ref);
     }
@@ -2509,9 +2509,8 @@ extension on DarticCompiler {
       ...namedEntries.map((e) => e.key),
     ];
     final shapeIdx = _constantPool.addRef(shape);
-    assert(shapeIdx <= 0xFF,
-        'CREATE_RECORD shape index $shapeIdx exceeds 8-bit C operand; '
-        'WIDE prefix not yet supported for this opcode');
+    assert(shapeIdx <= 0xFFFF,
+        'CREATE_RECORD shape index $shapeIdx exceeds 16-bit C operand');
 
     // Move into consecutive ref registers.
     final baseReg = _refAlloc.allocConsecutive(fieldRegs.length);

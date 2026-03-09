@@ -21,7 +21,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+            bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
             valueRegCount: 1,
             refRegCount: 0,
             paramCount: 0,
@@ -41,7 +41,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+            bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
             valueRegCount: 1,
             refRegCount: 0,
             paramCount: 0,
@@ -65,7 +65,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+            bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
             valueRegCount: 1,
             refRegCount: 0,
             paramCount: 0,
@@ -97,7 +97,7 @@ void main() {
         functions: [
           DarticFuncProto(
             funcId: 0,
-            bytecode: Uint32List.fromList([encodeAx(Op.halt, 0)]),
+            bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
             valueRegCount: 1,
             refRegCount: 0,
             paramCount: 0,
@@ -135,7 +135,7 @@ void main() {
           DarticFuncProto(
             funcId: 0,
             name: 'main',
-            bytecode: Uint32List.fromList([
+            bytecode: Uint64List.fromList([
               encodeABx(Op.callHost, 0, 0),
               encodeABC(Op.halt, 0, StackKind.ref.index + 1, 0),
             ]),

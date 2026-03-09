@@ -18,7 +18,7 @@ void main() {
       final cp = ConstantPool();
       final strIdx = cp.addRef('hello');
 
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABx(Op.loadConst, 0, strIdx),
         encodeABC(Op.nullCheck, 0, 0, 0),
         encodeAx(Op.halt, 0),
@@ -49,7 +49,7 @@ void main() {
       //   LOAD_NULL r0
       //   NULL_CHECK r0      (should throw — null!)
       //   HALT
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeABC(Op.loadNull, 0, 0, 0),
         encodeABC(Op.nullCheck, 0, 0, 0),
         encodeAx(Op.halt, 0),
@@ -86,7 +86,7 @@ void main() {
       //   BOX_INT r0, v0     (box int → ref)
       //   NULL_CHECK r0      (should pass — boxed 42 is non-null)
       //   HALT
-      final bytecode = Uint32List.fromList([
+      final bytecode = Uint64List.fromList([
         encodeAsBx(Op.loadInt, 0, 42),
         encodeABC(Op.boxInt, 0, 0, 0),
         encodeABC(Op.nullCheck, 0, 0, 0),

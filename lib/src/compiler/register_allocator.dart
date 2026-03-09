@@ -6,7 +6,7 @@
 ///
 /// Design rationale: This is far simpler than LSRA (which requires CFG +
 /// live-range analysis) while being adequate for Dart functions with <50
-/// locals and the 8-bit register encoding limit of 256.
+/// locals and the 16-bit register encoding limit of 65536.
 ///
 /// See: docs/design/05-compiler.md "寄存器分配" appendix
 class RegisterAllocator {
