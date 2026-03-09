@@ -139,7 +139,7 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 
 | 范围 | 分组 | 已用 | 预留 |
 |------|------|------|------|
-| 0x00-0x0F | 加载/存储 | 16 | 0 |
+| 0x00-0x0F | 加载/存储 | 13 | 3 |
 | 0x10-0x1F | 整数算术 | 14 | 2 |
 | 0x20-0x2F | 浮点算术 | 7 | 9 |
 | 0x30-0x3F | 比较 | 12 | 4 |
@@ -155,7 +155,7 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 | 0xA4-0xA7 | 异常处理与断言 | 4 | 0 |
 | 0xA8-0xFD | 预留（Superinstruction 等） | 0 | 86 |
 | 0xFE-0xFF | 系统 | 2 | 0 |
-| **合计** | | **105** | **151** |
+| **合计** | | **106** | **150** |
 
 ## 操作码分类
 
@@ -174,7 +174,8 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 0x09  MOVE_VAL      A, B          valueStack[A] = valueStack[B]
 0x0A  LOAD_UPVALUE  A, Bx         refStack[A] = upvalues[Bx].value
 0x0B  STORE_UPVALUE A, Bx         upvalues[Bx].value = refStack[A]
-0x0C-0x0F  （预留，box/unbox 已迁至 Type Conversion 区段 0x27-0x2C）
+0x0C  LOAD_ABSENT   A             refStack[A] = darticAbsent (参数未提供哨兵)
+0x0D-0x0F  （预留，box/unbox 已迁至 Type Conversion 区段 0x27-0x2C）
 ```
 
 ### 整数算术 (0x10-0x1F)
@@ -382,7 +383,7 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 
 **HALT 编码**：使用 ABC 格式。A = 结果寄存器编号，B = 结果类型（0=void/无返回值，1=int，2=double，3=ref），C = 保留。解释器在重置栈指针前根据 B 字段从对应栈读取返回值，存入 `entryResult`。`encodeABC(Op.halt, 0, 0, 0)` 与旧的 `encodeAx(Op.halt, 0)` 二进制兼容（均为 `0x000000FF`）。
 
-**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。当前已定义 105 个操作码（含 WIDE 和 HALT），预留 86 个槽位。
+**0xA8-0xFD 预留**：用于 Superinstruction（高频指令序列合并）等后续优化。当前已定义 106 个操作码（含 WIDE 和 HALT），预留 86 个槽位。
 
 > **Phase 2**：具体特化 opcode 留待 profiling 数据确定。触发条件：基准测试显示指令分发成为瓶颈。
 
@@ -391,7 +392,7 @@ WIDE 前缀极少使用（函数局部变量 >256 或常量池 >65K 时），不
 | 约束 | 值 | 来源 |
 |------|-----|------|
 | Opcode 空间 | 0-255（8 位） | 32 位指令编码，低 8 位为 opcode |
-| 当前已定义 opcode | 105 个 | ISA 定义（含 WIDE 和 HALT） |
+| 当前已定义 opcode | 106 个 | ISA 定义（含 WIDE 和 HALT） |
 | 预留 opcode 槽位 | 86 个（0xA8-0xFD） | 供 Superinstruction 使用 |
 | 标准寄存器上限 | 256（8 位 A/B/C） | ABC 编码格式 |
 | WIDE 扩展后寄存器上限 | 65536（16 位） | WIDE 前缀组合 |

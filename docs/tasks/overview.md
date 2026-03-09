@@ -170,6 +170,7 @@
 - [x] Flutter 热更新 demo 端到端编译通过（.dart → .dill → .darb，2531 bytes）
 - [x] Serializer v2 + Verifier 修复：.darb 加载→验证→执行→渲染完整通路（2999 + 30 tests pass）
 - [ ] Phase 2-6 全量零回归 — 23→9 regressions（14 fixed via per-arity strategy; 残留：RC2 DarticType×6, RC4-generic×2, RC4-closure×1）
+- [x] 统一 max-arity + LOAD_ABSENT 策略 — co19 零回归：Functions 166/187 (88.8%), Variables 95/111 (85.6%), Expressions 1589/1933 (82.2%)
 
 详见 [`docs/plans/development-roadmap.md`](../plans/development-roadmap.md)
 
