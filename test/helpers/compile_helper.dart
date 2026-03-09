@@ -11,6 +11,7 @@ import 'package:dartic/src/bridge/plugins/core_plugin.g.dart';
 import 'package:dartic/src/bridge/plugins/math_plugin.g.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
+import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
@@ -79,11 +80,27 @@ ir.VariableDeclaration makeDummyVarDecl(String name) {
 /// starting from [start].
 ///
 /// Returns -1 if not found.
+/// Handles both narrow (1-word) and WIDE (3-word) encoded instructions.
 int findOp(List<int> code, int op, {int start = 0}) {
   for (var i = start; i < code.length; i++) {
-    if (decodeOp(code[i]) == op) return i;
+    final word = code[i];
+    if (decodeOp(word) == op) return i;
+    // Check WIDE prefix: opcode is in word[i+2].
+    if (decodeOp(word) == Op.wide && i + 2 < code.length) {
+      if (decodeOp(code[i + 2]) == op) return i;
+    }
   }
   return -1;
+}
+
+/// Decodes the sBx offset from a WIDE AsBx jump instruction starting at [pc].
+///
+/// Assumes `code[pc]` is Op.wide, `code[pc+1]` is the extension word,
+/// and `code[pc+2]` is the original instruction word.
+int decodeWideJumpSBx(List<int> code, int pc) {
+  assert(decodeOp(code[pc]) == Op.wide, 'Expected WIDE prefix at pc=$pc');
+  final (_, sbx) = decodeWideAsBx(code[pc + 1], code[pc + 2]);
+  return sbx;
 }
 
 /// Compiles [source], executes it, and returns the entry result.

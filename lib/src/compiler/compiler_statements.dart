@@ -39,38 +39,26 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // 2. JUMP_IF_FALSE condReg -> else/end (placeholder).
-    final jumpToElse = _emitter.emitPlaceholder();
+    final jumpToElse = _emitter.emitJumpPlaceholder();
 
     // 3. Compile then branch.
     _compileStatement(stmt.then);
 
     if (stmt.otherwise != null) {
       // 4a. JUMP -> end (skip else branch, placeholder).
-      final jumpToEnd = _emitter.emitPlaceholder();
+      final jumpToEnd = _emitter.emitJumpPlaceholder();
 
       // 5. Backpatch: JUMP_IF_FALSE -> else start.
-      final elsePC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpToElse,
-        encodeAsBx(Op.jumpIfFalse, condReg, elsePC - jumpToElse - 1),
-      );
+      _emitter.patchJumpAsBx(jumpToElse, Op.jumpIfFalse, condReg, _emitter.currentPC);
 
       // 6. Compile else branch.
       _compileStatement(stmt.otherwise!);
 
       // 7. Backpatch: JUMP -> end.
-      final endPC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpToEnd,
-        encodeAsBx(Op.jump, 0, endPC - jumpToEnd - 1),
-      );
+      _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);
     } else {
       // 4b. No else: backpatch JUMP_IF_FALSE -> end.
-      final endPC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpToElse,
-        encodeAsBx(Op.jumpIfFalse, condReg, endPC - jumpToElse - 1),
-      );
+      _emitter.patchJumpAsBx(jumpToElse, Op.jumpIfFalse, condReg, _emitter.currentPC);
     }
   }
 
@@ -85,21 +73,16 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // 2. JUMP_IF_FALSE -> exit (placeholder).
-    final jumpToExit = _emitter.emitPlaceholder();
+    final jumpToExit = _emitter.emitJumpPlaceholder();
 
     // 3. Compile body.
     _compileStatement(stmt.body);
 
     // 4. JUMP backward to loop start.
-    final jumpPC = _emitter.currentPC;
-    _emitter.emit(encodeAsBx(Op.jump, 0, loopStartPC - jumpPC - 1));
+    _emitter.emitJumpAsBx(Op.jump, 0, loopStartPC);
 
     // 5. Backpatch exit.
-    final exitPC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpToExit,
-      encodeAsBx(Op.jumpIfFalse, condReg, exitPC - jumpToExit - 1),
-    );
+    _emitter.patchJumpAsBx(jumpToExit, Op.jumpIfFalse, condReg, _emitter.currentPC);
   }
 
   void _compileForStatement(ir.ForStatement stmt) {
@@ -126,7 +109,7 @@ extension on DarticCompiler {
       var (reg, regLoc) = _compileExpression(stmt.condition!);
       reg = _ensureBoolValue(reg, regLoc);
       condReg = reg;
-      jumpToExit = _emitter.emitPlaceholder();
+      jumpToExit = _emitter.emitJumpPlaceholder();
     }
 
     // 4. Compile body.
@@ -138,16 +121,11 @@ extension on DarticCompiler {
     }
 
     // 6. JUMP backward to loop start.
-    final jumpPC = _emitter.currentPC;
-    _emitter.emit(encodeAsBx(Op.jump, 0, loopStartPC - jumpPC - 1));
+    _emitter.emitJumpAsBx(Op.jump, 0, loopStartPC);
 
     // 7. Backpatch exit (if condition exists).
     if (jumpToExit != null) {
-      final exitPC = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpToExit,
-        encodeAsBx(Op.jumpIfFalse, condReg!, exitPC - jumpToExit - 1),
-      );
+      _emitter.patchJumpAsBx(jumpToExit, Op.jumpIfFalse, condReg!, _emitter.currentPC);
     }
 
     // Emit CLOSE_UPVALUE for captured loop variables going out of scope.
@@ -170,9 +148,7 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // 4. JUMP_IF_TRUE backward to loop start.
-    final jumpPC = _emitter.currentPC;
-    _emitter.emit(
-        encodeAsBx(Op.jumpIfTrue, condReg, loopStartPC - jumpPC - 1));
+    _emitter.emitJumpAsBx(Op.jumpIfTrue, condReg, loopStartPC);
   }
 
   // ── Control flow: switch/case ──
@@ -194,7 +170,7 @@ extension on DarticCompiler {
         // Default case: always execute body.
         _compileStatement(switchCase.body);
         if (i < stmt.cases.length - 1) {
-          endJumps.add(_emitter.emitPlaceholder());
+          endJumps.add(_emitter.emitJumpPlaceholder());
         }
         continue;
       }
@@ -210,19 +186,15 @@ extension on DarticCompiler {
         } else {
           _emitter.emitABC(Op.eqRef, resultReg, switchReg, caseReg);
         }
-        matchJumps.add(_emitter.emitPlaceholder()); // JUMP_IF_TRUE -> body
+        matchJumps.add(_emitter.emitJumpPlaceholder()); // JUMP_IF_TRUE -> body
       }
 
       // No match -> jump to next case.
-      final nextCaseJump = _emitter.emitPlaceholder();
+      final nextCaseJump = _emitter.emitJumpPlaceholder();
 
       // Backpatch match jumps -> body start.
-      final bodyPC = _emitter.currentPC;
       for (final jumpPC in matchJumps) {
-        _emitter.patchJump(
-          jumpPC,
-          encodeAsBx(Op.jumpIfTrue, resultReg, bodyPC - jumpPC - 1),
-        );
+        _emitter.patchJumpAsBx(jumpPC, Op.jumpIfTrue, resultReg, _emitter.currentPC);
       }
 
       // Compile case body.
@@ -230,24 +202,16 @@ extension on DarticCompiler {
 
       // JUMP to switch end (skip remaining cases).
       if (i < stmt.cases.length - 1) {
-        endJumps.add(_emitter.emitPlaceholder());
+        endJumps.add(_emitter.emitJumpPlaceholder());
       }
 
       // Backpatch next case jump.
-      final nextCasePC = _emitter.currentPC;
-      _emitter.patchJump(
-        nextCaseJump,
-        encodeAsBx(Op.jump, 0, nextCasePC - nextCaseJump - 1),
-      );
+      _emitter.patchJumpAsBx(nextCaseJump, Op.jump, 0, _emitter.currentPC);
     }
 
     // Backpatch all end-of-body jumps.
-    final endPC = _emitter.currentPC;
     for (final jumpPC in endJumps) {
-      _emitter.patchJump(
-        jumpPC,
-        encodeAsBx(Op.jump, 0, endPC - jumpPC - 1),
-      );
+      _emitter.patchJumpAsBx(jumpPC, Op.jump, 0, _emitter.currentPC);
     }
   }
 
@@ -261,12 +225,8 @@ extension on DarticCompiler {
     _compileStatement(stmt.body);
 
     // Backpatch all break jumps targeting this label.
-    final endPC = _emitter.currentPC;
     for (final jumpPC in _labelBreakJumps[stmt]!) {
-      _emitter.patchJump(
-        jumpPC,
-        encodeAsBx(Op.jump, 0, endPC - jumpPC - 1),
-      );
+      _emitter.patchJumpAsBx(jumpPC, Op.jump, 0, _emitter.currentPC);
     }
     _labelBreakJumps.remove(stmt);
   }
@@ -277,7 +237,7 @@ extension on DarticCompiler {
     if (breakList == null) {
       throw StateError('BreakStatement targets unknown LabeledStatement');
     }
-    breakList.add(_emitter.emitPlaceholder());
+    breakList.add(_emitter.emitJumpPlaceholder());
   }
 
   // ── Control flow: try/catch/finally ──
@@ -295,7 +255,7 @@ extension on DarticCompiler {
 
     // 3. Record try body end PC and jump over all catch handlers.
     final endPC = _emitter.currentPC;
-    final jumpOverCatches = _emitter.emitPlaceholder();
+    final jumpOverCatches = _emitter.emitJumpPlaceholder();
 
     // 4. Compile each catch clause.
     for (final catchClause in stmt.catches) {
@@ -332,7 +292,7 @@ extension on DarticCompiler {
       _catchStackTraceReg = savedStReg;
 
       // Jump to end of all catch handlers.
-      final jumpToEnd = _emitter.emitPlaceholder();
+      final jumpToEnd = _emitter.emitJumpPlaceholder();
 
       // Determine catch type: -1 for catch-all, constant pool index for typed.
       // In Kernel, untyped `catch(e)` has guard == Object (sound null safety)
@@ -365,19 +325,11 @@ extension on DarticCompiler {
       ));
 
       // Backpatch jump-to-end.
-      final endOfHandler = _emitter.currentPC;
-      _emitter.patchJump(
-        jumpToEnd,
-        encodeAsBx(Op.jump, 0, endOfHandler - jumpToEnd - 1),
-      );
+      _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);
     }
 
     // 5. Backpatch jump over catches (from end of try body).
-    final afterCatches = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpOverCatches,
-      encodeAsBx(Op.jump, 0, afterCatches - jumpOverCatches - 1),
-    );
+    _emitter.patchJumpAsBx(jumpOverCatches, Op.jump, 0, _emitter.currentPC);
   }
 
   void _compileTryFinally(ir.TryFinally stmt) {
@@ -401,7 +353,7 @@ extension on DarticCompiler {
     _compileStatement(stmt.finalizer);
 
     // Jump over the exception-path finalizer.
-    final jumpOverExPath = _emitter.emitPlaceholder();
+    final jumpOverExPath = _emitter.emitJumpPlaceholder();
 
     // 4. Exception path: handler entry.
     final handlerPC = _emitter.currentPC;
@@ -425,11 +377,7 @@ extension on DarticCompiler {
     ));
 
     // 6. Backpatch jump over exception path.
-    final afterExPath = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpOverExPath,
-      encodeAsBx(Op.jump, 0, afterExPath - jumpOverExPath - 1),
-    );
+    _emitter.patchJumpAsBx(jumpOverExPath, Op.jump, 0, _emitter.currentPC);
   }
 
   // ── Control flow: assert ──
@@ -466,14 +414,8 @@ extension on DarticCompiler {
     final opcode = stmt.isYieldStar ? Op.yieldStar : Op.yield_;
 
     // YIELD/YIELD_STAR A, Bx — A = yielded value/iterable/stream (ref),
-    // Bx = resume PC. Bx is a placeholder that will be patched to point to
-    // the next instruction after the yield (the resume point).
-    final yieldPC = _emitter.currentPC;
-    _emitter.emitABx(opcode, reg, 0); // placeholder Bx=0
-
-    // The resume PC is the instruction immediately after YIELD/YIELD_STAR.
-    final resumePC = _emitter.currentPC;
-    _emitter.patchJump(yieldPC, encodeABx(opcode, reg, resumePC));
+    // Bx = resume PC. Always uses 3-word WIDE encoding so Bx can hold any PC.
+    _emitter.emitWithResumePCInBx(opcode, reg);
   }
 
   // ── Return statement ──

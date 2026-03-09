@@ -141,7 +141,7 @@ extension on DarticCompiler {
         ? Op.jumpIfFalse
         : Op.jumpIfTrue;
 
-    final jumpPC = _emitter.emitPlaceholder();
+    final jumpPC = _emitter.emitJumpPlaceholder();
     var (rightReg, rightLoc) = _compileExpression(expr.right);
     rightReg = _ensureBoolValue(rightReg, rightLoc);
 
@@ -149,11 +149,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.moveVal, leftReg, rightReg, 0);
     }
 
-    final targetPC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpPC,
-      encodeAsBx(jumpOp, leftReg, targetPC - jumpPC - 1),
-    );
+    _emitter.patchJumpAsBx(jumpPC, jumpOp, leftReg, _emitter.currentPC);
 
     return (leftReg, ResultLoc.value);
   }
@@ -177,30 +173,22 @@ extension on DarticCompiler {
     condReg = _ensureBoolValue(condReg, condLoc);
 
     // 2. JUMP_IF_FALSE condReg -> else (placeholder).
-    final jumpToElse = _emitter.emitPlaceholder();
+    final jumpToElse = _emitter.emitJumpPlaceholder();
 
     // 3. Compile the then branch -> move result to resultReg.
     _compileBranchInto(expr.then, resultReg, resultLoc);
 
     // 4. JUMP -> end (placeholder, skip else branch).
-    final jumpToEnd = _emitter.emitPlaceholder();
+    final jumpToEnd = _emitter.emitJumpPlaceholder();
 
     // 5. Backpatch else label.
-    final elsePC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpToElse,
-      encodeAsBx(Op.jumpIfFalse, condReg, elsePC - jumpToElse - 1),
-    );
+    _emitter.patchJumpAsBx(jumpToElse, Op.jumpIfFalse, condReg, _emitter.currentPC);
 
     // 6. Compile the else branch -> move result to resultReg.
     _compileBranchInto(expr.otherwise, resultReg, resultLoc);
 
     // 7. Backpatch end label.
-    final endPC = _emitter.currentPC;
-    _emitter.patchJump(
-      jumpToEnd,
-      encodeAsBx(Op.jump, 0, endPC - jumpToEnd - 1),
-    );
+    _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);
 
     return (resultReg, resultLoc);
   }
@@ -220,10 +208,11 @@ extension on DarticCompiler {
     }
     // EqualsNull always represents `x == null` (no isNot flag).
     // CFE expresses `x != null` as `Not(EqualsNull(x))`.
-    // Pattern: LOAD_FALSE -> JUMP_IF_NNULL +1 -> LOAD_TRUE
+    // Pattern: LOAD_FALSE -> JUMP_IF_NNULL -> LOAD_TRUE
     _emitter.emitABC(Op.loadFalse, resultReg, 0, 0);
-    _emitter.emit(encodeAsBx(Op.jumpIfNnull, reg, 1));
+    final jumpPC = _emitter.emitJumpPlaceholder();
     _emitter.emitABC(Op.loadTrue, resultReg, 0, 0);
+    _emitter.patchJumpAsBx(jumpPC, Op.jumpIfNnull, reg, _emitter.currentPC);
     return (resultReg, ResultLoc.value);
   }
 
@@ -473,13 +462,9 @@ extension on DarticCompiler {
     operandReg = _boxToRefIfValue(operandReg, operandLoc,
         _inferExprType(expr.operand));
 
-    // The resume PC is the instruction AFTER the AWAIT instruction.
-    // AWAIT A, Bx where Bx = currentPC + 1 (the next instruction).
-    final awaitPC = _emitter.currentPC;
-    final resumePC = awaitPC + 1;
-
-    // Emit AWAIT A, Bx.
-    _emitter.emitABx(Op.await_, operandReg, resumePC);
+    // AWAIT A, Bx where Bx = resume PC (instruction after the AWAIT).
+    // Always uses 3-word WIDE encoding so Bx can hold any PC.
+    _emitter.emitWithResumePCInBx(Op.await_, operandReg);
 
     // After resume, the result is in refStack[A] (same register).
     return (operandReg, ResultLoc.ref);
