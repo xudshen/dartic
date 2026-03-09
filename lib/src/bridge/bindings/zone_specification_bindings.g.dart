@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class ZoneSpecificationBindings {
   static void register(DarticPluginContext ctx) {
@@ -36,28 +37,28 @@ abstract final class ZoneSpecificationBindings {
         'fork#0': (args) => (args[0] as ZoneSpecification).fork,
         '#13': (args) {
             final handleUncaughtError =
-                args.isNotEmpty ? args[0] as Function? : null;
-            final runFn = args.length > 2 ? args[2] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
+            final runFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             final runUnaryFn =
-                args.length > 3 ? args[3] as Function? : null;
+                identical(args[3], darticAbsent) ? null : args[3] as Function?;
             final runBinaryFn =
-                args.length > 4 ? args[4] as Function? : null;
+                identical(args[4], darticAbsent) ? null : args[4] as Function?;
             final registerCallbackFn =
-                args.length > 5 ? args[5] as Function? : null;
+                identical(args[5], darticAbsent) ? null : args[5] as Function?;
             final registerUnaryCallbackFn =
-                args.length > 6 ? args[6] as Function? : null;
+                identical(args[6], darticAbsent) ? null : args[6] as Function?;
             final registerBinaryCallbackFn =
-                args.length > 7 ? args[7] as Function? : null;
+                identical(args[7], darticAbsent) ? null : args[7] as Function?;
             final errorCallbackFn =
-                args.length > 8 ? args[8] as Function? : null;
+                identical(args[8], darticAbsent) ? null : args[8] as Function?;
             final scheduleMicrotaskFn =
-                args.length > 9 ? args[9] as Function? : null;
+                identical(args[9], darticAbsent) ? null : args[9] as Function?;
             final createTimerFn =
-                args.length > 10 ? args[10] as Function? : null;
+                identical(args[10], darticAbsent) ? null : args[10] as Function?;
             final createPeriodicTimerFn =
-                args.length > 11 ? args[11] as Function? : null;
+                identical(args[11], darticAbsent) ? null : args[11] as Function?;
             final printFn =
-                args.length > 12 ? args[12] as Function? : null;
+                identical(args[12], darticAbsent) ? null : args[12] as Function?;
 
             return ZoneSpecification(
               handleUncaughtError: handleUncaughtError != null
@@ -132,28 +133,28 @@ abstract final class ZoneSpecificationBindings {
   static Map<String, Object? Function(List<Object?>)> zoneSpecificationMethodMap() => {
         '#13': (args) {
             final handleUncaughtError =
-                args.isNotEmpty ? args[0] as Function? : null;
-            final runFn = args.length > 2 ? args[2] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
+            final runFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             final runUnaryFn =
-                args.length > 3 ? args[3] as Function? : null;
+                identical(args[3], darticAbsent) ? null : args[3] as Function?;
             final runBinaryFn =
-                args.length > 4 ? args[4] as Function? : null;
+                identical(args[4], darticAbsent) ? null : args[4] as Function?;
             final registerCallbackFn =
-                args.length > 5 ? args[5] as Function? : null;
+                identical(args[5], darticAbsent) ? null : args[5] as Function?;
             final registerUnaryCallbackFn =
-                args.length > 6 ? args[6] as Function? : null;
+                identical(args[6], darticAbsent) ? null : args[6] as Function?;
             final registerBinaryCallbackFn =
-                args.length > 7 ? args[7] as Function? : null;
+                identical(args[7], darticAbsent) ? null : args[7] as Function?;
             final errorCallbackFn =
-                args.length > 8 ? args[8] as Function? : null;
+                identical(args[8], darticAbsent) ? null : args[8] as Function?;
             final scheduleMicrotaskFn =
-                args.length > 9 ? args[9] as Function? : null;
+                identical(args[9], darticAbsent) ? null : args[9] as Function?;
             final createTimerFn =
-                args.length > 10 ? args[10] as Function? : null;
+                identical(args[10], darticAbsent) ? null : args[10] as Function?;
             final createPeriodicTimerFn =
-                args.length > 11 ? args[11] as Function? : null;
+                identical(args[11], darticAbsent) ? null : args[11] as Function?;
             final printFn =
-                args.length > 12 ? args[12] as Function? : null;
+                identical(args[12], darticAbsent) ? null : args[12] as Function?;
 
             return ZoneSpecification(
               handleUncaughtError: handleUncaughtError != null

@@ -14,7 +14,7 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   // ════════════════════════════════════════════════════════════════════
@@ -48,7 +48,7 @@ void main() {
 
   group('StringBufferBindings invoke', () {
     test('StringBuffer constructor with no args', () {
-      final sb = invoke('dart:core::StringBuffer::#1', [null]);
+      final sb = invoke('dart:core::StringBuffer::#1', []);
       expect(sb, isA<StringBuffer>());
       expect((sb as StringBuffer).isEmpty, true);
     });
@@ -87,7 +87,7 @@ void main() {
 
     test('StringBuffer.writeln with no argument', () {
       final sb = StringBuffer('text');
-      invoke('dart:core::StringBuffer::writeln#1', [sb, null]);
+      invoke('dart:core::StringBuffer::writeln#1', [sb]);
       expect(sb.toString(), 'text\n');
     });
 
@@ -96,7 +96,6 @@ void main() {
       invoke('dart:core::StringBuffer::writeAll#2', [
         sb,
         ['a', 'b', 'c'],
-        null
       ]);
       expect(sb.toString(), 'abc');
     });
@@ -249,7 +248,7 @@ void main() {
 
     test('Runes.join without separator', () {
       final runes = 'ab'.runes;
-      expect(invoke('dart:core::Runes::join#0', [runes]), '9798');
+      expect(invoke('dart:core::Runes::join#1', [runes]), '9798');
     });
   });
 
@@ -312,7 +311,7 @@ void main() {
       final iter = 'ab'.runes.iterator;
       invoke('dart:core::RuneIterator::moveNext#0', [iter]);
       invoke('dart:core::RuneIterator::moveNext#0', [iter]);
-      invoke('dart:core::RuneIterator::reset#0', [iter]);
+      invoke('dart:core::RuneIterator::reset#1', [iter]);
       expect(invoke('dart:core::RuneIterator::moveNext#0', [iter]), true);
       expect(invoke('dart:core::RuneIterator::current#0', [iter]), 97); // 'a'
     });

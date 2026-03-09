@@ -13,7 +13,7 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   // ── Registration ──
@@ -89,7 +89,7 @@ void main() {
 
     test('DateTime(2024, 6, 15, 10, 30, 45) with time components', () {
       final dt = invoke(
-          'dart:core::DateTime::#8', [2024, 6, 15, 10, 30, 45, null, null]);
+          'dart:core::DateTime::#8', [2024, 6, 15, 10, 30, 45]);
       final d = dt as DateTime;
       expect(d.year, 2024);
       expect(d.month, 6);
@@ -126,7 +126,7 @@ void main() {
 
     test('DateTime.fromMillisecondsSinceEpoch(0)', () {
       final dt = invoke(
-          'dart:core::DateTime::fromMillisecondsSinceEpoch#2', [0, null]);
+          'dart:core::DateTime::fromMillisecondsSinceEpoch#2', [0]);
       final d = dt as DateTime;
       expect(d.millisecondsSinceEpoch, 0);
     });
@@ -142,7 +142,7 @@ void main() {
     test('DateTime.fromMicrosecondsSinceEpoch(1000000)', () {
       final dt = invoke(
           'dart:core::DateTime::fromMicrosecondsSinceEpoch#2',
-          [1000000, null]);
+          [1000000]);
       final d = dt as DateTime;
       expect(d.microsecondsSinceEpoch, 1000000);
     });

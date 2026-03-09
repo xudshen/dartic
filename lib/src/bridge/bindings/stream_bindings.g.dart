@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class StreamBindings {
   static void register(DarticPluginContext ctx) {
@@ -28,14 +29,14 @@ abstract final class StreamBindings {
         'value#1': (args) => Stream.value(args[0]),
         'error#2': (args) {
             final error = args[0] as Object;
-            final st = args.length > 1 ? args[1] as StackTrace? : null;
+            final st = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
             return Stream.error(error, st);
         },
         'empty#0': (args) => const Stream.empty(),
         'fromFutures#1': (args) => Stream.fromFutures((args[0] as Iterable).cast<Future>()),
         'periodic#2': (args) {
             final period = args[0] as Duration;
-            final computation = args.length > 1 ? args[1] as Function? : null;
+            final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
             if (computation != null) {
               return Stream.periodic(period, (i) => computation(i));
             }
@@ -44,7 +45,7 @@ abstract final class StreamBindings {
         'multi#2': (args) {
             final onListen = args[0] as Function;
             final isBroadcast =
-                args.length > 1 ? args[1] as bool? ?? false : false;
+                identical(args[1], darticAbsent) ? false : args[1] as bool? ?? false;
             return Stream.multi(
               (controller) => onListen(controller),
               isBroadcast: isBroadcast,
@@ -61,10 +62,10 @@ abstract final class StreamBindings {
         'listen#4': (args) {
             final stream = args[0] as Stream;
             final onData = args[1] as Function?;
-            final onError = args.length > 2 ? args[2] as Function? : null;
-            final onDone = args.length > 3 ? args[3] as Function? : null;
+            final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            final onDone = identical(args[3], darticAbsent) ? null : args[3] as Function?;
             final cancelOnError =
-                args.length > 4 ? args[4] as bool? : null;
+                identical(args[4], darticAbsent) ? null : args[4] as bool?;
             return stream.listen(
               onData != null ? (e) => onData(e) : null,
               onError: onError,
@@ -110,11 +111,11 @@ abstract final class StreamBindings {
             final action = args[1] as Function;
             return stream.forEach((e) => action(e));
         },
-        'drain#1': (args) => (args[0] as Stream).drain(args.length > 1 ? args[1] : null),
+        'drain#1': (args) => (args[0] as Stream).drain(identical(args[1], darticAbsent) ? null : args[1]),
         'handleError#2': (args) {
             final stream = args[0] as Stream;
             final onError = args[1] as Function;
-            final test = args.length > 2 ? args[2] as Function? : null;
+            final test = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return stream.handleError(
               onError,
               test: test != null ? (e) => test(e) as bool : null,
@@ -134,7 +135,7 @@ abstract final class StreamBindings {
         'asBroadcastStream#2': (args) => (args[0] as Stream).asBroadcastStream(),
         'join#1': (args) {
             final stream = args[0] as Stream;
-            final sep = args.length > 1 ? args[1] as String? : null;
+            final sep = identical(args[1], darticAbsent) ? null : args[1] as String?;
             return stream.join(sep ?? '');
         },
         'reduce#1': (args) {
@@ -151,7 +152,7 @@ abstract final class StreamBindings {
         'toSet#0': (args) => (args[0] as Stream).toSet(),
         'distinct#1': (args) {
             final stream = args[0] as Stream;
-            final equals = args.length > 1 ? args[1] as Function? : null;
+            final equals = identical(args[1], darticAbsent) ? null : args[1] as Function?;
             if (equals != null) {
               return stream.distinct((a, b) => equals(a, b) as bool);
             }
@@ -170,7 +171,7 @@ abstract final class StreamBindings {
         'singleWhere#2': (args) {
             final stream = args[0] as Stream;
             final test = args[1] as Function;
-            final orElse = args.length > 2 ? args[2] as Function? : null;
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             if (orElse != null) {
               return stream.singleWhere((e) => test(e) as bool,
                   orElse: () => orElse());
@@ -180,7 +181,7 @@ abstract final class StreamBindings {
         'firstWhere#2': (args) {
             final stream = args[0] as Stream;
             final test = args[1] as Function;
-            final orElse = args.length > 2 ? args[2] as Function? : null;
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             if (orElse != null) {
               return stream.firstWhere((e) => test(e) as bool,
                   orElse: () => orElse());
@@ -190,7 +191,7 @@ abstract final class StreamBindings {
         'lastWhere#2': (args) {
             final stream = args[0] as Stream;
             final test = args[1] as Function;
-            final orElse = args.length > 2 ? args[2] as Function? : null;
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             if (orElse != null) {
               return stream.lastWhere((e) => test(e) as bool,
                   orElse: () => orElse());
@@ -203,7 +204,7 @@ abstract final class StreamBindings {
         'timeout#2': (args) {
             final stream = args[0] as Stream;
             final timeLimit = args[1] as Duration;
-            final onTimeout = args.length > 2 ? args[2] as Function? : null;
+            final onTimeout = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             if (onTimeout != null) {
               return stream.timeout(timeLimit,
                   onTimeout: (sink) => onTimeout(sink));

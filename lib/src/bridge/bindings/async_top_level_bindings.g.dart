@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class AsyncTopLevelBindings {
   static void register(DarticPluginContext ctx) {
@@ -15,10 +16,10 @@ abstract final class AsyncTopLevelBindings {
 );
     ctx.registerBinding('dart:async::::runZoned#4', (args) {
   final body = args[0] as Function;
-  final zoneValues = args.length > 1 ? args[1] as Map? : null;
+  final zoneValues = identical(args[1], darticAbsent) ? null : args[1] as Map?;
   final zoneSpec =
-      args.length > 2 ? args[2] as ZoneSpecification? : null;
-  final onError = args.length > 3 ? args[3] as Function? : null;
+      identical(args[2], darticAbsent) ? null : args[2] as ZoneSpecification?;
+  final onError = identical(args[3], darticAbsent) ? null : args[3] as Function?;
   // ignore: deprecated_member_use
   return runZoned(
     () => body(),
@@ -34,9 +35,9 @@ abstract final class AsyncTopLevelBindings {
     ctx.registerBinding('dart:async::::runZonedGuarded#4', (args) {
   final body = args[0] as Function;
   final onError = args[1] as Function;
-  final zoneValues = args.length > 2 ? args[2] as Map? : null;
+  final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
   final zoneSpec =
-      args.length > 3 ? args[3] as ZoneSpecification? : null;
+      identical(args[3], darticAbsent) ? null : args[3] as ZoneSpecification?;
   return runZonedGuarded(
     () => body(),
     (error, stack) => onError(error, stack),

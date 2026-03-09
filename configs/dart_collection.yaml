@@ -86,9 +86,9 @@ libraries:
         extra_methods:
           "#3": |
             (args) {
-              final equals = args.isNotEmpty ? args[0] as Function? : null;
-              final hashCodeFn = args.length > 1 ? args[1] as Function? : null;
-              final isValidKey = args.length > 2 ? args[2] as Function? : null;
+              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return HashMap<Object?, Object?>(
                 equals: equals != null ? (a, b) => equals(a, b) as bool : null,
                 hashCode:
@@ -105,9 +105,9 @@ libraries:
         extra_methods:
           "#3": |
             (args) {
-              final equals = args.isNotEmpty ? args[0] as Function? : null;
-              final hashCodeFn = args.length > 1 ? args[1] as Function? : null;
-              final isValidKey = args.length > 2 ? args[2] as Function? : null;
+              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return HashSet<Object?>(
                 equals: equals != null ? (a, b) => equals(a, b) as bool : null,
                 hashCode:
@@ -124,10 +124,8 @@ libraries:
         extra_methods:
           "#1": |
             (args) {
-              final initialCapacity =
-                  args.isNotEmpty ? args[0] as int? : null;
-              if (initialCapacity != null) {
-                return ListQueue<Object?>(initialCapacity);
+              if (!identical(args[0], darticAbsent)) {
+                return ListQueue<Object?>(args[0] as int);
               }
               return ListQueue<Object?>();
             }
@@ -166,9 +164,9 @@ libraries:
           "#2": |
             (args) {
               final compare =
-                  args.isNotEmpty ? args[0] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
               final isValidKey =
-                  args.length > 1 ? args[1] as Function? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Function?;
               return SplayTreeMap<Object?, Object?>(
                 compare != null ? (a, b) => compare(a, b) as int : null,
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,
@@ -190,9 +188,9 @@ libraries:
           "#2": |
             (args) {
               final compare =
-                  args.isNotEmpty ? args[0] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
               final isValidKey =
-                  args.length > 1 ? args[1] as Function? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Function?;
               return SplayTreeSet<Object?>(
                 compare != null ? (a, b) => compare(a, b) as int : null,
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,

@@ -77,10 +77,8 @@ abstract final class ListQueueBindings {
         'from#1': (args) => ListQueue.from(args[0] as Iterable<dynamic>),
         'of#1': (args) => ListQueue.of(args[0] as Iterable),
         '#1': (args) {
-            final initialCapacity =
-                args.isNotEmpty ? args[0] as int? : null;
-            if (initialCapacity != null) {
-              return ListQueue<Object?>(initialCapacity);
+            if (!identical(args[0], darticAbsent)) {
+              return ListQueue<Object?>(args[0] as int);
             }
             return ListQueue<Object?>();
         },

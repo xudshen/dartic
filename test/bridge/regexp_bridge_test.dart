@@ -13,7 +13,7 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   // ── Registration tests ──
@@ -110,7 +110,7 @@ void main() {
 
     test('constructor with null options uses defaults', () {
       final re = invoke(
-          'dart:core::RegExp::#5', [r'\d+', null, null, null, null]) as RegExp;
+          'dart:core::RegExp::#5', [r'\d+']) as RegExp;
       expect(re.isMultiLine, false);
       expect(re.isCaseSensitive, true);
       expect(re.isUnicode, false);
@@ -176,7 +176,7 @@ void main() {
     test('allMatches without start', () {
       final re = RegExp(r'\d+');
       final matches = invoke(
-              'dart:core::RegExp::allMatches#1', [re, 'a1b22c333'])
+              'dart:core::RegExp::allMatches#2', [re, 'a1b22c333'])
           as Iterable<RegExpMatch>;
       expect(matches.length, 3);
     });
@@ -193,7 +193,7 @@ void main() {
     test('allMatches with null start defaults to 0', () {
       final re = RegExp(r'\d+');
       final matches =
-          invoke('dart:core::RegExp::allMatches#1', [re, 'a1b22c333'])
+          invoke('dart:core::RegExp::allMatches#2', [re, 'a1b22c333'])
               as Iterable<RegExpMatch>;
       expect(matches.length, 3);
     });
@@ -212,7 +212,7 @@ void main() {
     test('matchAsPrefix without start', () {
       final re = RegExp(r'\d+');
       final m =
-          invoke('dart:core::RegExp::matchAsPrefix#1', [re, '123abc']) as Match;
+          invoke('dart:core::RegExp::matchAsPrefix#2', [re, '123abc']) as Match;
       expect(m.group(0), '123');
     });
 
@@ -226,7 +226,7 @@ void main() {
 
     test('matchAsPrefix returns null on no match at start', () {
       final re = RegExp(r'\d+');
-      expect(invoke('dart:core::RegExp::matchAsPrefix#1', [re, 'abc123']),
+      expect(invoke('dart:core::RegExp::matchAsPrefix#2', [re, 'abc123']),
           isNull);
     });
 

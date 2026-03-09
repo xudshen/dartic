@@ -46,6 +46,7 @@
 - **双栈 coercion：`_compileExpression` 返回的 `ResultLoc` 不能随意丢弃** — 编译器采用 value/ref 双栈架构，`_compileExpression` 返回 `(reg, ResultLoc)` 表示结果所在栈。在以下消费端必须检查 loc 并做 coercion（unbox 或 box）：条件跳转（if/while/for/do/assert/not/logical/conditional）、函数参数传递、变量赋值、接收者表达式（虚调用/getter/setter 分发）。只有**确定结果一定在 ref 栈**的场景（闭包、常量 case 表达式）才可以安全丢弃 loc
 - 所有g.dart不应该手动修改
 - 解决方案需要是完美的，不要什么改动最小，而是要最好的
+- 新增opcode需要同步更新到dump cli
 
 ## 命名前缀策略
 

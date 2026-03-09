@@ -44,7 +44,7 @@ abstract final class MultiStreamControllerBindings {
             final controller = args[0] as MultiStreamController;
             final error = args[1] as Object;
             final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
             if (st != null) {
               controller.addError(error, st);
             } else {
@@ -61,7 +61,7 @@ abstract final class MultiStreamControllerBindings {
             final controller = args[0] as MultiStreamController;
             final error = args[1] as Object;
             final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
             if (st != null) {
               controller.addErrorSync(error, st);
             } else {

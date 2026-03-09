@@ -87,7 +87,7 @@ void main() {
         'dart:core::Runes::#1',
         'dart:core::RuneIterator::moveNext#0',
         'dart:core::StringBuffer::#1',
-        'dart:core::Uri::parse#1',
+        'dart:core::Uri::parse#3',
         'dart:core::Stopwatch::#0',
         'dart:core::StackTrace::current#0',
         'dart:core::Symbol::#1',

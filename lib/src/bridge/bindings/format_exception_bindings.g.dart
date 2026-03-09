@@ -6,6 +6,7 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$FormatException extends FormatException implements DarticObjectHolder {
   _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as dynamic, superArgs[2] as int?);
@@ -81,9 +82,9 @@ abstract final class FormatExceptionBindings {
         'source#0': (args) => (args[0] as FormatException).source,
         'offset#0': (args) => (args[0] as FormatException).offset,
         '#3': (args) {
-            final msg = args.isNotEmpty && args[0] != null ? args[0] as String : '';
-            final source = args.length > 1 ? args[1] : null;
-            final offset = args.length > 2 ? args[2] as int? : null;
+            final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;
+            final source = identical(args[1], darticAbsent) ? null : args[1];
+            final offset = identical(args[2], darticAbsent) ? null : args[2] as int?;
             return FormatException(msg, source, offset);
         },
       };

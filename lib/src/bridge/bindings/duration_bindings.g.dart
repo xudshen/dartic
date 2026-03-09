@@ -6,6 +6,7 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$Duration extends Duration implements DarticObjectHolder {
   _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(days: superArgs[0] as int, hours: superArgs[1] as int, minutes: superArgs[2] as int, seconds: superArgs[3] as int, milliseconds: superArgs[4] as int, microseconds: superArgs[5] as int);
@@ -225,12 +226,12 @@ abstract final class DurationBindings {
         '>=#1': (args) => (args[0] as Duration) >= (args[1] as Duration),
         'unary-#0': (args) => -(args[0] as Duration),
         '#6': (args) => Duration(
-            days: args[0] != null ? args[0] as int : 0,
-            hours: args[1] != null ? args[1] as int : 0,
-            minutes: args[2] != null ? args[2] as int : 0,
-            seconds: args[3] != null ? args[3] as int : 0,
-            milliseconds: args[4] != null ? args[4] as int : 0,
-            microseconds: args[5] != null ? args[5] as int : 0,
+            days: identical(args[0], darticAbsent) ? 0 : args[0] as int,
+            hours: identical(args[1], darticAbsent) ? 0 : args[1] as int,
+            minutes: identical(args[2], darticAbsent) ? 0 : args[2] as int,
+            seconds: identical(args[3], darticAbsent) ? 0 : args[3] as int,
+            milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
+            microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
         ),
         '_#fromFields#1': (args) => Duration(microseconds: args[0] as int),
       };

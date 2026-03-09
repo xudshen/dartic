@@ -13,15 +13,15 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   // ── Registration tests ──
 
   group('registration', () {
     test('constructors are registered', () {
-      expect(registry.lookupByName('dart:core::Uri::parse#1'), isNot(-1));
-      expect(registry.lookupByName('dart:core::Uri::tryParse#1'), isNot(-1));
+      expect(registry.lookupByName('dart:core::Uri::parse#3'), isNot(-1));
+      expect(registry.lookupByName('dart:core::Uri::tryParse#3'), isNot(-1));
       expect(registry.lookupByName('dart:core::Uri::http#3'), isNot(-1));
       expect(registry.lookupByName('dart:core::Uri::https#3'), isNot(-1));
       expect(registry.lookupByName('dart:core::Uri::file#2'), isNot(-1));
@@ -94,7 +94,7 @@ void main() {
 
   group('constructors', () {
     test('Uri.parse parses valid URI', () {
-      final uri = invoke('dart:core::Uri::parse#1',
+      final uri = invoke('dart:core::Uri::parse#3',
           ['https://user:pass@dart.dev:443/path?q=1#frag']) as Uri;
       expect(uri.scheme, 'https');
       expect(uri.host, 'dart.dev');
@@ -106,18 +106,18 @@ void main() {
 
     test('Uri.tryParse returns Uri on valid input', () {
       final uri =
-          invoke('dart:core::Uri::tryParse#1', ['https://dart.dev']) as Uri;
+          invoke('dart:core::Uri::tryParse#3', ['https://dart.dev']) as Uri;
       expect(uri.host, 'dart.dev');
     });
 
     test('Uri.tryParse returns null on invalid input', () {
-      final result = invoke('dart:core::Uri::tryParse#1', ['://']);
+      final result = invoke('dart:core::Uri::tryParse#3', ['://']);
       expect(result, isNull);
     });
 
     test('Uri.http creates HTTP URI', () {
       final uri =
-          invoke('dart:core::Uri::http#3', ['dart.dev', '/path', null]) as Uri;
+          invoke('dart:core::Uri::http#3', ['dart.dev', '/path']) as Uri;
       expect(uri.scheme, 'http');
       expect(uri.host, 'dart.dev');
       expect(uri.path, '/path');
@@ -131,7 +131,7 @@ void main() {
 
     test('Uri.https creates HTTPS URI', () {
       final uri = invoke('dart:core::Uri::https#3',
-          ['dart.dev', '/path', null]) as Uri;
+          ['dart.dev', '/path']) as Uri;
       expect(uri.scheme, 'https');
       expect(uri.host, 'dart.dev');
     });
@@ -157,7 +157,7 @@ void main() {
 
     test('Uri.dataFromString creates data URI', () {
       final uri = invoke(
-          'dart:core::Uri::dataFromString#5', ['hello', null, null, null, null]) as Uri;
+          'dart:core::Uri::dataFromString#5', ['hello']) as Uri;
       expect(uri.scheme, 'data');
     });
   });

@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class StringBufferBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,13 +25,13 @@ abstract final class StringBufferBindings {
         'isEmpty#0': (args) => (args[0] as StringBuffer).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as StringBuffer).isNotEmpty,
         '#1': (args) {
-            if (args.isNotEmpty && args[0] != null) {
+            if (!identical(args[0], darticAbsent)) {
               return StringBuffer(args[0]!);
             }
             return StringBuffer();
         },
         'writeln#1': (args) {
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               (args[0] as StringBuffer).writeln(args[1]);
             } else {
               (args[0] as StringBuffer).writeln();
@@ -40,7 +41,7 @@ abstract final class StringBufferBindings {
         'writeAll#2': (args) {
             final sb = args[0] as StringBuffer;
             final objects = args[1] as Iterable;
-            if (args.length > 2 && args[2] != null) {
+            if (!identical(args[2], darticAbsent)) {
               sb.writeAll(objects, args[2] as String);
             } else {
               sb.writeAll(objects);

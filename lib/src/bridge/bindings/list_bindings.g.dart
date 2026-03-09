@@ -162,7 +162,7 @@ abstract final class ListBindings {
         'generate#3': (args) {
             final length = args[0] as int;
             final generator = args[1] as Function;
-            if (args.length > 2 && args[2] != null) {
+            if (!identical(args[2], darticAbsent)) {
               return List.generate(length, (i) => generator(i), growable: args[2] as bool);
             }
             return List.generate(length, (i) => generator(i));

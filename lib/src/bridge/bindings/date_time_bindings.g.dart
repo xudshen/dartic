@@ -3,6 +3,7 @@
 // Dart SDK: 3.10.7
 
 import '../../api/plugin_context.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class DateTimeBindings {
   static void register(DarticPluginContext ctx) {
@@ -70,34 +71,34 @@ abstract final class DateTimeBindings {
         '==#1': (args) => args[0] == args[1],
         '#8': (args) => DateTime(
             args[0] as int,
-            args.length > 1 && args[1] != null ? args[1] as int : 1,
-            args.length > 2 && args[2] != null ? args[2] as int : 1,
-            args.length > 3 && args[3] != null ? args[3] as int : 0,
-            args.length > 4 && args[4] != null ? args[4] as int : 0,
-            args.length > 5 && args[5] != null ? args[5] as int : 0,
-            args.length > 6 && args[6] != null ? args[6] as int : 0,
-            args.length > 7 && args[7] != null ? args[7] as int : 0,
+            identical(args[1], darticAbsent) ? 1 : args[1] as int,
+            identical(args[2], darticAbsent) ? 1 : args[2] as int,
+            identical(args[3], darticAbsent) ? 0 : args[3] as int,
+            identical(args[4], darticAbsent) ? 0 : args[4] as int,
+            identical(args[5], darticAbsent) ? 0 : args[5] as int,
+            identical(args[6], darticAbsent) ? 0 : args[6] as int,
+            identical(args[7], darticAbsent) ? 0 : args[7] as int,
         ),
         'utc#8': (args) => DateTime.utc(
             args[0] as int,
-            args.length > 1 && args[1] != null ? args[1] as int : 1,
-            args.length > 2 && args[2] != null ? args[2] as int : 1,
-            args.length > 3 && args[3] != null ? args[3] as int : 0,
-            args.length > 4 && args[4] != null ? args[4] as int : 0,
-            args.length > 5 && args[5] != null ? args[5] as int : 0,
-            args.length > 6 && args[6] != null ? args[6] as int : 0,
-            args.length > 7 && args[7] != null ? args[7] as int : 0,
+            identical(args[1], darticAbsent) ? 1 : args[1] as int,
+            identical(args[2], darticAbsent) ? 1 : args[2] as int,
+            identical(args[3], darticAbsent) ? 0 : args[3] as int,
+            identical(args[4], darticAbsent) ? 0 : args[4] as int,
+            identical(args[5], darticAbsent) ? 0 : args[5] as int,
+            identical(args[6], darticAbsent) ? 0 : args[6] as int,
+            identical(args[7], darticAbsent) ? 0 : args[7] as int,
         ),
         'fromMillisecondsSinceEpoch#2': (args) {
             final ms = args[0] as int;
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               return DateTime.fromMillisecondsSinceEpoch(ms, isUtc: args[1] as bool);
             }
             return DateTime.fromMillisecondsSinceEpoch(ms);
         },
         'fromMicrosecondsSinceEpoch#2': (args) {
             final us = args[0] as int;
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               return DateTime.fromMicrosecondsSinceEpoch(us, isUtc: args[1] as bool);
             }
             return DateTime.fromMicrosecondsSinceEpoch(us);

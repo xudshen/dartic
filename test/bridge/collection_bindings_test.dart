@@ -16,7 +16,7 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   group('CollectionBindings LinkedHashMap/LinkedHashSet', () {
@@ -63,7 +63,7 @@ void main() {
 
   group('CollectionBindings Queue', () {
     test('ListQueue constructor and operations', () {
-      final queue = invoke('dart:collection::ListQueue::#1', [null]) as Queue;
+      final queue = invoke('dart:collection::ListQueue::#1', []) as Queue;
       invoke('dart:collection::Queue::add#1', [queue, 'a']);
       invoke('dart:collection::Queue::addFirst#1', [queue, 'z']);
       invoke('dart:collection::Queue::addLast#1', [queue, 'm']);

@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class EventSinkBindings {
   static void register(DarticPluginContext ctx) {
@@ -25,7 +26,7 @@ abstract final class EventSinkBindings {
             final sink = args[0] as EventSink;
             final error = args[1] as Object;
             final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
             if (st != null) {
               sink.addError(error, st);
             } else {

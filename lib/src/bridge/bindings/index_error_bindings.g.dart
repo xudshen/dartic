@@ -136,9 +136,9 @@ abstract final class IndexErrorBindings {
         '#5': (args) => IndexError(
             args[0] as int,
             args[1],
-            args.length > 2 ? args[2] as String? : null,
-            args.length > 3 ? args[3] as String? : null,
-            args.length > 4 ? args[4] as int? : null,
+            identical(args[2], darticAbsent) ? null : args[2] as String?,
+            identical(args[3], darticAbsent) ? null : args[3] as String?,
+            identical(args[4], darticAbsent) ? null : args[4] as int?,
         ),
       };
 }

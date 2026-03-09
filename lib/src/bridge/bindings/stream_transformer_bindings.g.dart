@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class StreamTransformerBindings {
   static void register(DarticPluginContext ctx) {
@@ -38,11 +39,11 @@ abstract final class StreamTransformerBindings {
   static Map<String, Object? Function(List<Object?>)> streamHandlerTransformerMethodMap() => {
         '#3': (args) {
             final handleData =
-                args.isNotEmpty ? args[0] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
             final handleError =
-                args.length > 1 ? args[1] as Function? : null;
+                identical(args[1], darticAbsent) ? null : args[1] as Function?;
             final handleDone =
-                args.length > 2 ? args[2] as Function? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return StreamTransformer.fromHandlers(
               handleData: handleData != null
                   ? (data, sink) => handleData(data, sink)

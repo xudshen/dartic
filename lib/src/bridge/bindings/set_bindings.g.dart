@@ -86,7 +86,7 @@ abstract final class SetBindings {
         },
         'firstWhere#2': (args) {
             final fn = args[1] as Function;
-            final orElse = (args.length > 2 && args[2] != null) ? args[2] as Function : null;
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             for (final e in args[0] as Set) {
               if (fn(e) as bool) return e;
             }

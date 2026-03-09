@@ -9,7 +9,7 @@ void main() {
       final allOpcodes = <int>[
         Op.nop, Op.loadConst, Op.loadNull, Op.loadTrue, Op.loadFalse,
         Op.loadInt, Op.loadConstInt, Op.loadConstDbl, Op.moveRef, Op.moveVal,
-        Op.loadUpvalue, Op.storeUpvalue,
+        Op.loadUpvalue, Op.storeUpvalue, Op.loadAbsent,
         // Integer arithmetic
         Op.addInt, Op.subInt, Op.mulInt, Op.divInt, Op.modInt, Op.negInt,
         Op.bitAnd, Op.bitOr, Op.bitXor, Op.bitNot, Op.shl, Op.shr, Op.ushr,
@@ -61,8 +61,8 @@ void main() {
     });
 
     test('opTable contains no extra entries beyond valid opcodes', () {
-      // Verify count matches expected number of opcodes (111 in total).
-      expect(opTable.length, 111);
+      // Verify count matches expected number of opcodes (112 in total).
+      expect(opTable.length, 112);
     });
   });
 

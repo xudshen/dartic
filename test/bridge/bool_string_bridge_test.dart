@@ -13,7 +13,7 @@ void main() {
   Object? invoke(String name, List<Object?> args) {
     final id = registry.lookupByName(name);
     if (id == -1) fail('Binding not found: $name');
-    return registry.invoke(id, args);
+    return registry.invoke(id, padArgs(name, args));
   }
 
   group('bool bridge', () {
@@ -290,7 +290,6 @@ int main() {
         'abc123def456',
         RegExp(r'\d+'),
         (Match m) => '[${m.group(0)}]',
-        null,
       ]);
       expect(result, 'abc[123]def456');
     });
@@ -326,7 +325,7 @@ int main() {
     });
 
     test('allMatches returns all occurrences', () {
-      final matches = invoke('dart:core::String::allMatches#1', [
+      final matches = invoke('dart:core::String::allMatches#2', [
         'hello',
         'hello world hello',
       ]) as Iterable;
@@ -343,7 +342,7 @@ int main() {
     });
 
     test('matchAsPrefix matches at start', () {
-      final match = invoke('dart:core::String::matchAsPrefix#1', [
+      final match = invoke('dart:core::String::matchAsPrefix#2', [
         'hello',
         'hello world',
       ]) as Match;
@@ -351,7 +350,7 @@ int main() {
     });
 
     test('matchAsPrefix returns null when no match at start', () {
-      final result = invoke('dart:core::String::matchAsPrefix#1', [
+      final result = invoke('dart:core::String::matchAsPrefix#2', [
         'hello',
         'world hello',
       ]);

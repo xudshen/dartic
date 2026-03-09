@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class StreamSubscriptionBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,7 +21,7 @@ abstract final class StreamSubscriptionBindings {
         'pause#1': (args) {
             final sub = args[0] as StreamSubscription;
             final resumeSignal =
-                args.length > 1 ? args[1] as Future<void>? : null;
+                identical(args[1], darticAbsent) ? null : args[1] as Future<void>?;
             sub.pause(resumeSignal);
             return null;
         },
@@ -46,6 +47,6 @@ abstract final class StreamSubscriptionBindings {
             sub.onDone(handler != null ? () => handler() : null);
             return null;
         },
-        'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(args.length > 1 ? args[1] : null),
+        'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(identical(args[1], darticAbsent) ? null : args[1]),
       };
 }

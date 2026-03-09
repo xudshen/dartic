@@ -85,9 +85,9 @@ abstract final class StringBindings {
         'fromCharCode#1': (args) => String.fromCharCode(args[0] as int),
         'fromCharCodes#3': (args) {
             final codes = (args[0] as Iterable).cast<int>();
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               final start = args[1] as int;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 return String.fromCharCodes(codes, start, args[2] as int);
               }
               return String.fromCharCodes(codes, start);
@@ -104,7 +104,7 @@ abstract final class StringBindings {
             final self = args[0] as String;
             final pattern = args[1] as Pattern;
             final fn = args[2] as Function;
-            final start = (args.length > 3 && args[3] != null) ? args[3] as int : 0;
+            final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
             return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
         },
       };

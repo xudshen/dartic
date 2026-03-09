@@ -43,9 +43,9 @@ abstract final class SplayTreeMapBindings {
         'fromIterables#4': (args) => SplayTreeMap.fromIterables(args[0] as Iterable, args[1] as Iterable, (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), args[3] as bool Function(dynamic)?),
         '#2': (args) {
             final compare =
-                args.isNotEmpty ? args[0] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
             final isValidKey =
-                args.length > 1 ? args[1] as Function? : null;
+                identical(args[1], darticAbsent) ? null : args[1] as Function?;
             return SplayTreeMap<Object?, Object?>(
               compare != null ? (a, b) => compare(a, b) as int : null,
               isValidKey != null ? (k) => isValidKey(k) as bool : null,

@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:math';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class RandomBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,7 +21,7 @@ abstract final class RandomBindings {
         'nextDouble#0': (args) => (args[0] as Random).nextDouble(),
         'nextBool#0': (args) => (args[0] as Random).nextBool(),
         '#1': (args) {
-            final seed = args.isNotEmpty ? args[0] as int? : null;
+            final seed = identical(args[0], darticAbsent) ? null : args[0] as int?;
             return Random(seed);
         },
         'secure#0': (args) => Random.secure(),

@@ -93,10 +93,10 @@ libraries:
         custom: |
           (args) {
             final body = args[0] as Function;
-            final zoneValues = args.length > 1 ? args[1] as Map? : null;
+            final zoneValues = identical(args[1], darticAbsent) ? null : args[1] as Map?;
             final zoneSpec =
-                args.length > 2 ? args[2] as ZoneSpecification? : null;
-            final onError = args.length > 3 ? args[3] as Function? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as ZoneSpecification?;
+            final onError = identical(args[3], darticAbsent) ? null : args[3] as Function?;
             // ignore: deprecated_member_use
             return runZoned(
               () => body(),
@@ -115,9 +115,9 @@ libraries:
           (args) {
             final body = args[0] as Function;
             final onError = args[1] as Function;
-            final zoneValues = args.length > 2 ? args[2] as Map? : null;
+            final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
             final zoneSpec =
-                args.length > 3 ? args[3] as ZoneSpecification? : null;
+                identical(args[3], darticAbsent) ? null : args[3] as ZoneSpecification?;
             return runZonedGuarded(
               () => body(),
               (error, stack) => onError(error, stack),
@@ -144,7 +144,7 @@ libraries:
           "error#2": |
             (args) {
               final error = args[0] as Object;
-              final stackTrace = args.length > 1 ? args[1] as StackTrace? : null;
+              final stackTrace = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
               if (stackTrace != null) {
                 return Future.error(error, stackTrace);
               }
@@ -153,7 +153,7 @@ libraries:
           "delayed#2": |
             (args) {
               final duration = args[0] as Duration;
-              final computation = args.length > 1 ? args[1] as Function? : null;
+              final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
               if (computation != null) {
                 return Future.delayed(duration, () => computation());
               }
@@ -172,8 +172,8 @@ libraries:
           "wait#3": |
             (args) {
               final futures = (args[0] as Iterable).cast<Future>();
-              final eagerError = args.length > 1 ? args[1] as bool? : null;
-              final cleanUp = args.length > 2 ? args[2] as Function? : null;
+              final eagerError = identical(args[1], darticAbsent) ? null : args[1] as bool?;
+              final cleanUp = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return Future.wait(
                 futures.toList(),
                 eagerError: eagerError ?? false,
@@ -200,7 +200,7 @@ libraries:
             (args) {
               final future = args[0] as Future;
               final onValue = args[1] as Function;
-              final onError = args.length > 2 ? args[2] as Function? : null;
+              final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return future.then(
                 (v) => onValue(v),
                 onError: onError != null ? (e, s) => onError(e, s) : null,
@@ -210,7 +210,7 @@ libraries:
             (args) {
               final future = args[0] as Future;
               final onError = args[1] as Function;
-              final test = args.length > 2 ? args[2] as Function? : null;
+              final test = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return future.catchError(
                 onError,
                 test: test != null ? (e) => test(e) as bool : null,
@@ -232,7 +232,7 @@ libraries:
             (args) {
               final future = args[0] as Future;
               final timeLimit = args[1] as Duration;
-              final onTimeout = args.length > 2 ? args[2] as Function? : null;
+              final onTimeout = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               if (onTimeout != null) {
                 return future.timeout(timeLimit, onTimeout: () => onTimeout());
               }
@@ -258,7 +258,7 @@ libraries:
           "error#2": |
             (args) {
               final error = args[0] as Object;
-              final st = args.length > 1 ? args[1] as StackTrace? : null;
+              final st = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
               return Stream.error(error, st);
             }
           "empty#0": "(args) => const Stream.empty()"
@@ -266,7 +266,7 @@ libraries:
           "periodic#2": |
             (args) {
               final period = args[0] as Duration;
-              final computation = args.length > 1 ? args[1] as Function? : null;
+              final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
               if (computation != null) {
                 return Stream.periodic(period, (i) => computation(i));
               }
@@ -276,7 +276,7 @@ libraries:
             (args) {
               final onListen = args[0] as Function;
               final isBroadcast =
-                  args.length > 1 ? args[1] as bool? ?? false : false;
+                  identical(args[1], darticAbsent) ? false : args[1] as bool? ?? false;
               return Stream.multi(
                 (controller) => onListen(controller),
                 isBroadcast: isBroadcast,
@@ -295,10 +295,10 @@ libraries:
             (args) {
               final stream = args[0] as Stream;
               final onData = args[1] as Function?;
-              final onError = args.length > 2 ? args[2] as Function? : null;
-              final onDone = args.length > 3 ? args[3] as Function? : null;
+              final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              final onDone = identical(args[3], darticAbsent) ? null : args[3] as Function?;
               final cancelOnError =
-                  args.length > 4 ? args[4] as bool? : null;
+                  identical(args[4], darticAbsent) ? null : args[4] as bool?;
               return stream.listen(
                 onData != null ? (e) => onData(e) : null,
                 onError: onError,
@@ -350,12 +350,12 @@ libraries:
               final action = args[1] as Function;
               return stream.forEach((e) => action(e));
             }
-          "drain#1": "(args) => (args[0] as Stream).drain(args.length > 1 ? args[1] : null)"
+          "drain#1": "(args) => (args[0] as Stream).drain(identical(args[1], darticAbsent) ? null : args[1])"
           "handleError#2": |
             (args) {
               final stream = args[0] as Stream;
               final onError = args[1] as Function;
-              final test = args.length > 2 ? args[2] as Function? : null;
+              final test = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return stream.handleError(
                 onError,
                 test: test != null ? (e) => test(e) as bool : null,
@@ -378,7 +378,7 @@ libraries:
           "join#1": |
             (args) {
               final stream = args[0] as Stream;
-              final sep = args.length > 1 ? args[1] as String? : null;
+              final sep = identical(args[1], darticAbsent) ? null : args[1] as String?;
               return stream.join(sep ?? '');
             }
           "reduce#1": |
@@ -398,7 +398,7 @@ libraries:
           "distinct#1": |
             (args) {
               final stream = args[0] as Stream;
-              final equals = args.length > 1 ? args[1] as Function? : null;
+              final equals = identical(args[1], darticAbsent) ? null : args[1] as Function?;
               if (equals != null) {
                 return stream.distinct((a, b) => equals(a, b) as bool);
               }
@@ -420,7 +420,7 @@ libraries:
             (args) {
               final stream = args[0] as Stream;
               final test = args[1] as Function;
-              final orElse = args.length > 2 ? args[2] as Function? : null;
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               if (orElse != null) {
                 return stream.singleWhere((e) => test(e) as bool,
                     orElse: () => orElse());
@@ -431,7 +431,7 @@ libraries:
             (args) {
               final stream = args[0] as Stream;
               final test = args[1] as Function;
-              final orElse = args.length > 2 ? args[2] as Function? : null;
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               if (orElse != null) {
                 return stream.firstWhere((e) => test(e) as bool,
                     orElse: () => orElse());
@@ -442,7 +442,7 @@ libraries:
             (args) {
               final stream = args[0] as Stream;
               final test = args[1] as Function;
-              final orElse = args.length > 2 ? args[2] as Function? : null;
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               if (orElse != null) {
                 return stream.lastWhere((e) => test(e) as bool,
                     orElse: () => orElse());
@@ -456,7 +456,7 @@ libraries:
             (args) {
               final stream = args[0] as Stream;
               final timeLimit = args[1] as Duration;
-              final onTimeout = args.length > 2 ? args[2] as Function? : null;
+              final onTimeout = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               if (onTimeout != null) {
                 return stream.timeout(timeLimit,
                     onTimeout: (sink) => onTimeout(sink));
@@ -476,15 +476,15 @@ libraries:
           "#5": |
             (args) {
               final onListen =
-                  args.isNotEmpty ? args[0] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
               final onPause =
-                  args.length > 1 ? args[1] as Function? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Function?;
               final onResume =
-                  args.length > 2 ? args[2] as Function? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as Function?;
               final onCancel =
-                  args.length > 3 ? args[3] as Function? : null;
+                  identical(args[3], darticAbsent) ? null : args[3] as Function?;
               final sync =
-                  args.length > 4 ? args[4] as bool? ?? false : false;
+                  identical(args[4], darticAbsent) ? false : args[4] as bool? ?? false;
               return StreamController<Object?>(
                 onListen: onListen != null ? () => onListen() : null,
                 onPause: onPause != null ? () => onPause() : null,
@@ -498,11 +498,11 @@ libraries:
           "broadcast#3": |
             (args) {
               final onListen =
-                  args.isNotEmpty ? args[0] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
               final onCancel =
-                  args.length > 1 ? args[1] as Function? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Function?;
               final sync =
-                  args.length > 2 ? args[2] as bool? ?? false : false;
+                  identical(args[2], darticAbsent) ? false : args[2] as bool? ?? false;
               return StreamController<Object?>.broadcast(
                 onListen: onListen != null ? () => onListen() : null,
                 onCancel: onCancel != null ? () => onCancel() : null,
@@ -519,7 +519,7 @@ libraries:
               final controller = args[0] as StreamController;
               final error = args[1] as Object;
               final st =
-                  args.length > 2 ? args[2] as StackTrace? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
               if (st != null) {
                 controller.addError(error, st);
               } else {
@@ -539,7 +539,7 @@ libraries:
               final controller = args[0] as StreamController;
               final source = args[1] as Stream;
               final cancelOnError =
-                  args.length > 2 ? args[2] as bool? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as bool?;
               return controller.addStream(source,
                   cancelOnError: cancelOnError);
             }
@@ -552,7 +552,7 @@ libraries:
             (args) {
               final sub = args[0] as StreamSubscription;
               final resumeSignal =
-                  args.length > 1 ? args[1] as Future<void>? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Future<void>?;
               sub.pause(resumeSignal);
               return null;
             }
@@ -582,7 +582,7 @@ libraries:
               sub.onDone(handler != null ? () => handler() : null);
               return null;
             }
-          "asFuture#1": "(args) => (args[0] as StreamSubscription).asFuture(args.length > 1 ? args[1] : null)"
+          "asFuture#1": "(args) => (args[0] as StreamSubscription).asFuture(identical(args[1], darticAbsent) ? null : args[1])"
 
       # ── StreamTransformer ───────────────────────────────────────────────
       StreamTransformer:
@@ -601,11 +601,11 @@ libraries:
           "#3": |
             (args) {
               final handleData =
-                  args.isNotEmpty ? args[0] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
               final handleError =
-                  args.length > 1 ? args[1] as Function? : null;
+                  identical(args[1], darticAbsent) ? null : args[1] as Function?;
               final handleDone =
-                  args.length > 2 ? args[2] as Function? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return StreamTransformer.fromHandlers(
                 handleData: handleData != null
                     ? (data, sink) => handleData(data, sink)
@@ -644,7 +644,7 @@ libraries:
               final sink = args[0] as EventSink;
               final error = args[1] as Object;
               final st =
-                  args.length > 2 ? args[2] as StackTrace? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
               if (st != null) {
                 sink.addError(error, st);
               } else {
@@ -671,7 +671,7 @@ libraries:
               final sink = args[0] as StreamSink;
               final error = args[1] as Object;
               final st =
-                  args.length > 2 ? args[2] as StackTrace? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
               if (st != null) {
                 sink.addError(error, st);
               } else {
@@ -702,7 +702,7 @@ libraries:
               final controller = args[0] as MultiStreamController;
               final error = args[1] as Object;
               final st =
-                  args.length > 2 ? args[2] as StackTrace? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
               if (st != null) {
                 controller.addError(error, st);
               } else {
@@ -721,7 +721,7 @@ libraries:
               final controller = args[0] as MultiStreamController;
               final error = args[1] as Object;
               final st =
-                  args.length > 2 ? args[2] as StackTrace? : null;
+                  identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
               if (st != null) {
                 controller.addErrorSync(error, st);
               } else {
@@ -838,8 +838,8 @@ libraries:
           "fork#2": |
             (args) {
               final zone = args[0] as Zone;
-              final spec = args.length > 1 ? args[1] as ZoneSpecification? : null;
-              final zoneValues = args.length > 2 ? args[2] as Map? : null;
+              final spec = identical(args[1], darticAbsent) ? null : args[1] as ZoneSpecification?;
+              final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
               return zone.fork(
                 specification: spec,
                 zoneValues: zoneValues != null
@@ -946,28 +946,28 @@ libraries:
           "#13": |
             (args) {
               final handleUncaughtError =
-                  args.isNotEmpty ? args[0] as Function? : null;
-              final runFn = args.length > 2 ? args[2] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final runFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               final runUnaryFn =
-                  args.length > 3 ? args[3] as Function? : null;
+                  identical(args[3], darticAbsent) ? null : args[3] as Function?;
               final runBinaryFn =
-                  args.length > 4 ? args[4] as Function? : null;
+                  identical(args[4], darticAbsent) ? null : args[4] as Function?;
               final registerCallbackFn =
-                  args.length > 5 ? args[5] as Function? : null;
+                  identical(args[5], darticAbsent) ? null : args[5] as Function?;
               final registerUnaryCallbackFn =
-                  args.length > 6 ? args[6] as Function? : null;
+                  identical(args[6], darticAbsent) ? null : args[6] as Function?;
               final registerBinaryCallbackFn =
-                  args.length > 7 ? args[7] as Function? : null;
+                  identical(args[7], darticAbsent) ? null : args[7] as Function?;
               final errorCallbackFn =
-                  args.length > 8 ? args[8] as Function? : null;
+                  identical(args[8], darticAbsent) ? null : args[8] as Function?;
               final scheduleMicrotaskFn =
-                  args.length > 9 ? args[9] as Function? : null;
+                  identical(args[9], darticAbsent) ? null : args[9] as Function?;
               final createTimerFn =
-                  args.length > 10 ? args[10] as Function? : null;
+                  identical(args[10], darticAbsent) ? null : args[10] as Function?;
               final createPeriodicTimerFn =
-                  args.length > 11 ? args[11] as Function? : null;
+                  identical(args[11], darticAbsent) ? null : args[11] as Function?;
               final printFn =
-                  args.length > 12 ? args[12] as Function? : null;
+                  identical(args[12], darticAbsent) ? null : args[12] as Function?;
 
               return ZoneSpecification(
                 handleUncaughtError: handleUncaughtError != null
@@ -1044,28 +1044,28 @@ libraries:
           "#13": |
             (args) {
               final handleUncaughtError =
-                  args.isNotEmpty ? args[0] as Function? : null;
-              final runFn = args.length > 2 ? args[2] as Function? : null;
+                  identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final runFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               final runUnaryFn =
-                  args.length > 3 ? args[3] as Function? : null;
+                  identical(args[3], darticAbsent) ? null : args[3] as Function?;
               final runBinaryFn =
-                  args.length > 4 ? args[4] as Function? : null;
+                  identical(args[4], darticAbsent) ? null : args[4] as Function?;
               final registerCallbackFn =
-                  args.length > 5 ? args[5] as Function? : null;
+                  identical(args[5], darticAbsent) ? null : args[5] as Function?;
               final registerUnaryCallbackFn =
-                  args.length > 6 ? args[6] as Function? : null;
+                  identical(args[6], darticAbsent) ? null : args[6] as Function?;
               final registerBinaryCallbackFn =
-                  args.length > 7 ? args[7] as Function? : null;
+                  identical(args[7], darticAbsent) ? null : args[7] as Function?;
               final errorCallbackFn =
-                  args.length > 8 ? args[8] as Function? : null;
+                  identical(args[8], darticAbsent) ? null : args[8] as Function?;
               final scheduleMicrotaskFn =
-                  args.length > 9 ? args[9] as Function? : null;
+                  identical(args[9], darticAbsent) ? null : args[9] as Function?;
               final createTimerFn =
-                  args.length > 10 ? args[10] as Function? : null;
+                  identical(args[10], darticAbsent) ? null : args[10] as Function?;
               final createPeriodicTimerFn =
-                  args.length > 11 ? args[11] as Function? : null;
+                  identical(args[11], darticAbsent) ? null : args[11] as Function?;
               final printFn =
-                  args.length > 12 ? args[12] as Function? : null;
+                  identical(args[12], darticAbsent) ? null : args[12] as Function?;
 
               return ZoneSpecification(
                 handleUncaughtError: handleUncaughtError != null

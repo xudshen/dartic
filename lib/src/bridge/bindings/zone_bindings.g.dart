@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class ZoneBindings {
   static void register(DarticPluginContext ctx) {
@@ -65,8 +66,8 @@ abstract final class ZoneBindings {
         },
         'fork#2': (args) {
             final zone = args[0] as Zone;
-            final spec = args.length > 1 ? args[1] as ZoneSpecification? : null;
-            final zoneValues = args.length > 2 ? args[2] as Map? : null;
+            final spec = identical(args[1], darticAbsent) ? null : args[1] as ZoneSpecification?;
+            final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
             return zone.fork(
               specification: spec,
               zoneValues: zoneValues != null

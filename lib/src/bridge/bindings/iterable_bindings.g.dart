@@ -48,20 +48,20 @@ abstract final class IterableBindings {
         'single#0': (args) => (args[0] as Iterable).single,
         'generate#2': (args) {
             final count = args[0] as int;
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               final generator = args[1] as Function;
               return Iterable.generate(count, (i) => generator(i));
             }
             return Iterable.generate(count);
         },
         'toList#1': (args) {
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               return (args[0] as Iterable).toList(growable: args[1] as bool);
             }
             return (args[0] as Iterable).toList();
         },
         'join#1': (args) {
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               return (args[0] as Iterable).join(args[1] as String);
             }
             return (args[0] as Iterable).join();
@@ -77,7 +77,7 @@ abstract final class IterableBindings {
         'expand#1': (args) => (args[0] as Iterable).expand((e) => (args[1] as Function)(e) as Iterable),
         'firstWhere#2': (args) {
             final fn = args[1] as Function;
-            if (args.length > 2 && args[2] != null) {
+            if (!identical(args[2], darticAbsent)) {
               final orElse = args[2] as Function;
               return (args[0] as Iterable).firstWhere((e) => fn(e) as bool, orElse: () => orElse());
             }
@@ -85,7 +85,7 @@ abstract final class IterableBindings {
         },
         'lastWhere#2': (args) {
             final fn = args[1] as Function;
-            if (args.length > 2 && args[2] != null) {
+            if (!identical(args[2], darticAbsent)) {
               final orElse = args[2] as Function;
               return (args[0] as Iterable).lastWhere((e) => fn(e) as bool, orElse: () => orElse());
             }
@@ -93,7 +93,7 @@ abstract final class IterableBindings {
         },
         'singleWhere#2': (args) {
             final fn = args[1] as Function;
-            if (args.length > 2 && args[2] != null) {
+            if (!identical(args[2], darticAbsent)) {
               final orElse = args[2] as Function;
               return (args[0] as Iterable).singleWhere((e) => fn(e) as bool, orElse: () => orElse());
             }

@@ -4,6 +4,7 @@
 
 import '../../api/plugin_context.dart';
 import 'dart:async';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 abstract final class StreamControllerBindings {
   static void register(DarticPluginContext ctx) {
@@ -27,15 +28,15 @@ abstract final class StreamControllerBindings {
         'onCancel=#1': (args) { (args[0] as StreamController).onCancel = args[1] as FutureOr<void> Function()?; return args[1]; },
         '#5': (args) {
             final onListen =
-                args.isNotEmpty ? args[0] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
             final onPause =
-                args.length > 1 ? args[1] as Function? : null;
+                identical(args[1], darticAbsent) ? null : args[1] as Function?;
             final onResume =
-                args.length > 2 ? args[2] as Function? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as Function?;
             final onCancel =
-                args.length > 3 ? args[3] as Function? : null;
+                identical(args[3], darticAbsent) ? null : args[3] as Function?;
             final sync =
-                args.length > 4 ? args[4] as bool? ?? false : false;
+                identical(args[4], darticAbsent) ? false : args[4] as bool? ?? false;
             return StreamController<Object?>(
               onListen: onListen != null ? () => onListen() : null,
               onPause: onPause != null ? () => onPause() : null,
@@ -48,11 +49,11 @@ abstract final class StreamControllerBindings {
         },
         'broadcast#3': (args) {
             final onListen =
-                args.isNotEmpty ? args[0] as Function? : null;
+                identical(args[0], darticAbsent) ? null : args[0] as Function?;
             final onCancel =
-                args.length > 1 ? args[1] as Function? : null;
+                identical(args[1], darticAbsent) ? null : args[1] as Function?;
             final sync =
-                args.length > 2 ? args[2] as bool? ?? false : false;
+                identical(args[2], darticAbsent) ? false : args[2] as bool? ?? false;
             return StreamController<Object?>.broadcast(
               onListen: onListen != null ? () => onListen() : null,
               onCancel: onCancel != null ? () => onCancel() : null,
@@ -67,7 +68,7 @@ abstract final class StreamControllerBindings {
             final controller = args[0] as StreamController;
             final error = args[1] as Object;
             final st =
-                args.length > 2 ? args[2] as StackTrace? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
             if (st != null) {
               controller.addError(error, st);
             } else {
@@ -86,7 +87,7 @@ abstract final class StreamControllerBindings {
             final controller = args[0] as StreamController;
             final source = args[1] as Stream;
             final cancelOnError =
-                args.length > 2 ? args[2] as bool? : null;
+                identical(args[2], darticAbsent) ? null : args[2] as bool?;
             return controller.addStream(source,
                 cancelOnError: cancelOnError);
         },

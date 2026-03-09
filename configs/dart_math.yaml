@@ -95,7 +95,7 @@ libraries:
         extra_methods:
           "#1": |
             (args) {
-              final seed = args.isNotEmpty ? args[0] as int? : null;
+              final seed = identical(args[0], darticAbsent) ? null : args[0] as int?;
               return Random(seed);
             }
           "secure#0": "(args) => Random.secure()"

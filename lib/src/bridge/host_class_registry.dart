@@ -13,6 +13,7 @@
 /// See: docs/design/04-interop.md "HostClassWrapper"
 library;
 
+import '../api/dartic_absent.dart';
 import 'host_binding_registry.dart';
 
 /// Internal adapter backed by HostBindingRegistry name lookup.
@@ -45,12 +46,19 @@ class _HostAdapter {
   Object? invokeMethod(Object host, String name, List<Object?> args) {
     // Try exact arg count first, then widen by up to 3 to cover Dart optional
     // parameters (e.g., String.contains has 2 formals but is often called with
-    // 1 arg). This is safe because the binding wrappers already supply defaults
-    // for missing optional parameters.
+    // 1 arg). Pad missing optional args with darticAbsent so the binding's
+    // cascading checks work correctly.
     for (final prefix in _prefixes) {
       for (var arity = args.length; arity <= args.length + 3; arity++) {
         final id = _registry.lookupByName('$prefix$name#$arity');
-        if (id >= 0) return _registry.invoke(id, [host, ...args]);
+        if (id >= 0) {
+          final padded = [host, ...args];
+          // Pad to arity + 1 (receiver + arity params) with darticAbsent.
+          while (padded.length < arity + 1) {
+            padded.add(darticAbsent);
+          }
+          return _registry.invoke(id, padded);
+        }
       }
     }
     return notFound;

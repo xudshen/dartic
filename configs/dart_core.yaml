@@ -212,7 +212,7 @@ libraries:
             (args) {
               final length = args[0] as int;
               final generator = args[1] as Function;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 return List.generate(length, (i) => generator(i), growable: args[2] as bool);
               }
               return List.generate(length, (i) => generator(i));
@@ -295,47 +295,47 @@ libraries:
           "value#3": |
             (args) => RangeError.value(
               args[0] as num,
-              args.length > 1 ? args[1] as String? : null,
-              args.length > 2 ? args[2] as String? : null,
+              identical(args[1], darticAbsent) ? null : args[1] as String?,
+              identical(args[2], darticAbsent) ? null : args[2] as String?,
             )
           "range#5": |
             (args) => RangeError.range(
               args[0] as int,
               args[1] as int?,
               args[2] as int?,
-              args.length > 3 ? args[3] as String? : null,
-              args.length > 4 ? args[4] as String? : null,
+              identical(args[3], darticAbsent) ? null : args[3] as String?,
+              identical(args[4], darticAbsent) ? null : args[4] as String?,
             )
           "index#5": |
             (args) => RangeError.index(
               args[0] as int,
               args[1],
-              args.length > 2 ? args[2] as String? : null,
-              args.length > 3 ? args[3] as String? : null,
-              args.length > 4 ? args[4] as int? : null,
+              identical(args[2], darticAbsent) ? null : args[2] as String?,
+              identical(args[3], darticAbsent) ? null : args[3] as String?,
+              identical(args[4], darticAbsent) ? null : args[4] as int?,
             )
           "checkValidIndex#5": |
             (args) => RangeError.checkValidIndex(
               args[0] as int,
               args[1],
-              args.length > 2 ? args[2] as String? : null,
-              args.length > 3 ? args[3] as int? : null,
-              args.length > 4 ? args[4] as String? : null,
+              identical(args[2], darticAbsent) ? null : args[2] as String?,
+              identical(args[3], darticAbsent) ? null : args[3] as int?,
+              identical(args[4], darticAbsent) ? null : args[4] as String?,
             )
           "checkValidRange#6": |
             (args) => RangeError.checkValidRange(
               args[0] as int,
               args[1] as int?,
               args[2] as int,
-              args.length > 3 ? args[3] as String? : null,
-              args.length > 4 ? args[4] as String? : null,
-              args.length > 5 ? args[5] as String? : null,
+              identical(args[3], darticAbsent) ? null : args[3] as String?,
+              identical(args[4], darticAbsent) ? null : args[4] as String?,
+              identical(args[5], darticAbsent) ? null : args[5] as String?,
             )
           "checkNotNegative#3": |
             (args) => RangeError.checkNotNegative(
               args[0] as int,
-              args.length > 1 ? args[1] as String? : null,
-              args.length > 2 ? args[2] as String? : null,
+              identical(args[1], darticAbsent) ? null : args[1] as String?,
+              identical(args[2], darticAbsent) ? null : args[2] as String?,
             )
         extra_bindings:
           - "dart:core::RangeError::value#3"
@@ -353,9 +353,9 @@ libraries:
             (args) => IndexError(
               args[0] as int,
               args[1],
-              args.length > 2 ? args[2] as String? : null,
-              args.length > 3 ? args[3] as String? : null,
-              args.length > 4 ? args[4] as int? : null,
+              identical(args[2], darticAbsent) ? null : args[2] as String?,
+              identical(args[3], darticAbsent) ? null : args[3] as String?,
+              identical(args[4], darticAbsent) ? null : args[4] as int?,
             )
         extra_bindings:
           - "dart:core::IndexError::#5"
@@ -365,9 +365,9 @@ libraries:
         extra_methods:
           "#3": |
             (args) {
-              final msg = args.isNotEmpty && args[0] != null ? args[0] as String : '';
-              final source = args.length > 1 ? args[1] : null;
-              final offset = args.length > 2 ? args[2] as int? : null;
+              final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;
+              final source = identical(args[1], darticAbsent) ? null : args[1];
+              final offset = identical(args[2], darticAbsent) ? null : args[2] as int?;
               return FormatException(msg, source, offset);
             }
 
@@ -379,7 +379,7 @@ libraries:
       # ── Exception: constructor and toString ──
       Exception:
         extra_methods:
-          "#1": "(args) => Exception(args.isNotEmpty ? args[0] : null)"
+          "#1": "(args) => Exception(identical(args[0], darticAbsent) ? null : args[0])"
           "toString#0": "(args) => args[0].toString()"
 
       # ── MapEntry: private constructor variant ──
@@ -392,12 +392,12 @@ libraries:
         extra_methods:
           "#6": |
             (args) => Duration(
-              days: args[0] != null ? args[0] as int : 0,
-              hours: args[1] != null ? args[1] as int : 0,
-              minutes: args[2] != null ? args[2] as int : 0,
-              seconds: args[3] != null ? args[3] as int : 0,
-              milliseconds: args[4] != null ? args[4] as int : 0,
-              microseconds: args[5] != null ? args[5] as int : 0,
+              days: identical(args[0], darticAbsent) ? 0 : args[0] as int,
+              hours: identical(args[1], darticAbsent) ? 0 : args[1] as int,
+              minutes: identical(args[2], darticAbsent) ? 0 : args[2] as int,
+              seconds: identical(args[3], darticAbsent) ? 0 : args[3] as int,
+              milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
+              microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
             )
           "_#fromFields#1": "(args) => Duration(microseconds: args[0] as int)"
 
@@ -407,7 +407,7 @@ libraries:
           "parse#3": |
             (args) {
               final source = args[0] as String;
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return int.parse(source, radix: args[1] as int);
               }
               return int.parse(source);
@@ -426,10 +426,10 @@ libraries:
           "#5": |
             (args) => RegExp(
               args[0] as String,
-              multiLine: args.length > 1 && args[1] != null ? args[1] as bool : false,
-              caseSensitive: args.length > 2 && args[2] != null ? args[2] as bool : true,
-              unicode: args.length > 3 && args[3] != null ? args[3] as bool : false,
-              dotAll: args.length > 4 && args[4] != null ? args[4] as bool : false,
+              multiLine: identical(args[1], darticAbsent) ? false : args[1] as bool,
+              caseSensitive: identical(args[2], darticAbsent) ? true : args[2] as bool,
+              unicode: identical(args[3], darticAbsent) ? false : args[3] as bool,
+              dotAll: identical(args[4], darticAbsent) ? false : args[4] as bool,
             )
           "hashCode#0": "(args) => (args[0] as RegExp).hashCode"
           "toString#0": "(args) => (args[0] as RegExp).toString()"
@@ -440,7 +440,7 @@ libraries:
           "generate#2": |
             (args) {
               final count = args[0] as int;
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 final generator = args[1] as Function;
                 return Iterable.generate(count, (i) => generator(i));
               }
@@ -448,14 +448,14 @@ libraries:
             }
           "toList#1": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return (args[0] as Iterable).toList(growable: args[1] as bool);
               }
               return (args[0] as Iterable).toList();
             }
           "join#1": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return (args[0] as Iterable).join(args[1] as String);
               }
               return (args[0] as Iterable).join();
@@ -474,7 +474,7 @@ libraries:
           "firstWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 final orElse = args[2] as Function;
                 return (args[0] as Iterable).firstWhere((e) => fn(e) as bool, orElse: () => orElse());
               }
@@ -483,7 +483,7 @@ libraries:
           "lastWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 final orElse = args[2] as Function;
                 return (args[0] as Iterable).lastWhere((e) => fn(e) as bool, orElse: () => orElse());
               }
@@ -492,7 +492,7 @@ libraries:
           "singleWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 final orElse = args[2] as Function;
                 return (args[0] as Iterable).singleWhere((e) => fn(e) as bool, orElse: () => orElse());
               }
@@ -534,7 +534,7 @@ libraries:
           "update#3": |
             (args) {
               final updateFn = args[2] as Function;
-              final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
+              final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
               return (args[0] as Map).update(
                 args[1],
                 (v) => updateFn(v),
@@ -560,7 +560,7 @@ libraries:
           "firstWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              final orElse = (args.length > 2 && args[2] != null) ? args[2] as Function : null;
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               for (final e in args[0] as Set) {
                 if (fn(e) as bool) return e;
               }
@@ -591,14 +591,14 @@ libraries:
         extra_methods:
           "#1": |
             (args) {
-              if (args.isNotEmpty && args[0] != null) {
+              if (!identical(args[0], darticAbsent)) {
                 return StringBuffer(args[0]!);
               }
               return StringBuffer();
             }
           "writeln#1": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 (args[0] as StringBuffer).writeln(args[1]);
               } else {
                 (args[0] as StringBuffer).writeln();
@@ -609,7 +609,7 @@ libraries:
             (args) {
               final sb = args[0] as StringBuffer;
               final objects = args[1] as Iterable;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 sb.writeAll(objects, args[2] as String);
               } else {
                 sb.writeAll(objects);
@@ -624,29 +624,29 @@ libraries:
           "#8": |
             (args) => DateTime(
               args[0] as int,
-              args.length > 1 && args[1] != null ? args[1] as int : 1,
-              args.length > 2 && args[2] != null ? args[2] as int : 1,
-              args.length > 3 && args[3] != null ? args[3] as int : 0,
-              args.length > 4 && args[4] != null ? args[4] as int : 0,
-              args.length > 5 && args[5] != null ? args[5] as int : 0,
-              args.length > 6 && args[6] != null ? args[6] as int : 0,
-              args.length > 7 && args[7] != null ? args[7] as int : 0,
+              identical(args[1], darticAbsent) ? 1 : args[1] as int,
+              identical(args[2], darticAbsent) ? 1 : args[2] as int,
+              identical(args[3], darticAbsent) ? 0 : args[3] as int,
+              identical(args[4], darticAbsent) ? 0 : args[4] as int,
+              identical(args[5], darticAbsent) ? 0 : args[5] as int,
+              identical(args[6], darticAbsent) ? 0 : args[6] as int,
+              identical(args[7], darticAbsent) ? 0 : args[7] as int,
             )
           "utc#8": |
             (args) => DateTime.utc(
               args[0] as int,
-              args.length > 1 && args[1] != null ? args[1] as int : 1,
-              args.length > 2 && args[2] != null ? args[2] as int : 1,
-              args.length > 3 && args[3] != null ? args[3] as int : 0,
-              args.length > 4 && args[4] != null ? args[4] as int : 0,
-              args.length > 5 && args[5] != null ? args[5] as int : 0,
-              args.length > 6 && args[6] != null ? args[6] as int : 0,
-              args.length > 7 && args[7] != null ? args[7] as int : 0,
+              identical(args[1], darticAbsent) ? 1 : args[1] as int,
+              identical(args[2], darticAbsent) ? 1 : args[2] as int,
+              identical(args[3], darticAbsent) ? 0 : args[3] as int,
+              identical(args[4], darticAbsent) ? 0 : args[4] as int,
+              identical(args[5], darticAbsent) ? 0 : args[5] as int,
+              identical(args[6], darticAbsent) ? 0 : args[6] as int,
+              identical(args[7], darticAbsent) ? 0 : args[7] as int,
             )
           "fromMillisecondsSinceEpoch#2": |
             (args) {
               final ms = args[0] as int;
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return DateTime.fromMillisecondsSinceEpoch(ms, isUtc: args[1] as bool);
               }
               return DateTime.fromMillisecondsSinceEpoch(ms);
@@ -654,7 +654,7 @@ libraries:
           "fromMicrosecondsSinceEpoch#2": |
             (args) {
               final us = args[0] as int;
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return DateTime.fromMicrosecondsSinceEpoch(us, isUtc: args[1] as bool);
               }
               return DateTime.fromMicrosecondsSinceEpoch(us);
@@ -668,7 +668,7 @@ libraries:
             (args) {
               final authority = args[0] as String;
               final path = args[1] as String;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 return Uri.http(authority, path, (args[2] as Map).cast<String, dynamic>());
               }
               return Uri.http(authority, path);
@@ -677,21 +677,21 @@ libraries:
             (args) {
               final authority = args[0] as String;
               final path = args[1] as String;
-              if (args.length > 2 && args[2] != null) {
+              if (!identical(args[2], darticAbsent)) {
                 return Uri.https(authority, path, (args[2] as Map).cast<String, dynamic>());
               }
               return Uri.https(authority, path);
             }
           "file#2": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return Uri.file(args[0] as String, windows: args[1] as bool);
               }
               return Uri.file(args[0] as String);
             }
           "directory#2": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return Uri.directory(args[0] as String, windows: args[1] as bool);
               }
               return Uri.directory(args[0] as String);
@@ -699,34 +699,34 @@ libraries:
           "dataFromString#5": |
             (args) => Uri.dataFromString(
               args[0] as String,
-              mimeType: args.length > 1 && args[1] != null ? args[1] as String : null,
-              parameters: args.length > 3 && args[3] != null ? (args[3] as Map).cast<String, String>() : null,
-              base64: args.length > 4 && args[4] != null ? args[4] as bool : false,
+              mimeType: identical(args[1], darticAbsent) ? null : args[1] as String,
+              parameters: identical(args[3], darticAbsent) ? null : (args[3] as Map).cast<String, String>(),
+              base64: identical(args[4], darticAbsent) ? false : args[4] as bool,
             )
           "encodeQueryComponent#2": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
               }
               return Uri.encodeQueryComponent(args[0] as String);
             }
           "decodeQueryComponent#2": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
               }
               return Uri.decodeQueryComponent(args[0] as String);
             }
           "splitQueryString#2": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
               }
               return Uri.splitQueryString(args[0] as String);
             }
           "toFilePath#1": |
             (args) {
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 return (args[0] as Uri).toFilePath(windows: args[1] as bool);
               }
               return (args[0] as Uri).toFilePath();
@@ -748,9 +748,9 @@ libraries:
           "fromCharCodes#3": |
             (args) {
               final codes = (args[0] as Iterable).cast<int>();
-              if (args.length > 1 && args[1] != null) {
+              if (!identical(args[1], darticAbsent)) {
                 final start = args[1] as int;
-                if (args.length > 2 && args[2] != null) {
+                if (!identical(args[2], darticAbsent)) {
                   return String.fromCharCodes(codes, start, args[2] as int);
                 }
                 return String.fromCharCodes(codes, start);
@@ -769,6 +769,6 @@ libraries:
               final self = args[0] as String;
               final pattern = args[1] as Pattern;
               final fn = args[2] as Function;
-              final start = (args.length > 3 && args[3] != null) ? args[3] as int : 0;
+              final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
               return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
             }

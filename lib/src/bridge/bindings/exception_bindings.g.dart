@@ -6,6 +6,7 @@ import '../../api/plugin_context.dart';
 import '../dartic_dispatch.dart';
 import '../dartic_object_holder.dart';
 import '../../runtime/object.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 
 class _$Exception implements Exception, DarticObjectHolder {
   _$Exception(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -50,7 +51,7 @@ abstract final class ExceptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        '#1': (args) => Exception(args.isNotEmpty ? args[0] : null),
+        '#1': (args) => Exception(identical(args[0], darticAbsent) ? null : args[0]),
         'toString#0': (args) => args[0].toString(),
       };
 }

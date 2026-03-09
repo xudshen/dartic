@@ -33,7 +33,7 @@ abstract final class FutureBindings {
         'value#1': (args) => Future.value(args[0]),
         'error#2': (args) {
             final error = args[0] as Object;
-            final stackTrace = args.length > 1 ? args[1] as StackTrace? : null;
+            final stackTrace = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
             if (stackTrace != null) {
               return Future.error(error, stackTrace);
             }
@@ -41,7 +41,7 @@ abstract final class FutureBindings {
         },
         'delayed#2': (args) {
             final duration = args[0] as Duration;
-            final computation = args.length > 1 ? args[1] as Function? : null;
+            final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
             if (computation != null) {
               return Future.delayed(duration, () => computation());
             }
@@ -57,8 +57,8 @@ abstract final class FutureBindings {
         },
         'wait#3': (args) {
             final futures = (args[0] as Iterable).cast<Future>();
-            final eagerError = args.length > 1 ? args[1] as bool? : null;
-            final cleanUp = args.length > 2 ? args[2] as Function? : null;
+            final eagerError = identical(args[1], darticAbsent) ? null : args[1] as bool?;
+            final cleanUp = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return Future.wait(
               futures.toList(),
               eagerError: eagerError ?? false,
@@ -81,7 +81,7 @@ abstract final class FutureBindings {
         'then#2': (args) {
             final future = args[0] as Future;
             final onValue = args[1] as Function;
-            final onError = args.length > 2 ? args[2] as Function? : null;
+            final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return future.then(
               (v) => onValue(v),
               onError: onError != null ? (e, s) => onError(e, s) : null,
@@ -90,7 +90,7 @@ abstract final class FutureBindings {
         'catchError#2': (args) {
             final future = args[0] as Future;
             final onError = args[1] as Function;
-            final test = args.length > 2 ? args[2] as Function? : null;
+            final test = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return future.catchError(
               onError,
               test: test != null ? (e) => test(e) as bool : null,
@@ -109,7 +109,7 @@ abstract final class FutureBindings {
         'timeout#2': (args) {
             final future = args[0] as Future;
             final timeLimit = args[1] as Duration;
-            final onTimeout = args.length > 2 ? args[2] as Function? : null;
+            final onTimeout = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             if (onTimeout != null) {
               return future.timeout(timeLimit, onTimeout: () => onTimeout());
             }

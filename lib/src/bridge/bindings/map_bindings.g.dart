@@ -55,7 +55,7 @@ abstract final class MapBindings {
         },
         'update#3': (args) {
             final updateFn = args[2] as Function;
-            final ifAbsentFn = args.length > 3 ? args[3] as Function? : null;
+            final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
             return (args[0] as Map).update(
               args[1],
               (v) => updateFn(v),

@@ -77,9 +77,9 @@ abstract final class HashSetBindings {
         'last#0': (args) => (args[0] as HashSet).last,
         'single#0': (args) => (args[0] as HashSet).single,
         '#3': (args) {
-            final equals = args.isNotEmpty ? args[0] as Function? : null;
-            final hashCodeFn = args.length > 1 ? args[1] as Function? : null;
-            final isValidKey = args.length > 2 ? args[2] as Function? : null;
+            final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+            final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return HashSet<Object?>(
               equals: equals != null ? (a, b) => equals(a, b) as bool : null,
               hashCode:

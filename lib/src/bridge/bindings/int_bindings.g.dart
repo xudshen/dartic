@@ -80,7 +80,7 @@ abstract final class IntBindings {
         '>=#1': (args) => (args[0] as int) >= (args[1] as num),
         'parse#3': (args) {
             final source = args[0] as String;
-            if (args.length > 1 && args[1] != null) {
+            if (!identical(args[1], darticAbsent)) {
               return int.parse(source, radix: args[1] as int);
             }
             return int.parse(source);

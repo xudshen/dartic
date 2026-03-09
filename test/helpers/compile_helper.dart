@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_class_registry.dart';
 import 'package:dartic/src/bridge/host_binding_registry.dart';
@@ -234,4 +235,21 @@ Future<Object?> compileAndRunMultiFile(
   );
   interp.execute(module);
   return interp.entryResult;
+}
+
+/// Pads [args] with [darticAbsent] to match the arity encoded in [bindingName].
+///
+/// Binding names use the format `methodName#N` where N is the param count
+/// (excluding receiver for instance methods). Instance method wrappers expect
+/// `N + 1` args (receiver + N params); static/constructor wrappers expect `N`.
+/// We pad to `N + 1` which is safe for both cases — statics never access
+/// beyond `args[N-1]`.
+List<Object?> padArgs(String bindingName, List<Object?> args) {
+  final hashIdx = bindingName.lastIndexOf('#');
+  if (hashIdx == -1) return args;
+  final arity = int.tryParse(bindingName.substring(hashIdx + 1));
+  if (arity == null) return args;
+  final needed = arity + 1;
+  if (args.length >= needed) return args;
+  return [...args, ...List.filled(needed - args.length, darticAbsent)];
 }
