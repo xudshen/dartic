@@ -1,0 +1,120 @@
+# Flutter painting bindings configuration for dartic code generator.
+#
+# Run with:
+#   fvm dart run packages/dartic_cli/bin/dartic.dart gen \
+#     --config packages/dartic_flutter/configs/painting.yaml \
+#     --analysis-root packages/dartic_flutter
+#
+# The --analysis-root must point to a Flutter project so the analyzer
+# can resolve package:flutter/* types.
+#
+# Types covered (~40):
+#   Bridge classes (dartic code can extend):
+#     - NotchedShape
+#   Binding-only (dartic code uses, not extends):
+#     - TextStyle, EdgeInsets, BorderRadius, BoxDecoration, gradients, etc.
+#
+# Removed types (code gen limitations):
+#   - TextPainter: generated code uses `ui.` prefix for BoxHeightStyle/BoxWidthStyle
+#   - SweepGradient: generated code uses `math.pi` prefix
+#   - ImageConfiguration: references AssetBundle (not in painting.dart scope)
+#   - BorderSide: generated code uses unresolved `strokeAlignInside` constant
+#
+# Bridge removed (code gen bug — named params emitted as positional):
+#   - Decoration, ShapeBorder, OutlinedBorder, Gradient
+#   These are still included as binding-only classes.
+
+output_bindings: "../lib/src/bindings"
+output_plugins: "../lib/src/plugins"
+
+# Use package: imports instead of relative imports (external package).
+custom_imports:
+  - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
+  - "package:dartic/src/runtime/object.dart"
+  - "dart:ui"
+  - "package:flutter/foundation.dart"
+  - "package:flutter/gestures.dart"
+  - "package:flutter/rendering.dart"
+  - "package:flutter/painting.dart"
+
+libraries:
+  - uri: package:flutter/painting.dart
+    classes:
+      # ── Bridge candidates (abstract, extensible) ───────────────────────
+      # Decoration, ShapeBorder, OutlinedBorder, Gradient: bridge removed
+      # due to code gen bug with named params in overrides. Kept as bindings.
+      - Decoration
+      - ShapeBorder
+      - OutlinedBorder
+      - Gradient
+      - name: NotchedShape
+        bridge: true
+
+      # ── Text styles ────────────────────────────────────────────────────
+      - TextStyle
+      - StrutStyle
+
+      # ── Edge insets ────────────────────────────────────────────────────
+      - EdgeInsets
+      - EdgeInsetsDirectional
+      - EdgeInsetsGeometry
+
+      # ── Alignment ──────────────────────────────────────────────────────
+      - Alignment
+      - AlignmentDirectional
+      - AlignmentGeometry
+      - TextAlignVertical
+
+      # ── Border radius ──────────────────────────────────────────────────
+      - BorderRadius
+      - BorderRadiusDirectional
+      - BorderRadiusGeometry
+
+      # ── Borders ────────────────────────────────────────────────────────
+      # BorderSide removed: gen emits unresolved `strokeAlignInside` constant
+      - Border
+      - BorderDirectional
+
+      # ── Decorations ────────────────────────────────────────────────────
+      - BoxDecoration
+      - ShapeDecoration
+      - BoxShadow
+
+      # ── Gradients ──────────────────────────────────────────────────────
+      # SweepGradient removed: gen emits `math.pi` prefix
+      - LinearGradient
+      - RadialGradient
+      - GradientRotation
+
+      # ── Images ─────────────────────────────────────────────────────────
+      # ImageConfiguration removed: references AssetBundle (not in scope)
+      - DecorationImage
+
+      # ── Text ───────────────────────────────────────────────────────────
+      # TextPainter removed: gen emits `ui.BoxHeightStyle` prefix
+      - TextSpan
+
+      # ── Colors ─────────────────────────────────────────────────────────
+      - HSVColor
+      - HSLColor
+      - ColorSwatch
+
+      # ── Border shapes ──────────────────────────────────────────────────
+      - RoundedRectangleBorder
+      - CircleBorder
+      - StadiumBorder
+      - StarBorder
+      - CircularNotchedRectangle
+
+      # ── Enums ──────────────────────────────────────────────────────────
+      - RenderComparison
+      - Axis
+      - VerticalDirection
+      - AxisDirection
+      - BorderStyle
+      - BoxShape
+      - BoxFit
+      - ImageRepeat
+      - TextOverflow
+      - TextWidthBasis

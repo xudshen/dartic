@@ -8,6 +8,7 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:ui';
+import 'dart:typed_data';
 
 abstract final class SizeBindings {
   static void register(DarticPluginContext ctx) {
