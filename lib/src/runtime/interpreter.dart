@@ -728,6 +728,23 @@ class DarticInterpreter {
     final rBase = frame.savedRBase;
     final rSize = frame.savedRSP - rBase;
 
+    // Close open upvalues in this frame's ref stack region.
+    // After suspension, the stack slots are freed (nulled), so open upvalues
+    // would dangle. Save them for reopening at new positions in
+    // restoreFrameStack to maintain shared-variable semantics.
+    if (rSize > 0) {
+      Map<int, Upvalue>? suspended;
+      _openUpvalues.removeWhere((stackIndex, uv) {
+        if (stackIndex >= rBase && stackIndex < rBase + rSize) {
+          uv.close(refStack.read(stackIndex));
+          (suspended ??= {})[stackIndex - rBase] = uv;
+          return true;
+        }
+        return false;
+      });
+      frame.suspendedUpvalues = suspended;
+    }
+
     if (vSize > 0) {
       frame.savedValueSlots = Int64List(vSize);
       frame.savedValueSlots!.setRange(0, vSize, valueStack.intView, vBase);
@@ -786,6 +803,25 @@ class DarticInterpreter {
     frame.savedRSP = newRBase + rSize;
     valueStack.sp = newVBase + vSize;
     refStack.sp = newRBase + rSize;
+
+    // Reopen upvalues that were closed during suspendFrame.
+    // Write any values modified between suspend and restore (by closures
+    // invoked from microtasks) back to the new stack slots, then reattach
+    // each upvalue to the new absolute index. This restores shared-variable
+    // semantics between the frame and its escaped closures.
+    final suspended = frame.suspendedUpvalues;
+    if (suspended != null) {
+      for (final entry in suspended.entries) {
+        final newAbsIndex = newRBase + entry.key;
+        final uv = entry.value;
+        // Sync: if a closure wrote to the upvalue between suspend/restore,
+        // its .value is newer than the snapshot. Overwrite the stack slot.
+        refStack.slots[newAbsIndex] = uv.value;
+        uv.reopen(newAbsIndex);
+        _openUpvalues[newAbsIndex] = uv;
+      }
+      frame.suspendedUpvalues = null;
+    }
   }
 
   /// Registers then/error callbacks on a Future or schedules immediate resume
@@ -915,9 +951,11 @@ class DarticInterpreter {
       resultReg: 0,
     );
     // Push upvalue stack entry to keep it in sync with the call stack.
-    // Resumed frames don't capture upvalues from a closure caller, so
-    // push null (matching the entry-frame pattern in _executeEntry).
-    _upvalueStack.add(null);
+    // Restore closure upvalues from the frame (if any) so that
+    // LOAD_UPVALUE/STORE_UPVALUE work after resume.
+    final resumeUpvalues =
+        frame.upvalues.isEmpty ? null : frame.upvalues.cast<Upvalue>();
+    _upvalueStack.add(resumeUpvalues);
 
     int pc = frame.pc;
 
@@ -975,7 +1013,7 @@ class DarticInterpreter {
         rBase,
         frame.funcProto.bytecode,
         pc,
-        null,
+        resumeUpvalues,
       );
     } on Object catch (e, st) {
       // Uncaught exception from the async body — complete the Completer
@@ -2889,7 +2927,12 @@ class DarticInterpreter {
             final completer = Completer<Object?>();
 
             // Create a DarticFrame to hold the async state.
-            final frame = DarticFrame(funcProto: module.functions[callStack.funcId]);
+            // Preserve closure upvalues so LOAD_UPVALUE/STORE_UPVALUE work
+            // after the frame is resumed from a microtask.
+            final frame = DarticFrame(
+              funcProto: module.functions[callStack.funcId],
+              upvalues: currentUpvalues?.toList() ?? const [],
+            );
             frame.resultCompleter = completer;
             frame.capturedZone = Zone.current;
             frame.futureReg = a;

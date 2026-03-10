@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import '../bytecode/module.dart';
+import 'closure.dart';
 
 /// Heap-allocated execution frame for a function invocation.
 ///
@@ -49,6 +50,11 @@ class DarticFrame {
 
   /// Ref stack snapshot (frame region), null when not suspended.
   List<Object?>? savedRefSlots;
+
+  /// Open upvalues closed during [suspendFrame], keyed by frame-relative
+  /// offset (stackIndex - rBase). Restored to new positions during
+  /// [restoreFrameStack] to maintain shared-variable semantics.
+  Map<int, Upvalue>? suspendedUpvalues;
 
   // ── Async & generator control fields ──
 

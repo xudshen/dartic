@@ -304,6 +304,56 @@ void main() async {
       expect(prints, ['caught']);
     });
   });
+
+  group('async upvalue across await', () {
+    test('closure with captured list invoked from microtask', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+import 'dart:async';
+void main() async {
+  var list = <int>[];
+  var c = Completer<void>();
+  Future.microtask(() { list.add(42); c.complete(); });
+  await c.future;
+  print(list);
+}
+''');
+      expect(prints, ['[42]']);
+    });
+
+    test('stream listen with captured upvalue', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+import 'dart:async';
+void main() async {
+  var received = <int>[];
+  var c = Completer<void>();
+  var ctrl = StreamController<int>();
+  ctrl.stream.listen(
+    (i) { received.add(i); },
+    onDone: () { c.complete(); },
+  );
+  ctrl.add(1);
+  ctrl.add(2);
+  ctrl.close();
+  await c.future;
+  print(received);
+}
+''');
+      expect(prints, ['[1, 2]']);
+    });
+
+    test('variable mutation shared across await', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+import 'dart:async';
+void main() async {
+  var x = 0;
+  Future.microtask(() { x = 42; });
+  await Future.value(null);
+  print(x);
+}
+''');
+      expect(prints, ['42']);
+    });
+  });
 }
 
 /// Compiles Dart source, executes it (awaiting async completion), and

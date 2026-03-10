@@ -42,6 +42,16 @@ class Upvalue {
     value = closedValue;
     _stackIndex = -1;
   }
+
+  /// Reopens a closed upvalue, reattaching it to [stackIndex] on the ref stack.
+  ///
+  /// Used by [restoreFrameStack] after an async frame is resumed: upvalues
+  /// were closed during [suspendFrame] (to survive stack relocation), and
+  /// must be reopened at the new stack positions to restore shared-variable
+  /// semantics between the frame and its closures.
+  void reopen(int stackIndex) {
+    _stackIndex = stackIndex;
+  }
 }
 
 /// A closure: a function prototype paired with captured upvalues.
