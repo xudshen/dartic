@@ -5,9 +5,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-// Import the tool source directly (not a package import -- tool/ is outside lib/).
-// ignore: avoid_relative_lib_imports
-import '../../tool/co19_runner.dart';
+import 'package:co19_runner/co19_runner.dart';
 
 /// Inline Expect class source that mirrors co19 Expect.equals/isTrue/
 /// isFalse/throws without importing dart:async. Used for validation tests

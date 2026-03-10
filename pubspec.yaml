@@ -16,3 +16,23 @@ dependencies:
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.25.6
+  front_end:
+    path: vendor/dart-sdk/pkg/front_end
+  vm:
+    path: vendor/dart-sdk/pkg/vm
+  _fe_analyzer_shared:
+    path: vendor/dart-sdk/pkg/_fe_analyzer_shared
+
+dependency_overrides:
+  kernel:
+    path: vendor/dart-sdk/pkg/kernel
+  front_end:
+    path: vendor/dart-sdk/pkg/front_end
+  vm:
+    path: vendor/dart-sdk/pkg/vm
+  build_integration:
+    path: vendor/dart-sdk/pkg/build_integration
+  _fe_analyzer_shared:
+    path: vendor/dart-sdk/pkg/_fe_analyzer_shared
+  analyzer:
+    path: vendor/dart-sdk/pkg/analyzer

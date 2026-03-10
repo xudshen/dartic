@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-// Import the tool source directly (not a package import — tool/ is outside lib/).
-// ignore: avoid_relative_lib_imports
-import '../../tool/co19_runner.dart';
+import 'package:co19_runner/co19_runner.dart';
 
 void main() {
   // ---------------------------------------------------------------------------
@@ -67,7 +65,7 @@ void main() {
       );
 
       final str = outcome.toString();
-      expect(str, contains('fail'));
+      expect(str.toLowerCase(), contains('fail'));
       expect(str, contains('foo_t01.dart'));
     });
   });

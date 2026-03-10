@@ -1,0 +1,37 @@
+name: co19_runner
+description: >-
+  In-process co19 test runner for dartic. Uses CFE (front_end) for
+  compilation and Isolate-based execution — zero OS subprocess spawning.
+publish_to: none
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  dartic:
+    path: ../..
+  kernel:
+    path: ../../vendor/dart-sdk/pkg/kernel
+  front_end:
+    path: ../../vendor/dart-sdk/pkg/front_end
+  vm:
+    path: ../../vendor/dart-sdk/pkg/vm
+  _fe_analyzer_shared:
+    path: ../../vendor/dart-sdk/pkg/_fe_analyzer_shared
+
+dev_dependencies:
+  test: ^1.25.6
+
+dependency_overrides:
+  kernel:
+    path: ../../vendor/dart-sdk/pkg/kernel
+  front_end:
+    path: ../../vendor/dart-sdk/pkg/front_end
+  vm:
+    path: ../../vendor/dart-sdk/pkg/vm
+  build_integration:
+    path: ../../vendor/dart-sdk/pkg/build_integration
+  _fe_analyzer_shared:
+    path: ../../vendor/dart-sdk/pkg/_fe_analyzer_shared
+  analyzer:
+    path: ../../vendor/dart-sdk/pkg/analyzer

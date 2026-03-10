@@ -4,8 +4,9 @@ import 'dart:typed_data';
 import 'package:dartic/src/compiler/bytecode_emitter.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:kernel/ast.dart' as ir;
-import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:test/test.dart';
+
+import '../helpers/compile_helper.dart';
 
 void main() {
   group('BytecodeEmitter', () {
@@ -71,18 +72,7 @@ void main() {
       final dartFile = File('${tempDir.path}/test_main.dart');
       await dartFile.writeAsString('void main() {}\n');
 
-      final dillPath = '${tempDir.path}/test_main.dill';
-      final result = await Process.run(
-        'fvm',
-        ['dart', 'compile', 'kernel', dartFile.path, '-o', dillPath],
-      );
-      if (result.exitCode != 0) {
-        fail('Failed to compile .dill: ${result.stderr}');
-      }
-
-      final bytes = File(dillPath).readAsBytesSync();
-      component = ir.Component();
-      BinaryBuilder(bytes).readComponent(component);
+      component = await compileFileToComponent(dartFile.path);
     });
 
     tearDownAll(() async {
@@ -131,18 +121,7 @@ int add(int a, int b) => a + b;
 int main() => add(1, 2);
 ''');
 
-      final dillPath = '${tempDir.path}/test_add.dill';
-      final result = await Process.run(
-        'fvm',
-        ['dart', 'compile', 'kernel', dartFile.path, '-o', dillPath],
-      );
-      if (result.exitCode != 0) {
-        fail('Failed to compile .dill: ${result.stderr}');
-      }
-
-      final bytes = File(dillPath).readAsBytesSync();
-      final comp = ir.Component();
-      BinaryBuilder(bytes).readComponent(comp);
+      final comp = await compileFileToComponent(dartFile.path);
 
       final compiler = DarticCompiler(comp);
       final module = compiler.compile();

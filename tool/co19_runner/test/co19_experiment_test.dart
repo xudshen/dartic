@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-// Import the tool source directly (not a package import — tool/ is outside lib/).
-// ignore: avoid_relative_lib_imports
-import '../../tool/co19_runner.dart';
+import 'package:co19_runner/co19_runner.dart';
 
 void main() {
   // ---------------------------------------------------------------------------

@@ -4,8 +4,6 @@ import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 
 import '../helpers/compile_helper.dart';
-import 'package:kernel/ast.dart' as ir;
-import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -40,17 +38,7 @@ int main() {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
@@ -78,17 +66,7 @@ bool main() {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
@@ -128,17 +106,7 @@ int main() {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];
@@ -170,17 +138,7 @@ int main() {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
@@ -209,16 +167,7 @@ int main() {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0);
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
@@ -258,17 +207,7 @@ Future<void> main() async {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];
@@ -311,17 +250,7 @@ Future<void> main() async {
 }
 ''');
 
-        final dillPath = '${tempDir.path}/test.dill';
-        final compileResult = await Process.run(
-          'fvm',
-          ['dart', 'compile', 'kernel', testFile.path, '-o', dillPath],
-        );
-        expect(compileResult.exitCode, 0,
-            reason: 'Compilation failed: ${compileResult.stderr}');
-
-        final bytes = File(dillPath).readAsBytesSync();
-        final component = ir.Component();
-        BinaryBuilder(bytes).readComponent(component);
+        final component = await compileFileToComponent(testFile.path);
         final module = DarticCompiler(component).compile();
 
         final printLog = <String>[];

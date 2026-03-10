@@ -15,11 +15,76 @@ import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
+import 'package:front_end/src/api_unstable/vm.dart'
+    show
+        CfeSeverity,
+        CompilerOptions,
+        StandardFileSystem,
+        kernelForProgram;
 import 'package:kernel/ast.dart' as ir;
-import 'package:kernel/binary/ast_from_binary.dart';
+import 'package:kernel/target/targets.dart' show TargetFlags;
+import 'package:vm/modular/target/vm.dart' show VmTarget;
+
+// ---------------------------------------------------------------------------
+// In-process CFE compilation (zero subprocess spawning)
+// ---------------------------------------------------------------------------
+
+/// Lazily detected Dart SDK root path.
+String? _sdkRootCache;
+String get _sdkRoot =>
+    _sdkRootCache ??= File(Platform.resolvedExecutable).parent.parent.path;
+
+/// Creates fresh [CompilerOptions] for a single in-process CFE compilation.
+CompilerOptions _makeTestCompilerOptions({
+  required List<String> diagnostics,
+  required List<bool> hasErrors,
+}) {
+  return CompilerOptions()
+    ..sdkRoot = Uri.file('$_sdkRoot/')
+    ..sdkSummary =
+        Uri.file('$_sdkRoot/lib/_internal/vm_platform_strong.dill')
+    ..target = VmTarget(TargetFlags())
+    ..fileSystem = StandardFileSystem.instance
+    ..packagesFileUri = Uri.file(
+        '${Directory.current.path}/.dart_tool/package_config.json')
+    ..onDiagnostic = (msg) {
+      if (msg.severity == CfeSeverity.error ||
+          msg.severity == CfeSeverity.internalProblem) {
+        hasErrors.add(true);
+      }
+      diagnostics.addAll(msg.plainTextFormatted);
+    }
+    ..environmentDefines = const {}
+    ..compileSdk = false;
+}
+
+/// Compiles a Dart source file at [filePath] to a Kernel [ir.Component]
+/// via in-process CFE. Throws [StateError] on compilation failure.
+Future<ir.Component> compileFileToComponent(String filePath) async {
+  final diagnostics = <String>[];
+  final hasErrors = <bool>[];
+  final options = _makeTestCompilerOptions(
+    diagnostics: diagnostics,
+    hasErrors: hasErrors,
+  );
+
+  final compileResult = await kernelForProgram(
+    Uri.file(File(filePath).absolute.path),
+    options,
+  );
+
+  if (compileResult == null ||
+      compileResult.component == null ||
+      hasErrors.isNotEmpty) {
+    throw StateError(
+      'Failed to compile .dill:\n${diagnostics.join('\n')}',
+    );
+  }
+  return compileResult.component!;
+}
 
 /// Compiles a Dart source string to a [DarticModule] via the full pipeline:
-/// source -> .dill (via `fvm dart compile kernel`) -> Kernel AST -> DarticCompiler.
+/// source -> Component (via in-process CFE) -> DarticCompiler.
 ///
 /// Shared test helper for compiler tests.
 Future<DarticModule> compileDart(
@@ -32,23 +97,7 @@ Future<DarticModule> compileDart(
     final dartFile = File('${dir.path}/input.dart');
     await dartFile.writeAsString(source);
 
-    final dillPath = '${dir.path}/input.dill';
-    final result = await Process.run(
-      'fvm',
-      ['dart', 'compile', 'kernel', dartFile.path, '-o', dillPath],
-    );
-    if (result.exitCode != 0) {
-      throw StateError(
-        'Failed to compile .dill:\n'
-        'stdout: ${result.stdout}\n'
-        'stderr: ${result.stderr}',
-      );
-    }
-
-    final bytes = File(dillPath).readAsBytesSync();
-    final component = ir.Component();
-    BinaryBuilder(bytes).readComponent(component);
-
+    final component = await compileFileToComponent(dartFile.path);
     return DarticCompiler(component, compilablePackages: compilablePackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);
@@ -202,24 +251,8 @@ Future<DarticModule> compileDartMultiFile(
     // Determine the main file to compile.
     final main = mainFile ?? sources.keys.first;
     final mainPath = '${dir.path}/$main';
-    final dillPath = '${dir.path}/output.dill';
 
-    final result = await Process.run(
-      'fvm',
-      ['dart', 'compile', 'kernel', mainPath, '-o', dillPath],
-    );
-    if (result.exitCode != 0) {
-      throw StateError(
-        'Failed to compile .dill:\n'
-        'stdout: ${result.stdout}\n'
-        'stderr: ${result.stderr}',
-      );
-    }
-
-    final bytes = File(dillPath).readAsBytesSync();
-    final component = ir.Component();
-    BinaryBuilder(bytes).readComponent(component);
-
+    final component = await compileFileToComponent(mainPath);
     return DarticCompiler(component, compilablePackages: compilablePackages).compile();
   } finally {
     if (tempDir == null) await dir.delete(recursive: true);

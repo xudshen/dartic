@@ -19,10 +19,11 @@ fvm dart run packages/dartic_cli/bin/dartic.dart version
 
 # co19 测试（注意：目录精确到子类别，不要跑整个 vendor/co19/）
 # 所有测试输出必须重定向到临时文件，不要直接输出到终端
-fvm dart run tool/co19_runner.dart --run vendor/co19/TypeSystem/subtyping 2>&1 | tee $TMPDIR/co19_run.log
-fvm dart run tool/co19_runner.dart --run vendor/co19/Language/Variables 2>&1 | tee $TMPDIR/co19_run.log
+# 推荐使用 in-process runner（零子进程，避免 macOS launchservicesd 风暴）：
+cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run ../../vendor/co19/TypeSystem/subtyping 2>&1 | tee $TMPDIR/co19_run.log
+cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run ../../vendor/co19/Language/Variables 2>&1 | tee $TMPDIR/co19_run.log
 # 大范围跑时配合 snapshot/baseline 做增量对比
-fvm dart run tool/co19_runner.dart --run --snapshot=$TMPDIR/snap.json --baseline=$TMPDIR/base.json vendor/co19/Language 2>&1 | tee $TMPDIR/co19_run.log
+cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run --snapshot=$TMPDIR/snap.json --baseline=$TMPDIR/base.json ../../vendor/co19/Language 2>&1 | tee $TMPDIR/co19_run.log
 ```
 
 ## 初始化

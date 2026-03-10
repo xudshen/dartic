@@ -1,12 +1,32 @@
-/// co19 test runner — discovers and runs co19 conformance tests.
+/// co19 test runner — shared library for co19 conformance test infrastructure.
 ///
-/// This is a development tool, not part of the main dartic library.
-/// Usage: `dart tool/co19_runner.dart [options] <directories...>`
+/// Provides data model classes ([TestEntry], [TestOutcome], [CategoryStats],
+/// [DiffResult]), test discovery, in-process CFE compilation, Isolate-based
+/// execution, statistics, and snapshot/diff utilities.
+///
+/// The CLI entry point lives in `bin/co19_runner.dart`.
 library;
 
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:typed_data';
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic/src/compiler/compiler.dart';
+import 'package:front_end/src/api_unstable/vm.dart'
+    show
+        CfeSeverity,
+        CompilerOptions,
+        StandardFileSystem,
+        kernelForProgram,
+        parseExperimentalArguments,
+        parseExperimentalFlags;
+import 'package:kernel/ast.dart' as ir;
+import 'package:kernel/target/targets.dart' show TargetFlags;
+import 'package:vm/modular/target/vm.dart' show VmTarget;
 
 // ---------------------------------------------------------------------------
 // Data model
@@ -43,7 +63,7 @@ class TestEntry {
 
   /// Experiment flags parsed from `// SharedOptions=--enable-experiment=...`
   /// comments in the test file. These flags are passed to the Dart compiler
-  /// when compiling the test (e.g., `--enable-experiment=class-modifiers`).
+  /// when compiling this test.
   final List<String> experimentFlags;
 
   TestEntry({
@@ -58,7 +78,6 @@ class TestEntry {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TestEntry &&
-          runtimeType == other.runtimeType &&
           path == other.path &&
           category == other.category &&
           subcategory == other.subcategory &&
@@ -66,44 +85,41 @@ class TestEntry {
           _listEquals(experimentFlags, other.experimentFlags);
 
   @override
-  int get hashCode =>
-      Object.hash(path, category, subcategory, isNegative,
-          Object.hashAll(experimentFlags));
+  int get hashCode => Object.hash(
+        path,
+        category,
+        subcategory,
+        isNegative,
+        Object.hashAll(experimentFlags),
+      );
 
   @override
   String toString() {
     final neg = isNegative ? ' [NEGATIVE]' : '';
-    return 'TestEntry($category${subcategory.isEmpty ? '' : '/$subcategory'}: '
-        '${path.split('/').last}$neg)';
+    final flags = experimentFlags.isNotEmpty
+        ? ' [experiments: ${experimentFlags.join(", ")}]'
+        : '';
+    return '${path.split('/').last} ($category${subcategory.isNotEmpty ? "/$subcategory" : ""})$neg$flags';
   }
 }
 
-// ---------------------------------------------------------------------------
-// Test result types
-// ---------------------------------------------------------------------------
-
-/// Possible outcomes for a single co19 test execution.
+/// Possible results for a single test execution.
 enum TestResult {
-  /// Test compiled and executed successfully (or negative test failed to
-  /// compile as expected).
+  /// Test compiled and ran successfully (or failed to compile as expected
+  /// for a negative test).
   pass,
 
-  /// Test failed: normal test had a compile error or runtime failure, or
-  /// negative test compiled unexpectedly.
+  /// Test failed (compilation error, runtime exception, or unexpected result).
   fail,
 
-  /// Test was skipped (e.g., depends on unsupported features).
+  /// Test was skipped (e.g. unsupported dart: library import).
   skip,
 
-  /// Internal error during test execution (file read failure, unexpected
-  /// exception in the harness itself). Distinguished from [fail] because
-  /// errors indicate problems with the harness or environment, not test logic.
+  /// Internal runner error (file not found, timeout, etc.).
   error,
 }
 
-/// Associates a [TestEntry] with its execution [result] and optional [message].
-///
-/// The [message] contains failure details, skip reasons, or error diagnostics.
+/// Associates a [TestEntry] with its execution result.
 class TestOutcome {
   final TestEntry entry;
   final TestResult result;
@@ -116,116 +132,80 @@ class TestOutcome {
   });
 
   @override
-  String toString() {
-    final suffix = message.isEmpty ? '' : ' ($message)';
-    return 'TestOutcome(${result.name}: ${entry.path.split('/').last}$suffix)';
-  }
+  String toString() =>
+      '${result.name.toUpperCase().padRight(5)} ${entry.path.split('/').last}'
+      '${message.isNotEmpty ? " — $message" : ""}';
 }
 
 // ---------------------------------------------------------------------------
 // Negative test detection
 // ---------------------------------------------------------------------------
 
-/// Regex matching co19 negative test markers: `// [analyzer]` or `// [cfe]`.
+/// Regex that matches co19 negative test markers.
 ///
-/// These markers appear as standalone line comments (possibly with leading
-/// whitespace) in the test source. They indicate an expected compile-time error.
-/// Lines inside doc comments (`///`) or string literals are not matched because
-/// they will have a `///` prefix or be enclosed in quotes—neither of which
-/// produces a line that starts with optional whitespace followed by `//`
-/// then a space and `[analyzer]`/`[cfe]`.
-final _negativeMarkerPattern = RegExp(r'^\s*// \[(analyzer|cfe)\] ', multiLine: true);
+/// co19 negative tests indicate expected compilation errors with special
+/// comment patterns that contain `// [analyzer]` or `// [cfe]` markers.
+/// These markers appear on their own line with optional leading whitespace.
+///
+/// The pattern specifically matches lines that START with optional whitespace
+/// followed by `//` (not `///` doc comments), then a space and a bracket
+/// group. This avoids matching `[analyzer]` or `[cfe]` in string literals.
+final _negativeMarkerPattern =
+    RegExp(r'^\s*//\s+\[(analyzer|cfe)\]\s', multiLine: true);
 
-/// Returns `true` if [source] contains co19 negative-test markers.
-///
-/// A negative test is one that expects a compile-time error, indicated by
-/// `// [analyzer] ...` and/or `// [cfe] ...` comment lines.
-bool isNegativeTest(String source) {
-  return _negativeMarkerPattern.hasMatch(source);
-}
+/// Returns `true` if [source] contains co19 negative test markers.
+bool isNegativeTest(String source) => _negativeMarkerPattern.hasMatch(source);
 
 // ---------------------------------------------------------------------------
-// Unsupported import detection (skip list)
+// Unsupported import detection
 // ---------------------------------------------------------------------------
 
-/// Set of dart: libraries that are supported (or partially supported) in
-/// Phase 5.
-///
-/// - `dart:core`: fully bridged via CoreBindings.
-/// - `dart:async`: types (Future, Stream, Completer) are usable in the type
-///   system, though async execution (await, async*, sync*) is Phase 6 scope.
-///   Including it prevents false regressions for tests that reference async
-///   types without actually executing async code.
-///
-/// Any other `dart:` import in a non-negative test file's direct source causes
-/// the test to be skipped. Transitive imports (e.g., `Utils/expect.dart`
-/// importing `dart:async`) are NOT checked — only the test file's own source
-/// is scanned.
-const _supportedDartLibraries = {
-  'dart:core',
-  'dart:async',
-  'dart:math',
-  'dart:collection',
+/// Set of `dart:` libraries that are supported (or partially supported)
+/// by the dartic runtime. Tests importing only these libraries will be
+/// attempted; tests importing ANY library not in this set are skipped.
+final _supportedDartLibraries = <String>{
+  'core',
+  'async',
+  'math',
+  'collection',
 };
 
-
-/// Regex matching `import 'dart:xxx'` or `import "dart:xxx"` statements.
-///
-/// Captures the library name after `dart:` (e.g., `io`, `async`, `math`).
-/// This is a simple line-level scan — it may match commented-out imports,
-/// which is acceptable (conservative: skip rather than fail).
+/// Regex that matches `import 'dart:<lib>'` or `import "dart:<lib>"`.
 final _unsupportedImportPattern = RegExp(r'''import\s+['"]dart:(\w+)['"]''');
 
-/// Returns the first unsupported `dart:` library import found in [source],
-/// or `null` if all imports are supported (or there are no `dart:` imports).
-///
-/// Only the test file's direct source is scanned — transitive dependencies
-/// are not followed.
+/// Returns the first unsupported `dart:` library name imported by [source],
+/// or `null` if all imports are supported (or there are no dart: imports).
 String? findUnsupportedImport(String source) {
   for (final match in _unsupportedImportPattern.allMatches(source)) {
-    final lib = 'dart:${match.group(1)}';
+    final lib = match.group(1)!;
     if (!_supportedDartLibraries.contains(lib)) {
-      return lib;
+      return 'dart:$lib';
     }
   }
   return null;
 }
 
 // ---------------------------------------------------------------------------
-// SharedOptions experiment flag parsing
+// Experiment flag parsing
 // ---------------------------------------------------------------------------
 
-/// Regex matching `// SharedOptions=--enable-experiment=<flags>` lines.
-///
-/// Captures the comma-separated list of experiment flag names after
-/// `--enable-experiment=`. Only scans the first 20 lines of the source.
+/// Regex that matches `// SharedOptions=--enable-experiment=<flags>`.
 final _experimentFlagPattern =
-    RegExp(r'//\s*SharedOptions=--enable-experiment=(.+)');
+    RegExp(r'//\s*SharedOptions=--enable-experiment=([\w,-]+)');
 
-/// Parses experiment flags from `// SharedOptions=--enable-experiment=...`
-/// comments in the first 20 lines of [source].
+/// Parses experiment flags from `// SharedOptions=` comments in [source].
 ///
-/// Returns a list of experiment flag names. If the source contains multiple
-/// `SharedOptions` lines with experiment flags, all flags are merged into
-/// a single list. Comma-separated flags within a single line are split.
-///
-/// Example:
-/// ```
-/// // SharedOptions=--enable-experiment=class-modifiers,records
-/// ```
-/// Returns `['class-modifiers', 'records']`.
+/// Only the first 20 lines are scanned (co19 convention places SharedOptions
+/// near the top). Returns a flat list of experiment flag names.
 List<String> parseExperimentFlags(String source) {
-  if (source.isEmpty) return const [];
-
-  final flags = <String>[];
   final lines = source.split('\n');
   final limit = lines.length < 20 ? lines.length : 20;
+  final flags = <String>[];
 
   for (var i = 0; i < limit; i++) {
     final match = _experimentFlagPattern.firstMatch(lines[i]);
     if (match != null) {
-      final raw = match.group(1)!.trim();
-      flags.addAll(raw.split(',').map((f) => f.trim()).where((f) => f.isNotEmpty));
+      flags.addAll(match.group(1)!.split(',').map((s) => s.trim()));
     }
   }
 
@@ -236,61 +216,51 @@ List<String> parseExperimentFlags(String source) {
 // Test discovery
 // ---------------------------------------------------------------------------
 
-/// Regex matching co19 test file names: `<name>_t<NN>.dart` or
-/// `<name>_t<NNN>.dart` where NN is 2 digits and NNN is 3 digits.
+/// Pattern matching co19 test file names: `<name>_t<NN or NNN>.dart`
 final _testFilePattern = RegExp(r'_t\d{2,3}\.dart$');
 
-/// Discovers co19 test files by recursively scanning [rootDirs].
+/// Recursively discovers co19 test files in [rootDirs].
 ///
-/// Returns a sorted list of [TestEntry] objects for files whose names match
-/// the `*_t[0-9]{2}.dart` pattern. Non-test files (README.md, `*_lib.dart`,
-/// `lib.dart`, non-.dart files) are excluded.
+/// A test file is a `.dart` file whose name matches [_testFilePattern]
+/// (e.g. `foo_t01.dart`, `bar_A01_t02.dart`) and is NOT a `_lib.dart` helper.
 ///
-/// Category and subcategory are derived from the directory structure relative
-/// to each root directory:
-/// - `root/test_t01.dart` -> category=basename(root), subcategory=""
-/// - `root/Category/test_t01.dart` -> category="Category", subcategory=""
-/// - `root/Category/Sub/test_t01.dart` -> category="Category", subcategory="Sub"
-/// - `root/Category/Sub/Deep/test_t01.dart` -> category="Category", subcategory="Sub"
+/// Each returned [TestEntry] includes:
+/// - [TestEntry.category]: first directory level below root.
+/// - [TestEntry.subcategory]: second directory level (or empty).
+/// - [TestEntry.isNegative]: `true` if the source contains `// [analyzer]`
+///   or `// [cfe]` markers.
+/// - [TestEntry.experimentFlags]: parsed from `SharedOptions=` comments.
+///
+/// Results are sorted by path for deterministic output.
 List<TestEntry> discoverTests(List<String> rootDirs) {
   final entries = <TestEntry>[];
 
-  for (var rootPath in rootDirs) {
-    // Normalize: strip trailing slashes so relative-path math is correct.
-    while (rootPath.endsWith('/') && rootPath.length > 1) {
-      rootPath = rootPath.substring(0, rootPath.length - 1);
-    }
+  for (final rootDir in rootDirs) {
+    final dir = Directory(rootDir);
+    if (!dir.existsSync()) continue;
 
-    final rootDir = Directory(rootPath);
-    if (!rootDir.existsSync()) continue;
-
-    // The root directory name, used as category when files live directly
-    // inside the root (e.g., root = ".../Variables").
-    final rootName = rootDir.uri.pathSegments
-        .lastWhere((s) => s.isNotEmpty, orElse: () => '');
-
-    final entities = rootDir.listSync(recursive: true);
-    for (final entity in entities) {
+    for (final entity in dir.listSync(recursive: true)) {
       if (entity is! File) continue;
-
       final filePath = entity.path;
 
-      // Must be a .dart file.
-      if (!filePath.endsWith('.dart')) continue;
-
-      // Must match the _tNN.dart pattern.
+      // Must be a .dart file matching the test pattern.
       if (!_testFilePattern.hasMatch(filePath)) continue;
 
-      // Derive category and subcategory from relative path.
-      final relativePath = filePath.substring(rootPath.length + 1);
+      // Exclude _lib.dart helper files and lib.dart.
+      final fileName = filePath.split('/').last;
+      if (fileName.endsWith('_lib.dart') || fileName == 'lib.dart') continue;
+
+      // Derive category and subcategory from the path relative to root.
+      final relativePath =
+          filePath.substring(rootDir.endsWith('/') ? rootDir.length : rootDir.length + 1);
       final parts = relativePath.split('/');
 
-      final String category;
-      final String subcategory;
+      String category;
+      String subcategory;
 
-      if (parts.length == 1) {
-        // File directly in the root directory.
-        category = rootName;
+      if (parts.length <= 1) {
+        // File directly in root — use filename as category.
+        category = fileName;
         subcategory = '';
       } else if (parts.length == 2) {
         // root/Category/file.dart
@@ -322,27 +292,117 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
 }
 
 // ---------------------------------------------------------------------------
-// Single test execution
+// In-process compilation (CFE) and execution (Isolate)
 // ---------------------------------------------------------------------------
 
-/// Compiles and executes a single co19 test, returning its [TestOutcome].
+/// SDK root path, lazily auto-detected from [Platform.resolvedExecutable].
 ///
-/// Execution flow:
-/// - **Negative tests**: Compile the test. If compilation fails, the test
-///   passes (expected compile error). If compilation succeeds unexpectedly,
-///   the test fails.
-/// - **Normal tests**: Compile the test. If compilation fails, the test fails.
-///   If compilation succeeds, execute it. If execution completes without
-///   exception, the test passes. If execution throws, the test fails.
-/// - **Error**: If the test file cannot be read or an unexpected internal error
-///   occurs, the result is [TestResult.error].
-/// Path to the pre-compiled dartic_run kernel snapshot.
-/// Set by the CLI [main] or lazily by [_ensureRunnerCompiled].
-String? _darticRunnerDill;
+/// Override via [sdkRoot] setter if the auto-detected path is incorrect.
+String? _sdkRootCache;
+
+/// Returns the SDK root path, auto-detecting from the Dart executable if
+/// not explicitly set.
+String get sdkRoot {
+  return _sdkRootCache ??=
+      File(Platform.resolvedExecutable).parent.parent.path;
+}
+
+/// Explicitly sets the SDK root path. Call before [runTest] if the
+/// auto-detected path is incorrect.
+set sdkRoot(String value) => _sdkRootCache = value;
+
+/// Creates fresh [CompilerOptions] for a single in-process CFE compilation.
+///
+/// Each call returns a new instance to avoid state leakage between tests.
+/// [hasErrors] is set to `true` if any error-level diagnostic is reported.
+CompilerOptions _makeCompilerOptions({
+  List<String> experimentFlags = const [],
+  required List<String> diagnostics,
+  required List<bool> hasErrors,
+}) {
+  final options = CompilerOptions()
+    ..sdkRoot = Uri.file('$sdkRoot/')
+    ..sdkSummary =
+        Uri.file('$sdkRoot/lib/_internal/vm_platform_strong.dill')
+    ..target = VmTarget(TargetFlags())
+    ..fileSystem = StandardFileSystem.instance
+    ..packagesFileUri = Uri.file(
+        '${Directory.current.path}/.dart_tool/package_config.json')
+    ..onDiagnostic = (msg) {
+      if (msg.severity == CfeSeverity.error ||
+          msg.severity == CfeSeverity.internalProblem) {
+        hasErrors.add(true);
+      }
+      diagnostics.addAll(msg.plainTextFormatted);
+    }
+    ..environmentDefines = const {}
+    ..compileSdk = false;
+
+  if (experimentFlags.isNotEmpty) {
+    final parsed = parseExperimentalArguments(experimentFlags);
+    options.explicitExperimentalFlags = parseExperimentalFlags(
+      parsed,
+      onError: (msg) {
+        hasErrors.add(true);
+        diagnostics.add(msg);
+      },
+    );
+  }
+
+  return options;
+}
+
+/// Isolate entry point for test execution.
+///
+/// Receives `[Uint8List darbBytes, SendPort replyPort]`.
+/// Sends back `[int exitCode, String stdout, String stderr]`.
+void _executeIsolateEntry(List<dynamic> message) async {
+  final darbBytes = message[0] as Uint8List;
+  final sendPort = message[1] as SendPort;
+
+  final output = StringBuffer();
+
+  try {
+    final engine = DarticEngine(
+      config: DarticConfig(onPrint: (s) => output.writeln(s)),
+    );
+    engine.loadBytecode(darbBytes);
+    final result = engine.call('main');
+    if (result is Future) await result;
+    sendPort.send([0, output.toString(), '']);
+  } on Object catch (e, st) {
+    sendPort.send([1, output.toString(), '$e\n$st']);
+  }
+}
+
+/// Executes darb bytes in a spawned [Isolate] with timeout.
+///
+/// Returns `[exitCode, stdout, stderr]`. On timeout, kills the isolate
+/// and returns exitCode -1.
+Future<List<dynamic>> _executeInIsolate(
+  Uint8List darbBytes,
+  Duration timeout,
+) async {
+  final rp = ReceivePort();
+  Isolate? isolate;
+  try {
+    isolate = await Isolate.spawn(
+      _executeIsolateEntry,
+      [darbBytes, rp.sendPort],
+    );
+    final result = await rp.first.timeout(timeout, onTimeout: () {
+      isolate?.kill(priority: Isolate.immediate);
+      return [-1, '', 'timeout after ${timeout.inSeconds}s'];
+    });
+    return result as List<dynamic>;
+  } finally {
+    rp.close();
+  }
+}
 
 /// If set, save .darb files for failing tests to this directory.
 /// Allows post-mortem inspection via `dartic dump --full <path>.darb`.
-String? _darbDir;
+String? darbDir;
 
 /// Extracts a flat test name from a co19 test path for .darb file naming.
 ///
@@ -356,35 +416,21 @@ String _testNameFromPath(String path) {
   return basename;
 }
 
-/// Lazily compiles `tool/dartic_run.dart` to a kernel snapshot if not yet done.
-///
-/// The CLI [main] sets [_darticRunnerDill] eagerly before running tests.
-/// When tests call [runTest] directly (e.g., in unit tests), this function
-/// handles the on-demand compilation.
-Future<void> _ensureRunnerCompiled() async {
-  if (_darticRunnerDill != null) return;
-  final runnerDillDir =
-      await Directory.systemTemp.createTemp('dartic_runner_');
-  final runnerDillPath = '${runnerDillDir.path}/dartic_run.dill';
-  final compileResult = await Process.run(
-    'fvm',
-    [
-      'dart',
-      'compile',
-      'kernel',
-      'tool/dartic_run.dart',
-      '-o',
-      runnerDillPath,
-    ],
-  );
-  if (compileResult.exitCode != 0) {
-    throw StateError(
-      'Failed to compile dartic_run.dart: ${compileResult.stderr}',
-    );
-  }
-  _darticRunnerDill = runnerDillPath;
-}
+// ---------------------------------------------------------------------------
+// Single test execution
+// ---------------------------------------------------------------------------
 
+/// Compiles and executes a single co19 test via in-process CFE + Isolate.
+///
+/// Execution flow:
+/// - **Negative tests**: Compile the test. If compilation fails, the test
+///   passes (expected compile error). If compilation succeeds unexpectedly,
+///   the test fails.
+/// - **Normal tests**: Compile the test. If compilation fails, the test fails.
+///   If compilation succeeds, execute it. If execution completes without
+///   exception, the test passes. If execution throws, the test fails.
+/// - **Error**: If the test file cannot be read or an unexpected internal error
+///   occurs, the result is [TestResult.error].
 Future<TestOutcome> runTest(
   TestEntry entry, {
   Duration timeout = const Duration(seconds: 30),
@@ -414,20 +460,24 @@ Future<TestOutcome> runTest(
     );
   }
 
-  // Create a temporary directory for compilation artifacts.
-  final tempDir = await Directory.systemTemp.createTemp('co19_run_');
   try {
-    // Step 1: Compile .dart → .dill via `fvm dart compile kernel`.
-    final dillPath = '${tempDir.path}/test.dill';
-    final experimentArgs = entry.experimentFlags
-        .expand((f) => ['--enable-experiment=$f'])
-        .toList();
-    final compileResult = await Process.run(
-      'fvm',
-      ['dart', 'compile', 'kernel', ...experimentArgs, entry.path, '-o', dillPath],
+    // Step 1: Compile .dart → Component via in-process CFE.
+    final diagnostics = <String>[];
+    final hasErrors = <bool>[];
+    final options = _makeCompilerOptions(
+      experimentFlags: entry.experimentFlags,
+      diagnostics: diagnostics,
+      hasErrors: hasErrors,
     );
 
-    final compileFailed = compileResult.exitCode != 0;
+    final compileResult = await kernelForProgram(
+      Uri.file(File(entry.path).absolute.path),
+      options,
+    );
+
+    final compileFailed = compileResult == null ||
+        compileResult.component == null ||
+        hasErrors.isNotEmpty;
 
     if (entry.isNegative) {
       // Negative test: compile failure → pass, compile success → fail.
@@ -449,9 +499,9 @@ Future<TestOutcome> runTest(
 
     // Normal test: compile failure → fail.
     if (compileFailed) {
-      final stderr = compileResult.stderr.toString().trim();
-      final stdout = compileResult.stdout.toString().trim();
-      final detail = stderr.isNotEmpty ? stderr : stdout;
+      final detail = diagnostics.isNotEmpty
+          ? diagnostics.join('\n')
+          : 'compilation returned null';
       return TestOutcome(
         entry: entry,
         result: TestResult.fail,
@@ -459,38 +509,24 @@ Future<TestOutcome> runTest(
       );
     }
 
-    // Step 2: Execute via subprocess.
-    // dartic_run.dart compiles .dill → .darb (in-memory) → executes.
-    // Optionally saves .darb to disk for post-mortem bytecode inspection.
-    await _ensureRunnerCompiled();
-    final darbPath = _darbDir != null
-        ? '$_darbDir/${_testNameFromPath(entry.path)}.darb'
+    // Step 2: Compile Component → .darb bytes (in-process).
+    final ir.Component component = compileResult.component!;
+    final module = DarticCompiler(component).compile();
+    final Uint8List darbBytes = DarticSerializer().serialize(module);
+
+    // Optionally save .darb for post-mortem inspection.
+    final darbPath = darbDir != null
+        ? '$darbDir/${_testNameFromPath(entry.path)}.darb'
         : null;
-    final process = await Process.start(
-      'fvm',
-      [
-        'dart',
-        _darticRunnerDill!,
-        if (darbPath != null) ...['--save-darb', darbPath],
-        dillPath,
-      ],
-    );
-    final stdoutFuture = process.stdout.transform(utf8.decoder).join();
-    final stderrFuture = process.stderr.transform(utf8.decoder).join();
+    if (darbPath != null) {
+      File(darbPath).writeAsBytesSync(darbBytes);
+    }
 
-    final exitCode = await process.exitCode.timeout(
-      timeout,
-      onTimeout: () {
-        process.kill();
-        return -1;
-      },
-    );
-
-    final output = await stdoutFuture
-        .timeout(const Duration(seconds: 2), onTimeout: () => '');
-    final errors = (await stderrFuture
-            .timeout(const Duration(seconds: 2), onTimeout: () => ''))
-        .trim();
+    // Step 3: Execute via Isolate with timeout.
+    final execResult = await _executeInIsolate(darbBytes, timeout);
+    final exitCode = execResult[0] as int;
+    final output = execResult[1] as String;
+    final errors = (execResult[2] as String).trim();
 
     if (exitCode == -1) {
       return TestOutcome(
@@ -528,8 +564,6 @@ Future<TestOutcome> runTest(
       result: TestResult.fail,
       message: '$e',
     );
-  } finally {
-    await tempDir.delete(recursive: true);
   }
 }
 
@@ -607,7 +641,7 @@ Future<TestOutcome> runTestWithTimeout(
       );
     }
   }
-  // Subprocess path — timeout is handled inside runTest via process.kill().
+  // In-process path — timeout is handled inside runTest via Isolate.kill().
   return runTest(entry, timeout: timeout);
 }
 
@@ -1034,275 +1068,4 @@ String formatDiff(DiffResult diff) {
   }
 
   return buf.toString();
-}
-
-// ---------------------------------------------------------------------------
-// Progress reporting
-// ---------------------------------------------------------------------------
-
-/// Displays a single overwriting progress line on stderr.
-///
-/// Format: `[1234/4167] 900 pass, 300 fail, 34 error (28.5/s)`
-class _ProgressReporter {
-  _ProgressReporter(this._total)
-      : _pass = 0,
-        _fail = 0,
-        _error = 0,
-        _completed = 0,
-        _stopwatch = Stopwatch()..start();
-
-  final int _total;
-  int _pass;
-  int _fail;
-  int _error;
-  int _completed;
-  final Stopwatch _stopwatch;
-
-  /// Records a completed test result and rewrites the progress line.
-  void report(TestResult result) {
-    _completed++;
-    switch (result) {
-      case TestResult.pass:
-        _pass++;
-      case TestResult.fail:
-        _fail++;
-      case TestResult.error:
-        _error++;
-      case TestResult.skip:
-        break;
-    }
-    final elapsed = _stopwatch.elapsedMilliseconds / 1000.0;
-    final rate = elapsed > 0 ? _completed / elapsed : 0.0;
-    stderr.write(
-      '\r[$_completed/$_total] $_pass pass, $_fail fail, $_error error'
-      ' (${rate.toStringAsFixed(1)}/s)',
-    );
-  }
-
-  /// Prints the final progress line (with newline) and stops the stopwatch.
-  void finish() {
-    _stopwatch.stop();
-    final elapsed = _stopwatch.elapsedMilliseconds / 1000.0;
-    final rate = elapsed > 0 ? _completed / elapsed : 0.0;
-    stderr.writeln(
-      '\r[$_completed/$_total] $_pass pass, $_fail fail, $_error error'
-      ' (${rate.toStringAsFixed(1)}/s)',
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// CLI entry point
-// ---------------------------------------------------------------------------
-
-/// Prints a comprehensive usage message to [sink].
-void _printUsage(StringSink sink) {
-  sink.writeln('Usage: dart tool/co19_runner.dart [options] <directories...>');
-  sink.writeln('');
-  sink.writeln('Discovers and runs co19 conformance tests against the dartic');
-  sink.writeln('bytecode interpreter.');
-  sink.writeln('');
-  sink.writeln('Options:');
-  sink.writeln('  --run              Discover, compile, execute tests, and');
-  sink.writeln('                     print report.');
-  sink.writeln('  --jobs=N, -jN      Number of concurrent test workers.');
-  sink.writeln('                     Defaults to CPU core count.');
-  sink.writeln('  --timeout=<secs>   Per-test timeout in seconds (default: 30).');
-  sink.writeln('  --snapshot=<path>  Save results to a JSON snapshot file.');
-  sink.writeln('                     Requires --run.');
-  sink.writeln('  --baseline=<path>  Compare results against a baseline');
-  sink.writeln('                     snapshot and print diff. Requires --run.');
-  sink.writeln('                     If baseline file does not exist, just');
-  sink.writeln('                     runs and prints report (no diff).');
-  sink.writeln('  --darb-dir=<dir>   Save .darb files for failing tests to');
-  sink.writeln('                     <dir>. Use `dartic dump --full <f>.darb`');
-  sink.writeln('                     to inspect bytecode post-mortem.');
-  sink.writeln('  --help             Show this usage message.');
-  sink.writeln('');
-  sink.writeln('Default behavior (no flags): discovery only — lists test');
-  sink.writeln('files found in the given directories.');
-  sink.writeln('');
-  sink.writeln('Examples:');
-  sink.writeln('  # Discover tests only');
-  sink.writeln(
-      '  dart tool/co19_runner.dart vendor/co19/Language/Variables');
-  sink.writeln('');
-  sink.writeln('  # Run tests and print report');
-  sink.writeln(
-      '  dart tool/co19_runner.dart --run vendor/co19/Language/Variables');
-  sink.writeln('');
-  sink.writeln('  # Run with 8 workers and 60s timeout');
-  sink.writeln('  dart tool/co19_runner.dart --run --jobs=8 --timeout=60 \\');
-  sink.writeln('    vendor/co19/Language/Variables');
-  sink.writeln('');
-  sink.writeln('  # Run, save snapshot, and compare against baseline');
-  sink.writeln('  dart tool/co19_runner.dart --run \\');
-  sink.writeln('    --snapshot=snapshots/current.json \\');
-  sink.writeln('    --baseline=snapshots/baseline.json \\');
-  sink.writeln('    vendor/co19/Language/Variables');
-}
-
-/// Parses `-jN` style shorthand (e.g. `-j4` → `4`). Returns `null` on
-/// parse failure.
-int? _parseShortJobs(String arg) {
-  final n = int.tryParse(arg.substring(2));
-  return (n != null && n > 0) ? n : null;
-}
-
-Future<void> main(List<String> args) async {
-  // -- Parse arguments manually. --
-  var runMode = false;
-  int? jobs;
-  var timeoutSeconds = 30;
-  String? snapshotPath;
-  String? baselinePath;
-  var showHelp = false;
-  final dirs = <String>[];
-
-  for (final arg in args) {
-    if (arg == '--run') {
-      runMode = true;
-    } else if (arg == '--help' || arg == '-h') {
-      showHelp = true;
-    } else if (arg.startsWith('--jobs=')) {
-      jobs = int.tryParse(arg.substring('--jobs='.length));
-      if (jobs == null || jobs <= 0) {
-        stderr.writeln('Invalid --jobs value: $arg');
-        exitCode = 1;
-        return;
-      }
-    } else if (arg.startsWith('-j') && arg.length > 2) {
-      jobs = _parseShortJobs(arg);
-      if (jobs == null) {
-        stderr.writeln('Invalid -j value: $arg');
-        exitCode = 1;
-        return;
-      }
-    } else if (arg.startsWith('--timeout=')) {
-      timeoutSeconds =
-          int.tryParse(arg.substring('--timeout='.length)) ?? -1;
-      if (timeoutSeconds <= 0) {
-        stderr.writeln('Invalid --timeout value: $arg');
-        exitCode = 1;
-        return;
-      }
-    } else if (arg.startsWith('--snapshot=')) {
-      snapshotPath = arg.substring('--snapshot='.length);
-    } else if (arg.startsWith('--baseline=')) {
-      baselinePath = arg.substring('--baseline='.length);
-    } else if (arg.startsWith('--darb-dir=')) {
-      _darbDir = arg.substring('--darb-dir='.length);
-    } else if (arg.startsWith('--') || (arg.startsWith('-') && arg != '-')) {
-      stderr.writeln('Unknown option: $arg');
-      stderr.writeln('');
-      _printUsage(stderr);
-      exitCode = 1;
-      return;
-    } else {
-      dirs.add(arg);
-    }
-  }
-
-  // -- Handle --help. --
-  if (showHelp) {
-    _printUsage(stdout);
-    return;
-  }
-
-  // -- Validate arguments. --
-  if (dirs.isEmpty) {
-    stderr.writeln('Error: No directories provided.');
-    stderr.writeln('');
-    _printUsage(stderr);
-    exitCode = 1;
-    return;
-  }
-
-  // Default jobs to CPU core count.
-  final effectiveJobs = jobs ?? Platform.numberOfProcessors;
-
-  // -- Discover tests. --
-  final entries = discoverTests(dirs);
-
-  if (!runMode) {
-    // Discovery-only mode (default).
-    stdout.writeln('Discovered ${entries.length} test(s):');
-    for (final entry in entries) {
-      stdout.writeln('  $entry');
-    }
-    return;
-  }
-
-  // -- Pre-compile the subprocess runner for faster execution. --
-  stderr.writeln('Pre-compiling dartic runner...');
-  final runnerDillDir = await Directory.systemTemp.createTemp('dartic_runner_');
-  final runnerDillPath = '${runnerDillDir.path}/dartic_run.dill';
-  final precompileResult = await Process.run(
-    'fvm',
-    ['dart', 'compile', 'kernel', 'tool/dartic_run.dart', '-o', runnerDillPath],
-  );
-  if (precompileResult.exitCode != 0) {
-    stderr.writeln('Failed to compile dartic_run.dart:');
-    stderr.writeln(precompileResult.stderr);
-    exit(1);
-  }
-  _darticRunnerDill = runnerDillPath;
-
-  // -- Create darb output directory if requested. --
-  if (_darbDir != null) {
-    await Directory(_darbDir!).create(recursive: true);
-    stderr.writeln('Saving .darb files for failures to: $_darbDir');
-  }
-
-  // -- Run mode: execute tests in parallel. --
-  stderr.writeln(
-    'Discovered ${entries.length} test(s). '
-    'Running with $effectiveJobs worker(s), ${timeoutSeconds}s timeout...',
-  );
-
-  final progress = _ProgressReporter(entries.length);
-
-  // Each test runs as a subprocess (fvm dart dartic_run.dill test.dill).
-  // The Dart VM naturally handles async test completion — the process stays
-  // alive until all pending Futures/Timers complete, then exits.
-  // Timeout is handled by killing the subprocess.
-  final outcomes = await runTestsParallel(
-    entries,
-    jobs: effectiveJobs,
-    timeout: Duration(seconds: timeoutSeconds),
-    onProgress: (completed, total, result) => progress.report(result),
-  );
-
-  progress.finish();
-
-  // Clean up pre-compiled runner.
-  await runnerDillDir.delete(recursive: true);
-  stderr.writeln('');
-
-  // -- Compute stats and print report to stdout. --
-  final stats = computeStats(outcomes);
-  stdout.write(formatReport(stats, outcomes));
-
-  // -- Save snapshot if requested. --
-  if (snapshotPath != null) {
-    saveSnapshot(outcomes, snapshotPath);
-    stderr.writeln('Snapshot saved to $snapshotPath');
-  }
-
-  // -- Compare against baseline if requested. --
-  if (baselinePath != null) {
-    final baseline = loadSnapshot(baselinePath);
-    if (baseline.isEmpty) {
-      stderr.writeln(
-          'Baseline file not found or empty: $baselinePath (skipping diff)');
-    } else {
-      final diff = diffSnapshots(baseline, outcomesToMap(outcomes));
-      stdout.writeln('');
-      stdout.write(formatDiff(diff));
-    }
-  }
-
-  // Force exit: timed-out tests leave stale async operations (pending
-  // Futures, Timers, microtasks) that keep the Dart event loop alive.
-  exit(0);
 }
