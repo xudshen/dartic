@@ -514,13 +514,10 @@ Future<TestOutcome> runTest(
     final module = DarticCompiler(component).compile();
     final Uint8List darbBytes = DarticSerializer().serialize(module);
 
-    // Optionally save .darb for post-mortem inspection.
+    // Compute .darb save path (written only on failure/error).
     final darbPath = darbDir != null
         ? '$darbDir/${_testNameFromPath(entry.path)}.darb'
         : null;
-    if (darbPath != null) {
-      File(darbPath).writeAsBytesSync(darbBytes);
-    }
 
     // Step 3: Execute via Isolate with timeout.
     final execResult = await _executeInIsolate(darbBytes, timeout);
@@ -528,36 +525,47 @@ Future<TestOutcome> runTest(
     final output = execResult[1] as String;
     final errors = (execResult[2] as String).trim();
 
+    // Determine outcome.
+    TestOutcome outcome;
     if (exitCode == -1) {
-      return TestOutcome(
+      outcome = TestOutcome(
         entry: entry,
         result: TestResult.error,
         message: 'timeout after ${timeout.inSeconds}s',
       );
-    }
-
-    // Check async test markers in stdout.
-    final hasWaitForDone = output.contains('unittest-suite-wait-for-done');
-    final hasSuccess = output.contains('unittest-suite-success');
-
-    if (exitCode != 0) {
-      final darbHint = darbPath != null ? '\n        darb: $darbPath' : '';
-      return TestOutcome(
+    } else if (exitCode != 0) {
+      outcome = TestOutcome(
         entry: entry,
         result: TestResult.fail,
-        message: '${errors.isNotEmpty ? errors : 'exit code $exitCode'}$darbHint',
+        message: errors.isNotEmpty ? errors : 'exit code $exitCode',
+      );
+    } else {
+      // Check async test markers in stdout.
+      final hasWaitForDone = output.contains('unittest-suite-wait-for-done');
+      final hasSuccess = output.contains('unittest-suite-success');
+
+      if (hasWaitForDone && !hasSuccess) {
+        outcome = TestOutcome(
+          entry: entry,
+          result: TestResult.fail,
+          message: 'async test: wait-for-done without success',
+        );
+      } else {
+        outcome = TestOutcome(entry: entry, result: TestResult.pass);
+      }
+    }
+
+    // Save .darb only for failing/error tests (post-mortem inspection).
+    if (darbPath != null && outcome.result != TestResult.pass) {
+      File(darbPath).writeAsBytesSync(darbBytes);
+      outcome = TestOutcome(
+        entry: outcome.entry,
+        result: outcome.result,
+        message: '${outcome.message}\n        darb: $darbPath',
       );
     }
 
-    if (hasWaitForDone && !hasSuccess) {
-      return TestOutcome(
-        entry: entry,
-        result: TestResult.fail,
-        message: 'async test: wait-for-done without success',
-      );
-    }
-
-    return TestOutcome(entry: entry, result: TestResult.pass);
+    return outcome;
   } on Object catch (e) {
     return TestOutcome(
       entry: entry,

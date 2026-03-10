@@ -1,11 +1,8 @@
 import 'package:test/test.dart';
 
-// We test the async protocol logic by importing the co19_runner library.
-// Since the co19_runner.dart is a tool (not a library), we need to test
-// the protocol logic via the actual runTest function with real test files.
-//
-// However, for unit-testing the stdout marker detection and timeout logic,
-// we define isolated test helpers here.
+// Unit tests for the async test protocol (stdout marker detection and
+// timeout logic). These helpers are defined locally to test the protocol
+// logic in isolation, without depending on real CFE compilation.
 
 /// Represents the async test protocol state.
 enum AsyncTestState {

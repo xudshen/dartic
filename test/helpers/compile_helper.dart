@@ -74,7 +74,7 @@ Future<ir.Component> compileFileToComponent(String filePath) async {
       compileResult.component == null ||
       hasErrors.isNotEmpty) {
     throw StateError(
-      'Failed to compile .dill:\n${diagnostics.join('\n')}',
+      'CFE compilation failed:\n${diagnostics.join('\n')}',
     );
   }
   return compileResult.component!;
