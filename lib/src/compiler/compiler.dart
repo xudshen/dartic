@@ -457,6 +457,23 @@ class DarticCompiler {
         ? register(typeErrorClass, 'TypeError', superClassId: errorCid)
         : -1;
 
+    // Additional collection/interface core classes — needed for type templates
+    // that reference these types (e.g., List<String> in function type args).
+    final listCid =
+        register(ct.listClass, 'List', superClassId: objectCid);
+    final iterableCid =
+        register(ct.iterableClass, 'Iterable', superClassId: objectCid);
+    final mapCid =
+        register(ct.mapClass, 'Map', superClassId: objectCid);
+    final setCid =
+        register(ct.setClass, 'Set', superClassId: objectCid);
+    final comparableClass = ct.index.tryGetClass('dart:core', 'Comparable');
+    final comparableCid = comparableClass != null
+        ? register(comparableClass, 'Comparable', superClassId: objectCid)
+        : -1;
+    final streamCid =
+        register(ct.streamClass, 'Stream', superClassId: objectCid);
+
     // Set up supertype closures (transitive supertypeIds).
     _classInfos[objectCid].supertypeIds.add(objectCid);
     _classInfos[numCid].supertypeIds.addAll({numCid, objectCid});
@@ -475,6 +492,30 @@ class DarticCompiler {
           .supertypeIds
           .addAll({typeErrorCid, errorCid, objectCid});
     }
+    _classInfos[listCid].supertypeIds.addAll({listCid, iterableCid, objectCid});
+    _classInfos[iterableCid].supertypeIds.addAll({iterableCid, objectCid});
+    _classInfos[mapCid].supertypeIds.addAll({mapCid, objectCid});
+    _classInfos[setCid].supertypeIds.addAll({setCid, iterableCid, objectCid});
+    if (comparableCid >= 0) {
+      _classInfos[comparableCid].supertypeIds.addAll({comparableCid, objectCid});
+      // num implements Comparable<num>
+      _classInfos[numCid].supertypeIds.add(comparableCid);
+      _classInfos[intCid].supertypeIds.add(comparableCid);
+      _classInfos[doubleCid].supertypeIds.add(comparableCid);
+      // String implements Comparable<String>
+      _classInfos[stringCid].supertypeIds.add(comparableCid);
+    }
+    _classInfos[streamCid].supertypeIds.addAll({streamCid, objectCid});
+
+    // SuperTypeMap: generic supertype arg mappings for subtype checking.
+    // List<E> extends Iterable<E>
+    _classInfos[listCid].superTypeArgs[iterableCid] = [
+      TypeParameterTemplate(index: 0, isFunctionTypeParam: false),
+    ];
+    // Set<E> extends Iterable<E>
+    _classInfos[setCid].superTypeArgs[iterableCid] = [
+      TypeParameterTemplate(index: 0, isFunctionTypeParam: false),
+    ];
 
     _coreTypeIds = CoreTypeIds(
       intId: intCid,

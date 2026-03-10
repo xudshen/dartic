@@ -27,5 +27,6 @@ abstract final class ObjectBindings {
         'toString#0': (args) => args[0].toString(),
         'hashCode#0': (args) => args[0].hashCode,
         '==#1': (args) => args[0] == args[1],
+        '_#fromFields#0': (args) => Object(),
       };
 }

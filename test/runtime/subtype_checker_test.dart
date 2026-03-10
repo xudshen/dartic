@@ -474,9 +474,20 @@ void main() {
       expect(identical(result, listIntType), isTrue);
     });
 
-    test('unknown type extracts to dynamic', () {
+    test('List host object extracts to List<dynamic>', () {
       final result = extractType(<int>[1, 2, 3], registry, classes);
-      expect(identical(result, registry.dynamicType), isTrue);
+      if (registry.listClassId >= 0) {
+        expect(result, isA<DarticInterfaceType>());
+        expect((result as DarticInterfaceType).classId, registry.listClassId);
+      } else {
+        // No List registered → falls through to objectType.
+        expect(identical(result, registry.objectType), isTrue);
+      }
+    });
+
+    test('unknown host object extracts to Object', () {
+      final result = extractType(RegExp('test'), registry, classes);
+      expect(identical(result, registry.objectType), isTrue);
     });
 
     test('DarticObjectHolder extracts from embedded DarticObject classId', () {

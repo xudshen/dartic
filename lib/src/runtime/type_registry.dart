@@ -85,6 +85,23 @@ class TypeRegistry {
   /// Class ID for `TypeError` (dart:core).
   int get typeErrorClassId => _typeErrorClassId;
 
+  // ── Additional core class IDs (set post-construction via name lookup) ──
+
+  /// Class ID for `List` (dart:core). Set by interpreter from classes table.
+  int listClassId = -1;
+
+  /// Class ID for `Iterable` (dart:core). Set by interpreter from classes table.
+  int iterableClassId = -1;
+
+  /// Class ID for `Map` (dart:core). Set by interpreter from classes table.
+  int mapClassId = -1;
+
+  /// Class ID for `Set` (dart:core). Set by interpreter from classes table.
+  int setClassId = -1;
+
+  /// Class ID for `Stream` (dart:async). Set by interpreter from classes table.
+  int streamClassId = -1;
+
   // ── Bucket table ──
 
   // TODO(phase2): Add load-factor-triggered bucket resize/rehash.

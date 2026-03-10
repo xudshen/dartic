@@ -188,6 +188,7 @@ void main() {
 ''';
         final module = await compileDart(source);
         final engine = DarticEngine(
+          plugins: [DarticStdlibPlugin()],
           config: DarticConfig(
             onPrint: (v) => _printLog.add('$v'),
           ),
@@ -224,6 +225,7 @@ void main() {
 ''';
         final module = await compileDart(source);
         final engine = DarticEngine(
+          plugins: [DarticStdlibPlugin()],
           config: DarticConfig(
             onPrint: (v) => _printLog.add('$v'),
           ),
@@ -426,6 +428,7 @@ void main() {
 ''';
         final module = await compileDart(source);
         final engine = DarticEngine(
+          plugins: [DarticStdlibPlugin()],
           config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
         );
         engine.loadModule(module);

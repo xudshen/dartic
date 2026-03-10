@@ -133,6 +133,12 @@ libraries:
             );
           }
 
+      # CFE injects this in non-product `await for` lowering for debugger
+      # support. In dartic it's a no-op — we don't have _StreamImpl.
+      - name: _asyncStarMoveNextHelper
+        arity: 1
+        custom: "(args) => null"
+
     # ── Overrides ────────────────────────────────────────────────────────
 
     overrides:

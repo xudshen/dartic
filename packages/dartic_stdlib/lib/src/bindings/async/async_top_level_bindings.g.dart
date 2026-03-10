@@ -51,5 +51,6 @@ abstract final class AsyncTopLevelBindings {
   );
 }
 );
+    ctx.registerBinding('dart:async::::_asyncStarMoveNextHelper#1', (args) => null);
   }
 }

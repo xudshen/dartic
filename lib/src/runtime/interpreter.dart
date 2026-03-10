@@ -416,6 +416,23 @@ class DarticInterpreter {
         functionClassId: ids.functionId,
         typeErrorClassId: ids.typeErrorId,
       );
+      // Populate additional core class IDs by name lookup from classes table.
+      // These are registered by the compiler in _registerCoreTypes but not
+      // stored in CoreTypeIds to avoid .darb format changes.
+      for (final cls in module.classes) {
+        switch (cls.name) {
+          case 'List':
+            _effectiveTypeRegistry!.listClassId = cls.classId;
+          case 'Iterable':
+            _effectiveTypeRegistry!.iterableClassId = cls.classId;
+          case 'Map':
+            _effectiveTypeRegistry!.mapClassId = cls.classId;
+          case 'Set':
+            _effectiveTypeRegistry!.setClassId = cls.classId;
+          case 'Stream':
+            _effectiveTypeRegistry!.streamClassId = cls.classId;
+        }
+      }
     }
     final active = _activeTypeRegistry;
     if (active != null) {
