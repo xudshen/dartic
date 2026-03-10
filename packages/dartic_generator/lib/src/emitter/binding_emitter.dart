@@ -13,9 +13,10 @@
 /// See: lib/src/bridge/bindings/int_bindings.dart for reference.
 library;
 
-import 'dart:io' show Platform;
+import 'dart:io' show Platform, stderr;
 
 import '../analyzer/type_info.dart';
+import '../config/binding_config.dart' show MethodOverrideConfig;
 
 /// Generates a complete `.g.dart` binding file for a single type.
 String emitBindingFile(
@@ -28,6 +29,7 @@ String emitBindingFile(
   bool customBridge = false,
   List<String>? ignoreForFile,
   List<String>? customImports,
+  Map<String, MethodOverrideConfig>? methodOverrides,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -51,7 +53,7 @@ String emitBindingFile(
   // If customBridge is set, the preamble provides a hand-written Bridge class.
   // Skip auto-generation but still emit bridgeFactory registration.
   if (effectiveBridge && !customBridge) {
-    _writeBridgeClass(body, info);
+    _writeBridgeClass(body, info, methodOverrides: methodOverrides);
     body.writeln();
   }
 
@@ -454,6 +456,9 @@ void _writeMethodMap(
     }
   }
 
+  // Auto-generate _#fromFields#N for platform const classes.
+  _writeFromFieldsEntry(buf, info, overrideKeys);
+
   // Extra methods（来自 YAML 的自定义覆盖）。
   if (extraMethods != null) {
     for (final entry in extraMethods.entries) {
@@ -503,6 +508,85 @@ void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
   }
   // Last line: closing brace at map entry level.
   buf.writeln('$indent${lines.last.trim()},');
+}
+
+/// Auto-generates a `_#fromFields#N` binding entry for platform const classes.
+///
+/// Kernel CFE constant folding turns `const MyClass(...)` into an
+/// `InstanceConstant` with only final field values (sorted alphabetically
+/// by field name). The dartic compiler emits `CALL_HOST` to
+/// `_#fromFields#N` to reconstruct these instances at runtime.
+///
+/// This function auto-generates the binding by mapping sorted fields back
+/// to the unnamed constructor's parameters. It skips generation when:
+/// - The class has no fields (but still generates a zero-arg binding)
+/// - Any field is non-final (not const-constructible)
+/// - extraMethods already provides a `_#fromFields#N` entry (YAML override)
+/// - No unnamed constructor exists
+/// - Field-to-parameter matching fails
+void _writeFromFieldsEntry(
+    StringBuffer buf, TypeInfo info, Set<String> overrideKeys) {
+  final fields = info.fields;
+  final fieldCount = fields.length;
+  final fromFieldsKey = '_#fromFields#$fieldCount';
+
+  // Skip if extraMethods already provides this key.
+  if (overrideKeys.contains(fromFieldsKey)) return;
+
+  // Skip abstract classes — they can't be instantiated.
+  if (info.isAbstract) return;
+
+  // Find the unnamed constructor.
+  final unnamedCtor = info.constructors
+      .where((c) => c.name.isEmpty && !c.isFactory)
+      .firstOrNull;
+  if (unnamedCtor == null) return;
+
+  // Zero fields: generate simple `ClassName()`.
+  if (fieldCount == 0) {
+    buf.writeln(
+        "        '$fromFieldsKey': (args) => ${info.className}(),");
+    return;
+  }
+
+  // All fields must be final for const-constructibility.
+  if (!fields.every((f) => f.isFinal)) return;
+
+  // Sort fields alphabetically by original name (matching compiler ordering).
+  final sortedFields = [...fields]..sort((a, b) => a.name.compareTo(b.name));
+
+  // Build a map from stripped field name (no leading _) to constructor param.
+  final ctorParams = {for (final p in unnamedCtor.params) p.name: p};
+
+  // Try to match each sorted field to a constructor parameter.
+  // Field name stripping: remove leading `_` prefix to get parameter name.
+  final argExprs = <String>[];
+  for (var i = 0; i < sortedFields.length; i++) {
+    final field = sortedFields[i];
+    var paramName = field.name;
+    if (paramName.startsWith('_')) {
+      paramName = paramName.substring(1);
+    }
+
+    final param = ctorParams[paramName];
+    if (param == null) {
+      // Cannot match field to constructor param — emit warning and bail.
+      stderr.writeln(
+          'WARNING: _#fromFields auto-gen skipped for ${info.className}: '
+          'field "${field.name}" has no matching constructor param "$paramName"');
+      return;
+    }
+
+    final cast = _emitCast('args[$i]', param.type);
+    if (param.isNamed) {
+      argExprs.add('${param.name}: $cast');
+    } else {
+      argExprs.add(cast);
+    }
+  }
+
+  buf.writeln(
+      "        '$fromFieldsKey': (args) => ${info.className}(${argExprs.join(', ')}),");
 }
 
 /// Returns true if any of the given keys are in the override set.
@@ -1074,7 +1158,7 @@ String _emitStaticMethodWrapper(String className, MethodInfo method) {
 /// - Holds `DarticDispatch` and `DarticObject`
 /// - Overrides all non-static public methods/getters/setters/operators
 ///   with dispatch delegation (check `notOverridden` → call super)
-void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
+void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverrideConfig>? methodOverrides}) {
   final bridgeClassName = '_\$${info.className}';
   if (info.isInterface) {
     buf.writeln(
@@ -1141,7 +1225,8 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
   for (final method in info.methods) {
     overriddenMethods.add(method.name);
     buf.writeln();
-    _writeBridgeMethodOverride(buf, info.className, method);
+    _writeBridgeMethodOverride(buf, info.className, method,
+        overrideConfig: methodOverrides?[method.name]);
   }
 
   // Override getters with dispatch delegation
@@ -1209,8 +1294,20 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info) {
 }
 
 /// Generates a dispatch-delegating method override for Bridge.
+///
+/// Dispatch patterns (in priority order):
+/// 1. **mustCallSuper with overrideConfig** — super is always called;
+///    `super_order` controls whether super runs before or after dispatch.
+/// 2. **Abstract method** (`method.isAbstract`) — no super call; throw if
+///    not overridden in dartic code.
+/// 3. **mustCallSuper without overrideConfig** — treated as `super_order:
+///    before` by default.
+/// 4. **overrideConfig with defaultReturn** — return `defaultReturn` instead
+///    of calling super when not overridden.
+/// 5. **Normal method** — dispatch, fallback to super if notOverridden.
 void _writeBridgeMethodOverride(
-    StringBuffer buf, String className, MethodInfo method) {
+    StringBuffer buf, String className, MethodInfo method,
+    {MethodOverrideConfig? overrideConfig}) {
   // Build parameter list with types
   final params = <String>[];
   final argNames = <String>[];
@@ -1220,24 +1317,112 @@ void _writeBridgeMethodOverride(
   }
 
   final paramStr = params.join(', ');
-  final argsListStr = argNames.isEmpty ? 'const []' : '[${argNames.join(', ')}]';
+  final argsListStr =
+      argNames.isEmpty ? 'const []' : '[${argNames.join(', ')}]';
+  final superCall = 'super.${method.name}(${argNames.join(', ')})';
+  final dispatchCall =
+      "_dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr)";
 
   buf.writeln('  @override');
-  if (method.isVoid) {
-    buf.writeln('  void ${method.name}($paramStr) {');
-    buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr);");
-    buf.writeln(
-        '    if (identical(r, notOverridden)) { super.${method.name}(${argNames.join(', ')}); return; }');
-    buf.writeln('  }');
+
+  // Determine which pattern to use (priority order).
+  // An overrideConfig with defaultReturn means "return this value instead of
+  // calling super", which is a distinct pattern from mustCallSuper. Only
+  // treat overrideConfig as triggering mustCallSuper when defaultReturn is
+  // not set.
+  final hasDefaultReturn = overrideConfig?.defaultReturn != null;
+  final isMustCallSuper = method.mustCallSuper ||
+      (overrideConfig != null && !method.isAbstract && !hasDefaultReturn);
+  final superOrder = overrideConfig?.superOrder ?? 'before';
+
+  if (isMustCallSuper && !method.isAbstract) {
+    // ── Pattern: mustCallSuper ──
+    // Super is always called; order depends on superOrder.
+    if (method.isVoid) {
+      buf.writeln('  void ${method.name}($paramStr) {');
+      if (superOrder == 'before') {
+        buf.writeln('    $superCall;');
+        buf.writeln('    $dispatchCall;');
+      } else {
+        // after
+        buf.writeln('    $dispatchCall;');
+        buf.writeln('    $superCall;');
+      }
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
+      if (superOrder == 'before') {
+        buf.writeln('    $superCall;');
+        buf.writeln('    final r = $dispatchCall;');
+        buf.writeln(
+            '    if (identical(r, notOverridden)) return $superCall;');
+        buf.writeln('    return r as ${method.returnType};');
+      } else {
+        // after
+        buf.writeln('    final r = $dispatchCall;');
+        buf.writeln('    $superCall;');
+        buf.writeln(
+            '    if (identical(r, notOverridden)) return $superCall;');
+        buf.writeln('    return r as ${method.returnType};');
+      }
+      buf.writeln('  }');
+    }
+  } else if (method.isAbstract) {
+    // ── Pattern: abstract ──
+    // No super call; throw if dartic code didn't override.
+    if (method.isVoid) {
+      buf.writeln('  void ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    if (identical(r, notOverridden)) {');
+      buf.writeln(
+          "      throw UnsupportedError('Abstract method ${method.name} must be overridden in dartic code');");
+      buf.writeln('    }');
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    if (identical(r, notOverridden)) {');
+      buf.writeln(
+          "      throw UnsupportedError('Abstract method ${method.name} must be overridden in dartic code');");
+      buf.writeln('    }');
+      buf.writeln('    return r as ${method.returnType};');
+      buf.writeln('  }');
+    }
+  } else if (overrideConfig?.defaultReturn != null) {
+    // ── Pattern: defaultReturn ──
+    // Return a specific default value instead of calling super.
+    final defaultReturn = overrideConfig!.defaultReturn!;
+    if (method.isVoid) {
+      buf.writeln('  void ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln(
+          '    if (identical(r, notOverridden)) return;');
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln(
+          '    if (identical(r, notOverridden)) return $defaultReturn;');
+      buf.writeln('    return r as ${method.returnType};');
+      buf.writeln('  }');
+    }
   } else {
-    buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
-    buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr);");
-    buf.writeln(
-        '    if (identical(r, notOverridden)) return super.${method.name}(${argNames.join(', ')});');
-    buf.writeln('    return r as ${method.returnType};');
-    buf.writeln('  }');
+    // ── Pattern: normal ──
+    // Dispatch first, fallback to super if notOverridden.
+    if (method.isVoid) {
+      buf.writeln('  void ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln(
+          '    if (identical(r, notOverridden)) { $superCall; return; }');
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
+      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln(
+          '    if (identical(r, notOverridden)) return $superCall;');
+      buf.writeln('    return r as ${method.returnType};');
+      buf.writeln('  }');
+    }
   }
 }
 
@@ -1247,8 +1432,15 @@ void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter) {
   buf.writeln('  ${getter.returnType} get ${getter.name} {');
   buf.writeln(
       "    final r = _dispatch.get(this, \$darticObject, '${getter.name}');");
-  buf.writeln(
-      '    if (identical(r, notOverridden)) return super.${getter.name};');
+  if (getter.isAbstract) {
+    buf.writeln('    if (identical(r, notOverridden)) {');
+    buf.writeln(
+        "      throw UnsupportedError('Abstract getter ${getter.name} must be overridden in dartic code');");
+    buf.writeln('    }');
+  } else {
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super.${getter.name};');
+  }
   buf.writeln('    return r as ${getter.returnType};');
   buf.writeln('  }');
 }
@@ -1319,7 +1511,9 @@ void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
   final bridgeClassName = '_\$${info.className}';
 
   // Instance methods — reuse absent-aware wrapper generation.
+  // Skip abstract methods (no super implementation to forward).
   for (final method in info.methods) {
+    if (method.isAbstract) continue;
     final key = method.allBindingKeys[0];
     final wrapper = _emitInstanceMethodWrapper(bridgeClassName, method);
     final indented = wrapper.replaceAll('\n', '\n    ');
@@ -1327,14 +1521,16 @@ void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$$key', $indented);");
   }
 
-  // Getters
+  // Getters — skip abstract getters.
   for (final getter in info.getters) {
+    if (getter.isAbstract) continue;
     buf.writeln(
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${getter.name}#0', (args) => (args[0] as ${info.className}).${getter.name});");
   }
 
-  // Setters
+  // Setters — skip abstract setters.
   for (final setter in info.setters) {
+    if (setter.isAbstract) continue;
     final valueCast = _emitCast('args[1]', setter.paramType);
     buf.writeln(
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as ${info.className}).${setter.name} = $valueCast; return args[1]; });");

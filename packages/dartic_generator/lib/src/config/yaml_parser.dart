@@ -177,6 +177,18 @@ OverrideConfig _parseOverride(YamlMap yaml) {
           .toList() ??
       [];
 
+  final methodOverrides = <String, MethodOverrideConfig>{};
+  if (yaml['method_overrides'] is YamlMap) {
+    for (final entry in (yaml['method_overrides'] as YamlMap).entries) {
+      final methodName = entry.key as String;
+      final config = entry.value as YamlMap;
+      methodOverrides[methodName] = MethodOverrideConfig(
+        superOrder: (config['super_order'] as String?) ?? 'before',
+        defaultReturn: config['default_return'] as String?,
+      );
+    }
+  }
+
   return OverrideConfig(
     extraMethods: extraMethods,
     extraBindings: extraBindings,
@@ -186,5 +198,6 @@ OverrideConfig _parseOverride(YamlMap yaml) {
             ?.map((e) => e as String)
             .toList() ??
         [],
+    methodOverrides: methodOverrides,
   );
 }

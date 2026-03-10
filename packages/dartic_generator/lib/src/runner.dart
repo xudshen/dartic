@@ -130,6 +130,7 @@ class Runner {
               ? _mergeIgnoreForFile(overrides?.ignoreForFile)
               : overrides?.ignoreForFile,
           customImports: _nullIfEmpty(config.customImports),
+          methodOverrides: _nullIfEmpty(overrides?.methodOverrides),
         );
 
         final fileName = _classToFileName(className);

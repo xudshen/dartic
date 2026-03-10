@@ -108,7 +108,6 @@ abstract final class StateBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$deactivate#0', (args) { (args[0] as _$State).deactivate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$activate#0', (args) { (args[0] as _$State).activate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$dispose#0', (args) { (args[0] as _$State).dispose(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$build#1', (args) => (args[0] as _$State).build(args[1] as BuildContext));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$didChangeDependencies#0', (args) { (args[0] as _$State).didChangeDependencies(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$debugFillProperties#1', (args) { (args[0] as _$State).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$toStringShort#0', (args) => (args[0] as _$State).toStringShort());

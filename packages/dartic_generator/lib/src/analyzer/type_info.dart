@@ -25,6 +25,9 @@ class TypeInfo {
   /// Interface Bridges use `implements` instead of `extends`.
   final bool isInterface;
 
+  /// Instance fields (including private ones) for `_#fromFields` generation.
+  final List<FieldInfo> fields;
+
   TypeInfo({
     required this.className,
     required this.libraryUri,
@@ -39,6 +42,7 @@ class TypeInfo {
     this.isAbstract = false,
     this.isFinal = false,
     this.isInterface = false,
+    this.fields = const [],
   });
 
   /// 完整限定名，如 'dart:core::int'。
@@ -89,11 +93,15 @@ class MethodInfo {
   final List<ParamInfo> paramTypes;
   final String returnType;
   final bool isVoid;
+  final bool isAbstract;
+  final bool mustCallSuper;
 
   MethodInfo({
     required this.name,
     required this.paramTypes,
     required this.returnType,
+    this.isAbstract = false,
+    this.mustCallSuper = false,
   }) : isVoid = returnType == 'void';
 
   /// 主 binding key（总参数数），如 'gcd#1'。
@@ -107,8 +115,9 @@ class MethodInfo {
 class GetterInfo {
   final String name;
   final String returnType;
+  final bool isAbstract;
 
-  GetterInfo({required this.name, required this.returnType});
+  GetterInfo({required this.name, required this.returnType, this.isAbstract = false});
 
   String get bindingKey => '$name#0';
 }
@@ -117,8 +126,9 @@ class GetterInfo {
 class SetterInfo {
   final String name;
   final String paramType;
+  final bool isAbstract;
 
-  SetterInfo({required this.name, required this.paramType});
+  SetterInfo({required this.name, required this.paramType, this.isAbstract = false});
 
   String get bindingKey => '$name=#1';
 }
@@ -139,6 +149,14 @@ class OperatorInfo {
 
   bool get isUnary => paramType == null;
   String get bindingKey => '$lookupName#${isUnary ? 0 : 1}';
+}
+
+/// Instance field information for `_#fromFields` auto-generation.
+class FieldInfo {
+  final String name;
+  final String type;
+  final bool isFinal;
+  FieldInfo({required this.name, required this.type, this.isFinal = false});
 }
 
 /// 构造器信息。

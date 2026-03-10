@@ -194,6 +194,7 @@ class TypeAnalyzer {
         getters.add(GetterInfo(
           name: name,
           returnType: _sanitizeType(getter.returnType),
+          isAbstract: getter.isAbstract,
         ));
       }
     }
@@ -214,7 +215,11 @@ class TypeAnalyzer {
       final params = setter.formalParameters;
       final paramType =
           params.isNotEmpty ? _sanitizeType(params.first.type) : 'dynamic';
-      setters.add(SetterInfo(name: cleanName, paramType: paramType));
+      setters.add(SetterInfo(
+        name: cleanName,
+        paramType: paramType,
+        isAbstract: setter.isAbstract,
+      ));
     }
 
     // Extract constructors — skip for abstract classes and enums
@@ -256,6 +261,18 @@ class TypeAnalyzer {
       operators,
     );
 
+    // Collect non-static instance fields (including private ones) for
+    // _#fromFields auto-generation.
+    final fields = <FieldInfo>[];
+    for (final field in cls.fields) {
+      if (field.isStatic) continue;
+      fields.add(FieldInfo(
+        name: field.name!,
+        type: _sanitizeType(field.type),
+        isFinal: field.isFinal,
+      ));
+    }
+
     return TypeInfo(
       className: cls.name!,
       libraryUri: libraryUri,
@@ -270,6 +287,7 @@ class TypeAnalyzer {
       isAbstract: isAbstract,
       isFinal: isFinal,
       isInterface: isInterface,
+      fields: fields,
     );
   }
 
@@ -320,6 +338,7 @@ class TypeAnalyzer {
           getters.add(GetterInfo(
             name: memberName,
             returnType: _sanitizeType(member.returnType),
+            isAbstract: member.isAbstract,
           ));
           existingGetterNames.add(memberName);
         }
@@ -334,7 +353,11 @@ class TypeAnalyzer {
             final paramType = params.isNotEmpty
                 ? _sanitizeType(params.first.type)
                 : 'dynamic';
-            setters.add(SetterInfo(name: cleanName, paramType: paramType));
+            setters.add(SetterInfo(
+              name: cleanName,
+              paramType: paramType,
+              isAbstract: member.isAbstract,
+            ));
             existingSetterNames.add(cleanName);
           }
         }
@@ -373,12 +396,28 @@ class TypeAnalyzer {
     return member.enclosingElement == cls;
   }
 
+  /// Checks if an element has the `@mustCallSuper` annotation.
+  bool _hasMustCallSuper(ExecutableElement element) {
+    for (final annotation in element.metadata.annotations) {
+      final annotElement = annotation.element;
+      if (annotElement == null) continue;
+      if (annotElement is GetterElement) {
+        if (annotElement.name == 'mustCallSuper') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   /// Converts a [MethodElement] to [MethodInfo].
   MethodInfo _toMethodInfo(MethodElement method) {
     return MethodInfo(
       name: method.name!,
       paramTypes: _toParamInfoList(method.formalParameters),
       returnType: _sanitizeType(method.returnType),
+      isAbstract: method.isAbstract,
+      mustCallSuper: _hasMustCallSuper(method),
     );
   }
 

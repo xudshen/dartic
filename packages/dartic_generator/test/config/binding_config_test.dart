@@ -61,6 +61,33 @@ void main() {
     });
   });
 
+  group('MethodOverrideConfig', () {
+    test('defaults superOrder to before', () {
+      final m = MethodOverrideConfig();
+      expect(m.superOrder, 'before');
+      expect(m.defaultReturn, isNull);
+    });
+
+    test('accepts superOrder after', () {
+      final m = MethodOverrideConfig(superOrder: 'after');
+      expect(m.superOrder, 'after');
+    });
+
+    test('accepts defaultReturn', () {
+      final m = MethodOverrideConfig(defaultReturn: 'true');
+      expect(m.defaultReturn, 'true');
+    });
+
+    test('accepts both superOrder and defaultReturn', () {
+      final m = MethodOverrideConfig(
+        superOrder: 'after',
+        defaultReturn: 'false',
+      );
+      expect(m.superOrder, 'after');
+      expect(m.defaultReturn, 'false');
+    });
+  });
+
   group('OverrideConfig', () {
     test('extra_methods', () {
       final o = OverrideConfig(
@@ -82,6 +109,19 @@ void main() {
       final o = OverrideConfig();
       expect(o.extraMethods, isEmpty);
       expect(o.extraBindings, isEmpty);
+      expect(o.methodOverrides, isEmpty);
+    });
+
+    test('methodOverrides field', () {
+      final o = OverrideConfig(
+        methodOverrides: {
+          'dispose': MethodOverrideConfig(superOrder: 'after'),
+          'build': MethodOverrideConfig(defaultReturn: 'null'),
+        },
+      );
+      expect(o.methodOverrides, hasLength(2));
+      expect(o.methodOverrides['dispose']!.superOrder, 'after');
+      expect(o.methodOverrides['build']!.defaultReturn, 'null');
     });
   });
 
