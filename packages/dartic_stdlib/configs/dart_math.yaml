@@ -11,8 +11,13 @@
 # Constants (pi, e, ln2, ln10, log2e, log10e, sqrt1_2, sqrt2) are compiled as
 # inline constants by the CFE and do not generate CALL_HOST bindings.
 
-output_bindings: "../lib/src/bridge/bindings"
-output_plugins: "../lib/src/bridge/plugins"
+output_bindings: "../lib/src/bindings/math"
+output_plugins: "../lib/src/plugins"
+
+custom_imports:
+  - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
+  - "package:dartic/src/runtime/object.dart"
 
 libraries:
   - uri: dart:math
