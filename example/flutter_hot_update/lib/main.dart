@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -44,7 +45,7 @@ class _DarticHotUpdateAppState extends State<DarticHotUpdateApp> {
 
       // Create engine with Flutter bindings.
       final engine = DarticEngine(
-        plugins: [DarticFlutterPlugin()],
+        plugins: [DarticStdlibPlugin(), DarticFlutterPlugin()],
         config: const DarticConfig(
           maxTotalFuel: 10000000,
           executionTimeout: Duration(seconds: 30),
