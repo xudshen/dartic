@@ -1,0 +1,94 @@
+# Flutter Cupertino bindings configuration for dartic code generator.
+#
+# Run with:
+#   fvm dart run packages/dartic_cli/bin/dartic.dart gen \
+#     --config packages/dartic_flutter/configs/cupertino.yaml \
+#     --analysis-root packages/dartic_flutter
+#
+# The --analysis-root must point to a Flutter project so the analyzer
+# can resolve package:flutter/* types.
+#
+# Types covered (~28):
+#   Binding-only (dartic code uses, not extends):
+#     - CupertinoApp, CupertinoButton, CupertinoNavigationBar, etc.
+#
+# Removed types (code gen limitations or non-existent):
+#   - CupertinoTabView, CupertinoTabController: generics
+#   - CupertinoNavigationBarBackButton: may not be public
+#   - NoDefaultCupertinoThemeData: may be private
+#   - CupertinoPickerDefaultSelectionOverlay: may not exist
+#   - CupertinoLinearActivityIndicator: may not exist
+#   - CupertinoButtonSize: may not exist in this Flutter version
+#   - NavigationBarBottomMode: may not exist
+#   - CupertinoScrollBehavior: internal
+#   - CupertinoTextThemeData: may cause issues
+#   - CupertinoListTileChevron: may not exist
+#   - CupertinoTextField: gen emits unresolved BoxHeightStyle/BoxWidthStyle (ui. prefix)
+#   - CupertinoPopupSurface: gen emits unresolved defaultBlurSigma constant
+#   - CupertinoScrollbar: gen emits unresolved defaultThickness/defaultRadius constants
+#   - CupertinoListTile: gen emits unresolved FutureOr (missing dart:async import)
+#   - CupertinoDynamicColor: gen emits unresolved ColorSpace type
+
+output_bindings: "../lib/src/bindings"
+output_plugins: "../lib/src/plugins"
+
+# Use package: imports instead of relative imports (external package).
+custom_imports:
+  - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
+  - "package:dartic/src/runtime/object.dart"
+  - "package:flutter/foundation.dart"
+  - "package:flutter/rendering.dart"
+  - "package:flutter/gestures.dart"
+  - "package:flutter/services.dart"
+  - "package:flutter/widgets.dart"
+  - "package:flutter/cupertino.dart"
+
+libraries:
+  - uri: package:flutter/cupertino.dart
+    classes:
+      # -- App & scaffold ------------------------------------------------
+      - CupertinoApp
+      - CupertinoPageScaffold
+
+      # -- Navigation ----------------------------------------------------
+      - CupertinoNavigationBar
+      - CupertinoSliverNavigationBar
+      - CupertinoTabBar
+      - CupertinoTabScaffold
+
+      # -- Buttons & controls --------------------------------------------
+      - CupertinoButton
+      # CupertinoTextField removed: gen emits unresolved BoxHeightStyle/BoxWidthStyle
+      - CupertinoSearchTextField
+      - CupertinoSlider
+      - CupertinoSwitch
+
+      # -- Pickers -------------------------------------------------------
+      - CupertinoPicker
+      - CupertinoDatePicker
+      - CupertinoTimerPicker
+
+      # -- Dialogs & sheets ----------------------------------------------
+      - CupertinoAlertDialog
+      # CupertinoPopupSurface removed: gen emits unresolved defaultBlurSigma
+      - CupertinoActionSheet
+      - CupertinoActionSheetAction
+      - CupertinoDialogAction
+
+      # -- Indicators & scrolling ----------------------------------------
+      - CupertinoActivityIndicator
+      # CupertinoScrollbar removed: gen emits unresolved defaultThickness/defaultRadius
+
+      # -- Theming -------------------------------------------------------
+      - CupertinoTheme
+      - CupertinoThemeData
+      # CupertinoDynamicColor removed: gen emits unresolved ColorSpace type
+
+      # -- List ----------------------------------------------------------
+      # CupertinoListTile removed: gen emits unresolved FutureOr
+
+      # -- Enums ---------------------------------------------------------
+      - CupertinoDatePickerMode
+      - CupertinoTimerPickerMode
+      - OverlayVisibilityMode

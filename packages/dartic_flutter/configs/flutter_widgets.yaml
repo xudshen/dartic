@@ -29,6 +29,8 @@ custom_imports:
   - "package:flutter/services.dart"
   - "package:flutter/widgets.dart"
   - "package:flutter/material.dart"
+  - "package:flutter/cupertino.dart"
+  - "dart:ui"
 
 libraries:
   # ── Framework types (from package:flutter/widgets.dart) ───────────────
@@ -390,3 +392,75 @@ libraries:
       - FloatingActionButton
       - Card
       - ListTile
+
+      # ── Task 16: Theme & Style (~15 types) ─────────────────────────────
+      - ThemeData
+      - Theme
+      - AnimatedTheme
+      - ColorScheme
+      - TextTheme
+      - ButtonStyle
+      - InputDecoration
+      - InputDecorationTheme
+      - VisualDensity
+      - IconThemeData
+      - InputBorder
+      - UnderlineInputBorder
+      - OutlineInputBorder
+      # Enums
+      - MaterialTapTargetSize
+      - FloatingLabelBehavior
+
+      # ── Task 17: Input & Form widgets (~4 types) ───────────────────────
+      - TextField
+      - Checkbox
+      - Switch
+      - Slider
+
+      # ── Task 18: Navigation & Dialog (~14 types) ───────────────────────
+      - Dialog
+      - AlertDialog
+      - SimpleDialog
+      - SimpleDialogOption
+      - BottomSheet
+      - Drawer
+      - NavigationBar
+      - NavigationDestination
+      - NavigationRail
+      - BottomNavigationBar
+      - BottomAppBar
+      # Enums
+      - DrawerAlignment
+      - NavigationDestinationLabelBehavior
+      - SnackBarClosedReason
+
+      # ── Task 19: Tab & Other widgets (~29 types) ───────────────────────
+      - TabBar
+      - TabBarView
+      - Tab
+      - TabPageSelector
+      - TabPageSelectorIndicator
+      - SnackBar
+      - SnackBarAction
+      - Chip
+      - ActionChip
+      - ChoiceChip
+      - FilterChip
+      - InputChip
+      - ExpansionTile
+      - CircleAvatar
+      - Badge
+      - Divider
+      - ExpandIcon
+      - LinearProgressIndicator
+      - CircularProgressIndicator
+      - RefreshProgressIndicator
+      - GridTile
+      - GridTileBar
+      - IconButton
+      - OutlinedButton
+      - FilledButton
+      - MaterialPageRoute
+      # Enums
+      - TabBarIndicatorSize
+      - TabAlignment

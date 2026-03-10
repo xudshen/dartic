@@ -13,6 +13,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:ui';
 
 /// Bridge class that allows dartic code to extend StatefulWidget.
 class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {

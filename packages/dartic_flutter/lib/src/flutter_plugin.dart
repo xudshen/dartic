@@ -9,6 +9,7 @@ import 'plugins/services_plugin.g.dart';
 import 'plugins/scheduler_plugin.g.dart';
 import 'plugins/widgets_plugin.g.dart';
 import 'plugins/material_plugin.g.dart';
+import 'plugins/cupertino_plugin.g.dart';
 
 /// Flutter widget Bridge bindings plugin for dartic.
 ///
@@ -35,5 +36,6 @@ class DarticFlutterPlugin extends DarticPlugin {
     SchedulerPlugin().register(context);
     WidgetsPlugin().register(context);
     MaterialPlugin().register(context);
+    CupertinoPlugin().register(context);
   }
 }
