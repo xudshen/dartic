@@ -11,10 +11,6 @@ import 'dart:typed_data';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
-import '../bridge/plugins/async_plugin.g.dart';
-import '../bridge/plugins/collection_plugin.g.dart';
-import '../bridge/plugins/core_plugin.g.dart';
-import '../bridge/plugins/math_plugin.g.dart';
 import '../bytecode/module.dart';
 import '../runtime/call_stack.dart';
 import '../runtime/error.dart';
@@ -75,22 +71,12 @@ class DarticEngine {
       pendingBridgeFactories: _pendingBridgeFactories,
     );
 
-    // 3. Register core lib plugins — same registration path as user plugins.
-    for (final p in [
-      CorePlugin(),
-      AsyncPlugin(),
-      CollectionPlugin(),
-      MathPlugin(),
-    ]) {
-      p.register(_pluginContext);
-    }
-
-    // 4. Register user plugins.
+    // 3. Register user plugins.
     for (final plugin in plugins) {
       plugin.register(_pluginContext);
     }
 
-    // 5. Create the interpreter with config-mapped parameters.
+    // 4. Create the interpreter with config-mapped parameters.
     _interpreter = DarticInterpreter(
       hostBindingRegistry: _hostBindingRegistry,
       hostClassRegistry: _hostClassRegistry,
