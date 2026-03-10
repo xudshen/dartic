@@ -9,6 +9,7 @@ import 'package:dartic/src/api/plugin_context.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_class_registry.dart';
 import 'package:dartic/src/bridge/host_binding_registry.dart';
+import 'package:dartic/src/bridge/host_type_resolver.dart';
 import 'package:dartic_stdlib/src/plugins/core_plugin.g.dart';
 import 'package:test/test.dart';
 
@@ -25,6 +26,7 @@ void main() {
       hostBindingRegistry: hostRegistry,
       hostClassRegistry: dispatchRegistry,
       bridgeFactoryRegistry: BridgeFactoryRegistry(),
+      hostTypeResolver: HostTypeResolver(),
       pendingBridgeFactories: {},
     );
   });
@@ -47,6 +49,7 @@ void main() {
         hostBindingRegistry: hostRegistry,
         hostClassRegistry: dispatchRegistry,
         bridgeFactoryRegistry: BridgeFactoryRegistry(),
+        hostTypeResolver: HostTypeResolver(),
         pendingBridgeFactories: {},
       );
       CorePlugin().register(customCtx);

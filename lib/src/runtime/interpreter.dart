@@ -323,7 +323,9 @@ class DarticInterpreter {
     try {
       // Allocate global table (lazy — initializers run on first access).
       if (module.globalCount > 0) {
-        _globalTable = DarticGlobalTable(module.globalCount);
+        _globalTable = DarticGlobalTable(module.globalCount,
+            flags: module.globalFlags.isNotEmpty ? module.globalFlags : null,
+            names: module.globalNames.isNotEmpty ? module.globalNames : null);
       }
 
       // Run main.
@@ -370,7 +372,9 @@ class DarticInterpreter {
     try {
       // Allocate global table if needed (lazy — initializers run on first access).
       if (module.globalCount > 0 && _globalTable == null) {
-        _globalTable = DarticGlobalTable(module.globalCount);
+        _globalTable = DarticGlobalTable(module.globalCount,
+            flags: module.globalFlags.isNotEmpty ? module.globalFlags : null,
+            names: module.globalNames.isNotEmpty ? module.globalNames : null);
       }
 
       // Execute the target function via nested dispatch (HOST_BOUNDARY).
@@ -2291,17 +2295,29 @@ class DarticInterpreter {
                 pc = unwindToHandler(pc - 1, e, st);
                 continue;
               }
-            } else {
-              // No initializer — default to null.
+            } else if (!gt.isLate(bx)) {
+              // No initializer, non-late — default to null.
               gt.store(bx, null);
             }
+            // Late without initializer: leave uninitialized.
+            // gt.load() below will throw LateError.
           }
-          rs.write(rBase + a, gt.load(bx));
+          try {
+            rs.write(rBase + a, gt.load(bx));
+          } catch (e, st) {
+            pc = unwindToHandler(pc - 1, e, st);
+            continue;
+          }
 
         case Op.storeGlobal: // STORE_GLOBAL A, Bx — globals[Bx] = refStack[A]
           final a = decodeA(instr);
           final bx = decodeBx(instr);
-          _globalTable!.store(bx, rs.read(rBase + a));
+          try {
+            _globalTable!.store(bx, rs.read(rBase + a));
+          } catch (e, st) {
+            pc = unwindToHandler(pc - 1, e, st);
+            continue;
+          }
 
         // ── Object Operations (0x60-0x64) ──
 

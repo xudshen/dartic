@@ -150,7 +150,7 @@ Object main() {
   return obj.doesNotExist();
 }
 ''');
-      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries();
       final interp = DarticInterpreter(
         hostBindingRegistry: hostBindingRegistry,
         hostClassRegistry: hostClassRegistry,
@@ -169,7 +169,7 @@ Object main() {
   return obj.nope;
 }
 ''');
-      final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries();
       final interp = DarticInterpreter(
         hostBindingRegistry: hostBindingRegistry,
         hostClassRegistry: hostClassRegistry,

@@ -272,6 +272,10 @@ libraries:
             }
 
       # ── Error: uses custom _DarticErrorBacking for constructor ──
+      # Also hosts LateError bindings (dart:_internal) via extra_bindings.
+      # LateError is produced by CFE late variable lowering (DarticTarget
+      # enables LateLowering.all). Since dart:_internal can't be imported,
+      # we use _DarticLateError as the host implementation.
       Error:
         preamble: |
           /// Minimal concrete Error subclass used as host backing for
@@ -280,9 +284,37 @@ libraries:
             @override
             String toString() => 'Error';
           }
+
+          /// Host implementation of dart:_internal LateError.
+          /// Used by CFE-lowered late variable access checks.
+          class _DarticLateError extends Error {
+            final String _message;
+            _DarticLateError(this._message);
+            @override
+            String toString() => 'LateInitializationError: $_message';
+          }
         extra_methods:
           "#0": "(args) => _DarticErrorBacking()"
           "toString#0": "(args) => (args[0] as Error).toString()"
+          "localNI#1": |
+            (args) => _DarticLateError("Local '${args[0]}' has not been initialized.")
+          "fieldNI#1": |
+            (args) => _DarticLateError("Field '${args[0]}' has not been initialized.")
+          "localADI#1": |
+            (args) => _DarticLateError("Local '${args[0]}' has been assigned during initialization.")
+          "fieldADI#1": |
+            (args) => _DarticLateError("Field '${args[0]}' has been assigned during initialization.")
+          "localAI#1": |
+            (args) => _DarticLateError("Local '${args[0]}' has already been initialized.")
+          "fieldAI#1": |
+            (args) => _DarticLateError("Field '${args[0]}' has already been initialized.")
+        extra_bindings:
+          - "dart:_internal::LateError::localNI#1"
+          - "dart:_internal::LateError::fieldNI#1"
+          - "dart:_internal::LateError::localADI#1"
+          - "dart:_internal::LateError::fieldADI#1"
+          - "dart:_internal::LateError::localAI#1"
+          - "dart:_internal::LateError::fieldAI#1"
 
       # ── ArgumentError: constructor aliases + factory with optional params ──
       ArgumentError:

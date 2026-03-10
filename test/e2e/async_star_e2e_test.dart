@@ -239,7 +239,7 @@ Stream<int> main() {
 /// The main() function should return a Stream directly (synchronously).
 Future<Stream<Object?>> _compileAndGetStream(String source) async {
   final module = await compileDart(source);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries();
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
@@ -261,7 +261,7 @@ Future<(Stream<Object?>, List<String>)> _compileAndGetStreamWithPrint(
     String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(

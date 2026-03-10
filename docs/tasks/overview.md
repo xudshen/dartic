@@ -285,3 +285,29 @@
 | int_arithmetic | 159x | 366x | 纯算术循环 |
 | loop_sum_100k | 191x | 157x | dart_eval 略快 |
 | quicksort_1k | 236x | N/A | List 操作密集 |
+
+---
+
+## 跨阶段改进：Native Late Variable Support — ✅ 已完成
+
+**目标：** 移除 DarticCfeTarget（CFE late lowering），改为编译器原生处理 `isLate=true` 的 Kernel IR 节点
+
+**设计参考：** [`docs/plans/2026-03-11-late-variable-support.md`](../plans/2026-03-11-late-variable-support.md)
+
+| 组件 | 涉及文件 | 说明 |
+|------|---------|------|
+| Opcode LOAD_LATE_SENTINEL (0x0D) | opcodes, op_metadata, verifier, interpreter | nullable late 变量哨兵 |
+| VarBinding.isLate/isFinal | scope.dart | 局部变量 late 元数据 |
+| FieldLayout.isLate/isFinal | class_info.dart | 实例字段 late 元数据 |
+| Module globalFlags/globalNames | module.dart, serializer, deserializer | 全局变量 late 元数据 |
+| Format v5 | format.dart | FieldLayout flags + global metadata |
+| Late local read/write checks | compiler_expressions.dart | sentinel check → LateError.localNI/AI/ADI |
+| Late instance field get/set | compiler_expressions.dart, compiler_classes.dart | sentinel init in ctor + lazy eval |
+| Late global load/store | global_table.dart, interpreter.dart | runtime late/final guards |
+| DarticCfeTarget 移除 | dartic_target.dart (deleted) | 改用 VmTarget |
+
+**关键成果：**
+- [x] 49 个新测试全部通过（local 15 + sentinel 4 + instance 14 + static 12 + integration 8 - overlap 4）
+- [x] 全量 3018 tests pass, 0 fail, 3 skipped
+- [x] co19 Language/Variables 105/111 pass (95%)
+- [x] 支持：non-nullable/nullable sentinel、deferred initializer (lazy eval)、late final guard、closures/upvalues、inheritance

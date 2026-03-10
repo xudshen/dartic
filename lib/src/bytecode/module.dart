@@ -19,6 +19,8 @@ class DarticModule {
     required this.entryFuncId,
     this.globalCount = 0,
     this.globalInitializerIds = const [],
+    this.globalFlags = const [],
+    this.globalNames = const [],
     this.classes = const [],
     this.coreTypeIds,
     this.bindingNames = const [],
@@ -40,6 +42,12 @@ class DarticModule {
   /// For each global: funcId of its initializer function, or -1 if none.
   /// Length must equal [globalCount].
   final List<int> globalInitializerIds;
+
+  /// Per-global flags: bit0=isLate, bit1=isFinal. Length = [globalCount].
+  final List<int> globalFlags;
+
+  /// Per-global variable name (for LateError messages). Length = [globalCount].
+  final List<String> globalNames;
 
   /// Class table — indexed by classId. Used by NEW_INSTANCE and CALL_VIRTUAL.
   final List<DarticClassInfo> classes;

@@ -434,6 +434,83 @@ int main() {
     });
   });
 
+  group('transitive SuperTypeMap (indirect generic supertype)', () {
+    test('dynamic cast to generic supertype via intermediate class', () async {
+      // Child extends Middle, Middle implements Base<int>.
+      // Child should be castable to Base<int> via transitive SuperTypeMap.
+      final result = await compileAndRun('''
+class Base<T> {
+  T? value;
+}
+class Middle implements Base<int> {
+  int? value;
+}
+class Child extends Middle {}
+
+dynamic forgetType(dynamic d) => d;
+
+int main() {
+  Child c = Child();
+  Base<int> b = forgetType(c);
+  return 1;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('is check against generic supertype via intermediate class', () async {
+      final result = await compileAndRun('''
+class Base<T> {}
+class Middle implements Base<int> {}
+class Child extends Middle {}
+
+int main() {
+  Child c = Child();
+  if (c is Base<int>) return 1;
+  return 0;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('three-level transitive: GrandChild → Child → Middle → Base<T>',
+        () async {
+      final result = await compileAndRun('''
+class Base<T> {}
+class Middle implements Base<String> {}
+class Child extends Middle {}
+class GrandChild extends Child {}
+
+dynamic forgetType(dynamic d) => d;
+
+int main() {
+  GrandChild gc = GrandChild();
+  Base<String> b = forgetType(gc);
+  return 1;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('transitive with generic intermediate: Child<T> → Middle<T> → Base<T>',
+        () async {
+      final result = await compileAndRun('''
+class Base<T> {}
+class Middle<T> implements Base<T> {}
+class Child extends Middle<int> {}
+
+dynamic forgetType(dynamic d) => d;
+
+int main() {
+  Child c = Child();
+  Base<int> b = forgetType(c);
+  return 1;
+}
+''');
+      expect(result, 1);
+    });
+  });
+
   group('compiler bytecode verification', () {
     test('is expression emits INSTANTIATE_TYPE + INSTANCEOF', () async {
       final module = await compileDart('''

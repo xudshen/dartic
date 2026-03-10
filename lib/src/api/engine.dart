@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
+import '../bridge/host_type_resolver.dart';
 import '../bytecode/module.dart';
 import '../runtime/call_stack.dart';
 import '../runtime/error.dart';
@@ -62,12 +63,14 @@ class DarticEngine {
     _hostBindingRegistry = HostBindingRegistry();
     _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
+    _hostTypeResolver = HostTypeResolver();
     // 2. Create the plugin context for registration-only access.
     _pluginContext = DarticPluginContext(
       config: config,
       hostBindingRegistry: _hostBindingRegistry,
       hostClassRegistry: _hostClassRegistry,
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
+      hostTypeResolver: _hostTypeResolver,
       pendingBridgeFactories: _pendingBridgeFactories,
     );
 
@@ -81,6 +84,7 @@ class DarticEngine {
       hostBindingRegistry: _hostBindingRegistry,
       hostClassRegistry: _hostClassRegistry,
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
+      hostTypeResolver: _hostTypeResolver,
       callStack: CallStack(maxFrames: config.maxCallDepth),
       fuelBudget: config.fuelBudget,
       maxTotalFuel: config.maxTotalFuel,
@@ -93,6 +97,7 @@ class DarticEngine {
   late final HostBindingRegistry _hostBindingRegistry;
   late final HostClassRegistry _hostClassRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
+  late final HostTypeResolver _hostTypeResolver;
   late final DarticInterpreter _interpreter;
   late final DarticPluginContext _pluginContext;
 
@@ -145,6 +150,9 @@ class DarticEngine {
 
   /// Shared module-installation logic for [loadBytecode] and [loadModule].
   void _installModule(DarticModule module) {
+    // Resolve host type extraction entries: match class names → classIds.
+    _hostTypeResolver.resolveClassIds(module.classes);
+
     // Resolve pending bridge factories: match class names → classIds.
     if (_pendingBridgeFactories.isNotEmpty) {
       for (final classInfo in module.classes) {

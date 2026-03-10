@@ -11,6 +11,7 @@ library;
 import '../bridge/bridge_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
+import '../bridge/host_type_resolver.dart';
 import 'config.dart';
 
 /// Registration-only context for [DarticPlugin] implementations.
@@ -30,11 +31,13 @@ class DarticPluginContext {
     required HostBindingRegistry hostBindingRegistry,
     required HostClassRegistry hostClassRegistry,
     required BridgeFactoryRegistry bridgeFactoryRegistry,
+    required HostTypeResolver hostTypeResolver,
     required Map<String, BridgeFactory> pendingBridgeFactories,
   })  : _config = config,
         _hostBindingRegistry = hostBindingRegistry,
         _hostClassRegistry = hostClassRegistry,
         _bridgeFactoryRegistry = bridgeFactoryRegistry,
+        _hostTypeResolver = hostTypeResolver,
         _pendingBridgeFactories = pendingBridgeFactories;
 
   final DarticConfig _config;
@@ -42,6 +45,7 @@ class DarticPluginContext {
   final HostClassRegistry _hostClassRegistry;
   // ignore: unused_field — will be used in later tasks for bridge factory resolution
   final BridgeFactoryRegistry _bridgeFactoryRegistry;
+  final HostTypeResolver _hostTypeResolver;
   final Map<String, BridgeFactory> _pendingBridgeFactories;
 
   /// Read-only access to engine configuration.
@@ -114,7 +118,10 @@ class DarticPluginContext {
     ];
     _hostClassRegistry.register(prefixes, type: type, test: test);
 
-    // 3. Register bridge factory (deferred resolution by name).
+    // 3. Register host type extraction (for INSTANCEOF/CAST).
+    _hostTypeResolver.register(name: name, type: type, test: test);
+
+    // 4. Register bridge factory (deferred resolution by name).
     if (bridgeFactory != null) {
       _pendingBridgeFactories[name] = bridgeFactory;
     }

@@ -159,7 +159,7 @@ Future<void> main() async {
 Future<(Object?, List<String>)> _compileAndRunAsync(String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(

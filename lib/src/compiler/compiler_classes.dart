@@ -92,9 +92,16 @@ extension on DarticCompiler {
 
     for (final field in cls.fields) {
       if (field.isStatic) continue;
-      final kind = _classifyStackKind(field.type);
+      // Late fields are forced to ref stack regardless of declared type,
+      // because they use null or lateSentinel as the "uninitialized" marker.
+      final kind = field.isLate ? StackKind.ref : _classifyStackKind(field.type);
       final offset = kind.isValue ? valOffset++ : refOffset++;
-      final layout = FieldLayout(offset: offset, kind: kind);
+      final layout = FieldLayout(
+        offset: offset,
+        kind: kind,
+        isLate: field.isLate,
+        isFinal: field.isFinal,
+      );
       fieldLayouts[field.getterReference] = layout;
       final setterRef = field.setterReference;
       if (setterRef != null) {
@@ -304,6 +311,10 @@ extension on DarticCompiler {
     // In Kernel, `int x = 10;` on a field declaration may not generate an
     // explicit FieldInitializer in the constructor's initializer list. These
     // must be compiled before the explicit initializers.
+    //
+    // Late fields are special: they always get sentinel initialization here
+    // (regardless of whether they have an initializer), because late field
+    // initializers are deferred to first read (lazy evaluation).
     final explicitFields = <ir.Field>{};
     for (final init in ctor.initializers) {
       if (init is ir.FieldInitializer) explicitFields.add(init.field);
@@ -311,6 +322,12 @@ extension on DarticCompiler {
     final enclosingClass = ctor.enclosingClass;
     for (final field in enclosingClass.fields) {
       if (field.isStatic) continue;
+      if (field.isLate) {
+        // Late fields: emit sentinel initialization (null for non-nullable,
+        // lateSentinel for nullable). Initializer is deferred to first read.
+        _compileLateLateFieldInit(field);
+        continue;
+      }
       if (explicitFields.contains(field)) continue;
       if (field.initializer == null) continue;
       // Compile the field-level initializer directly.
@@ -383,6 +400,29 @@ extension on DarticCompiler {
     final (valReg, valLoc) = _compileExpression(value);
     const thisReg = 2; // rsp+2 on the ref stack
     _emitSetField(thisReg, valReg, valLoc, layout, _inferExprType(value));
+  }
+
+  /// Emits sentinel initialization for a late instance field in a constructor.
+  ///
+  /// Non-nullable late fields use `null` as sentinel (checked via JUMP_IF_NULL).
+  /// Nullable late fields use `lateSentinel` (checked via EQ_REF).
+  /// The field's initializer (if any) is deferred to first read (lazy eval).
+  void _compileLateLateFieldInit(ir.Field field) {
+    final cls = field.enclosingClass!;
+    final layouts = _instanceFieldLayouts[cls];
+    if (layouts == null) return;
+    final layout = layouts[field.getterReference];
+    if (layout == null) return;
+
+    const thisReg = 2;
+    final sentinelReg = _allocRefReg();
+    if (_isNullableType(field.type)) {
+      _emitter.emitABC(Op.loadLateSentinel, sentinelReg, 0, 0);
+    } else {
+      _emitter.emitABC(Op.loadNull, sentinelReg, 0, 0);
+    }
+    _emitter.emitABC(Op.setFieldRef, thisReg, sentinelReg, layout.offset);
+    _refAlloc.free(sentinelReg);
   }
 
   /// Compiles a [SuperInitializer] within a constructor.

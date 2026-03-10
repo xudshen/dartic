@@ -139,8 +139,9 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 0x09  MOVE_VAL      A, B          valueStack[A] = valueStack[B]
 0x0A  LOAD_UPVALUE  A, Bx         refStack[A] = upvalues[Bx].value
 0x0B  STORE_UPVALUE A, Bx         upvalues[Bx].value = refStack[A]
-0x0C  LOAD_ABSENT   A             refStack[A] = darticAbsent (参数未提供哨兵)
-0x0D-0x0F  （预留，box/unbox 已迁至 Type Conversion 区段 0x27-0x2C）
+0x0C  LOAD_ABSENT        A        refStack[A] = darticAbsent (参数未提供哨兵)
+0x0D  LOAD_LATE_SENTINEL A        refStack[A] = lateSentinel (nullable late 变量初始哨兵)
+0x0E-0x0F  （预留）
 ```
 
 ### 整数算术 (0x10-0x1F)

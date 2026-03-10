@@ -6,9 +6,8 @@
 /// See: docs/design/06-generics.md "isSubtypeOf"
 library;
 
-import 'dart:async' show Future, Stream;
-
 import '../bridge/dartic_object_holder.dart';
+import '../bridge/host_type_resolver.dart';
 import 'class_info.dart';
 import 'closure.dart';
 import 'dartic_record.dart';
@@ -345,10 +344,13 @@ class SubtypeChecker {
 /// Extracts a [DarticType] from a runtime value.
 ///
 /// Used by INSTANCEOF/CAST to determine the runtime type of an object.
+///
+/// For raw host objects (not DarticObject/DarticObjectHolder), delegates to
+/// [HostTypeResolver] which uses registered predicates from plugins.
 DarticType extractType(
   Object? value,
   TypeRegistry registry,
-  List<DarticClassInfo> classes,
+  HostTypeResolver? hostTypeResolver,
 ) {
   if (value == null) return registry.nullType;
   if (value is int) return registry.intType;
@@ -382,34 +384,14 @@ DarticType extractType(
   if (value is TypeError) {
     return registry.intern(registry.typeErrorClassId, const []);
   }
-  // Host objects from dart:core / dart:async — detect common types.
+  // Host objects — resolve via registered type predicates from plugins.
   // Type arguments use Never (bottom type) because host objects lose dartic
   // type info. Since Never <: T for any T, this makes covariant type arg
   // checks always pass — sound because the Dart VM already validated the
   // type when the object was created.
-  final bottom = registry.neverType;
-  if (value is Future) {
-    return registry.intern(registry.futureClassId, [bottom]);
-  }
-  if (value is Stream) {
-    final sid = registry.streamClassId;
-    if (sid >= 0) return registry.intern(sid, [bottom]);
-  }
-  if (value is List) {
-    final lid = registry.listClassId;
-    if (lid >= 0) return registry.intern(lid, [bottom]);
-  }
-  if (value is Set) {
-    final sid = registry.setClassId;
-    if (sid >= 0) return registry.intern(sid, [bottom]);
-  }
-  if (value is Map) {
-    final mid = registry.mapClassId;
-    if (mid >= 0) return registry.intern(mid, [bottom, bottom]);
-  }
-  if (value is Iterable) {
-    final iid = registry.iterableClassId;
-    if (iid >= 0) return registry.intern(iid, [bottom]);
+  if (hostTypeResolver != null) {
+    final resolved = hostTypeResolver.resolve(value, registry);
+    if (resolved != null) return resolved;
   }
   // Any other non-null host object is at least Object.
   return registry.objectType;

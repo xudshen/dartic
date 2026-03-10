@@ -39,7 +39,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -77,7 +77,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -116,7 +116,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _VirtualTestBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );

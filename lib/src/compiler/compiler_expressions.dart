@@ -1591,7 +1591,13 @@ extension on DarticCompiler {
           // SAFETY: loc discarded — field access targets object instances
           // which are always on the ref stack.
           final (recvReg, _) = _compileExpression(expr.receiver);
-          return _emitGetField(recvReg, layout);
+
+          if (!layout.isLate) {
+            return _emitGetField(recvReg, layout);
+          }
+
+          // Late field: read then check sentinel.
+          return _emitLateFieldGet(recvReg, layout, target);
         }
       }
     }
@@ -1663,7 +1669,21 @@ extension on DarticCompiler {
           // SAFETY: loc discarded — field access targets object instances
           // which are always on the ref stack.
           final (recvReg, _) = _compileExpression(expr.receiver);
+
+          // Late final field: guard against double-write.
+          if (layout.isLate && layout.isFinal) {
+            _emitLateFinalFieldWriteGuard(recvReg, layout, target);
+          }
+
           var (valReg, valLoc) = _compileExpression(expr.value);
+
+          if (layout.isLate) {
+            // Late fields are always on ref stack — box value if needed.
+            valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+            _emitter.emitABC(Op.setFieldRef, recvReg, valReg, layout.offset);
+            return (valReg, ResultLoc.ref);
+          }
+
           valReg = _emitSetField(
               recvReg, valReg, valLoc, layout, _inferExprType(expr.value));
           // InstanceSet result is the written value.
@@ -1898,6 +1918,9 @@ extension on DarticCompiler {
         final layout = layouts[target.getterReference];
         if (layout != null) {
           const thisReg = 2; // rsp+2
+          if (layout.isLate) {
+            return _emitLateFieldGet(thisReg, layout, target);
+          }
           return _emitGetField(thisReg, layout);
         }
       }
@@ -1939,8 +1962,22 @@ extension on DarticCompiler {
       if (layouts != null) {
         final layout = layouts[target.getterReference];
         if (layout != null) {
-          var (valReg, valLoc) = _compileExpression(expr.value);
           const thisReg = 2;
+
+          // Late final field: guard against double-write.
+          if (layout.isLate && layout.isFinal) {
+            _emitLateFinalFieldWriteGuard(thisReg, layout, target);
+          }
+
+          var (valReg, valLoc) = _compileExpression(expr.value);
+
+          if (layout.isLate) {
+            // Late fields are always on ref stack.
+            valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+            _emitter.emitABC(Op.setFieldRef, thisReg, valReg, layout.offset);
+            return (valReg, ResultLoc.ref);
+          }
+
           valReg = _emitSetField(
               thisReg, valReg, valLoc, layout, _inferExprType(expr.value));
           return (valReg, valLoc);
@@ -2915,6 +2952,105 @@ extension on DarticCompiler {
     } else {
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNull, refReg, _emitter.currentPC);
     }
+  }
+
+  /// Emits a late field GET with sentinel check and optional deferred init.
+  ///
+  /// 1. GET_FIELD_REF (late fields are always ref)
+  /// 2. Sentinel check (null for non-nullable, lateSentinel for nullable)
+  /// 3. If sentinel and has initializer → compile initializer + SET_FIELD_REF
+  /// 4. If sentinel and no initializer → throw LateError.fieldNI
+  (int, ResultLoc) _emitLateFieldGet(
+    int recvReg,
+    FieldLayout layout,
+    ir.Field field,
+  ) {
+    final isNullable = _isNullableType(field.type);
+
+    // Read current field value (always ref stack for late fields).
+    final resultReg = _allocRefReg();
+    _emitter.emitABC(Op.getFieldRef, resultReg, recvReg, layout.offset);
+
+    // Sentinel check → jump to ok if NOT sentinel.
+    int jumpToOkPC;
+    int condValReg = -1;
+    if (isNullable) {
+      (jumpToOkPC, condValReg) = _emitNullableSentinelCheck(resultReg);
+    } else {
+      jumpToOkPC = _emitter.emitJumpPlaceholder();
+    }
+
+    // Sentinel branch: init or throw.
+    if (field.initializer != null) {
+      // Deferred init: compile the initializer inline.
+      // The initializer may reference `this` (e.g., `late int x = ++count;`),
+      // so we bind the receiver to register 2 (the `this` register).
+      const thisReg = 2;
+      if (recvReg != thisReg) {
+        _emitMove(thisReg, recvReg, ResultLoc.ref);
+      }
+      final (initReg, initLoc) = _compileExpression(field.initializer!);
+      final initRefReg =
+          _boxToRefIfValue(initReg, initLoc, _inferExprType(field.initializer!));
+
+      // Store back to the field on the receiver.
+      _emitter.emitABC(Op.setFieldRef, recvReg, initRefReg, layout.offset);
+      _emitMove(resultReg, initRefReg, ResultLoc.ref);
+    } else {
+      // No initializer → throw LateError.fieldNI.
+      _emitLateError(field.name.text, 'fieldNI');
+    }
+
+    // Patch the "ok" jump target.
+    if (isNullable) {
+      _emitter.patchJumpAsBx(
+          jumpToOkPC, Op.jumpIfFalse, condValReg, _emitter.currentPC);
+      _valueAlloc.free(condValReg);
+    } else {
+      _emitter.patchJumpAsBx(
+          jumpToOkPC, Op.jumpIfNnull, resultReg, _emitter.currentPC);
+    }
+
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Emits a late final field write guard.
+  ///
+  /// Reads the current field value; if NOT sentinel, throws LateError.fieldAI.
+  void _emitLateFinalFieldWriteGuard(
+    int recvReg,
+    FieldLayout layout,
+    ir.Field field,
+  ) {
+    final isNullable = _isNullableType(field.type);
+
+    // Read current field value.
+    final currentReg = _allocRefReg();
+    _emitter.emitABC(Op.getFieldRef, currentReg, recvReg, layout.offset);
+
+    int jumpToOkPC;
+    int condValReg = -1;
+    if (isNullable) {
+      // EQ_REF → JUMP_IF_TRUE to ok (is sentinel → allow write)
+      (jumpToOkPC, condValReg) = _emitNullableSentinelCheck(currentReg);
+    } else {
+      // JUMP_IF_NULL → ok (is null sentinel → allow write)
+      jumpToOkPC = _emitter.emitJumpPlaceholder();
+    }
+
+    // NOT sentinel → already initialized → throw LateError.fieldAI.
+    _emitLateError(field.name.text, 'fieldAI');
+
+    // Patch ok jump.
+    if (isNullable) {
+      _emitter.patchJumpAsBx(
+          jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
+      _valueAlloc.free(condValReg);
+    } else {
+      _emitter.patchJumpAsBx(
+          jumpToOkPC, Op.jumpIfNull, currentReg, _emitter.currentPC);
+    }
+    _refAlloc.free(currentReg);
   }
 
   /// Emits CALL_HOST `LateError.<constructor>(name)` + THROW.

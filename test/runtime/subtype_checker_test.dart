@@ -435,33 +435,33 @@ void main() {
 
   group('extractType', () {
     test('null extracts to Null type', () {
-      final result = extractType(null, registry, classes);
+      final result = extractType(null, registry, null);
       expect(identical(result, registry.nullType), isTrue);
     });
 
     test('int extracts to int type', () {
-      final result = extractType(42, registry, classes);
+      final result = extractType(42, registry, null);
       expect(identical(result, registry.intType), isTrue);
     });
 
     test('double extracts to double type', () {
-      final result = extractType(3.14, registry, classes);
+      final result = extractType(3.14, registry, null);
       expect(identical(result, registry.doubleType), isTrue);
     });
 
     test('bool extracts to bool type', () {
-      final result = extractType(true, registry, classes);
+      final result = extractType(true, registry, null);
       expect(identical(result, registry.boolType), isTrue);
     });
 
     test('String extracts to String type', () {
-      final result = extractType('hello', registry, classes);
+      final result = extractType('hello', registry, null);
       expect(identical(result, registry.stringType), isTrue);
     });
 
     test('DarticObject extracts from classId', () {
       final obj = DarticObject(classes[animalCid]);
-      final result = extractType(obj, registry, classes);
+      final result = extractType(obj, registry, null);
       expect(result, isA<DarticInterfaceType>());
       expect((result as DarticInterfaceType).classId, animalCid);
     });
@@ -470,30 +470,25 @@ void main() {
       final obj = DarticObject(classes[listCid]);
       final listIntType = registry.intern(listCid, [registry.intType]);
       obj.runtimeType_ = listIntType;
-      final result = extractType(obj, registry, classes);
+      final result = extractType(obj, registry, null);
       expect(identical(result, listIntType), isTrue);
     });
 
-    test('List host object extracts to List<dynamic>', () {
-      final result = extractType(<int>[1, 2, 3], registry, classes);
-      if (registry.listClassId >= 0) {
-        expect(result, isA<DarticInterfaceType>());
-        expect((result as DarticInterfaceType).classId, registry.listClassId);
-      } else {
-        // No List registered → falls through to objectType.
-        expect(identical(result, registry.objectType), isTrue);
-      }
+    test('List host object extracts to Object without HostTypeResolver', () {
+      // Without HostTypeResolver, raw host objects fall through to objectType.
+      final result = extractType(<int>[1, 2, 3], registry, null);
+      expect(identical(result, registry.objectType), isTrue);
     });
 
     test('unknown host object extracts to Object', () {
-      final result = extractType(RegExp('test'), registry, classes);
+      final result = extractType(RegExp('test'), registry, null);
       expect(identical(result, registry.objectType), isTrue);
     });
 
     test('DarticObjectHolder extracts from embedded DarticObject classId', () {
       final obj = DarticObject(classes[animalCid]);
       final holder = _MockDarticObjectHolder(obj);
-      final result = extractType(holder, registry, classes);
+      final result = extractType(holder, registry, null);
       expect(result, isA<DarticInterfaceType>());
       expect((result as DarticInterfaceType).classId, animalCid);
     });
@@ -503,7 +498,7 @@ void main() {
       final listIntType = registry.intern(listCid, [registry.intType]);
       obj.runtimeType_ = listIntType;
       final holder = _MockDarticObjectHolder(obj);
-      final result = extractType(holder, registry, classes);
+      final result = extractType(holder, registry, null);
       expect(identical(result, listIntType), isTrue);
     });
 
@@ -514,13 +509,13 @@ void main() {
         namedTypes: const [],
       );
       record.runtimeType_ = recordType;
-      final result = extractType(record, registry, classes);
+      final result = extractType(record, registry, null);
       expect(identical(result, recordType), isTrue);
     });
 
     test('DarticRecord without runtimeType_ returns dynamicType', () {
       final record = DarticRecord([42], {});
-      final result = extractType(record, registry, classes);
+      final result = extractType(record, registry, null);
       expect(identical(result, registry.dynamicType), isTrue);
     });
   });

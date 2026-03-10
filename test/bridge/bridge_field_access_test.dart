@@ -44,7 +44,7 @@ void main() {
             _FieldTestBridge(dispatch, darticObj, superArgs),
       );
 
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -85,7 +85,7 @@ void main() {
             _FieldTestBridge(dispatch, darticObj, superArgs),
       );
 
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );

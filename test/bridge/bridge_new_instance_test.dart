@@ -26,7 +26,7 @@ class Foo extends Error {
 Object? main() => Foo();
 ''';
       final module = await compileDart(source);
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries();
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
 
@@ -68,7 +68,7 @@ class Bar {
 Object? main() => Bar();
 ''';
       final module = await compileDart(source);
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries();
       final bridgeFactoryRegistry = BridgeFactoryRegistry();
 
@@ -89,7 +89,7 @@ class Baz {}
 Object? main() => Baz();
 ''';
       final module = await compileDart(source);
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries();
 
       // No bridgeFactoryRegistry passed — should behave as before.
@@ -145,7 +145,7 @@ Object? main() {
       });
 
       // Use printFn callback to dispatch methods during execution.
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) {
           // This runs while _isExecuting = true, so _callDarticMethod works.

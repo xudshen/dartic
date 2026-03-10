@@ -69,7 +69,8 @@ class DarticDeserializer {
 
     final exportedFunctions = _readExportTable(reader);
     final classes = _readClassTable(reader);
-    final (globalCount, globalInitializerIds) = _readGlobalTable(reader);
+    final (globalCount, globalInitializerIds, globalFlags, globalNames) =
+        _readGlobalTable(reader);
     final coreTypeIds = _readCoreTypeIds(reader);
 
     return DarticModule(
@@ -81,6 +82,8 @@ class DarticDeserializer {
       classes: classes,
       globalCount: globalCount,
       globalInitializerIds: globalInitializerIds,
+      globalFlags: globalFlags,
+      globalNames: globalNames,
       coreTypeIds: coreTypeIds,
     );
   }
@@ -244,9 +247,13 @@ class DarticDeserializer {
       final nameIndex = r.readUint32();
       final offset = r.readUint32();
       final kindIndex = r.readByte();
+      // v5: late/final flags packed into 1 byte (bit0=isLate, bit1=isFinal)
+      final flags = r.readByte();
       cls.fields[nameIndex] = FieldLayout(
         offset: offset,
         kind: StackKind.values[kindIndex],
+        isLate: flags & 1 != 0,
+        isFinal: flags & 2 != 0,
       );
     }
 
@@ -276,10 +283,21 @@ class DarticDeserializer {
 
   // ── Global Table ──
 
-  (int, List<int>) _readGlobalTable(_ByteReader r) {
+  (int, List<int>, List<int>, List<String>) _readGlobalTable(_ByteReader r) {
     final count = r.readUint32();
-    final ids = List<int>.generate(count, (_) => r.readInt32());
-    return (count, ids);
+    final ids = <int>[];
+    final flags = <int>[];
+    final names = <String>[];
+    for (var i = 0; i < count; i++) {
+      ids.add(r.readInt32());
+      // v5: per-global flags byte
+      flags.add(r.readByte());
+      // v5: per-global name
+      final nameLen = r.readUint32();
+      final nameBytes = List<int>.generate(nameLen, (_) => r.readByte());
+      names.add(String.fromCharCodes(nameBytes));
+    }
+    return (count, ids, flags, names);
   }
 
   // ── CoreTypeIds ──

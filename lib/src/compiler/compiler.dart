@@ -63,6 +63,12 @@ class DarticCompiler {
   /// For each global: funcId of its initializer function, or -1 if none.
   final List<int> _globalInitializerIds = [];
 
+  /// Per-global flags: bit0=isLate, bit1=isFinal.
+  final List<int> _globalFlags = [];
+
+  /// Per-global variable name (for LateError messages).
+  final List<String> _globalNames = [];
+
   /// Total number of global variable slots.
   int _globalCount = 0;
 
@@ -140,7 +146,14 @@ class DarticCompiler {
 
   // Note: CFE represents all break/continue as LabeledStatement+BreakStatement
   // pairs, so separate continueTargets/breakTargets maps are not needed.
-  // ContinueSwitchStatement (fall-through) is not yet supported (Phase 3+).
+
+  /// Maps SwitchCase -> body start PC (set when a case body begins compiling).
+  /// Used by ContinueSwitchStatement for backward jumps to already-compiled cases.
+  final Map<ir.SwitchCase, int> _switchCaseBodyPCs = {};
+
+  /// Maps SwitchCase -> list of JUMP placeholder PCs for forward jumps to
+  /// cases not yet compiled. Backpatched when the target case body starts.
+  final Map<ir.SwitchCase, List<int>> _continueSwitchJumps = {};
 
   /// Exception handler table being built for the current function.
   final List<ExceptionHandler> _exceptionHandlers = [];
@@ -323,6 +336,54 @@ class DarticCompiler {
       }
     }
 
+    // Pass 1e: propagate SuperTypeMap entries transitively.
+    // After Pass 1d built direct mappings, this pass ensures that classes
+    // which indirectly implement a generic supertype (e.g., Child extends
+    // Middle, Middle implements Base<int>) inherit the type arg mapping.
+    // Classes are already in topological order (base first), so by the time
+    // we process a derived class, all its ancestors' entries are complete.
+    for (final lib in _component.libraries) {
+      if (_isHostLibrary(lib)) continue;
+      for (final cls in lib.classes) {
+        final classId = _classToClassId[cls]!;
+        final classInfo = _classInfos[classId];
+
+        // Collect direct supertype classIds for this class.
+        final directSupertypes = <int>[];
+        for (final sup in [
+          if (cls.supertype != null) cls.supertype!,
+          ...cls.implementedTypes,
+          if (cls.mixedInType != null) cls.mixedInType!,
+        ]) {
+          final sid = _typeClassIdLookup[sup.classNode];
+          if (sid != null) directSupertypes.add(sid);
+        }
+
+        // For each supertypeId that we lack a mapping for, try inheriting
+        // from a direct supertype that has one.
+        for (final supId in classInfo.supertypeIds) {
+          if (classInfo.superTypeArgs.containsKey(supId)) continue;
+          if (supId >= _classInfos.length) continue;
+
+          for (final directId in directSupertypes) {
+            if (directId >= _classInfos.length) continue;
+            final directInfo = _classInfos[directId];
+            final ancestorMapping = directInfo.superTypeArgs[supId];
+            if (ancestorMapping == null) continue;
+
+            // Compose: substitute ancestor's type param references using
+            // our→ancestor type arg mapping.
+            final ourToAncestor = classInfo.superTypeArgs[directId];
+            classInfo.superTypeArgs[supId] = [
+              for (final t in ancestorMapping)
+                _composeTemplate(t, ourToAncestor),
+            ];
+            break;
+          }
+        }
+      }
+    }
+
     // Determine entry point.
     final mainProc = _component.mainMethod;
     if (mainProc != null) {
@@ -395,6 +456,8 @@ class DarticCompiler {
       entryFuncId: _entryFuncId,
       globalCount: _globalCount,
       globalInitializerIds: _globalInitializerIds,
+      globalFlags: _globalFlags,
+      globalNames: _globalNames,
       classes: _classInfos,
       coreTypeIds: _coreTypeIds,
       bindingNames: _bindingNames,
@@ -425,6 +488,7 @@ class DarticCompiler {
         superClassId: superClassId,
         refFieldCount: 0,
         valueFieldCount: 0,
+        typeParamCount: cls.typeParameters.length,
       ));
       return classId;
     }
@@ -1266,6 +1330,10 @@ class DarticCompiler {
       _fieldToGlobalIndex[setterRef] = globalIndex;
     }
     _globalInitializerIds.add(-1);
+    _globalFlags.add(
+      (field.isLate ? 1 : 0) | (field.isFinal ? 2 : 0),
+    );
+    _globalNames.add(field.name.text);
   }
 
   /// Compiles the initializer for a global field if it has one.
@@ -1274,6 +1342,32 @@ class DarticCompiler {
     final globalIndex = _fieldToGlobalIndex[field.getterReference]!;
     _globalInitializerIds[globalIndex] =
         _compileGlobalInitializer(field, globalIndex);
+  }
+
+  /// Substitutes type parameter references in [template] using [substitution].
+  ///
+  /// Used by Pass 1e to compose transitive SuperTypeMap entries.
+  /// If a template is `TypeParameterTemplate(index: i, ITA)`, it is replaced
+  /// by `substitution[i]`. Concrete templates pass through unchanged.
+  /// If [substitution] is null or empty, returns [template] as-is.
+  TypeTemplate _composeTemplate(
+    TypeTemplate template,
+    List<TypeTemplate>? substitution,
+  ) {
+    if (substitution == null || substitution.isEmpty) return template;
+    return switch (template) {
+      TypeParameterTemplate(isFunctionTypeParam: false, index: final i)
+          when i < substitution.length =>
+        substitution[i],
+      InterfaceTypeTemplate(typeArgs: final args) when args.isNotEmpty =>
+        InterfaceTypeTemplate(
+          classId: template.classId,
+          typeArgs: [for (final a in args) _composeTemplate(a, substitution)],
+        ),
+      NullableTemplate(inner: final inner) =>
+        NullableTemplate(inner: _composeTemplate(inner, substitution)),
+      _ => template,
+    };
   }
 
   bool _isHostLibrary(ir.Library lib) {

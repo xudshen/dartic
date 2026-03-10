@@ -35,13 +35,24 @@ enum StackKind {
 ///
 /// See: docs/design/02-object-model.md "FieldLayout"
 class FieldLayout {
-  const FieldLayout({required this.offset, required this.kind});
+  const FieldLayout({
+    required this.offset,
+    required this.kind,
+    this.isLate = false,
+    this.isFinal = false,
+  });
 
   /// Offset within refFields or valueFields.
   final int offset;
 
   /// Which stack/storage this field uses.
   final StackKind kind;
+
+  /// Whether this field is declared `late`.
+  final bool isLate;
+
+  /// Whether this field is declared `final` (relevant for late final guards).
+  final bool isFinal;
 }
 
 /// Dart 3 class modifier flags stored as a bitfield.

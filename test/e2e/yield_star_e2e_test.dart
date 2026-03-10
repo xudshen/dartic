@@ -202,7 +202,7 @@ Stream<String> main() {
 Future<(Object?, List<String>)> _compileAndRun(String source) async {
   final printLog = <String>[];
   final module = await compileDart(source);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
   final interp = DarticInterpreter(
@@ -217,7 +217,7 @@ Future<(Object?, List<String>)> _compileAndRun(String source) async {
 /// Compiles Dart source, executes it, and returns the entry result as a Stream.
 Future<Stream<Object?>> _compileAndGetStream(String source) async {
   final module = await compileDart(source);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries();
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,

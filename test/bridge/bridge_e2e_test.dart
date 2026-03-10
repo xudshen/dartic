@@ -60,7 +60,7 @@ void main() {
             _E2EBridge(dispatch, darticObj, superArgs),
       );
 
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -105,7 +105,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _E2EBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -148,7 +148,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _E2EBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -196,7 +196,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _E2EBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );
@@ -259,7 +259,7 @@ void main() {
         (dispatch, darticObj, superArgs) =>
             _E2EBridge(dispatch, darticObj, superArgs),
       );
-      final (:hostBindingRegistry, :hostClassRegistry) =
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
           createTestRegistries(
         printFn: (v) => printLog.add('$v'),
       );

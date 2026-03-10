@@ -37,7 +37,8 @@ class DarticSerializer {
     w.writeUint32(module.entryFuncId);
     _writeExportTable(w, module.exportedFunctions);
     _writeClassTable(w, module.classes);
-    _writeGlobalTable(w, module.globalCount, module.globalInitializerIds);
+    _writeGlobalTable(w, module.globalCount, module.globalInitializerIds,
+        module.globalFlags, module.globalNames);
     _writeCoreTypeIds(w, module.coreTypeIds);
 
     // Build payload and compute checksum.
@@ -200,6 +201,8 @@ class DarticSerializer {
       w.writeUint32(entry.key); // nameIndex
       w.writeUint32(entry.value.offset);
       w.addByte(entry.value.kind.index);
+      // v5: late/final flags packed into 1 byte (bit0=isLate, bit1=isFinal)
+      w.addByte((entry.value.isLate ? 1 : 0) | (entry.value.isFinal ? 2 : 0));
     }
 
     // supertypeIds: Set<int>
@@ -226,10 +229,24 @@ class DarticSerializer {
   // ── Global Table ──
 
   void _writeGlobalTable(
-      _ByteWriter w, int globalCount, List<int> initializerIds) {
+    _ByteWriter w,
+    int globalCount,
+    List<int> initializerIds,
+    List<int> flags,
+    List<String> names,
+  ) {
     w.writeUint32(globalCount);
-    for (final id in initializerIds) {
-      w.writeInt32(id);
+    for (var i = 0; i < globalCount; i++) {
+      w.writeInt32(initializerIds[i]);
+      // v5: per-global flags byte (bit0=isLate, bit1=isFinal)
+      w.addByte(i < flags.length ? flags[i] : 0);
+      // v5: per-global name (string length + UTF-8 bytes)
+      final name = i < names.length ? names[i] : '';
+      final nameBytes = name.codeUnits;
+      w.writeUint32(nameBytes.length);
+      for (final b in nameBytes) {
+        w.addByte(b);
+      }
     }
   }
 
