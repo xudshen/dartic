@@ -311,3 +311,37 @@
 - [x] 全量 3018 tests pass, 0 fail, 3 skipped
 - [x] co19 Language/Variables 105/111 pass (95%)
 - [x] 支持：non-nullable/nullable sentinel、deferred initializer (lazy eval)、late final guard、closures/upvalues、inheritance
+
+---
+
+## Co19 90% 达标战役 — 🔄 进行中
+
+**目标：** co19 通过率 73.5% → 90%+
+
+**设计参考：** [`docs/plans/2026-03-09-co19-90-revised-plan.md`](../plans/2026-03-09-co19-90-revised-plan.md)
+
+**Task 目录：** [`docs/tasks/co19-90/`](co19-90/)
+
+### 当前状态快照（2026-03-11，commit 4310236）
+
+| 模块 | Total | Pass | Fail | Error | Pass Rate | 基线 |
+|------|-------|------|------|-------|-----------|------|
+| TypeSystem | 3,411 | 3,390 | 21 | 0 | **99.4%** | 60.3% |
+| Language | 5,370 | 4,768 | 588 | 9 | **88.8%** | 85.2% |
+| LanguageFeatures | 6,141 | 4,843 | 1,276 | 0 | **78.9%** | 71.4% |
+| LibTest | 7,988 | 1,304 | 1,161 | 5,523† | **52.9%**‡ | 63.9% |
+| **Total** | **22,910** | **14,305** | **3,046** | **5,532** | **82.4%** | 73.5% |
+
+† LibTest runner crashed 68 times，5,523 tests 未计入 pass/fail。‡ 仅统计已计数测试。
+
+> 注：测试发现总数从基线 10,691 增至 22,910，主要来自 LanguageFeatures（1,859→6,141）和 LibTest（1,506→7,988）的发现能力提升。
+
+| Phase | 描述 | 状态 |
+|-------|------|------|
+| [Phase 1](co19-90/phase1-typesystem.md) | TypeSystem 根因修复 | ✅ 达成（99.4%） |
+| [Phase 2](co19-90/phase2-language.md) | Language 补齐 | ⬜ 待开始 |
+| [Phase 3](co19-90/phase3-language-features.md) | LanguageFeatures 补齐 | ⬜ 待开始 |
+| [Phase 4](co19-90/phase4-libtest.md) | LibTest 桥接补全 | ⬜ 待开始 |
+| [Phase 5](co19-90/phase5-final.md) | 长尾清扫 + 最终验证 | ⬜ 待开始 |
+
+**Unit tests:** 3,018 pass, 0 fail, 3 skipped
