@@ -70,6 +70,97 @@ libraries:
       - Text
       - Icon
 
+      # ── Task 12: Layout & Basic (~34 types) ──────────────────────────────
+      - Stack
+      - Positioned
+      - PositionedDirectional
+      - IndexedStack
+      - Flex
+      - Flexible
+      - Wrap
+      - Align
+      - FittedBox
+      - FractionallySizedBox
+      - LimitedBox
+      - OverflowBox
+      - AspectRatio
+      - ConstrainedBox
+      - UnconstrainedBox
+      - IntrinsicWidth
+      - IntrinsicHeight
+      - Opacity
+      - ClipRect
+      - ClipRRect
+      - ClipOval
+      - ClipPath
+      - Transform
+      - RotatedBox
+      - FractionalTranslation
+      - Offstage
+      - IgnorePointer
+      - AbsorbPointer
+      - RepaintBoundary
+      - ColoredBox
+      - PhysicalModel
+      - PhysicalShape
+      - CustomPaint
+      - Directionality
+
+      # ── Task 13: Interaction & Scroll (~20 types) ────────────────────────
+      - GestureDetector
+      - ListView
+      - GridView
+      - CustomScrollView
+      - SingleChildScrollView
+      - PageView
+      - Builder
+      - StatefulBuilder
+      - FadeInImage
+      - Form
+      - MediaQuery
+      - DefaultTextStyle
+      - RichText
+
+      # ── Task 14: Animation & Navigation (~22 types) ──────────────────────
+      - AnimatedContainer
+      - AnimatedPadding
+      - AnimatedAlign
+      - AnimatedPositioned
+      - AnimatedOpacity
+      - AnimatedDefaultTextStyle
+      - AnimatedPhysicalModel
+      - AnimatedScale
+      - AnimatedRotation
+      - AnimatedSlide
+      - AnimatedSwitcher
+      - AnimatedSize
+      - SlideTransition
+      - ScaleTransition
+      - RotationTransition
+      - FadeTransition
+      - SizeTransition
+      - DecoratedBoxTransition
+      - Hero
+      - PageRouteBuilder
+      - RouteSettings
+
+      # ── Task 15: Other (~11 types) ───────────────────────────────────────
+      - Dismissible
+      - DraggableScrollableSheet
+      - Placeholder
+      - PreferredSize
+      - Overlay
+      - OverlayEntry
+      - LayoutBuilder
+      - OrientationBuilder
+      - Tooltip
+
+      # ── Task 13: Enums ──────────────────────────────────────────────────
+      - ScrollViewKeyboardDismissBehavior
+      - ConnectionState
+      - AutovalidateMode
+      - Orientation
+
     overrides:
       # ── StatelessWidget: custom Bridge (Widget @nonVirtual hashCode/==) ──
       StatelessWidget:
