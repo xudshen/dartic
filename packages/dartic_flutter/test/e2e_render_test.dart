@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,7 +26,7 @@ void main() {
             reason: 'Fixture simple_widget.darb must be pre-compiled');
 
         final bytes = darbFile.readAsBytesSync();
-        final engine = DarticEngine(plugins: [DarticFlutterPlugin()]);
+        final engine = DarticEngine(plugins: [DarticStdlibPlugin(), DarticFlutterPlugin()]);
 
         engine.loadBytecode(bytes);
         final widget = engine.call('createWidget') as Widget;

@@ -15,6 +15,7 @@ import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:front_end/src/api_unstable/vm.dart'
     show
@@ -86,12 +87,12 @@ class TestEntry {
 
   @override
   int get hashCode => Object.hash(
-        path,
-        category,
-        subcategory,
-        isNegative,
-        Object.hashAll(experimentFlags),
-      );
+    path,
+    category,
+    subcategory,
+    isNegative,
+    Object.hashAll(experimentFlags),
+  );
 
   @override
   String toString() {
@@ -125,11 +126,7 @@ class TestOutcome {
   final TestResult result;
   final String message;
 
-  TestOutcome({
-    required this.entry,
-    required this.result,
-    this.message = '',
-  });
+  TestOutcome({required this.entry, required this.result, this.message = ''});
 
   @override
   String toString() =>
@@ -150,8 +147,10 @@ class TestOutcome {
 /// The pattern specifically matches lines that START with optional whitespace
 /// followed by `//` (not `///` doc comments), then a space and a bracket
 /// group. This avoids matching `[analyzer]` or `[cfe]` in string literals.
-final _negativeMarkerPattern =
-    RegExp(r'^\s*//\s+\[(analyzer|cfe)\]\s', multiLine: true);
+final _negativeMarkerPattern = RegExp(
+  r'^\s*//\s+\[(analyzer|cfe)\]\s',
+  multiLine: true,
+);
 
 /// Returns `true` if [source] contains co19 negative test markers.
 bool isNegativeTest(String source) => _negativeMarkerPattern.hasMatch(source);
@@ -163,12 +162,7 @@ bool isNegativeTest(String source) => _negativeMarkerPattern.hasMatch(source);
 /// Set of `dart:` libraries that are supported (or partially supported)
 /// by the dartic runtime. Tests importing only these libraries will be
 /// attempted; tests importing ANY library not in this set are skipped.
-final _supportedDartLibraries = <String>{
-  'core',
-  'async',
-  'math',
-  'collection',
-};
+final _supportedDartLibraries = <String>{'core', 'async', 'math', 'collection'};
 
 /// Regex that matches `import 'dart:<lib>'` or `import "dart:<lib>"`.
 final _unsupportedImportPattern = RegExp(r'''import\s+['"]dart:(\w+)['"]''');
@@ -190,8 +184,9 @@ String? findUnsupportedImport(String source) {
 // ---------------------------------------------------------------------------
 
 /// Regex that matches `// SharedOptions=--enable-experiment=<flags>`.
-final _experimentFlagPattern =
-    RegExp(r'//\s*SharedOptions=--enable-experiment=([\w,-]+)');
+final _experimentFlagPattern = RegExp(
+  r'//\s*SharedOptions=--enable-experiment=([\w,-]+)',
+);
 
 /// Parses experiment flags from `// SharedOptions=` comments in [source].
 ///
@@ -251,8 +246,9 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
       if (fileName.endsWith('_lib.dart') || fileName == 'lib.dart') continue;
 
       // Derive category and subcategory from the path relative to root.
-      final relativePath =
-          filePath.substring(rootDir.endsWith('/') ? rootDir.length : rootDir.length + 1);
+      final relativePath = filePath.substring(
+        rootDir.endsWith('/') ? rootDir.length : rootDir.length + 1,
+      );
       final parts = relativePath.split('/');
 
       String category;
@@ -275,13 +271,15 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
       // Read file content to determine negativity and experiment flags.
       final source = entity.readAsStringSync();
 
-      entries.add(TestEntry(
-        path: filePath,
-        category: category,
-        subcategory: subcategory,
-        isNegative: isNegativeTest(source),
-        experimentFlags: parseExperimentFlags(source),
-      ));
+      entries.add(
+        TestEntry(
+          path: filePath,
+          category: category,
+          subcategory: subcategory,
+          isNegative: isNegativeTest(source),
+          experimentFlags: parseExperimentFlags(source),
+        ),
+      );
     }
   }
 
@@ -303,8 +301,7 @@ String? _sdkRootCache;
 /// Returns the SDK root path, auto-detecting from the Dart executable if
 /// not explicitly set.
 String get sdkRoot {
-  return _sdkRootCache ??=
-      File(Platform.resolvedExecutable).parent.parent.path;
+  return _sdkRootCache ??= File(Platform.resolvedExecutable).parent.parent.path;
 }
 
 /// Explicitly sets the SDK root path. Call before [runTest] if the
@@ -322,12 +319,12 @@ CompilerOptions _makeCompilerOptions({
 }) {
   final options = CompilerOptions()
     ..sdkRoot = Uri.file('$sdkRoot/')
-    ..sdkSummary =
-        Uri.file('$sdkRoot/lib/_internal/vm_platform_strong.dill')
+    ..sdkSummary = Uri.file('$sdkRoot/lib/_internal/vm_platform_strong.dill')
     ..target = VmTarget(TargetFlags())
     ..fileSystem = StandardFileSystem.instance
     ..packagesFileUri = Uri.file(
-        '${Directory.current.path}/.dart_tool/package_config.json')
+      '${Directory.current.path}/.dart_tool/package_config.json',
+    )
     ..onDiagnostic = (msg) {
       if (msg.severity == CfeSeverity.error ||
           msg.severity == CfeSeverity.internalProblem) {
@@ -364,6 +361,7 @@ void _executeIsolateEntry(List<dynamic> message) async {
 
   try {
     final engine = DarticEngine(
+      plugins: [DarticStdlibPlugin()],
       config: DarticConfig(onPrint: (s) => output.writeln(s)),
     );
     engine.loadBytecode(darbBytes);
@@ -386,14 +384,17 @@ Future<List<dynamic>> _executeInIsolate(
   final rp = ReceivePort();
   Isolate? isolate;
   try {
-    isolate = await Isolate.spawn(
-      _executeIsolateEntry,
-      [darbBytes, rp.sendPort],
+    isolate = await Isolate.spawn(_executeIsolateEntry, [
+      darbBytes,
+      rp.sendPort,
+    ]);
+    final result = await rp.first.timeout(
+      timeout,
+      onTimeout: () {
+        isolate?.kill(priority: Isolate.immediate);
+        return [-1, '', 'timeout after ${timeout.inSeconds}s'];
+      },
     );
-    final result = await rp.first.timeout(timeout, onTimeout: () {
-      isolate?.kill(priority: Isolate.immediate);
-      return [-1, '', 'timeout after ${timeout.inSeconds}s'];
-    });
     return result as List<dynamic>;
   } finally {
     rp.close();
@@ -475,7 +476,8 @@ Future<TestOutcome> runTest(
       options,
     );
 
-    final compileFailed = compileResult == null ||
+    final compileFailed =
+        compileResult == null ||
         compileResult.component == null ||
         hasErrors.isNotEmpty;
 
@@ -491,7 +493,8 @@ Future<TestOutcome> runTest(
         return TestOutcome(
           entry: entry,
           result: TestResult.fail,
-          message: 'negative test: expected compile error but compiled '
+          message:
+              'negative test: expected compile error but compiled '
               'successfully',
         );
       }
@@ -567,11 +570,7 @@ Future<TestOutcome> runTest(
 
     return outcome;
   } on Object catch (e) {
-    return TestOutcome(
-      entry: entry,
-      result: TestResult.fail,
-      message: '$e',
-    );
+    return TestOutcome(entry: entry, result: TestResult.fail, message: '$e');
   }
 }
 
@@ -738,16 +737,19 @@ List<CategoryStats> computeStats(List<TestOutcome> outcomes) {
   for (final category in groups.keys) {
     final list = groups[category]!;
     final negativeOutcomes = list.where((o) => o.entry.isNegative).toList();
-    stats.add(CategoryStats(
-      category: category,
-      pass: list.where((o) => o.result == TestResult.pass).length,
-      fail: list.where((o) => o.result == TestResult.fail).length,
-      skip: list.where((o) => o.result == TestResult.skip).length,
-      error: list.where((o) => o.result == TestResult.error).length,
-      negativeTotal: negativeOutcomes.length,
-      negativePass:
-          negativeOutcomes.where((o) => o.result == TestResult.pass).length,
-    ));
+    stats.add(
+      CategoryStats(
+        category: category,
+        pass: list.where((o) => o.result == TestResult.pass).length,
+        fail: list.where((o) => o.result == TestResult.fail).length,
+        skip: list.where((o) => o.result == TestResult.skip).length,
+        error: list.where((o) => o.result == TestResult.error).length,
+        negativeTotal: negativeOutcomes.length,
+        negativePass: negativeOutcomes
+            .where((o) => o.result == TestResult.pass)
+            .length,
+      ),
+    );
   }
 
   stats.sort((a, b) => a.category.compareTo(b.category));
@@ -764,10 +766,7 @@ List<CategoryStats> computeStats(List<TestOutcome> outcomes) {
 /// 1. A table with per-category pass/fail/skip/error counts and pass rate.
 /// 2. A TOTAL summary row.
 /// 3. Detailed lists of failed and errored tests with their messages.
-String formatReport(
-  List<CategoryStats> stats,
-  List<TestOutcome> outcomes,
-) {
+String formatReport(List<CategoryStats> stats, List<TestOutcome> outcomes) {
   final buf = StringBuffer();
 
   // Compute totals.
@@ -782,8 +781,7 @@ String formatReport(
     totalError += s.error;
   }
   final totalAll = totalPass + totalFail + totalSkip + totalError;
-  final totalRate =
-      totalAll == 0 ? 0.0 : (totalPass / totalAll) * 100.0;
+  final totalRate = totalAll == 0 ? 0.0 : (totalPass / totalAll) * 100.0;
 
   // Determine column widths.
   const minCatWidth = 10;
@@ -901,9 +899,7 @@ void saveSnapshot(List<TestOutcome> outcomes, String filePath) {
   final map = outcomesToMap(outcomes);
   final file = File(filePath);
   file.parent.createSync(recursive: true);
-  file.writeAsStringSync(
-    const JsonEncoder.withIndent('  ').convert(map),
-  );
+  file.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(map));
 }
 
 /// Loads a previously saved snapshot from [filePath].

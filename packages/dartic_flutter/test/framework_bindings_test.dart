@@ -1,10 +1,10 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
-import 'package:dartic_flutter/src/bindings/build_context_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/navigator_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/material_app_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/scaffold_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/text_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/material/material_app_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/material/scaffold_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/build_context_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/navigator_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/text_bindings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

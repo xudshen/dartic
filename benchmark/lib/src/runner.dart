@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
 import 'package:dartic/src/compiler/compiler.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 import 'package:dart_eval/dart_eval.dart' as de;
@@ -139,6 +140,7 @@ class BenchmarkRunner {
   Object? _executeDartic(Uint8List darbBytes) {
     final engine = DarticEngine(
       config: DarticConfig(fuelBudget: 1 << 30),
+      plugins: [DarticStdlibPlugin()],
     );
     engine.loadBytecode(darbBytes);
     return engine.call('main');

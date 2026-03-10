@@ -57,7 +57,7 @@ YAML 新增字段：
 
 | # | 包 | 估算类/枚举数 | Bridge 候选 | 依赖 |
 |---|---|-------------|------------|------|
-| 1 | **dart:ui** | ~30 | Canvas 相关 | 无 |
+| 1 | **dart:ui** | ~49 | Canvas 等 abstract 类作 binding-only | 无 |
 | 2 | **painting** | ~40 | Decoration, ImageProvider, TextSpan | dart:ui |
 | 3 | **animation** | ~25 | Animatable, Tween 系列 | dart:ui |
 | 4 | **rendering** | ~20 | 少量值类型 | painting |
@@ -68,7 +68,7 @@ YAML 新增字段：
 | 9 | **material** | ~70 | 少量 | widgets |
 | 10 | **cupertino** | ~40 | 少量 | widgets |
 
-总计约 300-350 个类/枚举。
+总计约 350-400 个类/枚举。
 
 ## 每个包的工作流程
 
@@ -109,5 +109,6 @@ class DarticFlutterPlugin extends DarticPlugin {
 ## 前置工作
 
 在批量生成绑定之前，需要先完成：
-1. Generator 增强：@mustCallSuper 自动检测、抽象方法自动 Bridge、枚举自动绑定
-2. 辅助脚本：从 Flutter SDK 提取公开 API 类名列表
+1. `_#fromFields` 自动生成：为有 const 构造函数的平台类自动生成 InstanceConstant 重建绑定（字段名去 `_` 前缀匹配构造器参数，零字段直接生成无参调用，匹配失败打印警告）
+2. Generator 增强：@mustCallSuper 自动检测、抽象方法自动 Bridge、枚举自动绑定
+3. 辅助脚本：从 Flutter SDK 提取公开 API 类名列表
