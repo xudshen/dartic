@@ -40,5 +40,6 @@ abstract final class PaddingBindings {
         'child#0': (args) => (args[0] as Padding).child,
         'key#0': (args) => (args[0] as Padding).key,
         '#3': (args) => Padding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: args[1] as EdgeInsetsGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
+        '_#fromFields#1': (args) => Padding(padding: args[0] as EdgeInsetsGeometry),
       };
 }

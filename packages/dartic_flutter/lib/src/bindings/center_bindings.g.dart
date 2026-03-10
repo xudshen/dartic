@@ -42,5 +42,6 @@ abstract final class CenterBindings {
         'child#0': (args) => (args[0] as Center).child,
         'key#0': (args) => (args[0] as Center).key,
         '#4': (args) => Center(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, widthFactor: identical(args[1], darticAbsent) ? null : args[1] as double?, heightFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
+        '_#fromFields#0': (args) => Center(),
       };
 }

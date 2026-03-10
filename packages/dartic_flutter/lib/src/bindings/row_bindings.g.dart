@@ -49,5 +49,6 @@ abstract final class RowBindings {
         'children#0': (args) => (args[0] as Row).children,
         'key#0': (args) => (args[0] as Row).key,
         '#9': (args) => Row(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxisAlignment: identical(args[1], darticAbsent) ? MainAxisAlignment.start : args[1] as MainAxisAlignment, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, crossAxisAlignment: identical(args[3], darticAbsent) ? CrossAxisAlignment.center : args[3] as CrossAxisAlignment, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?, verticalDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textBaseline: identical(args[6], darticAbsent) ? null : args[6] as TextBaseline?, spacing: identical(args[7], darticAbsent) ? 0.0 : args[7] as double, children: identical(args[8], darticAbsent) ? const <Widget>[] : (args[8] as List).cast<Widget>()),
+        '_#fromFields#0': (args) => Row(),
       };
 }

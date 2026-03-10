@@ -62,7 +62,6 @@ abstract final class StatefulWidgetBindings {
           _$StatefulWidget(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$createElement#0', (args) => (args[0] as _$StatefulWidget).createElement());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$createState#0', (args) => (args[0] as _$StatefulWidget).createState());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShort#0', (args) => (args[0] as _$StatefulWidget).toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$debugFillProperties#1', (args) { (args[0] as _$StatefulWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatefulWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
