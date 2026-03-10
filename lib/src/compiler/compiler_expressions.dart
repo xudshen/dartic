@@ -2181,6 +2181,8 @@ extension on DarticCompiler {
       final template = dartTypeToTemplate(
         typeArgs[i],
         _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
         coreTypes: _coreTypes,
       );
       final templateIdx = _constantPool.addRef(template);
@@ -2199,9 +2201,11 @@ extension on DarticCompiler {
     return (closureReg, ResultLoc.ref);
   }
 
-  /// Returns true if [type] contains any [ir.TypeParameterType].
+  /// Returns true if [type] contains any [ir.TypeParameterType] or
+  /// [ir.StructuralParameterType] that requires runtime resolution.
   bool _containsTypeParameter(ir.DartType type) {
     if (type is ir.TypeParameterType) return true;
+    if (type is ir.StructuralParameterType) return true;
     if (type is ir.InterfaceType) {
       return type.typeArguments.any(_containsTypeParameter);
     }
@@ -2218,9 +2222,22 @@ extension on DarticCompiler {
     if (type is ir.FutureOrType) {
       return _containsTypeParameter(type.typeArgument);
     }
-    if (type is ir.NullType || type is ir.DynamicType ||
-        type is ir.VoidType || type is ir.NeverType) {
+    // IntersectionType.left is always a TypeParameterType.
+    if (type is ir.IntersectionType) return true;
+    if (type is ir.RecordType) {
+      for (final p in type.positional) {
+        if (_containsTypeParameter(p)) return true;
+      }
+      for (final n in type.named) {
+        if (_containsTypeParameter(n.type)) return true;
+      }
       return false;
+    }
+    if (type is ir.ExtensionType) {
+      return type.typeArguments.any(_containsTypeParameter);
+    }
+    if (type is ir.TypedefType) {
+      return type.typeArguments.any(_containsTypeParameter);
     }
     return false;
   }

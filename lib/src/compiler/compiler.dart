@@ -196,6 +196,17 @@ class DarticCompiler {
   /// to populate its own ITA slot.
   int _itaUpvalueIdx = -1;
 
+  /// Upvalue index for FTA (function type arguments) in closure contexts.
+  /// When a non-generic closure is nested inside a generic function and
+  /// references the enclosing function's type parameters, the FTA (rBase+1)
+  /// must be captured as an upvalue.  The closure body emits
+  /// LOAD_UPVALUE r1, _ftaUpvalueIdx at the start.
+  ///
+  /// NOTE: This does not handle the nested-generic case where the closure
+  /// itself has type parameters (its own FTA occupies rBase+1).  That
+  /// requires a separate outer-FTA forwarding mechanism.
+  int _ftaUpvalueIdx = -1;
+
   /// True when an inner closure directly captures `this` from the current
   /// function. Used to ensure CLOSE_UPVALUE is emitted on return, even when
   /// no local variables are captured (only `this`).

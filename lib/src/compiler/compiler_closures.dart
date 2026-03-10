@@ -30,6 +30,7 @@ extension on DarticCompiler {
       capturedVarRefRegs: _capturedVarRefRegs,
       thisUpvalueIdx: _thisUpvalueIdx,
       itaUpvalueIdx: _itaUpvalueIdx,
+      ftaUpvalueIdx: _ftaUpvalueIdx,
       thisCapturedByInner: _thisCapturedByInner,
     ));
 
@@ -49,6 +50,7 @@ extension on DarticCompiler {
     _capturedVarRefRegs = {};
     _thisUpvalueIdx = -1;
     _itaUpvalueIdx = -1;
+    _ftaUpvalueIdx = -1;
     _thisCapturedByInner = false;
   }
 
@@ -73,6 +75,7 @@ extension on DarticCompiler {
     _capturedVarRefRegs = ctx.capturedVarRefRegs;
     _thisUpvalueIdx = ctx.thisUpvalueIdx;
     _itaUpvalueIdx = ctx.itaUpvalueIdx;
+    _ftaUpvalueIdx = ctx.ftaUpvalueIdx;
     _thisCapturedByInner = ctx.thisCapturedByInner;
   }
 
@@ -144,8 +147,9 @@ extension on DarticCompiler {
     // so we capture the value now for use after _pushContext.
     final outerThisUpvalueIdx = _thisUpvalueIdx;
 
-    // Step 2c: Track outer ITA upvalue index for transitive capture.
+    // Step 2c: Track outer ITA/FTA upvalue indices for transitive capture.
     final outerItaUpvalueIdx = _itaUpvalueIdx;
+    final outerFtaUpvalueIdx = _ftaUpvalueIdx;
 
     // Determine if the closure needs ITA: when it captures `this` and the
     // enclosing class is generic, ITA must be forwarded so INSTANTIATE_TYPE
@@ -153,6 +157,15 @@ extension on DarticCompiler {
     final needsIta = capturesThis &&
         _currentClassTypeParams != null &&
         _currentClassTypeParams!.isNotEmpty;
+
+    // Determine if the closure needs FTA: when the enclosing function is
+    // generic and the closure itself is NOT generic (its own rBase+1 is free).
+    // This allows INSTANTIATE_TYPE to resolve function type parameters.
+    // NOTE: Nested-generic case (generic closure inside generic function)
+    // is not handled — would require a separate outer-FTA forwarding slot.
+    final needsFta = _currentFunctionTypeParams != null &&
+        _currentFunctionTypeParams!.isNotEmpty &&
+        fn.typeParameters.isEmpty;
 
     // Step 3: Save the enclosing function scope (need it for upvalue resolution).
     final outerScope = _scope;
@@ -200,6 +213,25 @@ extension on DarticCompiler {
       _itaUpvalueIdx = idx;
     }
 
+    // Step 4d: Set up FTA upvalue if the closure needs function type arguments.
+    if (needsFta) {
+      final idx = _upvalueDescriptors.length;
+      if (outerFtaUpvalueIdx >= 0) {
+        // Transitive: FTA was already an upvalue in the enclosing closure.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: false,
+          index: outerFtaUpvalueIdx,
+        ));
+      } else {
+        // Direct: FTA is at rBase+1 of the enclosing method/function.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: true,
+          index: 1,
+        ));
+      }
+      _ftaUpvalueIdx = idx;
+    }
+
     // Create a new scope for the inner function. Its parent is the
     // outer scope so that upvalue resolution can walk up.
     _scope = Scope(
@@ -217,6 +249,12 @@ extension on DarticCompiler {
     // so INSTANTIATE_TYPE can read ITA from r0.
     if (needsIta) {
       _emitter.emitABx(Op.loadUpvalue, 0, _itaUpvalueIdx);
+    }
+
+    // Emit LOAD_UPVALUE for FTA if captured — so INSTANTIATE_TYPE can
+    // resolve function type parameters from rBase+1.
+    if (needsFta) {
+      _emitter.emitABx(Op.loadUpvalue, 1, _ftaUpvalueIdx);
     }
 
     // Emit LOAD_UPVALUE for `this` into the canonical r2 slot. This is
@@ -1173,6 +1211,7 @@ class _CompilationContext {
     required this.capturedVarRefRegs,
     required this.thisUpvalueIdx,
     required this.itaUpvalueIdx,
+    required this.ftaUpvalueIdx,
     required this.thisCapturedByInner,
   });
 
@@ -1194,6 +1233,7 @@ class _CompilationContext {
   final Map<ir.VariableDeclaration, int> capturedVarRefRegs;
   final int thisUpvalueIdx;
   final int itaUpvalueIdx;
+  final int ftaUpvalueIdx;
   final bool thisCapturedByInner;
 }
 
