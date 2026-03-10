@@ -2986,7 +2986,14 @@ extension on DarticCompiler {
       // The initializer may reference `this` (e.g., `late int x = ++count;`),
       // so we bind the receiver to register 2 (the `this` register).
       const thisReg = 2;
+      int savedThisReg = -1;
       if (recvReg != thisReg) {
+        // Save the current reg 2 — in instance methods this is `this`,
+        // in static/top-level functions it may hold a parameter or local.
+        // We must restore it after the initializer to avoid data-flow
+        // corruption at the branch merge point.
+        savedThisReg = _allocRefReg();
+        _emitMove(savedThisReg, thisReg, ResultLoc.ref);
         _emitMove(thisReg, recvReg, ResultLoc.ref);
       }
       final (initReg, initLoc) = _compileExpression(field.initializer!);
@@ -2996,6 +3003,12 @@ extension on DarticCompiler {
       // Store back to the field on the receiver.
       _emitter.emitABC(Op.setFieldRef, recvReg, initRefReg, layout.offset);
       _emitMove(resultReg, initRefReg, ResultLoc.ref);
+
+      // Restore reg 2 if we saved it.
+      if (savedThisReg >= 0) {
+        _emitMove(thisReg, savedThisReg, ResultLoc.ref);
+        _refAlloc.free(savedThisReg);
+      }
     } else {
       // No initializer → throw LateError.fieldNI.
       _emitLateError(field.name.text, 'fieldNI');
@@ -3070,6 +3083,7 @@ extension on DarticCompiler {
       [(nameReg, ResultLoc.ref, null as ir.DartType?)],
       bindingIndex,
     );
+    _refAlloc.free(nameReg);
 
     // THROW
     _emitter.emitABC(Op.throw_, errorReg, 0, 0);

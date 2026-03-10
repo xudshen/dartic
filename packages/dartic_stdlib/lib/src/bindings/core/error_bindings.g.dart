@@ -15,15 +15,6 @@ class _DarticErrorBacking extends Error {
   String toString() => 'Error';
 }
 
-/// Host implementation of dart:_internal LateError.
-/// Used by CFE-lowered late variable access checks.
-class _DarticLateError extends Error {
-  final String _message;
-  _DarticLateError(this._message);
-  @override
-  String toString() => 'LateInitializationError: $_message';
-}
-
 class _$Error extends Error implements DarticObjectHolder {
   _$Error(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
@@ -86,11 +77,11 @@ abstract final class ErrorBindings {
         'stackTrace#0': (args) => (args[0] as Error).stackTrace,
         '#0': (args) => _DarticErrorBacking(),
         'toString#0': (args) => (args[0] as Error).toString(),
-        'localNI#1': (args) => _DarticLateError("Local '${args[0]}' has not been initialized."),
-        'fieldNI#1': (args) => _DarticLateError("Field '${args[0]}' has not been initialized."),
-        'localADI#1': (args) => _DarticLateError("Local '${args[0]}' has been assigned during initialization."),
-        'fieldADI#1': (args) => _DarticLateError("Field '${args[0]}' has been assigned during initialization."),
-        'localAI#1': (args) => _DarticLateError("Local '${args[0]}' has already been initialized."),
-        'fieldAI#1': (args) => _DarticLateError("Field '${args[0]}' has already been initialized."),
+        'localNI#1': (args) => DarticLateError("Local '${args[0]}' has not been initialized."),
+        'fieldNI#1': (args) => DarticLateError("Field '${args[0]}' has not been initialized."),
+        'localADI#1': (args) => DarticLateError("Local '${args[0]}' has been assigned during initialization."),
+        'fieldADI#1': (args) => DarticLateError("Field '${args[0]}' has been assigned during initialization."),
+        'localAI#1': (args) => DarticLateError("Local '${args[0]}' has already been initialized."),
+        'fieldAI#1': (args) => DarticLateError("Field '${args[0]}' has already been initialized."),
       };
 }

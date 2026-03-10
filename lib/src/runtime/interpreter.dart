@@ -68,7 +68,7 @@ class DarticInterpreter {
   /// Non-nullable late variables use `null` as sentinel (cheaper check via
   /// JUMP_IF_NULL). Nullable late variables need a dedicated sentinel because
   /// `null` is a valid value — this object is identity-compared via
-  /// `IS_LATE_SENTINEL`.
+  /// `EQ_REF` against the loaded sentinel.
   static final Object lateSentinel = Object();
 
   /// Extracts [DarticObject] from a possible Bridge instance.

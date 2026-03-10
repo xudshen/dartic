@@ -69,6 +69,25 @@ class CallDepthExceededError extends DarticError {
 /// The interpreter has run longer than the configured wall-clock time limit.
 /// After catching this error, the runtime instance remains usable for
 /// subsequent [DarticInterpreter.execute] calls.
+/// Thrown when a `late` variable is accessed before initialization,
+/// written after initialization (for `late final`), or assigned during
+/// its own initializer.
+///
+/// Used by both the compiler's CALL_HOST path (local/field late variables)
+/// and the runtime's [DarticGlobalTable] (global late variables), ensuring
+/// a single error type across all late variable kinds.
+///
+/// Extends [Error] directly (not [DarticError]) so that its `toString()`
+/// matches the Dart VM's `LateError` output exactly.
+class DarticLateError extends Error {
+  DarticLateError(this._message);
+
+  final String _message;
+
+  @override
+  String toString() => 'LateInitializationError: $_message';
+}
+
 class ExecutionTimeoutError extends DarticError {
   ExecutionTimeoutError(this.elapsed, this.limit)
       : super(

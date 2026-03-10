@@ -47,8 +47,7 @@ class DarticGlobalTable {
     }
     if (identical(value, _uninitialized)) {
       if (isLate(index)) {
-        throw DarticError(
-          "LateInitializationError: Field '${_names[index]}' has not been initialized.");
+        throw DarticLateError("Field '${_names[index]}' has not been initialized.");
       }
       throw DarticError('Uninitialized global variable $index');
     }
@@ -60,8 +59,7 @@ class DarticGlobalTable {
   /// For late final globals, throws if already initialized.
   void store(int index, Object? value) {
     if (isLate(index) && isFinal(index) && isInitialized(index)) {
-      throw DarticError(
-        "LateInitializationError: Field '${_names[index]}' has already been initialized.");
+      throw DarticLateError("Field '${_names[index]}' has already been initialized.");
     }
     _slots[index] = value;
   }
