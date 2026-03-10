@@ -12,6 +12,7 @@ import 'package:dartic/dartic.dart'
         SdkNotFoundError,
         SdkResolver,
         SdkVersionMismatchError;
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
@@ -115,7 +116,10 @@ class RunCommand extends Command<int> {
         onPrint: stdout.writeln,
       );
 
-      final engine = DarticEngine(config: config);
+      final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
+        config: config,
+      );
       engine.loadBytecode(darbBytes);
 
       final result = engine.call('main');

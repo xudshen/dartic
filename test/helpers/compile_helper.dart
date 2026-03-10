@@ -6,10 +6,7 @@ import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_class_registry.dart';
 import 'package:dartic/src/bridge/host_binding_registry.dart';
-import 'package:dartic/src/bridge/plugins/async_plugin.g.dart';
-import 'package:dartic/src/bridge/plugins/collection_plugin.g.dart';
-import 'package:dartic/src/bridge/plugins/core_plugin.g.dart';
-import 'package:dartic/src/bridge/plugins/math_plugin.g.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
@@ -166,14 +163,7 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     bridgeFactoryRegistry: bridgeFactoryRegistry,
     pendingBridgeFactories: {},
   );
-  for (final plugin in [
-    CorePlugin(),
-    AsyncPlugin(),
-    CollectionPlugin(),
-    MathPlugin(),
-  ]) {
-    plugin.register(pluginContext);
-  }
+  DarticStdlibPlugin().register(pluginContext);
   return (
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
