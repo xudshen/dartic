@@ -397,13 +397,16 @@ void main() {
     });
 
     // ── 11. Upvalue descriptor out of range ──
-    test('detects upvalue descriptor isLocal index out of range', () {
+    // Note: isLocal upvalue indices refer to the parent function's registers,
+    // so the verifier cannot validate them without tracing CLOSURE linkage.
+    // Only chained (non-local) upvalue indices are validated.
+    test('detects chained upvalue descriptor index out of range', () {
       final bytecode = Uint64List.fromList([encodeAx(Op.halt, 0)]);
       final module = makeModule(
         bytecode: bytecode,
         refRegCount: 2,
         upvalueDescriptors: [
-          UpvalueDescriptor(isLocal: true, index: 50), // way past refRegCount
+          UpvalueDescriptor(isLocal: false, index: 50), // way past upvalueDescriptors.length
         ],
       );
       expect(verifier.verify(module), isFalse);

@@ -350,6 +350,7 @@ extension on DarticCompiler {
           fn.positionalParameters, fn.namedParameters),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
+      isConstructor: true,
     );
     _currentEnclosingClass = null;
     _currentClassTypeParams = null;

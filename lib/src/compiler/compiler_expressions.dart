@@ -2210,6 +2210,9 @@ extension on DarticCompiler {
       return type.typeArguments.any(_containsTypeParameter);
     }
     if (type is ir.FunctionType) {
+      for (final tp in type.typeParameters) {
+        if (_containsTypeParameter(tp.bound)) return true;
+      }
       if (_containsTypeParameter(type.returnType)) return true;
       for (final p in type.positionalParameters) {
         if (_containsTypeParameter(p)) return true;

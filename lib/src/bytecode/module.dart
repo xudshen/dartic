@@ -142,6 +142,7 @@ class DarticFuncProto {
     this.icTable = const [],
     this.exceptionTable = const [],
     this.upvalueDescriptors = const [],
+    this.isConstructor = false,
   });
 
   /// Human-readable function name (for debugging and serialization).
@@ -177,6 +178,10 @@ class DarticFuncProto {
   /// Defaults to `0` (ref). Used by invokeClosure to convert RETURN_VAL results
   /// back to the correct Dart type before handing to the host.
   final int returnKind;
+
+  /// Whether this function is a constructor.  Used by the CALL_STATIC
+  /// handler to gate ITA auto-load from `this` (rBase+2).
+  final bool isConstructor;
 
   /// Inline cache table — one entry per `CALL_VIRTUAL` instruction.
   final List<ICEntry> icTable;

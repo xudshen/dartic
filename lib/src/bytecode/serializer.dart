@@ -308,6 +308,9 @@ class DarticSerializer {
     // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
     w.addByte(func.returnKind);
 
+    // isConstructor flag (1 byte: 0 = false, 1 = true)
+    w.addByte(func.isConstructor ? 1 : 0);
+
     // typeTemplate (optional function type for closure type extraction)
     // Format: 1 byte flag (0 = null, 1 = present) + serialized TypeTemplate
     final typeTemplate = func.typeTemplate;

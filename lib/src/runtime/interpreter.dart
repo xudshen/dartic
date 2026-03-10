@@ -1866,11 +1866,11 @@ class DarticInterpreter {
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
 
-          // Auto-load ITA from callee's `this` (rsp+2) runtimeType_ for
-          // generic class constructors. The `this` argument was written by
-          // MOVE_REF before CALL_STATIC, so rBase+2 is the newly allocated
-          // object with runtimeType_ containing the class type args.
-          {
+          // Auto-load ITA from callee's `this` (rBase+2) runtimeType_ for
+          // constructors only.  The `this` argument was written by MOVE_REF
+          // before CALL_STATIC, so rBase+2 is the newly allocated object
+          // with runtimeType_ containing the class type args.
+          if (callee.isConstructor) {
             final thisObj = rs.read(rBase + 2);
             final darticObj = (thisObj is DarticObject)
                 ? thisObj

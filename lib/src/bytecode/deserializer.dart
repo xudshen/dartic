@@ -363,6 +363,9 @@ class DarticDeserializer {
     // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
     final returnKind = r.readByte();
 
+    // isConstructor flag (1 byte: 0 = false, 1 = true)
+    final isConstructor = r.readByte() != 0;
+
     // typeTemplate (optional function type for closure type extraction)
     TypeTemplate? typeTemplate;
     final hasTypeTemplate = r.readByte();
@@ -385,6 +388,7 @@ class DarticDeserializer {
       exceptionTable: exceptionTable,
       icTable: icTable,
       upvalueDescriptors: upvalueDescriptors,
+      isConstructor: isConstructor,
     );
     proto.typeTemplate = typeTemplate;
     return proto;

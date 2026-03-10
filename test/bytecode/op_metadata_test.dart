@@ -61,8 +61,8 @@ void main() {
     });
 
     test('opTable contains no extra entries beyond valid opcodes', () {
-      // Verify count matches expected number of opcodes (111 in total).
-      expect(opTable.length, 111);
+      // Verify count matches expected number of opcodes (112 in total).
+      expect(opTable.length, 112);
     });
   });
 
