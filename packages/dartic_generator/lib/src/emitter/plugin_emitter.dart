@@ -66,7 +66,7 @@ String emitPluginFile({
   }
 
   if (hasTopLevel && topLevelFileName != null) {
-    buf.writeln("import '../bindings/$topLevelFileName';");
+    buf.writeln("import '$bindingsImportPrefix/$topLevelFileName';");
   }
 
   buf.writeln();
