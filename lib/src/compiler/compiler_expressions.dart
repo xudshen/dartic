@@ -369,6 +369,15 @@ extension on DarticCompiler {
       final refReg = _allocRefReg();
       _emitter.emitABx(Op.loadUpvalue, refReg, uvIdx);
 
+      // Late variable upvalue: emit sentinel check after loading.
+      final binding = _scope.lookup(expr.variable);
+      if (binding != null && binding.isLate) {
+        _emitLateReadCheck(
+          refReg, expr.variable, binding,
+          isNullable: _isNullableType(expr.variable.type),
+        );
+      }
+
       // Unbox if the variable's declared type is a value type.
       // Upvalues always store boxed values on the ref stack, but downstream
       // code (e.g., ADD_INT) expects value-stack operands for int/double/bool.
@@ -380,10 +389,28 @@ extension on DarticCompiler {
     // value-type reads because the variable is now stored as a boxed ref.
     if (_capturedVarRefRegs.containsKey(expr.variable)) {
       final refReg = _capturedVarRefRegs[expr.variable]!;
+
+      final binding = _scope.lookup(expr.variable);
+      if (binding != null && binding.isLate) {
+        _emitLateReadCheck(
+          refReg, expr.variable, binding,
+          isNullable: _isNullableType(expr.variable.type),
+        );
+      }
+
       return _unboxCapturedIfNeeded(refReg, expr.variable.type);
     }
 
     final binding = _lookupVar(expr.variable);
+
+    if (binding.isLate) {
+      _emitLateReadCheck(
+        binding.reg, expr.variable, binding,
+        isNullable: _isNullableType(expr.variable.type),
+      );
+      return (binding.reg, ResultLoc.ref);
+    }
+
     return (binding.reg, _locOf(binding));
   }
 
@@ -401,6 +428,18 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileVariableSet(ir.VariableSet expr) {
     // Check if this is an upvalue access (variable from outer function scope).
     if (_contextStack.isNotEmpty && _isUpvalueAccess(expr.variable)) {
+      final binding = _scope.lookup(expr.variable);
+      if (binding != null && binding.isLate && binding.isFinal) {
+        final uvIdx = _resolveUpvalue(expr.variable);
+        final tmpReg = _allocRefReg();
+        _emitter.emitABx(Op.loadUpvalue, tmpReg, uvIdx);
+        _emitLateFinalWriteGuard(
+          tmpReg, expr.variable,
+          isNullable: _isNullableType(expr.variable.type),
+        );
+        _refAlloc.free(tmpReg);
+      }
+
       final uvIdx = _resolveUpvalue(expr.variable);
       var (srcReg, srcLoc) = _compileExpression(expr.value);
       // Ensure the value is on the ref stack (upvalues always use ref stack).
@@ -414,6 +453,15 @@ extension on DarticCompiler {
     // ref register.
     if (_capturedVarRefRegs.containsKey(expr.variable)) {
       final refReg = _capturedVarRefRegs[expr.variable]!;
+
+      final binding = _scope.lookup(expr.variable);
+      if (binding != null && binding.isLate && binding.isFinal) {
+        _emitLateFinalWriteGuard(
+          refReg, expr.variable,
+          isNullable: _isNullableType(expr.variable.type),
+        );
+      }
+
       var (srcReg, srcLoc) = _compileExpression(expr.value);
       srcReg = _boxToRefIfValue(srcReg, srcLoc, _inferExprType(expr.value));
       _emitMove(refReg, srcReg, ResultLoc.ref);
@@ -421,7 +469,21 @@ extension on DarticCompiler {
     }
 
     final binding = _lookupVar(expr.variable);
+
+    if (binding.isLate && binding.isFinal) {
+      _emitLateFinalWriteGuard(
+        binding.reg, expr.variable,
+        isNullable: _isNullableType(expr.variable.type),
+      );
+    }
+
     var (srcReg, srcLoc) = _compileExpression(expr.value);
+    // Late variables are on ref stack — coerce if needed.
+    if (binding.isLate) {
+      srcReg = _boxToRefIfValue(srcReg, srcLoc, _inferExprType(expr.value));
+      _emitMove(binding.reg, srcReg, ResultLoc.ref);
+      return (binding.reg, ResultLoc.ref);
+    }
     // Coerce stack kind if mismatch.
     (srcReg, _) = _coerceArg(srcReg, srcLoc, binding.kind, expr.value);
     final bindingLoc = _locOf(binding);
@@ -2716,6 +2778,166 @@ extension on DarticCompiler {
       }
     }
     return constant.tearOffConstant.accept(_constantVisitor);
+  }
+
+  // ── Late variable helpers ──
+
+  /// Returns true if [type] is nullable (can hold `null` as a valid value).
+  bool _isNullableType(ir.DartType type) {
+    if (type.nullability == ir.Nullability.nullable) return true;
+    if (type is ir.DynamicType) return true;
+    return false;
+  }
+
+  /// Emits a sentinel check for a nullable late variable and returns the
+  /// (jumpPlaceholderPC, condValReg) for later patching. The caller must
+  /// patch with JUMP_IF_FALSE (for "skip if not sentinel") or JUMP_IF_TRUE
+  /// (for "skip if sentinel").
+  ///
+  /// Emits: LOAD_LATE_SENTINEL tmp; EQ_REF condVal, refReg, tmp
+  /// condVal = 1 if sentinel, 0 if not.
+  /// Caller is responsible for freeing condValReg after patching.
+  (int jumpPC, int condValReg) _emitNullableSentinelCheck(int refReg) {
+    final tmpSentinel = _allocRefReg();
+    _emitter.emitABC(Op.loadLateSentinel, tmpSentinel, 0, 0);
+    final cmpVal = _allocValueReg();
+    _emitter.emitABC(Op.eqRef, cmpVal, refReg, tmpSentinel);
+    _refAlloc.free(tmpSentinel);
+    final jumpPC = _emitter.emitJumpPlaceholder();
+    return (jumpPC, cmpVal);
+  }
+
+  /// Emits a sentinel check + LateError throw (or deferred init) for a late
+  /// variable read.
+  ///
+  /// For non-nullable: `if (reg == null) throw LateError.localNI(name)`
+  /// For nullable: `if (identical(reg, lateSentinel)) throw LateError.localNI(name)`
+  ///
+  /// If the binding has a deferred initializer, compiles the initializer
+  /// inline and stores it (lazy evaluation).
+  void _emitLateReadCheck(
+    int refReg,
+    ir.VariableDeclaration varDecl,
+    VarBinding binding, {
+    required bool isNullable,
+  }) {
+    final hasDeferredInit = binding.deferredInitializer != null;
+
+    // Emit sentinel comparison → jump to ok if NOT sentinel.
+    int jumpToOkPC;
+    int condValReg = -1;
+    if (isNullable) {
+      (jumpToOkPC, condValReg) = _emitNullableSentinelCheck(refReg);
+    } else {
+      jumpToOkPC = _emitter.emitJumpPlaceholder();
+    }
+
+    if (hasDeferredInit) {
+      // Lazy init: compile the initializer and store.
+      final (initReg, initLoc) = _compileExpression(binding.deferredInitializer!);
+      final initRefReg = _boxToRefIfValue(initReg, initLoc, _inferExprType(binding.deferredInitializer!));
+
+      if (binding.isFinal) {
+        // ADI double-check: re-check sentinel — if someone else initialized
+        // during our init (concurrent/recursive), throw ADI error.
+        _emitLateADICheck(refReg, varDecl, isNullable: isNullable);
+      }
+
+      _emitMove(refReg, initRefReg, ResultLoc.ref);
+    } else {
+      // No initializer: throw LateError.localNI
+      _emitLateError(varDecl.name ?? '<unnamed>', 'localNI');
+    }
+
+    // Patch the "ok" jump target to here.
+    if (isNullable) {
+      // condVal=1 means IS sentinel → JUMP_IF_FALSE skips throw when NOT sentinel
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfFalse, condValReg, _emitter.currentPC);
+      _valueAlloc.free(condValReg);
+    } else {
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNnull, refReg, _emitter.currentPC);
+    }
+  }
+
+  /// Emits a late final write guard: if the variable is NOT sentinel, throw
+  /// LateError.localAI (already initialized).
+  void _emitLateFinalWriteGuard(
+    int refReg,
+    ir.VariableDeclaration varDecl, {
+    required bool isNullable,
+  }) {
+    int jumpToOkPC;
+    int condValReg = -1;
+    if (isNullable) {
+      // EQ_REF condVal, refReg, sentinel → JUMP_IF_TRUE to ok (is sentinel → allow write)
+      (jumpToOkPC, condValReg) = _emitNullableSentinelCheck(refReg);
+    } else {
+      // JUMP_IF_NULL refReg → ok (is null sentinel → allow write)
+      jumpToOkPC = _emitter.emitJumpPlaceholder();
+    }
+
+    // NOT sentinel → already initialized → throw LateError.localAI
+    _emitLateError(varDecl.name ?? '<unnamed>', 'localAI');
+
+    // Patch ok jump.
+    if (isNullable) {
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
+      _valueAlloc.free(condValReg);
+    } else {
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNull, refReg, _emitter.currentPC);
+    }
+  }
+
+  /// Emits ADI (already-during-initialization) check for late final with
+  /// deferred initializer. Re-checks the sentinel after compiling the
+  /// initializer expression — if no longer sentinel, someone else initialized
+  /// concurrently.
+  void _emitLateADICheck(
+    int refReg,
+    ir.VariableDeclaration varDecl, {
+    required bool isNullable,
+  }) {
+    int jumpToOkPC;
+    int condValReg = -1;
+    if (isNullable) {
+      (jumpToOkPC, condValReg) = _emitNullableSentinelCheck(refReg);
+    } else {
+      jumpToOkPC = _emitter.emitJumpPlaceholder();
+    }
+
+    // Not sentinel → already initialized during our init → throw ADI
+    _emitLateError(varDecl.name ?? '<unnamed>', 'localADI');
+
+    if (isNullable) {
+      // condVal=1 means IS sentinel → ok (still sentinel, safe to write)
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
+      _valueAlloc.free(condValReg);
+    } else {
+      _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNull, refReg, _emitter.currentPC);
+    }
+  }
+
+  /// Emits CALL_HOST `LateError.<constructor>(name)` + THROW.
+  ///
+  /// [constructor] is one of: `localNI`, `fieldNI`, `localAI`, `fieldAI`,
+  /// `localADI`, `fieldADI`.
+  void _emitLateError(String varName, String constructor) {
+    // Push the variable name as string argument.
+    final nameReg = _allocRefReg();
+    final nameIdx = _constantPool.addRef(varName);
+    _emitter.emitABx(Op.loadConst, nameReg, nameIdx);
+
+    // CALL_HOST dart:_internal::LateError::<constructor>#1
+    final symbolName = 'dart:_internal::LateError::$constructor#1';
+    final bindingIndex = _allocBinding(symbolName, 1);
+    final (errorReg, _) = _emitCallHost(
+      [(nameReg, ResultLoc.ref, null as ir.DartType?)],
+      bindingIndex,
+    );
+
+    // THROW
+    _emitter.emitABC(Op.throw_, errorReg, 0, 0);
+    _refAlloc.free(errorReg);
   }
 }
 

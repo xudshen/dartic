@@ -167,6 +167,9 @@ extension on DarticCompiler {
       final switchCase = stmt.cases[i];
 
       if (switchCase.isDefault) {
+        // Record body start PC for ContinueSwitchStatement.
+        _recordSwitchCaseBodyStart(switchCase);
+
         // Default case: always execute body.
         _compileStatement(switchCase.body);
         if (i < stmt.cases.length - 1) {
@@ -197,6 +200,9 @@ extension on DarticCompiler {
         _emitter.patchJumpAsBx(jumpPC, Op.jumpIfTrue, resultReg, _emitter.currentPC);
       }
 
+      // Record body start PC for ContinueSwitchStatement.
+      _recordSwitchCaseBodyStart(switchCase);
+
       // Compile case body.
       _compileStatement(switchCase.body);
 
@@ -212,6 +218,41 @@ extension on DarticCompiler {
     // Backpatch all end-of-body jumps.
     for (final jumpPC in endJumps) {
       _emitter.patchJumpAsBx(jumpPC, Op.jump, 0, _emitter.currentPC);
+    }
+
+    // Clean up switch case maps for this switch statement.
+    for (final switchCase in stmt.cases) {
+      _switchCaseBodyPCs.remove(switchCase);
+      _continueSwitchJumps.remove(switchCase);
+    }
+  }
+
+  /// Records the body start PC for [switchCase] and backpatches any pending
+  /// forward ContinueSwitchStatement jumps targeting this case.
+  void _recordSwitchCaseBodyStart(ir.SwitchCase switchCase) {
+    final bodyStartPC = _emitter.currentPC;
+    _switchCaseBodyPCs[switchCase] = bodyStartPC;
+
+    // Backpatch any forward jumps targeting this case.
+    final pending = _continueSwitchJumps.remove(switchCase);
+    if (pending != null) {
+      for (final jumpPC in pending) {
+        _emitter.patchJumpAsBx(jumpPC, Op.jump, 0, bodyStartPC);
+      }
+    }
+  }
+
+  void _compileContinueSwitchStatement(ir.ContinueSwitchStatement stmt) {
+    final targetCase = stmt.target;
+    final targetPC = _switchCaseBodyPCs[targetCase];
+
+    if (targetPC != null) {
+      // Target case already compiled — emit backward jump.
+      _emitter.emitJumpAsBx(Op.jump, 0, targetPC);
+    } else {
+      // Target case not yet compiled — emit placeholder for forward jump.
+      (_continueSwitchJumps[targetCase] ??= [])
+          .add(_emitter.emitJumpPlaceholder());
     }
   }
 
@@ -513,6 +554,14 @@ extension on DarticCompiler {
   // ── Variable declaration ──
 
   void _compileVariableDeclaration(ir.VariableDeclaration decl) {
+    // Late variables use sentinel-based initialization and are always on the
+    // ref stack (even value types like int/double/bool) because the sentinel
+    // is an Object? value (null or lateSentinel).
+    if (decl.isLate) {
+      _compileLateLVarDeclaration(decl);
+      return;
+    }
+
     final kind = _classifyStackKind(decl.type);
     if (decl.initializer != null) {
       final (initReg, initLoc) = _compileExpression(decl.initializer!);
@@ -566,6 +615,32 @@ extension on DarticCompiler {
       }
     }
   }
+
+  /// Compiles a `late` variable declaration.
+  ///
+  /// All late variables are forced to the ref stack and initialized with a
+  /// sentinel value:
+  /// - Non-nullable types: `null` as sentinel (checked via JUMP_IF_NULL)
+  /// - Nullable types: `lateSentinel` object (checked via EQ_REF)
+  ///
+  /// If the variable has an initializer, it is stored as a deferred expression
+  /// in the VarBinding for lazy evaluation on first read.
+  void _compileLateLVarDeclaration(ir.VariableDeclaration decl) {
+    final isNullable = _isNullableType(decl.type);
+    final binding = _scope.declare(
+      decl,
+      StackKind.ref,
+      isLate: true,
+      isFinal: decl.isFinal,
+      deferredInitializer: decl.initializer,
+    );
+    // Emit sentinel: null for non-nullable, lateSentinel for nullable.
+    if (isNullable) {
+      _emitter.emitABC(Op.loadLateSentinel, binding.reg, 0, 0);
+    } else {
+      _emitter.emitABC(Op.loadNull, binding.reg, 0, 0);
+    }
+  }
 }
 
 /// Visitor that compiles statements by delegating to `_compileXxx` extension
@@ -617,6 +692,9 @@ class _StmtCompileVisitor with ir.StatementVisitorDefaultMixin<void> {
   void visitTryCatch(ir.TryCatch node) => _c._compileTryCatch(node);
   @override
   void visitTryFinally(ir.TryFinally node) => _c._compileTryFinally(node);
+  @override
+  void visitContinueSwitchStatement(ir.ContinueSwitchStatement node) =>
+      _c._compileContinueSwitchStatement(node);
   @override
   void visitAssertStatement(ir.AssertStatement node) =>
       _c._compileAssertStatement(node);

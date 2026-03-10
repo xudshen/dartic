@@ -10,6 +10,7 @@ import '../bridge/closure_adapter.dart';
 import '../bridge/dartic_object_holder.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_class_registry.dart';
+import '../bridge/host_type_resolver.dart';
 import '../bytecode/deserializer.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
@@ -50,6 +51,7 @@ class DarticInterpreter {
     this.typeRegistry,
     this.hostBindingRegistry,
     this.bridgeFactoryRegistry,
+    this.hostTypeResolver,
     this.fuelBudget = defaultFuelBudget,
     this.maxTotalFuel,
     this.executionTimeout,
@@ -60,6 +62,14 @@ class DarticInterpreter {
         callStack = callStack ?? CallStack();
 
   static const int defaultFuelBudget = 50000;
+
+  /// Singleton sentinel for nullable late variable initialization tracking.
+  ///
+  /// Non-nullable late variables use `null` as sentinel (cheaper check via
+  /// JUMP_IF_NULL). Nullable late variables need a dedicated sentinel because
+  /// `null` is a valid value — this object is identity-compared via
+  /// `IS_LATE_SENTINEL`.
+  static final Object lateSentinel = Object();
 
   /// Extracts [DarticObject] from a possible Bridge instance.
   ///
@@ -104,6 +114,10 @@ class DarticInterpreter {
   /// Bridge factory registry for NEW_INSTANCE. If null, no Bridge instances
   /// are created (all allocations produce plain DarticObject).
   final BridgeFactoryRegistry? bridgeFactoryRegistry;
+
+  /// Host type resolver for extractType(). Maps raw host objects to DarticType
+  /// via registered predicates instead of hardcoded `is` checks.
+  final HostTypeResolver? hostTypeResolver;
 
   /// Global variable table — initialized per-module in [execute].
   DarticGlobalTable? _globalTable;
@@ -416,23 +430,6 @@ class DarticInterpreter {
         functionClassId: ids.functionId,
         typeErrorClassId: ids.typeErrorId,
       );
-      // Populate additional core class IDs by name lookup from classes table.
-      // These are registered by the compiler in _registerCoreTypes but not
-      // stored in CoreTypeIds to avoid .darb format changes.
-      for (final cls in module.classes) {
-        switch (cls.name) {
-          case 'List':
-            _effectiveTypeRegistry!.listClassId = cls.classId;
-          case 'Iterable':
-            _effectiveTypeRegistry!.iterableClassId = cls.classId;
-          case 'Map':
-            _effectiveTypeRegistry!.mapClassId = cls.classId;
-          case 'Set':
-            _effectiveTypeRegistry!.setClassId = cls.classId;
-          case 'Stream':
-            _effectiveTypeRegistry!.streamClassId = cls.classId;
-        }
-      }
     }
     final active = _activeTypeRegistry;
     if (active != null) {
@@ -1445,6 +1442,9 @@ class DarticInterpreter {
         case Op.loadAbsent: // LOAD_ABSENT A — refStack[A] = darticAbsent
           rs.write(rBase + decodeA(instr), darticAbsent);
 
+        case Op.loadLateSentinel: // LOAD_LATE_SENTINEL A — refStack[A] = lateSentinel
+          rs.write(rBase + decodeA(instr), lateSentinel);
+
         case Op.loadTrue: // LOAD_TRUE A — valueStack[A] = 1
           vs.writeInt(vBase + (decodeA(instr)), 1);
 
@@ -2375,7 +2375,7 @@ class DarticInterpreter {
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
-          final objType = extractType(value, reg, module.classes);
+          final objType = extractType(value, reg, hostTypeResolver);
           vs.writeInt(vBase + a, checker.isSubtypeOf(objType, targetType) ? 1 : 0);
 
         case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
@@ -2386,7 +2386,7 @@ class DarticInterpreter {
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
-          final objType = extractType(value, reg, module.classes);
+          final objType = extractType(value, reg, hostTypeResolver);
           if (checker.isSubtypeOf(objType, targetType)) {
             rs.write(rBase + a, value);
           } else {
@@ -2595,12 +2595,12 @@ class DarticInterpreter {
           // Compute and cache the record's runtime type.
           final reg = _activeTypeRegistry!;
           final positionalTypes = <DarticType>[
-            for (final v in positional) extractType(v, reg, module.classes),
+            for (final v in positional) extractType(v, reg, hostTypeResolver),
           ];
           final sortedKeys = named.keys.toList()..sort();
           final namedTypes = <({String name, DarticType type})>[
             for (final key in sortedKeys)
-              (name: key, type: extractType(named[key], reg, module.classes)),
+              (name: key, type: extractType(named[key], reg, hostTypeResolver)),
           ];
           record.runtimeType_ = reg.internRecord(
             positionalTypes: positionalTypes,
@@ -3490,7 +3490,7 @@ class DarticInterpreter {
         final fta = ftaRaw is List<DarticType> ? ftaRaw : null;
         final reg = _activeTypeRegistry!;
         final guardType = resolveType(guardTemplate, ita, fta, reg);
-        final exType = extractType(exception, reg, module.classes);
+        final exType = extractType(exception, reg, hostTypeResolver);
         if (_subtypeChecker!.isSubtypeOf(exType, guardType)) {
           return handler;
         }

@@ -21,6 +21,7 @@ abstract final class Op {
   static const loadUpvalue = 0x0A;
   static const storeUpvalue = 0x0B;
   static const loadAbsent = 0x0C;
+  static const loadLateSentinel = 0x0D;
 
   // ── Integer Arithmetic (0x10-0x1F) ──
   static const addInt = 0x10;

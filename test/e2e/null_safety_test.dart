@@ -320,7 +320,7 @@ int main() {
 
   group('late variables', () {
     test('late variable initialized before use', () async {
-      final result = await compileAndRun('''
+      final result = await compileAndRunWithHost('''
 int main() {
   late int x;
   x = 42;
@@ -331,7 +331,7 @@ int main() {
     });
 
     test('late variable assigned multiple times', () async {
-      final result = await compileAndRun('''
+      final result = await compileAndRunWithHost('''
 int main() {
   late int x;
   x = 10;
@@ -343,7 +343,7 @@ int main() {
     });
 
     test('late final variable', () async {
-      final result = await compileAndRun('''
+      final result = await compileAndRunWithHost('''
 int main() {
   late final int x;
   x = 55;
@@ -354,7 +354,7 @@ int main() {
     });
 
     test('late instance field', () async {
-      final result = await compileAndRun('''
+      final result = await compileAndRunWithHost('''
 class Obj {
   late int value;
 }

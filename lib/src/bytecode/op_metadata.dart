@@ -52,6 +52,7 @@ const Map<int, OpMeta> opTable = {
   Op.loadUpvalue: OpMeta('LOAD_UPVALUE', InstrFormat.aBx),
   Op.storeUpvalue: OpMeta('STORE_UPVALUE', InstrFormat.aBx),
   Op.loadAbsent: OpMeta('LOAD_ABSENT', InstrFormat.abc),
+  Op.loadLateSentinel: OpMeta('LOAD_LATE_SENTINEL', InstrFormat.abc),
 
   // ── Integer Arithmetic ──
   Op.addInt: OpMeta('ADD_INT', InstrFormat.abc),

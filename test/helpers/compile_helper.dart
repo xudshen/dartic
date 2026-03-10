@@ -6,6 +6,7 @@ import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_class_registry.dart';
 import 'package:dartic/src/bridge/host_binding_registry.dart';
+import 'package:dartic/src/bridge/host_type_resolver.dart';
 import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
@@ -165,10 +166,12 @@ Future<Uint8List> compileToDarb(String source, {Set<String> compilablePackages =
 /// constant types).
 Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<String> compilablePackages = const {}}) async {
   final module = await compileDart(source, compilablePackages: compilablePackages);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries();
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries();
+  hostTypeResolver.resolveClassIds(module.classes);
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
+    hostTypeResolver: hostTypeResolver,
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
@@ -181,12 +184,14 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 ) async {
   final printLog = <String>[];
   final module = await compileDart(source, compilablePackages: compilablePackages);
-  final (:hostBindingRegistry, :hostClassRegistry) = createTestRegistries(
+  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries(
     printFn: (v) => printLog.add('$v'),
   );
+  hostTypeResolver.resolveClassIds(module.classes);
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
+    hostTypeResolver: hostTypeResolver,
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
@@ -201,21 +206,25 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
 ({
   HostBindingRegistry hostBindingRegistry,
   HostClassRegistry hostClassRegistry,
+  HostTypeResolver hostTypeResolver,
 }) createTestRegistries({void Function(Object?)? printFn}) {
   final hostBindingRegistry = HostBindingRegistry();
   final hostClassRegistry = HostClassRegistry(hostBindingRegistry);
   final bridgeFactoryRegistry = BridgeFactoryRegistry();
+  final hostTypeResolver = HostTypeResolver();
   final pluginContext = DarticPluginContext(
     config: DarticConfig(onPrint: printFn),
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
     bridgeFactoryRegistry: bridgeFactoryRegistry,
+    hostTypeResolver: hostTypeResolver,
     pendingBridgeFactories: {},
   );
   DarticStdlibPlugin().register(pluginContext);
   return (
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
+    hostTypeResolver: hostTypeResolver,
   );
 }
 

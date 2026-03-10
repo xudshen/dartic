@@ -59,6 +59,7 @@ class DarticVerifier {
     Op.loadUpvalue,
     Op.storeUpvalue,
     Op.loadAbsent,
+    Op.loadLateSentinel,
     Op.addInt,
     Op.subInt,
     Op.mulInt,
@@ -379,10 +380,12 @@ class DarticVerifier {
     // Check 8: Exception handler table.
     for (var i = 0; i < func.exceptionTable.length; i++) {
       final h = func.exceptionTable[i];
-      if (h.startPC >= h.endPC) {
+      // startPC == endPC is valid (empty try range from CFE late lowering).
+      // The handler is unreachable and acts as a no-op at runtime.
+      if (h.startPC > h.endPC) {
         errors.add(
           '$prefix Exception handler #$i: startPC ${h.startPC} '
-          '>= endPC ${h.endPC}',
+          '> endPC ${h.endPC}',
         );
       }
       if (h.endPC > codeLength) {
@@ -568,6 +571,7 @@ class DarticVerifier {
       // Format A only: ref register
       case Op.loadNull:
       case Op.loadAbsent:
+      case Op.loadLateSentinel:
       case Op.returnRef:
       case Op.throw_:
       case Op.nullCheck:

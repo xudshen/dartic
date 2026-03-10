@@ -10,6 +10,9 @@ class VarBinding {
   const VarBinding({
     required this.reg,
     required this.kind,
+    this.isLate = false,
+    this.isFinal = false,
+    this.deferredInitializer,
   });
 
   /// Register number on the appropriate stack.
@@ -17,6 +20,17 @@ class VarBinding {
 
   /// Which stack this variable lives on.
   final StackKind kind;
+
+  /// Whether this is a `late` variable (sentinel-based initialization).
+  final bool isLate;
+
+  /// Whether this is a `final` variable (single-assignment).
+  final bool isFinal;
+
+  /// For `late` variables with an initializer, the Kernel IR expression
+  /// to compile lazily on first read. `null` for eagerly-initialized or
+  /// no-initializer late variables.
+  final ir.Expression? deferredInitializer;
 }
 
 /// Lexical scope for variable bindings and register lifecycle management.
@@ -46,11 +60,23 @@ class Scope {
   final List<int> _refRegs = [];
 
   /// Declares a variable in this scope and allocates a register for it.
-  VarBinding declare(ir.VariableDeclaration decl, StackKind kind) {
+  VarBinding declare(
+    ir.VariableDeclaration decl,
+    StackKind kind, {
+    bool isLate = false,
+    bool isFinal = false,
+    ir.Expression? deferredInitializer,
+  }) {
     final reg = kind.isValue
         ? valueAlloc.alloc()
         : refAlloc.alloc();
-    final binding = VarBinding(reg: reg, kind: kind);
+    final binding = VarBinding(
+      reg: reg,
+      kind: kind,
+      isLate: isLate,
+      isFinal: isFinal,
+      deferredInitializer: deferredInitializer,
+    );
     _bindings[decl] = binding;
     if (kind.isValue) {
       _valueRegs.add(reg);
@@ -65,9 +91,18 @@ class Scope {
   VarBinding declareWithReg(
     ir.VariableDeclaration decl,
     StackKind kind,
-    int reg,
-  ) {
-    final binding = VarBinding(reg: reg, kind: kind);
+    int reg, {
+    bool isLate = false,
+    bool isFinal = false,
+    ir.Expression? deferredInitializer,
+  }) {
+    final binding = VarBinding(
+      reg: reg,
+      kind: kind,
+      isLate: isLate,
+      isFinal: isFinal,
+      deferredInitializer: deferredInitializer,
+    );
     _bindings[decl] = binding;
     // Don't track in _valueRegs/_refRegs — the register is owned externally
     // (e.g., parameter registers are part of the frame layout, not scope-managed).
@@ -93,7 +128,14 @@ class Scope {
   /// Overwrites the existing binding in whichever scope contains [decl].
   void redeclareAsRef(ir.VariableDeclaration decl, int refReg) {
     if (_bindings.containsKey(decl)) {
-      _bindings[decl] = VarBinding(reg: refReg, kind: StackKind.ref);
+      final old = _bindings[decl]!;
+      _bindings[decl] = VarBinding(
+        reg: refReg,
+        kind: StackKind.ref,
+        isLate: old.isLate,
+        isFinal: old.isFinal,
+        deferredInitializer: old.deferredInitializer,
+      );
     } else {
       parent?.redeclareAsRef(decl, refReg);
     }
