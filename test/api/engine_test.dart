@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -33,20 +34,20 @@ void main() {
 
   group('DarticEngine state machine', () {
     test('created state - call() throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       expect(() => engine.call('main'), throwsStateError);
       engine.dispose();
     });
 
     test('loaded state - call() succeeds', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       engine.call('main'); // should not throw
       engine.dispose();
     });
 
     test('loaded state - loadBytecode() replaces module', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       engine.loadBytecode(voidMainBytes); // replace
       engine.call('main'); // still works
@@ -54,20 +55,20 @@ void main() {
     });
 
     test('disposed - call() throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       engine.dispose();
       expect(() => engine.call('main'), throwsStateError);
     });
 
     test('disposed - loadBytecode() throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.dispose();
       expect(() => engine.loadBytecode(voidMainBytes), throwsStateError);
     });
 
     test('disposed - addPlugin() throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.dispose();
       expect(
         () => engine.addPlugin(_TestPlugin(onRegister: (_) {})),
@@ -76,7 +77,7 @@ void main() {
     });
 
     test('addPlugin after loadBytecode throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       expect(
         () => engine.addPlugin(_TestPlugin(onRegister: (_) {})),
@@ -86,7 +87,7 @@ void main() {
     });
 
     test('registerBinding after loadBytecode throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       expect(
         () => engine.registerBinding('test::::foo#0', (_) => null),
@@ -96,7 +97,7 @@ void main() {
     });
 
     test('registerClass after loadBytecode throws StateError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       expect(
         () => engine.registerClass(
@@ -143,6 +144,7 @@ void main() {
     test('onPrint callback is invoked', () {
       final prints = <Object?>[];
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => prints.add(v)),
       );
       engine.loadBytecode(printHelloBytes);
@@ -156,7 +158,7 @@ void main() {
     test('plugin register() is called during construction', () {
       var registered = false;
       final plugin = _TestPlugin(onRegister: (e) => registered = true);
-      final engine = DarticEngine(plugins: [plugin]);
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin(), plugin]);
       expect(registered, isTrue);
       engine.dispose();
     });
@@ -165,7 +167,7 @@ void main() {
       DarticPluginContext? receivedContext;
       final plugin =
           _TestPlugin(onRegister: (ctx) => receivedContext = ctx);
-      DarticEngine(plugins: [plugin]);
+      DarticEngine(plugins: [DarticStdlibPlugin(), plugin]);
       expect(receivedContext, isNotNull);
     });
 
@@ -179,13 +181,13 @@ void main() {
         pluginName: 'p2',
         onRegister: (_) => registered.add('p2'),
       );
-      final engine = DarticEngine(plugins: [p1, p2]);
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin(), p1, p2]);
       expect(registered, ['p1', 'p2']);
       engine.dispose();
     });
 
     test('addPlugin before loadBytecode succeeds', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       var registered = false;
       engine.addPlugin(_TestPlugin(onRegister: (_) => registered = true));
       expect(registered, isTrue);
@@ -195,7 +197,7 @@ void main() {
 
   group('minimal 3-step usage', () {
     test('DarticEngine() -> loadBytecode -> call("main")', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       final result = engine.call('main');
       expect(result, isNull); // void main returns null
@@ -205,7 +207,7 @@ void main() {
 
   group('call() function lookup', () {
     test('call unknown function throws ArgumentError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       expect(() => engine.call('nonExistent'), throwsArgumentError);
       engine.dispose();
@@ -214,7 +216,7 @@ void main() {
 
   group('multiple calls', () {
     test('same engine can call main multiple times', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidMainBytes);
       engine.call('main');
       engine.call('main');

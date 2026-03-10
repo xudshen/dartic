@@ -1,8 +1,15 @@
 import 'package:dartic/dartic.dart';
 
+import 'plugins/animation_plugin.g.dart';
 import 'plugins/ui_plugin.g.dart';
+import 'plugins/painting_plugin.g.dart';
+import 'plugins/rendering_plugin.g.dart';
+import 'plugins/gestures_plugin.g.dart';
+import 'plugins/services_plugin.g.dart';
+import 'plugins/scheduler_plugin.g.dart';
 import 'plugins/widgets_plugin.g.dart';
 import 'plugins/material_plugin.g.dart';
+import 'plugins/cupertino_plugin.g.dart';
 
 /// Flutter widget Bridge bindings plugin for dartic.
 ///
@@ -20,8 +27,15 @@ class DarticFlutterPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext context) {
+    AnimationPlugin().register(context);
     UiPlugin().register(context);
+    PaintingPlugin().register(context);
+    RenderingPlugin().register(context);
+    GesturesPlugin().register(context);
+    ServicesPlugin().register(context);
+    SchedulerPlugin().register(context);
     WidgetsPlugin().register(context);
     MaterialPlugin().register(context);
+    CupertinoPlugin().register(context);
   }
 }

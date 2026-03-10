@@ -91,6 +91,27 @@ void main() {
       expect(source, contains('@override'));
     });
 
+    test('topLevel import uses bindingsImportPrefix', () {
+      final source = emitPluginFile(
+        libraryUri: 'dart:core',
+        pluginName: 'Core',
+        bindingClassNames: ['IntBindings'],
+        bindingFileNames: ['int_bindings.g.dart'],
+        hasTopLevel: true,
+        topLevelBindingClassName: 'CoreTopLevelBindings',
+        topLevelFileName: 'core_top_level_bindings.g.dart',
+        bindingsImportPrefix: '../bindings/core',
+      );
+      expect(
+          source,
+          contains(
+              "import '../bindings/core/core_top_level_bindings.g.dart'"));
+      expect(
+          source,
+          isNot(contains(
+              "import '../bindings/core_top_level_bindings.g.dart'")));
+    });
+
     test('top-level bindings registered last', () {
       final source = emitPluginFile(
         libraryUri: 'dart:core',

@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   dartic:
     path: ../../
+  dartic_stdlib:
+    path: ../../packages/dartic_stdlib
   dartic_flutter:
     path: ../../packages/dartic_flutter
 

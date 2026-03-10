@@ -8,12 +8,9 @@
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve dart:ui types.
 #
-# Types covered (P0 + P1):
-#   P0 (used by almost all widgets): Color, TextDirection
-#   P1 (layout/gesture/animation/text): Offset, Size, Rect, Radius,
-#       FontWeight, FontStyle, TextAlign
+# ~49 types covering enums, value/style classes, and binding-only abstracts.
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/ui"
 output_plugins: "../lib/src/plugins"
 
 custom_imports:
@@ -21,6 +18,7 @@ custom_imports:
   - "package:dartic/src/api/dartic_absent.dart"
   - "package:dartic/src/runtime/object.dart"
   - "dart:ui"
+  - "dart:typed_data"
 
 libraries:
   - uri: dart:ui
@@ -39,3 +37,58 @@ libraries:
       - FontWeight
       - FontStyle
       - TextAlign
+
+      # ── P2: 绘制相关枚举 ─────────────────────────────────────────
+      - BlendMode
+      - FilterQuality
+      - StrokeCap
+      - StrokeJoin
+      - PaintingStyle
+      - Clip
+      - ColorSpace
+      - ImageByteFormat
+      - PixelFormat
+      - PathFillType
+      - PathOperation
+      - BlurStyle
+      - TileMode
+      - PointMode
+      - ClipOp
+      - VertexMode
+
+      # ── P2: 文字相关枚举 ─────────────────────────────────────────
+      - TextBaseline
+      - TextDecoration
+      - TextDecorationStyle
+      - TextLeadingDistribution
+      - TextAffinity
+      - BoxHeightStyle
+      - BoxWidthStyle
+      - PlaceholderAlignment
+
+      # ── P2: 值类型/样式类 ────────────────────────────────────────
+      - Paint
+      - Shadow
+      - MaskFilter
+      - ColorFilter
+      - TextStyle
+      - ParagraphStyle
+      - StrutStyle
+      - ParagraphConstraints
+      - TextBox
+      - TextPosition
+      - TextRange
+      - LineMetrics
+      - RRect
+      - RSuperellipse
+      - RSTransform
+
+      # ── P2: Binding-only 抽象类 ──────────────────────────────────
+      - Canvas
+      - Path
+      - Picture
+      - PictureRecorder
+      - Paragraph
+      - ParagraphBuilder
+      - Image
+      - Codec

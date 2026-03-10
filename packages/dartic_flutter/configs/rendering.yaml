@@ -1,0 +1,53 @@
+# Flutter rendering bindings configuration for dartic code generator.
+#
+# Run with:
+#   fvm dart run packages/dartic_cli/bin/dartic.dart gen \
+#     packages/dartic_flutter/configs/rendering.yaml \
+#     --analysis-root packages/dartic_flutter
+#
+# The --analysis-root must point to a Flutter project so the analyzer
+# can resolve package:flutter/* types.
+#
+# Types covered (~11):
+#   Binding-only (dartic code uses, not extends):
+#     - BoxConstraints, RelativeRect
+#   Enums:
+#     - FlexFit, MainAxisSize, MainAxisAlignment, CrossAxisAlignment,
+#       HitTestBehavior, DecorationPosition, StackFit, CacheExtentStyle,
+#       GrowthDirection, WrapAlignment, WrapCrossAlignment
+#
+# Excluded types (code gen limitations):
+#   - CustomPainter, CustomClipper: Bridge named-parameter bug
+#   - RenderBox, RenderObject: complex internal types
+
+output_bindings: "../lib/src/bindings/rendering"
+output_plugins: "../lib/src/plugins"
+
+# Use package: imports instead of relative imports (external package).
+custom_imports:
+  - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
+  - "package:dartic/src/runtime/object.dart"
+  - "package:flutter/rendering.dart"
+  - "package:flutter/foundation.dart"
+  - "dart:ui"
+
+libraries:
+  - uri: package:flutter/rendering.dart
+    classes:
+      # ── Binding classes ──────────────────────────────────────────────
+      - BoxConstraints
+      - RelativeRect
+
+      # ── Enums ────────────────────────────────────────────────────────
+      - FlexFit
+      - MainAxisSize
+      - MainAxisAlignment
+      - CrossAxisAlignment
+      - HitTestBehavior
+      - DecorationPosition
+      - StackFit
+      - CacheExtentStyle
+      - GrowthDirection
+      - WrapAlignment
+      - WrapCrossAlignment

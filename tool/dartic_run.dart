@@ -18,6 +18,7 @@ import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:dartic/src/compiler/compiler.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
@@ -63,6 +64,7 @@ Future<void> main(List<String> args) async {
 
   // Load via full verified pipeline: deserialize + verify + execute.
   final engine = DarticEngine(
+    plugins: [DarticStdlibPlugin()],
     config: DarticConfig(onPrint: print),
   );
 

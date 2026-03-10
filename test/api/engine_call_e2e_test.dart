@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -35,7 +36,7 @@ void main() {}
     });
 
     test('int add(int a, int b) => a + b returns 7', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(addBytes);
       final result = engine.call('add', [3, 4]);
       expect(result, 7);
@@ -43,7 +44,7 @@ void main() {}
     });
 
     test('multiple calls to same function', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(addBytes);
       expect(engine.call('add', [1, 2]), 3);
       expect(engine.call('add', [10, 20]), 30);
@@ -52,14 +53,14 @@ void main() {}
     });
 
     test('call unknown function throws ArgumentError', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(addBytes);
       expect(() => engine.call('nonExistent'), throwsArgumentError);
       engine.dispose();
     });
 
     test('void function returns null', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(voidBytes);
       final result = engine.call('doNothing');
       expect(result, isNull);
@@ -67,7 +68,7 @@ void main() {}
     });
 
     test('String return type', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(stringBytes);
       final result = engine.call('greet');
       expect(result, 'hello');
@@ -107,6 +108,7 @@ void main() {}
       Object? capturedError;
       StackTrace? capturedStack;
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onUnhandledException: (e, st) {
             capturedError = e;
@@ -123,7 +125,7 @@ void main() {}
     });
 
     test('dartic throw uncaught, no onUnhandledException, exception propagates', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(throwBytes);
       expect(
         () => engine.call('boom'),
@@ -139,6 +141,7 @@ void loop() { while (true) {} }
 void main() {}
 ''');
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           maxTotalFuel: 100,
           onUnhandledException: (e, st) {
@@ -163,6 +166,7 @@ Object recurse() => recurse();
 void main() {}
 ''');
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           maxCallDepth: 10,
           onUnhandledException: (e, st) {
@@ -202,6 +206,7 @@ void main() {}
     test('print("hello") invokes onPrint', () {
       final prints = <Object?>[];
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => prints.add(v)),
       );
       engine.loadBytecode(printBytes);
@@ -213,6 +218,7 @@ void main() {}
     test('multiple prints accumulate', () {
       final prints = <Object?>[];
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => prints.add(v)),
       );
       engine.loadBytecode(multiPrintBytes);
@@ -231,6 +237,7 @@ int add(int a, int b) => a + b;
 void main() {}
 ''');
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onUnhandledException: (e, st) {}),
       );
       engine.loadBytecode(bytes);
@@ -259,7 +266,7 @@ void main() {}
     });
 
     test('bool argument and return', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(boolBytes);
       expect(engine.call('negate', [true]), false);
       expect(engine.call('negate', [false]), true);
@@ -267,7 +274,7 @@ void main() {}
     });
 
     test('double argument and return', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadBytecode(doubleBytes);
       final result = engine.call('half', [10.0]);
       expect(result, 5.0);

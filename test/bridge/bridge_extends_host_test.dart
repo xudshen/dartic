@@ -19,6 +19,7 @@
 /// CALL_HOST Bridge intercept routes overridden methods through DarticDispatch.
 /// String interpolation and host-side toString() calls dispatch to dartic overrides.
 import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -50,6 +51,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -84,6 +86,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -120,6 +123,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -151,6 +155,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -250,6 +255,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -278,6 +284,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -301,6 +308,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -328,6 +336,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -361,6 +370,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -385,6 +395,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -442,6 +453,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -474,6 +486,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -503,6 +516,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -532,6 +546,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -556,6 +571,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -583,6 +599,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -609,6 +626,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -630,6 +648,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(onPrint: (v) => _printLog.add('$v')),
       );
       engine.loadModule(module);
@@ -656,7 +675,7 @@ class MyError extends Error {
 Object main() => MyError();
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
       final result = engine.call('main');
 
@@ -675,7 +694,7 @@ class MyError extends Error {}
 Object main() => MyError();
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
       final result = engine.call('main');
 
@@ -700,7 +719,7 @@ class FixedStopwatch extends Stopwatch {
 Object main() => FixedStopwatch();
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
       final result = engine.call('main');
 
@@ -724,7 +743,7 @@ class AppError extends Error {
 Object main() => AppError();
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
       final result = engine.call('main');
 
@@ -762,6 +781,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -796,6 +816,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -829,6 +850,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -863,6 +885,7 @@ void main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -892,6 +915,7 @@ Object main() {
 ''';
       final module = await compileDart(source);
       final engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) => _printLog.add('$v'),
         ),
@@ -928,7 +952,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Object? caught;
@@ -957,7 +981,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Object? caught;
@@ -988,7 +1012,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Object? caught;
@@ -1016,7 +1040,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Object? caught;
@@ -1043,7 +1067,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Object? caught;
@@ -1070,7 +1094,7 @@ Object main() {
 }
 ''';
       final module = await compileDart(source);
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       engine.loadModule(module);
 
       Error? caught;

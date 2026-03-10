@@ -63,7 +63,7 @@ class DarticConfig {
   /// instead of writing to stdout. When null, print output is silently
   /// discarded.
   ///
-  /// Maps to [CorePlugin]'s print binding registration.
+  /// Maps to the stdlib plugin's print binding registration.
   final void Function(Object?)? onPrint;
 
   /// Callback for unhandled dartic exceptions.

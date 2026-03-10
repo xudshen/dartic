@@ -1,10 +1,11 @@
 import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('DarticPluginContext', () {
     test('registerBinding registers a host function', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       String? captured;
       final plugin = _TestPlugin((ctx) {
         ctx.registerBinding('test::::greet#1', (args) {
@@ -18,7 +19,7 @@ void main() {
     });
 
     test('registerClass registers methods and dispatcher', () {
-      final engine = DarticEngine();
+      final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
       final plugin = _TestPlugin((ctx) {
         ctx.registerClass(
           name: 'test::MyClass',
@@ -38,7 +39,7 @@ void main() {
       final plugin = _TestPlugin((ctx) {
         capturedConfig = ctx.config;
       });
-      DarticEngine(plugins: [plugin], config: config);
+      DarticEngine(plugins: [DarticStdlibPlugin(), plugin], config: config);
       expect(capturedConfig, same(config));
       expect(capturedConfig!.fuelBudget, 99999);
     });

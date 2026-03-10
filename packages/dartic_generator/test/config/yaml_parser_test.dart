@@ -119,6 +119,70 @@ void main() {
     });
   });
 
+  group('method_overrides', () {
+    late String path;
+
+    setUp(() {
+      path =
+          '${Directory.current.path}/test/fixtures/method_overrides_config.yaml';
+    });
+
+    test('parses method_overrides with super_order', () {
+      final config = parseConfigFile(path);
+      final lib = config.libraries.first;
+      final overrides = lib.overrides['State']!;
+
+      expect(overrides.methodOverrides, contains('dispose'));
+      expect(overrides.methodOverrides['dispose']!.superOrder, 'after');
+
+      expect(overrides.methodOverrides, contains('deactivate'));
+      expect(overrides.methodOverrides['deactivate']!.superOrder, 'after');
+    });
+
+    test('parses method_overrides with default_return', () {
+      final config = parseConfigFile(path);
+      final lib = config.libraries.first;
+      final overrides = lib.overrides['State']!;
+
+      expect(overrides.methodOverrides, contains('shouldRepaint'));
+      expect(
+        overrides.methodOverrides['shouldRepaint']!.defaultReturn,
+        'true',
+      );
+    });
+
+    test('defaults super_order to before', () {
+      final config = parseConfigFile(path);
+      final lib = config.libraries.first;
+      final overrides = lib.overrides['State']!;
+
+      // shouldRepaint has no explicit super_order, should default to 'before'
+      expect(overrides.methodOverrides['shouldRepaint']!.superOrder, 'before');
+
+      // build has explicit super_order: before
+      expect(overrides.methodOverrides['build']!.superOrder, 'before');
+    });
+
+    test('empty method_overrides is empty map', () {
+      // simple_config.yaml has overrides without method_overrides
+      final simplePath =
+          '${Directory.current.path}/test/fixtures/simple_config.yaml';
+      final config = parseConfigFile(simplePath);
+      final lib = config.libraries.first;
+
+      expect(lib.overrides['_GrowableList']!.methodOverrides, isEmpty);
+      expect(lib.overrides['Symbol']!.methodOverrides, isEmpty);
+    });
+
+    test('parses all method entries', () {
+      final config = parseConfigFile(path);
+      final lib = config.libraries.first;
+      final overrides = lib.overrides['State']!;
+
+      expect(overrides.methodOverrides, hasLength(4));
+    });
+  });
+
   group('dart_core.yaml', () {
     late String path;
 

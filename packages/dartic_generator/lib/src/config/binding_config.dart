@@ -93,6 +93,23 @@ class FunctionConfig {
   FunctionConfig({required this.name, this.custom, this.arity});
 }
 
+/// Per-method configuration for Bridge class generation.
+class MethodOverrideConfig {
+  /// Order of super call relative to dispatch.
+  /// 'before' (default): super first, then dispatch
+  /// 'after': dispatch first, then super
+  final String superOrder;
+
+  /// Default return value when method is not overridden in dartic code.
+  /// If set, this value is returned instead of calling super.
+  final String? defaultReturn;
+
+  MethodOverrideConfig({
+    this.superOrder = 'before',
+    this.defaultReturn,
+  });
+}
+
 /// 类型的额外 override 配置。
 class OverrideConfig {
   /// 补充 analyzer 发现不了的方法。
@@ -114,11 +131,16 @@ class OverrideConfig {
   /// generated file header.
   final List<String> ignoreForFile;
 
+  /// Per-method override configuration for Bridge classes.
+  /// Keys are method names, values configure super call order and defaults.
+  final Map<String, MethodOverrideConfig> methodOverrides;
+
   OverrideConfig({
     this.extraMethods = const {},
     this.extraBindings = const [],
     this.preamble,
     this.customBridge = false,
     this.ignoreForFile = const [],
+    this.methodOverrides = const {},
   });
 }

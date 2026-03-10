@@ -1,4 +1,5 @@
 import 'package:dartic_generator/src/analyzer/type_analyzer.dart';
+import 'package:dartic_generator/src/analyzer/type_info.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -105,6 +106,97 @@ void main() {
       expect(info.name, 'identical');
       expect(info.paramTypes, hasLength(2));
       expect(info.bindingName, 'dart:core::::identical#2');
+    });
+  });
+
+  group('MethodInfo metadata', () {
+    test('isAbstract defaults to false', () {
+      final m = MethodInfo(name: 'foo', paramTypes: [], returnType: 'void');
+      expect(m.isAbstract, false);
+      expect(m.mustCallSuper, false);
+    });
+
+    test('isAbstract can be set to true', () {
+      final m = MethodInfo(
+        name: 'foo',
+        paramTypes: [],
+        returnType: 'void',
+        isAbstract: true,
+      );
+      expect(m.isAbstract, true);
+    });
+
+    test('mustCallSuper can be set to true', () {
+      final m = MethodInfo(
+        name: 'foo',
+        paramTypes: [],
+        returnType: 'void',
+        mustCallSuper: true,
+      );
+      expect(m.mustCallSuper, true);
+    });
+  });
+
+  group('GetterInfo metadata', () {
+    test('isAbstract defaults to false', () {
+      final g = GetterInfo(name: 'foo', returnType: 'int');
+      expect(g.isAbstract, false);
+    });
+
+    test('isAbstract can be set to true', () {
+      final g = GetterInfo(name: 'foo', returnType: 'int', isAbstract: true);
+      expect(g.isAbstract, true);
+    });
+  });
+
+  group('SetterInfo metadata', () {
+    test('isAbstract defaults to false', () {
+      final s = SetterInfo(name: 'foo', paramType: 'int');
+      expect(s.isAbstract, false);
+    });
+
+    test('isAbstract can be set to true', () {
+      final s = SetterInfo(name: 'foo', paramType: 'int', isAbstract: true);
+      expect(s.isAbstract, true);
+    });
+  });
+
+  group('isAbstract integration', () {
+    test('Comparable.compareTo is abstract', () async {
+      final info = await analyzer.analyzeClass('dart:core', 'Comparable');
+      final compareTo = info.methods.firstWhere((m) => m.name == 'compareTo');
+      expect(compareTo.isAbstract, true);
+    });
+
+    test('directly declared concrete method is not abstract', () async {
+      // Duration.toString() is directly declared and concrete on a concrete class
+      final info = await analyzer.analyzeClass('dart:core', 'Duration');
+      final toString = info.methods.firstWhere((m) => m.name == 'toString');
+      expect(toString.isAbstract, false);
+    });
+
+    test('Iterable has abstract getter iterator', () async {
+      final info = await analyzer.analyzeClass('dart:core', 'Iterable');
+      final iterator = info.getters.firstWhere((g) => g.name == 'iterator');
+      expect(iterator.isAbstract, true);
+    });
+
+    test('directly declared concrete getter is not abstract', () async {
+      // List.isEmpty is inherited from Iterable but concrete (EfficientLengthIterable)
+      // Use String.length which is directly declared
+      final info = await analyzer.analyzeClass('dart:core', 'String');
+      final length = info.getters.firstWhere((g) => g.name == 'length');
+      expect(length.isAbstract, true); // String is abstract, so its getters are abstract
+    });
+
+    test('abstract class TypeInfo.isAbstract is set correctly', () async {
+      // Comparable is abstract
+      final comparable = await analyzer.analyzeClass('dart:core', 'Comparable');
+      expect(comparable.isAbstract, true);
+
+      // int is abstract (internally)
+      final intInfo = await analyzer.analyzeClass('dart:core', 'int');
+      expect(intInfo.isAbstract, true);
     });
   });
 }

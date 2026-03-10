@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';
@@ -38,6 +39,7 @@ void main() {}
       Object? reentryResult;
       late DarticEngine engine;
       engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) {
             // This callback runs during callPrint() execution.
@@ -70,6 +72,7 @@ void main() {}
       Object? innerResult;
       late DarticEngine engine;
       engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) {
             innerResult = engine.call('helper');
@@ -105,6 +108,7 @@ void main() {}
       Object? innerResult;
       late DarticEngine engine;
       engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) {
             printCount++;
@@ -144,6 +148,7 @@ void main() {}
       Object? reentryResult;
       late DarticEngine engine;
       engine = DarticEngine(
+        plugins: [DarticStdlibPlugin()],
         config: DarticConfig(
           onPrint: (v) {
             reentryResult = engine.call('darticHelper');

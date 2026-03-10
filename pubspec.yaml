@@ -14,6 +14,8 @@ dependencies:
   yaml: ^3.1.3
 
 dev_dependencies:
+  dartic_stdlib:
+    path: packages/dartic_stdlib
   lints: ^6.0.0
   test: ^1.25.6
   front_end:
