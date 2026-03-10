@@ -1,0 +1,25 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
+import 'package:dartic/src/runtime/object.dart';
+
+abstract final class FunctionBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'dart:core::Function',
+      type: Function,
+      test: (o) => o is Function,
+      methods: methodMap(),
+    );
+    ctx.registerBinding('dart:core::Function::apply#3', (args) => Function.apply(args[0] as Function, args[1] as List<dynamic>?, identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Map).cast<Symbol, dynamic>()));
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'hashCode#0': (args) => (args[0] as Function).hashCode,
+      };
+}

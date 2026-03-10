@@ -372,6 +372,7 @@ libraries:
       # ── FormatException: constructor with optional params ──
       FormatException:
         extra_methods:
+          "_#fromFields#3": "(args) => FormatException(args[0] as String, args[1], args[2] as int?)"
           "#3": |
             (args) {
               final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;

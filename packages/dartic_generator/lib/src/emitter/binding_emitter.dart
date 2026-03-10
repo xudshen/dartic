@@ -88,6 +88,8 @@ String emitBindingFileWithInternalTypes(
   String? configPath,
   Map<String, Map<String, String>>? extraMethods,
   Map<String, String>? mainExtraMethods,
+  List<String>? customImports,
+  List<String>? ignoreForFile,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -118,7 +120,13 @@ String emitBindingFileWithInternalTypes(
   // Build final output with header + detected imports
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
-  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
+  if (ignoreForFile != null && ignoreForFile.isNotEmpty) {
+    buf.writeln('// ignore_for_file: ${ignoreForFile.join(', ')}');
+    buf.writeln();
+  }
+  _writeImport(buf,
+      additionalImports: _detectRequiredImports(body.toString()),
+      customImports: customImports);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -130,6 +138,7 @@ String emitTopLevelBindingFile(
   String name,
   List<FunctionInfo> functions, {
   String? configPath,
+  List<String>? customImports,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -147,7 +156,14 @@ String emitTopLevelBindingFile(
   // Build final output with header + detected imports
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
-  _writeImport(buf, additionalImports: _detectRequiredImports(body.toString()));
+  if (customImports != null && customImports.isNotEmpty) {
+    buf.writeln(
+        '// ignore_for_file: unused_import, unnecessary_import, implementation_imports');
+    buf.writeln();
+  }
+  _writeImport(buf,
+      additionalImports: _detectRequiredImports(body.toString()),
+      customImports: customImports);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -173,6 +189,15 @@ void _writeImport(StringBuffer buf,
     // Use custom imports instead of default relative imports.
     for (final imp in customImports) {
       buf.writeln("import '$imp';");
+    }
+    // Still add SDK dart: imports detected from source (e.g., dart:async).
+    // Relative and package: imports are already covered by customImports.
+    if (additionalImports != null) {
+      for (final imp in additionalImports) {
+        if (imp.startsWith('dart:')) {
+          buf.writeln("import '$imp';");
+        }
+      }
     }
   } else {
     buf.writeln("import '../../api/plugin_context.dart';");

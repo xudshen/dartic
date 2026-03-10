@@ -105,6 +105,10 @@ class Runner {
           internalInfos,
           extraMethods: extraMethods,
           mainExtraMethods: _nullIfEmpty(mainExtraMethods),
+          customImports: _nullIfEmpty(config.customImports),
+          ignoreForFile: config.customImports.isNotEmpty
+              ? _mergeIgnoreForFile(null)
+              : null,
         );
 
         final fileName = _classToFileName(className);
@@ -184,6 +188,7 @@ class Runner {
         library.uri,
         pluginName,
         functionInfos,
+        customImports: _nullIfEmpty(config.customImports),
       );
 
       _writeFile(config.outputBindings, topLevelFileName, source);
