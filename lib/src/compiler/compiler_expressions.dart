@@ -2087,6 +2087,18 @@ extension on DarticCompiler {
         expr.typeArguments,
       );
     }
+    // ConstantExpression wrapping StaticTearOffConstant — used by Kernel
+    // for patterns like `_checkIs<T>` where `_checkIs` is a constant
+    // tear-off but `T` is a runtime type parameter.
+    if (expr.expression is ir.ConstantExpression) {
+      final constExpr = expr.expression as ir.ConstantExpression;
+      if (constExpr.constant is ir.StaticTearOffConstant) {
+        return _compileConstTearOffInstantiation(
+          constExpr.constant as ir.StaticTearOffConstant,
+          expr.typeArguments,
+        );
+      }
+    }
     // Fallback for non-StaticTearOff targets: pass through.
     return _compileExpression(expr.expression);
   }
@@ -2117,31 +2129,100 @@ extension on DarticCompiler {
     // Build a substitution to compute instantiated types.
     final subst = type_algebra.Substitution.fromPairs(typeParams, typeArgs);
 
-    if (!_needsInstantiationThunk(fn, subst)) {
-      return _compileStaticTearOff(tearOff);
-    }
-
+    // Always generate a thunk to bind FTA (function type arguments), even
+    // when there is no value/ref stack mismatch.  The inner function's body
+    // may reference the type parameters via INSTANTIATE_TYPE (e.g. `T` used
+    // as a value), which reads FTA from rBase+1.  Without the thunk, a plain
+    // tear-off leaves FTA null → crash at runtime.
     return _generateInstantiationThunk(funcId, fn, subst, typeArgs);
   }
 
-  /// Returns true if instantiating [fn] with [subst] causes a value/ref
-  /// stack-kind mismatch for any parameter or the return type.
-  bool _needsInstantiationThunk(
-      ir.FunctionNode fn, type_algebra.Substitution subst) {
-    for (final param in fn.positionalParameters) {
-      if (_classifyStackKind(param.type) !=
-          _classifyStackKind(subst.substituteType(param.type))) {
-        return true;
-      }
+  /// Compiles `Instantiation(ConstantExpression(StaticTearOffConstant(f)), typeArgs)`
+  /// where typeArgs may contain runtime type parameters (e.g., `T` from an
+  /// enclosing generic function).
+  ///
+  /// Unlike [_compileStaticInstantiation] which can generate a compile-time
+  /// thunk, this path resolves type arguments at runtime using the enclosing
+  /// function's ITA/FTA, then binds them to the closure via BIND_CLOSURE_FTA.
+  (int, ResultLoc) _compileConstTearOffInstantiation(
+    ir.StaticTearOffConstant tearOff,
+    List<ir.DartType> typeArgs,
+  ) {
+    final funcId = _procToFuncId[tearOff.target.reference];
+    if (funcId == null) {
+      throw UnsupportedError(
+        'ConstTearOffInstantiation: unknown function '
+        '${tearOff.target.name.text}',
+      );
     }
-    for (final param in fn.namedParameters) {
-      if (_classifyStackKind(param.type) !=
-          _classifyStackKind(subst.substituteType(param.type))) {
-        return true;
+
+    // Check if all type args are static (no TypeParameterType).
+    // If so, we can use the compile-time thunk approach.
+    final hasRuntimeTypeArgs = typeArgs.any(_containsTypeParameter);
+    if (!hasRuntimeTypeArgs) {
+      final fn = tearOff.target.function;
+      final typeParams = fn.typeParameters;
+      if (typeParams.isEmpty || typeArgs.isEmpty) {
+        return _compileStaticTearOffConstant(tearOff);
       }
+      final subst =
+          type_algebra.Substitution.fromPairs(typeParams, typeArgs);
+      return _generateInstantiationThunk(funcId, fn, subst, typeArgs);
     }
-    return _classifyStackKind(fn.returnType) !=
-        _classifyStackKind(subst.substituteType(fn.returnType));
+
+    // Runtime type args: resolve at the call site and bind to the closure.
+    // 1. Create closure for the target function.
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, funcId);
+
+    // 2. Resolve each type argument to a DarticType via INSTANTIATE_TYPE.
+    final firstTypeReg = _refAlloc.allocConsecutive(typeArgs.length);
+    for (var i = 0; i < typeArgs.length; i++) {
+      final template = dartTypeToTemplate(
+        typeArgs[i],
+        _typeClassIdLookup,
+        coreTypes: _coreTypes,
+      );
+      final templateIdx = _constantPool.addRef(template);
+      _emitter.emitABx(
+          Op.instantiateType, firstTypeReg + i, templateIdx);
+    }
+
+    // 3. Bundle into a List<DarticType> via CREATE_TYPE_ARGS.
+    final ftaReg = _allocRefReg();
+    _emitter.emitABC(
+        Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg);
+
+    // 4. Bind FTA to the closure.
+    _emitter.emitABC(Op.bindClosureFta, closureReg, ftaReg, 0);
+
+    return (closureReg, ResultLoc.ref);
+  }
+
+  /// Returns true if [type] contains any [ir.TypeParameterType].
+  bool _containsTypeParameter(ir.DartType type) {
+    if (type is ir.TypeParameterType) return true;
+    if (type is ir.InterfaceType) {
+      return type.typeArguments.any(_containsTypeParameter);
+    }
+    if (type is ir.FunctionType) {
+      if (_containsTypeParameter(type.returnType)) return true;
+      for (final p in type.positionalParameters) {
+        if (_containsTypeParameter(p)) return true;
+      }
+      for (final p in type.namedParameters) {
+        if (_containsTypeParameter(p.type)) return true;
+      }
+      return false;
+    }
+    if (type is ir.FutureOrType) {
+      return _containsTypeParameter(type.typeArgument);
+    }
+    if (type is ir.NullType || type is ir.DynamicType ||
+        type is ir.VoidType || type is ir.NeverType) {
+      return false;
+    }
+    return false;
   }
 
   /// Generates a bridge thunk for a generic function instantiation that has
@@ -2598,10 +2679,9 @@ extension on DarticCompiler {
       final subst =
           type_algebra.Substitution.fromPairs(typeParams, constant.types);
 
-      if (!_needsInstantiationThunk(fn, subst)) {
-        return _compileStaticTearOffConstant(tearOff);
-      }
-
+      // Always generate thunk to bind FTA — same rationale as
+      // _compileStaticInstantiation: even without stack mismatch, the inner
+      // function may reference its type params via INSTANTIATE_TYPE.
       return _generateInstantiationThunk(funcId, fn, subst, constant.types);
     }
     if (constant.tearOffConstant is ir.ConstructorTearOffConstant) {

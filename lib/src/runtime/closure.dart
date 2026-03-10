@@ -68,6 +68,16 @@ class DarticClosure {
   /// `is`/`as` type checks on closures.
   DarticType? runtimeType_;
 
+  /// Pre-bound function type arguments for generic function instantiation.
+  ///
+  /// When a generic function (e.g., `_checkIs<T>`) is instantiated with
+  /// runtime type arguments (e.g., `_checkIs<T>` inside `runtimeIsType<T>`),
+  /// the resolved type args are stored here. The [CALL] handler auto-loads
+  /// this into the callee's FTA slot (rBase+1) when calling the closure.
+  ///
+  /// Set by the BIND_CLOSURE_FTA instruction.
+  List<DarticType>? boundFTA;
+
   @override
   String toString() =>
       'DarticClosure(${funcProto.name}#${funcProto.funcId}, '

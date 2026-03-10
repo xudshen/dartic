@@ -105,6 +105,7 @@ abstract final class Op {
   // ── Closure (0x70-0x77) ──
   static const closure = 0x70;
   static const closeUpvalue = 0x71;
+  static const bindClosureFta = 0x72;
 
   // ── Generics & Types (0x78-0x7F) ──
   static const pushIta = 0x78;

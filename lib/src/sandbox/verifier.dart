@@ -127,6 +127,7 @@ class DarticVerifier {
     Op.wrapBridge,
     Op.closure,
     Op.closeUpvalue,
+    Op.bindClosureFta,
     Op.pushIta,
     Op.pushFta,
     Op.loadTypeArg,
@@ -728,6 +729,11 @@ class DarticVerifier {
       // wrapBridge: A=ref (DarticObject/Bridge result), no other register operands
       case Op.wrapBridge:
         _checkRef(a, rrc, 'A', prefix, pc, op);
+
+      // bindClosureFta: A=ref(closure), B=ref(FTA list)
+      case Op.bindClosureFta:
+        _checkRef(a, rrc, 'A', prefix, pc, op);
+        _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // nop, returnNull, halt: no register operands
       case Op.nop:

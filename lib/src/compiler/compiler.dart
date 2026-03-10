@@ -188,6 +188,14 @@ class DarticCompiler {
   /// LOAD_UPVALUE instead of directly reading rsp+2.
   int _thisUpvalueIdx = -1;
 
+  /// Upvalue index for ITA (instance type arguments) in closure contexts.
+  ///
+  /// When a closure inside a generic class method needs class type parameters,
+  /// the enclosing method's ITA (rBase+0) must be captured as an upvalue.
+  /// The closure body emits LOAD_UPVALUE r0, _itaUpvalueIdx at the start
+  /// to populate its own ITA slot.
+  int _itaUpvalueIdx = -1;
+
   /// True when an inner closure directly captures `this` from the current
   /// function. Used to ensure CLOSE_UPVALUE is emitted on return, even when
   /// no local variables are captured (only `this`).

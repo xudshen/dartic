@@ -136,6 +136,7 @@ const Map<int, OpMeta> opTable = {
   // ── Closure ──
   Op.closure: OpMeta('CLOSURE', InstrFormat.aBx),
   Op.closeUpvalue: OpMeta('CLOSE_UPVALUE', InstrFormat.abc),
+  Op.bindClosureFta: OpMeta('BIND_CLOSURE_FTA', InstrFormat.abc),
 
   // ── Generics & Types ──
   Op.pushIta: OpMeta('PUSH_ITA', InstrFormat.abc),

@@ -29,6 +29,7 @@ extension on DarticCompiler {
       upvalueIndices: _upvalueIndices,
       capturedVarRefRegs: _capturedVarRefRegs,
       thisUpvalueIdx: _thisUpvalueIdx,
+      itaUpvalueIdx: _itaUpvalueIdx,
       thisCapturedByInner: _thisCapturedByInner,
     ));
 
@@ -47,6 +48,7 @@ extension on DarticCompiler {
     _upvalueIndices = {};
     _capturedVarRefRegs = {};
     _thisUpvalueIdx = -1;
+    _itaUpvalueIdx = -1;
     _thisCapturedByInner = false;
   }
 
@@ -70,6 +72,7 @@ extension on DarticCompiler {
     _upvalueIndices = ctx.upvalueIndices;
     _capturedVarRefRegs = ctx.capturedVarRefRegs;
     _thisUpvalueIdx = ctx.thisUpvalueIdx;
+    _itaUpvalueIdx = ctx.itaUpvalueIdx;
     _thisCapturedByInner = ctx.thisCapturedByInner;
   }
 
@@ -141,6 +144,16 @@ extension on DarticCompiler {
     // so we capture the value now for use after _pushContext.
     final outerThisUpvalueIdx = _thisUpvalueIdx;
 
+    // Step 2c: Track outer ITA upvalue index for transitive capture.
+    final outerItaUpvalueIdx = _itaUpvalueIdx;
+
+    // Determine if the closure needs ITA: when it captures `this` and the
+    // enclosing class is generic, ITA must be forwarded so INSTANTIATE_TYPE
+    // can resolve class type parameters inside the closure.
+    final needsIta = capturesThis &&
+        _currentClassTypeParams != null &&
+        _currentClassTypeParams!.isNotEmpty;
+
     // Step 3: Save the enclosing function scope (need it for upvalue resolution).
     final outerScope = _scope;
 
@@ -168,6 +181,25 @@ extension on DarticCompiler {
       _thisUpvalueIdx = idx;
     }
 
+    // Step 4c: Set up ITA upvalue if the closure needs class type arguments.
+    if (needsIta) {
+      final idx = _upvalueDescriptors.length;
+      if (outerItaUpvalueIdx >= 0) {
+        // Transitive: ITA was already an upvalue in the enclosing closure.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: false,
+          index: outerItaUpvalueIdx,
+        ));
+      } else {
+        // Direct: ITA is at rBase+0 of the enclosing method.
+        _upvalueDescriptors.add(UpvalueDescriptor(
+          isLocal: true,
+          index: 0,
+        ));
+      }
+      _itaUpvalueIdx = idx;
+    }
+
     // Create a new scope for the inner function. Its parent is the
     // outer scope so that upvalue resolution can walk up.
     _scope = Scope(
@@ -180,6 +212,20 @@ extension on DarticCompiler {
     _refAlloc.alloc(); // rsp+0: ITA
     _refAlloc.alloc(); // rsp+1: FTA
     _refAlloc.alloc(); // rsp+2: this/receiver
+
+    // Emit LOAD_UPVALUE for ITA if captured — must happen before the body
+    // so INSTANTIATE_TYPE can read ITA from r0.
+    if (needsIta) {
+      _emitter.emitABx(Op.loadUpvalue, 0, _itaUpvalueIdx);
+    }
+
+    // Emit LOAD_UPVALUE for `this` into the canonical r2 slot. This is
+    // necessary because _emitThisPassthrough, CALL_SUPER, field access, and
+    // virtual dispatch all read `this` from r2. Without this, closures that
+    // capture `this` via upvalue have r2 uninitialized.
+    if (capturesThis) {
+      _emitter.emitABx(Op.loadUpvalue, 2, _thisUpvalueIdx);
+    }
 
     // Register parameters.
     _registerParams(fn.positionalParameters);
@@ -1126,6 +1172,7 @@ class _CompilationContext {
     required this.upvalueIndices,
     required this.capturedVarRefRegs,
     required this.thisUpvalueIdx,
+    required this.itaUpvalueIdx,
     required this.thisCapturedByInner,
   });
 
@@ -1146,6 +1193,7 @@ class _CompilationContext {
   final Map<ir.VariableDeclaration, int> upvalueIndices;
   final Map<ir.VariableDeclaration, int> capturedVarRefRegs;
   final int thisUpvalueIdx;
+  final int itaUpvalueIdx;
   final bool thisCapturedByInner;
 }
 
@@ -1160,7 +1208,8 @@ class _CapturedVarVisitor extends ir.RecursiveVisitor {
   final Set<ir.VariableDeclaration> _localParams;
   final Scope _outerScope;
 
-  /// True if any [ThisExpression] was found in the inner function body.
+  /// True if any [ThisExpression] or implicit `this` (super calls, etc.)
+  /// was found in the inner function body.
   bool capturesThis = false;
 
   /// Variables declared locally within the inner function body.
@@ -1169,6 +1218,25 @@ class _CapturedVarVisitor extends ir.RecursiveVisitor {
   @override
   void visitThisExpression(ir.ThisExpression node) {
     capturesThis = true;
+  }
+
+  // super.method(...), super.getter, super.setter all implicitly use `this`.
+  @override
+  void visitSuperMethodInvocation(ir.SuperMethodInvocation node) {
+    capturesThis = true;
+    super.visitSuperMethodInvocation(node);
+  }
+
+  @override
+  void visitSuperPropertyGet(ir.SuperPropertyGet node) {
+    capturesThis = true;
+    super.visitSuperPropertyGet(node);
+  }
+
+  @override
+  void visitSuperPropertySet(ir.SuperPropertySet node) {
+    capturesThis = true;
+    super.visitSuperPropertySet(node);
   }
 
   @override

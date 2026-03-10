@@ -266,7 +266,8 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 ```
 0x70  CLOSURE       A, Bx         refStack[A] = Closure(funcProto[Bx], captured upvalues)
 0x71  CLOSE_UPVALUE A             关闭所有指向 >= A 槽位的开放上值
-0x72-0x77 预留
+0x72  BIND_CLOSURE_FTA A, B, _    closure(refStack[A]).boundFTA = refStack[B] (List<DarticType>)
+0x73-0x77 预留
 ```
 
 ### 泛型与类型 (0x78-0x7F)

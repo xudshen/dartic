@@ -1818,6 +1818,15 @@ class DarticInterpreter {
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
 
+          // Auto-load bound FTA for generic function instantiations.
+          // When a generic function is instantiated with runtime type args
+          // (e.g., _checkIs<T> inside runtimeIsType<T>), the resolved FTA
+          // is stored in the closure via BIND_CLOSURE_FTA.
+          final boundFTA = closure.boundFTA;
+          if (boundFTA != null) {
+            rs.write(rBase + 1, boundFTA);
+          }
+
           // Switch to callee bytecode.
           code = callee.bytecode;
           pc = 0;
@@ -2431,6 +2440,10 @@ class DarticInterpreter {
           }
           rs.write(rBase + a, closure);
 
+        case Op.bindClosureFta: // BIND_CLOSURE_FTA A, B — closure[A].boundFTA = refStack[B]
+          (rs.read(rBase + decodeA(instr)) as DarticClosure).boundFTA =
+              rs.read(rBase + decodeB(instr)) as List<DarticType>;
+
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
           final minIndex = rBase + (decodeA(instr));
           _openUpvalues.removeWhere((stackIndex, uv) {
@@ -2468,6 +2481,21 @@ class DarticInterpreter {
           final template = cp.getRef(bx) as TypeTemplate;
           final ita = rs.read(rBase + 0) as List<DarticType>?;
           final fta = rs.read(rBase + 1) as List<DarticType>?;
+          // Guard: provide actionable error for missing ITA/FTA.
+          if (template is TypeParameterTemplate) {
+            if (template.isFunctionTypeParam && fta == null) {
+              final funcName = module.functions[callStack.funcId].name;
+              throw DarticError(
+                'INSTANTIATE_TYPE: FTA is null in function "$funcName" '
+                '(funcId=${callStack.funcId}) for FTA index ${template.index}');
+            }
+            if (!template.isFunctionTypeParam && ita == null) {
+              final funcName = module.functions[callStack.funcId].name;
+              throw DarticError(
+                'INSTANTIATE_TYPE: ITA is null in function "$funcName" '
+                '(funcId=${callStack.funcId}) for ITA index ${template.index}');
+            }
+          }
           rs.write(
               rBase + a, resolveType(template, ita, fta, _activeTypeRegistry!));
 
