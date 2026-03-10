@@ -17,7 +17,7 @@
 #
 # Material types are in material.yaml, cupertino in cupertino.yaml.
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/widgets"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

@@ -45,6 +45,5 @@ abstract final class ExpandedBindings {
         'child#0': (args) => (args[0] as Expanded).child,
         'key#0': (args) => (args[0] as Expanded).key,
         '#3': (args) => Expanded(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int, child: args[2] as Widget),
-        '_#fromFields#0': (args) => Expanded(),
       };
 }

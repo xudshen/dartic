@@ -29,7 +29,7 @@
 #   - CupertinoListTile: gen emits unresolved FutureOr (missing dart:async import)
 #   - CupertinoDynamicColor: gen emits unresolved ColorSpace type
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/cupertino"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

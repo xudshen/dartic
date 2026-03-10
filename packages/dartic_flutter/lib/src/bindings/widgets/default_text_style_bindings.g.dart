@@ -50,6 +50,5 @@ abstract final class DefaultTextStyleBindings {
         'key#0': (args) => (args[0] as DefaultTextStyle).key,
         '#9': (args) => DefaultTextStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: args[1] as TextStyle, textAlign: identical(args[2], darticAbsent) ? null : args[2] as TextAlign?, softWrap: identical(args[3], darticAbsent) ? true : args[3] as bool, overflow: identical(args[4], darticAbsent) ? TextOverflow.clip : args[4] as TextOverflow, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, textWidthBasis: identical(args[6], darticAbsent) ? TextWidthBasis.parent : args[6] as TextWidthBasis, textHeightBehavior: identical(args[7], darticAbsent) ? null : args[7] as TextHeightBehavior?, child: args[8] as Widget),
         'fallback#1': (args) => DefaultTextStyle.fallback(key: identical(args[0], darticAbsent) ? null : args[0] as Key?),
-        '_#fromFields#7': (args) => DefaultTextStyle(maxLines: args[0] as int?, overflow: args[1] as TextOverflow, softWrap: args[2] as bool, style: args[3] as TextStyle, textAlign: args[4] as TextAlign?, textHeightBehavior: args[5] as TextHeightBehavior?, textWidthBasis: args[6] as TextWidthBasis),
       };
 }

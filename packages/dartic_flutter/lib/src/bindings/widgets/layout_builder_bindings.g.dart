@@ -42,6 +42,5 @@ abstract final class LayoutBuilderBindings {
         'builder#0': (args) => (args[0] as LayoutBuilder).builder,
         'key#0': (args) => (args[0] as LayoutBuilder).key,
         '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext, BoxConstraints)),
-        '_#fromFields#0': (args) => LayoutBuilder(),
       };
 }

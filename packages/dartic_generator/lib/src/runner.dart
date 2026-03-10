@@ -8,6 +8,8 @@ library;
 
 import 'dart:io';
 
+import 'package:path/path.dart' as p;
+
 import 'config/yaml_parser.dart';
 import 'config/binding_config.dart';
 import 'analyzer/type_analyzer.dart';
@@ -189,6 +191,11 @@ class Runner {
 
     // ── Generate plugin file ──────────────────────────────────────────
     final pluginName = _libraryToPluginName(library.uri);
+    // Compute relative import path from plugins dir to bindings dir.
+    final bindingsRelPath = p.relative(
+      p.normalize(p.absolute(config.outputBindings)),
+      from: p.normalize(p.absolute(config.outputPlugins)),
+    );
     final pluginSource = plugin_emitter.emitPluginFile(
       libraryUri: library.uri,
       pluginName: pluginName,
@@ -198,6 +205,7 @@ class Runner {
       topLevelBindingClassName: topLevelBindingClassName,
       topLevelFileName: topLevelFileName,
       customImports: _nullIfEmpty(config.customImports),
+      bindingsImportPrefix: bindingsRelPath,
     );
 
     final pluginFileName = '${_libraryShortName(library.uri)}_plugin.g.dart';

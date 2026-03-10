@@ -44,6 +44,5 @@ abstract final class AnimatedOpacityBindings {
         'onEnd#0': (args) => (args[0] as AnimatedOpacity).onEnd,
         'key#0': (args) => (args[0] as AnimatedOpacity).key,
         '#7': (args) => AnimatedOpacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, opacity: args[2] as double, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : args[5] as void Function()?, alwaysIncludeSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool),
-        '_#fromFields#3': (args) => AnimatedOpacity(alwaysIncludeSemantics: args[0] as bool, child: args[1] as Widget?, opacity: args[2] as double),
       };
 }

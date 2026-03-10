@@ -24,7 +24,7 @@
 #   - Decoration, ShapeBorder, OutlinedBorder, Gradient
 #   These are still included as binding-only classes.
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/painting"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

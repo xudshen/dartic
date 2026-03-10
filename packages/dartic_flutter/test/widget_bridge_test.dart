@@ -7,9 +7,9 @@ import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
-import 'package:dartic_flutter/src/bindings/stateless_widget_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/stateful_widget_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/state_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/stateless_widget_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/stateful_widget_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/widgets/state_bindings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -51,7 +51,7 @@ DarticDispatch _dispatchWith(Map<String, Object? Function(List<Object?>)> handle
     final nameIdx = nameIndices[entry.key]!;
     final proto = DarticFuncProto(
       funcId: funcId,
-      bytecode: Uint32List(0),
+      bytecode: Uint64List(0),
       valueRegCount: 0,
       refRegCount: 0,
       paramCount: 0,

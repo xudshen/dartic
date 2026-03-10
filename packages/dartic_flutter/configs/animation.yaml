@@ -22,7 +22,7 @@
 #   - Split, ThreePointCubic: may not exist in all Flutter versions
 #   - ConstantTween: generated _#fromFields missing required positional arg
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/animation"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

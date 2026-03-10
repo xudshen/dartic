@@ -542,8 +542,12 @@ void _writeFromFieldsEntry(
       .firstOrNull;
   if (unnamedCtor == null) return;
 
-  // Zero fields: generate simple `ClassName()`.
+  // Zero fields: generate simple `ClassName()` — but only if the
+  // constructor has no required parameters.
   if (fieldCount == 0) {
+    final hasRequiredParams =
+        unnamedCtor.params.any((p) => !p.isOptional);
+    if (hasRequiredParams) return;
     buf.writeln(
         "        '$fromFieldsKey': (args) => ${info.className}(),");
     return;
@@ -561,6 +565,7 @@ void _writeFromFieldsEntry(
   // Try to match each sorted field to a constructor parameter.
   // Field name stripping: remove leading `_` prefix to get parameter name.
   final argExprs = <String>[];
+  final matchedParams = <String>{};
   for (var i = 0; i < sortedFields.length; i++) {
     final field = sortedFields[i];
     var paramName = field.name;
@@ -577,11 +582,24 @@ void _writeFromFieldsEntry(
       return;
     }
 
+    matchedParams.add(param.name);
     final cast = _emitCast('args[$i]', param.type);
     if (param.isNamed) {
       argExprs.add('${param.name}: $cast');
     } else {
       argExprs.add(cast);
+    }
+  }
+
+  // Validate: all required constructor params must be matched.
+  // If the constructor has required params not covered by fields, the
+  // generated call would fail to compile (missing_required_argument).
+  for (final p in unnamedCtor.params) {
+    if (!p.isOptional && !matchedParams.contains(p.name)) {
+      stderr.writeln(
+          'WARNING: _#fromFields auto-gen skipped for ${info.className}: '
+          'constructor requires param "${p.name}" not matched by any field');
+      return;
     }
   }
 
@@ -1352,17 +1370,17 @@ void _writeBridgeMethodOverride(
     } else {
       buf.writeln('  ${method.returnType} ${method.name}($paramStr) {');
       if (superOrder == 'before') {
-        buf.writeln('    $superCall;');
+        buf.writeln('    final superResult = $superCall;');
         buf.writeln('    final r = $dispatchCall;');
         buf.writeln(
-            '    if (identical(r, notOverridden)) return $superCall;');
+            '    if (identical(r, notOverridden)) return superResult;');
         buf.writeln('    return r as ${method.returnType};');
       } else {
         // after
         buf.writeln('    final r = $dispatchCall;');
-        buf.writeln('    $superCall;');
+        buf.writeln('    final superResult = $superCall;');
         buf.writeln(
-            '    if (identical(r, notOverridden)) return $superCall;');
+            '    if (identical(r, notOverridden)) return superResult;');
         buf.writeln('    return r as ${method.returnType};');
       }
       buf.writeln('  }');

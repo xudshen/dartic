@@ -823,6 +823,35 @@ void main() {
       expect(source, contains("'_#fromFields#1':"));
       expect(source, contains('Wrapper(args[0] as int)'));
     });
+
+    test('skips when constructor has required params not matched by fields', () {
+      // Simulates Widget subclass: has 1 field (key) but constructor requires
+      // additional required param (child) that's inherited, not a direct field.
+      final info = TypeInfo(
+        className: 'AnimatedWidget',
+        libraryUri: 'package:flutter/widgets.dart',
+        methods: [],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [],
+        constructors: [
+          ConstructorInfo(name: '', params: [
+            ParamInfo(name: 'duration', type: 'Duration', isNamed: true, isRequired: true),
+            ParamInfo(name: 'child', type: 'Widget', isNamed: true, isRequired: true),
+          ]),
+        ],
+        superclasses: [],
+        fields: [
+          FieldInfo(name: 'duration', type: 'Duration', isFinal: true),
+        ],
+      );
+      final source = emitBindingFile(info);
+
+      // Should NOT auto-generate _#fromFields — constructor requires `child`
+      // which is not a direct field of this class
+      expect(source, isNot(contains('_#fromFields')));
+    });
   });
 
   group('bridge method dispatch patterns', () {
@@ -1077,6 +1106,35 @@ void main() {
 
       // Abstract getter should NOT have a super forwarder
       expect(source, isNot(contains(r'\$super\$key')));
+    });
+
+    test('mustCallSuper non-void stores superResult to avoid double call', () {
+      final info = TypeInfo(
+        className: 'MyClass',
+        libraryUri: 'package:test',
+        methods: [
+          MethodInfo(
+            name: 'compute',
+            paramTypes: [],
+            returnType: 'int',
+            mustCallSuper: true,
+          ),
+        ],
+        getters: [],
+        setters: [],
+        operators: [],
+        staticMethods: [],
+        constructors: [ConstructorInfo(name: '', params: [])],
+        superclasses: [],
+      );
+      final source = emitBindingFile(info, bridge: true);
+
+      // Should store super result in a variable, not call super twice
+      expect(source, contains('final superResult = super.compute()'));
+      expect(source, contains('if (identical(r, notOverridden)) return superResult'));
+      // super.compute() should appear exactly once
+      final matches = 'super.compute()'.allMatches(source).length;
+      expect(matches, equals(1));
     });
 
     test('overrideConfig on non-mustCallSuper method uses mustCallSuper pattern', () {

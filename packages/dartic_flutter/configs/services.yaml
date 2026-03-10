@@ -24,7 +24,7 @@
 #   - TextInputFormatter Bridge: skip Bridge for formatters
 #   - LengthLimitingTextInputFormatter: gen emits call to @visibleForTesting `truncate`
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/services"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

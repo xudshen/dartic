@@ -1,14 +1,14 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic_flutter/dartic_flutter.dart';
-import 'package:dartic_flutter/src/bindings/color_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/offset_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/size_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/rect_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/radius_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/font_weight_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/font_style_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/text_direction_bindings.g.dart';
-import 'package:dartic_flutter/src/bindings/text_align_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/color_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/offset_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/size_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/rect_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/radius_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/font_weight_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/font_style_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/text_direction_bindings.g.dart';
+import 'package:dartic_flutter/src/bindings/ui/text_align_bindings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

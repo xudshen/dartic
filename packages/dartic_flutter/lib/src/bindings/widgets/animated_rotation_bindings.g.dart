@@ -45,6 +45,5 @@ abstract final class AnimatedRotationBindings {
         'onEnd#0': (args) => (args[0] as AnimatedRotation).onEnd,
         'key#0': (args) => (args[0] as AnimatedRotation).key,
         '#8': (args) => AnimatedRotation(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, turns: args[2] as double, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as Alignment, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as FilterQuality?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : args[7] as void Function()?),
-        '_#fromFields#4': (args) => AnimatedRotation(alignment: args[0] as Alignment, child: args[1] as Widget?, filterQuality: args[2] as FilterQuality?, turns: args[3] as double),
       };
 }

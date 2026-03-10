@@ -43,6 +43,5 @@ abstract final class AnimatedPaddingBindings {
         'onEnd#0': (args) => (args[0] as AnimatedPadding).onEnd,
         'key#0': (args) => (args[0] as AnimatedPadding).key,
         '#6': (args) => AnimatedPadding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: args[1] as EdgeInsetsGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : args[5] as void Function()?),
-        '_#fromFields#2': (args) => AnimatedPadding(child: args[0] as Widget?, padding: args[1] as EdgeInsetsGeometry),
       };
 }

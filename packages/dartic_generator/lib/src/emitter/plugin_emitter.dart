@@ -34,6 +34,7 @@ String emitPluginFile({
   String? topLevelBindingClassName,
   String? topLevelFileName,
   List<String>? customImports,
+  String bindingsImportPrefix = '../bindings',
 }) {
   assert(bindingClassNames.length == bindingFileNames.length);
 
@@ -61,7 +62,7 @@ String emitPluginFile({
   }
 
   for (final fileName in bindingFileNames) {
-    buf.writeln("import '../bindings/$fileName';");
+    buf.writeln("import '$bindingsImportPrefix/$fileName';");
   }
 
   if (hasTopLevel && topLevelFileName != null) {

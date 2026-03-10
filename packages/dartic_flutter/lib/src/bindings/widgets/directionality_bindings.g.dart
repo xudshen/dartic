@@ -42,6 +42,5 @@ abstract final class DirectionalityBindings {
         'child#0': (args) => (args[0] as Directionality).child,
         'key#0': (args) => (args[0] as Directionality).key,
         '#3': (args) => Directionality(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textDirection: args[1] as TextDirection, child: args[2] as Widget),
-        '_#fromFields#1': (args) => Directionality(textDirection: args[0] as TextDirection),
       };
 }

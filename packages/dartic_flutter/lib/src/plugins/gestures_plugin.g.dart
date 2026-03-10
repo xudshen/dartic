@@ -11,20 +11,20 @@ import 'package:dartic/src/runtime/object.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:ui';
-import '../bindings/drag_down_details_bindings.g.dart';
-import '../bindings/drag_start_details_bindings.g.dart';
-import '../bindings/drag_update_details_bindings.g.dart';
-import '../bindings/drag_end_details_bindings.g.dart';
-import '../bindings/long_press_start_details_bindings.g.dart';
-import '../bindings/long_press_move_update_details_bindings.g.dart';
-import '../bindings/long_press_end_details_bindings.g.dart';
-import '../bindings/tap_down_details_bindings.g.dart';
-import '../bindings/tap_up_details_bindings.g.dart';
-import '../bindings/scale_start_details_bindings.g.dart';
-import '../bindings/scale_update_details_bindings.g.dart';
-import '../bindings/scale_end_details_bindings.g.dart';
-import '../bindings/velocity_bindings.g.dart';
-import '../bindings/drag_start_behavior_bindings.g.dart';
+import '../bindings/gestures/drag_down_details_bindings.g.dart';
+import '../bindings/gestures/drag_start_details_bindings.g.dart';
+import '../bindings/gestures/drag_update_details_bindings.g.dart';
+import '../bindings/gestures/drag_end_details_bindings.g.dart';
+import '../bindings/gestures/long_press_start_details_bindings.g.dart';
+import '../bindings/gestures/long_press_move_update_details_bindings.g.dart';
+import '../bindings/gestures/long_press_end_details_bindings.g.dart';
+import '../bindings/gestures/tap_down_details_bindings.g.dart';
+import '../bindings/gestures/tap_up_details_bindings.g.dart';
+import '../bindings/gestures/scale_start_details_bindings.g.dart';
+import '../bindings/gestures/scale_update_details_bindings.g.dart';
+import '../bindings/gestures/scale_end_details_bindings.g.dart';
+import '../bindings/gestures/velocity_bindings.g.dart';
+import '../bindings/gestures/drag_start_behavior_bindings.g.dart';
 
 class GesturesPlugin extends DarticPlugin {
   @override

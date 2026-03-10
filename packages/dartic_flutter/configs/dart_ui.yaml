@@ -10,7 +10,7 @@
 #
 # ~49 types covering enums, value/style classes, and binding-only abstracts.
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/ui"
 output_plugins: "../lib/src/plugins"
 
 custom_imports:

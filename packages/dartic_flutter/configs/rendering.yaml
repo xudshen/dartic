@@ -20,7 +20,7 @@
 #   - CustomPainter, CustomClipper: Bridge named-parameter bug
 #   - RenderBox, RenderObject: complex internal types
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/rendering"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).

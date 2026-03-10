@@ -16,7 +16,7 @@
 #     - Dialog, AlertDialog, NavigationBar, NavigationRail
 #     - TabBar, SnackBar, Chip variants, ProgressIndicators, etc.
 
-output_bindings: "../lib/src/bindings"
+output_bindings: "../lib/src/bindings/material"
 output_plugins: "../lib/src/plugins"
 
 # Use package: imports instead of relative imports (external package).
