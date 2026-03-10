@@ -295,7 +295,8 @@ class DarticCompiler {
       if (_isHostLibrary(lib)) continue;
       for (final cls in lib.classes) {
         final classId = _classToClassId[cls]!;
-        final entries = buildSuperTypeEntries(cls, _typeClassIdLookup);
+        final entries = buildSuperTypeEntries(cls, _typeClassIdLookup,
+            coreTypes: _coreTypes);
         for (final entry in entries) {
           _classInfos[classId].superTypeArgs[entry.superClassId] =
               entry.typeArgMapping;
@@ -417,6 +418,25 @@ class DarticCompiler {
     final doubleCid = register(ct.doubleClass, 'double', superClassId: numCid);
     final stringCid = register(ct.stringClass, 'String', superClassId: objectCid);
     final boolCid = register(ct.boolClass, 'bool', superClassId: objectCid);
+    final futureCid =
+        register(ct.futureClass, 'Future', superClassId: objectCid);
+    final futureOrCid = register(
+        ct.deprecatedFutureOrClass, 'FutureOr',
+        superClassId: objectCid);
+    final functionCid =
+        register(ct.functionClass, 'Function', superClassId: objectCid);
+
+    // Error hierarchy: TypeError extends Error extends Object.
+    // Needed so that CAST failures produce catchable TypeError objects
+    // and `e is TypeError` / `e is Error` work in bytecode.
+    final errorClass = ct.index.tryGetClass('dart:core', 'Error');
+    final errorCid = errorClass != null
+        ? register(errorClass, 'Error', superClassId: objectCid)
+        : -1;
+    final typeErrorClass = ct.index.tryGetClass('dart:core', 'TypeError');
+    final typeErrorCid = (typeErrorClass != null && errorCid >= 0)
+        ? register(typeErrorClass, 'TypeError', superClassId: errorCid)
+        : -1;
 
     // Set up supertype closures (transitive supertypeIds).
     _classInfos[objectCid].supertypeIds.add(objectCid);
@@ -425,6 +445,17 @@ class DarticCompiler {
     _classInfos[doubleCid].supertypeIds.addAll({doubleCid, numCid, objectCid});
     _classInfos[stringCid].supertypeIds.addAll({stringCid, objectCid});
     _classInfos[boolCid].supertypeIds.addAll({boolCid, objectCid});
+    _classInfos[futureCid].supertypeIds.addAll({futureCid, objectCid});
+    _classInfos[futureOrCid].supertypeIds.addAll({futureOrCid, objectCid});
+    _classInfos[functionCid].supertypeIds.addAll({functionCid, objectCid});
+    if (errorCid >= 0) {
+      _classInfos[errorCid].supertypeIds.addAll({errorCid, objectCid});
+    }
+    if (typeErrorCid >= 0) {
+      _classInfos[typeErrorCid]
+          .supertypeIds
+          .addAll({typeErrorCid, errorCid, objectCid});
+    }
 
     _coreTypeIds = CoreTypeIds(
       intId: intCid,
@@ -433,6 +464,10 @@ class DarticCompiler {
       boolId: boolCid,
       objectId: objectCid,
       numId: numCid,
+      futureId: futureCid,
+      futureOrId: futureOrCid,
+      functionId: functionCid,
+      typeErrorId: typeErrorCid,
     );
   }
 
@@ -550,6 +585,7 @@ class DarticCompiler {
       _typeClassIdLookup,
       enclosingClassTypeParams: _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
     );
     return _constantPool.addRef(template);
   }
@@ -670,7 +706,7 @@ class DarticCompiler {
 
     final valRegCount = _valueAlloc.maxUsed;
     final refRegCount = _refAlloc.maxUsed;
-    _functions[funcId] = DarticFuncProto(
+    final proto = DarticFuncProto(
       funcId: funcId,
       name: proc.name.text,
       bytecode: _emitter.toUint64List(),
@@ -683,6 +719,21 @@ class DarticCompiler {
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
     );
+
+    // Set transient typeTemplate for closure type extraction (A-lite).
+    // Computed here so StaticTearOff closures get precise function types.
+    // Generic functions are included — the CLOSURE handler's try-catch
+    // protects against resolution failures when structural params are
+    // referenced in the body and FTA is unavailable.
+    proto.typeTemplate = dartTypeToTemplate(
+      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[funcId] = proto;
+
     _currentEnclosingClass = null;
     _currentClassTypeParams = null;
     _currentFunctionTypeParams = null;

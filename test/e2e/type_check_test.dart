@@ -225,6 +225,213 @@ int main() {
         throwsA(isA<TypeError>()),
       );
     });
+
+    test('failed cast caught by bytecode try-catch', () async {
+      final result = await compileAndRun('''
+class A {}
+class B {}
+int main() {
+  A a = A();
+  try {
+    B b = a as B;
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('failed implicit cast (dynamic→T) caught by bytecode try-catch',
+        () async {
+      final result = await compileAndRun('''
+dynamic forgetType(dynamic x) => x;
+int main() {
+  try {
+    int x = forgetType("hello");
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError caught and check callback works', () async {
+      final result = await compileAndRun('''
+class A {}
+class B {}
+bool didCatch = false;
+void tryThrows(void Function() f, bool Function(Object) check) {
+  try {
+    f();
+  } catch (e) {
+    if (check(e)) {
+      didCatch = true;
+    }
+  }
+}
+int main() {
+  A a = A();
+  tryThrows(() { B b = a as B; }, (e) => e is TypeError);
+  return didCatch ? 1 : 0;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError with optional check param (Expect.throws pattern)',
+        () async {
+      final result = await compileAndRun('''
+typedef bool CheckFn(dynamic exception);
+int result = 0;
+void myThrows(void Function() f, [CheckFn? check]) {
+  try {
+    f();
+  } catch (e) {
+    if (check != null && !check(e)) {
+      result = 2; // check failed
+    } else {
+      result = 1; // caught ok
+    }
+    return;
+  }
+  result = 3; // no exception thrown
+}
+dynamic forgetType(dynamic d) => d;
+class T1 {}
+class S0 extends T1 {}
+int main() {
+  S0? t0Instance = null;
+  myThrows(() {
+    T1 t1 = forgetType(t0Instance);
+  }, (e) => e is TypeError);
+  return result;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('calling local function inside closure', () async {
+      final result = await compileAndRun('''
+int result = 0;
+int main() {
+  bar() {
+    result = 42;
+  }
+  var f = () { bar(); };
+  f();
+  return result;
+}
+''');
+      expect(result, 42);
+    });
+
+    test('TypeError in class method argument', () async {
+      final result = await compileAndRun('''
+class A {
+  void test(int val) {}
+}
+dynamic forgetType(dynamic d) => d;
+int main() {
+  A a = A();
+  try {
+    a.test(forgetType("hello"));
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError in class member assignment via dynamic constructor',
+        () async {
+      final result = await compileAndRun('''
+dynamic forgetType(dynamic d) => d;
+class A {
+  static int s = 0;
+  A(dynamic val) { s = val; }
+}
+int main() {
+  try {
+    A(forgetType("hello"));
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError in static field lazy init caught by try-catch', () async {
+      final result = await compileAndRun('''
+dynamic forgetType(dynamic d) => d;
+class A {
+  static int s = forgetType("hello");
+}
+int main() {
+  try {
+    A.s;
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError in instance field initializer', () async {
+      final result = await compileAndRun('''
+dynamic forgetType(dynamic d) => d;
+class A {
+  int m = forgetType("hello");
+}
+int main() {
+  try {
+    A();
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
+
+    test('TypeError in super constructor argument', () async {
+      final result = await compileAndRun('''
+class Base {
+  int m;
+  Base(int value) : m = value;
+}
+class Child extends Base {
+  Child(dynamic t) : super(t);
+}
+dynamic forgetType(dynamic d) => d;
+int main() {
+  try {
+    Child(forgetType("hello"));
+    return 0;
+  } catch (e) {
+    if (e is TypeError) return 1;
+    return 2;
+  }
+}
+''');
+      expect(result, 1);
+    });
   });
 
   group('compiler bytecode verification', () {

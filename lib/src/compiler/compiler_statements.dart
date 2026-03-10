@@ -308,6 +308,7 @@ extension on DarticCompiler {
           _typeClassIdLookup,
           enclosingClassTypeParams: _currentClassTypeParams,
           enclosingFunctionTypeParams: _currentFunctionTypeParams,
+          coreTypes: _coreTypes,
         );
         catchType = _constantPool.addRef(template);
       }

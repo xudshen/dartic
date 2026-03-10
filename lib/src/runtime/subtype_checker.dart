@@ -8,6 +8,7 @@ library;
 
 import '../bridge/dartic_object_holder.dart';
 import 'class_info.dart';
+import 'closure.dart';
 import 'dartic_record.dart';
 import 'dartic_type.dart';
 import 'object.dart';
@@ -355,6 +356,11 @@ DarticType extractType(
   if (value is DarticRecord) {
     return value.runtimeType_ ?? registry.dynamicType;
   }
+  if (value is DarticClosure) {
+    if (value.runtimeType_ != null) return value.runtimeType_!;
+    // Fallback: unresolved closure → Function type.
+    return registry.intern(registry.functionClassId, const []);
+  }
   if (value is DarticObject) {
     // If the object has a runtime type (set by ALLOC_GENERIC), use it.
     final rt = value.runtimeType_;
@@ -368,6 +374,11 @@ DarticType extractType(
     final rt = obj.runtimeType_;
     if (rt != null) return rt;
     return registry.intern(obj.classId, const []);
+  }
+  // Native Dart TypeError thrown by CAST — map to the registered classId
+  // so that `e is TypeError` works in bytecode.
+  if (value is TypeError) {
+    return registry.intern(registry.typeErrorClassId, const []);
   }
   return registry.dynamicType;
 }

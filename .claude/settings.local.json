@@ -1,55 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(fvm:*)",
-      "Bash(grep:*)",
-      "Bash(make:*)",
-      "Bash(cat:*)",
-      "Bash(ls:*)",
-      "Bash(pwd)",
-      "Bash(wc:*)",
-      "Bash(find:*)",
-      "Bash(tree:*)",
-      "Bash(echo:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(awk:*)",
-      "Bash(sort:*)",
-      "Bash(uniq:*)",
-      "Bash(cut:*)",
-      "Bash(tr:*)",
-      "Bash(diff:*)",
-      "Bash(mkdir:*)",
-      "Bash(cp:*)",
-      "Bash(touch:*)",
-      "Bash(which:*)",
-      "Bash(whoami)",
-      "Bash(date:*)",
-      "Bash(xargs:*)",
-      "Bash(basename:*)",
-      "Bash(dirname:*)",
-      "Bash(realpath:*)",
-      "Bash(cd:*)",
-      "Bash(dart:*)",
-      "Bash(flutter:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git status:*)",
-      "Bash(git submodule:*)",
-      "Bash(git ls-tree:*)",
-      "Bash(git branch:*)",
-      "Bash(git show:*)",
-      "Bash(git stash:*)",
-      "Bash(git tag:*)",
-      "Bash(git remote:*)",
-      "Bash(git fetch:*)",
-      "Bash(git blame:*)",
+      "Bash(*)",
       "WebFetch",
-      "WebSearch",
-      "Bash(git clone:*)"
+      "WebSearch"
     ]
   },
-  "outputStyle": "Explanatory"
+  "outputStyle": "Explanatory",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowedDomains": [
+      "github.com",
+      "pub.dev",
+      "api.pub.dev",
+      "dart.dev",
+      "storage.googleapis.com"
+    ]
+  }
 }

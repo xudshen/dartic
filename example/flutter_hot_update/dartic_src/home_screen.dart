@@ -13,26 +13,40 @@ import 'package:flutter/material.dart';
 /// Through the Bridge pattern, this creates a real StatelessWidget instance
 /// that passes `is StatelessWidget` checks and participates in the
 /// Flutter widget tree.
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var count = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Hot Update!'),
-      ),
+      appBar: AppBar(title: Text('Hot Update!')),
       body: Center(
         child: Column(
           children: [
-            Text('Hello from dartic!'),
+            Text('Hello from dartic! $count'),
             SizedBox(height: 16),
             Text('This widget was loaded from .darb bytecode.'),
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
                 print('Button pressed in dartic code!');
+                setState(() {
+                  count++;
+                });
               },
               child: Text('Press Me'),
             ),
+            // // sample list
+            // ListView.builder(
+            //   itemBuilder: (context, index) {
+            //     return Text('Item $index');
+            //   },
+            // ),
           ],
         ),
       ),

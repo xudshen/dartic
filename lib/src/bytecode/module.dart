@@ -2,6 +2,7 @@ library;
 
 import 'dart:typed_data';
 
+import '../compiler/type_template.dart';
 import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 
@@ -80,6 +81,10 @@ class CoreTypeIds {
     required this.boolId,
     required this.objectId,
     required this.numId,
+    this.futureId = -100,
+    this.futureOrId = -101,
+    this.functionId = -102,
+    this.typeErrorId = -103,
   });
 
   final int intId;
@@ -88,6 +93,10 @@ class CoreTypeIds {
   final int boolId;
   final int objectId;
   final int numId;
+  final int futureId;
+  final int futureOrId;
+  final int functionId;
+  final int typeErrorId;
 }
 
 /// A binding name table entry for CALL_HOST instructions.
@@ -177,6 +186,13 @@ class DarticFuncProto {
 
   /// Upvalue descriptors for `CLOSURE` instruction.
   final List<UpvalueDescriptor> upvalueDescriptors;
+
+  /// Function type template — serialized to .darb.
+  ///
+  /// Set by the compiler for closures, tearoffs, and regular procedures.
+  /// Resolved at runtime by the CLOSURE handler using ITA/FTA to produce
+  /// a concrete [DarticType] on the resulting [DarticClosure].
+  TypeTemplate? typeTemplate;
 
   @override
   String toString() => 'FuncProto($name#$funcId, '

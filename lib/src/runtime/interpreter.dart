@@ -411,6 +411,10 @@ class DarticInterpreter {
         boolClassId: ids.boolId,
         objectClassId: ids.objectId,
         numClassId: ids.numId,
+        futureClassId: ids.futureId,
+        futureOrClassId: ids.futureOrId,
+        functionClassId: ids.functionId,
+        typeErrorClassId: ids.typeErrorId,
       );
     }
     final active = _activeTypeRegistry;
@@ -915,8 +919,12 @@ class DarticInterpreter {
           funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
         refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
-        valueStack.sp = vBase + handler.valStackDP;
-        refStack.sp = rBase + handler.refStackDP;
+        // Restore sp to the function's full register count (not
+        // refStackDP) so that catch-body registers and subsequent
+        // CALL instructions allocate callee frames AFTER the
+        // caller's entire register space — preventing overlap.
+        valueStack.sp = vBase + funcProto.valueRegCount;
+        refStack.sp = rBase + funcProto.refRegCount;
         refStack.write(rBase + handler.exceptionReg, exception);
         if (handler.stackTraceReg >= 0) {
           refStack.write(rBase + handler.stackTraceReg, stackTrace);
@@ -1071,8 +1079,11 @@ class DarticInterpreter {
           funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
         refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
-        valueStack.sp = vBase + handler.valStackDP;
-        refStack.sp = rBase + handler.refStackDP;
+        // Restore sp to the function's full register count (not
+        // refStackDP) so that catch-body registers and subsequent
+        // CALL instructions allocate callee frames correctly.
+        valueStack.sp = vBase + funcProto.valueRegCount;
+        refStack.sp = rBase + funcProto.refRegCount;
         refStack.write(rBase + handler.exceptionReg, exception);
         if (handler.stackTraceReg >= 0) {
           refStack.write(rBase + handler.stackTraceReg, stackTrace);
@@ -1266,8 +1277,11 @@ class DarticInterpreter {
             funcProto, searchPC, exception, module, rBase, rs);
         if (handler != null) {
           rs.clearRange(rBase + handler.refStackDP, rs.sp);
-          vs.sp = vBase + handler.valStackDP;
-          rs.sp = rBase + handler.refStackDP;
+          // Restore sp to the function's full register count so that
+          // catch-body CALLs allocate callee frames after the full
+          // caller frame, preventing register overlap.
+          vs.sp = vBase + funcProto.valueRegCount;
+          rs.sp = rBase + funcProto.refRegCount;
           rs.write(rBase + handler.exceptionReg, exception);
           if (handler.stackTraceReg >= 0) {
             rs.write(rBase + handler.stackTraceReg, stackTrace);
@@ -1843,6 +1857,26 @@ class DarticInterpreter {
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
 
+          // Auto-load ITA from callee's `this` (rsp+2) runtimeType_ for
+          // generic class constructors. The `this` argument was written by
+          // MOVE_REF before CALL_STATIC, so rBase+2 is the newly allocated
+          // object with runtimeType_ containing the class type args.
+          {
+            final thisObj = rs.read(rBase + 2);
+            final darticObj = (thisObj is DarticObject)
+                ? thisObj
+                : (thisObj is DarticObjectHolder)
+                    ? thisObj.$darticObject
+                    : null;
+            if (darticObj != null) {
+              final rtType = darticObj.runtimeType_;
+              if (rtType is DarticInterfaceType &&
+                  rtType.typeArgs.isNotEmpty) {
+                rs.write(rBase + 0, rtType.typeArgs);
+              }
+            }
+          }
+
           // Switch to callee bytecode.
           code = callee.bytecode;
           pc = 0;
@@ -2078,11 +2112,13 @@ class DarticInterpreter {
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
 
-          // Auto-load ITA from caller's `this` (rsp+2) runtimeType_ for
-          // generic classes, so super methods can access class type params.
+          // Auto-load ITA from callee's `this` (rsp+2) runtimeType_ for
+          // generic classes. This works for both constructor calls (where
+          // `this` is the newly allocated object with type args) and super
+          // calls (where `this` is passed through from the caller).
           // Bridge instances implement DarticObjectHolder, so unwrap to get
           // the underlying DarticObject for ITA extraction.
-          final thisObj = rs.read(callerRBase + 2);
+          final thisObj = rs.read(rBase + 2);
           final darticObj = (thisObj is DarticObject)
               ? thisObj
               : (thisObj is DarticObjectHolder)
@@ -2222,9 +2258,12 @@ class DarticInterpreter {
                   proto: module.functions[initFuncId],
                   args: const [],
                 );
-              } catch (_) {
+              } catch (e, st) {
                 gt.resetToUninitialized(bx);
-                rethrow;
+                // Route through unwindToHandler so bytecode-level
+                // try-catch blocks can catch initializer errors.
+                pc = unwindToHandler(pc - 1, e, st);
+                continue;
               }
             } else {
               // No initializer — default to null.
@@ -2325,7 +2364,9 @@ class DarticInterpreter {
           if (checker.isSubtypeOf(objType, targetType)) {
             rs.write(rBase + a, value);
           } else {
-            throw TypeError();
+            // Route through unwindToHandler so bytecode-level try-catch
+            // blocks can catch the TypeError (e.g., Expect.throws).
+            pc = unwindToHandler(pc - 1, TypeError(), StackTrace.current);
           }
 
         // ── Exception Handling (0xA4-0xA5) ──
@@ -2372,10 +2413,23 @@ class DarticInterpreter {
               upvalues.add(currentUpvalues![desc.index]);
             }
           }
-          rs.write(
-            rBase + a,
-            DarticClosure(funcProto: proto, upvalues: upvalues),
-          );
+          final closure = DarticClosure(funcProto: proto, upvalues: upvalues);
+          // Resolve transient typeTemplate → runtimeType_ using ITA/FTA
+          // from the current frame (A-lite closure type extraction).
+          final typeTemplate = proto.typeTemplate;
+          if (typeTemplate != null && _activeTypeRegistry != null) {
+            try {
+              final ita = rs.read(rBase + 0) as List<DarticType>?;
+              final fta = rs.read(rBase + 1) as List<DarticType>?;
+              closure.runtimeType_ =
+                  resolveType(typeTemplate, ita, fta, _activeTypeRegistry!);
+            } catch (_) {
+              // Resolution may fail if ITA/FTA don't match the template
+              // (e.g., generic function tearoffs). Leave runtimeType_ null;
+              // extractType will fall back to Function type.
+            }
+          }
+          rs.write(rBase + a, closure);
 
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
           final minIndex = rBase + (decodeA(instr));
@@ -3382,8 +3436,13 @@ class DarticInterpreter {
         // Typed catch: resolve guard type and check subtype.
         final guardTemplate =
             module.constantPool.getRef(handler.catchType) as TypeTemplate;
-        final ita = rs.read(rBase + 0) as List<DarticType>?;
-        final fta = rs.read(rBase + 1) as List<DarticType>?;
+        // Defensive: ITA/FTA slots may contain non-list values during
+        // stack unwinding (e.g., when frames are shared or parameters
+        // overlap with Ch2 reserved slots).
+        final itaRaw = rs.read(rBase + 0);
+        final ita = itaRaw is List<DarticType> ? itaRaw : null;
+        final ftaRaw = rs.read(rBase + 1);
+        final fta = ftaRaw is List<DarticType> ? ftaRaw : null;
         final reg = _activeTypeRegistry!;
         final guardType = resolveType(guardTemplate, ita, fta, reg);
         final exType = extractType(exception, reg, module.classes);

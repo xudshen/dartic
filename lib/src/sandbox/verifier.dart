@@ -197,10 +197,13 @@ class DarticVerifier {
   ) {
     switch (template) {
       case InterfaceTypeTemplate():
-        if (template.classId < 0 || template.classId >= classCount) {
+        // classId = -1 is a valid sentinel for unresolved host types
+        // (classes from dart: libraries not in the module's class table).
+        if (template.classId != -1 &&
+            (template.classId < 0 || template.classId >= classCount)) {
           errors.add(
             '$context: InterfaceTypeTemplate.classId '
-            '${template.classId} out of range [0, $classCount)',
+            '${template.classId} out of range [0, $classCount) or -1',
           );
         }
         for (final arg in template.typeArgs) {
@@ -440,12 +443,17 @@ class DarticVerifier {
     }
 
     // Check 9: Upvalue descriptors.
+    // Note: isLocal upvalue indices refer to registers in the *parent*
+    // function (the enclosing scope), not the current function. We cannot
+    // validate these bounds without tracing CLOSURE instructions to find
+    // the parent. Only validate non-local (chained) upvalue indices, which
+    // refer to the current function's upvalue list.
     for (var i = 0; i < func.upvalueDescriptors.length; i++) {
       final uv = func.upvalueDescriptors[i];
-      if (uv.isLocal && uv.index >= func.refRegCount) {
+      if (!uv.isLocal && uv.index >= func.upvalueDescriptors.length) {
         errors.add(
-          '$prefix Upvalue descriptor #$i: isLocal index ${uv.index} '
-          '>= refRegCount ${func.refRegCount}',
+          '$prefix Upvalue descriptor #$i: chained index ${uv.index} '
+          '>= upvalueDescriptors.length ${func.upvalueDescriptors.length}',
         );
       }
     }

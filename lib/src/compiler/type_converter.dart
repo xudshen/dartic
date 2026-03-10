@@ -1,4 +1,5 @@
 import 'package:kernel/ast.dart' as ir;
+import 'package:kernel/core_types.dart' as ir;
 
 import 'type_template.dart';
 
@@ -9,11 +10,13 @@ import 'type_template.dart';
 /// (for ITA lookup at runtime).
 /// [enclosingFunctionTypeParams] lists the type parameters of the enclosing
 /// method (for FTA lookup at runtime).
+/// [coreTypes] is needed to resolve FutureOrType (which has no classNode).
 TypeTemplate dartTypeToTemplate(
   ir.DartType type,
   Map<ir.Class, int> classIdLookup, {
   List<ir.TypeParameter>? enclosingClassTypeParams,
   List<ir.TypeParameter>? enclosingFunctionTypeParams,
+  ir.CoreTypes? coreTypes,
 }) {
   return _convert(
     type,
@@ -21,6 +24,7 @@ TypeTemplate dartTypeToTemplate(
     enclosingClassTypeParams,
     enclosingFunctionTypeParams,
     null,
+    coreTypes,
   );
 }
 
@@ -35,12 +39,17 @@ ir.DartType? _toNonNullable(ir.DartType type) {
       type.nullability == ir.Nullability.nullable) {
     return type.withDeclaredNullability(ir.Nullability.nonNullable);
   }
+  // For TypeParameterType and StructuralParameterType, check
+  // `declaredNullability` instead of the computed `nullability` getter.
+  // The getter combines declared + bound nullability — if the bound is
+  // nullable (e.g. T extends Object?), the effective nullability stays
+  // nullable even after we set nonNullable, causing infinite recursion.
   if (type is ir.TypeParameterType &&
-      type.nullability == ir.Nullability.nullable) {
+      type.declaredNullability == ir.Nullability.nullable) {
     return ir.TypeParameterType(type.parameter, ir.Nullability.nonNullable);
   }
   if (type is ir.StructuralParameterType &&
-      type.nullability == ir.Nullability.nullable) {
+      type.declaredNullability == ir.Nullability.nullable) {
     return ir.StructuralParameterType(
       type.parameter,
       ir.Nullability.nonNullable,
@@ -52,8 +61,14 @@ ir.DartType? _toNonNullable(ir.DartType type) {
   if (type is ir.RecordType && type.nullability == ir.Nullability.nullable) {
     return type.withDeclaredNullability(ir.Nullability.nonNullable);
   }
+  // ExtensionType and FutureOrType also have computed nullability
+  // (combines declared + erasure/type-arg nullability). Use declared.
   if (type is ir.ExtensionType &&
-      type.nullability == ir.Nullability.nullable) {
+      type.declaredNullability == ir.Nullability.nullable) {
+    return type.withDeclaredNullability(ir.Nullability.nonNullable);
+  }
+  if (type is ir.FutureOrType &&
+      type.declaredNullability == ir.Nullability.nullable) {
     return type.withDeclaredNullability(ir.Nullability.nonNullable);
   }
   return null;
@@ -65,11 +80,11 @@ TypeTemplate _convert(
   List<ir.TypeParameter>? classParams,
   List<ir.TypeParameter>? funcParams,
   List<ir.StructuralParameter>? structuralParams,
+  ir.CoreTypes? coreTypes,
 ) {
   // Handle nullable types by unwrapping to non-nullable and wrapping the
-  // result in NullableTemplate. This consolidates the 5 nullable cases
-  // (InterfaceType, FunctionType, TypeParameterType, StructuralParameterType,
-  // NeverType) into a single dispatch.
+  // result in NullableTemplate. This consolidates the nullable cases
+  // into a single dispatch.
   final nonNullable = _toNonNullable(type);
   if (nonNullable != null) {
     return NullableTemplate(
@@ -79,6 +94,7 @@ TypeTemplate _convert(
         classParams,
         funcParams,
         structuralParams,
+        coreTypes,
       ),
     );
   }
@@ -93,36 +109,47 @@ TypeTemplate _convert(
         typeArgs: [
           for (final arg in type.typeArguments)
             _convert(arg, classIdLookup, classParams, funcParams,
-                structuralParams),
+                structuralParams, coreTypes),
+        ],
+      ),
+    ir.FutureOrType() => InterfaceTypeTemplate(
+        classId: coreTypes != null
+            ? (classIdLookup[coreTypes.deprecatedFutureOrClass] ?? -1)
+            : -1,
+        typeArgs: [
+          _convert(type.typeArgument, classIdLookup, classParams, funcParams,
+              structuralParams, coreTypes),
         ],
       ),
     ir.FunctionType() => _convertFunctionType(
-        type, classIdLookup, classParams, funcParams, structuralParams),
+        type, classIdLookup, classParams, funcParams, structuralParams,
+        coreTypes),
     ir.TypeParameterType() =>
       _resolveTypeParam(type.parameter, classParams, funcParams),
     ir.StructuralParameterType() =>
       _resolveStructuralParam(type.parameter, structuralParams),
     ir.IntersectionType() => _convert(
-        type.right, classIdLookup, classParams, funcParams, structuralParams),
+        type.right, classIdLookup, classParams, funcParams, structuralParams,
+        coreTypes),
     ir.RecordType() => RecordTypeTemplate(
         positionalTypes: [
           for (final p in type.positional)
             _convert(p, classIdLookup, classParams, funcParams,
-                structuralParams),
+                structuralParams, coreTypes),
         ],
         namedTypes: [
           for (final n in type.named)
             (
               name: n.name,
               type: _convert(n.type, classIdLookup, classParams, funcParams,
-                  structuralParams),
+                  structuralParams, coreTypes),
             ),
         ],
       ),
     // ExtensionType is erased to its representation type.
     ir.ExtensionType() => _convert(
         type.extensionTypeErasure, classIdLookup, classParams, funcParams,
-        structuralParams),
+        structuralParams, coreTypes),
     _ => throw UnsupportedError(
         'Unsupported DartType for type template conversion: '
         '${type.runtimeType}',
@@ -146,6 +173,7 @@ TypeTemplate _convertFunctionType(
   List<ir.TypeParameter>? classParams,
   List<ir.TypeParameter>? funcParams,
   List<ir.StructuralParameter>? outerStructuralParams,
+  ir.CoreTypes? coreTypes,
 ) {
   // Concatenate outer + inner structural params so that inner function bodies
   // can still resolve references to outer type parameters (fix I-2).
@@ -164,7 +192,7 @@ TypeTemplate _convertFunctionType(
   for (final tp in type.typeParameters) {
     typeParamBounds.add(
       _convert(tp.bound, classIdLookup, classParams, funcParams,
-          newStructuralParams),
+          newStructuralParams, coreTypes),
     );
   }
 
@@ -175,11 +203,12 @@ TypeTemplate _convertFunctionType(
       classParams,
       funcParams,
       newStructuralParams,
+      coreTypes,
     ),
     positionalParams: [
       for (final p in type.positionalParameters)
         _convert(p, classIdLookup, classParams, funcParams,
-            newStructuralParams),
+            newStructuralParams, coreTypes),
     ],
     namedParams: [
       for (final np in type.namedParameters)
@@ -191,6 +220,7 @@ TypeTemplate _convertFunctionType(
             classParams,
             funcParams,
             newStructuralParams,
+            coreTypes,
           ),
           isRequired: np.isRequired,
         ),
@@ -254,10 +284,12 @@ TypeTemplate _resolveStructuralParam(
 ///
 /// [classIdLookup] maps Kernel Class nodes to assigned classIds (needed
 /// for converting bounds that reference other classes).
+/// [coreTypes] is needed to resolve FutureOrType in bounds.
 List<({String name, TypeTemplate bound})> extractTypeParamBounds(
   ir.Class cls,
-  Map<ir.Class, int> classIdLookup,
-) {
+  Map<ir.Class, int> classIdLookup, {
+  ir.CoreTypes? coreTypes,
+}) {
   return [
     for (var i = 0; i < cls.typeParameters.length; i++)
       (
@@ -268,6 +300,7 @@ List<({String name, TypeTemplate bound})> extractTypeParamBounds(
                 cls.typeParameters[i].bound,
                 classIdLookup,
                 enclosingClassTypeParams: cls.typeParameters,
+                coreTypes: coreTypes,
               ),
       ),
   ];
@@ -334,10 +367,12 @@ class SuperTypeEntry {
 ///
 /// [cls] is the Kernel class to analyze.
 /// [classIdLookup] maps Kernel Class nodes to assigned classIds.
+/// [coreTypes] is needed to resolve FutureOrType in supertype args.
 List<SuperTypeEntry> buildSuperTypeEntries(
   ir.Class cls,
-  Map<ir.Class, int> classIdLookup,
-) {
+  Map<ir.Class, int> classIdLookup, {
+  ir.CoreTypes? coreTypes,
+}) {
   final subClassId = classIdLookup[cls] ?? -1;
   final entries = <SuperTypeEntry>[];
 
@@ -360,6 +395,7 @@ List<SuperTypeEntry> buildSuperTypeEntries(
             arg,
             classIdLookup,
             enclosingClassTypeParams: cls.typeParameters,
+            coreTypes: coreTypes,
           ),
       ],
     ));

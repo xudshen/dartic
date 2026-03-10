@@ -20,7 +20,7 @@ import 'module.dart';
 /// - Export table: count (UInt16) + entries (name + funcId)
 /// - Class table: count (UInt32) + each class's metadata, methods, fields, supertypes
 /// - Global table: globalCount (UInt32) + initializerIds (Int32 each)
-/// - CoreTypeIds: flag (byte) + if present: 6 × UInt32
+/// - CoreTypeIds: flag (byte) + if present: 9 × UInt32
 ///
 /// All multi-byte values are little-endian.
 ///
@@ -82,8 +82,10 @@ class DarticSerializer {
         w.addByte(2);
         final ints = ref.serialize();
         w.writeUint32(ints.length);
+        // Use Int32 to preserve negative sentinel values (e.g., classId = -1
+        // for unresolved host types).
         for (final v in ints) {
-          w.writeUint32(v);
+          w.writeInt32(v);
         }
       } else if (ref is List<Object>) {
         // Record shape descriptor: [positionalCount, namedName1, ...]
@@ -215,7 +217,7 @@ class DarticSerializer {
         final ints = tmpl.serialize();
         w.writeUint32(ints.length);
         for (final v in ints) {
-          w.writeUint32(v);
+          w.writeInt32(v);
         }
       }
     }
@@ -242,6 +244,10 @@ class DarticSerializer {
       w.writeUint32(ids.boolId);
       w.writeUint32(ids.objectId);
       w.writeUint32(ids.numId);
+      w.writeUint32(ids.futureId);
+      w.writeUint32(ids.futureOrId);
+      w.writeUint32(ids.functionId);
+      w.writeUint32(ids.typeErrorId);
     } else {
       w.addByte(0);
     }
@@ -301,6 +307,20 @@ class DarticSerializer {
 
     // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
     w.addByte(func.returnKind);
+
+    // typeTemplate (optional function type for closure type extraction)
+    // Format: 1 byte flag (0 = null, 1 = present) + serialized TypeTemplate
+    final typeTemplate = func.typeTemplate;
+    if (typeTemplate != null) {
+      w.addByte(1);
+      final ints = typeTemplate.serialize();
+      w.writeUint32(ints.length);
+      for (final v in ints) {
+        w.writeInt32(v);
+      }
+    } else {
+      w.addByte(0);
+    }
   }
 }
 

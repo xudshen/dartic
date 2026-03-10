@@ -755,13 +755,25 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileLocalFunctionInvocation(
     ir.LocalFunctionInvocation expr,
   ) {
-    final binding = _lookupVar(expr.variable);
+    // Resolve the closure register — may be an upvalue if the local function
+    // was declared in an outer scope (same logic as _compileVariableGet).
+    int closureReg;
+    if (_contextStack.isNotEmpty && _isUpvalueAccess(expr.variable)) {
+      closureReg = _allocRefReg();
+      final uvIdx = _resolveUpvalue(expr.variable);
+      _emitter.emitABx(Op.loadUpvalue, closureReg, uvIdx);
+    } else if (_capturedVarRefRegs.containsKey(expr.variable)) {
+      closureReg = _capturedVarRefRegs[expr.variable]!;
+    } else {
+      closureReg = _lookupVar(expr.variable).reg;
+    }
+
     final varType = expr.variable.type;
     final funcType = varType is ir.FunctionType ? varType : null;
     final retType = funcType?.returnType ?? varType;
 
     return _compileClosureCall(
-      closureReg: binding.reg,
+      closureReg: closureReg,
       arguments: expr.arguments,
       funcType: funcType,
       returnType: retType,
@@ -1087,6 +1099,7 @@ extension on DarticCompiler {
         _typeClassIdLookup,
         enclosingClassTypeParams: _currentClassTypeParams,
         enclosingFunctionTypeParams: _currentFunctionTypeParams,
+        coreTypes: _coreTypes,
       );
       final templateIdx = _constantPool.addRef(template);
       _emitter.emitABx(Op.instantiateType, firstTypeReg + i, templateIdx);
@@ -1357,6 +1370,7 @@ extension on DarticCompiler {
       _typeClassIdLookup,
       enclosingClassTypeParams: _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
     );
     final templateIdx = _constantPool.addRef(template);
     final typeReg = _allocRefReg();
@@ -1429,6 +1443,7 @@ extension on DarticCompiler {
               _typeClassIdLookup,
               enclosingClassTypeParams: _currentClassTypeParams,
               enclosingFunctionTypeParams: _currentFunctionTypeParams,
+              coreTypes: _coreTypes,
             ),
         ],
       );
@@ -1950,6 +1965,7 @@ extension on DarticCompiler {
               _typeClassIdLookup,
               enclosingClassTypeParams: _currentClassTypeParams,
               enclosingFunctionTypeParams: _currentFunctionTypeParams,
+              coreTypes: _coreTypes,
             ),
         ],
       );
@@ -2045,6 +2061,7 @@ extension on DarticCompiler {
       _typeClassIdLookup,
       enclosingClassTypeParams: _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
     );
     final templateIdx = _constantPool.addRef(template);
     final typeReg = _allocRefReg();

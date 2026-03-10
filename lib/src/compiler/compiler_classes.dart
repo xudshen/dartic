@@ -190,11 +190,19 @@ extension on DarticCompiler {
     if (superClassId >= 0) {
       classInfo.supertypeIds.addAll(_classInfos[superClassId].supertypeIds);
     } else if (superClass != null) {
-      // Superclass is a platform class (e.g., Object). Check _typeClassIdLookup
-      // to include core type classIds in supertypeIds for runtime subtype checks.
-      final coreSuperCid = _typeClassIdLookup[superClass];
-      if (coreSuperCid != null) {
-        classInfo.supertypeIds.addAll(_classInfos[coreSuperCid].supertypeIds);
+      // Superclass is a platform class (e.g., UnimplementedError). Walk up the
+      // Kernel class hierarchy until we find an ancestor registered in
+      // _typeClassIdLookup (e.g., Error → Object). This ensures that user
+      // classes extending host classes get the correct supertypeIds chain.
+      ir.Class? walk = superClass;
+      while (walk != null) {
+        final coreSuperCid = _typeClassIdLookup[walk];
+        if (coreSuperCid != null) {
+          classInfo.supertypeIds
+              .addAll(_classInfos[coreSuperCid].supertypeIds);
+          break;
+        }
+        walk = walk.superclass;
       }
     }
     for (final implemented in cls.implementedTypes) {

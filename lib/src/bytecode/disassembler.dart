@@ -386,6 +386,9 @@ class DarticDisassembler {
       'ref: ${func.refRegCount}, '
       'return: $returnLabel) \u2500\u2500',
     );
+    if (func.typeTemplate != null) {
+      buf.writeln('  typeTemplate: ${func.typeTemplate}');
+    }
 
     final code = func.bytecode;
     var pc = 0;

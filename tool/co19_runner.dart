@@ -340,6 +340,22 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
 /// Set by the CLI [main] or lazily by [_ensureRunnerCompiled].
 String? _darticRunnerDill;
 
+/// If set, save .darb files for failing tests to this directory.
+/// Allows post-mortem inspection via `dartic dump --full <path>.darb`.
+String? _darbDir;
+
+/// Extracts a flat test name from a co19 test path for .darb file naming.
+///
+/// Example: `vendor/co19/TypeSystem/subtyping/dynamic/generated/foo_A01_t02.dart`
+/// → `foo_A01_t02`
+String _testNameFromPath(String path) {
+  final basename = path.split('/').last;
+  if (basename.endsWith('.dart')) {
+    return basename.substring(0, basename.length - 5);
+  }
+  return basename;
+}
+
 /// Lazily compiles `tool/dartic_run.dart` to a kernel snapshot if not yet done.
 ///
 /// The CLI [main] sets [_darticRunnerDill] eagerly before running tests.
@@ -444,14 +460,20 @@ Future<TestOutcome> runTest(
     }
 
     // Step 2: Execute via subprocess.
-    // dartic_run.dart compiles .dill → dartic bytecode and executes.
-    // The Dart VM naturally keeps the event loop running until all pending
-    // async operations complete — matching how the official co19 runner
-    // works (process-based execution).
+    // dartic_run.dart compiles .dill → .darb (in-memory) → executes.
+    // Optionally saves .darb to disk for post-mortem bytecode inspection.
     await _ensureRunnerCompiled();
+    final darbPath = _darbDir != null
+        ? '$_darbDir/${_testNameFromPath(entry.path)}.darb'
+        : null;
     final process = await Process.start(
       'fvm',
-      ['dart', _darticRunnerDill!, dillPath],
+      [
+        'dart',
+        _darticRunnerDill!,
+        if (darbPath != null) ...['--save-darb', darbPath],
+        dillPath,
+      ],
     );
     final stdoutFuture = process.stdout.transform(utf8.decoder).join();
     final stderrFuture = process.stderr.transform(utf8.decoder).join();
@@ -483,10 +505,11 @@ Future<TestOutcome> runTest(
     final hasSuccess = output.contains('unittest-suite-success');
 
     if (exitCode != 0) {
+      final darbHint = darbPath != null ? '\n        darb: $darbPath' : '';
       return TestOutcome(
         entry: entry,
         result: TestResult.fail,
-        message: errors.isNotEmpty ? errors : 'exit code $exitCode',
+        message: '${errors.isNotEmpty ? errors : 'exit code $exitCode'}$darbHint',
       );
     }
 
@@ -1091,6 +1114,9 @@ void _printUsage(StringSink sink) {
   sink.writeln('                     snapshot and print diff. Requires --run.');
   sink.writeln('                     If baseline file does not exist, just');
   sink.writeln('                     runs and prints report (no diff).');
+  sink.writeln('  --darb-dir=<dir>   Save .darb files for failing tests to');
+  sink.writeln('                     <dir>. Use `dartic dump --full <f>.darb`');
+  sink.writeln('                     to inspect bytecode post-mortem.');
   sink.writeln('  --help             Show this usage message.');
   sink.writeln('');
   sink.writeln('Default behavior (no flags): discovery only — lists test');
@@ -1164,6 +1190,8 @@ Future<void> main(List<String> args) async {
       snapshotPath = arg.substring('--snapshot='.length);
     } else if (arg.startsWith('--baseline=')) {
       baselinePath = arg.substring('--baseline='.length);
+    } else if (arg.startsWith('--darb-dir=')) {
+      _darbDir = arg.substring('--darb-dir='.length);
     } else if (arg.startsWith('--') || (arg.startsWith('-') && arg != '-')) {
       stderr.writeln('Unknown option: $arg');
       stderr.writeln('');
@@ -1219,6 +1247,12 @@ Future<void> main(List<String> args) async {
     exit(1);
   }
   _darticRunnerDill = runnerDillPath;
+
+  // -- Create darb output directory if requested. --
+  if (_darbDir != null) {
+    await Directory(_darbDir!).create(recursive: true);
+    stderr.writeln('Saving .darb files for failures to: $_darbDir');
+  }
 
   // -- Run mode: execute tests in parallel. --
   stderr.writeln(

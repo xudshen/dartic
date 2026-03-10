@@ -327,6 +327,10 @@ void main() {
           boolId: 3,
           objectId: 4,
           numId: 5,
+          futureId: 6,
+          futureOrId: 7,
+          functionId: 8,
+          typeErrorId: 9,
         ),
       );
       final bytes = serializer.serialize(module);
@@ -338,6 +342,10 @@ void main() {
       expect(restored.coreTypeIds!.boolId, 3);
       expect(restored.coreTypeIds!.objectId, 4);
       expect(restored.coreTypeIds!.numId, 5);
+      expect(restored.coreTypeIds!.futureId, 6);
+      expect(restored.coreTypeIds!.futureOrId, 7);
+      expect(restored.coreTypeIds!.functionId, 8);
+      expect(restored.coreTypeIds!.typeErrorId, 9);
     });
 
     test('null coreTypeIds round-trips', () {
@@ -349,6 +357,163 @@ void main() {
       final bytes = serializer.serialize(module);
       final restored = deserializer.deserialize(bytes);
       expect(restored.coreTypeIds, isNull);
+    });
+  });
+
+  group('round-trip: FuncProto.typeTemplate', () {
+    test('null typeTemplate round-trips', () {
+      final proto = DarticFuncProto(
+        funcId: 0,
+        bytecode: Uint64List.fromList([1]),
+        valueRegCount: 0,
+        refRegCount: 1,
+        paramCount: 0,
+        name: 'noType',
+      );
+      final module = DarticModule(
+        functions: [proto],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+      final bytes = serializer.serialize(module);
+      final restored = deserializer.deserialize(bytes);
+      expect(restored.functions[0].typeTemplate, isNull);
+    });
+
+    test('simple FunctionTypeTemplate round-trips', () {
+      // int Function(String) — classId 0=int, 2=String
+      final proto = DarticFuncProto(
+        funcId: 0,
+        bytecode: Uint64List.fromList([1]),
+        valueRegCount: 0,
+        refRegCount: 2,
+        paramCount: 1,
+        name: 'simpleFn',
+      );
+      proto.typeTemplate = FunctionTypeTemplate(
+        returnType: InterfaceTypeTemplate(classId: 0, typeArgs: []),
+        positionalParams: [
+          InterfaceTypeTemplate(classId: 2, typeArgs: []),
+        ],
+        namedParams: [],
+        requiredParamCount: 1,
+        typeParamBounds: [],
+      );
+
+      final module = DarticModule(
+        functions: [proto],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+      final bytes = serializer.serialize(module);
+      final restored = deserializer.deserialize(bytes);
+
+      final rt = restored.functions[0].typeTemplate;
+      expect(rt, isNotNull);
+      expect(rt, isA<FunctionTypeTemplate>());
+      final ft = rt! as FunctionTypeTemplate;
+      expect(ft.returnType, isA<InterfaceTypeTemplate>());
+      expect((ft.returnType as InterfaceTypeTemplate).classId, 0);
+      expect(ft.positionalParams, hasLength(1));
+      expect(
+        (ft.positionalParams[0] as InterfaceTypeTemplate).classId, 2);
+      expect(ft.requiredParamCount, 1);
+      expect(ft.namedParams, isEmpty);
+      expect(ft.typeParamBounds, isEmpty);
+    });
+
+    test('generic FunctionTypeTemplate with named params round-trips', () {
+      // T Function<T extends num>(T, {required String name})
+      final proto = DarticFuncProto(
+        funcId: 1,
+        bytecode: Uint64List.fromList([1, 2]),
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 2,
+        name: 'genericFn',
+      );
+      proto.typeTemplate = FunctionTypeTemplate(
+        returnType: TypeParameterTemplate(
+            index: 0, isFunctionTypeParam: true),
+        positionalParams: [
+          TypeParameterTemplate(index: 0, isFunctionTypeParam: true),
+        ],
+        namedParams: [
+          (
+            name: 'name',
+            type: InterfaceTypeTemplate(classId: 2, typeArgs: []),
+            isRequired: true,
+          ),
+        ],
+        requiredParamCount: 1,
+        typeParamBounds: [
+          // T extends num (classId=5)
+          InterfaceTypeTemplate(classId: 5, typeArgs: []),
+        ],
+      );
+
+      final module = DarticModule(
+        functions: [proto],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+      final bytes = serializer.serialize(module);
+      final restored = deserializer.deserialize(bytes);
+
+      final rt = restored.functions[0].typeTemplate;
+      expect(rt, isNotNull);
+      expect(rt, isA<FunctionTypeTemplate>());
+      final ft = rt! as FunctionTypeTemplate;
+      // return type is T (type param index 0)
+      expect(ft.returnType, isA<TypeParameterTemplate>());
+      expect((ft.returnType as TypeParameterTemplate).index, 0);
+      // 1 positional param
+      expect(ft.positionalParams, hasLength(1));
+      // 1 named param
+      expect(ft.namedParams, hasLength(1));
+      expect(ft.namedParams[0].name, 'name');
+      expect(ft.namedParams[0].isRequired, isTrue);
+      // 1 type param bound (num)
+      expect(ft.typeParamBounds, hasLength(1));
+      expect(
+        (ft.typeParamBounds[0] as InterfaceTypeTemplate).classId, 5);
+    });
+
+    test('nullable FunctionTypeTemplate round-trips', () {
+      // int Function(String)? — nullable wrapper
+      final proto = DarticFuncProto(
+        funcId: 2,
+        bytecode: Uint64List.fromList([1]),
+        valueRegCount: 0,
+        refRegCount: 1,
+        paramCount: 0,
+        name: 'nullableFn',
+      );
+      proto.typeTemplate = NullableTemplate(
+        inner: FunctionTypeTemplate(
+          returnType: InterfaceTypeTemplate(classId: 0, typeArgs: []),
+          positionalParams: [
+            InterfaceTypeTemplate(classId: 2, typeArgs: []),
+          ],
+          namedParams: [],
+          requiredParamCount: 1,
+          typeParamBounds: [],
+        ),
+      );
+
+      final module = DarticModule(
+        functions: [proto],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+      );
+      final bytes = serializer.serialize(module);
+      final restored = deserializer.deserialize(bytes);
+
+      final rt = restored.functions[0].typeTemplate;
+      expect(rt, isNotNull);
+      expect(rt, isA<NullableTemplate>());
+      final nt = rt! as NullableTemplate;
+      expect(nt.inner, isA<FunctionTypeTemplate>());
     });
   });
 

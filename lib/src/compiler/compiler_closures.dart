@@ -193,7 +193,7 @@ extension on DarticCompiler {
     final refRegCount = _refAlloc.maxUsed;
     final upvalueDescs = List<UpvalueDescriptor>.of(_upvalueDescriptors);
 
-    _functions[innerFuncId] = DarticFuncProto(
+    final innerProto = DarticFuncProto(
       funcId: innerFuncId,
       name: name ?? '<anonymous>',
       bytecode: _emitter.toUint64List(),
@@ -208,6 +208,18 @@ extension on DarticCompiler {
       icTable: List.of(_icEntries),
       upvalueDescriptors: upvalueDescs,
     );
+
+    // Set transient typeTemplate BEFORE _popContext() — at this point
+    // _currentClassTypeParams / _currentFunctionTypeParams still hold the
+    // outer function's type params, which is what the closure template needs.
+    innerProto.typeTemplate = dartTypeToTemplate(
+      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[innerFuncId] = innerProto;
 
     // Restore enclosing context.
     _popContext();
@@ -406,7 +418,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto.
-    _functions[thunkFuncId] = DarticFuncProto(
+    final ctorThunkProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<constructor-tearoff:${cls.name}.${target.name.text}>',
       bytecode: _emitter.toUint64List(),
@@ -418,6 +430,12 @@ extension on DarticCompiler {
           fn.positionalParameters, fn.namedParameters),
       returnKind: StackKind.ref.index,
     );
+
+    // Set typeTemplate: constructor tearoff type = ClassType Function(params).
+    ctorThunkProto.typeTemplate = _buildConstructorTearOffTypeTemplate(
+      cls, fn, _typeClassIdLookup, _coreTypes,
+    );
+    _functions[thunkFuncId] = ctorThunkProto;
 
     // Restore enclosing compilation state.
     _popContext();
@@ -560,6 +578,7 @@ extension on DarticCompiler {
             _typeClassIdLookup,
             enclosingClassTypeParams: _currentClassTypeParams,
             enclosingFunctionTypeParams: _currentFunctionTypeParams,
+            coreTypes: _coreTypes,
           ),
       ],
     );
@@ -584,7 +603,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto with INSTANTIATED paramKinds.
-    _functions[thunkFuncId] = DarticFuncProto(
+    final genCtorThunkProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<generic-constructor-tearoff:${cls.name}<${typeArgs.join(', ')}>.${target.name.text}>',
       bytecode: _emitter.toUint64List(),
@@ -598,6 +617,13 @@ extension on DarticCompiler {
       ]),
       returnKind: StackKind.ref.index,
     );
+
+    // Set typeTemplate: generic constructor tearoff with bound type args.
+    // Use the substituted (instantiated) types for parameters.
+    genCtorThunkProto.typeTemplate = _buildGenericConstructorTearOffTypeTemplate(
+      cls, fn, typeArgs, subst, _typeClassIdLookup, _coreTypes,
+    );
+    _functions[thunkFuncId] = genCtorThunkProto;
 
     // Restore enclosing compilation state.
     _popContext();
@@ -797,7 +823,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
-    _functions[thunkFuncId] = DarticFuncProto(
+    final instTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instance-tearoff:$methodName>',
       bytecode: _emitter.toUint64List(),
@@ -816,6 +842,18 @@ extension on DarticCompiler {
       ],
     );
 
+    // Set typeTemplate for the instance tearoff. Uses the enclosing
+    // class/method type params — correct when receiver is `this` or the
+    // method type doesn't depend on class type params.
+    instTearoffProto.typeTemplate = dartTypeToTemplate(
+      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[thunkFuncId] = instTearoffProto;
+
     // Restore enclosing compilation state.
     _popContext();
 
@@ -825,6 +863,105 @@ extension on DarticCompiler {
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
+  }
+
+  // ── TypeTemplate helpers for tearoffs ──
+
+  /// Builds a [FunctionTypeTemplate] for a non-generic constructor tearoff.
+  ///
+  /// The tearoff type is `ClassName Function(params...)`.
+  TypeTemplate _buildConstructorTearOffTypeTemplate(
+    ir.Class cls,
+    ir.FunctionNode fn,
+    Map<ir.Class, int> classIdLookup,
+    CoreTypes? coreTypes,
+  ) {
+    final classId = classIdLookup[cls] ?? -1;
+    return FunctionTypeTemplate(
+      returnType: InterfaceTypeTemplate(classId: classId, typeArgs: const []),
+      positionalParams: [
+        for (final p in fn.positionalParameters)
+          dartTypeToTemplate(
+            p.type,
+            classIdLookup,
+            enclosingClassTypeParams: _currentClassTypeParams,
+            enclosingFunctionTypeParams: _currentFunctionTypeParams,
+            coreTypes: coreTypes,
+          ),
+      ],
+      namedParams: [
+        for (final np in fn.namedParameters)
+          (
+            name: np.name!,
+            type: dartTypeToTemplate(
+              np.type,
+              classIdLookup,
+              enclosingClassTypeParams: _currentClassTypeParams,
+              enclosingFunctionTypeParams: _currentFunctionTypeParams,
+              coreTypes: coreTypes,
+            ),
+            isRequired: np.isRequired,
+          ),
+      ],
+      requiredParamCount: fn.requiredParameterCount,
+      typeParamBounds: const [],
+    );
+  }
+
+  /// Builds a [FunctionTypeTemplate] for a generic constructor tearoff
+  /// with bound type arguments (e.g., `Box<int>.new`).
+  ///
+  /// Uses instantiated (substituted) parameter types.
+  TypeTemplate _buildGenericConstructorTearOffTypeTemplate(
+    ir.Class cls,
+    ir.FunctionNode fn,
+    List<ir.DartType> typeArgs,
+    type_algebra.Substitution subst,
+    Map<ir.Class, int> classIdLookup,
+    CoreTypes? coreTypes,
+  ) {
+    final classId = classIdLookup[cls] ?? -1;
+    return FunctionTypeTemplate(
+      returnType: InterfaceTypeTemplate(
+        classId: classId,
+        typeArgs: [
+          for (final arg in typeArgs)
+            dartTypeToTemplate(
+              arg,
+              classIdLookup,
+              enclosingClassTypeParams: _currentClassTypeParams,
+              enclosingFunctionTypeParams: _currentFunctionTypeParams,
+              coreTypes: coreTypes,
+            ),
+        ],
+      ),
+      positionalParams: [
+        for (final p in fn.positionalParameters)
+          dartTypeToTemplate(
+            subst.substituteType(p.type),
+            classIdLookup,
+            enclosingClassTypeParams: _currentClassTypeParams,
+            enclosingFunctionTypeParams: _currentFunctionTypeParams,
+            coreTypes: coreTypes,
+          ),
+      ],
+      namedParams: [
+        for (final np in fn.namedParameters)
+          (
+            name: np.name!,
+            type: dartTypeToTemplate(
+              subst.substituteType(np.type),
+              classIdLookup,
+              enclosingClassTypeParams: _currentClassTypeParams,
+              enclosingFunctionTypeParams: _currentFunctionTypeParams,
+              coreTypes: coreTypes,
+            ),
+            isRequired: np.isRequired,
+          ),
+      ],
+      requiredParamCount: fn.requiredParameterCount,
+      typeParamBounds: const [],
+    );
   }
 
   // ── Captured variable analysis ──

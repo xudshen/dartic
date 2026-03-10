@@ -25,11 +25,13 @@ class TypeRegistry {
     int futureOrClassId = -101,
     int functionClassId = -102,
     int recordClassId = -103,
+    int typeErrorClassId = -104,
   })  : _futureClassId = futureClassId,
         _futureOrClassId = futureOrClassId,
         _functionClassId = functionClassId,
         _recordClassId = recordClassId,
         _objectClassId = objectClassId,
+        _typeErrorClassId = typeErrorClassId,
         _buckets = List<List<DarticType>?>.filled(_initialBucketCount, null) {
     // Pre-register special types (negative classIds).
     dynamicType = _internInterface(
@@ -66,6 +68,7 @@ class TypeRegistry {
   final int _functionClassId;
   final int _recordClassId;
   final int _objectClassId;
+  final int _typeErrorClassId;
 
   /// Class ID for `Future` (dart:async).
   int get futureClassId => _futureClassId;
@@ -78,6 +81,9 @@ class TypeRegistry {
 
   /// Class ID for `Record` (dart:core).
   int get recordClassId => _recordClassId;
+
+  /// Class ID for `TypeError` (dart:core).
+  int get typeErrorClassId => _typeErrorClassId;
 
   // ── Bucket table ──
 

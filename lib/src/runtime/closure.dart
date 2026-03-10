@@ -1,4 +1,5 @@
 import '../bytecode/module.dart';
+import 'dartic_type.dart';
 
 /// Mutable cell for captured variables (open/closed upvalue semantics).
 ///
@@ -59,6 +60,13 @@ class DarticClosure {
 
   /// Captured upvalue cells. Indexed by the upvalue descriptor index.
   final List<Upvalue> upvalues;
+
+  /// Precise runtime type of this closure (e.g., `int Function(String)`).
+  ///
+  /// Set by the CLOSURE handler after resolving [DarticFuncProto.typeTemplate]
+  /// with ITA/FTA from the enclosing frame. Used by [extractType] for
+  /// `is`/`as` type checks on closures.
+  DarticType? runtimeType_;
 
   @override
   String toString() =>

@@ -130,9 +130,10 @@ class DarticDeserializer {
         case 1:
           refs.add(r.readString());
         case 2:
-          // TypeTemplate: length-prefixed array of uint32s
+          // TypeTemplate: length-prefixed array of int32s (signed to
+          // preserve negative sentinel values like classId = -1).
           final intCount = r.readUint32();
-          final ints = List<int>.generate(intCount, (_) => r.readUint32());
+          final ints = List<int>.generate(intCount, (_) => r.readInt32());
           final (template, _) = TypeTemplate.deserialize(ints, 0);
           refs.add(template);
         case 3:
@@ -263,7 +264,7 @@ class DarticDeserializer {
       final templates = <TypeTemplate>[];
       for (var j = 0; j < tmplCount; j++) {
         final intCount = r.readUint32();
-        final ints = List<int>.generate(intCount, (_) => r.readUint32());
+        final ints = List<int>.generate(intCount, (_) => r.readInt32());
         final (tmpl, _) = TypeTemplate.deserialize(ints, 0);
         templates.add(tmpl);
       }
@@ -293,6 +294,10 @@ class DarticDeserializer {
       boolId: r.readUint32(),
       objectId: r.readUint32(),
       numId: r.readUint32(),
+      futureId: r.readUint32(),
+      futureOrId: r.readUint32(),
+      functionId: r.readUint32(),
+      typeErrorId: r.readUint32(),
     );
   }
 
@@ -358,7 +363,17 @@ class DarticDeserializer {
     // returnKind (StackKind index: 0=ref, 1=boolVal, 2=intVal, 3=doubleVal)
     final returnKind = r.readByte();
 
-    return DarticFuncProto(
+    // typeTemplate (optional function type for closure type extraction)
+    TypeTemplate? typeTemplate;
+    final hasTypeTemplate = r.readByte();
+    if (hasTypeTemplate == 1) {
+      final len = r.readUint32();
+      final ints = List.generate(len, (_) => r.readInt32());
+      final (template, _) = TypeTemplate.deserialize(ints, 0);
+      typeTemplate = template;
+    }
+
+    final proto = DarticFuncProto(
       funcId: funcId,
       name: name,
       bytecode: bytecode,
@@ -371,6 +386,8 @@ class DarticDeserializer {
       icTable: icTable,
       upvalueDescriptors: upvalueDescriptors,
     );
+    proto.typeTemplate = typeTemplate;
+    return proto;
   }
 }
 
