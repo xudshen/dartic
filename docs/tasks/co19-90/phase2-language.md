@@ -10,7 +10,30 @@
 - ~~Task 2.2 continue 的 `_labelContinueJumps` 方案~~：Kernel 已将 `continue` 脱糖为 `BreakStatement` 指向循环内部 `LabeledStatement`，无需新的 continue 跳转机制。仅 `ContinueSwitchStatement`（continue 到 case 标签）缺失
 - ~~Task 2.4 cascade~~：已由 CFE 脱糖为 `Let` 表达式，编译器已处理
 
-**测试数据：** 4,605 total, 3,923 pass (85.2%), 679 fail
+**测试数据：** 5,370 total, 4,879 pass (90.9%), 480 fail, 5 error, 6 skip
+
+**已完成修复（Phase 2 session 1）：**
+- ✅ SymbolConstant 编译支持（`_compileSymbolConstant` via `dart:_internal::Symbol::#1`）
+- ✅ InstanceSet ResultLoc 错误（`_emitSetField` boxing 后 loc 未更新）→ 7 null-aware assignment 测试修复
+- ✅ Enum mixin field layout（`_Enum` 字段未注册：enum with mixin 时 superclass 链查找）
+- ✅ noSuchMethod 桥接补全（`_InvocationMirror._withType`、`Map/List.unmodifiable`、`_List.empty`）
+- **净增 +30 pass，0 regression**
+
+**已完成修复（Phase 2 session 2）：**
+- ✅ DarticClosure `.call()` 动态分发（INVOKE_DYN + CALL_VIRTUAL 两处 handler）→ +17 tests
+- ✅ Deferred library 表达式桩（LoadLibrary → Future.value(null)、CheckLibraryIsLoaded → null）→ +9 tests
+- ✅ Null-receiver 异常路由（4 处 throw DarticError → unwindToHandler + NoSuchMethodError）→ +28 tests
+- ✅ InvocationMirror 类型转换修复（typeArgs/namedArgs 的 `.cast<>()` 安全转换）→ +25 net tests (26-1 regression)
+- ✅ Task 2.1 for-in 验证：CFE ForInLowering 已脱糖，无需编译器改动，9 个 E2E 测试全部通过
+- **净增 +79 pass (4800→4879)，1 regression（forwarder_A01_t09 noSuchMethod 参数类型检查缺口）**
+
+**已完成修复（Phase 2 session 3）：**
+- ✅ Switch 双栈 coercion（case 表达式在 value 栈而 switch 表达式在 ref 栈时，需 box 后用 EQ_REF）→ +8 tests（7 Switch + 1 Labels）
+- ✅ Unit test 修复（null-receiver 从 DarticError 改为 NoSuchMethodError，对应测试更新）
+- ✅ `_EmptyStream::_#fromFields` + `Object::_#fromFields` 绑定补全（影响其他 category）
+- **净增 +8 pass (4879→4887)，0 regression**
+
+**Phase 2 累计：** 4800 → 4887（+87 pass），90.9% → 91.0%
 
 ---
 
@@ -135,14 +158,19 @@ fvm dart run tool/co19_runner.dart --run --jobs=8 \
 
 ---
 
-## 剩余失败分布（Phase 2 基础 tasks 之后，需后续 Phase 继续修复）
+## 剩余失败分布（Phase 2 完成后：472 fail + 6 error = 478）
 
 | 类别 | 失败数 | 根因 | 修复阶段 |
 |------|--------|------|----------|
-| noSuchMethod forwarding | 43 | noSuchMethod 调用语义 | Phase 5 |
-| Property extraction (closurization) | 48 | 实例方法闭包化(20)、泛型方法实例化(8)、super 闭包化(8) | Phase 5 |
-| Constants | 31 | 常量表达式求值缺口 | Phase 5 |
-| Method invocation edge | 29 | 各类调用边缘情况 | Phase 5 |
-| Async\* generator runtime | ~30 | pause/resume/cancel 排序 | Phase 5 |
-| break/continue + finally | ~9 | finally 跨越跳转 | Phase 5 |
-| 散布其他 | ~400 | 多类别少量失败 | Phase 5 数据驱动 |
+| Yield_and_Yield_Each | 49 | async\* generator 深层运行时 | Phase 5 |
+| Property_Extraction | 40 | 闭包化（方法、getter、super） | Phase 5 |
+| Assignment | 36 | 29 negative + 5 real (super assignment, setter naming) | Phase 5 |
+| Function_Invocation | 29 | 20 async + 9 non-async (arg eval order, call dispatch) | Phase 5 |
+| Await_Expressions | 22 | async 运行时边缘 | Phase 5 |
+| Instance_Methods | 21 | noSuchMethod、方法调用边缘 | Phase 5 |
+| Break + Continue | 37 | break/continue + finally 交互 | Phase 5 |
+| Return | 14 | return + finally、async return | Phase 5 |
+| Identifier_Reference | 12 | 9 negative + 2 compile + 1 real | Phase 5 |
+| Constants | 11 | 常量表达式求值缺口 | Phase 5 |
+| For (Async_For_in) | 11 | await-for 未实现（Task 2.3） | Phase 2/5 |
+| 散布其他 | ~196 | 多类别少量失败 | Phase 5 数据驱动 |
