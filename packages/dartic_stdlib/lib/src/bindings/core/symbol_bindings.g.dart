@@ -8,6 +8,9 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 
+/// Symbol intern cache — ensures const Symbol('foo') is canonicalized.
+final Map<String, Symbol> _symbolCache = {};
+
 abstract final class SymbolBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,7 +26,7 @@ abstract final class SymbolBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hashCode#0': (args) => (args[0] as Symbol).hashCode,
-        '#1': (args) => Symbol(args[0] as String),
+        '#1': (args) => _symbolCache.putIfAbsent(args[0] as String, () => Symbol(args[0] as String)),
         '==#1': (args) => args[0] == args[1],
         'toString#0': (args) => args[0].toString(),
       };

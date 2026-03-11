@@ -19,6 +19,7 @@ abstract final class IterableBindings {
     ctx.registerBinding('dart:core::Iterable::castFrom#1', (args) => Iterable.castFrom(args[0] as Iterable));
     ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) => Iterable.iterableToShortString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
     ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) => Iterable.iterableToFullString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
+    ctx.registerBinding('dart:_internal::EmptyIterable::#0', methodMap()['#0']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -72,27 +73,39 @@ abstract final class IterableBindings {
         'expand#1': (args) => (args[0] as Iterable).expand((e) => (args[1] as Function)(e) as Iterable),
         'firstWhere#2': (args) {
             final fn = args[1] as Function;
-            if (!identical(args[2], darticAbsent)) {
-              final orElse = args[2] as Function;
-              return (args[0] as Iterable).firstWhere((e) => fn(e) as bool, orElse: () => orElse());
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            for (final e in args[0] as Iterable) {
+              if (fn(e) as bool) return e;
             }
-            return (args[0] as Iterable).firstWhere((e) => fn(e) as bool);
+            if (orElse != null) return orElse();
+            throw StateError('No element');
         },
         'lastWhere#2': (args) {
             final fn = args[1] as Function;
-            if (!identical(args[2], darticAbsent)) {
-              final orElse = args[2] as Function;
-              return (args[0] as Iterable).lastWhere((e) => fn(e) as bool, orElse: () => orElse());
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            Object? result;
+            bool found = false;
+            for (final e in args[0] as Iterable) {
+              if (fn(e) as bool) { result = e; found = true; }
             }
-            return (args[0] as Iterable).lastWhere((e) => fn(e) as bool);
+            if (found) return result;
+            if (orElse != null) return orElse();
+            throw StateError('No element');
         },
         'singleWhere#2': (args) {
             final fn = args[1] as Function;
-            if (!identical(args[2], darticAbsent)) {
-              final orElse = args[2] as Function;
-              return (args[0] as Iterable).singleWhere((e) => fn(e) as bool, orElse: () => orElse());
+            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            Object? result;
+            bool found = false;
+            for (final e in args[0] as Iterable) {
+              if (fn(e) as bool) {
+                if (found) throw StateError('Too many elements');
+                result = e; found = true;
+              }
             }
-            return (args[0] as Iterable).singleWhere((e) => fn(e) as bool);
+            if (found) return result;
+            if (orElse != null) return orElse();
+            throw StateError('No element');
         },
         'takeWhile#1': (args) => (args[0] as Iterable).takeWhile((e) => (args[1] as Function)(e) as bool),
         'skipWhile#1': (args) => (args[0] as Iterable).skipWhile((e) => (args[1] as Function)(e) as bool),
@@ -107,5 +120,6 @@ abstract final class IterableBindings {
             }
             return value;
         },
+        '#0': (args) => const Iterable.empty(),
       };
 }

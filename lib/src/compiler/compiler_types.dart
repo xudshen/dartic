@@ -42,7 +42,7 @@ extension on DarticCompiler {
             (_intBinaryOp(invName) == null && _doubleBinaryOp(invName) != null)) {
           return _coreTypes.doubleNonNullableRawType;
         }
-        // Mixed int op double → result is double (ops with a double
+        // Mixed int op double/num → result is double (ops with a double
         // equivalent via _intToDoubleOp). ~/,&,|,^,<<,>>,>>> excluded.
         final intOp = _intBinaryOp(invName);
         if (intOp != null &&
@@ -51,6 +51,11 @@ extension on DarticCompiler {
           final argKind = _inferStackKind(expr.arguments.positional[0]);
           if (argKind == StackKind.doubleVal) {
             return _coreTypes.doubleNonNullableRawType;
+          }
+          // Arg is ref (e.g., num) — result could be int or double at
+          // runtime. Return num to avoid incorrect int specialization.
+          if (argKind == StackKind.ref) {
+            return _coreTypes.numNonNullableRawType;
           }
         }
         return _coreTypes.intNonNullableRawType;

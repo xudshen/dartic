@@ -124,6 +124,8 @@ libraries:
       - name: TypeError
         bridge: true
       - NoSuchMethodError  # factory-only constructors, can't be bridged
+      - Deprecated
+      - OutOfMemoryError
 
       # ── Misc types ──────────────────────────────────────────────────
 
@@ -252,6 +254,21 @@ libraries:
           "filled#2": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: false)"
           "#1": "(args) => List<dynamic>.filled(args[0] as int, null, growable: false)"
           "empty#0": "(args) => const []"
+          "generate#2": |
+            (args) {
+              final length = args[0] as int;
+              final generator = args[1] as Function;
+              return List.generate(length, (i) => generator(i), growable: false);
+            }
+          "generate#3": |
+            (args) {
+              final length = args[0] as int;
+              final generator = args[1] as Function;
+              if (!identical(args[2], darticAbsent)) {
+                return List.generate(length, (i) => generator(i), growable: args[2] as bool);
+              }
+              return List.generate(length, (i) => generator(i), growable: false);
+            }
 
       # ── _Set: VM-internal compact set constructor ──
       _Set:
@@ -267,9 +284,13 @@ libraries:
           "#0": "(args) => <dynamic, dynamic>{}"
 
       # ── Symbol: cross-namespace binding (dart:_internal) ──
+      # Symbols are interned: const Symbol('foo') must be identical across calls.
       Symbol:
+        preamble: |
+          /// Symbol intern cache — ensures const Symbol('foo') is canonicalized.
+          final Map<String, Symbol> _symbolCache = {};
         extra_methods:
-          "#1": "(args) => Symbol(args[0] as String)"
+          "#1": "(args) => _symbolCache.putIfAbsent(args[0] as String, () => Symbol(args[0] as String))"
           "==#1": "(args) => args[0] == args[1]"
           "toString#0": "(args) => args[0].toString()"
         extra_bindings:
@@ -358,7 +379,7 @@ libraries:
             )
           "range#5": |
             (args) => RangeError.range(
-              args[0] as int,
+              args[0] as num,
               args[1] as int?,
               args[2] as int?,
               identical(args[3], darticAbsent) ? null : args[3] as String?,
@@ -434,6 +455,29 @@ libraries:
       TypeError:
         extra_methods:
           "toString#0": "(args) => (args[0] as TypeError).toString()"
+
+      # ── Deprecated: constructor + message getter ──
+      # Note: The analyzer may discover a phantom 'expires' getter that doesn't
+      # exist at runtime; override it to suppress auto-generation.
+      Deprecated:
+        extra_methods:
+          "#1": "(args) => Deprecated(args[0] as String)"
+          "message#0": "(args) => (args[0] as Deprecated).message"
+          "toString#0": "(args) => (args[0] as Deprecated).toString()"
+          "expires#0": "(args) => (args[0] as Deprecated).message"
+
+      # ── OutOfMemoryError: no-arg constructor ──
+      OutOfMemoryError:
+        extra_methods:
+          "#0": "(args) => OutOfMemoryError()"
+          "toString#0": "(args) => (args[0] as OutOfMemoryError).toString()"
+
+      # ── NoSuchMethodError: _withInvocation (private factory used by CFE) ──
+      NoSuchMethodError:
+        extra_methods:
+          "_withInvocation#2": "(args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation)"
+        extra_bindings:
+          - "dart:core::NoSuchMethodError::_withInvocation#2"
 
       # ── Exception: constructor and toString ──
       Exception:
@@ -530,32 +574,47 @@ libraries:
               return (args[0] as Iterable).map((e) => fn(e));
             }
           "expand#1": "(args) => (args[0] as Iterable).expand((e) => (args[1] as Function)(e) as Iterable)"
+          # Manual iteration to avoid orElse type mismatch:
+          # Dart enforces `(() => E)?` at runtime for typed iterables (e.g. Runes),
+          # but our `() => orElse()` returns `() => dynamic` which fails the check.
           "firstWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (!identical(args[2], darticAbsent)) {
-                final orElse = args[2] as Function;
-                return (args[0] as Iterable).firstWhere((e) => fn(e) as bool, orElse: () => orElse());
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              for (final e in args[0] as Iterable) {
+                if (fn(e) as bool) return e;
               }
-              return (args[0] as Iterable).firstWhere((e) => fn(e) as bool);
+              if (orElse != null) return orElse();
+              throw StateError('No element');
             }
           "lastWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (!identical(args[2], darticAbsent)) {
-                final orElse = args[2] as Function;
-                return (args[0] as Iterable).lastWhere((e) => fn(e) as bool, orElse: () => orElse());
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              Object? result;
+              bool found = false;
+              for (final e in args[0] as Iterable) {
+                if (fn(e) as bool) { result = e; found = true; }
               }
-              return (args[0] as Iterable).lastWhere((e) => fn(e) as bool);
+              if (found) return result;
+              if (orElse != null) return orElse();
+              throw StateError('No element');
             }
           "singleWhere#2": |
             (args) {
               final fn = args[1] as Function;
-              if (!identical(args[2], darticAbsent)) {
-                final orElse = args[2] as Function;
-                return (args[0] as Iterable).singleWhere((e) => fn(e) as bool, orElse: () => orElse());
+              final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              Object? result;
+              bool found = false;
+              for (final e in args[0] as Iterable) {
+                if (fn(e) as bool) {
+                  if (found) throw StateError('Too many elements');
+                  result = e; found = true;
+                }
               }
-              return (args[0] as Iterable).singleWhere((e) => fn(e) as bool);
+              if (found) return result;
+              if (orElse != null) return orElse();
+              throw StateError('No element');
             }
           "takeWhile#1": "(args) => (args[0] as Iterable).takeWhile((e) => (args[1] as Function)(e) as bool)"
           "skipWhile#1": "(args) => (args[0] as Iterable).skipWhile((e) => (args[1] as Function)(e) as bool)"
@@ -571,6 +630,9 @@ libraries:
               }
               return value;
             }
+          "#0": "(args) => const Iterable.empty()"
+        extra_bindings:
+          - "dart:_internal::EmptyIterable::#0"
 
       # ── List: factory constructors not discoverable by analyzer ──
       List:
@@ -956,6 +1018,20 @@ libraries:
               final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
               return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
             }
+          # splitMapJoin: ClosureAdapter returns (Object?)=>Object? which can't be
+          # directly cast to ((Match)=>String)? or ((String)=>String)?. Use wrapper lambdas.
+          "splitMapJoin#3": |
+            (args) {
+              final self = args[0] as String;
+              final pattern = args[1] as Pattern;
+              final onMatch = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              final onNonMatch = identical(args[3], darticAbsent) ? null : args[3] as Function?;
+              return self.splitMapJoin(
+                pattern,
+                onMatch: onMatch != null ? (m) => onMatch(m) as String : null,
+                onNonMatch: onNonMatch != null ? (s) => onNonMatch(s) as String : null,
+              );
+            }
 
       # ── Comparable: abstract interface, compareTo + static compare ──
       Comparable:
@@ -1068,5 +1144,41 @@ libraries:
               args[3] as List<Object?>?,
               (args[4] as Map?)?.cast<Symbol, Object?>(),
             )
+          "method#3": |
+            (args) => _DarticInvocationMirror(
+              args[0] as Symbol,
+              0,
+              null,
+              (args[1] as Iterable?)?.toList(),
+              identical(args[2], darticAbsent) ? null : (args[2] as Map?)?.cast<Symbol, Object?>(),
+            )
+          "genericMethod#4": |
+            (args) => _DarticInvocationMirror(
+              args[0] as Symbol,
+              0,
+              (args[1] as Iterable?)?.toList().cast<Type>(),
+              (args[2] as Iterable?)?.toList(),
+              identical(args[3], darticAbsent) ? null : (args[3] as Map?)?.cast<Symbol, Object?>(),
+            )
+          "getter#1": |
+            (args) => _DarticInvocationMirror(
+              args[0] as Symbol,
+              1,
+              null,
+              null,
+              null,
+            )
+          "setter#2": |
+            (args) => _DarticInvocationMirror(
+              args[0] as Symbol,
+              2,
+              null,
+              [args[1]],
+              null,
+            )
         extra_bindings:
           - "dart:core::_InvocationMirror::_withType#5"
+          - "dart:core::Invocation::method#3"
+          - "dart:core::Invocation::genericMethod#4"
+          - "dart:core::Invocation::getter#1"
+          - "dart:core::Invocation::setter#2"

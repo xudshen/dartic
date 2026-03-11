@@ -526,15 +526,30 @@ void _executeIsolateEntry(List<dynamic> message) async {
   final sendPort = message[1] as SendPort;
 
   final output = StringBuffer();
+  Completer<void>? asyncCompleter;
 
   try {
     final engine = DarticEngine(
       plugins: [DarticStdlibPlugin()],
-      config: DarticConfig(onPrint: (s) => output.writeln(s)),
+      config: DarticConfig(onPrint: (s) {
+        output.writeln(s);
+        // Detect co19 async test marker — defer result until success/failure.
+        final str = '$s';
+        if (str.contains('unittest-suite-wait-for-done')) {
+          asyncCompleter ??= Completer<void>();
+        }
+        if (str.contains('unittest-suite-success') && asyncCompleter != null) {
+          if (!asyncCompleter!.isCompleted) asyncCompleter!.complete();
+        }
+      }),
     );
     engine.loadBytecode(darbBytes);
     final result = engine.call('main');
     if (result is Future) await result;
+    // Wait for async tests: Timer callbacks haven't fired yet at this point.
+    if (asyncCompleter != null && !asyncCompleter!.isCompleted) {
+      await asyncCompleter!.future;
+    }
     sendPort.send([0, output.toString(), '']);
   } on Object catch (e, st) {
     sendPort.send([1, output.toString(), '$e\n$st']);

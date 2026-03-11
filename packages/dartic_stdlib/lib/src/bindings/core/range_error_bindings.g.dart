@@ -124,7 +124,7 @@ abstract final class RangeErrorBindings {
             identical(args[2], darticAbsent) ? null : args[2] as String?,
         ),
         'range#5': (args) => RangeError.range(
-            args[0] as int,
+            args[0] as num,
             args[1] as int?,
             args[2] as int?,
             identical(args[3], darticAbsent) ? null : args[3] as String?,

@@ -60,6 +60,10 @@ abstract final class InvocationBindings {
       methods: methodMap(),
     );
     ctx.registerBinding('dart:core::_InvocationMirror::_withType#5', methodMap()['_withType#5']!);
+    ctx.registerBinding('dart:core::Invocation::method#3', methodMap()['method#3']!);
+    ctx.registerBinding('dart:core::Invocation::genericMethod#4', methodMap()['genericMethod#4']!);
+    ctx.registerBinding('dart:core::Invocation::getter#1', methodMap()['getter#1']!);
+    ctx.registerBinding('dart:core::Invocation::setter#2', methodMap()['setter#2']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -77,6 +81,34 @@ abstract final class InvocationBindings {
             (args[2] as List?)?.cast<Type>(),
             args[3] as List<Object?>?,
             (args[4] as Map?)?.cast<Symbol, Object?>(),
+        ),
+        'method#3': (args) => _DarticInvocationMirror(
+            args[0] as Symbol,
+            0,
+            null,
+            (args[1] as Iterable?)?.toList(),
+            identical(args[2], darticAbsent) ? null : (args[2] as Map?)?.cast<Symbol, Object?>(),
+        ),
+        'genericMethod#4': (args) => _DarticInvocationMirror(
+            args[0] as Symbol,
+            0,
+            (args[1] as Iterable?)?.toList().cast<Type>(),
+            (args[2] as Iterable?)?.toList(),
+            identical(args[3], darticAbsent) ? null : (args[3] as Map?)?.cast<Symbol, Object?>(),
+        ),
+        'getter#1': (args) => _DarticInvocationMirror(
+            args[0] as Symbol,
+            1,
+            null,
+            null,
+            null,
+        ),
+        'setter#2': (args) => _DarticInvocationMirror(
+            args[0] as Symbol,
+            2,
+            null,
+            [args[1]],
+            null,
         ),
       };
 }

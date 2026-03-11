@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import '../bridge/dartic_dispatch.dart';
 import 'class_info.dart';
 import 'dartic_type.dart';
 
@@ -42,9 +43,48 @@ class DarticObject {
   /// Set by STORE_SUPER_ARGS, consumed by WRAP_BRIDGE.
   List<Object?>? pendingSuperArgs;
 
+  /// Dispatch for routing method calls back to the guest VM. Set at creation
+  /// time (NEW_INSTANCE / ALLOC_GENERIC). Enables toString/==/hashCode to
+  /// invoke guest overrides when called by host APIs.
+  DarticDispatch? dispatch;
+
   @override
-  String toString() => 'DarticObject(cls=$classId, '
-      'refs=${refFields.length}, vals=${valueFields.length})';
+  String toString() {
+    final d = dispatch;
+    if (d != null) {
+      try {
+        final result = d.invoke(this, this, 'toString', const []);
+        if (!identical(result, notOverridden)) return result as String;
+      } catch (_) {}
+    }
+    return 'DarticObject(cls=$classId, '
+        'refs=${refFields.length}, vals=${valueFields.length})';
+  }
+
+  @override
+  int get hashCode {
+    final d = dispatch;
+    if (d != null) {
+      try {
+        final result = d.get(this, this, 'hashCode');
+        if (!identical(result, notOverridden)) return result as int;
+      } catch (_) {}
+    }
+    return identityHashCode(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final d = dispatch;
+    if (d != null) {
+      try {
+        final result = d.invoke(this, this, '==', [other]);
+        if (!identical(result, notOverridden)) return result as bool;
+      } catch (_) {}
+    }
+    return false;
+  }
 
   /// Global empty singletons — shared by all instances with zero fields.
   static final List<Object?> _emptyRefFields = List<Object?>.unmodifiable([]);

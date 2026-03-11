@@ -103,12 +103,11 @@ extension on DarticCompiler {
     }
 
     // Phase 2: Allocate consecutive ref registers for STRING_INTERP operands.
-    // The dest register comes first, then the base + part count.
+    // The dest register is separate; the base + part slots must be
+    // truly consecutive (allocConsecutive bypasses the free pool which
+    // may return fragmented indices).
     final destReg = _allocRefReg();
-    final baseReg = _allocRefReg();
-    for (var i = 1; i < parts.length; i++) {
-      _allocRefReg(); // allocate remaining consecutive slots
-    }
+    final baseReg = _refAlloc.allocConsecutive(parts.length);
 
     // Phase 3: Move each part result into its consecutive slot.
     for (var i = 0; i < partRegs.length; i++) {
@@ -249,8 +248,9 @@ extension on DarticCompiler {
     switch ((leftKind, rightKind)) {
       case (StackKind.intVal || StackKind.boolVal, StackKind.intVal || StackKind.boolVal):
         // bool uses intView (0/1), so EQ_INT works for both int and bool.
-        lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.intVal);
-        rhsReg = _ensureValue(rhsReg, rhsLoc, StackKind.intVal);
+        // Use actual kind for unbox (UNBOX_BOOL for bool, UNBOX_INT for int).
+        lhsReg = _ensureValue(lhsReg, lhsLoc, leftKind);
+        rhsReg = _ensureValue(rhsReg, rhsLoc, rightKind);
         _emitter.emitABC(Op.eqInt, resultReg, lhsReg, rhsReg);
       case (StackKind.doubleVal, StackKind.doubleVal):
         lhsReg = _ensureValue(lhsReg, lhsLoc, StackKind.doubleVal);
@@ -1342,7 +1342,7 @@ extension on DarticCompiler {
   /// The interpreter places the receiver at callee's rsp+2 automatically.
   (int, ResultLoc) _compileVirtualCall(ir.InstanceInvocation expr) {
     final target = expr.interfaceTarget;
-    final methodName = expr.name.text;
+    final methodName = _mangleName(expr.name);
 
     // 1. Compile receiver — box to ref stack if value-type.
     var (receiverReg, receiverLoc) = _compileExpression(expr.receiver);
@@ -1691,7 +1691,7 @@ extension on DarticCompiler {
     // 3. No arguments for a getter — skip arg moves.
 
     // 4. Emit CALL_VIRTUAL.
-    _emitCallVirtual(resultReg, receiverReg, expr.name.text, 0);
+    _emitCallVirtual(resultReg, receiverReg, _mangleName(expr.name), 0);
 
     return (resultReg, retLoc);
   }
@@ -1824,7 +1824,7 @@ extension on DarticCompiler {
     _emitArgMovesForVirtualCall(argTemps);
 
     final dummyResult = _allocRefReg();
-    _emitCallVirtual(dummyResult, receiverReg, '${expr.name.text}=', 1);
+    _emitCallVirtual(dummyResult, receiverReg, '${_mangleName(expr.name)}=', 1);
 
     // InstanceSet evaluates to the assigned value.
     return (savedValReg, savedValLoc);
@@ -1868,7 +1868,7 @@ extension on DarticCompiler {
     final resultReg = _allocRefReg();
 
     // 3. Add property name to names partition and emit GET_FIELD_DYN.
-    final nameIdx = _constantPool.addName(expr.name.text);
+    final nameIdx = _constantPool.addName(_mangleName(expr.name));
     _emitter.emitABC(Op.getFieldDyn, resultReg, recvReg, nameIdx);
 
     return (resultReg, ResultLoc.ref);
@@ -1886,7 +1886,7 @@ extension on DarticCompiler {
     valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
 
     // 3. Add property name to names partition and emit SET_FIELD_DYN.
-    final nameIdx = _constantPool.addName(expr.name.text);
+    final nameIdx = _constantPool.addName(_mangleName(expr.name));
     _emitter.emitABC(Op.setFieldDyn, recvReg, valReg, nameIdx);
 
     // DynamicSet evaluates to the assigned value.
@@ -1930,7 +1930,7 @@ extension on DarticCompiler {
     }
 
     // 5. Emit INVOKE_DYN A=result, B=totalArgCount, C=nameIdx.
-    final nameIdx = _constantPool.addName(expr.name.text);
+    final nameIdx = _constantPool.addName(_mangleName(expr.name));
     final totalArgCount = 1 + argRegs.length; // receiver + explicit args
     _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx);
 
@@ -2776,7 +2776,14 @@ extension on DarticCompiler {
   /// library reference for private symbols). We simply load the name as a
   /// string and call the Symbol constructor.
   (int, ResultLoc) _compileSymbolConstant(ir.SymbolConstant constant) {
-    final (nameReg, nameLoc) = _loadString(constant.name);
+    // For private symbols (libraryReference != null), mangle the name to
+    // include the library URI so that `#_foo` from different libraries are
+    // not equal, while `Symbol('_foo')` (no library ref) stays unmangled.
+    final name = _manglePrivateName(
+      constant.name,
+      constant.libraryReference?.asLibrary,
+    );
+    final (nameReg, nameLoc) = _loadString(name);
     const symbolBinding = 'dart:_internal::Symbol::#1';
     final bindingIndex = _allocBinding(symbolBinding, 1);
     return _emitCallHost(

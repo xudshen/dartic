@@ -35,12 +35,37 @@ class DarticVerifier {
     errors.clear();
     _verifyEntryPoint(module);
     _verifyConstantPool(module.constantPool, module);
+
+    // Build child→parent map by scanning CLOSURE instructions across all
+    // functions. This allows upvalue chain validation: non-local upvalue
+    // indices refer to the *parent* closure's upvalue list, not the current
+    // function's.
+    final parentMap = _buildParentMap(module);
+
     for (final func in module.functions) {
-      _verifyFunction(func, module);
+      _verifyFunction(func, module, parentMap);
     }
     _verifyClassTable(module);
     _verifyExportTable(module);
     return errors.isEmpty;
+  }
+
+  /// Scans all functions for CLOSURE instructions to build a map from
+  /// child funcId → parent funcId.
+  Map<int, int> _buildParentMap(DarticModule module) {
+    final parentMap = <int, int>{};
+    for (final func in module.functions) {
+      final bc = func.bytecode;
+      for (var i = 0; i < bc.length; i++) {
+        final instr = bc[i];
+        final op = decodeOp(instr);
+        if (op == Op.closure) {
+          final childFuncId = decodeBx(instr);
+          parentMap[childFuncId] = func.funcId;
+        }
+      }
+    }
+    return parentMap;
   }
 
   // ── Valid opcode set (O(1) lookup) ──
@@ -303,7 +328,11 @@ class DarticVerifier {
 
   // ── Per-function verification ──
 
-  void _verifyFunction(DarticFuncProto func, DarticModule module) {
+  void _verifyFunction(
+    DarticFuncProto func,
+    DarticModule module,
+    Map<int, int> parentMap,
+  ) {
     final code = func.bytecode;
     final codeLength = code.length;
     final pool = module.constantPool;
@@ -454,18 +483,36 @@ class DarticVerifier {
     }
 
     // Check 9: Upvalue descriptors.
-    // Note: isLocal upvalue indices refer to registers in the *parent*
-    // function (the enclosing scope), not the current function. We cannot
-    // validate these bounds without tracing CLOSURE instructions to find
-    // the parent. Only validate non-local (chained) upvalue indices, which
-    // refer to the current function's upvalue list.
+    // isLocal upvalue indices refer to registers in the *parent* function
+    // (the enclosing scope). Non-local (chained) upvalue indices refer to
+    // the *parent closure's* upvalue array, NOT the current function's.
+    // We use parentMap to find the parent and validate chained indices.
     for (var i = 0; i < func.upvalueDescriptors.length; i++) {
       final uv = func.upvalueDescriptors[i];
-      if (!uv.isLocal && uv.index >= func.upvalueDescriptors.length) {
-        errors.add(
-          '$prefix Upvalue descriptor #$i: chained index ${uv.index} '
-          '>= upvalueDescriptors.length ${func.upvalueDescriptors.length}',
-        );
+      if (!uv.isLocal) {
+        final parentFuncId = parentMap[func.funcId];
+        if (parentFuncId != null &&
+            parentFuncId < module.functions.length) {
+          final parentFunc = module.functions[parentFuncId];
+          if (uv.index >= parentFunc.upvalueDescriptors.length) {
+            errors.add(
+              '$prefix Upvalue descriptor #$i: chained index ${uv.index} '
+              '>= parent upvalueDescriptors.length '
+              '${parentFunc.upvalueDescriptors.length}',
+            );
+          }
+        } else {
+          // No parent found — fall back to checking against own upvalue
+          // descriptors length (original heuristic). A non-local upvalue
+          // with no known parent is suspicious but may occur for the
+          // top-level function or synthetic closures.
+          if (uv.index >= func.upvalueDescriptors.length) {
+            errors.add(
+              '$prefix Upvalue descriptor #$i: chained index ${uv.index} '
+              '>= upvalueDescriptors.length ${func.upvalueDescriptors.length}',
+            );
+          }
+        }
       }
     }
   }
