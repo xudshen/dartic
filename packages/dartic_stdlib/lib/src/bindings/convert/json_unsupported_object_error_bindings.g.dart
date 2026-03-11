@@ -22,12 +22,12 @@ abstract final class JsonUnsupportedObjectErrorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as JsonUnsupportedObjectError).toString(),
+        'unsupportedObject#0': (args) => (args[0] as JsonUnsupportedObjectError).unsupportedObject,
+        'cause#0': (args) => (args[0] as JsonUnsupportedObjectError).cause,
         'partialResult#0': (args) => (args[0] as JsonUnsupportedObjectError).partialResult,
         'stackTrace#0': (args) => (args[0] as JsonUnsupportedObjectError).stackTrace,
         '#3': (args) => JsonUnsupportedObjectError(args[0], cause: identical(args[1], darticAbsent) ? null : args[1], partialResult: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#3': (args) => JsonUnsupportedObjectError(cause: args[0], partialResult: args[1] as String?, args[2]),
-        'cause#0': (args) => (args[0] as JsonUnsupportedObjectError).cause,
-        'unsupportedObject#0': (args) => (args[0] as JsonUnsupportedObjectError).unsupportedObject,
-        'toString#0': (args) => (args[0] as JsonUnsupportedObjectError).toString(),
       };
 }

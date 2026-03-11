@@ -30,7 +30,6 @@ abstract final class EncodingBindings {
         'decoder#0': (args) => (args[0] as Encoding).decoder,
         'name#0': (args) => (args[0] as Encoding).name,
         'inverted#0': (args) => (args[0] as Encoding).inverted,
-        'getByName#1': (args) => Encoding.getByName(args[0] as String),
         'decodeStream#1': (args) => (args[0] as Encoding).decodeStream((args[1] as Stream).cast<List<int>>()),
         'decode#1': (args) => (args[0] as Encoding).decode((args[1] as List).cast<int>()),
       };

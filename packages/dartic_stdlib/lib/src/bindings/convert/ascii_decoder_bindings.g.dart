@@ -30,11 +30,8 @@ abstract final class AsciiDecoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as AsciiDecoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as AsciiDecoder).cast(),
+        '#1': (args) => AsciiDecoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#0': (args) => AsciiDecoder(),
-        '#1': (args) {
-            final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
-            return AsciiDecoder(allowInvalid: allowInvalid);
-        },
         'startChunkedConversion#1': (args) => (args[0] as AsciiDecoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as AsciiDecoder).bind((args[1] as Stream).cast<List<int>>()),
         'convert#3': (args) {

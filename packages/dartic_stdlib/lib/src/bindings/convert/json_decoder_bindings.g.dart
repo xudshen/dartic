@@ -23,6 +23,7 @@ abstract final class JsonDecoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'convert#1': (args) => (args[0] as JsonDecoder).convert(args[1] as String),
         'fuse#1': (args) => (args[0] as JsonDecoder).fuse(args[1] as Converter<Object?, dynamic>),
         'cast#0': (args) => (args[0] as JsonDecoder).cast(),
         '_#fromFields#1': (args) => JsonDecoder(args[0] as Object? Function(Object?, Object?)?),
@@ -33,7 +34,6 @@ abstract final class JsonDecoderBindings {
             }
             return const JsonDecoder();
         },
-        'convert#1': (args) => (args[0] as JsonDecoder).convert(args[1] as String),
         'startChunkedConversion#1': (args) => (args[0] as dynamic).startChunkedConversion(args[1]),
         'bind#1': (args) => (args[0] as JsonDecoder).bind((args[1] as Stream).cast<String>()),
       };

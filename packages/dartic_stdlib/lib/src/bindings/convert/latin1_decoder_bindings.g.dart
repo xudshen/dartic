@@ -30,11 +30,8 @@ abstract final class Latin1DecoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as Latin1Decoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Latin1Decoder).cast(),
+        '#1': (args) => Latin1Decoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#0': (args) => Latin1Decoder(),
-        '#1': (args) {
-            final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
-            return Latin1Decoder(allowInvalid: allowInvalid);
-        },
         'startChunkedConversion#1': (args) => (args[0] as Latin1Decoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).cast<List<int>>()),
         'convert#3': (args) {

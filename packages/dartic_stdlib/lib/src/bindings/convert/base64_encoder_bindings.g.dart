@@ -25,12 +25,12 @@ abstract final class Base64EncoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as Base64Encoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Base64Encoder).cast(),
+        '#0': (args) => Base64Encoder(),
+        'urlSafe#0': (args) => Base64Encoder.urlSafe(),
         '_#fromFields#1': (args) {
             final urlSafe = args[0] as bool;
             return urlSafe ? Base64Encoder.urlSafe() : const Base64Encoder();
         },
-        '#0': (args) => const Base64Encoder(),
-        'urlSafe#0': (args) => Base64Encoder.urlSafe(),
         'convert#1': (args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>()),
         'startChunkedConversion#1': (args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>()),

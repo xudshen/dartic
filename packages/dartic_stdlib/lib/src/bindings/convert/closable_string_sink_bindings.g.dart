@@ -27,14 +27,11 @@ abstract final class ClosableStringSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'close#0': (args) { (args[0] as ClosableStringSink).close(); return null; },
         'write#1': (args) { (args[0] as ClosableStringSink).write(args[1]); return null; },
         'writeAll#2': (args) { (args[0] as ClosableStringSink).writeAll(args[1] as Iterable<dynamic>, identical(args[2], darticAbsent) ? "" : args[2] as String); return null; },
         'writeln#1': (args) { (args[0] as ClosableStringSink).writeln(identical(args[1], darticAbsent) ? null : args[1]); return null; },
         'writeCharCode#1': (args) { (args[0] as ClosableStringSink).writeCharCode(args[1] as int); return null; },
-        'close#0': (args) {
-            (args[0] as ClosableStringSink).close();
-            return null;
-        },
       };
 
   static Map<String, Object? Function(List<Object?>)> closableStringSinkMethodMap() => {

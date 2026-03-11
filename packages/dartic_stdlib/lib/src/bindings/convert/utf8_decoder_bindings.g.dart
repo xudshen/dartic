@@ -25,11 +25,8 @@ abstract final class Utf8DecoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as Utf8Decoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Utf8Decoder).cast(),
+        '#1': (args) => Utf8Decoder(allowMalformed: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#1': (args) => Utf8Decoder(allowMalformed: args[0] as bool),
-        '#1': (args) {
-            final allowMalformed = identical(args[0], darticAbsent) ? false : args[0] as bool;
-            return Utf8Decoder(allowMalformed: allowMalformed);
-        },
         'startChunkedConversion#1': (args) => (args[0] as Utf8Decoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as Utf8Decoder).bind((args[1] as Stream).cast<List<int>>()),
         'convert#3': (args) {

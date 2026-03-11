@@ -23,9 +23,11 @@ abstract final class JsonEncoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'convert#1': (args) => (args[0] as JsonEncoder).convert(args[1]),
         'fuse#1': (args) => (args[0] as JsonEncoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as JsonEncoder).cast(),
         'indent#0': (args) => (args[0] as JsonEncoder).indent,
+        '_#fromFields#2': (args) => JsonEncoder.withIndent(args[0] as String?, args[1] as dynamic Function(dynamic)?),
         '#1': (args) {
             final toEncodable = identical(args[0], darticAbsent) ? null : args[0] as Function?;
             if (toEncodable != null) {
@@ -41,7 +43,6 @@ abstract final class JsonEncoderBindings {
             }
             return JsonEncoder.withIndent(indent);
         },
-        'convert#1': (args) => (args[0] as JsonEncoder).convert(args[1]),
         'startChunkedConversion#1': (args) => (args[0] as JsonEncoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as JsonEncoder).bind((args[1] as Stream).cast<Object>()),
       };

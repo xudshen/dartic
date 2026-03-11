@@ -23,15 +23,12 @@ abstract final class HtmlEscapeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'convert#1': (args) => (args[0] as HtmlEscape).convert(args[1] as String),
         'fuse#1': (args) => (args[0] as HtmlEscape).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as HtmlEscape).cast(),
-        '_#fromFields#1': (args) => HtmlEscape(args[0] as HtmlEscapeMode),
-        '#1': (args) {
-            final mode = identical(args[0], darticAbsent) ? HtmlEscapeMode.unknown : args[0] as HtmlEscapeMode;
-            return HtmlEscape(mode);
-        },
-        'convert#1': (args) => (args[0] as HtmlEscape).convert(args[1] as String),
         'mode#0': (args) => (args[0] as HtmlEscape).mode,
+        '#1': (args) => HtmlEscape(identical(args[0], darticAbsent) ? HtmlEscapeMode.unknown : args[0] as HtmlEscapeMode),
+        '_#fromFields#1': (args) => HtmlEscape(args[0] as HtmlEscapeMode),
         'startChunkedConversion#1': (args) => (args[0] as HtmlEscape).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as HtmlEscape).bind((args[1] as Stream).cast<String>()),
       };

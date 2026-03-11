@@ -24,17 +24,16 @@ abstract final class ConverterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'fuse#1': (args) => (args[0] as Converter).fuse(args[1] as Converter),
         'cast#0': (args) => (args[0] as Converter).cast(),
         'convert#1': (args) {
             final converter = args[0] as Converter;
             var input = args[1];
-            // Cast List<dynamic> to List<int> for byte converters
             if (input is List && input is! List<int> && input is! List<String>) {
               input = input.cast<int>();
             }
             return converter.convert(input);
         },
-        'fuse#1': (args) => (args[0] as Converter).fuse(args[1] as Converter),
         'bind#1': (args) {
             final converter = args[0] as Converter;
             var stream = args[1] as Stream;

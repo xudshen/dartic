@@ -32,6 +32,7 @@ abstract final class ByteConversionSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'close#0': (args) { (args[0] as ByteConversionSink).close(); return null; },
         'add#1': (args) {
             (args[0] as ByteConversionSink).add((args[1] as List).cast<int>());
             return null;
@@ -43,10 +44,6 @@ abstract final class ByteConversionSinkBindings {
               args[3] as int,
               args[4] as bool,
             );
-            return null;
-        },
-        'close#0': (args) {
-            (args[0] as ByteConversionSink).close();
             return null;
         },
       };

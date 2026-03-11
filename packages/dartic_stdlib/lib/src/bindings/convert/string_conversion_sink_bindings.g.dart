@@ -37,27 +37,13 @@ abstract final class StringConversionSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'add#1': (args) {
-            (args[0] as StringConversionSink).add(args[1] as String);
-            return null;
-        },
-        'addSlice#4': (args) {
-            (args[0] as StringConversionSink).addSlice(
-              args[1] as String,
-              args[2] as int,
-              args[3] as int,
-              args[4] as bool,
-            );
-            return null;
-        },
+        'addSlice#4': (args) { (args[0] as StringConversionSink).addSlice(args[1] as String, args[2] as int, args[3] as int, args[4] as bool); return null; },
+        'add#1': (args) { (args[0] as StringConversionSink).add(args[1] as String); return null; },
         'asStringSink#0': (args) => (args[0] as StringConversionSink).asStringSink(),
+        'close#0': (args) { (args[0] as StringConversionSink).close(); return null; },
         'asUtf8Sink#1': (args) {
             final allowMalformed = identical(args[1], darticAbsent) ? false : args[1] as bool;
             return (args[0] as StringConversionSink).asUtf8Sink(allowMalformed);
-        },
-        'close#0': (args) {
-            (args[0] as StringConversionSink).close();
-            return null;
         },
       };
 

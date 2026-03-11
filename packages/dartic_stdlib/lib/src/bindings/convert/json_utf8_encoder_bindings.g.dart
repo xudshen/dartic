@@ -23,6 +23,7 @@ abstract final class JsonUtf8EncoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'convert#1': (args) => (args[0] as JsonUtf8Encoder).convert(args[1]),
         'fuse#1': (args) => (args[0] as JsonUtf8Encoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as JsonUtf8Encoder).cast(),
         '_#fromFields#3': (args) => JsonUtf8Encoder(
@@ -42,7 +43,6 @@ abstract final class JsonUtf8EncoderBindings {
             }
             return JsonUtf8Encoder();
         },
-        'convert#1': (args) => (args[0] as JsonUtf8Encoder).convert(args[1]),
         'startChunkedConversion#1': (args) => (args[0] as JsonUtf8Encoder).startChunkedConversion(castToBytesSink(args[1])),
         'bind#1': (args) => (args[0] as JsonUtf8Encoder).bind((args[1] as Stream).cast<Object>()),
       };

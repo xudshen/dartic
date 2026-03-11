@@ -24,11 +24,10 @@ abstract final class LineSplitterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'cast#0': (args) => (args[0] as LineSplitter).cast(),
-        '_#fromFields#0': (args) => LineSplitter(),
-        '#0': (args) => const LineSplitter(),
         'convert#1': (args) => (args[0] as LineSplitter).convert(args[1] as String),
-        'split#1': (args) => LineSplitter.split(args[1] as String),
+        'cast#0': (args) => (args[0] as LineSplitter).cast(),
+        '#0': (args) => LineSplitter(),
+        '_#fromFields#0': (args) => LineSplitter(),
         'startChunkedConversion#1': (args) => (args[0] as LineSplitter).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as LineSplitter).bind((args[1] as Stream).cast<String>()),
       };

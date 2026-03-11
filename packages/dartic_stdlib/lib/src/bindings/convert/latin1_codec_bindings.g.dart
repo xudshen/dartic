@@ -23,15 +23,15 @@ abstract final class Latin1CodecBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'encode#1': (args) => (args[0] as Latin1Codec).encode(args[1] as String),
         'decodeStream#1': (args) => (args[0] as Latin1Codec).decodeStream(args[1] as Stream<List<int>>),
         'fuse#1': (args) => (args[0] as Latin1Codec).fuse(args[1] as Codec<List<int>, dynamic>),
+        'name#0': (args) => (args[0] as Latin1Codec).name,
+        'encoder#0': (args) => (args[0] as Latin1Codec).encoder,
+        'decoder#0': (args) => (args[0] as Latin1Codec).decoder,
         'inverted#0': (args) => (args[0] as Latin1Codec).inverted,
+        '#1': (args) => Latin1Codec(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#1': (args) => Latin1Codec(allowInvalid: args[0] as bool),
-        '#1': (args) {
-            final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
-            return Latin1Codec(allowInvalid: allowInvalid);
-        },
-        'encode#1': (args) => (args[0] as Latin1Codec).encode(args[1] as String),
         'decode#2': (args) {
             final self = args[0] as Latin1Codec;
             final bytes = (args[1] as List).cast<int>();
@@ -41,8 +41,5 @@ abstract final class Latin1CodecBindings {
             }
             return self.decode(bytes);
         },
-        'encoder#0': (args) => (args[0] as Latin1Codec).encoder,
-        'decoder#0': (args) => (args[0] as Latin1Codec).decoder,
-        'name#0': (args) => (args[0] as Latin1Codec).name,
       };
 }

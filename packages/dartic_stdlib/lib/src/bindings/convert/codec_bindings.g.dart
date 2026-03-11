@@ -21,13 +21,13 @@ abstract final class CodecBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'fuse#1': (args) => (args[0] as Codec).fuse(args[1] as Codec),
         'encoder#0': (args) => (args[0] as Codec).encoder,
         'decoder#0': (args) => (args[0] as Codec).decoder,
         'inverted#0': (args) => (args[0] as Codec).inverted,
         'encode#1': (args) {
             final codec = args[0] as Codec;
             var input = args[1];
-            // Cast List<dynamic> to List<int> for byte-oriented codecs
             if (input is List && input is! List<int>) {
               input = input.cast<int>();
             }
@@ -41,6 +41,5 @@ abstract final class CodecBindings {
             }
             return codec.decode(input);
         },
-        'fuse#1': (args) => (args[0] as Codec).fuse(args[1] as Codec),
       };
 }

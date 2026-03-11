@@ -27,21 +27,15 @@ abstract final class ChunkedConversionSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'close#0': (args) { (args[0] as ChunkedConversionSink).close(); return null; },
         'add#1': (args) {
             var item = args[1];
-            // Only cast List<dynamic> to List<int> for byte sinks — not for sinks
-            // that accept strings or other types (e.g. JSON chunked conversion).
             if (item is List && item is! List<int> && item is! List<String>) {
-              // Check if all elements are actually ints before casting
               if (item.isNotEmpty && item.first is int) {
                 item = item.cast<int>();
               }
             }
             (args[0] as Sink).add(item);
-            return null;
-        },
-        'close#0': (args) {
-            (args[0] as Sink).close();
             return null;
         },
       };

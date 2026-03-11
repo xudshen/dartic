@@ -22,25 +22,18 @@ abstract final class Base64CodecBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'decode#1': (args) => (args[0] as Base64Codec).decode(args[1] as String),
+        'normalize#3': (args) => (args[0] as Base64Codec).normalize(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
         'fuse#1': (args) => (args[0] as Base64Codec).fuse(args[1] as Codec<String, dynamic>),
+        'encoder#0': (args) => (args[0] as Base64Codec).encoder,
+        'decoder#0': (args) => (args[0] as Base64Codec).decoder,
         'inverted#0': (args) => (args[0] as Base64Codec).inverted,
+        '#0': (args) => Base64Codec(),
+        'urlSafe#0': (args) => Base64Codec.urlSafe(),
         '_#fromFields#1': (args) {
-            // The field is _encoder (Base64Encoder). Use identical to check if urlSafe.
             final encoder = args[0] as Base64Encoder;
             return identical(encoder, const Base64Encoder()) ? const Base64Codec() : const Base64Codec.urlSafe();
         },
-        '#0': (args) => const Base64Codec(),
-        'urlSafe#0': (args) => const Base64Codec.urlSafe(),
         'encode#1': (args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>()),
-        'decode#1': (args) => (args[0] as Base64Codec).decode(args[1] as String),
-        'normalize#3': (args) {
-            final self = args[0] as Base64Codec;
-            final source = args[1] as String;
-            final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
-            final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
-            return self.normalize(source, start, end);
-        },
-        'encoder#0': (args) => (args[0] as Base64Codec).encoder,
-        'decoder#0': (args) => (args[0] as Base64Codec).decoder,
       };
 }

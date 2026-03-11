@@ -28,19 +28,13 @@ abstract final class AsciiEncoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'convert#3': (args) => (args[0] as AsciiEncoder).convert(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
         'fuse#1': (args) => (args[0] as AsciiEncoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as AsciiEncoder).cast(),
+        '#0': (args) => AsciiEncoder(),
         '_#fromFields#0': (args) => AsciiEncoder(),
-        '#0': (args) => const AsciiEncoder(),
         'startChunkedConversion#1': (args) => (args[0] as AsciiEncoder).startChunkedConversion(castToBytesSink(args[1])),
         'bind#1': (args) => (args[0] as AsciiEncoder).bind((args[1] as Stream).cast<String>()),
-        'convert#3': (args) {
-            final self = args[0] as AsciiEncoder;
-            final string = args[1] as String;
-            final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
-            final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
-            return self.convert(string, start, end);
-        },
       };
 
   static Map<String, Object? Function(List<Object?>)> unicodeSubsetEncoderMethodMap() => {
