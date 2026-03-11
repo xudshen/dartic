@@ -1946,11 +1946,16 @@ extension on DarticCompiler {
       final compiledArgs = <(int, ResultLoc, ir.DartType?)>[
         (thisReg, ResultLoc.ref, null),
       ];
-      // Add explicit arguments.
+      // Add explicit arguments (positional + named).
       for (final arg in expr.arguments.positional) {
         var (reg, loc) = _compileExpression(arg);
         reg = _boxToRefIfValue(reg, loc, _inferExprType(arg));
         compiledArgs.add((reg, ResultLoc.ref, _inferExprType(arg)));
+      }
+      for (final arg in expr.arguments.named) {
+        var (reg, loc) = _compileExpression(arg.value);
+        reg = _boxToRefIfValue(reg, loc, _inferExprType(arg.value));
+        compiledArgs.add((reg, ResultLoc.ref, _inferExprType(arg.value)));
       }
       final symbolName = _hostSymbolName(target);
       final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -2060,22 +2065,15 @@ extension on DarticCompiler {
     _refAlloc.alloc(); // rsp+1: FTA
     _refAlloc.alloc(); // rsp+2: this (will be set from upvalue)
 
-    // Register parameters with the same types as the method.
-    final argTemps = <(int, ResultLoc)>[];
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
-    for (final param in fn.namedParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
+    // Register parameters — promote optional value-stack params to ref-stack
+    // so that null serves as the "omitted" sentinel.
+    final (argTemps, promotedIndices) = _allocTearoffParams(fn);
 
-    // Apply default values for optional/named params (same as instance
-    // tearoff — closure-call convention sends null for omitted named args).
+    // Apply default values for optional/named params.
     _applyTearoffDefaults(fn, argTemps);
+
+    // Unbox promoted params back to value-stack for correct forwarding.
+    _unboxPromotedParams(fn, argTemps, promotedIndices);
 
     // Load `this` from upvalue[0] into ref register 2.
     _emitter.emitABC(Op.loadUpvalue, 2, 0, 0);
@@ -2085,6 +2083,15 @@ extension on DarticCompiler {
     final retLoc = _classifyType(retType);
     final resultReg =
         retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
+
+    // Forward FTA (function type arguments) from thunk's r1 to callee's
+    // FTA slot so generic super methods receive their type arguments.
+    if (fn.typeParameters.isNotEmpty) {
+      final ftaMovePC = _emitter.emitPlaceholder();
+      _pendingArgMoves.add(
+        (pc: ftaMovePC, srcReg: 1, argIdx: 1, loc: ResultLoc.ref),
+      );
+    }
 
     // Pass `this` through for CALL_SUPER.
     _emitThisPassthrough();
@@ -2110,8 +2117,9 @@ extension on DarticCompiler {
       refRegCount: _refAlloc.maxUsed,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
-      paramKinds:
-          _buildParamKinds(fn.positionalParameters, fn.namedParameters),
+      paramKinds: promotedIndices.isEmpty
+          ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
+          : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
       upvalueDescriptors: [
@@ -2119,6 +2127,16 @@ extension on DarticCompiler {
         // ref register 2 (isLocal=true).
         UpvalueDescriptor(isLocal: true, index: thisReg),
       ],
+    );
+
+    // Set typeTemplate so the DarticClosure has an associated function type
+    // (needed for `is Function`, `runtimeType`, type checks on the closure).
+    superTearoffProto.typeTemplate = dartTypeToTemplate(
+      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
     );
 
     // Restore the outer compilation state.

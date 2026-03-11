@@ -417,7 +417,7 @@ class TypeRegistry {
     if (existing.nullability != nullability) return false;
     if (existing.typeArgs.length != typeArgs.length) return false;
     for (var i = 0; i < typeArgs.length; i++) {
-      if (!identical(existing.typeArgs[i], typeArgs[i])) return false;
+      if (!_typeEquals(existing.typeArgs[i], typeArgs[i])) return false;
     }
     return true;
   }
@@ -518,7 +518,7 @@ class TypeRegistry {
       return false;
     }
     for (var i = 0; i < positionalTypes.length; i++) {
-      if (!identical(existing.positionalTypes[i], positionalTypes[i])) {
+      if (!_typeEquals(existing.positionalTypes[i], positionalTypes[i])) {
         return false;
       }
     }
@@ -527,7 +527,7 @@ class TypeRegistry {
       final a = existing.namedTypes[i];
       final b = namedTypes[i];
       if (a.name != b.name) return false;
-      if (!identical(a.type, b.type)) return false;
+      if (!_typeEquals(a.type, b.type)) return false;
     }
     return true;
   }

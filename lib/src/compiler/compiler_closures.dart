@@ -880,26 +880,16 @@ extension on DarticCompiler {
     _refAlloc.alloc(); // rsp+1: FTA
     _refAlloc.alloc(); // rsp+2: this/receiver (will be set from upvalue)
 
-    // Register parameters with the same types as the method.
-    final argTemps = <(int, ResultLoc)>[];
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
-    for (final param in fn.namedParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
+    // Register parameters — promote optional value-stack params to ref-stack
+    // so that null serves as the "omitted" sentinel in the closure-call
+    // convention (caller sends null for omitted named/optional args).
+    final (argTemps, promotedIndices) = _allocTearoffParams(fn);
 
     // 4. Apply default values for optional/named params.
-    //
-    // Closure-call convention: the caller loads null for omitted named args
-    // (it only has the FunctionType, not the callee's default values).
-    // The tearoff thunk must replace null with the actual defaults before
-    // forwarding to the original method (which expects all args provided).
     _applyTearoffDefaults(fn, argTemps);
+
+    // Unbox promoted params back to value-stack for correct forwarding.
+    _unboxPromotedParams(fn, argTemps, promotedIndices);
 
     // 5. Load receiver from upvalue[0] into a ref register.
     final receiverReg = _allocRefReg();
@@ -946,8 +936,9 @@ extension on DarticCompiler {
       refRegCount: _refAlloc.maxUsed,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
-      paramKinds: _buildParamKinds(
-          fn.positionalParameters, fn.namedParameters),
+      paramKinds: promotedIndices.isEmpty
+          ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
+          : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
       upvalueDescriptors: [
@@ -1013,6 +1004,103 @@ extension on DarticCompiler {
     }
   }
 
+  /// Allocates tearoff thunk parameters, promoting optional value-stack
+  /// params to ref-stack so that null can serve as the "omitted" sentinel.
+  ///
+  /// Returns `(argTemps, promotedIndices)` where `promotedIndices` tracks
+  /// which params were promoted from value→ref. After [_applyTearoffDefaults],
+  /// call [_unboxPromotedParams] to emit UNBOX instructions and restore
+  /// value-stack locations for correct forwarding.
+  (List<(int, ResultLoc)>, Set<int>) _allocTearoffParams(ir.FunctionNode fn) {
+    final argTemps = <(int, ResultLoc)>[];
+    final promoted = <int>{};
+
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
+      final kind = _classifyStackKind(param.type);
+      final isOptional = i >= fn.requiredParameterCount;
+      if (isOptional && kind.isValue && param.initializer != null) {
+        // Promote to ref-stack so null sentinel detects omitted args.
+        final reg = _refAlloc.alloc();
+        argTemps.add((reg, ResultLoc.ref));
+        promoted.add(i);
+      } else {
+        final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+    }
+
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      final param = fn.namedParameters[i];
+      final kind = _classifyStackKind(param.type);
+      if (kind.isValue && param.initializer != null) {
+        final reg = _refAlloc.alloc();
+        argTemps.add((reg, ResultLoc.ref));
+        promoted.add(fn.positionalParameters.length + i);
+      } else {
+        final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+    }
+
+    return (argTemps, promoted);
+  }
+
+  /// Emits UNBOX instructions for params promoted from value→ref by
+  /// [_allocTearoffParams], and updates [argTemps] to value-stack locations.
+  ///
+  /// After [_applyTearoffDefaults], promoted params hold the correct value
+  /// (provided or default) on the ref stack. This method unboxes them to
+  /// value-stack registers so the forwarding call uses the correct stack.
+  void _unboxPromotedParams(
+    ir.FunctionNode fn,
+    List<(int, ResultLoc)> argTemps,
+    Set<int> promotedIndices,
+  ) {
+    for (final idx in promotedIndices) {
+      final (refReg, _) = argTemps[idx];
+      final param = idx < fn.positionalParameters.length
+          ? fn.positionalParameters[idx]
+          : fn.namedParameters[idx - fn.positionalParameters.length];
+      final kind = _classifyStackKind(param.type);
+      final valueReg = _valueAlloc.alloc();
+
+      switch (kind) {
+        case StackKind.intVal:
+          _emitter.emitABC(Op.unboxInt, valueReg, refReg, 0);
+        case StackKind.boolVal:
+          _emitter.emitABC(Op.unboxBool, valueReg, refReg, 0);
+        case StackKind.doubleVal:
+          _emitter.emitABC(Op.unboxDouble, valueReg, refReg, 0);
+        default:
+          break; // unreachable: only value-stack params are promoted
+      }
+
+      argTemps[idx] = (valueReg, ResultLoc.value);
+    }
+  }
+
+  /// Builds [DarticFuncProto.paramKinds] for tearoff thunks, accounting for
+  /// params promoted from value→ref by [_allocTearoffParams].
+  ///
+  /// Promoted params get [StackKind.ref] so [_routeArgs] places incoming
+  /// args (or null for omitted) on the ref stack where the null sentinel works.
+  Uint8List _buildTearoffParamKinds(
+    ir.FunctionNode fn,
+    Set<int> promotedIndices,
+  ) {
+    final all = [...fn.positionalParameters, ...fn.namedParameters];
+    final kinds = Uint8List(all.length);
+    for (var i = 0; i < all.length; i++) {
+      if (promotedIndices.contains(i)) {
+        kinds[i] = StackKind.ref.index;
+      } else {
+        kinds[i] = _classifyStackKind(all[i].type).index;
+      }
+    }
+    return kinds;
+  }
+
   /// Emits a conditional default-value load for a single param.
   ///
   /// If the param has a non-null initializer and lives on the ref stack,
@@ -1022,7 +1110,7 @@ extension on DarticCompiler {
     (int, ResultLoc) paramSlot,
   ) {
     final (paramReg, paramLoc) = paramSlot;
-    if (paramLoc != ResultLoc.ref) return; // value-stack: skip
+    if (paramLoc != ResultLoc.ref) return; // value-stack: skip (no sentinel)
     if (param.initializer == null) return; // no default value
 
     // JUMP_IF_NNULL paramReg → skipLabel (not null = caller provided a value)

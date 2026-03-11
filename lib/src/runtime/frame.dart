@@ -17,7 +17,7 @@ import 'closure.dart';
 class DarticFrame {
   DarticFrame({
     required this.funcProto,
-    this.upvalues = const [],
+    this.upvalues = const <Upvalue>[],
   });
 
   // ── Basic fields ──
@@ -29,7 +29,7 @@ class DarticFrame {
   int pc = 0;
 
   /// Upvalue table (from DarticClosure for closure calls, empty otherwise).
-  final List<Object?> upvalues;
+  final List<Upvalue> upvalues;
 
   // ── Stack snapshot fields (for async suspend/resume) ──
 

@@ -73,8 +73,12 @@ void main() {
       final result = registry.getProperty('hello', 'length');
       expect(result, isNotNull);
     });
-    test('returns null for unregistered type', () {
-      expect(registry.getProperty(Object(), 'length'), isNull);
+    test('returns notFound for unregistered type', () {
+      expect(
+        identical(registry.getProperty(Object(), 'length'),
+            HostClassRegistry.notFound),
+        isTrue,
+      );
     });
     test('String.length', () {
       expect(registry.getProperty('hello', 'length'), equals(5));
@@ -126,8 +130,12 @@ void main() {
       expect(
           registry.invokeMethod('hello', 'contains', ['ell', 0]), equals(true));
     });
-    test('returns null for unregistered type', () {
-      expect(registry.invokeMethod(Object(), 'toString', []), isNull);
+    test('returns notFound for unregistered type', () {
+      expect(
+        identical(registry.invokeMethod(Object(), 'toString', []),
+            HostClassRegistry.notFound),
+        isTrue,
+      );
     });
     test('returns notFound for unknown method', () {
       expect(
@@ -175,9 +183,13 @@ void main() {
           reason: 'dynamically registered type should be found');
     });
 
-    test('unregistered custom type still returns null', () {
+    test('unregistered custom type returns notFound', () {
       // _Animal is not registered anywhere.
-      expect(registry.getProperty(_Animal(), 'name'), isNull);
+      expect(
+        identical(registry.getProperty(_Animal(), 'name'),
+            HostClassRegistry.notFound),
+        isTrue,
+      );
     });
   });
 

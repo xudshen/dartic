@@ -98,13 +98,14 @@ abstract final class InvocationMirrorBindings {
       (args) => Set.identity(),
     );
 
-    // _EmptyStream() — an empty stream
+    // _EmptyStream<T>() — arity 1 because CFE adds a type arg parameter
+    // for the generic class. Binding body ignores args[0] (the type arg).
     ctx.registerBinding(
       'dart:async::_EmptyStream::#1',
       (args) => const Stream.empty(),
     );
 
-    // _EmptyStream._#fromFields() — CFE-generated field constructor
+    // _EmptyStream._#fromFields<T>() — CFE-generated field constructor
     ctx.registerBinding(
       'dart:async::_EmptyStream::_#fromFields#1',
       (args) => const Stream.empty(),

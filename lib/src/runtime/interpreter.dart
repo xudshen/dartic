@@ -954,7 +954,7 @@ class DarticInterpreter {
     // Restore closure upvalues from the frame (if any) so that
     // LOAD_UPVALUE/STORE_UPVALUE work after resume.
     final resumeUpvalues =
-        frame.upvalues.isEmpty ? null : frame.upvalues.cast<Upvalue>();
+        frame.upvalues.isEmpty ? null : frame.upvalues;
     _upvalueStack.add(resumeUpvalues);
 
     int pc = frame.pc;
@@ -1046,11 +1046,7 @@ class DarticInterpreter {
     final vBase = frame.savedVBase;
     final rBase = frame.savedRBase;
 
-    // Cast upvalues from List<Object?> to List<Upvalue> (they were
-    // constructed as List<Upvalue> in INIT_ASYNC_STAR).
-    final upvalues = frame.upvalues.isNotEmpty
-        ? frame.upvalues.cast<Upvalue>()
-        : null;
+    final upvalues = frame.upvalues.isNotEmpty ? frame.upvalues : null;
 
     // Push a call stack entry for the async* body.
     callStack.pushFrame(
@@ -1101,10 +1097,7 @@ class DarticInterpreter {
     final vBase = frame.savedVBase;
     final rBase = frame.savedRBase;
 
-    // Cast upvalues from List<Object?> to List<Upvalue>.
-    final upvalues = frame.upvalues.isNotEmpty
-        ? frame.upvalues.cast<Upvalue>()
-        : null;
+    final upvalues = frame.upvalues.isNotEmpty ? frame.upvalues : null;
 
     // Push a call stack entry for the resumed frame.
     callStack.pushFrame(
@@ -1564,11 +1557,11 @@ class DarticInterpreter {
         case Op.unboxDouble: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
           final a = decodeA(instr);
           final b = decodeB(instr);
-          final _ubdVal = rs.read(rBase + b);
+          final ubdVal = rs.read(rBase + b);
           // Dart allows implicit int→double promotion (e.g., passing int where
           // double is expected). Handle both types to avoid cast failures.
           vs.writeDouble(vBase + a,
-              _ubdVal is double ? _ubdVal : (_ubdVal as int).toDouble());
+              ubdVal is double ? ubdVal : (ubdVal as int).toDouble());
 
         case Op.unboxBool: // UNBOX_BOOL A, B — valueStack[A] = (refStack[B] as bool) ? 1 : 0
           final a = decodeA(instr);

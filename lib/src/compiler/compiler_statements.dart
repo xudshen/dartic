@@ -189,6 +189,10 @@ extension on DarticCompiler {
       final resultReg = _allocValueReg();
       final matchJumps = <int>[];
 
+      // Pre-box switchReg once for ref-stack comparison (reused across
+      // multiple case expressions in the same SwitchCase).
+      int? refSwitchReg;
+
       for (final caseExpr in switchCase.expressions) {
         var (caseReg, caseLoc) = _compileExpression(caseExpr);
 
@@ -198,14 +202,13 @@ extension on DarticCompiler {
         } else {
           // At least one is on ref stack — box the value-stack operand
           // and use EQ_REF (handles mixed types correctly via ==).
-          var refSwitchReg = switchReg;
           if (isValueSwitch) {
-            refSwitchReg = _emitBoxToRef(switchReg, _inferExprType(stmt.expression));
+            refSwitchReg ??= _emitBoxToRef(switchReg, _inferExprType(stmt.expression));
           }
           if (caseLoc == ResultLoc.value) {
             caseReg = _emitBoxToRef(caseReg, _inferExprType(caseExpr));
           }
-          _emitter.emitABC(Op.eqRef, resultReg, refSwitchReg, caseReg);
+          _emitter.emitABC(Op.eqRef, resultReg, refSwitchReg ?? switchReg, caseReg);
         }
         matchJumps.add(_emitter.emitJumpPlaceholder()); // JUMP_IF_TRUE -> body
       }
