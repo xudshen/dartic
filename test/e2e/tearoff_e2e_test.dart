@@ -484,6 +484,74 @@ bool main() {
     });
   });
 
+  // ── Super host method tearoff ──
+
+  group('Super host method tearoff', () {
+    test('super.toString tearoff compiles without error', () async {
+      // Previously threw UnsupportedError: Unknown super method/getter target
+      // Compilation is the key test — runtime needs host bindings (DarticEngine).
+      final module = await compileDart('''
+class A {
+  @override
+  String toString() {
+    var f = super.toString;
+    return f is Function ? 'ok' : 'fail';
+  }
+}
+String main() {
+  return A().toString();
+}
+''');
+      // Verify the module compiled and has functions.
+      expect(module.functions.length, greaterThan(0));
+    });
+  });
+
+  // ── Super generic method instantiation ──
+
+  group('Super generic method instantiation', () {
+    test('super.genericMethod implicit instantiation', () async {
+      final result = await compileAndRun('''
+class Base {
+  T identity<T>(T x) => x;
+}
+class Child extends Base {
+  int callIt() {
+    int Function(int) f = super.identity;
+    return f(99);
+  }
+}
+int main() {
+  return Child().callIt();
+}
+''');
+      expect(result, 99);
+    });
+
+    test('super.genericMethod explicit instantiation', () async {
+      final result = await compileAndRun('''
+class Base {
+  T identity<T>(T x) => x;
+}
+class Child extends Base {
+  int callIt() {
+    var f = super.identity<int>;
+    return f(42);
+  }
+}
+int main() {
+  return Child().callIt();
+}
+''');
+      expect(result, 42);
+    });
+  });
+
+  // NOTE: Static tearoff canonicalization (identical(foo, foo)) deferred —
+  // requires host bindings for identical(). Static tearoff == already works
+  // via DarticClosure.operator ==. Kernel constant-folds most static tearoffs
+  // to StaticTearOffConstant which is already canonicalized.
+
   group('combined tearoff tests', () {
     test('constructor tearoff with named params (explicitly passed)', () async {
       final result = await compileAndRun('''

@@ -2058,8 +2058,8 @@ extension on DarticCompiler {
           return _emitCallHost(
               [(thisReg, ResultLoc.ref, null as ir.DartType?)], bindingIndex);
         }
-        // Host method tearoff — rare but possible (e.g. super.toString).
-        // Not yet supported.
+        // Host method tearoff — e.g., `super.toString`.
+        return _compileSuperHostMethodTearOff(target);
       }
 
       throw UnsupportedError(
@@ -2188,6 +2188,313 @@ extension on DarticCompiler {
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
 
+    return (closureReg, ResultLoc.ref);
+  }
+
+  /// Compiles `Instantiation(SuperPropertyGet(method), typeArgs)`:
+  /// a generic super method instantiation (e.g., `super.identity<int>`).
+  ///
+  /// Generates a combined thunk like [_compileInstanceInstantiation] but
+  /// uses CALL_SUPER instead of CALL_VIRTUAL.
+  (int, ResultLoc) _compileSuperInstantiation(
+    ir.Procedure target,
+    int funcId,
+    List<ir.DartType> typeArgs,
+  ) {
+    final methodName = target.name.text;
+    final fn = target.function;
+    final typeParams = fn.typeParameters;
+
+    // If no type params or no type args, fall back to plain super tearoff.
+    if (typeParams.isEmpty || typeArgs.isEmpty) {
+      return _compileSuperMethodTearOff(target, funcId);
+    }
+
+    final subst = type_algebra.Substitution.fromPairs(typeParams, typeArgs);
+    const thisReg = 2;
+
+    // Reserve function table slot.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    _pushContext();
+    _currentReturnType = subst.substituteType(fn.returnType);
+
+    _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
+
+    // Reserve header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+
+    // Allocate params with instantiated types + null-sentinel promotion.
+    final argTemps = <(int, ResultLoc)>[];
+    final promoted = <int>{};
+    final paramMappings = <({
+      int idx,
+      StackKind instKind,
+      StackKind actualKind,
+      ir.DartType instType,
+    })>[];
+
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final isOptional = i >= fn.requiredParameterCount;
+      if (isOptional && instKind.isValue && param.initializer != null) {
+        argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
+        promoted.add(i);
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add(
+            (reg, instKind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+      paramMappings.add((
+        idx: i,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+      ));
+    }
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      final param = fn.namedParameters[i];
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final flatIdx = fn.positionalParameters.length + i;
+      if (instKind.isValue && param.initializer != null) {
+        argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
+        promoted.add(flatIdx);
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add(
+            (reg, instKind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+      paramMappings.add((
+        idx: flatIdx,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+      ));
+    }
+
+    // Apply defaults.
+    _applyTearoffDefaults(fn, argTemps);
+
+    // Unbox promoted params.
+    for (final idx in promoted) {
+      final (refReg, _) = argTemps[idx];
+      final info = paramMappings.firstWhere((m) => m.idx == idx);
+      if (info.instKind.isValue) {
+        final valueReg = _valueAlloc.alloc();
+        switch (info.instKind) {
+          case StackKind.intVal:
+            _emitter.emitABC(Op.unboxInt, valueReg, refReg, 0);
+          case StackKind.boolVal:
+            _emitter.emitABC(Op.unboxBool, valueReg, refReg, 0);
+          case StackKind.doubleVal:
+            _emitter.emitABC(Op.unboxDouble, valueReg, refReg, 0);
+          default:
+            break;
+        }
+        argTemps[idx] = (valueReg, ResultLoc.value);
+      }
+    }
+
+    // Coerce from instantiated kind to actual (generic) kind.
+    final callArgTemps = <(int, ResultLoc)>[];
+    for (final info in paramMappings) {
+      callArgTemps.add(_coerceThunkArg(
+          argTemps[info.idx].$1, info.instKind, info.actualKind,
+          info.instType));
+    }
+
+    // Load `this` from upvalue[0].
+    _emitter.emitABC(Op.loadUpvalue, 2, 0, 0);
+
+    // Emit FTA for the call.
+    _emitFTAForCall(typeArgs);
+
+    // Pass `this` through for CALL_SUPER.
+    _emitThisPassthrough();
+
+    // Allocate result register and emit CALL_SUPER.
+    final actualRetKind = _classifyStackKind(fn.returnType);
+    final innerResultReg =
+        actualRetKind.isValue ? _allocValueReg() : _allocRefReg();
+    _emitArgMovesAndCall(callArgTemps, Op.callSuper, innerResultReg, funcId);
+
+    // Coerce return value and emit RETURN.
+    final instRetKind =
+        _classifyStackKind(subst.substituteType(fn.returnType));
+    final actualRetLoc =
+        actualRetKind.isValue ? ResultLoc.value : ResultLoc.ref;
+    _emitCoercedReturn(
+        innerResultReg, actualRetLoc, instRetKind, fn.returnType);
+
+    _patchPendingArgMoves();
+
+    // Build paramKinds.
+    final paramKinds =
+        Uint8List(fn.positionalParameters.length + fn.namedParameters.length);
+    for (var i = 0; i < paramMappings.length; i++) {
+      final m = paramMappings[i];
+      paramKinds[m.idx] =
+          promoted.contains(m.idx) ? StackKind.ref.index : m.instKind.index;
+    }
+
+    final thunkProto = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<super-instantiation:$methodName>',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: paramKinds,
+      returnKind:
+          _classifyReturnKind(subst.substituteType(fn.returnType)),
+      icTable: List.of(_icEntries),
+      upvalueDescriptors: [
+        UpvalueDescriptor(isLocal: true, index: thisReg),
+      ],
+    );
+
+    // Set typeTemplate to instantiated + covariant-widened type.
+    final instFuncType = subst.substituteType(
+      computeTearOffFunctionType(fn, _coreTypes),
+    );
+    thunkProto.typeTemplate = dartTypeToTemplate(
+      instFuncType,
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[thunkFuncId] = thunkProto;
+
+    _popContext();
+
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+    return (closureReg, ResultLoc.ref);
+  }
+
+  /// Generates a tearoff thunk for `super.hostMethod` (e.g., `super.toString`)
+  /// that captures `this` and forwards all arguments via CALL_HOST.
+  ///
+  /// Pattern mirrors [_compileSuperMethodTearOff] but uses CALL_HOST instead
+  /// of CALL_SUPER since the target method lives in the host VM, not dartic.
+  (int, ResultLoc) _compileSuperHostMethodTearOff(ir.Procedure target) {
+    final methodName = target.name.text;
+    final fn = target.function;
+
+    const thisReg = 2;
+
+    // Reserve function table slot.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    _pushContext();
+    _currentReturnType = fn.returnType;
+
+    _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
+
+    // Reserve header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+
+    // Allocate params + apply defaults + unbox promoted.
+    final (argTemps, promotedIndices) = _allocTearoffParams(fn);
+    _applyTearoffDefaults(fn, argTemps);
+    _unboxPromotedParams(fn, argTemps, promotedIndices);
+
+    // Load `this` from upvalue[0].
+    final receiverReg = _allocRefReg();
+    _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
+
+    // Build CALL_HOST args: receiver + params.
+    final symbolName = _hostSymbolName(target);
+    final bindingIndex = _allocBinding(symbolName, 1 + argTemps.length);
+
+    final hostArgs = <(int, ResultLoc, ir.DartType?)>[
+      (receiverReg, ResultLoc.ref, null),
+    ];
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      hostArgs.add((
+        argTemps[i].$1,
+        argTemps[i].$2,
+        fn.positionalParameters[i].type,
+      ));
+    }
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      final flatIdx = fn.positionalParameters.length + i;
+      hostArgs.add((
+        argTemps[flatIdx].$1,
+        argTemps[flatIdx].$2,
+        fn.namedParameters[i].type,
+      ));
+    }
+
+    final (resultReg, retLoc) = _emitCallHost(hostArgs, bindingIndex);
+
+    // Emit RETURN.
+    if (retLoc == ResultLoc.value) {
+      _emitter.emitABC(Op.returnVal, resultReg, 0, 0);
+    } else {
+      _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
+    }
+
+    _patchPendingArgMoves();
+
+    final superHostTearoffProto = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<super-host-tearoff:$methodName>',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: promotedIndices.isEmpty
+          ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
+          : _buildTearoffParamKinds(fn, promotedIndices),
+      returnKind: _classifyReturnKind(fn.returnType),
+      icTable: List.of(_icEntries),
+      upvalueDescriptors: [
+        UpvalueDescriptor(isLocal: true, index: thisReg),
+      ],
+    );
+
+    superHostTearoffProto.typeTemplate = dartTypeToTemplate(
+      computeTearOffFunctionType(fn, _coreTypes),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+
+    _functions[thunkFuncId] = superHostTearoffProto;
+    _popContext();
+
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -2444,6 +2751,20 @@ extension on DarticCompiler {
         expr.expression as ir.InstanceTearOff,
         expr.typeArguments,
       );
+    }
+
+    // SuperPropertyGet: super generic method instantiation.
+    // e.g., `int Function(int) f = super.identity<int>;`
+    if (expr.expression is ir.SuperPropertyGet) {
+      final superGet = expr.expression as ir.SuperPropertyGet;
+      final target = superGet.interfaceTarget;
+      if (target is ir.Procedure && !target.isGetter) {
+        final funcId = _procToFuncId[target.reference];
+        if (funcId != null) {
+          return _compileSuperInstantiation(
+              target, funcId, expr.typeArguments);
+        }
+      }
     }
 
     // Fallback for non-StaticTearOff targets: pass through.
