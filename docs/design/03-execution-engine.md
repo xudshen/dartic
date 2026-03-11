@@ -212,7 +212,7 @@ for each frame in call stack (current -> bottom):
   // 当前帧无匹配 -> 弹出帧，继续搜索调用者帧
 ```
 
-**catch 类型匹配说明**：`handler.catchType` 索引常量池中的 TypeTemplate（而非直接的 classId），运行时需先通过 Ch6 的 `resolveType` 将其解析为具体 DarticType（处理泛型参数替换），再调用 `isSubtypeOf` 进行子类型判定。对于非泛型的简单类型（如 `on FormatException`），TypeTemplate 为 ConcreteTypeTemplate，resolveType 直接返回预驻留的 DarticType，开销极低。
+**catch 类型匹配说明**：`handler.catchType` 索引常量池中的 TypeTemplate（而非直接的 classId），运行时需先通过 Ch6 的 `resolveType` 将其解析为具体 DarticType（处理泛型参数替换），再调用 `isSubtypeOf` 进行子类型判定。对于编译为字节码的非泛型简单类型，TypeTemplate 为 ConcreteTypeTemplate，resolveType 直接返回预驻留的 DarticType，开销极低；对于宿主库类型（如 `on FormatException`），TypeTemplate 为 HostClassTypeTemplate，resolveType 通过 FQN 名称查询 `HostTypeResolver.hostClassNameToId` 得到运行时 classId 后驻留，首次解析后缓存于 TypeRegistry。
 
 **栈展开（匹配成功后）**：
 

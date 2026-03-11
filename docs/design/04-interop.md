@@ -289,6 +289,43 @@ Engine 加载模块时，对每个 DarticClassInfo 按以下优先级匹配 Brid
 
 此三级解析链使 BridgeFactory 注册无需知道 dartic 类名——只需注册宿主类型名即可自动匹配所有继承/实现该类型的 dartic 类。
 
+### HostTypeResolver（宿主类型解析器）
+
+HostTypeResolver 为宿主 VM 对象提供运行时类型解析，使 `is`/`as`/`on` 类型检查对宿主类正确工作。它与 HostClassTypeTemplate（编译器生成的宿主类型描述，详见 Ch6）配合，构成宿主类型检查的**双路径架构**：
+
+```
+value is FormatException
+  │              │
+  │              └─ 右路径（目标类型）：HostClassTypeTemplate
+  │                 编译器编码 FQN 名称 → resolveType 查 hostClassNameToId → DarticType
+  │
+  └─ 左路径（对象类型）：HostTypeResolver.resolve()
+     从 host Object 实例反推 DarticType（runtimeType 匹配 + predicate 扫描）
+```
+
+两条路径不可合并——左路径的输入是**运行时对象实例**（无编译期类型名可用），右路径的输入是**编译期类型引用**（无运行时对象可检查）。两路径通过共享 `resolveClassIds()` 分配的 classId 保证一致性。
+
+**两阶段生命周期**：
+
+1. **注册阶段**（Engine 构造时）：插件通过 `PluginContext` 调用 `register()`，提供 FQN 名称、Dart Type、类型谓词和超类列表：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| name | String | FQN 类名，如 `'dart:core::FormatException'` |
+| type | Type | Dart Type，用于精确匹配（如 `FormatException`） |
+| test | `bool Function(Object)?` | 可选谓词，用于多态类型匹配（如 `(o) => o is Exception`） |
+| superclasses | `List<String>?` | FQN 超类名列表，用于构建 supertypeIds 闭包 |
+
+2. **解析阶段**（模块安装时）：`resolveClassIds(classes)` 将注册的名称与模块类表匹配。未在模块中的宿主类会创建新的 `DarticClassInfo` 条目（分配新 classId），然后迭代构建 `supertypeIds`（处理任意注册顺序）。最终产出 `hostClassNameToId` 映射表，共享给 `TypeRegistry` 供 HostClassTypeTemplate 运行时解析。
+
+**运行时解析三层策略**（`resolve(Object value, TypeRegistry registry)`）：
+
+1. **精确缓存**：`runtimeType → DarticType` 缓存，O(1) 命中（含负缓存）
+2. **精确类型匹配**：遍历已注册条目，比较 `value.runtimeType == entry.type`。此层保证更具体的类型（如 `FormatException`）不被基类谓词（如 `is Exception`）遮蔽
+3. **谓词扫描**：反向遍历已注册条目，对有 `test` 的条目执行 `entry.test!(value)`。反向遍历使后注册的（通常更具体的）类型优先
+
+首次命中后缓存结果，后续同 `runtimeType` 的查找为 O(1)。
+
 ### BridgeGenerator（编译期代码生成器）
 
 BridgeGenerator 基于 build_runner + package:analyzer，扫描目标库 API 并为每个宿主类生成三部分代码：

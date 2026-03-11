@@ -121,7 +121,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 
 ### TypeTemplate（编译期类型描述）
 
-编译器将 Kernel 类型节点编码为 TypeTemplate，存入 .darb 常量池 refs 分区。四种变体：
+编译器将 Kernel 类型节点编码为 TypeTemplate，存入 .darb 常量池 refs 分区。六种变体：
 
 | 变体 | 含义 | resolveType 行为 |
 |------|------|-----------------|
@@ -130,6 +130,7 @@ CFE 已完成所有类型推断，解释器无需重做。Kernel 的 `DartType` 
 | GenericTypeTemplate | 含类型参数引用的参数化接口类型（如 `List<T>`） | 递归 resolveType 每个 typeArgTemplate，然后 intern 为 DarticInterfaceType |
 | FunctionTypeTemplate | 函数类型（如 `void Function(T)`），保留完整参数签名 | 递归 resolveType 所有内嵌 TypeTemplate，然后 intern 为 DarticFunctionType |
 | RecordTypeTemplate | Record 类型（如 `(int, {String name})`），保留 positional + named 字段签名 | 递归 resolveType 所有字段 TypeTemplate，然后 intern 为 DarticRecordType |
+| HostClassTypeTemplate | 宿主库类型，编译器无法确定 classId（如 `FormatException`） | 通过 FQN 名称查询 `HostTypeResolver.hostClassNameToId` 得到运行时 classId，然后递归 resolveType typeArgs 并 intern 为 DarticInterfaceType |
 
 #### FunctionTypeTemplate 编码
 
@@ -199,21 +200,24 @@ resolveType 处理 FunctionTypeTemplate 时，递归解析所有内嵌 TypeTempl
 
 `INSTANCEOF` / `CAST` 指令的目标类型编码为 TypeTemplate（可能含 TypeParameterTemplate），运行时必须在调用 isSubtypeOf 之前解析为具体 DarticType。
 
-**解析五分支**：
+**解析六分支**：
 
 1. **ConcreteTypeTemplate** → 直接返回预驻留的 DarticType（O(1)）
 2. **TypeParameterTemplate** → 读取 isClassTypeParam 标志，从当前帧的 ITA（类类型参数）或 FTA（函数类型参数）中按 index 取值（O(1)）
 3. **GenericTypeTemplate** → 对每个 typeArgTemplate 递归调用 resolveType，收集解析后的类型参数列表，调用 `TypeRegistry.intern(classId, resolvedArgs, nullability)` 驻留并返回 DarticInterfaceType
 4. **FunctionTypeTemplate** → 递归 resolveType 所有内嵌 TypeTemplate（参数类型、返回类型、类型参数边界），调用 `TypeRegistry.internFunction(...)` 驻留并返回 DarticFunctionType
 5. **RecordTypeTemplate** → 递归 resolveType 所有字段 TypeTemplate（positional + named），调用 `TypeRegistry.internRecord(...)` 驻留并返回 DarticRecordType
+6. **HostClassTypeTemplate** → 通过 `TypeRegistry.resolveHostClassName(name)` 查询运行时 classId，递归 resolveType 每个 typeArgTemplate，调用 `TypeRegistry.intern(classId, resolvedArgs, nullability)` 驻留并返回 DarticInterfaceType。编译器为宿主库的 InterfaceType 生成此变体，存储 FQN 名称（如 `dart:core::FormatException`）而非 classId，使编译器与 Bridge 插件注册解耦
 
 **INSTANCEOF 指令执行流**（以 `value is T` 为例）：
 
 1. 从常量池取 TypeTemplate
-2. 用当前帧的 ITA/FTA 调用 resolveType 得到 targetType
-3. 从对象提取 objType（extractType）
+2. **右路径（目标类型）**：用当前帧的 ITA/FTA 调用 resolveType 得到 targetType。对宿主库类型（如 `FormatException`），TypeTemplate 为 HostClassTypeTemplate，通过 FQN 名称查 `hostClassNameToId` 得到运行时 classId（详见 Ch4 HostTypeResolver）
+3. **左路径（对象类型）**：从对象提取 objType（extractType）。对宿主 VM 对象，通过 HostTypeResolver.resolve() 的三层策略确定 DarticType（详见 Ch4 HostTypeResolver）
 4. 调用 `isSubtypeOf(objType, targetType)` 得到布尔结果
 5. 写入 valueStack
+
+两条路径通过共享 `HostTypeResolver.resolveClassIds()` 分配的 classId 保证一致性——左路径和右路径为同一宿主类产出相同的 classId，`isSubtypeOf` 比较才能正确匹配。
 
 ### 泛型函数实例化（Instantiation）
 
@@ -335,14 +339,17 @@ INSTANCEOF/CAST 指令需要从对象提取运行时类型（DarticType）。ext
 
 **宿主对象路径**（接收者为 VM 原生对象）：
 
-VM 对象进入解释器时，按以下优先级依次匹配：
+VM 对象进入解释器时，通过 `HostTypeResolver.resolve()` 的三层策略解析（详见 Ch4 HostTypeResolver）：
 
-1. **基本类型**：`int` / `double` / `String` / `bool` / `Null` → 返回 TypeRegistry 中预注册的 DarticType（O(1)）
-2. **集合类型**：`List<E>` / `Map<K,V>` / `Set<E>` → 利用 Dart reified generics 通过泛型辅助函数提取元素类型参数（如 `_extractListElementType<E>(List<E> list)`），递归 extractType 每个类型参数后 intern
-3. **Bridge 对象**：对象本身是 Bridge 类实例 → 直接从 Bridge 关联的 DarticObject 获取已有的 DarticType
-4. **未知类型**：以上均不匹配 → 退化为 `dynamic`
+1. **精确缓存**：`runtimeType → DarticType` 缓存，O(1) 命中。首次解析后自动缓存，含负缓存条目
+2. **精确类型匹配**：遍历已注册条目，比较 `value.runtimeType == entry.type`。基本类型（int/double/String/bool/Null）、集合类型（List/Map/Set）和其他已注册宿主类（FormatException 等）均在此层命中
+3. **谓词扫描**：反向遍历已注册条目，对有 `test` 的条目执行 `entry.test!(value)`。处理泛型多态类型（如 `List<int>` 的 runtimeType 为 `_GrowableList<int>` 而非 `List`），反向遍历保证更具体的类型优先
 
-**设计约束**：Dart 的 `Type` 对象不提供结构化访问 API（无法编程提取类型参数），因此步骤 2 依赖泛型辅助函数——利用 Dart reified generics 在泛型函数签名中捕获类型参数。详见 Ch4 Bridge 层的类型映射设计。
+Bridge 对象（对象本身是 Bridge 类实例）在 `HostTypeResolver` 之前拦截——直接从 Bridge 关联的 DarticObject 获取已有的 DarticType。
+
+HostTypeResolver 在模块安装时通过 `resolveClassIds()` 为每个注册的宿主类分配 classId 并构建 `supertypeIds` 闭包（处理继承链），使宿主类的 `is`/`as` 超类型检查正确工作。未注册的宿主类型返回 null（负缓存），由调用方决定降级策略。
+
+**设计约束**：Dart 的 `Type` 对象不提供结构化访问 API（无法编程提取类型参数），因此泛型集合类型的类型参数提取依赖泛型辅助函数——利用 Dart reified generics 在泛型函数签名中捕获类型参数（如 `_extractListElementType<E>(List<E> list)`）。详见 Ch4 Bridge 层的类型映射设计。
 
 ### 协变检查
 

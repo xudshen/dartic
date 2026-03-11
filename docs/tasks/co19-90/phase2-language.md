@@ -10,7 +10,7 @@
 - ~~Task 2.2 continue 的 `_labelContinueJumps` 方案~~：Kernel 已将 `continue` 脱糖为 `BreakStatement` 指向循环内部 `LabeledStatement`，无需新的 continue 跳转机制。仅 `ContinueSwitchStatement`（continue 到 case 标签）缺失
 - ~~Task 2.4 cascade~~：已由 CFE 脱糖为 `Let` 表达式，编译器已处理
 
-**测试数据：** 5,370 total, 4,879 pass (90.9%), 480 fail, 5 error, 6 skip
+**测试数据：** 5,370 total, 5,065 pass (94.4%), 294 fail, 6 error
 
 **已完成修复（Phase 2 session 1）：**
 - ✅ SymbolConstant 编译支持（`_compileSymbolConstant` via `dart:_internal::Symbol::#1`）
@@ -34,6 +34,15 @@
 - **净增 +8 pass (4879→4887)，0 regression**
 
 **Phase 2 累计：** 4800 → 4887（+87 pass），90.9% → 91.0%
+
+**已完成修复（Phase 2 session 4）：**
+- ✅ Return-in-finally 无限递归修复（`_FinalizerReturnCtx` 共享寄存器 + exit jumps）→ try-finally 嵌套 return 正确
+- ✅ Catch fall-through 修复（jump-to-end 在所有 handler 编译后统一 patch）→ catch 子句不再穿透
+- ✅ Host class type resolution 运行时化（`HostClassTypeTemplate` 替代编译器 `_registerReferencedHostClasses`）→ `is`/`as`/catch guard 对宿主类正确工作
+- ✅ HostTypeResolver exact-match-first resolve（精确 runtimeType 匹配优先于谓词扫描，防止基类谓词遮蔽派生类）
+- **净增 +178 pass (4887→5065)，0 regression**
+
+**Phase 2 累计（含 session 4）：** 4800 → 5065（+265 pass），89.4% → 94.4%
 
 ---
 
@@ -137,19 +146,25 @@ fvm dart run tool/co19_runner.dart --run --jobs=8 \
 
 ---
 
-## 剩余失败分布（Phase 2 完成后：472 fail + 6 error = 478）
+## 剩余失败分布（Phase 2 session 4 后：294 fail + 6 error = 300）
 
 | 类别 | 失败数 | 根因 | 修复阶段 |
 |------|--------|------|----------|
 | Yield_and_Yield_Each | 49 | async\* generator 深层运行时 | Phase 5 |
-| Property_Extraction | 40 | 闭包化（方法、getter、super） | Phase 5 |
-| Assignment | 36 | 29 negative + 5 real (super assignment, setter naming) | Phase 5 |
-| Function_Invocation | 29 | 20 async + 9 non-async (arg eval order, call dispatch) | Phase 5 |
+| Function_Invocation | 26 | async + non-async 边缘 | Phase 5 |
 | Await_Expressions | 22 | async 运行时边缘 | Phase 5 |
-| Instance_Methods | 21 | noSuchMethod、方法调用边缘 | Phase 5 |
-| Break + Continue | 37 | break/continue + finally 交互 | Phase 5 |
-| Return | 14 | return + finally、async return | Phase 5 |
-| Identifier_Reference | 12 | 9 negative + 2 compile + 1 real | Phase 5 |
-| Constants | 11 | 常量表达式求值缺口 | Phase 5 |
-| For (Async_For_in) | 7 | break/finally 交互、边缘 deepEquals（await-for 本身已可工作） | Phase 5 |
-| 散布其他 | ~196 | 多类别少量失败 | Phase 5 数据驱动 |
+| Property_Extraction | 18 | 闭包化（方法、getter、super） | Phase 5 |
+| Instance_Methods | 17 | noSuchMethod、方法调用边缘 | Phase 5 |
+| Return | 12 | return + finally、async return | Phase 5 |
+| Continue | 12 | continue + finally 交互 | Phase 5 |
+| Break | 12 | break + finally 交互 | Phase 5 |
+| Constants | 12 | 常量表达式求值缺口 | Phase 5 |
+| Identifier_Reference | 11 | negative + compile errors | Phase 5 |
+| For | 10 | async for-in 边缘 | Phase 5 |
+| Interface_Types | 7 | 类型系统边缘 | Phase 5 |
+| Imports | 6 | deferred loading 边缘 | Phase 5 |
+| Maps | 6 | Map 字面量边缘 | Phase 5 |
+| Object_Identity | 5 | const 规范化 | Phase 5 |
+| Instance_Creation | 5 | 构造器边缘 | Phase 5 |
+| Constructors | 5 | 构造器边缘 | Phase 5 |
+| 散布其他 | ~65 | 多类别少量失败 | Phase 5 数据驱动 |
