@@ -157,11 +157,12 @@ extension on DarticCompiler {
     final outerItaUpvalueIdx = _itaUpvalueIdx;
     final outerFtaUpvalueIdx = _ftaUpvalueIdx;
 
-    // Determine if the closure needs ITA: when it captures `this` and the
-    // enclosing class is generic, ITA must be forwarded so INSTANTIATE_TYPE
-    // can resolve class type parameters inside the closure.
-    final needsIta = capturesThis &&
-        _currentClassTypeParams != null &&
+    // Determine if the closure needs ITA: when the enclosing class is generic,
+    // ITA must be forwarded so INSTANTIATE_TYPE can resolve class type
+    // parameters inside the closure (e.g. `o is T` where T is a class type
+    // param). This is independent of `capturesThis` — a closure may reference
+    // class type parameters through DartType nodes without accessing `this`.
+    final needsIta = _currentClassTypeParams != null &&
         _currentClassTypeParams!.isNotEmpty;
 
     // Determine if the closure needs FTA: when the enclosing function is
@@ -314,9 +315,12 @@ extension on DarticCompiler {
     // Restore enclosing context.
     _popContext();
 
-    // Mark the enclosing function if `this` was directly captured
-    // (isLocal=true). This ensures CLOSE_UPVALUE is emitted on return.
-    if (capturesThis && outerThisUpvalueIdx < 0) {
+    // Mark the enclosing function if `this`, ITA, or FTA was directly
+    // captured (isLocal=true). This ensures CLOSE_UPVALUE is emitted on
+    // return so that open upvalues are closed before the frame is torn down.
+    if ((capturesThis && outerThisUpvalueIdx < 0) ||
+        (needsIta && outerItaUpvalueIdx < 0) ||
+        (needsFta && outerFtaUpvalueIdx < 0)) {
       _thisCapturedByInner = true;
     }
 

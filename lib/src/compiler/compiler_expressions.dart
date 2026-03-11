@@ -858,13 +858,19 @@ extension on DarticCompiler {
   /// Shared helper for compiling closure calls (LocalFunctionInvocation and
   /// FunctionInvocation). Handles positional arg coercion, named arg matching,
   /// and CALL emission.
+  ///
+  /// Always allocates a ref result register because the closure's actual
+  /// return kind (RETURN_VAL vs RETURN_REF) is unknown at compile time.
+  /// The runtime writes to both stacks on RETURN_VAL so the ref register
+  /// always has the boxed result. The caller unboxes if it needs a value type.
   (int, ResultLoc) _compileClosureCall({
     required int closureReg,
     required ir.Arguments arguments,
     required ir.FunctionType? funcType,
     required ir.DartType returnType,
   }) {
-    final (resultReg, retLoc) = _allocResultReg(returnType);
+    // Always use ref result register — closure return kind is unknown.
+    final resultReg = _allocRefReg();
 
     // Compile positional arguments with type coercion.
     final posParamTypes =
@@ -882,7 +888,14 @@ extension on DarticCompiler {
     }
 
     _emitArgMovesAndCall(argTemps, Op.call, resultReg, closureReg);
-    return (resultReg, retLoc);
+
+    // Unbox if the caller needs a value type (the ref register holds
+    // the boxed value thanks to the runtime's dual-write on RETURN_VAL).
+    final targetKind = _classifyStackKind(returnType);
+    if (targetKind.isValue) {
+      return (_emitUnbox(resultReg, targetKind), ResultLoc.value);
+    }
+    return (resultReg, ResultLoc.ref);
   }
 
   /// Compiles positional arguments with type coercion against a list of

@@ -2,7 +2,7 @@
 #
 # Run with:
 #   fvm dart run packages/dartic_cli/bin/dartic.dart gen \
-#     packages/dartic_flutter/configs/flutter_widgets.yaml \
+#     packages/dartic_flutter/configs/widgets.yaml \
 #     --analysis-root packages/dartic_flutter
 #
 # The --analysis-root must point to a Flutter project so the analyzer

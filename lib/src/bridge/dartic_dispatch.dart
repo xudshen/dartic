@@ -108,19 +108,21 @@ class DarticDispatch {
   /// [receiver] is the Bridge instance (set as `this` in dartic methods).
   /// [darticObject] is the embedded DarticObject (used for classId / method
   /// lookup).
-  void set(Object receiver, DarticObject darticObject, String property,
+  /// Returns `true` if the dartic has overridden [property], `false` otherwise.
+  bool set(Object receiver, DarticObject darticObject, String property,
       Object? value) {
     final setterName = '$property=';
     final nameIdx = _module.constantPool.lookupNameIndex(setterName);
-    if (nameIdx < 0) return;
+    if (nameIdx < 0) return false;
     final classes = _module.classes;
     for (var cid = darticObject.classId; cid >= 0;
         cid = classes[cid].superClassId) {
       final proto = classes[cid].methods[nameIdx];
       if (proto != null) {
         _callMethod(_module, proto, receiver, [value]);
-        return;
+        return true;
       }
     }
+    return false;
   }
 }

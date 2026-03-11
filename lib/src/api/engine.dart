@@ -42,9 +42,11 @@ enum _EngineState { created, loaded, disposed }
 ///   disposed                   disposed
 /// ```
 ///
-/// **Minimal 3-step usage:**
+/// **Minimal usage (with stdlib):**
 /// ```dart
-/// final engine = DarticEngine();
+/// import 'package:dartic_stdlib/dartic_stdlib.dart';
+///
+/// final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
 /// engine.loadBytecode(myDarbBytes);
 /// engine.call('main');
 /// ```

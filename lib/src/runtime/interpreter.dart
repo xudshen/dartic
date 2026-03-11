@@ -2355,6 +2355,22 @@ class DarticInterpreter {
           // Write return value to caller's register.
           if (op == Op.returnVal) {
             vs.writeInt(callerVSP + resReg, retVal);
+            // For closure calls (Op.call): also write boxed value to the
+            // ref stack. The caller may have allocated a ref result register
+            // because closure return kinds are unknown at compile time
+            // (e.g., generic closure returning type parameter T that was
+            // substituted to int at the call site). Only do this for
+            // Op.call to avoid corrupting ref stack slots in CALL_STATIC
+            // and CALL_VIRTUAL where the caller uses a value result register.
+            if (decodeOp(code[retPC - 1]) == Op.call) {
+              final boxed =
+                  switch (module.functions[calleeFuncId].returnKind) {
+                StackKind.boolDefault => retVal != 0,
+                StackKind.doubleDefault => vs.readDouble(retValIdx),
+                _ => retVal,
+              };
+              rs.write(callerRSP + resReg, boxed);
+            }
           } else {
             rs.write(callerRSP + resReg, retRef);
           }
@@ -2600,8 +2616,13 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final template = cp.getRef(bx) as TypeTemplate;
-          final ita = rs.read(rBase + 0) as List<DarticType>?;
-          final fta = rs.read(rBase + 1) as List<DarticType>?;
+          // Defensive reads: rBase+0/+1 may contain non-ITA/FTA values in
+          // top-level functions or closures where ITA/FTA slots overlap with
+          // local variables. Only use the value if it's actually a type list.
+          final itaRaw2 = rs.read(rBase + 0);
+          final ita = itaRaw2 is List<DarticType> ? itaRaw2 : null;
+          final ftaRaw2 = rs.read(rBase + 1);
+          final fta = ftaRaw2 is List<DarticType> ? ftaRaw2 : null;
           // Guard: provide actionable error for missing ITA/FTA.
           if (template is TypeParameterTemplate) {
             if (template.isFunctionTypeParam && fta == null) {
