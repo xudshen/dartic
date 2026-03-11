@@ -137,8 +137,6 @@ class HostTypeResolver {
         nameToInfo[shortName] = cls;
       }
       hostClassNameToId[p.name] = cls.classId;
-      // Also store by short name for HostClassTypeTemplate resolution.
-      hostClassNameToId[shortName] = cls.classId;
       _resolved.add(_ResolvedEntry(
         type: p.type,
         test: p.test,

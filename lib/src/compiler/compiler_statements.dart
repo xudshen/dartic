@@ -320,6 +320,20 @@ extension on DarticCompiler {
     breakList.add(_emitter.emitJumpPlaceholder());
   }
 
+  /// Wraps [_inlineFinalizersFromDepth] with return-in-finally protection.
+  ///
+  /// Sets up a [_FinalizerReturnCtx] so that any `return` statement inside
+  /// an inlined finally block stores its value in [retReg] and jumps past
+  /// the finalizer instead of recursing back into [_compileReturnStatement].
+  /// This is a no-op when [_activeFinalizers] is empty.
+  void _inlineFinalizersWithReturnProtection(int retReg) {
+    if (_activeFinalizers.isEmpty) return;
+    final savedCtx = _finalizerReturnCtx;
+    _finalizerReturnCtx = _FinalizerReturnCtx(retReg);
+    _inlineFinalizersFromDepth(0);
+    _finalizerReturnCtx = savedCtx;
+  }
+
   /// Inlines all active finalizer blocks from [fromDepth] to the current
   /// stack top. Used by break/continue to run only the finalizers being
   /// exited. For return, pass 0 to inline all active finalizers.
@@ -335,14 +349,13 @@ extension on DarticCompiler {
     // Compile innermost-first.
     for (var i = saved.length - 1; i >= 0; i--) {
       _compileStatement(saved[i].finalizer);
-      // If a return inside this finalizer set hasReturn, patch the exit
-      // jumps to land here so the next outer finalizer still runs.
-      if (_finalizerReturnCtx case final ctx? when ctx.hasReturn) {
+      // If a return inside this finalizer added exit jumps, patch them
+      // to land here so the next outer finalizer still runs.
+      if (_finalizerReturnCtx case final ctx? when ctx.exitJumps.isNotEmpty) {
         for (final jump in ctx.exitJumps) {
           _emitter.patchJumpAsBx(jump, Op.jump, 0, _emitter.currentPC);
         }
         ctx.exitJumps.clear();
-        ctx.hasReturn = false;
       }
     }
 
@@ -560,7 +573,6 @@ extension on DarticCompiler {
       } else {
         _emitter.emitABC(Op.loadNull, ctx.refReg, 0, 0);
       }
-      ctx.hasReturn = true;
       ctx.exitJumps.add(_emitter.emitJumpPlaceholder());
       return;
     }
@@ -575,7 +587,10 @@ extension on DarticCompiler {
       if (expr != null) {
         _compileExpression(expr);
       }
-      _inlineFinalizersFromDepth(0);
+      // Use a dummy reg for return-in-finally protection (the value is
+      // discarded for generators, but we need the ctx to prevent recursion).
+      final dummyReg = _allocRefReg();
+      _inlineFinalizersWithReturnProtection(dummyReg);
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
@@ -586,14 +601,14 @@ extension on DarticCompiler {
       if (expr == null) {
         final nullReg = _allocRefReg();
         _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
-        _inlineFinalizersFromDepth(0);
+        _inlineFinalizersWithReturnProtection(nullReg);
         _emitCloseUpvaluesIfNeeded();
         _emitter.emitABC(Op.asyncReturn, nullReg, 0, 0);
       } else {
         var (reg, loc) = _compileExpression(expr);
         // ASYNC_RETURN always operates on the ref stack.
         reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
-        _inlineFinalizersFromDepth(0);
+        _inlineFinalizersWithReturnProtection(reg);
         _emitCloseUpvaluesIfNeeded();
         _emitter.emitABC(Op.asyncReturn, reg, 0, 0);
       }
@@ -603,19 +618,32 @@ extension on DarticCompiler {
     if (_isEntryFunction) {
       // Entry function: encode result register and type in HALT ABC fields.
       // B field: 0=void, 1=ref, 2=boolVal, 3=intVal, 4=doubleVal (StackKind.index + 1).
-      if (expr != null) {
-        final (reg, loc) = _compileExpression(expr);
-        // Determine the StackKind for the HALT instruction. For ref-stack
-        // results, the kind is always ref. For value-stack results, use type
-        // inference to distinguish int vs double vs bool.
-        final kind = loc == ResultLoc.ref
-            ? StackKind.ref
-            : _inferStackKind(expr);
-        _inlineFinalizersFromDepth(0);
-        _emitter.emitABC(Op.halt, reg, kind.index + 1, 0);
+      if (_activeFinalizers.isNotEmpty) {
+        // With active finalizers, box to ref stack so the return-in-finally
+        // context can safely override the value.
+        if (expr != null) {
+          var (reg, loc) = _compileExpression(expr);
+          reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
+          _inlineFinalizersWithReturnProtection(reg);
+          _emitCloseUpvaluesIfNeeded();
+          _emitter.emitABC(Op.halt, reg, StackKind.ref.index + 1, 0);
+        } else {
+          final dummyReg = _allocRefReg();
+          _inlineFinalizersWithReturnProtection(dummyReg);
+          _emitCloseUpvaluesIfNeeded();
+          _emitter.emitABC(Op.halt, 0, 0, 0);
+        }
       } else {
-        _inlineFinalizersFromDepth(0);
-        _emitter.emitABC(Op.halt, 0, 0, 0);
+        // No finalizers — preserve the original StackKind-aware path.
+        if (expr != null) {
+          final (reg, loc) = _compileExpression(expr);
+          final kind = loc == ResultLoc.ref
+              ? StackKind.ref
+              : _inferStackKind(expr);
+          _emitter.emitABC(Op.halt, reg, kind.index + 1, 0);
+        } else {
+          _emitter.emitABC(Op.halt, 0, 0, 0);
+        }
       }
       return;
     }
@@ -636,11 +664,7 @@ extension on DarticCompiler {
         _emitter.emitABC(Op.loadNull, retReg, 0, 0);
       }
 
-      final savedCtx = _finalizerReturnCtx;
-      final ctx = _FinalizerReturnCtx(retReg);
-      _finalizerReturnCtx = ctx;
-      _inlineFinalizersFromDepth(0);
-      _finalizerReturnCtx = savedCtx;
+      _inlineFinalizersWithReturnProtection(retReg);
 
       _emitCloseUpvaluesIfNeeded();
       // retReg is on ref stack. Coerce to the function's return kind.

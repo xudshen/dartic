@@ -351,10 +351,12 @@ extension on DarticCompiler {
         final layout = fieldLayouts[field.getterReference];
         if (layout == null) continue;
 
+        // Register layout for synthetic accessors:
+        //   r0=ITA, r1=FTA, r2=this, r3=ref result/param
+        //   v0=value result/param (when field is int/double/bool)
         if (needsGetter) {
           final funcId = _functions.length;
           final isVal = layout.kind.isValue;
-          // Getter: GET_FIELD this(r2) → result, then RETURN.
           // Ref: GET_FIELD_REF r3, r2, offset → RETURN_REF r3
           // Val: GET_FIELD_VAL v0, r2, offset → RETURN_VAL v0
           final bytecode = Uint64List.fromList([
@@ -368,7 +370,7 @@ extension on DarticCompiler {
             name: '${cls.name}.$getterName',
             bytecode: bytecode,
             valueRegCount: isVal ? 1 : 0,
-            refRegCount: isVal ? 3 : 4, // ITA, FTA, this, [result]
+            refRegCount: isVal ? 3 : 4,
             paramCount: 0,
             returnKind: layout.kind.index,
           ));
@@ -378,9 +380,8 @@ extension on DarticCompiler {
         if (needsSetter) {
           final funcId = _functions.length;
           final isVal = layout.kind.isValue;
-          // Setter: SET_FIELD this(r2), param, offset → RETURN_NULL.
-          // Ref param arrives at r3: SET_FIELD_REF r2, r3, offset
-          // Val param arrives at v0: SET_FIELD_VAL r2, v0, offset
+          // Ref: SET_FIELD_REF r2, r3, offset → RETURN_NULL
+          // Val: SET_FIELD_VAL r2, v0, offset → RETURN_NULL
           final bytecode = Uint64List.fromList([
             encodeABC(isVal ? Op.setFieldVal : Op.setFieldRef,
                 2, isVal ? 0 : 3, layout.offset),
@@ -391,7 +392,7 @@ extension on DarticCompiler {
             name: '${cls.name}.$setterName',
             bytecode: bytecode,
             valueRegCount: isVal ? 1 : 0,
-            refRegCount: isVal ? 3 : 4, // ITA, FTA, this, [param]
+            refRegCount: isVal ? 3 : 4,
             paramCount: 1,
             paramKinds: Uint8List.fromList([layout.kind.index]),
           ));

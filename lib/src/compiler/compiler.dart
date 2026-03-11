@@ -38,11 +38,9 @@ class _FinalizerReturnCtx {
   final int refReg;
 
   /// Jump placeholders that should be patched to point after the inlined
-  /// finalizer chain.
+  /// finalizer chain. Non-empty iff a `return` was encountered inside
+  /// a finalizer during the current inlining pass.
   final List<int> exitJumps = [];
-
-  /// Whether a `return` was encountered inside any inlined finalizer.
-  bool hasReturn = false;
 
   _FinalizerReturnCtx(this.refReg);
 }
