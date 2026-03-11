@@ -137,6 +137,11 @@ class DarticInterpreter {
   /// [execute] call. Incremented at each fuel exhaustion boundary.
   int _totalFuelConsumed = 0;
 
+  /// Nesting depth of [_runNestedDispatch] calls. When > 0, fuel exhaustion
+  /// must NOT silently return from [_executeLoop] — nested dispatches are
+  /// synchronous host callbacks that must run to completion.
+  int _hostBoundaryDepth = 0;
+
   /// Stopwatch for [executionTimeout] tracking. Created and started
   /// at the beginning of [execute] when [executionTimeout] is non-null.
   Stopwatch? _executionStopwatch;
@@ -312,6 +317,7 @@ class DarticInterpreter {
         callMethod: _callDarticMethod,
       );
     }
+
   }
 
   /// Executes [module] starting from its entry function.
@@ -421,6 +427,7 @@ class DarticInterpreter {
     _activeModule = null;
     _activeDarticDispatch = null;
     _callbackResult = null;
+    _hostBoundaryDepth = 0;
   }
 
   /// Creates TypeRegistry and SubtypeChecker from module metadata if available.
@@ -617,10 +624,12 @@ class DarticInterpreter {
     );
 
     // Execute nested dispatch loop.
+    _hostBoundaryDepth++;
     try {
       _executeLoop(module, vBase, rBase, proto.bytecode, 0, upvalues);
     } on Object {
       // Exception propagated past HOST_BOUNDARY — restore stacks.
+      _hostBoundaryDepth--;
       vs.sp = savedVSP;
       rs.sp = savedRSP;
       if (callStack.isHostBoundary) {
@@ -629,6 +638,7 @@ class DarticInterpreter {
       }
       rethrow;
     }
+    _hostBoundaryDepth--;
 
     // Read result and clean up.
     final result = _callbackResult;
@@ -2188,10 +2198,15 @@ class DarticInterpreter {
             if (_hostClassRegistry != null) {
               if (ic.argCount == 0) {
                 // Zero-arg: getter dispatch.
-                final hostResult =
-                    _hostClassRegistry!.getProperty(receiver, methodName);
-                if (!identical(hostResult, HostClassRegistry.notFound)) {
-                  rs.write(rBase + a, hostResult);
+                try {
+                  final hostResult =
+                      _hostClassRegistry!.getProperty(receiver, methodName);
+                  if (!identical(hostResult, HostClassRegistry.notFound)) {
+                    rs.write(rBase + a, hostResult);
+                    continue;
+                  }
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, st);
                   continue;
                 }
               } else {
@@ -2201,10 +2216,15 @@ class DarticInterpreter {
                   (i) => rs.read(rBase + b + 3 + i),
                 );
                 _wrapClosureArgs(hostArgs);
-                final hostResult = _hostClassRegistry!
-                    .invokeMethod(receiver, methodName, hostArgs);
-                if (!identical(hostResult, HostClassRegistry.notFound)) {
-                  rs.write(rBase + a, hostResult);
+                try {
+                  final hostResult = _hostClassRegistry!
+                      .invokeMethod(receiver, methodName, hostArgs);
+                  if (!identical(hostResult, HostClassRegistry.notFound)) {
+                    rs.write(rBase + a, hostResult);
+                    continue;
+                  }
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, st);
                   continue;
                 }
               }
@@ -2482,7 +2502,9 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final classInfo = module.classes[bx];
-          rs.write(rBase + a, DarticObject(classInfo));
+          final obj = DarticObject(classInfo)
+            ..dispatch = _activeDarticDispatch;
+          rs.write(rBase + a, obj);
 
         case Op.storeSuperArgs: // STORE_SUPER_ARGS A, B — store A args starting at ref[B] into this.pendingSuperArgs
           final a = decodeA(instr); // arg count
@@ -2681,8 +2703,9 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final type = rs.read(rBase + b) as DarticInterfaceType;
           final classInfo = module.classes[type.classId];
-          final obj = DarticObject(classInfo);
-          obj.runtimeType_ = type;
+          final obj = DarticObject(classInfo)
+            ..runtimeType_ = type
+            ..dispatch = _activeDarticDispatch;
           rs.write(rBase + a, obj);
 
         // ── Null Safety (0xA7) ──
@@ -2853,10 +2876,15 @@ class DarticInterpreter {
 
           // Host object: try HostClassRegistry.
           if (_hostClassRegistry != null) {
-            final hostResult =
-                _hostClassRegistry!.getProperty(receiver, name);
-            if (!identical(hostResult, HostClassRegistry.notFound)) {
-              rs.write(rBase + a, hostResult);
+            try {
+              final hostResult =
+                  _hostClassRegistry!.getProperty(receiver, name);
+              if (!identical(hostResult, HostClassRegistry.notFound)) {
+                rs.write(rBase + a, hostResult);
+                continue;
+              }
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, st);
               continue;
             }
           }
@@ -2933,9 +2961,14 @@ class DarticInterpreter {
 
           // Host object: dynamic set dispatches through HostClassRegistry.
           if (_hostClassRegistry != null) {
-            final hostResult =
-                _hostClassRegistry!.invokeMethod(receiver, '$name=', [value]);
-            if (!identical(hostResult, HostClassRegistry.notFound)) {
+            try {
+              final hostResult =
+                  _hostClassRegistry!.invokeMethod(receiver, '$name=', [value]);
+              if (!identical(hostResult, HostClassRegistry.notFound)) {
+                continue;
+              }
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, st);
               continue;
             }
           }
@@ -3023,10 +3056,15 @@ class DarticInterpreter {
           );
           if (_hostClassRegistry != null) {
             _wrapClosureArgs(hostArgs);
-            final hostResult =
-                _hostClassRegistry!.invokeMethod(receiver, name, hostArgs);
-            if (!identical(hostResult, HostClassRegistry.notFound)) {
-              rs.write(rBase + a, hostResult);
+            try {
+              final hostResult =
+                  _hostClassRegistry!.invokeMethod(receiver, name, hostArgs);
+              if (!identical(hostResult, HostClassRegistry.notFound)) {
+                rs.write(rBase + a, hostResult);
+                continue;
+              }
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, st);
               continue;
             }
           }
@@ -3612,9 +3650,11 @@ class DarticInterpreter {
           _executionStopwatch!.elapsed, executionTimeout!);
     }
 
-    // If no resource limits are active, silently return on fuel exhaustion
-    // (Phase 1 behavior for async round scheduling).
-    if (!hasResourceLimits) return;
+    // If no resource limits are active and not inside a HOST_BOUNDARY nested
+    // dispatch, silently return on fuel exhaustion (Phase 1 behavior for async
+    // round scheduling). Nested dispatches are synchronous host callbacks that
+    // must run to completion — returning early would corrupt stack pointers.
+    if (!hasResourceLimits && _hostBoundaryDepth == 0) return;
 
     // Otherwise, continue the outer loop for the next fuel round.
     } // end for (;;)

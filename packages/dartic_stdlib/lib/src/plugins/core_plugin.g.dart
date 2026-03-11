@@ -38,6 +38,8 @@ import '../bindings/core/stack_overflow_error_bindings.g.dart';
 import '../bindings/core/assertion_error_bindings.g.dart';
 import '../bindings/core/type_error_bindings.g.dart';
 import '../bindings/core/no_such_method_error_bindings.g.dart';
+import '../bindings/core/deprecated_bindings.g.dart';
+import '../bindings/core/out_of_memory_error_bindings.g.dart';
 import '../bindings/core/stopwatch_bindings.g.dart';
 import '../bindings/core/stack_trace_bindings.g.dart';
 import '../bindings/core/string_stack_trace_bindings.g.dart';
@@ -98,6 +100,8 @@ class CorePlugin extends DarticPlugin {
     AssertionErrorBindings.register(ctx);
     TypeErrorBindings.register(ctx);
     NoSuchMethodErrorBindings.register(ctx);
+    DeprecatedBindings.register(ctx);
+    OutOfMemoryErrorBindings.register(ctx);
     StopwatchBindings.register(ctx);
     StackTraceBindings.register(ctx);
     StringStackTraceBindings.register(ctx);

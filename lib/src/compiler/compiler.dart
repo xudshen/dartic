@@ -63,6 +63,48 @@ class DarticCompiler {
   final ir.Component _component;
   final Set<String> _compilablePackages;
 
+  // ── Private name mangling ──
+
+  /// Assigns a stable numeric ID to each library for private name mangling.
+  ///
+  /// The Dart VM's [Symbol] class strips `@…` in `toString()`, but only
+  /// handles `@<numeric_id>` cleanly — URIs containing dots leak through.
+  /// We use sequential integers to avoid this issue.
+  final Map<Uri, int> _libraryIds = {};
+  int _nextLibraryId = 0;
+
+  int _getLibraryId(ir.Library lib) {
+    return _libraryIds.putIfAbsent(lib.importUri, () => _nextLibraryId++);
+  }
+
+  /// Mangles a Kernel [ir.Name] for the constant pool.
+  ///
+  /// Private names (starting with `_`) get a `@<libraryId>` suffix so that:
+  /// - `Symbol.toString()` strips the suffix → displays as `Symbol("_foo")`
+  /// - `Symbol.==` compares full `_name` → `_foo@0 != _foo@1`
+  ///
+  /// This ensures `#_foo` from different libraries produce distinct Symbols
+  /// while displaying identically as `Symbol("_foo")`.
+  String _mangleName(ir.Name name) {
+    final text = name.text;
+    final lib = name.library;
+    if (lib != null && text.startsWith('_')) {
+      return '$text@${_getLibraryId(lib)}';
+    }
+    return text;
+  }
+
+  /// Mangles a method/field name string with an explicit library.
+  ///
+  /// Use when the name has been modified (e.g., setter `=` appended)
+  /// but the library context is still available from the original [ir.Name].
+  String _manglePrivateName(String name, ir.Library? library) {
+    if (library != null && name.startsWith('_')) {
+      return '$name@${_getLibraryId(library)}';
+    }
+    return name;
+  }
+
   // ── Global compilation state ──
 
   final List<DarticFuncProto> _functions = [];
@@ -1032,6 +1074,13 @@ class DarticCompiler {
       } else {
         return null; // bitwise/shift — no double equivalent
       }
+    }
+
+    // Bail out when int arithmetic has a ref-typed operand (e.g., `num`).
+    // UNBOX_INT would truncate doubles; fall through to bridge dispatch.
+    if (targetKind == StackKind.intVal &&
+        (lhsKind == StackKind.ref || rhsKind == StackKind.ref)) {
+      return null;
     }
 
     // Compile operands (only after pre-check passes).

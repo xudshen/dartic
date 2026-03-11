@@ -37,7 +37,6 @@ abstract final class StringBindings {
         'replaceAll#2': (args) => (args[0] as String).replaceAll(args[1] as Pattern, args[2] as String),
         'replaceRange#3': (args) => (args[0] as String).replaceRange(args[1] as int, args[2] as int?, args[3] as String),
         'split#1': (args) => (args[0] as String).split(args[1] as Pattern),
-        'splitMapJoin#3': (args) => (args[0] as String).splitMapJoin(args[1] as Pattern, onMatch: identical(args[2], darticAbsent) ? null : args[2] as String Function(Match)?, onNonMatch: identical(args[3], darticAbsent) ? null : args[3] as String Function(String)?),
         'toLowerCase#0': (args) => (args[0] as String).toLowerCase(),
         'toUpperCase#0': (args) => (args[0] as String).toUpperCase(),
         'allMatches#2': (args) => (args[0] as String).allMatches(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int),
@@ -75,6 +74,17 @@ abstract final class StringBindings {
             final fn = args[2] as Function;
             final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
             return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
+        },
+        'splitMapJoin#3': (args) {
+            final self = args[0] as String;
+            final pattern = args[1] as Pattern;
+            final onMatch = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            final onNonMatch = identical(args[3], darticAbsent) ? null : args[3] as Function?;
+            return self.splitMapJoin(
+              pattern,
+              onMatch: onMatch != null ? (m) => onMatch(m) as String : null,
+              onNonMatch: onNonMatch != null ? (s) => onNonMatch(s) as String : null,
+            );
         },
       };
 }

@@ -858,7 +858,7 @@ extension on DarticCompiler {
   /// args, and calls via CALL_VIRTUAL.
   (int, ResultLoc) _compileInstanceTearOff(ir.InstanceTearOff expr) {
     final target = expr.interfaceTarget;
-    final methodName = expr.name.text;
+    final methodName = _mangleName(expr.name);
     final fn = target.function;
 
     // 1. Compile receiver expression.

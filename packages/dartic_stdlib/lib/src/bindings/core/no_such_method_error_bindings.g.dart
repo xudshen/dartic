@@ -17,11 +17,13 @@ abstract final class NoSuchMethodErrorBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Error'],
     );
+    ctx.registerBinding('dart:core::NoSuchMethodError::_withInvocation#2', methodMap()['_withInvocation#2']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as NoSuchMethodError).toString(),
         'stackTrace#0': (args) => (args[0] as NoSuchMethodError).stackTrace,
         'withInvocation#2': (args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation),
+        '_withInvocation#2': (args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation),
       };
 }

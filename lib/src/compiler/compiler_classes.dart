@@ -196,7 +196,7 @@ extension on DarticCompiler {
     if (enumHostBase != null) {
       for (final field in enumHostBase.fields) {
         if (field.isStatic) continue;
-        final nameIdx = _constantPool.addName(field.name.text);
+        final nameIdx = _constantPool.addName(_mangleName(field.name));
         final layout = fieldLayouts[field.getterReference]!;
         nameIndexedFields[nameIdx] = layout;
       }
@@ -204,7 +204,7 @@ extension on DarticCompiler {
 
     for (final field in cls.fields) {
       if (field.isStatic) continue;
-      final nameIdx = _constantPool.addName(field.name.text);
+      final nameIdx = _constantPool.addName(_mangleName(field.name));
       final layout = fieldLayouts[field.getterReference]!;
       nameIndexedFields[nameIdx] = layout;
     }
@@ -319,8 +319,8 @@ extension on DarticCompiler {
       // Register method in the class info method table.
       // Setters use "name=" convention to distinguish from getters/methods.
       final methodName = proc.isSetter
-          ? '${proc.name.text}='
-          : proc.name.text;
+          ? '${_mangleName(proc.name)}='
+          : _mangleName(proc.name);
       final nameIdx = _constantPool.addName(methodName);
       classInfo.methods[nameIdx] = _functions.last;
     }
@@ -334,7 +334,7 @@ extension on DarticCompiler {
       final superInfo = _classInfos[superClassId];
       for (final field in cls.fields) {
         if (field.isStatic) continue;
-        final getterName = field.name.text;
+        final getterName = _mangleName(field.name);
         final setterName = '${getterName}=';
         final getterIdx = _constantPool.addName(getterName);
         final setterIdx = _constantPool.addName(setterName);
@@ -407,10 +407,18 @@ extension on DarticCompiler {
     // for `toString` resolve directly to the enum class's `_enumToString`.
     if (enumHostBase != null) {
       final toStringIdx = _constantPool.addName('toString');
-      final enumToStringIdx = _constantPool.addName('_enumToString');
-      final enumToStringFunc = classInfo.methods[enumToStringIdx];
-      if (enumToStringFunc != null) {
-        classInfo.methods[toStringIdx] = enumToStringFunc;
+      // Find the _enumToString procedure — its ir.Name.library may differ
+      // from cls.enclosingLibrary (it's declared in dart:core's _Enum).
+      final enumToStringProc = cls.procedures.where(
+        (p) => p.name.text == '_enumToString',
+      ).firstOrNull;
+      if (enumToStringProc != null) {
+        final enumToStringIdx = _constantPool.addName(
+            _mangleName(enumToStringProc.name));
+        final enumToStringFunc = classInfo.methods[enumToStringIdx];
+        if (enumToStringFunc != null) {
+          classInfo.methods[toStringIdx] = enumToStringFunc;
+        }
       }
     }
 

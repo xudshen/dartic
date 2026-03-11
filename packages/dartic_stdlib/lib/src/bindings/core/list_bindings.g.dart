@@ -137,5 +137,18 @@ abstract final class ListBindings {
         'filled#2': (args) => List<dynamic>.filled(args[0] as int, args[1], growable: false),
         '#1': (args) => List<dynamic>.filled(args[0] as int, null, growable: false),
         'empty#0': (args) => const [],
+        'generate#2': (args) {
+            final length = args[0] as int;
+            final generator = args[1] as Function;
+            return List.generate(length, (i) => generator(i), growable: false);
+        },
+        'generate#3': (args) {
+            final length = args[0] as int;
+            final generator = args[1] as Function;
+            if (!identical(args[2], darticAbsent)) {
+              return List.generate(length, (i) => generator(i), growable: args[2] as bool);
+            }
+            return List.generate(length, (i) => generator(i), growable: false);
+        },
       };
 }
