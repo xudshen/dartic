@@ -11,13 +11,13 @@ void main() {
 
   group('isNegativeTest', () {
     group('detects negative markers', () {
-      test('detects // [analyzer] marker', () {
+      test('detects // [analyzer] COMPILE_TIME_ERROR marker', () {
         const source = '''
 main() {
   const int foo = 1;
   foo = 2;
 //^
-// [analyzer] unspecified
+// [analyzer] COMPILE_TIME_ERROR.UNDEFINED_CLASS
 }
 ''';
         expect(isNegativeTest(source), isTrue);
@@ -35,13 +35,13 @@ main() {
         expect(isNegativeTest(source), isTrue);
       });
 
-      test('detects both // [analyzer] and // [cfe] together', () {
+      test('detects both // [analyzer] COMPILE_TIME_ERROR and // [cfe] together', () {
         const source = '''
 main() {
   const int foo = 1;
   foo = 2;
 //^
-// [analyzer] unspecified
+// [analyzer] COMPILE_TIME_ERROR.CONST_NOT_INITIALIZED
 // [cfe] unspecified
 }
 ''';
@@ -60,12 +60,11 @@ main() {
         expect(isNegativeTest(source), isTrue);
       });
 
-      test('detects multiple error locations in one file', () {
+      test('detects multiple [cfe] locations in one file', () {
         const source = '''
 class C {
   factory var x = 1;
 //                 ^
-// [analyzer] unspecified
 // [cfe] unspecified
 }
 
@@ -78,11 +77,10 @@ main() {
         expect(isNegativeTest(source), isTrue);
       });
 
-      test('detects marker with leading spaces', () {
+      test('detects [cfe] marker with leading spaces', () {
         const source = '''
 main() {
   foo = 2;
-  // [analyzer] unspecified
   // [cfe] unspecified
 }
 ''';
@@ -100,12 +98,36 @@ main() {
         expect(isNegativeTest(source), isTrue);
       });
 
-      test('detects only [analyzer] without [cfe]', () {
+      test('[analyzer] STATIC_WARNING only is NOT negative', () {
+        const source = '''
+main() {
+  A? a = null;
+  a?.x;
+//^^
+// [analyzer] STATIC_WARNING.INVALID_NULL_AWARE_OPERATOR
+}
+''';
+        expect(isNegativeTest(source), isFalse);
+      });
+
+      test('[analyzer] unspecified without [cfe] IS negative', () {
+        // "unspecified" is not in _analyzerWarningCodes → treated as error
         const source = '''
 main() {
   foo = 2;
 //^
 // [analyzer] unspecified
+}
+''';
+        expect(isNegativeTest(source), isTrue);
+      });
+
+      test('[analyzer] COMPILE_TIME_ERROR without [cfe] IS negative', () {
+        const source = '''
+main() {
+  foo = 2;
+//^
+// [analyzer] COMPILE_TIME_ERROR.UNDEFINED_IDENTIFIER
 }
 ''';
         expect(isNegativeTest(source), isTrue);
@@ -186,13 +208,12 @@ main() {
       expect(entries.first.isNegative, isFalse);
     });
 
-    test('negative test file with [analyzer] has isNegative == true', () {
+    test('negative test file with [cfe] has isNegative == true', () {
       createFile('Variables/foo_t01.dart', '''
 main() {
   const int foo = 1;
   foo = 2;
 //^
-// [analyzer] unspecified
 // [cfe] unspecified
 }
 ''');
@@ -226,7 +247,6 @@ main() {
 main() {
   foo = 2;
 //^
-// [analyzer] unspecified
 // [cfe] unspecified
 }
 ''');
@@ -251,7 +271,7 @@ main() {
 main() {
   foo = 2;
 //^
-// [analyzer] unspecified
+// [cfe] unspecified
 }
 ''');
       final entries = discoverTests([tempDir.path]);

@@ -138,22 +138,77 @@ class TestOutcome {
 // Negative test detection
 // ---------------------------------------------------------------------------
 
-/// Regex that matches co19 negative test markers.
-///
-/// co19 negative tests indicate expected compilation errors with special
-/// comment patterns that contain `// [analyzer]` or `// [cfe]` markers.
-/// These markers appear on their own line with optional leading whitespace.
-///
-/// The pattern specifically matches lines that START with optional whitespace
-/// followed by `//` (not `///` doc comments), then a space and a bracket
-/// group. This avoids matching `[analyzer]` or `[cfe]` in string literals.
-final _negativeMarkerPattern = RegExp(
-  r'^\s*//\s+\[(analyzer|cfe)\]\s',
+/// Regex that matches `// [cfe] ...` markers.
+final _cfeMarkerPattern = RegExp(
+  r'^\s*//\s+\[cfe\]\s',
   multiLine: true,
 );
 
-/// Returns `true` if [source] contains co19 negative test markers.
-bool isNegativeTest(String source) => _negativeMarkerPattern.hasMatch(source);
+/// Regex that matches `// [analyzer] <CODE>` markers, capturing the code.
+final _analyzerMarkerPattern = RegExp(
+  r'^\s*//\s+\[analyzer\]\s+(\S+)',
+  multiLine: true,
+);
+
+/// Analyzer codes that are non-fatal warnings, not compile errors.
+///
+/// Sourced from the official Dart SDK test runner
+/// (`pkg/test_runner/lib/src/static_error.dart`). A test with ONLY these
+/// codes (and no `[cfe]` markers) should compile and run normally.
+const _analyzerWarningCodes = {
+  'STATIC_WARNING.ANALYSIS_OPTION_DEPRECATED',
+  'STATIC_WARNING.INCLUDE_FILE_NOT_FOUND',
+  'STATIC_WARNING.INCLUDED_FILE_WARNING',
+  'STATIC_WARNING.INVALID_OPTION',
+  'STATIC_WARNING.INVALID_SECTION_FORMAT',
+  'STATIC_WARNING.SPEC_MODE_REMOVED',
+  'STATIC_WARNING.UNREACHABLE_SWITCH_CASE',
+  'STATIC_WARNING.UNREACHABLE_SWITCH_DEFAULT',
+  'STATIC_WARNING.UNRECOGNIZED_ERROR_CODE',
+  'STATIC_WARNING.UNSUPPORTED_OPTION_WITH_LEGAL_VALUE',
+  'STATIC_WARNING.UNSUPPORTED_OPTION_WITH_LEGAL_VALUES',
+  'STATIC_WARNING.UNSUPPORTED_OPTION_WITHOUT_VALUES',
+  'STATIC_WARNING.UNSUPPORTED_VALUE',
+  'STATIC_WARNING.CAMERA_PERMISSIONS_INCOMPATIBLE',
+  'STATIC_WARNING.NO_TOUCHSCREEN_FEATURE',
+  'STATIC_WARNING.NON_RESIZABLE_ACTIVITY',
+  'STATIC_WARNING.PERMISSION_IMPLIES_UNSUPPORTED_HARDWARE',
+  'STATIC_WARNING.SETTING_ORIENTATION_ON_ACTIVITY',
+  'STATIC_WARNING.UNSUPPORTED_CHROME_OS_FEATURE',
+  'STATIC_WARNING.UNSUPPORTED_CHROME_OS_HARDWARE',
+  'STATIC_WARNING.DEAD_NULL_AWARE_EXPRESSION',
+  'STATIC_WARNING.INVALID_NULL_AWARE_OPERATOR',
+  'STATIC_WARNING.INVALID_OVERRIDE_DIFFERENT_DEFAULT_VALUES_NAMED',
+  'STATIC_WARNING.INVALID_OVERRIDE_DIFFERENT_DEFAULT_VALUES_POSITIONAL',
+  'STATIC_WARNING.MISSING_ENUM_CONSTANT_IN_SWITCH',
+  'STATIC_WARNING.UNNECESSARY_NON_NULL_ASSERTION',
+  'STATIC_WARNING.TOP_LEVEL_INSTANCE_GETTER',
+  'STATIC_WARNING.TOP_LEVEL_INSTANCE_METHOD',
+};
+
+/// Returns `true` if [source] is a negative test (expects compilation failure).
+///
+/// Uses the same logic as the official Dart SDK test runner:
+/// - `// [cfe] ...` → always negative (CFE errors are never warnings).
+/// - `// [analyzer] <CODE>` → negative UNLESS the code is in the
+///   [_analyzerWarningCodes] set (warnings are not compile errors).
+/// - A test with ONLY warning-level analyzer markers is NOT negative — it
+///   should compile and run normally.
+bool isNegativeTest(String source) {
+  // Any [cfe] marker → negative (CFE has no warning concept).
+  if (_cfeMarkerPattern.hasMatch(source)) return true;
+
+  // Check [analyzer] markers: negative only if at least one is NOT a warning.
+  final analyzerMatches = _analyzerMarkerPattern.allMatches(source);
+  for (final match in analyzerMatches) {
+    final code = match.group(1)!;
+    if (!_analyzerWarningCodes.contains(code)) {
+      return true; // Non-warning analyzer error → negative.
+    }
+  }
+
+  return false;
+}
 
 // ---------------------------------------------------------------------------
 // Unsupported import detection
@@ -162,7 +217,13 @@ bool isNegativeTest(String source) => _negativeMarkerPattern.hasMatch(source);
 /// Set of `dart:` libraries that are supported (or partially supported)
 /// by the dartic runtime. Tests importing only these libraries will be
 /// attempted; tests importing ANY library not in this set are skipped.
-final _supportedDartLibraries = <String>{'core', 'async', 'math', 'collection'};
+final _supportedDartLibraries = <String>{
+  'core',
+  'async',
+  'collection',
+  'convert',
+  'math',
+};
 
 /// Regex that matches `import 'dart:<lib>'` or `import "dart:<lib>"`.
 final _unsupportedImportPattern = RegExp(r'''import\s+['"]dart:(\w+)['"]''');
@@ -177,6 +238,78 @@ String? findUnsupportedImport(String source) {
     }
   }
   return null;
+}
+
+// ---------------------------------------------------------------------------
+// Skip list
+// ---------------------------------------------------------------------------
+
+/// Loads skip patterns from a text file.
+///
+/// The file format is one pattern per line:
+/// - Lines starting with `#` are comments.
+/// - Empty lines are ignored.
+/// - Inline comments after `#` are stripped (e.g., `pattern # reason`).
+/// - Each remaining line is a substring pattern matched against the test's
+///   full path.
+///
+/// Returns an empty list if the file does not exist.
+List<String> loadSkipPatterns(String filePath) {
+  final file = File(filePath);
+  if (!file.existsSync()) return [];
+  return file
+      .readAsLinesSync()
+      .map((l) {
+        // Strip inline comments: "pattern # reason" → "pattern"
+        final commentIdx = l.indexOf('#');
+        return (commentIdx >= 0 ? l.substring(0, commentIdx) : l).trim();
+      })
+      .where((l) => l.isNotEmpty)
+      .toList();
+}
+
+/// Returns the first skip pattern that matches [testPath], or `null` if no
+/// pattern matches.
+///
+/// Each pattern is tested as a substring of [testPath]. This supports:
+/// - Category names: `Yield_and_Yield_Each`
+/// - Path segments: `Language/Break/`
+/// - Specific files: `some_test_t01.dart`
+String? matchesSkipPattern(String testPath, List<String> patterns) {
+  for (final pattern in patterns) {
+    if (testPath.contains(pattern)) return pattern;
+  }
+  return null;
+}
+
+/// Partitions [entries] into (toRun, skipped) based on [skipPatterns].
+///
+/// Returns a record of `(entriesToRun, skipOutcomes)`. Skipped tests are
+/// returned as [TestOutcome]s with [TestResult.skip] and a message indicating
+/// the matched pattern.
+(List<TestEntry>, List<TestOutcome>) applySkipPatterns(
+  List<TestEntry> entries,
+  List<String> skipPatterns,
+) {
+  if (skipPatterns.isEmpty) return (entries, []);
+
+  final toRun = <TestEntry>[];
+  final skipped = <TestOutcome>[];
+
+  for (final entry in entries) {
+    final matched = matchesSkipPattern(entry.path, skipPatterns);
+    if (matched != null) {
+      skipped.add(TestOutcome(
+        entry: entry,
+        result: TestResult.skip,
+        message: 'skip-list: $matched',
+      ));
+    } else {
+      toRun.add(entry);
+    }
+  }
+
+  return (toRun, skipped);
 }
 
 // ---------------------------------------------------------------------------

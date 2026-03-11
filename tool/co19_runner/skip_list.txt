@@ -1,0 +1,250 @@
+# co19 skip list — full paths, safe for all suites
+#
+# Patterns are full relative paths from vendor/co19/.
+# Won't false-match across suites.
+#
+# Usage:
+#   dart run bin/co19_runner.dart --run --skip-list=skip_list.txt <dirs...>
+
+# ── Negative passthrough (65) ─────────────────────────────────────
+# CFE doesn't reject these [cfe]/COMPILE_TIME_ERROR tests. Unfixable.
+Language/Classes/Constructors/Factories/redirecting_constructor_t05.dart  # [cfe] + [analyzer] unspecified
+Language/Classes/method_definition_t06.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Function_Invocation/Function_Expression_Invocation/call_A03_t02.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Function_Invocation/Function_Expression_Invocation/call_A04_t04.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A14_t02.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A14_t04.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A14_t05.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A20_t02.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A20_t04.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A20_t05.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A26_t02.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A26_t04.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/built_in_identifier_A26_t05.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/If_null_Expressions/syntax_t01.dart  # [analyzer] DEAD_NULL_AWARE_EXPRESSION
+Language/Expressions/If_null_Expressions/syntax_t02.dart  # [analyzer] DEAD_NULL_AWARE_EXPRESSION
+Language/Expressions/If_null_Expressions/syntax_t03.dart  # [analyzer] DEAD_NULL_AWARE_EXPRESSION
+Language/Expressions/Instance_Creation/Const/parameterized_type_t01.dart  # [cfe]
+Language/Expressions/Instance_Creation/Const/parameterized_type_t02.dart  # [cfe]
+Language/Expressions/Lists/constant_list_t01.dart  # [cfe]
+Language/Expressions/Maps/constant_map_type_t01.dart  # [cfe]
+Language/Interfaces/Superinterfaces/Correct_Member_Overrides/correct_member_overrides_A03_t29.dart  # [cfe] + [analyzer] unspecified
+Language/Reference/Operator_Precedence/precedence_05_logical_or_t01.dart  # [analyzer] DEAD_NULL_AWARE_EXPRESSION
+Language/Statements/Switch/execution_case_no_default_t01.dart  # [analyzer] UNREACHABLE_SWITCH_CASE
+Language/Statements/Switch/execution_case_t01.dart  # [analyzer] UNREACHABLE_SWITCH_CASE
+Language/Types/Type_Void/implicit_usage_A01_t01.dart  # [cfe] + [analyzer] unspecified
+Language/Types/Type_Void/implicit_usage_A02_t01.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_conditional_A01_t02.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_do_while_A03_t02.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_do_while_A03_t03.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_A02_t03.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_A03_t03.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_in_A01_t07.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_in_A01_t08.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_in_A01_t09.dart  # [cfe] + [analyzer] unspecified
+TypeSystem/flow-analysis/reachability_for_in_A03_t01.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Control-flow-collections/Null-aware-elements/constants_A01_t02.dart  # [analyzer] unspecified
+LanguageFeatures/Control-flow-collections/Null-aware-elements/type_inference_map_A06_t01.dart  # [analyzer] unspecified
+LanguageFeatures/Control-flow-collections/Null-aware-elements/warnings_A01_t01.dart  # [analyzer] unspecified
+LanguageFeatures/Extension-types/nullability_A02_t01.dart  # [analyzer] unspecified
+LanguageFeatures/Parts-with-imports/grammar_A02_t01.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Patterns/list_A05_t05.dart  # [analyzer] UNNECESSARY_NULL_CHECK_PATTERN
+LanguageFeatures/Patterns/matching_list_A06_t01.dart  # [analyzer] UNREACHABLE_SWITCH_CASE
+LanguageFeatures/Patterns/null_assert_A03_t01.dart  # [analyzer] UNNECESSARY_NULL_ASSERT_PATTERN
+LanguageFeatures/Patterns/null_assert_A03_t02.dart  # [analyzer] UNNECESSARY_NULL_ASSERT_PATTERN
+LanguageFeatures/Patterns/null_check_A02_t01.dart  # [analyzer] UNNECESSARY_NULL_CHECK_PATTERN
+LanguageFeatures/Patterns/record_A02_t03.dart  # [analyzer] unspecified
+LanguageFeatures/Patterns/relational_A04_t06.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Patterns/switch_statement_A01_t01.dart  # [analyzer] UNREACHABLE_SWITCH_CASE
+LanguageFeatures/Spread-collections/ConstSpreads_A02_t01.dart  # [cfe]
+LanguageFeatures/Spread-collections/DynamicSemantics_Set_A02_t04.dart  # [cfe]
+LanguageFeatures/Spread-collections/TypeInference_A01_t03.dart  # [cfe]
+LanguageFeatures/Static-access-shorthand/constant_expression_A10_t03.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t01.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t02.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t03.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t04.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t05.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t06.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t07.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/Static-access-shorthand/type_inference_A09_t08.dart  # [cfe] + [analyzer] unspecified
+LanguageFeatures/nnbd/null_check_operator_A01_t02.dart  # [analyzer] unspecified
+LanguageFeatures/nnbd/null_check_operator_A03_t01.dart  # [analyzer] unspecified
+LanguageFeatures/nnbd/null_check_operator_A05_t01.dart  # [analyzer] unspecified
+LanguageFeatures/nnbd/null_check_operator_A07_t01.dart  # [analyzer] unspecified
+LanguageFeatures/nnbd/static_errors_A35_t01.dart  # [analyzer] unspecified
+
+# ── Async* / await-for (172) ──────────────────────────────────────
+# async* generator runtime not implemented.
+Language/Expressions/Await_Expressions/syntax_t02.dart  # async*
+Language/Expressions/Function_Invocation/async_cleanup_t01.dart  # await-for
+Language/Expressions/Function_Invocation/async_cleanup_t02.dart  # await-for
+Language/Expressions/Function_Invocation/async_cleanup_t03.dart  # async*, await-for
+Language/Expressions/Function_Invocation/async_cleanup_t04.dart  # async*, await-for
+Language/Expressions/Function_Invocation/async_cleanup_t05.dart  # await-for
+Language/Expressions/Function_Invocation/async_cleanup_t06.dart  # await-for
+Language/Expressions/Function_Invocation/async_cleanup_t07.dart  # async*, await-for
+Language/Expressions/Function_Invocation/async_cleanup_t08.dart  # async*, await-for
+Language/Expressions/Function_Invocation/async_generator_invokation_t03.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t04.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t05.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t06.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t07.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t08.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t09.dart  # async*
+Language/Expressions/Function_Invocation/async_generator_invokation_t10.dart  # async*
+Language/Functions/element_type_A02_t03.dart  # async*
+Language/Functions/element_type_A02_t04.dart  # async*
+Language/Functions/syntax_t03.dart  # async*, sync*
+Language/Functions/syntax_t36.dart  # async*, sync*
+Language/Functions/syntax_t37.dart  # async*, sync*
+Language/Functions/syntax_t38.dart  # async*, sync*
+Language/Functions/syntax_t41.dart  # async*, sync*
+Language/Functions/syntax_t42.dart  # async*, sync*
+Language/Functions/syntax_t43.dart  # async*, sync*
+Language/Functions/syntax_t44.dart  # async*, sync*
+Language/Functions/syntax_t45.dart  # async*, sync*
+Language/Functions/syntax_t46.dart  # async*, sync*
+Language/Statements/Break/async_loop_t01.dart  # await-for
+Language/Statements/Break/async_loop_t02.dart  # await-for
+Language/Statements/Break/async_loops_t01.dart  # await-for
+Language/Statements/Break/async_loops_t02.dart  # await-for
+Language/Statements/Break/async_loops_t03.dart  # await-for
+Language/Statements/Break/async_loops_t04.dart  # await-for
+Language/Statements/Break/async_loops_t05.dart  # await-for
+Language/Statements/Break/async_loops_t06.dart  # await-for
+Language/Statements/Break/async_loops_t07.dart  # await-for
+Language/Statements/Break/async_loops_t08.dart  # await-for
+Language/Statements/Break/async_loops_t09.dart  # await-for
+Language/Statements/Break/async_loops_t10.dart  # await-for
+Language/Statements/Continue/async_loops_t01.dart  # await-for
+Language/Statements/Continue/async_loops_t02.dart  # await-for
+Language/Statements/Continue/async_loops_t03.dart  # await-for
+Language/Statements/Continue/async_loops_t04.dart  # await-for
+Language/Statements/Continue/async_loops_t05.dart  # await-for
+Language/Statements/Continue/async_loops_t06.dart  # await-for
+Language/Statements/Continue/async_loops_t07.dart  # await-for
+Language/Statements/Continue/async_loops_t08.dart  # await-for
+Language/Statements/Continue/async_loops_t09.dart  # await-for
+Language/Statements/Continue/async_loops_t10.dart  # await-for
+Language/Statements/Continue/control_transfer_t08.dart  # await-for
+Language/Statements/Continue/control_transfer_t09.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/enclosing_loop_t01.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/execution_A02_t01.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/execution_A02_t02.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/execution_A03_t01.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/execution_A05_t03.dart  # await-for
+Language/Statements/For/Asynchronous_For_in/execution_A05_t04.dart  # async*, await-for
+Language/Statements/For/Asynchronous_For_in/execution_A05_t05.dart  # await-for
+Language/Statements/For/syntax_t18.dart  # await-for
+Language/Statements/Rethrow/execution_t01.dart  # async*
+Language/Statements/Rethrow/execution_t02.dart  # async*
+Language/Statements/Rethrow/execution_t03.dart  # async*
+Language/Statements/Rethrow/execution_t04.dart  # async*
+Language/Statements/Return/syntax_t10.dart  # async*
+Language/Statements/Return/syntax_t11.dart  # async*
+Language/Statements/Return/syntax_t12.dart  # async*
+Language/Statements/Return/syntax_t13.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t02.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t03.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t04.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t05.dart  # async*, await-for
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t06.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t07.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A01_t08.dart  # async*, await-for
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A02_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A03_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A03_t02.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A03_t03.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A03_t04.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A03_t05.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A04_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A04_t02.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A05_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A05_t02.dart  # async*, await-for
+Language/Statements/Yield_and_Yield_Each/Yield/execution_async_A05_t03.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_sync_t01.dart  # async*, sync*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_sync_t02.dart  # async*, sync*
+Language/Statements/Yield_and_Yield_Each/Yield/execution_sync_t03.dart  # async*, sync*
+Language/Statements/Yield_and_Yield_Each/Yield/location_t01.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/location_t02.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/location_t03.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/location_t04.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/location_t05.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/location_t06.dart  # yield
+Language/Statements/Yield_and_Yield_Each/Yield/static_type_t01.dart  # async*, sync*
+Language/Statements/Yield_and_Yield_Each/Yield/static_type_t02.dart  # async*, sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t01.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t02.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t03.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t04.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t05.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t06.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t07.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t08.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t09.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield/syntax_t10.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A01_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A02_t01.dart  # async*, await-for
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t02.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t03.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t04.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t05.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t06.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t07.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t08.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t09.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t10.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t11.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t12.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t13.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t14.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t15.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A03_t16.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_async_A04_t01.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t01.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t02.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t03.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t04.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t05.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/execution_sync_t06.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t01.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t02.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t03.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t04.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t05.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/location_t06.dart  # yield*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/static_type_t01.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/static_type_t02.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t01.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t02.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t03.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t04.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t05.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t06.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t07.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t08.dart  # async*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t09.dart  # sync*
+Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t10.dart  # async*
+LanguageFeatures/Augmentations/augmenting_functions_A01_t19.dart  # async*
+LanguageFeatures/Augmentations/augmenting_functions_A01_t20.dart  # async*
+LanguageFeatures/Control-flow-collections/type_inference_A12_t01.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A12_t02.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A12_t03.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A12_t04.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A13_t01.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A13_t02.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A13_t03.dart  # await-for
+LanguageFeatures/Control-flow-collections/type_inference_A13_t04.dart  # await-for
+LanguageFeatures/Horizontal-inference/async_t03.dart  # async*
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t01.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t03.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t05.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t07.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t09.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t11.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t01.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t02.dart  # await-for
+LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t03.dart  # await-for

@@ -58,6 +58,167 @@ class Expect {
 
 void main() {
   // ---------------------------------------------------------------------------
+  // Unit tests for skip list loading and matching
+  // ---------------------------------------------------------------------------
+
+  group('loadSkipPatterns', () {
+    late Directory tempDir;
+
+    setUp(() {
+      tempDir = Directory.systemTemp.createTempSync('co19_skip_patterns_');
+    });
+
+    tearDown(() {
+      tempDir.deleteSync(recursive: true);
+    });
+
+    test('returns empty list for non-existent file', () {
+      expect(loadSkipPatterns('${tempDir.path}/nonexistent.txt'), isEmpty);
+    });
+
+    test('returns empty list for empty file', () {
+      File('${tempDir.path}/empty.txt').writeAsStringSync('');
+      expect(loadSkipPatterns('${tempDir.path}/empty.txt'), isEmpty);
+    });
+
+    test('skips comment lines and empty lines', () {
+      File('${tempDir.path}/skip.txt').writeAsStringSync('''
+# This is a comment
+Yield_and_Yield_Each
+
+# Another comment
+Async_For_in
+''');
+      expect(
+        loadSkipPatterns('${tempDir.path}/skip.txt'),
+        equals(['Yield_and_Yield_Each', 'Async_For_in']),
+      );
+    });
+
+    test('strips inline comments', () {
+      File('${tempDir.path}/skip.txt').writeAsStringSync('''
+Yield_and_Yield_Each # async generators not implemented
+Async_For_in # await-for not implemented
+''');
+      expect(
+        loadSkipPatterns('${tempDir.path}/skip.txt'),
+        equals(['Yield_and_Yield_Each', 'Async_For_in']),
+      );
+    });
+
+    test('trims whitespace', () {
+      File('${tempDir.path}/skip.txt').writeAsStringSync('''
+  Yield_and_Yield_Each
+	Async_For_in
+''');
+      expect(
+        loadSkipPatterns('${tempDir.path}/skip.txt'),
+        equals(['Yield_and_Yield_Each', 'Async_For_in']),
+      );
+    });
+  });
+
+  group('matchesSkipPattern', () {
+    test('returns null for empty patterns', () {
+      expect(matchesSkipPattern('/path/to/test_t01.dart', []), isNull);
+    });
+
+    test('matches subcategory name', () {
+      expect(
+        matchesSkipPattern(
+          '/home/vendor/co19/Language/Yield_and_Yield_Each/Yield/foo_t01.dart',
+          ['Yield_and_Yield_Each'],
+        ),
+        equals('Yield_and_Yield_Each'),
+      );
+    });
+
+    test('matches specific file name', () {
+      expect(
+        matchesSkipPattern(
+          '/home/vendor/co19/Language/Variables/foo_t01.dart',
+          ['foo_t01.dart'],
+        ),
+        equals('foo_t01.dart'),
+      );
+    });
+
+    test('returns null when no pattern matches', () {
+      expect(
+        matchesSkipPattern(
+          '/home/vendor/co19/Language/Variables/foo_t01.dart',
+          ['Yield_and_Yield_Each', 'Async_For_in'],
+        ),
+        isNull,
+      );
+    });
+
+    test('returns first matching pattern', () {
+      expect(
+        matchesSkipPattern(
+          '/home/vendor/co19/Language/Yield_and_Yield_Each/Yield/foo_t01.dart',
+          ['Language', 'Yield_and_Yield_Each'],
+        ),
+        equals('Language'),
+      );
+    });
+
+    test('matches path segment', () {
+      expect(
+        matchesSkipPattern(
+          '/home/vendor/co19/Language/Break/foo_t01.dart',
+          ['Language/Break/'],
+        ),
+        equals('Language/Break/'),
+      );
+    });
+  });
+
+  group('applySkipPatterns', () {
+    test('returns all entries when no patterns', () {
+      final entries = [
+        TestEntry(path: '/a/test_t01.dart', category: 'A', subcategory: ''),
+        TestEntry(path: '/b/test_t02.dart', category: 'B', subcategory: ''),
+      ];
+      final (toRun, skipped) = applySkipPatterns(entries, []);
+      expect(toRun, hasLength(2));
+      expect(skipped, isEmpty);
+    });
+
+    test('partitions entries correctly', () {
+      final entries = [
+        TestEntry(
+          path: '/co19/Language/Yield_and_Yield_Each/foo_t01.dart',
+          category: 'Yield_and_Yield_Each',
+          subcategory: '',
+        ),
+        TestEntry(
+          path: '/co19/Language/Variables/bar_t01.dart',
+          category: 'Variables',
+          subcategory: '',
+        ),
+        TestEntry(
+          path: '/co19/Language/Async_For_in/baz_t01.dart',
+          category: 'Async_For_in',
+          subcategory: '',
+        ),
+      ];
+      final (toRun, skipped) = applySkipPatterns(
+        entries,
+        ['Yield_and_Yield_Each', 'Async_For_in'],
+      );
+
+      expect(toRun, hasLength(1));
+      expect(toRun.first.path, contains('Variables'));
+
+      expect(skipped, hasLength(2));
+      expect(skipped[0].result, equals(TestResult.skip));
+      expect(skipped[0].message, contains('skip-list:'));
+      expect(skipped[1].result, equals(TestResult.skip));
+    });
+  });
+
+  // ---------------------------------------------------------------------------
   // Unit tests for findUnsupportedImport()
   // ---------------------------------------------------------------------------
 
@@ -491,7 +652,6 @@ import 'dart:io';
 main() {
   foo = 2;
 //^
-// [analyzer] unspecified
 // [cfe] unspecified
 }
 ''');

@@ -86,6 +86,13 @@ void _printUsage(StringSink sink) {
   sink.writeln('                     snapshot and print diff. Requires --run.');
   sink.writeln('                     If baseline file does not exist, just');
   sink.writeln('                     runs and prints report (no diff).');
+  sink.writeln('  --skip-list=<path> Load skip patterns from a text file.');
+  sink.writeln('                     One pattern per line (substring match on');
+  sink.writeln('                     test path). Lines starting with # are');
+  sink.writeln('                     comments. Repeatable.');
+  sink.writeln('  --skip=<pattern>   Skip tests whose path contains <pattern>.');
+  sink.writeln('                     Repeatable (e.g. --skip=Yield_and_Yield_Each');
+  sink.writeln('                     --skip=Async_For_in).');
   sink.writeln('  --darb-dir=<dir>   Save .darb files for failing tests to');
   sink.writeln('                     <dir>. Use `dartic dump --full <f>.darb`');
   sink.writeln('                     to inspect bytecode post-mortem.');
@@ -125,6 +132,8 @@ Future<void> main(List<String> args) async {
   String? baselinePath;
   var showHelp = false;
   String? darbDirArg;
+  final skipListFiles = <String>[];
+  final skipPatterns = <String>[];
   final dirs = <String>[];
 
   for (final arg in args) {
@@ -158,6 +167,10 @@ Future<void> main(List<String> args) async {
       snapshotPath = arg.substring('--snapshot='.length);
     } else if (arg.startsWith('--baseline=')) {
       baselinePath = arg.substring('--baseline='.length);
+    } else if (arg.startsWith('--skip-list=')) {
+      skipListFiles.add(arg.substring('--skip-list='.length));
+    } else if (arg.startsWith('--skip=')) {
+      skipPatterns.add(arg.substring('--skip='.length));
     } else if (arg.startsWith('--darb-dir=')) {
       darbDirArg = arg.substring('--darb-dir='.length);
     } else if (arg.startsWith('--') || (arg.startsWith('-') && arg != '-')) {
@@ -189,6 +202,18 @@ Future<void> main(List<String> args) async {
   // Default jobs to CPU core count.
   final effectiveJobs = jobs ?? Platform.numberOfProcessors;
 
+  // -- Load skip patterns. --
+  final allSkipPatterns = <String>[...skipPatterns];
+  for (final path in skipListFiles) {
+    final loaded = loadSkipPatterns(path);
+    if (loaded.isEmpty) {
+      stderr.writeln('Warning: skip list empty or not found: $path');
+    } else {
+      stderr.writeln('Loaded ${loaded.length} skip pattern(s) from $path');
+    }
+    allSkipPatterns.addAll(loaded);
+  }
+
   // -- Discover tests. --
   final entries = discoverTests(dirs);
 
@@ -219,19 +244,31 @@ Future<void> main(List<String> args) async {
     stderr.writeln('Saving .darb files for failures to: $darbDirArg');
   }
 
+  // -- Apply skip patterns. --
+  final (entriesToRun, skipOutcomes) =
+      applySkipPatterns(entries, allSkipPatterns);
+
+  if (skipOutcomes.isNotEmpty) {
+    stderr.writeln(
+      'Skipping ${skipOutcomes.length} test(s) via skip patterns '
+      '(${entriesToRun.length} remaining)',
+    );
+  }
+
   // -- Run mode: execute tests in parallel. --
   stderr.writeln(
     'Discovered ${entries.length} test(s). '
-    'Running with $effectiveJobs worker(s), ${timeoutSeconds}s timeout...',
+    'Running ${entriesToRun.length} with $effectiveJobs worker(s), '
+    '${timeoutSeconds}s timeout...',
   );
 
-  final progress = _ProgressReporter(entries.length);
+  final progress = _ProgressReporter(entriesToRun.length);
 
   // Each test compiles in-process via CFE and executes in a spawned Isolate.
   // No OS subprocesses — eliminates Launch Services broadcast storms on macOS.
   // Timeout is handled by killing the Isolate.
-  final outcomes = await runTestsParallel(
-    entries,
+  final runOutcomes = await runTestsParallel(
+    entriesToRun,
     jobs: effectiveJobs,
     timeout: Duration(seconds: timeoutSeconds),
     onProgress: (completed, total, result) => progress.report(result),
@@ -239,6 +276,10 @@ Future<void> main(List<String> args) async {
 
   progress.finish();
   stderr.writeln('');
+
+  // Merge skip outcomes with run outcomes, maintaining path order.
+  final outcomes = [...skipOutcomes, ...runOutcomes]
+    ..sort((a, b) => a.entry.path.compareTo(b.entry.path));
 
   // -- Compute stats and print report to stdout. --
   final stats = computeStats(outcomes);
