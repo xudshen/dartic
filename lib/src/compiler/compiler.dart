@@ -132,6 +132,22 @@ class DarticCompiler {
   /// Total number of global variable slots.
   int _globalCount = 0;
 
+  /// Maps canonicalized [ir.Constant] objects to their global slot indices.
+  ///
+  /// Uses identity-based keys because the Dart CFE guarantees that
+  /// structurally identical constants share the same object reference.
+  /// Enum InstanceConstants map to their field globals; all other compound
+  /// constants map to anonymous globals with lazy initializers.
+  final Map<ir.Constant, int> _constToGlobalIndex = Map.identity();
+
+  /// The constant whose initializer function is currently being compiled.
+  ///
+  /// Used to prevent self-referential loops: when compiling the initializer
+  /// for constant A, the visitor must NOT redirect A itself to LOAD_GLOBAL
+  /// (since A's global is not yet initialized). Analogous to
+  /// [_currentInitializingField] for enum field globals.
+  ir.Constant? _currentInitializingConstant;
+
   // ── Host binding state ──
 
   /// Binding name table for CALL_HOST instructions.
@@ -480,6 +496,9 @@ class DarticCompiler {
       _entryFuncId = 0; // fallback
     }
 
+    // Pass 1.5: Scan constants and register canonicalization globals.
+    _scanAndRegisterConstants();
+
     // Pass 2a: compile each top-level procedure and static class procedures.
     for (final lib in _component.libraries) {
       if (_isHostLibrary(lib)) continue;
@@ -507,6 +526,9 @@ class DarticCompiler {
         }
       }
     }
+
+    // Pass 2b.5: Compile constant canonicalization initializers.
+    _compileConstantInitializers();
 
     // Pass 2c: compile class members (constructors and instance methods).
     for (final lib in _component.libraries) {
@@ -1593,6 +1615,170 @@ class DarticCompiler {
     return null;
   }
 
+  /// Returns true for constants that don't need canonicalization globals.
+  ///
+  /// Primitives (int, double, bool, string, null) are already canonical
+  /// in the host Dart VM — `identical(1, 1)` is true natively.
+  static bool _isPrimitiveConstant(ir.Constant c) =>
+      c is ir.IntConstant ||
+      c is ir.DoubleConstant ||
+      c is ir.BoolConstant ||
+      c is ir.StringConstant ||
+      c is ir.NullConstant;
+
+  /// Allocates an anonymous global slot for a constant.
+  ///
+  /// The slot is marked as final (no late init), with initializerId = -1
+  /// (to be filled in during constant initializer compilation).
+  int _allocConstantGlobal() {
+    final globalIndex = _globalCount++;
+    _globalInitializerIds.add(-1); // placeholder
+    _globalFlags.add(2); // bit1 = isFinal
+    _globalNames.add('__const_$globalIndex');
+    return globalIndex;
+  }
+
+  /// Pre-scans all user-library IR to find unique compound constants
+  /// and registers a global slot for each.
+  void _scanAndRegisterConstants() {
+    final scanner = _ConstantScanner(this);
+    for (final lib in _component.libraries) {
+      if (_isHostLibrary(lib)) continue;
+      lib.accept(scanner);
+    }
+  }
+
+  /// Compiles a lazy initializer function for a constant global.
+  ///
+  /// Similar to [_compileGlobalInitializer] but takes a bare [ir.Constant]
+  /// instead of a field.
+  int _compileConstantInitializer(ir.Constant constant, int globalIndex) {
+    _resetFunctionState(isEntry: true);
+    _currentInitializingConstant = constant;
+    _currentInitializingField = null; // defensive reset
+    try {
+      final (reg, loc) = constant.accept(_constantVisitor);
+      final refReg =
+          _boxToRefIfValue(reg, loc, _inferConstantType(constant));
+      _emitter.emitABx(Op.storeGlobal, refReg, globalIndex);
+    } finally {
+      _currentInitializingConstant = null;
+    }
+
+    _emitter.emitAx(Op.halt, 0);
+    _patchPendingArgMoves();
+
+    final funcId = _functions.length;
+    final valRegCount = _valueAlloc.maxUsed;
+    final refRegCount = _refAlloc.maxUsed;
+    _functions.add(DarticFuncProto(
+      funcId: funcId,
+      name: '__constinit_$globalIndex',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
+      paramCount: 0,
+    ));
+    return funcId;
+  }
+
+  /// Compiles initializer functions for all anonymous constant globals.
+  void _compileConstantInitializers() {
+    for (final entry in _constToGlobalIndex.entries) {
+      final constant = entry.key;
+      final globalIndex = entry.value;
+
+      // Skip enum constants — their field globals already have initializers.
+      if (constant is ir.InstanceConstant && constant.classNode.isEnum) {
+        continue;
+      }
+
+      // Skip if already has an initializer (defensive).
+      if (_globalInitializerIds[globalIndex] >= 0) continue;
+
+      final funcId = _compileConstantInitializer(constant, globalIndex);
+      _globalInitializerIds[globalIndex] = funcId;
+    }
+  }
+
   static final _haltBytecode =
       Uint64List.fromList([encodeAx(Op.halt, 0)]);
+}
+
+/// Walks IR to collect all compound constants and register them in the
+/// compiler's [DarticCompiler._constToGlobalIndex] cache.
+class _ConstantScanner extends ir.RecursiveVisitor {
+  _ConstantScanner(this._compiler);
+  final DarticCompiler _compiler;
+
+  final Set<ir.Constant> _seen = Set.identity();
+
+  @override
+  void visitConstantExpression(ir.ConstantExpression node) {
+    _collectConstant(node.constant);
+    super.visitConstantExpression(node);
+  }
+
+  void _collectConstant(ir.Constant constant) {
+    if (DarticCompiler._isPrimitiveConstant(constant)) return;
+    if (!_seen.add(constant)) return;
+
+    // Recurse into nested compound constants first (bottom-up order).
+    _visitNestedConstants(constant);
+
+    // Skip enum InstanceConstants — they are already handled by the
+    // existing _findEnumConstantGlobal path in _compileInstanceConstant.
+    // Registering them here would create a circular initialization:
+    // field initializer → LOAD_GLOBAL(fieldGlobal) → run initializer → ...
+    if (constant is ir.InstanceConstant && constant.classNode.isEnum) {
+      return;
+    }
+
+    // Skip host-library InstanceConstants (e.g. @pragma annotations).
+    // Their classes live in dart:core/dart:collection/etc. and may lack
+    // _#fromFields host bindings, so we cannot compile standalone
+    // initializers for them. They are compiled inline via
+    // _compilePlatformInstanceConstant when encountered in expressions.
+    if (constant is ir.InstanceConstant &&
+        _compiler._isHostLibrary(constant.classNode.enclosingLibrary)) {
+      return;
+    }
+
+    // Allocate an anonymous global for this constant.
+    final idx = _compiler._allocConstantGlobal();
+    _compiler._constToGlobalIndex[constant] = idx;
+  }
+
+  void _visitNestedConstants(ir.Constant constant) {
+    switch (constant) {
+      case ir.InstanceConstant():
+        for (final value in constant.fieldValues.values) {
+          _collectConstant(value);
+        }
+      case ir.ListConstant():
+        for (final entry in constant.entries) {
+          _collectConstant(entry);
+        }
+      case ir.MapConstant():
+        for (final entry in constant.entries) {
+          _collectConstant(entry.key);
+          _collectConstant(entry.value);
+        }
+      case ir.SetConstant():
+        for (final entry in constant.entries) {
+          _collectConstant(entry);
+        }
+      case ir.RecordConstant():
+        for (final field in constant.positional) {
+          _collectConstant(field);
+        }
+        for (final field in constant.named.values) {
+          _collectConstant(field);
+        }
+      case ir.InstantiationConstant():
+        _collectConstant(constant.tearOffConstant);
+      default:
+        break;
+    }
+  }
 }

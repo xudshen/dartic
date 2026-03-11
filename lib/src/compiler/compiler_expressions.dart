@@ -123,8 +123,24 @@ extension on DarticCompiler {
 
   // ── ConstantExpression ──
 
-  (int, ResultLoc) _compileConstantExpression(ir.ConstantExpression expr) =>
-      expr.constant.accept(_constantVisitor);
+  (int, ResultLoc) _compileConstantExpression(ir.ConstantExpression expr) {
+    final constant = expr.constant;
+
+    // Compound constants: check the canonicalization cache.
+    // Skip the constant currently being initialized (self-reference guard).
+    if (!DarticCompiler._isPrimitiveConstant(constant) &&
+        !identical(constant, _currentInitializingConstant)) {
+      final globalIndex = _constToGlobalIndex[constant];
+      if (globalIndex != null) {
+        final reg = _allocRefReg();
+        _emitter.emitABx(Op.loadGlobal, reg, globalIndex);
+        return (reg, ResultLoc.ref);
+      }
+    }
+
+    // Primitives, uncached, or self-initializing: compile inline.
+    return constant.accept(_constantVisitor);
+  }
 
   // ── Not ──
 
@@ -3576,12 +3592,33 @@ class _ConstantCompileVisitor
   _ConstantCompileVisitor(this._c);
   final DarticCompiler _c;
 
+  /// Checks the canonicalization cache for a compound constant.
+  ///
+  /// Returns `(reg, ResultLoc.ref)` if cached, or null to compile inline.
+  /// Needed for nested constants within compound constant initializers
+  /// (e.g., field values of InstanceConstant) which call
+  /// `constant.accept(_constantVisitor)` directly, bypassing
+  /// `_compileConstantExpression`.
+  ///
+  /// Skips the cache for `_currentInitializingConstant` to prevent the
+  /// initializer from loading its own uninitialized global.
+  (int, ResultLoc)? _loadCachedConstant(ir.Constant node) {
+    if (DarticCompiler._isPrimitiveConstant(node)) return null;
+    if (identical(node, _c._currentInitializingConstant)) return null;
+    final globalIndex = _c._constToGlobalIndex[node];
+    if (globalIndex == null) return null;
+    final reg = _c._allocRefReg();
+    _c._emitter.emitABx(Op.loadGlobal, reg, globalIndex);
+    return (reg, ResultLoc.ref);
+  }
+
   @override
   (int, ResultLoc) defaultConstant(ir.Constant node) => throw UnsupportedError(
         'Constant not yet implemented: ${node.runtimeType}. '
         'This may be added in a future compiler phase.',
       );
 
+  // Primitives — always inline, no cache needed.
   @override
   (int, ResultLoc) visitIntConstant(ir.IntConstant node) =>
       _c._loadInt(node.value);
@@ -3596,52 +3633,49 @@ class _ConstantCompileVisitor
       _c._loadString(node.value);
   @override
   (int, ResultLoc) visitNullConstant(ir.NullConstant node) => _c._loadNull();
+
+  // Compound constants — cache check before inline compilation.
   @override
   (int, ResultLoc) visitStaticTearOffConstant(
           ir.StaticTearOffConstant node) =>
-      _c._compileStaticTearOffConstant(node);
-
-  // Phase 4 additions
+      _loadCachedConstant(node) ?? _c._compileStaticTearOffConstant(node);
   @override
   (int, ResultLoc) visitInstanceConstant(ir.InstanceConstant node) =>
-      _c._compileInstanceConstant(node);
+      _loadCachedConstant(node) ?? _c._compileInstanceConstant(node);
   @override
   (int, ResultLoc) visitTypeLiteralConstant(ir.TypeLiteralConstant node) =>
-      _c._compileTypeLiteralConstant(node);
+      _loadCachedConstant(node) ?? _c._compileTypeLiteralConstant(node);
   @override
   (int, ResultLoc) visitInstantiationConstant(
           ir.InstantiationConstant node) =>
-      _c._compileInstantiationConstant(node);
-
+      _loadCachedConstant(node) ?? _c._compileInstantiationConstant(node);
   @override
   (int, ResultLoc) visitSymbolConstant(ir.SymbolConstant node) =>
-      _c._compileSymbolConstant(node);
-
-  // Collection constants
+      _loadCachedConstant(node) ?? _c._compileSymbolConstant(node);
   @override
   (int, ResultLoc) visitListConstant(ir.ListConstant node) =>
-      _c._compileListConstant(node);
+      _loadCachedConstant(node) ?? _c._compileListConstant(node);
   @override
   (int, ResultLoc) visitMapConstant(ir.MapConstant node) =>
-      _c._compileMapConstant(node);
+      _loadCachedConstant(node) ?? _c._compileMapConstant(node);
   @override
   (int, ResultLoc) visitSetConstant(ir.SetConstant node) =>
-      _c._compileSetConstant(node);
+      _loadCachedConstant(node) ?? _c._compileSetConstant(node);
   @override
   (int, ResultLoc) visitRecordConstant(ir.RecordConstant node) =>
-      _c._compileRecordConstant(node);
-
-  // Tearoff constants
+      _loadCachedConstant(node) ?? _c._compileRecordConstant(node);
   @override
   (int, ResultLoc) visitConstructorTearOffConstant(
           ir.ConstructorTearOffConstant node) =>
+      _loadCachedConstant(node) ??
       _c._compileConstructorTearOffConstant(node);
   @override
   (int, ResultLoc) visitRedirectingFactoryTearOffConstant(
           ir.RedirectingFactoryTearOffConstant node) =>
+      _loadCachedConstant(node) ??
       _c._compileRedirectingFactoryTearOffConstant(node);
   @override
   (int, ResultLoc) visitTypedefTearOffConstant(
           ir.TypedefTearOffConstant node) =>
-      _c._compileTypedefTearOffConstant(node);
+      _loadCachedConstant(node) ?? _c._compileTypedefTearOffConstant(node);
 }
