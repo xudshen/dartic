@@ -393,7 +393,7 @@ void main() {
 
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>()),
+        throwsA(isA<NoSuchMethodError>()),
       );
     });
   });

@@ -427,7 +427,7 @@ void main() {
   });
 
   group('dartTypeToTemplate — StructuralParameterType', () {
-    test('FunctionType structural parameter → TypeParameterTemplate', () {
+    test('FunctionType structural parameter → StructuralParamTemplate', () {
       // Create a FunctionType with a type parameter, then reference it.
       final structParam = ir.StructuralParameter(
         'T',
@@ -450,12 +450,12 @@ void main() {
       final result = dartTypeToTemplate(fnType, {});
       expect(result, isA<FunctionTypeTemplate>());
       final ft = result as FunctionTypeTemplate;
-      // The return type should reference the structural parameter at index 0
-      // as a function type param (since it's a FunctionType's own param).
-      expect(ft.returnType, isA<TypeParameterTemplate>());
-      final retTp = ft.returnType as TypeParameterTemplate;
+      // The return type should reference the function type's own structural
+      // parameter at index 0 via StructuralParamTemplate (not
+      // TypeParameterTemplate, which would try to read from FTA).
+      expect(ft.returnType, isA<StructuralParamTemplate>());
+      final retTp = ft.returnType as StructuralParamTemplate;
       expect(retTp.index, 0);
-      expect(retTp.isFunctionTypeParam, true);
     });
   });
 
