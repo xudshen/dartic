@@ -20,9 +20,9 @@ class _DarticInvocationMirror implements Invocation {
     List<Type>? typeArguments,
     List<Object?>? positionalArguments,
     Map<Symbol, Object?>? namedArguments,
-  )   : typeArguments = typeArguments ?? const [],
-        positionalArguments = positionalArguments ?? const [],
-        namedArguments = namedArguments ?? const {};
+  )   : typeArguments = typeArguments != null ? List<Type>.unmodifiable(typeArguments) : const <Type>[],
+        positionalArguments = positionalArguments != null ? List<Object?>.unmodifiable(positionalArguments) : const <Object?>[],
+        namedArguments = namedArguments != null ? Map<Symbol, Object?>.unmodifiable(namedArguments) : const <Symbol, Object?>{};
 
   @override
   final Symbol memberName;

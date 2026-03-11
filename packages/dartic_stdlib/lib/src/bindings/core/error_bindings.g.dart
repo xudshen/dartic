@@ -71,6 +71,7 @@ abstract final class ErrorBindings {
     ctx.registerBinding('dart:_internal::LateError::fieldADI#1', methodMap()['fieldADI#1']!);
     ctx.registerBinding('dart:_internal::LateError::localAI#1', methodMap()['localAI#1']!);
     ctx.registerBinding('dart:_internal::LateError::fieldAI#1', methodMap()['fieldAI#1']!);
+    ctx.registerBinding('dart:core::NoSuchMethodError::_forExternal#1', methodMap()['_forExternal#1']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -83,5 +84,6 @@ abstract final class ErrorBindings {
         'fieldADI#1': (args) => DarticLateError("Field '${args[0]}' has been assigned during initialization."),
         'localAI#1': (args) => DarticLateError("Local '${args[0]}' has already been initialized."),
         'fieldAI#1': (args) => DarticLateError("Field '${args[0]}' has already been initialized."),
+        '_forExternal#1': (args) => NoSuchMethodError.withInvocation(null, Invocation.method(Symbol(args[0] as String), const [])),
       };
 }
