@@ -74,15 +74,13 @@ LanguageFeatures/nnbd/null_check_operator_A05_t01.dart  # [analyzer] unspecified
 LanguageFeatures/nnbd/null_check_operator_A07_t01.dart  # [analyzer] unspecified
 LanguageFeatures/nnbd/static_errors_A35_t01.dart  # [analyzer] unspecified
 
-# ── Async* / await-for (172) ──────────────────────────────────────
-# async* generator runtime not implemented.
+# ── Async* / sync* generator runtime (120) ───────────────────────
+# async*/sync* generator runtime not implemented.
+# NOTE: pure await-for tests are NOT skipped — CFE desugars await-for
+# into _StreamIterator + await + while, which works with existing Bridge.
 Language/Expressions/Await_Expressions/syntax_t02.dart  # async*
-Language/Expressions/Function_Invocation/async_cleanup_t01.dart  # await-for
-Language/Expressions/Function_Invocation/async_cleanup_t02.dart  # await-for
 Language/Expressions/Function_Invocation/async_cleanup_t03.dart  # async*, await-for
 Language/Expressions/Function_Invocation/async_cleanup_t04.dart  # async*, await-for
-Language/Expressions/Function_Invocation/async_cleanup_t05.dart  # await-for
-Language/Expressions/Function_Invocation/async_cleanup_t06.dart  # await-for
 Language/Expressions/Function_Invocation/async_cleanup_t07.dart  # async*, await-for
 Language/Expressions/Function_Invocation/async_cleanup_t08.dart  # async*, await-for
 Language/Expressions/Function_Invocation/async_generator_invokation_t03.dart  # async*
@@ -105,38 +103,7 @@ Language/Functions/syntax_t43.dart  # async*, sync*
 Language/Functions/syntax_t44.dart  # async*, sync*
 Language/Functions/syntax_t45.dart  # async*, sync*
 Language/Functions/syntax_t46.dart  # async*, sync*
-Language/Statements/Break/async_loop_t01.dart  # await-for
-Language/Statements/Break/async_loop_t02.dart  # await-for
-Language/Statements/Break/async_loops_t01.dart  # await-for
-Language/Statements/Break/async_loops_t02.dart  # await-for
-Language/Statements/Break/async_loops_t03.dart  # await-for
-Language/Statements/Break/async_loops_t04.dart  # await-for
-Language/Statements/Break/async_loops_t05.dart  # await-for
-Language/Statements/Break/async_loops_t06.dart  # await-for
-Language/Statements/Break/async_loops_t07.dart  # await-for
-Language/Statements/Break/async_loops_t08.dart  # await-for
-Language/Statements/Break/async_loops_t09.dart  # await-for
-Language/Statements/Break/async_loops_t10.dart  # await-for
-Language/Statements/Continue/async_loops_t01.dart  # await-for
-Language/Statements/Continue/async_loops_t02.dart  # await-for
-Language/Statements/Continue/async_loops_t03.dart  # await-for
-Language/Statements/Continue/async_loops_t04.dart  # await-for
-Language/Statements/Continue/async_loops_t05.dart  # await-for
-Language/Statements/Continue/async_loops_t06.dart  # await-for
-Language/Statements/Continue/async_loops_t07.dart  # await-for
-Language/Statements/Continue/async_loops_t08.dart  # await-for
-Language/Statements/Continue/async_loops_t09.dart  # await-for
-Language/Statements/Continue/async_loops_t10.dart  # await-for
-Language/Statements/Continue/control_transfer_t08.dart  # await-for
-Language/Statements/Continue/control_transfer_t09.dart  # await-for
-Language/Statements/For/Asynchronous_For_in/enclosing_loop_t01.dart  # await-for
-Language/Statements/For/Asynchronous_For_in/execution_A02_t01.dart  # await-for
-Language/Statements/For/Asynchronous_For_in/execution_A02_t02.dart  # await-for
-Language/Statements/For/Asynchronous_For_in/execution_A03_t01.dart  # await-for
-Language/Statements/For/Asynchronous_For_in/execution_A05_t03.dart  # await-for
 Language/Statements/For/Asynchronous_For_in/execution_A05_t04.dart  # async*, await-for
-Language/Statements/For/Asynchronous_For_in/execution_A05_t05.dart  # await-for
-Language/Statements/For/syntax_t18.dart  # await-for
 Language/Statements/Rethrow/execution_t01.dart  # async*
 Language/Statements/Rethrow/execution_t02.dart  # async*
 Language/Statements/Rethrow/execution_t03.dart  # async*
@@ -230,21 +197,4 @@ Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t09.dart  # sync*
 Language/Statements/Yield_and_Yield_Each/Yield_Each/syntax_t10.dart  # async*
 LanguageFeatures/Augmentations/augmenting_functions_A01_t19.dart  # async*
 LanguageFeatures/Augmentations/augmenting_functions_A01_t20.dart  # async*
-LanguageFeatures/Control-flow-collections/type_inference_A12_t01.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A12_t02.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A12_t03.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A12_t04.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A13_t01.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A13_t02.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A13_t03.dart  # await-for
-LanguageFeatures/Control-flow-collections/type_inference_A13_t04.dart  # await-for
 LanguageFeatures/Horizontal-inference/async_t03.dart  # async*
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t01.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t03.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t05.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t07.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t09.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_element_A03_t11.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t01.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t02.dart  # await-for
-LanguageFeatures/Patterns/execution_pattern_await_for_in_statement_A02_t03.dart  # await-for
