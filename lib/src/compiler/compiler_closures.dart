@@ -981,6 +981,220 @@ extension on DarticCompiler {
     return (closureReg, ResultLoc.ref);
   }
 
+  /// Compiles `Instantiation(InstanceTearOff(receiver, method), typeArgs)`:
+  /// a generic instance method instantiation.
+  ///
+  /// Generates a combined thunk that:
+  /// 1. Captures receiver as upvalue[0]
+  /// 2. Accepts parameters with **instantiated** types
+  /// 3. Applies defaults for optional params
+  /// 4. Coerces from instantiated to generic types
+  /// 5. Emits FTA from type args
+  /// 6. Calls via CALL_VIRTUAL
+  /// 7. Coerces return value back
+  (int, ResultLoc) _compileInstanceInstantiation(
+    ir.InstanceTearOff expr,
+    List<ir.DartType> typeArgs,
+  ) {
+    final target = expr.interfaceTarget;
+    final methodName = _mangleName(expr.name);
+    final fn = target.function;
+
+    // If no type params or type args, fall back to plain instance tearoff.
+    final typeParams = fn.typeParameters;
+    if (typeParams.isEmpty || typeArgs.isEmpty) {
+      return _compileInstanceTearOff(expr);
+    }
+
+    // Build substitution for instantiated types.
+    final subst = type_algebra.Substitution.fromPairs(typeParams, typeArgs);
+
+    // 1. Compile receiver.
+    var (recReg, recLoc) = _compileExpression(expr.receiver);
+    recReg = _boxToRefIfValue(recReg, recLoc, _inferExprType(expr.receiver));
+
+    // 2. Reserve function table slot.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // 3. Push context.
+    _pushContext();
+    _currentReturnType = subst.substituteType(fn.returnType);
+
+    _scope = Scope(
+      valueAlloc: _valueAlloc,
+      refAlloc: _refAlloc,
+    );
+
+    // Reserve header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+    _refAlloc.alloc();
+
+    // 4. Allocate params with instantiated types + null-sentinel promotion.
+    final argTemps = <(int, ResultLoc)>[];
+    final promoted = <int>{};
+    final paramMappings = <({
+      int idx,
+      StackKind instKind,
+      StackKind actualKind,
+      ir.DartType instType,
+    })>[];
+
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final isOptional = i >= fn.requiredParameterCount;
+      if (isOptional && instKind.isValue && param.initializer != null) {
+        argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
+        promoted.add(i);
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add(
+            (reg, instKind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+      paramMappings.add((
+        idx: i,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+      ));
+    }
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      final param = fn.namedParameters[i];
+      final instType = subst.substituteType(param.type);
+      final instKind = _classifyStackKind(instType);
+      final actualKind = _classifyStackKind(param.type);
+      final flatIdx = fn.positionalParameters.length + i;
+      if (instKind.isValue && param.initializer != null) {
+        argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
+        promoted.add(flatIdx);
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        argTemps.add(
+            (reg, instKind.isValue ? ResultLoc.value : ResultLoc.ref));
+      }
+      paramMappings.add((
+        idx: flatIdx,
+        instKind: instKind,
+        actualKind: actualKind,
+        instType: instType,
+      ));
+    }
+
+    // 5. Apply defaults.
+    _applyTearoffDefaults(fn, argTemps);
+
+    // 6. Unbox promoted params back to instantiated kind.
+    for (final idx in promoted) {
+      final (refReg, _) = argTemps[idx];
+      final info = paramMappings.firstWhere((m) => m.idx == idx);
+      if (info.instKind.isValue) {
+        final valueReg = _valueAlloc.alloc();
+        switch (info.instKind) {
+          case StackKind.intVal:
+            _emitter.emitABC(Op.unboxInt, valueReg, refReg, 0);
+          case StackKind.boolVal:
+            _emitter.emitABC(Op.unboxBool, valueReg, refReg, 0);
+          case StackKind.doubleVal:
+            _emitter.emitABC(Op.unboxDouble, valueReg, refReg, 0);
+          default:
+            break;
+        }
+        argTemps[idx] = (valueReg, ResultLoc.value);
+      }
+    }
+
+    // 7. Coerce from instantiated kind to actual (generic) kind.
+    final callArgTemps = <(int, ResultLoc)>[];
+    for (final info in paramMappings) {
+      callArgTemps.add(_coerceThunkArg(
+          argTemps[info.idx].$1, info.instKind, info.actualKind,
+          info.instType));
+    }
+
+    // 8. Load receiver from upvalue[0].
+    final receiverReg = _allocRefReg();
+    _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
+
+    // 9. Emit FTA for the call.
+    _emitFTAForCall(typeArgs);
+
+    // 10. Allocate result register and emit CALL_VIRTUAL.
+    final actualRetKind = _classifyStackKind(fn.returnType);
+    final innerResultReg =
+        actualRetKind.isValue ? _allocValueReg() : _allocRefReg();
+    _emitArgMovesForVirtualCall(callArgTemps);
+    _emitCallVirtual(
+        innerResultReg, receiverReg, methodName, callArgTemps.length);
+
+    // 11. Coerce return value and emit RETURN.
+    final instRetKind =
+        _classifyStackKind(subst.substituteType(fn.returnType));
+    final actualRetLoc =
+        actualRetKind.isValue ? ResultLoc.value : ResultLoc.ref;
+    _emitCoercedReturn(
+        innerResultReg, actualRetLoc, instRetKind, fn.returnType);
+
+    _patchPendingArgMoves();
+
+    // Build paramKinds reflecting promotions.
+    final paramKinds =
+        Uint8List(fn.positionalParameters.length + fn.namedParameters.length);
+    for (var i = 0; i < paramMappings.length; i++) {
+      final m = paramMappings[i];
+      paramKinds[m.idx] =
+          promoted.contains(m.idx) ? StackKind.ref.index : m.instKind.index;
+    }
+
+    // Create FuncProto.
+    final thunkProto = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<instance-instantiation:$methodName>',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds: paramKinds,
+      returnKind:
+          _classifyReturnKind(subst.substituteType(fn.returnType)),
+      icTable: List.of(_icEntries),
+      upvalueDescriptors: [
+        UpvalueDescriptor(isLocal: true, index: recReg),
+      ],
+    );
+
+    // Set typeTemplate to instantiated + covariant-widened type.
+    final instFuncType = subst.substituteType(
+      computeTearOffFunctionType(fn, _coreTypes),
+    );
+    thunkProto.typeTemplate = dartTypeToTemplate(
+      instFuncType,
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[thunkFuncId] = thunkProto;
+
+    _popContext();
+
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+    return (closureReg, ResultLoc.ref);
+  }
+
   /// Emits null-check + default-value code for each optional/named param
   /// in a tearoff thunk.
   ///

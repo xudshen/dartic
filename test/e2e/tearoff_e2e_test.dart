@@ -388,6 +388,102 @@ bool main() {
 
   // ── Combined / higher-order tests ──
 
+  // ── Instantiation thunk defaults ──
+
+  group('Instantiation thunk defaults', () {
+    test('static generic instantiation with optional positional default', () async {
+      final result = await compileAndRun('''
+T pick<T>(T a, [T? b]) => b ?? a;
+int main() {
+  int Function(int, [int?]) f = pick;
+  return f(42);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('static generic instantiation with named default', () async {
+      final result = await compileAndRun('''
+T greet<T extends num>(T x, {T? bonus}) => bonus ?? x;
+int main() {
+  int Function(int, {int? bonus}) f = greet;
+  return f(10);
+}
+''');
+      expect(result, 10);
+    });
+
+    test('instantiation with explicit default value arg provided', () async {
+      final result = await compileAndRun('''
+T pick<T>(T a, [T? b]) => b ?? a;
+int main() {
+  int Function(int, [int?]) f = pick;
+  return f(42, 99);
+}
+''');
+      expect(result, 99);
+    });
+  });
+
+  // ── Generic instance method instantiation ──
+
+  group('Generic instance method instantiation', () {
+    test('basic implicit instantiation', () async {
+      final result = await compileAndRun('''
+class A {
+  T identity<T>(T x) => x;
+}
+int main() {
+  int Function(int) f = A().identity;
+  return f(42);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('explicit instantiation', () async {
+      final result = await compileAndRun('''
+class A {
+  T pick<T>(T a, T b) => a;
+}
+int main() {
+  var a = A();
+  var f = a.pick<int>;
+  return f(10, 20);
+}
+''');
+      expect(result, 10);
+    });
+
+    test('instantiation with optional params and defaults', () async {
+      final result = await compileAndRun('''
+class A {
+  T withDefault<T extends num>(T x, [T? y]) => y ?? x;
+}
+int main() {
+  int Function(int, [int?]) f = A().withDefault;
+  return f(42);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('instantiated tearoff equality', () async {
+      final result = await compileAndRun('''
+class A {
+  T id<T>(T x) => x;
+}
+bool main() {
+  var a = A();
+  int Function(int) f1 = a.id;
+  int Function(int) f2 = a.id;
+  return f1 == f2;
+}
+''');
+      expect(result, true);
+    });
+  });
+
   group('combined tearoff tests', () {
     test('constructor tearoff with named params (explicitly passed)', () async {
       final result = await compileAndRun('''

@@ -2437,6 +2437,15 @@ extension on DarticCompiler {
         );
       }
     }
+    // InstanceTearOff: generic instance method instantiation.
+    // e.g., `int Function(int) f = obj.genericMethod;`
+    if (expr.expression is ir.InstanceTearOff) {
+      return _compileInstanceInstantiation(
+        expr.expression as ir.InstanceTearOff,
+        expr.typeArguments,
+      );
+    }
+
     // Fallback for non-StaticTearOff targets: pass through.
     return _compileExpression(expr.expression);
   }
