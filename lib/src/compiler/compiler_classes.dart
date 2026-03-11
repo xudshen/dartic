@@ -101,8 +101,33 @@ extension on DarticCompiler {
       }
     }
 
+    // Build a name→layout map from inherited fields. Used below to detect
+    // mixin field replacement: when the CFE eliminates a mixin, it copies the
+    // mixin's fields into the application class. If a copied field has the
+    // same name as an inherited superclass field, it must REUSE the inherited
+    // offset (not allocate a new slot), because the Dart VM treats them as the
+    // same physical field and method bodies in the superclass may reference
+    // the inherited field directly.
+    final inheritedByName = <String, FieldLayout>{};
+    if (superClass != null) {
+      _collectInheritedFieldsByName(superClass, inheritedByName);
+    }
+
     for (final field in cls.fields) {
       if (field.isStatic) continue;
+
+      // Check if this field replaces an inherited field of the same name.
+      final inherited = inheritedByName[field.name.text];
+      if (inherited != null) {
+        // Reuse the inherited field's offset — the mixin field replaces it.
+        fieldLayouts[field.getterReference] = inherited;
+        final setterRef = field.setterReference;
+        if (setterRef != null) {
+          fieldLayouts[setterRef] = inherited;
+        }
+        continue;
+      }
+
       // Late fields are forced to ref stack regardless of declared type,
       // because they use null or lateSentinel as the "uninitialized" marker.
       final kind = field.isLate ? StackKind.ref : _classifyStackKind(field.type);
@@ -130,6 +155,36 @@ extension on DarticCompiler {
         }
       }
     }
+
+    // For eliminated mixin classes, also register the original mixin's field
+    // references in this class's layout. The CFE copies mixin fields into the
+    // application class, but copied method bodies still reference the original
+    // mixin field declarations (e.g., M1._xm1 instead of B1._xm1). Since the
+    // application class may have different field offsets (due to superclass
+    // fields), the mixin's references must be mapped to the correct offsets.
+    for (final impl in cls.implementedTypes) {
+      final implClass = impl.classNode;
+      for (final mixinField in implClass.fields) {
+        if (mixinField.isStatic) continue;
+        if (fieldLayouts.containsKey(mixinField.getterReference)) continue;
+        // Match by name to find the corresponding copied field in this class.
+        for (final clsField in cls.fields) {
+          if (clsField.isStatic) continue;
+          if (clsField.name.text == mixinField.name.text) {
+            final layout = fieldLayouts[clsField.getterReference];
+            if (layout != null) {
+              fieldLayouts[mixinField.getterReference] = layout;
+              final setterRef = mixinField.setterReference;
+              if (setterRef != null) {
+                fieldLayouts.putIfAbsent(setterRef, () => layout);
+              }
+            }
+            break;
+          }
+        }
+      }
+    }
+
     _instanceFieldLayouts[cls] = fieldLayouts;
 
     // Build name-indexed field layout for runtime dynamic access.
@@ -270,6 +325,81 @@ extension on DarticCompiler {
       classInfo.methods[nameIdx] = _functions.last;
     }
 
+    // Generate synthetic getter/setter for fields that shadow inherited
+    // methods. When a subclass declares `var v` that overrides a superclass
+    // getter/setter, the Kernel IR doesn't emit Procedure nodes for the
+    // implicit accessors. We must generate them so CALL_VIRTUAL dispatches
+    // to the subclass field rather than the inherited method.
+    if (superClassId >= 0) {
+      final superInfo = _classInfos[superClassId];
+      for (final field in cls.fields) {
+        if (field.isStatic) continue;
+        final getterName = field.name.text;
+        final setterName = '${getterName}=';
+        final getterIdx = _constantPool.addName(getterName);
+        final setterIdx = _constantPool.addName(setterName);
+
+        // Check if a getter/setter is inherited but not already overridden
+        // by an explicit procedure.
+        final needsGetter = superInfo.methods.containsKey(getterIdx) &&
+            !classInfo.methods.containsKey(getterIdx);
+        final needsSetter = superInfo.methods.containsKey(setterIdx) &&
+            !classInfo.methods.containsKey(setterIdx);
+
+        if (!needsGetter && !needsSetter) continue;
+
+        final layout = fieldLayouts[field.getterReference];
+        if (layout == null) continue;
+
+        if (needsGetter) {
+          final funcId = _functions.length;
+          final isVal = layout.kind.isValue;
+          // Getter: GET_FIELD this(r2) → result, then RETURN.
+          // Ref: GET_FIELD_REF r3, r2, offset → RETURN_REF r3
+          // Val: GET_FIELD_VAL v0, r2, offset → RETURN_VAL v0
+          final bytecode = Uint64List.fromList([
+            encodeABC(isVal ? Op.getFieldVal : Op.getFieldRef,
+                isVal ? 0 : 3, 2, layout.offset),
+            encodeABC(isVal ? Op.returnVal : Op.returnRef,
+                isVal ? 0 : 3, 0, 0),
+          ]);
+          _functions.add(DarticFuncProto(
+            funcId: funcId,
+            name: '${cls.name}.$getterName',
+            bytecode: bytecode,
+            valueRegCount: isVal ? 1 : 0,
+            refRegCount: isVal ? 3 : 4, // ITA, FTA, this, [result]
+            paramCount: 0,
+            returnKind: layout.kind.index,
+          ));
+          classInfo.methods[getterIdx] = _functions.last;
+        }
+
+        if (needsSetter) {
+          final funcId = _functions.length;
+          final isVal = layout.kind.isValue;
+          // Setter: SET_FIELD this(r2), param, offset → RETURN_NULL.
+          // Ref param arrives at r3: SET_FIELD_REF r2, r3, offset
+          // Val param arrives at v0: SET_FIELD_VAL r2, v0, offset
+          final bytecode = Uint64List.fromList([
+            encodeABC(isVal ? Op.setFieldVal : Op.setFieldRef,
+                2, isVal ? 0 : 3, layout.offset),
+            encodeABC(Op.returnNull, 0, 0, 0),
+          ]);
+          _functions.add(DarticFuncProto(
+            funcId: funcId,
+            name: '${cls.name}.$setterName',
+            bytecode: bytecode,
+            valueRegCount: isVal ? 1 : 0,
+            refRegCount: isVal ? 3 : 4, // ITA, FTA, this, [param]
+            paramCount: 1,
+            paramKinds: Uint8List.fromList([layout.kind.index]),
+          ));
+          classInfo.methods[setterIdx] = _functions.last;
+        }
+      }
+    }
+
     // For enum classes, alias `toString` → `_enumToString` in the method
     // table. Kernel compiles `_Enum.toString()` as a platform method that
     // delegates to `_enumToString()`. Since _Enum is a platform class, we
@@ -317,6 +447,36 @@ extension on DarticCompiler {
       namedParams: fn.namedParameters,
     );
 
+    // External constructors without a body throw NoSuchMethodError.
+    if (ctor.isExternal && fn.body == null) {
+      final name = '${ctor.enclosingClass.name}.${ctor.name.text}';
+      _emitExternalFunctionError(name.isEmpty ? ctor.enclosingClass.name : name);
+      _emitCloseUpvaluesIfNeeded();
+      _emitter.emitABC(Op.returnNull, 0, 0, 0);
+
+      _patchPendingArgMoves();
+      final valRegCount = _valueAlloc.maxUsed;
+      final refRegCount = _refAlloc.maxUsed;
+      final proto = DarticFuncProto(
+        funcId: funcId,
+        name: ctor.name.text.isEmpty
+            ? ctor.enclosingClass.name
+            : '${ctor.enclosingClass.name}.${ctor.name.text}',
+        bytecode: _emitter.toUint64List(),
+        valueRegCount: valRegCount,
+        refRegCount: refRegCount,
+        paramCount:
+            fn.positionalParameters.length + fn.namedParameters.length,
+        paramKinds:
+            _buildParamKinds(fn.positionalParameters, fn.namedParameters),
+        isConstructor: true,
+        exceptionTable: List.of(_exceptionHandlers),
+        icTable: List.of(_icEntries),
+      );
+      _functions[funcId] = proto;
+      return;
+    }
+
     // Compile implicit field initializers: fields with initializer expressions
     // that are NOT explicitly listed as FieldInitializer in the constructor.
     // In Kernel, `int x = 10;` on a field declaration may not generate an
@@ -326,11 +486,26 @@ extension on DarticCompiler {
     // Late fields are special: they always get sentinel initialization here
     // (regardless of whether they have an initializer), because late field
     // initializers are deferred to first read (lazy evaluation).
+    //
+    // Mixin field replacement: fields that shadow inherited fields (same name)
+    // must be initialized AFTER the super constructor, because the mixin's
+    // initializer should override any value set by the super constructor.
     final explicitFields = <ir.Field>{};
     for (final init in ctor.initializers) {
       if (init is ir.FieldInitializer) explicitFields.add(init.field);
     }
     final enclosingClass = ctor.enclosingClass;
+
+    // Build inherited field name set for mixin replacement detection.
+    final inheritedFieldNames = <String>{};
+    final superCls = enclosingClass.superclass;
+    if (superCls != null) {
+      _collectInheritedFieldNames(superCls, inheritedFieldNames);
+    }
+
+    // Collect mixin-replacement fields (deferred to after super).
+    final deferredMixinInits = <ir.Field>[];
+
     for (final field in enclosingClass.fields) {
       if (field.isStatic) continue;
       if (field.isLate) {
@@ -341,13 +516,26 @@ extension on DarticCompiler {
       }
       if (explicitFields.contains(field)) continue;
       if (field.initializer == null) continue;
+
+      // Mixin-replacement field: defer until after super.
+      if (inheritedFieldNames.contains(field.name.text)) {
+        deferredMixinInits.add(field);
+        continue;
+      }
+
       // Compile the field-level initializer directly.
       _compileFieldInit(field, field.initializer!);
     }
 
-    // Process initializers in declaration order.
+    // Process initializers in declaration order (includes SuperInitializer).
     for (final init in ctor.initializers) {
       init.accept(_initializerVisitor);
+    }
+
+    // Compile deferred mixin-replacement field initializers AFTER super.
+    // This ensures the mixin's values override the superclass constructor.
+    for (final field in deferredMixinInits) {
+      _compileFieldInit(field, field.initializer!);
     }
 
     // Compile constructor body.
@@ -384,6 +572,43 @@ extension on DarticCompiler {
     _currentClassTypeParams = null;
   }
 
+  /// Collects inherited field layouts by name from the given class and its
+  /// superclass chain. Used to detect mixin field replacement: when a mixin
+  /// field has the same name as a superclass field, it should reuse the
+  /// inherited offset.
+  void _collectInheritedFieldsByName(
+      ir.Class cls, Map<String, FieldLayout> result) {
+    final layouts = _instanceFieldLayouts[cls];
+    if (layouts != null) {
+      for (final field in cls.fields) {
+        if (field.isStatic) continue;
+        final layout = layouts[field.getterReference];
+        if (layout != null) {
+          result.putIfAbsent(field.name.text, () => layout);
+        }
+      }
+    }
+    // Walk up the superclass chain.
+    final sup = cls.superclass;
+    if (sup != null && _instanceFieldLayouts.containsKey(sup)) {
+      _collectInheritedFieldsByName(sup, result);
+    }
+  }
+
+  /// Collects inherited field names from the given class and its superclass
+  /// chain. Used to detect mixin field shadowing in constructor compilation.
+  void _collectInheritedFieldNames(
+      ir.Class cls, Set<String> result) {
+    for (final field in cls.fields) {
+      if (field.isStatic) continue;
+      result.add(field.name.text);
+    }
+    final sup = cls.superclass;
+    if (sup != null) {
+      _collectInheritedFieldNames(sup, result);
+    }
+  }
+
   /// Compiles a [FieldInitializer] within a constructor.
   ///
   /// Emits SET_FIELD_REF or SET_FIELD_VAL to write the initializer value
@@ -398,12 +623,7 @@ extension on DarticCompiler {
   /// Shared by explicit [FieldInitializer] and implicit field-level
   /// initializers (e.g., `int x = 10;` on field declarations).
   void _compileFieldInit(ir.Field field, ir.Expression value) {
-    final cls = field.enclosingClass!;
-    final layouts = _instanceFieldLayouts[cls];
-    if (layouts == null) {
-      throw StateError('Field layouts not found for class ${cls.name}');
-    }
-    final layout = layouts[field.getterReference];
+    final layout = _resolveFieldLayout(field, null);
     if (layout == null) {
       throw StateError('Field layout not found for ${field.name}');
     }

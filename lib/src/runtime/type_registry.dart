@@ -111,6 +111,22 @@ class TypeRegistry {
   /// `Object?` — the top type in sound null safety.
   late final DarticInterfaceType objectNullableType;
 
+  // ── Host class name resolution ──
+
+  /// Maps host class names (FQN or short) to classId.
+  /// Set by the engine at module-install time.
+  Map<String, int> _hostClassIds = const {};
+
+  /// Sets the host class name -> classId mapping for type resolution.
+  void setHostClassIds(Map<String, int> ids) {
+    _hostClassIds = ids;
+  }
+
+  /// Resolves a host class name to its classId, or [SpecialClassId.dynamic_]
+  /// if unknown (so `is` checks against unknown types degrade to `dynamic`).
+  int resolveHostClassName(String name) =>
+      _hostClassIds[name] ?? SpecialClassId.dynamic_;
+
   // ── Public API ──
 
   /// Interns an interface type. Returns the canonical instance.

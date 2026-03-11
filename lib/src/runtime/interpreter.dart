@@ -119,6 +119,11 @@ class DarticInterpreter {
   /// via registered predicates instead of hardcoded `is` checks.
   final HostTypeResolver? hostTypeResolver;
 
+  /// Host class name → classId mapping for HostClassTypeTemplate resolution.
+  /// Set by the engine at module-install time, applied when the TypeRegistry
+  /// is created in [_provisionTypeSystem].
+  Map<String, int> hostClassNameToId = const {};
+
   /// Global variable table — initialized per-module in [execute].
   DarticGlobalTable? _globalTable;
 
@@ -437,6 +442,11 @@ class DarticInterpreter {
     }
     final active = _activeTypeRegistry;
     if (active != null) {
+      // Apply host class name→classId mapping for HostClassTypeTemplate
+      // resolution at runtime.
+      if (hostClassNameToId.isNotEmpty) {
+        active.setHostClassIds(hostClassNameToId);
+      }
       _subtypeChecker = SubtypeChecker(
         classes: module.classes,
         registry: active,
@@ -1649,22 +1659,37 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(
-              vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
+          try {
+            vs.writeInt(
+                vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
+          } on ArgumentError catch (e, st) {
+            pc = unwindToHandler(pc, e, st);
+            continue;
+          }
 
         case Op.shr: // SHR A, B, C (arithmetic)
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(
-              vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
+          try {
+            vs.writeInt(
+                vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
+          } on ArgumentError catch (e, st) {
+            pc = unwindToHandler(pc, e, st);
+            continue;
+          }
 
         case Op.ushr: // USHR A, B, C (unsigned / logical)
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(
-              vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
+          try {
+            vs.writeInt(
+                vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
+          } on ArgumentError catch (e, st) {
+            pc = unwindToHandler(pc, e, st);
+            continue;
+          }
 
         case Op.addIntImm: // ADD_INT_IMM A, B, C (C is unsigned 8-bit immediate)
           final a = decodeA(instr);

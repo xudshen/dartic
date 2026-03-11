@@ -323,8 +323,19 @@ class DarticDisassembler {
       TypeParameterTemplate() =>
         t.isFunctionTypeParam ? 'F${t.index}' : 'T${t.index}',
       StructuralParamTemplate() => 'S${t.index}',
+      HostClassTypeTemplate() => _formatHostClassType(t, module),
       NullableTemplate() => '${_formatTypeTemplate(t.inner, module)}?',
     };
+  }
+
+  static String _formatHostClassType(
+    HostClassTypeTemplate t,
+    DarticModule module,
+  ) {
+    if (t.typeArgs.isEmpty) return 'host:${t.name}';
+    final args =
+        t.typeArgs.map((a) => _formatTypeTemplate(a, module)).join(', ');
+    return 'host:${t.name}<$args>';
   }
 
   static String _formatInterfaceType(

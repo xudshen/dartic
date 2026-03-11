@@ -41,6 +41,7 @@ DarticType resolveType(
     FunctionTypeTemplate() =>
       _resolveFunction(template, ita, fta, registry),
     RecordTypeTemplate() => _resolveRecord(template, ita, fta, registry),
+    HostClassTypeTemplate() => _resolveHostClass(template, ita, fta, registry),
   };
 }
 
@@ -167,4 +168,23 @@ DarticRecordType _resolveRecord(
     positionalTypes: resolvedPos,
     namedTypes: resolvedNamed,
   );
+}
+
+/// Resolves a host class type template by looking up its name in the registry.
+///
+/// The classId is resolved at runtime via [TypeRegistry.resolveHostClassName],
+/// which maps fully-qualified names to classIds set by the engine at
+/// module-install time.
+DarticInterfaceType _resolveHostClass(
+  HostClassTypeTemplate template,
+  List<DarticType>? ita,
+  List<DarticType>? fta,
+  TypeRegistry registry,
+) {
+  final classId = registry.resolveHostClassName(template.name);
+  final resolvedArgs = <DarticType>[
+    for (final argTemplate in template.typeArgs)
+      resolveType(argTemplate, ita, fta, registry),
+  ];
+  return registry.intern(classId, resolvedArgs);
 }

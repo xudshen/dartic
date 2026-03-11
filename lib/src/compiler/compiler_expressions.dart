@@ -900,6 +900,10 @@ extension on DarticCompiler {
 
   /// Compiles positional arguments with type coercion against a list of
   /// parameter types (from a FunctionType). Used by closure calls.
+  ///
+  /// For omitted optional positional params that live on the ref stack,
+  /// passes null as a sentinel so the callee's default-value guards can
+  /// detect the omission and apply the correct default.
   List<(int, ResultLoc)> _compilePositionalArgsFromTypes(
     List<ir.Expression> args,
     List<ir.DartType> paramTypes,
@@ -912,6 +916,16 @@ extension on DarticCompiler {
         (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind, args[i]);
       }
       argTemps.add((argReg, argLoc));
+    }
+
+    // Pass null sentinel for omitted optional positional params on the ref
+    // stack. This overwrites any stale data from previous calls so the
+    // callee's JUMP_IF_NNULL default guards work correctly.
+    for (var i = args.length; i < paramTypes.length; i++) {
+      final paramKind = _classifyStackKind(paramTypes[i]);
+      if (paramKind == StackKind.ref) {
+        argTemps.add(_loadNull());
+      }
     }
     return argTemps;
   }
@@ -971,26 +985,35 @@ extension on DarticCompiler {
     List<ir.NamedExpression> namedArgs,
     List<(int, ResultLoc)> argTemps,
   ) {
-    final providedNamed = <String, ir.NamedExpression>{};
-    for (final namedArg in namedArgs) {
-      providedNamed[namedArg.name] = namedArg;
+    // Build param-name → param lookup for coercion info.
+    final paramByName = <String, ir.VariableDeclaration>{};
+    for (final param in namedParams) {
+      paramByName[param.name!] = param;
     }
 
+    // Phase 1: Evaluate all provided named args in SOURCE order (left→right).
+    final compiled = <String, (int, ResultLoc)>{};
+    for (final namedArg in namedArgs) {
+      var (argReg, argLoc) = _compileExpression(namedArg.value);
+      final param = paramByName[namedArg.name]!;
+      final paramKind = _classifyStackKind(param.type);
+      (argReg, argLoc) =
+          _coerceArg(argReg, argLoc, paramKind, namedArg.value);
+      compiled[namedArg.name] = (argReg, argLoc);
+    }
+
+    // Phase 2: Emit argTemps in PARAMETER declaration order.
     for (final param in namedParams) {
-      final provided = providedNamed[param.name!];
-      if (provided != null) {
-        var (argReg, argLoc) = _compileExpression(provided.value);
-        final paramKind = _classifyStackKind(param.type);
-        (argReg, argLoc) = _coerceArg(
-            argReg, argLoc, paramKind, provided.value);
-        argTemps.add((argReg, argLoc));
+      final result = compiled[param.name!];
+      if (result != null) {
+        argTemps.add(result);
       } else {
         var (argReg, argLoc) = _compileDefaultValue(param);
         // Coerce the default value to the param's stack kind — e.g. an int
         // literal default must be boxed when the param type is dynamic/num.
         final paramKind = _classifyStackKind(param.type);
-        (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind,
-            param.initializer);
+        (argReg, argLoc) =
+            _coerceArg(argReg, argLoc, paramKind, param.initializer);
         argTemps.add((argReg, argLoc));
       }
     }
@@ -1007,19 +1030,28 @@ extension on DarticCompiler {
     List<ir.NamedExpression> namedArgs,
     List<(int, ResultLoc)> argTemps,
   ) {
-    final providedNamed = <String, ir.NamedExpression>{};
-    for (final namedArg in namedArgs) {
-      providedNamed[namedArg.name] = namedArg;
+    // Build param-name → param lookup for coercion info.
+    final paramByName = <String, ir.NamedType>{};
+    for (final param in namedParams) {
+      paramByName[param.name] = param;
     }
 
+    // Phase 1: Evaluate all provided named args in SOURCE order (left→right).
+    final compiled = <String, (int, ResultLoc)>{};
+    for (final namedArg in namedArgs) {
+      var (argReg, argLoc) = _compileExpression(namedArg.value);
+      final param = paramByName[namedArg.name]!;
+      final paramKind = _classifyStackKind(param.type);
+      (argReg, argLoc) =
+          _coerceArg(argReg, argLoc, paramKind, namedArg.value);
+      compiled[namedArg.name] = (argReg, argLoc);
+    }
+
+    // Phase 2: Emit argTemps in PARAMETER declaration order.
     for (final param in namedParams) {
-      final provided = providedNamed[param.name];
-      if (provided != null) {
-        var (argReg, argLoc) = _compileExpression(provided.value);
-        final paramKind = _classifyStackKind(param.type);
-        (argReg, argLoc) = _coerceArg(
-            argReg, argLoc, paramKind, provided.value);
-        argTemps.add((argReg, argLoc));
+      final result = compiled[param.name];
+      if (result != null) {
+        argTemps.add(result);
       } else {
         argTemps.add(_loadNull());
       }
@@ -1595,32 +1627,19 @@ extension on DarticCompiler {
 
     // Check if the target is a field.
     if (target is ir.Field) {
-      var layouts = _instanceFieldLayouts[targetClass];
-      // For enum classes, the field target may be in _Enum (platform class),
-      // but the actual receiver is a user-defined enum class. Look up the
-      // field in the receiver's class layout instead.
-      if (layouts == null && targetClass != null &&
-          _isHostLibrary(targetClass.enclosingLibrary)) {
-        final receiverClass = _resolveReceiverClass(expr.receiver);
-        if (receiverClass != null) {
-          layouts = _instanceFieldLayouts[receiverClass];
-        }
-      }
-      if (layouts != null) {
-        final layout = layouts[target.getterReference];
-        if (layout != null) {
-          // Compile receiver.
-          // SAFETY: loc discarded — field access targets object instances
-          // which are always on the ref stack.
-          final (recvReg, _) = _compileExpression(expr.receiver);
+      final layout = _resolveFieldLayout(target, expr.receiver);
+      if (layout != null) {
+        // Compile receiver.
+        // SAFETY: loc discarded — field access targets object instances
+        // which are always on the ref stack.
+        final (recvReg, _) = _compileExpression(expr.receiver);
 
-          if (!layout.isLate) {
-            return _emitGetField(recvReg, layout);
-          }
-
-          // Late field: read then check sentinel.
-          return _emitLateFieldGet(recvReg, layout, target);
+        if (!layout.isLate) {
+          return _emitGetField(recvReg, layout);
         }
+
+        // Late field: read then check sentinel.
+        return _emitLateFieldGet(recvReg, layout, target);
       }
     }
 
@@ -1683,38 +1702,35 @@ extension on DarticCompiler {
     final targetClass = target.enclosingClass;
 
     if (target is ir.Field) {
-      final layouts = _instanceFieldLayouts[targetClass];
-      if (layouts != null) {
-        final layout = layouts[target.getterReference];
-        if (layout != null) {
-          // Compile receiver and value.
-          // SAFETY: loc discarded — field access targets object instances
-          // which are always on the ref stack.
-          final (recvReg, _) = _compileExpression(expr.receiver);
+      final layout = _resolveFieldLayout(target, expr.receiver);
+      if (layout != null) {
+        // Compile receiver and value.
+        // SAFETY: loc discarded — field access targets object instances
+        // which are always on the ref stack.
+        final (recvReg, _) = _compileExpression(expr.receiver);
 
-          // Late final field: guard against double-write.
-          if (layout.isLate && layout.isFinal) {
-            _emitLateFinalFieldWriteGuard(recvReg, layout, target);
-          }
-
-          var (valReg, valLoc) = _compileExpression(expr.value);
-
-          if (layout.isLate) {
-            // Late fields are always on ref stack — box value if needed.
-            valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
-            _emitter.emitABC(Op.setFieldRef, recvReg, valReg, layout.offset);
-            return (valReg, ResultLoc.ref);
-          }
-
-          valReg = _emitSetField(
-              recvReg, valReg, valLoc, layout, _inferExprType(expr.value));
-          // InstanceSet result is the written value. _emitSetField may have
-          // coerced the value (e.g. boxed int→ref for a ref field), so the
-          // result loc must match the field's stack kind, not the original.
-          final resultLoc =
-              layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
-          return (valReg, resultLoc);
+        // Late final field: guard against double-write.
+        if (layout.isLate && layout.isFinal) {
+          _emitLateFinalFieldWriteGuard(recvReg, layout, target);
         }
+
+        var (valReg, valLoc) = _compileExpression(expr.value);
+
+        if (layout.isLate) {
+          // Late fields are always on ref stack — box value if needed.
+          valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+          _emitter.emitABC(Op.setFieldRef, recvReg, valReg, layout.offset);
+          return (valReg, ResultLoc.ref);
+        }
+
+        valReg = _emitSetField(
+            recvReg, valReg, valLoc, layout, _inferExprType(expr.value));
+        // InstanceSet result is the written value. _emitSetField may have
+        // coerced the value (e.g. boxed int→ref for a ref field), so the
+        // result loc must match the field's stack kind, not the original.
+        final resultLoc =
+            layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
+        return (valReg, resultLoc);
       }
     }
 
@@ -1987,17 +2003,13 @@ extension on DarticCompiler {
 
     // If the target is a field, use GET_FIELD_REF/GET_FIELD_VAL on `this`.
     if (target is ir.Field) {
-      final cls = target.enclosingClass!;
-      final layouts = _instanceFieldLayouts[cls];
-      if (layouts != null) {
-        final layout = layouts[target.getterReference];
-        if (layout != null) {
-          const thisReg = 2; // rsp+2
-          if (layout.isLate) {
-            return _emitLateFieldGet(thisReg, layout, target);
-          }
-          return _emitGetField(thisReg, layout);
+      final layout = _resolveFieldLayout(target, null);
+      if (layout != null) {
+        const thisReg = 2; // rsp+2
+        if (layout.isLate) {
+          return _emitLateFieldGet(thisReg, layout, target);
         }
+        return _emitGetField(thisReg, layout);
       }
     }
 
@@ -2170,33 +2182,29 @@ extension on DarticCompiler {
 
     // If the target is a field, use SET_FIELD_REF/SET_FIELD_VAL on `this`.
     if (target is ir.Field) {
-      final cls = target.enclosingClass!;
-      final layouts = _instanceFieldLayouts[cls];
-      if (layouts != null) {
-        final layout = layouts[target.getterReference];
-        if (layout != null) {
-          const thisReg = 2;
+      final layout = _resolveFieldLayout(target, null);
+      if (layout != null) {
+        const thisReg = 2;
 
-          // Late final field: guard against double-write.
-          if (layout.isLate && layout.isFinal) {
-            _emitLateFinalFieldWriteGuard(thisReg, layout, target);
-          }
-
-          var (valReg, valLoc) = _compileExpression(expr.value);
-
-          if (layout.isLate) {
-            // Late fields are always on ref stack.
-            valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
-            _emitter.emitABC(Op.setFieldRef, thisReg, valReg, layout.offset);
-            return (valReg, ResultLoc.ref);
-          }
-
-          valReg = _emitSetField(
-              thisReg, valReg, valLoc, layout, _inferExprType(expr.value));
-          final resultLoc =
-              layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
-          return (valReg, resultLoc);
+        // Late final field: guard against double-write.
+        if (layout.isLate && layout.isFinal) {
+          _emitLateFinalFieldWriteGuard(thisReg, layout, target);
         }
+
+        var (valReg, valLoc) = _compileExpression(expr.value);
+
+        if (layout.isLate) {
+          // Late fields are always on ref stack.
+          valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+          _emitter.emitABC(Op.setFieldRef, thisReg, valReg, layout.offset);
+          return (valReg, ResultLoc.ref);
+        }
+
+        valReg = _emitSetField(
+            thisReg, valReg, valLoc, layout, _inferExprType(expr.value));
+        final resultLoc =
+            layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
+        return (valReg, resultLoc);
       }
     }
 

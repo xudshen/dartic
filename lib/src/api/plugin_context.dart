@@ -119,7 +119,12 @@ class DarticPluginContext {
     _hostClassRegistry.register(prefixes, type: type, test: test);
 
     // 3. Register host type extraction (for INSTANCEOF/CAST).
-    _hostTypeResolver.register(name: name, type: type, test: test);
+    _hostTypeResolver.register(
+      name: name,
+      type: type,
+      test: test,
+      superclasses: superclasses,
+    );
 
     // 4. Register bridge factory (deferred resolution by name).
     if (bridgeFactory != null) {

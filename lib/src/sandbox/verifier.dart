@@ -237,6 +237,11 @@ class DarticVerifier {
         break; // index into ITA/FTA, not class table
       case StructuralParamTemplate():
         break; // index into containing FunctionTypeTemplate's type params
+      case HostClassTypeTemplate():
+        // Name-based reference — resolved at runtime, no classId to validate.
+        for (final arg in template.typeArgs) {
+          _verifyTypeTemplateClassIds(arg, classCount, context);
+        }
     }
   }
 
@@ -589,12 +594,21 @@ class DarticVerifier {
       case Op.returnVal:
         _checkVal(a, vrc, 'A', prefix, pc, op);
 
+      // Format ABx: A=ref or A=val (call result can be on either stack)
+      case Op.callStatic:
+      case Op.callSuper:
+        if (a >= rrc && a >= vrc) {
+          errors.add(
+            '$prefix Register A=$a >= both refRegCount $rrc and '
+            'valueRegCount $vrc at pc=$pc '
+            '(op=0x${op.toRadixString(16)})',
+          );
+        }
+
       // Format ABx: A=ref
       case Op.loadConst:
       case Op.loadUpvalue:
       case Op.storeUpvalue:
-      case Op.callStatic:
-      case Op.callSuper:
       case Op.callHost:
       case Op.newInstance:
       case Op.closure:

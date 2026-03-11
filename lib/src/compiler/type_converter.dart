@@ -106,14 +106,24 @@ TypeTemplate _convert(
     ir.DynamicType() => const DynamicTemplate(),
     ir.NeverType() => const NeverTemplate(),
     ir.NullType() => const NullableTemplate(inner: NeverTemplate()),
-    ir.InterfaceType() => InterfaceTypeTemplate(
-        classId: classIdLookup[type.classNode] ?? -1,
-        typeArgs: [
-          for (final arg in type.typeArguments)
-            _convert(arg, classIdLookup, classParams, funcParams,
-                structuralParams, coreTypes, currentFnTypeParams),
-        ],
-      ),
+    ir.InterfaceType() => classIdLookup.containsKey(type.classNode)
+        ? InterfaceTypeTemplate(
+            classId: classIdLookup[type.classNode]!,
+            typeArgs: [
+              for (final arg in type.typeArguments)
+                _convert(arg, classIdLookup, classParams, funcParams,
+                    structuralParams, coreTypes, currentFnTypeParams),
+            ],
+          )
+        : HostClassTypeTemplate(
+            name:
+                '${type.classNode.enclosingLibrary.importUri}::${type.classNode.name}',
+            typeArgs: [
+              for (final arg in type.typeArguments)
+                _convert(arg, classIdLookup, classParams, funcParams,
+                    structuralParams, coreTypes, currentFnTypeParams),
+            ],
+          ),
     ir.FutureOrType() => InterfaceTypeTemplate(
         classId: coreTypes != null
             ? (classIdLookup[coreTypes.deprecatedFutureOrClass] ?? -1)

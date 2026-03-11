@@ -323,11 +323,31 @@ extension on DarticCompiler {
   /// Inlines all active finalizer blocks from [fromDepth] to the current
   /// stack top. Used by break/continue to run only the finalizers being
   /// exited. For return, pass 0 to inline all active finalizers.
+  ///
+  /// Each finalizer is temporarily removed before compiling so that a
+  /// `return` inside a finally block only inlines the remaining outer
+  /// finalizers (prevents infinite recursion when a finally contains return).
   void _inlineFinalizersFromDepth(int fromDepth) {
-    // Walk from innermost (top) to the boundary depth.
-    for (var i = _activeFinalizers.length - 1; i >= fromDepth; i--) {
-      _compileStatement(_activeFinalizers[i].finalizer);
+    // Snapshot and truncate: nested returns won't re-inline these.
+    final saved = _activeFinalizers.sublist(fromDepth);
+    _activeFinalizers.length = fromDepth;
+
+    // Compile innermost-first.
+    for (var i = saved.length - 1; i >= 0; i--) {
+      _compileStatement(saved[i].finalizer);
+      // If a return inside this finalizer set hasReturn, patch the exit
+      // jumps to land here so the next outer finalizer still runs.
+      if (_finalizerReturnCtx case final ctx? when ctx.hasReturn) {
+        for (final jump in ctx.exitJumps) {
+          _emitter.patchJumpAsBx(jump, Op.jump, 0, _emitter.currentPC);
+        }
+        ctx.exitJumps.clear();
+        ctx.hasReturn = false;
+      }
     }
+
+    // Restore the list for surrounding compilation context.
+    _activeFinalizers.addAll(saved);
   }
 
   // ── Control flow: try/catch/finally ──
@@ -348,6 +368,7 @@ extension on DarticCompiler {
     final jumpOverCatches = _emitter.emitJumpPlaceholder();
 
     // 4. Compile each catch clause.
+    final jumpToEndPlaceholders = <int>[];
     for (final catchClause in stmt.catches) {
       // Allocate registers for exception and stackTrace variables.
       final exceptionReg = _allocRefReg();
@@ -381,8 +402,8 @@ extension on DarticCompiler {
       _catchExceptionReg = savedExReg;
       _catchStackTraceReg = savedStReg;
 
-      // Jump to end of all catch handlers.
-      final jumpToEnd = _emitter.emitJumpPlaceholder();
+      // Jump to end of all catch handlers (patched after loop).
+      jumpToEndPlaceholders.add(_emitter.emitJumpPlaceholder());
 
       // Determine catch type: -1 for catch-all, constant pool index for typed.
       // In Kernel, untyped `catch(e)` has guard == Object (sound null safety)
@@ -414,13 +435,16 @@ extension on DarticCompiler {
         exceptionReg: exceptionReg,
         stackTraceReg: stackTraceReg,
       ));
-
-      // Backpatch jump-to-end.
-      _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);
     }
 
-    // 5. Backpatch jump over catches (from end of try body).
-    _emitter.patchJumpAsBx(jumpOverCatches, Op.jump, 0, _emitter.currentPC);
+    // 5. Backpatch all jump-to-end placeholders to land after all handlers.
+    final afterCatchPC = _emitter.currentPC;
+    for (final jump in jumpToEndPlaceholders) {
+      _emitter.patchJumpAsBx(jump, Op.jump, 0, afterCatchPC);
+    }
+
+    // 6. Backpatch jump over catches (from end of try body).
+    _emitter.patchJumpAsBx(jumpOverCatches, Op.jump, 0, afterCatchPC);
   }
 
   void _compileTryFinally(ir.TryFinally stmt) {
@@ -521,6 +545,26 @@ extension on DarticCompiler {
   void _compileReturnStatement(ir.ReturnStatement stmt) {
     final expr = stmt.expression;
 
+    // ── Return inside an inlined finally block ──
+    // When _finalizerReturnCtx is active, we're compiling a finally block
+    // that was inlined by an outer return/break/continue. Instead of emitting
+    // a real RETURN, store the value in the context register and jump past
+    // this finally block so that outer finalizers still run.
+    if (_finalizerReturnCtx case final ctx?) {
+      if (expr != null) {
+        var (reg, loc) = _compileExpression(expr);
+        reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
+        if (reg != ctx.refReg) {
+          _emitter.emitABC(Op.moveRef, ctx.refReg, reg, 0);
+        }
+      } else {
+        _emitter.emitABC(Op.loadNull, ctx.refReg, 0, 0);
+      }
+      ctx.hasReturn = true;
+      ctx.exitJumps.add(_emitter.emitJumpPlaceholder());
+      return;
+    }
+
     // sync* and async* functions: explicit return statements just signal
     // generator done — emit RETURN_NULL (the return value, if any, is
     // ignored per Dart spec). For async*, RETURN_NULL triggers
@@ -576,15 +620,42 @@ extension on DarticCompiler {
       return;
     }
 
-    if (expr == null) {
+    // ── Normal return with active finalizers ──
+    // When there are active try-finally blocks, set up a return context
+    // so that `return` inside finally blocks stores the value and jumps
+    // rather than emitting a premature RETURN.
+    if (_activeFinalizers.isNotEmpty) {
+      final retReg = _allocRefReg();
+      if (expr != null) {
+        var (reg, loc) = _compileExpression(expr);
+        reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
+        if (reg != retReg) {
+          _emitter.emitABC(Op.moveRef, retReg, reg, 0);
+        }
+      } else {
+        _emitter.emitABC(Op.loadNull, retReg, 0, 0);
+      }
+
+      final savedCtx = _finalizerReturnCtx;
+      final ctx = _FinalizerReturnCtx(retReg);
+      _finalizerReturnCtx = ctx;
       _inlineFinalizersFromDepth(0);
+      _finalizerReturnCtx = savedCtx;
+
+      _emitCloseUpvaluesIfNeeded();
+      // retReg is on ref stack. Coerce to the function's return kind.
+      final retKind = _classifyStackKind(_currentReturnType);
+      _emitCoercedReturn(retReg, ResultLoc.ref, retKind, null);
+      return;
+    }
+
+    if (expr == null) {
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
     }
 
     final (reg, loc) = _compileExpression(expr);
-    _inlineFinalizersFromDepth(0);
     _emitCloseUpvaluesIfNeeded();
 
     // Coerce result between value/ref stacks when they don't match the

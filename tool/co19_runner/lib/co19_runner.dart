@@ -210,6 +210,31 @@ bool isNegativeTest(String source) {
   return false;
 }
 
+/// Regex to extract relative imports from test source code.
+final _importPattern = RegExp(r'''import\s+['"]([^'"]+)['"]''');
+
+/// Checks if any imported helper file (same directory) has [cfe] markers,
+/// making the test effectively negative (expects compilation failure in a
+/// dependency).
+bool _hasNegativeHelper(String testPath, String source) {
+  final dir = testPath.substring(0, testPath.lastIndexOf('/'));
+  for (final match in _importPattern.allMatches(source)) {
+    final importPath = match.group(1)!;
+    // Skip dart: and package: imports.
+    if (importPath.startsWith('dart:') || importPath.startsWith('package:')) {
+      continue;
+    }
+    // Resolve relative import path.
+    final resolvedPath = Uri.parse('$dir/').resolve(importPath).toFilePath();
+    final helperFile = File(resolvedPath);
+    if (helperFile.existsSync()) {
+      final helperSource = helperFile.readAsStringSync();
+      if (isNegativeTest(helperSource)) return true;
+    }
+  }
+  return false;
+}
+
 // ---------------------------------------------------------------------------
 // Unsupported import detection
 // ---------------------------------------------------------------------------
@@ -404,12 +429,22 @@ List<TestEntry> discoverTests(List<String> rootDirs) {
       // Read file content to determine negativity and experiment flags.
       final source = entity.readAsStringSync();
 
+      // Check main test file first.
+      var negative = isNegativeTest(source);
+
+      // If not negative, also scan companion *_lib.dart files.
+      // Co19 tests like definition_syntax_t01.dart may have the [cfe] marker
+      // only in their imported helper file definition_syntax_t01_lib.dart.
+      if (!negative) {
+        negative = _hasNegativeHelper(filePath, source);
+      }
+
       entries.add(
         TestEntry(
           path: filePath,
           category: category,
           subcategory: subcategory,
-          isNegative: isNegativeTest(source),
+          isNegative: negative,
           experimentFlags: parseExperimentFlags(source),
         ),
       );

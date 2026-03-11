@@ -22,6 +22,9 @@ fvm dart run packages/dartic_cli/bin/dartic.dart version
 # 推荐使用 in-process runner（零子进程，避免 macOS launchservicesd 风暴）：
 cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run ../../vendor/co19/TypeSystem/subtyping 2>&1 | tee $TMPDIR/co19_run.log
 cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run ../../vendor/co19/Language/Variables 2>&1 | tee $TMPDIR/co19_run.log
+# 跳过已知失败（skip list 文件 + 行内 pattern，可叠加）
+cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run --skip-list=skip_list.txt ../../vendor/co19/Language 2>&1 | tee $TMPDIR/co19_run.log
+cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run --skip=Yield_and_Yield_Each --skip=Async_For_in ../../vendor/co19/Language 2>&1 | tee $TMPDIR/co19_run.log
 # 大范围跑时配合 snapshot/baseline 做增量对比
 cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run --snapshot=$TMPDIR/snap.json --baseline=$TMPDIR/base.json ../../vendor/co19/Language 2>&1 | tee $TMPDIR/co19_run.log
 ```

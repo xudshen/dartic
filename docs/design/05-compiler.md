@@ -248,7 +248,7 @@ Kernel 的 `Constant` 子类映射到常量池四分区（refs/ints/doubles/name
 | `for` | 向后跳转 | 进入作用域 → 编译初始化 → 记录循环起点 → 编译条件 → `JUMP_IF_FALSE` 出循环 → 编译循环体 → 编译更新 → `JUMP` 回起点 → 发射 `CLOSE_UPVALUE`（若有被捕获的循环变量）→ 回填出口 |
 | `while` | 向后跳转 | 与 `for` 类似，无初始化和更新步骤 |
 | `do-while` | 先执行后判断 | 记录循环起点 → 编译循环体 → 编译条件 → `JUMP_IF_TRUE` 回起点 |
-| `for-in` | 迭代器协议 | 同步（`ForInStatement.isAsync == false`）：编译 `iterable.iterator` → 循环调用 `moveNext()` + `current` getter → 绑定循环变量。异步（`isAsync == true`，即 `await for`）：编译为 `stream.listen` + `AWAIT_STREAM_NEXT` 序列（详见 Ch7 async\* 生成器） |
+| `for-in` | 迭代器协议 | CFE 已将同步 for-in 和异步 `await for` 都完全脱糖：同步脱糖为 `iterable.iterator` → `while (iter.moveNext()) { var x = iter.current; ... }`；异步（`await for`）脱糖为 `new _StreamIterator(stream)` → `while (await iter.moveNext()) { var x = iter.current; ... }` + `finally { await iter.cancel(); }`。编译器无需处理 `ForInStatement`，Bridge 层提供 `_StreamIterator` 绑定 |
 | `switch` | 跳转表 / 二分查找 | 密集整数 case → 跳转表指令；稀疏 case → 二分查找跳转链。Pattern matching 在 Kernel 中已由 CFE 脱糖为 if-else 链 |
 | `try`/`catch` | 异常处理器表 | 不使用内联跳转。生成 `(startPC, endPC, handlerPC, catchType, valueStackDepth, refStackDepth)` 元组。`catchType`：无类型守卫（`catch(e)` 或 `on Object`）设为 `-1`（catch-all）；有类型守卫（`on SomeType`）将 guard 编译为 TypeTemplate 写入常量池，`catchType` 设为常量池索引。嵌套 try 按范围从小到大排序，运行时顺序扫描首个匹配。详见 Ch3 异常分发 |
 | `try`/`finally` | 处理器表 + finally 块 | finally 块在正常路径和异常路径各编译一份 |

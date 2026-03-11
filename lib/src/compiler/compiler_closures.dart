@@ -276,6 +276,12 @@ extension on DarticCompiler {
     _registerParams(fn.positionalParameters);
     _registerParams(fn.namedParameters);
 
+    // Emit callee-side default-value guards for optional ref-stack params.
+    // When a closure is called with fewer arguments than declared, the caller
+    // passes null sentinels for omitted ref-stack params. These guards check
+    // for null and apply the declared default value.
+    _emitClosureDefaultGuards(fn);
+
     _compileFunctionBodyWithMarker(fn, name ?? '<anonymous>');
 
     _patchPendingArgMoves();
@@ -1137,6 +1143,42 @@ extension on DarticCompiler {
     // Patch skip: JUMP_IF_NNULL paramReg → here
     _emitter.patchJumpAsBx(
         skipPC, Op.jumpIfNnull, paramReg, _emitter.currentPC);
+  }
+
+  /// Emits callee-side default-value guards for a closure's optional params.
+  ///
+  /// For each optional positional and named parameter that lives on the ref
+  /// stack and has a non-null default, emits:
+  ///   JUMP_IF_NNULL paramReg → skip
+  ///   <compile default value>
+  ///   MOVE_REF paramReg ← defaultReg
+  ///   skip:
+  ///
+  /// This works in tandem with [_compilePositionalArgsFromTypes] (caller)
+  /// which passes null sentinels for omitted ref-stack args.
+  void _emitClosureDefaultGuards(ir.FunctionNode fn) {
+    // Optional positional params: indices >= requiredParameterCount.
+    for (var i = fn.requiredParameterCount;
+        i < fn.positionalParameters.length;
+        i++) {
+      final param = fn.positionalParameters[i];
+      if (param.initializer == null) continue;
+      final kind = _classifyStackKind(param.type);
+      if (kind != StackKind.ref) continue; // value-stack: no null sentinel
+      final varInfo = _scope.lookup(param);
+      if (varInfo == null) continue;
+      _emitDefaultGuard(param, (varInfo.reg, ResultLoc.ref));
+    }
+
+    // Named params: all are optional by definition.
+    for (final param in fn.namedParameters) {
+      if (param.initializer == null) continue;
+      final kind = _classifyStackKind(param.type);
+      if (kind != StackKind.ref) continue;
+      final varInfo = _scope.lookup(param);
+      if (varInfo == null) continue;
+      _emitDefaultGuard(param, (varInfo.reg, ResultLoc.ref));
+    }
   }
 
   // ── TypeTemplate helpers for tearoffs ──

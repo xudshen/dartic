@@ -17,7 +17,12 @@ import '../runtime/dartic_type.dart';
 
 /// Pending entry awaiting classId resolution (before module load).
 class _PendingEntry {
-  _PendingEntry({required this.name, required this.type, this.test});
+  _PendingEntry({
+    required this.name,
+    required this.type,
+    this.test,
+    this.superclasses,
+  });
 
   /// Fully-qualified class name, e.g. `'dart:core::List'`.
   final String name;
@@ -27,6 +32,9 @@ class _PendingEntry {
 
   /// Optional type-check predicate for generic/polymorphic types.
   final bool Function(Object)? test;
+
+  /// Fully-qualified superclass names for supertype closure building.
+  final List<String>? superclasses;
 }
 
 /// Resolved entry with classId and type arg count (after module load).
@@ -70,32 +78,67 @@ class HostTypeResolver {
   /// [name] is the fully-qualified class name (e.g. `'dart:core::List'`).
   /// [type] is the Dart [Type] for exact-match cache seeding.
   /// [test] is an optional type-check predicate for generic/polymorphic types.
+  /// [superclasses] is an optional list of fully-qualified superclass names
+  /// for supertype closure building when the class is created at runtime.
   void register({
     required String name,
     required Type type,
     bool Function(Object)? test,
+    List<String>? superclasses,
   }) {
-    _pending.add(_PendingEntry(name: name, type: type, test: test));
+    _pending.add(_PendingEntry(
+      name: name,
+      type: type,
+      test: test,
+      superclasses: superclasses,
+    ));
   }
+
+  /// Maps fully-qualified host class name -> resolved classId.
+  /// Populated by [resolveClassIds] for type template resolution.
+  final Map<String, int> hostClassNameToId = {};
 
   /// Resolves pending entries against the module's class table.
   ///
   /// Called at module install time. Matches by short class name extracted
-  /// from the fully-qualified registration name.
+  /// from the fully-qualified registration name. If a class is not in the
+  /// module's class table, a new [DarticClassInfo] entry is created with a
+  /// fresh classId and appended to [classes].
   void resolveClassIds(List<DarticClassInfo> classes) {
     _cache.clear();
     _resolved.clear();
+    hostClassNameToId.clear();
 
-    // Build short-name → classInfo lookup.
+    // Build short-name → classInfo lookup from existing module classes.
     final nameToInfo = <String, DarticClassInfo>{};
     for (final cls in classes) {
       nameToInfo[cls.name] = cls;
     }
 
+    // Object classId is 0 by convention (first core type registered).
+    const objectCid = 0;
+
+    // Pass 1: resolve or create class entries for all pending registrations.
     for (final p in _pending) {
       final shortName = _extractShortName(p.name);
-      final cls = nameToInfo[shortName];
-      if (cls == null) continue;
+      var cls = nameToInfo[shortName];
+      if (cls == null) {
+        // Host class not in module — create a DarticClassInfo entry.
+        final classId = classes.length;
+        cls = DarticClassInfo(
+          classId: classId,
+          name: shortName,
+          superClassId: objectCid,
+          refFieldCount: 0,
+          valueFieldCount: 0,
+          typeParamCount: 0,
+        );
+        classes.add(cls);
+        nameToInfo[shortName] = cls;
+      }
+      hostClassNameToId[p.name] = cls.classId;
+      // Also store by short name for HostClassTypeTemplate resolution.
+      hostClassNameToId[shortName] = cls.classId;
       _resolved.add(_ResolvedEntry(
         type: p.type,
         test: p.test,
@@ -103,38 +146,101 @@ class HostTypeResolver {
         typeArgCount: cls.typeParamCount,
       ));
     }
+
+    // Pass 2: build supertypeIds iteratively.
+    // Registration order may not match dependency order (e.g. FormatException
+    // registered before Exception). Iterate until all entries are processed.
+    var progress = true;
+    while (progress) {
+      progress = false;
+      for (final p in _pending) {
+        final shortName = _extractShortName(p.name);
+        final cls = nameToInfo[shortName]!;
+        if (cls.supertypeIds.isNotEmpty) continue; // already built
+
+        // Check if all superclasses have their supertypeIds ready.
+        var ready = true;
+        if (p.superclasses != null) {
+          for (final superFqn in p.superclasses!) {
+            final superShort = _extractShortName(superFqn);
+            final superInfo = nameToInfo[superShort];
+            if (superInfo != null && superInfo.supertypeIds.isEmpty) {
+              ready = false;
+              break;
+            }
+          }
+        }
+        if (!ready) continue;
+
+        cls.supertypeIds.add(cls.classId); // self
+        cls.supertypeIds.add(objectCid); // Object
+        if (p.superclasses != null) {
+          for (final superFqn in p.superclasses!) {
+            final superShort = _extractShortName(superFqn);
+            final superInfo = nameToInfo[superShort];
+            if (superInfo != null) {
+              cls.supertypeIds.addAll(superInfo.supertypeIds);
+            }
+          }
+        }
+        progress = true;
+      }
+    }
   }
 
   /// Resolves a host object to its [DarticType], or null if unknown.
   ///
-  /// Uses a 2-layer strategy:
+  /// Uses a 3-layer strategy:
   ///   1. Exact `runtimeType` cache — O(1).
-  ///   2. Predicate scan (reverse traversal for subclass-first specificity).
+  ///   2. Exact `runtimeType` match against registered types — always prefers
+  ///      the most specific type regardless of registration order.
+  ///   3. Predicate scan (reverse traversal) — fallback for polymorphic types
+  ///      where exact match doesn't work (e.g. generic List<int>).
   DarticType? resolve(Object value, TypeRegistry registry) {
     final type = value.runtimeType;
     if (_cache.containsKey(type)) return _cache[type];
 
     final bottom = registry.neverType;
-    // Reverse traversal: later registrations are more specific (subclasses
-    // registered after superclasses). This ensures the most specific match.
+
+    // Layer 2: exact runtimeType match — order-independent, always correct.
+    // This prevents a base-class predicate (e.g. `is Exception`) from
+    // shadowing a more-specific entry (e.g. `FormatException`) when the
+    // base class is registered later.
+    for (final entry in _resolved) {
+      if (type == entry.type) {
+        final result = _intern(entry, bottom, registry);
+        _cache[type] = result;
+        return result;
+      }
+    }
+
+    // Layer 3: predicate scan — reverse traversal so later (more-specific)
+    // registrations take priority for polymorphic types.
     for (var i = _resolved.length - 1; i >= 0; i--) {
       final entry = _resolved[i];
-      final matches =
-          entry.test != null ? entry.test!(value) : type == entry.type;
-      if (matches) {
-        final args = switch (entry.typeArgCount) {
-          0 => const <DarticType>[],
-          1 => [bottom],
-          2 => [bottom, bottom],
-          _ => List<DarticType>.filled(entry.typeArgCount, bottom),
-        };
-        final result = registry.intern(entry.classId, args);
+      if (entry.test != null && entry.test!(value)) {
+        final result = _intern(entry, bottom, registry);
         _cache[type] = result;
         return result;
       }
     }
     _cache[type] = null; // negative cache
     return null;
+  }
+
+  /// Creates a [DarticType] from a resolved entry.
+  static DarticType _intern(
+    _ResolvedEntry entry,
+    DarticType bottom,
+    TypeRegistry registry,
+  ) {
+    final args = switch (entry.typeArgCount) {
+      0 => const <DarticType>[],
+      1 => [bottom],
+      2 => [bottom, bottom],
+      _ => List<DarticType>.filled(entry.typeArgCount, bottom),
+    };
+    return registry.intern(entry.classId, args);
   }
 
   /// Extracts the short class name from a fully-qualified name.

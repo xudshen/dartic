@@ -27,6 +27,26 @@ part 'compiler_types.dart';
 /// by expression compilation methods.
 enum ResultLoc { value, ref }
 
+/// Context for handling `return` inside inlined finally blocks.
+///
+/// When inlining finalizers for a return, a `return E` inside a finally block
+/// should store E in [refReg] and jump to [exitJumps] instead of emitting a
+/// real RETURN. After all finalizers are inlined, the caller uses [refReg]
+/// to emit the actual RETURN.
+class _FinalizerReturnCtx {
+  /// Ref register where the return value is stored (always ref-stack boxed).
+  final int refReg;
+
+  /// Jump placeholders that should be patched to point after the inlined
+  /// finalizer chain.
+  final List<int> exitJumps = [];
+
+  /// Whether a `return` was encountered inside any inlined finalizer.
+  bool hasReturn = false;
+
+  _FinalizerReturnCtx(this.refReg);
+}
+
 /// Compiles Kernel AST ([ir.Component]) to a [DarticModule].
 ///
 /// Phase 1 minimal compiler:
@@ -167,6 +187,12 @@ class DarticCompiler {
   /// a try body, each enclosing finalizer must be inlined before the jump.
   /// Each entry is the Kernel [TryFinally] node whose finalizer must execute.
   final List<ir.TryFinally> _activeFinalizers = [];
+
+  /// When non-null, we are inlining finalizers for a return statement.
+  /// A `return` inside an inlined finally block should store its value in
+  /// [_finalizerReturnRefReg] and jump to a collected exit point instead of
+  /// emitting a real RETURN instruction.
+  _FinalizerReturnCtx? _finalizerReturnCtx;
 
   /// Records the finalizer stack depth at the time each LabeledStatement was
   /// entered. Used by break/continue to determine which finalizers to inline:
@@ -335,7 +361,12 @@ class DarticCompiler {
     // Merge user class IDs into the type lookup for dartTypeToTemplate.
     _typeClassIdLookup.addAll(_classToClassId);
 
-    // Pass 1d: populate SuperTypeMap entries for generic subtype checking.
+    // NOTE: Host-library classes are no longer pre-registered here. Instead,
+    // the type converter emits HostClassTypeTemplate for classes not in the
+    // lookup, and the runtime resolves them at module-install time via
+    // HostTypeResolver.
+
+    // Pass 1e: populate SuperTypeMap entries for generic subtype checking.
     // buildSuperTypeEntries uses _typeClassIdLookup (core + user classes) to
     // resolve supertype classIds for both platform and user-defined types.
     for (final lib in _component.libraries) {
@@ -634,6 +665,7 @@ class DarticCompiler {
     _exceptionHandlers.clear();
     _icEntries.clear();
     _activeFinalizers.clear();
+    _finalizerReturnCtx = null;
     _finalizerDepthAtLabel.clear();
     _finalizerDepthAtSwitchCase.clear();
     _catchExceptionReg = -1;
@@ -692,6 +724,30 @@ class DarticCompiler {
       if (cls == _coreTypes.doubleClass) return StackKind.doubleVal.index;
     }
     return StackKind.ref.index;
+  }
+
+  // ── External function stub ──
+
+  /// Emits a body for external functions without implementation that throws
+  /// [NoSuchMethodError] at runtime, matching Dart VM behavior.
+  void _emitExternalFunctionError(String funcName) {
+    // Push the function name as string argument.
+    final nameReg = _allocRefReg();
+    final nameIdx = _constantPool.addRef(funcName);
+    _emitter.emitABx(Op.loadConst, nameReg, nameIdx);
+
+    // CALL_HOST dart:core::NoSuchMethodError::_forExternal#1
+    final symbolName = 'dart:core::NoSuchMethodError::_forExternal#1';
+    final bindingIndex = _allocBinding(symbolName, 1);
+    final (errorReg, _) = _emitCallHost(
+      [(nameReg, ResultLoc.ref, null as ir.DartType?)],
+      bindingIndex,
+    );
+    _refAlloc.free(nameReg);
+
+    // THROW
+    _emitter.emitABC(Op.throw_, errorReg, 0, 0);
+    _refAlloc.free(errorReg);
   }
 
   // ── Async stub ──
@@ -842,7 +898,12 @@ class DarticCompiler {
       namedParams: fn.namedParameters,
     );
 
-    _compileFunctionBodyWithMarker(fn, proc.name.text);
+    // External functions without a body should throw NoSuchMethodError.
+    if (proc.isExternal && fn.body == null) {
+      _emitExternalFunctionError(proc.name.text);
+    } else {
+      _compileFunctionBodyWithMarker(fn, proc.name.text);
+    }
 
     _patchPendingArgMoves();
 
@@ -1152,6 +1213,44 @@ class DarticCompiler {
         _emitter.emitABC(Op.boxInt, refReg, valueReg, 0);
     }
     return refReg;
+  }
+
+  /// Resolves a field's [FieldLayout] considering mixin field offset remapping.
+  ///
+  /// When the CFE eliminates mixins, it copies fields into the application
+  /// class but method bodies still reference the original mixin's field
+  /// declarations. The mixin's field offsets may differ from the application
+  /// class's offsets (because the application class has inherited fields from
+  /// its superclass). This method first checks the current enclosing class's
+  /// layout (which has the correct offsets), then falls back to the declaring
+  /// class layout, and finally tries to resolve via the receiver's static type.
+  FieldLayout? _resolveFieldLayout(ir.Field target, ir.Expression? receiver) {
+    final ref = target.getterReference;
+
+    // 1. Prefer the current enclosing class (handles mixin field offsets).
+    if (_currentEnclosingClass != null) {
+      final layout = _instanceFieldLayouts[_currentEnclosingClass]?[ref];
+      if (layout != null) return layout;
+    }
+
+    // 2. Fall back to the target's declaring class.
+    final targetClass = target.enclosingClass;
+    if (targetClass != null) {
+      final layout = _instanceFieldLayouts[targetClass]?[ref];
+      if (layout != null) return layout;
+    }
+
+    // 3. Enum fallback: target may be in _Enum (platform class). Resolve via
+    //    the receiver's compile-time type.
+    if (receiver != null && targetClass != null &&
+        _isHostLibrary(targetClass.enclosingLibrary)) {
+      final receiverClass = _resolveReceiverClass(receiver);
+      if (receiverClass != null) {
+        return _instanceFieldLayouts[receiverClass]?[ref];
+      }
+    }
+
+    return null;
   }
 
   /// Emits SET_FIELD_VAL or SET_FIELD_REF with appropriate value/ref coercion.

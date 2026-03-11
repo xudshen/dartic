@@ -153,7 +153,18 @@ class DarticEngine {
   /// Shared module-installation logic for [loadBytecode] and [loadModule].
   void _installModule(DarticModule module) {
     // Resolve host type extraction entries: match class names → classIds.
+    // This may create new DarticClassInfo entries for host classes not in
+    // the module's class table.
     _hostTypeResolver.resolveClassIds(module.classes);
+
+    // Pass host class name→classId mapping to the interpreter so that the
+    // TypeRegistry can resolve HostClassTypeTemplate at type instantiation
+    // time. The interpreter stores this and applies it when creating the
+    // TypeRegistry during _provisionTypeSystem.
+    if (_hostTypeResolver.hostClassNameToId.isNotEmpty) {
+      _interpreter.hostClassNameToId =
+          Map.unmodifiable(_hostTypeResolver.hostClassNameToId);
+    }
 
     // Resolve pending bridge factories: match class names → classIds.
     if (_pendingBridgeFactories.isNotEmpty) {

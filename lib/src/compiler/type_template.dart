@@ -22,6 +22,7 @@ abstract final class _TypeTag {
   static const int nullableType = 6;
   static const int recordType = 7;
   static const int structuralParam = 8;
+  static const int hostClassType = 9;
 }
 
 // ── Base class ──
@@ -54,6 +55,7 @@ sealed class TypeTemplate {
       _TypeTag.nullableType => _deserializeNullable(data, offset),
       _TypeTag.recordType => _deserializeRecord(data, offset),
       _TypeTag.structuralParam => _deserializeStructuralParam(data, offset),
+      _TypeTag.hostClassType => _deserializeHostClass(data, offset),
       _ => throw FormatException('Unknown TypeTemplate tag: $tag'),
     };
   }
@@ -201,6 +203,29 @@ sealed class TypeTemplate {
   ) {
     final (inner, newOffset) = deserialize(data, offset);
     return (NullableTemplate(inner: inner), newOffset);
+  }
+
+  static (HostClassTypeTemplate, int) _deserializeHostClass(
+    List<int> data,
+    int offset,
+  ) {
+    // Name is encoded as length + codeUnits.
+    final nameLen = data[offset++];
+    final codeUnits = data.sublist(offset, offset + nameLen);
+    offset += nameLen;
+    final name = String.fromCharCodes(codeUnits);
+
+    final argCount = data[offset++];
+    final typeArgs = <TypeTemplate>[];
+    for (var i = 0; i < argCount; i++) {
+      final (arg, newOffset) = deserialize(data, offset);
+      typeArgs.add(arg);
+      offset = newOffset;
+    }
+    return (
+      HostClassTypeTemplate(name: name, typeArgs: typeArgs),
+      offset,
+    );
   }
 }
 
@@ -551,6 +576,53 @@ class StructuralParamTemplate extends TypeTemplate {
 
   @override
   String toString() => 'StructuralParamTemplate(index: $index)';
+}
+
+/// Represents a host class type that is resolved by name at module-install time.
+///
+/// Unlike [InterfaceTypeTemplate] which uses a compile-time classId,
+/// this template stores a fully-qualified class name (e.g. `'dart:core::FormatException'`)
+/// and is resolved to a classId at runtime via [TypeRegistry.resolveHostClassName].
+///
+/// This decouples the compiler from host class registration — the compiler emits
+/// named references, and the runtime resolves them when the module is installed.
+class HostClassTypeTemplate extends TypeTemplate {
+  HostClassTypeTemplate({required this.name, required this.typeArgs});
+
+  /// Fully-qualified class name, e.g. `'dart:core::FormatException'`.
+  final String name;
+
+  /// Type argument templates (empty for non-generic types).
+  final List<TypeTemplate> typeArgs;
+
+  @override
+  List<int> serialize() {
+    final result = <int>[_TypeTag.hostClassType];
+    // Encode name as length + codeUnits.
+    final codeUnits = name.codeUnits;
+    result.add(codeUnits.length);
+    result.addAll(codeUnits);
+    // Encode type args.
+    result.add(typeArgs.length);
+    for (final arg in typeArgs) {
+      result.addAll(arg.serialize());
+    }
+    return result;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is HostClassTypeTemplate &&
+      name == other.name &&
+      _listEquals(typeArgs, other.typeArgs);
+
+  @override
+  int get hashCode => Object.hash(name, Object.hashAll(typeArgs));
+
+  @override
+  String toString() => typeArgs.isEmpty
+      ? 'HostClassTypeTemplate(name: $name)'
+      : 'HostClassTypeTemplate(name: $name, typeArgs: $typeArgs)';
 }
 
 /// Wraps an inner [TypeTemplate] to represent its nullable variant (e.g. `int?`).
