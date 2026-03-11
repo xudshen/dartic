@@ -2622,6 +2622,19 @@ class DarticInterpreter {
               // extractType will fall back to Function type.
             }
           }
+          // Eagerly capture receiver for tearoff equality comparison.
+          // Instance/super tearoffs have upvalue[0] = receiver/this.
+          if (upvalues.isNotEmpty) {
+            final name = proto.name;
+            if (name != null &&
+                (name.startsWith('<instance-tearoff:') ||
+                    name.startsWith('<super-tearoff:') ||
+                    name.startsWith('<instance-instantiation:'))) {
+              final uv = upvalues[0];
+              closure.boundReceiver =
+                  uv.isOpen ? rs.read(uv.stackIndex) : uv.value;
+            }
+          }
           rs.write(rBase + a, closure);
 
         case Op.bindClosureFta: // BIND_CLOSURE_FTA A, B — closure[A].boundFTA = refStack[B]

@@ -2173,7 +2173,7 @@ extension on DarticCompiler {
     // Set typeTemplate so the DarticClosure has an associated function type
     // (needed for `is Function`, `runtimeType`, type checks on the closure).
     superTearoffProto.typeTemplate = dartTypeToTemplate(
-      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      computeTearOffFunctionType(fn, _coreTypes),
       _typeClassIdLookup,
       enclosingClassTypeParams: _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
@@ -2686,7 +2686,7 @@ extension on DarticCompiler {
     // Create the thunk FuncProto.
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
-      name: '<instantiation-thunk>',
+      name: '<instantiation-thunk:$innerFuncId>',
       bytecode: _emitter.toUint64List(),
       valueRegCount: _valueAlloc.maxUsed,
       refRegCount: _refAlloc.maxUsed,

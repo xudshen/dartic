@@ -88,6 +88,91 @@ class DarticClosure {
   /// Set by the BIND_CLOSURE_FTA instruction.
   List<DarticType>? boundFTA;
 
+  /// Eagerly captured receiver for instance/super tearoffs.
+  ///
+  /// Set by the CLOSURE handler in the interpreter when the proto name
+  /// starts with `<instance-tearoff:` or `<super-tearoff:`.
+  /// Used by [operator ==] to compare receivers without depending on
+  /// Upvalue open/closed state.
+  Object? boundReceiver;
+
+  /// Dart spec §16.18.1: tearoff equality.
+  ///
+  /// Instance tearoffs: `c1 == c2` iff `identical(receiver1, receiver2)`
+  /// AND same method name.
+  /// Static/constructor tearoffs: same funcId or same thunk name.
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! DarticClosure) return false;
+
+    final name = funcProto.name;
+    final otherName = other.funcProto.name;
+
+    // Instance/super tearoff: same method name + identical receiver.
+    if (name != null &&
+        otherName != null &&
+        (name.startsWith('<instance-tearoff:') ||
+            name.startsWith('<super-tearoff:') ||
+            name.startsWith('<instance-instantiation:'))) {
+      return name == otherName &&
+          identical(boundReceiver, other.boundReceiver);
+    }
+
+    // Static/top-level tearoff or instantiation thunk without upvalues:
+    // same funcId means same function. Also compare boundFTA.
+    if (upvalues.isEmpty && other.upvalues.isEmpty) {
+      if (funcProto.funcId == other.funcProto.funcId) {
+        return _ftaEqual(boundFTA, other.boundFTA);
+      }
+      // Constructor tearoff / generic constructor tearoff / instantiation thunk:
+      // different funcIds but same name means same target.
+      if (name != null &&
+          otherName != null &&
+          (name.startsWith('<constructor-tearoff:') ||
+              name.startsWith('<generic-constructor-tearoff:') ||
+              name.startsWith('<instantiation-thunk:'))) {
+        return name == otherName && _ftaEqual(boundFTA, other.boundFTA);
+      }
+    }
+
+    // User closure / unrecognized: identity only.
+    return false;
+  }
+
+  @override
+  int get hashCode {
+    final name = funcProto.name;
+    if (name != null) {
+      if (name.startsWith('<instance-tearoff:') ||
+          name.startsWith('<super-tearoff:') ||
+          name.startsWith('<instance-instantiation:')) {
+        // Hash by method name only (not receiver — avoids open-upvalue issues).
+        return name.hashCode;
+      }
+      if (name.startsWith('<constructor-tearoff:') ||
+          name.startsWith('<generic-constructor-tearoff:') ||
+          name.startsWith('<instantiation-thunk:')) {
+        return name.hashCode;
+      }
+    }
+    // Static tearoff (no upvalues, same funcId) — hash by funcId.
+    if (upvalues.isEmpty) {
+      return funcProto.funcId.hashCode;
+    }
+    return identityHashCode(this);
+  }
+
+  static bool _ftaEqual(List<DarticType>? a, List<DarticType>? b) {
+    if (identical(a, b)) return true;
+    if (a == null || b == null) return a == null && b == null;
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (!identical(a[i], b[i])) return false;
+    }
+    return true;
+  }
+
   @override
   String toString() =>
       'DarticClosure(${funcProto.name}#${funcProto.funcId}, '

@@ -218,6 +218,174 @@ int main() {
     });
   });
 
+  // ── Tearoff covariant parameter widening ──
+
+  group('Tearoff covariant parameter widening', () {
+    test('explicit covariant widens to Object? in runtime type', () async {
+      final result = await compileAndRun('''
+class C {
+  void m(covariant int x) {}
+}
+bool main() {
+  var f = C().m;
+  return f is void Function(Object?);
+}
+''');
+      expect(result, true);
+    });
+
+    test('covariant-by-class widens to Object? in runtime type', () async {
+      final result = await compileAndRun('''
+class Box<T> {
+  void put(T value) {}
+}
+bool main() {
+  Box<int> b = Box<int>();
+  var f = b.put;
+  return f is void Function(Object?);
+}
+''');
+      expect(result, true);
+    });
+
+    test('mixed covariant and non-covariant params — widened', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(covariant int x, String y) => x;
+}
+bool main() {
+  var f = C().m;
+  return f is int Function(Object?, String);
+}
+''');
+      expect(result, true);
+    });
+
+    test('mixed covariant and non-covariant params — non-covariant stays', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(covariant int x, String y) => x;
+}
+bool main() {
+  var f = C().m;
+  // y is NOT covariant, so should NOT widen
+  return f is int Function(int, Object?);
+}
+''');
+      expect(result, false);
+    });
+
+    test('covariant named param widens to Object?', () async {
+      final result = await compileAndRun('''
+class C {
+  void m({covariant int x = 0}) {}
+}
+bool main() {
+  var f = C().m;
+  return f is void Function({Object? x});
+}
+''');
+      expect(result, true);
+    });
+  });
+
+  // ── Tearoff equality ──
+
+  group('Tearoff equality', () {
+    test('same receiver same method is equal', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(int x) => x;
+}
+bool main() {
+  var c = C();
+  return c.m == c.m;
+}
+''');
+      expect(result, true);
+    });
+
+    test('different receiver same method is not equal', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(int x) => x;
+}
+bool main() {
+  return C().m == C().m;
+}
+''');
+      expect(result, false);
+    });
+
+    test('same receiver different method is not equal', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(int x) => x;
+  int n(int x) => x;
+}
+bool main() {
+  var c = C();
+  return c.m == c.n;
+}
+''');
+      expect(result, false);
+    });
+
+    test('static tearoff equality', () async {
+      final result = await compileAndRun('''
+int foo(int x) => x;
+bool main() {
+  var f1 = foo;
+  var f2 = foo;
+  return f1 == f2;
+}
+''');
+      expect(result, true);
+    });
+
+    test('constructor tearoff equality', () async {
+      final result = await compileAndRun('''
+class C {
+  final int x;
+  C(this.x);
+}
+bool main() {
+  var f1 = C.new;
+  var f2 = C.new;
+  return f1 == f2;
+}
+''');
+      expect(result, true);
+    });
+
+    test('lambda is not equal to another lambda', () async {
+      final result = await compileAndRun('''
+bool main() {
+  var f1 = (int x) => x;
+  var f2 = (int x) => x;
+  return f1 == f2;
+}
+''');
+      expect(result, false);
+    });
+
+    test('cross-scope tearoff equality (receiver escapes)', () async {
+      final result = await compileAndRun('''
+class C {
+  int m(int x) => x;
+}
+int Function(int) extract(C c) => c.m;
+bool main() {
+  var c = C();
+  var f1 = extract(c);
+  var f2 = extract(c);
+  return f1 == f2;
+}
+''');
+      expect(result, true);
+    });
+  });
+
   // ── Combined / higher-order tests ──
 
   group('combined tearoff tests', () {

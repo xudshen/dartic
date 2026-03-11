@@ -962,7 +962,7 @@ extension on DarticCompiler {
     // class/method type params — correct when receiver is `this` or the
     // method type doesn't depend on class type params.
     instTearoffProto.typeTemplate = dartTypeToTemplate(
-      fn.computeThisFunctionType(ir.Nullability.nonNullable),
+      computeTearOffFunctionType(fn, _coreTypes),
       _typeClassIdLookup,
       enclosingClassTypeParams: _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,

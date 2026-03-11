@@ -3,6 +3,57 @@ import 'package:kernel/core_types.dart' as ir;
 
 import 'type_template.dart';
 
+/// Computes the runtime function type for a method tearoff, applying
+/// covariant parameter widening per Dart spec §16.18.1.
+///
+/// Covariant parameters (explicit `covariant` keyword or implicit via
+/// class type parameter variance) are widened to `Object?` in the
+/// resulting function type. This mirrors dart2wasm's `getTearOffType`.
+ir.FunctionType computeTearOffFunctionType(
+  ir.FunctionNode fn,
+  ir.CoreTypes coreTypes,
+) {
+  final staticType = fn.computeThisFunctionType(ir.Nullability.nonNullable);
+
+  // Fast path: no covariant params → return as-is.
+  final hasCovariant = fn.positionalParameters.any(
+          (p) => p.isCovariantByDeclaration || p.isCovariantByClass) ||
+      fn.namedParameters.any(
+          (p) => p.isCovariantByDeclaration || p.isCovariantByClass);
+  if (!hasCovariant) return staticType;
+
+  final objectNullable = coreTypes.objectNullableRawType;
+
+  final positionalParameters = List.of(staticType.positionalParameters);
+  for (int i = 0; i < positionalParameters.length; i++) {
+    final param = fn.positionalParameters[i];
+    if (param.isCovariantByDeclaration || param.isCovariantByClass) {
+      positionalParameters[i] = objectNullable;
+    }
+  }
+
+  final namedParameters = List.of(staticType.namedParameters);
+  for (int i = 0; i < namedParameters.length; i++) {
+    final param = fn.namedParameters[i];
+    if (param.isCovariantByDeclaration || param.isCovariantByClass) {
+      namedParameters[i] = ir.NamedType(
+        namedParameters[i].name,
+        objectNullable,
+        isRequired: namedParameters[i].isRequired,
+      );
+    }
+  }
+
+  return ir.FunctionType(
+    positionalParameters,
+    staticType.returnType,
+    ir.Nullability.nonNullable,
+    namedParameters: namedParameters,
+    typeParameters: staticType.typeParameters,
+    requiredParameterCount: staticType.requiredParameterCount,
+  );
+}
+
 /// Converts a Kernel [DartType] to a [TypeTemplate] for constant pool storage.
 ///
 /// [classIdLookup] maps Kernel Class nodes to assigned classIds.
