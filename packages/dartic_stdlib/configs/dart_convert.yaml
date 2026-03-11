@@ -1,0 +1,779 @@
+# dart:convert bindings configuration for dartic code generator.
+#
+# Types covered:
+#   1. Converter (abstract base — bindings only)
+#   2. Codec (abstract base — bindings only)
+#   3. Encoding (abstract — getByName static method)
+#   4. JsonCodec (constructor, encode, decode)
+#   5. JsonEncoder (constructor with optional toEncodable, convert)
+#   6. JsonDecoder (constructor with optional reviver, convert)
+#   7. JsonUtf8Encoder (constructor with optional params, convert)
+#   8. Utf8Codec (constructor with optional allowMalformed)
+#   9. Utf8Encoder (convert)
+#  10. Utf8Decoder (constructor with optional allowMalformed, convert)
+#  11. Base64Codec (constructor, encode, decode)
+#  12. Base64Encoder (constructor with optional urlSafe, convert)
+#  13. Base64Decoder (convert)
+#  14. AsciiCodec (constructor with optional allowInvalid)
+#  15. AsciiEncoder + _UnicodeSubsetEncoder (convert, bind, startChunkedConversion)
+#  16. AsciiDecoder + _UnicodeSubsetDecoder (convert, bind)
+#  17. Latin1Codec (constructor with optional allowInvalid)
+#  18. Latin1Encoder + _UnicodeSubsetEncoder (convert, bind, startChunkedConversion)
+#  19. Latin1Decoder + _UnicodeSubsetDecoder (convert, bind)
+#  20. HtmlEscape (constructor with optional mode, convert)
+#  21. HtmlEscapeMode (static constants)
+#  22. LineSplitter (convert, split)
+#  23. JsonUnsupportedObjectError (cause getter)
+#  24. ChunkedConversionSink (add, close)
+#  25. StringConversionSink + internal sinks (add, addSlice, asStringSink, asUtf8Sink)
+#  26. ByteConversionSink (addSlice)
+#  27. ClosableStringSink + _ClosableStringSink
+#  28. Top-level functions: jsonEncode, jsonDecode, base64Encode, base64Decode,
+#      base64UrlEncode
+#  29. Top-level constants: json, utf8, ascii, latin1, base64, base64Url
+#
+# Constants (json, utf8, ascii, latin1, base64, base64Url) may be inlined by
+# CFE, but we bind them for cases where they are accessed as values.
+
+output_bindings: "../lib/src/bindings/convert"
+output_plugins: "../lib/src/plugins"
+
+custom_imports:
+  - "package:dartic/dartic.dart"
+  - "package:dartic/src/api/dartic_absent.dart"
+  - "package:dartic/src/runtime/object.dart"
+
+libraries:
+  - uri: dart:convert
+    classes:
+      # ── Codec (abstract base) ──────────────────────────────────────────
+      - Codec
+
+      # ── Converter (abstract base) ──────────────────────────────────────
+      - Converter
+
+      # ── Encoding (abstract, has static getByName) ──────────────────────
+      - Encoding
+
+      # ── JsonCodec ──────────────────────────────────────────────────────
+      - JsonCodec
+
+      # ── JsonEncoder ────────────────────────────────────────────────────
+      - JsonEncoder
+
+      # ── JsonDecoder ────────────────────────────────────────────────────
+      - JsonDecoder
+
+      # ── JsonUtf8Encoder ────────────────────────────────────────────────
+      - JsonUtf8Encoder
+
+      # ── JsonUnsupportedObjectError ─────────────────────────────────────
+      - JsonUnsupportedObjectError
+
+      # ── Utf8Codec ──────────────────────────────────────────────────────
+      - Utf8Codec
+
+      # ── Utf8Encoder ────────────────────────────────────────────────────
+      - Utf8Encoder
+
+      # ── Utf8Decoder ────────────────────────────────────────────────────
+      - Utf8Decoder
+
+      # ── Base64Codec ────────────────────────────────────────────────────
+      - Base64Codec
+
+      # ── Base64Encoder ──────────────────────────────────────────────────
+      - Base64Encoder
+
+      # ── Base64Decoder ──────────────────────────────────────────────────
+      - Base64Decoder
+
+      # ── AsciiCodec ────────────────────────────────────────────────────
+      - AsciiCodec
+
+      # ── AsciiEncoder + _UnicodeSubsetEncoder ──────────────────────────
+      - name: AsciiEncoder
+        internal_types:
+          - _UnicodeSubsetEncoder
+
+      # ── AsciiDecoder + _UnicodeSubsetDecoder ──────────────────────────
+      - name: AsciiDecoder
+        internal_types:
+          - _UnicodeSubsetDecoder
+
+      # ── Latin1Codec ───────────────────────────────────────────────────
+      - Latin1Codec
+
+      # ── Latin1Encoder + _UnicodeSubsetEncoder ─────────────────────────
+      - name: Latin1Encoder
+        internal_types:
+          - _UnicodeSubsetEncoder
+
+      # ── Latin1Decoder + _UnicodeSubsetDecoder ─────────────────────────
+      - name: Latin1Decoder
+        internal_types:
+          - _UnicodeSubsetDecoder
+
+      # ── HtmlEscape ────────────────────────────────────────────────────
+      - HtmlEscape
+
+      # ── HtmlEscapeMode ────────────────────────────────────────────────
+      - HtmlEscapeMode
+
+      # ── LineSplitter ──────────────────────────────────────────────────
+      - LineSplitter
+
+      # ── ChunkedConversionSink (abstract, add/close) ───────────────────
+      - name: ChunkedConversionSink
+        internal_types:
+          - _SimpleCallbackSink
+
+      # ── StringConversionSink + internal sinks ─────────────────────────
+      - name: StringConversionSink
+        internal_types:
+          - _StringCallbackSink
+          - _StringAdapterSink
+          - _StringSinkConversionSink
+
+      # ── ByteConversionSink + internal sinks ───────────────────────────
+      - name: ByteConversionSink
+        internal_types:
+          - _ByteAdapterSink
+          - _ByteCallbackSink
+
+      # ── ClosableStringSink + _ClosableStringSink ──────────────────────
+      - name: ClosableStringSink
+        internal_types:
+          - _ClosableStringSink
+
+    # ── Top-level functions ──────────────────────────────────────────────
+
+    functions:
+      - name: jsonEncode
+        arity: 2
+        custom: |
+          (args) {
+            final value = args[0];
+            final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            if (toEncodable != null) {
+              return jsonEncode(value, toEncodable: (v) => toEncodable(v));
+            }
+            return jsonEncode(value);
+          }
+
+      - name: jsonDecode
+        arity: 2
+        custom: |
+          (args) {
+            final source = args[0] as String;
+            final reviver = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            if (reviver != null) {
+              return jsonDecode(source, reviver: (key, value) => reviver(key, value));
+            }
+            return jsonDecode(source);
+          }
+
+      - name: base64Encode
+        arity: 1
+        custom: "(args) => base64Encode((args[0] as List).cast<int>())"
+
+      - name: base64Decode
+        arity: 1
+        custom: "(args) => base64Decode(args[0] as String)"
+
+      - name: base64UrlEncode
+        arity: 1
+        custom: "(args) => base64Url.encode((args[0] as List).cast<int>())"
+
+    # ── Overrides ────────────────────────────────────────────────────────
+
+    overrides:
+
+      # ── Codec: abstract base, encode/decode dispatch ──
+      Codec:
+        extra_methods:
+          "encode#1": |
+            (args) {
+              final codec = args[0] as Codec;
+              var input = args[1];
+              // Cast List<dynamic> to List<int> for byte-oriented codecs
+              if (input is List && input is! List<int>) {
+                input = input.cast<int>();
+              }
+              return codec.encode(input);
+            }
+          "decode#1": |
+            (args) {
+              final codec = args[0] as Codec;
+              var input = args[1];
+              if (input is List && input is! List<int>) {
+                input = input.cast<int>();
+              }
+              return codec.decode(input);
+            }
+          "fuse#1": "(args) => (args[0] as Codec).fuse(args[1] as Codec)"
+
+      # ── Converter: abstract base ──
+      # Note: startChunkedConversion and bind use dynamic dispatch because
+      # concrete Converter subclasses override with typed Sink<T>/Stream<T>
+      # parameters, but the interpreter creates untyped Sink<Object?>/Stream<dynamic>.
+      Converter:
+        extra_methods:
+          "convert#1": |
+            (args) {
+              final converter = args[0] as Converter;
+              var input = args[1];
+              // Cast List<dynamic> to List<int> for byte converters
+              if (input is List && input is! List<int> && input is! List<String>) {
+                input = input.cast<int>();
+              }
+              return converter.convert(input);
+            }
+          "fuse#1": "(args) => (args[0] as Converter).fuse(args[1] as Converter)"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+
+      # ── Encoding: static getByName + decodeStream with cast ──
+      Encoding:
+        extra_methods:
+          "getByName#1": "(args) => Encoding.getByName(args[0] as String)"
+          "decodeStream#1": "(args) => (args[0] as Encoding).decodeStream((args[1] as Stream).cast<List<int>>())"
+          "decode#1": "(args) => (args[0] as Encoding).decode((args[1] as List).cast<int>())"
+
+      # ── JsonCodec: constructor with optional reviver/toEncodable ──
+      JsonCodec:
+        extra_methods:
+          "#2": |
+            (args) {
+              final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              return JsonCodec(
+                reviver: reviver != null ? (key, value) => reviver(key, value) : null,
+                toEncodable: toEncodable != null ? (v) => toEncodable(v) : null,
+              );
+            }
+          "decode#2": |
+            (args) {
+              final self = args[0] as JsonCodec;
+              final source = args[1] as String;
+              final reviver = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              if (reviver != null) {
+                return self.decode(source, reviver: (key, value) => reviver(key, value));
+              }
+              return self.decode(source);
+            }
+          "encode#2": |
+            (args) {
+              final self = args[0] as JsonCodec;
+              final value = args[1];
+              final toEncodable = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              if (toEncodable != null) {
+                return self.encode(value, toEncodable: (v) => toEncodable(v));
+              }
+              return self.encode(value);
+            }
+          "encoder#0": "(args) => (args[0] as JsonCodec).encoder"
+          "decoder#0": "(args) => (args[0] as JsonCodec).decoder"
+
+      # ── JsonEncoder: constructor with optional toEncodable + indent ──
+      JsonEncoder:
+        extra_methods:
+          "#1": |
+            (args) {
+              final toEncodable = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              if (toEncodable != null) {
+                return JsonEncoder((v) => toEncodable(v));
+              }
+              return const JsonEncoder();
+            }
+          "withIndent#2": |
+            (args) {
+              final indent = args[0] as String?;
+              final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              if (toEncodable != null) {
+                return JsonEncoder.withIndent(indent, (v) => toEncodable(v));
+              }
+              return JsonEncoder.withIndent(indent);
+            }
+          "convert#1": "(args) => (args[0] as JsonEncoder).convert(args[1])"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── JsonDecoder: constructor with optional reviver ──
+      JsonDecoder:
+        extra_methods:
+          "#1": |
+            (args) {
+              final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              if (reviver != null) {
+                return JsonDecoder((key, value) => reviver(key, value));
+              }
+              return const JsonDecoder();
+            }
+          "convert#1": "(args) => (args[0] as JsonDecoder).convert(args[1] as String)"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── JsonUtf8Encoder: constructor with optional positional params ──
+      # JsonUtf8Encoder([String? indent, toEncodable(dynamic)?, int bufferSize = 256])
+      # _#fromFields cannot be auto-generated (field order differs from constructor)
+      JsonUtf8Encoder:
+        extra_methods:
+          "_#fromFields#3": |
+            (args) => JsonUtf8Encoder(
+              args[0] as String?,
+              args[1] as dynamic Function(dynamic)?,
+              args[2] as int? ?? 256,
+            )
+          "#3": |
+            (args) {
+              final indent = identical(args[0], darticAbsent) ? null : args[0] as String?;
+              final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final bufferSize = identical(args[2], darticAbsent) ? 256 : args[2] as int;
+              if (toEncodable != null) {
+                return JsonUtf8Encoder(indent, (v) => toEncodable(v), bufferSize);
+              }
+              if (indent != null) {
+                return JsonUtf8Encoder(indent, null, bufferSize);
+              }
+              return JsonUtf8Encoder();
+            }
+          "convert#1": "(args) => (args[0] as JsonUtf8Encoder).convert(args[1])"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── JsonUnsupportedObjectError: cause getter ──
+      JsonUnsupportedObjectError:
+        extra_methods:
+          "cause#0": "(args) => (args[0] as JsonUnsupportedObjectError).cause"
+          "unsupportedObject#0": "(args) => (args[0] as JsonUnsupportedObjectError).unsupportedObject"
+          "toString#0": "(args) => (args[0] as JsonUnsupportedObjectError).toString()"
+
+      # ── Utf8Codec: constructor with optional allowMalformed ──
+      Utf8Codec:
+        extra_methods:
+          "_#fromFields#1": "(args) => Utf8Codec(allowMalformed: args[0] as bool)"
+          "#1": |
+            (args) {
+              final allowMalformed = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return Utf8Codec(allowMalformed: allowMalformed);
+            }
+          "encode#1": "(args) => (args[0] as Utf8Codec).encode(args[1] as String)"
+          "decode#2": |
+            (args) {
+              final self = args[0] as Utf8Codec;
+              final codeUnits = (args[1] as List).cast<int>();
+              final allowMalformed = identical(args[2], darticAbsent) ? null : args[2] as bool?;
+              if (allowMalformed != null) {
+                return self.decode(codeUnits, allowMalformed: allowMalformed);
+              }
+              return self.decode(codeUnits);
+            }
+          "encoder#0": "(args) => (args[0] as Utf8Codec).encoder"
+          "decoder#0": "(args) => (args[0] as Utf8Codec).decoder"
+          "name#0": "(args) => (args[0] as Utf8Codec).name"
+
+      # ── Utf8Encoder ──
+      Utf8Encoder:
+        extra_methods:
+          "#0": "(args) => const Utf8Encoder()"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as Utf8Encoder;
+              final string = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(string, start, end);
+            }
+
+      # ── Utf8Decoder: constructor with optional allowMalformed ──
+      Utf8Decoder:
+        extra_methods:
+          "#1": |
+            (args) {
+              final allowMalformed = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return Utf8Decoder(allowMalformed: allowMalformed);
+            }
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as Utf8Decoder;
+              final codeUnits = (args[1] as List).cast<int>();
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(codeUnits, start, end);
+            }
+
+      # ── Base64Codec ──
+      # Field is `_encoder` (Base64Encoder), not a bool.
+      Base64Codec:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              // The field is _encoder (Base64Encoder). Use identical to check if urlSafe.
+              final encoder = args[0] as Base64Encoder;
+              return identical(encoder, const Base64Encoder()) ? const Base64Codec() : const Base64Codec.urlSafe();
+            }
+          "#0": "(args) => const Base64Codec()"
+          "urlSafe#0": "(args) => const Base64Codec.urlSafe()"
+          "encode#1": "(args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>())"
+          "decode#1": "(args) => (args[0] as Base64Codec).decode(args[1] as String)"
+          "normalize#3": |
+            (args) {
+              final self = args[0] as Base64Codec;
+              final source = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.normalize(source, start, end);
+            }
+          "encoder#0": "(args) => (args[0] as Base64Codec).encoder"
+          "decoder#0": "(args) => (args[0] as Base64Codec).decoder"
+
+      # ── Base64Encoder: const no-arg constructor + urlSafe() factory ──
+      # Base64Encoder() is const; urlSafe() is a separate factory.
+      # convert() takes exactly 1 positional arg (List<int>).
+      Base64Encoder:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              final urlSafe = args[0] as bool;
+              return urlSafe ? Base64Encoder.urlSafe() : const Base64Encoder();
+            }
+          "#0": "(args) => const Base64Encoder()"
+          "urlSafe#0": "(args) => Base64Encoder.urlSafe()"
+          "convert#1": "(args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>())"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── Base64Decoder ──
+      Base64Decoder:
+        extra_methods:
+          "#0": "(args) => const Base64Decoder()"
+          "convert#3": |
+            (args) {
+              final self = args[0] as Base64Decoder;
+              final input = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(input, start, end);
+            }
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── AsciiCodec: constructor with optional allowInvalid ──
+      AsciiCodec:
+        extra_methods:
+          "_#fromFields#1": "(args) => AsciiCodec(allowInvalid: args[0] as bool)"
+          "#1": |
+            (args) {
+              final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return AsciiCodec(allowInvalid: allowInvalid);
+            }
+          "encode#1": "(args) => (args[0] as AsciiCodec).encode(args[1] as String)"
+          "decode#2": |
+            (args) {
+              final self = args[0] as AsciiCodec;
+              final bytes = (args[1] as List).cast<int>();
+              final allowInvalid = identical(args[2], darticAbsent) ? null : args[2] as bool?;
+              if (allowInvalid != null) {
+                return self.decode(bytes, allowInvalid: allowInvalid);
+              }
+              return self.decode(bytes);
+            }
+          "encoder#0": "(args) => (args[0] as AsciiCodec).encoder"
+          "decoder#0": "(args) => (args[0] as AsciiCodec).decoder"
+          "name#0": "(args) => (args[0] as AsciiCodec).name"
+
+      # ── AsciiEncoder + _UnicodeSubsetEncoder ──
+      AsciiEncoder:
+        extra_methods:
+          "#0": "(args) => const AsciiEncoder()"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as AsciiEncoder;
+              final string = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(string, start, end);
+            }
+
+      # _UnicodeSubsetEncoder: internal base for AsciiEncoder/Latin1Encoder
+      # Must use dynamic dispatch since _UnicodeSubsetEncoder is private and
+      # overrides Converter.convert with extra optional positional params.
+      _UnicodeSubsetEncoder:
+        extra_methods:
+          "convert#3": |
+            (args) {
+              final self = args[0];
+              final string = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return (self as dynamic).convert(string, start, end);
+            }
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+
+      # ── AsciiDecoder + _UnicodeSubsetDecoder ──
+      AsciiDecoder:
+        extra_methods:
+          "#1": |
+            (args) {
+              final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return AsciiDecoder(allowInvalid: allowInvalid);
+            }
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as AsciiDecoder;
+              final bytes = (args[1] as List).cast<int>();
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(bytes, start, end);
+            }
+
+      # _UnicodeSubsetDecoder: internal base for AsciiDecoder/Latin1Decoder
+      # Must use dynamic dispatch since _UnicodeSubsetDecoder is private and
+      # overrides Converter.convert with extra optional positional params.
+      _UnicodeSubsetDecoder:
+        extra_methods:
+          "convert#3": |
+            (args) {
+              final self = args[0];
+              final bytes = (args[1] as List).cast<int>();
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return (self as dynamic).convert(bytes, start, end);
+            }
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── Latin1Codec: constructor with optional allowInvalid ──
+      Latin1Codec:
+        extra_methods:
+          "_#fromFields#1": "(args) => Latin1Codec(allowInvalid: args[0] as bool)"
+          "#1": |
+            (args) {
+              final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return Latin1Codec(allowInvalid: allowInvalid);
+            }
+          "encode#1": "(args) => (args[0] as Latin1Codec).encode(args[1] as String)"
+          "decode#2": |
+            (args) {
+              final self = args[0] as Latin1Codec;
+              final bytes = (args[1] as List).cast<int>();
+              final allowInvalid = identical(args[2], darticAbsent) ? null : args[2] as bool?;
+              if (allowInvalid != null) {
+                return self.decode(bytes, allowInvalid: allowInvalid);
+              }
+              return self.decode(bytes);
+            }
+          "encoder#0": "(args) => (args[0] as Latin1Codec).encoder"
+          "decoder#0": "(args) => (args[0] as Latin1Codec).decoder"
+          "name#0": "(args) => (args[0] as Latin1Codec).name"
+
+      # ── Latin1Encoder ──
+      Latin1Encoder:
+        extra_methods:
+          "#0": "(args) => const Latin1Encoder()"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as Latin1Encoder;
+              final string = args[1] as String;
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(string, start, end);
+            }
+
+      # ── Latin1Decoder: constructor with optional allowInvalid ──
+      Latin1Decoder:
+        extra_methods:
+          "#1": |
+            (args) {
+              final allowInvalid = identical(args[0], darticAbsent) ? false : args[0] as bool;
+              return Latin1Decoder(allowInvalid: allowInvalid);
+            }
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+          "convert#3": |
+            (args) {
+              final self = args[0] as Latin1Decoder;
+              final bytes = (args[1] as List).cast<int>();
+              final start = identical(args[2], darticAbsent) ? 0 : args[2] as int;
+              final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
+              return self.convert(bytes, start, end);
+            }
+
+      # ── HtmlEscape: constructor with optional mode ──
+      HtmlEscape:
+        extra_methods:
+          "#1": |
+            (args) {
+              final mode = identical(args[0], darticAbsent) ? HtmlEscapeMode.unknown : args[0] as HtmlEscapeMode;
+              return HtmlEscape(mode);
+            }
+          "convert#1": "(args) => (args[0] as HtmlEscape).convert(args[1] as String)"
+          "mode#0": "(args) => (args[0] as HtmlEscape).mode"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── HtmlEscapeMode: static constants ──
+      HtmlEscapeMode:
+        extra_methods:
+          "unknown#0": "(args) => HtmlEscapeMode.unknown"
+          "attribute#0": "(args) => HtmlEscapeMode.attribute"
+          "sqAttribute#0": "(args) => HtmlEscapeMode.sqAttribute"
+          "element#0": "(args) => HtmlEscapeMode.element"
+          "escapeLtGt#0": "(args) => (args[0] as HtmlEscapeMode).escapeLtGt"
+          "escapeQuot#0": "(args) => (args[0] as HtmlEscapeMode).escapeQuot"
+          "escapeApos#0": "(args) => (args[0] as HtmlEscapeMode).escapeApos"
+          "escapeSlash#0": "(args) => (args[0] as HtmlEscapeMode).escapeSlash"
+
+      # ── LineSplitter ──
+      LineSplitter:
+        extra_methods:
+          "#0": "(args) => const LineSplitter()"
+          "convert#1": "(args) => (args[0] as LineSplitter).convert(args[1] as String)"
+          "split#1": "(args) => LineSplitter.split(args[1] as String)"
+          "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
+          "bind#1": "(args) => (args[0] as dynamic).bind(args[1])"
+
+      # ── ChunkedConversionSink + _SimpleCallbackSink ──
+      ChunkedConversionSink:
+        extra_methods:
+          "add#1": |
+            (args) {
+              var item = args[1];
+              // Cast List<dynamic> to List<int> for byte sinks
+              if (item is List && item is! List<int>) {
+                item = item.cast<int>();
+              }
+              (args[0] as Sink).add(item);
+              return null;
+            }
+          "close#0": |
+            (args) {
+              (args[0] as Sink).close();
+              return null;
+            }
+
+      # _SimpleCallbackSink: internal, factory for ChunkedConversionSink.withCallback
+      _SimpleCallbackSink:
+        extra_methods:
+          "#1": |
+            (args) {
+              final callback = args[0] as Function;
+              return ChunkedConversionSink.withCallback((chunks) => callback(chunks));
+            }
+
+      # ── StringConversionSink + internal sinks ──
+      StringConversionSink:
+        extra_methods:
+          "add#1": |
+            (args) {
+              (args[0] as StringConversionSink).add(args[1] as String);
+              return null;
+            }
+          "addSlice#4": |
+            (args) {
+              (args[0] as StringConversionSink).addSlice(
+                args[1] as String,
+                args[2] as int,
+                args[3] as int,
+                args[4] as bool,
+              );
+              return null;
+            }
+          "asStringSink#0": "(args) => (args[0] as StringConversionSink).asStringSink()"
+          "asUtf8Sink#1": |
+            (args) {
+              final allowMalformed = identical(args[1], darticAbsent) ? false : args[1] as bool;
+              return (args[0] as StringConversionSink).asUtf8Sink(allowMalformed);
+            }
+          "close#0": |
+            (args) {
+              (args[0] as StringConversionSink).close();
+              return null;
+            }
+
+      # _StringCallbackSink: internal, factory for StringConversionSink.withCallback
+      _StringCallbackSink:
+        extra_methods:
+          "#1": |
+            (args) {
+              final callback = args[0] as Function;
+              return StringConversionSink.withCallback((s) => callback(s));
+            }
+
+      # _StringAdapterSink: internal, factory for StringConversionSink.from
+      _StringAdapterSink:
+        extra_methods:
+          "#1": "(args) => StringConversionSink.from(args[0] as Sink<String>)"
+
+      # _StringSinkConversionSink: internal, factory for StringConversionSink.fromStringSink
+      _StringSinkConversionSink:
+        extra_methods:
+          "#1": "(args) => StringConversionSink.fromStringSink(args[0] as StringSink)"
+
+      # ── ByteConversionSink + internal sinks ──
+      ByteConversionSink:
+        extra_methods:
+          "add#1": |
+            (args) {
+              (args[0] as ByteConversionSink).add((args[1] as List).cast<int>());
+              return null;
+            }
+          "addSlice#4": |
+            (args) {
+              (args[0] as ByteConversionSink).addSlice(
+                (args[1] as List).cast<int>(),
+                args[2] as int,
+                args[3] as int,
+                args[4] as bool,
+              );
+              return null;
+            }
+          "close#0": |
+            (args) {
+              (args[0] as ByteConversionSink).close();
+              return null;
+            }
+
+      # _ByteAdapterSink: internal, factory for ByteConversionSink.from
+      _ByteAdapterSink:
+        extra_methods:
+          "#1": "(args) => ByteConversionSink.from(args[0] as Sink<List<int>>)"
+
+      # _ByteCallbackSink: internal, factory for ByteConversionSink.withCallback
+      _ByteCallbackSink:
+        extra_methods:
+          "#1": |
+            (args) {
+              final callback = args[0] as Function;
+              return ByteConversionSink.withCallback((bytes) => callback(bytes));
+            }
+
+      # ── ClosableStringSink + _ClosableStringSink ──
+      ClosableStringSink:
+        extra_methods:
+          "close#0": |
+            (args) {
+              (args[0] as ClosableStringSink).close();
+              return null;
+            }
+
+      # _ClosableStringSink: internal, factory for ClosableStringSink.fromStringSink
+      _ClosableStringSink:
+        extra_methods:
+          "#2": |
+            (args) {
+              final sink = args[0] as StringSink;
+              final onClose = args[1] as Function;
+              return ClosableStringSink.fromStringSink(sink, () => onClose());
+            }

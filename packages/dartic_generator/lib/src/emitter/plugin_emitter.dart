@@ -4,7 +4,7 @@
 /// The generated plugin class extends [DarticPlugin] and calls each
 /// binding's `register()` method in its own [register] override.
 ///
-/// See: lib/src/bridge/plugins/core_plugin.dart for reference.
+/// See: packages/dartic_stdlib/lib/src/plugins/core_plugin.g.dart for reference.
 library;
 
 import 'dart:io' show Platform;

@@ -1,0 +1,35 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/src/api/dartic_absent.dart';
+import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
+import 'dart:convert';
+import 'dart:async';
+
+abstract final class LineSplitterBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'dart:convert::LineSplitter',
+      type: LineSplitter,
+      test: (o) => o is LineSplitter,
+      methods: methodMap(),
+      superclasses: ['dart:async::StreamTransformerBase', 'dart:async::StreamTransformer'],
+    );
+    ctx.registerBinding('dart:convert::LineSplitter::split#3', (args) => LineSplitter.split(args[0] as String, identical(args[1], darticAbsent) ? 0 : args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?));
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'cast#0': (args) => (args[0] as LineSplitter).cast(),
+        '_#fromFields#0': (args) => LineSplitter(),
+        '#0': (args) => const LineSplitter(),
+        'convert#1': (args) => (args[0] as LineSplitter).convert(args[1] as String),
+        'split#1': (args) => LineSplitter.split(args[1] as String),
+        'startChunkedConversion#1': (args) => (args[0] as LineSplitter).startChunkedConversion(castToStringSink(args[1])),
+        'bind#1': (args) => (args[0] as LineSplitter).bind((args[1] as Stream).cast<String>()),
+      };
+}

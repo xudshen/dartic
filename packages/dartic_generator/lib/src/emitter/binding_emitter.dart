@@ -10,7 +10,7 @@
 /// - `static void register(DarticPluginContext ctx)` calls registerClass/registerBinding
 /// - `static Map<String, Object? Function(List<Object?>)> methodMap()` returns closures
 ///
-/// See: lib/src/bridge/bindings/int_bindings.dart for reference.
+/// See: packages/dartic_stdlib/lib/src/bindings/core/int_bindings.g.dart for reference.
 library;
 
 import 'dart:io' show Platform, stderr;
@@ -72,7 +72,8 @@ String emitBindingFile(
     buf.writeln();
   }
   _writeImport(buf,
-      additionalImports: _detectRequiredImports(body.toString()),
+      additionalImports:
+          _detectRequiredImports(body.toString(), libraryUri: info.libraryUri),
       bridge: effectiveBridge,
       customImports: customImports);
   buf.writeln();
@@ -125,7 +126,8 @@ String emitBindingFileWithInternalTypes(
     buf.writeln();
   }
   _writeImport(buf,
-      additionalImports: _detectRequiredImports(body.toString()),
+      additionalImports: _detectRequiredImports(body.toString(),
+          libraryUri: mainInfo.libraryUri),
       customImports: customImports);
   buf.writeln();
   buf.write(body);
@@ -162,7 +164,8 @@ String emitTopLevelBindingFile(
     buf.writeln();
   }
   _writeImport(buf,
-      additionalImports: _detectRequiredImports(body.toString()),
+      additionalImports:
+          _detectRequiredImports(body.toString(), libraryUri: libraryUri),
       customImports: customImports);
   buf.writeln();
   buf.write(body);
@@ -216,54 +219,30 @@ void _writeImport(StringBuffer buf,
   }
 }
 
-/// Scans source code for known types that require additional imports.
-Set<String> _detectRequiredImports(String source) {
+/// Scans source code for types that require additional imports.
+///
+/// [libraryUri] is the URI of the library being generated (e.g. 'dart:convert').
+/// It is always added to imports when it starts with 'dart:' (since the
+/// generated binding file references the library's own types).
+///
+/// Cross-library references (e.g. dart:async's Stream used in a dart:convert
+/// binding) are detected by scanning the source for known type names.
+Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
   final imports = <String>{};
+
+  // Always import the library we're generating bindings for (dart:core is
+  // implicitly imported by Dart, so skip it).
+  if (libraryUri != null &&
+      libraryUri.startsWith('dart:') &&
+      libraryUri != 'dart:core') {
+    imports.add(libraryUri);
+  }
+
   if (source.contains('DarticObject')) {
     imports.add('../../runtime/object.dart');
   }
-  // dart:collection types
-  const collectionTypes = [
-    'LinkedHashMap', 'LinkedHashSet', 'HashMap', 'HashSet',
-    'Queue', 'ListQueue', 'SplayTreeMap', 'SplayTreeSet',
-    'UnmodifiableListView', 'UnmodifiableMapView', 'UnmodifiableSetView',
-  ];
-  for (final type in collectionTypes) {
-    if (RegExp('\\b$type\\b').hasMatch(source)) {
-      imports.add('dart:collection');
-      break;
-    }
-  }
-  // dart:math types (class names) and top-level math functions (matched with
-  // call syntax `fn(` to avoid false positives on types that have methods
-  // named pow, log, etc.)
-  const mathTypes = [
-    'Random', 'Point', 'Rectangle', 'MutableRectangle',
-  ];
-  const mathFunctions = [
-    'min', 'max', 'sqrt', 'pow', 'sin', 'cos', 'tan',
-    'log', 'exp', 'atan2', 'asin', 'acos', 'atan',
-  ];
-  for (final type in mathTypes) {
-    if (RegExp('\\b$type\\b').hasMatch(source)) {
-      imports.add('dart:math');
-      break;
-    }
-  }
-  if (!imports.contains('dart:math')) {
-    // Check for top-level math function calls: `=> fn(` or `fn(args` at line
-    // start (not `.fn(` which would be method calls on an instance)
-    for (final fn in mathFunctions) {
-      if (RegExp('(?<![.])\\b$fn\\(').hasMatch(source)) {
-        imports.add('dart:math');
-        break;
-      }
-    }
-  }
-  if (RegExp(r'\bEncoding\b').hasMatch(source)) {
-    imports.add('dart:convert');
-  }
-  // dart:async types used in custom binding closures
+  // dart:async types — the most common cross-library dependency (Stream,
+  // Future, etc. appear in bindings for many libraries).
   const asyncTypes = [
     'Future', 'FutureOr', 'Completer', 'Stream', 'StreamController',
     'StreamSubscription', 'StreamTransformer', 'StreamConsumer',
@@ -275,6 +254,25 @@ Set<String> _detectRequiredImports(String source) {
     if (RegExp('\\b$type\\b').hasMatch(source)) {
       imports.add('dart:async');
       break;
+    }
+  }
+  // Cross-library references: types from other dart: libraries that may
+  // appear in extra_methods or auto-generated code.
+  const crossLibraryTypes = <String, List<String>>{
+    'dart:convert': ['Encoding', 'JsonCodec', 'JsonEncoder', 'JsonDecoder',
+        'Utf8Codec', 'Utf8Encoder', 'Utf8Decoder', 'Base64Codec',
+        'AsciiCodec', 'Latin1Codec', 'HtmlEscape'],
+    'dart:collection': ['LinkedHashMap', 'LinkedHashSet', 'HashMap', 'HashSet',
+        'Queue', 'ListQueue'],
+    'dart:math': ['Random', 'Point', 'Rectangle'],
+  };
+  for (final entry in crossLibraryTypes.entries) {
+    if (imports.contains(entry.key)) continue; // already imported
+    for (final type in entry.value) {
+      if (RegExp('\\b$type\\b').hasMatch(source)) {
+        imports.add(entry.key);
+        break;
+      }
     }
   }
   if (RegExp(r'\bdarticAbsent\b').hasMatch(source)) {
@@ -549,6 +547,12 @@ void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
 /// - extraMethods already provides a `_#fromFields#N` entry (YAML override)
 /// - No unnamed constructor exists
 /// - Field-to-parameter matching fails
+///
+/// **Limitation:** Only the class's own fields are considered, not inherited
+/// fields from superclasses. If Kernel emits an `InstanceConstant` that
+/// includes inherited field values, the auto-generated binding will have
+/// the wrong arity. Workaround: provide a manual `_#fromFields#N` entry
+/// via `extra_methods` in the YAML config.
 void _writeFromFieldsEntry(
     StringBuffer buf, TypeInfo info, Set<String> overrideKeys) {
   final fields = info.fields;
@@ -642,29 +646,40 @@ void _writeInternalMethodMap(
   TypeInfo info, {
   Map<String, String>? extraMethods,
 }) {
+  // Collect override keys so extraMethods can suppress auto-generated entries.
+  final overrideKeys = extraMethods?.keys.toSet() ?? <String>{};
+
   final mapName = _toInternalMethodMapName(info.className);
   buf.writeln(
       '  static Map<String, Object? Function(List<Object?>)> $mapName() => {');
 
   // Instance methods
   for (final method in info.methods) {
-    _writeInstanceMethodEntries(buf, info.className, method);
+    if (!_anyKeyOverridden(method.allBindingKeys, overrideKeys)) {
+      _writeInstanceMethodEntries(buf, info.className, method);
+    }
   }
 
   // Getters
   for (final getter in info.getters) {
-    buf.writeln(
-        "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+    if (!overrideKeys.contains(getter.bindingKey)) {
+      buf.writeln(
+          "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+    }
   }
 
   // Setters
   for (final setter in info.setters) {
-    _writeSetterEntry(buf, info.className, setter);
+    if (!overrideKeys.contains(setter.bindingKey)) {
+      _writeSetterEntry(buf, info.className, setter);
+    }
   }
 
   // Operators
   for (final op in info.operators) {
-    _writeOperatorEntry(buf, info.className, op);
+    if (!overrideKeys.contains(op.bindingKey)) {
+      _writeOperatorEntry(buf, info.className, op);
+    }
   }
 
   // Extra methods（自定义覆盖）。
@@ -1493,7 +1508,9 @@ void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter) {
   buf.writeln('  @override');
   buf.writeln('  set ${setter.name}(${setter.paramType} value) {');
   buf.writeln(
-      "    _dispatch.set(this, \$darticObject, '${setter.name}', value);");
+      "    if (!_dispatch.set(this, \$darticObject, '${setter.name}', value)) {");
+  buf.writeln('      super.${setter.name} = value;');
+  buf.writeln('    }');
   buf.writeln('  }');
 }
 
@@ -1589,8 +1606,13 @@ String _emitTopLevelFunctionWrapper(FunctionInfo fn) {
 
   final args = <String>[];
   for (var i = 0; i < fn.paramTypes.length; i++) {
-    // Top-level functions: no receiver, args[0..N-1] are params
-    args.add('args[$i]');
+    final param = fn.paramTypes[i];
+    final argExpr = _emitArgExpression(param, i);
+    if (param.isNamed) {
+      args.add('${param.name}: $argExpr');
+    } else {
+      args.add(argExpr);
+    }
   }
   final call = '${fn.name}(${args.join(', ')})';
 

@@ -1,7 +1,7 @@
 /// Dart standard library bindings for the dartic bytecode interpreter.
 ///
 /// Provides [DarticStdlibPlugin] which registers bindings for dart:core,
-/// dart:async, dart:collection, and dart:math.
+/// dart:async, dart:collection, dart:convert, and dart:math.
 ///
 /// ```dart
 /// import 'package:dartic/dartic.dart';
