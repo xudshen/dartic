@@ -21,6 +21,7 @@ abstract final class _TypeTag {
   static const int typeParameter = 5;
   static const int nullableType = 6;
   static const int recordType = 7;
+  static const int structuralParam = 8;
 }
 
 // ── Base class ──
@@ -52,6 +53,7 @@ sealed class TypeTemplate {
       _TypeTag.typeParameter => _deserializeTypeParameter(data, offset),
       _TypeTag.nullableType => _deserializeNullable(data, offset),
       _TypeTag.recordType => _deserializeRecord(data, offset),
+      _TypeTag.structuralParam => _deserializeStructuralParam(data, offset),
       _ => throw FormatException('Unknown TypeTemplate tag: $tag'),
     };
   }
@@ -183,6 +185,14 @@ sealed class TypeTemplate {
       ),
       offset,
     );
+  }
+
+  static (StructuralParamTemplate, int) _deserializeStructuralParam(
+    List<int> data,
+    int offset,
+  ) {
+    final index = data[offset++];
+    return (StructuralParamTemplate(index: index), offset);
   }
 
   static (NullableTemplate, int) _deserializeNullable(
@@ -513,6 +523,34 @@ class RecordTypeTemplate extends TypeTemplate {
   String toString() => 'RecordTypeTemplate('
       'pos: $positionalTypes, '
       'named: [${namedTypes.map((n) => '${n.name}: ${n.type}').join(', ')}])';
+}
+
+/// Represents a reference to a function type's own structural type parameter.
+///
+/// Unlike [TypeParameterTemplate] which references ITA/FTA from the current
+/// stack frame, this references the containing [FunctionTypeTemplate]'s own
+/// type parameters. At runtime, resolves to [DarticTypeParameterType].
+///
+/// Example: In `T Function<T extends num>(T)`, both references to T produce
+/// `StructuralParamTemplate(index: 0)`.
+class StructuralParamTemplate extends TypeTemplate {
+  const StructuralParamTemplate({required this.index});
+
+  /// Zero-based index into the containing FunctionTypeTemplate's typeParamBounds.
+  final int index;
+
+  @override
+  List<int> serialize() => [_TypeTag.structuralParam, index];
+
+  @override
+  bool operator ==(Object other) =>
+      other is StructuralParamTemplate && index == other.index;
+
+  @override
+  int get hashCode => Object.hash(8, index);
+
+  @override
+  String toString() => 'StructuralParamTemplate(index: $index)';
 }
 
 /// Wraps an inner [TypeTemplate] to represent its nullable variant (e.g. `int?`).

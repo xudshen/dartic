@@ -235,6 +235,8 @@ class DarticVerifier {
         break; // no classId references
       case TypeParameterTemplate():
         break; // index into ITA/FTA, not class table
+      case StructuralParamTemplate():
+        break; // index into containing FunctionTypeTemplate's type params
     }
   }
 

@@ -66,8 +66,19 @@ extension on DarticCompiler {
     // We must account for them so that:
     // 1. InstanceConstant field values can be set correctly
     // 2. InstanceGet on _Enum.index / _Enum._name resolves to GET_FIELD
-    final isEnumClass = cls.isEnum && superClass != null
-        && _isHostLibrary(superClass.enclosingLibrary);
+    //
+    // For simple enums, superClass IS _Enum (host library). For enums with
+    // mixins (e.g. `enum E with A`), CFE creates an intermediate mixin
+    // application class (_E&_Enum&A) in the user library. We walk up the
+    // hierarchy to find the actual _Enum host class.
+    ir.Class? enumHostBase;
+    if (cls.isEnum && superClass != null) {
+      ir.Class? c = superClass;
+      while (c != null && !_isHostLibrary(c.enclosingLibrary)) {
+        c = c.superclass;
+      }
+      enumHostBase = c;
+    }
     // Compute field layout: offsets start after inherited fields.
     var refOffset = inheritedRefFields;
     var valOffset = inheritedValFields;
@@ -76,8 +87,8 @@ extension on DarticCompiler {
     // For enum classes, register the _Enum superclass fields in the layout
     // so that _compileInstanceConstant can find them when setting fieldValues.
     // Also compute inherited field counts from the actual platform fields.
-    if (isEnumClass) {
-      for (final field in superClass.fields) {
+    if (enumHostBase != null) {
+      for (final field in enumHostBase.fields) {
         if (field.isStatic) continue;
         final kind = _classifyStackKind(field.type);
         final offset = kind.isValue ? valOffset++ : refOffset++;
@@ -127,8 +138,8 @@ extension on DarticCompiler {
     final nameIndexedFields = <int, FieldLayout>{};
 
     // Include _Enum inherited fields for enum classes.
-    if (isEnumClass) {
-      for (final field in superClass.fields) {
+    if (enumHostBase != null) {
+      for (final field in enumHostBase.fields) {
         if (field.isStatic) continue;
         final nameIdx = _constantPool.addName(field.name.text);
         final layout = fieldLayouts[field.getterReference]!;
@@ -264,7 +275,7 @@ extension on DarticCompiler {
     // delegates to `_enumToString()`. Since _Enum is a platform class, we
     // cannot compile its toString method. Instead, we make virtual dispatch
     // for `toString` resolve directly to the enum class's `_enumToString`.
-    if (isEnumClass) {
+    if (enumHostBase != null) {
       final toStringIdx = _constantPool.addName('toString');
       final enumToStringIdx = _constantPool.addName('_enumToString');
       final enumToStringFunc = classInfo.methods[enumToStringIdx];

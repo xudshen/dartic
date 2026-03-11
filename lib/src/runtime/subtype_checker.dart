@@ -113,6 +113,15 @@ class SubtypeChecker {
       return isSubtypeOf(futureT, sup) && isSubtypeOf(t, sup);
     }
 
+    // Structural type parameter references (within generic function types).
+    // Same index → same type; different index or mixed with concrete → false.
+    if (sub is DarticTypeParameterType && sup is DarticTypeParameterType) {
+      return sub.index == sup.index;
+    }
+    if (sub is DarticTypeParameterType || sup is DarticTypeParameterType) {
+      return false;
+    }
+
     // Rule 9: function type dispatch.
     if (sub is DarticFunctionType || sup is DarticFunctionType) {
       return _checkFunctionTypeSubtype(sub, sup);
@@ -159,6 +168,7 @@ class SubtypeChecker {
           positionalTypes: type.positionalTypes,
           namedTypes: type.namedTypes,
         ),
+      DarticTypeParameterType() => DarticTypeParameterType(type.index),
     };
   }
 

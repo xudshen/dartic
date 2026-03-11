@@ -80,8 +80,9 @@ TypeTemplate _convert(
   List<ir.TypeParameter>? classParams,
   List<ir.TypeParameter>? funcParams,
   List<ir.StructuralParameter>? structuralParams,
-  ir.CoreTypes? coreTypes,
-) {
+  ir.CoreTypes? coreTypes, [
+  List<ir.StructuralParameter>? currentFnTypeParams,
+]) {
   // Handle nullable types by unwrapping to non-nullable and wrapping the
   // result in NullableTemplate. This consolidates the nullable cases
   // into a single dispatch.
@@ -95,6 +96,7 @@ TypeTemplate _convert(
         funcParams,
         structuralParams,
         coreTypes,
+        currentFnTypeParams,
       ),
     );
   }
@@ -109,7 +111,7 @@ TypeTemplate _convert(
         typeArgs: [
           for (final arg in type.typeArguments)
             _convert(arg, classIdLookup, classParams, funcParams,
-                structuralParams, coreTypes),
+                structuralParams, coreTypes, currentFnTypeParams),
         ],
       ),
     ir.FutureOrType() => InterfaceTypeTemplate(
@@ -118,7 +120,7 @@ TypeTemplate _convert(
             : -1,
         typeArgs: [
           _convert(type.typeArgument, classIdLookup, classParams, funcParams,
-              structuralParams, coreTypes),
+              structuralParams, coreTypes, currentFnTypeParams),
         ],
       ),
     ir.FunctionType() => _convertFunctionType(
@@ -127,29 +129,29 @@ TypeTemplate _convert(
     ir.TypeParameterType() =>
       _resolveTypeParam(type.parameter, classParams, funcParams),
     ir.StructuralParameterType() =>
-      _resolveStructuralParam(type.parameter, structuralParams),
+      _resolveStructuralParam(type.parameter, structuralParams, currentFnTypeParams),
     ir.IntersectionType() => _convert(
         type.right, classIdLookup, classParams, funcParams, structuralParams,
-        coreTypes),
+        coreTypes, currentFnTypeParams),
     ir.RecordType() => RecordTypeTemplate(
         positionalTypes: [
           for (final p in type.positional)
             _convert(p, classIdLookup, classParams, funcParams,
-                structuralParams, coreTypes),
+                structuralParams, coreTypes, currentFnTypeParams),
         ],
         namedTypes: [
           for (final n in type.named)
             (
               name: n.name,
               type: _convert(n.type, classIdLookup, classParams, funcParams,
-                  structuralParams, coreTypes),
+                  structuralParams, coreTypes, currentFnTypeParams),
             ),
         ],
       ),
     // ExtensionType is erased to its representation type.
     ir.ExtensionType() => _convert(
         type.extensionTypeErasure, classIdLookup, classParams, funcParams,
-        structuralParams, coreTypes),
+        structuralParams, coreTypes, currentFnTypeParams),
     _ => throw UnsupportedError(
         'Unsupported DartType for type template conversion: '
         '${type.runtimeType}',
@@ -187,12 +189,17 @@ TypeTemplate _convertFunctionType(
     newStructuralParams = outerStructuralParams;
   }
 
+  // The current function type's own type parameters — used to distinguish
+  // self-referencing structural params (→ StructuralParamTemplate) from
+  // outer structural params (→ TypeParameterTemplate with FTA).
+  final ownTypeParams = type.typeParameters;
+
   // Convert type parameter bounds for generic function types.
   final typeParamBounds = <TypeTemplate>[];
   for (final tp in type.typeParameters) {
     typeParamBounds.add(
       _convert(tp.bound, classIdLookup, classParams, funcParams,
-          newStructuralParams, coreTypes),
+          newStructuralParams, coreTypes, ownTypeParams),
     );
   }
 
@@ -204,11 +211,12 @@ TypeTemplate _convertFunctionType(
       funcParams,
       newStructuralParams,
       coreTypes,
+      ownTypeParams,
     ),
     positionalParams: [
       for (final p in type.positionalParameters)
         _convert(p, classIdLookup, classParams, funcParams,
-            newStructuralParams, coreTypes),
+            newStructuralParams, coreTypes, ownTypeParams),
     ],
     namedParams: [
       for (final np in type.namedParameters)
@@ -221,6 +229,7 @@ TypeTemplate _convertFunctionType(
             funcParams,
             newStructuralParams,
             coreTypes,
+            ownTypeParams,
           ),
           isRequired: np.isRequired,
         ),
@@ -257,14 +266,28 @@ TypeTemplate _resolveTypeParam(
 }
 
 /// Resolves a [ir.StructuralParameter] (from a FunctionType's own type
-/// parameter list) to a [TypeParameterTemplate].
+/// parameter list) to a [TypeTemplate].
 ///
-/// Structural parameters are always function-level type parameters
-/// (isFunctionTypeParam = true).
+/// If the parameter belongs to the current function type's own type parameters
+/// ([currentFnTypeParams]), it resolves to a [StructuralParamTemplate] which
+/// at runtime becomes a [DarticTypeParameterType] without touching FTA.
+///
+/// If the parameter belongs to an outer function type (found in
+/// [structuralParams] but not in [currentFnTypeParams]), it resolves to a
+/// [TypeParameterTemplate] with `isFunctionTypeParam = true` for FTA lookup.
 TypeTemplate _resolveStructuralParam(
   ir.StructuralParameter param,
   List<ir.StructuralParameter>? structuralParams,
+  List<ir.StructuralParameter>? currentFnTypeParams,
 ) {
+  // Check if this is the current function type's own param first.
+  if (currentFnTypeParams != null) {
+    final ownIdx = currentFnTypeParams.indexOf(param);
+    if (ownIdx >= 0) {
+      return StructuralParamTemplate(index: ownIdx);
+    }
+  }
+  // Outer structural param — resolve via TypeParameterTemplate (FTA).
   if (structuralParams != null) {
     final idx = structuralParams.indexOf(param);
     if (idx >= 0) {

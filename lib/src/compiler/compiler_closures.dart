@@ -32,6 +32,8 @@ extension on DarticCompiler {
       itaUpvalueIdx: _itaUpvalueIdx,
       ftaUpvalueIdx: _ftaUpvalueIdx,
       thisCapturedByInner: _thisCapturedByInner,
+      activeFinalizers: List.of(_activeFinalizers),
+      finalizerDepthAtLabel: Map.of(_finalizerDepthAtLabel),
     ));
 
     _emitter = BytecodeEmitter();
@@ -43,6 +45,8 @@ extension on DarticCompiler {
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
     _icEntries.clear();
+    _activeFinalizers.clear();
+    _finalizerDepthAtLabel.clear();
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
     _upvalueDescriptors = [];
@@ -77,6 +81,8 @@ extension on DarticCompiler {
     _itaUpvalueIdx = ctx.itaUpvalueIdx;
     _ftaUpvalueIdx = ctx.ftaUpvalueIdx;
     _thisCapturedByInner = ctx.thisCapturedByInner;
+    _restoreList(_activeFinalizers, ctx.activeFinalizers);
+    _restoreMap(_finalizerDepthAtLabel, ctx.finalizerDepthAtLabel);
   }
 
   /// Restores a mutable list's contents from a saved snapshot.
@@ -323,14 +329,22 @@ extension on DarticCompiler {
 
   /// Compiles a [FunctionDeclaration] as a closure.
   ///
-  /// Delegates to [_compileInnerFunction] for the shared compilation logic,
-  /// then binds the resulting closure to the declaration's variable.
+  /// Pre-declares the variable *before* compiling the function body so that
+  /// self-referencing local functions (e.g. `dynamic f(x) => x > 0 ? f(x-1) : 1`)
+  /// can resolve the function name via upvalue capture.
   void _compileFunctionDeclaration(ir.FunctionDeclaration decl) {
+    // Pre-allocate a ref register and declare the variable BEFORE compiling
+    // the inner function body, enabling recursive self-reference.
+    final preReg = _allocRefReg();
+    _scope.declareWithReg(decl.variable, StackKind.ref, preReg);
+
     final (closureReg, _) =
         _compileInnerFunction(decl.function, decl.variable.name);
 
-    // Bind the FunctionDeclaration's variable to the closure register.
-    _scope.declareWithReg(decl.variable, StackKind.ref, closureReg);
+    // Copy the closure into the pre-declared register.
+    if (closureReg != preReg) {
+      _emitter.emitABC(Op.moveRef, preReg, closureReg, 0);
+    }
   }
 
   /// Compiles a [FunctionExpression] (anonymous function / lambda) as a
@@ -879,25 +893,42 @@ extension on DarticCompiler {
       argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
     }
 
-    // 4. Load receiver from upvalue[0] into a ref register.
+    // 4. Apply default values for optional/named params.
+    //
+    // Closure-call convention: the caller loads null for omitted named args
+    // (it only has the FunctionType, not the callee's default values).
+    // The tearoff thunk must replace null with the actual defaults before
+    // forwarding to the original method (which expects all args provided).
+    _applyTearoffDefaults(fn, argTemps);
+
+    // 5. Load receiver from upvalue[0] into a ref register.
     final receiverReg = _allocRefReg();
     _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
 
-    // 5. Allocate result register based on return type.
+    // 6. Allocate result register based on return type.
     final retType = fn.returnType;
     final retLoc = _classifyType(retType);
     final resultReg = retLoc == ResultLoc.ref
         ? _allocRefReg()
         : _allocValueReg();
 
-    // 6. Emit arg MOVEs for virtual call (skip receiver — interpreter
+    // 7. Forward FTA (function type arguments) from thunk's r1 to callee's
+    // FTA slot so generic methods receive their type arguments.
+    if (fn.typeParameters.isNotEmpty) {
+      final ftaMovePC = _emitter.emitPlaceholder();
+      _pendingArgMoves.add(
+        (pc: ftaMovePC, srcReg: 1, argIdx: 1, loc: ResultLoc.ref),
+      );
+    }
+
+    // 8. Emit arg MOVEs for virtual call (skip receiver — interpreter
     // handles it).
     _emitArgMovesForVirtualCall(argTemps);
 
-    // 7. Emit CALL_VIRTUAL.
+    // 9. Emit CALL_VIRTUAL.
     _emitCallVirtual(resultReg, receiverReg, methodName, argTemps.length);
 
-    // 8. Emit RETURN.
+    // 10. Emit RETURN.
     if (retLoc == ResultLoc.value) {
       _emitter.emitABC(Op.returnVal, resultReg, 0, 0);
     } else {
@@ -947,6 +978,73 @@ extension on DarticCompiler {
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
+  }
+
+  /// Emits null-check + default-value code for each optional/named param
+  /// in a tearoff thunk.
+  ///
+  /// The closure-call convention sends null for omitted named args (the caller
+  /// only has the [FunctionType], not the callee's default values). This
+  /// method emits:
+  /// ```
+  /// JUMP_IF_NNULL paramReg → skip
+  /// <compile default value expression>
+  /// MOVE_REF paramReg, defaultReg
+  /// skip:
+  /// ```
+  ///
+  /// Only ref-stack params are handled (value-stack params with defaults are
+  /// rare in practice and would require a different sentinel mechanism).
+  void _applyTearoffDefaults(
+    ir.FunctionNode fn,
+    List<(int, ResultLoc)> argTemps,
+  ) {
+    // Handle optional positional params (those beyond requiredParameterCount).
+    for (var i = fn.requiredParameterCount;
+        i < fn.positionalParameters.length;
+        i++) {
+      _emitDefaultGuard(fn.positionalParameters[i], argTemps[i]);
+    }
+
+    // Handle named params.
+    final posCount = fn.positionalParameters.length;
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      _emitDefaultGuard(fn.namedParameters[i], argTemps[posCount + i]);
+    }
+  }
+
+  /// Emits a conditional default-value load for a single param.
+  ///
+  /// If the param has a non-null initializer and lives on the ref stack,
+  /// emits: if (paramReg == null) paramReg = <default>.
+  void _emitDefaultGuard(
+    ir.VariableDeclaration param,
+    (int, ResultLoc) paramSlot,
+  ) {
+    final (paramReg, paramLoc) = paramSlot;
+    if (paramLoc != ResultLoc.ref) return; // value-stack: skip
+    if (param.initializer == null) return; // no default value
+
+    // JUMP_IF_NNULL paramReg → skipLabel (not null = caller provided a value)
+    final skipPC = _emitter.emitJumpPlaceholder();
+
+    // Compile default value expression.
+    // Use the initializer's inferred type (not the param's declared type)
+    // for boxing — the param type may be too broad (dynamic, Object, num)
+    // to distinguish int vs double.
+    final init = param.initializer!;
+    final (defaultReg, defaultLoc) = _compileExpression(init);
+    final boxedReg =
+        _boxToRefIfValue(defaultReg, defaultLoc, _inferExprType(init));
+
+    // Store into the param register.
+    if (boxedReg != paramReg) {
+      _emitter.emitABC(Op.moveRef, paramReg, boxedReg, 0);
+    }
+
+    // Patch skip: JUMP_IF_NNULL paramReg → here
+    _emitter.patchJumpAsBx(
+        skipPC, Op.jumpIfNnull, paramReg, _emitter.currentPC);
   }
 
   // ── TypeTemplate helpers for tearoffs ──
@@ -1213,6 +1311,8 @@ class _CompilationContext {
     required this.itaUpvalueIdx,
     required this.ftaUpvalueIdx,
     required this.thisCapturedByInner,
+    required this.activeFinalizers,
+    required this.finalizerDepthAtLabel,
   });
 
   final BytecodeEmitter emitter;
@@ -1235,6 +1335,8 @@ class _CompilationContext {
   final int itaUpvalueIdx;
   final int ftaUpvalueIdx;
   final bool thisCapturedByInner;
+  final List<ir.TryFinally> activeFinalizers;
+  final Map<ir.LabeledStatement, int> finalizerDepthAtLabel;
 }
 
 /// AST visitor that collects references to outer-scope variables.

@@ -128,18 +128,18 @@ class HostClassRegistry {
   }
 
   /// Dispatches a property getter on [receiver] via its registered adapter.
-  /// Returns null if no adapter registered; [notFound] if property not found.
+  /// Returns [notFound] if no adapter registered or property not found.
   Object? getProperty(Object receiver, String name) {
     final adapter = _lookup(receiver);
-    if (adapter == null) return null;
+    if (adapter == null) return notFound;
     return adapter.getProperty(receiver, name);
   }
 
   /// Dispatches a method call on [receiver] via its registered adapter.
-  /// Returns null if no adapter registered; [notFound] if method not found.
+  /// Returns [notFound] if no adapter registered or method not found.
   Object? invokeMethod(Object receiver, String name, List<Object?> args) {
     final adapter = _lookup(receiver);
-    if (adapter == null) return null;
+    if (adapter == null) return notFound;
     return adapter.invokeMethod(receiver, name, args);
   }
 

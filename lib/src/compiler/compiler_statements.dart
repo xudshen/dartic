@@ -163,6 +163,13 @@ extension on DarticCompiler {
     // Collect end-of-body jumps for backpatching.
     final endJumps = <int>[];
 
+    // Record finalizer depth at switch entry so ContinueSwitchStatement
+    // can inline only finalizers added *within* the switch body.
+    final switchFinalizerDepth = _activeFinalizers.length;
+    for (final sc in stmt.cases) {
+      _finalizerDepthAtSwitchCase[sc] = switchFinalizerDepth;
+    }
+
     for (var i = 0; i < stmt.cases.length; i++) {
       final switchCase = stmt.cases[i];
 
@@ -183,11 +190,22 @@ extension on DarticCompiler {
       final matchJumps = <int>[];
 
       for (final caseExpr in switchCase.expressions) {
-        final (caseReg, _) = _compileExpression(caseExpr);
-        if (isValueSwitch) {
+        var (caseReg, caseLoc) = _compileExpression(caseExpr);
+
+        if (isValueSwitch && caseLoc == ResultLoc.value) {
+          // Both on value stack — compare with EQ_INT.
           _emitter.emitABC(Op.eqInt, resultReg, switchReg, caseReg);
         } else {
-          _emitter.emitABC(Op.eqRef, resultReg, switchReg, caseReg);
+          // At least one is on ref stack — box the value-stack operand
+          // and use EQ_REF (handles mixed types correctly via ==).
+          var refSwitchReg = switchReg;
+          if (isValueSwitch) {
+            refSwitchReg = _emitBoxToRef(switchReg, _inferExprType(stmt.expression));
+          }
+          if (caseLoc == ResultLoc.value) {
+            caseReg = _emitBoxToRef(caseReg, _inferExprType(caseExpr));
+          }
+          _emitter.emitABC(Op.eqRef, resultReg, refSwitchReg, caseReg);
         }
         matchJumps.add(_emitter.emitJumpPlaceholder()); // JUMP_IF_TRUE -> body
       }
@@ -224,6 +242,7 @@ extension on DarticCompiler {
     for (final switchCase in stmt.cases) {
       _switchCaseBodyPCs.remove(switchCase);
       _continueSwitchJumps.remove(switchCase);
+      _finalizerDepthAtSwitchCase.remove(switchCase);
     }
   }
 
@@ -244,8 +263,14 @@ extension on DarticCompiler {
 
   void _compileContinueSwitchStatement(ir.ContinueSwitchStatement stmt) {
     final targetCase = stmt.target;
-    final targetPC = _switchCaseBodyPCs[targetCase];
 
+    // Inline try-finally finalizers between the continue site and the
+    // switch level (all cases share the same depth recorded at switch entry).
+    final switchDepth = _finalizerDepthAtSwitchCase[targetCase] ??
+        _activeFinalizers.length;
+    _inlineFinalizersFromDepth(switchDepth);
+
+    final targetPC = _switchCaseBodyPCs[targetCase];
     if (targetPC != null) {
       // Target case already compiled — emit backward jump.
       _emitter.emitJumpAsBx(Op.jump, 0, targetPC);
@@ -261,6 +286,9 @@ extension on DarticCompiler {
   void _compileLabeledStatement(ir.LabeledStatement stmt) {
     // Register the label for break target resolution.
     _labelBreakJumps[stmt] = [];
+    // Record the finalizer stack depth so break knows which finalizers
+    // to inline (only those added *after* this label was registered).
+    _finalizerDepthAtLabel[stmt] = _activeFinalizers.length;
 
     // Compile the body.
     _compileStatement(stmt.body);
@@ -270,6 +298,7 @@ extension on DarticCompiler {
       _emitter.patchJumpAsBx(jumpPC, Op.jump, 0, _emitter.currentPC);
     }
     _labelBreakJumps.remove(stmt);
+    _finalizerDepthAtLabel.remove(stmt);
   }
 
   void _compileBreakStatement(ir.BreakStatement stmt) {
@@ -278,7 +307,24 @@ extension on DarticCompiler {
     if (breakList == null) {
       throw StateError('BreakStatement targets unknown LabeledStatement');
     }
+
+    // Inline try-finally blocks' finalizers that the break exits through.
+    // Only inline finalizers added *after* the target label was registered.
+    final targetDepth = _finalizerDepthAtLabel[stmt.target] ??
+        _activeFinalizers.length;
+    _inlineFinalizersFromDepth(targetDepth);
+
     breakList.add(_emitter.emitJumpPlaceholder());
+  }
+
+  /// Inlines all active finalizer blocks from [fromDepth] to the current
+  /// stack top. Used by break/continue to run only the finalizers being
+  /// exited. For return, pass 0 to inline all active finalizers.
+  void _inlineFinalizersFromDepth(int fromDepth) {
+    // Walk from innermost (top) to the boundary depth.
+    for (var i = _activeFinalizers.length - 1; i >= fromDepth; i--) {
+      _compileStatement(_activeFinalizers[i].finalizer);
+    }
   }
 
   // ── Control flow: try/catch/finally ──
@@ -385,10 +431,17 @@ extension on DarticCompiler {
     // 1. Record try start PC.
     final startPC = _emitter.currentPC;
 
-    // 2. Compile try body.
+    // 2. Push this finalizer so break/continue/return inside the try body
+    //    will inline it before jumping out.
+    _activeFinalizers.add(stmt);
+
+    // 3. Compile try body.
     _compileStatement(stmt.body);
 
-    // 3. Record try end and compile finally on normal path.
+    // 4. Pop the finalizer — normal exit doesn't need the chain mechanism.
+    _activeFinalizers.removeLast();
+
+    // 5. Record try end and compile finally on normal path.
     final endPC = _emitter.currentPC;
 
     // Normal path: compile finalizer body.
@@ -397,7 +450,7 @@ extension on DarticCompiler {
     // Jump over the exception-path finalizer.
     final jumpOverExPath = _emitter.emitJumpPlaceholder();
 
-    // 4. Exception path: handler entry.
+    // 6. Exception path: handler entry.
     final handlerPC = _emitter.currentPC;
 
     // Compile finalizer again for exception path.
@@ -406,7 +459,7 @@ extension on DarticCompiler {
     // RETHROW to continue propagating the exception.
     _emitter.emitABC(Op.rethrow_, exceptionReg, stackTraceReg, 0);
 
-    // 5. Add exception handler.
+    // 7. Add exception handler.
     _exceptionHandlers.add(ExceptionHandler(
       startPC: startPC,
       endPC: endPC,
@@ -418,7 +471,7 @@ extension on DarticCompiler {
       stackTraceReg: stackTraceReg,
     ));
 
-    // 6. Backpatch jump over exception path.
+    // 8. Backpatch jump over exception path.
     _emitter.patchJumpAsBx(jumpOverExPath, Op.jump, 0, _emitter.currentPC);
   }
 
@@ -475,6 +528,7 @@ extension on DarticCompiler {
       if (expr != null) {
         _compileExpression(expr);
       }
+      _inlineFinalizersFromDepth(0);
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
@@ -485,12 +539,14 @@ extension on DarticCompiler {
       if (expr == null) {
         final nullReg = _allocRefReg();
         _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
+        _inlineFinalizersFromDepth(0);
         _emitCloseUpvaluesIfNeeded();
         _emitter.emitABC(Op.asyncReturn, nullReg, 0, 0);
       } else {
         var (reg, loc) = _compileExpression(expr);
         // ASYNC_RETURN always operates on the ref stack.
         reg = _boxToRefIfValue(reg, loc, _inferExprType(expr));
+        _inlineFinalizersFromDepth(0);
         _emitCloseUpvaluesIfNeeded();
         _emitter.emitABC(Op.asyncReturn, reg, 0, 0);
       }
@@ -508,20 +564,24 @@ extension on DarticCompiler {
         final kind = loc == ResultLoc.ref
             ? StackKind.ref
             : _inferStackKind(expr);
+        _inlineFinalizersFromDepth(0);
         _emitter.emitABC(Op.halt, reg, kind.index + 1, 0);
       } else {
+        _inlineFinalizersFromDepth(0);
         _emitter.emitABC(Op.halt, 0, 0, 0);
       }
       return;
     }
 
     if (expr == null) {
+      _inlineFinalizersFromDepth(0);
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
       return;
     }
 
     final (reg, loc) = _compileExpression(expr);
+    _inlineFinalizersFromDepth(0);
     _emitCloseUpvaluesIfNeeded();
 
     // Coerce result between value/ref stacks when they don't match the

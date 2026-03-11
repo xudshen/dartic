@@ -155,8 +155,23 @@ class DarticCompiler {
   /// cases not yet compiled. Backpatched when the target case body starts.
   final Map<ir.SwitchCase, List<int>> _continueSwitchJumps = {};
 
+  /// Records the finalizer stack depth at switch entry for each SwitchCase.
+  /// Used by ContinueSwitchStatement to inline finalizers between the
+  /// `continue` site and the target case (both are at the switch level).
+  final Map<ir.SwitchCase, int> _finalizerDepthAtSwitchCase = {};
+
   /// Exception handler table being built for the current function.
   final List<ExceptionHandler> _exceptionHandlers = [];
+
+  /// Stack of active try-finally blocks. When break/continue/return exits
+  /// a try body, each enclosing finalizer must be inlined before the jump.
+  /// Each entry is the Kernel [TryFinally] node whose finalizer must execute.
+  final List<ir.TryFinally> _activeFinalizers = [];
+
+  /// Records the finalizer stack depth at the time each LabeledStatement was
+  /// entered. Used by break/continue to determine which finalizers to inline:
+  /// only those added *after* the target label was registered.
+  final Map<ir.LabeledStatement, int> _finalizerDepthAtLabel = {};
 
   /// Inline cache entries being built for the current function.
   /// Each CALL_VIRTUAL site adds one ICEntry.
@@ -618,6 +633,9 @@ class DarticCompiler {
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
     _icEntries.clear();
+    _activeFinalizers.clear();
+    _finalizerDepthAtLabel.clear();
+    _finalizerDepthAtSwitchCase.clear();
     _catchExceptionReg = -1;
     _catchStackTraceReg = -1;
 

@@ -391,7 +391,21 @@ class TypeRegistry {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 
-  // ── Structural equality (uses identical() for nested types) ──
+  // ── Structural equality (uses identical() for interned types,
+  //    falls back to == for non-interned DarticTypeParameterType) ──
+
+  /// Compares two [DarticType] instances for equality.
+  ///
+  /// Interned types (interface, function, record) use pointer equality
+  /// (`identical`). Non-interned [DarticTypeParameterType] uses structural
+  /// equality (`==`).
+  static bool _typeEquals(DarticType a, DarticType b) {
+    if (identical(a, b)) return true;
+    if (a is DarticTypeParameterType && b is DarticTypeParameterType) {
+      return a == b;
+    }
+    return false;
+  }
 
   static bool _equalsInterface(
     DarticInterfaceType existing,
@@ -419,12 +433,12 @@ class TypeRegistry {
   ) {
     if (existing.nullability != nullability) return false;
     if (existing.requiredParamCount != requiredParamCount) return false;
-    if (!identical(existing.returnType, returnType)) return false;
+    if (!_typeEquals(existing.returnType, returnType)) return false;
     if (existing.positionalParams.length != positionalParams.length) {
       return false;
     }
     for (var i = 0; i < positionalParams.length; i++) {
-      if (!identical(existing.positionalParams[i], positionalParams[i])) {
+      if (!_typeEquals(existing.positionalParams[i], positionalParams[i])) {
         return false;
       }
     }
@@ -433,14 +447,14 @@ class TypeRegistry {
       final a = existing.namedParams[i];
       final b = namedParams[i];
       if (a.name != b.name) return false;
-      if (!identical(a.type, b.type)) return false;
+      if (!_typeEquals(a.type, b.type)) return false;
       if (a.isRequired != b.isRequired) return false;
     }
     if (existing.typeParamBounds.length != typeParamBounds.length) {
       return false;
     }
     for (var i = 0; i < typeParamBounds.length; i++) {
-      if (!identical(existing.typeParamBounds[i], typeParamBounds[i])) {
+      if (!_typeEquals(existing.typeParamBounds[i], typeParamBounds[i])) {
         return false;
       }
     }

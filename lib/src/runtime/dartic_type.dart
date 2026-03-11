@@ -31,8 +31,8 @@ abstract final class SpecialClassId {
 
 /// Base type for all runtime type representations.
 ///
-/// Sealed: [DarticInterfaceType], [DarticFunctionType], and
-/// [DarticRecordType] exist.
+/// Sealed: [DarticInterfaceType], [DarticFunctionType],
+/// [DarticRecordType], and [DarticTypeParameterType] exist.
 sealed class DarticType {
   /// The nullability of this type.
   Nullability get nullability;
@@ -177,5 +177,41 @@ final class DarticRecordType extends DarticType {
       ...namedTypes.map((n) => '${n.type} ${n.name}'),
     ];
     return 'DarticRecordType((${fields.join(', ')})$nullSuffix)';
+  }
+}
+
+/// A reference to a generic function type's own type parameter.
+///
+/// Used within [DarticFunctionType] to represent self-referencing type
+/// parameters. For example, in `T Function<T extends num>(T)`, both parameter
+/// and return type are `DarticTypeParameterType(0)`.
+///
+/// Not interned -- compared structurally by [index] and [nullability].
+final class DarticTypeParameterType extends DarticType {
+  DarticTypeParameterType(this.index,
+      [this.nullability = Nullability.nonNullable]);
+
+  /// Zero-based index into the enclosing [DarticFunctionType.typeParamBounds].
+  final int index;
+
+  @override
+  final Nullability nullability;
+
+  @override
+  int get canonicalHash => Object.hash(99, index, nullability.index);
+
+  @override
+  bool operator ==(Object other) =>
+      other is DarticTypeParameterType &&
+      index == other.index &&
+      nullability == other.nullability;
+
+  @override
+  int get hashCode => Object.hash(99, index, nullability.index);
+
+  @override
+  String toString() {
+    final nullSuffix = nullability == Nullability.nullable ? '?' : '';
+    return 'DarticTypeParameterType(#$index$nullSuffix)';
   }
 }

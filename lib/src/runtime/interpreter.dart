@@ -1564,7 +1564,11 @@ class DarticInterpreter {
         case Op.unboxDouble: // UNBOX_DOUBLE A, B — doubleView[A] = refStack[B] as double
           final a = decodeA(instr);
           final b = decodeB(instr);
-          vs.writeDouble(vBase + a, rs.read(rBase + b) as double);
+          final _ubdVal = rs.read(rBase + b);
+          // Dart allows implicit int→double promotion (e.g., passing int where
+          // double is expected). Handle both types to avoid cast failures.
+          vs.writeDouble(vBase + a,
+              _ubdVal is double ? _ubdVal : (_ubdVal as int).toDouble());
 
         case Op.unboxBool: // UNBOX_BOOL A, B — valueStack[A] = (refStack[B] as bool) ? 1 : 0
           final a = decodeA(instr);
@@ -1600,14 +1604,25 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(
-              vBase + a, vs.readInt(vBase + b) ~/ vs.readInt(vBase + c));
+          try {
+            vs.writeInt(
+                vBase + a, vs.readInt(vBase + b) ~/ vs.readInt(vBase + c));
+          } on UnsupportedError catch (e, st) {
+            pc = unwindToHandler(pc, e, st);
+            continue;
+          }
 
         case Op.modInt: // MOD_INT A, B, C
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(vBase + a, vs.readInt(vBase + b) % vs.readInt(vBase + c));
+          try {
+            vs.writeInt(
+                vBase + a, vs.readInt(vBase + b) % vs.readInt(vBase + c));
+          } on UnsupportedError catch (e, st) {
+            pc = unwindToHandler(pc, e, st);
+            continue;
+          }
 
         case Op.negInt: // NEG_INT A, B
           final a = decodeA(instr);
@@ -2015,6 +2030,29 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
 
+          // DarticClosure: handle .call() for closures dispatched via
+          // CALL_VIRTUAL (e.g., variable holding a closure called as f()).
+          if (receiver is DarticClosure) {
+            final methodName = cp.getName(ic.methodNameIndex);
+            if (methodName == 'call') {
+              // CALL_VIRTUAL arg layout: receiver at r[B], args at
+              // r[B+3], r[B+4], ... (skipping ITA/FTA/this slots).
+              final argCount = ic.argCount;
+              final closureArgs = List<Object?>.generate(
+                argCount,
+                (i) => rs.read(rBase + b + 3 + i),
+              );
+              try {
+                final result = invokeClosure(receiver, closureArgs);
+                rs.write(rBase + a, result);
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, st);
+              }
+              continue;
+            }
+            // Non-call methods on closures — fall through to noSuchMethod.
+          }
+
           // Try dartic dispatch: works for DarticObject and Bridge.
           // Bridge instances implement DarticObjectHolder, wrapping a
           // DarticObject whose classId drives IC method lookup.
@@ -2117,22 +2155,41 @@ class DarticInterpreter {
           {
             final methodName = cp.getName(ic.methodNameIndex);
             if (receiver == null) {
-              throw DarticError(
-                'NoSuchMethodError: method "$methodName" called on null',
+              final error = NoSuchMethodError.withInvocation(
+                null,
+                Invocation.method(Symbol(methodName), const []),
               );
+              pc = unwindToHandler(pc - 1, error, StackTrace.current);
+              continue;
             }
             // Non-DarticObject: try HostClassRegistry dynamic dispatch.
-            // NOTE: only zero-arg getters are supported here — method calls on
-            // host objects with arguments should go through CALL_HOST (compiler
-            // routes them there for statically-typed receivers) or INVOKE_DYN
-            // (for dynamic receivers). This fallback handles the edge case where
-            // a zero-arg method/getter ends up via CALL_VIRTUAL.
-            final hostResult =
-                _hostClassRegistry?.getProperty(receiver, methodName);
-            if (hostResult != null &&
-                !identical(hostResult, HostClassRegistry.notFound)) {
-              rs.write(rBase + a, hostResult);
-              continue;
+            // Supports both zero-arg getters and method calls with arguments.
+            // This path is reached when a host object (e.g., List from
+            // List.unmodifiable) flows through dartic-compiled code that uses
+            // CALL_VIRTUAL because the static type has a dartic classId.
+            if (_hostClassRegistry != null) {
+              if (ic.argCount == 0) {
+                // Zero-arg: getter dispatch.
+                final hostResult =
+                    _hostClassRegistry!.getProperty(receiver, methodName);
+                if (!identical(hostResult, HostClassRegistry.notFound)) {
+                  rs.write(rBase + a, hostResult);
+                  continue;
+                }
+              } else {
+                // N-arg: method dispatch — read args from r[B+3..].
+                final hostArgs = List<Object?>.generate(
+                  ic.argCount,
+                  (i) => rs.read(rBase + b + 3 + i),
+                );
+                _wrapClosureArgs(hostArgs);
+                final hostResult = _hostClassRegistry!
+                    .invokeMethod(receiver, methodName, hostArgs);
+                if (!identical(hostResult, HostClassRegistry.notFound)) {
+                  rs.write(rBase + a, hostResult);
+                  continue;
+                }
+              }
             }
             // noSuchMethod fallback for host objects.
             final nsmInvocation = _buildVirtualInvocation(
@@ -2684,9 +2741,12 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final name = cp.getName(c);
           if (receiver == null) {
-            throw DarticError(
-              'NoSuchMethodError: getter "$name" called on null',
+            final error = NoSuchMethodError.withInvocation(
+              null,
+              Invocation.getter(Symbol(name)),
             );
+            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            continue;
           }
 
           // DarticObject: look up field, then getter method.
@@ -2753,11 +2813,13 @@ class DarticInterpreter {
           }
 
           // Host object: try HostClassRegistry.
-          final hostResult = _hostClassRegistry?.getProperty(receiver, name);
-          if (hostResult != null &&
-              !identical(hostResult, HostClassRegistry.notFound)) {
-            rs.write(rBase + a, hostResult);
-            continue;
+          if (_hostClassRegistry != null) {
+            final hostResult =
+                _hostClassRegistry!.getProperty(receiver, name);
+            if (!identical(hostResult, HostClassRegistry.notFound)) {
+              rs.write(rBase + a, hostResult);
+              continue;
+            }
           }
           // noSuchMethod fallback for host objects.
           final invocation = DarticInvocation.getter(Symbol(name));
@@ -2775,9 +2837,12 @@ class DarticInterpreter {
           final value = rs.read(rBase + b);
           final name = cp.getName(c);
           if (receiver == null) {
-            throw DarticError(
-              'NoSuchMethodError: setter "$name" called on null',
+            final error = NoSuchMethodError.withInvocation(
+              null,
+              Invocation.setter(Symbol(name), value),
             );
+            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            continue;
           }
 
           // DarticObject: look up field, then setter method.
@@ -2828,11 +2893,12 @@ class DarticInterpreter {
           }
 
           // Host object: dynamic set dispatches through HostClassRegistry.
-          final hostResult =
-              _hostClassRegistry?.invokeMethod(receiver, '$name=', [value]);
-          if (hostResult != null &&
-              !identical(hostResult, HostClassRegistry.notFound)) {
-            continue;
+          if (_hostClassRegistry != null) {
+            final hostResult =
+                _hostClassRegistry!.invokeMethod(receiver, '$name=', [value]);
+            if (!identical(hostResult, HostClassRegistry.notFound)) {
+              continue;
+            }
           }
           // noSuchMethod fallback for host objects. Use b as dummy result reg.
           final invocation = DarticInvocation.setter(Symbol(name), value);
@@ -2849,12 +2915,31 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + a + 1);
           final name = cp.getName(c);
           if (receiver == null) {
-            throw DarticError(
-              'NoSuchMethodError: method "$name" called on null',
+            final error = NoSuchMethodError.withInvocation(
+              null,
+              Invocation.method(Symbol(name), const []),
             );
+            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            continue;
           }
 
           final explicitArgCount = b - 1;
+
+          // DarticClosure: handle .call() for closures invoked dynamically.
+          // e.g., `Function f = () => 42; f.call()` or `(dynamic f)()`.
+          if (receiver is DarticClosure && name == 'call') {
+            final closureArgs = List<Object?>.generate(
+              explicitArgCount,
+              (i) => rs.read(rBase + a + 2 + i),
+            );
+            try {
+              final result = invokeClosure(receiver, closureArgs);
+              rs.write(rBase + a, result);
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, st);
+            }
+            continue;
+          }
 
           // DarticObject: look up method in class info.
           if (receiver is DarticObject) {
@@ -2901,8 +2986,7 @@ class DarticInterpreter {
             _wrapClosureArgs(hostArgs);
             final hostResult =
                 _hostClassRegistry!.invokeMethod(receiver, name, hostArgs);
-            if (hostResult != null &&
-                !identical(hostResult, HostClassRegistry.notFound)) {
+            if (!identical(hostResult, HostClassRegistry.notFound)) {
               rs.write(rBase + a, hostResult);
               continue;
             }

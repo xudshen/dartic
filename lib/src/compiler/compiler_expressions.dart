@@ -932,7 +932,11 @@ extension on DarticCompiler {
     for (var i = arguments.positional.length;
         i < positionalParams.length;
         i++) {
-      argTemps.add(_compileDefaultValue(positionalParams[i]));
+      var (argReg, argLoc) = _compileDefaultValue(positionalParams[i]);
+      final paramKind = _classifyStackKind(positionalParams[i].type);
+      (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind,
+          positionalParams[i].initializer);
+      argTemps.add((argReg, argLoc));
     }
 
     // 3. Handle named arguments.
@@ -968,7 +972,12 @@ extension on DarticCompiler {
             argReg, argLoc, paramKind, provided.value);
         argTemps.add((argReg, argLoc));
       } else {
-        final (argReg, argLoc) = _compileDefaultValue(param);
+        var (argReg, argLoc) = _compileDefaultValue(param);
+        // Coerce the default value to the param's stack kind — e.g. an int
+        // literal default must be boxed when the param type is dynamic/num.
+        final paramKind = _classifyStackKind(param.type);
+        (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind,
+            param.initializer);
         argTemps.add((argReg, argLoc));
       }
     }
@@ -1686,8 +1695,12 @@ extension on DarticCompiler {
 
           valReg = _emitSetField(
               recvReg, valReg, valLoc, layout, _inferExprType(expr.value));
-          // InstanceSet result is the written value.
-          return (valReg, valLoc);
+          // InstanceSet result is the written value. _emitSetField may have
+          // coerced the value (e.g. boxed int→ref for a ref field), so the
+          // result loc must match the field's stack kind, not the original.
+          final resultLoc =
+              layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
+          return (valReg, resultLoc);
         }
       }
     }
@@ -1788,6 +1801,31 @@ extension on DarticCompiler {
     return (savedValReg, savedValLoc);
   }
 
+  // ── Deferred library expressions (no-op stubs) ──
+
+  /// Compiles [LoadLibrary]: dartic eagerly loads all libraries, so this
+  /// returns `Future.value(null)` via a host binding (per Dart VM semantics
+  /// for eagerly-loaded deferred imports).
+  (int, ResultLoc) _compileLoadLibrary(ir.LoadLibrary node) {
+    const binding = 'dart:async::Future::value#1';
+    final bindingIndex = _allocBinding(binding, 1);
+    // Pass null to Future.value() → Future<void> that resolves immediately.
+    final nullReg = _allocRefReg();
+    _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
+    return _emitCallHost(
+      [(nullReg, ResultLoc.ref, null)],
+      bindingIndex,
+    );
+  }
+
+  /// Compiles [CheckLibraryIsLoaded]: dartic eagerly loads all libraries,
+  /// so this is a no-op that evaluates to null.
+  (int, ResultLoc) _compileCheckLibraryIsLoaded(ir.CheckLibraryIsLoaded node) {
+    final reg = _allocRefReg();
+    _emitter.emitABC(Op.loadNull, reg, 0, 0);
+    return (reg, ResultLoc.ref);
+  }
+
   // ── Dynamic dispatch (DynamicGet / DynamicSet / DynamicInvocation) ──
 
   /// Compiles [DynamicGet]: emits GET_FIELD_DYN for dynamic receiver property
@@ -1883,26 +1921,45 @@ extension on DarticCompiler {
     final target = expr.interfaceTarget;
 
     final funcId = _procToFuncId[target.reference];
-    if (funcId == null) {
-      throw UnsupportedError(
-        'Unknown super method target: ${target.name.text}',
+
+    if (funcId != null) {
+      // Target is a compiled (user) method → CALL_SUPER.
+      final (resultReg, retLoc) =
+          _allocResultReg(target.function.returnType);
+
+      final argTemps = _compileCallArgs(
+        expr.arguments,
+        target.function.positionalParameters,
+        target.function.namedParameters,
       );
+
+      _emitThisPassthrough();
+      _emitArgMovesAndCall(argTemps, Op.callSuper, resultReg, funcId);
+
+      return (resultReg, retLoc);
     }
 
-    // Allocate result register based on return type.
-    final (resultReg, retLoc) = _allocResultReg(target.function.returnType);
+    // Target is a host (platform) method → CALL_HOST.
+    // e.g., super.==() targeting Object.==, super.toString(), etc.
+    if (_isHostLibrary(target.enclosingLibrary)) {
+      const thisReg = 2;
+      final compiledArgs = <(int, ResultLoc, ir.DartType?)>[
+        (thisReg, ResultLoc.ref, null),
+      ];
+      // Add explicit arguments.
+      for (final arg in expr.arguments.positional) {
+        var (reg, loc) = _compileExpression(arg);
+        reg = _boxToRefIfValue(reg, loc, _inferExprType(arg));
+        compiledArgs.add((reg, ResultLoc.ref, _inferExprType(arg)));
+      }
+      final symbolName = _hostSymbolName(target);
+      final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
+      return _emitCallHost(compiledArgs, bindingIndex);
+    }
 
-    // Compile arguments.
-    final argTemps = _compileCallArgs(
-      expr.arguments,
-      target.function.positionalParameters,
-      target.function.namedParameters,
+    throw UnsupportedError(
+      'Unknown super method target: ${target.name.text}',
     );
-
-    _emitThisPassthrough();
-    _emitArgMovesAndCall(argTemps, Op.callSuper, resultReg, funcId);
-
-    return (resultReg, retLoc);
   }
 
   /// Compiles [SuperPropertyGet] via CALL_SUPER for getters, or direct
@@ -1926,28 +1983,153 @@ extension on DarticCompiler {
       }
     }
 
-    // Getter Procedure → CALL_SUPER.
-    if (target is ir.Procedure && target.isGetter) {
+    if (target is ir.Procedure) {
       final funcId = _procToFuncId[target.reference];
-      if (funcId == null) {
-        throw UnsupportedError(
-          'Unknown super getter target: ${target.name.text}',
-        );
+
+      if (funcId != null) {
+        // Getter → CALL_SUPER directly.
+        if (target.isGetter) {
+          final (resultReg, retLoc) =
+              _allocResultReg(target.function.returnType);
+
+          _emitThisPassthrough();
+          _emitArgMovesAndCall(
+              <(int, ResultLoc)>[], Op.callSuper, resultReg, funcId);
+
+          return (resultReg, retLoc);
+        }
+
+        // Non-getter method → super method tearoff thunk.
+        return _compileSuperMethodTearOff(target, funcId);
       }
 
-      final (resultReg, retLoc) =
-          _allocResultReg(target.function.returnType);
+      // Host (platform) getter/method → CALL_HOST.
+      if (_isHostLibrary(target.enclosingLibrary)) {
+        if (target.isGetter) {
+          const thisReg = 2;
+          final symbolName = _hostSymbolName(target);
+          final bindingIndex = _allocBinding(symbolName, 1);
+          return _emitCallHost(
+              [(thisReg, ResultLoc.ref, null as ir.DartType?)], bindingIndex);
+        }
+        // Host method tearoff — rare but possible (e.g. super.toString).
+        // Not yet supported.
+      }
 
-      _emitThisPassthrough();
-      _emitArgMovesAndCall(
-          <(int, ResultLoc)>[], Op.callSuper, resultReg, funcId);
-
-      return (resultReg, retLoc);
+      throw UnsupportedError(
+        'Unknown super method/getter target: ${target.name.text}',
+      );
     }
 
     throw UnsupportedError(
       'Unsupported SuperPropertyGet target: ${target.runtimeType}',
     );
+  }
+
+  /// Generates a tearoff thunk for `super.method` that captures `this`
+  /// and forwards all arguments via CALL_SUPER.
+  (int, ResultLoc) _compileSuperMethodTearOff(
+      ir.Procedure target, int funcId) {
+    final methodName = target.name.text;
+    final fn = target.function;
+
+    // Capture `this` from the enclosing function's ref register 2.
+    const thisReg = 2;
+
+    // Reserve a slot in the function table.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // Save current compilation state.
+    _pushContext();
+    _currentReturnType = fn.returnType;
+
+    _scope = Scope(
+      valueAlloc: _valueAlloc,
+      refAlloc: _refAlloc,
+    );
+
+    // Reserve standard header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this (will be set from upvalue)
+
+    // Register parameters with the same types as the method.
+    final argTemps = <(int, ResultLoc)>[];
+    for (final param in fn.positionalParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+    for (final param in fn.namedParameters) {
+      final kind = _classifyStackKind(param.type);
+      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
+    }
+
+    // Apply default values for optional/named params (same as instance
+    // tearoff — closure-call convention sends null for omitted named args).
+    _applyTearoffDefaults(fn, argTemps);
+
+    // Load `this` from upvalue[0] into ref register 2.
+    _emitter.emitABC(Op.loadUpvalue, 2, 0, 0);
+
+    // Allocate result register based on return type.
+    final retType = fn.returnType;
+    final retLoc = _classifyType(retType);
+    final resultReg =
+        retLoc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
+
+    // Pass `this` through for CALL_SUPER.
+    _emitThisPassthrough();
+
+    // Emit arg moves and CALL_SUPER.
+    _emitArgMovesAndCall(argTemps, Op.callSuper, resultReg, funcId);
+
+    // Emit RETURN.
+    if (retLoc == ResultLoc.value) {
+      _emitter.emitABC(Op.returnVal, resultReg, 0, 0);
+    } else {
+      _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
+    }
+
+    _patchPendingArgMoves();
+
+    // Create the thunk FuncProto with 1 upvalue descriptor.
+    final superTearoffProto = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<super-tearoff:$methodName>',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount:
+          fn.positionalParameters.length + fn.namedParameters.length,
+      paramKinds:
+          _buildParamKinds(fn.positionalParameters, fn.namedParameters),
+      returnKind: _classifyReturnKind(fn.returnType),
+      icTable: List.of(_icEntries),
+      upvalueDescriptors: [
+        // upvalue[0] = this, captured from the enclosing function's
+        // ref register 2 (isLocal=true).
+        UpvalueDescriptor(isLocal: true, index: thisReg),
+      ],
+    );
+
+    // Restore the outer compilation state.
+    _functions[thunkFuncId] = superTearoffProto;
+    _popContext();
+
+    // Emit CREATE_CLOSURE in the outer function.
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+
+    return (closureReg, ResultLoc.ref);
   }
 
   /// Compiles [SuperPropertySet] via CALL_SUPER for setters, or direct
@@ -1980,7 +2162,9 @@ extension on DarticCompiler {
 
           valReg = _emitSetField(
               thisReg, valReg, valLoc, layout, _inferExprType(expr.value));
-          return (valReg, valLoc);
+          final resultLoc =
+              layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
+          return (valReg, resultLoc);
         }
       }
     }
@@ -2542,6 +2726,24 @@ extension on DarticCompiler {
 
     _emitCreateCollection(op, destReg, elementRegs, elements.length);
     return (destReg, ResultLoc.ref);
+  }
+
+  // ── Symbol Constants ──
+
+  /// Compiles a [ir.SymbolConstant] by calling the `Symbol` constructor
+  /// via the host binding `dart:_internal::Symbol::#1`.
+  ///
+  /// In Kernel IR, `SymbolConstant` stores a `name` string (and an optional
+  /// library reference for private symbols). We simply load the name as a
+  /// string and call the Symbol constructor.
+  (int, ResultLoc) _compileSymbolConstant(ir.SymbolConstant constant) {
+    final (nameReg, nameLoc) = _loadString(constant.name);
+    const symbolBinding = 'dart:_internal::Symbol::#1';
+    final bindingIndex = _allocBinding(symbolBinding, 1);
+    return _emitCallHost(
+      [(nameReg, nameLoc, null)],
+      bindingIndex,
+    );
   }
 
   // ── Collection Constants ──
@@ -3298,6 +3500,14 @@ class _ExprCompileVisitor
   (int, ResultLoc) visitInstantiation(ir.Instantiation node) =>
       _c._compileInstantiation(node);
 
+  // Deferred library (no-op: dartic eagerly loads all libraries)
+  @override
+  (int, ResultLoc) visitLoadLibrary(ir.LoadLibrary node) =>
+      _c._compileLoadLibrary(node);
+  @override
+  (int, ResultLoc) visitCheckLibraryIsLoaded(ir.CheckLibraryIsLoaded node) =>
+      _c._compileCheckLibraryIsLoaded(node);
+
   // Dynamic dispatch (Phase 5)
   @override
   (int, ResultLoc) visitDynamicGet(ir.DynamicGet node) =>
@@ -3356,6 +3566,10 @@ class _ConstantCompileVisitor
   (int, ResultLoc) visitInstantiationConstant(
           ir.InstantiationConstant node) =>
       _c._compileInstantiationConstant(node);
+
+  @override
+  (int, ResultLoc) visitSymbolConstant(ir.SymbolConstant node) =>
+      _c._compileSymbolConstant(node);
 
   // Collection constants
   @override

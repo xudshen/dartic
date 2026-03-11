@@ -322,6 +322,7 @@ class DarticDisassembler {
       RecordTypeTemplate() => _formatRecordType(t, module),
       TypeParameterTemplate() =>
         t.isFunctionTypeParam ? 'F${t.index}' : 'T${t.index}',
+      StructuralParamTemplate() => 'S${t.index}',
       NullableTemplate() => '${_formatTypeTemplate(t.inner, module)}?',
     };
   }

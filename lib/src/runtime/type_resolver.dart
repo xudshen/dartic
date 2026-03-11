@@ -34,6 +34,7 @@ DarticType resolveType(
     DynamicTemplate() => registry.dynamicType,
     NeverTemplate() => registry.neverType,
     TypeParameterTemplate() => _resolveTypeParam(template, ita, fta),
+    StructuralParamTemplate() => DarticTypeParameterType(template.index),
     NullableTemplate() => _resolveNullable(template, ita, fta, registry),
     InterfaceTypeTemplate() =>
       _resolveInterface(template, ita, fta, registry),
@@ -83,6 +84,8 @@ DarticType _resolveNullable(
         namedTypes: inner.namedTypes,
         nullability: Nullability.nullable,
       ),
+    DarticTypeParameterType() =>
+      DarticTypeParameterType(inner.index, Nullability.nullable),
   };
 }
 
