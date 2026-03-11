@@ -547,10 +547,52 @@ int main() {
     });
   });
 
-  // NOTE: Static tearoff canonicalization (identical(foo, foo)) deferred —
-  // requires host bindings for identical(). Static tearoff == already works
-  // via DarticClosure.operator ==. Kernel constant-folds most static tearoffs
-  // to StaticTearOffConstant which is already canonicalized.
+  // ── Static tearoff canonicalization (identical) ──
+
+  group('Static tearoff canonicalization', () {
+    test('identical static tearoff in same scope', () async {
+      final result = await compileAndRunWithHost('''
+int foo(int x) => x;
+bool main() {
+  return identical(foo, foo);
+}
+''');
+      expect(result, true);
+    });
+
+    test('identical across scopes', () async {
+      final result = await compileAndRunWithHost('''
+int foo(int x) => x;
+Object grab() => foo;
+bool main() {
+  return identical(grab(), grab());
+}
+''');
+      expect(result, true);
+    });
+
+    test('non-identical different static tearoffs', () async {
+      final result = await compileAndRunWithHost('''
+int foo(int x) => x;
+int bar(int x) => x;
+bool main() {
+  return identical(foo, bar);
+}
+''');
+      expect(result, false);
+    });
+
+    test('const tearoff identical to runtime tearoff', () async {
+      final result = await compileAndRunWithHost('''
+int foo(int x) => x;
+const f = foo;
+bool main() {
+  return identical(f, foo);
+}
+''');
+      expect(result, true);
+    });
+  });
 
   group('combined tearoff tests', () {
     test('constructor tearoff with named params (explicitly passed)', () async {

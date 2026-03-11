@@ -376,14 +376,32 @@ extension on DarticCompiler {
   /// Compiles a [StaticTearOff]: wraps a top-level function reference as a
   /// [DarticClosure] so it can be used as a first-class value.
   (int, ResultLoc) _compileStaticTearOff(ir.StaticTearOff expr) {
-    final funcId = _procToFuncId[expr.target.reference];
+    final ref = expr.target.reference;
+    final funcId = _procToFuncId[ref];
     if (funcId == null) {
       throw UnsupportedError(
         'StaticTearOff: unknown function ${expr.target.name.text}',
       );
     }
+
+    // Check if already cached → LOAD_GLOBAL (ensures identical(f, f)).
+    final existingGlobal = _staticTearOffGlobals[ref];
+    if (existingGlobal != null) {
+      final reg = _allocRefReg();
+      _emitter.emitABx(Op.loadGlobal, reg, existingGlobal);
+      return (reg, ResultLoc.ref);
+    }
+
+    // First occurrence: emit CLOSURE + STORE_GLOBAL, then return the reg.
+    final globalIndex = _globalCount++;
+    _globalInitializerIds.add(-1); // eager store, no lazy init
+    _globalFlags.add(2); // bit1 = isFinal
+    _globalNames.add('__static_tearoff_${expr.target.name.text}');
+    _staticTearOffGlobals[ref] = globalIndex;
+
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, funcId);
+    _emitter.emitABx(Op.storeGlobal, closureReg, globalIndex);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -393,15 +411,33 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileStaticTearOffConstant(
     ir.StaticTearOffConstant constant,
   ) {
-    final funcId = _procToFuncId[constant.target.reference];
+    final ref = constant.target.reference;
+    final funcId = _procToFuncId[ref];
     if (funcId == null) {
       throw UnsupportedError(
         'StaticTearOffConstant: unknown function '
         '${constant.target.name.text}',
       );
     }
+
+    // Share the same cache as _compileStaticTearOff so that
+    // identical(const_tearoff, runtime_tearoff) holds.
+    final existingGlobal = _staticTearOffGlobals[ref];
+    if (existingGlobal != null) {
+      final reg = _allocRefReg();
+      _emitter.emitABx(Op.loadGlobal, reg, existingGlobal);
+      return (reg, ResultLoc.ref);
+    }
+
+    final globalIndex = _globalCount++;
+    _globalInitializerIds.add(-1);
+    _globalFlags.add(2); // isFinal
+    _globalNames.add('__static_tearoff_${constant.target.name.text}');
+    _staticTearOffGlobals[ref] = globalIndex;
+
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, funcId);
+    _emitter.emitABx(Op.storeGlobal, closureReg, globalIndex);
     return (closureReg, ResultLoc.ref);
   }
 

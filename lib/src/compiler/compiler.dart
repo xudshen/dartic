@@ -132,6 +132,11 @@ class DarticCompiler {
   /// Total number of global variable slots.
   int _globalCount = 0;
 
+  /// Cache for static tearoff globals: target Reference → globalIndex.
+  /// Ensures `identical(f, f)` holds for top-level/static function tearoffs
+  /// even when the CFE emits StaticTearOff rather than StaticTearOffConstant.
+  final Map<ir.Reference, int> _staticTearOffGlobals = {};
+
   /// Maps canonicalized [ir.Constant] objects to their global slot indices.
   ///
   /// Uses identity-based keys because the Dart CFE guarantees that
