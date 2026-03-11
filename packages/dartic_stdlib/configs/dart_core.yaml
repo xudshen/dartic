@@ -161,6 +161,18 @@ libraries:
       # ── StringSink (abstract, needed by dart:convert ClosableStringSink) ──
       - StringSink
 
+      # ── Comparable (abstract interface for natural ordering) ──
+      - Comparable
+
+      # ── Sink (abstract interface for data destinations) ──
+      - Sink
+
+      # ── WeakReference (weak reference to objects) ──
+      - WeakReference
+
+      # ── Finalizer (GC finalization callbacks) ──
+      - Finalizer
+
     # ── Top-level functions ──────────────────────────────────────────────
 
     functions:
@@ -173,6 +185,10 @@ libraries:
             (ctx.config.onPrint ?? print)(args[0]);
             return null;
           }
+
+      - name: identityHashCode
+        arity: 1
+        custom: "(args) => identityHashCode(args[0])"
 
       # EnumName|get#name -- extension getter used by .name on enums
       - name: "EnumName|get#name"
@@ -302,6 +318,8 @@ libraries:
             (args) => DarticLateError("Local '${args[0]}' has already been initialized.")
           "fieldAI#1": |
             (args) => DarticLateError("Field '${args[0]}' has already been initialized.")
+          "_forExternal#1": |
+            (args) => NoSuchMethodError.withInvocation(null, Invocation.method(Symbol(args[0] as String), const []))
         extra_bindings:
           - "dart:_internal::LateError::localNI#1"
           - "dart:_internal::LateError::fieldNI#1"
@@ -309,6 +327,7 @@ libraries:
           - "dart:_internal::LateError::fieldADI#1"
           - "dart:_internal::LateError::localAI#1"
           - "dart:_internal::LateError::fieldAI#1"
+          - "dart:core::NoSuchMethodError::_forExternal#1"
 
       # ── ArgumentError: constructor aliases + factory with optional params ──
       ArgumentError:
@@ -854,6 +873,59 @@ libraries:
               return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
             }
 
+      # ── Comparable: abstract interface, compareTo + static compare ──
+      Comparable:
+        extra_methods:
+          "compareTo#1": "(args) => (args[0] as Comparable).compareTo(args[1])"
+          "compare#2": "(args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable)"
+
+      # ── Sink: abstract interface, add + close (both void) ──
+      Sink:
+        extra_methods:
+          "add#1": |
+            (args) {
+              (args[0] as Sink).add(args[1]);
+              return null;
+            }
+          "close#0": |
+            (args) {
+              (args[0] as Sink).close();
+              return null;
+            }
+
+      # ── WeakReference: factory constructor + target getter ──
+      WeakReference:
+        extra_methods:
+          "#1": "(args) => WeakReference(args[0]!)"
+          "target#0": "(args) => (args[0] as WeakReference).target"
+
+      # ── Finalizer: factory with callback + attach with optional detach ──
+      Finalizer:
+        extra_methods:
+          "#1": |
+            (args) {
+              final fn = args[0] as Function;
+              return Finalizer((token) => fn(token));
+            }
+          "attach#3": |
+            (args) {
+              final finalizer = args[0] as Finalizer;
+              final value = args[1]!;
+              final token = args[2];
+              final detach = identical(args[3], darticAbsent) ? null : args[3];
+              if (detach != null) {
+                finalizer.attach(value, token, detach: detach);
+              } else {
+                finalizer.attach(value, token);
+              }
+              return null;
+            }
+          "detach#1": |
+            (args) {
+              (args[0] as Finalizer).detach(args[1]!);
+              return null;
+            }
+
       # ── Invocation + _InvocationMirror: noSuchMethod forwarder support ─
       # CFE generates `_InvocationMirror._withType(name, type, typeArgs, posArgs, namedArgs)`
       # in noSuchMethod forwarders. We provide a pure-Dart Invocation proxy
@@ -873,9 +945,9 @@ libraries:
               List<Type>? typeArguments,
               List<Object?>? positionalArguments,
               Map<Symbol, Object?>? namedArguments,
-            )   : typeArguments = typeArguments ?? const [],
-                  positionalArguments = positionalArguments ?? const [],
-                  namedArguments = namedArguments ?? const {};
+            )   : typeArguments = typeArguments != null ? List<Type>.unmodifiable(typeArguments) : const <Type>[],
+                  positionalArguments = positionalArguments != null ? List<Object?>.unmodifiable(positionalArguments) : const <Object?>[],
+                  namedArguments = namedArguments != null ? Map<Symbol, Object?>.unmodifiable(namedArguments) : const <Symbol, Object?>{};
 
             @override
             final Symbol memberName;

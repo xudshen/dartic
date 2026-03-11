@@ -36,6 +36,7 @@ import '../bindings/convert/chunked_conversion_sink_bindings.g.dart';
 import '../bindings/convert/string_conversion_sink_bindings.g.dart';
 import '../bindings/convert/byte_conversion_sink_bindings.g.dart';
 import '../bindings/convert/closable_string_sink_bindings.g.dart';
+import '../bindings/convert/json_cyclic_error_bindings.g.dart';
 import '../bindings/convert/convert_top_level_bindings.g.dart';
 
 class ConvertPlugin extends DarticPlugin {
@@ -71,6 +72,7 @@ class ConvertPlugin extends DarticPlugin {
     StringConversionSinkBindings.register(ctx);
     ByteConversionSinkBindings.register(ctx);
     ClosableStringSinkBindings.register(ctx);
+    JsonCyclicErrorBindings.register(ctx);
     ConvertTopLevelBindings.register(ctx);
   }
 }

@@ -66,6 +66,9 @@ libraries:
         internal_types:
           - _ClosableStringSink
 
+      # ── JsonCyclicError (subclass of JsonUnsupportedObjectError) ────────
+      - JsonCyclicError
+
     functions:
       - name: jsonEncode
         arity: 2
@@ -535,3 +538,9 @@ libraries:
               final onClose = args[1] as Function;
               return ClosableStringSink.fromStringSink(sink, () => onClose());
             }
+
+      # ── JsonCyclicError: subclass of JsonUnsupportedObjectError ──
+      JsonCyclicError:
+        extra_methods:
+          "#1": "(args) => JsonCyclicError(args[0])"
+          "toString#0": "(args) => (args[0] as JsonCyclicError).toString()"

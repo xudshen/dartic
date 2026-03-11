@@ -51,6 +51,11 @@ abstract final class AsyncTopLevelBindings {
   );
 }
 );
+    ctx.registerBinding('dart:async::::unawaited#1', (args) {
+  unawaited(args[0] as Future<void>?);
+  return null;
+}
+);
     ctx.registerBinding('dart:async::::_asyncStarMoveNextHelper#1', (args) => null);
   }
 }

@@ -81,6 +81,18 @@ libraries:
         internal_types:
           - _ZoneSpecification
 
+      # ── TimeoutException ─────────────────────────────────────────────
+      - TimeoutException
+
+      # ── ZoneDelegate (abstract final, passed to zone handlers) ───────
+      - ZoneDelegate
+
+      # ── StreamView (read-only Stream wrapper) ────────────────────────
+      - StreamView
+
+      # ── StreamTransformerBase (abstract base for custom transformers) ─
+      - StreamTransformerBase
+
     # ── Top-level functions ──────────────────────────────────────────────
 
     functions:
@@ -131,6 +143,14 @@ libraries:
                   : null,
               zoneSpecification: zoneSpec,
             );
+          }
+
+      - name: unawaited
+        arity: 1
+        custom: |
+          (args) {
+            unawaited(args[0] as Future<void>?);
+            return null;
           }
 
       # CFE injects this in non-product `await for` lowering for debugger
@@ -1150,3 +1170,121 @@ libraries:
                     : null,
               );
             }
+
+      # ── TimeoutException ─────────────────────────────────────────────────
+      # Auto-gen _#fromFields gets field order wrong (Duration before String);
+      # explicit override fixes the constructor parameter order.
+      TimeoutException:
+        extra_methods:
+          "_#fromFields#2": "(args) => TimeoutException(args[0] as String?, args[1] as Duration?)"
+          "#2": |
+            (args) => TimeoutException(
+              identical(args[0], darticAbsent) ? null : args[0] as String?,
+              identical(args[1], darticAbsent) ? null : args[1] as Duration?,
+            )
+          "message#0": "(args) => (args[0] as TimeoutException).message"
+          "duration#0": "(args) => (args[0] as TimeoutException).duration"
+          "toString#0": "(args) => (args[0] as TimeoutException).toString()"
+
+      # ── ZoneDelegate ─────────────────────────────────────────────────────
+      ZoneDelegate:
+        extra_methods:
+          "handleUncaughtError#3": |
+            (args) {
+              (args[0] as ZoneDelegate).handleUncaughtError(
+                args[1] as Zone, args[2] as Object, args[3] as StackTrace);
+              return null;
+            }
+          "run#2": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              return delegate.run(args[1] as Zone, () => (args[2] as Function)());
+            }
+          "runUnary#3": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              return delegate.runUnary(args[1] as Zone, (a) => f(a), args[3]);
+            }
+          "runBinary#4": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              return delegate.runBinary(args[1] as Zone, (a, b) => f(a, b), args[3], args[4]);
+            }
+          "registerCallback#2": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              return delegate.registerCallback(args[1] as Zone, () => f());
+            }
+          "registerUnaryCallback#2": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              return delegate.registerUnaryCallback(args[1] as Zone, (a) => f(a));
+            }
+          "registerBinaryCallback#2": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              return delegate.registerBinaryCallback(args[1] as Zone, (a, b) => f(a, b));
+            }
+          "errorCallback#3": |
+            (args) => (args[0] as ZoneDelegate).errorCallback(
+              args[1] as Zone, args[2] as Object, args[3] as StackTrace?)
+          "scheduleMicrotask#2": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[2] as Function;
+              delegate.scheduleMicrotask(args[1] as Zone, () => f());
+              return null;
+            }
+          "createTimer#3": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[3] as Function;
+              return delegate.createTimer(args[1] as Zone, args[2] as Duration, () => f());
+            }
+          "createPeriodicTimer#3": |
+            (args) {
+              final delegate = args[0] as ZoneDelegate;
+              final f = args[3] as Function;
+              return delegate.createPeriodicTimer(args[1] as Zone, args[2] as Duration, (t) => f(t));
+            }
+          "print#2": |
+            (args) {
+              (args[0] as ZoneDelegate).print(args[1] as Zone, args[2] as String);
+              return null;
+            }
+          "fork#3": |
+            (args) => (args[0] as ZoneDelegate).fork(
+              args[1] as Zone,
+              identical(args[2], darticAbsent) ? null : args[2] as ZoneSpecification?,
+              identical(args[3], darticAbsent) ? null : args[3] as Map?,
+            )
+
+      # ── StreamView ───────────────────────────────────────────────────────
+      StreamView:
+        extra_methods:
+          "#1": "(args) => StreamView(args[0] as Stream)"
+          "isBroadcast#0": "(args) => (args[0] as StreamView).isBroadcast"
+          "listen#4": |
+            (args) {
+              final stream = args[0] as Stream;
+              final onData = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              final onDone = identical(args[3], darticAbsent) ? null : args[3] as Function?;
+              final cancelOnError = identical(args[4], darticAbsent) ? null : args[4] as bool?;
+              return stream.listen(
+                onData != null ? (data) => onData(data) : null,
+                onError: onError != null ? (e, st) => onError(e, st) : null,
+                onDone: onDone != null ? () => onDone() : null,
+                cancelOnError: cancelOnError,
+              );
+            }
+
+      # ── StreamTransformerBase ────────────────────────────────────────────
+      StreamTransformerBase:
+        extra_methods:
+          "cast#0": "(args) => (args[0] as StreamTransformer).cast()"

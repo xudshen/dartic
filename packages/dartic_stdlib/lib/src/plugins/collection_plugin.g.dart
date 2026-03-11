@@ -19,6 +19,8 @@ import '../bindings/collection/splay_tree_set_bindings.g.dart';
 import '../bindings/collection/unmodifiable_list_view_bindings.g.dart';
 import '../bindings/collection/unmodifiable_map_view_bindings.g.dart';
 import '../bindings/collection/unmodifiable_set_view_bindings.g.dart';
+import '../bindings/collection/double_linked_queue_bindings.g.dart';
+import '../bindings/collection/map_view_bindings.g.dart';
 
 class CollectionPlugin extends DarticPlugin {
   @override
@@ -37,5 +39,7 @@ class CollectionPlugin extends DarticPlugin {
     UnmodifiableListViewBindings.register(ctx);
     UnmodifiableMapViewBindings.register(ctx);
     UnmodifiableSetViewBindings.register(ctx);
+    DoubleLinkedQueueBindings.register(ctx);
+    MapViewBindings.register(ctx);
   }
 }

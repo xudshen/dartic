@@ -22,6 +22,10 @@ import '../bindings/async/stream_iterator_bindings.g.dart';
 import '../bindings/async/timer_bindings.g.dart';
 import '../bindings/async/zone_bindings.g.dart';
 import '../bindings/async/zone_specification_bindings.g.dart';
+import '../bindings/async/timeout_exception_bindings.g.dart';
+import '../bindings/async/zone_delegate_bindings.g.dart';
+import '../bindings/async/stream_view_bindings.g.dart';
+import '../bindings/async/stream_transformer_base_bindings.g.dart';
 import '../bindings/async/async_top_level_bindings.g.dart';
 
 class AsyncPlugin extends DarticPlugin {
@@ -44,6 +48,10 @@ class AsyncPlugin extends DarticPlugin {
     TimerBindings.register(ctx);
     ZoneBindings.register(ctx);
     ZoneSpecificationBindings.register(ctx);
+    TimeoutExceptionBindings.register(ctx);
+    ZoneDelegateBindings.register(ctx);
+    StreamViewBindings.register(ctx);
+    StreamTransformerBaseBindings.register(ctx);
     AsyncTopLevelBindings.register(ctx);
   }
 }

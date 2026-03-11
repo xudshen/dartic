@@ -55,6 +55,10 @@ import '../bindings/core/date_time_bindings.g.dart';
 import '../bindings/core/string_buffer_bindings.g.dart';
 import '../bindings/core/uri_bindings.g.dart';
 import '../bindings/core/string_sink_bindings.g.dart';
+import '../bindings/core/comparable_bindings.g.dart';
+import '../bindings/core/sink_bindings.g.dart';
+import '../bindings/core/weak_reference_bindings.g.dart';
+import '../bindings/core/finalizer_bindings.g.dart';
 import '../bindings/core/core_top_level_bindings.g.dart';
 
 class CorePlugin extends DarticPlugin {
@@ -110,6 +114,10 @@ class CorePlugin extends DarticPlugin {
     StringBufferBindings.register(ctx);
     UriBindings.register(ctx);
     StringSinkBindings.register(ctx);
+    ComparableBindings.register(ctx);
+    SinkBindings.register(ctx);
+    WeakReferenceBindings.register(ctx);
+    FinalizerBindings.register(ctx);
     CoreTopLevelBindings.register(ctx);
   }
 }
