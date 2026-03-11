@@ -232,6 +232,7 @@ libraries:
         extra_methods:
           "filled#2": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: false)"
           "#1": "(args) => List<dynamic>.filled(args[0] as int, null, growable: false)"
+          "empty#0": "(args) => const []"
 
       # ── _Set: VM-internal compact set constructor ──
       _Set:
@@ -549,14 +550,24 @@ libraries:
               return value;
             }
 
-      # ── List: extra methods removed — per-arity auto-generated ──
-      # indexOf, lastIndexOf, toList, join: generator creates per-arity entries
+      # ── List: factory constructors not discoverable by analyzer ──
+      List:
+        extra_methods:
+          "unmodifiable#1": "(args) => List.unmodifiable(args[0] as Iterable)"
+          "from#2": |
+            (args) {
+              final growable = (args.length > 1 && !identical(args[1], darticAbsent))
+                  ? args[1] as bool
+                  : true;
+              return List.from(args[0] as Iterable, growable: growable);
+            }
 
       # ── Map: fromEntries + callback methods + toString ──
       Map:
         extra_methods:
           "#0": "(args) => <dynamic, dynamic>{}"
           "fromEntries#1": "(args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>())"
+          "unmodifiable#1": "(args) => Map.unmodifiable(args[0] as Map)"
           "toString#0": "(args) => (args[0] as Map).toString()"
           "updateAll#1": |
             (args) {
@@ -842,3 +853,64 @@ libraries:
               final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
               return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
             }
+
+      # ── Invocation + _InvocationMirror: noSuchMethod forwarder support ─
+      # CFE generates `_InvocationMirror._withType(name, type, typeArgs, posArgs, namedArgs)`
+      # in noSuchMethod forwarders. We provide a pure-Dart Invocation proxy
+      # via preamble, then register it under the _InvocationMirror namespace
+      # via extra_bindings (same pattern as Error → LateError).
+      Invocation:
+        preamble: |
+          /// A pure-Dart implementation of [Invocation] for the dartic runtime.
+          ///
+          /// CFE generates noSuchMethod forwarders that construct
+          /// `_InvocationMirror._withType(memberName, type, typeArgs, posArgs, namedArgs)`.
+          /// Since `_InvocationMirror` is a private VM class, we provide this proxy.
+          class _DarticInvocationMirror implements Invocation {
+            _DarticInvocationMirror(
+              this.memberName,
+              this._type,
+              List<Type>? typeArguments,
+              List<Object?>? positionalArguments,
+              Map<Symbol, Object?>? namedArguments,
+            )   : typeArguments = typeArguments ?? const [],
+                  positionalArguments = positionalArguments ?? const [],
+                  namedArguments = namedArguments ?? const {};
+
+            @override
+            final Symbol memberName;
+
+            final int _type;
+
+            @override
+            final List<Type> typeArguments;
+
+            @override
+            final List<Object?> positionalArguments;
+
+            @override
+            final Map<Symbol, dynamic> namedArguments;
+
+            @override
+            bool get isMethod => _type & 0x3 == 0;
+
+            @override
+            bool get isGetter => _type & 0x3 == 1;
+
+            @override
+            bool get isSetter => _type & 0x3 == 2;
+
+            @override
+            bool get isAccessor => !isMethod;
+          }
+        extra_methods:
+          "_withType#5": |
+            (args) => _DarticInvocationMirror(
+              args[0] as Symbol,
+              args[1] as int,
+              (args[2] as List?)?.cast<Type>(),
+              args[3] as List<Object?>?,
+              (args[4] as Map?)?.cast<Symbol, Object?>(),
+            )
+        extra_bindings:
+          - "dart:core::_InvocationMirror::_withType#5"

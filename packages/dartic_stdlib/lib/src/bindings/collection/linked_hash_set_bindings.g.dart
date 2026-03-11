@@ -68,5 +68,6 @@ abstract final class LinkedHashSetBindings {
         '#0': (args) => LinkedHashSet<Object?>(),
         'from#1': (args) => LinkedHashSet.from(args[0] as Iterable),
         'of#1': (args) => LinkedHashSet.of(args[0] as Iterable),
+        'identity#0': (args) => Set.identity(),
       };
 }

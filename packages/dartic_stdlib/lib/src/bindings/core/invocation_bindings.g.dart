@@ -8,6 +8,49 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 
+/// A pure-Dart implementation of [Invocation] for the dartic runtime.
+///
+/// CFE generates noSuchMethod forwarders that construct
+/// `_InvocationMirror._withType(memberName, type, typeArgs, posArgs, namedArgs)`.
+/// Since `_InvocationMirror` is a private VM class, we provide this proxy.
+class _DarticInvocationMirror implements Invocation {
+  _DarticInvocationMirror(
+    this.memberName,
+    this._type,
+    List<Type>? typeArguments,
+    List<Object?>? positionalArguments,
+    Map<Symbol, Object?>? namedArguments,
+  )   : typeArguments = typeArguments ?? const [],
+        positionalArguments = positionalArguments ?? const [],
+        namedArguments = namedArguments ?? const {};
+
+  @override
+  final Symbol memberName;
+
+  final int _type;
+
+  @override
+  final List<Type> typeArguments;
+
+  @override
+  final List<Object?> positionalArguments;
+
+  @override
+  final Map<Symbol, dynamic> namedArguments;
+
+  @override
+  bool get isMethod => _type & 0x3 == 0;
+
+  @override
+  bool get isGetter => _type & 0x3 == 1;
+
+  @override
+  bool get isSetter => _type & 0x3 == 2;
+
+  @override
+  bool get isAccessor => !isMethod;
+}
+
 abstract final class InvocationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -16,6 +59,7 @@ abstract final class InvocationBindings {
       test: (o) => o is Invocation,
       methods: methodMap(),
     );
+    ctx.registerBinding('dart:core::_InvocationMirror::_withType#5', methodMap()['_withType#5']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -27,5 +71,12 @@ abstract final class InvocationBindings {
         'isGetter#0': (args) => (args[0] as Invocation).isGetter,
         'isSetter#0': (args) => (args[0] as Invocation).isSetter,
         'isAccessor#0': (args) => (args[0] as Invocation).isAccessor,
+        '_withType#5': (args) => _DarticInvocationMirror(
+            args[0] as Symbol,
+            args[1] as int,
+            (args[2] as List?)?.cast<Type>(),
+            args[3] as List<Object?>?,
+            (args[4] as Map?)?.cast<Symbol, Object?>(),
+        ),
       };
 }

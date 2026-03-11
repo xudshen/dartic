@@ -95,6 +95,13 @@ abstract final class ListBindings {
         '[]#1': (args) => (args[0] as List)[(args[1] as int)],
         '[]=#2': (args) { (args[0] as List)[args[1] as int] = args[2]; return args[2]; },
         '+#1': (args) => (args[0] as List) + (args[1] as List),
+        'unmodifiable#1': (args) => List.unmodifiable(args[0] as Iterable),
+        'from#2': (args) {
+            final growable = (args.length > 1 && !identical(args[1], darticAbsent))
+                ? args[1] as bool
+                : true;
+            return List.from(args[0] as Iterable, growable: growable);
+        },
       };
 
   static Map<String, Object? Function(List<Object?>)> growableListMethodMap() => {
@@ -129,5 +136,6 @@ abstract final class ListBindings {
   static Map<String, Object? Function(List<Object?>)> listMethodMap() => {
         'filled#2': (args) => List<dynamic>.filled(args[0] as int, args[1], growable: false),
         '#1': (args) => List<dynamic>.filled(args[0] as int, null, growable: false),
+        'empty#0': (args) => const [],
       };
 }

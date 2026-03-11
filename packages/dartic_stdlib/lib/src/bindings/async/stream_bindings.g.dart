@@ -219,5 +219,7 @@ abstract final class StreamBindings {
 
   static Map<String, Object? Function(List<Object?>)> emptyStreamMethodMap() => {
         '#0': (args) => const Stream.empty(),
+        '#1': (args) => const Stream.empty(),
+        '_#fromFields#1': (args) => const Stream.empty(),
       };
 }

@@ -47,6 +47,7 @@ abstract final class MapBindings {
         '[]=#2': (args) { (args[0] as Map)[args[1]] = args[2]; return args[2]; },
         '#0': (args) => <dynamic, dynamic>{},
         'fromEntries#1': (args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>()),
+        'unmodifiable#1': (args) => Map.unmodifiable(args[0] as Map),
         'toString#0': (args) => (args[0] as Map).toString(),
         'updateAll#1': (args) {
             final fn = args[1] as Function;

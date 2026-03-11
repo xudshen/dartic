@@ -477,9 +477,13 @@ libraries:
           "transform#1": "(args) => (args[0] as Stream).transform(args[1] as StreamTransformer)"
 
       # ── _EmptyStream ────────────────────────────────────────────────────
+      # #0 is the zero-arg constructor; #1 is needed because CFE adds a
+      # type arg parameter for the generic class _EmptyStream<T>.
       _EmptyStream:
         extra_methods:
           "#0": "(args) => const Stream.empty()"
+          "#1": "(args) => const Stream.empty()"
+          "_#fromFields#1": "(args) => const Stream.empty()"
 
       # ── StreamController ────────────────────────────────────────────────
       StreamController:
