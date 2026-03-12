@@ -180,6 +180,14 @@ class DarticFuncProto {
   /// (backward compatible with hand-crafted test protos).
   final Uint8List? paramKinds;
 
+  /// Whether CALL-site args (all on ref stack) need runtime rerouting to
+  /// the correct stack positions based on [paramKinds].
+  ///
+  /// True when any parameter uses the value stack (int, double, bool).
+  /// False when all parameters use the ref stack (no rerouting needed).
+  late final bool needsArgRerouting =
+      paramKinds?.any((k) => k != StackKind.refDefault) ?? false;
+
   /// Return value classification for [DarticInterpreter.invokeClosure] boxing.
   ///
   /// `0` = ref, `1` = boolVal, `2` = intVal, `3` = doubleVal.

@@ -925,23 +925,25 @@ extension on DarticCompiler {
     List<ir.DartType> paramTypes,
   ) {
     final argTemps = <(int, ResultLoc)>[];
+    // For indirect calls (CALL opcode), always box all args to the ref stack.
+    // The runtime reroutes to the correct stack based on callee's paramKinds.
+    // This is necessary because the declared FunctionType at the call site
+    // may differ from the actual callee's parameter layout (e.g., due to
+    // contravariant parameter subtyping: int Function(Object) stored in
+    // int Function(int) variable).
     for (var i = 0; i < args.length; i++) {
       var (argReg, argLoc) = _compileExpression(args[i]);
-      if (i < paramTypes.length) {
-        final paramKind = _classifyStackKind(paramTypes[i]);
-        (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind, args[i]);
+      if (argLoc == ResultLoc.value) {
+        argReg = _emitBoxToRef(argReg, _inferExprType(args[i]));
+        argLoc = ResultLoc.ref;
       }
       argTemps.add((argReg, argLoc));
     }
 
-    // Pass null sentinel for omitted optional positional params on the ref
-    // stack. This overwrites any stale data from previous calls so the
-    // callee's JUMP_IF_NNULL default guards work correctly.
+    // Pass null sentinel for ALL omitted optional positional params.
+    // The runtime reroute skips null values for value-stack params.
     for (var i = args.length; i < paramTypes.length; i++) {
-      final paramKind = _classifyStackKind(paramTypes[i]);
-      if (paramKind == StackKind.ref) {
-        argTemps.add(_loadNull());
-      }
+      argTemps.add(_loadNull());
     }
     return argTemps;
   }
@@ -1046,20 +1048,15 @@ extension on DarticCompiler {
     List<ir.NamedExpression> namedArgs,
     List<(int, ResultLoc)> argTemps,
   ) {
-    // Build param-name → param lookup for coercion info.
-    final paramByName = <String, ir.NamedType>{};
-    for (final param in namedParams) {
-      paramByName[param.name] = param;
-    }
-
     // Phase 1: Evaluate all provided named args in SOURCE order (left→right).
+    // Always box to ref for indirect calls (same rationale as positional).
     final compiled = <String, (int, ResultLoc)>{};
     for (final namedArg in namedArgs) {
       var (argReg, argLoc) = _compileExpression(namedArg.value);
-      final param = paramByName[namedArg.name]!;
-      final paramKind = _classifyStackKind(param.type);
-      (argReg, argLoc) =
-          _coerceArg(argReg, argLoc, paramKind, namedArg.value);
+      if (argLoc == ResultLoc.value) {
+        argReg = _emitBoxToRef(argReg, _inferExprType(namedArg.value));
+        argLoc = ResultLoc.ref;
+      }
       compiled[namedArg.name] = (argReg, argLoc);
     }
 

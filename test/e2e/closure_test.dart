@@ -204,4 +204,116 @@ int main() {
       expect(result, 42);
     });
   });
+
+  group('indirect call arg reroute — CALL all-ref', () {
+    test('int Function(int) variable holds actual int-param closure', () async {
+      // The variable type says int→int (value stack), but the CALL opcode
+      // must work regardless of callee's actual paramKinds layout.
+      final result = await compileAndRun('''
+int add1(int x) => x + 1;
+int main() {
+  int Function(int) fn = add1;
+  return fn(41);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('Function variable holds int-param closure', () async {
+      // Variable typed as bare Function — no param type info at call site.
+      // The caller doesn't know param kinds, must work via reroute.
+      final result = await compileAndRun('''
+int add1(int x) => x + 1;
+int main() {
+  Function fn = add1;
+  return fn(41) as int;
+}
+''');
+      expect(result, 42);
+    });
+
+    test('dynamic variable holds int-param closure', () async {
+      final result = await compileAndRun('''
+int add1(int x) => x + 1;
+int main() {
+  dynamic fn = add1;
+  return fn(41) as int;
+}
+''');
+      expect(result, 42);
+    });
+
+    test('int Function(int, double) multi-param indirect call', () async {
+      final result = await compileAndRun('''
+int compute(int a, double b) => a + b.toInt();
+int main() {
+  int Function(int, double) fn = compute;
+  return fn(30, 12.0);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('closure with named params via indirect call', () async {
+      final result = await compileAndRun('''
+int f({required int x, required int y}) => x + y;
+int main() {
+  int Function({required int x, required int y}) fn = f;
+  return fn(x: 20, y: 22);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('higher-order function passes closure indirectly', () async {
+      final result = await compileAndRun('''
+int apply(int Function(int) f, int x) => f(x);
+int double_(int n) => n * 2;
+int main() => apply(double_, 21);
+''');
+      expect(result, 42);
+    });
+
+    test('contravariant assignment: Object param called as int', () async {
+      // foo expects Object (ref stack) but variable is typed int Function(int)
+      // (value stack). Contravariant subtyping makes this valid Dart.
+      // The CALL must reroute the int arg from value to ref.
+      final result = await compileAndRunWithHost('''
+int foo(Object x) => (x as int) + 1;
+int main() {
+  int Function(int) fn = foo;
+  return fn(41);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('num param called via int-typed variable', () async {
+      // num param goes to ref stack, but variable typed as int Function(int)
+      // would place arg on value stack.
+      final result = await compileAndRunWithHost('''
+int bar(num n) => n.toInt() + 1;
+int main() {
+  int Function(int) fn = bar;
+  return fn(41);
+}
+''');
+      expect(result, 42);
+    });
+
+    test('pass callback with different param stack kind', () async {
+      // forEach expects void Function(Object?) which is ref-stack param,
+      // but actual callback takes int (value-stack param).
+      final result = await compileAndRunWithHost('''
+int main() {
+  int sum = 0;
+  void add(int x) { sum += x; }
+  var list = <int>[10, 20, 12];
+  list.forEach(add);
+  return sum;
+}
+''');
+      expect(result, 42);
+    });
+  });
 }

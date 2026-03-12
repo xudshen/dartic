@@ -1930,6 +1930,47 @@ class DarticInterpreter {
             rs.write(rBase + 1, boundFTA);
           }
 
+          // Reroute args from all-ref layout to callee's expected layout.
+          // The compiler boxes ALL args to the ref stack for CALL opcodes
+          // (since the callee's actual paramKinds may differ from the
+          // declared FunctionType at the call site). If the callee has
+          // value-stack params, unbox them from the ref stack now.
+          if (callee.needsArgRerouting) {
+            final paramKinds = callee.paramKinds!;
+            var readRefIdx = 3; // args start at rBase+3
+            var writeRefIdx = 3;
+            var writeValIdx = 0;
+            for (var i = 0; i < paramKinds.length; i++) {
+              final value = rs.read(rBase + readRefIdx);
+              readRefIdx++;
+              switch (paramKinds[i]) {
+                case StackKind.intDefault:
+                  if (value != null) {
+                    vs.writeInt(vBase + writeValIdx, value as int);
+                  }
+                  writeValIdx++;
+                case StackKind.boolDefault:
+                  if (value != null) {
+                    final v = value;
+                    vs.writeInt(
+                        vBase + writeValIdx, v is bool ? (v ? 1 : 0) : v as int);
+                  }
+                  writeValIdx++;
+                case StackKind.doubleDefault:
+                  if (value != null) {
+                    vs.writeDouble(
+                        vBase + writeValIdx, (value as num).toDouble());
+                  }
+                  writeValIdx++;
+                default: // ref — compact ref positions
+                  if (writeRefIdx != readRefIdx - 1) {
+                    rs.write(rBase + writeRefIdx, value);
+                  }
+                  writeRefIdx++;
+              }
+            }
+          }
+
           // Switch to callee bytecode.
           code = callee.bytecode;
           pc = 0;
