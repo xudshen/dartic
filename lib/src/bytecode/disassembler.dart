@@ -510,6 +510,15 @@ class DarticDisassembler {
     final a = decodeA(instr);
     final b = decodeB(instr);
     final c = decodeC(instr);
+
+    // CREATE_LIST/CREATE_MAP/CREATE_SET use B bit15 as const flag.
+    if (op == Op.createList || op == Op.createMap || op == Op.createSet) {
+      final isConst = (b & 0x8000) != 0;
+      final baseReg = b & 0x7FFF;
+      final constTag = isConst ? '|const' : '';
+      return ('r$a, r$baseReg$constTag, r$c', '');
+    }
+
     final operands = 'r$a, r$b, r$c';
     final annotation = _annotateABC(op, a, b, c, module);
     return (operands, annotation);

@@ -316,6 +316,10 @@ extension on DarticCompiler {
         paramCount: 0,
       ));
 
+      // Skip abstract methods — they have no body and must not shadow
+      // inherited concrete implementations in the method table.
+      if (proc.isAbstract) continue;
+
       // Register method in the class info method table.
       // Setters use "name=" convention to distinguish from getters/methods.
       final methodName = proc.isSetter
@@ -678,10 +682,24 @@ extension on DarticCompiler {
       return;
     }
 
+    // Compute ITA (class type args) for the super constructor early —
+    // the INSTANTIATE_TYPE + CREATE_TYPE_ARGS write to local registers.
+    // E.g. `class C extends S<int, String>` → S.<init> needs ITA=[int,String].
+    final superClass = init.target.enclosingClass;
+    int? itaReg;
+    if (superClass.typeParameters.isNotEmpty) {
+      final supertype = _currentEnclosingClass!.supertype!;
+      itaReg = _computeITAForCall(supertype.typeArguments);
+    }
+
     final argTemps = _compileInitializerArgs(
       init.arguments,
       init.target.function,
     );
+
+    // Place ITA move AFTER arg compilation to prevent intermediate calls
+    // (like f("a1")) from overwriting the callee frame area.
+    if (itaReg != null) _emitITAMove(itaReg);
 
     _emitThisPassthrough();
 
@@ -706,6 +724,13 @@ extension on DarticCompiler {
       init.arguments,
       init.target.function,
     );
+
+    // Forward ITA to the redirecting constructor — it's in the same class,
+    // so it needs the same class type arguments. ITA is at register 0.
+    final targetClass = init.target.enclosingClass;
+    if (targetClass.typeParameters.isNotEmpty) {
+      _emitITAMove(0); // forward current ITA (rsp+0) to callee's rsp+0
+    }
 
     _emitThisPassthrough();
 

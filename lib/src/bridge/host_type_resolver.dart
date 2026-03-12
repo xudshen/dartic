@@ -290,6 +290,23 @@ class HostTypeResolver {
     return registry.intern(entry.classId, args);
   }
 
+  /// Checks if [value] matches a registered entry with the given [classId].
+  ///
+  /// Used as a fallback by `_findHandler` when the primary `extractType` picks
+  /// a type in a different inheritance branch than the exception handler's
+  /// guard type. This happens for host classes with multiple inheritance
+  /// branches (e.g., `IntegerDivisionByZeroException extends UnsupportedError
+  /// implements Exception` — extractType picks UnsupportedError, but the
+  /// handler guard is Exception).
+  bool matchesClassId(Object value, int classId) {
+    for (final entry in _resolved) {
+      if (entry.classId != classId) continue;
+      if (entry.test != null && entry.test!(value)) return true;
+      if (value.runtimeType == entry.type) return true;
+    }
+    return false;
+  }
+
   /// Extracts the short class name from a fully-qualified name.
   ///
   /// `'dart:core::List'` → `'List'`

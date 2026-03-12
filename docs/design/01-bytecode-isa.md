@@ -302,12 +302,14 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 ### 集合操作 (0x90-0x97)
 
 ```
-0x90  CREATE_LIST   A, B, C       refStack[A] = List(refStack[A+1..A+C]), typeArgs from refStack[B]
-0x91  CREATE_MAP    A, B, C       refStack[A] = Map(key-value pairs), typeArgs from refStack[B]
-0x92  CREATE_SET    A, B, C       refStack[A] = Set(refStack[A+1..A+C]), typeArgs from refStack[B]
+0x90  CREATE_LIST   A, B, C       refStack[A] = List(refStack[B..B+C-1])
+0x91  CREATE_MAP    A, B, C       refStack[A] = Map(key-value pairs from refStack[B..B+2C-1])
+0x92  CREATE_SET    A, B, C       refStack[A] = Set(refStack[B..B+C-1])
 0x93  CREATE_RECORD A, Bx         refStack[A] = Record(fields...), shape from constPool.refs[Bx]
 0x94-0x97 预留
 ```
+
+**B bit15 const 标志（CREATE_LIST / CREATE_MAP / CREATE_SET）**：B 操作数的最高位（bit15, 0x8000）用作 const 标志。当 `(B & 0x8000) != 0` 时，解释器创建不可修改的集合（`List.unmodifiable` / `Map.unmodifiable` / `Set.unmodifiable`）；实际的元素起始寄存器为 `B & 0x7FFF`。编译器在编译 Kernel IR 的 `ListConstant` / `MapConstant` / `SetConstant` 节点时设置此标志，在运行时强制 Dart const 集合的不可变语义，无需引入新 opcode 或 bridge 绑定。
 
 `CREATE_RECORD` 的 Bx 索引常量池 `refs` 分区，对应条目为 `RecordShape` 描述符（包含命名字段名列表和位置字段数量）。
 

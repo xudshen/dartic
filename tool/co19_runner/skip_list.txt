@@ -34,6 +34,19 @@ Language/Statements/Switch/execution_case_no_default_t01.dart  # [analyzer] UNRE
 Language/Statements/Switch/execution_case_t01.dart  # [analyzer] UNREACHABLE_SWITCH_CASE
 Language/Types/Type_Void/implicit_usage_A01_t01.dart  # [cfe] + [analyzer] unspecified
 Language/Types/Type_Void/implicit_usage_A02_t01.dart  # [cfe] + [analyzer] unspecified
+Language/Expressions/Identifier_Reference/syntax_t02.dart  # [cfe] parse error: digit-start identifier
+Language/Expressions/Identifier_Reference/syntax_t07.dart  # [cfe] non-ASCII identifier U+0430
+Language/Generics/syntax_t32.dart  # [cfe] parse error: typedef Function type
+Language/Generics/syntax_t33.dart  # [cfe] parse error: expected type, got '5'
+Language/Libraries_and_Scripts/Parts/compilation_t01.dart  # [cfe] duplicate name in part
+Language/Errors_and_Warnings/compile_error_t07.dart  # [cfe] syntax error in part file
+Language/Types/Type_Aliases/syntax_t22.dart  # [cfe] parse error: expected '>'
+Language/Overview/Privacy/private_and_public_t14.dart  # [cfe] Dart 3.x wildcard: `_` as identifier → compile error
+Language/Classes/Instance_Methods/covariant_A01_t15.dart  # [cfe] String can't be assigned to num
+Language/Expressions/Strings/String_Interpolation/no_quote_t01.dart  # [cfe] Dart 3.x wildcard: Undefined name '_'
+Language/Types/Type_Void/permitted_use_A12_t02.dart  # [cfe] void expression can't be used
+Language/Types/Type_Void/permitted_use_A12_t03.dart  # [cfe] void expression can't be used
+Language/Libraries_and_Scripts/Parts/uri_contents_t01.dart  # [cfe] static modifier in part file
 TypeSystem/flow-analysis/reachability_conditional_A01_t02.dart  # [cfe] + [analyzer] unspecified
 TypeSystem/flow-analysis/reachability_do_while_A03_t02.dart  # [cfe] + [analyzer] unspecified
 TypeSystem/flow-analysis/reachability_do_while_A03_t03.dart  # [cfe] + [analyzer] unspecified

@@ -544,7 +544,14 @@ void _executeIsolateEntry(List<dynamic> message) async {
       }),
     );
     engine.loadBytecode(darbBytes);
-    final result = engine.call('main');
+    // Dart spec: main() may accept 0, 1, or 2 params.
+    // If 1: List<String> args. If 2: (List<String>, dynamic sendPort).
+    final mainParams = engine.getExportParamCount('main') ?? 0;
+    final mainArgs = <Object?>[
+      if (mainParams >= 1) <String>[],
+      if (mainParams >= 2) null,
+    ];
+    final result = engine.call('main', mainArgs);
     if (result is Future) await result;
     // Wait for async tests: Timer callbacks haven't fired yet at this point.
     if (asyncCompleter != null && !asyncCompleter!.isCompleted) {

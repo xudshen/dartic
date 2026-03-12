@@ -1437,15 +1437,21 @@ class DarticCompiler {
   /// [destReg] is the pre-allocated destination register.
   /// [srcRegs] are the already-compiled element registers (all on ref stack).
   /// [count] is the element/entry count for the C operand.
+  /// [isConst] sets B bit15 (0x8000) to signal the interpreter to produce
+  /// an unmodifiable collection (List/Map/Set.unmodifiable).
   void _emitCreateCollection(
-      int op, int destReg, List<int> srcRegs, int count) {
+      int op, int destReg, List<int> srcRegs, int count,
+      {bool isConst = false}) {
+    assert(count <= 0xFFFF,
+        'Collection literal too large: $count elements (max 65535)');
     final baseReg = _refAlloc.allocConsecutive(srcRegs.length);
     for (var i = 0; i < srcRegs.length; i++) {
       if (srcRegs[i] != baseReg + i) {
         _emitter.emitABC(Op.moveRef, baseReg + i, srcRegs[i], 0);
       }
     }
-    _emitter.emitABC(op, destReg, baseReg, count);
+    final bOperand = isConst ? (baseReg | 0x8000) : baseReg;
+    _emitter.emitABC(op, destReg, bOperand, count);
   }
 
   // ── Host binding helpers ──

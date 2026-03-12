@@ -1246,6 +1246,50 @@ extension on DarticCompiler {
     );
   }
 
+  /// Compiles ITA (Implicit Type Arguments = class type params) for a
+  /// generic class constructor call. Returns the ref register holding the
+  /// `List<DarticType>` ITA value.
+  ///
+  /// The caller must add the pending MOVE to callee's rsp+0 at the right
+  /// time — specifically AFTER all intermediate function calls (arg
+  /// compilation) are done, to prevent those calls from overwriting the
+  /// callee frame area where ITA will be placed.
+  ///
+  /// [typeArgs] are the Kernel type arguments from the constructor invocation
+  /// or the superclass clause. Without this, INSTANTIATE_TYPE instructions
+  /// in the constructor body that reference class type params (e.g. `T`)
+  /// will find ITA == null and throw.
+  int _computeITAForCall(List<ir.DartType> typeArgs) {
+    // Resolve each type argument to consecutive DarticType ref registers.
+    final firstTypeReg = _refAlloc.allocConsecutive(typeArgs.length);
+    for (var i = 0; i < typeArgs.length; i++) {
+      final template = dartTypeToTemplate(
+        typeArgs[i],
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+        coreTypes: _coreTypes,
+      );
+      final templateIdx = _constantPool.addRef(template);
+      _emitter.emitABx(Op.instantiateType, firstTypeReg + i, templateIdx);
+    }
+
+    // CREATE_TYPE_ARGS: bundle resolved types into a List<DarticType>.
+    final itaReg = _allocRefReg();
+    _emitter.emitABC(
+        Op.createTypeArgs, typeArgs.length, firstTypeReg, itaReg);
+    return itaReg;
+  }
+
+  /// Emits a pending MOVE to place [itaReg] at callee's rsp+0 (ITA slot).
+  /// Must be called after all intermediate function calls are done.
+  void _emitITAMove(int itaReg) {
+    final itaMovePC = _emitter.emitPlaceholder();
+    _pendingArgMoves.add(
+      (pc: itaMovePC, srcReg: itaReg, argIdx: 0, loc: ResultLoc.ref),
+    );
+  }
+
   // ── Instance invocation (arithmetic specialization) ──
 
   (int, ResultLoc) _compileInstanceInvocation(ir.InstanceInvocation expr) {
@@ -1584,32 +1628,43 @@ extension on DarticCompiler {
       _emitter.emitABx(Op.newInstance, objReg, classId);
     }
 
-    // 2. Compile arguments.
+    // 2. Compute ITA (class type args) into a local register. The actual
+    //    MOVE to the callee's rsp+0 happens AFTER arg compilation to prevent
+    //    intermediate function calls from overwriting the callee frame area.
+    int? itaReg;
+    if (isGeneric) {
+      itaReg = _computeITAForCall(expr.arguments.types);
+    }
+
+    // 3. Compile arguments.
     final argTemps = _compileCallArgs(
       expr.arguments,
       target.function.positionalParameters,
       target.function.namedParameters,
     );
 
-    // 3. Emit pending MOVE for `this` at ref argIdx 2.
+    // 4. Place ITA move after arg compilation (safe from intermediate calls).
+    if (itaReg != null) _emitITAMove(itaReg);
+
+    // 5. Emit pending MOVE for `this` at ref argIdx 2.
     final thisMovePC = _emitter.emitPlaceholder();
     _pendingArgMoves.add(
       (pc: thisMovePC, srcReg: objReg, argIdx: 2, loc: ResultLoc.ref),
     );
 
-    // 4. Emit arg moves + CALL_STATIC. Constructor returns void, so use a
+    // 6. Emit arg moves + CALL_STATIC. Constructor returns void, so use a
     //    dummy ref register for the unused result.
     final dummyResult = _allocRefReg();
     _emitArgMovesAndCall(argTemps, Op.callStatic, dummyResult, funcId);
 
-    // 5. If class extends a host class, emit WRAP_BRIDGE to create Bridge.
+    // 7. If class extends a host class, emit WRAP_BRIDGE to create Bridge.
     final classInfo = _classInfos[classId];
     if (classInfo.hostSuperClassName != null ||
         classInfo.hostInterfaceNames != null) {
       _emitter.emitABx(Op.wrapBridge, objReg, classId);
     }
 
-    // 6. The expression result is the object, not the call result.
+    // 8. The expression result is the object, not the call result.
     return (objReg, ResultLoc.ref);
   }
 
@@ -3137,17 +3192,19 @@ extension on DarticCompiler {
 
   // ── Collection Constants ──
 
-  /// Compiles a [ir.ListConstant] to CREATE_LIST bytecode.
+  /// Compiles a [ir.ListConstant] to CREATE_LIST bytecode (B bit15 = const).
   (int, ResultLoc) _compileListConstant(ir.ListConstant constant) =>
-      _compileConstantElementCollection(Op.createList, constant.entries);
+      _compileConstantElementCollection(Op.createList, constant.entries,
+          isConst: true);
 
-  /// Compiles a [ir.MapConstant] to CREATE_MAP bytecode.
+  /// Compiles a [ir.MapConstant] to CREATE_MAP bytecode (B bit15 = const).
   (int, ResultLoc) _compileMapConstant(ir.MapConstant constant) {
     final entries = constant.entries;
     final destReg = _allocRefReg();
 
     if (entries.isEmpty) {
-      _emitter.emitABC(Op.createMap, destReg, 0, 0);
+      // B=0x8000 signals const (bit15 set, base=0).
+      _emitter.emitABC(Op.createMap, destReg, 0x8000, 0);
       return (destReg, ResultLoc.ref);
     }
 
@@ -3164,13 +3221,15 @@ extension on DarticCompiler {
       kvRegs.add(valReg);
     }
 
-    _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length);
+    _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length,
+        isConst: true);
     return (destReg, ResultLoc.ref);
   }
 
-  /// Compiles a [ir.SetConstant] to CREATE_SET bytecode.
+  /// Compiles a [ir.SetConstant] to CREATE_SET bytecode (B bit15 = const).
   (int, ResultLoc) _compileSetConstant(ir.SetConstant constant) =>
-      _compileConstantElementCollection(Op.createSet, constant.entries);
+      _compileConstantElementCollection(Op.createSet, constant.entries,
+          isConst: true);
 
   // ── Record Literals & Constants ──
 
@@ -3335,14 +3394,17 @@ extension on DarticCompiler {
 
   /// Shared helper for list/set constant compilation: compiles each constant
   /// entry, boxes to ref if needed, and emits the collection creation op.
+  /// When [isConst] is true, sets B bit15 to signal unmodifiable collection.
   (int, ResultLoc) _compileConstantElementCollection(
     int op,
-    List<ir.Constant> entries,
-  ) {
+    List<ir.Constant> entries, {
+    bool isConst = false,
+  }) {
     final destReg = _allocRefReg();
 
     if (entries.isEmpty) {
-      _emitter.emitABC(op, destReg, 0, 0);
+      final bOperand = isConst ? 0x8000 : 0;
+      _emitter.emitABC(op, destReg, bOperand, 0);
       return (destReg, ResultLoc.ref);
     }
 
@@ -3353,7 +3415,8 @@ extension on DarticCompiler {
       elementRegs.add(reg);
     }
 
-    _emitCreateCollection(op, destReg, elementRegs, entries.length);
+    _emitCreateCollection(op, destReg, elementRegs, entries.length,
+        isConst: isConst);
     return (destReg, ResultLoc.ref);
   }
 

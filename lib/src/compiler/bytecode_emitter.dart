@@ -44,6 +44,9 @@ class BytecodeEmitter {
 
   /// Emits an ABC-format instruction.
   void emitABC(int op, int a, int b, int c) {
+    assert(a >= 0 && a <= 0xFFFF, 'ABC operand A out of range: $a');
+    assert(b >= 0 && b <= 0xFFFF, 'ABC operand B out of range: $b');
+    assert(c >= 0 && c <= 0xFFFF, 'ABC operand C out of range: $c');
     _buffer.add(encodeABC(op, a, b, c));
   }
 

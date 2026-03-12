@@ -99,6 +99,22 @@ extension on DarticCompiler {
       _compileVariableDeclaration(v);
     }
 
+    // Record pre-promotion binding state for loop variables.
+    // If a loop variable is later promoted to ref stack (for closure capture
+    // in the condition, body, or updates), the BOX instruction emitted during
+    // promotion will re-execute on every iteration. We need to sync the
+    // updated ref value back to the original value register before the
+    // back-edge JUMP, so the next iteration's BOX uses the correct value
+    // (Dart per-iteration variable semantics).
+    final prePromotionState =
+        <ir.VariableDeclaration, (int valReg, StackKind kind)>{};
+    for (final v in stmt.variables) {
+      final binding = _scope.lookup(v);
+      if (binding != null && binding.kind.isValue) {
+        prePromotionState[v] = (binding.reg, binding.kind);
+      }
+    }
+
     // 2. Record loop start (condition check point).
     final loopStartPC = _emitter.currentPC;
 
@@ -120,10 +136,28 @@ extension on DarticCompiler {
       _compileExpression(update);
     }
 
-    // 6. JUMP backward to loop start.
+    // 6. Sync captured loop vars back to their original value registers.
+    // If any loop variable was promoted to ref stack during condition/body/update
+    // compilation (due to closure capture), the BOX at loopStartPC re-boxes the
+    // stale original value register. Emit UNBOX to carry the updated value.
+    for (final v in stmt.variables) {
+      final pre = prePromotionState[v];
+      if (pre == null) continue;
+      final refReg = _capturedVarRefRegs[v];
+      if (refReg == null) continue;
+      final (valReg, kind) = pre;
+      final unboxOp = switch (kind) {
+        StackKind.doubleVal => Op.unboxDouble,
+        StackKind.boolVal => Op.unboxBool,
+        _ => Op.unboxInt,
+      };
+      _emitter.emitABC(unboxOp, valReg, refReg, 0);
+    }
+
+    // 7. JUMP backward to loop start.
     _emitter.emitJumpAsBx(Op.jump, 0, loopStartPC);
 
-    // 7. Backpatch exit (if condition exists).
+    // 8. Backpatch exit (if condition exists).
     if (jumpToExit != null) {
       _emitter.patchJumpAsBx(jumpToExit, Op.jumpIfFalse, condReg!, _emitter.currentPC);
     }

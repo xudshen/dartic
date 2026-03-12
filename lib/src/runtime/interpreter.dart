@@ -1637,10 +1637,11 @@ class DarticInterpreter {
           final c = decodeC(instr);
           final divisorD = vs.readInt(vBase + c);
           if (divisorD == 0) {
-            final e = UnsupportedError(
-                'Result of truncating division is Infinity: '
-                '${vs.readInt(vBase + b)} ~/ 0');
-            pc = unwindToHandler(pc - 1, e, StackTrace.current);
+            // Intentionally use deprecated type for Dart spec fidelity:
+            // co19 tests catch `on IntegerDivisionByZeroException`.
+            // ignore: deprecated_member_use
+            pc = unwindToHandler(pc - 1, IntegerDivisionByZeroException(),
+                StackTrace.current);
             continue;
           }
           vs.writeInt(vBase + a, vs.readInt(vBase + b) ~/ divisorD);
@@ -1651,10 +1652,11 @@ class DarticInterpreter {
           final c = decodeC(instr);
           final divisorM = vs.readInt(vBase + c);
           if (divisorM == 0) {
-            final e = UnsupportedError(
-                'Result of truncating division is Infinity: '
-                '${vs.readInt(vBase + b)} % 0');
-            pc = unwindToHandler(pc - 1, e, StackTrace.current);
+            // Intentionally use deprecated type for Dart spec fidelity:
+            // co19 tests catch `on IntegerDivisionByZeroException`.
+            // ignore: deprecated_member_use
+            pc = unwindToHandler(pc - 1, IntegerDivisionByZeroException(),
+                StackTrace.current);
             continue;
           }
           vs.writeInt(vBase + a, vs.readInt(vBase + b) % divisorM);
@@ -2087,10 +2089,7 @@ class DarticInterpreter {
                   break;
                 }
               } on Object catch (e, st) {
-                final ne = e is IntegerDivisionByZeroException
-                    ? UnsupportedError(e.toString())
-                    : e;
-                pc = unwindToHandler(pc - 1, ne, st);
+                pc = unwindToHandler(pc - 1, e, st);
                 continue;
               }
             }
@@ -2125,11 +2124,7 @@ class DarticInterpreter {
             rs.write(rBase + a, result);
           } on Object catch (e, st) {
             // Host function threw — route through the exception handler.
-            // Normalize deprecated IntegerDivisionByZeroException → UnsupportedError.
-            final ne = e is IntegerDivisionByZeroException
-                ? UnsupportedError(e.toString())
-                : e;
-            pc = unwindToHandler(pc - 1, ne, st);
+            pc = unwindToHandler(pc - 1, e, st);
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
@@ -2289,10 +2284,7 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  final ne = e is IntegerDivisionByZeroException
-                      ? UnsupportedError(e.toString())
-                      : e;
-                  pc = unwindToHandler(pc - 1, ne, st);
+                  pc = unwindToHandler(pc - 1, e, st);
                   continue;
                 }
               } else {
@@ -2310,10 +2302,7 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  final ne = e is IntegerDivisionByZeroException
-                      ? UnsupportedError(e.toString())
-                      : e;
-                  pc = unwindToHandler(pc - 1, ne, st);
+                  pc = unwindToHandler(pc - 1, e, st);
                   continue;
                 }
               }
@@ -2822,15 +2811,22 @@ class DarticInterpreter {
         // ── Collection Creation (0x90-0x92) ──
 
         case Op.createList: // CREATE_LIST A, B, C — refStack[A] = List from refStack[B..B+C-1]
+          // B bit15 (0x8000) = const flag → produce List.unmodifiable
           final a = decodeA(instr);
-          final b = decodeB(instr);
+          final rawB = decodeB(instr);
+          final isConst = (rawB & 0x8000) != 0;
+          final b = rawB & 0x7FFF;
           final c = decodeC(instr);
           final list = List<Object?>.generate(c, (i) => rs.read(rBase + b + i));
-          rs.write(rBase + a, list);
+          rs.write(
+              rBase + a, isConst ? List<Object?>.unmodifiable(list) : list);
 
         case Op.createMap: // CREATE_MAP A, B, C — refStack[A] = Map from C key/value pairs starting at B
+          // B bit15 (0x8000) = const flag → produce Map.unmodifiable
           final a = decodeA(instr);
-          final b = decodeB(instr);
+          final rawB = decodeB(instr);
+          final isConst = (rawB & 0x8000) != 0;
+          final b = rawB & 0x7FFF;
           final c = decodeC(instr);
           final map = <Object?, Object?>{};
           for (var i = 0; i < c; i++) {
@@ -2838,17 +2834,22 @@ class DarticInterpreter {
             final value = rs.read(rBase + b + i * 2 + 1);
             map[key] = value;
           }
-          rs.write(rBase + a, map);
+          rs.write(rBase + a,
+              isConst ? Map<Object?, Object?>.unmodifiable(map) : map);
 
         case Op.createSet: // CREATE_SET A, B, C — refStack[A] = Set from refStack[B..B+C-1]
+          // B bit15 (0x8000) = const flag → produce Set.unmodifiable
           final a = decodeA(instr);
-          final b = decodeB(instr);
+          final rawB = decodeB(instr);
+          final isConst = (rawB & 0x8000) != 0;
+          final b = rawB & 0x7FFF;
           final c = decodeC(instr);
           final set = <Object?>{};
           for (var i = 0; i < c; i++) {
             set.add(rs.read(rBase + b + i));
           }
-          rs.write(rBase + a, set);
+          rs.write(
+              rBase + a, isConst ? Set<Object?>.unmodifiable(set) : set);
 
         case Op.createRecord: // CREATE_RECORD A, B, C — refStack[A] = Record from shape cp.refs[C], fields at B
           final a = decodeA(instr);
@@ -3009,7 +3010,7 @@ class DarticInterpreter {
           if (receiver == null) {
             final error = NoSuchMethodError.withInvocation(
               null,
-              Invocation.setter(Symbol(name), value),
+              Invocation.setter(Symbol('$name='), value),
             );
             pc = unwindToHandler(pc - 1, error, StackTrace.current);
             continue;
@@ -3052,11 +3053,13 @@ class DarticInterpreter {
                 }
               }
             }
-            // noSuchMethod fallback. Use b (value reg) as dummy result to
-            // avoid overwriting the receiver register a.
-            final nsmInvocation = DarticInvocation.setter(Symbol(name), value);
+            // noSuchMethod fallback. Use register 0 (ITA scratch) as dummy
+            // result — both a (receiver) and b (RHS value) may still be live.
+            // The assignment expression must evaluate to o2 per Dart spec.
+            final nsmInvocation =
+                DarticInvocation.setter(Symbol('$name='), value);
             final (nsmPushed, nsmHandlerPC) =
-                dispatchNoSuchMethod(receiver, nsmInvocation, b);
+                dispatchNoSuchMethod(receiver, nsmInvocation, 0);
             if (nsmPushed) continue;
             pc = nsmHandlerPC;
             continue;
@@ -3075,10 +3078,11 @@ class DarticInterpreter {
               continue;
             }
           }
-          // noSuchMethod fallback for host objects. Use b as dummy result reg.
-          final invocation = DarticInvocation.setter(Symbol(name), value);
+          // noSuchMethod fallback for host objects. Use register 0 (ITA scratch)
+          // as dummy result — both a and b may still be live.
+          final invocation = DarticInvocation.setter(Symbol('$name='), value);
           final (pushed, handlerPC) =
-              dispatchNoSuchMethod(receiver, invocation, b);
+              dispatchNoSuchMethod(receiver, invocation, 0);
           if (pushed) continue;
           pc = handlerPC;
           continue;
@@ -3818,6 +3822,24 @@ class DarticInterpreter {
         final exType = extractType(exception, reg, hostTypeResolver);
         if (_subtypeChecker!.isSubtypeOf(exType, guardType)) {
           return handler;
+        }
+        // Fallback for host objects with multiple inheritance branches.
+        //
+        // extractType picks the "most specific" predicate match from the
+        // HostTypeResolver, but for types like IntegerDivisionByZeroException
+        // (extends UnsupportedError implements Exception), the most specific
+        // match (UnsupportedError) may be in a different branch than the
+        // guard type (Exception). Check the guard's classId directly against
+        // the host type resolver's registered predicates.
+        if (exception != null &&
+            exception is! DarticObject &&
+            exception is! DarticClosure &&
+            hostTypeResolver != null &&
+            guardType is DarticInterfaceType) {
+          if (hostTypeResolver!.matchesClassId(
+              exception, guardType.classId)) {
+            return handler;
+          }
         }
       }
     }

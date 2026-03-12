@@ -214,6 +214,23 @@ class DarticEngine {
   ///
   /// Throws [StateError] if not in the `loaded` state.
   /// Throws [ArgumentError] if [function] is not found in the export table.
+
+  /// Returns the declared parameter count for an exported function, or null
+  /// if [function] is not found in the export table.
+  ///
+  /// Throws [StateError] if not in the `loaded` state.
+  int? getExportParamCount(String function) {
+    if (_state != _EngineState.loaded) {
+      throw StateError(
+        'Cannot getExportParamCount() in state $_state. '
+        'loadBytecode() must be called first.',
+      );
+    }
+    final funcId = _module!.exportedFunctions[function];
+    if (funcId == null) return null;
+    return _module!.functions[funcId].paramCount;
+  }
+
   Object? call(String function, [List<Object?> args = const []]) {
     if (_state != _EngineState.loaded) {
       throw StateError(

@@ -752,12 +752,13 @@ class DarticVerifier {
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
-      // createList/createMap/createSet: A=ref, B=ref(typeArgs), C=count
+      // createList/createMap/createSet: A=ref, B=ref(start)|0x8000(const), C=count
+      // B bit15 is a const flag — mask it off before register bounds check.
       case Op.createList:
       case Op.createMap:
       case Op.createSet:
         _checkRef(a, rrc, 'A', prefix, pc, op);
-        _checkRef(b, rrc, 'B', prefix, pc, op);
+        _checkRef(b & 0x7FFF, rrc, 'B', prefix, pc, op);
 
       // stringInterp: A=ref, B=count (not register)
       case Op.stringInterp:
