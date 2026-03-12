@@ -2060,22 +2060,38 @@ class DarticInterpreter {
           final bx = decodeBx(instr);
 
           // Bridge interception: if the binding is an instance method and the
-          // receiver is a Bridge, try dispatching through DarticDispatch first.
+          // receiver is a DarticObjectHolder or DarticObject, try dispatching
+          // through DarticDispatch first. This handles dartic-compiled classes
+          // that override host methods (e.g., toString, operator==).
           final bindingInfo = module.bindingNames[bx];
           final methodName = bindingInfo.methodName;
           if (methodName != null && _activeDarticDispatch != null) {
             final receiver = rs.read(rBase + a + 1);
+            DarticObject? darticObj;
             if (receiver is DarticObjectHolder) {
+              darticObj = receiver.$darticObject;
+            } else if (receiver is DarticObject) {
+              darticObj = receiver;
+            }
+            if (darticObj != null) {
               final argCount = bindingInfo.argCount;
               final remaining = List<Object?>.generate(
                 argCount - 1, (i) => rs.read(rBase + a + 2 + i),
               );
-              final result = _activeDarticDispatch!.invoke(
-                receiver, receiver.$darticObject, methodName, remaining,
-              );
-              if (!identical(result, notOverridden)) {
-                rs.write(rBase + a, result);
-                break;
+              try {
+                final result = _activeDarticDispatch!.invoke(
+                  receiver!, darticObj, methodName, remaining,
+                );
+                if (!identical(result, notOverridden)) {
+                  rs.write(rBase + a, result);
+                  break;
+                }
+              } on Object catch (e, st) {
+                final ne = e is IntegerDivisionByZeroException
+                    ? UnsupportedError(e.toString())
+                    : e;
+                pc = unwindToHandler(pc - 1, ne, st);
+                continue;
               }
             }
           }
