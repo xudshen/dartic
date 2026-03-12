@@ -43,7 +43,7 @@
 | clearRange 是否修复 refStackDP 而非删除 | 直接删除 clearRange | 精确 liveness 分析的复杂度不值得；stale ref 影响可忽略 |
 | CALL reroute valIdx 起始位置 | 保持 valIdx=0 | value 栈无保留槽，与 `_routeArgs` 一致，agent 已验证 |
 | THROW stackTrace 方案 | 用 buildCurrentStackTrace() | catch 子句 st 来自 handler.stackTraceReg，非 Error.stackTrace |
-| Assert 消息方案 | 新增 ASSERT_MSG opcode (ABC) | 保留 ASSERT 向后兼容；避免 decompose 需要构造宿主 AssertionError |
+| Assert 消息方案 | 修改现有 ASSERT ABx→ABC 格式 | 用户决策：不新增 opcode，B=msg ref reg (0xFF=无消息) |
 | BOM 修复方案 | writeUint16 code units + 格式版本升级 | 从源头解决，不在反序列化端打补丁 |
 | DarticClosure.operator== 冲突 | 保留 main 的 boundReceiver + name-prefix 方案 | 比 worktree 的 isTearOff 更精确 |
 
@@ -60,11 +60,11 @@
 
 **方案:** 删除三处 `refStack.clearRange(rBase + handler.refStackDP, refStack.sp)` 调用，保留 sp 恢复。添加注释说明为何不 clear。
 
-- [ ] **Step 1: 写测试** — 编写 e2e 测试：try body 中声明 `int?` 变量（触发 BOX_INT），catch body 读该变量，验证值正确
-- [ ] **Step 2: 跑测试确认失败**
-- [ ] **Step 3: 在 interpreter.dart 中删除 3 处 clearRange，替换为注释说明**
-- [ ] **Step 4: analyze + 跑测试**
-- [ ] **Step 5: Commit**
+- [x] **Step 1: 写测试** — 编写 e2e 测试：try body 中声明 `int?` 变量（触发 BOX_INT），catch body 读该变量，验证值正确
+- [x] **Step 2: 跑测试确认失败**
+- [x] **Step 3: 在 interpreter.dart 中删除 3 处 clearRange，替换为注释说明**
+- [x] **Step 4: analyze + 跑测试**
+- [x] **Step 5: Commit** — daf6efa
 
 ---
 
@@ -88,15 +88,15 @@
 - in-place reroute 安全（refIdx <= 3+i 恒成立）
 - paramKinds 序列化已实现
 
-- [ ] **Step 1: 写测试** — e2e 测试：声明 `int Function(int)` 变量，赋值为一个实际参数为 value-stack int 的函数，通过变量间接调用
-- [ ] **Step 2: 跑测试确认失败**
-- [ ] **Step 3: 修改 `_compilePositionalArgsFromTypes` — 全部 box 到 ref**
-- [ ] **Step 4: 修改 named args 编译 — 全部 box 到 ref**
-- [ ] **Step 5: 在 `DarticFuncProto` 添加 `needsArgRerouting` 预计算**
-- [ ] **Step 6: 在 CALL handler 添加 reroute 逻辑**
-- [ ] **Step 7: analyze + 跑测试**
-- [ ] **Step 8: 跑完整单元测试套件确认无回归**
-- [ ] **Step 9: Commit**
+- [x] **Step 1: 写测试** — e2e 测试：声明 `int Function(int)` 变量，赋值为一个实际参数为 value-stack int 的函数，通过变量间接调用
+- [x] **Step 2: 跑测试确认失败**
+- [x] **Step 3: 修改 `_compilePositionalArgsFromTypes` — 全部 box 到 ref**
+- [x] **Step 4: 修改 named args 编译 — 全部 box 到 ref**
+- [x] **Step 5: 在 `DarticFuncProto` 添加 `needsArgRerouting` 预计算**
+- [x] **Step 6: 在 CALL handler 添加 reroute 逻辑**
+- [x] **Step 7: analyze + 跑测试**
+- [x] **Step 8: 跑完整单元测试套件确认无回归**
+- [x] **Step 9: Commit** — a6d2bad
 
 ---
 
@@ -113,10 +113,10 @@
 - DIV_INT/MOD_INT：删除 try-catch，改为 `if (divisor == 0)` 显式构造 `UnsupportedError`，`unwindToHandler(pc - 1, ...)`
 - SHL/SHR/USHR：保留 try-catch（ArgumentError 来自 host），仅修正 `pc → pc - 1`
 
-- [ ] **Step 1: 写测试** — e2e 测试：`try { 1 ~/ 0; } catch (e) { ... }` 验证捕获 UnsupportedError
-- [ ] **Step 2: 修改 DIV_INT、MOD_INT、SHL、SHR、USHR 共 5 处**
-- [ ] **Step 3: analyze + 跑测试**
-- [ ] **Step 4: Commit**
+- [x] **Step 1: 写测试** — e2e 测试：`try { 1 ~/ 0; } catch (e) { ... }` 验证捕获 UnsupportedError
+- [x] **Step 2: 修改 DIV_INT、MOD_INT、SHL、SHR、USHR 共 5 处**
+- [x] **Step 3: analyze + 跑测试**
+- [x] **Step 4: Commit** — daf6efa
 
 ---
 
@@ -133,13 +133,13 @@
 - THROW handler：删除 host re-throw hack，改为 `final throwSt = buildCurrentStackTrace(); pc = unwindToHandler(pc - 1, exception, throwSt);`
 - 需要在 CallStack 上添加 `funcIdAt(int depth)` 访问器
 
-- [ ] **Step 1: 添加 `CallStack.funcIdAt()` 方法**
-- [ ] **Step 2: 添加 `buildCurrentStackTrace()` 方法**
-- [ ] **Step 3: 修改 THROW handler — 删除 host re-throw，改用 buildCurrentStackTrace()**
-- [ ] **Step 4: 在 `engine.dart` 注册 `StackTrace.current` 绑定 — `_interpreter.buildCurrentStackTrace()`**
-- [ ] **Step 5: 写测试 — 验证 catch 块的 st.toString() 包含解释器函数名**
-- [ ] **Step 6: analyze + 跑测试**
-- [ ] **Step 7: Commit**
+- [x] **Step 1: 添加 `CallStack.funcIdAt()` 方法**
+- [x] **Step 2: 添加 `buildCurrentStackTrace()` 方法**
+- [x] **Step 3: 修改 THROW handler — 删除 host re-throw，改用 buildCurrentStackTrace()**
+- [x] **Step 4: 在 `engine.dart` 注册 `StackTrace.current` 绑定 — `_interpreter.buildCurrentStackTrace()`**
+- [x] **Step 5: 写测试 — 验证 catch 块的 st.toString() 包含解释器函数名**
+- [x] **Step 6: analyze + 跑测试**
+- [x] **Step 7: Commit** — 7652f93
 
 ---
 
@@ -168,12 +168,12 @@
 **5c: Pattern 注册**
 - `_registerCoreTypes` 中：注册 Pattern class，添加 String implements Pattern 超类型关系
 
-- [ ] **Step 1: 修改 HostTypeResolver — supertypeCount + 全扫描 + SuperTypeMap + typeParamCount**
-- [ ] **Step 2: 修改 SubtypeChecker — 两处修复**
-- [ ] **Step 3: 修改 compiler.dart — Pattern 注册**
-- [ ] **Step 4: 写测试 — `x is Pattern` where x is String**
-- [ ] **Step 5: analyze + 跑测试**
-- [ ] **Step 6: Commit**
+- [x] **Step 1: 修改 HostTypeResolver — supertypeCount + 全扫描 + SuperTypeMap + typeParamCount**
+- [x] **Step 2: 修改 SubtypeChecker — 两处修复**
+- [x] **Step 3: 修改 compiler.dart — Pattern 注册**
+- [x] **Step 4: 写测试 — `x is Pattern` where x is String**
+- [x] **Step 5: analyze + 跑测试**
+- [x] **Step 6: Commit** — 895f592
 
 ---
 
@@ -188,9 +188,9 @@
 
 **方案:** 在每个 `on Object catch (e, st)` 块中添加 `final ne = e is IntegerDivisionByZeroException ? UnsupportedError(e.toString()) : e;`
 
-- [ ] **Step 1: 修改 3 处 catch 块**
-- [ ] **Step 2: analyze + 跑测试**
-- [ ] **Step 3: Commit**
+- [x] **Step 1: 修改 3 处 catch 块**
+- [x] **Step 2: analyze + 跑测试**
+- [x] **Step 3: Commit** — daf6efa
 
 ---
 
@@ -213,16 +213,13 @@
 - 当无 message 时保留原有 ASSERT + 0xFFFFFFFF sentinel
 - 运行时：`case Op.assertMsg:` — 检查 condition，如果 false 则 `AssertionError(rs.read(rBase + b))` + unwindToHandler
 
-- [ ] **Step 1: 在 opcodes.dart 添加 `assertMsg = 0xA8`**
-- [ ] **Step 2: 在 op_metadata.dart 添加元数据**
-- [ ] **Step 3: 在 verifier.dart 添加 ASSERT_MSG**
-- [ ] **Step 4: 在 disassembler.dart 添加 ASSERT_MSG**
-- [ ] **Step 5: 写测试 — `assert(false, someVariable)` 验证 AssertionError 包含消息**
-- [ ] **Step 6: 跑测试确认失败**
-- [ ] **Step 7: 在 compiler_statements.dart 修改 _compileAssertStatement**
-- [ ] **Step 8: 在 interpreter.dart 添加 ASSERT_MSG handler**
-- [ ] **Step 9: analyze + 跑测试**
-- [ ] **Step 10: Commit**
+- [x] **Step 1-4: 修改 ASSERT 为 ABC 格式**（用户选择修改现有 opcode 而非新增，B=msg ref reg, 0xFF=no msg）
+- [x] **Step 5: 写测试 — `assert(false, someVariable)` 验证 AssertionError 包含消息**
+- [x] **Step 6: 跑测试确认失败**
+- [x] **Step 7: 在 compiler_statements.dart 修改 _compileAssertStatement**
+- [x] **Step 8: 在 interpreter.dart 修改 ASSERT handler**
+- [x] **Step 9: analyze + 跑测试**
+- [x] **Step 10: Commit** — 77d2f95
 
 ### Task 8: CALL_HOST DarticObject dispatch 扩展
 
@@ -236,9 +233,9 @@
 - 抽取 `darticObj` 变量：`DarticObjectHolder` → `receiver.$darticObject`，`DarticObject` → receiver 本身
 - dispatch 调用包裹 try-catch，异常路由到 unwindToHandler
 
-- [ ] **Step 1: 修改 CALL_HOST bridge interception 逻辑**
-- [ ] **Step 2: analyze + 跑测试**
-- [ ] **Step 3: Commit**
+- [x] **Step 1: 修改 CALL_HOST bridge interception 逻辑**
+- [x] **Step 2: analyze + 跑测试**
+- [x] **Step 3: Commit** — bc62235
 
 ---
 
@@ -251,10 +248,10 @@
 
 **方案:** 将 `callbackArity != null && (type == 'Function' || type == 'Function?')` 改为 `callbackArity != null`。改完后需重新 `dartic gen` 重新生成受影响的 .g.dart 文件。
 
-- [ ] **Step 1: 修改 isFunctionType getter**
-- [ ] **Step 2: 重新生成 .g.dart 绑定**
-- [ ] **Step 3: analyze + 跑测试**
-- [ ] **Step 4: Commit**
+- [x] **Step 1: 修改 isFunctionType getter** — `callbackArity != null`
+- [x] **Step 2: 重新生成 .g.dart 绑定**
+- [x] **Step 3: analyze + 跑测试**
+- [x] **Step 4: Commit** — 6856cfe
 
 ---
 
@@ -267,10 +264,10 @@
 
 **方案:** 添加 `final encoding = identical(args[2], darticAbsent) ? null : args[2] as Encoding?;` 并传给 `Uri.dataFromString`。改完后需重新 `dartic gen` 重新生成 uri_bindings.g.dart。
 
-- [ ] **Step 1: 修改 dart_core.yaml 中两处 dataFromString**
-- [ ] **Step 2: 重新生成 uri_bindings.g.dart**
-- [ ] **Step 3: analyze + 跑测试**
-- [ ] **Step 4: Commit**
+- [x] **Step 1: 修改 dart_core.yaml 中两处 dataFromString** — 添加 encoding 参数
+- [x] **Step 2: 重新生成 uri_bindings.g.dart**
+- [x] **Step 3: analyze + 跑测试**
+- [x] **Step 4: Commit** — 6856cfe
 
 ---
 
@@ -291,12 +288,12 @@
 - 格式版本 bump v5 → v6
 - 删除 worktree 中 deserializer 的 BOM hack（如有残留）
 
-- [ ] **Step 1: 写测试 — 包含 BOM 的字符串序列化/反序列化 roundtrip**
-- [ ] **Step 2: 修改 serializer.dart writeString**
-- [ ] **Step 3: 修改 deserializer.dart readString**
-- [ ] **Step 4: 修改 format.dart 版本号**
-- [ ] **Step 5: analyze + 跑测试**
-- [ ] **Step 6: Commit**
+- [x] **Step 1: 写测试 — 包含 BOM 的字符串序列化/反序列化 roundtrip**
+- [x] **Step 2: 修改 serializer.dart writeString** — writeUint16 per code unit
+- [x] **Step 3: 修改 deserializer.dart readString** — readUint16 per code unit
+- [x] **Step 4: 修改 format.dart 版本号** — v5→v6
+- [x] **Step 5: analyze + 跑测试**
+- [x] **Step 6: Commit** — 6856cfe
 
 ---
 
@@ -304,7 +301,7 @@
 
 全部 Task 完成后：
 
-- [ ] **跑完整单元测试套件** — 预期 3060+ pass
+- [x] **跑完整单元测试套件** — 3090 pass, 3 skip, 11 fail（11 全为 pre-existing）
 - [ ] **跑 co19 Language 回归** — 预期 ≥ 94.4%（不低于当前基线）
 - [ ] **更新 MEMORY.md** — 记录修复内容
 
