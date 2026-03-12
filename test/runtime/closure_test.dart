@@ -115,10 +115,10 @@ void main() {
       //
       // main (funcId=0): refRegCount=1 (r0 = closure)
       //   CLOSURE r0, funcId=1    — create closure from funcProto[1]
-      //   CALL A=0, B=0, C=0     — call closure in r0, result to v0
+      //   CALL A=0, B=0, C=0     — call closure in r0, result to r0 (ref)
       //   HALT
       //
-      // Expected: v0 = 42
+      // Expected: r0 (ref) = 42 (boxed int)
 
       final innerProto = DarticFuncProto(
         funcId: 1,
@@ -153,7 +153,8 @@ void main() {
       );
 
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 42);
+      // Op.call writes the return value to the REF stack (boxed).
+      expect(interp.refStack.read(0), 42);
     });
 
     test('LOAD_UPVALUE reads captured variable', () {
@@ -169,10 +170,10 @@ void main() {
       // main (funcId=0):
       //   BOX_INT r0, v0=99      — box 99 to ref stack
       //   CLOSURE r1, funcId=1   — create closure capturing r0
-      //   CALL A=1, B=1, C=0     — call closure in r1, result → v1
+      //   CALL A=1, B=1, C=0     — call closure in r1, result → r1 (ref)
       //   HALT
       //
-      // Expected: v1 = 99
+      // Expected: r1 (ref) = 99 (boxed int)
 
       final innerProto = DarticFuncProto(
         funcId: 1,
@@ -212,7 +213,8 @@ void main() {
       );
 
       interp.execute(module);
-      expect(interp.valueStack.readInt(1), 99);
+      // Op.call writes the return value to the REF stack (boxed).
+      expect(interp.refStack.read(1), 99);
     });
 
     test('STORE_UPVALUE writes to captured variable (mutation sharing)', () {
@@ -460,10 +462,10 @@ void main() {
       //   To write to callee's v0, write to absolute pos 2, which is
       //   main's v2 (beyond main's frame).
       //   LOAD_INT v2, 5         — callee's v0 = 5
-      //   CALL A=0, B=1, C=0     — result → v0
+      //   CALL A=0, B=1, C=0     — result → r0 (ref)
       //   HALT
       //
-      // Expected: v0 = 5 + 10 = 15
+      // Expected: r0 (ref) = 15 (boxed int)
 
       final innerProto = DarticFuncProto(
         funcId: 1,
@@ -505,7 +507,8 @@ void main() {
       );
 
       interp.execute(module);
-      expect(interp.valueStack.readInt(0), 15);
+      // Op.call writes the return value to the REF stack (boxed).
+      expect(interp.refStack.read(0), 15);
     });
   });
 }

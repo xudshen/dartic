@@ -184,6 +184,13 @@ extension on DarticCompiler {
     // Determine the result location (value or ref) from the static type.
     final resultLoc = _classifyType(expr.staticType);
 
+    // For value-target branches, compute the target StackKind from the
+    // ConditionalExpression's static type. This is needed as a fallback when
+    // a branch expression type is uninhabitable (e.g. Never from `null ?? v`).
+    final targetKind = resultLoc == ResultLoc.value
+        ? _classifyStackKind(expr.staticType)
+        : null;
+
     // Allocate the result register BEFORE compiling either branch.
     // Both branches write their result to this same register.
     final resultReg = resultLoc == ResultLoc.ref
@@ -198,7 +205,8 @@ extension on DarticCompiler {
     final jumpToElse = _emitter.emitJumpPlaceholder();
 
     // 3. Compile the then branch -> move result to resultReg.
-    _compileBranchInto(expr.then, resultReg, resultLoc);
+    _compileBranchInto(expr.then, resultReg, resultLoc,
+        targetKind: targetKind);
 
     // 4. JUMP -> end (placeholder, skip else branch).
     final jumpToEnd = _emitter.emitJumpPlaceholder();
@@ -207,7 +215,8 @@ extension on DarticCompiler {
     _emitter.patchJumpAsBx(jumpToElse, Op.jumpIfFalse, condReg, _emitter.currentPC);
 
     // 6. Compile the else branch -> move result to resultReg.
-    _compileBranchInto(expr.otherwise, resultReg, resultLoc);
+    _compileBranchInto(expr.otherwise, resultReg, resultLoc,
+        targetKind: targetKind);
 
     // 7. Backpatch end label.
     _emitter.patchJumpAsBx(jumpToEnd, Op.jump, 0, _emitter.currentPC);

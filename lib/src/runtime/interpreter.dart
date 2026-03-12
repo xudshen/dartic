@@ -156,6 +156,11 @@ class DarticInterpreter {
   /// Ensures the same DarticClosure produces the same Dart Function instance.
   final _closureProxyCache = Expando<Function>('closureProxy');
 
+  /// Dart Function proxy -> DarticClosure reverse lookup.
+  /// When host code stores a closure (e.g., in a List) and returns it later,
+  /// the proxy Function must be unwrapped back to the original DarticClosure.
+  final _closureReverseCache = Expando<DarticClosure>('closureReverse');
+
   /// Parallel stack of upvalue lists for each call frame. Stores the
   /// current frame's closure upvalues (or null for non-closure calls).
   /// Pushed on CALL/CALL_STATIC, popped on RETURN.
@@ -700,6 +705,7 @@ class DarticInterpreter {
               '${arg.funcProto.paramCount}'),
         };
         _closureProxyCache[arg] = cached;
+        _closureReverseCache[cached] = arg;
         args[i] = cached;
       }
     }
@@ -1911,7 +1917,14 @@ class DarticInterpreter {
         case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
           final a = decodeA(instr);
           final b = decodeB(instr);
-          final closure = rs.read(rBase + b) as DarticClosure;
+          final raw = rs.read(rBase + b);
+          // Unwrap proxy functions back to DarticClosure. This happens when
+          // closures escape to host collections (e.g., List.add wraps them via
+          // ClosureAdapter) and are later read back via host getters.
+          final closure = raw is DarticClosure
+              ? raw
+              : (raw is Function ? _closureReverseCache[raw] : null)
+                  ?? (raw as DarticClosure); // fallback: original cast error
           final callee = closure.funcProto;
 
           // Overflow and call depth checks.
@@ -2477,15 +2490,12 @@ class DarticInterpreter {
 
           // Write return value to caller's register.
           if (op == Op.returnVal) {
-            vs.writeInt(callerVSP + resReg, retVal);
-            // For closure calls (Op.call): also write boxed value to the
-            // ref stack. The caller may have allocated a ref result register
-            // because closure return kinds are unknown at compile time
-            // (e.g., generic closure returning type parameter T that was
-            // substituted to int at the call site). Only do this for
-            // Op.call to avoid corrupting ref stack slots in CALL_STATIC
-            // and CALL_VIRTUAL where the caller uses a value result register.
             if (decodeOp(code[retPC - 1]) == Op.call) {
+              // For closure calls (Op.call): write ONLY to the ref stack.
+              // Op.call's result register is always a ref register (closure
+              // return kinds are unknown at compile time). Writing to the
+              // value stack would corrupt an unrelated value register that
+              // happens to share the same index.
               final boxed =
                   switch (module.functions[calleeFuncId].returnKind) {
                 StackKind.boolDefault => retVal != 0,
@@ -2493,6 +2503,10 @@ class DarticInterpreter {
                 _ => retVal,
               };
               rs.write(callerRSP + resReg, boxed);
+            } else {
+              // CALL_STATIC / CALL_VIRTUAL: result register is a value
+              // register, so write there.
+              vs.writeInt(callerVSP + resReg, retVal);
             }
           } else {
             rs.write(callerRSP + resReg, retRef);
@@ -2504,6 +2518,19 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final gt = _globalTable!;
+          if (gt.isInitializing(bx) && gt.isFinal(bx)) {
+            // Re-entrant access to a late final during initialization — ADI.
+            // Dart spec: accessing a late final variable while its initializer
+            // is already running is a LateInitializationError.
+            // Non-final variables simply re-enter the initializer (no throw).
+            try {
+              throw DarticLateError(
+                  "Field '${gt.nameOf(bx)}' has not been initialized.");
+            } catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, st);
+              continue;
+            }
+          }
           if (!gt.isInitialized(bx)) {
             // Lazy initialization: run the initializer on first access.
             final initFuncId = module.globalInitializerIds[bx];

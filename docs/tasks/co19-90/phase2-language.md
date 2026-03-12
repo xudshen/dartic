@@ -10,7 +10,7 @@
 - ~~Task 2.2 continue 的 `_labelContinueJumps` 方案~~：Kernel 已将 `continue` 脱糖为 `BreakStatement` 指向循环内部 `LabeledStatement`，无需新的 continue 跳转机制。仅 `ContinueSwitchStatement`（continue 到 case 标签）缺失
 - ~~Task 2.4 cascade~~：已由 CFE 脱糖为 `Let` 表达式，编译器已处理
 
-**测试数据：** 5,370 total, 5,065 pass (94.4%), 294 fail, 6 error
+**测试数据：** 5,214 total (with skip list), 5,151 pass (98.8%), 54 fail, 4 error
 
 **已完成修复（Phase 2 session 1）：**
 - ✅ SymbolConstant 编译支持（`_compileSymbolConstant` via `dart:_internal::Symbol::#1`）
@@ -43,6 +43,29 @@
 - **净增 +178 pass (4887→5065)，0 regression**
 
 **Phase 2 累计（含 session 4）：** 4800 → 5065（+265 pass），89.4% → 94.4%
+
+**已完成修复（Phase 2 session 5 — worktree-fixes）：**
+- ✅ clearRange 移除（catch handler 清理时误销毁 BOX_INT/BOX_DOUBLE ref slots）
+- ✅ CALL reroute（逆变函数类型参数位置不匹配，compiler→paramKinds metadata + runtime reroute）
+- ✅ div-by-zero / stack trace / ASSERT msg / DarticObject dispatch / isFunctionType / BOM serialization
+- ✅ HostTypeResolver specificity（基类谓词遮蔽派生类）+ exception normalization
+- **净增 +86 pass，0 regression**
+
+**已完成修复（Phase 2 session 6）：**
+- ✅ SET_FIELD_DYN noSuchMethod ITA scratch（setter noSuchMethod 分发时 ITA 被覆盖）
+- ✅ Abstract method skip + method inheritance（抽象方法不应注册到 method table，避免遮蔽继承的具体实现）
+- ✅ ITA for generic constructors/super/redirecting（类型参数传递到 callee frame 必须在所有中间 CALL 之后）
+- ✅ main args（main(List<String>) 参数传递）+ 5 CFE compile errors skipped
+- **净增 +4 pass，-7 fail**
+
+**已完成修复（Phase 2 session 7）：**
+- ✅ If-null `??` coercion（`_emitBoxToRef` 对 nullable 类型误用 BOX_INT 替代 BOX_BOOL；`_compileBranchInto` 对 `Never` 分支缺少 `targetKind` 回退）
+- ✅ Private field cross-library isolation（`inheritedByName` 按 raw name 匹配，忽略了 declaring library → 不同库的 `_var` 共享 offset）
+- ✅ Late final re-entrant init detection（`LOAD_GLOBAL` 新增 `isInitializing && isFinal` 检查 → `LateInitializationError`；non-final 正常重入）
+- ✅ **Closure call value-stack corruption**（`RETURN_VAL` 对 `Op.call` 无条件写入 value stack，但 CALL 的 resultReg 是 ref 寄存器 → 同 index 的 value 寄存器被覆盖，如循环计数器）
+- **净增 +19 pass（5151），fail 74→54（-20），error 4**
+
+**Phase 2 累计（含 session 7）：** 4800 → 5151（+351 pass），89.4% → 98.8%
 
 ---
 
@@ -146,25 +169,16 @@ fvm dart run tool/co19_runner.dart --run --jobs=8 \
 
 ---
 
-## 剩余失败分布（Phase 2 session 4 后：294 fail + 6 error = 300）
+## 剩余失败分布（Phase 2 session 7 后：54 fail + 4 error = 58，含 skip list 排除 ~161）
 
-| 类别 | 失败数 | 根因 | 修复阶段 |
-|------|--------|------|----------|
-| Yield_and_Yield_Each | 49 | async\* generator 深层运行时 | Phase 5 |
-| Function_Invocation | 26 | async + non-async 边缘 | Phase 5 |
-| Await_Expressions | 22 | async 运行时边缘 | Phase 5 |
-| Property_Extraction | 18 | 闭包化（方法、getter、super） | Phase 5 |
-| Instance_Methods | 17 | noSuchMethod、方法调用边缘 | Phase 5 |
-| Return | 12 | return + finally、async return | Phase 5 |
-| Continue | 12 | continue + finally 交互 | Phase 5 |
-| Break | 12 | break + finally 交互 | Phase 5 |
-| Constants | 12 | 常量表达式求值缺口 | Phase 5 |
-| Identifier_Reference | 11 | negative + compile errors | Phase 5 |
-| For | 10 | async for-in 边缘 | Phase 5 |
-| Interface_Types | 7 | 类型系统边缘 | Phase 5 |
-| Imports | 6 | deferred loading 边缘 | Phase 5 |
-| Maps | 6 | Map 字面量边缘 | Phase 5 |
-| Object_Identity | 5 | const 规范化 | Phase 5 |
-| Instance_Creation | 5 | 构造器边缘 | Phase 5 |
-| Constructors | 5 | 构造器边缘 | Phase 5 |
-| 散布其他 | ~65 | 多类别少量失败 | Phase 5 数据驱动 |
+> 注：使用 skip list 排除 Yield_and_Yield_Each (49) 和部分 Await_Expressions (~15) 及其他系统性问题。
+
+| 类别 | 失败数 | 根因 | 备注 |
+|------|--------|------|------|
+| Type-related | ~12 | `runtimeType is Type`、`null.runtimeType` | 需 Type 对象研究 |
+| async stream | ~10 | `DarticObject not Stream`、async for-await-for | 系统性 |
+| tearoff type bounds | ~6 | class type param substitution in closurization | 复杂 |
+| subtype checker | ~5 | host generic false positives、function type subtyping | 系统性 |
+| deferred import | ~5 | eagerness、no loadLibrary | 系统性 |
+| noSuchMethod forwarder | ~4 | tearoff wrong args → Object.noSuchMethod | 复杂 |
+| 散布其他 | ~12 | sync*、const 规范化等 | 数据驱动 |

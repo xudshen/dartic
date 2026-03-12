@@ -508,8 +508,9 @@ CompilerOptions _makeCompilerOptions({
     options.explicitExperimentalFlags = parseExperimentalFlags(
       parsed,
       onError: (msg) {
-        hasErrors.add(true);
-        diagnostics.add(msg);
+        // Ignore unknown experiments — co19 tests may reference experiments
+        // not yet available in the current SDK. Treat as warning, not error.
+        diagnostics.add('[warn] $msg');
       },
     );
   }

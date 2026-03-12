@@ -1243,8 +1243,9 @@ class DarticCompiler {
   void _compileBranchInto(
     ir.Expression branchExpr,
     int targetReg,
-    ResultLoc targetLoc,
-  ) {
+    ResultLoc targetLoc, {
+    StackKind? targetKind,
+  }) {
     var (reg, loc) = _compileExpression(branchExpr);
     if (loc == ResultLoc.value && targetLoc == ResultLoc.ref) {
       reg = _emitBoxToRef(reg, _inferExprType(branchExpr));
@@ -1254,7 +1255,13 @@ class DarticCompiler {
       // ConditionalExpression targets a value-stack register. This occurs in
       // CFE-desugared `??` where the non-null branch is a VariableGet with
       // promotedType (e.g. int? promoted to int).
-      final kind = _inferNonNullStackKind(branchExpr);
+      var kind = _inferNonNullStackKind(branchExpr);
+      // For dead branches (e.g. `null ?? 2.0` where the else branch type is
+      // Never), _inferNonNullStackKind returns StackKind.ref. Fall back to
+      // the target kind derived from the ConditionalExpression's staticType.
+      if (kind == StackKind.ref && targetKind != null) {
+        kind = targetKind;
+      }
       reg = _ensureValue(reg, loc, kind);
       loc = ResultLoc.value;
     }
@@ -1286,7 +1293,18 @@ class DarticCompiler {
   /// Returns the ref-stack register containing the boxed value.
   int _emitBoxToRef(int valueReg, ir.DartType? type) {
     final refReg = _allocRefReg();
-    final kind = type != null ? _classifyStackKind(type) : StackKind.intVal;
+    // Strip nullability before classifying — nullable value types (bool?,
+    // int?, double?) have StackKind.ref but we need the underlying value kind
+    // to choose the correct BOX opcode (BOX_BOOL vs BOX_INT vs BOX_DOUBLE).
+    var classifyType = type;
+    if (classifyType is ir.InterfaceType &&
+        classifyType.nullability == ir.Nullability.nullable) {
+      classifyType = classifyType.withDeclaredNullability(
+          ir.Nullability.nonNullable);
+    }
+    final kind = classifyType != null
+        ? _classifyStackKind(classifyType)
+        : StackKind.intVal;
     switch (kind) {
       case StackKind.doubleVal:
         _emitter.emitABC(Op.boxDouble, refReg, valueReg, 0);

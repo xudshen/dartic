@@ -131,15 +131,35 @@ extension on DarticCompiler {
     // 4. Compile body.
     _compileStatement(stmt.body);
 
-    // 5. Compile update expressions.
+    // 5. Close captured loop vars for per-iteration variable semantics.
+    // Dart for-loops create distinct iteration variables for each iteration.
+    // CLOSE_UPVALUE must happen AFTER the body but BEFORE the update
+    // expressions (i++), so closures created in this iteration capture the
+    // current value, not the incremented one.
+    {
+      int minCapturedReg = -1;
+      for (final v in stmt.variables) {
+        final refReg = _capturedVarRefRegs[v];
+        if (refReg != null && prePromotionState.containsKey(v)) {
+          if (minCapturedReg == -1 || refReg < minCapturedReg) {
+            minCapturedReg = refReg;
+          }
+        }
+      }
+      if (minCapturedReg != -1) {
+        _emitter.emitABC(Op.closeUpvalue, minCapturedReg, 0, 0);
+      }
+    }
+
+    // 6. Compile update expressions.
     for (final update in stmt.updates) {
       _compileExpression(update);
     }
 
-    // 6. Sync captured loop vars back to their original value registers.
-    // If any loop variable was promoted to ref stack during condition/body/update
-    // compilation (due to closure capture), the BOX at loopStartPC re-boxes the
-    // stale original value register. Emit UNBOX to carry the updated value.
+    // 7. Sync captured loop vars back to their original value registers.
+    // After CLOSE_UPVALUE snapshots the value and update expressions modify it,
+    // UNBOX the updated value from the ref register back to the value register
+    // so the next iteration's BOX creates a fresh upvalue slot.
     for (final v in stmt.variables) {
       final pre = prePromotionState[v];
       if (pre == null) continue;
@@ -154,10 +174,10 @@ extension on DarticCompiler {
       _emitter.emitABC(unboxOp, valReg, refReg, 0);
     }
 
-    // 7. JUMP backward to loop start.
+    // 8. JUMP backward to loop start.
     _emitter.emitJumpAsBx(Op.jump, 0, loopStartPC);
 
-    // 8. Backpatch exit (if condition exists).
+    // 9. Backpatch exit (if condition exists).
     if (jumpToExit != null) {
       _emitter.patchJumpAsBx(jumpToExit, Op.jumpIfFalse, condReg!, _emitter.currentPC);
     }

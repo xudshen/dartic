@@ -71,6 +71,12 @@ class DarticGlobalTable {
         !identical(value, _initializing);
   }
 
+  /// Returns true if the global at [index] is currently being initialized.
+  bool isInitializing(int index) => identical(_slots[index], _initializing);
+
+  /// Returns the name of the global at [index].
+  String nameOf(int index) => _names[index];
+
   /// Marks the global as currently initializing (for cycle detection).
   void markInitializing(int index) {
     _slots[index] = _initializing;

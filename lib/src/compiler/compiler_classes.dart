@@ -101,14 +101,14 @@ extension on DarticCompiler {
       }
     }
 
-    // Build a name→layout map from inherited fields. Used below to detect
-    // mixin field replacement: when the CFE eliminates a mixin, it copies the
-    // mixin's fields into the application class. If a copied field has the
-    // same name as an inherited superclass field, it must REUSE the inherited
-    // offset (not allocate a new slot), because the Dart VM treats them as the
-    // same physical field and method bodies in the superclass may reference
-    // the inherited field directly.
-    final inheritedByName = <String, FieldLayout>{};
+    // Build a name→(layout, library) map from inherited fields. Used below to
+    // detect mixin field replacement: when the CFE eliminates a mixin, it
+    // copies the mixin's fields into the application class. If a copied field
+    // has the same name as an inherited superclass field, it must REUSE the
+    // inherited offset (not allocate a new slot), because the Dart VM treats
+    // them as the same physical field and method bodies in the superclass may
+    // reference the inherited field directly.
+    final inheritedByName = <String, (FieldLayout, ir.Library)>{};
     if (superClass != null) {
       _collectInheritedFieldsByName(superClass, inheritedByName);
     }
@@ -117,15 +117,26 @@ extension on DarticCompiler {
       if (field.isStatic) continue;
 
       // Check if this field replaces an inherited field of the same name.
-      final inherited = inheritedByName[field.name.text];
-      if (inherited != null) {
-        // Reuse the inherited field's offset — the mixin field replaces it.
-        fieldLayouts[field.getterReference] = inherited;
-        final setterRef = field.setterReference;
-        if (setterRef != null) {
-          fieldLayouts[setterRef] = inherited;
+      // Only reuse the inherited offset for mixin field replacement (same
+      // physical field copied by CFE). Private fields from different libraries
+      // are distinct symbols (`_var@lib0` ≠ `_var@lib1`) and must get their
+      // own memory slots — otherwise cross-library privacy is broken.
+      final inheritedEntry = inheritedByName[field.name.text];
+      if (inheritedEntry != null) {
+        final (inherited, inheritedLib) = inheritedEntry;
+        // Private fields with the same name but from different libraries
+        // are distinct — allocate a new slot instead of reusing.
+        final isDistinctPrivate = field.name.text.startsWith('_') &&
+            field.enclosingClass!.enclosingLibrary != inheritedLib;
+        if (!isDistinctPrivate) {
+          // Reuse the inherited field's offset — the mixin field replaces it.
+          fieldLayouts[field.getterReference] = inherited;
+          final setterRef = field.setterReference;
+          if (setterRef != null) {
+            fieldLayouts[setterRef] = inherited;
+          }
+          continue;
         }
-        continue;
       }
 
       // Late fields are forced to ref stack regardless of declared type,
@@ -590,14 +601,15 @@ extension on DarticCompiler {
   /// field has the same name as a superclass field, it should reuse the
   /// inherited offset.
   void _collectInheritedFieldsByName(
-      ir.Class cls, Map<String, FieldLayout> result) {
+      ir.Class cls, Map<String, (FieldLayout, ir.Library)> result) {
     final layouts = _instanceFieldLayouts[cls];
     if (layouts != null) {
       for (final field in cls.fields) {
         if (field.isStatic) continue;
         final layout = layouts[field.getterReference];
         if (layout != null) {
-          result.putIfAbsent(field.name.text, () => layout);
+          result.putIfAbsent(field.name.text,
+              () => (layout, field.enclosingClass!.enclosingLibrary));
         }
       }
     }
