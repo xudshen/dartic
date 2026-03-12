@@ -107,8 +107,10 @@ class Runner {
           mainExtraMethods: _nullIfEmpty(mainExtraMethods),
           customImports: _nullIfEmpty(config.customImports),
           ignoreForFile: config.customImports.isNotEmpty
-              ? _mergeIgnoreForFile(null)
-              : null,
+              ? _mergeIgnoreForFile(mainOverrides?.ignoreForFile)
+              : mainOverrides?.ignoreForFile,
+          bridge: classConfig.bridge,
+          methodOverrides: _nullIfEmpty(mainOverrides?.methodOverrides),
         );
 
         final fileName = _classToFileName(className);

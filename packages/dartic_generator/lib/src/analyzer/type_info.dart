@@ -70,6 +70,11 @@ class ParamInfo {
   /// is implicitly null.
   final String? defaultValueCode;
 
+  /// The type string with method-level type params preserved (for Bridge overrides).
+  /// null when identical to [type]. Used by Bridge generation to emit correct
+  /// param types for abstract generic method overrides (e.g. `E?` instead of `Object?`).
+  final String? fullType;
+
   ParamInfo({
     required this.name,
     required this.type,
@@ -79,6 +84,7 @@ class ParamInfo {
     this.callbackArity,
     this.callbackReturnType,
     this.defaultValueCode,
+    this.fullType,
   });
 
   /// Whether this parameter is a function type that needs a wrapper closure.
@@ -97,12 +103,17 @@ class MethodInfo {
   final bool isAbstract;
   final bool mustCallSuper;
 
+  /// Type parameter declaration string for generic methods (e.g. '<E>', '<K, V>').
+  /// null for non-generic methods.
+  final String? typeParamDecl;
+
   MethodInfo({
     required this.name,
     required this.paramTypes,
     required this.returnType,
     this.isAbstract = false,
     this.mustCallSuper = false,
+    this.typeParamDecl,
   }) : isVoid = returnType == 'void';
 
   /// 主 binding key（总参数数），如 'gcd#1'。

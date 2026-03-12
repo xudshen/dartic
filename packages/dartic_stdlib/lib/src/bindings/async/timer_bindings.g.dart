@@ -17,7 +17,7 @@ abstract final class TimerBindings {
       test: (o) => o is Timer,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:async::Timer::run#1', (args) { Timer.run(args[0] as void Function()); return null; });
+    ctx.registerBinding('dart:async::Timer::run#1', (args) { Timer.run(() => (args[0] as Function)()); return null; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

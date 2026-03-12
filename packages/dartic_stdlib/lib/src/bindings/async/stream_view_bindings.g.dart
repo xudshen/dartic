@@ -26,7 +26,7 @@ abstract final class StreamViewBindings {
         'map#1': (args) => (args[0] as StreamView).map((a) => (args[1] as Function)(a)),
         'asyncMap#1': (args) => (args[0] as StreamView).asyncMap((a) => (args[1] as Function)(a) as FutureOr),
         'asyncExpand#1': (args) => (args[0] as StreamView).asyncExpand((a) => (args[1] as Function)(a) as Stream?),
-        'handleError#2': (args) => (args[0] as StreamView).handleError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : args[2] as bool Function(dynamic)?),
+        'handleError#2': (args) => (args[0] as StreamView).handleError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         'expand#1': (args) => (args[0] as StreamView).expand((a) => (args[1] as Function)(a) as Iterable),
         'pipe#1': (args) => (args[0] as StreamView).pipe(args[1] as StreamConsumer),
         'transform#1': (args) => (args[0] as StreamView).transform(args[1] as StreamTransformer),

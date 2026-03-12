@@ -38,6 +38,7 @@ libraries:
 
       # ── Stream + _EmptyStream ───────────────────────────────────────────
       - name: Stream
+        bridge: true
         internal_types:
           - _EmptyStream
 
@@ -45,7 +46,8 @@ libraries:
       - StreamController
 
       # ── StreamSubscription ──────────────────────────────────────────────
-      - StreamSubscription
+      - name: StreamSubscription
+        bridge: true
 
       # ── StreamTransformer + internal types ──────────────────────────────
       - name: StreamTransformer

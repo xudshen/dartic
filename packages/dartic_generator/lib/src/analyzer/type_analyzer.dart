@@ -412,12 +412,36 @@ class TypeAnalyzer {
 
   /// Converts a [MethodElement] to [MethodInfo].
   MethodInfo _toMethodInfo(MethodElement method) {
+    // Build type parameter declaration for generic methods (e.g. <E>, <K, V>).
+    String? typeParamDecl;
+    Set<String>? methodTypeParamNames;
+    if (method.typeParameters.isNotEmpty) {
+      methodTypeParamNames = {
+        for (final tp in method.typeParameters)
+          if (tp.name != null) tp.name!,
+      };
+      final parts = method.typeParameters.map((tp) {
+        final bound = tp.bound;
+        if (bound != null && !bound.isDartCoreObject) {
+          return '${tp.name} extends ${_sanitizeType(bound)}';
+        }
+        return tp.name;
+      });
+      typeParamDecl = '<${parts.join(', ')}>';
+    }
+
+    // Return type preserves method-level type params so Bridge overrides
+    // have correct signatures (e.g. Stream<S> map<S>(...) not Stream map<S>(...)).
+    // Param types are always fully erased since the Bridge accepts wider types.
     return MethodInfo(
       name: method.name!,
-      paramTypes: _toParamInfoList(method.formalParameters),
-      returnType: _sanitizeType(method.returnType),
+      paramTypes: _toParamInfoList(method.formalParameters,
+          preserveTypeParams: methodTypeParamNames),
+      returnType: _sanitizeType(method.returnType,
+          preserveTypeParams: methodTypeParamNames),
       isAbstract: method.isAbstract,
       mustCallSuper: _hasMustCallSuper(method),
+      typeParamDecl: typeParamDecl,
     );
   }
 
@@ -453,7 +477,12 @@ class TypeAnalyzer {
   }
 
   /// Converts a list of [FormalParameterElement] to [ParamInfo] list.
-  List<ParamInfo> _toParamInfoList(List<FormalParameterElement> params) {
+  ///
+  /// [preserveTypeParams] — when provided, method-level type param names that
+  /// should be preserved in `fullType` (used for Bridge overrides of abstract
+  /// generic methods like `asFuture<E>([E? futureValue])`).
+  List<ParamInfo> _toParamInfoList(List<FormalParameterElement> params,
+      {Set<String>? preserveTypeParams}) {
     return params.map((p) {
       int? callbackArity;
       String? callbackReturnType;
@@ -469,15 +498,26 @@ class TypeAnalyzer {
         }
       }
 
+      final erasedType = _sanitizeType(p.type);
+
+      // Compute fullType with method type params preserved (for Bridge use).
+      String? fullType;
+      if (preserveTypeParams != null) {
+        final preserved =
+            _sanitizeType(p.type, preserveTypeParams: preserveTypeParams);
+        if (preserved != erasedType) fullType = preserved;
+      }
+
       return ParamInfo(
         name: p.name ?? '',
-        type: _sanitizeType(p.type),
+        type: erasedType,
         isOptional: p.isOptional,
         isNamed: p.isNamed,
         isRequired: p.isRequired,
         callbackArity: callbackArity,
         callbackReturnType: callbackReturnType,
         defaultValueCode: p.isOptional ? p.defaultValueCode : null,
+        fullType: fullType,
       );
     }).toList();
   }
@@ -496,28 +536,40 @@ class TypeAnalyzer {
 
   /// Sanitizes a [DartType] for use in generated code.
   ///
-  /// Type parameters (E, T, K, V, etc.) are replaced with their bound or
-  /// with a suitable runtime type. Function types with type parameters
-  /// are simplified to `Function`.
-  String _sanitizeType(DartType type) {
+  /// Type parameters are replaced with their bound or `dynamic`/`Object?`.
+  /// Function types with type parameters are simplified to `Function`.
+  ///
+  /// [preserveTypeParams] — when provided, type parameters whose names are in
+  /// this set are kept as-is instead of being erased. Used to preserve
+  /// method-level type params in return types so Bridge overrides have correct
+  /// signatures (e.g. `Stream<S> map<S>(...)`).
+  String _sanitizeType(DartType type, {Set<String>? preserveTypeParams}) {
     // Type parameter -> use its bound, or fall back to dynamic
     if (type is TypeParameterType) {
+      // Preserve method-level type params for Bridge return types.
+      if (preserveTypeParams != null &&
+          preserveTypeParams.contains(type.element.name)) {
+        final suffix =
+            type.nullabilitySuffix == NullabilitySuffix.question ? '?' : '';
+        return '${type.element.name}$suffix';
+      }
       final bound = type.bound;
       if (bound.isDartCoreObject || bound is DynamicType || bound is VoidType) {
         return type.nullabilitySuffix == NullabilitySuffix.question
             ? 'Object?'
             : 'dynamic';
       }
-      return _sanitizeType(bound);
+      return _sanitizeType(bound, preserveTypeParams: preserveTypeParams);
     }
 
-    // Function type -> simplify to Function
+    // Function type -> simplify to Function if it contains erasable type params
     if (type is FunctionType) {
-      // Check if any param or return uses type parameters
-      final hasTypeParam = type.typeParameters.isNotEmpty ||
-          type.formalParameters.any((p) => _containsTypeParam(p.type)) ||
-          _containsTypeParam(type.returnType);
-      if (hasTypeParam) {
+      // Check if any param or return uses erasable type parameters
+      final hasErasableTypeParam = type.typeParameters.isNotEmpty ||
+          type.formalParameters.any(
+              (p) => _containsErasableTypeParam(p.type, preserveTypeParams)) ||
+          _containsErasableTypeParam(type.returnType, preserveTypeParams);
+      if (hasErasableTypeParam) {
         return type.nullabilitySuffix == NullabilitySuffix.question
             ? 'Function?'
             : 'Function';
@@ -527,10 +579,14 @@ class TypeAnalyzer {
 
     // Interface type with type arguments -> recursively sanitize type args
     if (type is InterfaceType && type.typeArguments.isNotEmpty) {
-      if (type.typeArguments.any(_containsTypeParam)) {
+      if (type.typeArguments
+          .any((t) => _containsErasableTypeParam(t, preserveTypeParams))) {
         final name = type.element.name;
         // Recursively sanitize each type argument
-        final sanitizedArgs = type.typeArguments.map(_sanitizeType).toList();
+        final sanitizedArgs = type.typeArguments
+            .map((t) =>
+                _sanitizeType(t, preserveTypeParams: preserveTypeParams))
+            .toList();
         // If all args become 'dynamic', use the raw type name
         final allDynamic = sanitizedArgs.every((a) => a == 'dynamic');
         if (allDynamic) {
@@ -549,16 +605,23 @@ class TypeAnalyzer {
     return type.getDisplayString();
   }
 
-  /// Returns true if a [DartType] contains (or is) a type parameter.
-  bool _containsTypeParam(DartType type) {
-    if (type is TypeParameterType) return true;
+  /// Returns true if [type] contains a type parameter that should be erased.
+  ///
+  /// Type params in [preserve] are NOT considered erasable, so types that only
+  /// contain preserved params return false.
+  bool _containsErasableTypeParam(DartType type, Set<String>? preserve) {
+    if (type is TypeParameterType) {
+      return !(preserve?.contains(type.element.name) ?? false);
+    }
     if (type is FunctionType) {
       return type.typeParameters.isNotEmpty ||
-          type.formalParameters.any((p) => _containsTypeParam(p.type)) ||
-          _containsTypeParam(type.returnType);
+          type.formalParameters
+              .any((p) => _containsErasableTypeParam(p.type, preserve)) ||
+          _containsErasableTypeParam(type.returnType, preserve);
     }
     if (type is InterfaceType) {
-      return type.typeArguments.any(_containsTypeParam);
+      return type.typeArguments
+          .any((t) => _containsErasableTypeParam(t, preserve));
     }
     return false;
   }
