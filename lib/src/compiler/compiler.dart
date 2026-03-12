@@ -650,6 +650,10 @@ class DarticCompiler {
         : -1;
     final streamCid =
         register(ct.streamClass, 'Stream', superClassId: objectCid);
+    final patternClass = ct.index.tryGetClass('dart:core', 'Pattern');
+    final patternCid = patternClass != null
+        ? register(patternClass, 'Pattern', superClassId: objectCid)
+        : -1;
 
     // Set up supertype closures (transitive supertypeIds).
     _classInfos[objectCid].supertypeIds.add(objectCid);
@@ -683,6 +687,11 @@ class DarticCompiler {
       _classInfos[stringCid].supertypeIds.add(comparableCid);
     }
     _classInfos[streamCid].supertypeIds.addAll({streamCid, objectCid});
+    if (patternCid >= 0) {
+      _classInfos[patternCid].supertypeIds.addAll({patternCid, objectCid});
+      // String implements Pattern<String>
+      _classInfos[stringCid].supertypeIds.add(patternCid);
+    }
 
     // SuperTypeMap: generic supertype arg mappings for subtype checking.
     // List<E> extends Iterable<E>

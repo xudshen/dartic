@@ -311,6 +311,9 @@ class SubtypeChecker {
   ) {
     // Same classId → check type arguments directly.
     if (sub.classId == sup.classId) {
+      // If the supertype has no type args (raw type), it matches regardless
+      // of the sub's type args (e.g. `List<int> is List` → true).
+      if (sup.typeArgs.isEmpty) return true;
       return _typeArgsMatch(sub.typeArgs, sup.typeArgs);
     }
 
@@ -326,8 +329,10 @@ class SubtypeChecker {
     // Generic supertype check: resolve type arg mapping via SuperTypeMap.
     final mapping = classInfo.superTypeArgs[sup.classId];
     if (mapping == null) {
-      // No mapping available — fall back to supertypeIds only.
-      return sup.typeArgs.isEmpty;
+      // No mapping available — if all supertype args are top types
+      // (dynamic/void/Object?), the subtype relation holds because any type
+      // is a subtype of a top type. Otherwise, we can't prove the relation.
+      return sup.typeArgs.every(_isTopType);
     }
 
     // Arity mismatch: mapping should have same length as supertype's type args.

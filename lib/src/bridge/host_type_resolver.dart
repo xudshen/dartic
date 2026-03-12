@@ -12,6 +12,7 @@
 /// the same `runtimeType` are O(1).
 library;
 
+import '../compiler/type_template.dart';
 import '../runtime/class_info.dart';
 import '../runtime/dartic_type.dart';
 
@@ -50,6 +51,11 @@ class _ResolvedEntry {
   final bool Function(Object)? test;
   final int classId;
   final int typeArgCount;
+
+  /// Number of supertypeIds for this entry's class. Used by Layer 3 to
+  /// pick the most specific predicate match: a class with more supertypes
+  /// is more specific (deeper in the hierarchy).
+  int supertypeCount = 0;
 }
 
 /// Resolves raw host VM objects to their dartic [DarticType].
@@ -124,6 +130,18 @@ class HostTypeResolver {
       var cls = nameToInfo[shortName];
       if (cls == null) {
         // Host class not in module — create a DarticClassInfo entry.
+        // Inherit typeParamCount from the first known superclass if available.
+        var typeParamCount = 0;
+        if (p.superclasses != null) {
+          for (final superFqn in p.superclasses!) {
+            final superShort = _extractShortName(superFqn);
+            final superInfo = nameToInfo[superShort];
+            if (superInfo != null && superInfo.typeParamCount > 0) {
+              typeParamCount = superInfo.typeParamCount;
+              break;
+            }
+          }
+        }
         final classId = classes.length;
         cls = DarticClassInfo(
           classId: classId,
@@ -131,7 +149,7 @@ class HostTypeResolver {
           superClassId: objectCid,
           refFieldCount: 0,
           valueFieldCount: 0,
-          typeParamCount: 0,
+          typeParamCount: typeParamCount,
         );
         classes.add(cls);
         nameToInfo[shortName] = cls;
@@ -178,10 +196,31 @@ class HostTypeResolver {
             final superInfo = nameToInfo[superShort];
             if (superInfo != null) {
               cls.supertypeIds.addAll(superInfo.supertypeIds);
+
+              // SuperTypeMap identity mapping: when a generic superclass has
+              // type parameters, create an identity mapping so that the
+              // subtype checker can resolve type args through the hierarchy.
+              if (superInfo.typeParamCount > 0 &&
+                  !cls.superTypeArgs.containsKey(superInfo.classId)) {
+                cls.superTypeArgs[superInfo.classId] = [
+                  for (var i = 0; i < superInfo.typeParamCount; i++)
+                    TypeParameterTemplate(
+                        index: i, isFunctionTypeParam: false),
+                ];
+              }
             }
           }
         }
         progress = true;
+      }
+    }
+
+    // Pass 3: backfill supertypeCount into resolved entries.
+    // This count is used by Layer 3 to pick the most specific predicate
+    // match among multiple candidates.
+    for (final entry in _resolved) {
+      if (entry.classId >= 0 && entry.classId < classes.length) {
+        entry.supertypeCount = classes[entry.classId].supertypeIds.length;
       }
     }
   }
@@ -192,8 +231,9 @@ class HostTypeResolver {
   ///   1. Exact `runtimeType` cache — O(1).
   ///   2. Exact `runtimeType` match against registered types — always prefers
   ///      the most specific type regardless of registration order.
-  ///   3. Predicate scan (reverse traversal) — fallback for polymorphic types
-  ///      where exact match doesn't work (e.g. generic List<int>).
+  ///   3. Predicate scan — fallback for polymorphic types where exact match
+  ///      doesn't work (e.g. generic `List<int>`). Picks the most specific
+  ///      match by supertype count.
   DarticType? resolve(Object value, TypeRegistry registry) {
     final type = value.runtimeType;
     if (_cache.containsKey(type)) return _cache[type];
@@ -212,15 +252,24 @@ class HostTypeResolver {
       }
     }
 
-    // Layer 3: predicate scan — reverse traversal so later (more-specific)
-    // registrations take priority for polymorphic types.
-    for (var i = _resolved.length - 1; i >= 0; i--) {
-      final entry = _resolved[i];
+    // Layer 3: predicate scan — scan ALL matching predicates, pick the most
+    // specific one (highest supertypeCount = deepest in the hierarchy).
+    // This prevents registration order from affecting which type wins when
+    // a base-class predicate (e.g. `is Exception`) also matches a more-
+    // specific type (e.g. FormatException).
+    _ResolvedEntry? bestMatch;
+    for (final entry in _resolved) {
       if (entry.test != null && entry.test!(value)) {
-        final result = _intern(entry, bottom, registry);
-        _cache[type] = result;
-        return result;
+        if (bestMatch == null ||
+            entry.supertypeCount > bestMatch.supertypeCount) {
+          bestMatch = entry;
+        }
       }
+    }
+    if (bestMatch != null) {
+      final result = _intern(bestMatch, bottom, registry);
+      _cache[type] = result;
+      return result;
     }
     _cache[type] = null; // negative cache
     return null;
