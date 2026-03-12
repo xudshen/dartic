@@ -783,9 +783,10 @@ class DarticVerifier {
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
-      // assert_: A=val (condition bool on value stack), Bx=refs pool
+      // assert_: A=val (condition bool), B=ref (message, 0xFF=none)
       case Op.assert_:
         _checkVal(a, vrc, 'A', prefix, pc, op);
+        if (b != 0xFF) _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // storeSuperArgs: A=argCount (immediate), B=ref(firstArg), C unused
       // Compiler packs args into consecutive ref registers starting at B.

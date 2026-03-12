@@ -645,12 +645,6 @@ class DarticDisassembler {
               ? _formatRefTypeAnnotation(cp.getRef(bx), module)
               : '<out of bounds>',
         ),
-      Op.assert_ => (
-          '#',
-          bx < cp.refCount
-              ? _formatRefAnnotation(cp.getRef(bx), module)
-              : '<out of bounds>',
-        ),
       Op.loadGlobal => ('#', 'global[$bx]'),
       Op.storeGlobal => ('#', 'global[$bx]'),
       Op.initAsync => (

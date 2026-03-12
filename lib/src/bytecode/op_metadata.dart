@@ -177,7 +177,7 @@ const Map<int, OpMeta> opTable = {
   // ── Exception & Assert ──
   Op.throw_: OpMeta('THROW', InstrFormat.abc),
   Op.rethrow_: OpMeta('RETHROW', InstrFormat.abc),
-  Op.assert_: OpMeta('ASSERT', InstrFormat.aBx),
+  Op.assert_: OpMeta('ASSERT', InstrFormat.abc),
   Op.nullCheck: OpMeta('NULL_CHECK', InstrFormat.abc),
 
   // ── System ──

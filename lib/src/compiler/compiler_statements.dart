@@ -522,20 +522,17 @@ extension on DarticCompiler {
     var (condReg, condLoc) = _compileExpression(stmt.condition);
     condReg = _ensureBoolValue(condReg, condLoc);
 
-    // Determine message constant pool index.
-    // 0xFFFFFFFF = sentinel for "no message" (max 32-bit Bx).
-    int msgIdx = 0xFFFFFFFF;
+    // Compile the message expression to a ref register.
+    // 0xFF sentinel means "no message".
+    int msgReg = 0xFF;
     if (stmt.message != null) {
-      final msgExpr = stmt.message!;
-      if (msgExpr is ir.StringLiteral) {
-        msgIdx = _constantPool.addRef(msgExpr.value);
-      }
-      // For non-literal messages, treat as "no message" (Phase 3+ can
-      // handle lazy evaluation).
+      final (reg, loc) = _compileExpression(stmt.message!);
+      msgReg = _boxToRefIfValue(reg, loc, _inferExprType(stmt.message!));
     }
 
-    // Emit ASSERT A, Bx -- instruction checks condition and throws if false.
-    _emitter.emitABx(Op.assert_, condReg, msgIdx);
+    // Emit ASSERT A, B, _ (ABC format) — condition in value reg A,
+    // message in ref reg B (0xFF = no message).
+    _emitter.emitABC(Op.assert_, condReg, msgReg, 0);
   }
 
   // ── Yield statement ──

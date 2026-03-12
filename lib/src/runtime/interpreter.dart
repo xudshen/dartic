@@ -2652,12 +2652,11 @@ class DarticInterpreter {
           final stackTrace = b > 0 ? rs.read(rBase + b) : null;
           pc = unwindToHandler(pc - 1, exception, stackTrace);
 
-        case Op.assert_: // ASSERT A, Bx — if valueStack[A] == 0 → throw AssertionError
+        case Op.assert_: // ASSERT A, B, _ — if valueStack[A] == 0 → throw AssertionError
           final a = decodeA(instr);
-          final bx = decodeBx(instr);
+          final b = decodeB(instr);
           if (vs.readInt(vBase + a) == 0) {
-            final message =
-                bx != 0xFFFFFFFF ? module.constantPool.getRef(bx) : null;
+            final message = b != 0xFF ? rs.read(rBase + b) : null;
             final exception = AssertionError(message?.toString());
             pc = unwindToHandler(
                 pc - 1, exception, buildCurrentStackTrace());

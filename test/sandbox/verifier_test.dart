@@ -774,18 +774,16 @@ void main() {
     // ── C1 fix: assert_ uses value stack ──
 
     test('assert_ register A is checked against valueRegCount', () {
-      // ASSERT A=5, Bx=0 — A should be on value stack.
+      // ASSERT A=5, B=0xFF, C=0 — A should be on value stack.
       // valueRegCount=2, so reg 5 is out of bounds.
       final bytecode = Uint64List.fromList([
-        encodeAsBx(Op.assert_, 5, 0),
+        encodeABC(Op.assert_, 5, 0xFF, 0),
         encodeAx(Op.halt, 0),
       ]);
-      final pool = ConstantPool()..addRef('assertion message');
       final module = makeModule(
         bytecode: bytecode,
         valueRegCount: 2,
         refRegCount: 8,
-        constantPool: pool,
       );
       expect(verifier.verify(module), isFalse);
       expect(
@@ -798,15 +796,13 @@ void main() {
 
     test('assert_ valid when A within valueRegCount', () {
       final bytecode = Uint64List.fromList([
-        encodeAsBx(Op.assert_, 0, 0),
+        encodeABC(Op.assert_, 0, 0xFF, 0),
         encodeAx(Op.halt, 0),
       ]);
-      final pool = ConstantPool()..addRef('ok');
       final module = makeModule(
         bytecode: bytecode,
         valueRegCount: 2,
         refRegCount: 2,
-        constantPool: pool,
       );
       expect(verifier.verify(module), isTrue);
     });
