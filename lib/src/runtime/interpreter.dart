@@ -994,11 +994,11 @@ class DarticInterpreter {
       final handler = _findHandler(
           funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
-        refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
-        // Restore sp to the function's full register count (not
-        // refStackDP) so that catch-body registers and subsequent
-        // CALL instructions allocate callee frames AFTER the
-        // caller's entire register space — preventing overlap.
+        // NOTE: Do NOT clearRange ref registers here. Variables declared
+        // at function scope may have BOX_INT/BOX_DOUBLE results in ref
+        // slots allocated during the try body. Clearing would null them
+        // out, causing catch body reads to fail. Stale refs are harmless
+        // — GC reclaims them when the frame pops.
         valueStack.sp = vBase + funcProto.valueRegCount;
         refStack.sp = rBase + funcProto.refRegCount;
         refStack.write(rBase + handler.exceptionReg, exception);
@@ -1147,10 +1147,8 @@ class DarticInterpreter {
       final handler = _findHandler(
           funcProto, pc - 1, exception, module, rBase, refStack);
       if (handler != null) {
-        refStack.clearRange(rBase + handler.refStackDP, refStack.sp);
-        // Restore sp to the function's full register count (not
-        // refStackDP) so that catch-body registers and subsequent
-        // CALL instructions allocate callee frames correctly.
+        // NOTE: Do NOT clearRange ref registers here — see comment in
+        // async completer handler above.
         valueStack.sp = vBase + funcProto.valueRegCount;
         refStack.sp = rBase + funcProto.refRegCount;
         refStack.write(rBase + handler.exceptionReg, exception);
@@ -1345,10 +1343,9 @@ class DarticInterpreter {
         final handler = _findHandler(
             funcProto, searchPC, exception, module, rBase, rs);
         if (handler != null) {
-          rs.clearRange(rBase + handler.refStackDP, rs.sp);
-          // Restore sp to the function's full register count so that
-          // catch-body CALLs allocate callee frames after the full
-          // caller frame, preventing register overlap.
+          // NOTE: Do NOT clearRange ref registers — variables declared
+          // at function scope may have BOX_INT/BOX_DOUBLE inside the
+          // try body but be read in the catch body.
           vs.sp = vBase + funcProto.valueRegCount;
           rs.sp = rBase + funcProto.refRegCount;
           rs.write(rBase + handler.exceptionReg, exception);
@@ -1617,25 +1614,29 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          try {
-            vs.writeInt(
-                vBase + a, vs.readInt(vBase + b) ~/ vs.readInt(vBase + c));
-          } on UnsupportedError catch (e, st) {
-            pc = unwindToHandler(pc, e, st);
+          final divisorD = vs.readInt(vBase + c);
+          if (divisorD == 0) {
+            final e = UnsupportedError(
+                'Result of truncating division is Infinity: '
+                '${vs.readInt(vBase + b)} ~/ 0');
+            pc = unwindToHandler(pc - 1, e, StackTrace.current);
             continue;
           }
+          vs.writeInt(vBase + a, vs.readInt(vBase + b) ~/ divisorD);
 
         case Op.modInt: // MOD_INT A, B, C
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          try {
-            vs.writeInt(
-                vBase + a, vs.readInt(vBase + b) % vs.readInt(vBase + c));
-          } on UnsupportedError catch (e, st) {
-            pc = unwindToHandler(pc, e, st);
+          final divisorM = vs.readInt(vBase + c);
+          if (divisorM == 0) {
+            final e = UnsupportedError(
+                'Result of truncating division is Infinity: '
+                '${vs.readInt(vBase + b)} % 0');
+            pc = unwindToHandler(pc - 1, e, StackTrace.current);
             continue;
           }
+          vs.writeInt(vBase + a, vs.readInt(vBase + b) % divisorM);
 
         case Op.negInt: // NEG_INT A, B
           final a = decodeA(instr);
@@ -1673,7 +1674,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc, e, st);
+            pc = unwindToHandler(pc - 1, e, st);
             continue;
           }
 
@@ -1685,7 +1686,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc, e, st);
+            pc = unwindToHandler(pc - 1, e, st);
             continue;
           }
 
@@ -1697,7 +1698,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc, e, st);
+            pc = unwindToHandler(pc - 1, e, st);
             continue;
           }
 
@@ -2046,7 +2047,11 @@ class DarticInterpreter {
             rs.write(rBase + a, result);
           } on Object catch (e, st) {
             // Host function threw — route through the exception handler.
-            pc = unwindToHandler(pc - 1, e, st);
+            // Normalize deprecated IntegerDivisionByZeroException → UnsupportedError.
+            final ne = e is IntegerDivisionByZeroException
+                ? UnsupportedError(e.toString())
+                : e;
+            pc = unwindToHandler(pc - 1, ne, st);
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
@@ -2206,7 +2211,10 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  final ne = e is IntegerDivisionByZeroException
+                      ? UnsupportedError(e.toString())
+                      : e;
+                  pc = unwindToHandler(pc - 1, ne, st);
                   continue;
                 }
               } else {
@@ -2224,7 +2232,10 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  final ne = e is IntegerDivisionByZeroException
+                      ? UnsupportedError(e.toString())
+                      : e;
+                  pc = unwindToHandler(pc - 1, ne, st);
                   continue;
                 }
               }
