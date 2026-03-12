@@ -1,6 +1,5 @@
 library;
 
-import 'dart:convert';
 import 'dart:typed_data';
 
 import '../compiler/type_template.dart';
@@ -472,11 +471,14 @@ class _ByteReader {
   }
 
   String readString() {
-    final byteLen = readUint32();
-    _checkBounds(byteLen);
-    final view = Uint8List.sublistView(_bytes, _offset, _offset + byteLen);
-    _offset += byteLen;
-    return utf8.decode(view);
+    final codeUnitCount = readUint32();
+    _checkBounds(codeUnitCount * 2);
+    final codeUnits = Uint16List(codeUnitCount);
+    for (var i = 0; i < codeUnitCount; i++) {
+      codeUnits[i] = _bd.getUint16(_offset, Endian.little);
+      _offset += 2;
+    }
+    return String.fromCharCodes(codeUnits);
   }
 
   void _checkBounds(int needed) {

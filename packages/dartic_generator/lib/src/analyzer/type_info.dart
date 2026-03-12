@@ -82,9 +82,10 @@ class ParamInfo {
   });
 
   /// Whether this parameter is a function type that needs a wrapper closure.
-  bool get isFunctionType =>
-      callbackArity != null &&
-      (type == 'Function' || type == 'Function?');
+  /// Any parameter with a known callbackArity needs wrapping — dartic closures
+  /// have runtime type `Object? Function(Object?, ...)` and cannot be cast to
+  /// concrete function types like `bool Function(int)`.
+  bool get isFunctionType => callbackArity != null;
 }
 
 /// 实例方法信息。

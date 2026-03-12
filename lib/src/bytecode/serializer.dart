@@ -1,6 +1,5 @@
 library;
 
-import 'dart:convert';
 import 'dart:typed_data';
 
 import '../compiler/type_template.dart';
@@ -387,9 +386,10 @@ class _ByteWriter {
   }
 
   void writeString(String value) {
-    final encoded = utf8.encode(value);
-    writeUint32(encoded.length);
-    _builder.add(encoded);
+    writeUint32(value.length);
+    for (var i = 0; i < value.length; i++) {
+      writeUint16(value.codeUnitAt(i));
+    }
   }
 
   Uint8List toBytes() => _builder.toBytes();

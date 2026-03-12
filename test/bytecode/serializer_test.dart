@@ -536,4 +536,23 @@ void main() {
       );
     });
   });
+
+  group('round-trip: BOM string', () {
+    test('string with leading BOM survives serialization roundtrip', () {
+      const bomString = '\uFEFF hello';
+      final pool = ConstantPool();
+      pool.addRef(bomString);
+
+      final module = DarticModule(
+        functions: [],
+        constantPool: pool,
+        entryFuncId: 0,
+      );
+      final bytes = serializer.serialize(module);
+      final restored = deserializer.deserialize(bytes);
+
+      expect(restored.constantPool.refs[0], bomString);
+      expect((restored.constantPool.refs[0] as String).codeUnitAt(0), 0xFEFF);
+    });
+  });
 }

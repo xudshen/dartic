@@ -17,7 +17,7 @@ abstract final class NumBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
     );
-    ctx.registerBinding('dart:core::num::parse#2', (args) => num.parse(args[0] as String, identical(args[1], darticAbsent) ? null : args[1] as num Function(String)?));
+    ctx.registerBinding('dart:core::num::parse#2', (args) => num.parse(args[0] as String, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)));
     ctx.registerBinding('dart:core::num::tryParse#1', (args) => num.tryParse(args[0] as String));
   }
 

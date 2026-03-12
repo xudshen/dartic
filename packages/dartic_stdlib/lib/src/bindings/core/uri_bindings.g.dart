@@ -110,6 +110,7 @@ abstract final class UriBindings {
         'dataFromString#5': (args) => Uri.dataFromString(
             args[0] as String,
             mimeType: identical(args[1], darticAbsent) ? null : args[1] as String,
+            encoding: identical(args[2], darticAbsent) ? null : args[2] as Encoding?,
             parameters: identical(args[3], darticAbsent) ? null : (args[3] as Map).cast<String, String>(),
             base64: identical(args[4], darticAbsent) ? false : args[4] as bool,
         ),
@@ -164,6 +165,7 @@ abstract final class UriBindings {
         'dataFromString#5': (args) => Uri.dataFromString(
             args[0] as String,
             mimeType: identical(args[1], darticAbsent) ? null : args[1] as String,
+            encoding: identical(args[2], darticAbsent) ? null : args[2] as Encoding?,
             parameters: identical(args[3], darticAbsent) ? null : (args[3] as Map).cast<String, String>(),
             base64: identical(args[4], darticAbsent) ? false : args[4] as bool,
         ),
