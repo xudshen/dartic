@@ -97,6 +97,29 @@ class CallStack {
   /// Returns `true` if the current frame is a HOST_BOUNDARY sentinel.
   bool get isHostBoundary => funcId == sentinelHostBoundary;
 
+  /// Returns the funcId at [depth] frames from the top (0 = current frame).
+  ///
+  /// Used by [DarticInterpreter.buildCurrentStackTrace] to walk the call stack.
+  /// Returns [sentinelHostBoundary] for HOST_BOUNDARY sentinel frames.
+  int funcIdAt(int depth) {
+    var base = _base;
+    for (var i = 0; i < depth; i++) {
+      base = _data[base + _savedFP] - frameSize;
+      if (base < 0) return sentinelHostBoundary;
+    }
+    return _data[base + _funcId];
+  }
+
+  /// Returns the savedFP at [depth] frames from the top.
+  int savedFPAt(int depth) {
+    var base = _base;
+    for (var i = 0; i < depth; i++) {
+      base = _data[base + _savedFP] - frameSize;
+      if (base < 0) return 0;
+    }
+    return _data[base + _savedFP];
+  }
+
   /// Resets the call stack to its initial empty state.
   ///
   /// Used by [DarticInterpreter._resetState] for error recovery after

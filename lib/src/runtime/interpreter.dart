@@ -430,6 +430,27 @@ class DarticInterpreter {
     _hostBoundaryDepth = 0;
   }
 
+  /// Builds a [StackTrace] representing the current interpreter call stack.
+  ///
+  /// Walks the CallStack from the current frame backward, skipping
+  /// HOST_BOUNDARY sentinel frames. Produces a standard `#N funcName (dartic)`
+  /// format that mirrors Dart VM stack traces.
+  StackTrace buildCurrentStackTrace() {
+    final module = _activeModule;
+    if (module == null) return StackTrace.current;
+    final functions = module.functions;
+    final buffer = StringBuffer();
+    for (var i = 0; i < callStack.depth; i++) {
+      final funcId = callStack.funcIdAt(i);
+      if (funcId == CallStack.sentinelHostBoundary) continue;
+      final name = funcId < functions.length
+          ? functions[funcId].name
+          : '<unknown>';
+      buffer.writeln('#$i      $name (dartic)');
+    }
+    return StackTrace.fromString(buffer.toString());
+  }
+
   /// Creates TypeRegistry and SubtypeChecker from module metadata if available.
   void _provisionTypeSystem(DarticModule module) {
     final ids = module.coreTypeIds;
@@ -2619,7 +2640,8 @@ class DarticInterpreter {
         case Op.throw_: // THROW A — throw refStack[A]
           final a = decodeA(instr);
           final exception = rs.read(rBase + a);
-          pc = unwindToHandler(pc - 1, exception, StackTrace.current);
+          pc = unwindToHandler(
+              pc - 1, exception, buildCurrentStackTrace());
 
         case Op.rethrow_: // RETHROW A, B — rethrow refStack[A] with stackTrace refStack[B]
           final a = decodeA(instr);
@@ -2637,7 +2659,8 @@ class DarticInterpreter {
             final message =
                 bx != 0xFFFFFFFF ? module.constantPool.getRef(bx) : null;
             final exception = AssertionError(message?.toString());
-            pc = unwindToHandler(pc - 1, exception, StackTrace.current);
+            pc = unwindToHandler(
+                pc - 1, exception, buildCurrentStackTrace());
           }
 
         // ── Closure (0x70-0x71) ──
