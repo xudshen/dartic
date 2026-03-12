@@ -302,8 +302,8 @@
 全部 Task 完成后：
 
 - [x] **跑完整单元测试套件** — 3090 pass, 3 skip, 11 fail（11 全为 pre-existing）
-- [ ] **跑 co19 Language 回归** — 预期 ≥ 94.4%（不低于当前基线）
-- [ ] **更新 MEMORY.md** — 记录修复内容
+- [x] **跑 co19 Language 回归** — 95.9%（5151 pass / 117 fail / 88 skip / 14 error），基线 94.4% → +1.5%
+- [x] **更新 MEMORY.md** — 记录修复内容
 
 ---
 
