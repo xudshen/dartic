@@ -20,7 +20,7 @@ import '../sandbox/verifier.dart';
 import '../compiler/type_template.dart';
 import 'call_stack.dart';
 import 'stack_trace.dart';
-import 'class_info.dart' show StackKind;
+import 'class_info.dart' show DarticClassInfo, StackKind;
 import 'closure.dart';
 import 'dartic_invocation.dart';
 import 'dartic_record.dart';
@@ -328,6 +328,9 @@ class DarticInterpreter {
     // Auto-create TypeRegistry + SubtypeChecker from module metadata.
     _provisionTypeSystem(module);
 
+    // Compute methodDeclarer for inherited method ITA resolution.
+    _computeMethodDeclarers(module);
+
     // Resolve binding name table for CALL_HOST.
     _resolveBindings(module);
 
@@ -501,6 +504,36 @@ class DarticInterpreter {
     }
   }
 
+  /// Computes [DarticClassInfo.methodDeclarer] for all classes in the module.
+  ///
+  /// Walks the superclass chain to determine which class originally declared
+  /// each method. Two methods share the same `funcId` iff one is inherited
+  /// (compile-time flattening via `putIfAbsent`). Processing classes in
+  /// ascending classId order guarantees parents are computed before children.
+  void _computeMethodDeclarers(DarticModule module) {
+    final classes = module.classes;
+    for (var i = 0; i < classes.length; i++) {
+      final cls = classes[i];
+      final superId = cls.superClassId;
+      for (final entry in cls.methods.entries) {
+        final nameIdx = entry.key;
+        final funcId = entry.value.funcId;
+        if (superId >= 0 && superId < classes.length) {
+          final parent = classes[superId];
+          final parentMethod = parent.methods[nameIdx];
+          if (parentMethod != null && parentMethod.funcId == funcId) {
+            // Inherited — use parent's declarer (already computed).
+            cls.methodDeclarer[nameIdx] =
+                parent.methodDeclarer[nameIdx] ?? superId;
+            continue;
+          }
+        }
+        // New or overridden — declared in this class.
+        cls.methodDeclarer[nameIdx] = cls.classId;
+      }
+    }
+  }
+
   /// The effective type registry: either user-provided or auto-created from
   /// module metadata.
   TypeRegistry? _effectiveTypeRegistry;
@@ -583,18 +616,56 @@ class DarticInterpreter {
   /// via HOST_BOUNDARY, ensuring value-type returns (int, double, bool) are
   /// properly boxed to Object? for the ref-stack result expected by dynamic
   /// dispatch instructions.
+  ///
+  /// [ita] — pre-resolved ITA for inherited methods from generic superclasses.
+  /// When null, falls back to loading ITA from the receiver's runtimeType_.
   Object? _callDarticMethod(
     DarticModule module,
     DarticFuncProto method,
     Object receiver,
-    List<Object?> args,
-  ) {
+    List<Object?> args, {
+    List<DarticType>? ita,
+  }) {
     return _runNestedDispatch(
       module: module,
       proto: method,
       receiver: receiver,
       args: args,
+      ita: ita,
     );
+  }
+
+  /// Resolves the correct ITA for a method dispatch on [darticObj].
+  ///
+  /// Handles both self-declared and inherited methods:
+  /// - Self-declared: returns receiver's own type args (or null if non-generic)
+  /// - Inherited from generic superclass: resolves super's type arg templates
+  ///   using receiver's ITA via [DarticClassInfo.superTypeArgs]
+  List<DarticType>? _resolveMethodITA(
+    DarticClassInfo classInfo,
+    int nameIdx,
+    DarticObject darticObj,
+  ) {
+    final rtType = darticObj.runtimeType_;
+    final receiverITA =
+        rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty
+            ? rtType.typeArgs
+            : null;
+    final declaringId = classInfo.methodDeclarer[nameIdx];
+    if (declaringId != null && declaringId != darticObj.classId) {
+      // Inherited from a superclass — resolve super's type args.
+      final templates = classInfo.superTypeArgs[declaringId];
+      if (templates != null &&
+          templates.isNotEmpty &&
+          _activeTypeRegistry != null) {
+        return <DarticType>[
+          for (final t in templates)
+            resolveType(t, receiverITA, null, _activeTypeRegistry!),
+        ];
+      }
+      return null;
+    }
+    return receiverITA;
   }
 
   /// Shared implementation for [invokeClosure] and [_callDarticMethod].
@@ -608,6 +679,7 @@ class DarticInterpreter {
     required List<Object?> args,
     Object? receiver,
     List<Upvalue>? upvalues,
+    List<DarticType>? ita,
   }) {
     final vs = valueStack;
     final rs = refStack;
@@ -653,16 +725,24 @@ class DarticInterpreter {
     if (receiver != null) {
       rs.write(rBase + 2, receiver);
 
-      // Auto-load ITA from DarticObject's runtimeType_ for generic classes.
-      // This mirrors CALL_VIRTUAL's ITA loading (line ~2318) and is needed
-      // when dispatching through _callDarticMethod (e.g., INVOKE_DYN).
-      final darticObj = receiver is DarticObject
-          ? receiver
-          : (receiver is DarticObjectHolder ? receiver.$darticObject : null);
-      if (darticObj != null) {
-        final rtType = darticObj.runtimeType_;
-        if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
-          rs.write(rBase + 0, rtType.typeArgs);
+      // Auto-load ITA for the callee method.
+      if (ita != null) {
+        // Caller resolved the correct ITA (e.g., for inherited methods
+        // from generic superclasses via _resolveMethodITA).
+        rs.write(rBase + 0, ita);
+      } else {
+        // Fallback: load from receiver's runtimeType_ (works for
+        // self-declared methods and invokeClosure).
+        final darticObj = receiver is DarticObject
+            ? receiver
+            : (receiver is DarticObjectHolder
+                ? receiver.$darticObject
+                : null);
+        if (darticObj != null) {
+          final rtType = darticObj.runtimeType_;
+          if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
+            rs.write(rBase + 0, rtType.typeArgs);
+          }
         }
       }
     }
@@ -2375,13 +2455,13 @@ class DarticInterpreter {
 
           if (darticObj != null) {
             // IC dispatch using darticObj's classId.
+            final classInfo = module.classes[darticObj.classId];
             DarticFuncProto? callee;
             if (ic.cachedClassId == darticObj.classId) {
               // IC hit — fast path.
               callee = module.functions[ic.cachedFuncId];
             } else {
               // IC miss — slow path: look up method in class info.
-              final classInfo = module.classes[darticObj.classId];
               final method = classInfo.methods[ic.methodNameIndex];
               if (method != null) {
                 callee = method;
@@ -2429,13 +2509,12 @@ class DarticInterpreter {
               // dispatch and field access opcodes to extract darticObj.
               rs.write(rBase + 2, receiver);
 
-              // Auto-load ITA from darticObj's runtimeType_ for generic
-              // classes. Use darticObj (not receiver) because runtimeType_
-              // is only available on DarticObject.
-              final rtType = darticObj.runtimeType_;
-              if (rtType is DarticInterfaceType &&
-                  rtType.typeArgs.isNotEmpty) {
-                rs.write(rBase + 0, rtType.typeArgs);
+              // Auto-load ITA for the callee method — handles both
+              // self-declared and inherited methods from generic superclasses.
+              final methodITA = _resolveMethodITA(
+                  classInfo, ic.methodNameIndex, darticObj);
+              if (methodITA != null) {
+                rs.write(rBase + 0, methodITA);
               }
 
               // Switch to callee bytecode.
@@ -3189,8 +3268,11 @@ class DarticInterpreter {
               final getter = classInfo.methods[nameIdx];
               if (getter != null) {
                 try {
-                  final getterResult =
-                      _callDarticMethod(module, getter, receiver, const []);
+                  final getterITA =
+                      _resolveMethodITA(classInfo, nameIdx, receiver);
+                  final getterResult = _callDarticMethod(
+                      module, getter, receiver, const [],
+                      ita: getterITA);
                   rs.write(rBase + a, getterResult);
                 } on Object catch (e, st) {
                   pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
@@ -3295,7 +3377,10 @@ class DarticInterpreter {
                 final setter = classInfo.methods[setterNameIdx];
                 if (setter != null) {
                   try {
-                    _callDarticMethod(module, setter, receiver, [value]);
+                    final setterITA = _resolveMethodITA(
+                        classInfo, setterNameIdx, receiver);
+                    _callDarticMethod(module, setter, receiver, [value],
+                        ita: setterITA);
                   } on Object catch (e, st) {
                     pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   }
@@ -3404,8 +3489,11 @@ class DarticInterpreter {
                 );
                 if (methodArgs != null) {
                   try {
+                    final dynITA =
+                        _resolveMethodITA(classInfo, nameIdx, receiver);
                     final methodResult = _callDarticMethod(
-                        module, method, receiver, methodArgs);
+                        module, method, receiver, methodArgs,
+                        ita: dynITA);
                     rs.write(rBase + a, methodResult);
                   } on Object catch (e, st) {
                     pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));

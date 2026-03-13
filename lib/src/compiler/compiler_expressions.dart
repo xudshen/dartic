@@ -980,6 +980,14 @@ extension on DarticCompiler {
     required ir.FunctionType? funcType,
     required ir.DartType returnType,
   }) {
+    // When funcType is null (variable typed as bare `Function`) and there
+    // are named arguments, Op.call can't reorder named args — it only
+    // handles value/ref rerouting. Use INVOKE_DYN "call" instead, which
+    // routes through DynCallDescriptor-based named arg reordering.
+    if (funcType == null && arguments.named.isNotEmpty) {
+      return _compileClosureCallDynamic(closureReg, arguments);
+    }
+
     // Always use ref result register — closure return kind is unknown.
     final resultReg = _allocRefReg();
 
@@ -1009,6 +1017,60 @@ extension on DarticCompiler {
     if (targetKind.isValue) {
       return (_emitUnbox(resultReg, targetKind), ResultLoc.value);
     }
+    return (resultReg, ResultLoc.ref);
+  }
+
+  /// Fallback path for closure calls when funcType is null (bare `Function`)
+  /// and named arguments are present. Emits INVOKE_DYN with method name
+  /// "call" so the runtime's DynCallDescriptor reorders named args to
+  /// match the callee's actual parameter layout.
+  (int, ResultLoc) _compileClosureCallDynamic(
+    int closureReg,
+    ir.Arguments arguments,
+  ) {
+    // 1. Compile positional args → box to ref.
+    final argRegs = <int>[];
+    for (final arg in arguments.positional) {
+      var (argReg, argLoc) = _compileExpression(arg);
+      argReg = _boxToRefIfValue(argReg, argLoc, _inferExprType(arg));
+      argRegs.add(argReg);
+    }
+
+    // 2. Compile named args in source order → box to ref.
+    final namedNames = <String>[];
+    for (final arg in arguments.named) {
+      var (argReg, argLoc) = _compileExpression(arg.value);
+      argReg = _boxToRefIfValue(argReg, argLoc, _inferExprType(arg.value));
+      argRegs.add(argReg);
+      namedNames.add(arg.name);
+    }
+
+    // 3. Allocate consecutive: result(A), receiver(A+1), args(A+2...).
+    final slotCount = 1 + 1 + argRegs.length;
+    final resultReg = _refAlloc.allocConsecutive(slotCount);
+    final recvSlot = resultReg + 1;
+
+    // 4. Move closure (receiver) and args into consecutive slots.
+    if (closureReg != recvSlot) {
+      _emitter.emitABC(Op.moveRef, recvSlot, closureReg, 0);
+    }
+    for (var i = 0; i < argRegs.length; i++) {
+      final slot = resultReg + 2 + i;
+      if (argRegs[i] != slot) {
+        _emitter.emitABC(Op.moveRef, slot, argRegs[i], 0);
+      }
+    }
+
+    // 5. Create DynCallDescriptor and emit INVOKE_DYN.
+    final descriptor = DynCallDescriptor(
+      methodName: 'call',
+      positionalArgCount: arguments.positional.length,
+      namedArgNames: namedNames,
+    );
+    final descIdx = _constantPool.addRef(descriptor);
+    final totalArgCount = 1 + argRegs.length; // receiver + all args
+    _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, descIdx);
+
     return (resultReg, ResultLoc.ref);
   }
 

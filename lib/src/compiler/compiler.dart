@@ -1832,7 +1832,20 @@ class DarticCompiler {
       final init = field.initializer;
       if (init is ir.ConstantExpression &&
           identical(init.constant, constant)) {
-        return _fieldToGlobalIndex[field.getterReference];
+        final idx = _fieldToGlobalIndex[field.getterReference];
+        if (idx == null) continue;
+        // When compiling a field initializer, skip fields whose own
+        // initializers haven't been compiled yet. Otherwise aliases like
+        // `static const E one = E.e1` create a circular lazy-init chain:
+        // __init_e1 → LOAD_GLOBAL(one) → __init_one → LOAD_GLOBAL(e1) → ...
+        // Only apply this guard during field initialization (Pass 2b),
+        // not during procedure compilation (Pass 2a) where all globals
+        // are valid targets.
+        if (_currentInitializingField != null &&
+            _globalInitializerIds[idx] == -1) {
+          continue;
+        }
+        return idx;
       }
     }
     return null;

@@ -171,4 +171,13 @@ class DarticClassInfo {
   ///
   /// Populated by the compiler from [SuperTypeEntry] data.
   final Map<int, List<TypeTemplate>> superTypeArgs = {};
+
+  /// Maps method name index → classId of the class that originally declared
+  /// the method. Computed post-load from the flattened method tables.
+  ///
+  /// Used by CALL_VIRTUAL to resolve ITA for inherited methods from generic
+  /// superclasses. For example, if `D` inherits `f` from `CheckTopMerge<T>`,
+  /// `methodDeclarer[f_nameIdx] = checkTopMergeClassId` allows the runtime
+  /// to look up `superTypeArgs[checkTopMergeClassId]` and resolve `T`.
+  final Map<int, int> methodDeclarer = {};
 }

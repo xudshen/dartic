@@ -353,29 +353,29 @@
 
 **Task 目录：** [`docs/tasks/co19-90/`](co19-90/)
 
-### 当前状态快照（2026-03-13，Phase 2 session 8 完成）
+### 当前状态快照（2026-03-14，Phase 3 triage）
 
 | 模块 | Total | Pass | Fail | Error | Pass Rate | 基线 |
 |------|-------|------|------|-------|-----------|------|
 | TypeSystem | 3,411 | 3,390 | 21 | 0 | **99.4%** | 60.3% |
 | Language | 5,370† | 5,175 | 30 | 4 | **99.3%** | 85.2% |
-| LanguageFeatures | 6,141 | 4,843 | 1,276 | 0 | **78.9%** | 71.4% |
-| LibTest | 7,988 | 1,304 | 1,161 | 5,523‡ | **52.9%**§ | 63.9% |
-| **Total** | **22,910** | **14,712** | **2,488** | **5,527** | **85.5%** | 73.5% |
+| LanguageFeatures | 5,747‡ | 5,589 | 138 | 6 | **97.3%** | 71.4% |
+| LibTest | 7,988 | 2,180 | 541 | 10 | **79.8%**§ | 63.9% |
+| **Total** | **22,516** | **16,334** | **730** | **20** | **93.4%** | 73.5% |
 
-† Language 使用 skip list（排除 ~161 个 async*/yield 系统性失败）。99.3% 为非 skip 测试通过率。‡ LibTest runner crashed 68 times，5,523 tests 未计入 pass/fail。§ 仅统计已计数测试。
+† Language 使用 skip list（排除 ~161 个 async*/yield 系统性失败）。‡ LanguageFeatures 使用 skip list（排除 394 个已知不支持测试）。§ LibTest 排除 5,257 个不支持 dart: import 的测试。
 
-> 注：测试发现总数从基线 10,691 增至 22,910，主要来自 LanguageFeatures（1,859→6,141）和 LibTest（1,506→7,988）的发现能力提升。
+> 注：LanguageFeatures 从基线 78.9% → 97.3%（+746 pass），主要来自 Pattern matching 编译、Type System Completion Components 1&2、以及 Phase 3 triage 修复（含 ITA 继承修复 +24）。
 
 | Phase | 描述 | 状态 |
 |-------|------|------|
 | [Phase 1](co19-90/phase1-typesystem.md) | TypeSystem 根因修复 | ✅ 达成（99.4%） |
-| [Phase 2](co19-90/phase2-language.md) | Language 补齐 | 🔄 进行中（98.8%） |
-| [Phase 3](co19-90/phase3-language-features.md) | LanguageFeatures 补齐 | ⬜ 待开始 |
+| [Phase 2](co19-90/phase2-language.md) | Language 补齐 | ✅ 达成（99.3%） |
+| [Phase 3](co19-90/phase3-language-features.md) | LanguageFeatures 补齐 | 🔄 进行中（97.3%） |
 | [Phase 4](co19-90/phase4-libtest.md) | LibTest 桥接补全 | ⬜ 待开始 |
 | [Phase 5](co19-90/phase5-final.md) | 长尾清扫 + 最终验证 | ⬜ 待开始 |
 
-**Unit tests:** 3,212 pass, 10 fail, 3 skipped
+**Unit tests:** 3,227 pass, 10 fail, 3 skipped
 
 ---
 
