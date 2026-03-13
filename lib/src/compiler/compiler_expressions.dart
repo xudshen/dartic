@@ -1473,11 +1473,8 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileRethrow(ir.Rethrow expr) {
     assert(_catchExceptionReg >= 0, 'Rethrow outside of catch clause');
-    // B=0 signals "no stack trace" to the interpreter (b > 0 check).
-    // _catchStackTraceReg is -1 when the catch clause has no stackTrace var;
-    // passing -1 directly would wrap to 0xFFFF in the 16-bit B field.
-    final stReg = _catchStackTraceReg >= 0 ? _catchStackTraceReg : 0;
-    _emitter.emitABC(Op.rethrow_, _catchExceptionReg, stReg, 0);
+    assert(_catchStackTraceReg >= 0, 'Rethrow without stackTrace register');
+    _emitter.emitABC(Op.rethrow_, _catchExceptionReg, _catchStackTraceReg, 0);
 
     // Rethrow has type Never -- return a dummy ref register.
     return (_catchExceptionReg, ResultLoc.ref);

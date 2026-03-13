@@ -439,8 +439,10 @@ extension on DarticCompiler {
     final jumpToEndPlaceholders = <int>[];
     for (final catchClause in stmt.catches) {
       // Allocate registers for exception and stackTrace variables.
+      // Always allocate stackTraceReg even when user doesn't bind `s` — rethrow
+      // needs a register to read the original stack trace from.
       final exceptionReg = _allocRefReg();
-      int stackTraceReg = -1;
+      final stackTraceReg = _allocRefReg();
 
       // Declare exception variable in scope.
       if (catchClause.exception != null) {
@@ -449,7 +451,6 @@ extension on DarticCompiler {
       }
 
       if (catchClause.stackTrace != null) {
-        stackTraceReg = _allocRefReg();
         _scope.declareWithReg(
             catchClause.stackTrace!, StackKind.ref, stackTraceReg);
       }
