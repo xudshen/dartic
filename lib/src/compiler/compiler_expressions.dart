@@ -2211,6 +2211,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-tearoff:$methodName>',
@@ -2224,6 +2225,7 @@ extension on DarticCompiler {
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         // upvalue[0] = this, captured from the enclosing function's
         // ref register 2 (isLocal=true).
@@ -2414,6 +2416,7 @@ extension on DarticCompiler {
           promoted.contains(m.idx) ? StackKind.ref.index : m.instKind.index;
     }
 
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final thunkProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-instantiation:$methodName>',
@@ -2426,6 +2429,7 @@ extension on DarticCompiler {
       returnKind:
           _classifyReturnKind(subst.substituteType(fn.returnType)),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         UpvalueDescriptor(isLocal: true, index: thisReg),
       ],
@@ -2525,6 +2529,7 @@ extension on DarticCompiler {
 
     _patchPendingArgMoves();
 
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superHostTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-host-tearoff:$methodName>',
@@ -2538,6 +2543,7 @@ extension on DarticCompiler {
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         UpvalueDescriptor(isLocal: true, index: thisReg),
       ],
@@ -3075,6 +3081,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instantiation-thunk:$innerFuncId>',
@@ -3088,6 +3095,7 @@ extension on DarticCompiler {
         ...namedMappings.map((m) => m.instKind.index),
       ]),
       returnKind: _classifyReturnKind(subst.substituteType(fn.returnType)),
+      lineTable: List.of(_currentLineTable),
     );
 
     // Restore enclosing compilation state.

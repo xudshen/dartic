@@ -8,7 +8,12 @@ part of 'compiler.dart';
 extension on DarticCompiler {
   // ── Statement compilation ──
 
-  void _compileStatement(ir.Statement stmt) => stmt.accept(_stmtVisitor);
+  void _compileStatement(ir.Statement stmt) {
+    if (stmt.fileOffset >= 0) {
+      _recordSourcePosition(stmt.fileOffset);
+    }
+    stmt.accept(_stmtVisitor);
+  }
 
   void _compileBlock(ir.Block block) {
     // Push a child scope for this block.

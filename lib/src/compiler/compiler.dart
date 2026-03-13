@@ -181,8 +181,26 @@ class DarticCompiler {
   final Map<ir.Class, Map<ir.Reference, FieldLayout>> _instanceFieldLayouts =
       {};
 
+  // ── Source position tracking (module-level) ──
+
+  /// Maps source file URIs to indices in [_fileUris].
+  final Map<Uri, int> _fileUriIndex = {};
+
+  /// Ordered source file URI strings, indexed by file index.
+  final List<String> _fileUris = [];
+
+  /// Per-file line start offsets, indexed by file index.
+  /// Populated from Kernel [Component.uriToSource] after all procedures are compiled.
+  final List<List<int>> _lineStarts = [];
+
   // ── Per-function compilation state ──
   // Reset in _compileProcedure for each function.
+
+  /// Source position entries being built for the current function.
+  List<LineTableEntry> _currentLineTable = [];
+
+  /// Index into [_fileUris] for the current function's source file.
+  int _currentFileIndex = 0;
 
   late BytecodeEmitter _emitter;
   late RegisterAllocator _valueAlloc;
@@ -563,6 +581,20 @@ class DarticCompiler {
       }
     }
 
+    // Build lineStarts table from Kernel Component.uriToSource.
+    // _lineStarts must be in the same order as _fileUris (indexed by
+    // _fileUriIndex values).
+    _lineStarts.clear();
+    for (var i = 0; i < _fileUris.length; i++) {
+      _lineStarts.add(const []);
+    }
+    for (final entry in _fileUriIndex.entries) {
+      final source = _component.uriToSource[entry.key];
+      if (source != null && source.lineStarts != null) {
+        _lineStarts[entry.value] = source.lineStarts!;
+      }
+    }
+
     return DarticModule(
       functions: _functions,
       constantPool: _constantPool,
@@ -575,6 +607,8 @@ class DarticCompiler {
       coreTypeIds: _coreTypeIds,
       bindingNames: _bindingNames,
       exportedFunctions: Map.unmodifiable(_exportedFunctions),
+      fileUris: List.of(_fileUris),
+      lineStartsTable: List.of(_lineStarts),
     );
   }
 
@@ -736,6 +770,7 @@ class DarticCompiler {
     _isEntryFunction = isEntry;
     _currentReturnType = returnType;
     _currentAsyncMarker = ir.AsyncMarker.Sync;
+    _currentLineTable = [];
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -760,6 +795,28 @@ class DarticCompiler {
     // for release -- they live for the entire function).
     _registerParams(positionalParams);
     _registerParams(namedParams);
+  }
+
+  /// Records a source position mapping at the current bytecode PC.
+  ///
+  /// [fileOffset] is the Kernel byte offset within the source file.
+  /// Only records when [fileOffset] is valid (>= 0).
+  void _recordSourcePosition(int fileOffset) {
+    if (fileOffset < 0) return;
+    _currentLineTable.add(LineTableEntry(
+      pc: _emitter.currentPC,
+      fileIndex: _currentFileIndex,
+      fileOffset: fileOffset,
+    ));
+  }
+
+  /// Returns the file index for a given URI, creating a new entry if needed.
+  int _getOrCreateFileIndex(Uri uri) {
+    return _fileUriIndex.putIfAbsent(uri, () {
+      final idx = _fileUris.length;
+      _fileUris.add(uri.toString());
+      return idx;
+    });
   }
 
   /// Registers a list of parameter declarations in the current scope.
@@ -967,6 +1024,9 @@ class DarticCompiler {
         ? fn.typeParameters
         : null;
 
+    // Set up file index for source position recording.
+    _currentFileIndex = _getOrCreateFileIndex(proc.fileUri);
+
     _resetFunctionState(
       isEntry: funcId == _entryFuncId,
       returnType: fn.returnType,
@@ -985,6 +1045,10 @@ class DarticCompiler {
 
     final valRegCount = _valueAlloc.maxUsed;
     final refRegCount = _refAlloc.maxUsed;
+
+    // Sort line table by PC for binary search at runtime.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
+
     final proto = DarticFuncProto(
       funcId: funcId,
       name: proc.name.text,
@@ -997,6 +1061,7 @@ class DarticCompiler {
       returnKind: _classifyReturnKind(fn.returnType),
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
     );
 
     // Set transient typeTemplate for closure type extraction (A-lite).
