@@ -1259,6 +1259,8 @@ class DarticInterpreter {
     // Also set _currentAsyncFrame so AWAIT works inside async* bodies.
     _currentAsyncFrame = frame;
 
+    final wasExecuting = _isExecuting;
+    _isExecuting = true;
     try {
       _executeLoop(
         module,
@@ -1277,6 +1279,8 @@ class DarticInterpreter {
       }
       _currentAsyncStarFrame = null;
       _currentAsyncFrame = null;
+    } finally {
+      _isExecuting = wasExecuting;
     }
   }
 
@@ -1357,6 +1361,8 @@ class DarticInterpreter {
     // Set the async* frame context and start a new dispatch loop.
     _currentAsyncStarFrame = frame;
     _currentAsyncFrame = frame;
+    final wasExecuting = _isExecuting;
+    _isExecuting = true;
     try {
       _executeLoop(
         module,
@@ -1375,6 +1381,8 @@ class DarticInterpreter {
       }
       _currentAsyncStarFrame = null;
       _currentAsyncFrame = null;
+    } finally {
+      _isExecuting = wasExecuting;
     }
   }
 
