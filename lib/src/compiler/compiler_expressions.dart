@@ -4292,6 +4292,14 @@ class _ExprCompileVisitor
   @override
   (int, ResultLoc) visitDynamicInvocation(ir.DynamicInvocation node) =>
       _c._compileDynamicInvocation(node);
+
+  // Pattern matching expressions
+  @override
+  (int, ResultLoc) visitSwitchExpression(ir.SwitchExpression node) =>
+      _c._compileSwitchExpression(node);
+  @override
+  (int, ResultLoc) visitPatternAssignment(ir.PatternAssignment node) =>
+      _c._compilePatternAssignment(node);
 }
 
 /// Visitor that compiles [ir.Constant] nodes to bytecode.

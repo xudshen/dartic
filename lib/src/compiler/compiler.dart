@@ -19,6 +19,7 @@ import 'type_template.dart';
 part 'compiler_classes.dart';
 part 'compiler_closures.dart';
 part 'compiler_expressions.dart';
+part 'compiler_patterns.dart';
 part 'compiler_statements.dart';
 part 'compiler_types.dart';
 

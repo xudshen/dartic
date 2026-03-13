@@ -910,4 +910,15 @@ class _StmtCompileVisitor with ir.StatementVisitorDefaultMixin<void> {
       _c._compileYieldStatement(node);
   @override
   void visitEmptyStatement(ir.EmptyStatement node) {}
+
+  // Pattern matching contexts
+  @override
+  void visitPatternSwitchStatement(ir.PatternSwitchStatement node) =>
+      _c._compilePatternSwitchStatement(node);
+  @override
+  void visitIfCaseStatement(ir.IfCaseStatement node) =>
+      _c._compileIfCaseStatement(node);
+  @override
+  void visitPatternVariableDeclaration(ir.PatternVariableDeclaration node) =>
+      _c._compilePatternVariableDeclaration(node);
 }
