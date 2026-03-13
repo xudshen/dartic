@@ -314,6 +314,37 @@
 
 ---
 
+## 跨阶段改进：Stack Trace Enhancement — ✅ 已完成
+
+**目标：** 将急切字符串式栈追踪替换为惰性结构化 `DarticStackTrace`，并在 .darb v7 中嵌入源码行表，支持 `file:line:col` 格式输出
+
+**设计参考：** [`docs/design/01-bytecode-isa.md`](../design/01-bytecode-isa.md)（§ Stack Trace）
+
+| 组件 | 涉及文件 | 说明 |
+|------|---------|------|
+| DarticStackTrace | stack_trace.dart | 惰性快照式栈追踪，O(N) 单遍捕获，缓存 toString() |
+| CallStack 基指针遍历 | call_stack.dart | funcIdAtBase/returnPCAtBase/savedFPAtBase 方法 |
+| HOST_BOUNDARY 名称跟踪 | interpreter.dart | _lastHostCallName + _hostNameStack 并行栈 |
+| 解释器迁移（20 处） | interpreter.dart | 所有 StackTrace.current/buildCurrentStackTrace → DarticStackTrace |
+| 死字段移除 | module.dart, serializer, deserializer, verifier | ExceptionHandler.valStackDP/refStackDP 移除 |
+| LineTableEntry | module.dart | PC→(fileIndex, fileOffset) 源码位置映射 |
+| 编译器行表记录 | compiler*.dart | _recordSourcePosition() 在每条语句/构造函数记录 |
+| 序列化 delta 编码 | serializer.dart, deserializer.dart | lineTable + sourceInfo section，格式 v6→v7 |
+| 二分查找行号解析 | stack_trace.dart | lineTable 查 PC，lineStartsTable 查 offset→line:col |
+| Verifier 验证 | verifier.dart | lineTable pc/fileIndex 范围检查 |
+| 反汇编器标注 | disassembler.dart | dump 输出自动附加 `; main.dart:8` 源码标注 |
+
+**关键成果：**
+- [x] 16/16 tasks 完成（Batch A: Tasks 1-8, Batch B: Tasks 9-16）
+- [x] 栈追踪输出从 `#0 main (dartic)` 升级为 `#0 main (main.dart:8:3)`
+- [x] HOST_BOUNDARY 帧显示为 `[host: dart:core::print]`
+- [x] 宿主异常附带 `===== host exception =====` 分隔符
+- [x] .darb 格式 v6→v7（不兼容升级：移除死字段 + 新增行表）
+- [x] 9 个 e2e 测试 + 5 个行号解析单测 + 7 个序列化 roundtrip 测试
+- [x] 全量 3132 tests pass, 3 skip, 13 fail（全部 pre-existing）
+
+---
+
 ## Co19 90% 达标战役 — 🔄 进行中
 
 **目标：** co19 通过率 73.5% → 90%+
@@ -344,4 +375,4 @@
 | [Phase 4](co19-90/phase4-libtest.md) | LibTest 桥接补全 | ⬜ 待开始 |
 | [Phase 5](co19-90/phase5-final.md) | 长尾清扫 + 最终验证 | ⬜ 待开始 |
 
-**Unit tests:** 3,092 pass, 9 fail, 3 skipped
+**Unit tests:** 3,132 pass, 13 fail, 3 skipped
