@@ -1022,15 +1022,26 @@ class DarticInterpreter {
         : () => _resumeFrame(frame, module);
 
     if (value is Future) {
-      // Lazily create cached callbacks for this frame.
+      // Sync fast-path: when no dispatch loop is active (_isExecuting == false),
+      // resume directly instead of scheduleMicrotask. This matches native Dart's
+      // synchronous _Future._complete() propagation, preventing _StreamIterator
+      // from spuriously pausing the subscription during await-for loops.
       frame.thenCallback ??= (Object? result) {
         frame.resumeValue = result;
-        zone.scheduleMicrotask(resume);
+        if (_isExecuting) {
+          zone.scheduleMicrotask(resume);
+        } else {
+          resume();
+        }
       };
       frame.errorCallback ??= (Object error, StackTrace stackTrace) {
         frame.resumeException = error;
         frame.resumeStackTrace = stackTrace;
-        zone.scheduleMicrotask(resume);
+        if (_isExecuting) {
+          zone.scheduleMicrotask(resume);
+        } else {
+          resume();
+        }
       };
       value.then(
         frame.thenCallback! as void Function(Object?),
@@ -1186,6 +1197,8 @@ class DarticInterpreter {
 
     // Set the async frame context and start a new dispatch loop.
     _currentAsyncFrame = frame;
+    final wasExecuting = _isExecuting;
+    _isExecuting = true;
     try {
       _executeLoop(
         module,
@@ -1211,6 +1224,8 @@ class DarticInterpreter {
         completer.completeError(e, st);
       }
       _currentAsyncFrame = null;
+    } finally {
+      _isExecuting = wasExecuting;
     }
   }
 
