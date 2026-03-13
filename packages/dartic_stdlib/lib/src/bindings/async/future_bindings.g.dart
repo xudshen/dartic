@@ -28,7 +28,7 @@ abstract final class FutureBindings {
             final computation = args[0] as Function;
             return Future(() => computation());
         },
-        'value#1': (args) => Future.value(args[0]),
+        'value#1': (args) => Future.value(identical(args[0], darticAbsent) ? null : args[0]),
         'error#2': (args) {
             final error = args[0] as Object;
             final stackTrace = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
