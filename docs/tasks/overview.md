@@ -353,17 +353,17 @@
 
 **Task 目录：** [`docs/tasks/co19-90/`](co19-90/)
 
-### 当前状态快照（2026-03-12，Phase 2 session 7 完成）
+### 当前状态快照（2026-03-13，Phase 2 session 8 完成）
 
 | 模块 | Total | Pass | Fail | Error | Pass Rate | 基线 |
 |------|-------|------|------|-------|-----------|------|
 | TypeSystem | 3,411 | 3,390 | 21 | 0 | **99.4%** | 60.3% |
-| Language | 5,214† | 5,151 | 54 | 4 | **98.8%** | 85.2% |
+| Language | 5,370† | 5,175 | 30 | 4 | **99.3%** | 85.2% |
 | LanguageFeatures | 6,141 | 4,843 | 1,276 | 0 | **78.9%** | 71.4% |
 | LibTest | 7,988 | 1,304 | 1,161 | 5,523‡ | **52.9%**§ | 63.9% |
-| **Total** | **22,754** | **14,688** | **2,512** | **5,527** | **85.4%** | 73.5% |
+| **Total** | **22,910** | **14,712** | **2,488** | **5,527** | **85.5%** | 73.5% |
 
-† Language 使用 skip list（排除 ~161 个 async*/yield 系统性失败）。‡ LibTest runner crashed 68 times，5,523 tests 未计入 pass/fail。§ 仅统计已计数测试。
+† Language 使用 skip list（排除 ~161 个 async*/yield 系统性失败）。99.3% 为非 skip 测试通过率。‡ LibTest runner crashed 68 times，5,523 tests 未计入 pass/fail。§ 仅统计已计数测试。
 
 > 注：测试发现总数从基线 10,691 增至 22,910，主要来自 LanguageFeatures（1,859→6,141）和 LibTest（1,506→7,988）的发现能力提升。
 
@@ -375,4 +375,32 @@
 | [Phase 4](co19-90/phase4-libtest.md) | LibTest 桥接补全 | ⬜ 待开始 |
 | [Phase 5](co19-90/phase5-final.md) | 长尾清扫 + 最终验证 | ⬜ 待开始 |
 
-**Unit tests:** 3,132 pass, 13 fail, 3 skipped
+**Unit tests:** 3,212 pass, 10 fail, 3 skipped
+
+---
+
+## 跨阶段改进：DynamicInvocation Named Parameter Support — ✅ 已完成
+
+**目标：** 让 DynamicInvocation（receiver 类型为 dynamic 的方法调用）正确编译并传递命名参数，包括参数求值、运行时重排和默认值填充
+
+**设计参考：** [`docs/plans/2026-03-12-dynamic-invocation-named-params.md`](../plans/2026-03-12-dynamic-invocation-named-params.md)
+
+| 组件 | 涉及文件 | 说明 |
+|------|---------|------|
+| DynCallDescriptor | module.dart | 动态调用描述符：方法名 + positional 数量 + named 名称列表 |
+| FuncProto 元数据 | module.dart | positionalParamCount, requiredPositionalCount, namedParamNames, paramDefaults |
+| 序列化 v8→v9 | format.dart, serializer.dart, deserializer.dart | DynCallDescriptor refs tag 4 + FuncProto 新字段 |
+| 编译器 | compiler*.dart (4 files) | _collectParamDefaults + _compileDynamicInvocation 重写 + 13 个 FuncProto 构造点 |
+| 运行时 | interpreter.dart | _buildDynArgs 参数重排 + INVOKE_DYN handler 重写 |
+| 工具链 | disassembler.dart, verifier.dart | DynCallDescriptor 反汇编 + refs 分区校验 |
+
+**关键成果：**
+- [x] 12 个 e2e 测试全部通过（命名参数重排、默认值填充、noSuchMethod、闭包调用等）
+- [x] co19 Language 54 fail → 30 fail（-24），99.3% 非 skip 通过率
+- [x] co19 Method_Invocation 122/122 (100%)
+- [x] 全量 3,212 tests pass, 10 fail, 3 skip（0 regressions）
+
+**Phase 2 待办（不在本次范围）：**
+- Host 对象动态命名参数（需改 gen 工具 + binding）
+- 复杂 const 默认值（const 构造器、const 集合）
+- DynamicInvocation 类型参数传递

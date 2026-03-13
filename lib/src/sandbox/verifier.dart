@@ -393,12 +393,27 @@ class DarticVerifier {
         }
       }
 
-      // Names pool references (getFieldDyn, setFieldDyn, invokeDyn).
-      if (op == Op.getFieldDyn || op == Op.setFieldDyn || op == Op.invokeDyn) {
+      // Names pool references (getFieldDyn, setFieldDyn).
+      if (op == Op.getFieldDyn || op == Op.setFieldDyn) {
         if (c >= pool.nameCount) {
           errors.add(
             '$prefix names pool index C=$c >= nameCount '
             '${pool.nameCount} at pc=$pc',
+          );
+        }
+      }
+
+      // INVOKE_DYN: C operand indexes into refs partition (DynCallDescriptor).
+      if (op == Op.invokeDyn) {
+        if (c >= pool.refCount) {
+          errors.add(
+            '$prefix refs pool index C=$c >= refCount '
+            '${pool.refCount} at pc=$pc',
+          );
+        } else if (pool.getRef(c) is! DynCallDescriptor) {
+          errors.add(
+            '$prefix INVOKE_DYN C=$c does not point to DynCallDescriptor '
+            'at pc=$pc',
           );
         }
       }

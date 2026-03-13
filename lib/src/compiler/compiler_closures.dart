@@ -311,6 +311,10 @@ extension on DarticCompiler {
       paramKinds: _buildParamKinds(
           fn.positionalParameters, fn.namedParameters),
       returnKind: _classifyReturnKind(fn.returnType),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
       upvalueDescriptors: upvalueDescs,
@@ -571,6 +575,10 @@ extension on DarticCompiler {
       paramCount: totalParams,
       paramKinds: Uint8List(totalParams), // all StackKind.ref (index 0)
       returnKind: StackKind.ref.index,
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       lineTable: List.of(_currentLineTable),
     );
 
@@ -743,6 +751,10 @@ extension on DarticCompiler {
           ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: StackKind.ref.index,
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
     );
 
     // Set typeTemplate: constructor tearoff type.
@@ -1018,6 +1030,10 @@ extension on DarticCompiler {
             m.promoted ? StackKind.ref.index : m.instKind.index),
       ]),
       returnKind: StackKind.ref.index,
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
     );
 
     // Set typeTemplate: generic constructor tearoff with bound type args.
@@ -1244,6 +1260,10 @@ extension on DarticCompiler {
           ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       upvalueDescriptors: [
         // upvalue[0] = receiver, captured from the enclosing function's
@@ -1463,6 +1483,10 @@ extension on DarticCompiler {
       paramKinds: paramKinds,
       returnKind:
           _classifyReturnKind(subst.substituteType(fn.returnType)),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       upvalueDescriptors: [
         UpvalueDescriptor(isLocal: true, index: recReg),

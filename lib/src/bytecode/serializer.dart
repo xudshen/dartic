@@ -2,6 +2,7 @@ library;
 
 import 'dart:typed_data';
 
+import '../api/dartic_absent.dart';
 import '../compiler/type_template.dart';
 import '../runtime/class_info.dart';
 import 'constant_pool.dart';
@@ -104,6 +105,14 @@ class DarticSerializer {
               'Unsupported record shape element: ${elem.runtimeType}',
             );
           }
+        }
+      } else if (ref is DynCallDescriptor) {
+        w.addByte(4);
+        w.writeString(ref.methodName);
+        w.writeUint32(ref.positionalArgCount);
+        w.writeUint32(ref.namedArgNames.length);
+        for (final name in ref.namedArgNames) {
+          w.writeString(name);
         }
       } else {
         throw StateError('Unsupported ref type: ${ref.runtimeType}');
@@ -346,6 +355,43 @@ class DarticSerializer {
 
     // isConstructor flag (1 byte: 0 = false, 1 = true)
     w.addByte(func.isConstructor ? 1 : 0);
+
+    // positionalParamCount (uint32)
+    w.writeUint32(func.positionalParamCount);
+
+    // requiredPositionalCount (uint32)
+    w.writeUint32(func.requiredPositionalCount);
+
+    // namedParamNames
+    w.writeUint32(func.namedParamNames.length);
+    for (final name in func.namedParamNames) {
+      w.writeString(name);
+    }
+
+    // paramDefaults — tagged encoding
+    w.writeUint32(func.paramDefaults.length);
+    for (final d in func.paramDefaults) {
+      if (identical(d, darticAbsent)) {
+        w.addByte(0); // required, no default
+      } else if (d == null) {
+        w.addByte(1); // null
+      } else if (d is int) {
+        w.addByte(2);
+        w.writeInt64(d);
+      } else if (d is double) {
+        w.addByte(3);
+        w.writeFloat64(d);
+      } else if (d is bool) {
+        w.addByte(4);
+        w.addByte(d ? 1 : 0);
+      } else if (d is String) {
+        w.addByte(5);
+        w.writeString(d);
+      } else {
+        // Unsupported complex default — write darticAbsent tag.
+        w.addByte(0);
+      }
+    }
 
     // typeTemplate (optional function type for closure type extraction)
     // Format: 1 byte flag (0 = null, 1 = present) + serialized TypeTemplate

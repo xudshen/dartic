@@ -498,6 +498,10 @@ extension on DarticCompiler {
         paramKinds:
             _buildParamKinds(fn.positionalParameters, fn.namedParameters),
         isConstructor: true,
+        positionalParamCount: fn.positionalParameters.length,
+        requiredPositionalCount: fn.requiredParameterCount,
+        namedParamNames: [for (final p in fn.namedParameters) p.name!],
+        paramDefaults: _collectParamDefaults(fn),
         exceptionTable: List.of(_exceptionHandlers),
         icTable: List.of(_icEntries),
         lineTable: List.of(_currentLineTable),
@@ -597,6 +601,10 @@ extension on DarticCompiler {
       paramKinds: _buildParamKinds(
           fn.positionalParameters, fn.namedParameters),
       returnKind: _classifyReturnKind(fn.returnType),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       isConstructor: true,
       lineTable: List.of(_currentLineTable),

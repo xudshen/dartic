@@ -178,6 +178,56 @@ class LineTableEntry {
   final int fileOffset;
 }
 
+/// Descriptor for a dynamic call site — records which arguments the caller
+/// provides so the runtime can reorder named args and fill defaults.
+///
+/// Stored in the constant pool refs partition. Multiple call sites with
+/// identical signatures share the same descriptor (dedup by ConstantPool).
+class DynCallDescriptor {
+  const DynCallDescriptor({
+    required this.methodName,
+    required this.positionalArgCount,
+    this.namedArgNames = const [],
+  });
+
+  /// Method name being called (mangled).
+  final String methodName;
+
+  /// Number of positional arguments (excluding receiver).
+  final int positionalArgCount;
+
+  /// Named argument names in **source order** (matches arg layout on stack).
+  final List<String> namedArgNames;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DynCallDescriptor &&
+          methodName == other.methodName &&
+          positionalArgCount == other.positionalArgCount &&
+          _listEquals(namedArgNames, other.namedArgNames);
+
+  @override
+  int get hashCode => Object.hash(
+        methodName,
+        positionalArgCount,
+        Object.hashAll(namedArgNames),
+      );
+
+  static bool _listEquals(List<String> a, List<String> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+
+  @override
+  String toString() =>
+      'DynCallDescriptor($methodName, pos=$positionalArgCount, '
+      'named=$namedArgNames)';
+}
+
 class DarticFuncProto {
   DarticFuncProto({
     required this.funcId,
@@ -193,6 +243,10 @@ class DarticFuncProto {
     this.upvalueDescriptors = const [],
     this.isConstructor = false,
     this.lineTable = const [],
+    this.positionalParamCount = 0,
+    this.requiredPositionalCount = 0,
+    this.namedParamNames = const [],
+    this.paramDefaults = const [],
   });
 
   /// Human-readable function name (for debugging and serialization).
@@ -240,6 +294,24 @@ class DarticFuncProto {
   /// Whether this function is a constructor.  Used by the CALL_STATIC
   /// handler to gate ITA auto-load from `this` (rBase+2).
   final bool isConstructor;
+
+  /// Number of positional parameters (required + optional).
+  /// Named params count = paramCount - positionalParamCount.
+  final int positionalParamCount;
+
+  /// Number of required positional parameters.
+  final int requiredPositionalCount;
+
+  /// Named parameter names in **declaration order**.
+  /// Length equals paramCount - positionalParamCount.
+  final List<String> namedParamNames;
+
+  /// Default values for optional parameters.
+  ///
+  /// Layout: [optionalPos0, ..., optionalPosN, named0, ..., namedM]
+  /// in declaration order. `darticAbsent` = required (no default).
+  /// Only simple types supported: null, int, double, bool, String.
+  final List<Object?> paramDefaults;
 
   /// Inline cache table — one entry per `CALL_VIRTUAL` instruction.
   final List<ICEntry> icTable;
