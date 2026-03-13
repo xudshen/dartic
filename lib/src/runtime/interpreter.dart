@@ -3023,8 +3023,13 @@ class DarticInterpreter {
 
         case Op.nullCheck: // NULL_CHECK A — if refStack[A] == null → throw
           if (rs.read(rBase + (decodeA(instr))) == null) {
-            throw DarticError(
-                'Null check operator used on a null value');
+            // Route through unwindToHandler so bytecode-level try-catch
+            // blocks can catch the null check error (e.g., Expect.throws).
+            pc = unwindToHandler(
+                pc - 1,
+                DarticError('Null check operator used on a null value'),
+                DarticStackTrace.capture(
+                    callStack, module, pc - 1, _hostNameStack));
           }
 
         // ── Collection Creation (0x90-0x92) ──

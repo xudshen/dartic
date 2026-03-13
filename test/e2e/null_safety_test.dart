@@ -40,6 +40,20 @@ String main() => identity(null);
       );
     });
 
+    test('null check error caught by dartic try-catch', () async {
+      final result = await compileAndRun('''
+String main() {
+  String? x = null;
+  try {
+    return x!;
+  } catch (e) {
+    return 'caught';
+  }
+}
+''');
+      expect(result, 'caught');
+    });
+
     test('null int value throws error', () async {
       final module = await compileDart('''
 int identity(int? x) => x!;
