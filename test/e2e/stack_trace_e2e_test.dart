@@ -21,7 +21,8 @@ Object main() => getTrace();
 ''');
       final trace = result as String;
       expect(trace, contains('getTrace'));
-      expect(trace, contains('(dartic)'));
+      // With source line info, format is file:line:col instead of 'dartic'
+      expect(trace, contains('.dart:'));
       // Frame numbering should start at #0
       expect(trace, contains('#0'));
     });
@@ -86,7 +87,7 @@ Object main() => getTrace();
 ''');
       final trace = result as String;
       expect(trace, contains('getTrace'));
-      expect(trace, contains('(dartic)'));
+      expect(trace, contains('.dart:'));
     });
 
     test('contiguous frame numbering', () async {
@@ -153,6 +154,29 @@ Object main() => getTrace();
       final s2 = trace.toString();
       expect(identical(s1, s2), isTrue,
           reason: 'toString() should cache and return same String instance');
+    });
+
+    test('stack trace contains source file:line:col', () async {
+      final result = await compileAndRunWithHost('''
+void thrower() {
+  throw 'boom';
+}
+String getTrace() {
+  try {
+    thrower();
+  } catch (e, s) {
+    return s.toString();
+  }
+  return '';
+}
+Object main() => getTrace();
+''');
+      final trace = result as String;
+      // Should contain file:line:col format (not just 'dartic')
+      // The exact file is a temp file, but it should have .dart extension and line numbers
+      expect(trace, contains('.dart:'));
+      // Should NOT contain the old 'dartic' stub (at least for the top frame)
+      expect(trace, isNot(contains('(dartic)')));
     });
   });
 }
