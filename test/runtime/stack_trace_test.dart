@@ -312,4 +312,127 @@ void main() {
       expect(trace.toString(), '');
     });
   });
+
+  group('_resolveLocation (line number resolution)', () {
+    /// Builds a module with one function that has a lineTable and source info.
+    DarticModule buildModuleWithLineTable({
+      required String funcName,
+      required List<LineTableEntry> lineTable,
+      required List<String> fileUris,
+      required List<List<int>> lineStartsTable,
+    }) {
+      return DarticModule(
+        functions: [
+          DarticFuncProto(
+            funcId: 0,
+            bytecode: Uint64List(100), // big enough for any test PC
+            valueRegCount: 0,
+            refRegCount: 0,
+            paramCount: 0,
+            name: funcName,
+            lineTable: lineTable,
+          ),
+        ],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+        fileUris: fileUris,
+        lineStartsTable: lineStartsTable,
+      );
+    }
+
+    test('resolves file:line:col from lineTable', () {
+      // Source: line 1 starts at offset 0, line 2 at offset 20, line 3 at 40
+      final module = buildModuleWithLineTable(
+        funcName: 'main',
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 0, fileOffset: 5),   // line 1, col 6
+          LineTableEntry(pc: 3, fileIndex: 0, fileOffset: 25),  // line 2, col 6
+          LineTableEntry(pc: 6, fileIndex: 0, fileOffset: 45),  // line 3, col 6
+        ],
+        fileUris: ['file:///path/to/main.dart'],
+        lineStartsTable: [
+          [0, 20, 40],
+        ],
+      );
+
+      final trace = DarticStackTrace.fromFrames(
+        [FrameSnapshot(funcId: 0, pc: 4, isHostBoundary: false)],
+        null,
+        module,
+      );
+
+      final str = trace.toString();
+      // PC=4 → nearest entry with pc<=4 is pc=3 → fileOffset=25
+      // lineStarts [0, 20, 40] → offset 25 is in line 2 (0-based index 1), col = 25-20+1 = 6
+      expect(str, contains('main.dart:2:6'));
+    });
+
+    test('falls back to dartic when lineTable is empty', () {
+      final module = buildModuleWithLineTable(
+        funcName: 'main',
+        lineTable: [],
+        fileUris: ['file:///main.dart'],
+        lineStartsTable: [[0, 10]],
+      );
+
+      final trace = DarticStackTrace.fromFrames(
+        [FrameSnapshot(funcId: 0, pc: 5, isHostBoundary: false)],
+        null,
+        module,
+      );
+
+      expect(trace.toString(), contains('(dartic)'));
+    });
+
+    test('exact PC match', () {
+      final module = buildModuleWithLineTable(
+        funcName: 'foo',
+        lineTable: [
+          LineTableEntry(pc: 5, fileIndex: 0, fileOffset: 30),
+        ],
+        fileUris: ['file:///foo.dart'],
+        lineStartsTable: [
+          [0, 15, 30, 45], // line 3 starts at 30
+        ],
+      );
+
+      final trace = DarticStackTrace.fromFrames(
+        [FrameSnapshot(funcId: 0, pc: 5, isHostBoundary: false)],
+        null,
+        module,
+      );
+
+      // fileOffset=30, lineStarts=[0,15,30,45] → line 3, col 1
+      expect(trace.toString(), contains('foo.dart:3:1'));
+    });
+
+    test('extracts short filename from URI', () {
+      final module = buildModuleWithLineTable(
+        funcName: 'bar',
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 0, fileOffset: 0),
+        ],
+        fileUris: ['package:my_app/src/utils/helper.dart'],
+        lineStartsTable: [[0]],
+      );
+
+      final trace = DarticStackTrace.fromFrames(
+        [FrameSnapshot(funcId: 0, pc: 0, isHostBoundary: false)],
+        null,
+        module,
+      );
+
+      expect(trace.toString(), contains('helper.dart:1:1'));
+    });
+
+    test('null module falls back to dartic', () {
+      final trace = DarticStackTrace.fromFrames(
+        [FrameSnapshot(funcId: 0, pc: 0, isHostBoundary: false)],
+        null,
+        null,
+      );
+
+      expect(trace.toString(), contains('(dartic)'));
+    });
+  });
 }
