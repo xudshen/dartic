@@ -1084,7 +1084,7 @@ class DarticInterpreter {
         _upvalueStack.removeLast();
         frame.resultCompleter!.completeError(
             exception!,
-            stackTrace is StackTrace ? stackTrace : StackTrace.empty);
+            stackTrace is StackTrace ? stackTrace : DarticStackTrace.empty);
         _currentAsyncFrame = null;
         return;
       }
@@ -1236,7 +1236,7 @@ class DarticInterpreter {
         if (controller != null && !controller.isClosed) {
           controller.addError(
               exception!,
-              stackTrace is StackTrace ? stackTrace : StackTrace.empty);
+              stackTrace is StackTrace ? stackTrace : DarticStackTrace.empty);
           controller.close();
         }
         _currentAsyncStarFrame = null;
@@ -1426,7 +1426,7 @@ class DarticInterpreter {
         }
         if (callStack.depth <= 1) {
           Error.throwWithStackTrace(exception!,
-              stackTrace is StackTrace ? stackTrace : StackTrace.current);
+              stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
         }
         rs.clearRange(rBase, rs.sp);
         vs.sp = vBase;
@@ -1446,7 +1446,7 @@ class DarticInterpreter {
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
           Error.throwWithStackTrace(exception!,
-              stackTrace is StackTrace ? stackTrace : StackTrace.current);
+              stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
         }
         vBase = callerVSP;
         rBase = callerRSP;
@@ -2145,7 +2145,7 @@ class DarticInterpreter {
                   break;
                 }
               } on Object catch (e, st) {
-                pc = unwindToHandler(pc - 1, e, st);
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 continue;
               }
             }
@@ -2184,7 +2184,7 @@ class DarticInterpreter {
             rs.write(rBase + a, result);
           } on Object catch (e, st) {
             // Host function threw — route through the exception handler.
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
@@ -2212,7 +2212,7 @@ class DarticInterpreter {
                 final result = invokeClosure(receiver, closureArgs);
                 rs.write(rBase + a, result);
               } on Object catch (e, st) {
-                pc = unwindToHandler(pc - 1, e, st);
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
               }
               continue;
             }
@@ -2574,7 +2574,7 @@ class DarticInterpreter {
               throw DarticLateError(
                   "Field '${gt.nameOf(bx)}' has not been initialized.");
             } catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, st);
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
               continue;
             }
           }
@@ -2593,7 +2593,7 @@ class DarticInterpreter {
                 gt.resetToUninitialized(bx);
                 // Route through unwindToHandler so bytecode-level
                 // try-catch blocks can catch initializer errors.
-                pc = unwindToHandler(pc - 1, e, st);
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 continue;
               }
             } else if (!gt.isLate(bx)) {
@@ -2606,7 +2606,7 @@ class DarticInterpreter {
           try {
             rs.write(rBase + a, gt.load(bx));
           } catch (e, st) {
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             continue;
           }
 
@@ -2616,7 +2616,7 @@ class DarticInterpreter {
           try {
             _globalTable!.store(bx, rs.read(rBase + a));
           } catch (e, st) {
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             continue;
           }
 
@@ -3389,7 +3389,7 @@ class DarticInterpreter {
             final stackTrace = rs.read(rBase + b);
             frame.resultCompleter!.completeError(
               error!,
-              stackTrace is StackTrace ? stackTrace : StackTrace.empty,
+              stackTrace is StackTrace ? stackTrace : DarticStackTrace.empty,
             );
 
             if (!frame.futureReturned) {
