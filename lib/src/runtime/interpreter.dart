@@ -226,6 +226,23 @@ class DarticInterpreter {
   /// async* context from sync* and regular async contexts.
   DarticFrame? _currentAsyncStarFrame;
 
+  /// The name of the last host function invoked via CALL_HOST.
+  ///
+  /// Set just before invoking the host binding; read-once by
+  /// [_runNestedDispatch] so HOST_BOUNDARY frames can display
+  /// the host function name (e.g., `[host: map]`).
+  String? _lastHostCallName;
+
+  /// Parallel stack of host function names for each HOST_BOUNDARY frame.
+  ///
+  /// Pushed in [_runNestedDispatch] (read-once from [_lastHostCallName]),
+  /// popped at every exit point. Consumed by [DarticStackTrace.capture]
+  /// to label HOST_BOUNDARY sentinel frames.
+  final List<String?> _hostNameStack = [];
+
+  /// Exposes [_hostNameStack] for [DarticStackTrace.capture].
+  List<String?> get hostNameStack => _hostNameStack;
+
   /// Deserializes, validates, and prepares a bytecode module for execution.
   ///
   /// Pipeline: bytes → deserialize → structural verification → bridge
@@ -433,6 +450,8 @@ class DarticInterpreter {
     _activeDarticDispatch = null;
     _callbackResult = null;
     _hostBoundaryDepth = 0;
+    _lastHostCallName = null;
+    _hostNameStack.clear();
   }
 
   /// Builds a [StackTrace] representing the current interpreter call stack.
@@ -612,6 +631,12 @@ class DarticInterpreter {
     final savedVSP = vs.sp;
     final savedRSP = rs.sp;
 
+    // Read-once: capture the host function name set by CALL_HOST,
+    // then clear to prevent stale values from leaking into later calls.
+    final hostName = _lastHostCallName;
+    _lastHostCallName = null;
+    _hostNameStack.add(hostName);
+
     // Push HOST_BOUNDARY sentinel frame.
     callStack.pushFrame(
       funcId: CallStack.sentinelHostBoundary,
@@ -656,6 +681,7 @@ class DarticInterpreter {
     } on Object {
       // Exception propagated past HOST_BOUNDARY — restore stacks.
       _hostBoundaryDepth--;
+      _hostNameStack.removeLast();
       vs.sp = savedVSP;
       rs.sp = savedRSP;
       if (callStack.isHostBoundary) {
@@ -665,6 +691,7 @@ class DarticInterpreter {
       rethrow;
     }
     _hostBoundaryDepth--;
+    _hostNameStack.removeLast();
 
     // Read result and clean up.
     final result = _callbackResult;
@@ -675,6 +702,21 @@ class DarticInterpreter {
     _upvalueStack.removeLast();
 
     return result;
+  }
+
+  /// Extracts the short function name from a full binding name.
+  ///
+  /// Examples:
+  /// - `"dart:core::List::map#2"` → `"map"`
+  /// - `"dart:core::::print#1"` → `"print"`
+  /// - `"dart:core::int::operator +#2"` → `"operator +"`
+  static String _extractFuncName(String fullName) {
+    // Strip trailing `#N` arity suffix.
+    final hashIdx = fullName.lastIndexOf('#');
+    final base = hashIdx >= 0 ? fullName.substring(0, hashIdx) : fullName;
+    // Take the last `::` segment.
+    final lastSep = base.lastIndexOf('::');
+    return lastSep >= 0 ? base.substring(lastSep + 2) : base;
   }
 
   /// Wraps any [DarticClosure] entries in [args] as Dart [Function] objects
@@ -2130,6 +2172,10 @@ class DarticInterpreter {
           );
 
           _wrapClosureArgs(hostArgs);
+
+          // Record host name for HOST_BOUNDARY labelling in stack traces.
+          _lastHostCallName =
+              bindingInfo.methodName ?? _extractFuncName(bindingInfo.name);
 
           // Invoke the host function and write result to refStack[A].
           try {
