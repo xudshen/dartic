@@ -1,4 +1,3 @@
-import 'package:dartic/src/runtime/error.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -24,7 +23,7 @@ int main() => identity(42);
       expect(result, 42);
     });
 
-    test('null value throws error', () async {
+    test('null value throws TypeError', () async {
       final module = await compileDart('''
 String identity(String? x) => x!;
 String main() => identity(null);
@@ -32,11 +31,7 @@ String main() => identity(null);
       final interp = DarticInterpreter();
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('Null check'),
-        )),
+        throwsA(isA<TypeError>()),
       );
     });
 
@@ -54,7 +49,7 @@ String main() {
       expect(result, 'caught');
     });
 
-    test('null int value throws error', () async {
+    test('null int value throws TypeError', () async {
       final module = await compileDart('''
 int identity(int? x) => x!;
 int main() => identity(null);
@@ -62,11 +57,7 @@ int main() => identity(null);
       final interp = DarticInterpreter();
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('Null check'),
-        )),
+        throwsA(isA<TypeError>()),
       );
     });
 

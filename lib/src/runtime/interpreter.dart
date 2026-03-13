@@ -3027,7 +3027,7 @@ class DarticInterpreter {
             // blocks can catch the null check error (e.g., Expect.throws).
             pc = unwindToHandler(
                 pc - 1,
-                DarticError('Null check operator used on a null value'),
+                TypeError(),
                 DarticStackTrace.capture(
                     callStack, module, pc - 1, _hostNameStack));
           }
