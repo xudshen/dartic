@@ -149,6 +149,10 @@ abstract final class StreamSubscriptionBindings {
             sub.onDone(handler != null ? () => handler() : null);
             return null;
         },
-        'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(identical(args[1], darticAbsent) ? null : args[1]),
+        'asFuture#1': (args) {
+            final sub = args[0] as StreamSubscription;
+            if (identical(args[1], darticAbsent)) return sub.asFuture();
+            return sub.asFuture(args[1]);
+        },
       };
 }
