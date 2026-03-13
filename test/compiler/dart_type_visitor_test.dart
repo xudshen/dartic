@@ -6,6 +6,8 @@ import 'package:test/test.dart';
 /// Convenience to avoid repeating the fileUri parameter for every Class.
 final _testUri = Uri.parse('test:///test.dart');
 
+/// Shared across all tests — classes accumulate intentionally since each test
+/// references specific class instances, not the library's class list.
 final _testLib = ir.Library(_testUri, fileUri: _testUri);
 
 ir.Class _makeClass(String name, {List<ir.TypeParameter>? typeParameters}) {
