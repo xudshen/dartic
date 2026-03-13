@@ -455,27 +455,6 @@ class DarticInterpreter {
     _hostNameStack.clear();
   }
 
-  /// Builds a [StackTrace] representing the current interpreter call stack.
-  ///
-  /// Walks the CallStack from the current frame backward, skipping
-  /// HOST_BOUNDARY sentinel frames. Produces a standard `#N funcName (dartic)`
-  /// format that mirrors Dart VM stack traces.
-  StackTrace buildCurrentStackTrace() {
-    final module = _activeModule;
-    if (module == null) return StackTrace.current;
-    final functions = module.functions;
-    final buffer = StringBuffer();
-    for (var i = 0; i < callStack.depth; i++) {
-      final funcId = callStack.funcIdAt(i);
-      if (funcId == CallStack.sentinelHostBoundary) continue;
-      final name = funcId < functions.length
-          ? functions[funcId].name
-          : '<unknown>';
-      buffer.writeln('#$i      $name (dartic)');
-    }
-    return StackTrace.fromString(buffer.toString());
-  }
-
   /// Creates TypeRegistry and SubtypeChecker from module metadata if available.
   void _provisionTypeSystem(DarticModule module) {
     final ids = module.coreTypeIds;

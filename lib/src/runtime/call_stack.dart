@@ -114,7 +114,6 @@ class CallStack {
 
   /// Returns the funcId at [depth] frames from the top (0 = current frame).
   ///
-  /// Used by [DarticInterpreter.buildCurrentStackTrace] to walk the call stack.
   /// Returns [sentinelHostBoundary] for HOST_BOUNDARY sentinel frames.
   int funcIdAt(int depth) {
     var base = _base;
