@@ -284,24 +284,123 @@ void main() async {
       expect(prints, ['finally-fail']);
     });
 
-    test('host boundary: async throw inside forEach callback', () async {
-      // async function throws synchronously inside a host callback (forEach).
-      // Exception crosses HOST_BOUNDARY; _currentAsyncFrame must be restored.
+    test('host boundary: async throw completes Future, does not leak',
+        () async {
+      // async function throws inside a host callback (forEach). With the
+      // implicit async try-catch, the throw completes the Future with error
+      // instead of leaking synchronously across the HOST_BOUNDARY. Since
+      // bad() is called without await, execution continues past forEach.
+      // We capture the Future and await it to avoid host-level unhandled
+      // error (dartic uses real Dart Completers).
       final (result, prints) = await _compileAndRunAsync('''
 Future<int> bad() async { throw 'hb-err'; }
 void main() async {
+  Future? f;
   try {
     var list = [1];
     list.forEach((x) {
-      bad();
+      f = bad();
     });
     print('no-error');
   } catch (e) {
     print('caught');
   }
+  try { await f; } catch (_) {}
 }
 ''');
-      expect(prints, ['caught']);
+      expect(prints, ['no-error']);
+    });
+  });
+
+  group('async implicit catch — throw completes Future with error', () {
+    test('throw in async body does not leak to caller', () async {
+      // Without implicit try-catch, the throw escapes via call stack.
+      // With implicit try-catch, the Future completes with error and
+      // execution continues in the caller past the f() call.
+      final (_, prints) = await _compileAndRunAsync('''
+Future f() async { throw 'err'; }
+void main() async {
+  var future = f();
+  print('reached');
+  try {
+    await future;
+  } catch (e) {
+    print('caught: \$e');
+  }
+}
+''');
+      expect(prints, ['reached', 'caught: err']);
+    });
+
+    test('Future.then onError receives async throw', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+import 'dart:async';
+Future f() async { throw 42; }
+void main() async {
+  var c = Completer<void>();
+  f().then(
+    (_) { print('no-error'); },
+    onError: (e) { print('onError: \$e'); c.complete(); },
+  );
+  await c.future;
+}
+''');
+      expect(prints, ['onError: 42']);
+    });
+
+    test('async entry function throw completes Future with error', () async {
+      // main() itself is async and throws — the entryResult Future should
+      // complete with error, not propagate to the host VM.
+      final printLog = <String>[];
+      final module = await compileDart('''
+void main() async { throw 'entry-err'; }
+''');
+      final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) =
+          createTestRegistries(printFn: (v) => printLog.add('\$v'));
+      final interp = DarticInterpreter(
+        hostBindingRegistry: hostBindingRegistry,
+        hostClassRegistry: hostClassRegistry,
+        fuelBudget: 100000,
+      );
+      interp.execute(module);
+      final result = interp.entryResult;
+      expect(result, isA<Future>());
+      // The Future should complete with error, not throw during execute().
+      Object? caughtError;
+      await (result as Future).then((_) {}, onError: (e) { caughtError = e; });
+      expect(caughtError, 'entry-err');
+    });
+
+    test('chained async throws: inner completes outer via await', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+Future inner() async { throw 'deep'; }
+Future middle() async { await inner(); }
+void main() async {
+  try {
+    await middle();
+  } catch (e) {
+    print('caught: \$e');
+  }
+}
+''');
+      expect(prints, ['caught: deep']);
+    });
+
+    test('throw after await in async body', () async {
+      final (_, prints) = await _compileAndRunAsync('''
+Future f() async {
+  await Future.value(1);
+  throw 'post-await';
+}
+void main() async {
+  try {
+    await f();
+  } catch (e) {
+    print('caught: \$e');
+  }
+}
+''');
+      expect(prints, ['caught: post-await']);
     });
   });
 

@@ -1033,6 +1033,11 @@ class DarticCompiler {
       final typeBx = _emitValueTypeTemplate(fn);
       final futureReg = _allocRefReg();
       _emitter.emitABx(Op.initAsync, futureReg, typeBx);
+
+      // Implicit try-catch wrapping the async body: any unhandled throw
+      // completes the Future with error via ASYNC_THROW instead of
+      // leaking the exception up the call stack.
+      final bodyStartPC = _emitter.currentPC;
       if (fn.body != null) _compileStatement(fn.body!);
       // Safety net: if no explicit return, emit ASYNC_RETURN null.
       // For async entry functions, INIT_ASYNC stores the future in
@@ -1041,6 +1046,22 @@ class DarticCompiler {
       _emitter.emitABC(Op.loadNull, nullReg, 0, 0);
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.asyncReturn, nullReg, 0, 0);
+      final bodyEndPC = _emitter.currentPC;
+
+      // Implicit catch-all handler: ASYNC_THROW exception, stackTrace.
+      final exReg = _allocRefReg();
+      final stReg = _allocRefReg();
+      final handlerPC = _emitter.currentPC;
+      _emitter.emitABC(Op.asyncThrow, exReg, stReg, 0);
+
+      _exceptionHandlers.add(ExceptionHandler(
+        startPC: bodyStartPC,
+        endPC: bodyEndPC,
+        handlerPC: handlerPC,
+        catchType: -1, // catch-all
+        exceptionReg: exReg,
+        stackTraceReg: stReg,
+      ));
     } else if (asyncMarker == ir.AsyncMarker.SyncStar) {
       _currentAsyncMarker = ir.AsyncMarker.SyncStar;
       final typeBx = _emitValueTypeTemplate(fn);
