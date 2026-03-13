@@ -420,9 +420,6 @@ libraries:
           - "dart:core::RangeError::value#3"
           - "dart:core::RangeError::range#5"
           - "dart:core::RangeError::index#5"
-          - "dart:core::RangeError::checkValidIndex#5"
-          - "dart:core::RangeError::checkValidRange#6"
-          - "dart:core::RangeError::checkNotNegative#3"
 
       # ── IndexError: constructor with optional params ──
       IndexError:

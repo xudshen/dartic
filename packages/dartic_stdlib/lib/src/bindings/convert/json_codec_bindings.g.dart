@@ -26,7 +26,7 @@ abstract final class JsonCodecBindings {
         'encoder#0': (args) => (args[0] as JsonCodec).encoder,
         'decoder#0': (args) => (args[0] as JsonCodec).decoder,
         'inverted#0': (args) => (args[0] as JsonCodec).inverted,
-        'withReviver#1': (args) => JsonCodec.withReviver(args[0] as dynamic Function(Object?, Object?)),
+        'withReviver#1': (args) => JsonCodec.withReviver((a, b) => (args[0] as Function)(a, b)),
         '_#fromFields#2': (args) => JsonCodec(),
         '#2': (args) {
             final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;

@@ -16,7 +16,7 @@ abstract final class ComparableBindings {
       test: (o) => o is Comparable,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:core::Comparable::compare#2', (args) => Comparable.compare(args[0] as Comparable<dynamic>, args[1] as Comparable<dynamic>));
+    ctx.registerBinding('dart:core::Comparable::compare#2', methodMap()['compare#2']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

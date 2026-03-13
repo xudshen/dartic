@@ -92,9 +92,9 @@ abstract final class RangeErrorBindings {
           _$RangeError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::RangeError::checkValueInInterval#5', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', (args) => RangeError.checkValidIndex(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as int?, identical(args[4], darticAbsent) ? null : args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?, identical(args[5], darticAbsent) ? null : args[5] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) => RangeError.checkNotNegative(args[0] as int, identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2] as String?));
+    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', methodMap()['checkValidIndex#5']!);
+    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', methodMap()['checkValidRange#6']!);
+    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', methodMap()['checkNotNegative#3']!);
     ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as RangeError).start);
     ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as RangeError).end);
     ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as RangeError).invalidValue);
@@ -104,9 +104,6 @@ abstract final class RangeErrorBindings {
     ctx.registerBinding('dart:core::RangeError::value#3', methodMap()['value#3']!);
     ctx.registerBinding('dart:core::RangeError::range#5', methodMap()['range#5']!);
     ctx.registerBinding('dart:core::RangeError::index#5', methodMap()['index#5']!);
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', methodMap()['checkValidIndex#5']!);
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', methodMap()['checkValidRange#6']!);
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', methodMap()['checkNotNegative#3']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
