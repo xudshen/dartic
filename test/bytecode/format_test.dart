@@ -9,8 +9,8 @@ void main() {
       expect(DarbFormat.magic, 0x44415242);
     });
 
-    test('version number is 6', () {
-      expect(DarbFormat.version, 6);
+    test('version number is 7', () {
+      expect(DarbFormat.version, 7);
     });
 
     test('header size is 12 bytes (magic + version + checksum)', () {
@@ -78,8 +78,8 @@ void main() {
         ..setUint32(0, DarbFormat.version, Endian.little);
       final bytes = buf.buffer.asUint8List();
 
-      // version 6 in LE: [0x06, 0x00, 0x00, 0x00]
-      expect(bytes[0], 0x06);
+      // version 7 in LE: [0x07, 0x00, 0x00, 0x00]
+      expect(bytes[0], 0x07);
       expect(bytes[1], 0x00);
       expect(bytes[2], 0x00);
       expect(bytes[3], 0x00);
