@@ -66,7 +66,7 @@ abstract final class StreamViewBindings {
             final cancelOnError = identical(args[4], darticAbsent) ? null : args[4] as bool?;
             return stream.listen(
               onData != null ? (data) => onData(data) : null,
-              onError: onError != null ? (e, st) => onError(e, st) : null,
+              onError: onError,
               onDone: onDone != null ? () => onDone() : null,
               cancelOnError: cancelOnError,
             );

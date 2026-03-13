@@ -17,11 +17,10 @@ abstract final class FutureBindings {
       test: (o) => o is Future,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:async::Future::wait#3', (args) => Future.wait((args[0] as Iterable).cast<Future>(), eagerError: identical(args[1], darticAbsent) ? false : args[1] as bool, cleanUp: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
-    ctx.registerBinding('dart:async::Future::any#1', (args) => Future.any((args[0] as Iterable).cast<Future>()));
-    ctx.registerBinding('dart:async::Future::forEach#2', (args) => Future.forEach(args[0] as Iterable, (a) => (args[1] as Function)(a) as FutureOr<dynamic>));
-    ctx.registerBinding('dart:async::Future::doWhile#1', (args) => Future.doWhile(() => (args[0] as Function)() as FutureOr<bool>));
     ctx.registerBinding('dart:async::Future::wait#3', methodMap()['wait#3']!);
+    ctx.registerBinding('dart:async::Future::any#1', methodMap()['any#1']!);
+    ctx.registerBinding('dart:async::Future::forEach#2', methodMap()['forEach#2']!);
+    ctx.registerBinding('dart:async::Future::doWhile#1', methodMap()['doWhile#1']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -70,7 +69,11 @@ abstract final class FutureBindings {
         },
         'doWhile#1': (args) {
             final action = args[0] as Function;
-            return Future.doWhile(() => action() as FutureOr<bool>);
+            return Future.doWhile(() {
+              final r = action();
+              if (r is Future) return (r as Future).then((v) => v as bool);
+              return r as bool;
+            });
         },
         'forEach#2': (args) {
             final elements = args[0] as Iterable;
@@ -83,7 +86,7 @@ abstract final class FutureBindings {
             final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
             return future.then(
               (v) => onValue(v),
-              onError: onError != null ? (e, s) => onError(e, s) : null,
+              onError: onError,
             );
         },
         'catchError#2': (args) {

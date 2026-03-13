@@ -221,7 +221,11 @@ libraries:
           "doWhile#1": |
             (args) {
               final action = args[0] as Function;
-              return Future.doWhile(() => action() as FutureOr<bool>);
+              return Future.doWhile(() {
+                final r = action();
+                if (r is Future) return (r as Future).then((v) => v as bool);
+                return r as bool;
+              });
             }
           "forEach#2": |
             (args) {
@@ -236,7 +240,7 @@ libraries:
               final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
               return future.then(
                 (v) => onValue(v),
-                onError: onError != null ? (e, s) => onError(e, s) : null,
+                onError: onError,
               );
             }
           "catchError#2": |
@@ -271,8 +275,6 @@ libraries:
               }
               return future.timeout(timeLimit);
             }
-        extra_bindings:
-          - "dart:async::Future::wait#3"
 
       # ── Completer ───────────────────────────────────────────────────────
       Completer:
@@ -1280,7 +1282,7 @@ libraries:
               final cancelOnError = identical(args[4], darticAbsent) ? null : args[4] as bool?;
               return stream.listen(
                 onData != null ? (data) => onData(data) : null,
-                onError: onError != null ? (e, st) => onError(e, st) : null,
+                onError: onError,
                 onDone: onDone != null ? () => onDone() : null,
                 cancelOnError: cancelOnError,
               );

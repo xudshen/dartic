@@ -212,334 +212,339 @@ LanguageFeatures/Augmentations/augmenting_functions_A01_t19.dart  # async*
 LanguageFeatures/Augmentations/augmenting_functions_A01_t20.dart  # async*
 LanguageFeatures/Horizontal-inference/async_t03.dart  # async*
 
-# ── Unsupported language experiments in SDK 3.38 (311) ──────────
-# These tests use language features not supported by dart compile kernel
-# in Dart SDK 3.38.7. Not dartic bugs — will resolve with SDK upgrade.
+
+# ── Unsupported language syntax in SDK 3.38 (311) ──────────────
+# These tests use language features whose syntax is not supported
+# by the Dart SDK 3.38.7 kernel frontend. Not dartic bugs.
 # Augmentations (175)
-LanguageFeatures/Augmentations/application_order_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/application_order_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/applying_augmentations_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/applying_augmentations_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/applying_augmentations_A02_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t12.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t19.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t20.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t21.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t26.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A03_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A03_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t11.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t12.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t13.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t15.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A07_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_class_like_declarations_A07_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t13.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t16.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t18.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t19.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t20.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A01_t21.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A02_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A02_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A09_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t15.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t16.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t17.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t20.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_constructors_A10_t21.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_enums_A03_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_enums_A03_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_enums_A03_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_enums_A05_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_enums_A05_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t11.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t12.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t13.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t15.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t16.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t17.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A01_t18.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t18.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t19.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t20.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t21.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t22.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t23.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t24.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t25.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t26.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t27.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t28.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t30.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t31.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A04_t32.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A05_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A05_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A06_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A07_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A08_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_functions_A08_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t11.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t12.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t13.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t15.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t11.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t12.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t13.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t14.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t15.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A05_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/complete_declarations_A01_t09.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/complete_declarations_A02_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/complete_declarations_A02_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/complete_declarations_A07_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/enums_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/enums_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extension_types_A02_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extension_types_A02_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extension_types_A02_t10.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extension_types_A03_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extension_types_A03_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/extensions_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A01_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/scoping_A02_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t08.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A02_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A02_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t01.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t04.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t05.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t06.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t07.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A05_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A05_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A06_t02.dart  # [cfe] augment keyword not supported in SDK 3.38
-LanguageFeatures/Augmentations/type_annotation_inheritance_A06_t03.dart  # [cfe] augment keyword not supported in SDK 3.38
+LanguageFeatures/Augmentations/application_order_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/application_order_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/applying_augmentations_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/applying_augmentations_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/applying_augmentations_A02_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t12.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t19.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t20.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t21.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A02_t26.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A03_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A03_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t11.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t12.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t13.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A05_t15.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A07_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_class_like_declarations_A07_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t13.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t16.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t18.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t19.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t20.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A01_t21.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A02_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A02_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A09_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t15.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t16.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t17.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t20.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_constructors_A10_t21.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_enums_A03_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_enums_A03_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_enums_A03_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_enums_A05_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_enums_A05_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t11.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t12.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t13.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t15.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t16.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t17.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A01_t18.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t18.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t19.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t20.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t21.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t22.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t23.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t24.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t25.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t26.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t27.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t28.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t30.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t31.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A04_t32.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A05_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A05_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A06_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A07_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A08_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_functions_A08_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t11.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t12.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t13.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A01_t15.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t11.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t12.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t13.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t14.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t15.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A05_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A06_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/complete_declarations_A01_t09.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/complete_declarations_A02_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/complete_declarations_A02_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/complete_declarations_A07_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/enums_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/enums_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extension_types_A02_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extension_types_A02_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extension_types_A02_t10.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extension_types_A03_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extension_types_A03_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/extensions_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A01_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/scoping_A02_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A01_t08.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A02_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A02_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t01.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t04.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t05.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t06.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A04_t07.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A05_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A05_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A06_t02.dart  # [cfe] augment syntax not supported in SDK 3.38
+LanguageFeatures/Augmentations/type_annotation_inheritance_A06_t03.dart  # [cfe] augment syntax not supported in SDK 3.38
 # Constructor-tear-offs (2)
-LanguageFeatures/Constructor-tear-offs/syntax_A01_t01.dart  # [cfe] compile error
-LanguageFeatures/Constructor-tear-offs/syntax_A02_t01.dart  # [cfe] compile error
+LanguageFeatures/Constructor-tear-offs/syntax_A01_t01.dart  # [cfe] compile error in SDK 3.38
+LanguageFeatures/Constructor-tear-offs/syntax_A02_t01.dart  # [cfe] compile error in SDK 3.38
 # Extension-types (2)
-LanguageFeatures/Extension-types/syntax_A04_t08.dart  # [cfe] compile error
-LanguageFeatures/Extension-types/syntax_A07_t01.dart  # [cfe] compile error
+LanguageFeatures/Extension-types/syntax_A04_t08.dart  # [cfe] compile error in SDK 3.38
+LanguageFeatures/Extension-types/syntax_A07_t01.dart  # [cfe] compile error in SDK 3.38
 # Parts-with-imports (35)
-LanguageFeatures/Parts-with-imports/export_A02_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/grammar_A01_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/grammar_A01_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/grammar_A01_t03.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/grammar_A04_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/ownership_A01_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/resolving_extensions_A01_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/resolving_extensions_A01_t03.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/sanity_rules_A01_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/sanity_rules_A01_t04.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/sanity_rules_A02_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/sanity_rules_A02_t04.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A01_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A01_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t03.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t04.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t05.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t06.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A02_t07.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A03_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A03_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A03_t03.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A06_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A06_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A06_t03.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A06_t04.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/scope_A08_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/terminology_A01_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/terminology_A02_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/terminology_A03_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/terminology_A04_t01.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/terminology_A05_t02.dart  # [cfe] parts-with-imports not supported in SDK 3.38
-LanguageFeatures/Parts-with-imports/top_level_A01_t05.dart  # [cfe] parts-with-imports not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/export_A02_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/grammar_A01_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/grammar_A01_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/grammar_A01_t03.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/grammar_A04_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/ownership_A01_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/resolving_extensions_A01_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/resolving_extensions_A01_t03.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/sanity_rules_A01_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/sanity_rules_A01_t04.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/sanity_rules_A02_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/sanity_rules_A02_t04.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A01_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A01_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t03.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t04.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t05.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t06.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A02_t07.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A03_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A03_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A03_t03.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A06_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A06_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A06_t03.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A06_t04.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/scope_A08_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/terminology_A01_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/terminology_A02_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/terminology_A03_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/terminology_A04_t01.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/terminology_A05_t02.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
+LanguageFeatures/Parts-with-imports/top_level_A01_t05.dart  # [cfe] parts-with-imports syntax not supported in SDK 3.38
 # Patterns (1)
-LanguageFeatures/Patterns/pattern_assignment_A02_t02.dart  # [cfe] compile error
+LanguageFeatures/Patterns/pattern_assignment_A02_t02.dart  # [cfe] compile error in SDK 3.38
 # Primary-constructors (68)
-LanguageFeatures/Primary-constructors/grammar_A01_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/grammar_A02_t07.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/grammar_A05_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/grammar_A05_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/grammar_A05_t05.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/grammar_A05_t07.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/mixin_class_A01_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A01_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A01_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A01_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A01_t06.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A02_t09.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A02_t10.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A02_t12.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t05.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t07.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t08.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t09.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t10.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A04_t11.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A05_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t07.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t08.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t09.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A06_t10.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A10_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A11_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A11_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A12_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A12_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A12_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A13_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A14_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A15_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A15_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A15_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A17_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A17_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A17_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A17_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A18_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A18_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A18_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A18_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A19_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A19_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A19_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A19_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A20_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A20_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A20_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A20_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t03.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t04.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t05.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t06.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t07.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A21_t08.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A24_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A25_t01.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
-LanguageFeatures/Primary-constructors/static_processing_A25_t02.dart  # [cfe] primary-constructors experiment not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A01_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A02_t07.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A05_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A05_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A05_t05.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/grammar_A05_t07.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/mixin_class_A01_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A01_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A01_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A01_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A01_t06.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A02_t09.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A02_t10.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A02_t12.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t05.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t07.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t08.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t09.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t10.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A04_t11.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A05_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t07.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t08.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t09.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A06_t10.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A10_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A11_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A11_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A12_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A12_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A12_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A13_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A14_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A15_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A15_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A15_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A17_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A17_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A17_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A17_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A18_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A18_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A18_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A18_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A19_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A19_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A19_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A19_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A20_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A20_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A20_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A20_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t03.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t04.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t05.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t06.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t07.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A21_t08.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A24_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A25_t01.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
+LanguageFeatures/Primary-constructors/static_processing_A25_t02.dart  # [cfe] primary-constructors syntax not supported in SDK 3.38
 # Private-named-parameters (8)
-LanguageFeatures/Private-named-parameters/static_semantics_A03_t01.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/static_semantics_A03_t02.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/static_semantics_A04_t01.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/static_semantics_A04_t02.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/static_semantics_A05_t01.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/static_semantics_A05_t02.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/super_parameters_A01_t01.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
-LanguageFeatures/Private-named-parameters/super_parameters_A01_t02.dart  # [cfe] private-named-parameters experiment not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A03_t01.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A03_t02.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A04_t01.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A04_t02.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A05_t01.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/static_semantics_A05_t02.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/super_parameters_A01_t01.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
+LanguageFeatures/Private-named-parameters/super_parameters_A01_t02.dart  # [cfe] private-named-parameters syntax not supported in SDK 3.38
 # Static-extensions (1)
-LanguageFeatures/Static-extensions/static_member_A05_t03.dart  # [cfe] static-extensions not supported in SDK 3.38
+LanguageFeatures/Static-extensions/static_member_A05_t03.dart  # [cfe] static-extensions syntax not supported in SDK 3.38
 # Unquoted-imports (19)
-LanguageFeatures/Unquoted-imports/keywords_A01_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/keywords_A01_t02.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/keywords_A01_t03.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/lib/part_A01_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/lib/part_A01_t02.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/of.parts.test/lib/part_A02_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A02_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A02_t03.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t02.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t03.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t04.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t05.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A03_t06.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A04_t01.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A04_t02.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A04_t03.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/static_semantics_A04_t04.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-LanguageFeatures/Unquoted-imports/whitespace_and_comments_A01_t03.dart  # [cfe] unquoted-imports not supported in SDK 3.38
-# Primary-constructors SharedOptions experiment flag (7)
-LanguageFeatures/Primary-constructors/grammar_A02_t06.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/grammar_A02_t08.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/grammar_A05_t02.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/grammar_A05_t04.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/grammar_A05_t06.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/grammar_A05_t08.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
-LanguageFeatures/Primary-constructors/static_processing_A02_t11.dart  # [cfe] SharedOptions=--enable-experiment=primary-constructors rejected
+LanguageFeatures/Unquoted-imports/keywords_A01_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/keywords_A01_t02.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/keywords_A01_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/lib/part_A01_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/lib/part_A01_t02.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/of.parts.test/lib/part_A02_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A02_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A02_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t02.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t04.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t05.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A03_t06.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A04_t01.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A04_t02.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A04_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/static_semantics_A04_t04.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+LanguageFeatures/Unquoted-imports/whitespace_and_comments_A01_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
+
+# ── dart:io / dart:ffi not bridged (51) ─────────────────────────
+# FinalizationRegistry tests require dart:io (Platform) + dart:ffi (DynamicLibrary)
+# via shared gc_utils_lib.dart. dart:io bridge not implemented.
+LanguageFeatures/FinalizationRegistry/  # all 51 tests need dart:io + dart:ffi
+LibTest/ffi/  # dart:ffi not bridged (~159 tests)
+LibTest/io/  # dart:io not bridged (Stdout, Stdin, WebSocket, ZLib, etc.)
+LibTest/html/  # dart:html — browser API, not applicable (~571 tests)
+LibTest/js_interop/  # dart:js_interop — JS interop, not applicable (~477 tests)
+LibTest/js_interop_unsafe/  # dart:js_interop_unsafe — JS interop, not applicable (~38 tests)
+LibTest/isolate/  # dart:isolate — multi-isolate not implemented (~247 tests)
+LibTest/mirrors/  # dart:mirrors — reflection not implemented (~29 tests)

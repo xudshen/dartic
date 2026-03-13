@@ -59,7 +59,9 @@ String emitBindingFile(
 
   body.writeln('abstract final class $bindingsClassName {');
   _writeRegisterMethod(body, info,
-      extraBindings: extraBindings, bridge: effectiveBridge);
+      extraBindings: extraBindings,
+      bridge: effectiveBridge,
+      extraMethodKeys: extraMethods?.keys.toSet());
   body.writeln();
   _writeMethodMap(body, info, extraMethods: extraMethods);
   body.writeln('}');
@@ -324,6 +326,7 @@ void _writeRegisterMethod(
   TypeInfo info, {
   List<String>? extraBindings,
   bool bridge = false,
+  Set<String>? extraMethodKeys,
 }) {
   buf.writeln('  static void register(DarticPluginContext ctx) {');
 
@@ -358,7 +361,8 @@ void _writeRegisterMethod(
     buf.writeln('    );');
 
     // Static methods as registerBinding
-    _writeStaticMethodRegistrations(buf, info);
+    _writeStaticMethodRegistrations(buf, info,
+        extraMethodKeys: extraMethodKeys);
 
     // Static getters as registerBinding
     _writeStaticGetterRegistrations(buf, info);
@@ -413,7 +417,8 @@ void _writeRegisterMethodWithInternalTypes(
   buf.writeln('    );');
 
   // Static methods for main type
-  _writeStaticMethodRegistrations(buf, mainInfo);
+  _writeStaticMethodRegistrations(buf, mainInfo,
+      extraMethodKeys: extraMethods?[mainInfo.className]?.keys.toSet());
 
   // Static getters for main type
   _writeStaticGetterRegistrations(buf, mainInfo);
@@ -436,10 +441,21 @@ void _writeRegisterMethodWithInternalTypes(
   buf.writeln('  }');
 }
 
-void _writeStaticMethodRegistrations(StringBuffer buf, TypeInfo info) {
+void _writeStaticMethodRegistrations(
+  StringBuffer buf,
+  TypeInfo info, {
+  Set<String>? extraMethodKeys,
+}) {
   for (final method in info.staticMethods) {
     // 統一：単一 max-arity binding key。
     final key = '${method.name}#${method.paramTypes.length}';
+    // If extra_methods provides a custom override for this key, use
+    // methodMap() instead of the auto-generated wrapper.
+    if (extraMethodKeys != null && extraMethodKeys.contains(key)) {
+      buf.writeln(
+          "    ctx.registerBinding('${info.qualifiedName}::$key', methodMap()['$key']!);");
+      continue;
+    }
     final wrapper = _emitStaticMethodWrapper(info.className, method);
     final indented = wrapper.replaceAll('\n', '\n    ');
     buf.writeln(
