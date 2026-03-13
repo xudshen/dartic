@@ -90,6 +90,29 @@ Object main() => getTrace();
       expect(trace, contains('.dart:'));
     });
 
+    test('rethrow without s binding preserves stack trace', () async {
+      final result = await compileAndRunWithHost('''
+String getTrace() {
+  try {
+    try {
+      throw 'original';
+    } catch (e) {
+      rethrow;
+    }
+  } catch (e, s) {
+    return s.toString();
+  }
+  return '';
+}
+Object main() => getTrace();
+''');
+      final trace = result as String;
+      expect(trace, contains('getTrace'));
+      expect(trace, contains('.dart:'));
+      // Must NOT be null — rethrow must preserve trace even without s binding
+      expect(trace, isNot(equals('null')));
+    });
+
     test('contiguous frame numbering', () async {
       final result = await compileAndRunWithHost('''
 void depth4() { throw 'x'; }

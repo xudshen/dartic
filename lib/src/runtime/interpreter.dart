@@ -1507,7 +1507,7 @@ class DarticInterpreter {
         // ignore: unnecessary_cast
         (receiver as dynamic).noSuchMethod(invocation);
       } on Object catch (e, st) {
-        final handlerPC = unwindToHandler(pc - 1, e, st);
+        final handlerPC = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
         return (false, handlerPC);
       }
       // Should not reach here, but if it does, rethrow.
@@ -1725,7 +1725,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) << vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             continue;
           }
 
@@ -1737,7 +1737,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) >> vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             continue;
           }
 
@@ -1749,7 +1749,7 @@ class DarticInterpreter {
             vs.writeInt(
                 vBase + a, vs.readInt(vBase + b) >>> vs.readInt(vBase + c));
           } on ArgumentError catch (e, st) {
-            pc = unwindToHandler(pc - 1, e, st);
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             continue;
           }
 
@@ -2323,7 +2323,7 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   continue;
                 }
               } else {
@@ -2341,7 +2341,7 @@ class DarticInterpreter {
                     continue;
                   }
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   continue;
                 }
               }
@@ -2707,7 +2707,9 @@ class DarticInterpreter {
           final exception = rs.read(rBase + a);
           // Read stackTrace BEFORE unwinding — the source register may fall
           // within the range that gets nullified during stack unwinding.
-          final stackTrace = b > 0 ? rs.read(rBase + b) : null;
+          // Compiler always allocates a stackTraceReg for catch clauses,
+          // so B is always a valid register index.
+          final stackTrace = rs.read(rBase + b);
           pc = unwindToHandler(pc - 1, exception, stackTrace);
 
         case Op.assert_: // ASSERT A, B, _ — if valueStack[A] == 0 → throw AssertionError
@@ -2996,7 +2998,7 @@ class DarticInterpreter {
                       _callDarticMethod(module, getter, receiver, const []);
                   rs.write(rBase + a, getterResult);
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 }
                 continue;
               }
@@ -3041,7 +3043,7 @@ class DarticInterpreter {
                 continue;
               }
             } on Object catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, st);
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
               continue;
             }
           }
@@ -3100,7 +3102,7 @@ class DarticInterpreter {
                   try {
                     _callDarticMethod(module, setter, receiver, [value]);
                   } on Object catch (e, st) {
-                    pc = unwindToHandler(pc - 1, e, st);
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   }
                   continue;
                 }
@@ -3127,7 +3129,7 @@ class DarticInterpreter {
                 continue;
               }
             } on Object catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, st);
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
               continue;
             }
           }
@@ -3168,7 +3170,7 @@ class DarticInterpreter {
               final result = invokeClosure(receiver, closureArgs);
               rs.write(rBase + a, result);
             } on Object catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, st);
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             }
             continue;
           }
@@ -3190,7 +3192,7 @@ class DarticInterpreter {
                       module, method, receiver, methodArgs);
                   rs.write(rBase + a, methodResult);
                 } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, st);
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 }
                 continue;
               }
@@ -3224,7 +3226,7 @@ class DarticInterpreter {
                 continue;
               }
             } on Object catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, st);
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
               continue;
             }
           }
