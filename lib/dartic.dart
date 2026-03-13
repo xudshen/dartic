@@ -19,6 +19,7 @@ export 'src/bridge/dartic_dispatch.dart'
     show DarticDispatch, InterpreterMethodCallback, notOverridden;
 export 'src/bridge/dartic_object_holder.dart';
 export 'src/runtime/error.dart';
+export 'src/runtime/stack_trace.dart' show DarticStackTrace;
 export 'src/sandbox/load_error.dart';
 export 'src/toolchain/compile_pipeline.dart';
 export 'src/toolchain/sdk_resolver.dart';

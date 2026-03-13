@@ -21,7 +21,8 @@ abstract final class DarbFormat {
   /// v4: + isConstructor flag on DarticFuncProto.
   /// v5: + isLate/isFinal flags on FieldLayout.
   /// v6: strings serialized as UTF-16 code units (was UTF-8, which swallowed BOM).
-  static const int version = 6;
+  /// v7: removed valStackDP/refStackDP from ExceptionHandler; added lineTable + source info (Batch B).
+  static const int version = 7;
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;

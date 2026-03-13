@@ -39,6 +39,7 @@ class DarticSerializer {
     _writeGlobalTable(w, module.globalCount, module.globalInitializerIds,
         module.globalFlags, module.globalNames);
     _writeCoreTypeIds(w, module.coreTypeIds);
+    _writeSourceInfo(w, module);
 
     // Build payload and compute checksum.
     final payload = w.toBytes();
@@ -269,6 +270,26 @@ class DarticSerializer {
     }
   }
 
+  // ── Source Info ──
+
+  void _writeSourceInfo(_ByteWriter w, DarticModule module) {
+    if (module.fileUris.isEmpty) {
+      w.addByte(0); // hasSourceInfo = false
+    } else {
+      w.addByte(1); // hasSourceInfo = true
+      w.writeUint32(module.fileUris.length);
+      for (final uri in module.fileUris) {
+        w.writeString(uri);
+      }
+      for (final lineStarts in module.lineStartsTable) {
+        w.writeUint32(lineStarts.length);
+        for (final offset in lineStarts) {
+          w.writeUint32(offset);
+        }
+      }
+    }
+  }
+
   void _writeFunction(_ByteWriter w, DarticFuncProto func) {
     w.writeString(func.name);
     w.writeUint32(func.funcId);
@@ -289,8 +310,6 @@ class DarticSerializer {
       w.writeUint32(handler.endPC);
       w.writeUint32(handler.handlerPC);
       w.writeInt32(handler.catchType);
-      w.writeUint32(handler.valStackDP);
-      w.writeUint32(handler.refStackDP);
       w.writeInt32(handler.exceptionReg);
       w.writeInt32(handler.stackTraceReg);
     }
@@ -339,6 +358,16 @@ class DarticSerializer {
       }
     } else {
       w.addByte(0);
+    }
+
+    // lineTable (PC → source location mapping, delta-encoded)
+    w.writeUint32(func.lineTable.length);
+    int prevPc = 0;
+    for (final entry in func.lineTable) {
+      w.writeUint32(entry.pc - prevPc); // deltaPc
+      w.writeUint16(entry.fileIndex);
+      w.writeUint32(entry.fileOffset);
+      prevPc = entry.pc;
     }
   }
 }

@@ -8,7 +8,12 @@ part of 'compiler.dart';
 extension on DarticCompiler {
   // ── Statement compilation ──
 
-  void _compileStatement(ir.Statement stmt) => stmt.accept(_stmtVisitor);
+  void _compileStatement(ir.Statement stmt) {
+    if (stmt.fileOffset >= 0) {
+      _recordSourcePosition(stmt.fileOffset);
+    }
+    stmt.accept(_stmtVisitor);
+  }
 
   void _compileBlock(ir.Block block) {
     // Push a child scope for this block.
@@ -420,10 +425,6 @@ extension on DarticCompiler {
   // ── Control flow: try/catch/finally ──
 
   void _compileTryCatch(ir.TryCatch stmt) {
-    // Record the value/ref stack depths at try entry for stack unwinding.
-    final valStackDP = _valueAlloc.maxUsed;
-    final refStackDP = _refAlloc.maxUsed;
-
     // 1. Record try body start PC.
     final startPC = _emitter.currentPC;
 
@@ -438,8 +439,10 @@ extension on DarticCompiler {
     final jumpToEndPlaceholders = <int>[];
     for (final catchClause in stmt.catches) {
       // Allocate registers for exception and stackTrace variables.
+      // Always allocate stackTraceReg even when user doesn't bind `s` — rethrow
+      // needs a register to read the original stack trace from.
       final exceptionReg = _allocRefReg();
-      int stackTraceReg = -1;
+      final stackTraceReg = _allocRefReg();
 
       // Declare exception variable in scope.
       if (catchClause.exception != null) {
@@ -448,7 +451,6 @@ extension on DarticCompiler {
       }
 
       if (catchClause.stackTrace != null) {
-        stackTraceReg = _allocRefReg();
         _scope.declareWithReg(
             catchClause.stackTrace!, StackKind.ref, stackTraceReg);
       }
@@ -497,8 +499,6 @@ extension on DarticCompiler {
         endPC: endPC,
         handlerPC: handlerPC,
         catchType: catchType,
-        valStackDP: valStackDP,
-        refStackDP: refStackDP,
         exceptionReg: exceptionReg,
         stackTraceReg: stackTraceReg,
       ));
@@ -515,9 +515,6 @@ extension on DarticCompiler {
   }
 
   void _compileTryFinally(ir.TryFinally stmt) {
-    final valStackDP = _valueAlloc.maxUsed;
-    final refStackDP = _refAlloc.maxUsed;
-
     // Allocate registers for exception/stackTrace in the error path.
     final exceptionReg = _allocRefReg();
     final stackTraceReg = _allocRefReg();
@@ -559,8 +556,6 @@ extension on DarticCompiler {
       endPC: endPC,
       handlerPC: handlerPC,
       catchType: -1, // finally = catch-all
-      valStackDP: valStackDP,
-      refStackDP: refStackDP,
       exceptionReg: exceptionReg,
       stackTraceReg: stackTraceReg,
     ));

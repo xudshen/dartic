@@ -25,6 +25,8 @@ class DarticModule {
     this.coreTypeIds,
     this.bindingNames = const [],
     this.exportedFunctions = const {},
+    this.fileUris = const [],
+    this.lineStartsTable = const [],
   });
 
   /// Function table — indexed by funcId.
@@ -75,6 +77,19 @@ class DarticModule {
   ///
   /// The map is treated as immutable after construction.
   final Map<String, int> exportedFunctions;
+
+  /// File URI table — index → URI string (e.g., 'file:///path/to/main.dart').
+  ///
+  /// Referenced by [LineTableEntry.fileIndex] in each function's line table.
+  /// Populated by the compiler from Kernel [Component.uriToSource].
+  final List<String> fileUris;
+
+  /// Per-file line start offsets — `lineStartsTable[fileIndex]` gives a
+  /// sorted list of byte offsets where each line begins.
+  ///
+  /// Used by [DarticStackTrace._resolveLocation] to convert
+  /// [LineTableEntry.fileOffset] to line:col format.
+  final List<List<int>> lineStartsTable;
 }
 
 /// Maps core Dart types to their compiler-assigned classIds.
@@ -137,6 +152,28 @@ class BindingEntry {
 /// Multiple DarticFrames or DarticClosures may share the same proto.
 ///
 /// See: docs/design/02-object-model.md "函数原型"
+/// A source position mapping entry: bytecode PC → source file location.
+///
+/// Used by [DarticStackTrace._resolveLocation] to produce `file:line:col`
+/// output. Entries within a function's [DarticFuncProto.lineTable] are
+/// sorted by [pc] (ascending).
+class LineTableEntry {
+  const LineTableEntry({
+    required this.pc,
+    required this.fileIndex,
+    required this.fileOffset,
+  });
+
+  /// Bytecode word offset within the function's [DarticFuncProto.bytecode].
+  final int pc;
+
+  /// Index into [DarticModule.fileUris] identifying the source file.
+  final int fileIndex;
+
+  /// Byte offset within the source file (from Kernel [TreeNode.fileOffset]).
+  final int fileOffset;
+}
+
 class DarticFuncProto {
   DarticFuncProto({
     required this.funcId,
@@ -151,6 +188,7 @@ class DarticFuncProto {
     this.exceptionTable = const [],
     this.upvalueDescriptors = const [],
     this.isConstructor = false,
+    this.lineTable = const [],
   });
 
   /// Human-readable function name (for debugging and serialization).
@@ -208,6 +246,13 @@ class DarticFuncProto {
   /// Upvalue descriptors for `CLOSURE` instruction.
   final List<UpvalueDescriptor> upvalueDescriptors;
 
+  /// Source position line table — PC → source location mapping.
+  ///
+  /// Sorted by [LineTableEntry.pc] (ascending). Used by
+  /// [DarticStackTrace._resolveLocation] for line number resolution.
+  /// Empty when compiled without source info (Batch A compatibility).
+  final List<LineTableEntry> lineTable;
+
   /// Function type template — serialized to .darb.
   ///
   /// Set by the compiler for closures, tearoffs, and regular procedures.
@@ -260,8 +305,6 @@ class ExceptionHandler {
     required this.endPC,
     required this.handlerPC,
     this.catchType = -1,
-    this.valStackDP = 0,
-    this.refStackDP = 0,
     required this.exceptionReg,
     required this.stackTraceReg,
   });
@@ -280,12 +323,6 @@ class ExceptionHandler {
   /// - `>= 0`: constant pool index of a [TypeTemplate] for typed catch
   ///   (`on SomeType catch (e)`)
   final int catchType;
-
-  /// Value stack depth to restore when entering the handler.
-  final int valStackDP;
-
-  /// Ref stack depth to restore when entering the handler.
-  final int refStackDP;
 
   /// Register to store the caught exception object.
   final int exceptionReg;

@@ -34,6 +34,8 @@ extension on DarticCompiler {
       thisCapturedByInner: _thisCapturedByInner,
       activeFinalizers: List.of(_activeFinalizers),
       finalizerDepthAtLabel: Map.of(_finalizerDepthAtLabel),
+      currentLineTable: _currentLineTable,
+      currentFileIndex: _currentFileIndex,
     ));
 
     _emitter = BytecodeEmitter();
@@ -41,6 +43,9 @@ extension on DarticCompiler {
     _refAlloc = RegisterAllocator();
     _isEntryFunction = false;
     _currentAsyncMarker = ir.AsyncMarker.Sync;
+    _currentLineTable = [];
+    // _currentFileIndex is inherited from enclosing function (closures are
+    // defined in the same file as their enclosing procedure).
     _pendingArgMoves.clear();
     _labelBreakJumps.clear();
     _exceptionHandlers.clear();
@@ -83,6 +88,8 @@ extension on DarticCompiler {
     _thisCapturedByInner = ctx.thisCapturedByInner;
     _restoreList(_activeFinalizers, ctx.activeFinalizers);
     _restoreMap(_finalizerDepthAtLabel, ctx.finalizerDepthAtLabel);
+    _currentLineTable = ctx.currentLineTable;
+    _currentFileIndex = ctx.currentFileIndex;
   }
 
   /// Restores a mutable list's contents from a saved snapshot.
@@ -290,6 +297,9 @@ extension on DarticCompiler {
     final refRegCount = _refAlloc.maxUsed;
     final upvalueDescs = List<UpvalueDescriptor>.of(_upvalueDescriptors);
 
+    // Sort line table by PC for binary search at runtime.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
+
     final innerProto = DarticFuncProto(
       funcId: innerFuncId,
       name: name ?? '<anonymous>',
@@ -304,6 +314,7 @@ extension on DarticCompiler {
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
       upvalueDescriptors: upvalueDescs,
+      lineTable: List.of(_currentLineTable),
     );
 
     // Set transient typeTemplate BEFORE _popContext() — at this point
@@ -1697,6 +1708,8 @@ class _CompilationContext {
     required this.thisCapturedByInner,
     required this.activeFinalizers,
     required this.finalizerDepthAtLabel,
+    required this.currentLineTable,
+    required this.currentFileIndex,
   });
 
   final BytecodeEmitter emitter;
@@ -1721,6 +1734,8 @@ class _CompilationContext {
   final bool thisCapturedByInner;
   final List<ir.TryFinally> activeFinalizers;
   final Map<ir.LabeledStatement, int> finalizerDepthAtLabel;
+  final List<LineTableEntry> currentLineTable;
+  final int currentFileIndex;
 }
 
 /// AST visitor that collects references to outer-scope variables.

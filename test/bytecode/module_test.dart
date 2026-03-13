@@ -188,27 +188,21 @@ void main() {
       expect(handler.endPC, 20);
       expect(handler.handlerPC, 30);
       expect(handler.catchType, -1); // default: catch-all
-      expect(handler.valStackDP, 0); // default
-      expect(handler.refStackDP, 0); // default
       expect(handler.exceptionReg, 5);
       expect(handler.stackTraceReg, 6);
     });
 
-    test('custom catchType and stack depths', () {
+    test('custom catchType', () {
       final handler = ExceptionHandler(
         startPC: 0,
         endPC: 10,
         handlerPC: 15,
         catchType: 42,
-        valStackDP: 3,
-        refStackDP: 2,
         exceptionReg: 0,
         stackTraceReg: 1,
       );
 
       expect(handler.catchType, 42);
-      expect(handler.valStackDP, 3);
-      expect(handler.refStackDP, 2);
     });
   });
 

@@ -360,7 +360,7 @@ DarticGlobalTable 存储静态字段和顶层变量。每个槽位初始为 `_un
 |--------|-----|------|
 | fuel 预算 | 50,000 指令/回合 | ~200us `Timer.run` 调度开销 + ~10ms 目标回合时间（保持 UI 60fps 流畅）。注意：实测可能仅需 1-3ms（平均 ~30ns/指令），可根据 profiling 上调至 100,000-200,000 |
 | 最大调用深度 | 512 帧 | 满足正常递归深度（Dart 常规代码极少超过 100 层），同时防止栈溢出消耗过多内存。HOST_BOUNDARY 哨兵帧计入此限制，交替调用（解释器<->VM）每层消耗约 3-5 个 VM 帧，512 层约占 ~512KB VM 栈空间（默认 1MB） |
-| ExceptionHandler 条目大小 | 8 个 int | startPC + endPC + handlerPC + catchType + valStackDP + refStackDP + exceptionReg + stackTraceReg |
+| ExceptionHandler 条目大小 | 6 个 int | startPC + endPC + handlerPC + catchType + exceptionReg + stackTraceReg |
 | 异常处理器表大小 | 每函数无硬上限 | 按 (startPC, endPC) 排序保证内层优先匹配；实际嵌套深度通常 ≤ 5 |
 | invokeClosure 嵌套深度 | 受 maxCallDepth 统一限制 | HOST_BOUNDARY 哨兵帧占用 CallStack 槽位，计入 512 帧上限 |
 

@@ -442,18 +442,6 @@ class DarticVerifier {
           'out of range [0, $codeLength)',
         );
       }
-      if (h.valStackDP < 0 || h.valStackDP > func.valueRegCount) {
-        errors.add(
-          '$prefix Exception handler #$i: valStackDP ${h.valStackDP} '
-          'out of range [0, ${func.valueRegCount}]',
-        );
-      }
-      if (h.refStackDP < 0 || h.refStackDP > func.refRegCount) {
-        errors.add(
-          '$prefix Exception handler #$i: refStackDP ${h.refStackDP} '
-          'out of range [0, ${func.refRegCount}]',
-        );
-      }
       if (h.exceptionReg >= func.refRegCount) {
         errors.add(
           '$prefix Exception handler #$i: exceptionReg ${h.exceptionReg} '
@@ -467,6 +455,24 @@ class DarticVerifier {
         errors.add(
           '$prefix Exception handler #$i: stackTraceReg ${h.stackTraceReg} '
           'out of range (expected -1 or [0, ${func.refRegCount}))',
+        );
+      }
+    }
+
+    // Check 14: Line table range validation.
+    for (var j = 0; j < func.lineTable.length; j++) {
+      final lt = func.lineTable[j];
+      if (lt.pc < 0 || lt.pc >= codeLength) {
+        errors.add(
+          '$prefix lineTable[$j]: pc ${lt.pc} out of range '
+          '[0, $codeLength)',
+        );
+      }
+      if (module.fileUris.isNotEmpty &&
+          (lt.fileIndex < 0 || lt.fileIndex >= module.fileUris.length)) {
+        errors.add(
+          '$prefix lineTable[$j]: fileIndex ${lt.fileIndex} out of range '
+          '[0, ${module.fileUris.length})',
         );
       }
     }

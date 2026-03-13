@@ -140,8 +140,6 @@ void main() {
             endPC: 50,
             handlerPC: 60,
             catchType: -1,
-            valStackDP: 2,
-            refStackDP: 1,
             exceptionReg: 3,
             stackTraceReg: 4,
           ),
@@ -150,8 +148,6 @@ void main() {
             endPC: 30,
             handlerPC: 35,
             catchType: 5,
-            valStackDP: 0,
-            refStackDP: 0,
             exceptionReg: 6,
             stackTraceReg: 7,
           ),
@@ -178,8 +174,6 @@ void main() {
       expect(f.exceptionTable[0].endPC, 50);
       expect(f.exceptionTable[0].handlerPC, 60);
       expect(f.exceptionTable[0].catchType, -1);
-      expect(f.exceptionTable[0].valStackDP, 2);
-      expect(f.exceptionTable[0].refStackDP, 1);
       expect(f.exceptionTable[0].exceptionReg, 3);
       expect(f.exceptionTable[0].stackTraceReg, 4);
 

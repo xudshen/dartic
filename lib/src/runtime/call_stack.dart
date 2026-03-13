@@ -97,9 +97,23 @@ class CallStack {
   /// Returns `true` if the current frame is a HOST_BOUNDARY sentinel.
   bool get isHostBoundary => funcId == sentinelHostBoundary;
 
+  // ── Base-pointer traversal (O(N) single-pass stack walking) ──
+
+  /// Exposes the base offset of the current (top) frame.
+  /// Used by DarticStackTrace.capture() for O(N) traversal.
+  int get currentBase => _fp - frameSize;
+
+  /// Reads funcId at an absolute base offset (no chain walking).
+  int funcIdAtBase(int base) => _data[base + _funcId];
+
+  /// Reads returnPC at an absolute base offset.
+  int returnPCAtBase(int base) => _data[base + _returnPC];
+
+  /// Reads savedFP at an absolute base offset.
+  int savedFPAtBase(int base) => _data[base + _savedFP];
+
   /// Returns the funcId at [depth] frames from the top (0 = current frame).
   ///
-  /// Used by [DarticInterpreter.buildCurrentStackTrace] to walk the call stack.
   /// Returns [sentinelHostBoundary] for HOST_BOUNDARY sentinel frames.
   int funcIdAt(int depth) {
     var base = _base;

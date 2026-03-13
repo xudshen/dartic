@@ -1473,11 +1473,8 @@ extension on DarticCompiler {
 
   (int, ResultLoc) _compileRethrow(ir.Rethrow expr) {
     assert(_catchExceptionReg >= 0, 'Rethrow outside of catch clause');
-    // B=0 signals "no stack trace" to the interpreter (b > 0 check).
-    // _catchStackTraceReg is -1 when the catch clause has no stackTrace var;
-    // passing -1 directly would wrap to 0xFFFF in the 16-bit B field.
-    final stReg = _catchStackTraceReg >= 0 ? _catchStackTraceReg : 0;
-    _emitter.emitABC(Op.rethrow_, _catchExceptionReg, stReg, 0);
+    assert(_catchStackTraceReg >= 0, 'Rethrow without stackTrace register');
+    _emitter.emitABC(Op.rethrow_, _catchExceptionReg, _catchStackTraceReg, 0);
 
     // Rethrow has type Never -- return a dummy ref register.
     return (_catchExceptionReg, ResultLoc.ref);
@@ -2211,6 +2208,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-tearoff:$methodName>',
@@ -2224,6 +2222,7 @@ extension on DarticCompiler {
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         // upvalue[0] = this, captured from the enclosing function's
         // ref register 2 (isLocal=true).
@@ -2414,6 +2413,7 @@ extension on DarticCompiler {
           promoted.contains(m.idx) ? StackKind.ref.index : m.instKind.index;
     }
 
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final thunkProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-instantiation:$methodName>',
@@ -2426,6 +2426,7 @@ extension on DarticCompiler {
       returnKind:
           _classifyReturnKind(subst.substituteType(fn.returnType)),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         UpvalueDescriptor(isLocal: true, index: thisReg),
       ],
@@ -2525,6 +2526,7 @@ extension on DarticCompiler {
 
     _patchPendingArgMoves();
 
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superHostTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-host-tearoff:$methodName>',
@@ -2538,6 +2540,7 @@ extension on DarticCompiler {
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
+      lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
         UpvalueDescriptor(isLocal: true, index: thisReg),
       ],
@@ -3075,6 +3078,7 @@ extension on DarticCompiler {
     _patchPendingArgMoves();
 
     // Create the thunk FuncProto.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     _functions[thunkFuncId] = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instantiation-thunk:$innerFuncId>',
@@ -3088,6 +3092,7 @@ extension on DarticCompiler {
         ...namedMappings.map((m) => m.instKind.index),
       ]),
       returnKind: _classifyReturnKind(subst.substituteType(fn.returnType)),
+      lineTable: List.of(_currentLineTable),
     );
 
     // Restore enclosing compilation state.

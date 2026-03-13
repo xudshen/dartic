@@ -466,6 +466,9 @@ extension on DarticCompiler {
     _currentEnclosingClass = ctor.enclosingClass;
     _currentClassTypeParams = ctor.enclosingClass.typeParameters;
 
+    // Set up file index for source position recording.
+    _currentFileIndex = _getOrCreateFileIndex(ctor.fileUri);
+
     _resetFunctionState(
       positionalParams: fn.positionalParameters,
       namedParams: fn.namedParameters,
@@ -481,6 +484,7 @@ extension on DarticCompiler {
       _patchPendingArgMoves();
       final valRegCount = _valueAlloc.maxUsed;
       final refRegCount = _refAlloc.maxUsed;
+      _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
       final proto = DarticFuncProto(
         funcId: funcId,
         name: ctor.name.text.isEmpty
@@ -496,6 +500,7 @@ extension on DarticCompiler {
         isConstructor: true,
         exceptionTable: List.of(_exceptionHandlers),
         icTable: List.of(_icEntries),
+        lineTable: List.of(_currentLineTable),
       );
       _functions[funcId] = proto;
       return;
@@ -574,6 +579,9 @@ extension on DarticCompiler {
 
     _patchPendingArgMoves();
 
+    // Sort line table by PC for binary search at runtime.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
+
     final className = ctor.enclosingClass.name;
     final ctorName = ctor.name.text;
     final displayName =
@@ -591,6 +599,7 @@ extension on DarticCompiler {
       returnKind: _classifyReturnKind(fn.returnType),
       icTable: List.of(_icEntries),
       isConstructor: true,
+      lineTable: List.of(_currentLineTable),
     );
     _currentEnclosingClass = null;
     _currentClassTypeParams = null;
