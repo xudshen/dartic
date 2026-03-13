@@ -6,8 +6,13 @@ import 'package:test/test.dart';
 /// Convenience to avoid repeating the fileUri parameter for every Class.
 final _testUri = Uri.parse('test:///test.dart');
 
+final _testLib = ir.Library(_testUri, fileUri: _testUri);
+
 ir.Class _makeClass(String name, {List<ir.TypeParameter>? typeParameters}) {
-  return ir.Class(name: name, fileUri: _testUri, typeParameters: typeParameters);
+  final cls =
+      ir.Class(name: name, fileUri: _testUri, typeParameters: typeParameters);
+  _testLib.addClass(cls);
+  return cls;
 }
 
 void main() {
@@ -130,17 +135,16 @@ void main() {
       );
     });
 
-    test('unknown class falls back to classId -1', () {
+    test('unknown class in host library produces HostClassTypeTemplate', () {
       final unknownClass = _makeClass('Unknown');
       final unknownType = ir.InterfaceType(
         unknownClass,
         ir.Nullability.nonNullable,
       );
       final result = dartTypeToTemplate(unknownType, classIdLookup);
-      expect(
-        result,
-        equals(InterfaceTypeTemplate(classId: -1, typeArgs: [])),
-      );
+      // Classes with a host library (not in classIdLookup) get resolved
+      // as HostClassTypeTemplate with the qualified name for runtime resolution.
+      expect(result, isA<HostClassTypeTemplate>());
     });
   });
 
