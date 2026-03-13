@@ -251,10 +251,12 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
   final imports = <String>{};
 
   // Always import the library we're generating bindings for (dart:core is
-  // implicitly imported by Dart, so skip it).
+  // implicitly imported by Dart, so skip it; dart:_ private libraries
+  // cannot be imported directly — the class is available via re-export).
   if (libraryUri != null &&
       libraryUri.startsWith('dart:') &&
-      libraryUri != 'dart:core') {
+      libraryUri != 'dart:core' &&
+      !libraryUri.startsWith('dart:_')) {
     imports.add(libraryUri);
   }
 
@@ -283,7 +285,8 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
         'Utf8Codec', 'Utf8Encoder', 'Utf8Decoder', 'Base64Codec',
         'AsciiCodec', 'Latin1Codec', 'HtmlEscape'],
     'dart:collection': ['LinkedHashMap', 'LinkedHashSet', 'HashMap', 'HashSet',
-        'Queue', 'ListQueue'],
+        'Queue', 'ListQueue', 'DoubleLinkedQueueEntry', 'LinkedListEntry',
+        'LinkedList', 'HasNextIterator', 'DoubleLinkedQueue'],
     'dart:math': ['Random', 'Point', 'Rectangle'],
   };
   for (final entry in crossLibraryTypes.entries) {
@@ -1264,12 +1267,17 @@ String _emitStaticMethodWrapper(String className, MethodInfo method) {
 ///   with dispatch delegation (check `notOverridden` → call super)
 void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverrideConfig>? methodOverrides}) {
   final bridgeClassName = '_\$${info.className}';
+  // Add `base` modifier when the superclass is `base` (Dart requires it).
+  final classModifier = info.isBase ? 'base ' : '';
+  // For F-bounded types (e.g. LinkedListEntry<E extends LinkedListEntry<E>>),
+  // use self-referencing type args so the bridge satisfies the bound.
+  final superTypeArgs = info.bridgeSuperTypeArgs ?? '';
   if (info.isInterface) {
     buf.writeln(
-        'class $bridgeClassName implements ${info.className}, DarticObjectHolder {');
+        '${classModifier}class $bridgeClassName implements ${info.className}$superTypeArgs, DarticObjectHolder {');
   } else {
     buf.writeln(
-        'class $bridgeClassName extends ${info.className} implements DarticObjectHolder {');
+        '${classModifier}class $bridgeClassName extends ${info.className}$superTypeArgs implements DarticObjectHolder {');
   }
 
   // Constructor — takes dispatch, darticObject, superArgs.

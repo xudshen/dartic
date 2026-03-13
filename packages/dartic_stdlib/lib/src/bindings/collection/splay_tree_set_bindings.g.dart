@@ -18,6 +18,7 @@ abstract final class SplayTreeSetBindings {
       methods: methodMap(),
       superclasses: ['dart:collection::_SplayTree', 'dart:core::Iterable', 'dart:collection::SetBase', 'dart:core::Set', 'dart:core::_SetIterable', 'dart:_internal::EfficientLengthIterable', 'dart:_internal::HideEfficientLengthIterable'],
     );
+    ctx.registerBinding('dart:collection::_SplayTreeSet&_SplayTree&Iterable&SetMixin::elementAt#1', methodMap()['elementAt#1']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -70,7 +71,15 @@ abstract final class SplayTreeSetBindings {
               isValidKey != null ? (k) => isValidKey(k) as bool : null,
             );
         },
-        'from#3': (args) => SplayTreeSet.from(args[0] as Iterable),
+        'from#3': (args) {
+            final compare = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return SplayTreeSet.from(
+              args[0] as Iterable,
+              compare != null ? (a, b) => compare(a, b) as int : null,
+              isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         'add#1': (args) => (args[0] as SplayTreeSet).add(args[1]),
         'first#0': (args) => (args[0] as SplayTreeSet).first,
         'last#0': (args) => (args[0] as SplayTreeSet).last,

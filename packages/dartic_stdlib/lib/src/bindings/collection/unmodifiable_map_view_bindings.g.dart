@@ -18,6 +18,24 @@ abstract final class UnmodifiableMapViewBindings {
       methods: methodMap(),
       superclasses: ['dart:collection::MapView', 'dart:core::Map', 'dart:collection::_UnmodifiableMapMixin'],
     );
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::[]=#2', methodMap()['[]=#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::addAll#1', methodMap()['addAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::clear#0', methodMap()['clear#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::putIfAbsent#2', methodMap()['putIfAbsent#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::remove#1', methodMap()['remove#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::update#3', methodMap()['update#3']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::updateAll#1', methodMap()['updateAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::removeWhere#1', methodMap()['removeWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapBase::addEntries#1', methodMap()['addEntries#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::[]=#2', methodMap()['[]=#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::addAll#1', methodMap()['addAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::clear#0', methodMap()['clear#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::putIfAbsent#2', methodMap()['putIfAbsent#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::remove#1', methodMap()['remove#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::update#3', methodMap()['update#3']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::updateAll#1', methodMap()['updateAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::removeWhere#1', methodMap()['removeWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::addEntries#1', methodMap()['addEntries#1']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

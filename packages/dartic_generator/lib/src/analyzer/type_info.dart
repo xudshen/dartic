@@ -25,6 +25,17 @@ class TypeInfo {
   /// Interface Bridges use `implements` instead of `extends`.
   final bool isInterface;
 
+  /// Whether the class uses the `base` modifier (Bridge subclass must also be `base`).
+  final bool isBase;
+
+  /// Type arguments the Bridge class should use when extending the host class.
+  ///
+  /// For F-bounded types like `LinkedListEntry<E extends LinkedListEntry<E>>`,
+  /// the bridge class must use a self-reference: `_$LinkedListEntry extends
+  /// LinkedListEntry<_$LinkedListEntry>`. This field holds `['_$LinkedListEntry']`.
+  /// null means no type arguments needed (non-generic or simple erasure).
+  final String? bridgeSuperTypeArgs;
+
   /// Instance fields (including private ones) for `_#fromFields` generation.
   final List<FieldInfo> fields;
 
@@ -42,6 +53,8 @@ class TypeInfo {
     this.isAbstract = false,
     this.isFinal = false,
     this.isInterface = false,
+    this.isBase = false,
+    this.bridgeSuperTypeArgs,
     this.fields = const [],
   });
 

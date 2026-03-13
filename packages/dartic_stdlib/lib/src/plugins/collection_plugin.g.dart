@@ -19,6 +19,12 @@ import '../bindings/collection/splay_tree_set_bindings.g.dart';
 import '../bindings/collection/unmodifiable_list_view_bindings.g.dart';
 import '../bindings/collection/unmodifiable_map_view_bindings.g.dart';
 import '../bindings/collection/unmodifiable_set_view_bindings.g.dart';
+import '../bindings/collection/list_base_bindings.g.dart';
+import '../bindings/collection/map_base_bindings.g.dart';
+import '../bindings/collection/linked_list_bindings.g.dart';
+import '../bindings/collection/linked_list_entry_bindings.g.dart';
+import '../bindings/collection/has_next_iterator_bindings.g.dart';
+import '../bindings/collection/double_linked_queue_entry_bindings.g.dart';
 import '../bindings/collection/double_linked_queue_bindings.g.dart';
 import '../bindings/collection/map_view_bindings.g.dart';
 
@@ -39,6 +45,12 @@ class CollectionPlugin extends DarticPlugin {
     UnmodifiableListViewBindings.register(ctx);
     UnmodifiableMapViewBindings.register(ctx);
     UnmodifiableSetViewBindings.register(ctx);
+    ListBaseBindings.register(ctx);
+    MapBaseBindings.register(ctx);
+    LinkedListBindings.register(ctx);
+    LinkedListEntryBindings.register(ctx);
+    HasNextIteratorBindings.register(ctx);
+    DoubleLinkedQueueEntryBindings.register(ctx);
     DoubleLinkedQueueBindings.register(ctx);
     MapViewBindings.register(ctx);
   }

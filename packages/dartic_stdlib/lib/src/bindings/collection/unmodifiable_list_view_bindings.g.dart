@@ -19,6 +19,48 @@ abstract final class UnmodifiableListViewBindings {
       methods: methodMap(),
       superclasses: ['dart:_internal::UnmodifiableListBase', 'dart:collection::ListBase', 'dart:core::List', 'dart:core::Iterable', 'dart:core::_ListIterable', 'dart:_internal::EfficientLengthIterable', 'dart:_internal::HideEfficientLengthIterable', 'dart:_internal::UnmodifiableListMixin'],
     );
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::[]=#2', methodMap()['[]=#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::length=#1', methodMap()['length=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::first=#1', methodMap()['first=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::last=#1', methodMap()['last=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::setAll#2', methodMap()['setAll#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::add#1', methodMap()['add#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::insert#2', methodMap()['insert#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::insertAll#2', methodMap()['insertAll#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::addAll#1', methodMap()['addAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::remove#1', methodMap()['remove#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::removeWhere#1', methodMap()['removeWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::retainWhere#1', methodMap()['retainWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::sort#1', methodMap()['sort#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::shuffle#1', methodMap()['shuffle#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::clear#0', methodMap()['clear#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::removeAt#1', methodMap()['removeAt#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::removeLast#0', methodMap()['removeLast#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::setRange#4', methodMap()['setRange#4']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::removeRange#2', methodMap()['removeRange#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::replaceRange#3', methodMap()['replaceRange#3']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListBase::fillRange#3', methodMap()['fillRange#3']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::[]=#2', methodMap()['[]=#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::length=#1', methodMap()['length=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::first=#1', methodMap()['first=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::last=#1', methodMap()['last=#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::setAll#2', methodMap()['setAll#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::add#1', methodMap()['add#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::insert#2', methodMap()['insert#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::insertAll#2', methodMap()['insertAll#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::addAll#1', methodMap()['addAll#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::remove#1', methodMap()['remove#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::removeWhere#1', methodMap()['removeWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::retainWhere#1', methodMap()['retainWhere#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::sort#1', methodMap()['sort#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::shuffle#1', methodMap()['shuffle#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::clear#0', methodMap()['clear#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::removeAt#1', methodMap()['removeAt#1']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::removeLast#0', methodMap()['removeLast#0']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::setRange#4', methodMap()['setRange#4']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::removeRange#2', methodMap()['removeRange#2']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::replaceRange#3', methodMap()['replaceRange#3']!);
+    ctx.registerBinding('dart:_internal::UnmodifiableListMixin::fillRange#3', methodMap()['fillRange#3']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

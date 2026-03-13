@@ -20,6 +20,9 @@ abstract final class IterableBindings {
     ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) => Iterable.iterableToShortString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
     ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) => Iterable.iterableToFullString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
     ctx.registerBinding('dart:_internal::EmptyIterable::#0', methodMap()['#0']!);
+    ctx.registerBinding('dart:_internal::IterableElementError::noElement#0', methodMap()['noElement#0']!);
+    ctx.registerBinding('dart:_internal::IterableElementError::tooMany#0', methodMap()['tooMany#0']!);
+    ctx.registerBinding('dart:_internal::IterableElementError::tooFew#0', methodMap()['tooFew#0']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -121,5 +124,8 @@ abstract final class IterableBindings {
             return value;
         },
         '#0': (args) => const Iterable.empty(),
+        'noElement#0': (args) => StateError('No element'),
+        'tooMany#0': (args) => StateError('Too many elements'),
+        'tooFew#0': (args) => StateError('Too few elements'),
       };
 }

@@ -63,6 +63,27 @@ libraries:
       # ── UnmodifiableSetView ────────────────────────────────────────────
       - UnmodifiableSetView
 
+      # ── ListBase (abstract, for extends-host) ─────────────────────────
+      - ListBase
+
+      # ── MapBase (abstract, for extends-host) ─────────────────────────
+      - MapBase
+
+      # ── LinkedList ──────────────────────────────────────────────────────
+      - LinkedList
+
+      # ── LinkedListEntry ─────────────────────────────────────────────
+      # NOTE: bridge: true deferred — F-bounded type LinkedListEntry<E extends
+      # LinkedListEntry<E>> creates type mismatches in generated bridge overrides.
+      # Needs gen tool enhancement to substitute type params in bridge signatures.
+      - LinkedListEntry
+
+      # ── HasNextIterator ──────────────────────────────────────────────
+      - HasNextIterator
+
+      # ── DoubleLinkedQueueEntry ──────────────────────────────────────────
+      - DoubleLinkedQueueEntry
+
       # ── DoubleLinkedQueue ────────────────────────────────────────────────
       - DoubleLinkedQueue
 
@@ -76,9 +97,34 @@ libraries:
       LinkedHashMap:
         extra_methods:
           "#0": "(args) => LinkedHashMap<Object?, Object?>()"
+          "#3": |
+            (args) {
+              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return LinkedHashMap<Object?, Object?>(
+                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
+                hashCode:
+                    hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
+                isValidKey:
+                    isValidKey != null ? (k) => isValidKey(k) as bool : null,
+              );
+            }
           "from#1": "(args) => LinkedHashMap.from(args[0] as Map)"
           "of#1": "(args) => LinkedHashMap.of(args[0] as Map)"
           "_fromEntries#1": "(args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>())"
+          "fromIterable#3": |
+            (args) {
+              final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return LinkedHashMap.fromIterable(
+                args[0] as Iterable,
+                key: key != null ? (e) => key(e) : null,
+                value: value != null ? (e) => value(e) : null,
+              );
+            }
+          "fromIterables#2": "(args) => LinkedHashMap.fromIterables(args[0] as Iterable, args[1] as Iterable)"
+          "identity#0": "(args) => LinkedHashMap.identity()"
         extra_bindings:
           - "dart:_compact_hash::_Map::#0"
 
@@ -111,6 +157,18 @@ libraries:
             }
           "from#1": "(args) => HashMap.from(args[0] as Map)"
           "of#1": "(args) => HashMap.of(args[0] as Map)"
+          "fromIterable#3": |
+            (args) {
+              final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return HashMap.fromIterable(
+                args[0] as Iterable,
+                key: key != null ? (e) => key(e) : null,
+                value: value != null ? (e) => value(e) : null,
+              );
+            }
+          "fromIterables#2": "(args) => HashMap.fromIterables(args[0] as Iterable, args[1] as Iterable)"
+          "identity#0": "(args) => HashMap.identity()"
 
       # ── HashSet: constructor with callback wrapping ──
       HashSet:
@@ -130,6 +188,7 @@ libraries:
             }
           "from#1": "(args) => HashSet.from(args[0] as Iterable)"
           "of#1": "(args) => HashSet.of(args[0] as Iterable)"
+          "identity#0": "(args) => HashSet.identity()"
 
       # ── ListQueue: constructor with optional capacity ──
       ListQueue:
@@ -184,7 +243,16 @@ libraries:
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,
               );
             }
-          "from#3": "(args) => SplayTreeMap.from(args[0] as Map)"
+          "from#3": |
+            (args) {
+              final compare = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return SplayTreeMap.from(
+                args[0] as Map,
+                compare != null ? (a, b) => compare(a, b) as int : null,
+                isValidKey != null ? (k) => isValidKey(k) as bool : null,
+              );
+            }
           "[]#1": "(args) => (args[0] as SplayTreeMap)[args[1]]"
           "firstKey#0": "(args) => (args[0] as SplayTreeMap).firstKey()"
           "lastKey#0": "(args) => (args[0] as SplayTreeMap).lastKey()"
@@ -208,23 +276,83 @@ libraries:
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,
               );
             }
-          "from#3": "(args) => SplayTreeSet.from(args[0] as Iterable)"
+          "from#3": |
+            (args) {
+              final compare = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return SplayTreeSet.from(
+                args[0] as Iterable,
+                compare != null ? (a, b) => compare(a, b) as int : null,
+                isValidKey != null ? (k) => isValidKey(k) as bool : null,
+              );
+            }
           "add#1": "(args) => (args[0] as SplayTreeSet).add(args[1])"
           "first#0": "(args) => (args[0] as SplayTreeSet).first"
           "last#0": "(args) => (args[0] as SplayTreeSet).last"
           "contains#1": "(args) => (args[0] as SplayTreeSet).contains(args[1])"
           "remove#1": "(args) => (args[0] as SplayTreeSet).remove(args[1])"
           "length#0": "(args) => (args[0] as SplayTreeSet).length"
+        extra_bindings:
+          - "dart:collection::_SplayTreeSet&_SplayTree&Iterable&SetMixin::elementAt#1"
 
       # ── UnmodifiableListView ──
+      # extra_bindings registers UnmodifiableListBase methods (dart:_internal)
+      # under the correct namespace. The closures come from the auto-generated
+      # methodMap (all inherited from UnmodifiableListBase).
       UnmodifiableListView:
         extra_methods:
           "#1": "(args) => UnmodifiableListView(args[0] as Iterable)"
           "[]#1": "(args) => (args[0] as UnmodifiableListView)[args[1] as int]"
           "length#0": "(args) => (args[0] as UnmodifiableListView).length"
           "iterator#0": "(args) => (args[0] as UnmodifiableListView).iterator"
+        extra_bindings:
+          # UnmodifiableListBase write methods (all throw UnsupportedError)
+          - "dart:_internal::UnmodifiableListBase::[]=#2"
+          - "dart:_internal::UnmodifiableListBase::length=#1"
+          - "dart:_internal::UnmodifiableListBase::first=#1"
+          - "dart:_internal::UnmodifiableListBase::last=#1"
+          - "dart:_internal::UnmodifiableListBase::setAll#2"
+          - "dart:_internal::UnmodifiableListBase::add#1"
+          - "dart:_internal::UnmodifiableListBase::insert#2"
+          - "dart:_internal::UnmodifiableListBase::insertAll#2"
+          - "dart:_internal::UnmodifiableListBase::addAll#1"
+          - "dart:_internal::UnmodifiableListBase::remove#1"
+          - "dart:_internal::UnmodifiableListBase::removeWhere#1"
+          - "dart:_internal::UnmodifiableListBase::retainWhere#1"
+          - "dart:_internal::UnmodifiableListBase::sort#1"
+          - "dart:_internal::UnmodifiableListBase::shuffle#1"
+          - "dart:_internal::UnmodifiableListBase::clear#0"
+          - "dart:_internal::UnmodifiableListBase::removeAt#1"
+          - "dart:_internal::UnmodifiableListBase::removeLast#0"
+          - "dart:_internal::UnmodifiableListBase::setRange#4"
+          - "dart:_internal::UnmodifiableListBase::removeRange#2"
+          - "dart:_internal::UnmodifiableListBase::replaceRange#3"
+          - "dart:_internal::UnmodifiableListBase::fillRange#3"
+          # UnmodifiableListMixin (same methods, different mixin app name)
+          - "dart:_internal::UnmodifiableListMixin::[]=#2"
+          - "dart:_internal::UnmodifiableListMixin::length=#1"
+          - "dart:_internal::UnmodifiableListMixin::first=#1"
+          - "dart:_internal::UnmodifiableListMixin::last=#1"
+          - "dart:_internal::UnmodifiableListMixin::setAll#2"
+          - "dart:_internal::UnmodifiableListMixin::add#1"
+          - "dart:_internal::UnmodifiableListMixin::insert#2"
+          - "dart:_internal::UnmodifiableListMixin::insertAll#2"
+          - "dart:_internal::UnmodifiableListMixin::addAll#1"
+          - "dart:_internal::UnmodifiableListMixin::remove#1"
+          - "dart:_internal::UnmodifiableListMixin::removeWhere#1"
+          - "dart:_internal::UnmodifiableListMixin::retainWhere#1"
+          - "dart:_internal::UnmodifiableListMixin::sort#1"
+          - "dart:_internal::UnmodifiableListMixin::shuffle#1"
+          - "dart:_internal::UnmodifiableListMixin::clear#0"
+          - "dart:_internal::UnmodifiableListMixin::removeAt#1"
+          - "dart:_internal::UnmodifiableListMixin::removeLast#0"
+          - "dart:_internal::UnmodifiableListMixin::setRange#4"
+          - "dart:_internal::UnmodifiableListMixin::removeRange#2"
+          - "dart:_internal::UnmodifiableListMixin::replaceRange#3"
+          - "dart:_internal::UnmodifiableListMixin::fillRange#3"
 
       # ── UnmodifiableMapView ──
+      # extra_bindings registers UnmodifiableMapBase methods (dart:_internal)
       UnmodifiableMapView:
         extra_methods:
           "#1": "(args) => UnmodifiableMapView(args[0] as Map)"
@@ -233,6 +361,27 @@ libraries:
           "keys#0": "(args) => (args[0] as UnmodifiableMapView).keys"
           "values#0": "(args) => (args[0] as UnmodifiableMapView).values"
           "containsKey#1": "(args) => (args[0] as UnmodifiableMapView).containsKey(args[1])"
+        extra_bindings:
+          # UnmodifiableMapBase write methods (all throw UnsupportedError)
+          - "dart:_internal::UnmodifiableMapBase::[]=#2"
+          - "dart:_internal::UnmodifiableMapBase::addAll#1"
+          - "dart:_internal::UnmodifiableMapBase::clear#0"
+          - "dart:_internal::UnmodifiableMapBase::putIfAbsent#2"
+          - "dart:_internal::UnmodifiableMapBase::remove#1"
+          - "dart:_internal::UnmodifiableMapBase::update#3"
+          - "dart:_internal::UnmodifiableMapBase::updateAll#1"
+          - "dart:_internal::UnmodifiableMapBase::removeWhere#1"
+          - "dart:_internal::UnmodifiableMapBase::addEntries#1"
+          # UnmodifiableMapMixin (same methods, different mixin app)
+          - "dart:_internal::UnmodifiableMapMixin::[]=#2"
+          - "dart:_internal::UnmodifiableMapMixin::addAll#1"
+          - "dart:_internal::UnmodifiableMapMixin::clear#0"
+          - "dart:_internal::UnmodifiableMapMixin::putIfAbsent#2"
+          - "dart:_internal::UnmodifiableMapMixin::remove#1"
+          - "dart:_internal::UnmodifiableMapMixin::update#3"
+          - "dart:_internal::UnmodifiableMapMixin::updateAll#1"
+          - "dart:_internal::UnmodifiableMapMixin::removeWhere#1"
+          - "dart:_internal::UnmodifiableMapMixin::addEntries#1"
 
       # ── UnmodifiableSetView ──
       UnmodifiableSetView:
@@ -243,6 +392,35 @@ libraries:
           "iterator#0": "(args) => (args[0] as UnmodifiableSetView).iterator"
           "lookup#1": "(args) => (args[0] as UnmodifiableSetView).lookup(args[1])"
           "toSet#0": "(args) => (args[0] as UnmodifiableSetView).toSet()"
+
+      # ── ListBase: abstract, gen auto-discovers all inherited methods ──
+      # No extra_methods needed — analyzer finds forEach, where, map, etc.
+
+      # ── MapBase: abstract, gen auto-discovers all methods ──
+      # No extra_methods needed.
+
+      # ── DoubleLinkedQueueEntry: gen auto-discovers public methods ──
+
+      # ── LinkedList: constructor + forEach callback wrapping ──
+      # LinkedList<E extends LinkedListEntry<E>> has recursive F-bound.
+      # Must use explicit type arg to avoid inference failure.
+      LinkedList:
+        extra_methods:
+          "#0": "(args) => LinkedList<Never>()"
+          "forEach#1": |
+            (args) {
+              final fn = args[1] as Function;
+              (args[0] as LinkedList).forEach((e) => fn(e));
+              return null;
+            }
+
+      # NOTE: LinkedListEntry.element doesn't exist — element is on
+      # DoubleLinkedQueueEntry, which gets auto-discovered by gen tool.
+
+      # ── HasNextIterator: constructor ──
+      HasNextIterator:
+        extra_methods:
+          "#1": "(args) => HasNextIterator(args[0] as Iterator)"
 
       # ── DoubleLinkedQueue: constructors + Queue methods + callback methods ──
       DoubleLinkedQueue:
@@ -306,6 +484,13 @@ libraries:
               return null;
             }
           "toString#0": "(args) => (args[0] as DoubleLinkedQueue).toString()"
+          # _DoubleLinkedQueueIterator: private class, methods go here
+          "moveNext#0": "(args) => (args[0] as Iterator).moveNext()"
+          "current#0": "(args) => (args[0] as Iterator).current"
+        extra_bindings:
+          # _DoubleLinkedQueueIterator private class
+          - "dart:collection::_DoubleLinkedQueueIterator::moveNext#0"
+          - "dart:collection::_DoubleLinkedQueueIterator::current#0"
 
       # ── MapView: constructor + delegating Map methods + callback wrapping ──
       MapView:

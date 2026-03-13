@@ -118,6 +118,11 @@ class TypeAnalyzer {
     // Use the actual declaration URI for correct binding name resolution.
     // For dart:core, this is dart:core (no change). For barrel exports like
     // package:flutter/widgets.dart, this resolves to the real src/ path.
+    // Exception: dart:_internal and other private SDK libraries should keep
+    // Always use the actual declaring URI for binding names — even for
+    // dart:_internal classes. The compiler emits binding lookups using the
+    // declaring library, so the binding name must match. The import in the
+    // generated file is handled separately (private dart: URIs are skipped).
     final actualUri = cls.library.uri.toString();
     if (actualUri != libraryUri) {
       libraryUri = actualUri;
@@ -139,6 +144,31 @@ class TypeAnalyzer {
         !cls.isSealed &&
         !cls.isMixinClass &&
         cls.constructors.every((c) => c.isFactory || c.isSynthetic);
+
+    // Check if the class uses the `base` modifier (Bridge must also be base).
+    final isBase = cls is ClassElement && cls.isBase;
+
+    // Detect F-bounded type parameters for Bridge self-reference.
+    // E.g. LinkedListEntry<E extends LinkedListEntry<E>> needs
+    // _$LinkedListEntry extends LinkedListEntry<_$LinkedListEntry>.
+    String? bridgeSuperTypeArgs;
+    if (cls.typeParameters.isNotEmpty) {
+      final bridgeClassName = '_\$${cls.name}';
+      final args = <String>[];
+      for (final tp in cls.typeParameters) {
+        final bound = tp.bound;
+        // F-bounded: the bound references the declaring class itself
+        if (bound is InterfaceType && bound.element.name == cls.name) {
+          args.add(bridgeClassName);
+        } else {
+          args.add('dynamic');
+        }
+      }
+      // Only set if at least one arg is self-referencing
+      if (args.any((a) => a == bridgeClassName)) {
+        bridgeSuperTypeArgs = '<${args.join(', ')}>';
+      }
+    }
 
     // Separate methods into instance, static, and operators
     final methods = <MethodInfo>[];
@@ -287,6 +317,8 @@ class TypeAnalyzer {
       isAbstract: isAbstract,
       isFinal: isFinal,
       isInterface: isInterface,
+      isBase: isBase,
+      bridgeSuperTypeArgs: bridgeSuperTypeArgs,
       fields: fields,
     );
   }
@@ -543,7 +575,11 @@ class TypeAnalyzer {
   /// this set are kept as-is instead of being erased. Used to preserve
   /// method-level type params in return types so Bridge overrides have correct
   /// signatures (e.g. `Stream<S> map<S>(...)`).
-  String _sanitizeType(DartType type, {Set<String>? preserveTypeParams}) {
+  String _sanitizeType(
+    DartType type, {
+    Set<String>? preserveTypeParams,
+    Set<TypeParameterElement>? visiting,
+  }) {
     // Type parameter -> use its bound, or fall back to dynamic
     if (type is TypeParameterType) {
       // Preserve method-level type params for Bridge return types.
@@ -553,13 +589,22 @@ class TypeAnalyzer {
             type.nullabilitySuffix == NullabilitySuffix.question ? '?' : '';
         return '${type.element.name}$suffix';
       }
+      // Cycle detection: if we've already seen this type parameter, break
+      // the recursion (e.g. LinkedList<E extends LinkedListEntry<E>>).
+      final visited = visiting ?? <TypeParameterElement>{};
+      if (!visited.add(type.element)) {
+        return type.nullabilitySuffix == NullabilitySuffix.question
+            ? 'Object?'
+            : 'dynamic';
+      }
       final bound = type.bound;
       if (bound.isDartCoreObject || bound is DynamicType || bound is VoidType) {
         return type.nullabilitySuffix == NullabilitySuffix.question
             ? 'Object?'
             : 'dynamic';
       }
-      return _sanitizeType(bound, preserveTypeParams: preserveTypeParams);
+      return _sanitizeType(bound,
+          preserveTypeParams: preserveTypeParams, visiting: visited);
     }
 
     // Function type -> simplify to Function if it contains erasable type params
@@ -584,8 +629,8 @@ class TypeAnalyzer {
         final name = type.element.name;
         // Recursively sanitize each type argument
         final sanitizedArgs = type.typeArguments
-            .map((t) =>
-                _sanitizeType(t, preserveTypeParams: preserveTypeParams))
+            .map((t) => _sanitizeType(t,
+                preserveTypeParams: preserveTypeParams, visiting: visiting))
             .toList();
         // If all args become 'dynamic', use the raw type name
         final allDynamic = sanitizedArgs.every((a) => a == 'dynamic');

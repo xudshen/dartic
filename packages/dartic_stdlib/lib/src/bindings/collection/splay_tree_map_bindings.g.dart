@@ -51,7 +51,15 @@ abstract final class SplayTreeMapBindings {
               isValidKey != null ? (k) => isValidKey(k) as bool : null,
             );
         },
-        'from#3': (args) => SplayTreeMap.from(args[0] as Map),
+        'from#3': (args) {
+            final compare = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return SplayTreeMap.from(
+              args[0] as Map,
+              compare != null ? (a, b) => compare(a, b) as int : null,
+              isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         '[]#1': (args) => (args[0] as SplayTreeMap)[args[1]],
         'firstKey#0': (args) => (args[0] as SplayTreeMap).firstKey(),
         'lastKey#0': (args) => (args[0] as SplayTreeMap).lastKey(),

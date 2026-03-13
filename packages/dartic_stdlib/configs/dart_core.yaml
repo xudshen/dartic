@@ -628,8 +628,15 @@ libraries:
               return value;
             }
           "#0": "(args) => const Iterable.empty()"
+          # IterableElementError static factories (dart:_internal)
+          "noElement#0": "(args) => StateError('No element')"
+          "tooMany#0": "(args) => StateError('Too many elements')"
+          "tooFew#0": "(args) => StateError('Too few elements')"
         extra_bindings:
           - "dart:_internal::EmptyIterable::#0"
+          - "dart:_internal::IterableElementError::noElement#0"
+          - "dart:_internal::IterableElementError::tooMany#0"
+          - "dart:_internal::IterableElementError::tooFew#0"
 
       # ── List: factory constructors not discoverable by analyzer ──
       List:
@@ -641,6 +648,11 @@ libraries:
                   ? args[1] as bool
                   : true;
               return List.from(args[0] as Iterable, growable: growable);
+            }
+          "of#2": |
+            (args) {
+              final growable = identical(args[1], darticAbsent) ? true : args[1] as bool;
+              return List.of(args[0] as Iterable, growable: growable);
             }
 
       # ── Map: fromEntries + callback methods + toString ──

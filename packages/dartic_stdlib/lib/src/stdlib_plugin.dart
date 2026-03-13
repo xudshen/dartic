@@ -1,5 +1,6 @@
 import 'package:dartic/dartic.dart';
 
+import 'bindings/internal/iterable_wrappers.dart';
 import 'plugins/core_plugin.g.dart';
 import 'plugins/async_plugin.g.dart';
 import 'plugins/collection_plugin.g.dart';
@@ -21,5 +22,6 @@ class DarticStdlibPlugin extends DarticPlugin {
     CollectionPlugin().register(context);
     ConvertPlugin().register(context);
     MathPlugin().register(context);
+    InternalIterableBindings.register(context);
   }
 }

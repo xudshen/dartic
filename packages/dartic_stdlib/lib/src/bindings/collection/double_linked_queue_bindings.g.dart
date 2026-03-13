@@ -18,6 +18,8 @@ abstract final class DoubleLinkedQueueBindings {
       methods: methodMap(),
       superclasses: ['dart:core::Iterable', 'dart:collection::Queue', 'dart:collection::_QueueIterable', 'dart:_internal::EfficientLengthIterable', 'dart:_internal::HideEfficientLengthIterable'],
     );
+    ctx.registerBinding('dart:collection::_DoubleLinkedQueueIterator::moveNext#0', methodMap()['moveNext#0']!);
+    ctx.registerBinding('dart:collection::_DoubleLinkedQueueIterator::current#0', methodMap()['current#0']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -95,5 +97,7 @@ abstract final class DoubleLinkedQueueBindings {
             return null;
         },
         'toString#0': (args) => (args[0] as DoubleLinkedQueue).toString(),
+        'moveNext#0': (args) => (args[0] as Iterator).moveNext(),
+        'current#0': (args) => (args[0] as Iterator).current,
       };
 }

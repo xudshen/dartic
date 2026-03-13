@@ -78,5 +78,6 @@ abstract final class HashSetBindings {
         },
         'from#1': (args) => HashSet.from(args[0] as Iterable),
         'of#1': (args) => HashSet.of(args[0] as Iterable),
+        'identity#0': (args) => HashSet.identity(),
       };
 }

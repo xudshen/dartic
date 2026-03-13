@@ -102,6 +102,10 @@ abstract final class ListBindings {
                 : true;
             return List.from(args[0] as Iterable, growable: growable);
         },
+        'of#2': (args) {
+            final growable = identical(args[1], darticAbsent) ? true : args[1] as bool;
+            return List.of(args[0] as Iterable, growable: growable);
+        },
       };
 
   static Map<String, Object? Function(List<Object?>)> growableListMethodMap() => {

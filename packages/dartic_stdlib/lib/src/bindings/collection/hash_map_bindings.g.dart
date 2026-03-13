@@ -56,5 +56,16 @@ abstract final class HashMapBindings {
         },
         'from#1': (args) => HashMap.from(args[0] as Map),
         'of#1': (args) => HashMap.of(args[0] as Map),
+        'fromIterable#3': (args) {
+            final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return HashMap.fromIterable(
+              args[0] as Iterable,
+              key: key != null ? (e) => key(e) : null,
+              value: value != null ? (e) => value(e) : null,
+            );
+        },
+        'fromIterables#2': (args) => HashMap.fromIterables(args[0] as Iterable, args[1] as Iterable),
+        'identity#0': (args) => HashMap.identity(),
       };
 }

@@ -44,8 +44,31 @@ abstract final class LinkedHashMapBindings {
         '[]#1': (args) => (args[0] as LinkedHashMap)[(args[1])],
         '[]=#2': (args) { (args[0] as LinkedHashMap)[args[1]] = args[2]; return args[2]; },
         '#0': (args) => LinkedHashMap<Object?, Object?>(),
+        '#3': (args) {
+            final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+            final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return LinkedHashMap<Object?, Object?>(
+              equals: equals != null ? (a, b) => equals(a, b) as bool : null,
+              hashCode:
+                  hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
+              isValidKey:
+                  isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         'from#1': (args) => LinkedHashMap.from(args[0] as Map),
         'of#1': (args) => LinkedHashMap.of(args[0] as Map),
         '_fromEntries#1': (args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>()),
+        'fromIterable#3': (args) {
+            final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return LinkedHashMap.fromIterable(
+              args[0] as Iterable,
+              key: key != null ? (e) => key(e) : null,
+              value: value != null ? (e) => value(e) : null,
+            );
+        },
+        'fromIterables#2': (args) => LinkedHashMap.fromIterables(args[0] as Iterable, args[1] as Iterable),
+        'identity#0': (args) => LinkedHashMap.identity(),
       };
 }
