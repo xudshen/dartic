@@ -387,7 +387,11 @@ abstract final class StreamBindings {
             final action = args[1] as Function;
             return stream.forEach((e) => action(e));
         },
-        'drain#1': (args) => (args[0] as Stream).drain(identical(args[1], darticAbsent) ? null : args[1]),
+        'drain#1': (args) {
+            final stream = args[0] as Stream;
+            if (identical(args[1], darticAbsent)) return stream.drain();
+            return stream.drain(args[1]);
+        },
         'handleError#2': (args) {
             final stream = args[0] as Stream;
             final onError = args[1] as Function;
@@ -408,7 +412,15 @@ abstract final class StreamBindings {
             return stream.asyncExpand((e) => convert(e) as Stream?);
         },
         'isBroadcast#0': (args) => (args[0] as Stream).isBroadcast,
-        'asBroadcastStream#2': (args) => (args[0] as Stream).asBroadcastStream(),
+        'asBroadcastStream#2': (args) {
+            final stream = args[0] as Stream;
+            final onListen = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final onCancel = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return stream.asBroadcastStream(
+              onListen: onListen != null ? (sub) => onListen(sub) : null,
+              onCancel: onCancel != null ? (sub) => onCancel(sub) : null,
+            );
+        },
         'join#1': (args) {
             final stream = args[0] as Stream;
             final sep = identical(args[1], darticAbsent) ? null : args[1] as String?;

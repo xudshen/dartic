@@ -64,9 +64,10 @@ abstract final class StreamTransformerBindings {
 
   static Map<String, Object? Function(List<Object?>)> streamSubscriptionTransformerMethodMap() => {
         '#1': (args) {
-            final bind = args[0] as Function;
-            return StreamTransformer.fromBind(
-              (stream) => bind(stream) as Stream,
+            final transformer = args[0] as Function;
+            return StreamTransformer(
+              (stream, cancelOnError) =>
+                transformer(stream, cancelOnError) as StreamSubscription,
             );
         },
       };
