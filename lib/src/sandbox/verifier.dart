@@ -459,6 +459,24 @@ class DarticVerifier {
       }
     }
 
+    // Check 14: Line table range validation.
+    for (var j = 0; j < func.lineTable.length; j++) {
+      final lt = func.lineTable[j];
+      if (lt.pc < 0 || lt.pc >= codeLength) {
+        errors.add(
+          '$prefix lineTable[$j]: pc ${lt.pc} out of range '
+          '[0, $codeLength)',
+        );
+      }
+      if (module.fileUris.isNotEmpty &&
+          (lt.fileIndex < 0 || lt.fileIndex >= module.fileUris.length)) {
+        errors.add(
+          '$prefix lineTable[$j]: fileIndex ${lt.fileIndex} out of range '
+          '[0, ${module.fileUris.length})',
+        );
+      }
+    }
+
     // Check 12: IC table name indices.
     for (var i = 0; i < func.icTable.length; i++) {
       final ic = func.icTable[i];

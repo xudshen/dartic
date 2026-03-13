@@ -829,6 +829,68 @@ void main() {
       expect(verifier.verify(module), isTrue);
     });
 
+    // ── lineTable range validation ──
+
+    test('detects lineTable entry with pc out of range', () {
+      final bytecode = Uint64List.fromList([
+        encodeAx(Op.nop, 0),
+        encodeAx(Op.halt, 0),
+      ]);
+      // bytecode.length = 2, so pc=5 is out of range
+      final func = DarticFuncProto(
+        funcId: 0,
+        name: 'main',
+        bytecode: bytecode,
+        valueRegCount: 1,
+        refRegCount: 1,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 5, fileIndex: 0, fileOffset: 0),
+        ],
+      );
+      final module = DarticModule(
+        functions: [func],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+        classes: [],
+        bindingNames: [],
+        fileUris: ['file:///test.dart'],
+      );
+      expect(verifier.verify(module), isFalse);
+      expect(verifier.errors, isNotEmpty);
+      expect(verifier.errors.any((e) => e.contains('lineTable') && e.contains('pc 5')), isTrue);
+    });
+
+    test('detects lineTable entry with fileIndex out of range', () {
+      final bytecode = Uint64List.fromList([
+        encodeAx(Op.nop, 0),
+        encodeAx(Op.halt, 0),
+      ]);
+      // fileUris has 1 entry (index 0 valid), fileIndex=3 is out of range
+      final func = DarticFuncProto(
+        funcId: 0,
+        name: 'main',
+        bytecode: bytecode,
+        valueRegCount: 1,
+        refRegCount: 1,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 3, fileOffset: 0),
+        ],
+      );
+      final module = DarticModule(
+        functions: [func],
+        constantPool: ConstantPool(),
+        entryFuncId: 0,
+        classes: [],
+        bindingNames: [],
+        fileUris: ['file:///test.dart'],
+      );
+      expect(verifier.verify(module), isFalse);
+      expect(verifier.errors, isNotEmpty);
+      expect(verifier.errors.any((e) => e.contains('lineTable') && e.contains('fileIndex 3')), isTrue);
+    });
+
     test('exception handler stackTraceReg -2 is invalid', () {
       final bytecode = Uint64List.fromList([
         encodeAx(Op.nop, 0),
