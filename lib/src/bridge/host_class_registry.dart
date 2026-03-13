@@ -86,10 +86,10 @@ class HostClassRegistry {
 
   // ── Layer 1: exact runtimeType cache ───────────────────────────────
 
-  /// Cache from `runtimeType` to adapter. Populated at registration
+  /// Cache from `runtimeType` to adapter list. Populated at registration
   /// time for exact types and on first lookup for predicate-matched types,
   /// providing O(1) dispatch on subsequent calls.
-  final Map<Type, _HostAdapter> _exactMap = {};
+  final Map<Type, List<_HostAdapter>> _exactMap = {};
 
   // ── Layer 2: dynamically registered user entries ───────────────────
 
@@ -121,7 +121,7 @@ class HostClassRegistry {
     bool Function(Object)? test,
   }) {
     final adapter = _HostAdapter(_registry, prefixes);
-    _exactMap[type] = adapter;
+    (_exactMap[type] ??= []).add(adapter);
     if (test != null) {
       _userEntries.add((test: test, adapter: adapter));
     }
@@ -130,40 +130,52 @@ class HostClassRegistry {
   /// Dispatches a property getter on [receiver] via its registered adapter.
   /// Returns [notFound] if no adapter registered or property not found.
   Object? getProperty(Object receiver, String name) {
-    final adapter = _lookup(receiver);
-    if (adapter == null) return notFound;
-    return adapter.getProperty(receiver, name);
+    final adapters = _lookupAll(receiver);
+    if (adapters == null) return notFound;
+    for (final adapter in adapters) {
+      final result = adapter.getProperty(receiver, name);
+      if (!identical(result, notFound)) return result;
+    }
+    return notFound;
   }
 
   /// Dispatches a method call on [receiver] via its registered adapter.
   /// Returns [notFound] if no adapter registered or method not found.
   Object? invokeMethod(Object receiver, String name, List<Object?> args) {
-    final adapter = _lookup(receiver);
-    if (adapter == null) return notFound;
-    return adapter.invokeMethod(receiver, name, args);
+    final adapters = _lookupAll(receiver);
+    if (adapters == null) return notFound;
+    for (final adapter in adapters) {
+      final result = adapter.invokeMethod(receiver, name, args);
+      if (!identical(result, notFound)) return result;
+    }
+    return notFound;
   }
 
-  /// Looks up the adapter for [receiver] based on its runtime type.
+  /// Looks up all matching adapters for [receiver] based on its runtime type.
   ///
   /// Uses a 2-layer strategy:
   ///   1. Exact `runtimeType` cache — O(1).
-  ///   2. User-registered type tests — predicate scan for generic/polymorphic types.
+  ///   2. User-registered type tests — predicate scan, collecting ALL matches.
   ///
   /// Returns null if no adapter is registered for the receiver's type.
-  _HostAdapter? _lookup(Object receiver) {
+  /// Multiple adapters can match (e.g., StreamSink matches both StreamSink
+  /// and EventSink adapters); getProperty/invokeMethod tries each in turn.
+  List<_HostAdapter>? _lookupAll(Object receiver) {
     final type = receiver.runtimeType;
     final cached = _exactMap[type];
     if (cached != null) return cached;
 
-    // Reverse traversal: later registrations are more specific (e.g., subtypes
-    // registered after supertypes). This ensures the most specific match wins.
+    // Collect all matching adapters via predicate scan.
+    List<_HostAdapter>? matches;
     for (var i = _userEntries.length - 1; i >= 0; i--) {
       final entry = _userEntries[i];
       if (entry.test(receiver)) {
-        _exactMap[type] = entry.adapter;
-        return entry.adapter;
+        (matches ??= []).add(entry.adapter);
       }
     }
-    return null;
+    if (matches != null) {
+      _exactMap[type] = matches;
+    }
+    return matches;
   }
 }
