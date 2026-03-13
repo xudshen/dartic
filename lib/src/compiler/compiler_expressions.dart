@@ -2009,8 +2009,12 @@ extension on DarticCompiler {
   /// Compiles [DynamicInvocation]: emits INVOKE_DYN for dynamic receiver
   /// method calls (e.g., `dynamic x = [1,2]; x.contains(1)`).
   ///
+  /// Compiles ALL arguments (positional + named) in source order to preserve
+  /// evaluation semantics, and creates a [DynCallDescriptor] so the runtime
+  /// can reorder named args at dispatch time.
+  ///
   /// Layout: result at reg A, receiver at A+1, args at A+2..., [typeArgs].
-  /// INVOKE_DYN A, B, C where B=totalArgCount (receiver+args), C=nameIdx.
+  /// INVOKE_DYN A, B, C where B=totalArgCount (receiver+args), C=descriptorIdx.
   /// If type arguments are present, B has bit 7 set (0x80) and the
   /// type args list is placed at A+1+argCount (right after the last arg).
   (int, ResultLoc) _compileDynamicInvocation(ir.DynamicInvocation expr) {
@@ -2026,7 +2030,17 @@ extension on DarticCompiler {
       argRegs.add(argReg);
     }
 
-    // 3. Compile type arguments (if any) into a List<DarticType> register.
+    // 3. Compile all named args in source order → box to ref.
+    //    Dart spec: evaluation order = source order (left to right).
+    final namedNames = <String>[];
+    for (final arg in expr.arguments.named) {
+      var (argReg, argLoc) = _compileExpression(arg.value);
+      argReg = _boxToRefIfValue(argReg, argLoc, _inferExprType(arg.value));
+      argRegs.add(argReg);
+      namedNames.add(arg.name);
+    }
+
+    // 4. Compile type arguments (if any) into a List<DarticType> register.
     final hasTypeArgs = expr.arguments.types.isNotEmpty;
     int? typeArgsReg;
     if (hasTypeArgs) {
@@ -2048,13 +2062,13 @@ extension on DarticCompiler {
           Op.createTypeArgs, typeArgTypes.length, firstTypeReg, typeArgsReg);
     }
 
-    // 4. Allocate consecutive ref registers: result(A), receiver(A+1), args(A+2...), [typeArgs].
+    // 5. Allocate consecutive ref registers: result(A), receiver(A+1), args(A+2...), [typeArgs].
     final slotCount = 1 + 1 + argRegs.length + (hasTypeArgs ? 1 : 0);
     final resultReg = _refAlloc.allocConsecutive(slotCount);
     final recvSlot = resultReg + 1;
     final argSlots = List.generate(argRegs.length, (i) => resultReg + 2 + i);
 
-    // 5. MOVE receiver, args, and type args into consecutive slots.
+    // 6. MOVE receiver, args, and type args into consecutive slots.
     if (recvReg != recvSlot) {
       _emitter.emitABC(Op.moveRef, recvSlot, recvReg, 0);
     }
@@ -2070,11 +2084,18 @@ extension on DarticCompiler {
       }
     }
 
-    // 6. Emit INVOKE_DYN A=result, B=totalArgCount[|0x80], C=nameIdx.
-    final nameIdx = _constantPool.addName(_mangleName(expr.name));
-    var totalArgCount = 1 + argRegs.length; // receiver + explicit args
+    // 7. Create DynCallDescriptor and add to constant pool refs.
+    final descriptor = DynCallDescriptor(
+      methodName: _mangleName(expr.name),
+      positionalArgCount: expr.arguments.positional.length,
+      namedArgNames: namedNames,
+    );
+    final descIdx = _constantPool.addRef(descriptor);
+
+    // 8. Emit INVOKE_DYN A=result, B=totalArgCount[|0x80], C=descriptorIdx.
+    var totalArgCount = 1 + argRegs.length; // receiver + all explicit args
     if (hasTypeArgs) totalArgCount |= 0x80;
-    _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx);
+    _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, descIdx);
 
     return (resultReg, ResultLoc.ref);
   }
@@ -2289,6 +2310,10 @@ extension on DarticCompiler {
           ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
@@ -2493,6 +2518,10 @@ extension on DarticCompiler {
       paramKinds: paramKinds,
       returnKind:
           _classifyReturnKind(subst.substituteType(fn.returnType)),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
@@ -2611,6 +2640,10 @@ extension on DarticCompiler {
           ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
           : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: _classifyReturnKind(fn.returnType),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       icTable: List.of(_icEntries),
       lineTable: List.of(_currentLineTable),
       upvalueDescriptors: [
@@ -3164,6 +3197,10 @@ extension on DarticCompiler {
         ...namedMappings.map((m) => m.instKind.index),
       ]),
       returnKind: _classifyReturnKind(subst.substituteType(fn.returnType)),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
       lineTable: List.of(_currentLineTable),
     );
 

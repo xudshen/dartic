@@ -4,6 +4,7 @@ import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/core_types.dart' show CoreTypes;
 import 'package:kernel/type_algebra.dart' as type_algebra;
 
+import '../api/dartic_absent.dart';
 import '../bytecode/constant_pool.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
@@ -867,6 +868,58 @@ class DarticCompiler {
     return StackKind.ref.index;
   }
 
+  /// Collects default values for optional parameters from a FunctionNode.
+  ///
+  /// Returns a list covering optional positional params + all named params,
+  /// in declaration order. Required params (including required named) get
+  /// [darticAbsent]. Only simple constant defaults are stored (null, int,
+  /// double, bool, String); complex const expressions get [darticAbsent]
+  /// and will cause a runtime error if omitted in a dynamic call.
+  List<Object?> _collectParamDefaults(ir.FunctionNode fn) {
+    final defaults = <Object?>[];
+
+    // Optional positional params.
+    for (var i = fn.requiredParameterCount;
+        i < fn.positionalParameters.length;
+        i++) {
+      defaults.add(_evalSimpleDefault(fn.positionalParameters[i]));
+    }
+
+    // Named params (all are optional unless marked required).
+    for (final param in fn.namedParameters) {
+      if (param.isRequired) {
+        defaults.add(darticAbsent);
+      } else {
+        defaults.add(_evalSimpleDefault(param));
+      }
+    }
+
+    return defaults;
+  }
+
+  /// Evaluates a simple constant default value from a parameter declaration.
+  /// Returns the Dart value for null/int/double/bool/String defaults,
+  /// or [darticAbsent] for complex or missing defaults.
+  Object? _evalSimpleDefault(ir.VariableDeclaration param) {
+    final init = param.initializer;
+    if (init == null) return null; // implicit null default
+    if (init is ir.ConstantExpression) {
+      final c = init.constant;
+      if (c is ir.NullConstant) return null;
+      if (c is ir.IntConstant) return c.value;
+      if (c is ir.DoubleConstant) return c.value;
+      if (c is ir.BoolConstant) return c.value;
+      if (c is ir.StringConstant) return c.value;
+    }
+    if (init is ir.NullLiteral) return null;
+    if (init is ir.IntLiteral) return init.value;
+    if (init is ir.DoubleLiteral) return init.value;
+    if (init is ir.BoolLiteral) return init.value;
+    if (init is ir.StringLiteral) return init.value;
+    // Complex const — not supported in V1.
+    return darticAbsent;
+  }
+
   // ── External function stub ──
 
   /// Emits a body for external functions without implementation that throws
@@ -1103,6 +1156,10 @@ class DarticCompiler {
       exceptionTable: List.of(_exceptionHandlers),
       icTable: List.of(_icEntries),
       lineTable: List.of(_currentLineTable),
+      positionalParamCount: fn.positionalParameters.length,
+      requiredPositionalCount: fn.requiredParameterCount,
+      namedParamNames: [for (final p in fn.namedParameters) p.name!],
+      paramDefaults: _collectParamDefaults(fn),
     );
 
     // Set transient typeTemplate for closure type extraction (A-lite).

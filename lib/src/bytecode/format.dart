@@ -23,7 +23,10 @@ abstract final class DarbFormat {
   /// v6: strings serialized as UTF-16 code units (was UTF-8, which swallowed BOM).
   /// v7: removed valStackDP/refStackDP from ExceptionHandler; added lineTable + source info (Batch B).
   /// v8: + CoreTypeIds.typeId (Type class ID for `is Type` checks).
-  static const int version = 8;
+  /// v9: + positionalParamCount, requiredPositionalCount, namedParamNames,
+  ///     paramDefaults on DarticFuncProto; + DynCallDescriptor in constant
+  ///     pool refs (tag 4). INVOKE_DYN C operand: refs index (was names index).
+  static const int version = 9;
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;

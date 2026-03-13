@@ -2,6 +2,7 @@ library;
 
 import 'dart:typed_data';
 
+import '../api/dartic_absent.dart';
 import '../compiler/type_template.dart';
 import '../runtime/class_info.dart';
 import 'constant_pool.dart';
@@ -157,6 +158,17 @@ class DarticDeserializer {
             }
           }
           refs.add(shape);
+        case 4:
+          // DynCallDescriptor
+          final methodName = r.readString();
+          final posArgCount = r.readUint32();
+          final namedCount = r.readUint32();
+          final namedNames = List.generate(namedCount, (_) => r.readString());
+          refs.add(DynCallDescriptor(
+            methodName: methodName,
+            positionalArgCount: posArgCount,
+            namedArgNames: namedNames,
+          ));
         default:
           throw FormatException('Unknown ref tag: $tag');
       }
@@ -401,6 +413,34 @@ class DarticDeserializer {
     // isConstructor flag (1 byte: 0 = false, 1 = true)
     final isConstructor = r.readByte() != 0;
 
+    // positionalParamCount
+    final positionalParamCount = r.readUint32();
+
+    // requiredPositionalCount
+    final requiredPositionalCount = r.readUint32();
+
+    // namedParamNames
+    final namedParamNameCount = r.readUint32();
+    final namedParamNames = List.generate(
+      namedParamNameCount, (_) => r.readString(),
+    );
+
+    // paramDefaults — tagged decoding
+    final paramDefaultCount = r.readUint32();
+    final paramDefaults = <Object?>[];
+    for (var i = 0; i < paramDefaultCount; i++) {
+      final defaultTag = r.readByte();
+      switch (defaultTag) {
+        case 0: paramDefaults.add(darticAbsent); // required
+        case 1: paramDefaults.add(null);
+        case 2: paramDefaults.add(r.readInt64());
+        case 3: paramDefaults.add(r.readFloat64());
+        case 4: paramDefaults.add(r.readByte() != 0);
+        case 5: paramDefaults.add(r.readString());
+        default: paramDefaults.add(darticAbsent);
+      }
+    }
+
     // typeTemplate (optional function type for closure type extraction)
     TypeTemplate? typeTemplate;
     final hasTypeTemplate = r.readByte();
@@ -438,6 +478,10 @@ class DarticDeserializer {
       upvalueDescriptors: upvalueDescriptors,
       isConstructor: isConstructor,
       lineTable: lineTable,
+      positionalParamCount: positionalParamCount,
+      requiredPositionalCount: requiredPositionalCount,
+      namedParamNames: namedParamNames,
+      paramDefaults: paramDefaults,
     );
     proto.typeTemplate = typeTemplate;
     return proto;

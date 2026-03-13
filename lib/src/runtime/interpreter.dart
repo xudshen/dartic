@@ -818,6 +818,83 @@ class DarticInterpreter {
     }
   }
 
+  /// Builds a correctly ordered argument list for a dynamic call to [target].
+  ///
+  /// Takes the caller's positional args and named args (keyed by name),
+  /// reorders named args to match the target's declaration order, and fills
+  /// default values for any missing optional parameters.
+  ///
+  /// Returns null if the call is invalid (wrong positional count, unknown
+  /// named arg, missing required named arg) — caller should dispatch to
+  /// noSuchMethod.
+  List<Object?>? _buildDynArgs(
+    DarticFuncProto target,
+    List<Object?> callerPositional,
+    Map<String, Object?> callerNamed,
+  ) {
+    final posParamCount = target.positionalParamCount;
+    final reqPosCount = target.requiredPositionalCount;
+    final namedParamNames = target.namedParamNames;
+    final defaults = target.paramDefaults;
+
+    // Validate positional arg count.
+    if (callerPositional.length < reqPosCount ||
+        callerPositional.length > posParamCount) {
+      return null; // wrong positional count → noSuchMethod
+    }
+
+    // Validate named arg names.
+    if (callerNamed.isNotEmpty) {
+      final namedSet = namedParamNames.toSet();
+      for (final name in callerNamed.keys) {
+        if (!namedSet.contains(name)) {
+          return null; // unknown named arg → noSuchMethod
+        }
+      }
+    }
+
+    final args = <Object?>[];
+
+    // 1. Positional args provided by caller.
+    args.addAll(callerPositional);
+
+    // 2. Missing optional positional args → fill defaults.
+    //    defaults layout: [optPos0, ..., optPosN, named0, ..., namedM]
+    final optPosCount = posParamCount - reqPosCount;
+    for (var i = callerPositional.length; i < posParamCount; i++) {
+      final defaultIdx = i - reqPosCount;
+      if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+        final d = defaults[defaultIdx];
+        args.add(identical(d, darticAbsent) ? null : d);
+      } else {
+        args.add(null);
+      }
+    }
+
+    // 3. Named args → in target declaration order, fill defaults for missing.
+    for (var i = 0; i < namedParamNames.length; i++) {
+      final paramName = namedParamNames[i];
+      if (callerNamed.containsKey(paramName)) {
+        args.add(callerNamed[paramName]);
+      } else {
+        // Fill default value.
+        final defaultIdx = optPosCount + i;
+        if (defaultIdx < defaults.length) {
+          final d = defaults[defaultIdx];
+          if (identical(d, darticAbsent)) {
+            // Required named param not provided → noSuchMethod.
+            return null;
+          }
+          args.add(d);
+        } else {
+          args.add(null);
+        }
+      }
+    }
+
+    return args;
+  }
+
   /// Saves the value-stack and ref-stack regions owned by [frame] into its
   /// snapshot fields ([DarticFrame.savedValueSlots], [DarticFrame.savedRefSlots]).
   ///
@@ -3247,15 +3324,17 @@ class DarticInterpreter {
           pc = handlerPC;
           continue;
 
-        case Op.invokeDyn: // INVOKE_DYN A, B, C — refStack[A] = dynamicDispatch(refStack[A+1], names[C], args)
+        case Op.invokeDyn: // INVOKE_DYN A, B, C — dynamic method dispatch with named args
           final a = decodeA(instr);
           final rawB = decodeB(instr);
           final c = decodeC(instr);
+          final desc = cp.getRef(c) as DynCallDescriptor;
           // B bit 7 signals type arguments present after the last arg.
           final hasTypeArgs = (rawB & 0x80) != 0;
-          final totalArgCount = rawB & 0x7F; // receiver + explicit args
+          final totalArgCount = rawB & 0x7F; // receiver + all explicit args
           final receiver = rs.read(rBase + a + 1);
-          final name = cp.getName(c);
+          final name = desc.methodName;
+
           if (receiver == null) {
             final error = NoSuchMethodError.withInvocation(
               null,
@@ -3265,8 +3344,6 @@ class DarticInterpreter {
             continue;
           }
 
-          final explicitArgCount = totalArgCount - 1;
-
           // Read type arguments if present (placed after the last regular arg).
           List<Type>? dynTypeArgs;
           if (hasTypeArgs) {
@@ -3275,51 +3352,62 @@ class DarticInterpreter {
             if (fta is List) dynTypeArgs = fta.cast<Type>();
           }
 
-          // DarticClosure: handle .call() for closures invoked dynamically.
-          // e.g., `Function f = () => 42; f.call()` or `(dynamic f)()`.
+          // ── Parse caller args from ref stack ──
+          final posCount = desc.positionalArgCount;
+          final callerPositional = List<Object?>.generate(
+            posCount, (i) => rs.read(rBase + a + 2 + i),
+          );
+          final callerNamed = <String, Object?>{
+            for (var i = 0; i < desc.namedArgNames.length; i++)
+              desc.namedArgNames[i]: rs.read(rBase + a + 2 + posCount + i),
+          };
+
+          // ── DarticClosure dispatch ──
           if (receiver is DarticClosure && name == 'call') {
-            final closureArgs = List<Object?>.generate(
-              explicitArgCount,
-              (i) => rs.read(rBase + a + 2 + i),
+            final closureArgs = _buildDynArgs(
+              receiver.funcProto, callerPositional, callerNamed,
             );
-            try {
-              final result = invokeClosure(receiver, closureArgs);
-              rs.write(rBase + a, result);
-            } on Object catch (e, st) {
-              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+            if (closureArgs != null) {
+              try {
+                final result = invokeClosure(receiver, closureArgs);
+                rs.write(rBase + a, result);
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+              }
+              continue;
             }
-            continue;
+            // Fall through to noSuchMethod.
           }
 
-          // DarticObject: look up method in class info.
+          // ── DarticObject dispatch ──
           if (receiver is DarticObject) {
             final classInfo = module.classes[receiver.classId];
             final nameIdx = cp.lookupNameIndex(name);
             if (nameIdx >= 0) {
               final method = classInfo.methods[nameIdx];
               if (method != null) {
-                // Found method — call via _callDarticMethod for proper boxing.
-                final methodArgs = List<Object?>.generate(
-                  explicitArgCount,
-                  (i) => rs.read(rBase + a + 2 + i),
+                final methodArgs = _buildDynArgs(
+                  method, callerPositional, callerNamed,
                 );
-                try {
-                  final methodResult = _callDarticMethod(
-                      module, method, receiver, methodArgs);
-                  rs.write(rBase + a, methodResult);
-                } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                if (methodArgs != null) {
+                  try {
+                    final methodResult = _callDarticMethod(
+                        module, method, receiver, methodArgs);
+                    rs.write(rBase + a, methodResult);
+                  } on Object catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  }
+                  continue;
                 }
-                continue;
+                // Method found but args don't match → noSuchMethod.
               }
             }
-            // noSuchMethod fallback for DarticObject.
-            final nsmArgs = List<Object?>.generate(
-              explicitArgCount,
-              (i) => rs.read(rBase + a + 2 + i),
+            // noSuchMethod for DarticObject.
+            final nsmInvocation = DarticInvocation.method(
+              Symbol(name), callerPositional,
+              {for (final e in callerNamed.entries) Symbol(e.key): e.value},
+              dynTypeArgs,
             );
-            final nsmInvocation =
-                DarticInvocation.method(Symbol(name), nsmArgs, null, dynTypeArgs);
             final (nsmPushed, nsmHandlerPC) =
                 dispatchNoSuchMethod(receiver, nsmInvocation, a);
             if (nsmPushed) continue;
@@ -3327,9 +3415,10 @@ class DarticInterpreter {
             continue;
           }
 
-          // Host object: try HostClassRegistry, then noSuchMethod fallback.
+          // ── Host object dispatch ──
+          // Phase 1: only pass positional args (named args to host = Phase 2).
           final hostArgs = List<Object?>.generate(
-            explicitArgCount,
+            posCount,
             (i) => rs.read(rBase + a + 2 + i),
           );
           if (_hostClassRegistry != null) {
@@ -3347,8 +3436,11 @@ class DarticInterpreter {
             }
           }
           // noSuchMethod fallback for host objects.
-          final invocation =
-              DarticInvocation.method(Symbol(name), hostArgs, null, dynTypeArgs);
+          final invocation = DarticInvocation.method(
+            Symbol(name), callerPositional,
+            {for (final e in callerNamed.entries) Symbol(e.key): e.value},
+            dynTypeArgs,
+          );
           final (pushed, handlerPC) =
               dispatchNoSuchMethod(receiver, invocation, a);
           if (pushed) continue;

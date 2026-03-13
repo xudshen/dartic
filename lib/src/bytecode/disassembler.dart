@@ -595,12 +595,23 @@ class DarticDisassembler {
       Op.setFieldDyn => c < cp.nameCount
           ? '.${cp.getName(c)}'
           : '<out of bounds>',
-      Op.invokeDyn => c < cp.nameCount
-          ? '.${cp.getName(c)}'
+      Op.invokeDyn => c < cp.refCount
+          ? _formatDynCallDescriptor(cp.getRef(c))
           : '<out of bounds>',
       Op.tagType => 'obj=r$a, type=r$b',
       _ => '',
     };
+  }
+
+  static String _formatDynCallDescriptor(Object? ref) {
+    if (ref is DynCallDescriptor) {
+      final named = ref.namedArgNames.isEmpty
+          ? ''
+          : ', named=[${ref.namedArgNames.join(', ')}]';
+      return '.${ref.methodName}(pos=${ref.positionalArgCount}$named)';
+    }
+    // Backward compat: old format used names partition.
+    return '.$ref';
   }
 
   static (String prefix, String annotation) _annotateABx(
