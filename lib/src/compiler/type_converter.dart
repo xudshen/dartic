@@ -449,6 +449,13 @@ class SuperTypeEntry {
 /// Only includes supertypes whose class node is present in [classIdLookup]
 /// (platform classes like `Object` are skipped).
 ///
+/// When a direct supertype is NOT in [classIdLookup] (e.g., intermediate host
+/// classes like `MapBase`, `MapMixin`), walks through the host class hierarchy
+/// to find ancestors that ARE registered, composing type arguments along the
+/// way. This ensures that `MyMap<K,V> extends MapBase<K,V>` correctly produces
+/// a `Map` supertype entry even though `MapBase` and `MapMixin` are not
+/// registered.
+///
 /// [cls] is the Kernel class to analyze.
 /// [classIdLookup] maps Kernel Class nodes to assigned classIds.
 /// [coreTypes] is needed to resolve FutureOrType in supertype args.
@@ -459,6 +466,7 @@ List<SuperTypeEntry> buildSuperTypeEntries(
 }) {
   final subClassId = classIdLookup[cls] ?? -1;
   final entries = <SuperTypeEntry>[];
+  final visitedSuperClassIds = <int>{};
 
   // Collect all direct supertypes: extends, implements, and with (mixin).
   final supertypes = <ir.Supertype>[
@@ -469,21 +477,211 @@ List<SuperTypeEntry> buildSuperTypeEntries(
 
   for (final supertype in supertypes) {
     final superClassId = classIdLookup[supertype.classNode];
-    if (superClassId == null) continue;
-    entries.add(SuperTypeEntry(
-      subClassId: subClassId,
-      superClassId: superClassId,
-      typeArgMapping: [
-        for (final arg in supertype.typeArguments)
-          dartTypeToTemplate(
-            arg,
-            classIdLookup,
-            enclosingClassTypeParams: cls.typeParameters,
-            coreTypes: coreTypes,
-          ),
-      ],
-    ));
+    if (superClassId != null) {
+      if (visitedSuperClassIds.add(superClassId)) {
+        entries.add(SuperTypeEntry(
+          subClassId: subClassId,
+          superClassId: superClassId,
+          typeArgMapping: [
+            for (final arg in supertype.typeArguments)
+              dartTypeToTemplate(
+                arg,
+                classIdLookup,
+                enclosingClassTypeParams: cls.typeParameters,
+                coreTypes: coreTypes,
+              ),
+          ],
+        ));
+      }
+    } else {
+      // Intermediate host class not in lookup — walk through it to find
+      // registered ancestors and compose type argument mappings.
+      _walkHostSupertypes(
+        supertype,
+        cls.typeParameters,
+        classIdLookup,
+        coreTypes,
+        subClassId,
+        entries,
+        visitedSuperClassIds,
+      );
+    }
   }
 
   return entries;
+}
+
+/// Recursively walks through an intermediate host class (not in
+/// [classIdLookup]) to find registered ancestor supertypes. Composes type
+/// arguments through each level of the hierarchy.
+///
+/// For example, `MapBase<K,V> → MapMixin<K,V> → Map<K,V>`: substitutes
+/// each level's type arguments into the next to produce the final mapping
+/// from the originating class's type parameters to the ancestor's.
+void _walkHostSupertypes(
+  ir.Supertype hostSupertype,
+  List<ir.TypeParameter> originTypeParams,
+  Map<ir.Class, int> classIdLookup,
+  ir.CoreTypes? coreTypes,
+  int subClassId,
+  List<SuperTypeEntry> entries,
+  Set<int> visitedSuperClassIds,
+) {
+  final hostClass = hostSupertype.classNode;
+  final hostTypeArgs = hostSupertype.typeArguments;
+  final visited = <ir.Class>{};
+
+  void walk(ir.Class cls, List<ir.DartType> currentArgs) {
+    if (!visited.add(cls)) return;
+
+    // Collect all supertypes of this intermediate class.
+    final supers = <ir.Supertype>[
+      if (cls.supertype != null) cls.supertype!,
+      ...cls.implementedTypes,
+      if (cls.mixedInType != null) cls.mixedInType!,
+    ];
+
+    for (final sup in supers) {
+      // Substitute type arguments: replace cls's type parameters with
+      // currentArgs to get the concrete arguments for sup.
+      final substitutedArgs = <ir.DartType>[
+        for (final arg in sup.typeArguments)
+          _substituteTypeArgs(arg, cls.typeParameters, currentArgs),
+      ];
+
+      final superClassId = classIdLookup[sup.classNode];
+      if (superClassId != null) {
+        if (visitedSuperClassIds.add(superClassId)) {
+          entries.add(SuperTypeEntry(
+            subClassId: subClassId,
+            superClassId: superClassId,
+            typeArgMapping: [
+              for (final arg in substitutedArgs)
+                dartTypeToTemplate(
+                  arg,
+                  classIdLookup,
+                  enclosingClassTypeParams: originTypeParams,
+                  coreTypes: coreTypes,
+                ),
+            ],
+          ));
+        }
+      } else {
+        // Continue walking through unregistered host classes.
+        walk(sup.classNode, substitutedArgs);
+      }
+    }
+  }
+
+  walk(hostClass, hostTypeArgs);
+}
+
+/// Substitutes type parameter references in [type] using the provided
+/// [typeParams] → [typeArgs] mapping. For example, if [type] is `T` where
+/// `T` is `typeParams[0]`, returns `typeArgs[0]`.
+ir.DartType _substituteTypeArgs(
+  ir.DartType type,
+  List<ir.TypeParameter> typeParams,
+  List<ir.DartType> typeArgs,
+) {
+  if (type is ir.TypeParameterType) {
+    final idx = typeParams.indexOf(type.parameter);
+    if (idx >= 0 && idx < typeArgs.length) {
+      return typeArgs[idx];
+    }
+    return type;
+  }
+  if (type is ir.InterfaceType) {
+    if (type.typeArguments.isEmpty) return type;
+    return ir.InterfaceType(
+      type.classNode,
+      type.nullability,
+      [
+        for (final a in type.typeArguments)
+          _substituteTypeArgs(a, typeParams, typeArgs),
+      ],
+    );
+  }
+  if (type is ir.FutureOrType) {
+    return ir.FutureOrType(
+      _substituteTypeArgs(type.typeArgument, typeParams, typeArgs),
+      type.declaredNullability,
+    );
+  }
+  if (type is ir.FunctionType) {
+    final subst = type.positionalParameters
+        .any((p) => _containsTypeParam(p, typeParams)) ||
+        type.namedParameters
+            .any((n) => _containsTypeParam(n.type, typeParams)) ||
+        _containsTypeParam(type.returnType, typeParams);
+    if (!subst) return type;
+    return ir.FunctionType(
+      [
+        for (final p in type.positionalParameters)
+          _substituteTypeArgs(p, typeParams, typeArgs),
+      ],
+      _substituteTypeArgs(type.returnType, typeParams, typeArgs),
+      type.declaredNullability,
+      namedParameters: [
+        for (final n in type.namedParameters)
+          ir.NamedType(
+            n.name,
+            _substituteTypeArgs(n.type, typeParams, typeArgs),
+            isRequired: n.isRequired,
+          ),
+      ],
+      typeParameters: type.typeParameters,
+      requiredParameterCount: type.requiredParameterCount,
+    );
+  }
+  if (type is ir.RecordType) {
+    final subst = type.positional
+        .any((p) => _containsTypeParam(p, typeParams)) ||
+        type.named.any((n) => _containsTypeParam(n.type, typeParams));
+    if (!subst) return type;
+    return ir.RecordType(
+      [
+        for (final p in type.positional)
+          _substituteTypeArgs(p, typeParams, typeArgs),
+      ],
+      [
+        for (final n in type.named)
+          ir.NamedType(
+            n.name,
+            _substituteTypeArgs(n.type, typeParams, typeArgs),
+            isRequired: n.isRequired,
+          ),
+      ],
+      type.declaredNullability,
+    );
+  }
+  return type;
+}
+
+/// Returns `true` if [type] references any of [typeParams].
+bool _containsTypeParam(
+  ir.DartType type,
+  List<ir.TypeParameter> typeParams,
+) {
+  if (type is ir.TypeParameterType) {
+    return typeParams.contains(type.parameter);
+  }
+  if (type is ir.InterfaceType) {
+    return type.typeArguments.any((a) => _containsTypeParam(a, typeParams));
+  }
+  if (type is ir.FutureOrType) {
+    return _containsTypeParam(type.typeArgument, typeParams);
+  }
+  if (type is ir.FunctionType) {
+    return _containsTypeParam(type.returnType, typeParams) ||
+        type.positionalParameters
+            .any((p) => _containsTypeParam(p, typeParams)) ||
+        type.namedParameters
+            .any((n) => _containsTypeParam(n.type, typeParams));
+  }
+  if (type is ir.RecordType) {
+    return type.positional.any((p) => _containsTypeParam(p, typeParams)) ||
+        type.named.any((n) => _containsTypeParam(n.type, typeParams));
+  }
+  return false;
 }

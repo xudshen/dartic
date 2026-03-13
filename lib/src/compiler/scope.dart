@@ -141,6 +141,21 @@ class Scope {
     }
   }
 
+  /// Removes a register from scope tracking so it won't be freed on release.
+  ///
+  /// Used by [BlockExpression] compilation to keep the result register alive
+  /// after the block scope is released. The register was allocated by
+  /// [declare] in this scope but needs to survive beyond the scope's lifetime.
+  ///
+  /// [isValue] is `true` for value-stack registers, `false` for ref-stack.
+  void untrackReg(int reg, {required bool isValue}) {
+    if (isValue) {
+      _valueRegs.remove(reg);
+    } else {
+      _refRegs.remove(reg);
+    }
+  }
+
   /// Releases all registers allocated in this scope back to their pools.
   void release() {
     valueAlloc.freeAll(_valueRegs);

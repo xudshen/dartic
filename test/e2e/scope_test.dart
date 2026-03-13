@@ -595,6 +595,30 @@ int main() {
     });
   });
 
+  group('switch expression result register lifetime', () {
+    test('switch expression result survives block scope', () async {
+      final result = await compileAndRun('''
+int main() {
+  int v = 2;
+  int result = switch (v) { 1 => 10, 2 => 20, _ => 30 };
+  return result;
+}
+''');
+      expect(result, 20);
+    });
+
+    test('multiple switch expressions do not interfere', () async {
+      final result = await compileAndRun('''
+int main() {
+  int a = switch (1) { 1 => 10, _ => 0 };
+  int b = switch (2) { 2 => 20, _ => 0 };
+  return a + b;
+}
+''');
+      expect(result, 30);
+    });
+  });
+
   group('variable copy independence (register aliasing regression)', () {
     test('int copy does not alias source', () async {
       final result = await compileAndRun('''

@@ -569,6 +569,81 @@ void main() {
       expect(verifier.errors[0], contains('CALL_VIRTUAL'));
     });
 
+    test('CALL_VIRTUAL A register valid on value stack', () {
+      // Fix: CALL_VIRTUAL result register can be on the value stack (e.g.,
+      // operator== returns bool). A=5 is within valueRegCount=8 but exceeds
+      // refRegCount=2. This should PASS.
+      final pool = ConstantPool.from(
+        refs: [],
+        ints: Int64List(0),
+        doubles: Float64List(0),
+        names: ['method'],
+      );
+      final bytecode = Uint64List.fromList([
+        encodeABC(Op.callVirtual, 5, 0, 0), // A=5 (val), B=0 (ref), C=0 (IC)
+        encodeAx(Op.halt, 0),
+      ]);
+      final module = makeModule(
+        bytecode: bytecode,
+        constantPool: pool,
+        refRegCount: 2,
+        valueRegCount: 8,
+        icTable: [ICEntry(methodNameIndex: 0)],
+      );
+      expect(verifier.verify(module), isTrue);
+      expect(verifier.errors, isEmpty);
+    });
+
+    test('CALL_VIRTUAL A register exceeds both stacks', () {
+      // A=10 exceeds both valueRegCount=8 and refRegCount=2. Should FAIL.
+      final pool = ConstantPool.from(
+        refs: [],
+        ints: Int64List(0),
+        doubles: Float64List(0),
+        names: ['method'],
+      );
+      final bytecode = Uint64List.fromList([
+        encodeABC(Op.callVirtual, 10, 0, 0),
+        encodeAx(Op.halt, 0),
+      ]);
+      final module = makeModule(
+        bytecode: bytecode,
+        constantPool: pool,
+        refRegCount: 2,
+        valueRegCount: 8,
+        icTable: [ICEntry(methodNameIndex: 0)],
+      );
+      expect(verifier.verify(module), isFalse);
+      expect(verifier.errors, isNotEmpty);
+      expect(
+        verifier.errors[0],
+        allOf(contains('Register'), contains('A=10')),
+      );
+    });
+
+    test('CALL_VIRTUAL A register valid on ref stack', () {
+      // A=1 is within refRegCount=3. Should PASS (existing behavior).
+      final pool = ConstantPool.from(
+        refs: [],
+        ints: Int64List(0),
+        doubles: Float64List(0),
+        names: ['method'],
+      );
+      final bytecode = Uint64List.fromList([
+        encodeABC(Op.callVirtual, 1, 0, 0),
+        encodeAx(Op.halt, 0),
+      ]);
+      final module = makeModule(
+        bytecode: bytecode,
+        constantPool: pool,
+        refRegCount: 3,
+        valueRegCount: 2,
+        icTable: [ICEntry(methodNameIndex: 0)],
+      );
+      expect(verifier.verify(module), isTrue);
+      expect(verifier.errors, isEmpty);
+    });
+
     test('CALL_SUPER Bx out of range', () {
       final bytecode = Uint64List.fromList([
         encodeABx(Op.callSuper, 0, 99),

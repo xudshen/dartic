@@ -364,14 +364,17 @@ extension on DarticCompiler {
     }
 
     // Compile value expression inside the scope (can reference block vars).
-    final result = _compileExpression(expr.value);
+    final (resultReg, resultLoc) = _compileExpression(expr.value);
 
-    // Release scope -- the result register is NOT scope-tracked (allocated
-    // by _allocValueReg/_allocRefReg), so it survives.
+    // The result register may be a scope-tracked variable (e.g. CFE-desugared
+    // switch expressions use `block { int #t; ... } => #t` where #t is
+    // declared in this scope). Untrack it so it survives scope release.
+    _scope.untrackReg(resultReg, isValue: resultLoc == ResultLoc.value);
+
     _scope.release();
     _scope = outerScope;
 
-    return result;
+    return (resultReg, resultLoc);
   }
 
   // ── Variable access ──

@@ -358,6 +358,187 @@ void main() {
     });
   });
 
+  // ── Host class walkthrough tests ──
+
+  group('buildSuperTypeEntries — host class walkthrough', () {
+    test('intermediate host class walked to find registered ancestor', () {
+      // MyList<T> → ListBase<T> → ListMixin<T> → List<T>
+      // Only List (id=0) and MyList (id=1) are registered.
+      final typeParamE = ir.TypeParameter('E', const ir.DynamicType());
+      final listClass = _makeClass('List', typeParameters: [typeParamE]);
+
+      final typeParamEMixin = ir.TypeParameter('E', const ir.DynamicType());
+      final listMixinClass =
+          _makeClass('ListMixin', typeParameters: [typeParamEMixin]);
+      listMixinClass.implementedTypes.add(
+        ir.Supertype(
+          listClass,
+          [ir.TypeParameterType(typeParamEMixin, ir.Nullability.nonNullable)],
+        ),
+      );
+
+      final typeParamEBase = ir.TypeParameter('E', const ir.DynamicType());
+      final listBaseClass =
+          _makeClass('ListBase', typeParameters: [typeParamEBase]);
+      listBaseClass.mixedInType = ir.Supertype(
+        listMixinClass,
+        [ir.TypeParameterType(typeParamEBase, ir.Nullability.nonNullable)],
+      );
+
+      final typeParamT = ir.TypeParameter('T', const ir.DynamicType());
+      final myListClass = _makeClass('MyList', typeParameters: [typeParamT]);
+      myListClass.supertype = ir.Supertype(
+        listBaseClass,
+        [ir.TypeParameterType(typeParamT, ir.Nullability.nonNullable)],
+      );
+
+      final classIdLookup = <ir.Class, int>{
+        listClass: 0,
+        // listMixinClass NOT registered
+        // listBaseClass NOT registered
+        myListClass: 1,
+      };
+
+      final entries = buildSuperTypeEntries(myListClass, classIdLookup);
+
+      // Should find List<T> via walkthrough: MyList<T> → ListBase<T> → ListMixin<T> → List<T>
+      expect(entries.length, 1);
+      expect(entries[0].subClassId, 1);
+      expect(entries[0].superClassId, 0);
+      expect(entries[0].typeArgMapping.length, 1);
+      expect(
+        entries[0].typeArgMapping[0],
+        equals(TypeParameterTemplate(index: 0, isFunctionTypeParam: false)),
+      );
+    });
+
+    test('host chain with concrete type args composition', () {
+      // MyIntList → ListBase<int> → ListMixin<int> → List<int>
+      // Only List (id=0), int (id=2), and MyIntList (id=1) are registered.
+      final intClass = _makeClass('int');
+      final typeParamE = ir.TypeParameter('E', const ir.DynamicType());
+      final listClass = _makeClass('List', typeParameters: [typeParamE]);
+
+      final typeParamEMixin = ir.TypeParameter('E', const ir.DynamicType());
+      final listMixinClass =
+          _makeClass('ListMixin', typeParameters: [typeParamEMixin]);
+      listMixinClass.implementedTypes.add(
+        ir.Supertype(
+          listClass,
+          [ir.TypeParameterType(typeParamEMixin, ir.Nullability.nonNullable)],
+        ),
+      );
+
+      final typeParamEBase = ir.TypeParameter('E', const ir.DynamicType());
+      final listBaseClass =
+          _makeClass('ListBase', typeParameters: [typeParamEBase]);
+      listBaseClass.mixedInType = ir.Supertype(
+        listMixinClass,
+        [ir.TypeParameterType(typeParamEBase, ir.Nullability.nonNullable)],
+      );
+
+      final myIntListClass = _makeClass('MyIntList');
+      myIntListClass.supertype = ir.Supertype(
+        listBaseClass,
+        [ir.InterfaceType(intClass, ir.Nullability.nonNullable)],
+      );
+
+      final classIdLookup = <ir.Class, int>{
+        listClass: 0,
+        myIntListClass: 1,
+        intClass: 2,
+      };
+
+      final entries = buildSuperTypeEntries(myIntListClass, classIdLookup);
+
+      expect(entries.length, 1);
+      expect(entries[0].subClassId, 1);
+      expect(entries[0].superClassId, 0);
+      expect(entries[0].typeArgMapping.length, 1);
+      // T in List maps to concrete int
+      expect(
+        entries[0].typeArgMapping[0],
+        equals(InterfaceTypeTemplate(classId: 2, typeArgs: [])),
+      );
+    });
+
+    test('duplicate supertype deduplication', () {
+      // A class reaches the same registered ancestor via two paths:
+      //   Foo → Bar (unregistered, implements Base)
+      //   Foo implements Base directly
+      // Only Base (id=0) and Foo (id=1) are registered.
+      final baseClass = _makeClass('Base');
+      final barClass = _makeClass('Bar');
+      barClass.implementedTypes.add(ir.Supertype(baseClass, const []));
+
+      final fooClass = _makeClass('Foo');
+      fooClass.supertype = ir.Supertype(barClass, const []); // via Bar → Base
+      fooClass.implementedTypes.add(ir.Supertype(baseClass, const [])); // direct
+
+      final classIdLookup = <ir.Class, int>{
+        baseClass: 0,
+        fooClass: 1,
+      };
+
+      final entries = buildSuperTypeEntries(fooClass, classIdLookup);
+
+      // Should produce only ONE entry for Base, not two.
+      final baseEntries =
+          entries.where((e) => e.superClassId == 0).toList();
+      expect(baseEntries.length, 1);
+      expect(baseEntries[0].subClassId, 1);
+    });
+
+    test('FunctionType in supertype args gets substituted', () {
+      // class Comparable<T> {}
+      // class Foo<T> implements Comparable<void Function(T)> {}
+      // Comparable is registered (id=0), Foo is registered (id=1).
+      final typeParamTC = ir.TypeParameter('T', const ir.DynamicType());
+      final comparableClass =
+          _makeClass('Comparable', typeParameters: [typeParamTC]);
+
+      final typeParamTF = ir.TypeParameter('T', const ir.DynamicType());
+      final fooClass = _makeClass('Foo', typeParameters: [typeParamTF]);
+
+      // Foo<T> implements Comparable<void Function(T)>
+      fooClass.implementedTypes.add(
+        ir.Supertype(
+          comparableClass,
+          [
+            ir.FunctionType(
+              [ir.TypeParameterType(typeParamTF, ir.Nullability.nonNullable)],
+              const ir.VoidType(),
+              ir.Nullability.nonNullable,
+            ),
+          ],
+        ),
+      );
+
+      final classIdLookup = <ir.Class, int>{
+        comparableClass: 0,
+        fooClass: 1,
+      };
+
+      final entries = buildSuperTypeEntries(fooClass, classIdLookup);
+
+      expect(entries.length, 1);
+      expect(entries[0].subClassId, 1);
+      expect(entries[0].superClassId, 0);
+      expect(entries[0].typeArgMapping.length, 1);
+
+      // The typeArgMapping should be a FunctionTypeTemplate with
+      // void return type and one positional param = TypeParameterTemplate(0).
+      final fnTemplate =
+          entries[0].typeArgMapping[0] as FunctionTypeTemplate;
+      expect(fnTemplate.returnType, equals(const VoidTemplate()));
+      expect(fnTemplate.positionalParams.length, 1);
+      expect(
+        fnTemplate.positionalParams[0],
+        equals(TypeParameterTemplate(index: 0, isFunctionTypeParam: false)),
+      );
+    });
+  });
+
   // ── SuperTypeEntry equality ──
 
   group('SuperTypeEntry equality and hashCode', () {

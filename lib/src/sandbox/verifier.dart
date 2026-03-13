@@ -723,9 +723,17 @@ class DarticVerifier {
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
-      // callVirtual: A=ref(result), B=ref(receiver), C=IC index (not register)
+      // callVirtual: A=ref or val (result), B=ref(receiver), C=IC index
+      // The result register can be on either stack depending on the callee's
+      // return kind (e.g. operator== returns bool on the value stack).
       case Op.callVirtual:
-        _checkRef(a, rrc, 'A', prefix, pc, op);
+        if (a >= rrc && a >= vrc) {
+          errors.add(
+            '$prefix Register A=$a >= both refRegCount $rrc and '
+            'valueRegCount $vrc at pc=$pc '
+            '(op=0x${op.toRadixString(16)})',
+          );
+        }
         _checkRef(b, rrc, 'B', prefix, pc, op);
 
       // getFieldRef/setFieldRef: A=ref, B=ref, C=field offset (not checked)

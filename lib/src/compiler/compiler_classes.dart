@@ -274,28 +274,15 @@ extension on DarticCompiler {
     if (superClassId >= 0) {
       classInfo.supertypeIds.addAll(_classInfos[superClassId].supertypeIds);
     } else if (superClass != null) {
-      // Superclass is a platform class (e.g., UnimplementedError). Walk up the
-      // Kernel class hierarchy until we find an ancestor registered in
-      // _typeClassIdLookup (e.g., Error → Object). This ensures that user
-      // classes extending host classes get the correct supertypeIds chain.
-      ir.Class? walk = superClass;
-      while (walk != null) {
-        final coreSuperCid = _typeClassIdLookup[walk];
-        if (coreSuperCid != null) {
-          classInfo.supertypeIds
-              .addAll(_classInfos[coreSuperCid].supertypeIds);
-          break;
-        }
-        walk = walk.superclass;
-      }
+      // Superclass is a platform class (e.g., MapBase, UnimplementedError).
+      // Walk the full Kernel class hierarchy collecting all supertype IDs.
+      // Must traverse both the superclass chain AND implementedTypes at each
+      // level, because intermediate host classes may implement core interfaces
+      // (e.g., MapBase → MapMixin → Map) that aren't in the direct chain.
+      _collectHostSupertypeIds(superClass, classInfo.supertypeIds);
     }
     for (final implemented in cls.implementedTypes) {
-      final implClassId = _classToClassId[implemented.classNode]
-          ?? _typeClassIdLookup[implemented.classNode];
-      if (implClassId != null) {
-        // Add the interface itself and its transitive supertypeIds.
-        classInfo.supertypeIds.addAll(_classInfos[implClassId].supertypeIds);
-      }
+      _collectHostSupertypeIds(implemented.classNode, classInfo.supertypeIds);
     }
 
     // Populate runtime field table for dynamic access.
@@ -448,6 +435,43 @@ extension on DarticCompiler {
     }
 
     _classInfos.add(classInfo);
+  }
+
+  /// Transitively collects supertype IDs from a host (platform) class by
+  /// walking its superclass chain and implemented interfaces in the Kernel AST.
+  ///
+  /// For each class encountered, if it has a registered core type ID (in
+  /// `_typeClassIdLookup`), that class's full supertypeIds are merged in.
+  /// The walk also descends into each class's `implementedTypes` recursively,
+  /// so chains like `MyMap → MapBase → MapMixin → Map` correctly include Map.
+  void _collectHostSupertypeIds(ir.Class hostClass, Set<int> target) {
+    final visited = <ir.Class>{};
+    void visit(ir.Class cls) {
+      if (!visited.add(cls)) return;
+      // If this class has a registered core type ID, add its supertypeIds.
+      final coreId = _typeClassIdLookup[cls];
+      if (coreId != null) {
+        target.addAll(_classInfos[coreId].supertypeIds);
+      }
+      // Also check if it's a user-registered class.
+      final userId = _classToClassId[cls];
+      if (userId != null) {
+        target.addAll(_classInfos[userId].supertypeIds);
+      }
+      // Walk superclass.
+      if (cls.superclass != null) {
+        visit(cls.superclass!);
+      }
+      // Walk implemented interfaces.
+      for (final iface in cls.implementedTypes) {
+        visit(iface.classNode);
+      }
+      // Walk mixed-in class (mixin application).
+      if (cls.mixedInClass != null) {
+        visit(cls.mixedInClass!);
+      }
+    }
+    visit(hostClass);
   }
 
   // ── Constructor compilation (Pass 2c) ──
