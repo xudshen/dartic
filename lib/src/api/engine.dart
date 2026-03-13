@@ -161,9 +161,46 @@ class DarticEngine {
     // TypeRegistry can resolve HostClassTypeTemplate at type instantiation
     // time. The interpreter stores this and applies it when creating the
     // TypeRegistry during _provisionTypeSystem.
-    if (_hostTypeResolver.hostClassNameToId.isNotEmpty) {
-      _interpreter.hostClassNameToId =
-          Map.unmodifiable(_hostTypeResolver.hostClassNameToId);
+    final hostNameToId = _hostTypeResolver.hostClassNameToId;
+    if (hostNameToId.isNotEmpty) {
+      _interpreter.hostClassNameToId = Map.unmodifiable(hostNameToId);
+
+      // Patch dartic classes' supertypeIds with newly-resolved host classIds.
+      // The compiler can't include host plugin classIds because they're
+      // assigned at module-install time, not compile time.
+      for (final classInfo in module.classes) {
+        if (classInfo.hostInterfaceNames != null) {
+          for (final ifaceName in classInfo.hostInterfaceNames!) {
+            final hostCid = hostNameToId[ifaceName];
+            if (hostCid != null &&
+                !classInfo.supertypeIds.contains(hostCid)) {
+              classInfo.supertypeIds.add(hostCid);
+              // Also add the host class's own supertypeIds (transitivity).
+              if (hostCid < module.classes.length) {
+                for (final supId in module.classes[hostCid].supertypeIds) {
+                  if (!classInfo.supertypeIds.contains(supId)) {
+                    classInfo.supertypeIds.add(supId);
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (classInfo.hostSuperClassName != null) {
+          final hostCid = hostNameToId[classInfo.hostSuperClassName!];
+          if (hostCid != null &&
+              !classInfo.supertypeIds.contains(hostCid)) {
+            classInfo.supertypeIds.add(hostCid);
+            if (hostCid < module.classes.length) {
+              for (final supId in module.classes[hostCid].supertypeIds) {
+                if (!classInfo.supertypeIds.contains(supId)) {
+                  classInfo.supertypeIds.add(supId);
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     // Resolve pending bridge factories: match class names → classIds.

@@ -315,6 +315,11 @@ class SubtypeChecker {
       // If the supertype has no type args (raw type), it matches regardless
       // of the sub's type args (e.g. `List<int> is List` → true).
       if (sup.typeArgs.isEmpty) return true;
+      // If the subtype has no type args (raw host type whose typeParamCount
+      // is unknown), treat missing args as Never (bottom type).  Never <: T
+      // for any T, so this always matches — sound for host objects because
+      // the Dart VM already validated their actual type args at creation.
+      if (sub.typeArgs.isEmpty) return true;
       return _typeArgsMatch(sub.typeArgs, sup.typeArgs);
     }
 
