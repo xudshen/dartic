@@ -3319,8 +3319,14 @@ class DarticInterpreter {
             suspendFrame(frame);
 
             if (needsReturnToCaller) {
-              final callerState = _deliverFutureToCaller(
-                  frame, future, module, vBase, rBase);
+              final ({int vBase, int rBase, Uint64List code, int pc, List<Upvalue>? upvalues})? callerState;
+              try {
+                callerState = _deliverFutureToCaller(
+                    frame, future, module, vBase, rBase);
+              } catch (e) {
+                _currentAsyncFrame = null;
+                throw DarticInternalError('_deliverFutureToCaller failed', e);
+              }
               if (callerState == null) {
                 // Entry function or host boundary — register callbacks + exit.
                 _registerAwaitCallbacks(frame, value, module);
@@ -3359,8 +3365,14 @@ class DarticInterpreter {
             if (!frame.futureReturned) {
               final future = rs.read(rBase + frame.futureReg);
               rs.clearRange(rBase, rs.sp);
-              final callerState = _deliverFutureToCaller(
-                  frame, future, module, vBase, rBase);
+              final ({int vBase, int rBase, Uint64List code, int pc, List<Upvalue>? upvalues})? callerState;
+              try {
+                callerState = _deliverFutureToCaller(
+                    frame, future, module, vBase, rBase);
+              } catch (e) {
+                _currentAsyncFrame = null;
+                throw DarticInternalError('_deliverFutureToCaller failed', e);
+              }
               if (callerState == null) return;
               vBase = callerState.vBase;
               rBase = callerState.rBase;
@@ -3395,8 +3407,14 @@ class DarticInterpreter {
             if (!frame.futureReturned) {
               final future = rs.read(rBase + frame.futureReg);
               rs.clearRange(rBase, rs.sp);
-              final callerState = _deliverFutureToCaller(
-                  frame, future, module, vBase, rBase);
+              final ({int vBase, int rBase, Uint64List code, int pc, List<Upvalue>? upvalues})? callerState;
+              try {
+                callerState = _deliverFutureToCaller(
+                    frame, future, module, vBase, rBase);
+              } catch (e) {
+                _currentAsyncFrame = null;
+                throw DarticInternalError('_deliverFutureToCaller failed', e);
+              }
               if (callerState == null) return;
               vBase = callerState.vBase;
               rBase = callerState.rBase;
