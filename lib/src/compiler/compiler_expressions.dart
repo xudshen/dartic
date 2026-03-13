@@ -297,10 +297,15 @@ extension on DarticCompiler {
   }
 
   /// Compiles a user-defined operator== via CALL_VIRTUAL.
+  ///
+  /// When the receiver is nullable, emits a null guard: if the receiver is
+  /// null, uses identity comparison (null is only equal to null) instead of
+  /// dispatching CALL_VIRTUAL on a null receiver.
   (int, ResultLoc) _compileUserEqualsCall(ir.EqualsCall expr) {
     // Compile receiver (left operand, ref stack).
     var (receiverReg, receiverLoc) = _compileExpression(expr.left);
-    receiverReg = _boxToRefIfValue(receiverReg, receiverLoc, _inferExprType(expr.left));
+    final receiverType = _inferExprType(expr.left);
+    receiverReg = _boxToRefIfValue(receiverReg, receiverLoc, receiverType);
 
     // Compile argument (right operand, ref stack — parameter type is Object).
     var (argReg, argLoc) = _compileExpression(expr.right);
@@ -309,11 +314,68 @@ extension on DarticCompiler {
     // Result is bool (value stack).
     final resultReg = _allocValueReg();
 
-    // Emit arg move for right operand via shared helper.
-    _emitArgMovesForVirtualCall([(argReg, ResultLoc.ref)]);
+    // Null guard for nullable receiver: `null == x` uses identity semantics.
+    final receiverNullable =
+        receiverType != null && _isNullableType(receiverType);
 
-    // Emit CALL_VIRTUAL with method name '=='.
-    _emitCallVirtual(resultReg, receiverReg, '==', 1);
+    int? nullPathEndJumpPC;
+    if (receiverNullable) {
+      final nullGuardJumpPC = _emitter.emitJumpPlaceholder();
+      // Null path: identity comparison (null == null → true, null == x → false).
+      _emitter.emitABC(Op.eqRef, resultReg, receiverReg, argReg);
+      nullPathEndJumpPC = _emitter.emitJumpPlaceholder();
+      // Patch: receiver is non-null → jump here for CALL_VIRTUAL.
+      _emitter.patchJumpAsBx(
+          nullGuardJumpPC, Op.jumpIfNnull, receiverReg, _emitter.currentPC);
+    }
+
+    // Prefer CALL_STATIC when funcId is known: places args on the correct
+    // stacks based on the callee's actual param types. CALL_VIRTUAL always
+    // puts args on the ref stack, which fails for value-type params like
+    // `bool operator ==(covariant bool other)` — the callee reads val[0]
+    // but the arg sits at ref[3].
+    final eqFuncId = _procToFuncId[expr.interfaceTarget.reference];
+    if (eqFuncId != null) {
+      // Place receiver at ref[2] (this slot).
+      var movePC = _emitter.emitPlaceholder();
+      _pendingArgMoves.add(
+        (pc: movePC, srcReg: receiverReg, argIdx: 2, loc: ResultLoc.ref),
+      );
+
+      // Place arg on the correct stack for the callee's param type.
+      final params = expr.interfaceTarget.function.positionalParameters;
+      final paramKind = params.isNotEmpty
+          ? _classifyStackKind(params.first.type)
+          : StackKind.ref;
+
+      if (paramKind.isValue) {
+        // Value-type param: unbox the already-boxed arg and use MOVE_VAL.
+        final unboxedReg = _emitUnbox(argReg, paramKind);
+        movePC = _emitter.emitPlaceholder();
+        _pendingArgMoves.add(
+          (pc: movePC, srcReg: unboxedReg, argIdx: 0, loc: ResultLoc.value),
+        );
+      } else {
+        movePC = _emitter.emitPlaceholder();
+        _pendingArgMoves.add(
+          (pc: movePC, srcReg: argReg, argIdx: 3, loc: ResultLoc.ref),
+        );
+      }
+
+      _emitter.emitABx(Op.callStatic, resultReg, eqFuncId);
+    } else {
+      // Emit arg move for right operand via shared helper.
+      _emitArgMovesForVirtualCall([(argReg, ResultLoc.ref)]);
+
+      // Emit CALL_VIRTUAL with method name '=='.
+      _emitCallVirtual(resultReg, receiverReg, '==', 1);
+    }
+
+    if (receiverNullable) {
+      // Converge null and non-null paths.
+      _emitter.patchJumpAsBx(
+          nullPathEndJumpPC!, Op.jump, 0, _emitter.currentPC);
+    }
 
     return (resultReg, ResultLoc.value);
   }
@@ -1540,6 +1602,16 @@ extension on DarticCompiler {
 
       if (targetKind.isValue && operandLoc == ResultLoc.ref) {
         return (_emitUnbox(operandReg, targetKind), ResultLoc.value);
+      }
+
+      // Widening cast: operand is on value stack but target type classifies
+      // as ref (e.g., double → num, int → Object). Box using the *operand's*
+      // actual type so the correct BOX opcode is emitted (BOX_DOUBLE, not
+      // BOX_INT).
+      if (targetKind == StackKind.ref && operandLoc == ResultLoc.value) {
+        final operandType = _inferExprType(expr.operand);
+        operandReg = _emitBoxToRef(operandReg, operandType);
+        return (operandReg, ResultLoc.ref);
       }
 
       // Otherwise pass through as-is (no CAST needed).

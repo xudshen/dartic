@@ -144,15 +144,15 @@ extension on DarticCompiler {
     final fails = <_FailJump>[];
 
     if (pattern.equalsTargetReference != null) {
-      // Custom == operator: call it via _emitPatternCall.
-      // ConstantPattern has no matchedValueType — the equalsTarget tells us
-      // which == to call. Pass null for matchedValueType; _emitPatternCall
-      // will dispatch based on the target's enclosing class.
+      // Custom == operator: equalsTargetReference points to operator== on
+      // the *constant's* type, so the constant is the receiver and the
+      // scrutinee is the argument. E.g., `case MyConst():` compiles to
+      // `MyConst.operator==(scrutinee)`.
       final resultReg = _emitPatternCall(
         pattern.equalsTargetReference,
         '==',
-        scrutineeReg,
-        [constReg],
+        constReg,
+        [scrutineeReg],
         null,
       );
       final boolReg = _emitUnbox(resultReg, StackKind.boolVal);
@@ -876,7 +876,51 @@ extension on DarticCompiler {
       }
     }
 
-    // Dartic method/getter → CALL_VIRTUAL.
+    // Dartic method: prefer CALL_STATIC when funcId is known, because the
+    // compiler can place args on the correct stacks (value vs ref) based on
+    // the callee's known param types. CALL_VIRTUAL always assumes ref-stack
+    // args, so covariant value-type params (e.g., bool in operator==) would
+    // read from the wrong stack.
+    if (target is ir.Procedure) {
+      final funcId = _procToFuncId[targetRef];
+      if (funcId != null) {
+        final resultReg = _allocRefReg();
+        // Place receiver at ref[2] (this slot).
+        var movePC = _emitter.emitPlaceholder();
+        _pendingArgMoves.add(
+          (pc: movePC, srcReg: receiverReg, argIdx: 2, loc: ResultLoc.ref),
+        );
+        // Place args on the correct stack based on callee's param types.
+        // Value-type params (covariant bool/int/double) go to the value
+        // stack; ref-type params go to ref stack at slot 3+.
+        final params = target.function.positionalParameters;
+        var refArgIdx = 3;
+        var valArgIdx = 0;
+        for (var i = 0; i < argRegs.length; i++) {
+          final paramKind = (i < params.length)
+              ? _classifyStackKind(params[i].type)
+              : StackKind.ref;
+          if (paramKind.isValue) {
+            final unboxedReg = _emitUnbox(argRegs[i], paramKind);
+            movePC = _emitter.emitPlaceholder();
+            _pendingArgMoves.add(
+              (pc: movePC, srcReg: unboxedReg, argIdx: valArgIdx++,
+                  loc: ResultLoc.value),
+            );
+          } else {
+            movePC = _emitter.emitPlaceholder();
+            _pendingArgMoves.add(
+              (pc: movePC, srcReg: argRegs[i], argIdx: refArgIdx++,
+                  loc: ResultLoc.ref),
+            );
+          }
+        }
+        _emitter.emitABx(Op.callStatic, resultReg, funcId);
+        return resultReg;
+      }
+    }
+
+    // Fallback: CALL_VIRTUAL (target unknown or no funcId).
     final resultReg = _allocRefReg();
     _emitArgMovesForPatternCall(argRegs);
     _emitCallVirtual(resultReg, receiverReg, methodName, argRegs.length);

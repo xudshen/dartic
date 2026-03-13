@@ -2251,7 +2251,15 @@ class DarticInterpreter {
             if (darticObj != null) {
               final argCount = bindingInfo.argCount;
               final remaining = List<Object?>.generate(
-                argCount - 1, (i) => rs.read(rBase + a + 2 + i),
+                argCount - 1, (i) {
+                  final v = rs.read(rBase + a + 2 + i);
+                  // Convert darticAbsent sentinel to null: the compiler emits
+                  // LOAD_ABSENT for unprovided optional parameters. When
+                  // re-routing through DarticDispatch to a dartic-compiled
+                  // method, the sentinel must become null — dartic methods
+                  // don't check for darticAbsent.
+                  return identical(v, darticAbsent) ? null : v;
+                },
               );
               try {
                 final result = _activeDarticDispatch!.invoke(
