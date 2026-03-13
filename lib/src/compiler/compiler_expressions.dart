@@ -1061,7 +1061,10 @@ extension on DarticCompiler {
       }
     }
 
-    // 5. Create DynCallDescriptor and emit INVOKE_DYN.
+    // 5. Emit FTA for generic closure calls (e.g., f<int>(x: 1)).
+    _emitFTAForCall(arguments.types);
+
+    // 6. Create DynCallDescriptor and emit INVOKE_DYN.
     final descriptor = DynCallDescriptor(
       methodName: 'call',
       positionalArgCount: arguments.positional.length,
