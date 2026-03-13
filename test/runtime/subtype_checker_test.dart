@@ -3,6 +3,7 @@ import 'package:dartic/src/compiler/type_template.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/dartic_record.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';
+import 'package:dartic/src/runtime/host_type_table.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:dartic/src/runtime/subtype_checker.dart';
 import 'package:test/test.dart';
@@ -535,6 +536,23 @@ void main() {
       final result = extractType(regWithType.intType, regWithType, null);
       expect(result, isA<DarticInterfaceType>());
       expect((result as DarticInterfaceType).classId, typeCid);
+    });
+
+    test('tagged host object returns precise type from HostTypeTable', () {
+      final table = HostTypeTable();
+      final list = <int>[1, 2, 3];
+      final listIntType = registry.intern(listCid, [registry.intType]);
+      table.attach(list, listIntType);
+      final result = extractType(list, registry, null, hostTypeTable: table);
+      expect(identical(result, listIntType), isTrue);
+    });
+
+    test('untagged host object falls through to HostTypeResolver/Object', () {
+      final table = HostTypeTable();
+      final list = <int>[1, 2, 3];
+      // No tag attached — should fall through to objectType.
+      final result = extractType(list, registry, null, hostTypeTable: table);
+      expect(result, registry.objectType);
     });
 
     test('DarticFunctionType value also extracts as Type classId', () {

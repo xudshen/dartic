@@ -823,7 +823,28 @@ extension on DarticCompiler {
 
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
-    return _emitCallHost(compiledArgs, bindingIndex);
+    final (resultReg, resultLoc) =
+        _emitCallHost(compiledArgs, bindingIndex);
+
+    // Emit TAG_TYPE for generic host factory results (List<int>, Set<bool>,
+    // Future<String>, etc.) so extractType() returns precise generic types
+    // instead of the HostTypeResolver's approximate Never-based fallback.
+    //
+    // The CFE lowers list/set literals to internal factory calls
+    // (_GrowableList._literal, _LinkedHashSet._literal) whose return types
+    // refer to internal classes NOT in _typeClassIdLookup. We resolve to
+    // the nearest registered public supertype (List, Set, etc.).
+    if (expr.arguments.types.isNotEmpty) {
+      final publicType = _resolvePublicGenericType(
+        target.enclosingClass!,
+        expr.arguments.types,
+      );
+      if (publicType != null) {
+        _emitCollectionTagType(resultReg, publicType);
+      }
+    }
+
+    return (resultReg, resultLoc);
   }
 
   /// Compiles the default value for a parameter declaration.
@@ -911,6 +932,9 @@ extension on DarticCompiler {
         argTemps,
       );
     }
+
+    // Emit FTA for generic closure calls (e.g., ctor<int>(42)).
+    _emitFTAForCall(arguments.types);
 
     _emitArgMovesAndCall(argTemps, Op.call, resultReg, closureReg);
 
@@ -1571,7 +1595,22 @@ extension on DarticCompiler {
 
     final symbolName = _hostSymbolName(expr.target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
-    return _emitCallHost(compiledArgs, bindingIndex);
+    final (resultReg, resultLoc) =
+        _emitCallHost(compiledArgs, bindingIndex);
+
+    // Emit TAG_TYPE for generic host constructor results (Set<bool>,
+    // Future<int>, Completer<String>, etc.).
+    if (expr.arguments.types.isNotEmpty) {
+      final publicType = _resolvePublicGenericType(
+        expr.target.enclosingClass,
+        expr.arguments.types,
+      );
+      if (publicType != null) {
+        _emitCollectionTagType(resultReg, publicType);
+      }
+    }
+
+    return (resultReg, resultLoc);
   }
 
   /// Compiles a [ConstructorInvocation]: NEW_INSTANCE (or ALLOC_GENERIC for
@@ -1970,8 +2009,10 @@ extension on DarticCompiler {
   /// Compiles [DynamicInvocation]: emits INVOKE_DYN for dynamic receiver
   /// method calls (e.g., `dynamic x = [1,2]; x.contains(1)`).
   ///
-  /// Layout: result at reg A, receiver at A+1, args at A+2...
+  /// Layout: result at reg A, receiver at A+1, args at A+2..., [typeArgs].
   /// INVOKE_DYN A, B, C where B=totalArgCount (receiver+args), C=nameIdx.
+  /// If type arguments are present, B has bit 7 set (0x80) and the
+  /// type args list is placed at A+1+argCount (right after the last arg).
   (int, ResultLoc) _compileDynamicInvocation(ir.DynamicInvocation expr) {
     // 1. Compile receiver to ref (box if needed).
     var (recvReg, recvLoc) = _compileExpression(expr.receiver);
@@ -1985,15 +2026,35 @@ extension on DarticCompiler {
       argRegs.add(argReg);
     }
 
-    // 3. Allocate consecutive ref registers: result(A), receiver(A+1), args(A+2...).
-    // Must use allocConsecutive to bypass the free pool — individual alloc()
-    // calls may return non-adjacent registers from the recycling pool.
-    final slotCount = 1 + 1 + argRegs.length; // result + receiver + args
+    // 3. Compile type arguments (if any) into a List<DarticType> register.
+    final hasTypeArgs = expr.arguments.types.isNotEmpty;
+    int? typeArgsReg;
+    if (hasTypeArgs) {
+      final typeArgTypes = expr.arguments.types;
+      final firstTypeReg = _refAlloc.allocConsecutive(typeArgTypes.length);
+      for (var i = 0; i < typeArgTypes.length; i++) {
+        final template = dartTypeToTemplate(
+          typeArgTypes[i],
+          _typeClassIdLookup,
+          enclosingClassTypeParams: _currentClassTypeParams,
+          enclosingFunctionTypeParams: _currentFunctionTypeParams,
+          coreTypes: _coreTypes,
+        );
+        final templateIdx = _constantPool.addRef(template);
+        _emitter.emitABx(Op.instantiateType, firstTypeReg + i, templateIdx);
+      }
+      typeArgsReg = _allocRefReg();
+      _emitter.emitABC(
+          Op.createTypeArgs, typeArgTypes.length, firstTypeReg, typeArgsReg);
+    }
+
+    // 4. Allocate consecutive ref registers: result(A), receiver(A+1), args(A+2...), [typeArgs].
+    final slotCount = 1 + 1 + argRegs.length + (hasTypeArgs ? 1 : 0);
     final resultReg = _refAlloc.allocConsecutive(slotCount);
     final recvSlot = resultReg + 1;
     final argSlots = List.generate(argRegs.length, (i) => resultReg + 2 + i);
 
-    // 4. MOVE receiver and args into consecutive slots.
+    // 5. MOVE receiver, args, and type args into consecutive slots.
     if (recvReg != recvSlot) {
       _emitter.emitABC(Op.moveRef, recvSlot, recvReg, 0);
     }
@@ -2002,10 +2063,17 @@ extension on DarticCompiler {
         _emitter.emitABC(Op.moveRef, argSlots[i], argRegs[i], 0);
       }
     }
+    if (hasTypeArgs) {
+      final typeArgsSlot = resultReg + 1 + 1 + argRegs.length;
+      if (typeArgsReg != typeArgsSlot) {
+        _emitter.emitABC(Op.moveRef, typeArgsSlot, typeArgsReg!, 0);
+      }
+    }
 
-    // 5. Emit INVOKE_DYN A=result, B=totalArgCount, C=nameIdx.
+    // 6. Emit INVOKE_DYN A=result, B=totalArgCount[|0x80], C=nameIdx.
     final nameIdx = _constantPool.addName(_mangleName(expr.name));
-    final totalArgCount = 1 + argRegs.length; // receiver + explicit args
+    var totalArgCount = 1 + argRegs.length; // receiver + explicit args
+    if (hasTypeArgs) totalArgCount |= 0x80;
     _emitter.emitABC(Op.invokeDyn, resultReg, totalArgCount, nameIdx);
 
     return (resultReg, ResultLoc.ref);
@@ -2449,6 +2517,10 @@ extension on DarticCompiler {
 
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+
+    // Bind FTA for equality discrimination.
+    _emitBindClosureFTA(closureReg, typeArgs);
+
     return (closureReg, ResultLoc.ref);
   }
 
@@ -3079,7 +3151,7 @@ extension on DarticCompiler {
 
     // Create the thunk FuncProto.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
-    _functions[thunkFuncId] = DarticFuncProto(
+    final instThunkProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<instantiation-thunk:$innerFuncId>',
       bytecode: _emitter.toUint64List(),
@@ -3095,13 +3167,87 @@ extension on DarticCompiler {
       lineTable: List.of(_currentLineTable),
     );
 
+    // Set typeTemplate: the instantiated (non-generic) function type for
+    // type checks and runtimeType synthesis.
+    //
+    // We cannot use `computeTearOffFunctionType` here because it creates
+    // a generic FunctionType with fresh StructuralParameter objects.
+    // `subst` maps the original `fn.typeParameters` (TypeParameter), not
+    // those structural copies, so substitution would silently fail.
+    //
+    // Instead, build the instantiated type directly from `fn`'s parameter
+    // types (which reference the original TypeParameter objects that subst
+    // resolves), applying covariant widening per Dart spec §16.18.1.
+    final objectNullable = _coreTypes.objectNullableRawType;
+    final instFuncType = ir.FunctionType(
+      [
+        for (final p in fn.positionalParameters)
+          (p.isCovariantByDeclaration || p.isCovariantByClass)
+              ? objectNullable
+              : subst.substituteType(p.type),
+      ],
+      subst.substituteType(fn.returnType),
+      ir.Nullability.nonNullable,
+      namedParameters: [
+        for (final n in fn.namedParameters)
+          ir.NamedType(
+            n.name!,
+            (n.isCovariantByDeclaration || n.isCovariantByClass)
+                ? objectNullable
+                : subst.substituteType(n.type),
+            isRequired: n.isRequired,
+          ),
+      ],
+      requiredParameterCount: fn.requiredParameterCount,
+      // Omit typeParameters — they are fully bound by the instantiation.
+    );
+    instThunkProto.typeTemplate = dartTypeToTemplate(
+      instFuncType,
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[thunkFuncId] = instThunkProto;
+
     // Restore enclosing compilation state.
     _popContext();
 
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+
+    // Bind FTA to the closure for equality discrimination: two instantiations
+    // of the same generic function with different type args must not be equal.
+    _emitBindClosureFTA(closureReg, typeArgs);
+
     return (closureReg, ResultLoc.ref);
+  }
+
+  /// Instantiates [typeArgs] into a `List<DarticType>` and emits
+  /// `BIND_CLOSURE_FTA` to attach it to [closureReg].
+  ///
+  /// This sets `DarticClosure.boundFTA` so that equality comparison can
+  /// distinguish `f<int>` from `f<String>` even when both wrap the same
+  /// inner function.
+  void _emitBindClosureFTA(int closureReg, List<ir.DartType> typeArgs) {
+    if (typeArgs.isEmpty) return;
+    final firstTypeReg = _refAlloc.allocConsecutive(typeArgs.length);
+    for (var i = 0; i < typeArgs.length; i++) {
+      final template = dartTypeToTemplate(
+        typeArgs[i],
+        _typeClassIdLookup,
+        enclosingClassTypeParams: _currentClassTypeParams,
+        enclosingFunctionTypeParams: _currentFunctionTypeParams,
+        coreTypes: _coreTypes,
+      );
+      final templateIdx = _constantPool.addRef(template);
+      _emitter.emitABx(Op.instantiateType, firstTypeReg + i, templateIdx);
+    }
+    final ftaReg = _allocRefReg();
+    _emitter.emitABC(
+        Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg);
+    _emitter.emitABC(Op.bindClosureFta, closureReg, ftaReg, 0);
   }
 
   /// Coerces a thunk parameter from the instantiated kind to the actual kind.
@@ -3118,8 +3264,17 @@ extension on DarticCompiler {
   // ── Collection Literals ──
 
   /// Compiles a [ir.ListLiteral] to CREATE_LIST bytecode.
-  (int, ResultLoc) _compileListLiteral(ir.ListLiteral expr) =>
-      _compileElementCollection(Op.createList, expr.expressions);
+  (int, ResultLoc) _compileListLiteral(ir.ListLiteral expr) {
+    final (destReg, loc) =
+        _compileElementCollection(Op.createList, expr.expressions);
+    // Tag with List<T> type for precise generic type checks.
+    if (expr.typeArgument is! ir.DynamicType) {
+      final collType = ir.InterfaceType(
+          _coreTypes.listClass, ir.Nullability.nonNullable, [expr.typeArgument]);
+      _emitCollectionTagType(destReg, collType);
+    }
+    return (destReg, loc);
+  }
 
   /// Compiles a [ir.MapLiteral] to CREATE_MAP bytecode.
   ///
@@ -3131,29 +3286,119 @@ extension on DarticCompiler {
 
     if (entries.isEmpty) {
       _emitter.emitABC(Op.createMap, destReg, 0, 0);
-      return (destReg, ResultLoc.ref);
+    } else {
+      // Compile each key/value, box to ref if needed.
+      final kvRegs = <int>[];
+      for (final entry in entries) {
+        var (keyReg, keyLoc) = _compileExpression(entry.key);
+        keyReg = _boxToRefIfValue(keyReg, keyLoc, _inferExprType(entry.key));
+        kvRegs.add(keyReg);
+
+        var (valReg, valLoc) = _compileExpression(entry.value);
+        valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(entry.value));
+        kvRegs.add(valReg);
+      }
+
+      // Move k/v pairs into consecutive slots and emit CREATE_MAP.
+      _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length);
     }
 
-    // Compile each key/value, box to ref if needed.
-    final kvRegs = <int>[];
-    for (final entry in entries) {
-      var (keyReg, keyLoc) = _compileExpression(entry.key);
-      keyReg = _boxToRefIfValue(keyReg, keyLoc, _inferExprType(entry.key));
-      kvRegs.add(keyReg);
-
-      var (valReg, valLoc) = _compileExpression(entry.value);
-      valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(entry.value));
-      kvRegs.add(valReg);
+    // Tag with Map<K, V> type for precise generic type checks.
+    if (expr.keyType is! ir.DynamicType || expr.valueType is! ir.DynamicType) {
+      final collType = ir.InterfaceType(_coreTypes.mapClass,
+          ir.Nullability.nonNullable, [expr.keyType, expr.valueType]);
+      _emitCollectionTagType(destReg, collType);
     }
-
-    // Move k/v pairs into consecutive slots and emit CREATE_MAP.
-    _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length);
     return (destReg, ResultLoc.ref);
   }
 
   /// Compiles a [ir.SetLiteral] to CREATE_SET bytecode.
-  (int, ResultLoc) _compileSetLiteral(ir.SetLiteral expr) =>
-      _compileElementCollection(Op.createSet, expr.expressions);
+  (int, ResultLoc) _compileSetLiteral(ir.SetLiteral expr) {
+    final (destReg, loc) =
+        _compileElementCollection(Op.createSet, expr.expressions);
+    // Tag with Set<T> type for precise generic type checks.
+    if (expr.typeArgument is! ir.DynamicType) {
+      final collType = ir.InterfaceType(
+          _coreTypes.setClass, ir.Nullability.nonNullable, [expr.typeArgument]);
+      _emitCollectionTagType(destReg, collType);
+    }
+    return (destReg, loc);
+  }
+
+  /// Resolves a host factory's enclosing class to the nearest registered
+  /// public supertype with the given type arguments.
+  ///
+  /// The CFE lowers collection literals to internal factory calls
+  /// (e.g., `_GrowableList._literal<int>` instead of `ListLiteral`).
+  /// The internal class `_GrowableList` isn't in `_typeClassIdLookup`, but
+  /// its public supertype `List` is. This walks up the class hierarchy to
+  /// find a registered class and substitutes the factory's type arguments.
+  ir.InterfaceType? _resolvePublicGenericType(
+    ir.Class factoryClass,
+    List<ir.DartType> factoryTypeArgs,
+  ) {
+    // Fast path: the factory class itself is registered (e.g., List.filled).
+    if (_typeClassIdLookup.containsKey(factoryClass)) {
+      return ir.InterfaceType(
+        factoryClass,
+        ir.Nullability.nonNullable,
+        factoryTypeArgs,
+      );
+    }
+
+    // BFS over the full supertype hierarchy (extends + mixins + implements)
+    // with transitive type argument substitution. For _GrowableList<int>,
+    // this resolves: _GrowableList<int> → ListBase<int> → ListMixin<int>
+    // → List<int> (registered → return it).
+    final initialSubst = factoryClass.typeParameters.isNotEmpty
+        ? type_algebra.Substitution.fromPairs(
+            factoryClass.typeParameters, factoryTypeArgs)
+        : type_algebra.Substitution.empty;
+
+    // Queue holds fully-resolved InterfaceTypes (type args already concrete).
+    final queue = <ir.InterfaceType>[];
+    void enqueueSupers(ir.Class cls, type_algebra.Substitution subst) {
+      for (final sup in [
+        cls.supertype,
+        cls.mixedInType,
+        ...cls.implementedTypes,
+      ]) {
+        if (sup != null) {
+          final resolved = subst.substituteType(sup.asInterfaceType);
+          if (resolved is ir.InterfaceType) queue.add(resolved);
+        }
+      }
+    }
+
+    enqueueSupers(factoryClass, initialSubst);
+    final visited = <ir.Class>{factoryClass};
+
+    while (queue.isNotEmpty) {
+      final resolved = queue.removeAt(0);
+      if (!visited.add(resolved.classNode)) continue;
+
+      if (resolved.classNode != _coreTypes.objectClass &&
+          _typeClassIdLookup.containsKey(resolved.classNode)) {
+        return resolved;
+      }
+      // Build substitution for next level: map this class's type params
+      // to the concrete type args we just resolved.
+      final cls = resolved.classNode;
+      final nextSubst = cls.typeParameters.isNotEmpty
+          ? type_algebra.Substitution.fromPairs(
+              cls.typeParameters, resolved.typeArguments)
+          : type_algebra.Substitution.empty;
+      enqueueSupers(cls, nextSubst);
+    }
+    return null;
+  }
+
+  /// Emits INSTANTIATE_TYPE + TAG_TYPE to attach a [DarticType] to a host
+  /// collection object in [destReg].
+  void _emitCollectionTagType(int destReg, ir.InterfaceType collType) {
+    final typeReg = _emitInstantiateType(collType);
+    _emitter.emitABC(Op.tagType, destReg, typeReg, 0);
+  }
 
   /// Shared helper for list/set literal compilation: compiles each element
   /// expression, boxes to ref if needed, and emits the collection creation op.
@@ -3207,9 +3452,18 @@ extension on DarticCompiler {
   // ── Collection Constants ──
 
   /// Compiles a [ir.ListConstant] to CREATE_LIST bytecode (B bit15 = const).
-  (int, ResultLoc) _compileListConstant(ir.ListConstant constant) =>
-      _compileConstantElementCollection(Op.createList, constant.entries,
-          isConst: true);
+  (int, ResultLoc) _compileListConstant(ir.ListConstant constant) {
+    final (destReg, loc) = _compileConstantElementCollection(
+        Op.createList, constant.entries,
+        isConst: true);
+    // Tag with List<T> type for precise generic type checks.
+    if (constant.typeArgument is! ir.DynamicType) {
+      final collType = ir.InterfaceType(_coreTypes.listClass,
+          ir.Nullability.nonNullable, [constant.typeArgument]);
+      _emitCollectionTagType(destReg, collType);
+    }
+    return (destReg, loc);
+  }
 
   /// Compiles a [ir.MapConstant] to CREATE_MAP bytecode (B bit15 = const).
   (int, ResultLoc) _compileMapConstant(ir.MapConstant constant) {
@@ -3219,31 +3473,48 @@ extension on DarticCompiler {
     if (entries.isEmpty) {
       // B=0x8000 signals const (bit15 set, base=0).
       _emitter.emitABC(Op.createMap, destReg, 0x8000, 0);
-      return (destReg, ResultLoc.ref);
+    } else {
+      // Compile each key/value constant, box to ref if needed.
+      final kvRegs = <int>[];
+      for (final entry in entries) {
+        var (keyReg, keyLoc) = entry.key.accept(_constantVisitor);
+        keyReg =
+            _boxToRefIfValue(keyReg, keyLoc, _inferConstantType(entry.key));
+        kvRegs.add(keyReg);
+
+        var (valReg, valLoc) = entry.value.accept(_constantVisitor);
+        valReg = _boxToRefIfValue(
+            valReg, valLoc, _inferConstantType(entry.value));
+        kvRegs.add(valReg);
+      }
+
+      _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length,
+          isConst: true);
     }
 
-    // Compile each key/value constant, box to ref if needed.
-    final kvRegs = <int>[];
-    for (final entry in entries) {
-      var (keyReg, keyLoc) = entry.key.accept(_constantVisitor);
-      keyReg = _boxToRefIfValue(keyReg, keyLoc, _inferConstantType(entry.key));
-      kvRegs.add(keyReg);
-
-      var (valReg, valLoc) = entry.value.accept(_constantVisitor);
-      valReg = _boxToRefIfValue(
-          valReg, valLoc, _inferConstantType(entry.value));
-      kvRegs.add(valReg);
+    // Tag with Map<K, V> type for precise generic type checks.
+    if (constant.keyType is! ir.DynamicType ||
+        constant.valueType is! ir.DynamicType) {
+      final collType = ir.InterfaceType(_coreTypes.mapClass,
+          ir.Nullability.nonNullable, [constant.keyType, constant.valueType]);
+      _emitCollectionTagType(destReg, collType);
     }
-
-    _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length,
-        isConst: true);
     return (destReg, ResultLoc.ref);
   }
 
   /// Compiles a [ir.SetConstant] to CREATE_SET bytecode (B bit15 = const).
-  (int, ResultLoc) _compileSetConstant(ir.SetConstant constant) =>
-      _compileConstantElementCollection(Op.createSet, constant.entries,
-          isConst: true);
+  (int, ResultLoc) _compileSetConstant(ir.SetConstant constant) {
+    final (destReg, loc) = _compileConstantElementCollection(
+        Op.createSet, constant.entries,
+        isConst: true);
+    // Tag with Set<T> type for precise generic type checks.
+    if (constant.typeArgument is! ir.DynamicType) {
+      final collType = ir.InterfaceType(_coreTypes.setClass,
+          ir.Nullability.nonNullable, [constant.typeArgument]);
+      _emitCollectionTagType(destReg, collType);
+    }
+    return (destReg, loc);
+  }
 
   // ── Record Literals & Constants ──
 

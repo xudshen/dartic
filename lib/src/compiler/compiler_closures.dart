@@ -390,6 +390,10 @@ extension on DarticCompiler {
     final ref = expr.target.reference;
     final funcId = _procToFuncId[ref];
     if (funcId == null) {
+      // Host library function — generate a CALL_HOST wrapper thunk.
+      if (_isHostLibrary(expr.target.enclosingLibrary)) {
+        return _generateHostStaticTearOffThunk(expr.target);
+      }
       throw UnsupportedError(
         'StaticTearOff: unknown function ${expr.target.name.text}',
       );
@@ -425,6 +429,10 @@ extension on DarticCompiler {
     final ref = constant.target.reference;
     final funcId = _procToFuncId[ref];
     if (funcId == null) {
+      // Host library function — generate a CALL_HOST wrapper thunk.
+      if (_isHostLibrary(constant.target.enclosingLibrary)) {
+        return _generateHostStaticTearOffThunk(constant.target);
+      }
       throw UnsupportedError(
         'StaticTearOffConstant: unknown function '
         '${constant.target.name.text}',
@@ -449,6 +457,139 @@ extension on DarticCompiler {
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, funcId);
     _emitter.emitABx(Op.storeGlobal, closureReg, globalIndex);
+    return (closureReg, ResultLoc.ref);
+  }
+
+  // ── Host static tearoff ──
+
+  /// Generates a closure thunk that wraps a host library static function
+  /// (e.g., `int.parse`) via CALL_HOST.
+  ///
+  /// All parameters are allocated on the ref stack. For optional/named params,
+  /// the null sentinel (from the dartic call protocol) is converted to
+  /// `darticAbsent` (the host binding protocol) before forwarding.
+  (int, ResultLoc) _generateHostStaticTearOffThunk(ir.Procedure target) {
+    final fn = target.function;
+
+    // Reserve a slot in the function table.
+    final thunkFuncId = _functions.length;
+    _functions.add(DarticFuncProto(
+      funcId: thunkFuncId,
+      bytecode: DarticCompiler._haltBytecode,
+      valueRegCount: 0,
+      refRegCount: 0,
+      paramCount: 0,
+    ));
+
+    // Save current compilation state.
+    _pushContext();
+    _scope = Scope(valueAlloc: _valueAlloc, refAlloc: _refAlloc);
+
+    // Reserve standard header: ITA(0), FTA(1), this(2).
+    _refAlloc.alloc(); // rsp+0: ITA
+    _refAlloc.alloc(); // rsp+1: FTA
+    _refAlloc.alloc(); // rsp+2: this/receiver
+
+    // Allocate ALL params on ref stack for simplicity with CALL_HOST.
+    //
+    // Positional params: in declaration order (matches both caller and host).
+    // Named params: allocated in ALPHABETICAL order because the caller
+    // (via _compileNamedArgsFromNamedTypes) sends named args sorted by
+    // FunctionType.namedParameters which are alphabetically ordered.
+    // CALL_HOST args are then reordered to DECLARATION order to match
+    // the host binding's expectation.
+    final totalParams =
+        fn.positionalParameters.length + fn.namedParameters.length;
+
+    // Allocate positional param registers.
+    final posParamRegs = <int>[];
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      posParamRegs.add(_refAlloc.alloc());
+    }
+
+    // Allocate named param registers in ALPHABETICAL order.
+    final sortedNamedParams = List.of(fn.namedParameters)
+        ..sort((a, b) => a.name!.compareTo(b.name!));
+    final namedParamRegByName = <String, int>{};
+    for (final param in sortedNamedParams) {
+      namedParamRegByName[param.name!] = _refAlloc.alloc();
+    }
+
+    // Build CALL_HOST args in DECLARATION order.
+    // Positional params first, then named params in fn.namedParameters order.
+    final compiledArgs = <(int, ResultLoc, ir.DartType?)>[];
+
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
+      final reg = posParamRegs[i];
+      final isOptional = i >= fn.requiredParameterCount;
+
+      if (isOptional) {
+        // JUMP_IF_NNULL reg → skip; LOAD_ABSENT reg; skip:
+        final skipPC = _emitter.emitJumpPlaceholder();
+        _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+        _emitter.patchJumpAsBx(
+            skipPC, Op.jumpIfNnull, reg, _emitter.currentPC);
+      }
+      compiledArgs.add((reg, ResultLoc.ref, param.type));
+    }
+
+    // Named params in DECLARATION order for CALL_HOST, but registers were
+    // allocated in alphabetical order for the caller.
+    for (final param in fn.namedParameters) {
+      final reg = namedParamRegByName[param.name!]!;
+
+      if (!param.isRequired) {
+        // JUMP_IF_NNULL reg → skip; LOAD_ABSENT reg; skip:
+        final skipPC = _emitter.emitJumpPlaceholder();
+        _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+        _emitter.patchJumpAsBx(
+            skipPC, Op.jumpIfNnull, reg, _emitter.currentPC);
+      }
+      compiledArgs.add((reg, ResultLoc.ref, param.type));
+    }
+
+    // Emit CALL_HOST.
+    final symbolName = _hostSymbolName(target);
+    final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
+    final (resultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+
+    // RETURN_REF.
+    _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
+
+    _patchPendingArgMoves();
+
+    // Create the thunk FuncProto.
+    _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
+    final thunkProto = DarticFuncProto(
+      funcId: thunkFuncId,
+      name: '<host-static-tearoff:${target.enclosingClass?.name ?? ""}'
+          '.${target.name.text}>',
+      bytecode: _emitter.toUint64List(),
+      valueRegCount: _valueAlloc.maxUsed,
+      refRegCount: _refAlloc.maxUsed,
+      paramCount: totalParams,
+      paramKinds: Uint8List(totalParams), // all StackKind.ref (index 0)
+      returnKind: StackKind.ref.index,
+      lineTable: List.of(_currentLineTable),
+    );
+
+    // Set typeTemplate from the host function's signature.
+    thunkProto.typeTemplate = dartTypeToTemplate(
+      computeTearOffFunctionType(fn, _coreTypes),
+      _typeClassIdLookup,
+      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingFunctionTypeParams: _currentFunctionTypeParams,
+      coreTypes: _coreTypes,
+    );
+    _functions[thunkFuncId] = thunkProto;
+
+    // Restore enclosing compilation state.
+    _popContext();
+
+    // Emit CLOSURE wrapping the thunk in the enclosing function.
+    final closureReg = _allocRefReg();
+    _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
     return (closureReg, ResultLoc.ref);
   }
 
@@ -540,22 +681,39 @@ extension on DarticCompiler {
     _refAlloc.alloc(); // rsp+1: FTA
     _refAlloc.alloc(); // rsp+2: this/receiver (unused in thunk)
 
-    // Register parameters with the same types as the constructor.
-    final argTemps = <(int, ResultLoc)>[];
-    for (final param in fn.positionalParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
-    for (final param in fn.namedParameters) {
-      final kind = _classifyStackKind(param.type);
-      final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      argTemps.add((reg, kind.isValue ? ResultLoc.value : ResultLoc.ref));
-    }
+    // Register parameters — promote optional value-stack params to ref-stack
+    // so that null serves as the "omitted" sentinel in the closure-call
+    // convention (caller sends null for omitted named/optional args).
+    final (argTemps, promotedIndices) = _allocTearoffParams(fn);
+
+    // Apply default values for optional/named params.
+    _applyTearoffDefaults(fn, argTemps);
+
+    // Unbox promoted params back to value-stack for correct forwarding.
+    _unboxPromotedParams(fn, argTemps, promotedIndices);
 
     // 1. Allocate object.
     final objReg = _allocRefReg();
-    _emitter.emitABx(Op.newInstance, objReg, classId);
+    final isGenericClass = cls.typeParameters.isNotEmpty;
+    if (isGenericClass) {
+      // Unbound generic constructor tearoff (e.g., Box.new for Box<T>):
+      // The caller provides type args via FTA (rsp+1). Create the object
+      // with ALLOC_GENERIC so it has the correct runtimeType (e.g., Box<int>).
+      // CALL_STATIC auto-loads ITA from this.runtimeType_ for constructors.
+      final typeTemplate = InterfaceTypeTemplate(
+        classId: classId,
+        typeArgs: [
+          for (var i = 0; i < cls.typeParameters.length; i++)
+            TypeParameterTemplate(index: i, isFunctionTypeParam: true),
+        ],
+      );
+      final templateIdx = _constantPool.addRef(typeTemplate);
+      final typeReg = _allocRefReg();
+      _emitter.emitABx(Op.instantiateType, typeReg, templateIdx);
+      _emitter.emitABC(Op.allocGeneric, objReg, typeReg, 0);
+    } else {
+      _emitter.emitABx(Op.newInstance, objReg, classId);
+    }
 
     // 2. Emit pending MOVE for `this` at ref argIdx 2.
     final thisMovePC = _emitter.emitPlaceholder();
@@ -581,15 +739,24 @@ extension on DarticCompiler {
       refRegCount: _refAlloc.maxUsed,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
-      paramKinds: _buildParamKinds(
-          fn.positionalParameters, fn.namedParameters),
+      paramKinds: promotedIndices.isEmpty
+          ? _buildParamKinds(fn.positionalParameters, fn.namedParameters)
+          : _buildTearoffParamKinds(fn, promotedIndices),
       returnKind: StackKind.ref.index,
     );
 
-    // Set typeTemplate: constructor tearoff type = ClassType Function(params).
-    ctorThunkProto.typeTemplate = _buildConstructorTearOffTypeTemplate(
-      cls, fn, _typeClassIdLookup, _coreTypes,
-    );
+    // Set typeTemplate: constructor tearoff type.
+    // Non-generic class: ClassName Function(params)
+    // Generic class: ClassName<T> Function<T>(params) — a generic function type.
+    if (isGenericClass) {
+      ctorThunkProto.typeTemplate = _buildUnboundGenericConstructorTypeTemplate(
+        cls, fn, _typeClassIdLookup, _coreTypes,
+      );
+    } else {
+      ctorThunkProto.typeTemplate = _buildConstructorTearOffTypeTemplate(
+        cls, fn, _typeClassIdLookup, _coreTypes,
+      );
+    }
     _functions[thunkFuncId] = ctorThunkProto;
 
     // Restore enclosing compilation state.
@@ -671,24 +838,42 @@ extension on DarticCompiler {
 
     // Register parameters with INSTANTIATED types (the caller's calling
     // convention). Track both the instantiated kind and the actual kind
-    // for coercion.
+    // for coercion. Promote optional value-stack params to ref-stack so
+    // null serves as the "omitted" sentinel for default-value handling.
     final paramMappings = <({
       int reg,
       StackKind instKind,
       StackKind actualKind,
       ir.DartType instType,
+      bool promoted,
     })>[];
-    for (final param in fn.positionalParameters) {
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
       final actualKind = _classifyStackKind(param.type);
-      final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      paramMappings.add((
-        reg: reg,
-        instKind: instKind,
-        actualKind: actualKind,
-        instType: instType,
-      ));
+      final isOptional = i >= fn.requiredParameterCount;
+      if (isOptional && instKind.isValue && param.initializer != null) {
+        // Promote to ref-stack so null sentinel detects omitted args.
+        final reg = _refAlloc.alloc();
+        paramMappings.add((
+          reg: reg,
+          instKind: instKind,
+          actualKind: actualKind,
+          instType: instType,
+          promoted: true,
+        ));
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        paramMappings.add((
+          reg: reg,
+          instKind: instKind,
+          actualKind: actualKind,
+          instType: instType,
+          promoted: false,
+        ));
+      }
     }
     final namedMappings = <({
       int reg,
@@ -696,30 +881,90 @@ extension on DarticCompiler {
       StackKind actualKind,
       ir.DartType instType,
       String name,
+      bool promoted,
     })>[];
     for (final param in fn.namedParameters) {
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
       final actualKind = _classifyStackKind(param.type);
-      final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
-      namedMappings.add((
-        reg: reg,
-        instKind: instKind,
-        actualKind: actualKind,
-        instType: instType,
-        name: param.name!,
-      ));
+      if (instKind.isValue && param.initializer != null) {
+        final reg = _refAlloc.alloc();
+        namedMappings.add((
+          reg: reg,
+          instKind: instKind,
+          actualKind: actualKind,
+          instType: instType,
+          name: param.name!,
+          promoted: true,
+        ));
+      } else {
+        final reg =
+            instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
+        namedMappings.add((
+          reg: reg,
+          instKind: instKind,
+          actualKind: actualKind,
+          instType: instType,
+          name: param.name!,
+          promoted: false,
+        ));
+      }
     }
 
-    // Coerce each parameter from instantiated kind to actual kind.
+    // Apply default values for optional/named params (on ref stack).
+    // Build a temporary argTemps list for _applyTearoffDefaults.
+    final preCoerceTemps = <(int, ResultLoc)>[
+      for (final m in paramMappings)
+        (m.reg, m.promoted ? ResultLoc.ref : (m.instKind.isValue ? ResultLoc.value : ResultLoc.ref)),
+      for (final m in namedMappings)
+        (m.reg, m.promoted ? ResultLoc.ref : (m.instKind.isValue ? ResultLoc.value : ResultLoc.ref)),
+    ];
+    _applyTearoffDefaults(fn, preCoerceTemps);
+
+    // Unbox promoted params back to value-stack, then coerce to actual kind.
     final argTemps = <(int, ResultLoc)>[];
-    for (final m in paramMappings) {
+    for (var i = 0; i < paramMappings.length; i++) {
+      final m = paramMappings[i];
+      var reg = m.reg;
+      var instKind = m.instKind;
+      if (m.promoted) {
+        // Unbox from ref→value before coercion.
+        final valueReg = _valueAlloc.alloc();
+        switch (instKind) {
+          case StackKind.intVal:
+            _emitter.emitABC(Op.unboxInt, valueReg, reg, 0);
+          case StackKind.boolVal:
+            _emitter.emitABC(Op.unboxBool, valueReg, reg, 0);
+          case StackKind.doubleVal:
+            _emitter.emitABC(Op.unboxDouble, valueReg, reg, 0);
+          default:
+            break;
+        }
+        reg = valueReg;
+      }
       argTemps.add(
-          _coerceThunkArg(m.reg, m.instKind, m.actualKind, m.instType));
+          _coerceThunkArg(reg, instKind, m.actualKind, m.instType));
     }
-    for (final m in namedMappings) {
+    for (var i = 0; i < namedMappings.length; i++) {
+      final m = namedMappings[i];
+      var reg = m.reg;
+      var instKind = m.instKind;
+      if (m.promoted) {
+        final valueReg = _valueAlloc.alloc();
+        switch (instKind) {
+          case StackKind.intVal:
+            _emitter.emitABC(Op.unboxInt, valueReg, reg, 0);
+          case StackKind.boolVal:
+            _emitter.emitABC(Op.unboxBool, valueReg, reg, 0);
+          case StackKind.doubleVal:
+            _emitter.emitABC(Op.unboxDouble, valueReg, reg, 0);
+          default:
+            break;
+        }
+        reg = valueReg;
+      }
       argTemps.add(
-          _coerceThunkArg(m.reg, m.instKind, m.actualKind, m.instType));
+          _coerceThunkArg(reg, instKind, m.actualKind, m.instType));
     }
 
     // 1. Allocate object with ALLOC_GENERIC.
@@ -767,8 +1012,10 @@ extension on DarticCompiler {
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: Uint8List.fromList([
-        ...paramMappings.map((m) => m.instKind.index),
-        ...namedMappings.map((m) => m.instKind.index),
+        ...paramMappings.map((m) =>
+            m.promoted ? StackKind.ref.index : m.instKind.index),
+        ...namedMappings.map((m) =>
+            m.promoted ? StackKind.ref.index : m.instKind.index),
       ]),
       returnKind: StackKind.ref.index,
     );
@@ -1239,6 +1486,11 @@ extension on DarticCompiler {
 
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
+
+    // Bind FTA to the closure for equality discrimination: two instantiations
+    // of the same method with different type args must not be equal.
+    _emitBindClosureFTA(closureReg, typeArgs);
+
     return (closureReg, ResultLoc.ref);
   }
 
@@ -1540,6 +1792,136 @@ extension on DarticCompiler {
       typeParamBounds: const [],
     );
   }
+
+  /// Builds a [FunctionTypeTemplate] for an **unbound** generic constructor
+  /// tearoff (e.g., `Box.new` for `class Box<T>`).
+  ///
+  /// The tearoff type is a generic function:
+  /// `Box<T> Function<T>(T value)` — type parameters are structural params
+  /// within the FunctionTypeTemplate.
+  ///
+  /// We use `enclosingFunctionTypeParams = cls.typeParameters` so
+  /// `dartTypeToTemplate` recognizes `T` — but it produces
+  /// `TypeParameterTemplate(isFunctionTypeParam: true)` which resolves
+  /// from FTA at runtime. For an unbound generic function type, these
+  /// must be `StructuralParamTemplate` (abstract type variables) instead.
+  /// `_fnTypeParamToStructural` post-processes the conversion.
+  TypeTemplate _buildUnboundGenericConstructorTypeTemplate(
+    ir.Class cls,
+    ir.FunctionNode fn,
+    Map<ir.Class, int> classIdLookup,
+    CoreTypes? coreTypes,
+  ) {
+    final classId = classIdLookup[cls] ?? -1;
+
+    // Return type: ClassName<T0, T1, ...> with structural param references.
+    final returnType = InterfaceTypeTemplate(
+      classId: classId,
+      typeArgs: [
+        for (var i = 0; i < cls.typeParameters.length; i++)
+          StructuralParamTemplate(index: i),
+      ],
+    );
+
+    final savedFTP = _currentFunctionTypeParams;
+    _currentFunctionTypeParams = cls.typeParameters;
+
+    TypeTemplate conv(ir.DartType type) => _fnTypeParamToStructural(
+          dartTypeToTemplate(
+            type,
+            classIdLookup,
+            enclosingClassTypeParams: _currentClassTypeParams,
+            enclosingFunctionTypeParams: _currentFunctionTypeParams,
+            coreTypes: coreTypes,
+          ),
+        );
+
+    final template = FunctionTypeTemplate(
+      returnType: returnType,
+      positionalParams: [
+        for (final p in fn.positionalParameters) conv(p.type),
+      ],
+      namedParams: [
+        for (final np in fn.namedParameters)
+          (
+            name: np.name!,
+            type: conv(np.type),
+            isRequired: np.isRequired,
+          ),
+      ],
+      requiredParamCount: fn.requiredParameterCount,
+      typeParamBounds: [
+        for (final tp in cls.typeParameters) conv(tp.bound),
+      ],
+    );
+
+    _currentFunctionTypeParams = savedFTP;
+    return template;
+  }
+
+  /// Recursively replaces `TypeParameterTemplate(isFunctionTypeParam: true)`
+  /// with `StructuralParamTemplate(same index)`.
+  ///
+  /// Used when building typeTemplates for unbound generic function types where
+  /// the type parameters are the function's own structural params (should
+  /// resolve to `DarticTypeParameterType` at runtime) rather than FTA lookups.
+  static TypeTemplate _fnTypeParamToStructural(TypeTemplate t) => switch (t) {
+        TypeParameterTemplate(:final index, isFunctionTypeParam: true) =>
+          StructuralParamTemplate(index: index),
+        NullableTemplate(:final inner) =>
+          NullableTemplate(inner: _fnTypeParamToStructural(inner)),
+        InterfaceTypeTemplate(:final classId, :final typeArgs) =>
+          InterfaceTypeTemplate(
+            classId: classId,
+            typeArgs: [
+              for (final a in typeArgs) _fnTypeParamToStructural(a)
+            ],
+          ),
+        HostClassTypeTemplate(:final name, :final typeArgs) =>
+          HostClassTypeTemplate(
+            name: name,
+            typeArgs: [
+              for (final a in typeArgs) _fnTypeParamToStructural(a)
+            ],
+          ),
+        RecordTypeTemplate(:final positionalTypes, :final namedTypes) =>
+          RecordTypeTemplate(
+            positionalTypes: [
+              for (final p in positionalTypes) _fnTypeParamToStructural(p)
+            ],
+            namedTypes: [
+              for (final n in namedTypes)
+                (
+                  name: n.name,
+                  type: _fnTypeParamToStructural(n.type),
+                )
+            ],
+          ),
+        FunctionTypeTemplate(
+          :final returnType,
+          :final positionalParams,
+          :final namedParams,
+          :final requiredParamCount,
+          :final typeParamBounds,
+        ) =>
+          FunctionTypeTemplate(
+            returnType: _fnTypeParamToStructural(returnType),
+            positionalParams: [
+              for (final p in positionalParams) _fnTypeParamToStructural(p)
+            ],
+            namedParams: [
+              for (final n in namedParams)
+                (
+                  name: n.name,
+                  type: _fnTypeParamToStructural(n.type),
+                  isRequired: n.isRequired,
+                )
+            ],
+            requiredParamCount: requiredParamCount,
+            typeParamBounds: typeParamBounds,
+          ),
+        _ => t, // Void, Dynamic, Never, StructuralParamTemplate, etc.
+      };
 
   // ── Captured variable analysis ──
 

@@ -12,6 +12,7 @@ import 'class_info.dart';
 import 'closure.dart';
 import 'dartic_record.dart';
 import 'dartic_type.dart';
+import 'host_type_table.dart';
 import 'object.dart';
 import 'type_resolver.dart';
 
@@ -362,11 +363,16 @@ class SubtypeChecker {
 ///
 /// For raw host objects (not DarticObject/DarticObjectHolder), delegates to
 /// [HostTypeResolver] which uses registered predicates from plugins.
+///
+/// If [hostTypeTable] is provided, tagged host objects (e.g. `List<int>`
+/// created via TAG_TYPE) return their precise generic type before falling
+/// back to HostTypeResolver's approximate `List<Never>`.
 DarticType extractType(
   Object? value,
   TypeRegistry registry,
-  HostTypeResolver? hostTypeResolver,
-) {
+  HostTypeResolver? hostTypeResolver, {
+  HostTypeTable? hostTypeTable,
+}) {
   if (value == null) return registry.nullType;
   if (value is int) return registry.intType;
   if (value is double) return registry.doubleType;
@@ -377,6 +383,11 @@ DarticType extractType(
   }
   if (value is DarticClosure) {
     if (value.runtimeType_ != null) return value.runtimeType_!;
+    // Synthesize DarticFunctionType from typeTemplate if available.
+    final typeTemplate = value.funcProto.typeTemplate;
+    if (typeTemplate != null) {
+      return resolveType(typeTemplate, null, value.boundFTA, registry);
+    }
     // Fallback: unresolved closure → Function type.
     return registry.intern(registry.functionClassId, const []);
   }
@@ -397,6 +408,13 @@ DarticType extractType(
   // DarticType objects (runtime type reified as `Type`).
   if (value is DarticType) {
     return registry.intern(registry.typeClassId, const []);
+  }
+  // Host objects tagged via TAG_TYPE (e.g. List<int>, Map<String, int>).
+  // Checked before HostTypeResolver so precise generic types win over
+  // the approximate Never-based fallback.
+  if (hostTypeTable != null) {
+    final tagged = hostTypeTable.lookup(value);
+    if (tagged != null) return tagged;
   }
   // Native Dart TypeError thrown by CAST — map to the registered classId
   // so that `e is TypeError` works in bytecode.

@@ -149,6 +149,9 @@ abstract final class Op {
   static const assert_ = 0xA6;
   static const nullCheck = 0xA7;
 
+  // ── Type Tagging (0xA8) ──
+  static const tagType = 0xA8;
+
   // ── System (0xFF) ──
   static const halt = 0xFF;
 }
