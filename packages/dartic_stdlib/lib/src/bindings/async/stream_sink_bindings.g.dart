@@ -9,6 +9,79 @@ import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:async';
 
+class _$StreamSink implements StreamSink, DarticObjectHolder {
+  _$StreamSink(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<dynamic> close() {
+    final r = _dispatch.invoke(this, $darticObject, 'close', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method close must be overridden in dartic code');
+    }
+    return r as Future<dynamic>;
+  }
+
+  @override
+  void add(dynamic event) {
+    final r = _dispatch.invoke(this, $darticObject, 'add', [event]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method add must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void addError(Object error, [StackTrace? stackTrace]) {
+    final r = _dispatch.invoke(this, $darticObject, 'addError', [error, stackTrace]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addError must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Future<dynamic> addStream(Stream stream) {
+    final r = _dispatch.invoke(this, $darticObject, 'addStream', [stream]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addStream must be overridden in dartic code');
+    }
+    return r as Future<dynamic>;
+  }
+
+  @override
+  Future<dynamic> get done {
+    final r = _dispatch.get(this, $darticObject, 'done');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter done must be overridden in dartic code');
+    }
+    return r as Future<dynamic>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r == true;
+  }
+}
+
 abstract final class StreamSinkBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +90,8 @@ abstract final class StreamSinkBindings {
       test: (o) => o is StreamSink,
       methods: methodMap(),
       superclasses: ['dart:async::EventSink', 'dart:core::Sink', 'dart:async::StreamConsumer'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StreamSink(dispatch, darticObject, superArgs),
     );
   }
 

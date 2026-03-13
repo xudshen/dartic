@@ -56,13 +56,16 @@ libraries:
           - _StreamSubscriptionTransformer
 
       # ── EventSink ───────────────────────────────────────────────────────
-      - EventSink
+      - name: EventSink
+        bridge: true
 
       # ── StreamSink ──────────────────────────────────────────────────────
-      - StreamSink
+      - name: StreamSink
+        bridge: true
 
       # ── StreamConsumer ──────────────────────────────────────────────────
-      - StreamConsumer
+      - name: StreamConsumer
+        bridge: true
 
       # ── MultiStreamController ───────────────────────────────────────────
       - MultiStreamController
