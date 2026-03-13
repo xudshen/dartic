@@ -213,8 +213,6 @@ void main() {
             endPC: 20,
             handlerPC: 30,
             catchType: 5,
-            valStackDP: 3,
-            refStackDP: 1,
             exceptionReg: 7,
             stackTraceReg: 8,
           ),
@@ -223,8 +221,6 @@ void main() {
             endPC: 100,
             handlerPC: 200,
             catchType: -1, // catch-all
-            valStackDP: 0,
-            refStackDP: 0,
             exceptionReg: 2,
             stackTraceReg: 3,
           ),
@@ -241,8 +237,6 @@ void main() {
       expect(handlers[0].endPC, 20);
       expect(handlers[0].handlerPC, 30);
       expect(handlers[0].catchType, 5);
-      expect(handlers[0].valStackDP, 3);
-      expect(handlers[0].refStackDP, 1);
       expect(handlers[0].exceptionReg, 7);
       expect(handlers[0].stackTraceReg, 8);
 
@@ -250,8 +244,6 @@ void main() {
       expect(handlers[1].endPC, 100);
       expect(handlers[1].handlerPC, 200);
       expect(handlers[1].catchType, -1);
-      expect(handlers[1].valStackDP, 0);
-      expect(handlers[1].refStackDP, 0);
       expect(handlers[1].exceptionReg, 2);
       expect(handlers[1].stackTraceReg, 3);
     });

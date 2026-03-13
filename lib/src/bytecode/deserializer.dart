@@ -341,8 +341,6 @@ class DarticDeserializer {
         endPC: r.readUint32(),
         handlerPC: r.readUint32(),
         catchType: r.readInt32(),
-        valStackDP: r.readUint32(),
-        refStackDP: r.readUint32(),
         exceptionReg: r.readInt32(),
         stackTraceReg: r.readInt32(),
       ),

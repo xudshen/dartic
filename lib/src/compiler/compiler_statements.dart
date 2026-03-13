@@ -420,10 +420,6 @@ extension on DarticCompiler {
   // ── Control flow: try/catch/finally ──
 
   void _compileTryCatch(ir.TryCatch stmt) {
-    // Record the value/ref stack depths at try entry for stack unwinding.
-    final valStackDP = _valueAlloc.maxUsed;
-    final refStackDP = _refAlloc.maxUsed;
-
     // 1. Record try body start PC.
     final startPC = _emitter.currentPC;
 
@@ -497,8 +493,6 @@ extension on DarticCompiler {
         endPC: endPC,
         handlerPC: handlerPC,
         catchType: catchType,
-        valStackDP: valStackDP,
-        refStackDP: refStackDP,
         exceptionReg: exceptionReg,
         stackTraceReg: stackTraceReg,
       ));
@@ -515,9 +509,6 @@ extension on DarticCompiler {
   }
 
   void _compileTryFinally(ir.TryFinally stmt) {
-    final valStackDP = _valueAlloc.maxUsed;
-    final refStackDP = _refAlloc.maxUsed;
-
     // Allocate registers for exception/stackTrace in the error path.
     final exceptionReg = _allocRefReg();
     final stackTraceReg = _allocRefReg();
@@ -559,8 +550,6 @@ extension on DarticCompiler {
       endPC: endPC,
       handlerPC: handlerPC,
       catchType: -1, // finally = catch-all
-      valStackDP: valStackDP,
-      refStackDP: refStackDP,
       exceptionReg: exceptionReg,
       stackTraceReg: stackTraceReg,
     ));

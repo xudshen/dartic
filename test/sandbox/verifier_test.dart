@@ -807,62 +807,6 @@ void main() {
       expect(verifier.verify(module), isTrue);
     });
 
-    // ── C2 fix: exception handler valStackDP/refStackDP ──
-
-    test('exception handler valStackDP out of range', () {
-      final bytecode = Uint64List.fromList([
-        encodeAx(Op.nop, 0),
-        encodeAx(Op.halt, 0),
-      ]);
-      final handler = ExceptionHandler(
-        startPC: 0,
-        endPC: 1,
-        handlerPC: 0,
-        valStackDP: 100, // way beyond valueRegCount
-        refStackDP: 0,
-        exceptionReg: 0,
-        stackTraceReg: -1,
-      );
-      final module = makeModule(
-        bytecode: bytecode,
-        exceptionTable: [handler],
-        valueRegCount: 4,
-        refRegCount: 2,
-      );
-      expect(verifier.verify(module), isFalse);
-      expect(
-        verifier.errors.any((e) => e.contains('valStackDP')),
-        isTrue,
-      );
-    });
-
-    test('exception handler refStackDP out of range', () {
-      final bytecode = Uint64List.fromList([
-        encodeAx(Op.nop, 0),
-        encodeAx(Op.halt, 0),
-      ]);
-      final handler = ExceptionHandler(
-        startPC: 0,
-        endPC: 1,
-        handlerPC: 0,
-        valStackDP: 0,
-        refStackDP: 100, // way beyond refRegCount
-        exceptionReg: 0,
-        stackTraceReg: -1,
-      );
-      final module = makeModule(
-        bytecode: bytecode,
-        exceptionTable: [handler],
-        valueRegCount: 4,
-        refRegCount: 2,
-      );
-      expect(verifier.verify(module), isFalse);
-      expect(
-        verifier.errors.any((e) => e.contains('refStackDP')),
-        isTrue,
-      );
-    });
-
     // ── I4 fix: stackTraceReg sentinel validation ──
 
     test('exception handler stackTraceReg -1 is valid (sentinel)', () {

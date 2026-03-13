@@ -260,8 +260,6 @@ class ExceptionHandler {
     required this.endPC,
     required this.handlerPC,
     this.catchType = -1,
-    this.valStackDP = 0,
-    this.refStackDP = 0,
     required this.exceptionReg,
     required this.stackTraceReg,
   });
@@ -280,12 +278,6 @@ class ExceptionHandler {
   /// - `>= 0`: constant pool index of a [TypeTemplate] for typed catch
   ///   (`on SomeType catch (e)`)
   final int catchType;
-
-  /// Value stack depth to restore when entering the handler.
-  final int valStackDP;
-
-  /// Ref stack depth to restore when entering the handler.
-  final int refStackDP;
 
   /// Register to store the caught exception object.
   final int exceptionReg;

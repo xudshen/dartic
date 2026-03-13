@@ -138,8 +138,6 @@ void main() {
                 endPC: 1,
                 handlerPC: 2,
                 catchType: -1, // catch-all
-                valStackDP: 0,
-                refStackDP: 0,
                 exceptionReg: 0,
                 stackTraceReg: 1,
               ),

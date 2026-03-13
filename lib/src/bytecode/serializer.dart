@@ -289,8 +289,6 @@ class DarticSerializer {
       w.writeUint32(handler.endPC);
       w.writeUint32(handler.handlerPC);
       w.writeInt32(handler.catchType);
-      w.writeUint32(handler.valStackDP);
-      w.writeUint32(handler.refStackDP);
       w.writeInt32(handler.exceptionReg);
       w.writeInt32(handler.stackTraceReg);
     }

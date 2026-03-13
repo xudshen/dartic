@@ -442,18 +442,6 @@ class DarticVerifier {
           'out of range [0, $codeLength)',
         );
       }
-      if (h.valStackDP < 0 || h.valStackDP > func.valueRegCount) {
-        errors.add(
-          '$prefix Exception handler #$i: valStackDP ${h.valStackDP} '
-          'out of range [0, ${func.valueRegCount}]',
-        );
-      }
-      if (h.refStackDP < 0 || h.refStackDP > func.refRegCount) {
-        errors.add(
-          '$prefix Exception handler #$i: refStackDP ${h.refStackDP} '
-          'out of range [0, ${func.refRegCount}]',
-        );
-      }
       if (h.exceptionReg >= func.refRegCount) {
         errors.add(
           '$prefix Exception handler #$i: exceptionReg ${h.exceptionReg} '
