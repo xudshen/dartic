@@ -404,6 +404,7 @@ class DarticDisassembler {
 
     final code = func.bytecode;
     var pc = 0;
+    String? prevSourceAnnotation;
     while (pc < code.length) {
       final instr = code[pc];
       final op = decodeOp(instr);
@@ -423,6 +424,14 @@ class DarticDisassembler {
       if (annotation.isNotEmpty) {
         line.write('  ; $annotation');
       }
+
+      // Append source location annotation when it changes.
+      final srcAnnotation = _resolveSourceAnnotation(pc, func, module);
+      if (srcAnnotation != null && srcAnnotation != prevSourceAnnotation) {
+        line.write('  ; $srcAnnotation');
+        prevSourceAnnotation = srcAnnotation;
+      }
+
       buf.writeln(line);
       pc++;
     }
@@ -708,5 +717,62 @@ class DarticDisassembler {
       3 => 'double',
       _ => 'unknown($kind)',
     };
+  }
+
+  // ── Source line annotation ──
+
+  /// Resolves a bytecode [pc] to a `shortFile:line` string using the
+  /// function's line table and the module's file/line-starts tables.
+  ///
+  /// Returns `null` if no mapping exists for [pc].
+  static String? _resolveSourceAnnotation(
+    int pc,
+    DarticFuncProto func,
+    DarticModule module,
+  ) {
+    final table = func.lineTable;
+    if (table.isEmpty) return null;
+
+    // Binary search: find largest entry with entry.pc <= pc.
+    var lo = 0;
+    var hi = table.length - 1;
+    if (table[lo].pc > pc) return null;
+    while (lo < hi) {
+      final mid = (lo + hi + 1) >> 1; // round up
+      if (table[mid].pc <= pc) {
+        lo = mid;
+      } else {
+        hi = mid - 1;
+      }
+    }
+
+    final entry = table[lo];
+    final fileIndex = entry.fileIndex;
+    final fileOffset = entry.fileOffset;
+
+    // Resolve file URI → short name.
+    if (fileIndex < 0 || fileIndex >= module.fileUris.length) return null;
+    final uri = module.fileUris[fileIndex];
+    final shortName = Uri.parse(uri).pathSegments.lastOrNull ?? uri;
+
+    // Resolve byte offset → line number using lineStartsTable.
+    if (fileIndex >= module.lineStartsTable.length) return '$shortName:?';
+    final lineStarts = module.lineStartsTable[fileIndex];
+    if (lineStarts.isEmpty) return '$shortName:?';
+
+    // Binary search for the line: largest lineStarts[i] <= fileOffset.
+    var llo = 0;
+    var lhi = lineStarts.length - 1;
+    while (llo < lhi) {
+      final mid = (llo + lhi + 1) >> 1;
+      if (lineStarts[mid] <= fileOffset) {
+        llo = mid;
+      } else {
+        lhi = mid - 1;
+      }
+    }
+    final lineNumber = llo + 1; // 1-based
+
+    return '$shortName:$lineNumber';
   }
 }
