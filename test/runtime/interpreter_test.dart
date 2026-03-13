@@ -66,8 +66,8 @@ void main() {
   group('illegal opcode', () {
     test('throws DarticError for reserved opcode', () {
       final module = buildModule(
-        // 0xA8 is in the reserved/superinstruction range.
-        Uint64List.fromList([encodeABC(0xA8, 0, 0, 0)]),
+        // 0xA9 is in the reserved/superinstruction range.
+        Uint64List.fromList([encodeABC(0xA9, 0, 0, 0)]),
       );
       expect(
         () => interpreter.execute(module),

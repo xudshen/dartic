@@ -62,7 +62,7 @@ void main() {
 
     test('opTable contains no extra entries beyond valid opcodes', () {
       // Verify count matches expected number of opcodes (113 in total).
-      expect(opTable.length, 113);
+      expect(opTable.length, 114);
     });
   });
 

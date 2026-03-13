@@ -165,6 +165,7 @@ extension on DarticCompiler {
       fails.add(_emitFailJumpIfFalse(boolReg));
     }
 
+    _refAlloc.free(constReg);
     return fails;
   }
 
@@ -360,11 +361,7 @@ extension on DarticCompiler {
         // Always free — VariablePattern binds via declare() + MOVE.
         _refAlloc.free(elemReg);
 
-        if (headIndex >= 0) {
-          headIndex++;
-        } else {
-          headIndex++;
-        }
+        headIndex++;
       }
     }
 
@@ -506,12 +503,17 @@ extension on DarticCompiler {
         return _allocRefReg();
 
       case ir.ObjectAccessKind.FunctionTearOff:
-        // Receiver IS the function — pass through.
-        return receiverReg;
+        // Receiver IS the function — copy to new register so callers can
+        // safely free it without corrupting the scrutinee.
+        final copyReg = _allocRefReg();
+        _emitter.emitABC(Op.moveRef, copyReg, receiverReg, 0);
+        return copyReg;
 
       case ir.ObjectAccessKind.Direct:
-        // Extension type representation — pass through.
-        return receiverReg;
+        // Extension type representation — copy to avoid scrutinee double-free.
+        final copyReg = _allocRefReg();
+        _emitter.emitABC(Op.moveRef, copyReg, receiverReg, 0);
+        return copyReg;
 
       case ir.ObjectAccessKind.Extension:
       case ir.ObjectAccessKind.ExtensionType:
@@ -542,7 +544,6 @@ extension on DarticCompiler {
       // Dartic-compiled extension method: CALL_STATIC.
       final resultReg = _allocRefReg();
       // Receiver is the only argument for a getter.
-      _pendingArgMoves.clear();
       final movePC = _emitter.emitPlaceholder();
       _pendingArgMoves.add(
         (pc: movePC, srcReg: receiverReg, argIdx: 3, loc: ResultLoc.ref),
@@ -596,6 +597,7 @@ extension on DarticCompiler {
     // Left success → copy pattern vars to joint vars.
     _copyOrPatternVarsToJoint(
         pattern.left, pattern.orPatternJointVariables, outerScope);
+    _emitCloseUpvaluesForScope(_scope);
     _scope.release();
     _scope = outerScope;
 
@@ -615,6 +617,7 @@ extension on DarticCompiler {
     // Right success → copy pattern vars to joint vars.
     _copyOrPatternVarsToJoint(
         pattern.right, pattern.orPatternJointVariables, outerScope);
+    _emitCloseUpvaluesForScope(_scope);
     _scope.release();
     _scope = outerScope;
 
@@ -660,6 +663,7 @@ extension on DarticCompiler {
     _refAlloc.free(typeReg);
 
     final fails = _compilePattern(pattern.pattern, castedReg);
+    _refAlloc.free(castedReg);
     return fails;
   }
 
@@ -707,7 +711,6 @@ extension on DarticCompiler {
           if (funcId != null) {
             // Dartic-compiled extension operator.
             resultReg = _allocRefReg();
-            _pendingArgMoves.clear();
             var movePC = _emitter.emitPlaceholder();
             _pendingArgMoves.add(
               (pc: movePC, srcReg: scrutineeReg, argIdx: 3,
@@ -743,7 +746,9 @@ extension on DarticCompiler {
         resultReg = _allocRefReg();
     }
 
+    _refAlloc.free(rhsReg);
     final boolReg = _emitUnbox(resultReg, StackKind.boolVal);
+    _refAlloc.free(resultReg);
     if (pattern.kind == ir.RelationalPatternKind.notEquals) {
       final notReg = _allocValueReg();
       _emitter.emitABC(Op.notBool, notReg, boolReg, 0);
@@ -761,9 +766,10 @@ extension on DarticCompiler {
     }
 
     int sourceReg = scrutineeReg;
+    int? castedReg;
     if (pattern.needsCast) {
       final typeReg = _emitInstantiateType(pattern.variable.type);
-      final castedReg = _allocRefReg();
+      castedReg = _allocRefReg();
       _emitter.emitABC(Op.cast, castedReg, scrutineeReg, typeReg);
       _refAlloc.free(typeReg);
       sourceReg = castedReg;
@@ -776,6 +782,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.moveRef, binding.reg, sourceReg, 0);
     }
 
+    if (castedReg != null) _refAlloc.free(castedReg);
     return const [];
   }
 
@@ -860,7 +867,11 @@ extension on DarticCompiler {
     if (target is ir.Field) {
       final layout = _resolveFieldLayout(target, null);
       if (layout != null) {
-        final (resultReg, _) = _emitGetField(receiverReg, layout);
+        var (resultReg, resultLoc) = _emitGetField(receiverReg, layout);
+        if (resultLoc == ResultLoc.value) {
+          // Value-kind field (int/double/bool) → box to ref stack.
+          resultReg = _emitBoxToRef(resultReg, target.type);
+        }
         return resultReg;
       }
     }
@@ -1123,8 +1134,15 @@ extension on DarticCompiler {
     var (initReg, initLoc) = _compileExpression(stmt.initializer);
     initReg = _boxToRefIfValue(initReg, initLoc, stmt.matchedValueType);
 
-    // Irrefutable context: pattern MUST match.
-    _compilePattern(stmt.pattern, initReg, isIrrefutable: true);
+    // Irrefutable context: pattern MUST match. Patch any fail paths to throw.
+    final failJumps =
+        _compilePattern(stmt.pattern, initReg, isIrrefutable: true);
+    if (failJumps.isNotEmpty) {
+      final successJump = _emitter.emitJumpPlaceholder();
+      _patchFailJumps(failJumps, _emitter.currentPC);
+      _emitThrowReachabilityError();
+      _emitter.patchJumpAsBx(successJump, Op.jump, 0, _emitter.currentPC);
+    }
   }
 
   /// Compiles [PatternAssignment].
@@ -1132,8 +1150,15 @@ extension on DarticCompiler {
     var (valReg, valLoc) = _compileExpression(expr.expression);
     valReg = _boxToRefIfValue(valReg, valLoc, expr.matchedValueType);
 
-    // Irrefutable context.
-    _compilePattern(expr.pattern, valReg, isIrrefutable: true);
+    // Irrefutable context: patch any fail paths to throw.
+    final failJumps =
+        _compilePattern(expr.pattern, valReg, isIrrefutable: true);
+    if (failJumps.isNotEmpty) {
+      final successJump = _emitter.emitJumpPlaceholder();
+      _patchFailJumps(failJumps, _emitter.currentPC);
+      _emitThrowReachabilityError();
+      _emitter.patchJumpAsBx(successJump, Op.jump, 0, _emitter.currentPC);
+    }
 
     // PatternAssignment is an expression — returns the original value.
     return (valReg, ResultLoc.ref);
@@ -1141,23 +1166,13 @@ extension on DarticCompiler {
 
   /// Emits a throw for exhaustive switch that didn't match.
   void _emitThrowReachabilityError() {
-    // Create a ReachabilityError by constructing a string message
-    // and throwing a StateError (which is what dart2js/DDC do).
+    // Throw a string message directly — valid Dart (`throw "message"`).
+    // This avoids dependency on host bindings for StateError construction.
     final msgReg = _allocRefReg();
     final msgIdx = _constantPool.addRef(
         'Expected at least one case to match in exhaustive switch');
     _emitter.emitABx(Op.loadConst, msgReg, msgIdx);
-
-    // CALL_HOST to create StateError.
-    final symbolName = 'dart:core::StateError::StateError#1';
-    final bindingIndex = _allocBinding(symbolName, 1);
-    final (errorReg, _) = _emitCallHost(
-      [(msgReg, ResultLoc.ref, null as ir.DartType?)],
-      bindingIndex,
-    );
+    _emitter.emitABC(Op.throw_, msgReg, 0, 0);
     _refAlloc.free(msgReg);
-
-    _emitter.emitABC(Op.throw_, errorReg, 0, 0);
-    _refAlloc.free(errorReg);
   }
 }
