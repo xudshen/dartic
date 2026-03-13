@@ -528,6 +528,186 @@ void main() {
     });
   });
 
+  // ── lineTable roundtrip ──
+
+  group('lineTable roundtrip', () {
+    test('empty lineTable preserved', () {
+      final proto = DarticFuncProto(
+        funcId: 0,
+        name: 'noLines',
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
+        valueRegCount: 1,
+        refRegCount: 0,
+        paramCount: 0,
+        lineTable: const [],
+      );
+
+      final module = buildModuleFrom(functions: [proto]);
+      final result = roundtripModule(module);
+
+      expect(result.functions[0].lineTable, isEmpty);
+    });
+
+    test('lineTable entries with delta-encoded PCs preserved', () {
+      final proto = DarticFuncProto(
+        funcId: 0,
+        name: 'withLines',
+        bytecode: Uint64List.fromList([
+          encodeAx(Op.halt, 0),
+          encodeAx(Op.halt, 0),
+          encodeAx(Op.halt, 0),
+        ]),
+        valueRegCount: 1,
+        refRegCount: 0,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 0, fileOffset: 100),
+          LineTableEntry(pc: 5, fileIndex: 0, fileOffset: 200),
+          LineTableEntry(pc: 12, fileIndex: 1, fileOffset: 50),
+        ],
+      );
+
+      final module = buildModuleFrom(functions: [proto]);
+      final result = roundtripModule(module);
+
+      final lt = result.functions[0].lineTable;
+      expect(lt.length, 3);
+
+      expect(lt[0].pc, 0);
+      expect(lt[0].fileIndex, 0);
+      expect(lt[0].fileOffset, 100);
+
+      expect(lt[1].pc, 5);
+      expect(lt[1].fileIndex, 0);
+      expect(lt[1].fileOffset, 200);
+
+      expect(lt[2].pc, 12);
+      expect(lt[2].fileIndex, 1);
+      expect(lt[2].fileOffset, 50);
+    });
+
+    test('lineTable survives roundtrip across multiple functions', () {
+      final f0 = DarticFuncProto(
+        funcId: 0,
+        name: 'f0',
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
+        valueRegCount: 1,
+        refRegCount: 0,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 0, fileOffset: 10),
+        ],
+      );
+
+      final f1 = DarticFuncProto(
+        funcId: 1,
+        name: 'f1',
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
+        valueRegCount: 1,
+        refRegCount: 0,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 1, fileOffset: 20),
+          LineTableEntry(pc: 3, fileIndex: 1, fileOffset: 40),
+        ],
+      );
+
+      final module = buildModuleFrom(functions: [f0, f1]);
+      final result = roundtripModule(module);
+
+      expect(result.functions[0].lineTable.length, 1);
+      expect(result.functions[0].lineTable[0].fileOffset, 10);
+
+      expect(result.functions[1].lineTable.length, 2);
+      expect(result.functions[1].lineTable[0].fileOffset, 20);
+      expect(result.functions[1].lineTable[1].pc, 3);
+      expect(result.functions[1].lineTable[1].fileOffset, 40);
+    });
+  });
+
+  // ── Source info roundtrip ──
+
+  group('source info roundtrip', () {
+    test('empty source info preserved', () {
+      final module = buildModuleFrom();
+      final result = roundtripModule(module);
+
+      expect(result.fileUris, isEmpty);
+      expect(result.lineStartsTable, isEmpty);
+    });
+
+    test('fileUris and lineStartsTable preserved', () {
+      final module = buildModuleFrom(
+        fileUris: [
+          'file:///home/user/main.dart',
+          'file:///home/user/lib/utils.dart',
+        ],
+        lineStartsTable: [
+          [0, 25, 50, 80, 120],
+          [0, 30, 60],
+        ],
+      );
+      final result = roundtripModule(module);
+
+      expect(result.fileUris.length, 2);
+      expect(result.fileUris[0], 'file:///home/user/main.dart');
+      expect(result.fileUris[1], 'file:///home/user/lib/utils.dart');
+
+      expect(result.lineStartsTable.length, 2);
+      expect(result.lineStartsTable[0], [0, 25, 50, 80, 120]);
+      expect(result.lineStartsTable[1], [0, 30, 60]);
+    });
+
+    test('unicode file URIs preserved', () {
+      final module = buildModuleFrom(
+        fileUris: ['file:///home/用户/源码.dart'],
+        lineStartsTable: [
+          [0, 10],
+        ],
+      );
+      final result = roundtripModule(module);
+
+      expect(result.fileUris[0], 'file:///home/用户/源码.dart');
+    });
+
+    test('source info + lineTable combined roundtrip', () {
+      final proto = DarticFuncProto(
+        funcId: 0,
+        name: 'main',
+        bytecode: Uint64List.fromList([encodeAx(Op.halt, 0)]),
+        valueRegCount: 1,
+        refRegCount: 0,
+        paramCount: 0,
+        lineTable: [
+          LineTableEntry(pc: 0, fileIndex: 0, fileOffset: 25),
+          LineTableEntry(pc: 2, fileIndex: 0, fileOffset: 50),
+        ],
+      );
+
+      final module = buildModuleFrom(
+        functions: [proto],
+        fileUris: ['file:///main.dart'],
+        lineStartsTable: [
+          [0, 25, 50, 80],
+        ],
+      );
+      final result = roundtripModule(module);
+
+      // Verify function lineTable
+      final lt = result.functions[0].lineTable;
+      expect(lt.length, 2);
+      expect(lt[0].pc, 0);
+      expect(lt[0].fileIndex, 0);
+      expect(lt[0].fileOffset, 25);
+      expect(lt[1].pc, 2);
+      expect(lt[1].fileOffset, 50);
+
+      // Verify module source info
+      expect(result.fileUris, ['file:///main.dart']);
+      expect(result.lineStartsTable[0], [0, 25, 50, 80]);
+    });
+  });
+
   // ── Record shape refs roundtrip ──
 
   group('record shape refs roundtrip', () {

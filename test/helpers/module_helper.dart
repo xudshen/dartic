@@ -38,11 +38,15 @@ DarticModule buildModuleFrom({
   List<DarticFuncProto>? functions,
   ConstantPool? pool,
   int entryFuncId = 0,
+  List<String> fileUris = const [],
+  List<List<int>> lineStartsTable = const [],
 }) {
   return DarticModule(
     functions: functions ?? [],
     constantPool: pool ?? ConstantPool(),
     entryFuncId: entryFuncId,
+    fileUris: fileUris,
+    lineStartsTable: lineStartsTable,
   );
 }
 

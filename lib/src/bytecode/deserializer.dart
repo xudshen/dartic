@@ -71,6 +71,7 @@ class DarticDeserializer {
     final (globalCount, globalInitializerIds, globalFlags, globalNames) =
         _readGlobalTable(reader);
     final coreTypeIds = _readCoreTypeIds(reader);
+    final (fileUris, lineStartsTable) = _readSourceInfo(reader);
 
     return DarticModule(
       functions: functions,
@@ -84,6 +85,8 @@ class DarticDeserializer {
       globalFlags: globalFlags,
       globalNames: globalNames,
       coreTypeIds: coreTypeIds,
+      fileUris: fileUris,
+      lineStartsTable: lineStartsTable,
     );
   }
 
@@ -318,6 +321,22 @@ class DarticDeserializer {
     );
   }
 
+  // ── Source Info ──
+
+  (List<String>, List<List<int>>) _readSourceInfo(_ByteReader r) {
+    final hasSourceInfo = r.readByte();
+    if (hasSourceInfo == 0) {
+      return (const <String>[], const <List<int>>[]);
+    }
+    final fileUriCount = r.readUint32();
+    final fileUris = List.generate(fileUriCount, (_) => r.readString());
+    final lineStartsTable = List.generate(fileUriCount, (_) {
+      final count = r.readUint32();
+      return List.generate(count, (_) => r.readUint32());
+    });
+    return (fileUris, lineStartsTable);
+  }
+
   DarticFuncProto _readFunction(_ByteReader r) {
     final name = r.readString();
     final funcId = r.readUint32();
@@ -391,6 +410,19 @@ class DarticDeserializer {
       typeTemplate = template;
     }
 
+    // lineTable (PC → source location mapping, delta-encoded)
+    final lineTableLength = r.readUint32();
+    final lineTable = <LineTableEntry>[];
+    int prevPc = 0;
+    for (var i = 0; i < lineTableLength; i++) {
+      final deltaPc = r.readUint32();
+      final fileIndex = r.readUint16();
+      final fileOffset = r.readUint32();
+      prevPc += deltaPc;
+      lineTable
+          .add(LineTableEntry(pc: prevPc, fileIndex: fileIndex, fileOffset: fileOffset));
+    }
+
     final proto = DarticFuncProto(
       funcId: funcId,
       name: name,
@@ -404,6 +436,7 @@ class DarticDeserializer {
       icTable: icTable,
       upvalueDescriptors: upvalueDescriptors,
       isConstructor: isConstructor,
+      lineTable: lineTable,
     );
     proto.typeTemplate = typeTemplate;
     return proto;
