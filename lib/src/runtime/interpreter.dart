@@ -19,6 +19,7 @@ import '../sandbox/load_error.dart';
 import '../sandbox/verifier.dart';
 import '../compiler/type_template.dart';
 import 'call_stack.dart';
+import 'stack_trace.dart';
 import 'class_info.dart' show StackKind;
 import 'closure.dart';
 import 'dartic_invocation.dart';
@@ -1689,7 +1690,7 @@ class DarticInterpreter {
             // co19 tests catch `on IntegerDivisionByZeroException`.
             // ignore: deprecated_member_use
             pc = unwindToHandler(pc - 1, IntegerDivisionByZeroException(),
-                StackTrace.current);
+                DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
           }
           vs.writeInt(vBase + a, vs.readInt(vBase + b) ~/ divisorD);
@@ -1704,7 +1705,7 @@ class DarticInterpreter {
             // co19 tests catch `on IntegerDivisionByZeroException`.
             // ignore: deprecated_member_use
             pc = unwindToHandler(pc - 1, IntegerDivisionByZeroException(),
-                StackTrace.current);
+                DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
           }
           vs.writeInt(vBase + a, vs.readInt(vBase + b) % divisorM);
@@ -1834,7 +1835,7 @@ class DarticInterpreter {
             pc = unwindToHandler(
               pc - 1,
               UnsupportedError('Infinity or NaN toInt'),
-              StackTrace.current,
+              DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack),
             );
           } else {
             vs.writeInt(vBase + a, dv.toInt());
@@ -2324,7 +2325,7 @@ class DarticInterpreter {
                 null,
                 Invocation.method(Symbol(methodName), const []),
               );
-              pc = unwindToHandler(pc - 1, error, StackTrace.current);
+              pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
               continue;
             }
             // Non-DarticObject: try HostClassRegistry dynamic dispatch.
@@ -2710,7 +2711,7 @@ class DarticInterpreter {
           } else {
             // Route through unwindToHandler so bytecode-level try-catch
             // blocks can catch the TypeError (e.g., Expect.throws).
-            pc = unwindToHandler(pc - 1, TypeError(), StackTrace.current);
+            pc = unwindToHandler(pc - 1, TypeError(), DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
           }
 
         // ── Exception Handling (0xA4-0xA5) ──
@@ -2719,7 +2720,7 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final exception = rs.read(rBase + a);
           pc = unwindToHandler(
-              pc - 1, exception, buildCurrentStackTrace());
+              pc - 1, exception, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
 
         case Op.rethrow_: // RETHROW A, B — rethrow refStack[A] with stackTrace refStack[B]
           final a = decodeA(instr);
@@ -2737,7 +2738,7 @@ class DarticInterpreter {
             final message = b != 0xFF ? rs.read(rBase + b) : null;
             final exception = AssertionError(message?.toString());
             pc = unwindToHandler(
-                pc - 1, exception, buildCurrentStackTrace());
+                pc - 1, exception, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
           }
 
         // ── Closure (0x70-0x71) ──
@@ -2984,7 +2985,7 @@ class DarticInterpreter {
               null,
               Invocation.getter(Symbol(name)),
             );
-            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
           }
 
@@ -3085,7 +3086,7 @@ class DarticInterpreter {
               null,
               Invocation.setter(Symbol('$name='), value),
             );
-            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
           }
 
@@ -3171,7 +3172,7 @@ class DarticInterpreter {
               null,
               Invocation.method(Symbol(name), const []),
             );
-            pc = unwindToHandler(pc - 1, error, StackTrace.current);
+            pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
           }
 
