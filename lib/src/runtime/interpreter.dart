@@ -470,7 +470,17 @@ class DarticInterpreter {
         futureOrClassId: ids.futureOrId,
         functionClassId: ids.functionId,
         typeErrorClassId: ids.typeErrorId,
+        typeClassId: ids.typeId,
       );
+    }
+    // Register class names for DarticType.toString() — covers both
+    // core types (which the TypeRegistry constructor already pre-registered
+    // for its well-known IDs) and user-defined classes.
+    final reg = _effectiveTypeRegistry;
+    if (reg != null) {
+      for (final classInfo in module.classes) {
+        reg.registerClassName(classInfo.classId, classInfo.name);
+      }
     }
     final active = _activeTypeRegistry;
     if (active != null) {
@@ -2102,6 +2112,20 @@ class DarticInterpreter {
           // that override host methods (e.g., toString, operator==).
           final bindingInfo = module.bindingNames[bx];
           final methodName = bindingInfo.methodName;
+
+          // runtimeType interception (Path A): when a CALL_HOST targets
+          // `runtimeType` on any object, return the DarticType from
+          // extractType instead of the host VM's runtimeType.
+          if (methodName == 'runtimeType') {
+            final reg = _activeTypeRegistry;
+            if (reg != null) {
+              final receiver = rs.read(rBase + a + 1);
+              final darticType = extractType(receiver, reg, hostTypeResolver);
+              rs.write(rBase + a, darticType);
+              break;
+            }
+          }
+
           if (methodName != null && _activeDarticDispatch != null) {
             final receiver = rs.read(rBase + a + 1);
             DarticObject? darticObj;
@@ -2174,6 +2198,23 @@ class DarticInterpreter {
           // Read receiver and IC entry up front.
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
+
+          // runtimeType interception (Path C): when CALL_VIRTUAL targets
+          // the `runtimeType` getter, short-circuit with extractType.
+          {
+            final methodName = cp.getName(ic.methodNameIndex);
+            if (methodName == 'runtimeType') {
+              final reg = _activeTypeRegistry;
+              if (reg != null) {
+                if (receiver == null) {
+                  rs.write(rBase + a, reg.nullType);
+                } else {
+                  rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver));
+                }
+                break;
+              }
+            }
+          }
 
           // DarticClosure: handle .call() for closures dispatched via
           // CALL_VIRTUAL (e.g., variable holding a closure called as f()).
@@ -2962,12 +3003,30 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final name = cp.getName(c);
           if (receiver == null) {
+            // null.runtimeType → Null
+            if (name == 'runtimeType') {
+              final reg = _activeTypeRegistry;
+              if (reg != null) {
+                rs.write(rBase + a, reg.nullType);
+                break;
+              }
+            }
             final error = NoSuchMethodError.withInvocation(
               null,
               Invocation.getter(Symbol(name)),
             );
             pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
+          }
+
+          // runtimeType interception (Path B): return DarticType for any
+          // receiver, using the same extractType logic as INSTANCEOF.
+          if (name == 'runtimeType') {
+            final reg = _activeTypeRegistry;
+            if (reg != null) {
+              rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver));
+              break;
+            }
           }
 
           // DarticObject: look up field, then getter method.

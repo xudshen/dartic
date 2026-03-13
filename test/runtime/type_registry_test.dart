@@ -364,7 +364,7 @@ void main() {
           (name: 'name', type: registry.stringType),
         ],
       );
-      expect(t.toString(), contains('DarticRecordType'));
+      expect(t.toString(), '(int, {String name})');
     });
   });
 }

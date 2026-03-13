@@ -394,6 +394,10 @@ DarticType extractType(
     if (rt != null) return rt;
     return registry.intern(obj.classId, const []);
   }
+  // DarticType objects (runtime type reified as `Type`).
+  if (value is DarticType) {
+    return registry.intern(registry.typeClassId, const []);
+  }
   // Native Dart TypeError thrown by CAST — map to the registered classId
   // so that `e is TypeError` works in bytecode.
   if (value is TypeError) {

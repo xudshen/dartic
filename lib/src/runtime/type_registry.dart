@@ -26,13 +26,31 @@ class TypeRegistry {
     int functionClassId = -102,
     int recordClassId = -103,
     int typeErrorClassId = -104,
+    int typeClassId = -105,
   })  : _futureClassId = futureClassId,
         _futureOrClassId = futureOrClassId,
         _functionClassId = functionClassId,
         _recordClassId = recordClassId,
         _objectClassId = objectClassId,
         _typeErrorClassId = typeErrorClassId,
+        _typeClassId = typeClassId,
         _buckets = List<List<DarticType>?>.filled(_initialBucketCount, null) {
+    // Pre-register well-known class names for toString().
+    _classNames[SpecialClassId.dynamic_] = 'dynamic';
+    _classNames[SpecialClassId.void_] = 'void';
+    _classNames[SpecialClassId.never] = 'Never';
+    _classNames[intClassId] = 'int';
+    _classNames[doubleClassId] = 'double';
+    _classNames[stringClassId] = 'String';
+    _classNames[boolClassId] = 'bool';
+    _classNames[objectClassId] = 'Object';
+    _classNames[numClassId] = 'num';
+    if (futureClassId >= 0) _classNames[futureClassId] = 'Future';
+    if (futureOrClassId >= 0) _classNames[futureOrClassId] = 'FutureOr';
+    if (functionClassId >= 0) _classNames[functionClassId] = 'Function';
+    if (recordClassId >= 0) _classNames[recordClassId] = 'Record';
+    if (typeClassId >= 0) _classNames[typeClassId] = 'Type';
+
     // Pre-register special types (negative classIds).
     dynamicType = _internInterface(
         SpecialClassId.dynamic_, const [], Nullability.nonNullable);
@@ -69,6 +87,19 @@ class TypeRegistry {
   final int _recordClassId;
   final int _objectClassId;
   final int _typeErrorClassId;
+  final int _typeClassId;
+
+  // ── Class name registry (classId → human-readable name for toString) ──
+
+  final Map<int, String> _classNames = {};
+
+  /// Registers a human-readable class name for a given [classId].
+  ///
+  /// Called by the compiler during `_registerCoreTypes` and by the
+  /// interpreter at module-install time for user-defined classes.
+  void registerClassName(int classId, String name) {
+    _classNames[classId] = name;
+  }
 
   /// Class ID for `Future` (dart:async).
   int get futureClassId => _futureClassId;
@@ -84,6 +115,9 @@ class TypeRegistry {
 
   /// Class ID for `TypeError` (dart:core).
   int get typeErrorClassId => _typeErrorClassId;
+
+  /// Class ID for `Type` (dart:core).
+  int get typeClassId => _typeClassId;
 
   // ── Bucket table ──
 
@@ -297,6 +331,7 @@ class TypeRegistry {
       classId: classId,
       typeArgs: typeArgs,
       nullability: nullability,
+      className: _classNames[classId] ?? '#$classId',
     );
     type._canonicalHash = hash;
     (_buckets[bucketIndex] ??= []).add(type);

@@ -108,6 +108,7 @@ class CoreTypeIds {
     this.futureOrId = -101,
     this.functionId = -102,
     this.typeErrorId = -103,
+    this.typeId = -105,
   });
 
   final int intId;
@@ -120,6 +121,9 @@ class CoreTypeIds {
   final int futureOrId;
   final int functionId;
   final int typeErrorId;
+
+  /// Class ID for `Type` (dart:core). Used by `is Type` checks.
+  final int typeId;
 }
 
 /// A binding name table entry for CALL_HOST instructions.

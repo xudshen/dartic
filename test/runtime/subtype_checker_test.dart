@@ -518,6 +518,47 @@ void main() {
       final result = extractType(record, registry, null);
       expect(identical(result, registry.dynamicType), isTrue);
     });
+
+    test('DarticType value extracts as Type classId', () {
+      // Create a registry with a known Type classId.
+      const typeCid = 25;
+      final regWithType = TypeRegistry(
+        intClassId: intCid,
+        doubleClassId: doubleCid,
+        stringClassId: stringCid,
+        boolClassId: boolCid,
+        objectClassId: objectCid,
+        numClassId: numCid,
+        typeClassId: typeCid,
+      );
+      // extractType on a DarticType value should return Type's interface type.
+      final result = extractType(regWithType.intType, regWithType, null);
+      expect(result, isA<DarticInterfaceType>());
+      expect((result as DarticInterfaceType).classId, typeCid);
+    });
+
+    test('DarticFunctionType value also extracts as Type classId', () {
+      const typeCid = 25;
+      final regWithType = TypeRegistry(
+        intClassId: intCid,
+        doubleClassId: doubleCid,
+        stringClassId: stringCid,
+        boolClassId: boolCid,
+        objectClassId: objectCid,
+        numClassId: numCid,
+        typeClassId: typeCid,
+      );
+      final fnType = regWithType.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 0,
+        positionalParams: const [],
+        namedParams: const [],
+        returnType: regWithType.voidType,
+      );
+      final result = extractType(fnType, regWithType, null);
+      expect(result, isA<DarticInterfaceType>());
+      expect((result as DarticInterfaceType).classId, typeCid);
+    });
   });
 }
 

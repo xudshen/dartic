@@ -318,6 +318,7 @@ class DarticDeserializer {
       futureOrId: r.readUint32(),
       functionId: r.readUint32(),
       typeErrorId: r.readUint32(),
+      typeId: r.readUint32(),
     );
   }
 

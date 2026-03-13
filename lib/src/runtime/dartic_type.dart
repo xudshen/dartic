@@ -33,7 +33,7 @@ abstract final class SpecialClassId {
 ///
 /// Sealed: [DarticInterfaceType], [DarticFunctionType],
 /// [DarticRecordType], and [DarticTypeParameterType] exist.
-sealed class DarticType {
+sealed class DarticType implements Type {
   /// The nullability of this type.
   Nullability get nullability;
 
@@ -51,7 +51,9 @@ final class DarticInterfaceType extends DarticType {
     required this.classId,
     required List<DarticType> typeArgs,
     required this.nullability,
-  }) : typeArgs = typeArgs.isEmpty
+    required String className,
+  })  : _className = className,
+        typeArgs = typeArgs.isEmpty
             ? const []
             : List<DarticType>.unmodifiable(typeArgs);
 
@@ -65,6 +67,9 @@ final class DarticInterfaceType extends DarticType {
   @override
   final Nullability nullability;
 
+  /// Human-readable class name, injected by [TypeRegistry] during interning.
+  final String _className;
+
   /// Set by [TypeRegistry] during interning.
   int _canonicalHash = 0;
 
@@ -73,10 +78,14 @@ final class DarticInterfaceType extends DarticType {
 
   @override
   String toString() {
-    final nullSuffix =
-        nullability == Nullability.nullable ? '?' : '';
-    if (typeArgs.isEmpty) return 'DarticInterfaceType(#$classId$nullSuffix)';
-    return 'DarticInterfaceType(#$classId<${typeArgs.join(', ')}>$nullSuffix)';
+    // Null is represented as Never? internally; display as 'Null'.
+    if (classId == SpecialClassId.never &&
+        nullability == Nullability.nullable) {
+      return 'Null';
+    }
+    final suffix = nullability == Nullability.nullable ? '?' : '';
+    if (typeArgs.isEmpty) return '$_className$suffix';
+    return '$_className<${typeArgs.join(', ')}>$suffix';
   }
 }
 
@@ -129,13 +138,28 @@ final class DarticFunctionType extends DarticType {
 
   @override
   String toString() {
-    final nullSuffix =
-        nullability == Nullability.nullable ? '?' : '';
-    final params = <String>[
-      ...positionalParams.map((p) => '$p'),
-      ...namedParams.map((n) => '${n.isRequired ? "required " : ""}${n.type} ${n.name}'),
-    ];
-    return 'DarticFunctionType($returnType Function(${params.join(', ')})$nullSuffix)';
+    final suffix = nullability == Nullability.nullable ? '?' : '';
+    final parts = <String>[];
+    // Required positional params.
+    for (var i = 0; i < requiredParamCount; i++) {
+      parts.add('${positionalParams[i]}');
+    }
+    // Optional positional params in [brackets].
+    if (positionalParams.length > requiredParamCount) {
+      final optional = positionalParams
+          .skip(requiredParamCount)
+          .map((p) => '$p')
+          .join(', ');
+      parts.add('[$optional]');
+    }
+    // Named params in {braces}.
+    if (namedParams.isNotEmpty) {
+      final named = namedParams
+          .map((n) => '${n.isRequired ? "required " : ""}${n.type} ${n.name}')
+          .join(', ');
+      parts.add('{$named}');
+    }
+    return '$returnType Function(${parts.join(', ')})$suffix';
   }
 }
 
@@ -171,12 +195,17 @@ final class DarticRecordType extends DarticType {
 
   @override
   String toString() {
-    final nullSuffix = nullability == Nullability.nullable ? '?' : '';
-    final fields = <String>[
+    final suffix = nullability == Nullability.nullable ? '?' : '';
+    final parts = <String>[
       ...positionalTypes.map((t) => '$t'),
-      ...namedTypes.map((n) => '${n.type} ${n.name}'),
     ];
-    return 'DarticRecordType((${fields.join(', ')})$nullSuffix)';
+    if (namedTypes.isNotEmpty) {
+      final named = namedTypes
+          .map((n) => '${n.type} ${n.name}')
+          .join(', ');
+      parts.add('{$named}');
+    }
+    return '(${parts.join(', ')})$suffix';
   }
 }
 
