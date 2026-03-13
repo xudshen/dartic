@@ -180,6 +180,9 @@ const Map<int, OpMeta> opTable = {
   Op.assert_: OpMeta('ASSERT', InstrFormat.abc),
   Op.nullCheck: OpMeta('NULL_CHECK', InstrFormat.abc),
 
+  // ── Type Tagging ──
+  Op.tagType: OpMeta('TAG_TYPE', InstrFormat.abc),
+
   // ── System ──
   Op.halt: OpMeta('HALT', InstrFormat.abc),
 };

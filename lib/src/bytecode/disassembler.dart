@@ -598,6 +598,7 @@ class DarticDisassembler {
       Op.invokeDyn => c < cp.nameCount
           ? '.${cp.getName(c)}'
           : '<out of bounds>',
+      Op.tagType => 'obj=r$a, type=r$b',
       _ => '',
     };
   }

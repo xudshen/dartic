@@ -159,4 +159,167 @@ void main() {
       );
     });
   });
+
+  group('DarticType implements Type', () {
+    late TypeRegistry registry;
+
+    setUp(() {
+      registry = TypeRegistry(
+        intClassId: intCid,
+        doubleClassId: doubleCid,
+        stringClassId: stringCid,
+        boolClassId: boolCid,
+        objectClassId: objectCid,
+        numClassId: numCid,
+      );
+    });
+
+    test('DarticInterfaceType is Type', () {
+      expect(registry.intType, isA<Type>());
+      expect(registry.intType is Type, isTrue);
+    });
+
+    test('DarticFunctionType is Type', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 1,
+        positionalParams: [registry.intType],
+        namedParams: const [],
+        returnType: registry.stringType,
+      );
+      expect(fnType, isA<Type>());
+    });
+
+    test('DarticRecordType is Type', () {
+      final recordType = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+      );
+      expect(recordType, isA<Type>());
+    });
+
+    test('DarticTypeParameterType is Type', () {
+      final tpType = DarticTypeParameterType(0);
+      expect(tpType, isA<Type>());
+    });
+  });
+
+  group('toString() Dart standard format', () {
+    late TypeRegistry registry;
+
+    setUp(() {
+      registry = TypeRegistry(
+        intClassId: intCid,
+        doubleClassId: doubleCid,
+        stringClassId: stringCid,
+        boolClassId: boolCid,
+        objectClassId: objectCid,
+        numClassId: numCid,
+      );
+    });
+
+    test('simple interface types', () {
+      expect(registry.intType.toString(), 'int');
+      expect(registry.doubleType.toString(), 'double');
+      expect(registry.stringType.toString(), 'String');
+      expect(registry.boolType.toString(), 'bool');
+      expect(registry.numType.toString(), 'num');
+      expect(registry.objectType.toString(), 'Object');
+    });
+
+    test('special types', () {
+      expect(registry.dynamicType.toString(), 'dynamic');
+      expect(registry.voidType.toString(), 'void');
+      expect(registry.neverType.toString(), 'Never');
+      expect(registry.nullType.toString(), 'Null');
+    });
+
+    test('nullable types', () {
+      expect(registry.objectNullableType.toString(), 'Object?');
+      final nullableInt = registry.intern(intCid, const [],
+          nullability: Nullability.nullable);
+      expect(nullableInt.toString(), 'int?');
+    });
+
+    test('generic interface types', () {
+      registry.registerClassName(listCid, 'List');
+      final listInt = registry.intern(listCid, [registry.intType]);
+      expect(listInt.toString(), 'List<int>');
+
+      const mapCid = 11;
+      registry.registerClassName(mapCid, 'Map');
+      final mapStringInt = registry.intern(
+          mapCid, [registry.stringType, registry.intType]);
+      expect(mapStringInt.toString(), 'Map<String, int>');
+    });
+
+    test('function type — simple', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 1,
+        positionalParams: [registry.stringType],
+        namedParams: const [],
+        returnType: registry.intType,
+      );
+      expect(fnType.toString(), 'int Function(String)');
+    });
+
+    test('function type — nullable', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 1,
+        positionalParams: [registry.stringType],
+        namedParams: const [],
+        returnType: registry.intType,
+        nullability: Nullability.nullable,
+      );
+      expect(fnType.toString(), 'int Function(String)?');
+    });
+
+    test('function type — named params', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 1,
+        positionalParams: [registry.stringType],
+        namedParams: [
+          (name: 'flag', type: registry.boolType, isRequired: true),
+        ],
+        returnType: registry.intType,
+      );
+      expect(
+          fnType.toString(), 'int Function(String, {required bool flag})');
+    });
+
+    test('function type — optional positional params', () {
+      final fnType = registry.internFunction(
+        typeParamBounds: const [],
+        requiredParamCount: 1,
+        positionalParams: [
+          registry.stringType,
+          registry.intType,
+          registry.boolType,
+        ],
+        namedParams: const [],
+        returnType: registry.intType,
+      );
+      expect(fnType.toString(), 'int Function(String, [int, bool])');
+    });
+
+    test('record type', () {
+      final recordType = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: [(name: 'x', type: registry.boolType)],
+      );
+      expect(recordType.toString(), '(int, String, {bool x})');
+    });
+
+    test('nullable record type', () {
+      final recordType = registry.internRecord(
+        positionalTypes: [registry.intType, registry.stringType],
+        namedTypes: const [],
+        nullability: Nullability.nullable,
+      );
+      expect(recordType.toString(), '(int, String)?');
+    });
+  });
 }

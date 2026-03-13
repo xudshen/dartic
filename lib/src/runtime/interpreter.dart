@@ -28,6 +28,7 @@ import 'dartic_type.dart';
 import 'error.dart';
 import 'frame.dart';
 import 'global_table.dart';
+import 'host_type_table.dart';
 import 'object.dart';
 import 'ref_stack.dart';
 import 'subtype_checker.dart';
@@ -130,6 +131,10 @@ class DarticInterpreter {
 
   /// Subtype checker for DarticType-based INSTANCEOF/CAST.
   SubtypeChecker? _subtypeChecker;
+
+  /// Expando-based side table for attaching [DarticType] to host objects
+  /// (List, Map, Set, etc.) via TAG_TYPE opcode.
+  final HostTypeTable _hostTypeTable = HostTypeTable();
 
   /// Remaining fuel — shared across initializer and main execution.
   int _fuel = 0;
@@ -470,7 +475,17 @@ class DarticInterpreter {
         futureOrClassId: ids.futureOrId,
         functionClassId: ids.functionId,
         typeErrorClassId: ids.typeErrorId,
+        typeClassId: ids.typeId,
       );
+    }
+    // Register class names for DarticType.toString() — covers both
+    // core types (which the TypeRegistry constructor already pre-registered
+    // for its well-known IDs) and user-defined classes.
+    final reg = _effectiveTypeRegistry;
+    if (reg != null) {
+      for (final classInfo in module.classes) {
+        reg.registerClassName(classInfo.classId, classInfo.name);
+      }
     }
     final active = _activeTypeRegistry;
     if (active != null) {
@@ -637,26 +652,40 @@ class DarticInterpreter {
     // Place receiver at rBase+2 (this) if provided.
     if (receiver != null) {
       rs.write(rBase + 2, receiver);
+
+      // Auto-load ITA from DarticObject's runtimeType_ for generic classes.
+      // This mirrors CALL_VIRTUAL's ITA loading (line ~2318) and is needed
+      // when dispatching through _callDarticMethod (e.g., INVOKE_DYN).
+      final darticObj = receiver is DarticObject
+          ? receiver
+          : (receiver is DarticObjectHolder ? receiver.$darticObject : null);
+      if (darticObj != null) {
+        final rtType = darticObj.runtimeType_;
+        if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
+          rs.write(rBase + 0, rtType.typeArgs);
+        }
+      }
     }
-
-    // Route args to the correct stacks via paramKinds metadata.
-    // The refArgStart offset only matters for the legacy fallback path
-    // (when paramKinds is null): methods use rBase+3, closures use rBase+2.
-    _routeArgs(proto, args, vBase, rBase, receiver != null ? 3 : 2);
-
-    // Push callee frame.
-    callStack.pushFrame(
-      funcId: proto.funcId,
-      returnPC: 0,
-      savedFP: callStack.fp,
-      savedVSP: vBase,
-      savedRSP: rBase,
-      resultReg: 0,
-    );
 
     // Execute nested dispatch loop.
     _hostBoundaryDepth++;
     try {
+      // Route args to the correct stacks via paramKinds metadata.
+      // Must be inside try-catch: _routeArgs may throw (e.g., covariant
+      // parameter type mismatch when unboxing Object→int). Without this,
+      // the HOST_BOUNDARY frame and stack pointers are never cleaned up.
+      _routeArgs(proto, args, vBase, rBase, receiver != null ? 3 : 2);
+
+      // Push callee frame.
+      callStack.pushFrame(
+        funcId: proto.funcId,
+        returnPC: 0,
+        savedFP: callStack.fp,
+        savedVSP: vBase,
+        savedRSP: rBase,
+        resultReg: 0,
+      );
+
       _executeLoop(module, vBase, rBase, proto.bytecode, 0, upvalues);
     } on Object {
       // Exception propagated past HOST_BOUNDARY — restore stacks.
@@ -664,6 +693,11 @@ class DarticInterpreter {
       _hostNameStack.removeLast();
       vs.sp = savedVSP;
       rs.sp = savedRSP;
+      // Pop callee frame if it was pushed (might not have been if
+      // _routeArgs threw before pushFrame).
+      if (!callStack.isHostBoundary) {
+        callStack.popFrame();
+      }
       if (callStack.isHostBoundary) {
         callStack.popFrame();
         _upvalueStack.removeLast();
@@ -1388,6 +1422,19 @@ class DarticInterpreter {
     int unwindToHandler(int startPC, Object? exception, Object? stackTrace) {
       var searchPC = startPC;
       while (true) {
+        // Guard: if we've unwound to a HOST_BOUNDARY sentinel frame,
+        // propagate the exception to the host VM immediately. This
+        // occurs when nested _runNestedDispatch calls rethrow exceptions
+        // that land back in an outer _executeLoop's unwindToHandler.
+        if (callStack.isHostBoundary) {
+          _upvalueStack.removeLast();
+          Error.throwWithStackTrace(
+              exception!,
+              stackTrace is StackTrace
+                  ? stackTrace
+                  : DarticStackTrace.capture(
+                      callStack, module, pc, _hostNameStack));
+        }
         final funcProto = module.functions[callStack.funcId];
         final handler = _findHandler(
             funcProto, searchPC, exception, module, rBase, rs);
@@ -2102,6 +2149,20 @@ class DarticInterpreter {
           // that override host methods (e.g., toString, operator==).
           final bindingInfo = module.bindingNames[bx];
           final methodName = bindingInfo.methodName;
+
+          // runtimeType interception (Path A): when a CALL_HOST targets
+          // `runtimeType` on any object, return the DarticType from
+          // extractType instead of the host VM's runtimeType.
+          if (methodName == 'runtimeType') {
+            final reg = _activeTypeRegistry;
+            if (reg != null) {
+              final receiver = rs.read(rBase + a + 1);
+              final darticType = extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+              rs.write(rBase + a, darticType);
+              break;
+            }
+          }
+
           if (methodName != null && _activeDarticDispatch != null) {
             final receiver = rs.read(rBase + a + 1);
             DarticObject? darticObj;
@@ -2174,6 +2235,23 @@ class DarticInterpreter {
           // Read receiver and IC entry up front.
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
+
+          // runtimeType interception (Path C): when CALL_VIRTUAL targets
+          // the `runtimeType` getter, short-circuit with extractType.
+          {
+            final methodName = cp.getName(ic.methodNameIndex);
+            if (methodName == 'runtimeType') {
+              final reg = _activeTypeRegistry;
+              if (reg != null) {
+                if (receiver == null) {
+                  rs.write(rBase + a, reg.nullType);
+                } else {
+                  rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
+                }
+                break;
+              }
+            }
+          }
 
           // DarticClosure: handle .call() for closures dispatched via
           // CALL_VIRTUAL (e.g., variable holding a closure called as f()).
@@ -2673,7 +2751,7 @@ class DarticInterpreter {
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
-          final objType = extractType(value, reg, hostTypeResolver);
+          final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           vs.writeInt(vBase + a, checker.isSubtypeOf(objType, targetType) ? 1 : 0);
 
         case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
@@ -2684,7 +2762,7 @@ class DarticInterpreter {
           final value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
-          final objType = extractType(value, reg, hostTypeResolver);
+          final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           if (checker.isSubtypeOf(objType, targetType)) {
             rs.write(rBase + a, value);
           } else {
@@ -2772,8 +2850,17 @@ class DarticInterpreter {
           rs.write(rBase + a, closure);
 
         case Op.bindClosureFta: // BIND_CLOSURE_FTA A, B — closure[A].boundFTA = refStack[B]
-          (rs.read(rBase + decodeA(instr)) as DarticClosure).boundFTA =
-              rs.read(rBase + decodeB(instr)) as List<DarticType>;
+          final bindClosure = rs.read(rBase + decodeA(instr)) as DarticClosure;
+          final bindFta = rs.read(rBase + decodeB(instr)) as List<DarticType>;
+          bindClosure.boundFTA = bindFta;
+          // If the closure has a typeTemplate, resolve it with the bound FTA
+          // to set a precise runtimeType_ (e.g., `int Function(int)` instead
+          // of the unresolved generic `T Function<T>(T)`).
+          final bindTemplate = bindClosure.funcProto.typeTemplate;
+          if (bindTemplate != null && _activeTypeRegistry != null) {
+            bindClosure.runtimeType_ =
+                resolveType(bindTemplate, null, bindFta, _activeTypeRegistry!);
+          }
 
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
           final minIndex = rBase + (decodeA(instr));
@@ -2927,12 +3014,12 @@ class DarticInterpreter {
           // Compute and cache the record's runtime type.
           final reg = _activeTypeRegistry!;
           final positionalTypes = <DarticType>[
-            for (final v in positional) extractType(v, reg, hostTypeResolver),
+            for (final v in positional) extractType(v, reg, hostTypeResolver, hostTypeTable: _hostTypeTable),
           ];
           final sortedKeys = named.keys.toList()..sort();
           final namedTypes = <({String name, DarticType type})>[
             for (final key in sortedKeys)
-              (name: key, type: extractType(named[key], reg, hostTypeResolver)),
+              (name: key, type: extractType(named[key], reg, hostTypeResolver, hostTypeTable: _hostTypeTable)),
           ];
           record.runtimeType_ = reg.internRecord(
             positionalTypes: positionalTypes,
@@ -2962,12 +3049,30 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final name = cp.getName(c);
           if (receiver == null) {
+            // null.runtimeType → Null
+            if (name == 'runtimeType') {
+              final reg = _activeTypeRegistry;
+              if (reg != null) {
+                rs.write(rBase + a, reg.nullType);
+                break;
+              }
+            }
             final error = NoSuchMethodError.withInvocation(
               null,
               Invocation.getter(Symbol(name)),
             );
             pc = unwindToHandler(pc - 1, error, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
             continue;
+          }
+
+          // runtimeType interception (Path B): return DarticType for any
+          // receiver, using the same extractType logic as INSTANCEOF.
+          if (name == 'runtimeType') {
+            final reg = _activeTypeRegistry;
+            if (reg != null) {
+              rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
+              break;
+            }
           }
 
           // DarticObject: look up field, then getter method.
@@ -3144,8 +3249,11 @@ class DarticInterpreter {
 
         case Op.invokeDyn: // INVOKE_DYN A, B, C — refStack[A] = dynamicDispatch(refStack[A+1], names[C], args)
           final a = decodeA(instr);
-          final b = decodeB(instr); // arg count (including receiver)
+          final rawB = decodeB(instr);
           final c = decodeC(instr);
+          // B bit 7 signals type arguments present after the last arg.
+          final hasTypeArgs = (rawB & 0x80) != 0;
+          final totalArgCount = rawB & 0x7F; // receiver + explicit args
           final receiver = rs.read(rBase + a + 1);
           final name = cp.getName(c);
           if (receiver == null) {
@@ -3157,7 +3265,15 @@ class DarticInterpreter {
             continue;
           }
 
-          final explicitArgCount = b - 1;
+          final explicitArgCount = totalArgCount - 1;
+
+          // Read type arguments if present (placed after the last regular arg).
+          List<Type>? dynTypeArgs;
+          if (hasTypeArgs) {
+            final ftaSlot = rBase + a + 1 + totalArgCount;
+            final fta = rs.read(ftaSlot);
+            if (fta is List) dynTypeArgs = fta.cast<Type>();
+          }
 
           // DarticClosure: handle .call() for closures invoked dynamically.
           // e.g., `Function f = () => 42; f.call()` or `(dynamic f)()`.
@@ -3203,7 +3319,7 @@ class DarticInterpreter {
               (i) => rs.read(rBase + a + 2 + i),
             );
             final nsmInvocation =
-                DarticInvocation.method(Symbol(name), nsmArgs);
+                DarticInvocation.method(Symbol(name), nsmArgs, null, dynTypeArgs);
             final (nsmPushed, nsmHandlerPC) =
                 dispatchNoSuchMethod(receiver, nsmInvocation, a);
             if (nsmPushed) continue;
@@ -3232,7 +3348,7 @@ class DarticInterpreter {
           }
           // noSuchMethod fallback for host objects.
           final invocation =
-              DarticInvocation.method(Symbol(name), hostArgs);
+              DarticInvocation.method(Symbol(name), hostArgs, null, dynTypeArgs);
           final (pushed, handlerPC) =
               dispatchNoSuchMethod(receiver, invocation, a);
           if (pushed) continue;
@@ -3774,6 +3890,18 @@ class DarticInterpreter {
             throw DarticError('YIELD_STAR in non-generator context');
           }
 
+        // ── Type Tagging ──
+
+        case Op.tagType: // TAG_TYPE A, B — attach refStack[B] (DarticType) to refStack[A] (host object)
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final hostObj = rs.read(rBase + a);
+          final darticType = rs.read(rBase + b);
+          if (hostObj != null && darticType is DarticType) {
+            _hostTypeTable.attach(hostObj, darticType);
+          }
+          break;
+
         // ── System ──
 
         case Op.halt: // HALT ABC: A=resultReg, B=kind+1, C=unused
@@ -3858,7 +3986,10 @@ class DarticInterpreter {
       ic.argCount,
       (i) => rs.read(receiverBase + 3 + i),
     );
-    return DarticInvocation.method(Symbol(methodName), args);
+    // Read FTA from rsp+1 if present (List<DarticType>).
+    final fta = rs.read(receiverBase + 1);
+    final typeArgs = fta is List ? fta.cast<Type>() : null;
+    return DarticInvocation.method(Symbol(methodName), args, null, typeArgs);
   }
 
   /// Searches [funcProto]'s exception table for a handler matching [pc].
@@ -3892,7 +4023,7 @@ class DarticInterpreter {
         final fta = ftaRaw is List<DarticType> ? ftaRaw : null;
         final reg = _activeTypeRegistry!;
         final guardType = resolveType(guardTemplate, ita, fta, reg);
-        final exType = extractType(exception, reg, hostTypeResolver);
+        final exType = extractType(exception, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
         if (_subtypeChecker!.isSubtypeOf(exType, guardType)) {
           return handler;
         }

@@ -183,6 +183,7 @@ class DarticVerifier {
     Op.rethrow_,
     Op.assert_,
     Op.nullCheck,
+    Op.tagType,
     Op.halt,
   };
 
@@ -735,6 +736,11 @@ class DarticVerifier {
 
       // cast: A=ref(result), B=ref, C=type pool (not register)
       case Op.cast:
+        _checkRef(a, rrc, 'A', prefix, pc, op);
+        _checkRef(b, rrc, 'B', prefix, pc, op);
+
+      // tagType: A=ref(obj), B=ref(type), C=unused
+      case Op.tagType:
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 

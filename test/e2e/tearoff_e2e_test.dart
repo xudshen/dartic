@@ -177,6 +177,67 @@ int main() {
 ''');
       expect(result, 42);
     });
+
+    test('generic constructor tearoff preserves runtimeType', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+void main() {
+  var f = Box<int>.new;
+  var b = f(42);
+  print(b is Box<int>);
+  print(b.runtimeType);
+}
+''');
+      expect(output, ['true', 'Box<int>']);
+    });
+
+    test('constructor tearoff is Function type check', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Foo {
+  final int x;
+  Foo(this.x);
+}
+void main() {
+  var tearoff = Foo.new;
+  print(tearoff is Foo Function(int));
+  print(tearoff.runtimeType);
+}
+''');
+      expect(output[0], 'true');
+    });
+
+    test('generic constructor tearoff Function type check', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+void main() {
+  var tearoff = Box<int>.new;
+  print(tearoff is Box<int> Function(int));
+}
+''');
+      expect(output, ['true']);
+    });
+
+    test('generic constructor tearoff is-check false for wrong type arg', () async {
+      final result = await compileAndRunWithHost('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+int main() {
+  var f = Box<int>.new;
+  var b = f(42);
+  if (b is Box<String>) return 0;
+  return 1;
+}
+''');
+      expect(result, 1);
+    });
   });
 
   // ── ConstructorTearOff as constant ──
@@ -482,6 +543,33 @@ bool main() {
 ''');
       expect(result, true);
     });
+
+    test('different type instantiations are not equal', () async {
+      final result = await compileAndRun('''
+T identity<T>(T x) => x;
+bool main() {
+  int Function(int) f1 = identity;
+  String Function(String) f2 = identity;
+  return f1 == f2;
+}
+''');
+      expect(result, false);
+    });
+
+    test('different instance method type instantiations are not equal', () async {
+      final result = await compileAndRun('''
+class A {
+  T id<T>(T x) => x;
+}
+bool main() {
+  var a = A();
+  int Function(int) f1 = a.id;
+  String Function(String) f2 = a.id;
+  return f1 == f2;
+}
+''');
+      expect(result, false);
+    });
   });
 
   // ── Super host method tearoff ──
@@ -611,6 +699,54 @@ int main() {
       expect(result, 30);
     });
 
+    test('constructor tearoff with optional positional default', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Foo {
+  final int x;
+  final String y;
+  Foo(this.x, [this.y = 'default']);
+}
+void main() {
+  var tearoff = Foo.new;
+  var obj = tearoff(42);
+  print(obj.y);
+}
+''');
+      expect(output, ['default']);
+    });
+
+    test('constructor tearoff with named param default', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Bar {
+  final int a;
+  final bool flag;
+  Bar(this.a, {this.flag = true});
+}
+void main() {
+  var tearoff = Bar.new;
+  var obj = tearoff(10);
+  print(obj.flag);
+}
+''');
+      expect(output, ['true']);
+    });
+
+    test('generic constructor tearoff with default value', () async {
+      final (_, output) = await compileAndCapturePrint('''
+class Pair<T> {
+  final T first;
+  final String label;
+  Pair(this.first, {this.label = 'unlabeled'});
+}
+void main() {
+  var tearoff = Pair<int>.new;
+  var p = tearoff(42);
+  print(p.label);
+}
+''');
+      expect(output, ['unlabeled']);
+    });
+
     test('multiple tearoffs in same function', () async {
       final result = await compileAndRun('''
 class A {
@@ -628,6 +764,117 @@ int main() {
 ''');
       // a.compute(10) = 11, b.compute(10) = 20
       expect(result, 31);
+    });
+  });
+
+  // ── Host static tearoff tests ──
+
+  group('Host static tearoff', () {
+    test('int.parse tearoff — basic call', () async {
+      final result = await compileAndRunWithHost('''
+int main() {
+  var parse = int.parse;
+  return parse("42");
+}
+''');
+      expect(result, 42);
+    });
+
+    test('int.parse tearoff — is Function check', () async {
+      final result = await compileAndRunWithHost('''
+int main() {
+  var parse = int.parse;
+  if (parse is Function) return 1;
+  return 0;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('host static tearoff with optional param — int.parse radix', () async {
+      final result = await compileAndRunWithHost('''
+int main() {
+  var parse = int.parse;
+  return parse("ff", radix: 16);
+}
+''');
+      expect(result, 255);
+    });
+
+    test('host static tearoff passed as callback', () async {
+      final result = await compileAndRunWithHost('''
+int applyParse(int Function(String) f, String s) => f(s);
+int main() {
+  return applyParse(int.parse, "99");
+}
+''');
+      expect(result, 99);
+    });
+  });
+
+  // ── Unbound generic constructor tearoff tests ──
+
+  group('Unbound generic constructor tearoff', () {
+    test('Box.new tearoff — basic invocation with type arg', () async {
+      final result = await compileAndRun('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+  T get() => value;
+}
+int main() {
+  var ctor = Box.new;
+  var box = ctor<int>(42);
+  return box.get();
+}
+''');
+      expect(result, 42);
+    });
+
+    test('Box.new tearoff — is Function check', () async {
+      final result = await compileAndRun('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+int main() {
+  var ctor = Box.new;
+  if (ctor is Function) return 1;
+  return 0;
+}
+''');
+      expect(result, 1);
+    });
+
+    test('Box.new tearoff — passed as generic callback', () async {
+      final result = await compileAndRun('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+Box<T> makeBox<T>(Box<T> Function<T>(T) factory, T val) => factory<T>(val);
+int main() {
+  var box = makeBox(Box.new, 99);
+  return box.value;
+}
+''');
+      expect(result, 99);
+    });
+
+    test('Box.new tearoff — runtime type check Box<int> vs Box<String>', () async {
+      final result = await compileAndRunWithHost('''
+class Box<T> {
+  final T value;
+  Box(this.value);
+}
+int main() {
+  var ctor = Box.new;
+  var box = ctor<int>(42);
+  if (box is Box<int>) return 1;
+  return 0;
+}
+''');
+      expect(result, 1);
     });
   });
 }

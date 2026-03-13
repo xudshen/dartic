@@ -19,7 +19,7 @@ import 'module.dart';
 /// - Export table: count (UInt16) + entries (name + funcId)
 /// - Class table: count (UInt32) + each class's metadata, methods, fields, supertypes
 /// - Global table: globalCount (UInt32) + initializerIds (Int32 each)
-/// - CoreTypeIds: flag (byte) + if present: 9 × UInt32
+/// - CoreTypeIds: flag (byte) + if present: 11 × UInt32
 ///
 /// All multi-byte values are little-endian.
 ///
@@ -265,6 +265,7 @@ class DarticSerializer {
       w.writeUint32(ids.futureOrId);
       w.writeUint32(ids.functionId);
       w.writeUint32(ids.typeErrorId);
+      w.writeUint32(ids.typeId);
     } else {
       w.addByte(0);
     }

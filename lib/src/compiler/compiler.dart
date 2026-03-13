@@ -688,6 +688,10 @@ class DarticCompiler {
     final patternCid = patternClass != null
         ? register(patternClass, 'Pattern', superClassId: objectCid)
         : -1;
+    final typeClass = ct.index.tryGetClass('dart:core', 'Type');
+    final typeCid = typeClass != null
+        ? register(typeClass, 'Type', superClassId: objectCid)
+        : -1;
 
     // Set up supertype closures (transitive supertypeIds).
     _classInfos[objectCid].supertypeIds.add(objectCid);
@@ -726,6 +730,9 @@ class DarticCompiler {
       // String implements Pattern<String>
       _classInfos[stringCid].supertypeIds.add(patternCid);
     }
+    if (typeCid >= 0) {
+      _classInfos[typeCid].supertypeIds.addAll({typeCid, objectCid});
+    }
 
     // SuperTypeMap: generic supertype arg mappings for subtype checking.
     // List<E> extends Iterable<E>
@@ -748,6 +755,7 @@ class DarticCompiler {
       futureOrId: futureOrCid,
       functionId: functionCid,
       typeErrorId: typeErrorCid,
+      typeId: typeCid,
     );
   }
 
@@ -921,6 +929,36 @@ class DarticCompiler {
     return _constantPool.addRef(template);
   }
 
+  /// Emits CAST instructions at function entry for covariant parameters.
+  ///
+  /// Dart spec requires that parameters marked `covariant` (explicitly or
+  /// implicitly via class type parameter dependence) are checked at every
+  /// call site. The static type system widens them to `Object?` in the
+  /// method signature, so the runtime must verify the actual argument type.
+  ///
+  /// Only ref-stack parameters need explicit CAST — value-stack parameters
+  /// (non-nullable int/double/bool) are already validated by the CALL
+  /// reroute unboxing mechanism.
+  void _emitCovariantParamChecks(ir.FunctionNode fn) {
+    final allParams = [
+      ...fn.positionalParameters,
+      ...fn.namedParameters,
+    ];
+    for (final param in allParams) {
+      if (!param.isCovariantByDeclaration && !param.isCovariantByClass) {
+        continue;
+      }
+      final binding = _scope.lookup(param);
+      if (binding == null || binding.kind.isValue) continue;
+
+      // Emit INSTANTIATE_TYPE for the declared parameter type.
+      // For generic classes, this resolves `T` via ITA at runtime.
+      final typeReg = _emitInstantiateType(param.type);
+      // CAST paramReg, paramReg, typeReg — in-place check, throws TypeError.
+      _emitter.emitABC(Op.cast, binding.reg, binding.reg, typeReg);
+    }
+  }
+
   /// Compiles a function body with the appropriate async marker handling.
   ///
   /// Dispatches based on [fn.dartAsyncMarker]:
@@ -931,6 +969,9 @@ class DarticCompiler {
   ///
   /// Entry functions (main) use HALT; non-entry use RETURN instructions.
   void _compileFunctionBodyWithMarker(ir.FunctionNode fn, String funcName) {
+    // Emit covariant parameter checks before the function body.
+    _emitCovariantParamChecks(fn);
+
     final asyncMarker = fn.dartAsyncMarker;
 
     if (asyncMarker == ir.AsyncMarker.Async) {
