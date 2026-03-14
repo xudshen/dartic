@@ -1661,7 +1661,7 @@ extension on DarticCompiler {
       if (promotedIndices.contains(i)) {
         kinds[i] = StackKind.ref.index;
       } else {
-        kinds[i] = _classifyStackKind(all[i].type).index;
+        kinds[i] = _effectiveParamKind(all[i]).index;
       }
     }
     return kinds;
