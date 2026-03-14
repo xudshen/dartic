@@ -877,7 +877,7 @@ extension on DarticCompiler {
       final param = fn.positionalParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final isOptional = i >= fn.requiredParameterCount;
       if (isOptional && instKind.isValue && param.initializer != null) {
         // Promote to ref-stack so null sentinel detects omitted args.
@@ -912,7 +912,7 @@ extension on DarticCompiler {
     for (final param in fn.namedParameters) {
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       if (instKind.isValue && param.initializer != null) {
         final reg = _refAlloc.alloc();
         namedMappings.add((
@@ -1384,7 +1384,7 @@ extension on DarticCompiler {
       final param = fn.positionalParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final isOptional = i >= fn.requiredParameterCount;
       if (isOptional && instKind.isValue && param.initializer != null) {
         argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
@@ -1406,7 +1406,7 @@ extension on DarticCompiler {
       final param = fn.namedParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final flatIdx = fn.positionalParameters.length + i;
       if (instKind.isValue && param.initializer != null) {
         argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
@@ -1583,7 +1583,7 @@ extension on DarticCompiler {
 
     for (var i = 0; i < fn.positionalParameters.length; i++) {
       final param = fn.positionalParameters[i];
-      final kind = _classifyStackKind(param.type);
+      final kind = _effectiveParamKind(param);
       final isOptional = i >= fn.requiredParameterCount;
       if (isOptional && kind.isValue && param.initializer != null) {
         // Promote to ref-stack so null sentinel detects omitted args.
@@ -1598,7 +1598,7 @@ extension on DarticCompiler {
 
     for (var i = 0; i < fn.namedParameters.length; i++) {
       final param = fn.namedParameters[i];
-      final kind = _classifyStackKind(param.type);
+      final kind = _effectiveParamKind(param);
       if (kind.isValue && param.initializer != null) {
         final reg = _refAlloc.alloc();
         argTemps.add((reg, ResultLoc.ref));
@@ -1719,7 +1719,7 @@ extension on DarticCompiler {
         i++) {
       final param = fn.positionalParameters[i];
       if (param.initializer == null) continue;
-      final kind = _classifyStackKind(param.type);
+      final kind = _effectiveParamKind(param);
       if (kind != StackKind.ref) continue; // value-stack: no null sentinel
       final varInfo = _scope.lookup(param);
       if (varInfo == null) continue;
@@ -1729,7 +1729,7 @@ extension on DarticCompiler {
     // Named params: all are optional by definition.
     for (final param in fn.namedParameters) {
       if (param.initializer == null) continue;
-      final kind = _classifyStackKind(param.type);
+      final kind = _effectiveParamKind(param);
       if (kind != StackKind.ref) continue;
       final varInfo = _scope.lookup(param);
       if (varInfo == null) continue;

@@ -2701,7 +2701,7 @@ extension on DarticCompiler {
       final param = fn.positionalParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final isOptional = i >= fn.requiredParameterCount;
       if (isOptional && instKind.isValue && param.initializer != null) {
         argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
@@ -2723,7 +2723,7 @@ extension on DarticCompiler {
       final param = fn.namedParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final flatIdx = fn.positionalParameters.length + i;
       if (instKind.isValue && param.initializer != null) {
         argTemps.add((_refAlloc.alloc(), ResultLoc.ref));
@@ -3439,7 +3439,7 @@ extension on DarticCompiler {
     for (final param in fn.positionalParameters) {
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       paramMappings.add((
         reg: reg,
@@ -3453,7 +3453,7 @@ extension on DarticCompiler {
     for (final param in fn.namedParameters) {
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _classifyStackKind(param.type);
+      final actualKind = _effectiveParamKind(param);
       final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       namedMappings.add((
         reg: reg,
