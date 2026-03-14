@@ -246,12 +246,12 @@ abstract final class InternalIterableBindings {
     // ── List factory constructors with extra arity ──
     // List.empty(growable: bool) — 1 named param
     ctx.registerBinding('dart:core::List::empty#1', (args) {
-      final growable = args[0] as bool? ?? false;
+      final growable = identical(args[0], darticAbsent) ? false : args[0] as bool;
       return growable ? <dynamic>[] : List<dynamic>.empty();
     });
     // List.filled(length, fill, growable: bool) — 3 params
     ctx.registerBinding('dart:core::List::filled#3', (args) {
-      final growable = args[2] as bool? ?? true;
+      final growable = identical(args[2], darticAbsent) ? true : args[2] as bool;
       return List<dynamic>.filled(args[0] as int, args[1], growable: growable);
     });
 
@@ -290,7 +290,7 @@ abstract final class InternalIterableBindings {
       return (args[0] as Set).toString();
     });
     ctx.registerBinding('$setBase::toList#1', (args) {
-      final growable = args[1] as bool? ?? true;
+      final growable = identical(args[1], darticAbsent) ? true : args[1] as bool;
       return (args[0] as Set).toList(growable: growable);
     });
     ctx.registerBinding('$setBase::toSet#0', (args) {

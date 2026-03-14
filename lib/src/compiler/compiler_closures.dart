@@ -1513,8 +1513,32 @@ extension on DarticCompiler {
     );
 
     // Set typeTemplate to instantiated + covariant-widened type.
-    final instFuncType = subst.substituteType(
-      computeTearOffFunctionType(fn, _coreTypes),
+    // Must build directly from fn's parameter types (which reference the
+    // original TypeParameter objects that subst resolves), NOT from
+    // computeTearOffFunctionType (which creates fresh StructuralParameters
+    // that subst cannot match). Same approach as _generateInstantiationThunk.
+    final objectNullable = _coreTypes.objectNullableRawType;
+    final instFuncType = ir.FunctionType(
+      [
+        for (final p in fn.positionalParameters)
+          (p.isCovariantByDeclaration || p.isCovariantByClass)
+              ? objectNullable
+              : subst.substituteType(p.type),
+      ],
+      subst.substituteType(fn.returnType),
+      ir.Nullability.nonNullable,
+      namedParameters: [
+        for (final n in fn.namedParameters)
+          ir.NamedType(
+            n.name!,
+            (n.isCovariantByDeclaration || n.isCovariantByClass)
+                ? objectNullable
+                : subst.substituteType(n.type),
+            isRequired: n.isRequired,
+          ),
+      ],
+      requiredParameterCount: fn.requiredParameterCount,
+      // typeParameters intentionally omitted — they've been instantiated.
     );
     thunkProto.typeTemplate = dartTypeToTemplate(
       instFuncType,
