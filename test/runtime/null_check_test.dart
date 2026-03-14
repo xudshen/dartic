@@ -4,7 +4,6 @@ import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/runtime/error.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -44,7 +43,7 @@ void main() {
       expect(interp.refStack.read(0), 'hello');
     });
 
-    test('null ref throws DarticError', () {
+    test('null ref throws TypeError', () {
       // Program:
       //   LOAD_NULL r0
       //   NULL_CHECK r0      (should throw — null!)
@@ -72,11 +71,7 @@ void main() {
       final interp = DarticInterpreter();
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
-          contains('Null check'),
-        )),
+        throwsA(isA<TypeError>()),
       );
     });
 
