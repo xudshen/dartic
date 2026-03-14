@@ -3039,7 +3039,7 @@ class DarticInterpreter {
           } else {
             // Route through unwindToHandler so bytecode-level try-catch
             // blocks can catch the TypeError (e.g., Expect.throws).
-            pc = unwindToHandler(pc - 1, TypeError(), DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
+            pc = unwindToHandler(pc - 1, DarticCastError(objType, targetType), DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
           }
 
         // ── Exception Handling (0xA4-0xA5) ──

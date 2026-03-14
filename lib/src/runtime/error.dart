@@ -98,6 +98,22 @@ class DarticNullCheckError extends TypeError {
   String toString() => 'Null check operator used on a null value';
 }
 
+/// Thrown when an `as` cast fails at runtime.
+///
+/// Extends [TypeError] directly (not [DarticError]) so that dartic code
+/// catching `TypeError` handles it correctly, matching the Dart VM's
+/// behavior. The [toString] output matches the Dart VM's cast error format.
+class DarticCastError extends TypeError {
+  DarticCastError(this.valueType, this.targetType);
+
+  final Object valueType;
+  final Object targetType;
+
+  @override
+  String toString() =>
+      "type '$valueType' is not a subtype of type '$targetType' in type cast";
+}
+
 class ExecutionTimeoutError extends DarticError {
   ExecutionTimeoutError(this.elapsed, this.limit)
       : super(
