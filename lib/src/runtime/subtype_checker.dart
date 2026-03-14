@@ -394,11 +394,58 @@ DarticType extractType(
     return value.runtimeType_ ?? registry.dynamicType;
   }
   if (value is DarticClosure) {
-    if (value.runtimeType_ != null) return value.runtimeType_!;
+    if (value.runtimeType_ != null) {
+      // If FTA is bound but runtimeType_ was set with unresolved type params,
+      // re-derive from template instead.
+      final rt = value.runtimeType_!;
+      if (value.boundFTA == null || rt is! DarticFunctionType ||
+          rt.typeParamBounds.isEmpty) {
+        return rt;
+      }
+      // Fall through to template-based resolution below.
+    }
     // Synthesize DarticFunctionType from typeTemplate if available.
     final typeTemplate = value.funcProto.typeTemplate;
     if (typeTemplate != null) {
-      return resolveType(typeTemplate, null, value.boundFTA, registry);
+      var resolved = resolveType(typeTemplate, null, value.boundFTA, registry);
+      // If the closure has bound FTA and the resolved type is still a generic
+      // FunctionType, instantiate it: replace DarticTypeParameterType(i) refs
+      // with FTA[i] and remove the type param binders. This handles the case
+      // where the typeTemplate contains StructuralParamTemplates (from generic
+      // function types like `<T>(T) → T`) that resolveType does not substitute.
+      if (value.boundFTA != null &&
+          resolved is DarticFunctionType &&
+          resolved.typeParamBounds.isNotEmpty &&
+          resolved.typeParamBounds.length == value.boundFTA!.length) {
+        final fta = value.boundFTA!;
+        resolved = registry.internFunction(
+          typeParamBounds: const [], // No longer generic after instantiation.
+          requiredParamCount: resolved.requiredParamCount,
+          positionalParams: [
+            for (final p in resolved.positionalParams)
+              p is DarticTypeParameterType && p.index < fta.length
+                  ? fta[p.index]
+                  : p,
+          ],
+          namedParams: [
+            for (final n in resolved.namedParams)
+              (
+                name: n.name,
+                type: n.type is DarticTypeParameterType &&
+                        (n.type as DarticTypeParameterType).index < fta.length
+                    ? fta[(n.type as DarticTypeParameterType).index]
+                    : n.type,
+                isRequired: n.isRequired,
+              ),
+          ],
+          returnType: resolved.returnType is DarticTypeParameterType &&
+                  (resolved.returnType as DarticTypeParameterType).index <
+                      fta.length
+              ? fta[(resolved.returnType as DarticTypeParameterType).index]
+              : resolved.returnType,
+        );
+      }
+      return resolved;
     }
     // Fallback: unresolved closure → Function type.
     return registry.intern(registry.functionClassId, const []);

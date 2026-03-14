@@ -3257,8 +3257,14 @@ extension on DarticCompiler {
       }
     }
 
-    // Fallback for non-StaticTearOff targets: pass through.
-    return _compileExpression(expr.expression);
+    // Fallback: compile the inner expression (which produces a generic
+    // closure), then bind FTA so the runtime can resolve its function type.
+    // This handles e.g. extension tearoff getters returning generic closures:
+    //   Instantiation(StaticInvocation(get#bar, [receiver]), [int])
+    var (reg, loc) = _compileExpression(expr.expression);
+    reg = _boxToRefIfValue(reg, loc, _inferExprType(expr.expression));
+    _emitBindClosureFTA(reg, expr.typeArguments);
+    return (reg, ResultLoc.ref);
   }
 
   /// Compiles `Instantiation(StaticTearOff(f), typeArgs)`.
