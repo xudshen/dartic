@@ -502,7 +502,42 @@ void main() {}
     });
   });
 
-  group('VariableSet inside logical expression', () {
+  group('Variable register corruption in logical expression', () {
+    test('x && false: x keeps original value (VariableGet)', () async {
+      final module = await compileDart('''
+int main() {
+  bool x = true;
+  bool y = x && false;
+  // x must remain true — && result (false) must not overwrite x's register.
+  if (x != true) return -1;
+  if (y != false) return -2;
+  return 0;
+}
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, 0,
+          reason: 'VariableGet in && must not be overwritten by && result');
+    });
+
+    test('x || true: x keeps original value (VariableGet)', () async {
+      final module = await compileDart('''
+int main() {
+  bool x = false;
+  bool y = x || true;
+  // x must remain false — || result (true) must not overwrite x's register.
+  if (x != false) return -1;
+  if (y != true) return -2;
+  return 0;
+}
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, 0,
+          reason: 'VariableGet in || must not be overwritten by || result');
+    });
+
+    // VariableSet tests below:
     test('(x = f()) && g(): x keeps assigned value when && is false',
         () async {
       final module = await compileDart('''

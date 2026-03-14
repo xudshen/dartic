@@ -106,6 +106,19 @@ abstract final class ListBindings {
             final growable = identical(args[1], darticAbsent) ? true : args[1] as bool;
             return List.of(args[0] as Iterable, growable: growable);
         },
+        'generate#2': (args) {
+            final length = args[0] as int;
+            final generator = args[1] as Function;
+            return List.generate(length, (i) => generator(i));
+        },
+        'generate#3': (args) {
+            final length = args[0] as int;
+            final generator = args[1] as Function;
+            if (!identical(args[2], darticAbsent)) {
+              return List.generate(length, (i) => generator(i), growable: args[2] as bool);
+            }
+            return List.generate(length, (i) => generator(i));
+        },
       };
 
   static Map<String, Object? Function(List<Object?>)> growableListMethodMap() => {
