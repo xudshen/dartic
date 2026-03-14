@@ -129,11 +129,24 @@ extension on DarticCompiler {
         final isDistinctPrivate = field.name.text.startsWith('_') &&
             field.enclosingClass!.enclosingLibrary != inheritedLib;
         if (!isDistinctPrivate) {
-          // Reuse the inherited field's offset — the mixin field replaces it.
-          fieldLayouts[field.getterReference] = inherited;
+          // Reuse the inherited field's offset and kind, but update the
+          // isLate/isFinal flags from the child's declaration. Without this,
+          // a child field `int x = 3` overriding `late final int x` would
+          // inherit the parent's late+final flags, causing spurious write
+          // guards on a regular non-final field.
+          final childLayout = (field.isLate == inherited.isLate &&
+                  field.isFinal == inherited.isFinal)
+              ? inherited
+              : FieldLayout(
+                  offset: inherited.offset,
+                  kind: inherited.kind,
+                  isLate: field.isLate,
+                  isFinal: field.isFinal,
+                );
+          fieldLayouts[field.getterReference] = childLayout;
           final setterRef = field.setterReference;
           if (setterRef != null) {
-            fieldLayouts[setterRef] = inherited;
+            fieldLayouts[setterRef] = childLayout;
           }
           continue;
         }
@@ -345,8 +358,17 @@ extension on DarticCompiler {
         // by an explicit procedure.
         final needsGetter = superInfo.methods.containsKey(getterIdx) &&
             !classInfo.methods.containsKey(getterIdx);
-        final needsSetter = superInfo.methods.containsKey(setterIdx) &&
+        var needsSetter = superInfo.methods.containsKey(setterIdx) &&
             !classInfo.methods.containsKey(setterIdx);
+
+        // Late final fields with initializer have no implicit setter —
+        // the spec says all writes are runtime errors. Don't generate a
+        // synthetic setter; let the class inherit the parent's setter
+        // (if any) via putIfAbsent, which has the proper write guard.
+        if (needsSetter && field.isLate && field.isFinal &&
+            field.initializer != null) {
+          needsSetter = false;
+        }
 
         if (!needsGetter && !needsSetter) continue;
 

@@ -24,12 +24,12 @@ All 168 failures by subcategory:
 | 2 | **Spread-collections** | 27 | DarticObject→Iterable/Map cast (11), collection type loss (8), List.of binding (8) | Mixed |
 | 3 | **nnbd/overriding** | 24 | _resolveTypeParam ITA null crash | Fixable |
 | 4 | **Super-mixins** | 16 | MRO resolution: super dispatch + covariance | Systemic |
-| 5 | **nnbd (late)** | 8 | Late variable semantics (ADI, write guard, init) | Research |
+| 5 | **nnbd (late)** | 3 | ~~ADI/write guard (5 fixed)~~ Remaining: compiler stack overflow (2), polymorphic override (1) | Research |
 | 6 | **nnbd (other)** | 4 | list_length(1), runtime_equality(1), static_errors(2) | Mixed |
 | 7 | **nnbd (error)** | 6 | future_flattening timeouts | Systemic |
 | 8 | **Extension-types** | 9 | member_invocation(4), exhaustiveness(2), static_analysis(3) | Mixed |
 | 9 | **Set-literals** | 7 | Collection type loss (type args erased at runtime) | Systemic |
-| 10 | **Records** | 7 | expandos(1), $1/$2 members(5), type_inference(2) | Research |
+| 10 | **Records** | 5 | ~~$1/$2 dispatch (2 fixed)~~ expandos(1), closure type-check(1), type_inference(2) | Research |
 | 11 | **Static-access-shorthand** | 6 | constant_expression(3), non_ambiguity(2), semantics(1) | Research |
 | 12 | **Generic-functions-as-type-args** | 4 | List_A01 — closure runtimeType null | Systemic |
 | 13 | **Enhanced-Enum** | 4 | Host factory tearoff + enum semantics | Mixed |
@@ -38,7 +38,7 @@ All 168 failures by subcategory:
 | 16 | **Augmentations** | 2 | augmenting_variables_getters_setters | Research |
 | 17 | **Parts-with-imports** | 1 | scope_A05 | Research |
 | 18 | **Extension-methods** | 1 | member_conflict_resolution | Research |
-| | **TOTAL** | **168** | | |
+| | **TOTAL** | **161** (was 168, -7 fixed) | | |
 
 ## Systemic Issues Archive
 
@@ -126,17 +126,17 @@ Biggest cluster. Needs:
 - Host factory constructor closure wrappers (14 tests)
 **Action**: Separate design doc needed.
 
-### R2: Late Variable Semantics (8 tests)
-Mixed issues: ADI handling (4), write guard (2), init error recovery (2).
-**Action**: Investigate individually; some may be fixable.
+### ~~R2: Late Variable Semantics (8 tests)~~ ✅ Investigated — 5 fixed, 3 research
+**Fixed (5)**: ADI write-before-throw preserves value (A04_t01/t02), late final dynamic write guard (A06_t07), static/top-level re-init after throw (A08_t03/t04).
+**Remaining (3)**: A05_t01/t02 (compiler stack overflow on re-entrant instance late init — needs architectural fix), A07_t02 (polymorphic late final override — CFE doesn't generate setter Procedures for late fields).
 
 ### R3: Static-access-shorthand remaining (6 tests)
 Constant expressions and non-ambiguity patterns.
 **Action**: Investigate error messages individually.
 
-### R4: Records $1/$2 members (5 tests)
-Record positional field access via getter dispatch.
-**Action**: Check record field dispatch implementation.
+### ~~R4: Records $1/$2 members (7 tests → 5 remaining)~~ ✅ Investigated — 2 fixed, 5 research
+**Fixed (2)**: GET_FIELD_DYN named field fallback for $-prefixed names (members_A04_t01), INVOKE_DYN get-then-call for DarticRecord (members_A04_t02).
+**Remaining (5)**: expandos_A01_t01 (DarticRecord not rejected by Expando — systemic), members_A04_t03 + type_inference_A01_t03/t04 (type-safe dynamic closure invocation — type system limitation).
 
 ### R5: Control-flow-collections null-aware elements (4 tests)
 New Dart 3.x feature for `?element` in list/set/map literals.
@@ -162,16 +162,18 @@ Dynamic dispatch to extension type members.
 |--------|-----------|--------------------:|----------:|
 | Baseline (post-fixes) | 0 | 168 | 96.8% |
 | ~~Task 1: ITA null~~ ✅ | **24** | **144** | **97.3%** |
-| Task 2: List.of binding | ~8 | 136 | 97.6% |
-| Task 3: Exhaustiveness | ~2 | 134 | 97.7% |
-| Task 4: Skip-list | -6 err | 128 | 97.8%* |
-| **Fixable subtotal** | **~34** | **~128** | **97.8%** |
-| R1: Constructor tearoff | ~35 | 93 | 98.4% |
-| R2: Late vars | ~8 | 85 | 98.5% |
-| R3-R6: Research items | ~19 | 66 | 98.9% |
-| S1-S6: Systemic (future) | ~34 | 32 | 99.4% |
+| ~~R2: Late vars~~ ✅ | **5** | **139** | **97.6%** |
+| ~~R4: Records $1/$2~~ ✅ | **2** | **137** | **97.6%** |
+| ~~Host supertypeIds patch~~ ✅ | **1** | **136** | **97.6%** |
+| Task 2: List.of binding | ~8 | 128 | 97.8% |
+| Task 3: Exhaustiveness | ~2 | 126 | 97.8% |
+| Task 4: Skip-list | -6 err | 120 | 97.9%* |
+| **Fixable subtotal** | **~42** | **~120** | **97.9%** |
+| R1: Constructor tearoff | ~35 | 85 | 98.5% |
+| R3, R5-R6: Research items | ~14 | 71 | 98.8% |
+| S1-S6: Systemic (future) | ~34 | 37 | 99.4% |
 
-*After skip-list, effective count drops to 5,741.
+*After skip-list, effective count drops to 5,727.
 
 ## Session Fixes Applied
 
@@ -189,3 +191,30 @@ Dynamic dispatch to extension type members.
 **Root cause**: CALL_VIRTUAL loaded ITA from `darticObj.runtimeType_.typeArgs`, which is empty for non-generic receiver classes. Methods inherited from generic superclasses (e.g., `CheckTopMerge<T>.f` called on non-generic `D`) got null ITA, crashing in `_resolveTypeParam`.
 **Fix**: Added `methodDeclarer` map to DarticClassInfo (computed at module load by comparing funcIds across parent/child method tables). New `_resolveMethodITA` helper resolves the declaring superclass's type args via `superTypeArgs` templates. Applied to all 4 dispatch paths: CALL_VIRTUAL, INVOKE_DYN, GET_FIELD_DYN, SET_FIELD_DYN.
 **Impact**: +24 nnbd/overriding/override_checking_A06 tests. Total: 5,589/5,747 = 97.3%.
+
+### Fix 4: Late variable write-before-throw preserves value (interpreter.dart)
+**Root cause**: LOAD_GLOBAL catch handler unconditionally called `resetToUninitialized(bx)`, wiping values written by the initializer before it threw (e.g., `s = val1; throw Exception()`).
+**Fix**: Guard `resetToUninitialized` with `if (gt.isInitializing(bx))` — only reset if initializer didn't write a value.
+**Impact**: +4 nnbd/late tests (A04_t01, A04_t02, A08_t03, A08_t04).
+
+### Fix 5: SET_FIELD_DYN late final write guard (interpreter.dart)
+**Root cause**: Dynamic setter dispatch (`SET_FIELD_DYN`) bypassed late final write guards, allowing multiple writes to `late final` fields.
+**Fix**: Check `fieldLayout.isLate && fieldLayout.isFinal` in SET_FIELD_DYN handler. Route to setter method (if exists = late final without initializer) or throw LateError (no setter = late final with initializer).
+**Impact**: +1 nnbd/late_A06_t07.
+
+### Fix 6: FieldLayout flag inheritance contamination (compiler_classes.dart)
+**Root cause**: Child field overriding parent field inherited parent's `isLate`/`isFinal` flags via `FieldLayout` reuse. `class B { int x = 3; }` extending `class A { late final int x; }` would mark B's `x` as late+final.
+**Fix**: Compare child's `isLate`/`isFinal` with inherited layout; create new `FieldLayout` with child flags if they differ. Also skip synthetic setter generation for `late final` fields with initializer.
+**Impact**: Prerequisite for A07_t02 (polymorphic case still needs research).
+
+### Fix 7: Records GET_FIELD_DYN named field fallback (interpreter.dart)
+**Root cause**: GET_FIELD_DYN for DarticRecord only tried positional access for `$`-prefixed names. Named fields CAN start with `$` (e.g., `($101: "value")`), but code fell through to NoSuchMethodError without checking named fields.
+**Fix**: After failing positional lookup for `$`-prefixed names, fall through to named field check before throwing.
+**Impact**: +1 Records/members_A04_t01.
+
+### Fix 8: Records INVOKE_DYN get-then-call dispatch (interpreter.dart)
+**Root cause**: `r.$1("arg")` compiled as INVOKE_DYN with name `$1`. INVOKE_DYN didn't handle DarticRecord — fell through to `dispatchNoSuchMethod`. Records need get-then-call semantics: retrieve the field value, then invoke it.
+**Fix**: Added DarticRecord handler in INVOKE_DYN: get positional/named field, then invoke as DarticClosure or host Function.
+**Impact**: +1 Records/members_A04_t02.
+
+**Session total**: +8 pass (5,589 → 5,597), -8 fail (138 → 130). Pass rate: 97.6%.

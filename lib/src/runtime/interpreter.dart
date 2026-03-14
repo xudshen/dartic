@@ -2811,7 +2811,14 @@ class DarticInterpreter {
                   args: const [],
                 );
               } catch (e, st) {
-                gt.resetToUninitialized(bx);
+                // Only reset to uninitialized if the slot is still
+                // _initializing. If the initializer wrote a value before
+                // throwing (e.g., `s = val1; throw ...`), that value must
+                // be preserved — subsequent reads should return the written
+                // value per the Dart spec.
+                if (gt.isInitializing(bx)) {
+                  gt.resetToUninitialized(bx);
+                }
                 // Route through unwindToHandler so bytecode-level
                 // try-catch blocks can catch initializer errors.
                 pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
@@ -2916,7 +2923,8 @@ class DarticInterpreter {
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
           final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
-          vs.writeInt(vBase + a, checker.isSubtypeOf(objType, targetType) ? 1 : 0);
+          final isMatch = checker.isSubtypeOf(objType, targetType);
+          vs.writeInt(vBase + a, isMatch ? 1 : 0);
 
         case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
           final a = decodeA(instr);
@@ -3292,22 +3300,32 @@ class DarticInterpreter {
           // DarticRecord: positional ($1, $2, ...) or named field access.
           if (receiver is DarticRecord) {
             if (name.startsWith(r'$')) {
-              final index = int.parse(name.substring(1)) - 1;
-              if (index < 0 || index >= receiver.positional.length) {
-                throw DarticError(
-                    'Record positional field $name out of range '
-                    '(record has ${receiver.positional.length} positional fields)');
+              final idx = int.tryParse(name.substring(1));
+              if (idx != null) {
+                final index = idx - 1;
+                if (index >= 0 && index < receiver.positional.length) {
+                  rs.write(rBase + a, receiver.getPositional(index));
+                  continue;
+                }
               }
-              rs.write(rBase + a, receiver.getPositional(index));
-            } else {
-              if (!receiver.named.containsKey(name)) {
-                throw DarticError(
-                    'Record has no named field \'$name\' '
-                    '(available: ${receiver.named.keys.join(', ')})');
-              }
-              rs.write(rBase + a, receiver.getNamed(name));
+              // Positional out of range or invalid — fall through to
+              // named field check. Named fields CAN start with '$'
+              // (e.g., `($101: "value")`).
             }
-            continue;
+            if (receiver.named.containsKey(name)) {
+              rs.write(rBase + a, receiver.getNamed(name));
+              continue;
+            }
+            // Missing field → throw NoSuchMethodError via unwindToHandler.
+            try {
+              throw NoSuchMethodError.withInvocation(
+                receiver,
+                DarticInvocation.getter(Symbol(name)),
+              );
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+              continue;
+            }
           }
 
           // Host object: try HostClassRegistry.
@@ -3356,6 +3374,37 @@ class DarticInterpreter {
             if (nameIdx >= 0) {
               final fieldLayout = classInfo.fields[nameIdx];
               if (fieldLayout != null) {
+                // Late final write guard: delegate to setter method.
+                // The CFE generates a setter only for late final WITHOUT
+                // initializer (allowing first write). Fields WITH initializer
+                // have no setter — all writes are runtime errors.
+                if (fieldLayout.isLate && fieldLayout.isFinal) {
+                  final setterNameIdx = cp.lookupNameIndex('$name=');
+                  final setter = setterNameIdx >= 0
+                      ? classInfo.methods[setterNameIdx]
+                      : null;
+                  if (setter != null) {
+                    // Setter has the write guard: allows first write,
+                    // throws LateError.fieldAI on subsequent writes.
+                    try {
+                      final setterITA = _resolveMethodITA(
+                          classInfo, setterNameIdx, receiver);
+                      _callDarticMethod(module, setter, receiver, [value],
+                          ita: setterITA);
+                    } on Object catch (e, st) {
+                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    }
+                  } else {
+                    // No setter → field has initializer → reject write.
+                    try {
+                      throw DarticLateError(
+                          "Field '$name' has already been initialized.");
+                    } catch (e, st) {
+                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    }
+                  }
+                  continue;
+                }
                 switch (fieldLayout.kind) {
                   case StackKind.ref:
                     receiver.refFields[fieldLayout.offset] = value;
@@ -3459,6 +3508,77 @@ class DarticInterpreter {
             for (var i = 0; i < desc.namedArgNames.length; i++)
               desc.namedArgNames[i]: rs.read(rBase + a + 2 + posCount + i),
           };
+
+          // ── DarticRecord: get-then-call dispatch ──
+          // `r.$1(arg)` is compiled as INVOKE_DYN "$1" — first get the
+          // field value, then invoke it as a closure or host function.
+          if (receiver is DarticRecord) {
+            Object? fieldValue;
+            bool found = false;
+            if (name.startsWith(r'$')) {
+              final idx = int.tryParse(name.substring(1));
+              if (idx != null) {
+                final index = idx - 1;
+                if (index >= 0 && index < receiver.positional.length) {
+                  fieldValue = receiver.getPositional(index);
+                  found = true;
+                }
+              }
+            }
+            if (!found && receiver.named.containsKey(name)) {
+              fieldValue = receiver.getNamed(name);
+              found = true;
+            }
+            if (found) {
+              // Invoke the field value as a function.
+              if (fieldValue is DarticClosure) {
+                final closureArgs = _buildDynArgs(
+                  fieldValue.funcProto, callerPositional, callerNamed,
+                );
+                if (closureArgs != null) {
+                  try {
+                    final result = invokeClosure(fieldValue, closureArgs);
+                    rs.write(rBase + a, result);
+                  } on Object catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  }
+                  continue;
+                }
+              } else if (fieldValue is Function) {
+                try {
+                  final result = Function.apply(
+                    fieldValue,
+                    callerPositional,
+                    callerNamed.isEmpty
+                        ? null
+                        : {
+                            for (final e in callerNamed.entries)
+                              Symbol(e.key): e.value,
+                          },
+                  );
+                  rs.write(rBase + a, result);
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                }
+                continue;
+              }
+              // Field found but not callable — NoSuchMethodError.
+            }
+            // Field not found or not callable — NoSuchMethodError.
+            try {
+              throw NoSuchMethodError.withInvocation(
+                receiver,
+                DarticInvocation.method(
+                  Symbol(name), callerPositional,
+                  {for (final e in callerNamed.entries) Symbol(e.key): e.value},
+                  dynTypeArgs,
+                ),
+              );
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+              continue;
+            }
+          }
 
           // ── DarticClosure dispatch ──
           if (receiver is DarticClosure && name == 'call') {
