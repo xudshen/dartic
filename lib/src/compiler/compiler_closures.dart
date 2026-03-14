@@ -466,13 +466,10 @@ extension on DarticCompiler {
 
   // ── Host static tearoff ──
 
-  /// Generates a closure thunk that wraps a host library static function
-  /// (e.g., `int.parse`) via CALL_HOST.
-  ///
-  /// All parameters are allocated on the ref stack. For optional/named params,
-  /// the null sentinel (from the dartic call protocol) is converted to
-  /// `darticAbsent` (the host binding protocol) before forwarding.
-  (int, ResultLoc) _generateHostStaticTearOffThunk(ir.Procedure target) {
+  /// Builds a host static tearoff thunk (CALL_HOST wrapper) and returns its
+  /// funcId. Does NOT emit CLOSURE in the enclosing context — caller decides
+  /// whether to emit CLOSURE directly or wrap in an instantiation thunk.
+  int _buildHostStaticTearOffThunk(ir.Procedure target) {
     final fn = target.function;
 
     // Reserve a slot in the function table.
@@ -595,6 +592,18 @@ extension on DarticCompiler {
     // Restore enclosing compilation state.
     _popContext();
 
+    return thunkFuncId;
+  }
+
+  /// Generates a closure thunk that wraps a host library static function
+  /// (e.g., `int.parse`) via CALL_HOST.
+  ///
+  /// All parameters are allocated on the ref stack. For optional/named params,
+  /// the null sentinel (from the dartic call protocol) is converted to
+  /// `darticAbsent` (the host binding protocol) before forwarding.
+  (int, ResultLoc) _generateHostStaticTearOffThunk(ir.Procedure target) {
+    final thunkFuncId = _buildHostStaticTearOffThunk(target);
+
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
@@ -620,6 +629,11 @@ extension on DarticCompiler {
       // in _procToFuncId — just emit a static tearoff.
       final funcId = _procToFuncId[target.reference];
       if (funcId == null) {
+        // Host library factory (e.g., List.filled, LinkedHashSet.of) —
+        // generate a CALL_HOST wrapper thunk, same as host static tearoff.
+        if (_isHostLibrary(target.enclosingLibrary)) {
+          return _generateHostStaticTearOffThunk(target);
+        }
         throw UnsupportedError(
           'ConstructorTearOff: unknown factory ${target.name.text}',
         );
@@ -1066,6 +1080,11 @@ extension on DarticCompiler {
     } else if (target is ir.Procedure && target.isFactory) {
       final funcId = _procToFuncId[target.reference];
       if (funcId == null) {
+        // Host library factory (e.g., List.filled) — generate a CALL_HOST
+        // wrapper thunk, same as host static tearoff.
+        if (_isHostLibrary(target.enclosingLibrary)) {
+          return _generateHostStaticTearOffThunk(target);
+        }
         throw UnsupportedError(
           'ConstructorTearOffConstant: unknown factory ${target.name.text}',
         );

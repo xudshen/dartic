@@ -2952,6 +2952,10 @@ class DarticInterpreter {
           // may also satisfy other interfaces (e.g., LinkedHashMap). Only
           // applies when classIds differ — same classId with type arg mismatch
           // (e.g., List<int> is List<String>) must NOT use this fallback.
+          // Also skip when the object has a TAG_TYPE-tagged precise type,
+          // because the SubtypeChecker already has complete type arg info —
+          // the fallback would ignore type args and produce false positives
+          // (e.g., LinkedHashSet<num> is Set<int> → true via matchesClassId).
           if (!result &&
               value != null &&
               value is! DarticObject &&
@@ -2959,7 +2963,8 @@ class DarticInterpreter {
               hostTypeResolver != null &&
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
-                  objType.classId != targetType.classId)) {
+                  objType.classId != targetType.classId) &&
+              _hostTypeTable.lookup(value) == null) {
             result = hostTypeResolver!.matchesClassId(
                 value, targetType.classId);
           }
@@ -2983,6 +2988,7 @@ class DarticInterpreter {
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
                   objType.classId != targetType.classId) &&
+              _hostTypeTable.lookup(value) == null &&
               hostTypeResolver!.matchesClassId(
                   value, targetType.classId)) {
             // Host object matches via predicate (multi-inheritance fallback).
@@ -3320,6 +3326,19 @@ class DarticInterpreter {
                   StackKind.intVal =>
                     receiver.valueFields[fieldLayout.offset],
                 };
+                // Late field sentinel check: if the field is late and the
+                // stored value is the sentinel (null for non-nullable, or
+                // lateSentinel for nullable), throw LateInitializationError.
+                if (fieldLayout.isLate &&
+                    (fieldVal == null || fieldVal == lateSentinel)) {
+                  try {
+                    throw DarticLateError(
+                        "Field '$name' has not been initialized.");
+                  } catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    continue;
+                  }
+                }
                 rs.write(rBase + a, fieldVal);
                 continue;
               }

@@ -1880,6 +1880,21 @@ extension on DarticCompiler {
 
     // Check if the target is a field.
     if (target is ir.Field) {
+      // Virtual field dispatch: when the field name is overridden by a
+      // subclass, the static interfaceTarget may point to a superclass's
+      // field declaration, but the runtime object's actual field is at a
+      // different offset. Use GET_FIELD_DYN for correct virtual dispatch.
+      final mangledName = _mangleName(expr.name);
+      if (_overriddenFieldNames.contains(mangledName)) {
+        // SAFETY: loc discarded — field access targets object instances
+        // which are always on the ref stack.
+        final (recvReg, _) = _compileExpression(expr.receiver);
+        final resultReg = _allocRefReg();
+        final nameIdx = _constantPool.addName(mangledName);
+        _emitter.emitABC(Op.getFieldDyn, resultReg, recvReg, nameIdx);
+        return (resultReg, ResultLoc.ref);
+      }
+
       final layout = _resolveFieldLayout(target, expr.receiver);
       if (layout != null) {
         // Compile receiver.
@@ -1955,6 +1970,18 @@ extension on DarticCompiler {
     final targetClass = target.enclosingClass;
 
     if (target is ir.Field) {
+      // Virtual field dispatch: when the field name is overridden by a
+      // subclass, use SET_FIELD_DYN for correct virtual dispatch.
+      final mangledName = _mangleName(expr.name);
+      if (_overriddenFieldNames.contains(mangledName)) {
+        final (recvReg, _) = _compileExpression(expr.receiver);
+        var (valReg, valLoc) = _compileExpression(expr.value);
+        valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+        final nameIdx = _constantPool.addName(mangledName);
+        _emitter.emitABC(Op.setFieldDyn, recvReg, valReg, nameIdx);
+        return (valReg, ResultLoc.ref);
+      }
+
       final layout = _resolveFieldLayout(target, expr.receiver);
       if (layout != null) {
         // Compile receiver and value.
@@ -2242,15 +2269,128 @@ extension on DarticCompiler {
 
   // ── Super access expressions ──
 
+  /// Remaps a super method/getter/setter target for mixin application classes.
+  ///
+  /// In un-lowered Kernel, mixin application classes (e.g., `_MA&C&M` from
+  /// `MA extends C with M`) copy mixin body methods but retain the original
+  /// `SuperMethodInvocation.interfaceTarget` from the mixin declaration's
+  /// on-clause supertypes (e.g., `A.a1` from `mixin M on A`).
+  ///
+  /// This is incorrect at runtime: when applied as `C with M`, `super.a1()`
+  /// should resolve to `C.a1` (the mixin application's actual superclass),
+  /// not `A.a1` (the mixin declaration's on-clause type).
+  ///
+  /// Returns the remapped procedure from the actual superclass chain, or
+  /// `null` if no remapping is needed (not a mixin application class, or
+  /// the same procedure is found).
+  ir.Procedure? _remapMixinSuperProcedure(ir.Procedure target) {
+    final cls = _currentEnclosingClass;
+    // Mixin application classes: either un-lowered (mixedInClass != null) or
+    // eliminated/lowered (isAnonymousMixin with copied procedures, mixedInClass
+    // is null). Both need super target remapping because copied procedures
+    // retain on-clause super targets (e.g., A.a1) instead of the actual
+    // superclass chain targets (e.g., C.a1).
+    if (cls == null ||
+        (cls.mixedInClass == null && !cls.isAnonymousMixin)) {
+      return null;
+    }
+
+    final name = target.name.text;
+    final isPrivate = name.startsWith('_');
+
+    // Walk the mixin application's actual superclass chain to find the
+    // correct override of the target method.
+    var current = cls.superclass;
+    while (current != null) {
+      for (final proc in current.procedures) {
+        if (proc.isStatic || proc.isAbstract) continue;
+        if (proc.name.text != name) continue;
+        // Match getter/setter/method kind.
+        if (proc.kind != target.kind) continue;
+        // For private members, also match library.
+        if (isPrivate &&
+            proc.enclosingLibrary != target.enclosingLibrary) continue;
+        // Found a match — use it if we have a funcId for it.
+        if (_procToFuncId.containsKey(proc.reference)) {
+          return proc;
+        }
+      }
+      current = current.superclass;
+    }
+    return null; // No remap found — use original target.
+  }
+
+  /// Remaps a super field target for mixin application classes.
+  ///
+  /// Same logic as [_remapMixinSuperProcedure] but for fields: walks the
+  /// actual superclass chain to find the most-derived field with the same name.
+  /// This is needed because mixin copies retain on-clause super field targets
+  /// (e.g., `A::a`) instead of the application's actual superclass field
+  /// (e.g., `C::a`).
+  ir.Field? _remapMixinSuperField(ir.Field target) {
+    final cls = _currentEnclosingClass;
+    if (cls == null ||
+        (cls.mixedInClass == null && !cls.isAnonymousMixin)) {
+      return null;
+    }
+
+    final name = target.name.text;
+    final isPrivate = name.startsWith('_');
+
+    // Walk the mixin application's actual superclass chain to find the
+    // most-derived field with the same name.
+    var current = cls.superclass;
+    while (current != null) {
+      for (final field in current.fields) {
+        if (field.isStatic) continue;
+        if (field.name.text != name) continue;
+        if (isPrivate &&
+            field.enclosingClass!.enclosingLibrary !=
+                target.enclosingClass!.enclosingLibrary) {
+          continue;
+        }
+        // Found a match — use it if we have a layout for it.
+        if (_instanceFieldLayouts[current]
+                ?.containsKey(field.getterReference) ==
+            true) {
+          return field;
+        }
+      }
+      current = current.superclass;
+    }
+    return null;
+  }
+
+  /// Remaps a super target (Procedure or Field) for mixin application classes.
+  ///
+  /// Delegates to [_remapMixinSuperProcedure] or [_remapMixinSuperField]
+  /// based on type. Returns the original target unchanged if no remapping
+  /// is needed.
+  ir.Member _remapMixinSuperTarget(ir.Member target) {
+    if (target is ir.Procedure) {
+      return _remapMixinSuperProcedure(target) ?? target;
+    }
+    if (target is ir.Field) {
+      return _remapMixinSuperField(target) ?? target;
+    }
+    return target;
+  }
+
   /// Compiles [SuperMethodInvocation] via CALL_SUPER.
   ///
   /// The target method is resolved at compile time via Kernel's
   /// `interfaceTarget`. CALL_SUPER ABx: A=result, Bx=funcId.
   /// The receiver (this) is passed at rsp+2 of the callee frame.
+  ///
+  /// For mixin application classes, the Kernel's `interfaceTarget` points
+  /// to the mixin declaration's on-clause supertypes (e.g., A.a1), not the
+  /// mixin application's actual superclass (e.g., C.a1 when applied as
+  /// `C with M`). [_remapMixinSuperProcedure] corrects this.
   (int, ResultLoc) _compileSuperMethodInvocation(
     ir.SuperMethodInvocation expr,
   ) {
-    final target = expr.interfaceTarget;
+    final target = _remapMixinSuperProcedure(expr.interfaceTarget) ??
+        expr.interfaceTarget;
 
     final funcId = _procToFuncId[target.reference];
 
@@ -2301,8 +2441,11 @@ extension on DarticCompiler {
 
   /// Compiles [SuperPropertyGet] via CALL_SUPER for getters, or direct
   /// field access for fields.
+  ///
+  /// For mixin application classes, remaps the target via
+  /// [_remapMixinSuperProcedure] (see [_compileSuperMethodInvocation]).
   (int, ResultLoc) _compileSuperPropertyGet(ir.SuperPropertyGet expr) {
-    final target = expr.interfaceTarget;
+    final target = _remapMixinSuperTarget(expr.interfaceTarget);
 
     // If the target is a field, use GET_FIELD_REF/GET_FIELD_VAL on `this`.
     if (target is ir.Field) {
@@ -2809,8 +2952,11 @@ extension on DarticCompiler {
 
   /// Compiles [SuperPropertySet] via CALL_SUPER for setters, or direct
   /// field write for fields.
+  ///
+  /// For mixin application classes, remaps procedure targets via
+  /// [_remapMixinSuperProcedure] (see [_compileSuperMethodInvocation]).
   (int, ResultLoc) _compileSuperPropertySet(ir.SuperPropertySet expr) {
-    final target = expr.interfaceTarget;
+    final target = _remapMixinSuperTarget(expr.interfaceTarget);
 
     // If the target is a field, use SET_FIELD_REF/SET_FIELD_VAL on `this`.
     if (target is ir.Field) {
@@ -3511,10 +3657,10 @@ extension on DarticCompiler {
   /// its public supertype `List` is. This walks up the class hierarchy to
   /// find a registered class and substitutes the factory's type arguments.
   ///
-  /// **Public host classes** (HashMap, HashSet, etc.) that are NOT in
-  /// `_typeClassIdLookup` are left untagged — their type is resolved at
-  /// runtime by [HostTypeResolver] with the correct classId. Only private
-  /// internal classes (names starting with `_`) use the walkup strategy.
+  /// For classes in `_typeClassIdLookup` (core types like List, Set, Map),
+  /// returns an InterfaceType directly. For other classes (both public like
+  /// LinkedHashSet and private like _GrowableList), walks up the hierarchy
+  /// or returns the class itself for HostClassTypeTemplate resolution.
   ir.InterfaceType? _resolvePublicGenericType(
     ir.Class factoryClass,
     List<ir.DartType> factoryTypeArgs,
@@ -3528,13 +3674,18 @@ extension on DarticCompiler {
       );
     }
 
-    // Public host classes (HashMap, HashSet, etc.) are NOT in the lookup but
-    // have bindings registered with HostTypeResolver. Don't walk up to a base
-    // class (e.g. Map) — that would make `is HashMap` fail because TAG_TYPE
-    // would tag the object as Map, preempting the resolver.
-    // Only walk up for private/internal classes (e.g., _GrowableList → List).
+    // Public host classes (LinkedHashSet, HashMap, etc.) are NOT in
+    // _typeClassIdLookup but have bindings registered with HostTypeResolver.
+    // Return them directly — dartTypeToTemplate will create a
+    // HostClassTypeTemplate that resolves to the correct classId at runtime
+    // via resolveHostClassName. This preserves both class identity (e.g.,
+    // LinkedHashSet vs Set) AND generic type args (e.g., <num>).
     if (!factoryClass.name.startsWith('_')) {
-      return null;
+      return ir.InterfaceType(
+        factoryClass,
+        ir.Nullability.nonNullable,
+        factoryTypeArgs,
+      );
     }
 
     // BFS over the full supertype hierarchy (extends + mixins + implements)
@@ -3942,6 +4093,19 @@ extension on DarticCompiler {
           target,
           constant.types,
         );
+      }
+      // Host factory with instantiation: e.g., List<int>.filled
+      // Build host thunk, then wrap with instantiation to bind type args.
+      if (target is ir.Procedure &&
+          target.isFactory &&
+          constant.types.isNotEmpty &&
+          _isHostLibrary(target.enclosingLibrary)) {
+        final thunkFuncId = _buildHostStaticTearOffThunk(target);
+        final fn = target.function;
+        final subst = type_algebra.Substitution.fromPairs(
+            fn.typeParameters, constant.types);
+        return _generateInstantiationThunk(
+            thunkFuncId, fn, subst, constant.types);
       }
     }
     return constant.tearOffConstant.accept(_constantVisitor);

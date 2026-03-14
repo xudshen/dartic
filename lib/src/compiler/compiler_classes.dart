@@ -101,56 +101,17 @@ extension on DarticCompiler {
       }
     }
 
-    // Build a name→(layout, library) map from inherited fields. Used below to
-    // detect mixin field replacement: when the CFE eliminates a mixin, it
-    // copies the mixin's fields into the application class. If a copied field
-    // has the same name as an inherited superclass field, it must REUSE the
-    // inherited offset (not allocate a new slot), because the Dart VM treats
-    // them as the same physical field and method bodies in the superclass may
-    // reference the inherited field directly.
-    final inheritedByName = <String, (FieldLayout, ir.Library)>{};
-    if (superClass != null) {
-      _collectInheritedFieldsByName(superClass, inheritedByName);
-    }
+    // Each field declaration in a class gets its own storage slot.
+    // In Dart, when a subclass declares a field with the same name as a
+    // superclass field, it creates a NEW storage slot and overrides the
+    // implicit getter/setter. The superclass's field remains at its original
+    // offset and is accessible via `super.fieldName`.
+    //
+    // Parent field layouts are inherited via putIfAbsent below (lines 174+),
+    // so inherited fields are still accessible by their original references.
 
     for (final field in cls.fields) {
       if (field.isStatic) continue;
-
-      // Check if this field replaces an inherited field of the same name.
-      // Only reuse the inherited offset for mixin field replacement (same
-      // physical field copied by CFE). Private fields from different libraries
-      // are distinct symbols (`_var@lib0` ≠ `_var@lib1`) and must get their
-      // own memory slots — otherwise cross-library privacy is broken.
-      final inheritedEntry = inheritedByName[field.name.text];
-      if (inheritedEntry != null) {
-        final (inherited, inheritedLib) = inheritedEntry;
-        // Private fields with the same name but from different libraries
-        // are distinct — allocate a new slot instead of reusing.
-        final isDistinctPrivate = field.name.text.startsWith('_') &&
-            field.enclosingClass!.enclosingLibrary != inheritedLib;
-        if (!isDistinctPrivate) {
-          // Reuse the inherited field's offset and kind, but update the
-          // isLate/isFinal flags from the child's declaration. Without this,
-          // a child field `int x = 3` overriding `late final int x` would
-          // inherit the parent's late+final flags, causing spurious write
-          // guards on a regular non-final field.
-          final childLayout = (field.isLate == inherited.isLate &&
-                  field.isFinal == inherited.isFinal)
-              ? inherited
-              : FieldLayout(
-                  offset: inherited.offset,
-                  kind: inherited.kind,
-                  isLate: field.isLate,
-                  isFinal: field.isFinal,
-                );
-          fieldLayouts[field.getterReference] = childLayout;
-          final setterRef = field.setterReference;
-          if (setterRef != null) {
-            fieldLayouts[setterRef] = childLayout;
-          }
-          continue;
-        }
-      }
 
       // Late fields are forced to ref stack regardless of declared type,
       // because they use null or lateSentinel as the "uninitialized" marker.
@@ -657,30 +618,6 @@ extension on DarticCompiler {
     );
     _currentEnclosingClass = null;
     _currentClassTypeParams = null;
-  }
-
-  /// Collects inherited field layouts by name from the given class and its
-  /// superclass chain. Used to detect mixin field replacement: when a mixin
-  /// field has the same name as a superclass field, it should reuse the
-  /// inherited offset.
-  void _collectInheritedFieldsByName(
-      ir.Class cls, Map<String, (FieldLayout, ir.Library)> result) {
-    final layouts = _instanceFieldLayouts[cls];
-    if (layouts != null) {
-      for (final field in cls.fields) {
-        if (field.isStatic) continue;
-        final layout = layouts[field.getterReference];
-        if (layout != null) {
-          result.putIfAbsent(field.name.text,
-              () => (layout, field.enclosingClass!.enclosingLibrary));
-        }
-      }
-    }
-    // Walk up the superclass chain.
-    final sup = cls.superclass;
-    if (sup != null && _instanceFieldLayouts.containsKey(sup)) {
-      _collectInheritedFieldsByName(sup, result);
-    }
   }
 
   /// Collects inherited field names from the given class and its superclass

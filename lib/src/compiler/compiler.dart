@@ -183,6 +183,12 @@ class DarticCompiler {
   final Map<ir.Class, Map<ir.Reference, FieldLayout>> _instanceFieldLayouts =
       {};
 
+  /// Mangled field names that are declared in a class AND also declared
+  /// (same name) in one of its superclasses. For these fields, InstanceGet/Set
+  /// must use GET_FIELD_DYN/SET_FIELD_DYN to achieve virtual dispatch —
+  /// the runtime object's classInfo.fields resolves to the most-derived slot.
+  final Set<String> _overriddenFieldNames = {};
+
   // ── Source position tracking (module-level) ──
 
   /// Maps source file URIs to indices in [_fileUris].
@@ -436,6 +442,51 @@ class DarticCompiler {
       if (_isHostLibrary(lib)) continue;
       for (final cls in lib.classes) {
         _registerClass(cls);
+      }
+    }
+
+    // Pass 1c-post: compute overridden field names.
+    // Scan all user classes — if a class declares a non-static field whose
+    // name also appears in an ancestor class, mark that name as overridden.
+    // InstanceGet/Set targeting these fields must use GET_FIELD_DYN/SET_FIELD_DYN
+    // for correct virtual dispatch at runtime.
+    //
+    // NOTE: This is a global (program-wide) set, not per-class. If field "x"
+    // is overridden in one class hierarchy, ALL InstanceGet/Set on "x" in any
+    // class will use GET_FIELD_DYN — even in hierarchies where "x" is not
+    // overridden. This is a conservative approximation: correct but may cause
+    // unnecessary dynamic dispatch for fields that share a name with an
+    // overridden field in an unrelated hierarchy. In practice, the overhead
+    // is negligible for a bytecode interpreter.
+    for (final lib in _component.libraries) {
+      if (_isHostLibrary(lib)) continue;
+      for (final cls in lib.classes) {
+        for (final field in cls.fields) {
+          if (field.isStatic) continue;
+          final name = field.name.text;
+          final isPrivate = name.startsWith('_');
+          final fieldLib =
+              isPrivate ? field.enclosingClass!.enclosingLibrary : null;
+          final mangledName = _mangleName(field.name);
+          // Walk up superclass chain looking for same-name field.
+          var ancestor = cls.superclass;
+          ancestorSearch:
+          while (ancestor != null) {
+            for (final ancestorField in ancestor.fields) {
+              if (ancestorField.isStatic) continue;
+              if (ancestorField.name.text != name) continue;
+              // Private fields in different libraries don't conflict.
+              if (isPrivate &&
+                  ancestorField.enclosingClass!.enclosingLibrary != fieldLib) {
+                continue;
+              }
+              // Found an ancestor with the same field name → overridden.
+              _overriddenFieldNames.add(mangledName);
+              break ancestorSearch;
+            }
+            ancestor = ancestor.superclass;
+          }
+        }
       }
     }
 

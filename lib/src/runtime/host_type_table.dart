@@ -20,5 +20,11 @@ class HostTypeTable {
   }
 
   /// Returns the attached [DarticType] for [obj], or `null` if none.
-  DarticType? lookup(Object obj) => _expando[obj];
+  ///
+  /// Returns `null` for value types (num, bool, String) which cannot
+  /// be stored in an [Expando].
+  DarticType? lookup(Object obj) {
+    if (obj is num || obj is bool || obj is String) return null;
+    return _expando[obj];
+  }
 }
