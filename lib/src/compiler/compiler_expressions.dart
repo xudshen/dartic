@@ -343,9 +343,11 @@ extension on DarticCompiler {
       );
 
       // Place arg on the correct stack for the callee's param type.
+      // Use _effectiveParamKind to match _registerParams — covariant params
+      // (common for operator == via isCovariantByClass) are promoted to ref.
       final params = expr.interfaceTarget.function.positionalParameters;
       final paramKind = params.isNotEmpty
-          ? _classifyStackKind(params.first.type)
+          ? _effectiveParamKind(params.first)
           : StackKind.ref;
 
       if (paramKind.isValue) {
@@ -4402,9 +4404,11 @@ extension on DarticCompiler {
       // Value-stack: box to a temp ref reg for the CAST check.
       final tempRef = _emitBoxToRef(valReg, valType);
       _emitter.emitABC(Op.cast, tempRef, tempRef, typeReg);
+      _refAlloc.free(tempRef);
     } else {
       _emitter.emitABC(Op.cast, valReg, valReg, typeReg);
     }
+    _refAlloc.free(typeReg);
   }
 
   /// Emits CALL_HOST `LateError.<constructor>(name)` + THROW.
