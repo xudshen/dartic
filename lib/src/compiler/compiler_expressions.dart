@@ -3510,6 +3510,11 @@ extension on DarticCompiler {
   /// The internal class `_GrowableList` isn't in `_typeClassIdLookup`, but
   /// its public supertype `List` is. This walks up the class hierarchy to
   /// find a registered class and substitutes the factory's type arguments.
+  ///
+  /// **Public host classes** (HashMap, HashSet, etc.) that are NOT in
+  /// `_typeClassIdLookup` are left untagged — their type is resolved at
+  /// runtime by [HostTypeResolver] with the correct classId. Only private
+  /// internal classes (names starting with `_`) use the walkup strategy.
   ir.InterfaceType? _resolvePublicGenericType(
     ir.Class factoryClass,
     List<ir.DartType> factoryTypeArgs,
@@ -3521,6 +3526,15 @@ extension on DarticCompiler {
         ir.Nullability.nonNullable,
         factoryTypeArgs,
       );
+    }
+
+    // Public host classes (HashMap, HashSet, etc.) are NOT in the lookup but
+    // have bindings registered with HostTypeResolver. Don't walk up to a base
+    // class (e.g. Map) — that would make `is HashMap` fail because TAG_TYPE
+    // would tag the object as Map, preempting the resolver.
+    // Only walk up for private/internal classes (e.g., _GrowableList → List).
+    if (!factoryClass.name.startsWith('_')) {
+      return null;
     }
 
     // BFS over the full supertype hierarchy (extends + mixins + implements)

@@ -164,12 +164,14 @@ class OperatorInfo {
   final String lookupName;
   final String? paramType;
   final String returnType;
+  final bool isAbstract;
 
   OperatorInfo({
     required this.name,
     required this.lookupName,
     required this.paramType,
     required this.returnType,
+    this.isAbstract = false,
   });
 
   bool get isUnary => paramType == null;

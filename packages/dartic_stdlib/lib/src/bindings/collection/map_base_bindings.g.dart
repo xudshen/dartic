@@ -9,6 +9,168 @@ import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'dart:collection';
 
+class _$MapBase extends MapBase implements DarticObjectHolder {
+  _$MapBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Object? remove(Object? key) {
+    final r = _dispatch.invoke(this, $darticObject, 'remove', [key]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method remove must be overridden in dartic code');
+    }
+    return r as Object?;
+  }
+
+  @override
+  void clear() {
+    final r = _dispatch.invoke(this, $darticObject, 'clear', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method clear must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void forEach(Function action) {
+    final r = _dispatch.invoke(this, $darticObject, 'forEach', [action]);
+    if (identical(r, notOverridden)) { super.forEach((a, b) => action(a, b)); return; }
+  }
+
+  @override
+  void addAll(Map other) {
+    final r = _dispatch.invoke(this, $darticObject, 'addAll', [other]);
+    if (identical(r, notOverridden)) { super.addAll(other); return; }
+  }
+
+  @override
+  bool containsValue(Object? value) {
+    final r = _dispatch.invoke(this, $darticObject, 'containsValue', [value]);
+    if (identical(r, notOverridden)) return super.containsValue(value);
+    return r as bool;
+  }
+
+  @override
+  dynamic putIfAbsent(dynamic key, Function ifAbsent) {
+    final r = _dispatch.invoke(this, $darticObject, 'putIfAbsent', [key, ifAbsent]);
+    if (identical(r, notOverridden)) return super.putIfAbsent(key, () => ifAbsent());
+    return r as dynamic;
+  }
+
+  @override
+  dynamic update(dynamic key, Function update, {Function? ifAbsent}) {
+    final r = _dispatch.invoke(this, $darticObject, 'update', [key, update, ifAbsent]);
+    if (identical(r, notOverridden)) return super.update(key, (a) => update(a), ifAbsent: ifAbsent != null ? () => ifAbsent() : null);
+    return r as dynamic;
+  }
+
+  @override
+  void updateAll(Function update) {
+    final r = _dispatch.invoke(this, $darticObject, 'updateAll', [update]);
+    if (identical(r, notOverridden)) { super.updateAll((a, b) => update(a, b)); return; }
+  }
+
+  @override
+  void addEntries(Iterable<MapEntry> newEntries) {
+    final r = _dispatch.invoke(this, $darticObject, 'addEntries', [newEntries]);
+    if (identical(r, notOverridden)) { super.addEntries(newEntries); return; }
+  }
+
+  @override
+  void removeWhere(Function test) {
+    final r = _dispatch.invoke(this, $darticObject, 'removeWhere', [test]);
+    if (identical(r, notOverridden)) { super.removeWhere((a, b) => test(a, b) as bool); return; }
+  }
+
+  @override
+  bool containsKey(Object? key) {
+    final r = _dispatch.invoke(this, $darticObject, 'containsKey', [key]);
+    if (identical(r, notOverridden)) return super.containsKey(key);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Iterable get keys {
+    final r = _dispatch.get(this, $darticObject, 'keys');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter keys must be overridden in dartic code');
+    }
+    return r as Iterable;
+  }
+
+  @override
+  Iterable<MapEntry> get entries {
+    final r = _dispatch.get(this, $darticObject, 'entries');
+    if (identical(r, notOverridden)) return super.entries;
+    return r as Iterable<MapEntry>;
+  }
+
+  @override
+  int get length {
+    final r = _dispatch.get(this, $darticObject, 'length');
+    if (identical(r, notOverridden)) return super.length;
+    return r as int;
+  }
+
+  @override
+  bool get isEmpty {
+    final r = _dispatch.get(this, $darticObject, 'isEmpty');
+    if (identical(r, notOverridden)) return super.isEmpty;
+    return r as bool;
+  }
+
+  @override
+  bool get isNotEmpty {
+    final r = _dispatch.get(this, $darticObject, 'isNotEmpty');
+    if (identical(r, notOverridden)) return super.isNotEmpty;
+    return r as bool;
+  }
+
+  @override
+  Iterable get values {
+    final r = _dispatch.get(this, $darticObject, 'values');
+    if (identical(r, notOverridden)) return super.values;
+    return r as Iterable;
+  }
+
+  @override
+  Object? operator [](Object? index) {
+    final r = _dispatch.invoke(this, $darticObject, '[]', [index]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator [] must be overridden in dartic code'); }
+    return r as Object?;
+  }
+
+  @override
+  void operator []=(dynamic index, dynamic value) {
+    final r = _dispatch.invoke(this, $darticObject, '[]=', [index, value]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator []= must be overridden in dartic code'); }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r == true;
+  }
+}
+
 abstract final class MapBaseBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,8 +179,27 @@ abstract final class MapBaseBindings {
       test: (o) => o is MapBase,
       methods: methodMap(),
       superclasses: ['dart:core::Map'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MapBase(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:collection::MapBase::mapToString#1', (args) => MapBase.mapToString(args[0] as Map<Object?, Object?>));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$cast#0', (args) => (args[0] as _$MapBase).cast());
+    ctx.registerBinding('dart:collection::MapBase::\$super\$forEach#1', (args) { (args[0] as _$MapBase).forEach((a, b) => (args[1] as Function)(a, b)); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$addAll#1', (args) { (args[0] as _$MapBase).addAll(args[1] as Map); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$containsValue#1', (args) => (args[0] as _$MapBase).containsValue(args[1]));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$putIfAbsent#2', (args) => (args[0] as _$MapBase).putIfAbsent(args[1], () => (args[2] as Function)()));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$update#3', (args) => (args[0] as _$MapBase).update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$updateAll#1', (args) { (args[0] as _$MapBase).updateAll((a, b) => (args[1] as Function)(a, b)); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$map#1', (args) => (args[0] as _$MapBase).map((a, b) => (args[1] as Function)(a, b) as MapEntry));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$addEntries#1', (args) { (args[0] as _$MapBase).addEntries((args[1] as Iterable).cast<MapEntry>()); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$removeWhere#1', (args) { (args[0] as _$MapBase).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$containsKey#1', (args) => (args[0] as _$MapBase).containsKey(args[1]));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$toString#0', (args) => (args[0] as _$MapBase).toString());
+    ctx.registerBinding('dart:collection::MapBase::\$super\$entries#0', (args) => (args[0] as MapBase).entries);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$length#0', (args) => (args[0] as MapBase).length);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$isEmpty#0', (args) => (args[0] as MapBase).isEmpty);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$isNotEmpty#0', (args) => (args[0] as MapBase).isNotEmpty);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$values#0', (args) => (args[0] as MapBase).values);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

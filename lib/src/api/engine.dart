@@ -157,6 +157,35 @@ class DarticEngine {
     // the module's class table.
     _hostTypeResolver.resolveClassIds(module.classes);
 
+    // Merge host class supertypeIds into dartic classes that extend host classes.
+    // The compiler can only build supertypeIds from classes it knows about
+    // (core types + user classes). For dartic classes extending host classes
+    // (e.g., ListBaseImpl extends ListBase), the host class's supertypeIds
+    // (ListBase → List → Iterable → Object) are only available after
+    // resolveClassIds() creates the host class entries.
+    if (_hostTypeResolver.hostClassNameToId.isNotEmpty) {
+      for (final classInfo in module.classes) {
+        if (classInfo.hostSuperClassName != null) {
+          final hostCid =
+              _hostTypeResolver.hostClassNameToId[classInfo.hostSuperClassName];
+          if (hostCid != null && hostCid < module.classes.length) {
+            classInfo.supertypeIds
+                .addAll(module.classes[hostCid].supertypeIds);
+          }
+        }
+        if (classInfo.hostInterfaceNames != null) {
+          for (final ifaceName in classInfo.hostInterfaceNames!) {
+            final ifaceCid =
+                _hostTypeResolver.hostClassNameToId[ifaceName];
+            if (ifaceCid != null && ifaceCid < module.classes.length) {
+              classInfo.supertypeIds
+                  .addAll(module.classes[ifaceCid].supertypeIds);
+            }
+          }
+        }
+      }
+    }
+
     // Pass host class name→classId mapping to the interpreter so that the
     // TypeRegistry can resolve HostClassTypeTemplate at type instantiation
     // time. The interpreter stores this and applies it when creating the

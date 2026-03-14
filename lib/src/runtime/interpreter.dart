@@ -2923,8 +2923,24 @@ class DarticInterpreter {
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
           final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
-          final isMatch = checker.isSubtypeOf(objType, targetType);
-          vs.writeInt(vBase + a, isMatch ? 1 : 0);
+          var result = checker.isSubtypeOf(objType, targetType);
+          // Fallback for host objects with multiple inheritance branches.
+          // extractType returns ONE type (e.g., Map for _Map), but the object
+          // may also satisfy other interfaces (e.g., LinkedHashMap). Only
+          // applies when classIds differ — same classId with type arg mismatch
+          // (e.g., List<int> is List<String>) must NOT use this fallback.
+          if (!result &&
+              value != null &&
+              value is! DarticObject &&
+              value is! DarticClosure &&
+              hostTypeResolver != null &&
+              targetType is DarticInterfaceType &&
+              (objType is! DarticInterfaceType ||
+                  objType.classId != targetType.classId)) {
+            result = hostTypeResolver!.matchesClassId(
+                value, targetType.classId);
+          }
+          vs.writeInt(vBase + a, result ? 1 : 0);
 
         case Op.cast: // CAST A, B, C — refStack[A] = refStack[B] if subtype, else throw TypeError
           final a = decodeA(instr);
@@ -2936,6 +2952,17 @@ class DarticInterpreter {
           final reg = _activeTypeRegistry!;
           final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           if (checker.isSubtypeOf(objType, targetType)) {
+            rs.write(rBase + a, value);
+          } else if (value != null &&
+              value is! DarticObject &&
+              value is! DarticClosure &&
+              hostTypeResolver != null &&
+              targetType is DarticInterfaceType &&
+              (objType is! DarticInterfaceType ||
+                  objType.classId != targetType.classId) &&
+              hostTypeResolver!.matchesClassId(
+                  value, targetType.classId)) {
+            // Host object matches via predicate (multi-inheritance fallback).
             rs.write(rBase + a, value);
           } else {
             // Route through unwindToHandler so bytecode-level try-catch
@@ -4352,7 +4379,9 @@ class DarticInterpreter {
             exception is! DarticObject &&
             exception is! DarticClosure &&
             hostTypeResolver != null &&
-            guardType is DarticInterfaceType) {
+            guardType is DarticInterfaceType &&
+            (exType is! DarticInterfaceType ||
+                exType.classId != guardType.classId)) {
           if (hostTypeResolver!.matchesClassId(
               exception, guardType.classId)) {
             return handler;

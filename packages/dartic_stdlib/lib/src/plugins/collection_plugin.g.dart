@@ -21,6 +21,7 @@ import '../bindings/collection/unmodifiable_map_view_bindings.g.dart';
 import '../bindings/collection/unmodifiable_set_view_bindings.g.dart';
 import '../bindings/collection/list_base_bindings.g.dart';
 import '../bindings/collection/map_base_bindings.g.dart';
+import '../bindings/collection/set_base_bindings.g.dart';
 import '../bindings/collection/linked_list_bindings.g.dart';
 import '../bindings/collection/linked_list_entry_bindings.g.dart';
 import '../bindings/collection/has_next_iterator_bindings.g.dart';
@@ -47,6 +48,7 @@ class CollectionPlugin extends DarticPlugin {
     UnmodifiableSetViewBindings.register(ctx);
     ListBaseBindings.register(ctx);
     MapBaseBindings.register(ctx);
+    SetBaseBindings.register(ctx);
     LinkedListBindings.register(ctx);
     LinkedListEntryBindings.register(ctx);
     HasNextIteratorBindings.register(ctx);

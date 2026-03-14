@@ -63,19 +63,22 @@ libraries:
       # ── UnmodifiableSetView ────────────────────────────────────────────
       - UnmodifiableSetView
 
-      # ── ListBase (abstract, for extends-host) ─────────────────────────
-      - ListBase
+      # ── ListBase (abstract, bridge for extends-host subclasses) ────────
+      - name: ListBase
+        bridge: true
 
-      # ── MapBase (abstract, for extends-host) ─────────────────────────
-      - MapBase
+      # ── MapBase (abstract, bridge for extends-host subclasses) ────────
+      - name: MapBase
+        bridge: true
+
+      # ── SetBase (abstract, bridge for extends-host subclasses) ─────────
+      - name: SetBase
+        bridge: true
 
       # ── LinkedList ──────────────────────────────────────────────────────
       - LinkedList
 
       # ── LinkedListEntry ─────────────────────────────────────────────
-      # NOTE: bridge: true deferred — F-bounded type LinkedListEntry<E extends
-      # LinkedListEntry<E>> creates type mismatches in generated bridge overrides.
-      # Needs gen tool enhancement to substitute type params in bridge signatures.
       - LinkedListEntry
 
       # ── HasNextIterator ──────────────────────────────────────────────

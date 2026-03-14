@@ -315,11 +315,18 @@ class SubtypeChecker {
       // If the supertype has no type args (raw type), it matches regardless
       // of the sub's type args (e.g. `List<int> is List` → true).
       if (sup.typeArgs.isEmpty) return true;
-      // If the subtype has no type args (raw host type whose typeParamCount
-      // is unknown), treat missing args as Never (bottom type).  Never <: T
-      // for any T, so this always matches — sound for host objects because
-      // the Dart VM already validated their actual type args at creation.
-      if (sub.typeArgs.isEmpty) return true;
+      if (sub.typeArgs.isEmpty) {
+        // Raw sub matches only if the class has 0 declared type params
+        // (e.g. host types where resolveClassIds couldn't determine count).
+        // For classes with declared type params, missing typeArgs on sub
+        // is a bug (missing ALLOC_GENERIC) and should fail conservatively.
+        final cid = sub.classId;
+        if (cid >= 0 && cid < classes.length &&
+            classes[cid].typeParamCount == 0) {
+          return true;
+        }
+        return false;
+      }
       return _typeArgsMatch(sub.typeArgs, sup.typeArgs);
     }
 
@@ -419,7 +426,9 @@ DarticType extractType(
   // the approximate Never-based fallback.
   if (hostTypeTable != null) {
     final tagged = hostTypeTable.lookup(value);
-    if (tagged != null) return tagged;
+    if (tagged != null) {
+      return tagged;
+    }
   }
   // Native Dart TypeError thrown by CAST — map to the registered classId
   // so that `e is TypeError` works in bytecode.

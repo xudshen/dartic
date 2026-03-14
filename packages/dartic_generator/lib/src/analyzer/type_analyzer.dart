@@ -489,6 +489,7 @@ class TypeAnalyzer {
       lookupName: lookupName,
       paramType: isUnary ? null : _sanitizeType(params.first.type),
       returnType: _sanitizeType(method.returnType),
+      isAbstract: method.isAbstract,
     );
   }
 
