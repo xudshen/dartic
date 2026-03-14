@@ -94,8 +94,11 @@ libraries:
       # Function -- no dispatcher for Function instances
       - Function
 
-      # Iterator -- abstract, no dispatcher
-      - Iterator
+      # Iterator -- abstract, bridge: true enables _$Iterator bridge class
+      # so dartic classes implementing Iterator can be used as host Iterator
+      # (e.g. returned from Iterable.iterator getter through the Iterable bridge).
+      - name: Iterator
+        bridge: true
 
       # ── Error/Exception hierarchy ────────────────────────────────────
       # Non-final error/exception types get bridge: true so scripts can
