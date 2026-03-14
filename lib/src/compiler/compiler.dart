@@ -1084,10 +1084,12 @@ class DarticCompiler {
         // on success the original value reg is still valid.
         final tempRef = _emitBoxToRef(binding.reg, param.type);
         _emitter.emitABC(Op.cast, tempRef, tempRef, typeReg);
+        _refAlloc.free(tempRef);
       } else {
         // CAST paramReg, paramReg, typeReg — in-place check, throws TypeError.
         _emitter.emitABC(Op.cast, binding.reg, binding.reg, typeReg);
       }
+      _refAlloc.free(typeReg);
     }
   }
 

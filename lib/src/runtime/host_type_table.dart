@@ -15,7 +15,11 @@ class HostTypeTable {
   final Expando<DarticType> _expando = Expando<DarticType>('darticType');
 
   /// Attaches [type] to [obj]. Overwrites any previous attachment.
+  ///
+  /// No-ops for value types (num, bool, String) which cannot be stored
+  /// in an [Expando].
   void attach(Object obj, DarticType type) {
+    if (obj is num || obj is bool || obj is String) return;
     _expando[obj] = type;
   }
 

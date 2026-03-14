@@ -3372,6 +3372,9 @@ class DarticInterpreter {
                 // Late field sentinel check: if the field is late and the
                 // stored value is the sentinel (null for non-nullable, or
                 // lateSentinel for nullable), throw LateInitializationError.
+                // Note: late fields are always StackKind.ref per compiler
+                // convention (compiler_classes.dart), so the value-stack
+                // branches above are unreachable for late fields.
                 if (fieldLayout.isLate &&
                     (fieldVal == null || fieldVal == lateSentinel)) {
                   try {

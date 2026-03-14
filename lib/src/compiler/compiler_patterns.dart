@@ -898,7 +898,7 @@ extension on DarticCompiler {
         var valArgIdx = 0;
         for (var i = 0; i < argRegs.length; i++) {
           final paramKind = (i < params.length)
-              ? _classifyStackKind(params[i].type)
+              ? _effectiveParamKind(params[i])
               : StackKind.ref;
           if (paramKind.isValue) {
             final unboxedReg = _emitUnbox(argRegs[i], paramKind);

@@ -757,9 +757,10 @@ extension on DarticCompiler {
       final savedValReg = valReg;
       final savedValLoc = valLoc;
 
-      // Box if the setter parameter expects ref stack.
+      // Box if the setter parameter expects ref stack (includes covariant
+      // promotion via _effectiveParamKind to match _registerParams).
       final setterParam = target.function.positionalParameters.first;
-      final paramKind = _classifyStackKind(setterParam.type);
+      final paramKind = _effectiveParamKind(setterParam);
       if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
         valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
         valLoc = ResultLoc.ref;
@@ -2107,9 +2108,10 @@ extension on DarticCompiler {
     final savedValReg = valReg;
     final savedValLoc = valLoc;
 
-    // 3. The setter's parameter determines where the arg goes.
+    // 3. The setter's parameter determines where the arg goes (includes
+    // covariant promotion via _effectiveParamKind to match _registerParams).
     final setterParam = setter.function.positionalParameters.first;
-    final paramKind = _classifyStackKind(setterParam.type);
+    final paramKind = _effectiveParamKind(setterParam);
     if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
       valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
       valLoc = ResultLoc.ref;
@@ -3023,7 +3025,7 @@ extension on DarticCompiler {
       final savedValLoc = valLoc;
 
       final setterParam = target.function.positionalParameters.first;
-      final paramKind = _classifyStackKind(setterParam.type);
+      final paramKind = _effectiveParamKind(setterParam);
       if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
         valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
         valLoc = ResultLoc.ref;

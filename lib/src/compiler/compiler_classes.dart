@@ -765,7 +765,7 @@ extension on DarticCompiler {
     for (var i = 0; i < arguments.positional.length; i++) {
       var (argReg, argLoc) = _compileExpression(arguments.positional[i]);
       if (i < targetParams.length) {
-        final paramKind = _classifyStackKind(targetParams[i].type);
+        final paramKind = _effectiveParamKind(targetParams[i]);
         (argReg, argLoc) = _coerceArg(
             argReg, argLoc, paramKind, arguments.positional[i]);
       }
