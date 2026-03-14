@@ -1,5 +1,4 @@
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/runtime/error.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';
 
@@ -50,9 +49,9 @@ String main() => identity(null);
       final interp = DarticInterpreter();
       expect(
         () => interp.execute(module),
-        throwsA(isA<DarticError>().having(
-          (e) => e.message,
-          'message',
+        throwsA(isA<TypeError>().having(
+          (e) => e.toString(),
+          'toString()',
           contains('Null check'),
         )),
       );

@@ -88,6 +88,16 @@ class DarticLateError extends Error {
   String toString() => 'LateInitializationError: $_message';
 }
 
+/// Thrown when the null check operator (`!`) is applied to `null`.
+///
+/// Extends [TypeError] directly (not [DarticError]) so that dartic code
+/// catching `TypeError` handles it correctly, matching the Dart VM's
+/// behavior for `x!` on null. The [toString] output matches the Dart VM's.
+class DarticNullCheckError extends TypeError {
+  @override
+  String toString() => 'Null check operator used on a null value';
+}
+
 class ExecutionTimeoutError extends DarticError {
   ExecutionTimeoutError(this.elapsed, this.limit)
       : super(
