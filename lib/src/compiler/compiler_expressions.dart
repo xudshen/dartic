@@ -3631,12 +3631,11 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileListLiteral(ir.ListLiteral expr) {
     final (destReg, loc) =
         _compileElementCollection(Op.createList, expr.expressions);
-    // Tag with List<T> type for precise generic type checks.
-    if (expr.typeArgument is! ir.DynamicType) {
-      final collType = ir.InterfaceType(
-          _coreTypes.listClass, ir.Nullability.nonNullable, [expr.typeArgument]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with List<T> type for precise generic type checks.
+    // Even List<dynamic> must be tagged so that `is List<int>` returns false.
+    final listType = ir.InterfaceType(
+        _coreTypes.listClass, ir.Nullability.nonNullable, [expr.typeArgument]);
+    _emitCollectionTagType(destReg, listType);
     return (destReg, loc);
   }
 
@@ -3667,12 +3666,12 @@ extension on DarticCompiler {
       _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length);
     }
 
-    // Tag with Map<K, V> type for precise generic type checks.
-    if (expr.keyType is! ir.DynamicType || expr.valueType is! ir.DynamicType) {
-      final collType = ir.InterfaceType(_coreTypes.mapClass,
-          ir.Nullability.nonNullable, [expr.keyType, expr.valueType]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with Map<K, V> type for precise generic type checks.
+    // Even Map<dynamic, dynamic> must be tagged so that `is Map<int, int>`
+    // returns false (dynamic is NOT a subtype of int).
+    final mapType = ir.InterfaceType(_coreTypes.mapClass,
+        ir.Nullability.nonNullable, [expr.keyType, expr.valueType]);
+    _emitCollectionTagType(destReg, mapType);
     return (destReg, ResultLoc.ref);
   }
 
@@ -3680,12 +3679,10 @@ extension on DarticCompiler {
   (int, ResultLoc) _compileSetLiteral(ir.SetLiteral expr) {
     final (destReg, loc) =
         _compileElementCollection(Op.createSet, expr.expressions);
-    // Tag with Set<T> type for precise generic type checks.
-    if (expr.typeArgument is! ir.DynamicType) {
-      final collType = ir.InterfaceType(
-          _coreTypes.setClass, ir.Nullability.nonNullable, [expr.typeArgument]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with Set<T> type for precise generic type checks.
+    final setType = ir.InterfaceType(
+        _coreTypes.setClass, ir.Nullability.nonNullable, [expr.typeArgument]);
+    _emitCollectionTagType(destReg, setType);
     return (destReg, loc);
   }
 
