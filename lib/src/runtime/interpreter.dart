@@ -3398,7 +3398,7 @@ class DarticInterpreter {
                     // No setter → field has initializer → reject write.
                     try {
                       throw DarticLateError(
-                          "Field '$name' has already been initialized.");
+                          "Cannot assign to late final field '$name'.");
                     } catch (e, st) {
                       pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                     }
