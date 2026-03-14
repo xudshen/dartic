@@ -3175,6 +3175,7 @@ class DarticInterpreter {
                 TypeError(),
                 DarticStackTrace.capture(
                     callStack, module, pc - 1, _hostNameStack));
+            continue;
           }
 
         // ── Collection Creation (0x90-0x92) ──
