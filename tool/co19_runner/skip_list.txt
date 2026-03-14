@@ -537,6 +537,12 @@ LanguageFeatures/Unquoted-imports/static_semantics_A04_t03.dart  # [cfe] unquote
 LanguageFeatures/Unquoted-imports/static_semantics_A04_t04.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
 LanguageFeatures/Unquoted-imports/whitespace_and_comments_A01_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
 
+# ── Native Dart hang (2) ────────────────────────────────────────
+# These tests hang in native Dart VM too: StreamController.addStream(Stream.fromIterable(...))
+# delivers events but never closes the controller, so `await for` waits forever.
+Language/Statements/For/Asynchronous_For_in/execution_A02_t01.dart  # native Dart hang: addStream never closes controller
+Language/Statements/For/Asynchronous_For_in/execution_A02_t02.dart  # native Dart hang: addStream never closes controller
+
 # ── dart:io / dart:ffi not bridged (51) ─────────────────────────
 # FinalizationRegistry tests require dart:io (Platform) + dart:ffi (DynamicLibrary)
 # via shared gc_utils_lib.dart. dart:io bridge not implemented.

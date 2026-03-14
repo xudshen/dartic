@@ -260,14 +260,15 @@ extension on DarticCompiler {
           _emitter.emitABC(Op.eqInt, resultReg, switchReg, caseReg);
         } else {
           // At least one is on ref stack — box the value-stack operand
-          // and use EQ_REF (handles mixed types correctly via ==).
+          // and use EQ_GENERIC (value equality via ==). EQ_REF uses
+          // identical() which fails for runtime-created strings vs constants.
           if (isValueSwitch) {
             refSwitchReg ??= _emitBoxToRef(switchReg, _inferExprType(stmt.expression));
           }
           if (caseLoc == ResultLoc.value) {
             caseReg = _emitBoxToRef(caseReg, _inferExprType(caseExpr));
           }
-          _emitter.emitABC(Op.eqRef, resultReg, refSwitchReg ?? switchReg, caseReg);
+          _emitter.emitABC(Op.eqGeneric, resultReg, refSwitchReg ?? switchReg, caseReg);
         }
         matchJumps.add(_emitter.emitJumpPlaceholder()); // JUMP_IF_TRUE -> body
       }
