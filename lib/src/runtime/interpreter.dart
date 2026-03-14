@@ -455,8 +455,11 @@ class DarticInterpreter {
     _activeSyncStarIterator = null;
     _syncStarStatus = null;
     _syncStarSuspendedFrame = null;
-    _activeModule = null;
-    _activeDarticDispatch = null;
+    // NOTE: _activeModule and _activeDarticDispatch are intentionally NOT
+    // cleared here. They must survive for pending async callbacks (Stream
+    // listeners, Zone callbacks, microtasks) that fire after execute() returns
+    // and call invokeClosure(). They are overwritten by the next
+    // _initExecution() call, so there is no stale-state risk.
     _callbackResult = null;
     _hostBoundaryDepth = 0;
     _lastHostCallName = null;
@@ -601,12 +604,21 @@ class DarticInterpreter {
     }
     final proto = closure.funcProto;
 
-    return _runNestedDispatch(
-      module: module,
-      proto: proto,
-      args: args,
-      upvalues: closure.upvalues,
-    );
+    // Save/restore _isExecuting so that cold-start re-entry (callback firing
+    // after execute() returned) works correctly. Matches the pattern used in
+    // _resumeFrame and _startAsyncStarBody.
+    final wasExecuting = _isExecuting;
+    _isExecuting = true;
+    try {
+      return _runNestedDispatch(
+        module: module,
+        proto: proto,
+        args: args,
+        upvalues: closure.upvalues,
+      );
+    } finally {
+      _isExecuting = wasExecuting;
+    }
   }
 
   /// Calls a DarticObject method synchronously with proper result boxing.
@@ -666,6 +678,28 @@ class DarticInterpreter {
       return null;
     }
     return receiverITA;
+  }
+
+  /// Resolves ITA for a CALL_SUPER target identified by [funcId].
+  ///
+  /// When a non-generic class inherits a method from a generic superclass
+  /// (e.g., `MA` inherits `B<D>.bar`), the receiver's `runtimeType_.typeArgs`
+  /// is empty. This helper scans the receiver's method table to find which
+  /// name maps to [funcId], then delegates to [_resolveMethodITA] for
+  /// superclass type arg resolution.
+  List<DarticType>? _resolveSuperCallITA(
+    DarticObject darticObj,
+    int funcId,
+    DarticModule module,
+  ) {
+    final classInfo = module.classes[darticObj.classId];
+    // Find the nameIdx that maps to this funcId.
+    for (final entry in classInfo.methods.entries) {
+      if (entry.value.funcId == funcId) {
+        return _resolveMethodITA(classInfo, entry.key, darticObj);
+      }
+    }
+    return null;
   }
 
   /// Shared implementation for [invokeClosure] and [_callDarticMethod].
@@ -2673,6 +2707,15 @@ class DarticInterpreter {
             final rtType = darticObj.runtimeType_;
             if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
               rs.write(rBase + 0, rtType.typeArgs);
+            } else {
+              // Non-generic receiver inheriting from generic superclass:
+              // resolve ITA via superTypeArgs (e.g., MA → B<D>.bar needs
+              // ITA=[D]).
+              final resolvedITA =
+                  _resolveSuperCallITA(darticObj, bx, module);
+              if (resolvedITA != null) {
+                rs.write(rBase + 0, resolvedITA);
+              }
             }
           }
 

@@ -883,10 +883,27 @@ class DarticCompiler {
   /// Registers a list of parameter declarations in the current scope.
   void _registerParams(List<ir.VariableDeclaration> params) {
     for (final param in params) {
-      final kind = _classifyStackKind(param.type);
+      final kind = _effectiveParamKind(param);
       final reg = kind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       _scope.declareWithReg(param, kind, reg);
     }
+  }
+
+  /// Returns the effective [StackKind] for a parameter, accounting for
+  /// covariance.
+  ///
+  /// Covariant parameters (explicit `covariant` or implicit via generic type
+  /// parameter dependence) must always live on the ref stack so that the
+  /// runtime CAST check can verify the actual argument type. Without this,
+  /// a caller passing a wider type (e.g., `double` for an `int` param) via
+  /// covariant widening would corrupt value-stack bits silently.
+  StackKind _effectiveParamKind(ir.VariableDeclaration param) {
+    final kind = _classifyStackKind(param.type);
+    if (kind.isValue &&
+        (param.isCovariantByDeclaration || param.isCovariantByClass)) {
+      return StackKind.ref;
+    }
+    return kind;
   }
 
   /// Builds a [Uint8List] encoding each parameter's [StackKind] for
@@ -899,7 +916,7 @@ class DarticCompiler {
     final all = [...positional, ...named];
     final kinds = Uint8List(all.length);
     for (var i = 0; i < all.length; i++) {
-      kinds[i] = _classifyStackKind(all[i].type).index;
+      kinds[i] = _effectiveParamKind(all[i]).index;
     }
     return kinds;
   }
@@ -1041,9 +1058,10 @@ class DarticCompiler {
   /// call site. The static type system widens them to `Object?` in the
   /// method signature, so the runtime must verify the actual argument type.
   ///
-  /// Only ref-stack parameters need explicit CAST — value-stack parameters
-  /// (non-nullable int/double/bool) are already validated by the CALL
-  /// reroute unboxing mechanism.
+  /// Both ref-stack and value-stack parameters need CAST. Value-stack
+  /// parameters (non-nullable int/double/bool) are boxed to a temp ref reg
+  /// for the CAST check — a caller may pass a wider type (e.g., double
+  /// instead of int) via the covariant widening mechanism.
   void _emitCovariantParamChecks(ir.FunctionNode fn) {
     final allParams = [
       ...fn.positionalParameters,
@@ -1054,13 +1072,22 @@ class DarticCompiler {
         continue;
       }
       final binding = _scope.lookup(param);
-      if (binding == null || binding.kind.isValue) continue;
+      if (binding == null) continue;
 
       // Emit INSTANTIATE_TYPE for the declared parameter type.
       // For generic classes, this resolves `T` via ITA at runtime.
       final typeReg = _emitInstantiateType(param.type);
-      // CAST paramReg, paramReg, typeReg — in-place check, throws TypeError.
-      _emitter.emitABC(Op.cast, binding.reg, binding.reg, typeReg);
+
+      if (binding.kind.isValue) {
+        // Value-stack param: box to a temp ref reg for the CAST check.
+        // The CAST verifies the type and throws TypeError on mismatch;
+        // on success the original value reg is still valid.
+        final tempRef = _emitBoxToRef(binding.reg, param.type);
+        _emitter.emitABC(Op.cast, tempRef, tempRef, typeReg);
+      } else {
+        // CAST paramReg, paramReg, typeReg — in-place check, throws TypeError.
+        _emitter.emitABC(Op.cast, binding.reg, binding.reg, typeReg);
+      }
     }
   }
 

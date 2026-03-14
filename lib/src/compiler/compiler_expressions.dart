@@ -1129,7 +1129,7 @@ extension on DarticCompiler {
     for (var i = 0; i < arguments.positional.length; i++) {
       var (argReg, argLoc) = _compileExpression(arguments.positional[i]);
       if (i < positionalParams.length) {
-        final paramKind = _classifyStackKind(positionalParams[i].type);
+        final paramKind = _effectiveParamKind(positionalParams[i]);
         (argReg, argLoc) = _coerceArg(
             argReg, argLoc, paramKind, arguments.positional[i]);
       }
@@ -1141,7 +1141,7 @@ extension on DarticCompiler {
         i < positionalParams.length;
         i++) {
       var (argReg, argLoc) = _compileDefaultValue(positionalParams[i]);
-      final paramKind = _classifyStackKind(positionalParams[i].type);
+      final paramKind = _effectiveParamKind(positionalParams[i]);
       (argReg, argLoc) = _coerceArg(argReg, argLoc, paramKind,
           positionalParams[i].initializer);
       argTemps.add((argReg, argLoc));
@@ -1177,7 +1177,7 @@ extension on DarticCompiler {
     for (final namedArg in namedArgs) {
       var (argReg, argLoc) = _compileExpression(namedArg.value);
       final param = paramByName[namedArg.name]!;
-      final paramKind = _classifyStackKind(param.type);
+      final paramKind = _effectiveParamKind(param);
       (argReg, argLoc) =
           _coerceArg(argReg, argLoc, paramKind, namedArg.value);
       compiled[namedArg.name] = (argReg, argLoc);
@@ -1192,7 +1192,7 @@ extension on DarticCompiler {
         var (argReg, argLoc) = _compileDefaultValue(param);
         // Coerce the default value to the param's stack kind — e.g. an int
         // literal default must be boxed when the param type is dynamic/num.
-        final paramKind = _classifyStackKind(param.type);
+        final paramKind = _effectiveParamKind(param);
         (argReg, argLoc) =
             _coerceArg(argReg, argLoc, paramKind, param.initializer);
         argTemps.add((argReg, argLoc));
@@ -1970,12 +1970,20 @@ extension on DarticCompiler {
     final targetClass = target.enclosingClass;
 
     if (target is ir.Field) {
+      final isCovariant =
+          target.isCovariantByDeclaration || target.isCovariantByClass;
+
       // Virtual field dispatch: when the field name is overridden by a
       // subclass, use SET_FIELD_DYN for correct virtual dispatch.
       final mangledName = _mangleName(expr.name);
       if (_overriddenFieldNames.contains(mangledName)) {
         final (recvReg, _) = _compileExpression(expr.receiver);
         var (valReg, valLoc) = _compileExpression(expr.value);
+        // Covariant field check before dynamic dispatch write.
+        if (isCovariant) {
+          _emitCovariantFieldCheck(valReg, valLoc, target.type,
+              _inferExprType(expr.value));
+        }
         valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
         final nameIdx = _constantPool.addName(mangledName);
         _emitter.emitABC(Op.setFieldDyn, recvReg, valReg, nameIdx);
@@ -1995,6 +2003,12 @@ extension on DarticCompiler {
         }
 
         var (valReg, valLoc) = _compileExpression(expr.value);
+
+        // Covariant field check before direct field write.
+        if (isCovariant) {
+          _emitCovariantFieldCheck(valReg, valLoc, target.type,
+              _inferExprType(expr.value));
+        }
 
         if (layout.isLate) {
           // Late fields are always on ref stack — box value if needed.
@@ -2970,6 +2984,13 @@ extension on DarticCompiler {
         }
 
         var (valReg, valLoc) = _compileExpression(expr.value);
+
+        // Covariant field check: if the field is covariant, emit CAST before
+        // the write to verify the value matches the field's declared type.
+        if (target.isCovariantByDeclaration || target.isCovariantByClass) {
+          _emitCovariantFieldCheck(valReg, valLoc, target.type,
+              _inferExprType(expr.value));
+        }
 
         if (layout.isLate) {
           // Late fields are always on ref stack.
@@ -4358,6 +4379,32 @@ extension on DarticCompiler {
           jumpToOkPC, Op.jumpIfNull, currentReg, _emitter.currentPC);
     }
     _refAlloc.free(currentReg);
+  }
+
+  /// Emits a CAST check for a covariant field write.
+  ///
+  /// The Dart spec requires that covariant fields are type-checked at runtime
+  /// when written through a widened superclass interface. This is the field
+  /// analog of [_emitCovariantParamChecks] for method parameters.
+  ///
+  /// [valReg] and [valLoc] describe the value being written.
+  /// [fieldType] is the declared type of the field (the CAST target).
+  /// [valType] is the inferred static type of the value expression (used for
+  /// boxing if the value is on the value stack).
+  void _emitCovariantFieldCheck(
+    int valReg,
+    ResultLoc valLoc,
+    ir.DartType fieldType,
+    ir.DartType? valType,
+  ) {
+    final typeReg = _emitInstantiateType(fieldType);
+    if (valLoc == ResultLoc.value) {
+      // Value-stack: box to a temp ref reg for the CAST check.
+      final tempRef = _emitBoxToRef(valReg, valType);
+      _emitter.emitABC(Op.cast, tempRef, tempRef, typeReg);
+    } else {
+      _emitter.emitABC(Op.cast, valReg, valReg, typeReg);
+    }
   }
 
   /// Emits CALL_HOST `LateError.<constructor>(name)` + THROW.
