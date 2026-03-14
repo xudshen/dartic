@@ -501,4 +501,47 @@ void main() {}
       expect(targetPC, lessThanOrEqualTo(code.length));
     });
   });
+
+  group('VariableSet inside logical expression', () {
+    test('(x = f()) && g(): x keeps assigned value when && is false',
+        () async {
+      final module = await compileDart('''
+bool returnTrue() => true;
+bool returnFalse() => false;
+
+int main() {
+  bool x = false;
+  // x = returnTrue() sets x to true, then && evaluates returnFalse().
+  // && result is false, but x should remain true (the assigned value).
+  bool result = (x = returnTrue()) && returnFalse();
+  if (x != true) return -1;
+  if (result != false) return -2;
+  return 0;
+}
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, 0,
+          reason: 'VariableSet in && must not be overwritten by && result');
+    });
+
+    test('(x = f()) || g(): x keeps assigned value when || is true',
+        () async {
+      final module = await compileDart('''
+int main() {
+  bool x = true;
+  // x=false, then || evaluates right side (true).
+  // x should stay false (the assigned value), not become true (|| result).
+  bool r = (x = false) || true;
+  if (x != false) return -1;
+  if (r != true) return -2;
+  return 0;
+}
+''');
+      final interp = DarticInterpreter();
+      interp.execute(module);
+      expect(interp.entryResult, 0,
+          reason: 'VariableSet in || must not be overwritten by || result');
+    });
+  });
 }

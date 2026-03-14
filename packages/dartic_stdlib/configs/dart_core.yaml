@@ -50,7 +50,10 @@ libraries:
       # `[1,2,3] is Iterable` matches first, binding the wrong dispatcher.
 
       # Iterable -- registered first so subtypes (List, Set) take priority
-      - Iterable
+      # bridge: true enables _$Iterable bridge class for dartic classes that
+      # extend Iterable (or the typedef aliases IterableBase/IterableMixin).
+      - name: Iterable
+        bridge: true
 
       # List -- dispatcher prefix chain: List, _GrowableList, Iterable
       - name: List

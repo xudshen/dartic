@@ -158,6 +158,17 @@ extension on DarticCompiler {
     var (leftReg, leftLoc) = _compileExpression(expr.left);
     leftReg = _ensureBoolValue(leftReg, leftLoc);
 
+    // When the left operand is a VariableSet (e.g. `(x = f()) && g()`),
+    // leftReg IS the variable's own register. The && operator overwrites
+    // this register with the right-side result (line: moveVal leftReg,
+    // rightReg), which corrupts the variable. Allocate a temp copy so
+    // the variable keeps its assigned value.
+    if (expr.left is ir.VariableSet) {
+      final tmpReg = _allocValueReg();
+      _emitter.emitABC(Op.moveVal, tmpReg, leftReg, 0);
+      leftReg = tmpReg;
+    }
+
     // &&: short-circuit on false; ||: short-circuit on true.
     final jumpOp = expr.operatorEnum == ir.LogicalExpressionOperator.AND
         ? Op.jumpIfFalse

@@ -88,6 +88,9 @@ class TypeAnalyzer {
   }
 
   /// Finds a class by name, including exported and private classes.
+  ///
+  /// Handles typedef aliases (e.g. `IterableBase<E> = Iterable<E>` in
+  /// Dart 3.10+) by resolving to the aliased target class.
   InterfaceElement? _findClass(LibraryElement library, String className) {
     // Try public API first (declared in this library)
     final cls = library.getClass(className);
@@ -96,6 +99,15 @@ class TypeAnalyzer {
     // Try exported namespace (for barrel libraries that re-export from src/)
     final exported = library.exportNamespace.definedNames2[className];
     if (exported is InterfaceElement) return exported;
+
+    // Handle typedef aliases: e.g. typedef IterableBase<E> = Iterable<E>
+    // Resolve the alias to the target InterfaceElement.
+    if (exported is TypeAliasElement) {
+      final aliasedType = exported.aliasedType;
+      if (aliasedType is InterfaceType) {
+        return aliasedType.element;
+      }
+    }
 
     // For private classes, search through all library fragments
     for (final fragment in library.fragments) {
