@@ -554,3 +554,46 @@ LibTest/js_interop/  # dart:js_interop — JS interop, not applicable (~477 test
 LibTest/js_interop_unsafe/  # dart:js_interop_unsafe — JS interop, not applicable (~38 tests)
 LibTest/isolate/  # dart:isolate — multi-isolate not implemented (~247 tests)
 LibTest/mirrors/  # dart:mirrors — reflection not implemented (~29 tests)
+
+# ── F-bounded generics: LinkedList (103) ─────────────────────────
+# LinkedList<E extends LinkedListEntry<E>> is F-bounded generic.
+# DarticObject cannot be cast to LinkedListEntry<LinkedListEntry<dynamic>>.
+# Fix requires F-bounded generic bridge — extremely high cost, extremely low usage.
+# Status: permanent skip.
+LibTest/collection/LinkedList/  # F-bounded: DarticObject → LinkedListEntry<LinkedListEntry<dynamic>> (~79 tests)
+LibTest/collection/LinkedListEntry/  # F-bounded: same root cause (~24 tests)
+
+# ── dart:_internal types not bridged: UnmodifiableMapBase (16) ───
+# UnmodifiableMapBase lives in dart:_internal (not user-accessible).
+# dartic classes extending it produce DarticObject → MapBase cast failures.
+# Status: permanent skip until dart:_internal bridge support added.
+LibTest/collection/UnmodifiableMapBase/  # dart:_internal::UnmodifiableMapBase not bridged (~16 tests)
+
+# ── Comparable bridge missing: SplayTree (4) ────────────────────
+# SplayTreeMap/SplayTreeSet tests create dartic Comparable subclasses.
+# DarticObject → Comparable<dynamic> cast fails. Needs Comparable bridge.
+# Status: permanent skip (low priority — Comparable bridge trivial but niche).
+LibTest/collection/SplayTreeMap/SplayTreeMap_class_A04_t01.dart  # DarticObject → Comparable
+LibTest/collection/SplayTreeMap/SplayTreeMap_class_A04_t03.dart  # DarticObject → Comparable
+LibTest/collection/SplayTreeSet/SplayTreeSet.from_A02_t04.dart   # DarticObject → Comparable
+LibTest/collection/SplayTreeSet/SplayTreeSet_A03_t03.dart        # DarticObject → Comparable
+
+# ── Mixin chain host type detection gap (40) ─────────────────────
+# TEMPORARY SKIP — tracked in docs/tasks/overview.md
+# Root cause: compiler hostSuperClassName only checks direct superclass,
+# does not walk mixin application chain. `class X extends Object with
+# IterableMixin` creates anonymous mixin application that hides the host type.
+# Research: docs/research/bridge-multi-host-type.md (Phase 2)
+# Affects: IterableMixin (30), ListMixin (5), ListBase (5)
+# TODO: fix compiler_classes.dart to detect host types in mixin chain
+LibTest/collection/IterableMixin/  # mixin chain gap: with IterableMixin → no bridge (~30 tests)
+LibTest/collection/ListMixin/ListMixin_class_A01_t02.dart  # mixin chain: with ListMixin → stack overflow
+LibTest/collection/ListMixin/ListMixin_class_A01_t03.dart  # mixin chain: with ListMixin → stack overflow
+LibTest/collection/ListMixin/ListMixin_class_A01_t04.dart  # mixin chain: with ListMixin → stack overflow
+LibTest/collection/ListMixin/ListMixin_class_A01_t05.dart  # mixin chain: with ListMixin → stack overflow
+LibTest/collection/ListMixin/ListMixin_class_A01_t06.dart  # mixin chain: with ListMixin → stack overflow
+LibTest/collection/ListBase/ListBase_class_A01_t02.dart    # mixin chain: ListBase = ListMixin → stack overflow
+LibTest/collection/ListBase/ListBase_class_A01_t03.dart    # mixin chain: ListBase = ListMixin → stack overflow
+LibTest/collection/ListBase/ListBase_class_A01_t04.dart    # mixin chain: ListBase = ListMixin → stack overflow
+LibTest/collection/ListBase/ListBase_class_A01_t05.dart    # mixin chain: ListBase = ListMixin → stack overflow
+LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBase = ListMixin → stack overflow

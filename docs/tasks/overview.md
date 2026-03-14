@@ -404,3 +404,24 @@
 - Host 对象动态命名参数（需改 gen 工具 + binding）
 - 复杂 const 默认值（const 构造器、const 集合）
 - DynamicInvocation 类型参数传递
+
+---
+
+## 已知系统性问题（临时 skip，待修复）
+
+### Mixin chain host type 检测 gap — 临时 skip ~40 tests
+
+**状态：** 临时 skip（skip_list.txt 标注 TEMPORARY SKIP）
+
+**影响：** LibTest/collection IterableMixin (30)、ListMixin (5)、ListBase (5)
+
+**根因：** 编译器 `compiler_classes.dart` 中 `hostSuperClassName` 只检查直接 superclass，不穿透 mixin application。当 dartic 类使用 `extends Object with IterableMixin` 时，Kernel AST 产生匿名 mixin application 类（如 `_MyIterable&Object&Iterable`），编译器看到的直接 superclass 是这个匿名类（位于用户库），不是 host library 中的 `Iterable`，导致 `hostSuperClassName` 不被设置，bridge factory 不会应用。
+
+**下游表现：**
+- `DarticObject → Iterable<dynamic>` cast 失败（无 bridge → 传给宿主时 as Iterable 报错）
+- Stack overflow（mixin dispatch 递归：dartic 方法分发回到 mixin 默认实现而非 dartic 覆盖）
+- field-as-getter dispatch 失败（bridge `_dispatch.get()` 查 method table，field 不在里面）
+
+**修复方向：** 编译器在确定 `hostSuperClassName` 时，当直接 superclass 是 anonymous mixin application 时，遍历 mixin chain 中的 `mixedInClass`，检测是否为 host type。
+
+**调研文档：** `docs/research/bridge-multi-host-type.md` (Phase 2: Mixin Chain Detection)
