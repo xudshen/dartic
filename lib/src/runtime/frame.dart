@@ -95,6 +95,10 @@ class DarticFrame {
   /// Register index to write the await result into upon resume.
   int awaitDestReg = 0;
 
+  /// Whether the awaited Future's TAG_TYPE type arg is itself a Future type.
+  /// Set at AWAIT time, used by thenCallback to decide FutureBox unwrapping.
+  bool awaitedTypeArgIsFuture = false;
+
   /// Value received from a completed Future (set before resume).
   Object? resumeValue;
 

@@ -27,6 +27,7 @@ import 'dartic_record.dart';
 import 'dartic_type.dart';
 import 'error.dart';
 import 'frame.dart';
+import 'future_box.dart';
 import 'global_table.dart';
 import 'host_type_table.dart';
 import 'object.dart';
@@ -1154,6 +1155,23 @@ class DarticInterpreter {
       // synchronous _Future._complete() propagation, preventing _StreamIterator
       // from spuriously pausing the subscription during await-for loops.
       frame.thenCallback ??= (Object? result) {
+        // Unwrap FutureBox from anti-flatten wrapping.
+        if (result is FutureBox) {
+          final unwrapped = result.value;
+          if (!frame.awaitedTypeArgIsFuture && unwrapped is Future) {
+            // T is not Future → re-flatten by awaiting the inner Future.
+            unwrapped.then((inner) {
+              frame.resumeValue = inner;
+              if (_isExecuting) {
+                zone.scheduleMicrotask(resume);
+              } else {
+                resume();
+              }
+            }, onError: frame.errorCallback! as void Function(Object, StackTrace));
+            return;
+          }
+          result = unwrapped;
+        }
         frame.resumeValue = result;
         if (_isExecuting) {
           zone.scheduleMicrotask(resume);
@@ -2413,6 +2431,68 @@ class DarticInterpreter {
               final darticType = extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
               rs.write(rBase + a, darticType);
               break;
+            }
+          }
+
+          // Future.then() anti-flatten interception: unwrap FutureBox values
+          // and selectively re-flatten based on TAG_TYPE.
+          // When the Future binding wraps a computation result in FutureBox
+          // (to prevent host VM flattening of nested Futures), the .then()
+          // callback receives FutureBox instead of the raw value. Here we
+          // unwrap it and decide whether to re-flatten (T is not Future)
+          // or pass through (T is Future, e.g., Future<Future<int>>).
+          if (methodName == 'then') {
+            final receiver = rs.read(rBase + a + 1);
+            if (receiver is Future) {
+              final tag = _hostTypeTable.lookup(receiver);
+              if (tag is DarticInterfaceType &&
+                  tag.typeArgs.isNotEmpty &&
+                  _activeTypeRegistry != null) {
+                final typeArgIsFuture =
+                    tag.typeArgs[0] is DarticInterfaceType &&
+                        (tag.typeArgs[0] as DarticInterfaceType).classId ==
+                            _activeTypeRegistry!.futureClassId;
+
+                final argCount = bindingInfo.argCount;
+                final hostArgs = List<Object?>.generate(
+                  argCount, (i) => rs.read(rBase + a + 1 + i),
+                );
+                _wrapClosureArgs(hostArgs);
+
+                final onValue = hostArgs[1] as Function;
+                final onError =
+                    identical(hostArgs[2], darticAbsent) ? null : hostArgs[2];
+
+                _lastHostCallName = 'then';
+                try {
+                  final future = receiver; // already checked: receiver is Future
+                  final result = future.then((v) {
+                    if (v is FutureBox) {
+                      final unwrapped = v.value;
+                      if (!typeArgIsFuture && unwrapped is Future) {
+                        // T is not Future → re-flatten by chaining.
+                        // Propagate onError so errors from the inner Future
+                        // route to the caller's error handler.
+                        return unwrapped.then(
+                          (inner) => onValue(inner),
+                          onError: onError,
+                        );
+                      }
+                      return onValue(unwrapped);
+                    }
+                    return onValue(v);
+                  }, onError: onError as Function?);
+                  rs.write(rBase + a, result);
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(
+                      pc - 1,
+                      e,
+                      DarticStackTrace.captureWithHost(
+                          callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
+                }
+                break;
+              }
             }
           }
 
@@ -3920,6 +4000,20 @@ class DarticInterpreter {
 
             // Read the awaited value BEFORE suspending (suspend nulls the slots).
             final Object? value = rs.read(rBase + a);
+
+            // Check TAG_TYPE for FutureBox unwrapping decision on resume.
+            // If the awaited Future's type arg is itself a Future type,
+            // FutureBox should be unwrapped without re-flattening.
+            frame.awaitedTypeArgIsFuture = false;
+            if (value is Future && _activeTypeRegistry != null) {
+              final tag = _hostTypeTable.lookup(value);
+              if (tag is DarticInterfaceType && tag.typeArgs.isNotEmpty) {
+                final inner = tag.typeArgs[0];
+                frame.awaitedTypeArgIsFuture =
+                    inner is DarticInterfaceType &&
+                        inner.classId == _activeTypeRegistry!.futureClassId;
+              }
+            }
 
             // If this is the first suspension point, we need to return the
             // future to the caller. The async function was called via

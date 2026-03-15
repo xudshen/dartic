@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/src/runtime/future_box.dart';
 import 'dart:async';
 
 abstract final class FutureBindings {
@@ -26,9 +27,15 @@ abstract final class FutureBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         '#1': (args) {
             final computation = args[0] as Function;
-            return Future(() => computation());
+            return Future(() {
+              final result = computation();
+              return result is Future ? FutureBox(result) : result;
+            });
         },
-        'value#1': (args) => Future.value(identical(args[0], darticAbsent) ? null : args[0]),
+        'value#1': (args) {
+            final v = identical(args[0], darticAbsent) ? null : args[0];
+            return Future.value(v is Future ? FutureBox(v) : v);
+        },
         'error#2': (args) {
             final error = args[0] as Object;
             final stackTrace = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
@@ -41,17 +48,26 @@ abstract final class FutureBindings {
             final duration = args[0] as Duration;
             final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
             if (computation != null) {
-              return Future.delayed(duration, () => computation());
+              return Future.delayed(duration, () {
+                final result = computation();
+                return result is Future ? FutureBox(result) : result;
+              });
             }
             return Future.delayed(duration);
         },
         'microtask#1': (args) {
             final computation = args[0] as Function;
-            return Future.microtask(() => computation());
+            return Future.microtask(() {
+              final result = computation();
+              return result is Future ? FutureBox(result) : result;
+            });
         },
         'sync#1': (args) {
             final computation = args[0] as Function;
-            return Future.sync(() => computation());
+            return Future.sync(() {
+              final result = computation();
+              return result is Future ? FutureBox(result) : result;
+            });
         },
         'wait#3': (args) {
             final futures = (args[0] as Iterable).cast<Future>();

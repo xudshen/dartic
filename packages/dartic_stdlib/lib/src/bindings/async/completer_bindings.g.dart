@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/src/runtime/future_box.dart';
 import 'dart:async';
 
 abstract final class CompleterBindings {

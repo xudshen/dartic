@@ -8,6 +8,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/src/api/dartic_absent.dart';
 import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/src/runtime/future_box.dart';
 import '../bindings/async/future_bindings.g.dart';
 import '../bindings/async/completer_bindings.g.dart';
 import '../bindings/async/stream_bindings.g.dart';

@@ -559,16 +559,6 @@ LanguageFeatures/Unquoted-imports/static_semantics_A04_t03.dart  # [cfe] unquote
 LanguageFeatures/Unquoted-imports/static_semantics_A04_t04.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
 LanguageFeatures/Unquoted-imports/whitespace_and_comments_A01_t03.dart  # [cfe] unquoted-imports syntax not supported in SDK 3.38
 
-# ── future_flattening timeout (6) ────────────────────────────────
-# These tests hang (timeout after 30s). Likely compiler stack overflow
-# or infinite loop during Future type flattening.
-LanguageFeatures/nnbd/future_flattening_A01_t57.dart  # timeout
-LanguageFeatures/nnbd/future_flattening_A01_t58.dart  # timeout
-LanguageFeatures/nnbd/future_flattening_A01_t59.dart  # timeout
-LanguageFeatures/nnbd/future_flattening_A01_t75.dart  # timeout
-LanguageFeatures/nnbd/future_flattening_A01_t76.dart  # timeout
-LanguageFeatures/nnbd/future_flattening_A01_t81.dart  # timeout
-
 # ── Deferred import semantics (4) ────────────────────────────────
 # dartic loads all libraries eagerly — deferred import enforcement
 # (throwing on pre-load access) not implemented.
