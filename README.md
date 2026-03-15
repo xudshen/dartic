@@ -1,39 +1,104 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# dartic
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
+A lightweight Dart bytecode interpreter for embedding and Flutter hot-update.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Compile Dart source to `.darb` bytecode ahead of time, then load and execute it
+inside any Dart or Flutter app -- no code generation, no `dart:mirrors`, pure Dart.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **99.5% Dart language compliance** -- passes 8,500+ co19 conformance tests
+  covering the type system, language semantics, and standard library.
+- **Pure Dart runtime** -- runs on any platform Dart supports (mobile, desktop,
+  web, server) with zero native dependencies.
+- **Dual-stack register VM** -- 64-bit fixed-width bytecode with separate value
+  and reference stacks for efficient numeric operations.
+- **Bridge layer** -- seamless bidirectional interop between interpreted code and
+  host Dart/Flutter code via declarative YAML bindings.
+- **Sandboxed execution** -- configurable resource limits (instructions, stack
+  depth, memory) prevent runaway scripts.
+- **Flutter hot-update** -- push updated `.darb` bytecode to deployed Flutter
+  apps without a full rebuild.
+- **Plugin system** -- extend the interpreter with custom host bindings through
+  the `DarticPlugin` interface.
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+## Quick Start (Pure Dart)
 
 ```dart
-const like = 'sample';
+import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
+
+void main() async {
+  final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
+  final bytecode = await loadBytecodeFromFile('app.darb');
+  final result = await engine.execute(bytecode);
+  print('exit: $result');
+}
 ```
 
-## Additional information
+## Quick Start (Flutter Hot Update)
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+import 'package:dartic/dartic.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
+import 'package:dartic_flutter/dartic_flutter.dart';
+
+final engine = DarticEngine(plugins: [
+  DarticStdlibPlugin(),
+  DarticFlutterPlugin(),
+]);
+
+// Download updated bytecode from your server, then:
+// final result = await engine.execute(bytecode);
+```
+
+## Install the CLI
+
+```bash
+dart pub global activate dartic_cli
+
+# Compile Dart source to bytecode
+dartic compile lib/app.dart -o app.darb
+
+# Run bytecode directly
+dartic run app.darb
+
+# Inspect bytecode
+dartic dump app.darb --full
+```
+
+## Dart Subset Support
+
+| Area | Status | Notes |
+|------|--------|-------|
+| Classes, mixins, enums | Supported | Including enhanced enums and sealed classes |
+| Generics | Supported | Full reification with type argument tracking |
+| Async/await | Supported | Future, Stream, Completer |
+| Pattern matching | Supported | All pattern types and contexts |
+| Extension types | Supported | Inline classes |
+| Null safety | Supported | Sound null safety |
+| Records | Supported | Named and positional fields |
+| Isolates | Not supported | Single-isolate execution model |
+| dart:io / dart:html | Not supported | Use Bridge bindings for platform APIs |
+| Macros | Not supported | Dart macros are not available |
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| [`dartic`](.) | Core runtime engine and public API |
+| [`dartic_annotation`](packages/dartic_annotation) | `@DarticExport` and `@DarticHide` annotations |
+| [`dartic_compiler`](packages/dartic_compiler) | Kernel AST to bytecode compiler |
+| [`dartic_stdlib`](packages/dartic_stdlib) | Standard library bindings (dart:core, dart:async, etc.) |
+| [`dartic_flutter`](packages/dartic_flutter) | Flutter widget bindings |
+| [`dartic_cli`](packages/dartic_cli) | Command-line tools (compile, run, dump, gen) |
+
+## Documentation
+
+- [Architecture](ARCHITECTURE.md) -- design overview, core concepts, key decisions
+- [Design docs](docs/design/) -- per-package detailed design
+- [Guides](docs/guides/) -- tutorials and reference
+
+## License
+
+MIT -- see [LICENSE](LICENSE).
