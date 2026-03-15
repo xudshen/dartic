@@ -49,5 +49,6 @@ abstract final class ColorBindings {
         'from#5': (args) => Color.from(alpha: args[0] as double, red: args[1] as double, green: args[2] as double, blue: args[3] as double, colorSpace: identical(args[4], darticAbsent) ? ColorSpace.sRGB : args[4] as ColorSpace),
         'fromARGB#4': (args) => Color.fromARGB(args[0] as int, args[1] as int, args[2] as int, args[3] as int),
         'fromRGBO#4': (args) => Color.fromRGBO(args[0] as int, args[1] as int, args[2] as int, args[3] as double),
+        '_#fromFields#5': (args) => Color.from(alpha: args[0] as double, blue: args[1] as double, colorSpace: args[2] as ColorSpace, green: args[3] as double, red: args[4] as double),
       };
 }

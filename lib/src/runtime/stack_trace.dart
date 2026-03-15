@@ -152,17 +152,26 @@ class DarticStackTrace implements StackTrace {
   @override
   String toString() => _cached ??= _buildString();
 
+  /// Maximum dartic frames to display in toString().
+  static const int _maxDisplayFrames = 30;
+
+  /// Maximum host trace lines to display in toString().
+  static const int _maxHostTraceLines = 20;
+
   String _buildString() {
     if (_frames.isEmpty) return '';
     final buf = StringBuffer();
     var frameIndex = 0;
-    for (final frame in _frames) {
+    final displayLimit =
+        _frames.length < _maxDisplayFrames ? _frames.length : _maxDisplayFrames;
+    for (var i = 0; i < displayLimit; i++) {
+      final frame = _frames[i];
       if (frame.isHostBoundary) {
         final name = frame.hostFuncName;
         if (name != null) {
-          buf.writeln('#$frameIndex      [host: $name]');
+          buf.writeln('#$frameIndex      [host: $name] (dartic:0:0)');
         } else {
-          buf.writeln('#$frameIndex      [host]');
+          buf.writeln('#$frameIndex      [host] (dartic:0:0)');
         }
         frameIndex++;
         continue;
@@ -172,12 +181,22 @@ class DarticStackTrace implements StackTrace {
       buf.writeln('#$frameIndex      $name ($location)');
       frameIndex++;
     }
-    if (_truncatedCount > 0) {
-      buf.writeln('... $_truncatedCount more frames');
+    final hiddenDartic = _frames.length - displayLimit + _truncatedCount;
+    if (hiddenDartic > 0) {
+      buf.writeln('... $hiddenDartic more dartic frames');
     }
     if (_hostTrace != null) {
       buf.writeln('===== host exception =====');
-      buf.write(_hostTrace.toString());
+      final hostStr = _hostTrace.toString();
+      final lines = hostStr.split('\n');
+      if (lines.length <= _maxHostTraceLines) {
+        buf.write(hostStr);
+      } else {
+        for (var i = 0; i < _maxHostTraceLines; i++) {
+          buf.writeln(lines[i]);
+        }
+        buf.writeln('... ${lines.length - _maxHostTraceLines} more host frames');
+      }
     }
     return buf.toString();
   }

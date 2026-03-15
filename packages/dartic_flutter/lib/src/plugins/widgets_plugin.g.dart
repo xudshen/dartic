@@ -30,6 +30,7 @@ import '../bindings/widgets/expanded_bindings.g.dart';
 import '../bindings/widgets/container_bindings.g.dart';
 import '../bindings/widgets/text_bindings.g.dart';
 import '../bindings/widgets/icon_bindings.g.dart';
+import '../bindings/widgets/icon_data_bindings.g.dart';
 import '../bindings/widgets/stack_bindings.g.dart';
 import '../bindings/widgets/positioned_bindings.g.dart';
 import '../bindings/widgets/positioned_directional_bindings.g.dart';
@@ -133,6 +134,7 @@ class WidgetsPlugin extends DarticPlugin {
     ContainerBindings.register(ctx);
     TextBindings.register(ctx);
     IconBindings.register(ctx);
+    IconDataBindings.register(ctx);
     StackBindings.register(ctx);
     PositionedBindings.register(ctx);
     PositionedDirectionalBindings.register(ctx);

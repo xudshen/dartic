@@ -119,17 +119,17 @@ abstract final class StateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'didUpdateWidget#1': (args) { (args[0] as State).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as State).reassemble(); return null; },
-        'deactivate#0': (args) { (args[0] as State).deactivate(); return null; },
         'activate#0': (args) { (args[0] as State).activate(); return null; },
-        'didChangeDependencies#0': (args) { (args[0] as State).didChangeDependencies(); return null; },
         'debugFillProperties#1': (args) { (args[0] as State).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as State).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as State).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
-        'build#1': (args) => (args[0] as _$State).build(args[1] as BuildContext),
-        'initState#0': (args) { (args[0] as _$State).initState(); return null; },
-        'dispose#0': (args) { (args[0] as _$State).dispose(); return null; },
+        'build#1': (args) => throw UnsupportedError('build() is abstract — must be overridden'),
+        'initState#0': (args) { return null; },
+        'dispose#0': (args) { return null; },
+        'didUpdateWidget#1': (args) { return null; },
+        'didChangeDependencies#0': (args) { return null; },
+        'deactivate#0': (args) { return null; },
         'setState#1': (args) {
             final fn = args[1] as Function;
             (args[0] as State).setState(() { fn(); });

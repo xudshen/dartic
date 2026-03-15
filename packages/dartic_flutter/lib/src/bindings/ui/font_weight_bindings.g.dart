@@ -37,5 +37,6 @@ abstract final class FontWeightBindings {
         'toString#0': (args) => (args[0] as FontWeight).toString(),
         'index#0': (args) => (args[0] as FontWeight).index,
         'value#0': (args) => (args[0] as FontWeight).value,
+        '_#fromFields#2': (args) => FontWeight.values[args[0] as int],
       };
 }

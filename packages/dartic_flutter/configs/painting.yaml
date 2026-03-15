@@ -117,3 +117,9 @@ libraries:
       - ImageRepeat
       - TextOverflow
       - TextWidthBasis
+
+    overrides:
+      # ── NotchedShape: abstract getOuterPath — prevent bridge recursion ──
+      NotchedShape:
+        extra_methods:
+          "getOuterPath#2": "(args) => throw UnsupportedError('getOuterPath() is abstract — must be overridden')"

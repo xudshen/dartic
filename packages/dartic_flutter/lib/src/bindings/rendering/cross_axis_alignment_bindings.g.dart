@@ -29,5 +29,6 @@ abstract final class CrossAxisAlignmentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'index#0': (args) => (args[0] as CrossAxisAlignment).index,
+        '_#fromFields#2': (args) => CrossAxisAlignment.values[args[1] as int],
       };
 }

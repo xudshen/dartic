@@ -27,5 +27,6 @@ abstract final class ColorSpaceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'index#0': (args) => (args[0] as ColorSpace).index,
+        '_#fromFields#2': (args) => ColorSpace.values[args[1] as int],
       };
 }

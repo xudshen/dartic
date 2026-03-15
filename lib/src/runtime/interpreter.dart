@@ -876,7 +876,7 @@ class DarticInterpreter {
       );
 
       _executeLoop(module, vBase, rBase, proto.bytecode, 0, upvalues);
-    } on Object {
+    } on Object catch (e, st) {
       // Exception propagated past HOST_BOUNDARY — restore stacks.
       _hostBoundaryDepth--;
       _hostNameStack.removeLast();

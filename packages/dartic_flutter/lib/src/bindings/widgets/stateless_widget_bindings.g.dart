@@ -83,7 +83,7 @@ abstract final class StatelessWidgetBindings {
         'toStringDeep#4': (args) => (args[0] as StatelessWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as StatelessWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as StatelessWidget).debugDescribeChildren(),
-        'build#1': (args) => (args[0] as _$StatelessWidget).build(args[1] as BuildContext),
+        'build#1': (args) => throw UnsupportedError('build() is abstract — must be overridden'),
         'toString#0': (args) => (args[0] as StatelessWidget).toString(),
         'hashCode#0': (args) => (args[0] as StatelessWidget).hashCode,
         '==#1': (args) => args[0] == args[1],

@@ -72,6 +72,7 @@ libraries:
       - Container
       - Text
       - Icon
+      - IconData
 
       # ── Task 12: Layout & Basic (~34 types) ──────────────────────────────
       - Stack
@@ -211,7 +212,7 @@ libraries:
                   DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
               _$StatelessWidget(dispatch, obj, superArgs);
         extra_methods:
-          "build#1": "(args) => (args[0] as _$StatelessWidget).build(args[1] as BuildContext)"
+          "build#1": "(args) => throw UnsupportedError('build() is abstract — must be overridden')"
           "toString#0": "(args) => (args[0] as StatelessWidget).toString()"
           "hashCode#0": "(args) => (args[0] as StatelessWidget).hashCode"
           "==#1": "(args) => args[0] == args[1]"
@@ -261,7 +262,7 @@ libraries:
                   DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
               _$StatefulWidget(dispatch, obj, superArgs);
         extra_methods:
-          "createState#0": "(args) => (args[0] as _$StatefulWidget).createState()"
+          "createState#0": "(args) => throw UnsupportedError('createState() is abstract — must be overridden')"
           "toString#0": "(args) => (args[0] as StatefulWidget).toString()"
           "hashCode#0": "(args) => (args[0] as StatefulWidget).hashCode"
           "==#1": "(args) => args[0] == args[1]"
@@ -350,9 +351,12 @@ libraries:
                   DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
               _$State(dispatch, obj, superArgs);
         extra_methods:
-          "build#1": "(args) => (args[0] as _$State).build(args[1] as BuildContext)"
-          "initState#0": "(args) { (args[0] as _$State).initState(); return null; }"
-          "dispose#0": "(args) { (args[0] as _$State).dispose(); return null; }"
+          "build#1": "(args) => throw UnsupportedError('build() is abstract — must be overridden')"
+          "initState#0": "(args) { return null; }"
+          "dispose#0": "(args) { return null; }"
+          "didUpdateWidget#1": "(args) { return null; }"
+          "didChangeDependencies#0": "(args) { return null; }"
+          "deactivate#0": "(args) { return null; }"
           "setState#1": |
             (args) {
               final fn = args[1] as Function;
@@ -378,5 +382,10 @@ libraries:
           "getInheritedWidgetOfExactType#0": "(args) => throw UnsupportedError('getInheritedWidgetOfExactType requires reified type argument')"
           "getElementForInheritedWidgetOfExactType#0": "(args) => throw UnsupportedError('getElementForInheritedWidgetOfExactType requires reified type argument')"
           "findAncestorRenderObjectOfType#0": "(args) => throw UnsupportedError('findAncestorRenderObjectOfType requires reified type argument')"
+
+      # ── IconData: auto-gen skips (field analysis issue). Fields sorted: codePoint, fontFamily, fontFamilyFallback, fontPackage, matchTextDirection
+      IconData:
+        extra_methods:
+          "_#fromFields#5": "(args) => IconData(args[0] as int, fontFamily: args[1] as String?, fontFamilyFallback: args[2] == null ? null : (args[2] as List).cast<String>(), fontPackage: args[3] as String?, matchTextDirection: args[4] as bool)"
 
       # ── Navigator: no extra overrides needed ─────────────────────────

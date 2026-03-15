@@ -113,6 +113,15 @@ libraries:
       - OutlinedButton
       - FilledButton
       - MaterialPageRoute
+      - MaterialColor
+      - DrawerHeader
       # Enums
       - TabBarIndicatorSize
       - TabAlignment
+
+    overrides:
+      # MaterialColor: inherited fields from Color + ColorSwatch._swatch.
+      # Sorted fields: _swatch, a, b, colorSpace, g, r (6 total)
+      MaterialColor:
+        extra_methods:
+          "_#fromFields#6": "(args) => MaterialColor(Color.from(alpha: args[1] as double, blue: args[2] as double, colorSpace: args[3] as ColorSpace, green: args[4] as double, red: args[5] as double).value, (args[0] as Map).cast<int, Color>())"

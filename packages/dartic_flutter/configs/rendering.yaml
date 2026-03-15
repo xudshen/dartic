@@ -50,3 +50,12 @@ libraries:
       - GrowthDirection
       - WrapAlignment
       - WrapCrossAlignment
+
+    overrides:
+      # Enums — no unnamed ctor. Fields sorted: _name, index
+      MainAxisAlignment:
+        extra_methods:
+          "_#fromFields#2": "(args) => MainAxisAlignment.values[args[1] as int]"
+      CrossAxisAlignment:
+        extra_methods:
+          "_#fromFields#2": "(args) => CrossAxisAlignment.values[args[1] as int]"

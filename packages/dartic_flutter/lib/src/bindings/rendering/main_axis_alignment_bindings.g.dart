@@ -30,5 +30,6 @@ abstract final class MainAxisAlignmentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'index#0': (args) => (args[0] as MainAxisAlignment).index,
+        '_#fromFields#2': (args) => MainAxisAlignment.values[args[1] as int],
       };
 }

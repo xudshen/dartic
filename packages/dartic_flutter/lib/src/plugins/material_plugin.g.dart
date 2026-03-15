@@ -82,6 +82,8 @@ import '../bindings/material/icon_button_bindings.g.dart';
 import '../bindings/material/outlined_button_bindings.g.dart';
 import '../bindings/material/filled_button_bindings.g.dart';
 import '../bindings/material/material_page_route_bindings.g.dart';
+import '../bindings/material/material_color_bindings.g.dart';
+import '../bindings/material/drawer_header_bindings.g.dart';
 import '../bindings/material/tab_bar_indicator_size_bindings.g.dart';
 import '../bindings/material/tab_alignment_bindings.g.dart';
 
@@ -158,6 +160,8 @@ class MaterialPlugin extends DarticPlugin {
     OutlinedButtonBindings.register(ctx);
     FilledButtonBindings.register(ctx);
     MaterialPageRouteBindings.register(ctx);
+    MaterialColorBindings.register(ctx);
+    DrawerHeaderBindings.register(ctx);
     TabBarIndicatorSizeBindings.register(ctx);
     TabAlignmentBindings.register(ctx);
   }

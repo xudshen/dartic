@@ -100,7 +100,7 @@ void main() {
       expect(lines[2], startsWith('#2'));
     });
 
-    test('truncation appends ... N more frames', () {
+    test('truncation appends ... N more dartic frames', () {
       final module = _buildModule(['main']);
       final trace = DarticStackTrace.fromFrames(
         [
@@ -111,7 +111,7 @@ void main() {
         truncatedCount: 42,
       );
       final str = trace.toString();
-      expect(str, contains('... 42 more frames'));
+      expect(str, contains('... 42 more dartic frames'));
     });
 
     test('captureWithHost appends host trace after separator', () {
@@ -273,7 +273,7 @@ void main() {
       expect(str, isNot(contains('f1')));
       expect(str, isNot(contains('f0')));
       // Truncation message
-      expect(str, contains('... 2 more frames'));
+      expect(str, contains('... 2 more dartic frames'));
     });
 
     test('captureWithHost stores host trace', () {
