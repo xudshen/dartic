@@ -6,12 +6,15 @@ import 'package:dartic/src/runtime/interpreter.dart';
 import '../helpers/compile_helper.dart';
 import 'package:test/test.dart';
 
+final _co19Exists =
+    Directory('${Directory.current.path}/vendor/co19').existsSync();
+
 void main() {
   // ══════════════════════════════════════════════════════════════════
   // static_type_helper.dart
   // ══════════════════════════════════════════════════════════════════
 
-  group('static_type_helper integration', () {
+  group('static_type_helper integration', skip: _co19Exists ? null : 'vendor/co19 not cloned', () {
     final helperPath =
         '${Directory.current.path}/vendor/co19/Utils/static_type_helper.dart';
 
@@ -86,7 +89,7 @@ bool main() {
   // Full vendor expect.dart (including async_utils)
   // ══════════════════════════════════════════════════════════════════
 
-  group('vendor expect.dart integration', () {
+  group('vendor expect.dart integration', skip: _co19Exists ? null : 'vendor/co19 not cloned', () {
     final expectPath =
         '${Directory.current.path}/vendor/co19/Utils/expect.dart';
 
@@ -187,7 +190,7 @@ int main() {
   // asyncStart / asyncEnd (from async_utils.dart, part of expect.dart)
   // ══════════════════════════════════════════════════════════════════
 
-  group('async_utils integration', () {
+  group('async_utils integration', skip: _co19Exists ? null : 'vendor/co19 not cloned', () {
     final expectPath =
         '${Directory.current.path}/vendor/co19/Utils/expect.dart';
 

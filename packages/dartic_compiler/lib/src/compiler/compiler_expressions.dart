@@ -1288,22 +1288,6 @@ extension on DarticCompiler {
     return [(reg, loc, _inferExprType(expr))];
   }
 
-  /// Compiles positional and named arguments from [arguments] into
-  /// host-arg tuples and appends them to [out].
-  void _compileHostPositionalAndNamed(
-    ir.Arguments arguments,
-    List<(int, ResultLoc, ir.DartType?)> out,
-  ) {
-    for (final arg in arguments.positional) {
-      final (reg, loc) = _compileExpression(arg);
-      out.add((reg, loc, _inferExprType(arg)));
-    }
-    for (final arg in arguments.named) {
-      final (reg, loc) = _compileExpression(arg.value);
-      out.add((reg, loc, _inferExprType(arg.value)));
-    }
-  }
-
   /// Emits a CALL_HOST instruction for a platform function call.
   ///
   /// Unlike CALL_STATIC (which pushes a CallStack frame), CALL_HOST reads
@@ -1529,39 +1513,34 @@ extension on DarticCompiler {
   /// The receiver is the first arg (index 0), followed by explicit args.
   (int, ResultLoc) _compileHostInstanceCall(ir.InstanceInvocation expr) {
     final target = expr.interfaceTarget;
-    final func = target is ir.Procedure ? target.function : null;
+    final func = target.function;
 
     // 先编译 receiver。
     final compiledArgs = _compileHostExprArgs(expr.receiver);
 
-    if (func != null) {
-      // 统一：始终将位置 + 命名参数填充到 max arity。
-      for (final arg in expr.arguments.positional) {
-        final (reg, loc) = _compileExpression(arg);
-        compiledArgs.add((reg, loc, _inferExprType(arg)));
-      }
-      for (var i = expr.arguments.positional.length;
-          i < func.positionalParameters.length;
-          i++) {
+    // 统一：始终将位置 + 命名参数填充到 max arity。
+    for (final arg in expr.arguments.positional) {
+      final (reg, loc) = _compileExpression(arg);
+      compiledArgs.add((reg, loc, _inferExprType(arg)));
+    }
+    for (var i = expr.arguments.positional.length;
+        i < func.positionalParameters.length;
+        i++) {
+      final (reg, loc) = _loadAbsent();
+      compiledArgs.add((reg, loc, null));
+    }
+    final namedProvided = <String, ir.Expression>{
+      for (final n in expr.arguments.named) n.name: n.value,
+    };
+    for (final param in func.namedParameters) {
+      final value = namedProvided[param.name];
+      if (value != null) {
+        final (reg, loc) = _compileExpression(value);
+        compiledArgs.add((reg, loc, _inferExprType(value)));
+      } else {
         final (reg, loc) = _loadAbsent();
         compiledArgs.add((reg, loc, null));
       }
-      final namedProvided = <String, ir.Expression>{
-        for (final n in expr.arguments.named) n.name: n.value,
-      };
-      for (final param in func.namedParameters) {
-        final value = namedProvided[param.name];
-        if (value != null) {
-          final (reg, loc) = _compileExpression(value);
-          compiledArgs.add((reg, loc, _inferExprType(value)));
-        } else {
-          final (reg, loc) = _loadAbsent();
-          compiledArgs.add((reg, loc, null));
-        }
-      }
-    } else {
-      // Getter/field — 无 function 节点，直接传位置参数。
-      _compileHostPositionalAndNamed(expr.arguments, compiledArgs);
     }
 
     final symbolName = _hostSymbolName(target);

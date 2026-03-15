@@ -18,6 +18,8 @@ dependencies:
   meta: ^1.11.0
 
 dev_dependencies:
+  dartic_cli:
+    path: packages/dartic_cli
   dartic_compiler:
     path: packages/dartic_compiler
   dartic_stdlib:

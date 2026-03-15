@@ -2905,7 +2905,6 @@ class DarticInterpreter {
           currentUpvalues = null;
 
           // Advance to callee frame.
-          final callerRBase = rBase;
           vBase = vs.sp;
           rBase = rs.sp;
           vs.sp += callee.valueRegCount;
@@ -3384,10 +3383,9 @@ class DarticInterpreter {
           // Instance/super tearoffs have upvalue[0] = receiver/this.
           if (upvalues.isNotEmpty) {
             final name = proto.name;
-            if (name != null &&
-                (name.startsWith('<instance-tearoff:') ||
-                    name.startsWith('<super-tearoff:') ||
-                    name.startsWith('<instance-instantiation:'))) {
+            if (name.startsWith('<instance-tearoff:') ||
+                name.startsWith('<super-tearoff:') ||
+                name.startsWith('<instance-instantiation:')) {
               final uv = upvalues[0];
               closure.boundReceiver =
                   uv.isOpen ? rs.read(uv.stackIndex) : uv.value;
@@ -4100,7 +4098,7 @@ class DarticInterpreter {
                 );
                 if (fieldValue != null) {
                   final (callNsmPushed, callNsmPC) =
-                      dispatchNoSuchMethod(fieldValue!, callInvocation, a);
+                      dispatchNoSuchMethod(fieldValue, callInvocation, a);
                   if (callNsmPushed) continue;
                   pc = callNsmPC;
                   continue;

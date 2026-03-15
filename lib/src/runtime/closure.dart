@@ -112,12 +112,10 @@ class DarticClosure {
     // Instance/super tearoff: same method name + identical receiver.
     // For instantiation thunks, also compare boundFTA so that
     // `a.id<int>` != `a.id<String>`.
-    if (name != null &&
-        otherName != null &&
-        (name.startsWith('<instance-tearoff:') ||
-            name.startsWith('<super-tearoff:') ||
-            name.startsWith('<instance-instantiation:') ||
-            name.startsWith('<super-instantiation:'))) {
+    if (name.startsWith('<instance-tearoff:') ||
+        name.startsWith('<super-tearoff:') ||
+        name.startsWith('<instance-instantiation:') ||
+        name.startsWith('<super-instantiation:')) {
       return name == otherName &&
           identical(boundReceiver, other.boundReceiver) &&
           _ftaEqual(boundFTA, other.boundFTA);
@@ -131,11 +129,9 @@ class DarticClosure {
       }
       // Constructor tearoff / generic constructor tearoff / instantiation thunk:
       // different funcIds but same name means same target.
-      if (name != null &&
-          otherName != null &&
-          (name.startsWith('<constructor-tearoff:') ||
-              name.startsWith('<generic-constructor-tearoff:') ||
-              name.startsWith('<instantiation-thunk:'))) {
+      if (name.startsWith('<constructor-tearoff:') ||
+          name.startsWith('<generic-constructor-tearoff:') ||
+          name.startsWith('<instantiation-thunk:')) {
         return name == otherName && _ftaEqual(boundFTA, other.boundFTA);
       }
     }
@@ -147,20 +143,18 @@ class DarticClosure {
   @override
   int get hashCode {
     final name = funcProto.name;
-    if (name != null) {
-      if (name.startsWith('<instance-tearoff:') ||
-          name.startsWith('<super-tearoff:') ||
-          name.startsWith('<instance-instantiation:') ||
-          name.startsWith('<super-instantiation:')) {
-        // Hash by method name + boundFTA (not receiver — avoids open-upvalue issues).
-        // Different type instantiations get different hashes.
-        return Object.hash(name, boundFTA?.length);
-      }
-      if (name.startsWith('<constructor-tearoff:') ||
-          name.startsWith('<generic-constructor-tearoff:') ||
-          name.startsWith('<instantiation-thunk:')) {
-        return name.hashCode;
-      }
+    if (name.startsWith('<instance-tearoff:') ||
+        name.startsWith('<super-tearoff:') ||
+        name.startsWith('<instance-instantiation:') ||
+        name.startsWith('<super-instantiation:')) {
+      // Hash by method name + boundFTA (not receiver — avoids open-upvalue issues).
+      // Different type instantiations get different hashes.
+      return Object.hash(name, boundFTA?.length);
+    }
+    if (name.startsWith('<constructor-tearoff:') ||
+        name.startsWith('<generic-constructor-tearoff:') ||
+        name.startsWith('<instantiation-thunk:')) {
+      return name.hashCode;
     }
     // Static tearoff (no upvalues, same funcId) — hash by funcId.
     if (upvalues.isEmpty) {
