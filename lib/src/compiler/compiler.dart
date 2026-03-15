@@ -781,7 +781,7 @@ class DarticCompiler {
       final classId = entry.value;
       final info = _classInfos[classId];
 
-      // BFS/DFS through the Kernel IR class hierarchy.
+      // DFS through the Kernel IR class hierarchy.
       final visited = <ir.Class>{};
       final queue = <ir.Class>[cls];
       while (queue.isNotEmpty) {

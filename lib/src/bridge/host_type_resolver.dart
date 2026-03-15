@@ -202,11 +202,23 @@ class HostTypeResolver {
               // subtype checker can resolve type args through the hierarchy.
               if (superInfo.typeParamCount > 0 &&
                   !cls.superTypeArgs.containsKey(superInfo.classId)) {
-                cls.superTypeArgs[superInfo.classId] = [
+                final directMapping = [
                   for (var i = 0; i < superInfo.typeParamCount; i++)
                     TypeParameterTemplate(
                         index: i, isFunctionTypeParam: false),
                 ];
+                cls.superTypeArgs[superInfo.classId] = directMapping;
+
+                // Transitivity: compose super's superTypeArgs into cls.
+                // If C has superTypeArgs[D] and we just built B→C, then
+                // B→D = substitute(C→D, B→C).
+                for (final grandEntry in superInfo.superTypeArgs.entries) {
+                  if (cls.superTypeArgs.containsKey(grandEntry.key)) continue;
+                  cls.superTypeArgs[grandEntry.key] = [
+                    for (final t in grandEntry.value)
+                      substituteTypeTemplate(t, directMapping),
+                  ];
+                }
               }
             }
           }
