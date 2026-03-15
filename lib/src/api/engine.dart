@@ -163,7 +163,6 @@ class DarticEngine {
     DarticClassInfo classInfo,
     int hostCid,
     DarticClassInfo hostInfo,
-    List<DarticClassInfo> classes,
   ) {
     // Get the dartic class's type param mapping to the host class.
     // If none exists, assume identity mapping (same type params in order).
@@ -180,33 +179,12 @@ class DarticEngine {
       } else {
         // Compose: substitute host's mapping with the dartic class's mapping.
         classInfo.superTypeArgs[supId] = [
-          for (final t in hostToSup) _substituteTemplate(t, classToHost),
+          for (final t in hostToSup) substituteTypeTemplate(t, classToHost),
         ];
       }
     }
   }
 
-  /// Substitutes [TypeParameterTemplate] references in [template] using
-  /// [mapping]. Used to compose chained superTypeArgs mappings.
-  static TypeTemplate _substituteTemplate(
-    TypeTemplate template,
-    List<TypeTemplate> mapping,
-  ) {
-    return switch (template) {
-      TypeParameterTemplate(:final index, isFunctionTypeParam: false)
-          when index < mapping.length =>
-        mapping[index],
-      InterfaceTypeTemplate(:final classId, :final typeArgs)
-          when typeArgs.isNotEmpty =>
-        InterfaceTypeTemplate(
-          classId: classId,
-          typeArgs: [
-            for (final a in typeArgs) _substituteTemplate(a, mapping),
-          ],
-        ),
-      _ => template,
-    };
-  }
 
   /// Shared module-installation logic for [loadBytecode] and [loadModule].
   void _installModule(DarticModule module) {
@@ -229,7 +207,7 @@ class DarticEngine {
           if (hostCid != null && hostCid < module.classes.length) {
             final hostInfo = module.classes[hostCid];
             classInfo.supertypeIds.addAll(hostInfo.supertypeIds);
-            _composeSuperTypeArgs(classInfo, hostCid, hostInfo, module.classes);
+            _composeSuperTypeArgs(classInfo, hostCid, hostInfo);
           }
         }
         if (classInfo.hostInterfaceNames != null) {
@@ -239,8 +217,7 @@ class DarticEngine {
             if (ifaceCid != null && ifaceCid < module.classes.length) {
               final hostInfo = module.classes[ifaceCid];
               classInfo.supertypeIds.addAll(hostInfo.supertypeIds);
-              _composeSuperTypeArgs(
-                  classInfo, ifaceCid, hostInfo, module.classes);
+              _composeSuperTypeArgs(classInfo, ifaceCid, hostInfo);
             }
           }
         }

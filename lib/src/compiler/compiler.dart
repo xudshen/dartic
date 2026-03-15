@@ -554,7 +554,7 @@ class DarticCompiler {
             final ourToAncestor = classInfo.superTypeArgs[directId];
             classInfo.superTypeArgs[supId] = [
               for (final t in ancestorMapping)
-                _composeTemplate(t, ourToAncestor),
+                substituteTypeTemplate(t, ourToAncestor),
             ];
             break;
           }
@@ -890,7 +890,7 @@ class DarticCompiler {
               // Compose: cls→grand = substitute sup→grand with cls→sup.
               info.superTypeArgs[grandId] = [
                 for (final t in supToGrand)
-                  _substituteSuperTypeArg(t, clsToSup),
+                  substituteTypeTemplate(t, clsToSup),
               ];
             }
             changed = true;
@@ -900,27 +900,6 @@ class DarticCompiler {
     }
   }
 
-  /// Substitutes type parameter references in [template] using [mapping].
-  /// E.g., TypeParam(0) with mapping [InterfaceType(int)] → InterfaceType(int).
-  static TypeTemplate _substituteSuperTypeArg(
-    TypeTemplate template,
-    List<TypeTemplate> mapping,
-  ) {
-    return switch (template) {
-      TypeParameterTemplate(:final index, isFunctionTypeParam: false)
-          when index < mapping.length =>
-        mapping[index],
-      InterfaceTypeTemplate(:final classId, :final typeArgs)
-          when typeArgs.isNotEmpty =>
-        InterfaceTypeTemplate(
-          classId: classId,
-          typeArgs: [
-            for (final a in typeArgs) _substituteSuperTypeArg(a, mapping),
-          ],
-        ),
-      _ => template,
-    };
-  }
 
   // ── Per-function state management ──
 
@@ -1941,32 +1920,6 @@ class DarticCompiler {
     final globalIndex = _fieldToGlobalIndex[field.getterReference]!;
     _globalInitializerIds[globalIndex] =
         _compileGlobalInitializer(field, globalIndex);
-  }
-
-  /// Substitutes type parameter references in [template] using [substitution].
-  ///
-  /// Used by Pass 1e to compose transitive SuperTypeMap entries.
-  /// If a template is `TypeParameterTemplate(index: i, ITA)`, it is replaced
-  /// by `substitution[i]`. Concrete templates pass through unchanged.
-  /// If [substitution] is null or empty, returns [template] as-is.
-  TypeTemplate _composeTemplate(
-    TypeTemplate template,
-    List<TypeTemplate>? substitution,
-  ) {
-    if (substitution == null || substitution.isEmpty) return template;
-    return switch (template) {
-      TypeParameterTemplate(isFunctionTypeParam: false, index: final i)
-          when i < substitution.length =>
-        substitution[i],
-      InterfaceTypeTemplate(typeArgs: final args) when args.isNotEmpty =>
-        InterfaceTypeTemplate(
-          classId: template.classId,
-          typeArgs: [for (final a in args) _composeTemplate(a, substitution)],
-        ),
-      NullableTemplate(inner: final inner) =>
-        NullableTemplate(inner: _composeTemplate(inner, substitution)),
-      _ => template,
-    };
   }
 
   bool _isHostLibrary(ir.Library lib) {

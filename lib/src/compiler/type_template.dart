@@ -649,3 +649,32 @@ class NullableTemplate extends TypeTemplate {
   @override
   String toString() => 'NullableTemplate($inner)';
 }
+
+// ── Shared substitution helper ──
+
+/// Substitutes [TypeParameterTemplate] references in [template] using
+/// positional [mapping]. Handles all template types including
+/// [NullableTemplate] and nested [InterfaceTypeTemplate] type args.
+///
+/// Used for composing chained superTypeArgs mappings (e.g., A→B + B→C = A→C).
+/// If [mapping] is null or empty, returns [template] as-is.
+TypeTemplate substituteTypeTemplate(
+  TypeTemplate template,
+  List<TypeTemplate>? mapping,
+) {
+  if (mapping == null || mapping.isEmpty) return template;
+  return switch (template) {
+    TypeParameterTemplate(isFunctionTypeParam: false, index: final i)
+        when i < mapping.length =>
+      mapping[i],
+    InterfaceTypeTemplate(classId: final cid, typeArgs: final args)
+        when args.isNotEmpty =>
+      InterfaceTypeTemplate(
+        classId: cid,
+        typeArgs: [for (final a in args) substituteTypeTemplate(a, mapping)],
+      ),
+    NullableTemplate(inner: final inner) =>
+      NullableTemplate(inner: substituteTypeTemplate(inner, mapping)),
+    _ => template,
+  };
+}
