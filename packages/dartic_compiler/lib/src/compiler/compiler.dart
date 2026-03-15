@@ -4,17 +4,12 @@ import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/core_types.dart' show CoreTypes;
 import 'package:kernel/type_algebra.dart' as type_algebra;
 
-import '../api/dartic_absent.dart';
-import '../bytecode/constant_pool.dart';
-import '../bytecode/encoding.dart';
-import '../bytecode/module.dart';
-import '../bytecode/opcodes.dart';
-import '../runtime/class_info.dart';
+import 'package:dartic/dartic_internal.dart';
+
 import 'bytecode_emitter.dart';
 import 'register_allocator.dart';
 import 'scope.dart';
 import 'type_converter.dart';
-import '../types/type_template.dart';
 
 part 'compiler_classes.dart';
 part 'compiler_closures.dart';

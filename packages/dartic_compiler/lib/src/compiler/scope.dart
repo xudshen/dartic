@@ -1,9 +1,9 @@
 import 'package:kernel/ast.dart' as ir;
 
-import '../runtime/class_info.dart' show StackKind;
+import 'package:dartic/dartic_internal.dart' show StackKind;
 import 'register_allocator.dart';
 
-export '../runtime/class_info.dart' show StackKind;
+export 'package:dartic/dartic_internal.dart' show StackKind;
 
 /// A variable binding within a [Scope].
 class VarBinding {

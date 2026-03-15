@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import '../bytecode/encoding.dart';
+import 'package:dartic/dartic_internal.dart';
 
 /// Low-level bytecode emission buffer for the 64-bit fixed-width ISA.
 ///

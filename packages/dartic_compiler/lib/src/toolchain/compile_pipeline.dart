@@ -14,7 +14,8 @@ import 'dart:typed_data';
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 
-import '../bytecode/serializer.dart';
+import 'package:dartic/dartic_internal.dart';
+
 import '../compiler/compiler.dart';
 import '../compiler/package_discovery.dart';
 import 'sdk_resolver.dart';
