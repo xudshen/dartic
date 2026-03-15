@@ -1,4 +1,5 @@
-import 'package:dartic/dartic.dart' show SdkNotFoundError, SdkResolver;
+import 'package:dartic_compiler/dartic_compiler.dart'
+    show SdkNotFoundError, SdkResolver;
 
 /// A fake SdkResolver that succeeds for both SDKs.
 class FakeSuccessSdkResolver extends SdkResolver {

@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart' show CompilePipeline;
+import 'package:dartic_compiler/dartic_compiler.dart' show CompilePipeline;
 import 'package:dartic_cli/src/commands/run_command.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:test/test.dart';
