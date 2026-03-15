@@ -617,6 +617,7 @@ class DarticInterpreter {
         proto: proto,
         args: args,
         upvalues: closure.upvalues,
+        fta: closure.boundFTA,
       );
       // Auto-wrap DarticClosure returns so host code can call them as Functions.
       // This is the host→dartic bridge exit point; DarticClosure is not a Dart
@@ -727,6 +728,38 @@ class DarticInterpreter {
     return null;
   }
 
+  /// Resolves default FTA (Function Type Arguments) for a generic function
+  /// when called without explicit type instantiation.
+  ///
+  /// Per Dart spec, uninstantiated type params default to their "instantiation
+  /// to bounds" value. For unconstrained params (`<X>`, kernel bound=Object?),
+  /// the default is `dynamic`; for explicitly bounded params (`<X extends num>`),
+  /// the default is the bound itself.
+  ///
+  /// Returns null if the function is not generic or the registry is unavailable.
+  List<DarticType>? _resolveDefaultFTA(DarticFuncProto proto) {
+    final template = proto.typeTemplate;
+    if (template is! FunctionTypeTemplate) return null;
+    final bounds = template.typeParamBounds;
+    if (bounds.isEmpty) return null;
+    final reg = _activeTypeRegistry;
+    if (reg == null) return null;
+    final result = <DarticType>[];
+    for (final bound in bounds) {
+      final resolved = resolveType(bound, null, null, reg);
+      // Kernel encodes unconstrained type params with bound = Object?, but
+      // Dart's instantiation-to-bound for function type params uses `dynamic`
+      // as the default (not Object?). Substitute accordingly.
+      // Types are interned, so identity comparison works.
+      if (identical(resolved, reg.objectNullableType)) {
+        result.add(reg.dynamicType);
+      } else {
+        result.add(resolved);
+      }
+    }
+    return result;
+  }
+
   /// Shared implementation for [invokeClosure] and [_callDarticMethod].
   ///
   /// Pushes a HOST_BOUNDARY sentinel frame, allocates a callee frame, routes
@@ -739,6 +772,7 @@ class DarticInterpreter {
     Object? receiver,
     List<Upvalue>? upvalues,
     List<DarticType>? ita,
+    List<DarticType>? fta,
   }) {
     final vs = valueStack;
     final rs = refStack;
@@ -803,6 +837,21 @@ class DarticInterpreter {
             rs.write(rBase + 0, rtType.typeArgs);
           }
         }
+      }
+    }
+
+    // Load FTA (Function Type Arguments) for generic closures.
+    // When a generic closure is called with explicit FTA (via
+    // BIND_CLOSURE_FTA), invokeClosure passes it here. For bare generic
+    // tearoffs called without type instantiation, resolve default FTA from
+    // the function's type parameter bounds (Dart spec: uninstantiated type
+    // params default to their declared bounds).
+    if (fta != null) {
+      rs.write(rBase + 1, fta);
+    } else {
+      final defaultFta = _resolveDefaultFTA(proto);
+      if (defaultFta != null) {
+        rs.write(rBase + 1, defaultFta);
       }
     }
 
@@ -1678,6 +1727,16 @@ class DarticInterpreter {
     //
     // Side effects: mutates vBase, rBase, code, currentUpvalues via closure.
     int unwindToHandler(int startPC, Object? exception, Object? stackTrace) {
+      // Dart spec: Error.stackTrace is set when the error is first thrown.
+      // We use Error.throwWithStackTrace in a try-catch to set the
+      // VM-internal _stackTrace field on the host Error object.
+      if (exception is Error &&
+          exception.stackTrace == null &&
+          stackTrace is StackTrace) {
+        try {
+          Error.throwWithStackTrace(exception, stackTrace);
+        } catch (_) {}
+      }
       var searchPC = startPC;
       while (true) {
         // Guard: if we've unwound to a HOST_BOUNDARY sentinel frame,
@@ -2317,6 +2376,17 @@ class DarticInterpreter {
           final boundFTA = closure.boundFTA;
           if (boundFTA != null) {
             rs.write(rBase + 1, boundFTA);
+          } else if (rs.read(rBase + 1) == null) {
+            // Bare generic tearoff called without type instantiation AND
+            // the caller didn't place FTA via CREATE_TYPE_ARGS. Only then
+            // resolve defaults from type param bounds. The null check is
+            // critical: the compiler may write FTA directly to the callee
+            // frame area via CREATE_TYPE_ARGS before CALL, which must not
+            // be overwritten by the default.
+            final fta = _resolveDefaultFTA(callee);
+            if (fta != null) {
+              rs.write(rBase + 1, fta);
+            }
           }
 
           // Reroute args from all-ref layout to callee's expected layout.
