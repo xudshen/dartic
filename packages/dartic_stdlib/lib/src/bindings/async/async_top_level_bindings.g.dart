@@ -24,7 +24,7 @@ abstract final class AsyncTopLevelBindings {
       identical(args[2], darticAbsent) ? null : args[2] as ZoneSpecification?;
   final onError = identical(args[3], darticAbsent) ? null : args[3] as Function?;
   // ignore: deprecated_member_use
-  return runZoned(
+  return runZoned<Object?>(
     () => body(),
     zoneValues: zoneValues != null
         ? Map<Object?, Object?>.from(zoneValues)
@@ -41,7 +41,7 @@ abstract final class AsyncTopLevelBindings {
   final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
   final zoneSpec =
       identical(args[3], darticAbsent) ? null : args[3] as ZoneSpecification?;
-  return runZonedGuarded(
+  return runZonedGuarded<Object?>(
     () => body(),
     (error, stack) => onError(error, stack),
     zoneValues: zoneValues != null

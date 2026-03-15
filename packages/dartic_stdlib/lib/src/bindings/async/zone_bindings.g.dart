@@ -19,6 +19,11 @@ abstract final class ZoneBindings {
     );
     ctx.registerBinding('dart:async::Zone::root#0', (args) => Zone.root);
     ctx.registerBinding('dart:async::Zone::current#0', (args) => Zone.current);
+
+    // _RootZone
+    for (final e in rootZoneMethodMap().entries) {
+      ctx.registerBinding('dart:async::_RootZone::${e.key}', e.value);
+    }
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -150,5 +155,9 @@ abstract final class ZoneBindings {
             return zone.errorCallback(
                 args[1] as Object, args[2] as StackTrace?);
         },
+      };
+
+  static Map<String, Object? Function(List<Object?>)> rootZoneMethodMap() => {
+        '_#fromFields#0': (args) => Zone.root,
       };
 }

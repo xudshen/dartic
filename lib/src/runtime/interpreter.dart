@@ -610,15 +610,38 @@ class DarticInterpreter {
     final wasExecuting = _isExecuting;
     _isExecuting = true;
     try {
-      return _runNestedDispatch(
+      final result = _runNestedDispatch(
         module: module,
         proto: proto,
         args: args,
         upvalues: closure.upvalues,
       );
+      // Auto-wrap DarticClosure returns so host code can call them as Functions.
+      // This is the host→dartic bridge exit point; DarticClosure is not a Dart
+      // Function and must be wrapped in a ClosureAdapter proxy of matching arity.
+      if (result is DarticClosure) {
+        return _wrapClosure(result);
+      }
+      return result;
     } finally {
       _isExecuting = wasExecuting;
     }
+  }
+
+  /// Wraps a [DarticClosure] as a host-callable [Function] with identity cache.
+  ///
+  /// Identity-cached so that:
+  /// - The same [DarticClosure] always produces the same [Function] instance
+  ///   (enabling addListener/removeListener patterns).
+  /// - [_unwrapClosureProxy] can recover the original [DarticClosure] for
+  ///   `is`/`as` type checks (INSTANCE_OF / CAST).
+  Function _wrapClosure(DarticClosure closure) {
+    final cached = _closureProxyCache[closure];
+    if (cached != null) return cached;
+    final proxy = ClosureAdapter(this, closure).createProxy();
+    _closureProxyCache[closure] = proxy;
+    _closureReverseCache[proxy] = closure;
+    return proxy;
   }
 
   /// Calls a DarticObject method synchronously with proper result boxing.
@@ -854,29 +877,8 @@ class DarticInterpreter {
   /// Dart [Function] instance, enabling addListener/removeListener patterns.
   void _wrapClosureArgs(List<Object?> args) {
     for (var i = 0; i < args.length; i++) {
-      final arg = args[i];
-      if (arg is DarticClosure) {
-        var cached = _closureProxyCache[arg];
-        if (cached != null) {
-          args[i] = cached;
-          continue;
-        }
-        final proxy = ClosureAdapter(this, arg);
-        cached = switch (arg.funcProto.paramCount) {
-          0 => proxy.proxy0(),
-          1 => proxy.proxy1(),
-          2 => proxy.proxy2(),
-          3 => proxy.proxy3(),
-          4 => proxy.proxy4(),
-          5 => proxy.proxy5(),
-          6 => proxy.proxy6(),
-          _ => throw DarticError(
-              'ClosureAdapter: unsupported arity '
-              '${arg.funcProto.paramCount}'),
-        };
-        _closureProxyCache[arg] = cached;
-        _closureReverseCache[cached] = arg;
-        args[i] = cached;
+      if (args[i] is DarticClosure) {
+        args[i] = _wrapClosure(args[i] as DarticClosure);
       }
     }
   }
