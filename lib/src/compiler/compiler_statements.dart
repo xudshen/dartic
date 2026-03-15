@@ -798,11 +798,15 @@ extension on DarticCompiler {
           'for ${decl.name}',
         );
 
-        // If the initializer is a VariableGet, the returned register belongs to
-        // an existing variable. We must allocate a fresh register and copy the
-        // value so the new variable does not alias the source. Without this, code
-        // like `int a = 1; int b = a; b = 5;` would corrupt `a`.
-        if (decl.initializer is ir.VariableGet) {
+        // If the initializer is a VariableGet or VariableSet, the returned
+        // register belongs to an existing variable. We must allocate a fresh
+        // register and copy the value so the new variable does not alias the
+        // source. Without this:
+        // - VariableGet: `int a = 1; int b = a; b = 5;` would corrupt `a`
+        // - VariableSet: `int a; int b = a = 1; a = 2;` would corrupt `b`
+        //   (CFE let-bindings for null-aware elements hit this pattern)
+        if (decl.initializer is ir.VariableGet ||
+            decl.initializer is ir.VariableSet) {
           final binding = _scope.declare(decl, kind);
           final loc = kind.isValue ? ResultLoc.value : ResultLoc.ref;
           _emitMove(binding.reg, initReg, loc);

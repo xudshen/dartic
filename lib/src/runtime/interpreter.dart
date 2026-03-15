@@ -3029,14 +3029,15 @@ class DarticInterpreter {
           final objType = extractType(_unwrapClosureProxy(value), reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           var result = checker.isSubtypeOf(objType, targetType);
           // Fallback for host objects with multiple inheritance branches.
-          // extractType returns ONE type (e.g., Map for _Map), but the object
-          // may also satisfy other interfaces (e.g., LinkedHashMap). Only
-          // applies when classIds differ — same classId with type arg mismatch
-          // (e.g., List<int> is List<String>) must NOT use this fallback.
-          // Also skip when the object has a TAG_TYPE-tagged precise type,
-          // because the SubtypeChecker already has complete type arg info —
-          // the fallback would ignore type args and produce false positives
-          // (e.g., LinkedHashSet<num> is Set<int> → true via matchesClassId).
+          // extractType returns ONE type (e.g., Set for a set literal), but
+          // the actual host object may also satisfy other interfaces (e.g.,
+          // LinkedHashSet). Only applies when classIds differ — same classId
+          // with type arg mismatch must NOT use this fallback.
+          //
+          // When TAG_TYPE is present (objType has precise type args), we
+          // allow the class identity fallback but ALSO verify type args are
+          // compatible. This handles `{1,2} is LinkedHashSet<int>`: TAG_TYPE
+          // says Set<int>, host is LinkedHashSet, and int <: int passes.
           if (!result &&
               value != null &&
               value is! DarticObject &&
@@ -3044,10 +3045,32 @@ class DarticInterpreter {
               hostTypeResolver != null &&
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
-                  objType.classId != targetType.classId) &&
-              _hostTypeTable.lookup(value) == null) {
-            result = hostTypeResolver!.matchesClassId(
-                value, targetType.classId);
+                  objType.classId != targetType.classId)) {
+            final tagged = _hostTypeTable.lookup(value);
+            if (tagged == null) {
+              // No TAG_TYPE — pure class identity check (type args unknown).
+              result = hostTypeResolver!.matchesClassId(
+                  value, targetType.classId);
+            } else if (tagged is DarticInterfaceType &&
+                hostTypeResolver!.matchesClassId(
+                    value, targetType.classId)) {
+              // TAG_TYPE present + host matches target class. Verify type
+              // args: the tag's type args (on the abstract class) must be
+              // subtypes of the target's type args. Since Set<E>→LinkedHashSet<E>
+              // has identity type param mapping, we compare directly.
+              if (targetType.typeArgs.isEmpty) {
+                result = true;
+              } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
+                result = true;
+                for (var i = 0; i < targetType.typeArgs.length; i++) {
+                  if (!checker.isSubtypeOf(
+                      tagged.typeArgs[i], targetType.typeArgs[i])) {
+                    result = false;
+                    break;
+                  }
+                }
+              }
+            }
           }
           vs.writeInt(vBase + a, result ? 1 : 0);
 
@@ -3068,12 +3091,34 @@ class DarticInterpreter {
               hostTypeResolver != null &&
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
-                  objType.classId != targetType.classId) &&
-              _hostTypeTable.lookup(value) == null &&
-              hostTypeResolver!.matchesClassId(
-                  value, targetType.classId)) {
-            // Host object matches via predicate (multi-inheritance fallback).
-            rs.write(rBase + a, value);
+                  objType.classId != targetType.classId)) {
+            // Host object multi-inheritance fallback (same as INSTANCE_OF).
+            final tagged = _hostTypeTable.lookup(value);
+            bool castOk = false;
+            if (tagged == null) {
+              castOk = hostTypeResolver!.matchesClassId(
+                  value, targetType.classId);
+            } else if (tagged is DarticInterfaceType &&
+                hostTypeResolver!.matchesClassId(
+                    value, targetType.classId)) {
+              if (targetType.typeArgs.isEmpty) {
+                castOk = true;
+              } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
+                castOk = true;
+                for (var i = 0; i < targetType.typeArgs.length; i++) {
+                  if (!checker.isSubtypeOf(
+                      tagged.typeArgs[i], targetType.typeArgs[i])) {
+                    castOk = false;
+                    break;
+                  }
+                }
+              }
+            }
+            if (castOk) {
+              rs.write(rBase + a, value);
+            } else {
+              pc = unwindToHandler(pc - 1, DarticCastError(objType, targetType), DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
+            }
           } else {
             // Route through unwindToHandler so bytecode-level try-catch
             // blocks can catch the TypeError (e.g., Expect.throws).

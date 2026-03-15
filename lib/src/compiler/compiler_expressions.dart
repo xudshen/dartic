@@ -2788,8 +2788,16 @@ extension on DarticCompiler {
     // Load `this` from upvalue[0].
     _emitter.emitABC(Op.loadUpvalue, 2, 0, 0);
 
-    // Emit FTA for the call.
-    _emitFTAForCall(typeArgs);
+    // Forward FTA from thunk's r1 (bound via _emitBindClosureFTA at the outer
+    // call site where ITA is available). The thunk itself has no ITA — it's a
+    // closure, not a class method — so _emitFTAForCall(typeArgs) would crash
+    // trying to read ITA for class type parameter references like T.
+    if (typeArgs.isNotEmpty) {
+      final ftaMovePC = _emitter.emitPlaceholder();
+      _pendingArgMoves.add(
+        (pc: ftaMovePC, srcReg: 1, argIdx: 1, loc: ResultLoc.ref),
+      );
+    }
 
     // Pass `this` through for CALL_SUPER.
     _emitThisPassthrough();
