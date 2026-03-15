@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
+      - name: Clone vendor/dart-sdk (kernel dependency)
+        run: |
+          git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+            https://github.com/dart-lang/sdk.git vendor/dart-sdk
+      - name: Install dependencies
+        run: dart pub get
+      - name: Analyze dartic
+        run: dart analyze lib/
+      - name: Analyze dartic_compiler
+        run: dart analyze packages/dartic_compiler/lib/
+      - name: Analyze dartic_cli
+        run: dart analyze packages/dartic_cli/lib/
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
+      - name: Clone vendor/dart-sdk (kernel dependency)
+        run: |
+          git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+            https://github.com/dart-lang/sdk.git vendor/dart-sdk
+      - name: Install dependencies
+        run: dart pub get
+      - name: Run tests
+        run: dart test --reporter expanded
+
+  build-cli:
+    name: Build CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.10.7"
+      - name: Clone vendor/dart-sdk (kernel dependency)
+        run: |
+          git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+            https://github.com/dart-lang/sdk.git vendor/dart-sdk
+      - name: Install dependencies
+        run: dart pub get
+      - name: Compile CLI binary
+        run: dart compile exe packages/dartic_cli/bin/dartic.dart -o dartic
+      - name: Verify CLI binary
+        run: |
+          ./dartic version
+          ./dartic --help
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dartic-linux-x64
+          path: dartic
