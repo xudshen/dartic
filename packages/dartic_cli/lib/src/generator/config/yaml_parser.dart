@@ -72,11 +72,14 @@ GeneratorConfig _parseConfig(YamlMap yaml, [String? configDir]) {
           .toList() ??
       [];
 
+  final pluginName = yaml['plugin_name'] as String?;
+
   return GeneratorConfig(
     outputBindings: outputBindings,
     outputPlugins: outputPlugins,
     libraries: libraries,
     customImports: customImports,
+    pluginName: pluginName,
   );
 }
 

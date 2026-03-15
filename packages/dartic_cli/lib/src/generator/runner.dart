@@ -47,9 +47,50 @@ class Runner {
   /// Core pipeline: config → analyze → emit → write.
   Future<void> _processConfig(GeneratorConfig config) async {
     final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
+
+    // Collect all binding class/file names across libraries for combined plugin.
+    final allBindingClassNames = <String>[];
+    final allBindingFileNames = <String>[];
+    final allTopLevelClassNames = <String>[];
+    final allTopLevelFileNames = <String>[];
+
     try {
       for (final library in config.libraries) {
-        await _processLibrary(config, library, analyzer);
+        final result = await _processLibrary(config, library, analyzer);
+        allBindingClassNames.addAll(result.bindingClassNames);
+        allBindingFileNames.addAll(result.bindingFileNames);
+        if (result.topLevelClassName != null) {
+          allTopLevelClassNames.add(result.topLevelClassName!);
+          allTopLevelFileNames.add(result.topLevelFileName!);
+        }
+      }
+
+      // Generate combined plugin if plugin_name is set.
+      if (config.pluginName != null) {
+        final bindingsRelPath = p.relative(
+          p.normalize(p.absolute(config.outputBindings)),
+          from: p.normalize(p.absolute(config.outputPlugins)),
+        );
+        final allClassNames = [
+          ...allBindingClassNames,
+          ...allTopLevelClassNames,
+        ];
+        final allFileNames = [
+          ...allBindingFileNames,
+          ...allTopLevelFileNames,
+        ];
+        final pluginSource = plugin_emitter.emitPluginFile(
+          libraryUri: config.pluginName!,
+          pluginName: config.pluginName!,
+          bindingClassNames: allClassNames,
+          bindingFileNames: allFileNames,
+          hasTopLevel: false, // Already included in allClassNames
+          customImports: _nullIfEmpty(config.customImports),
+          bindingsImportPrefix: bindingsRelPath,
+        );
+        final pluginFileName =
+            '${_toSnakeCase(config.pluginName!)}_plugin.g.dart';
+        _writeFile(config.outputPlugins, pluginFileName, pluginSource);
       }
     } finally {
       await analyzer.dispose();
@@ -57,7 +98,8 @@ class Runner {
   }
 
   /// Processes a single library: analyzes classes/functions, emits files.
-  Future<void> _processLibrary(
+  /// Returns binding info for combined plugin generation.
+  Future<_LibraryResult> _processLibrary(
     GeneratorConfig config,
     LibraryConfig library,
     TypeAnalyzer analyzer,
@@ -196,27 +238,36 @@ class Runner {
       _writeFile(config.outputBindings, topLevelFileName, source);
     }
 
-    // ── Generate plugin file ──────────────────────────────────────────
-    final pluginName = _libraryToPluginName(library.uri);
-    // Compute relative import path from plugins dir to bindings dir.
-    final bindingsRelPath = p.relative(
-      p.normalize(p.absolute(config.outputBindings)),
-      from: p.normalize(p.absolute(config.outputPlugins)),
-    );
-    final pluginSource = plugin_emitter.emitPluginFile(
-      libraryUri: library.uri,
-      pluginName: pluginName,
+    // ── Generate per-library plugin file (only when no combined plugin) ──
+    if (config.pluginName == null) {
+      final pluginName = _libraryToPluginName(library.uri);
+      final bindingsRelPath = p.relative(
+        p.normalize(p.absolute(config.outputBindings)),
+        from: p.normalize(p.absolute(config.outputPlugins)),
+      );
+      final pluginSource = plugin_emitter.emitPluginFile(
+        libraryUri: library.uri,
+        pluginName: pluginName,
+        bindingClassNames: bindingClassNames,
+        bindingFileNames: bindingFileNames,
+        hasTopLevel: hasTopLevel,
+        topLevelBindingClassName: topLevelBindingClassName,
+        topLevelFileName: topLevelFileName,
+        customImports: _nullIfEmpty(config.customImports),
+        bindingsImportPrefix: bindingsRelPath,
+      );
+
+      final pluginFileName =
+          '${_libraryShortName(library.uri)}_plugin.g.dart';
+      _writeFile(config.outputPlugins, pluginFileName, pluginSource);
+    }
+
+    return _LibraryResult(
       bindingClassNames: bindingClassNames,
       bindingFileNames: bindingFileNames,
-      hasTopLevel: hasTopLevel,
-      topLevelBindingClassName: topLevelBindingClassName,
+      topLevelClassName: topLevelBindingClassName,
       topLevelFileName: topLevelFileName,
-      customImports: _nullIfEmpty(config.customImports),
-      bindingsImportPrefix: bindingsRelPath,
     );
-
-    final pluginFileName = '${_libraryShortName(library.uri)}_plugin.g.dart';
-    _writeFile(config.outputPlugins, pluginFileName, pluginSource);
   }
 
   // ── TypeInfo helpers ─────────────────────────────────────────────────
@@ -375,4 +426,19 @@ class Runner {
     final file = File('${dir.path}/$fileName');
     file.writeAsStringSync(content);
   }
+}
+
+/// Result of processing a single library, used for combined plugin generation.
+class _LibraryResult {
+  final List<String> bindingClassNames;
+  final List<String> bindingFileNames;
+  final String? topLevelClassName;
+  final String? topLevelFileName;
+
+  _LibraryResult({
+    required this.bindingClassNames,
+    required this.bindingFileNames,
+    this.topLevelClassName,
+    this.topLevelFileName,
+  });
 }

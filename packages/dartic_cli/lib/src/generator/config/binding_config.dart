@@ -16,11 +16,19 @@ class GeneratorConfig {
   /// like `dartic_flutter` that need `package:dartic/dartic.dart`.
   final List<String> customImports;
 
+  /// When set, generates a single combined plugin aggregating all libraries
+  /// instead of per-library plugins. The value is the PascalCase prefix
+  /// (e.g. `'FabService'` → generates `FabServicePlugin`).
+  ///
+  /// When null (default), each library gets its own plugin file.
+  final String? pluginName;
+
   GeneratorConfig({
     required this.outputBindings,
     required this.outputPlugins,
     required this.libraries,
     this.customImports = const [],
+    this.pluginName,
   });
 }
 
