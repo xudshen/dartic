@@ -25,7 +25,6 @@ output_plugins: "../lib/src/plugins"
 custom_imports:
   - "package:dartic/dartic.dart"
   - "package:dartic/dartic_internal.dart"
-  - "package:dartic/src/runtime/future_box.dart"
 
 libraries:
   - uri: dart:async

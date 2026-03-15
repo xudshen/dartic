@@ -54,17 +54,13 @@ final engine = DarticEngine(plugins: [
 
 ## Install the CLI
 
+Download the precompiled binary from [GitHub Releases](https://github.com/xudshen/dartic/releases):
+
 ```bash
-dart pub global activate dartic_cli
+# macOS / Linux
+curl -fsSL https://github.com/xudshen/dartic/releases/latest/download/install.sh | sh
 
-# Compile Dart source to bytecode
-dartic compile lib/app.dart -o app.darb
-
-# Run bytecode directly
-dartic run app.darb
-
-# Inspect bytecode
-dartic dump app.darb --full
+# Or download manually from the releases page
 ```
 
 ## Dart Subset Support

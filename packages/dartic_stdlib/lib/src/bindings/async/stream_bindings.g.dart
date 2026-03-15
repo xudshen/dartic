@@ -6,7 +6,6 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic/src/runtime/future_box.dart';
 import 'dart:async';
 
 class _$Stream extends Stream implements DarticObjectHolder {

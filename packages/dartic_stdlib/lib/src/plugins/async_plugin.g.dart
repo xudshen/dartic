@@ -7,7 +7,6 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic/src/runtime/future_box.dart';
 import '../bindings/async/future_bindings.g.dart';
 import '../bindings/async/completer_bindings.g.dart';
 import '../bindings/async/stream_bindings.g.dart';
