@@ -251,6 +251,127 @@ void main() {
     });
   });
 
+  group('createProxy', () {
+    test('selects fixed proxy for all-required params', () {
+      final proto = DarticFuncProto(
+        funcId: 1,
+        name: 'twoArgs',
+        bytecode: Uint64List.fromList([
+          encodeABC(Op.moveRef, 0, 3, 0),
+          encodeABC(Op.returnRef, 0, 0, 0),
+        ]),
+        valueRegCount: 0,
+        refRegCount: 4,
+        paramCount: 2,
+        requiredPositionalCount: 2,
+        positionalParamCount: 2,
+      );
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+      final fn = ClosureAdapter(interp, closure).createProxy();
+
+      // Fixed proxy2: exactly 2 args required.
+      expect(fn('a', 'b'), equals('b'));
+    });
+
+    test('selects flex proxy for optional params', () {
+      // Closure: ([Object? a]) — 0 required, 1 total.
+      final proto = DarticFuncProto(
+        funcId: 1,
+        name: 'optionalOne',
+        bytecode: Uint64List.fromList([
+          encodeABC(Op.returnNull, 0, 0, 0),
+        ]),
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 1,
+        requiredPositionalCount: 0,
+        positionalParamCount: 1,
+      );
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+      final fn = ClosureAdapter(interp, closure).createProxy();
+
+      // Flex proxy: can be called with 0 or 1 args.
+      expect(fn(), isNull); // 0 args — like scheduleMicrotask
+      expect(fn(42), isNull); // 1 arg — like Future.then
+    });
+
+    test('flex proxy passes correct args to invokeClosure', () {
+      // Identity closure that returns its first arg.
+      final proto = _identityProto();
+      // Override to have 1 optional param (0 required, 1 total).
+      final flexProto = DarticFuncProto(
+        funcId: proto.funcId,
+        name: proto.name,
+        bytecode: proto.bytecode,
+        valueRegCount: proto.valueRegCount,
+        refRegCount: proto.refRegCount,
+        paramCount: 1,
+        requiredPositionalCount: 0,
+        positionalParamCount: 1,
+      );
+      final interp = _initInterpreter(flexProto);
+      final closure = DarticClosure(funcProto: flexProto, upvalues: []);
+      final fn = ClosureAdapter(interp, closure).createProxy();
+
+      // Called with 1 arg: passes [arg] to invokeClosure.
+      expect(fn('hello'), equals('hello'));
+      expect(fn(99), equals(99));
+    });
+
+    test('flex proxy identity cached via wrapClosureArgs', () {
+      final proto = DarticFuncProto(
+        funcId: 1,
+        name: 'flex',
+        bytecode: Uint64List.fromList([
+          encodeABC(Op.returnNull, 0, 0, 0),
+        ]),
+        valueRegCount: 0,
+        refRegCount: 3,
+        paramCount: 1,
+        requiredPositionalCount: 0,
+        positionalParamCount: 1,
+      );
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+
+      final args1 = <Object?>[closure];
+      final args2 = <Object?>[closure];
+      interp.wrapClosureArgs(args1);
+      interp.wrapClosureArgs(args2);
+
+      expect(identical(args1[0], args2[0]), isTrue,
+          reason: 'flex proxy should be identity-cached');
+      // Both 0-arg and 1-arg calls work on the cached proxy.
+      final fn = args1[0] as Function;
+      expect(fn(), isNull);
+      expect(fn(42), isNull);
+    });
+
+    test('throws for unsupported flex arity >= 4', () {
+      final proto = DarticFuncProto(
+        funcId: 1,
+        name: 'tooMany',
+        bytecode: Uint64List.fromList([
+          encodeABC(Op.returnNull, 0, 0, 0),
+        ]),
+        valueRegCount: 0,
+        refRegCount: 6,
+        paramCount: 4,
+        requiredPositionalCount: 0,
+        positionalParamCount: 4,
+      );
+      final interp = _initInterpreter(proto);
+      final closure = DarticClosure(funcProto: proto, upvalues: []);
+
+      expect(
+        () => ClosureAdapter(interp, closure).createProxy(),
+        throwsArgumentError,
+      );
+    });
+  });
+
   group('closure proxy identity cache', () {
     test('same DarticClosure produces identical Function across calls', () {
       final proto = _identityProto();
