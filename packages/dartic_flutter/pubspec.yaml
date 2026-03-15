@@ -13,6 +13,9 @@ dependencies:
   dartic:
     path: ../../
 
+dartic:
+  role: plugin
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,0 @@
-# Dartic Flutter plugin — provides runtime bindings for Flutter types.
-# The compiler skips all packages without role: compilable by default,
-# so there is no need to enumerate host packages.
-role: plugin
