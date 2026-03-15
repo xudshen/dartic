@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:dartic/src/bytecode/deserializer.dart';
-import 'package:dartic/src/bytecode/disassembler.dart';
+import 'package:dartic/dartic_internal.dart'
+    show DarticDeserializer, DarticDisassembler;
 
 import '../cli_error.dart';
 

@@ -3,12 +3,11 @@ import 'dart:typed_data';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic/dartic.dart'
+    show DarticConfig, DarticEngine, DarticError;
+import 'package:dartic_compiler/dartic_compiler.dart'
     show
         CompileError,
         CompilePipeline,
-        DarticConfig,
-        DarticEngine,
-        DarticError,
         SdkNotFoundError,
         SdkResolver,
         SdkVersionMismatchError;

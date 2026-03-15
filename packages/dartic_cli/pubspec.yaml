@@ -9,6 +9,8 @@ environment:
 dependencies:
   dartic:
     path: ../../
+  dartic_compiler:
+    path: ../dartic_compiler
   dartic_generator:
     path: ../dartic_generator
   dartic_stdlib:
