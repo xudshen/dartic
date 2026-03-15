@@ -19,3 +19,4 @@ export 'src/bridge/dartic_object_holder.dart';
 export 'src/runtime/error.dart';
 export 'src/runtime/stack_trace.dart' show DarticStackTrace;
 export 'src/sandbox/load_error.dart';
+export 'src/bytecode/format.dart' show DarbFormat;
