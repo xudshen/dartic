@@ -4026,6 +4026,94 @@ class DarticInterpreter {
                 // Method found but args don't match → noSuchMethod.
               }
             }
+
+            // ── Get-then-call fallback ──
+            // Dart spec: if method not found, try getter/field access, then
+            // call .call() on the result. If no .call(), noSuchMethod with
+            // memberName == #call. If no field/getter either, noSuchMethod
+            // with memberName == #<name>.
+            if (nameIdx >= 0) {
+              final fieldLayout = classInfo.fields[nameIdx];
+              if (fieldLayout != null) {
+                final fieldValue = switch (fieldLayout.kind) {
+                  StackKind.ref => receiver.refFields[fieldLayout.offset],
+                  StackKind.doubleVal => receiver.valueFields.buffer
+                      .asFloat64List()[fieldLayout.offset],
+                  StackKind.boolVal =>
+                    receiver.valueFields[fieldLayout.offset] != 0,
+                  StackKind.intVal =>
+                    receiver.valueFields[fieldLayout.offset],
+                };
+                if (fieldValue is DarticClosure) {
+                  final closureArgs = _buildDynArgs(
+                    fieldValue.funcProto, callerPositional, callerNamed,
+                  );
+                  if (closureArgs != null) {
+                    try {
+                      final result = _runNestedDispatch(
+                        module: module,
+                        proto: fieldValue.funcProto,
+                        args: closureArgs,
+                        upvalues: fieldValue.upvalues,
+                        fta: fieldValue.boundFTA,
+                      );
+                      rs.write(rBase + a, result);
+                    } on Object catch (e, st) {
+                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    }
+                    continue;
+                  }
+                } else if (fieldValue is Function) {
+                  try {
+                    final result = Function.apply(
+                      fieldValue,
+                      callerPositional,
+                      callerNamed.isEmpty
+                          ? null
+                          : {
+                              for (final e in callerNamed.entries)
+                                Symbol(e.key): e.value,
+                            },
+                    );
+                    rs.write(rBase + a, result);
+                  } on Object catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  }
+                  continue;
+                }
+                // Field found but not callable → noSuchMethod with #call.
+                final callInvocation = DarticInvocation.method(
+                  Symbol('call'), callerPositional,
+                  {for (final e in callerNamed.entries) Symbol(e.key): e.value},
+                  dynTypeArgs,
+                );
+                if (fieldValue != null) {
+                  final (callNsmPushed, callNsmPC) =
+                      dispatchNoSuchMethod(fieldValue!, callInvocation, a);
+                  if (callNsmPushed) continue;
+                  pc = callNsmPC;
+                  continue;
+                }
+                // null.call() → NoSuchMethodError.
+                try {
+                  throw NoSuchMethodError.withInvocation(
+                      null, callInvocation);
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
+                }
+              }
+              // Also try getter method for get-then-call.
+              // (If method lookup found a method but args didn't match, the
+              //  getter is the same funcProto — skip to noSuchMethod.)
+              // Getter methods are separate entries in classInfo.methods,
+              // but here the nameIdx matches the property name. The method
+              // we already found above IS the getter/method for that name.
+              // If it exists but args don't match, that means it's a method
+              // (not a field), so we should fall through to noSuchMethod
+              // with #<name> (method call with wrong args).
+            }
+
             // noSuchMethod for DarticObject.
             final nsmInvocation = DarticInvocation.method(
               Symbol(name), callerPositional,
