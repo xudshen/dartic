@@ -1,5 +1,7 @@
 name: dartic_generator
-description: CLI code generator for dartic bindings and plugins.
+description: >-
+  DEPRECATED — generator code has been absorbed into dartic_cli.
+  This package is kept only for backward compatibility.
 version: 0.2.0
 publish_to: none
 

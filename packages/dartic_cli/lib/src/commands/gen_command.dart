@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:dartic_generator/src/runner.dart';
-import 'package:dartic_generator/src/scanner.dart';
+import '../generator/runner.dart';
+import '../generator/scanner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 import '../cli_error.dart';
