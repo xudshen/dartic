@@ -3006,9 +3006,17 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final c = decodeC(instr);
           final targetType = rs.read(rBase + c) as DarticType;
-          final value = rs.read(rBase + b);
+          var value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
+          // Unwrap ClosureAdapter proxies: when a DarticClosure passes through
+          // host code (e.g., Zone.registerCallback), it comes back as a proxy
+          // Function with erased type (Object? → Object?). Use the reverse
+          // cache to recover the original DarticClosure for type extraction.
+          if (value is Function && value is! DarticClosure) {
+            final cached = _closureReverseCache[value];
+            if (cached != null) value = cached;
+          }
           final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           var result = checker.isSubtypeOf(objType, targetType);
           // Fallback for host objects with multiple inheritance branches.
@@ -3039,10 +3047,16 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final c = decodeC(instr);
           final targetType = rs.read(rBase + c) as DarticType;
-          final value = rs.read(rBase + b);
+          var value = rs.read(rBase + b);
           final checker = _subtypeChecker!;
           final reg = _activeTypeRegistry!;
-          final objType = extractType(value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+          // Unwrap ClosureAdapter proxies for type checking (same as INSTANCE_OF).
+          var checkValue = value;
+          if (value is Function && value is! DarticClosure) {
+            final cached = _closureReverseCache[value];
+            if (cached != null) checkValue = cached;
+          }
+          final objType = extractType(checkValue, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
           if (checker.isSubtypeOf(objType, targetType)) {
             rs.write(rBase + a, value);
           } else if (value != null &&

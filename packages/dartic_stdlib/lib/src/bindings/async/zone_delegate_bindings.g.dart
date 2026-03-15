@@ -41,18 +41,15 @@ abstract final class ZoneDelegateBindings {
         },
         'registerCallback#2': (args) {
             final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            return delegate.registerCallback(args[1] as Zone, () => f());
+            return delegate.registerCallback(args[1] as Zone, args[2] as dynamic Function());
         },
         'registerUnaryCallback#2': (args) {
             final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            return delegate.registerUnaryCallback(args[1] as Zone, (a) => f(a));
+            return delegate.registerUnaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic));
         },
         'registerBinaryCallback#2': (args) {
             final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            return delegate.registerBinaryCallback(args[1] as Zone, (a, b) => f(a, b));
+            return delegate.registerBinaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic, dynamic));
         },
         'errorCallback#3': (args) => (args[0] as ZoneDelegate).errorCallback(
         args[1] as Zone, args[2] as Object, args[3] as StackTrace?),

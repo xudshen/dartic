@@ -949,20 +949,17 @@ libraries:
           "registerCallback#1": |
             (args) {
               final zone = args[0] as Zone;
-              final callback = args[1] as Function;
-              return zone.registerCallback(() => callback());
+              return zone.registerCallback(args[1] as dynamic Function());
             }
           "registerUnaryCallback#1": |
             (args) {
               final zone = args[0] as Zone;
-              final callback = args[1] as Function;
-              return zone.registerUnaryCallback((a) => callback(a));
+              return zone.registerUnaryCallback(args[1] as dynamic Function(dynamic));
             }
           "registerBinaryCallback#1": |
             (args) {
               final zone = args[0] as Zone;
-              final callback = args[1] as Function;
-              return zone.registerBinaryCallback((a, b) => callback(a, b));
+              return zone.registerBinaryCallback(args[1] as dynamic Function(dynamic, dynamic));
             }
           "createTimer#2": |
             (args) {
@@ -1242,20 +1239,17 @@ libraries:
           "registerCallback#2": |
             (args) {
               final delegate = args[0] as ZoneDelegate;
-              final f = args[2] as Function;
-              return delegate.registerCallback(args[1] as Zone, () => f());
+              return delegate.registerCallback(args[1] as Zone, args[2] as dynamic Function());
             }
           "registerUnaryCallback#2": |
             (args) {
               final delegate = args[0] as ZoneDelegate;
-              final f = args[2] as Function;
-              return delegate.registerUnaryCallback(args[1] as Zone, (a) => f(a));
+              return delegate.registerUnaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic));
             }
           "registerBinaryCallback#2": |
             (args) {
               final delegate = args[0] as ZoneDelegate;
-              final f = args[2] as Function;
-              return delegate.registerBinaryCallback(args[1] as Zone, (a, b) => f(a, b));
+              return delegate.registerBinaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic, dynamic));
             }
           "errorCallback#3": |
             (args) => (args[0] as ZoneDelegate).errorCallback(

@@ -111,18 +111,15 @@ abstract final class ZoneBindings {
         },
         'registerCallback#1': (args) {
             final zone = args[0] as Zone;
-            final callback = args[1] as Function;
-            return zone.registerCallback(() => callback());
+            return zone.registerCallback(args[1] as dynamic Function());
         },
         'registerUnaryCallback#1': (args) {
             final zone = args[0] as Zone;
-            final callback = args[1] as Function;
-            return zone.registerUnaryCallback((a) => callback(a));
+            return zone.registerUnaryCallback(args[1] as dynamic Function(dynamic));
         },
         'registerBinaryCallback#1': (args) {
             final zone = args[0] as Zone;
-            final callback = args[1] as Function;
-            return zone.registerBinaryCallback((a, b) => callback(a, b));
+            return zone.registerBinaryCallback(args[1] as dynamic Function(dynamic, dynamic));
         },
         'createTimer#2': (args) {
             final zone = args[0] as Zone;
