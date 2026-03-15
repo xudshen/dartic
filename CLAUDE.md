@@ -34,8 +34,9 @@ cd tool/co19_runner && fvm dart run bin/co19_runner.dart --run --snapshot=$TMPDI
 首次 clone 后需要初始化 vendor 依赖（`vendor/` 在 `.gitignore` 中，不随仓库分发）：
 
 ```bash
-git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+git clone --depth 1 --filter=blob:none --no-checkout --branch 3.10.7 \
   https://github.com/dart-lang/sdk.git vendor/dart-sdk
+cd vendor/dart-sdk && git sparse-checkout set pkg/kernel pkg/_fe_analyzer_shared pkg/analyzer pkg/front_end pkg/vm pkg/build_integration && git checkout && cd ../..
 git clone --depth 1 --filter=blob:none \
   https://github.com/dart-lang/co19.git vendor/co19
 fvm dart pub get
