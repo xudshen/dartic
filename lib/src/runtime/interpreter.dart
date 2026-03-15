@@ -2231,8 +2231,13 @@ class DarticInterpreter {
               for (var i = 0; i < argCount; i++) {
                 args.add(rs.read(rs.sp + 3 + i));
               }
-              final result = Function.apply(raw, args);
-              rs.write(rBase + a, result);
+              try {
+                final result = Function.apply(raw, args);
+                rs.write(rBase + a, result);
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
+              }
               break;
             }
           } else {

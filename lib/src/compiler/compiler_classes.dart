@@ -391,19 +391,27 @@ extension on DarticCompiler {
     // delegates to `_enumToString()`. Since _Enum is a platform class, we
     // cannot compile its toString method. Instead, we make virtual dispatch
     // for `toString` resolve directly to the enum class's `_enumToString`.
+    //
+    // However, if the user has defined a custom `toString` override in the
+    // enum body, that takes precedence — skip the alias in that case.
     if (enumHostBase != null) {
-      final toStringIdx = _constantPool.addName('toString');
-      // Find the _enumToString procedure — its ir.Name.library may differ
-      // from cls.enclosingLibrary (it's declared in dart:core's _Enum).
-      final enumToStringProc = cls.procedures.where(
-        (p) => p.name.text == '_enumToString',
-      ).firstOrNull;
-      if (enumToStringProc != null) {
-        final enumToStringIdx = _constantPool.addName(
-            _mangleName(enumToStringProc.name));
-        final enumToStringFunc = classInfo.methods[enumToStringIdx];
-        if (enumToStringFunc != null) {
-          classInfo.methods[toStringIdx] = enumToStringFunc;
+      final hasUserToString = cls.procedures.any(
+        (p) => p.name.text == 'toString' && !p.isAbstract,
+      );
+      if (!hasUserToString) {
+        final toStringIdx = _constantPool.addName('toString');
+        // Find the _enumToString procedure — its ir.Name.library may differ
+        // from cls.enclosingLibrary (it's declared in dart:core's _Enum).
+        final enumToStringProc = cls.procedures.where(
+          (p) => p.name.text == '_enumToString',
+        ).firstOrNull;
+        if (enumToStringProc != null) {
+          final enumToStringIdx = _constantPool.addName(
+              _mangleName(enumToStringProc.name));
+          final enumToStringFunc = classInfo.methods[enumToStringIdx];
+          if (enumToStringFunc != null) {
+            classInfo.methods[toStringIdx] = enumToStringFunc;
+          }
         }
       }
     }

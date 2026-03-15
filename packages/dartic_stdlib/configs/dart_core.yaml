@@ -308,6 +308,8 @@ libraries:
           "#1": "(args) => StackTrace.fromString(args[0] as String)"
 
       # ── _Enum: DarticObject field accessors ──
+      # Compiler emits dart:core::Enum::index#0 (public interface name),
+      # but source_name is _Enum, so we need an extra_bindings alias.
       _Enum:
         extra_methods:
           "index#0": |
@@ -320,6 +322,8 @@ libraries:
               final obj = args[0] as DarticObject;
               return obj.refFields[0] as String;
             }
+        extra_bindings:
+          - "dart:core::Enum::index#0"
 
       # ── Error: uses custom _DarticErrorBacking for constructor ──
       # Also hosts LateError bindings (dart:_internal) via extra_bindings.

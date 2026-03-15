@@ -13,6 +13,7 @@ abstract final class EnumBindings {
     for (final e in methodMap().entries) {
       ctx.registerBinding('dart:core::_Enum::${e.key}', e.value);
     }
+    ctx.registerBinding('dart:core::Enum::index#0', methodMap()['index#0']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

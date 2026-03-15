@@ -2029,6 +2029,54 @@ class _ConstantScanner extends ir.RecursiveVisitor {
 
   final Set<ir.Constant> _seen = Set.identity();
 
+  // ── Skip annotations (metadata) — they're not runtime code. ──
+  // RecursiveVisitor.visitX() calls node.visitChildren() which includes
+  // annotations. We override annotatable node types to visit only the
+  // executable children (function body, field initializer, etc.), skipping
+  // annotation lists. This prevents annotation-only constants like
+  // @override (_Override) and @pragma from getting global slots and
+  // generating unresolvable _#fromFields bindings.
+
+  @override
+  void visitProcedure(ir.Procedure node) => node.function.accept(this);
+
+  @override
+  void visitField(ir.Field node) => node.initializer?.accept(this);
+
+  @override
+  void visitConstructor(ir.Constructor node) {
+    node.function.accept(this);
+    for (final init in node.initializers) {
+      init.accept(this);
+    }
+  }
+
+  @override
+  void visitClass(ir.Class node) {
+    for (final f in node.fields) {
+      f.accept(this);
+    }
+    for (final c in node.constructors) {
+      c.accept(this);
+    }
+    for (final p in node.procedures) {
+      p.accept(this);
+    }
+  }
+
+  @override
+  void visitLibrary(ir.Library node) {
+    for (final cls in node.classes) {
+      cls.accept(this);
+    }
+    for (final p in node.procedures) {
+      p.accept(this);
+    }
+    for (final f in node.fields) {
+      f.accept(this);
+    }
+  }
+
   @override
   void visitConstantExpression(ir.ConstantExpression node) {
     _collectConstant(node.constant);
@@ -2050,15 +2098,11 @@ class _ConstantScanner extends ir.RecursiveVisitor {
       return;
     }
 
-    // Skip host-library InstanceConstants (e.g. @pragma annotations).
-    // Their classes live in dart:core/dart:collection/etc. and may lack
-    // _#fromFields host bindings, so we cannot compile standalone
-    // initializers for them. They are compiled inline via
-    // _compilePlatformInstanceConstant when encountered in expressions.
-    if (constant is ir.InstanceConstant &&
-        _compiler._isHostLibrary(constant.classNode.enclosingLibrary)) {
-      return;
-    }
+    // Host-library InstanceConstants (e.g. const Object(), const Duration())
+    // are allocated a global slot like any other constant so that identity
+    // is preserved across multiple references (e.g. const Object() ==
+    // const Object()). Their initializers use _compilePlatformInstanceConstant
+    // (CALL_HOST to _#fromFields binding) instead of inline field-setting.
 
     // Allocate an anonymous global for this constant.
     final idx = _compiler._allocConstantGlobal();
@@ -2097,4 +2141,5 @@ class _ConstantScanner extends ir.RecursiveVisitor {
         break;
     }
   }
+
 }
