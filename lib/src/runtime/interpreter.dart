@@ -2340,6 +2340,26 @@ class DarticInterpreter {
           }
           final callee = closure.funcProto;
 
+          // Arity check: verify call-site arg count matches callee's params.
+          {
+            final argCount = decodeC(instr);
+            if (argCount < callee.requiredPositionalCount ||
+                argCount > callee.positionalParamCount + callee.namedParamNames.length) {
+              final args = <Object?>[];
+              for (var i = 0; i < argCount; i++) {
+                args.add(rs.read(rs.sp + 3 + i));
+              }
+              try {
+                throw NoSuchMethodError.withInvocation(
+                    raw!,
+                    Invocation.method(#call, args));
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
+              }
+            }
+          }
+
           // Overflow and call depth checks.
           if (vs.sp + callee.valueRegCount > vs.capacity ||
               rs.sp + callee.refRegCount > rs.capacity) {
@@ -3958,7 +3978,19 @@ class DarticInterpreter {
             );
             if (closureArgs != null) {
               try {
-                final result = invokeClosure(receiver, closureArgs);
+                // Use _runNestedDispatch directly instead of invokeClosure
+                // to avoid wrapping DarticClosure returns in ClosureAdapter.
+                // invokeClosure wraps DarticClosure results for host→dartic
+                // boundary exits, but here we're within the dispatch loop —
+                // the result stays on the ref stack and must remain a raw
+                // DarticClosure for later Op.call / INVOKE_DYN dispatch.
+                final result = _runNestedDispatch(
+                  module: module,
+                  proto: receiver.funcProto,
+                  args: closureArgs,
+                  upvalues: receiver.upvalues,
+                  fta: receiver.boundFTA,
+                );
                 rs.write(rBase + a, result);
               } on Object catch (e, st) {
                 pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
