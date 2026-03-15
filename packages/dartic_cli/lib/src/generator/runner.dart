@@ -349,13 +349,19 @@ class Runner {
     return dotIdx >= 0 ? name.substring(0, dotIdx) : name;
   }
 
-  /// Maps a library URI to a plugin class name prefix.
+  /// Maps a library URI to a plugin class name prefix (PascalCase).
   ///
   /// `dart:core` → `Core`
   /// `dart:async` → `Async`
+  /// `package:fab_navigator/fab_navigator.dart` → `FabNavigator`
   String _libraryToPluginName(String uri) {
     final short = _libraryShortName(uri);
-    return short[0].toUpperCase() + short.substring(1);
+    // Convert snake_case to PascalCase
+    return short
+        .split('_')
+        .map((part) =>
+            part.isEmpty ? '' : part[0].toUpperCase() + part.substring(1))
+        .join();
   }
 
   // ── File I/O ─────────────────────────────────────────────────────────
