@@ -423,26 +423,17 @@ DarticType extractType(
           requiredParamCount: resolved.requiredParamCount,
           positionalParams: [
             for (final p in resolved.positionalParams)
-              p is DarticTypeParameterType && p.index < fta.length
-                  ? fta[p.index]
-                  : p,
+              _substituteFTA(p, fta, registry),
           ],
           namedParams: [
             for (final n in resolved.namedParams)
               (
                 name: n.name,
-                type: n.type is DarticTypeParameterType &&
-                        (n.type as DarticTypeParameterType).index < fta.length
-                    ? fta[(n.type as DarticTypeParameterType).index]
-                    : n.type,
+                type: _substituteFTA(n.type, fta, registry),
                 isRequired: n.isRequired,
               ),
           ],
-          returnType: resolved.returnType is DarticTypeParameterType &&
-                  (resolved.returnType as DarticTypeParameterType).index <
-                      fta.length
-              ? fta[(resolved.returnType as DarticTypeParameterType).index]
-              : resolved.returnType,
+          returnType: _substituteFTA(resolved.returnType, fta, registry),
         );
       }
       return resolved;
@@ -493,4 +484,39 @@ DarticType extractType(
   }
   // Any other non-null host object is at least Object.
   return registry.objectType;
+}
+
+/// Recursively substitutes [DarticTypeParameterType] references with
+/// concrete types from [fta]. Handles nested type args (e.g.,
+/// `List<T>` → `List<int>` when `fta[0] = int`).
+DarticType _substituteFTA(
+  DarticType type,
+  List<DarticType> fta,
+  TypeRegistry registry,
+) {
+  return switch (type) {
+    DarticTypeParameterType() when type.index < fta.length => fta[type.index],
+    DarticInterfaceType() when type.typeArgs.isNotEmpty => registry.intern(
+        type.classId,
+        [for (final a in type.typeArgs) _substituteFTA(a, fta, registry)],
+      ),
+    DarticFunctionType() => registry.internFunction(
+        typeParamBounds: type.typeParamBounds,
+        positionalParams: [
+          for (final p in type.positionalParams)
+            _substituteFTA(p, fta, registry),
+        ],
+        namedParams: [
+          for (final n in type.namedParams)
+            (
+              name: n.name,
+              type: _substituteFTA(n.type, fta, registry),
+              isRequired: n.isRequired,
+            ),
+        ],
+        returnType: _substituteFTA(type.returnType, fta, registry),
+        requiredParamCount: type.requiredParamCount,
+      ),
+    _ => type,
+  };
 }

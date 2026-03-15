@@ -3838,12 +3838,10 @@ extension on DarticCompiler {
     final (destReg, loc) = _compileConstantElementCollection(
         Op.createList, constant.entries,
         isConst: true);
-    // Tag with List<T> type for precise generic type checks.
-    if (constant.typeArgument is! ir.DynamicType) {
-      final collType = ir.InterfaceType(_coreTypes.listClass,
-          ir.Nullability.nonNullable, [constant.typeArgument]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with List<T> type for precise generic type checks.
+    final listType = ir.InterfaceType(_coreTypes.listClass,
+        ir.Nullability.nonNullable, [constant.typeArgument]);
+    _emitCollectionTagType(destReg, listType);
     return (destReg, loc);
   }
 
@@ -3874,13 +3872,10 @@ extension on DarticCompiler {
           isConst: true);
     }
 
-    // Tag with Map<K, V> type for precise generic type checks.
-    if (constant.keyType is! ir.DynamicType ||
-        constant.valueType is! ir.DynamicType) {
-      final collType = ir.InterfaceType(_coreTypes.mapClass,
-          ir.Nullability.nonNullable, [constant.keyType, constant.valueType]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with Map<K, V> type for precise generic type checks.
+    final mapType = ir.InterfaceType(_coreTypes.mapClass,
+        ir.Nullability.nonNullable, [constant.keyType, constant.valueType]);
+    _emitCollectionTagType(destReg, mapType);
     return (destReg, ResultLoc.ref);
   }
 
@@ -3889,12 +3884,10 @@ extension on DarticCompiler {
     final (destReg, loc) = _compileConstantElementCollection(
         Op.createSet, constant.entries,
         isConst: true);
-    // Tag with Set<T> type for precise generic type checks.
-    if (constant.typeArgument is! ir.DynamicType) {
-      final collType = ir.InterfaceType(_coreTypes.setClass,
-          ir.Nullability.nonNullable, [constant.typeArgument]);
-      _emitCollectionTagType(destReg, collType);
-    }
+    // Always tag with Set<T> type for precise generic type checks.
+    final setType = ir.InterfaceType(_coreTypes.setClass,
+        ir.Nullability.nonNullable, [constant.typeArgument]);
+    _emitCollectionTagType(destReg, setType);
     return (destReg, loc);
   }
 
