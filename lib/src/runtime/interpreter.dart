@@ -4787,7 +4787,7 @@ class DarticInterpreter {
     if (maxTotalFuel != null && _totalFuelConsumed >= maxTotalFuel!) {
       throw FuelExhaustedError(_totalFuelConsumed, maxTotalFuel!);
     }
-    if (executionTimeout != null &&
+    if (_executionStopwatch != null &&
         _executionStopwatch!.elapsed >= executionTimeout!) {
       throw ExecutionTimeoutError(
           _executionStopwatch!.elapsed, executionTimeout!);

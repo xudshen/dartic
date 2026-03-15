@@ -41,12 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Text('Press Me'),
             ),
-            // // sample list
-            // ListView.builder(
-            //   itemBuilder: (context, index) {
-            //     return Text('Item $index');
-            //   },
-            // ),
+            // sample list
+            Expanded(
+              child: ListView.builder(
+                itemCount: count,
+                itemBuilder: (context, index) {
+                  return SizedBox(height: 100, child: Text('Item $index'));
+                },
+              ),
+            ),
           ],
         ),
       ),
