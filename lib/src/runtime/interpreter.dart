@@ -4044,6 +4044,17 @@ class DarticInterpreter {
                   StackKind.intVal =>
                     receiver.valueFields[fieldLayout.offset],
                 };
+                // Late sentinel check (same as GET_FIELD_DYN).
+                if (fieldLayout.isLate &&
+                    (fieldValue == null || fieldValue == lateSentinel)) {
+                  try {
+                    throw DarticLateError(
+                        "Field '$name' has not been initialized.");
+                  } catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    continue;
+                  }
+                }
                 if (fieldValue is DarticClosure) {
                   final closureArgs = _buildDynArgs(
                     fieldValue.funcProto, callerPositional, callerNamed,

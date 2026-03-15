@@ -188,21 +188,19 @@ class DarticDispatch {
 
   /// Writes a field value to [obj] according to [layout].
   ///
-  /// Mirrors the interpreter's SET_FIELD_DYN field-write logic. Late final
-  /// guards are handled by the setter method path (not here), so this only
-  /// covers direct field writes for non-late-final fields.
+  /// Mirrors the interpreter's SET_FIELD_DYN field-write logic. This method
+  /// is only reached from [set] when NO setter method exists for the field.
+  /// For `late final` fields, absence of a setter means the field has an
+  /// initializer — all runtime writes are forbidden (same as the interpreter's
+  /// "Cannot assign to late final field" path in SET_FIELD_DYN).
   void _writeField(
       DarticObject obj, FieldLayout layout, String fieldName, Object? value) {
-    // Late final write guard: if the field is late+final and already
-    // initialized, reject the write.
+    // Late final fields without a setter have an initializer — all writes
+    // are forbidden. (set() already tried the setter-method path; reaching
+    // here means no setter exists.)
     if (layout.isLate && layout.isFinal) {
-      final current = layout.kind == StackKind.ref
-          ? obj.refFields[layout.offset]
-          : null;
-      if (current != null && !identical(current, _lateSentinel)) {
-        throw DarticLateError(
-            "Field '$fieldName' has already been initialized.");
-      }
+      throw DarticLateError(
+          "Field '$fieldName' has already been initialized.");
     }
     switch (layout.kind) {
       case StackKind.ref:
