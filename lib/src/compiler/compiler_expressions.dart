@@ -1383,7 +1383,9 @@ extension on DarticCompiler {
     if (callOp == Op.callStatic || callOp == Op.callSuper) {
       _emitter.emitABx(callOp, resultReg, callOperandB);
     } else {
-      _emitter.emitABC(callOp, resultReg, callOperandB, 0);
+      // For Op.call: C = positional arg count (used for native Function
+      // fallback when the callee is a host Function, not a DarticClosure).
+      _emitter.emitABC(callOp, resultReg, callOperandB, argTemps.length);
     }
   }
 

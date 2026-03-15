@@ -2197,17 +2197,38 @@ class DarticInterpreter {
 
         // ── Call/Return (0x50-0x5F) ──
 
-        case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
+        case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A; C=argCount
           final a = decodeA(instr);
           final b = decodeB(instr);
           final raw = rs.read(rBase + b);
           // Unwrap proxy functions back to DarticClosure. This happens when
           // closures escape to host collections (e.g., List.add wraps them via
           // ClosureAdapter) and are later read back via host getters.
-          final closure = raw is DarticClosure
-              ? raw
-              : (raw is Function ? _closureReverseCache[raw] : null)
-                  ?? (raw as DarticClosure); // fallback: original cast error
+          DarticClosure? closure;
+          if (raw is DarticClosure) {
+            closure = raw;
+          } else if (raw is Function) {
+            closure = _closureReverseCache[raw];
+            if (closure == null) {
+              // Native host Function — call directly via Function.apply.
+              // C field encodes the positional arg count. Args are placed by
+              // the compiler at the callee frame area: rs.sp+3, rs.sp+4, ...
+              // (skipping ITA/FTA/this header slots).
+              final argCount = decodeC(instr);
+              final args = <Object?>[];
+              for (var i = 0; i < argCount; i++) {
+                args.add(rs.read(rs.sp + 3 + i));
+              }
+              final result = Function.apply(raw, args);
+              rs.write(rBase + a, result);
+              break;
+            }
+          } else {
+            // Not callable — throw NoSuchMethodError.
+            throw NoSuchMethodError.withInvocation(
+                raw ?? Object(),
+                Invocation.method(#call, const []));
+          }
           final callee = closure.funcProto;
 
           // Overflow and call depth checks.
