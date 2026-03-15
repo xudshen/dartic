@@ -1,0 +1,12 @@
+test/
+tool/
+vendor/
+docs/
+benchmark/
+archive/
+.claude/
+.github/
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE

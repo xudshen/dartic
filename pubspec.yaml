@@ -1,8 +1,15 @@
 name: dartic
-description: A Dart bytecode interpreter.
+description: >-
+  A lightweight Dart bytecode interpreter for embedding.
+  Load and execute precompiled .darb bytecode in any Dart or Flutter app.
 version: 1.0.0
-publish_to: none
-repository: https://github.com/xudshen/dartic.git
+repository: https://github.com/xudshen/dartic
+homepage: https://github.com/xudshen/dartic
+topics:
+  - interpreter
+  - bytecode
+  - hot-update
+  - flutter
 
 environment:
   sdk: ^3.10.7
