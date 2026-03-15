@@ -14,7 +14,7 @@ import 'bytecode_emitter.dart';
 import 'register_allocator.dart';
 import 'scope.dart';
 import 'type_converter.dart';
-import 'type_template.dart';
+import '../types/type_template.dart';
 
 part 'compiler_classes.dart';
 part 'compiler_closures.dart';

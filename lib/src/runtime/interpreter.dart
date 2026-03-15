@@ -17,7 +17,7 @@ import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
 import '../sandbox/load_error.dart';
 import '../sandbox/verifier.dart';
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 import 'call_stack.dart';
 import 'stack_trace.dart';
 import 'class_info.dart' show DarticClassInfo, StackKind;

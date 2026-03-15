@@ -1,5 +1,5 @@
 import 'package:dartic/src/bridge/dartic_object_holder.dart';
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/dartic_record.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';

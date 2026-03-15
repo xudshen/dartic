@@ -1,7 +1,7 @@
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/core_types.dart' as ir;
 
-import 'type_template.dart';
+import '../types/type_template.dart';
 
 /// Computes the runtime function type for a method tearoff, applying
 /// covariant parameter widening per Dart spec §16.18.1.

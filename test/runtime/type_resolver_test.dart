@@ -1,4 +1,4 @@
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';
 import 'package:dartic/src/runtime/type_resolver.dart';
 import 'package:test/test.dart';

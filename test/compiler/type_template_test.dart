@@ -1,4 +1,4 @@
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:test/test.dart';
 
 void main() {

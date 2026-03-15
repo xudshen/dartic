@@ -7,7 +7,7 @@
 /// See: docs/design/06-generics.md "resolveType 四分支"
 library;
 
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 import 'dartic_type.dart';
 
 /// Resolves a [TypeTemplate] to a concrete [DarticType].

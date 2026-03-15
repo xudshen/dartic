@@ -3,7 +3,7 @@ library;
 import 'dart:typed_data';
 
 import '../api/dartic_absent.dart';
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 import 'format.dart';
