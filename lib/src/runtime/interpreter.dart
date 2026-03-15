@@ -3031,13 +3031,12 @@ class DarticInterpreter {
           // Fallback for host objects with multiple inheritance branches.
           // extractType returns ONE type (e.g., Set for a set literal), but
           // the actual host object may also satisfy other interfaces (e.g.,
-          // LinkedHashSet). Only applies when classIds differ — same classId
-          // with type arg mismatch must NOT use this fallback.
+          // LinkedHashSet).
           //
-          // When TAG_TYPE is present (objType has precise type args), we
-          // allow the class identity fallback but ALSO verify type args are
-          // compatible. This handles `{1,2} is LinkedHashSet<int>`: TAG_TYPE
-          // says Set<int>, host is LinkedHashSet, and int <: int passes.
+          // IMPORTANT: Only fire when the subtype checker lacks info about
+          // this class relationship. If targetType.classId IS already in the
+          // obj's supertypeIds, the checker had the full picture (including
+          // type arg mappings via superTypeArgs) — fallback must NOT override.
           if (!result &&
               value != null &&
               value is! DarticObject &&
@@ -3046,27 +3045,32 @@ class DarticInterpreter {
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
                   objType.classId != targetType.classId)) {
-            final tagged = _hostTypeTable.lookup(value);
-            if (tagged == null) {
-              // No TAG_TYPE — pure class identity check (type args unknown).
-              result = hostTypeResolver!.matchesClassId(
-                  value, targetType.classId);
-            } else if (tagged is DarticInterfaceType &&
-                hostTypeResolver!.matchesClassId(
-                    value, targetType.classId)) {
-              // TAG_TYPE present + host matches target class. Verify type
-              // args: the tag's type args (on the abstract class) must be
-              // subtypes of the target's type args. Since Set<E>→LinkedHashSet<E>
-              // has identity type param mapping, we compare directly.
-              if (targetType.typeArgs.isEmpty) {
-                result = true;
-              } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
-                result = true;
-                for (var i = 0; i < targetType.typeArgs.length; i++) {
-                  if (!checker.isSubtypeOf(
-                      tagged.typeArgs[i], targetType.typeArgs[i])) {
-                    result = false;
-                    break;
+            // Check if the subtype checker already knows this relationship.
+            final objCid = objType is DarticInterfaceType ? objType.classId : -1;
+            final knownRelation = objCid >= 0 &&
+                objCid < checker.classes.length &&
+                checker.classes[objCid].supertypeIds.contains(targetType.classId);
+
+            if (!knownRelation) {
+              final tagged = _hostTypeTable.lookup(value);
+              if (tagged == null) {
+                // No TAG_TYPE — pure class identity check.
+                result = hostTypeResolver!.matchesClassId(
+                    value, targetType.classId);
+              } else if (tagged is DarticInterfaceType &&
+                  hostTypeResolver!.matchesClassId(
+                      value, targetType.classId)) {
+                // TAG_TYPE present + host matches. Verify type args.
+                if (targetType.typeArgs.isEmpty) {
+                  result = true;
+                } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
+                  result = true;
+                  for (var i = 0; i < targetType.typeArgs.length; i++) {
+                    if (!checker.isSubtypeOf(
+                        tagged.typeArgs[i], targetType.typeArgs[i])) {
+                      result = false;
+                      break;
+                    }
                   }
                 }
               }
@@ -3092,24 +3096,30 @@ class DarticInterpreter {
               targetType is DarticInterfaceType &&
               (objType is! DarticInterfaceType ||
                   objType.classId != targetType.classId)) {
-            // Host object multi-inheritance fallback (same as INSTANCE_OF).
-            final tagged = _hostTypeTable.lookup(value);
+            // Host multi-inheritance fallback (same guard as INSTANCE_OF).
+            final objCid = objType is DarticInterfaceType ? objType.classId : -1;
+            final knownRelation = objCid >= 0 &&
+                objCid < checker.classes.length &&
+                checker.classes[objCid].supertypeIds.contains(targetType.classId);
             bool castOk = false;
-            if (tagged == null) {
-              castOk = hostTypeResolver!.matchesClassId(
-                  value, targetType.classId);
-            } else if (tagged is DarticInterfaceType &&
-                hostTypeResolver!.matchesClassId(
-                    value, targetType.classId)) {
-              if (targetType.typeArgs.isEmpty) {
-                castOk = true;
-              } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
-                castOk = true;
-                for (var i = 0; i < targetType.typeArgs.length; i++) {
-                  if (!checker.isSubtypeOf(
-                      tagged.typeArgs[i], targetType.typeArgs[i])) {
-                    castOk = false;
-                    break;
+            if (!knownRelation) {
+              final tagged = _hostTypeTable.lookup(value);
+              if (tagged == null) {
+                castOk = hostTypeResolver!.matchesClassId(
+                    value, targetType.classId);
+              } else if (tagged is DarticInterfaceType &&
+                  hostTypeResolver!.matchesClassId(
+                      value, targetType.classId)) {
+                if (targetType.typeArgs.isEmpty) {
+                  castOk = true;
+                } else if (tagged.typeArgs.length == targetType.typeArgs.length) {
+                  castOk = true;
+                  for (var i = 0; i < targetType.typeArgs.length; i++) {
+                    if (!checker.isSubtypeOf(
+                        tagged.typeArgs[i], targetType.typeArgs[i])) {
+                      castOk = false;
+                      break;
+                    }
                   }
                 }
               }
@@ -4540,13 +4550,8 @@ class DarticInterpreter {
           return handler;
         }
         // Fallback for host objects with multiple inheritance branches.
-        //
-        // extractType picks the "most specific" predicate match from the
-        // HostTypeResolver, but for types like IntegerDivisionByZeroException
-        // (extends UnsupportedError implements Exception), the most specific
-        // match (UnsupportedError) may be in a different branch than the
-        // guard type (Exception). Check the guard's classId directly against
-        // the host type resolver's registered predicates.
+        // Same pattern as INSTANCE_OF/CAST: when TAG_TYPE is present, allow
+        // matchesClassId but verify type args; when absent, pure class check.
         if (exception != null &&
             exception is! DarticObject &&
             exception is! DarticClosure &&
@@ -4554,9 +4559,34 @@ class DarticInterpreter {
             guardType is DarticInterfaceType &&
             (exType is! DarticInterfaceType ||
                 exType.classId != guardType.classId)) {
-          if (hostTypeResolver!.matchesClassId(
-              exception, guardType.classId)) {
-            return handler;
+          final exCid = exType is DarticInterfaceType ? exType.classId : -1;
+          final knownRelation = exCid >= 0 &&
+              exCid < _subtypeChecker!.classes.length &&
+              _subtypeChecker!.classes[exCid].supertypeIds.contains(guardType.classId);
+          if (!knownRelation) {
+            final tagged = _hostTypeTable.lookup(exception);
+            if (tagged == null) {
+              if (hostTypeResolver!.matchesClassId(
+                  exception, guardType.classId)) {
+                return handler;
+              }
+            } else if (tagged is DarticInterfaceType &&
+                hostTypeResolver!.matchesClassId(
+                    exception, guardType.classId)) {
+              if (guardType.typeArgs.isEmpty) {
+                return handler;
+              } else if (tagged.typeArgs.length == guardType.typeArgs.length) {
+                bool ok = true;
+                for (var i = 0; i < guardType.typeArgs.length; i++) {
+                  if (!_subtypeChecker!.isSubtypeOf(
+                      tagged.typeArgs[i], guardType.typeArgs[i])) {
+                    ok = false;
+                    break;
+                  }
+                }
+                if (ok) return handler;
+              }
+            }
           }
         }
       }

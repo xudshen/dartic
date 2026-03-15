@@ -13,7 +13,9 @@ import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_type_resolver.dart';
 import '../bytecode/module.dart';
+import '../compiler/type_template.dart';
 import '../runtime/call_stack.dart';
+import '../runtime/class_info.dart';
 import '../runtime/error.dart';
 import '../runtime/interpreter.dart';
 import 'config.dart';
@@ -150,6 +152,62 @@ class DarticEngine {
     _installModule(module);
   }
 
+  /// Composes superTypeArgs from [hostInfo] into [classInfo].
+  ///
+  /// When a dartic class extends a host class (e.g., MyList<T> extends
+  /// ListBase<T>), the host class has superTypeArgs for its own supertypes
+  /// (e.g., ListBase→List, ListBase→Iterable). We compose these with the
+  /// dartic class's own mapping to the host class to build transitive entries
+  /// (e.g., MyList→List, MyList→Iterable).
+  void _composeSuperTypeArgs(
+    DarticClassInfo classInfo,
+    int hostCid,
+    DarticClassInfo hostInfo,
+    List<DarticClassInfo> classes,
+  ) {
+    // Get the dartic class's type param mapping to the host class.
+    // If none exists, assume identity mapping (same type params in order).
+    final classToHost = classInfo.superTypeArgs[hostCid];
+
+    for (final entry in hostInfo.superTypeArgs.entries) {
+      final supId = entry.key;
+      if (classInfo.superTypeArgs.containsKey(supId)) continue;
+      final hostToSup = entry.value; // e.g., ListBase→List: [TypeParam(0)]
+
+      if (classToHost == null) {
+        // No explicit mapping — directly inherit host's mapping.
+        classInfo.superTypeArgs[supId] = hostToSup;
+      } else {
+        // Compose: substitute host's mapping with the dartic class's mapping.
+        classInfo.superTypeArgs[supId] = [
+          for (final t in hostToSup) _substituteTemplate(t, classToHost),
+        ];
+      }
+    }
+  }
+
+  /// Substitutes [TypeParameterTemplate] references in [template] using
+  /// [mapping]. Used to compose chained superTypeArgs mappings.
+  static TypeTemplate _substituteTemplate(
+    TypeTemplate template,
+    List<TypeTemplate> mapping,
+  ) {
+    return switch (template) {
+      TypeParameterTemplate(:final index, isFunctionTypeParam: false)
+          when index < mapping.length =>
+        mapping[index],
+      InterfaceTypeTemplate(:final classId, :final typeArgs)
+          when typeArgs.isNotEmpty =>
+        InterfaceTypeTemplate(
+          classId: classId,
+          typeArgs: [
+            for (final a in typeArgs) _substituteTemplate(a, mapping),
+          ],
+        ),
+      _ => template,
+    };
+  }
+
   /// Shared module-installation logic for [loadBytecode] and [loadModule].
   void _installModule(DarticModule module) {
     // Resolve host type extraction entries: match class names → classIds.
@@ -169,8 +227,9 @@ class DarticEngine {
           final hostCid =
               _hostTypeResolver.hostClassNameToId[classInfo.hostSuperClassName];
           if (hostCid != null && hostCid < module.classes.length) {
-            classInfo.supertypeIds
-                .addAll(module.classes[hostCid].supertypeIds);
+            final hostInfo = module.classes[hostCid];
+            classInfo.supertypeIds.addAll(hostInfo.supertypeIds);
+            _composeSuperTypeArgs(classInfo, hostCid, hostInfo, module.classes);
           }
         }
         if (classInfo.hostInterfaceNames != null) {
@@ -178,8 +237,10 @@ class DarticEngine {
             final ifaceCid =
                 _hostTypeResolver.hostClassNameToId[ifaceName];
             if (ifaceCid != null && ifaceCid < module.classes.length) {
-              classInfo.supertypeIds
-                  .addAll(module.classes[ifaceCid].supertypeIds);
+              final hostInfo = module.classes[ifaceCid];
+              classInfo.supertypeIds.addAll(hostInfo.supertypeIds);
+              _composeSuperTypeArgs(
+                  classInfo, ifaceCid, hostInfo, module.classes);
             }
           }
         }

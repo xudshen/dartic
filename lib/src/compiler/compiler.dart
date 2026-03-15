@@ -787,15 +787,12 @@ class DarticCompiler {
       _classInfos[typeCid].supertypeIds.addAll({typeCid, objectCid});
     }
 
-    // SuperTypeMap: generic supertype arg mappings for subtype checking.
-    // List<E> extends Iterable<E>
-    _classInfos[listCid].superTypeArgs[iterableCid] = [
-      TypeParameterTemplate(index: 0, isFunctionTypeParam: false),
-    ];
-    // Set<E> extends Iterable<E>
-    _classInfos[setCid].superTypeArgs[iterableCid] = [
-      TypeParameterTemplate(index: 0, isFunctionTypeParam: false),
-    ];
+    // SuperTypeMap: extract generic supertype arg mappings from Kernel IR.
+    // For each registered core type, read its `supertype` and `implementedTypes`
+    // from the Kernel AST to build superTypeArgs entries. This avoids hardcoding
+    // relationships like `num implements Comparable<num>` — the Kernel IR is the
+    // single source of truth.
+    _extractSuperTypeArgs(_typeClassIdLookup);
 
     _coreTypeIds = CoreTypeIds(
       intId: intCid,
@@ -810,6 +807,118 @@ class DarticCompiler {
       typeErrorId: typeErrorCid,
       typeId: typeCid,
     );
+  }
+
+  /// Extracts superTypeArgs mappings from Kernel IR for all registered core
+  /// types. For each class in [lookup], reads its `supertype` and
+  /// `implementedTypes` to find supertypes that are also in [lookup], and
+  /// converts their type arguments to [TypeTemplate]s.
+  ///
+  /// This replaces hardcoded mappings like `List→Iterable: [TypeParam(0)]`
+  /// with data-driven extraction from the Kernel AST.
+  void _extractSuperTypeArgs(Map<ir.Class, int> lookup) {
+    // Phase 1: Extract direct supertype arg mappings from Kernel IR.
+    // For `List<E> extends Iterable<E>` → List.superTypeArgs[Iterable] = [TypeParam(0)]
+    // For `num implements Comparable<num>` → num.superTypeArgs[Comparable] = [InterfaceType(num)]
+    for (final entry in lookup.entries) {
+      final cls = entry.key;
+      final classId = entry.value;
+      final info = _classInfos[classId];
+
+      final supers = <ir.Supertype>[
+        if (cls.supertype != null) cls.supertype!,
+        ...cls.implementedTypes,
+        if (cls.mixedInType != null) cls.mixedInType!,
+      ];
+
+      for (final sup in supers) {
+        final supClassId = lookup[sup.classNode];
+        if (supClassId == null || sup.typeArguments.isEmpty) continue;
+        if (info.superTypeArgs.containsKey(supClassId)) continue;
+
+        info.superTypeArgs[supClassId] = [
+          for (final arg in sup.typeArguments)
+            dartTypeToTemplate(
+              arg,
+              lookup,
+              enclosingClassTypeParams: cls.typeParameters,
+              enclosingFunctionTypeParams: const [],
+              coreTypes: _coreTypes,
+            ),
+        ];
+      }
+    }
+
+    // Phase 2: Propagate transitive superTypeArgs.
+    // For `int extends num` (no type args) and `num.superTypeArgs[Comparable] = [num]`,
+    // build `int.superTypeArgs[Comparable] = [num]`.
+    // For `List<E>.superTypeArgs[Iterable] = [TypeParam(0)]` and
+    // `Iterable<E>.superTypeArgs[...]`, compose by substitution.
+    // Iterate until fixpoint since ordering in [lookup] is arbitrary.
+    bool changed = true;
+    while (changed) {
+      changed = false;
+      for (final entry in lookup.entries) {
+        final cls = entry.key;
+        final classId = entry.value;
+        final info = _classInfos[classId];
+
+        final supers = <ir.Supertype>[
+          if (cls.supertype != null) cls.supertype!,
+          ...cls.implementedTypes,
+          if (cls.mixedInType != null) cls.mixedInType!,
+        ];
+
+        for (final sup in supers) {
+          final supClassId = lookup[sup.classNode];
+          if (supClassId == null) continue;
+          final supInfo = _classInfos[supClassId];
+
+          // Build cls→sup mapping (null = identity/no type args).
+          final clsToSup = info.superTypeArgs[supClassId];
+
+          for (final grandEntry in supInfo.superTypeArgs.entries) {
+            final grandId = grandEntry.key;
+            if (info.superTypeArgs.containsKey(grandId)) continue;
+            final supToGrand = grandEntry.value;
+
+            if (clsToSup == null) {
+              // No type args (e.g., int extends num) → inherit directly.
+              info.superTypeArgs[grandId] = supToGrand;
+            } else {
+              // Compose: cls→grand = substitute sup→grand with cls→sup.
+              info.superTypeArgs[grandId] = [
+                for (final t in supToGrand)
+                  _substituteSuperTypeArg(t, clsToSup),
+              ];
+            }
+            changed = true;
+          }
+        }
+      }
+    }
+  }
+
+  /// Substitutes type parameter references in [template] using [mapping].
+  /// E.g., TypeParam(0) with mapping [InterfaceType(int)] → InterfaceType(int).
+  static TypeTemplate _substituteSuperTypeArg(
+    TypeTemplate template,
+    List<TypeTemplate> mapping,
+  ) {
+    return switch (template) {
+      TypeParameterTemplate(:final index, isFunctionTypeParam: false)
+          when index < mapping.length =>
+        mapping[index],
+      InterfaceTypeTemplate(:final classId, :final typeArgs)
+          when typeArgs.isNotEmpty =>
+        InterfaceTypeTemplate(
+          classId: classId,
+          typeArgs: [
+            for (final a in typeArgs) _substituteSuperTypeArg(a, mapping),
+          ],
+        ),
+      _ => template,
+    };
   }
 
   // ── Per-function state management ──
