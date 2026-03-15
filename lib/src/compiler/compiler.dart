@@ -678,14 +678,15 @@ class DarticCompiler {
   /// NOT to [_classToClassId] (which controls compiler decisions like equality
   /// dispatch and constructor resolution).
   void _registerCoreTypes() {
-    int register(ir.Class cls, String name, {int superClassId = -1}) {
+    // Register a core type: adds to _typeClassIdLookup only (not _classToClassId).
+    // superClassId and supertypeIds are computed from Kernel IR afterwards.
+    int register(ir.Class cls, String name) {
       final classId = _classInfos.length;
-      // Only add to the type-operation lookup, NOT _classToClassId.
       _typeClassIdLookup[cls] = classId;
       _classInfos.add(DarticClassInfo(
         classId: classId,
         name: name,
-        superClassId: superClassId,
+        superClassId: -1, // Resolved below from Kernel IR.
         refFieldCount: 0,
         valueFieldCount: 0,
         typeParamCount: cls.typeParameters.length,
@@ -693,105 +694,41 @@ class DarticCompiler {
       return classId;
     }
 
+    int? tryRegister(ir.Class? cls, String name) =>
+        cls != null ? register(cls, name) : null;
+
     final ct = _coreTypes;
 
+    // ── Register all core types (order doesn't matter). ──
     final objectCid = register(ct.objectClass, 'Object');
-    final numCid = register(ct.numClass, 'num', superClassId: objectCid);
-    final intCid = register(ct.intClass, 'int', superClassId: numCid);
-    final doubleCid = register(ct.doubleClass, 'double', superClassId: numCid);
-    final stringCid = register(ct.stringClass, 'String', superClassId: objectCid);
-    final boolCid = register(ct.boolClass, 'bool', superClassId: objectCid);
-    final futureCid =
-        register(ct.futureClass, 'Future', superClassId: objectCid);
-    final futureOrCid = register(
-        ct.deprecatedFutureOrClass, 'FutureOr',
-        superClassId: objectCid);
-    final functionCid =
-        register(ct.functionClass, 'Function', superClassId: objectCid);
+    final numCid = register(ct.numClass, 'num');
+    final intCid = register(ct.intClass, 'int');
+    final doubleCid = register(ct.doubleClass, 'double');
+    final stringCid = register(ct.stringClass, 'String');
+    final boolCid = register(ct.boolClass, 'bool');
+    final futureCid = register(ct.futureClass, 'Future');
+    final futureOrCid = register(ct.deprecatedFutureOrClass, 'FutureOr');
+    final functionCid = register(ct.functionClass, 'Function');
+    tryRegister(ct.index.tryGetClass('dart:core', 'Error'), 'Error');
+    final typeErrorCid = tryRegister(
+        ct.index.tryGetClass('dart:core', 'TypeError'), 'TypeError') ?? -1;
+    register(ct.listClass, 'List');
+    register(ct.iterableClass, 'Iterable');
+    register(ct.mapClass, 'Map');
+    register(ct.setClass, 'Set');
+    tryRegister(ct.index.tryGetClass('dart:core', 'Comparable'), 'Comparable');
+    register(ct.streamClass, 'Stream');
+    tryRegister(ct.index.tryGetClass('dart:core', 'Pattern'), 'Pattern');
+    final typeCid = tryRegister(
+        ct.index.tryGetClass('dart:core', 'Type'), 'Type') ?? -1;
+    final recordCid = tryRegister(ct.recordClass, 'Record') ?? -1;
 
-    // Error hierarchy: TypeError extends Error extends Object.
-    // Needed so that CAST failures produce catchable TypeError objects
-    // and `e is TypeError` / `e is Error` work in bytecode.
-    final errorClass = ct.index.tryGetClass('dart:core', 'Error');
-    final errorCid = errorClass != null
-        ? register(errorClass, 'Error', superClassId: objectCid)
-        : -1;
-    final typeErrorClass = ct.index.tryGetClass('dart:core', 'TypeError');
-    final typeErrorCid = (typeErrorClass != null && errorCid >= 0)
-        ? register(typeErrorClass, 'TypeError', superClassId: errorCid)
-        : -1;
+    // ── Derive superClassId + supertypeIds from Kernel IR. ──
+    // Walk each registered class's supertype/implementedTypes to build the
+    // full type hierarchy. No manual specification needed.
+    _buildCoreTypeHierarchy(_typeClassIdLookup, objectCid);
 
-    // Additional collection/interface core classes — needed for type templates
-    // that reference these types (e.g., List<String> in function type args).
-    final listCid =
-        register(ct.listClass, 'List', superClassId: objectCid);
-    final iterableCid =
-        register(ct.iterableClass, 'Iterable', superClassId: objectCid);
-    final mapCid =
-        register(ct.mapClass, 'Map', superClassId: objectCid);
-    final setCid =
-        register(ct.setClass, 'Set', superClassId: objectCid);
-    final comparableClass = ct.index.tryGetClass('dart:core', 'Comparable');
-    final comparableCid = comparableClass != null
-        ? register(comparableClass, 'Comparable', superClassId: objectCid)
-        : -1;
-    final streamCid =
-        register(ct.streamClass, 'Stream', superClassId: objectCid);
-    final patternClass = ct.index.tryGetClass('dart:core', 'Pattern');
-    final patternCid = patternClass != null
-        ? register(patternClass, 'Pattern', superClassId: objectCid)
-        : -1;
-    final typeClass = ct.index.tryGetClass('dart:core', 'Type');
-    final typeCid = typeClass != null
-        ? register(typeClass, 'Type', superClassId: objectCid)
-        : -1;
-
-    // Set up supertype closures (transitive supertypeIds).
-    _classInfos[objectCid].supertypeIds.add(objectCid);
-    _classInfos[numCid].supertypeIds.addAll({numCid, objectCid});
-    _classInfos[intCid].supertypeIds.addAll({intCid, numCid, objectCid});
-    _classInfos[doubleCid].supertypeIds.addAll({doubleCid, numCid, objectCid});
-    _classInfos[stringCid].supertypeIds.addAll({stringCid, objectCid});
-    _classInfos[boolCid].supertypeIds.addAll({boolCid, objectCid});
-    _classInfos[futureCid].supertypeIds.addAll({futureCid, objectCid});
-    _classInfos[futureOrCid].supertypeIds.addAll({futureOrCid, objectCid});
-    _classInfos[functionCid].supertypeIds.addAll({functionCid, objectCid});
-    if (errorCid >= 0) {
-      _classInfos[errorCid].supertypeIds.addAll({errorCid, objectCid});
-    }
-    if (typeErrorCid >= 0) {
-      _classInfos[typeErrorCid]
-          .supertypeIds
-          .addAll({typeErrorCid, errorCid, objectCid});
-    }
-    _classInfos[listCid].supertypeIds.addAll({listCid, iterableCid, objectCid});
-    _classInfos[iterableCid].supertypeIds.addAll({iterableCid, objectCid});
-    _classInfos[mapCid].supertypeIds.addAll({mapCid, objectCid});
-    _classInfos[setCid].supertypeIds.addAll({setCid, iterableCid, objectCid});
-    if (comparableCid >= 0) {
-      _classInfos[comparableCid].supertypeIds.addAll({comparableCid, objectCid});
-      // num implements Comparable<num>
-      _classInfos[numCid].supertypeIds.add(comparableCid);
-      _classInfos[intCid].supertypeIds.add(comparableCid);
-      _classInfos[doubleCid].supertypeIds.add(comparableCid);
-      // String implements Comparable<String>
-      _classInfos[stringCid].supertypeIds.add(comparableCid);
-    }
-    _classInfos[streamCid].supertypeIds.addAll({streamCid, objectCid});
-    if (patternCid >= 0) {
-      _classInfos[patternCid].supertypeIds.addAll({patternCid, objectCid});
-      // String implements Pattern<String>
-      _classInfos[stringCid].supertypeIds.add(patternCid);
-    }
-    if (typeCid >= 0) {
-      _classInfos[typeCid].supertypeIds.addAll({typeCid, objectCid});
-    }
-
-    // SuperTypeMap: extract generic supertype arg mappings from Kernel IR.
-    // For each registered core type, read its `supertype` and `implementedTypes`
-    // from the Kernel AST to build superTypeArgs entries. This avoids hardcoding
-    // relationships like `num implements Comparable<num>` — the Kernel IR is the
-    // single source of truth.
+    // ── Extract superTypeArgs from Kernel IR. ──
     _extractSuperTypeArgs(_typeClassIdLookup);
 
     _coreTypeIds = CoreTypeIds(
@@ -806,7 +743,71 @@ class DarticCompiler {
       functionId: functionCid,
       typeErrorId: typeErrorCid,
       typeId: typeCid,
+      recordId: recordCid,
     );
+  }
+
+  /// Builds superClassId and supertypeIds for all registered core types by
+  /// walking the Kernel IR class hierarchy. Replaces hardcoded transitive
+  /// closures like `intCid.supertypeIds.addAll({intCid, numCid, objectCid})`.
+  void _buildCoreTypeHierarchy(Map<ir.Class, int> lookup, int objectCid) {
+    // Phase 1: Set superClassId from Kernel IR's supertype field.
+    for (final entry in lookup.entries) {
+      final cls = entry.key;
+      final classId = entry.value;
+      final info = _classInfos[classId];
+
+      // Every class includes itself in supertypeIds.
+      info.supertypeIds.add(classId);
+
+      // Object has no supertype.
+      if (classId == objectCid) continue;
+
+      // Resolve superClassId from Kernel IR.
+      final irSupertype = cls.supertype;
+      if (irSupertype != null) {
+        final supCid = lookup[irSupertype.classNode];
+        if (supCid != null) {
+          info.superClassId = supCid;
+        }
+      }
+    }
+
+    // Phase 2: Build transitive supertypeIds from Kernel IR.
+    // Walk supertype + implementedTypes + mixedInType recursively,
+    // collecting all registered ancestors.
+    for (final entry in lookup.entries) {
+      final cls = entry.key;
+      final classId = entry.value;
+      final info = _classInfos[classId];
+
+      // BFS/DFS through the Kernel IR class hierarchy.
+      final visited = <ir.Class>{};
+      final queue = <ir.Class>[cls];
+      while (queue.isNotEmpty) {
+        final current = queue.removeLast();
+        if (!visited.add(current)) continue;
+
+        final supers = <ir.Supertype>[
+          if (current.supertype != null) current.supertype!,
+          ...current.implementedTypes,
+          if (current.mixedInType != null) current.mixedInType!,
+        ];
+
+        for (final sup in supers) {
+          final supCid = lookup[sup.classNode];
+          if (supCid != null) {
+            info.supertypeIds.add(supCid);
+          }
+          // Continue walking even if sup.classNode is not registered —
+          // intermediate classes may lead to registered ancestors.
+          queue.add(sup.classNode);
+        }
+      }
+
+      // All types are subtypes of Object.
+      info.supertypeIds.add(objectCid);
+    }
   }
 
   /// Extracts superTypeArgs mappings from Kernel IR for all registered core

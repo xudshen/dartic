@@ -95,8 +95,8 @@ class DarticClassInfo {
   /// Class name (for debugging and reflection).
   final String name;
 
-  /// Parent class ID.
-  final int superClassId;
+  /// Parent class ID (-1 if no registered parent).
+  int superClassId;
 
   /// Number of reference-type fields.
   final int refFieldCount;

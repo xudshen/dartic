@@ -109,6 +109,7 @@ class CoreTypeIds {
     this.functionId = -102,
     this.typeErrorId = -103,
     this.typeId = -105,
+    this.recordId = -106,
   });
 
   final int intId;
@@ -124,6 +125,9 @@ class CoreTypeIds {
 
   /// Class ID for `Type` (dart:core). Used by `is Type` checks.
   final int typeId;
+
+  /// Class ID for `Record` (dart:core). Used by `is Record` checks.
+  final int recordId;
 }
 
 /// A binding name table entry for CALL_HOST instructions.

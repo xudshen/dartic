@@ -482,6 +482,7 @@ class DarticInterpreter {
         functionClassId: ids.functionId,
         typeErrorClassId: ids.typeErrorId,
         typeClassId: ids.typeId,
+        recordClassId: ids.recordId,
       );
     }
     // Register class names for DarticType.toString() — covers both

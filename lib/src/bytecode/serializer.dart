@@ -275,6 +275,7 @@ class DarticSerializer {
       w.writeUint32(ids.functionId);
       w.writeUint32(ids.typeErrorId);
       w.writeUint32(ids.typeId);
+      w.writeUint32(ids.recordId);
     } else {
       w.addByte(0);
     }

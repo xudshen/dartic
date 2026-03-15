@@ -51,7 +51,7 @@ void main() {
       );
       final output = DarticDisassembler.disassemble(module, fileSize: 1024);
 
-      expect(output, contains('DARB v9'));
+      expect(output, contains('DARB v10'));
       expect(output, contains('1024 bytes'));
       expect(output, contains('Constants:'));
       expect(output, contains('Functions:'));
@@ -68,7 +68,7 @@ void main() {
       final module = _makeModule();
       final output = DarticDisassembler.disassemble(module);
 
-      expect(output, contains('DARB v9'));
+      expect(output, contains('DARB v10'));
       expect(output, isNot(contains('bytes')));
     });
 

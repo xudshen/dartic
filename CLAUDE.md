@@ -107,6 +107,7 @@ fvm dart pub get
 - **双栈 coercion：`_compileExpression` 返回的 `ResultLoc` 不能随意丢弃** — 编译器采用 value/ref 双栈架构，`_compileExpression` 返回 `(reg, ResultLoc)` 表示结果所在栈。在以下消费端必须检查 loc 并做 coercion（unbox 或 box）：条件跳转（if/while/for/do/assert/not/logical/conditional）、函数参数传递、变量赋值、接收者表达式（虚调用/getter/setter 分发）。只有**确定结果一定在 ref 栈**的场景（闭包、常量 case 表达式）才可以安全丢弃 loc。
 - **co19 测试注意范围** — 目录精确到子类别（如 `TypeSystem/subtyping`），不要跑整个 `vendor/co19/`。
 - **复制路径必须对齐所有维度** — 从已有代码派生新路径时（如 B 参考 A 实现），必须逐项核对原始路径的每个步骤是否都已复制。遗漏的步骤往往不会在编译期报错，只在特定运行时路径静默出错。新增派生路径后应与原始路径做 diff 确认无遗漏，或提取共享 helper 消除重复。
+- **宿主类型信息从 Kernel IR 提取，不要在编译器硬编码** — 类型参数映射（superTypeArgs）、类继承关系等宿主类型知识必须从 Kernel IR 的 `supertype`/`implementedTypes` 提取或在运行时由 HostTypeResolver 解析，禁止在编译器中手写具体映射（如 `num→Comparable<num>`）。
 
 ## 文档体系
 

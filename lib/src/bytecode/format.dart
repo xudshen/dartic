@@ -26,7 +26,8 @@ abstract final class DarbFormat {
   /// v9: + positionalParamCount, requiredPositionalCount, namedParamNames,
   ///     paramDefaults on DarticFuncProto; + DynCallDescriptor in constant
   ///     pool refs (tag 4). INVOKE_DYN C operand: refs index (was names index).
-  static const int version = 9;
+  /// v10: + CoreTypeIds.recordId (Record class ID for `is Record` checks).
+  static const int version = 10;
 
   /// File header size in bytes (magic + version + checksum = 12).
   static const int headerSize = 12;
