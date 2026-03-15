@@ -99,6 +99,11 @@ class DarticFrame {
   /// Set at AWAIT time, used by thenCallback to decide FutureBox unwrapping.
   bool awaitedTypeArgIsFuture = false;
 
+  /// Whether this async function's emittedValueType is a Future type.
+  /// Set at INIT_ASYNC time. When true, ASYNC_RETURN wraps the result
+  /// in FutureBox to prevent Completer<Object?>.complete() from flattening.
+  bool asyncReturnNeedsBox = false;
+
   /// Value received from a completed Future (set before resume).
   Object? resumeValue;
 

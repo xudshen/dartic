@@ -1137,6 +1137,19 @@ class DarticInterpreter {
   ///
   /// For async* frames (identified by `frame.streamController != null`),
   /// routes to [_resumeAsyncStarFrame] instead of [_resumeFrame].
+  /// Checks whether [value]'s TAG_TYPE has a type arg that is itself a Future.
+  ///
+  /// Used at FutureBox unwrap points to decide whether to re-flatten
+  /// (T is not Future) or pass through (T is Future, e.g. Future<Future<int>>).
+  bool _hasTaggedFutureTypeArg(Object? value) {
+    if (value is! Future || _activeTypeRegistry == null) return false;
+    final tag = _hostTypeTable.lookup(value);
+    if (tag is! DarticInterfaceType || tag.typeArgs.isEmpty) return false;
+    final inner = tag.typeArgs[0];
+    return inner is DarticInterfaceType &&
+        inner.classId == _activeTypeRegistry!.futureClassId;
+  }
+
   void _registerAwaitCallbacks(
     DarticFrame frame, Object? value, DarticModule module,
   ) {
@@ -2448,10 +2461,7 @@ class DarticInterpreter {
               if (tag is DarticInterfaceType &&
                   tag.typeArgs.isNotEmpty &&
                   _activeTypeRegistry != null) {
-                final typeArgIsFuture =
-                    tag.typeArgs[0] is DarticInterfaceType &&
-                        (tag.typeArgs[0] as DarticInterfaceType).classId ==
-                            _activeTypeRegistry!.futureClassId;
+                final typeArgIsFuture = _hasTaggedFutureTypeArg(receiver);
 
                 final argCount = bindingInfo.argCount;
                 final hostArgs = List<Object?>.generate(
@@ -3963,9 +3973,6 @@ class DarticInterpreter {
         case Op.initAsync: // INIT_ASYNC A, Bx — create Completer<T>, refStack[A] = completer.future
           {
             final a = decodeA(instr);
-            // Bx = constant pool index for emittedValueType TypeTemplate.
-            // Phase 1: use Completer<dynamic> (typed Completer deferred).
-            // final bx = decodeBx(instr);
             final completer = Completer<Object?>();
 
             // Create a DarticFrame to hold the async state.
@@ -3978,6 +3985,20 @@ class DarticInterpreter {
             frame.resultCompleter = completer;
             frame.capturedZone = Zone.current;
             frame.futureReg = a;
+
+            // Read emittedValueType from Bx to detect async functions that
+            // return Future<Future<T>>. When the emitted value type is itself
+            // a Future, ASYNC_RETURN must wrap the result in FutureBox to
+            // prevent Completer<Object?>.complete() from flattening.
+            final bx = decodeBx(instr);
+            if (_activeTypeRegistry != null &&
+                bx < module.constantPool.refCount) {
+              final template = module.constantPool.getRef(bx);
+              if (template is InterfaceTypeTemplate &&
+                  template.classId == _activeTypeRegistry!.futureClassId) {
+                frame.asyncReturnNeedsBox = true;
+              }
+            }
 
             // Save the caller's async frame so it can be restored when this
             // async function returns its future to the caller via `continue`.
@@ -4002,18 +4023,7 @@ class DarticInterpreter {
             final Object? value = rs.read(rBase + a);
 
             // Check TAG_TYPE for FutureBox unwrapping decision on resume.
-            // If the awaited Future's type arg is itself a Future type,
-            // FutureBox should be unwrapped without re-flattening.
-            frame.awaitedTypeArgIsFuture = false;
-            if (value is Future && _activeTypeRegistry != null) {
-              final tag = _hostTypeTable.lookup(value);
-              if (tag is DarticInterfaceType && tag.typeArgs.isNotEmpty) {
-                final inner = tag.typeArgs[0];
-                frame.awaitedTypeArgIsFuture =
-                    inner is DarticInterfaceType &&
-                        inner.classId == _activeTypeRegistry!.futureClassId;
-              }
-            }
+            frame.awaitedTypeArgIsFuture = _hasTaggedFutureTypeArg(value);
 
             // If this is the first suspension point, we need to return the
             // future to the caller. The async function was called via
@@ -4073,7 +4083,13 @@ class DarticInterpreter {
           {
             final a = decodeA(instr);
             final frame = _currentAsyncFrame!;
-            final result = rs.read(rBase + a);
+            var result = rs.read(rBase + a);
+            // Wrap in FutureBox if the async function's emittedValueType is
+            // a Future type (e.g., async Future<Future<int>> foo()), preventing
+            // Completer<Object?>.complete() from flattening the nested Future.
+            if (frame.asyncReturnNeedsBox && result is Future) {
+              result = FutureBox(result);
+            }
             frame.resultCompleter!.complete(result);
 
             if (!frame.futureReturned) {
