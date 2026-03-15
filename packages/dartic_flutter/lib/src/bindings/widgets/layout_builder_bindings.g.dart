@@ -40,6 +40,6 @@ abstract final class LayoutBuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as LayoutBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as LayoutBuilder).builder,
         'key#0': (args) => (args[0] as LayoutBuilder).key,
-        '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext, BoxConstraints)),
+        '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
       };
 }

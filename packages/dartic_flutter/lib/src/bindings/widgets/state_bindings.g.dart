@@ -105,7 +105,7 @@ abstract final class StateBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$initState#0', (args) { (args[0] as _$State).initState(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$didUpdateWidget#1', (args) { (args[0] as _$State).didUpdateWidget(args[1] as StatefulWidget); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$reassemble#0', (args) { (args[0] as _$State).reassemble(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$setState#1', (args) { (args[0] as _$State).setState(args[1] as void Function()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$setState#1', (args) { (args[0] as _$State).setState(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$deactivate#0', (args) { (args[0] as _$State).deactivate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$activate#0', (args) { (args[0] as _$State).activate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$dispose#0', (args) { (args[0] as _$State).dispose(); return null; });

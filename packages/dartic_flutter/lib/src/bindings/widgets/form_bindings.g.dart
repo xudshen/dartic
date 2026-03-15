@@ -14,6 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
+import 'dart:async';
 
 abstract final class FormBindings {
   static void register(DarticPluginContext ctx) {
@@ -45,7 +46,7 @@ abstract final class FormBindings {
         'onChanged#0': (args) => (args[0] as Form).onChanged,
         'autovalidateMode#0': (args) => (args[0] as Form).autovalidateMode,
         'key#0': (args) => (args[0] as Form).key,
-        '#8': (args) => Form(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, canPop: identical(args[2], darticAbsent) ? null : args[2] as bool?, onPopInvoked: identical(args[3], darticAbsent) ? null : args[3] as void Function(bool)?, onPopInvokedWithResult: identical(args[4], darticAbsent) ? null : args[4] as void Function(bool, Object?)?, onWillPop: identical(args[5], darticAbsent) ? null : args[5] as Future<bool> Function()?, onChanged: identical(args[6], darticAbsent) ? null : args[6] as void Function()?, autovalidateMode: identical(args[7], darticAbsent) ? null : args[7] as AutovalidateMode?),
+        '#8': (args) => Form(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, canPop: identical(args[2], darticAbsent) ? null : args[2] as bool?, onPopInvoked: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onPopInvokedWithResult: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b) => (args[4] as Function?)!(a, b), onWillPop: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), autovalidateMode: identical(args[7], darticAbsent) ? null : args[7] as AutovalidateMode?),
         '_#fromFields#7': (args) => Form(autovalidateMode: args[0] as AutovalidateMode?, canPop: args[1] as bool?, child: args[2] as Widget, onChanged: args[3] as void Function()?, onPopInvoked: args[4] as void Function(bool)?, onPopInvokedWithResult: args[5] as void Function(bool, Object?)?, onWillPop: args[6] as Future<bool> Function()?),
       };
 }

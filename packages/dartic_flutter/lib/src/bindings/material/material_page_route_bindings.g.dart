@@ -14,6 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
+import 'dart:async';
 
 abstract final class MaterialPageRouteBindings {
   static void register(DarticPluginContext ctx) {
@@ -30,7 +31,7 @@ abstract final class MaterialPageRouteBindings {
         'buildContent#1': (args) => (args[0] as MaterialPageRoute).buildContent(args[1] as BuildContext),
         'canTransitionTo#1': (args) => (args[0] as MaterialPageRoute).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as MaterialPageRoute).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
-        'setState#1': (args) { (args[0] as MaterialPageRoute).setState(args[1] as void Function()); return null; },
+        'setState#1': (args) { (args[0] as MaterialPageRoute).setState(() => (args[1] as Function)()); return null; },
         'buildPage#3': (args) => (args[0] as MaterialPageRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as MaterialPageRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
         'install#0': (args) { (args[0] as MaterialPageRoute).install(); return null; },
@@ -38,8 +39,8 @@ abstract final class MaterialPageRouteBindings {
         'didAdd#0': (args) { (args[0] as MaterialPageRoute).didAdd(); return null; },
         'willPop#0': (args) => (args[0] as MaterialPageRoute).willPop(),
         'onPopInvokedWithResult#2': (args) { (args[0] as MaterialPageRoute).onPopInvokedWithResult(args[1] as bool, args[2]); return null; },
-        'addScopedWillPopCallback#1': (args) { (args[0] as MaterialPageRoute).addScopedWillPopCallback(args[1] as Future<bool> Function()); return null; },
-        'removeScopedWillPopCallback#1': (args) { (args[0] as MaterialPageRoute).removeScopedWillPopCallback(args[1] as Future<bool> Function()); return null; },
+        'addScopedWillPopCallback#1': (args) { (args[0] as MaterialPageRoute).addScopedWillPopCallback(() => (args[1] as Function)() as Future<bool>); return null; },
+        'removeScopedWillPopCallback#1': (args) { (args[0] as MaterialPageRoute).removeScopedWillPopCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'registerPopEntry#1': (args) { (args[0] as MaterialPageRoute).registerPopEntry(args[1] as PopEntry<Object?>); return null; },
         'unregisterPopEntry#1': (args) { (args[0] as MaterialPageRoute).unregisterPopEntry(args[1] as PopEntry<Object?>); return null; },
         'didChangePrevious#1': (args) { (args[0] as MaterialPageRoute).didChangePrevious(args[1] as Route<dynamic>?); return null; },
@@ -115,6 +116,6 @@ abstract final class MaterialPageRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as MaterialPageRoute).receivedTransition = args[1] as Widget? Function(BuildContext, Animation<double>, Animation<double>, bool, Widget?)?; return args[1]; },
         'offstage=#1': (args) { (args[0] as MaterialPageRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as MaterialPageRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
-        '#9': (args) => MaterialPageRoute(builder: args[0] as Widget Function(BuildContext), settings: identical(args[1], darticAbsent) ? null : args[1] as RouteSettings?, requestFocus: identical(args[2], darticAbsent) ? null : args[2] as bool?, maintainState: identical(args[3], darticAbsent) ? true : args[3] as bool, fullscreenDialog: identical(args[4], darticAbsent) ? false : args[4] as bool, allowSnapshotting: identical(args[5], darticAbsent) ? true : args[5] as bool, barrierDismissible: identical(args[6], darticAbsent) ? false : args[6] as bool, traversalEdgeBehavior: identical(args[7], darticAbsent) ? null : args[7] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[8], darticAbsent) ? null : args[8] as TraversalEdgeBehavior?),
+        '#9': (args) => MaterialPageRoute(builder: (a) => (args[0] as Function)(a) as Widget, settings: identical(args[1], darticAbsent) ? null : args[1] as RouteSettings?, requestFocus: identical(args[2], darticAbsent) ? null : args[2] as bool?, maintainState: identical(args[3], darticAbsent) ? true : args[3] as bool, fullscreenDialog: identical(args[4], darticAbsent) ? false : args[4] as bool, allowSnapshotting: identical(args[5], darticAbsent) ? true : args[5] as bool, barrierDismissible: identical(args[6], darticAbsent) ? false : args[6] as bool, traversalEdgeBehavior: identical(args[7], darticAbsent) ? null : args[7] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[8], darticAbsent) ? null : args[8] as TraversalEdgeBehavior?),
       };
 }

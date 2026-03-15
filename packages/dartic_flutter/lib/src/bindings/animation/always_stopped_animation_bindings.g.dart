@@ -21,10 +21,10 @@ abstract final class AlwaysStoppedAnimationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'addListener#1': (args) { (args[0] as AlwaysStoppedAnimation).addListener(args[1] as void Function()); return null; },
-        'removeListener#1': (args) { (args[0] as AlwaysStoppedAnimation).removeListener(args[1] as void Function()); return null; },
-        'addStatusListener#1': (args) { (args[0] as AlwaysStoppedAnimation).addStatusListener(args[1] as void Function(AnimationStatus)); return null; },
-        'removeStatusListener#1': (args) { (args[0] as AlwaysStoppedAnimation).removeStatusListener(args[1] as void Function(AnimationStatus)); return null; },
+        'addListener#1': (args) { (args[0] as AlwaysStoppedAnimation).addListener(() => (args[1] as Function)()); return null; },
+        'removeListener#1': (args) { (args[0] as AlwaysStoppedAnimation).removeListener(() => (args[1] as Function)()); return null; },
+        'addStatusListener#1': (args) { (args[0] as AlwaysStoppedAnimation).addStatusListener((a) => (args[1] as Function)(a)); return null; },
+        'removeStatusListener#1': (args) { (args[0] as AlwaysStoppedAnimation).removeStatusListener((a) => (args[1] as Function)(a)); return null; },
         'toStringDetails#0': (args) => (args[0] as AlwaysStoppedAnimation).toStringDetails(),
         'drive#1': (args) => (args[0] as AlwaysStoppedAnimation).drive(args[1] as Animatable),
         'value#0': (args) => (args[0] as AlwaysStoppedAnimation).value,

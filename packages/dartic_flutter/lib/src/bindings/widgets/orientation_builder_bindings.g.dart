@@ -37,7 +37,7 @@ abstract final class OrientationBuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as OrientationBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as OrientationBuilder).builder,
         'key#0': (args) => (args[0] as OrientationBuilder).key,
-        '#2': (args) => OrientationBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext, Orientation)),
+        '#2': (args) => OrientationBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
         '_#fromFields#1': (args) => OrientationBuilder(builder: args[0] as Widget Function(BuildContext, Orientation)),
       };
 }

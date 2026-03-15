@@ -34,7 +34,7 @@ abstract final class DecorationBindings {
                   if (identical(args[1], darticAbsent)) {
                     return (args[0] as Decoration).createBoxPainter();
                   } else {
-                    return (args[0] as Decoration).createBoxPainter(args[1] as void Function());
+                    return (args[0] as Decoration).createBoxPainter(() => (args[1] as Function)());
                   }
                 },
         'getClipPath#2': (args) => (args[0] as Decoration).getClipPath(args[1] as Rect, args[2] as TextDirection),

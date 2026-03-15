@@ -23,10 +23,10 @@ abstract final class TrainHoppingAnimationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as TrainHoppingAnimation).dispose(); return null; },
         'toString#0': (args) => (args[0] as TrainHoppingAnimation).toString(),
-        'addListener#1': (args) { (args[0] as TrainHoppingAnimation).addListener(args[1] as void Function()); return null; },
-        'removeListener#1': (args) { (args[0] as TrainHoppingAnimation).removeListener(args[1] as void Function()); return null; },
-        'addStatusListener#1': (args) { (args[0] as TrainHoppingAnimation).addStatusListener(args[1] as void Function(AnimationStatus)); return null; },
-        'removeStatusListener#1': (args) { (args[0] as TrainHoppingAnimation).removeStatusListener(args[1] as void Function(AnimationStatus)); return null; },
+        'addListener#1': (args) { (args[0] as TrainHoppingAnimation).addListener(() => (args[1] as Function)()); return null; },
+        'removeListener#1': (args) { (args[0] as TrainHoppingAnimation).removeListener(() => (args[1] as Function)()); return null; },
+        'addStatusListener#1': (args) { (args[0] as TrainHoppingAnimation).addStatusListener((a) => (args[1] as Function)(a)); return null; },
+        'removeStatusListener#1': (args) { (args[0] as TrainHoppingAnimation).removeStatusListener((a) => (args[1] as Function)(a)); return null; },
         'drive#1': (args) => (args[0] as TrainHoppingAnimation).drive(args[1] as Animatable),
         'toStringDetails#0': (args) => (args[0] as TrainHoppingAnimation).toStringDetails(),
         'didRegisterListener#0': (args) { (args[0] as TrainHoppingAnimation).didRegisterListener(); return null; },
@@ -44,6 +44,6 @@ abstract final class TrainHoppingAnimationBindings {
         'isAnimating#0': (args) => (args[0] as TrainHoppingAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as TrainHoppingAnimation).isForwardOrCompleted,
         'onSwitchedTrain=#1': (args) { (args[0] as TrainHoppingAnimation).onSwitchedTrain = args[1] as void Function()?; return args[1]; },
-        '#3': (args) => TrainHoppingAnimation(args[0] as Animation<double>, args[1] as Animation<double>?, onSwitchedTrain: identical(args[2], darticAbsent) ? null : args[2] as void Function()?),
+        '#3': (args) => TrainHoppingAnimation(args[0] as Animation<double>, args[1] as Animation<double>?, onSwitchedTrain: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
       };
 }

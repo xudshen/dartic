@@ -21,13 +21,13 @@ abstract final class ReverseAnimationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'addListener#1': (args) { (args[0] as ReverseAnimation).addListener(args[1] as void Function()); return null; },
-        'removeListener#1': (args) { (args[0] as ReverseAnimation).removeListener(args[1] as void Function()); return null; },
+        'addListener#1': (args) { (args[0] as ReverseAnimation).addListener(() => (args[1] as Function)()); return null; },
+        'removeListener#1': (args) { (args[0] as ReverseAnimation).removeListener(() => (args[1] as Function)()); return null; },
         'didStartListening#0': (args) { (args[0] as ReverseAnimation).didStartListening(); return null; },
         'didStopListening#0': (args) { (args[0] as ReverseAnimation).didStopListening(); return null; },
         'toString#0': (args) => (args[0] as ReverseAnimation).toString(),
-        'addStatusListener#1': (args) { (args[0] as ReverseAnimation).addStatusListener(args[1] as void Function(AnimationStatus)); return null; },
-        'removeStatusListener#1': (args) { (args[0] as ReverseAnimation).removeStatusListener(args[1] as void Function(AnimationStatus)); return null; },
+        'addStatusListener#1': (args) { (args[0] as ReverseAnimation).addStatusListener((a) => (args[1] as Function)(a)); return null; },
+        'removeStatusListener#1': (args) { (args[0] as ReverseAnimation).removeStatusListener((a) => (args[1] as Function)(a)); return null; },
         'drive#1': (args) => (args[0] as ReverseAnimation).drive(args[1] as Animatable),
         'toStringDetails#0': (args) => (args[0] as ReverseAnimation).toStringDetails(),
         'didRegisterListener#0': (args) { (args[0] as ReverseAnimation).didRegisterListener(); return null; },

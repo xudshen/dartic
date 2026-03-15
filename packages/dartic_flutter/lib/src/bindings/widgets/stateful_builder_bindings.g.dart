@@ -37,7 +37,7 @@ abstract final class StatefulBuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as StatefulBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as StatefulBuilder).builder,
         'key#0': (args) => (args[0] as StatefulBuilder).key,
-        '#2': (args) => StatefulBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext, void Function(void Function()))),
+        '#2': (args) => StatefulBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
         '_#fromFields#1': (args) => StatefulBuilder(builder: args[0] as Widget Function(BuildContext, void Function(void Function()))),
       };
 }

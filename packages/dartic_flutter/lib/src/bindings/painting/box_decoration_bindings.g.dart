@@ -33,7 +33,7 @@ abstract final class BoxDecorationBindings {
         'lerpTo#2': (args) => (args[0] as BoxDecoration).lerpTo(args[1] as Decoration?, args[2] as double),
         'debugFillProperties#1': (args) { (args[0] as BoxDecoration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'hitTest#3': (args) => (args[0] as BoxDecoration).hitTest(args[1] as Size, args[2] as Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),
-        'createBoxPainter#1': (args) => (args[0] as BoxDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : args[1] as void Function()?),
+        'createBoxPainter#1': (args) => (args[0] as BoxDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
         'toStringShort#0': (args) => (args[0] as BoxDecoration).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as BoxDecoration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'color#0': (args) => (args[0] as BoxDecoration).color,

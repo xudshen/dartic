@@ -35,6 +35,6 @@ abstract final class TickerBindings {
         'shouldScheduleTick#0': (args) => (args[0] as Ticker).shouldScheduleTick,
         'debugLabel#0': (args) => (args[0] as Ticker).debugLabel,
         'muted=#1': (args) { (args[0] as Ticker).muted = args[1] as bool; return args[1]; },
-        '#2': (args) => Ticker(args[0] as void Function(Duration), debugLabel: identical(args[1], darticAbsent) ? null : args[1] as String?),
+        '#2': (args) => Ticker((a) => (args[0] as Function)(a), debugLabel: identical(args[1], darticAbsent) ? null : args[1] as String?),
       };
 }

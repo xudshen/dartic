@@ -27,8 +27,8 @@ abstract final class OverlayEntryBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'addListener#1': (args) { (args[0] as OverlayEntry).addListener(args[1] as void Function()); return null; },
-        'removeListener#1': (args) { (args[0] as OverlayEntry).removeListener(args[1] as void Function()); return null; },
+        'addListener#1': (args) { (args[0] as OverlayEntry).addListener(() => (args[1] as Function)()); return null; },
+        'removeListener#1': (args) { (args[0] as OverlayEntry).removeListener(() => (args[1] as Function)()); return null; },
         'remove#0': (args) { (args[0] as OverlayEntry).remove(); return null; },
         'markNeedsBuild#0': (args) { (args[0] as OverlayEntry).markNeedsBuild(); return null; },
         'dispose#0': (args) { (args[0] as OverlayEntry).dispose(); return null; },
@@ -40,6 +40,6 @@ abstract final class OverlayEntryBindings {
         'mounted#0': (args) => (args[0] as OverlayEntry).mounted,
         'opaque=#1': (args) { (args[0] as OverlayEntry).opaque = args[1] as bool; return args[1]; },
         'maintainState=#1': (args) { (args[0] as OverlayEntry).maintainState = args[1] as bool; return args[1]; },
-        '#4': (args) => OverlayEntry(builder: args[0] as Widget Function(BuildContext), opaque: identical(args[1], darticAbsent) ? false : args[1] as bool, maintainState: identical(args[2], darticAbsent) ? false : args[2] as bool, canSizeOverlay: identical(args[3], darticAbsent) ? false : args[3] as bool),
+        '#4': (args) => OverlayEntry(builder: (a) => (args[0] as Function)(a) as Widget, opaque: identical(args[1], darticAbsent) ? false : args[1] as bool, maintainState: identical(args[2], darticAbsent) ? false : args[2] as bool, canSizeOverlay: identical(args[3], darticAbsent) ? false : args[3] as bool),
       };
 }

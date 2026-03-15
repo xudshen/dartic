@@ -43,6 +43,6 @@ abstract final class AnimatedAlignBindings {
         'duration#0': (args) => (args[0] as AnimatedAlign).duration,
         'onEnd#0': (args) => (args[0] as AnimatedAlign).onEnd,
         'key#0': (args) => (args[0] as AnimatedAlign).key,
-        '#8': (args) => AnimatedAlign(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: args[1] as AlignmentGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, heightFactor: identical(args[3], darticAbsent) ? null : args[3] as double?, widthFactor: identical(args[4], darticAbsent) ? null : args[4] as double?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : args[7] as void Function()?),
+        '#8': (args) => AnimatedAlign(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: args[1] as AlignmentGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, heightFactor: identical(args[3], darticAbsent) ? null : args[3] as double?, widthFactor: identical(args[4], darticAbsent) ? null : args[4] as double?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
       };
 }

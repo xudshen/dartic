@@ -41,6 +41,6 @@ abstract final class AnimatedSlideBindings {
         'duration#0': (args) => (args[0] as AnimatedSlide).duration,
         'onEnd#0': (args) => (args[0] as AnimatedSlide).onEnd,
         'key#0': (args) => (args[0] as AnimatedSlide).key,
-        '#6': (args) => AnimatedSlide(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, offset: args[2] as Offset, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : args[5] as void Function()?),
+        '#6': (args) => AnimatedSlide(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, offset: args[2] as Offset, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
       };
 }
