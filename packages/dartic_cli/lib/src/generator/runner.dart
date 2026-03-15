@@ -66,7 +66,12 @@ class Runner {
       }
 
       // Generate combined plugin if plugin_name is set.
+      // plugin_name is snake_case in YAML (e.g. 'fab_service'),
+      // converted to PascalCase for the class name (e.g. 'FabServicePlugin'),
+      // kept as snake_case for the file name (e.g. 'fab_service_plugin.g.dart').
       if (config.pluginName != null) {
+        final snakeName = config.pluginName!;
+        final pascalName = _snakeToPascal(snakeName);
         final bindingsRelPath = p.relative(
           p.normalize(p.absolute(config.outputBindings)),
           from: p.normalize(p.absolute(config.outputPlugins)),
@@ -80,16 +85,15 @@ class Runner {
           ...allTopLevelFileNames,
         ];
         final pluginSource = plugin_emitter.emitPluginFile(
-          libraryUri: config.pluginName!,
-          pluginName: config.pluginName!,
+          libraryUri: snakeName,
+          pluginName: pascalName,
           bindingClassNames: allClassNames,
           bindingFileNames: allFileNames,
           hasTopLevel: false, // Already included in allClassNames
           customImports: _nullIfEmpty(config.customImports),
           bindingsImportPrefix: bindingsRelPath,
         );
-        final pluginFileName =
-            '${_toSnakeCase(config.pluginName!)}_plugin.g.dart';
+        final pluginFileName = '${snakeName}_plugin.g.dart';
         _writeFile(config.outputPlugins, pluginFileName, pluginSource);
       }
     } finally {
@@ -406,9 +410,15 @@ class Runner {
   /// `dart:async` → `Async`
   /// `package:fab_navigator/fab_navigator.dart` → `FabNavigator`
   String _libraryToPluginName(String uri) {
-    final short = _libraryShortName(uri);
-    // Convert snake_case to PascalCase
-    return short
+    return _snakeToPascal(_libraryShortName(uri));
+  }
+
+  /// Converts a snake_case string to PascalCase.
+  ///
+  /// `fab_navigator` → `FabNavigator`
+  /// `core` → `Core`
+  String _snakeToPascal(String snake) {
+    return snake
         .split('_')
         .map((part) =>
             part.isEmpty ? '' : part[0].toUpperCase() + part.substring(1))
