@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 
 class _$Duration extends Duration implements DarticObjectHolder {
   _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(days: superArgs[0] as int, hours: superArgs[1] as int, minutes: superArgs[2] as int, seconds: superArgs[3] as int, milliseconds: superArgs[4] as int, microseconds: superArgs[5] as int);

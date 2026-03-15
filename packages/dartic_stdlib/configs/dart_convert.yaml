@@ -12,8 +12,7 @@ output_plugins: "../lib/src/plugins"
 
 custom_imports:
   - "package:dartic/dartic.dart"
-  - "package:dartic/src/api/dartic_absent.dart"
-  - "package:dartic/src/runtime/object.dart"
+  - "package:dartic/dartic_internal.dart"
   - "package:dartic_stdlib/src/bindings/convert/convert_helpers.dart"
 
 libraries:

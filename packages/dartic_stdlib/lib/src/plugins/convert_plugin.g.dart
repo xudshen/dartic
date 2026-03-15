@@ -6,8 +6,7 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import '../bindings/convert/codec_bindings.g.dart';
 import '../bindings/convert/converter_bindings.g.dart';

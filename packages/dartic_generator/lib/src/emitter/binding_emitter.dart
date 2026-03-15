@@ -227,12 +227,12 @@ void _writeImport(StringBuffer buf,
     if (bridge) {
       buf.writeln("import '../dartic_dispatch.dart';");
       buf.writeln("import '../dartic_object_holder.dart';");
-      buf.writeln("import '../../runtime/object.dart';");
+      buf.writeln("import '../../dartic_internal.dart';");
     }
     if (additionalImports != null) {
       for (final imp in additionalImports) {
         // Skip imports already added by bridge mode
-        if (bridge && imp == '../../runtime/object.dart') continue;
+        if (bridge && imp == '../../dartic_internal.dart') continue;
         buf.writeln("import '$imp';");
       }
     }
@@ -261,7 +261,7 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
   }
 
   if (source.contains('DarticObject')) {
-    imports.add('../../runtime/object.dart');
+    imports.add('../../dartic_internal.dart');
   }
   // dart:async types — the most common cross-library dependency (Stream,
   // Future, etc. appear in bindings for many libraries).
@@ -299,7 +299,7 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
     }
   }
   if (RegExp(r'\bdarticAbsent\b').hasMatch(source)) {
-    imports.add('package:dartic/src/api/dartic_absent.dart');
+    imports.add('package:dartic/dartic_internal.dart');
   }
   return imports;
 }

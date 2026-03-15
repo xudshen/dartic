@@ -492,7 +492,7 @@ void main() {
       // Bridge imports
       expect(source, contains("import '../dartic_dispatch.dart'"));
       expect(source, contains("import '../dartic_object_holder.dart'"));
-      expect(source, contains("import '../../runtime/object.dart'"));
+      expect(source, contains("import '../../dartic_internal.dart'"));
 
       // Method override with dispatch delegation
       expect(source, contains("_dispatch.invoke(this, \$darticObject, 'toString'"));
