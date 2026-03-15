@@ -7,6 +7,9 @@ import 'package:dartic/src/runtime/class_info.dart';
 import 'package:dartic/src/runtime/object.dart';
 import 'package:test/test.dart';
 
+/// Test-only late sentinel (mirrors DarticInterpreter.lateSentinel).
+final Object _testLateSentinel = Object();
+
 void main() {
   group('DarticDispatch', () {
     group('notOverridden sentinel', () {
@@ -132,6 +135,7 @@ void main() {
             if (method.name == 'name=') return null;
             return null;
           },
+          lateSentinel: _testLateSentinel,
         );
       });
 
@@ -320,6 +324,7 @@ void main() {
             ));
             return 'called:${method.name}';
           },
+          lateSentinel: _testLateSentinel,
         );
       });
 

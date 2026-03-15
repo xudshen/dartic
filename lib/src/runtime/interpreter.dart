@@ -347,6 +347,7 @@ class DarticInterpreter {
       _activeDarticDispatch = DarticDispatch(
         module: module,
         callMethod: _callDarticMethod,
+        lateSentinel: lateSentinel,
       );
     }
 
