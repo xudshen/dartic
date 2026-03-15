@@ -534,12 +534,25 @@ class TypeAnalyzer {
 
       // If the parameter is a function type, extract callback info
       final rawType = p.type;
+      List<CallbackParamInfo>? callbackParams;
       if (rawType is FunctionType) {
         // Skip generic function parameters (e.g. Set<R> Function<R>())
         // These have their own type parameters and can't be wrapped.
         if (rawType.typeParameters.isEmpty) {
           callbackArity = rawType.formalParameters.length;
           callbackReturnType = _sanitizeType(rawType.returnType);
+          // Extract detailed parameter info for named-parameter support.
+          final hasNamed = rawType.formalParameters.any((fp) => fp.isNamed);
+          if (hasNamed) {
+            callbackParams = rawType.formalParameters.map((fp) {
+              return CallbackParamInfo(
+                name: fp.name ?? '',
+                type: _sanitizeType(fp.type),
+                isNamed: fp.isNamed,
+                isRequired: fp.isRequired,
+              );
+            }).toList();
+          }
         }
       }
 
@@ -561,6 +574,7 @@ class TypeAnalyzer {
         isRequired: p.isRequired,
         callbackArity: callbackArity,
         callbackReturnType: callbackReturnType,
+        callbackParams: callbackParams,
         defaultValueCode: p.isOptional ? p.defaultValueCode : null,
         fullType: fullType,
       );

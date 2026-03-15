@@ -62,6 +62,21 @@ class TypeInfo {
   String get qualifiedName => '$libraryUri::$className';
 }
 
+/// Describes a single parameter of a callback/function-type parameter.
+class CallbackParamInfo {
+  final String name;
+  final String type;
+  final bool isNamed;
+  final bool isRequired;
+
+  CallbackParamInfo({
+    required this.name,
+    required this.type,
+    this.isNamed = false,
+    this.isRequired = false,
+  });
+}
+
 /// 方法参数信息。
 class ParamInfo {
   final String name;
@@ -77,6 +92,11 @@ class ParamInfo {
   /// For function-typed parameters, the return type of the callback
   /// (used to generate wrapping closures). null if not a function-type param.
   final String? callbackReturnType;
+
+  /// For function-typed parameters, detailed info about each callback parameter
+  /// (name, type, isNamed, isRequired). null if not a function-typed parameter.
+  /// When present, enables correct generation of named-parameter closures.
+  final List<CallbackParamInfo>? callbackParams;
 
   /// The source code of the default value for optional params (e.g. 'false',
   /// 'AlignmentDirectional.centerEnd'). null if no default or if the default
@@ -96,6 +116,7 @@ class ParamInfo {
     this.isRequired = false,
     this.callbackArity,
     this.callbackReturnType,
+    this.callbackParams,
     this.defaultValueCode,
     this.fullType,
   });

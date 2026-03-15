@@ -915,37 +915,71 @@ List<String> _splitTopLevelTypeArgs(String typeArgs) {
 /// Generates a callback wrapper for a function-typed parameter.
 ///
 /// Examples:
-///   bool Function(E) → `(e0) => (args[N] as Function)(e0) as bool`
-///   void Function(E) → `(e0) { (args[N] as Function)(e0); }`  (but simpler: `(e0) => (args[N] as Function)(e0)`)
-///   T Function(T, E) → `(e0, e1) => (args[N] as Function)(e0, e1)`
-///   int Function(E, E)? → uses nullable check
+///   bool Function(E) → `(a) => (args[N] as Function)(a) as bool`
+///   void Function(DragEndDetails, {bool isClosing}) →
+///     `(a, {required bool b}) => (args[N] as Function)(a, b)`
+///   Widget? Function(BuildContext, {int columnCount, int selectedIndex})? →
+///     nullable + named params
 String _emitCallbackWrapper(ParamInfo param, int argsIndex) {
   final arity = param.callbackArity!;
   final returnType = param.callbackReturnType ?? 'dynamic';
   final isNullable = param.type.endsWith('?');
+  final cbParams = param.callbackParams; // null if all positional
 
-  // Build parameter names: e0, e1, e2, ...
-  final paramNames = [for (var i = 0; i < arity; i++) _callbackParamName(i)];
-  final paramList = paramNames.join(', ');
+  // Build parameter declaration and call argument lists.
+  final String paramDecl;
+  final String callArgs;
+
+  if (cbParams != null) {
+    // Has named parameters — generate typed declaration with {named} section.
+    final positional = <String>[];
+    final named = <String>[];
+    final callPositional = <String>[];
+    final callNamed = <String>[];
+
+    for (var i = 0; i < cbParams.length; i++) {
+      final cp = cbParams[i];
+      if (cp.isNamed) {
+        // Named params must use the original name (Dart requires name match).
+        final req = cp.isRequired ? 'required ' : '';
+        named.add('$req${cp.type} ${cp.name}');
+        callNamed.add('${cp.name}: ${cp.name}');
+      } else {
+        final varName = _callbackParamName(i);
+        positional.add(varName);
+        callPositional.add(varName);
+      }
+    }
+
+    // Build declaration: (a, b, {required int c, required int d})
+    final parts = <String>[...positional];
+    if (named.isNotEmpty) {
+      parts.add('{${named.join(', ')}}');
+    }
+    paramDecl = parts.join(', ');
+    callArgs = [...callPositional, ...callNamed].join(', ');
+  } else {
+    // All positional — simple a, b, c names.
+    final paramNames = [for (var i = 0; i < arity; i++) _callbackParamName(i)];
+    paramDecl = paramNames.join(', ');
+    callArgs = paramDecl;
+  }
+
   final fnRef = 'args[$argsIndex] as Function${isNullable ? '?' : ''}';
 
   if (isNullable) {
-    // Nullable function: wrap with null-aware closure.
-    // Parentheses around the cast are crucial to avoid parse ambiguity
-    // between `Function?` (nullable type) and `? :` (ternary operator).
     if (arity == 0) {
       return '(args[$argsIndex] as Function?) == null ? null : () => (args[$argsIndex] as Function?)!()';
     }
-    return '(args[$argsIndex] as Function?) == null ? null : ($paramList) => (args[$argsIndex] as Function?)!($paramList)';
+    return '(args[$argsIndex] as Function?) == null ? null : ($paramDecl) => (args[$argsIndex] as Function?)!($callArgs)';
   }
 
-  // Build the call expression, adding a cast only for concrete return types
   final needsCast =
       returnType != 'void' && returnType != 'dynamic' && returnType != 'Object?';
-  final call = '($fnRef)($paramList)';
+  final call = '($fnRef)($callArgs)';
   final callExpr = needsCast ? '$call as $returnType' : call;
 
-  return '($paramList) => $callExpr';
+  return '($paramDecl) => $callExpr';
 }
 
 /// Returns a parameter name for callback wrappers.
