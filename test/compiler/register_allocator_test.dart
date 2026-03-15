@@ -1,4 +1,4 @@
-import 'package:dartic/src/compiler/register_allocator.dart';
+import 'package:dartic_compiler/src/compiler/register_allocator.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dartic/src/toolchain/target.dart';
+import 'package:dartic_compiler/src/toolchain/target.dart';
 import 'package:test/test.dart';
 
 void main() {

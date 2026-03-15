@@ -1,6 +1,6 @@
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/compiler/bytecode_emitter.dart';
+import 'package:dartic_compiler/src/compiler/bytecode_emitter.dart';
 import 'package:test/test.dart';
 
 void main() {

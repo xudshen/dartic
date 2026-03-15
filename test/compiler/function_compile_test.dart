@@ -1,7 +1,7 @@
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/compiler/register_allocator.dart';
-import 'package:dartic/src/compiler/scope.dart';
+import 'package:dartic_compiler/src/compiler/register_allocator.dart';
+import 'package:dartic_compiler/src/compiler/scope.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';

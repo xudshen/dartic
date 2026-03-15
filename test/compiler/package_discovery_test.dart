@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dartic/src/compiler/package_discovery.dart';
+import 'package:dartic_compiler/src/compiler/package_discovery.dart';
 import 'package:test/test.dart';
 
 void main() {

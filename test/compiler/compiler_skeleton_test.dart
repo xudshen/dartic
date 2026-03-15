@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dartic/src/compiler/bytecode_emitter.dart';
-import 'package:dartic/src/compiler/compiler.dart';
+import 'package:dartic_compiler/src/compiler/bytecode_emitter.dart';
+import 'package:dartic_compiler/src/compiler/compiler.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:test/test.dart';
 

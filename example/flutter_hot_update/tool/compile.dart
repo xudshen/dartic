@@ -13,9 +13,9 @@
 // ignore_for_file: implementation_imports
 import 'dart:io';
 
-import 'package:dartic/dartic.dart';
-import 'package:dartic/src/bytecode/serializer.dart';
-import 'package:dartic/src/compiler/compiler.dart';
+import 'package:dartic/dartic_internal.dart' show DarticSerializer;
+import 'package:dartic_compiler/dartic_compiler.dart'
+    show DarticCompiler, discoverCompilablePackages;
 import 'package:kernel/ast.dart' as ir;
 import 'package:kernel/binary/ast_from_binary.dart';
 

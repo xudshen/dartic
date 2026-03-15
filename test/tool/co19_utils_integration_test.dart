@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dartic/src/compiler/compiler.dart';
+import 'package:dartic_compiler/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 
 import '../helpers/compile_helper.dart';

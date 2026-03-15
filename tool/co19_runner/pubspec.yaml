@@ -10,6 +10,8 @@ environment:
 dependencies:
   dartic:
     path: ../..
+  dartic_compiler:
+    path: ../../packages/dartic_compiler
   dartic_stdlib:
     path: ../../packages/dartic_stdlib
   kernel:

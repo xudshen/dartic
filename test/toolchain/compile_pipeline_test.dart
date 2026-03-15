@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dartic/src/toolchain/compile_pipeline.dart';
-import 'package:dartic/src/toolchain/sdk_resolver.dart';
-import 'package:dartic/src/toolchain/target.dart';
+import 'package:dartic_compiler/src/toolchain/compile_pipeline.dart';
+import 'package:dartic_compiler/src/toolchain/sdk_resolver.dart';
+import 'package:dartic_compiler/src/toolchain/target.dart';
 import 'package:test/test.dart';
 
 /// Resolves the Dart SDK path from this project's FVM configuration.
