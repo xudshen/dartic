@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart'
+import 'package:dartic_compiler/dartic_compiler.dart'
     show SdkResolver, readSdkVersion;
 import 'package:mason_logger/mason_logger.dart';
 

@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -42,6 +41,6 @@ abstract final class AnimatedSlideBindings {
         'duration#0': (args) => (args[0] as AnimatedSlide).duration,
         'onEnd#0': (args) => (args[0] as AnimatedSlide).onEnd,
         'key#0': (args) => (args[0] as AnimatedSlide).key,
-        '#6': (args) => AnimatedSlide(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, offset: args[2] as Offset, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : args[5] as void Function()?),
+        '#6': (args) => AnimatedSlide(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, offset: args[2] as Offset, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
       };
 }

@@ -2,17 +2,21 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
+import 'package:dartic/dartic_internal.dart'
+    show
+        DarticModule,
+        DarticFuncProto,
+        DarticSerializer,
+        darticAbsent,
+        decodeOp,
+        decodesBx;
 import 'package:dartic/src/bridge/bridge_factory_registry.dart';
 import 'package:dartic/src/bridge/host_class_registry.dart';
 import 'package:dartic/src/bridge/host_binding_registry.dart';
 import 'package:dartic/src/bridge/host_type_resolver.dart';
-import 'package:dartic_stdlib/dartic_stdlib.dart';
-import 'package:dartic/src/bytecode/encoding.dart';
-import 'package:dartic/src/bytecode/module.dart';
-import 'package:dartic/src/bytecode/serializer.dart';
-import 'package:dartic/src/compiler/compiler.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
+import 'package:dartic_compiler/dartic_compiler.dart' show DarticCompiler;
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:front_end/src/api_unstable/vm.dart'
     show
         CfeSeverity,

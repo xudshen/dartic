@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:ui';
@@ -37,7 +36,7 @@ abstract final class BoxConstraintsBindings {
         'constrainDimensions#2': (args) => (args[0] as BoxConstraints).constrainDimensions(args[1] as double, args[2] as double),
         'constrainSizeAndAttemptToPreserveAspectRatio#1': (args) => (args[0] as BoxConstraints).constrainSizeAndAttemptToPreserveAspectRatio(args[1] as Size),
         'isSatisfiedBy#1': (args) => (args[0] as BoxConstraints).isSatisfiedBy(args[1] as Size),
-        'debugAssertIsValid#2': (args) => (args[0] as BoxConstraints).debugAssertIsValid(isAppliedConstraint: identical(args[1], darticAbsent) ? false : args[1] as bool, informationCollector: identical(args[2], darticAbsent) ? null : args[2] as Iterable<DiagnosticsNode> Function()?),
+        'debugAssertIsValid#2': (args) => (args[0] as BoxConstraints).debugAssertIsValid(isAppliedConstraint: identical(args[1], darticAbsent) ? false : args[1] as bool, informationCollector: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'normalize#0': (args) => (args[0] as BoxConstraints).normalize(),
         'toString#0': (args) => (args[0] as BoxConstraints).toString(),
         'minWidth#0': (args) => (args[0] as BoxConstraints).minWidth,

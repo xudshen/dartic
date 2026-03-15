@@ -9,10 +9,13 @@ environment:
 dependencies:
   dartic:
     path: ../../
-  dartic_generator:
-    path: ../dartic_generator
+  dartic_annotation:
+    path: ../dartic_annotation
+  dartic_compiler:
+    path: ../dartic_compiler
   dartic_stdlib:
     path: ../dartic_stdlib
+  analyzer: ^8.0.0
   args: ^2.6.0
   mason_logger: ^0.3.1
   yaml: ^3.1.0

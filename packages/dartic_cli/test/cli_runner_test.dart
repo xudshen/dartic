@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart' show darticVersion;
+import 'package:dartic_compiler/dartic_compiler.dart' show darticVersion;
 import 'package:dartic_cli/src/cli_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:test/test.dart';

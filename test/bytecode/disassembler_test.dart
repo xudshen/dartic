@@ -5,7 +5,7 @@ import 'package:dartic/src/bytecode/disassembler.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/module.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:dartic/src/runtime/class_info.dart';
 import 'package:test/test.dart';
 

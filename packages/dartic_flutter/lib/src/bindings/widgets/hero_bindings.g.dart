@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -43,7 +42,7 @@ abstract final class HeroBindings {
         'placeholderBuilder#0': (args) => (args[0] as Hero).placeholderBuilder,
         'transitionOnUserGestures#0': (args) => (args[0] as Hero).transitionOnUserGestures,
         'key#0': (args) => (args[0] as Hero).key,
-        '#7': (args) => Hero(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tag: args[1] as Object, createRectTween: identical(args[2], darticAbsent) ? null : args[2] as Tween<Rect?> Function(Rect?, Rect?)?, flightShuttleBuilder: identical(args[3], darticAbsent) ? null : args[3] as Widget Function(BuildContext, Animation<double>, HeroFlightDirection, BuildContext, BuildContext)?, placeholderBuilder: identical(args[4], darticAbsent) ? null : args[4] as Widget Function(BuildContext, Size, Widget)?, transitionOnUserGestures: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
+        '#7': (args) => Hero(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tag: args[1] as Object, createRectTween: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), flightShuttleBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b, c, d, e) => (args[3] as Function?)!(a, b, c, d, e), placeholderBuilder: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b, c) => (args[4] as Function?)!(a, b, c), transitionOnUserGestures: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
         '_#fromFields#6': (args) => Hero(child: args[0] as Widget, createRectTween: args[1] as Tween<Rect?> Function(Rect?, Rect?)?, flightShuttleBuilder: args[2] as Widget Function(BuildContext, Animation<double>, HeroFlightDirection, BuildContext, BuildContext)?, placeholderBuilder: args[3] as Widget Function(BuildContext, Size, Widget)?, tag: args[4] as Object, transitionOnUserGestures: args[5] as bool),
       };
 }

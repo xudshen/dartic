@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -44,6 +43,6 @@ abstract final class AnimatedScaleBindings {
         'duration#0': (args) => (args[0] as AnimatedScale).duration,
         'onEnd#0': (args) => (args[0] as AnimatedScale).onEnd,
         'key#0': (args) => (args[0] as AnimatedScale).key,
-        '#8': (args) => AnimatedScale(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, scale: args[2] as double, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as Alignment, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as FilterQuality?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : args[7] as void Function()?),
+        '#8': (args) => AnimatedScale(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, scale: args[2] as double, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as Alignment, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as FilterQuality?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
       };
 }

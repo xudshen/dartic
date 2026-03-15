@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -24,10 +23,10 @@ abstract final class CurvedAnimationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as CurvedAnimation).dispose(); return null; },
         'toString#0': (args) => (args[0] as CurvedAnimation).toString(),
-        'addListener#1': (args) { (args[0] as CurvedAnimation).addListener(args[1] as void Function()); return null; },
-        'removeListener#1': (args) { (args[0] as CurvedAnimation).removeListener(args[1] as void Function()); return null; },
-        'addStatusListener#1': (args) { (args[0] as CurvedAnimation).addStatusListener(args[1] as void Function(AnimationStatus)); return null; },
-        'removeStatusListener#1': (args) { (args[0] as CurvedAnimation).removeStatusListener(args[1] as void Function(AnimationStatus)); return null; },
+        'addListener#1': (args) { (args[0] as CurvedAnimation).addListener(() => (args[1] as Function)()); return null; },
+        'removeListener#1': (args) { (args[0] as CurvedAnimation).removeListener(() => (args[1] as Function)()); return null; },
+        'addStatusListener#1': (args) { (args[0] as CurvedAnimation).addStatusListener((a) => (args[1] as Function)(a)); return null; },
+        'removeStatusListener#1': (args) { (args[0] as CurvedAnimation).removeStatusListener((a) => (args[1] as Function)(a)); return null; },
         'drive#1': (args) => (args[0] as CurvedAnimation).drive(args[1] as Animatable),
         'toStringDetails#0': (args) => (args[0] as CurvedAnimation).toStringDetails(),
         'parent#0': (args) => (args[0] as CurvedAnimation).parent,

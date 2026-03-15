@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -42,7 +41,7 @@ abstract final class AnimatedThemeBindings {
         'duration#0': (args) => (args[0] as AnimatedTheme).duration,
         'onEnd#0': (args) => (args[0] as AnimatedTheme).onEnd,
         'key#0': (args) => (args[0] as AnimatedTheme).key,
-        '#6': (args) => AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, duration: identical(args[3], darticAbsent) ? kThemeAnimationDuration : args[3] as Duration, onEnd: identical(args[4], darticAbsent) ? null : args[4] as void Function()?, child: args[5] as Widget),
+        '#6': (args) => AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, duration: identical(args[3], darticAbsent) ? kThemeAnimationDuration : args[3] as Duration, onEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), child: args[5] as Widget),
         '_#fromFields#2': (args) => AnimatedTheme(child: args[0] as Widget, data: args[1] as ThemeData),
       };
 }

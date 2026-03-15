@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:dartic/dartic.dart' show darticVersion;
+import 'package:dartic_compiler/dartic_compiler.dart' show darticVersion;
 import 'package:dartic_cli/src/commands/compile_command.dart';
 import 'package:dartic_cli/src/commands/doctor_command.dart';
 import 'package:dartic_cli/src/commands/dump_command.dart';

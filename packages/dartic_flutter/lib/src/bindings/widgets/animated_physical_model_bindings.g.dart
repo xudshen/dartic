@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -49,6 +48,6 @@ abstract final class AnimatedPhysicalModelBindings {
         'duration#0': (args) => (args[0] as AnimatedPhysicalModel).duration,
         'onEnd#0': (args) => (args[0] as AnimatedPhysicalModel).onEnd,
         'key#0': (args) => (args[0] as AnimatedPhysicalModel).key,
-        '#13': (args) => AnimatedPhysicalModel(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, shape: identical(args[2], darticAbsent) ? BoxShape.rectangle : args[2] as BoxShape, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as Clip, borderRadius: identical(args[4], darticAbsent) ? null : args[4] as BorderRadius?, elevation: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, color: args[6] as Color, animateColor: identical(args[7], darticAbsent) ? true : args[7] as bool, shadowColor: args[8] as Color, animateShadowColor: identical(args[9], darticAbsent) ? true : args[9] as bool, curve: identical(args[10], darticAbsent) ? Curves.linear : args[10] as Curve, duration: args[11] as Duration, onEnd: identical(args[12], darticAbsent) ? null : args[12] as void Function()?),
+        '#13': (args) => AnimatedPhysicalModel(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, shape: identical(args[2], darticAbsent) ? BoxShape.rectangle : args[2] as BoxShape, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as Clip, borderRadius: identical(args[4], darticAbsent) ? null : args[4] as BorderRadius?, elevation: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, color: args[6] as Color, animateColor: identical(args[7], darticAbsent) ? true : args[7] as bool, shadowColor: args[8] as Color, animateShadowColor: identical(args[9], darticAbsent) ? true : args[9] as bool, curve: identical(args[10], darticAbsent) ? Curves.linear : args[10] as Curve, duration: args[11] as Duration, onEnd: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : () => (args[12] as Function?)!()),
       };
 }

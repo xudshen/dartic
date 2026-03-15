@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -43,7 +42,7 @@ abstract final class SnackBarActionBindings {
         'label#0': (args) => (args[0] as SnackBarAction).label,
         'onPressed#0': (args) => (args[0] as SnackBarAction).onPressed,
         'key#0': (args) => (args[0] as SnackBarAction).key,
-        '#7': (args) => SnackBarAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, disabledTextColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, disabledBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, label: args[5] as String, onPressed: args[6] as void Function()),
+        '#7': (args) => SnackBarAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, disabledTextColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, disabledBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, label: args[5] as String, onPressed: () => (args[6] as Function)()),
         '_#fromFields#6': (args) => SnackBarAction(backgroundColor: args[0] as Color?, disabledBackgroundColor: args[1] as Color?, disabledTextColor: args[2] as Color?, label: args[3] as String, onPressed: args[4] as void Function(), textColor: args[5] as Color?),
       };
 }

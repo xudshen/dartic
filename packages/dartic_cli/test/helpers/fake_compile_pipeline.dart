@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:dartic/dartic.dart' show CompilePipeline, DarticTarget;
+import 'package:dartic_compiler/dartic_compiler.dart'
+    show CompilePipeline, DarticTarget;
 
 import 'fake_sdk_resolver.dart';
 

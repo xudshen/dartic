@@ -23,8 +23,7 @@ output_plugins: "../lib/src/plugins"
 # Use package: imports instead of relative imports (external package).
 custom_imports:
   - "package:dartic/dartic.dart"
-  - "package:dartic/src/api/dartic_absent.dart"
-  - "package:dartic/src/runtime/object.dart"
+  - "package:dartic/dartic_internal.dart"
   - "package:flutter/foundation.dart"
   - "package:flutter/rendering.dart"
   - "package:flutter/gestures.dart"

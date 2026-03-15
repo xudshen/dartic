@@ -14,9 +14,9 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/bytecode/serializer.dart';
+import 'package:dartic/dartic_internal.dart' show DarticSerializer;
+import 'package:dartic_compiler/dartic_compiler.dart' show DarticCompiler;
 import 'package:dartic_stdlib/dartic_stdlib.dart';
-import 'package:dartic/src/compiler/compiler.dart';
 import 'package:front_end/src/api_unstable/vm.dart'
     show
         CfeSeverity,

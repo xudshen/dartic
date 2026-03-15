@@ -6,8 +6,7 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/scheduler.dart';
 import 'dart:async';
 import '../bindings/scheduler/ticker_bindings.g.dart';

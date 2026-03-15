@@ -1,7 +1,9 @@
 name: dartic_stdlib
-description: Dart standard library bindings (dart:core, dart:async, dart:collection, dart:math) for the dartic bytecode interpreter.
+description: >-
+  Dart standard library bindings (dart:core, dart:async, dart:collection,
+  dart:math) for the dartic bytecode interpreter.
 version: 0.1.0
-publish_to: none
+repository: https://github.com/xudshen/dartic/tree/main/packages/dartic_stdlib
 
 environment:
   sdk: ^3.10.7

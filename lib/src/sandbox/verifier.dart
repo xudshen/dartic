@@ -11,7 +11,7 @@ import '../bytecode/constant_pool.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 
 /// Validates a [DarticModule] for structural integrity.
 ///

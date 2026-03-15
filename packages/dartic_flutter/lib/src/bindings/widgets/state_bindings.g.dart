@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -106,7 +105,7 @@ abstract final class StateBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$initState#0', (args) { (args[0] as _$State).initState(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$didUpdateWidget#1', (args) { (args[0] as _$State).didUpdateWidget(args[1] as StatefulWidget); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$reassemble#0', (args) { (args[0] as _$State).reassemble(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$setState#1', (args) { (args[0] as _$State).setState(args[1] as void Function()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$setState#1', (args) { (args[0] as _$State).setState(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$deactivate#0', (args) { (args[0] as _$State).deactivate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$activate#0', (args) { (args[0] as _$State).activate(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::State::\$super\$dispose#0', (args) { (args[0] as _$State).dispose(); return null; });

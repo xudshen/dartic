@@ -1,5 +1,5 @@
-import 'package:dartic/src/compiler/type_converter.dart';
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic_compiler/src/compiler/type_converter.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:kernel/ast.dart' as ir;
 import 'package:test/test.dart';
 

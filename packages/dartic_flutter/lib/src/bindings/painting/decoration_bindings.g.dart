@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -35,7 +34,7 @@ abstract final class DecorationBindings {
                   if (identical(args[1], darticAbsent)) {
                     return (args[0] as Decoration).createBoxPainter();
                   } else {
-                    return (args[0] as Decoration).createBoxPainter(args[1] as void Function());
+                    return (args[0] as Decoration).createBoxPainter(() => (args[1] as Function)());
                   }
                 },
         'getClipPath#2': (args) => (args[0] as Decoration).getClipPath(args[1] as Rect, args[2] as TextDirection),

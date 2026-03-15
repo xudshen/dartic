@@ -1,4 +1,4 @@
-import 'package:dartic/src/compiler/scope.dart';
+import 'package:dartic_compiler/src/compiler/scope.dart';
 import 'package:test/test.dart';
 
 import '../helpers/compile_helper.dart';

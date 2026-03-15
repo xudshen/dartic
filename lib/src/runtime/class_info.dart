@@ -1,5 +1,5 @@
 import '../bytecode/module.dart';
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 
 /// Classifies which stack a variable or field lives on.
 ///

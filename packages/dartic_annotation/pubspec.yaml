@@ -1,6 +1,7 @@
 name: dartic_annotation
 description: Annotations for the dartic code generator (@DarticExport, @DarticHide).
 version: 0.1.0
+repository: https://github.com/xudshen/dartic/tree/main/packages/dartic_annotation
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

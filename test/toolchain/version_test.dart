@@ -1,4 +1,4 @@
-import 'package:dartic/src/toolchain/version.dart';
+import 'package:dartic_compiler/src/toolchain/version.dart';
 import 'package:test/test.dart';
 
 void main() {

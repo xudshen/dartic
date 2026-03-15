@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:dartic/src/bytecode/constant_pool.dart';
 import 'package:dartic/src/bytecode/encoding.dart';
 import 'package:dartic/src/bytecode/opcodes.dart';
-import 'package:dartic/src/compiler/type_template.dart';
+import 'package:dartic/src/types/type_template.dart';
 import 'package:dartic/src/runtime/dartic_type.dart';
 import 'package:dartic/src/runtime/interpreter.dart';
 import 'package:test/test.dart';

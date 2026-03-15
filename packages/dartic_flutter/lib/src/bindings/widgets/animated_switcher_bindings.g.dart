@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -46,7 +45,7 @@ abstract final class AnimatedSwitcherBindings {
         'transitionBuilder#0': (args) => (args[0] as AnimatedSwitcher).transitionBuilder,
         'layoutBuilder#0': (args) => (args[0] as AnimatedSwitcher).layoutBuilder,
         'key#0': (args) => (args[0] as AnimatedSwitcher).key,
-        '#8': (args) => AnimatedSwitcher(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, duration: args[2] as Duration, reverseDuration: identical(args[3], darticAbsent) ? null : args[3] as Duration?, switchInCurve: identical(args[4], darticAbsent) ? Curves.linear : args[4] as Curve, switchOutCurve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, transitionBuilder: identical(args[6], darticAbsent) ? AnimatedSwitcher.defaultTransitionBuilder : args[6] as Widget Function(Widget, Animation<double>), layoutBuilder: identical(args[7], darticAbsent) ? AnimatedSwitcher.defaultLayoutBuilder : args[7] as Widget Function(Widget?, List<Widget>)),
+        '#8': (args) => AnimatedSwitcher(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, duration: args[2] as Duration, reverseDuration: identical(args[3], darticAbsent) ? null : args[3] as Duration?, switchInCurve: identical(args[4], darticAbsent) ? Curves.linear : args[4] as Curve, switchOutCurve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, transitionBuilder: identical(args[6], darticAbsent) ? AnimatedSwitcher.defaultTransitionBuilder : (a, b) => (args[6] as Function)(a, b) as Widget, layoutBuilder: identical(args[7], darticAbsent) ? AnimatedSwitcher.defaultLayoutBuilder : (a, b) => (args[7] as Function)(a, b) as Widget),
         '_#fromFields#7': (args) => AnimatedSwitcher(child: args[0] as Widget?, duration: args[1] as Duration, layoutBuilder: args[2] as Widget Function(Widget?, List<Widget>), reverseDuration: args[3] as Duration?, switchInCurve: args[4] as Curve, switchOutCurve: args[5] as Curve, transitionBuilder: args[6] as Widget Function(Widget, Animation<double>)),
       };
 }

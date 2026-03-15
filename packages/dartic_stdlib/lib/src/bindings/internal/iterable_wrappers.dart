@@ -12,7 +12,7 @@ library;
 import 'dart:collection';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
+import 'package:dartic/dartic_internal.dart';
 
 abstract final class InternalIterableBindings {
   static void register(DarticPluginContext ctx) {

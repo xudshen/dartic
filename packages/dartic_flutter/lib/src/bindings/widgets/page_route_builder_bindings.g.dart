@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -15,6 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
+import 'dart:async';
 
 abstract final class PageRouteBuilderBindings {
   static void register(DarticPluginContext ctx) {
@@ -32,14 +32,14 @@ abstract final class PageRouteBuilderBindings {
         'buildTransitions#4': (args) => (args[0] as PageRouteBuilder).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
         'canTransitionTo#1': (args) => (args[0] as PageRouteBuilder).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as PageRouteBuilder).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
-        'setState#1': (args) { (args[0] as PageRouteBuilder).setState(args[1] as void Function()); return null; },
+        'setState#1': (args) { (args[0] as PageRouteBuilder).setState(() => (args[1] as Function)()); return null; },
         'install#0': (args) { (args[0] as PageRouteBuilder).install(); return null; },
         'didPush#0': (args) => (args[0] as PageRouteBuilder).didPush(),
         'didAdd#0': (args) { (args[0] as PageRouteBuilder).didAdd(); return null; },
         'willPop#0': (args) => (args[0] as PageRouteBuilder).willPop(),
         'onPopInvokedWithResult#2': (args) { (args[0] as PageRouteBuilder).onPopInvokedWithResult(args[1] as bool, args[2]); return null; },
-        'addScopedWillPopCallback#1': (args) { (args[0] as PageRouteBuilder).addScopedWillPopCallback(args[1] as Future<bool> Function()); return null; },
-        'removeScopedWillPopCallback#1': (args) { (args[0] as PageRouteBuilder).removeScopedWillPopCallback(args[1] as Future<bool> Function()); return null; },
+        'addScopedWillPopCallback#1': (args) { (args[0] as PageRouteBuilder).addScopedWillPopCallback(() => (args[1] as Function)() as Future<bool>); return null; },
+        'removeScopedWillPopCallback#1': (args) { (args[0] as PageRouteBuilder).removeScopedWillPopCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'registerPopEntry#1': (args) { (args[0] as PageRouteBuilder).registerPopEntry(args[1] as PopEntry<Object?>); return null; },
         'unregisterPopEntry#1': (args) { (args[0] as PageRouteBuilder).unregisterPopEntry(args[1] as PopEntry<Object?>); return null; },
         'didChangePrevious#1': (args) { (args[0] as PageRouteBuilder).didChangePrevious(args[1] as Route<dynamic>?); return null; },
@@ -118,9 +118,9 @@ abstract final class PageRouteBuilderBindings {
         'willDisposeAnimationController=#1': (args) { (args[0] as PageRouteBuilder).willDisposeAnimationController = args[1] as bool; return args[1]; },
         '#13': (args) {
           if (identical(args[3], darticAbsent)) {
-            return PageRouteBuilder(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, requestFocus: identical(args[1], darticAbsent) ? null : args[1] as bool?, pageBuilder: args[2] as Widget Function(BuildContext, Animation<double>, Animation<double>), transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 300) : args[4] as Duration, reverseTransitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 300) : args[5] as Duration, opaque: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool, barrierColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, barrierLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, maintainState: identical(args[10], darticAbsent) ? true : args[10] as bool, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, allowSnapshotting: identical(args[12], darticAbsent) ? true : args[12] as bool);
+            return PageRouteBuilder(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, requestFocus: identical(args[1], darticAbsent) ? null : args[1] as bool?, pageBuilder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 300) : args[4] as Duration, reverseTransitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 300) : args[5] as Duration, opaque: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool, barrierColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, barrierLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, maintainState: identical(args[10], darticAbsent) ? true : args[10] as bool, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, allowSnapshotting: identical(args[12], darticAbsent) ? true : args[12] as bool);
           } else {
-            return PageRouteBuilder(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, requestFocus: identical(args[1], darticAbsent) ? null : args[1] as bool?, pageBuilder: args[2] as Widget Function(BuildContext, Animation<double>, Animation<double>), transitionsBuilder: args[3] as Widget Function(BuildContext, Animation<double>, Animation<double>, Widget), transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 300) : args[4] as Duration, reverseTransitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 300) : args[5] as Duration, opaque: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool, barrierColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, barrierLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, maintainState: identical(args[10], darticAbsent) ? true : args[10] as bool, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, allowSnapshotting: identical(args[12], darticAbsent) ? true : args[12] as bool);
+            return PageRouteBuilder(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, requestFocus: identical(args[1], darticAbsent) ? null : args[1] as bool?, pageBuilder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, transitionsBuilder: (a, b, c, d) => (args[3] as Function)(a, b, c, d) as Widget, transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 300) : args[4] as Duration, reverseTransitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 300) : args[5] as Duration, opaque: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool, barrierColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, barrierLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, maintainState: identical(args[10], darticAbsent) ? true : args[10] as bool, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, allowSnapshotting: identical(args[12], darticAbsent) ? true : args[12] as bool);
           }
         },
         '_#fromFields#9': (args) => PageRouteBuilder(barrierColor: args[0] as Color?, barrierDismissible: args[1] as bool, barrierLabel: args[2] as String?, maintainState: args[3] as bool, opaque: args[4] as bool, pageBuilder: args[5] as Widget Function(BuildContext, Animation<double>, Animation<double>), reverseTransitionDuration: args[6] as Duration, transitionDuration: args[7] as Duration, transitionsBuilder: args[8] as Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)),

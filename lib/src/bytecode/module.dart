@@ -2,7 +2,7 @@ library;
 
 import 'dart:typed_data';
 
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 import '../runtime/class_info.dart';
 import 'constant_pool.dart';
 

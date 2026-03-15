@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -41,7 +40,7 @@ abstract final class CupertinoTabScaffoldBindings {
         'resizeToAvoidBottomInset#0': (args) => (args[0] as CupertinoTabScaffold).resizeToAvoidBottomInset,
         'restorationId#0': (args) => (args[0] as CupertinoTabScaffold).restorationId,
         'key#0': (args) => (args[0] as CupertinoTabScaffold).key,
-        '#7': (args) => CupertinoTabScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tabBar: args[1] as CupertinoTabBar, tabBuilder: args[2] as Widget Function(BuildContext, int), controller: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTabController?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, resizeToAvoidBottomInset: identical(args[5], darticAbsent) ? true : args[5] as bool, restorationId: identical(args[6], darticAbsent) ? null : args[6] as String?),
+        '#7': (args) => CupertinoTabScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tabBar: args[1] as CupertinoTabBar, tabBuilder: (a, b) => (args[2] as Function)(a, b) as Widget, controller: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTabController?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, resizeToAvoidBottomInset: identical(args[5], darticAbsent) ? true : args[5] as bool, restorationId: identical(args[6], darticAbsent) ? null : args[6] as String?),
         '_#fromFields#6': (args) => CupertinoTabScaffold(backgroundColor: args[0] as Color?, controller: args[1] as CupertinoTabController?, resizeToAvoidBottomInset: args[2] as bool, restorationId: args[3] as String?, tabBar: args[4] as CupertinoTabBar, tabBuilder: args[5] as Widget Function(BuildContext, int)),
       };
 }

@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -31,7 +30,7 @@ abstract final class ShapeDecorationBindings {
         'lerpTo#2': (args) => (args[0] as ShapeDecoration).lerpTo(args[1] as Decoration?, args[2] as double),
         'debugFillProperties#1': (args) { (args[0] as ShapeDecoration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'hitTest#3': (args) => (args[0] as ShapeDecoration).hitTest(args[1] as Size, args[2] as Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),
-        'createBoxPainter#1': (args) => (args[0] as ShapeDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : args[1] as void Function()?),
+        'createBoxPainter#1': (args) => (args[0] as ShapeDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
         'toStringShort#0': (args) => (args[0] as ShapeDecoration).toStringShort(),
         'debugAssertIsValid#0': (args) => (args[0] as ShapeDecoration).debugAssertIsValid(),
         'toDiagnosticsNode#2': (args) => (args[0] as ShapeDecoration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

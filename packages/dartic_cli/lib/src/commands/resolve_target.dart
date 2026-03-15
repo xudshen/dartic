@@ -1,4 +1,5 @@
-import 'package:dartic/dartic.dart' show DarticTarget, detectTarget;
+import 'package:dartic_compiler/dartic_compiler.dart'
+    show DarticTarget, detectTarget;
 
 /// Resolves the compilation target from the CLI flag or auto-detection.
 ///

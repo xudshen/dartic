@@ -13,7 +13,7 @@ import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_type_resolver.dart';
 import '../bytecode/module.dart';
-import '../compiler/type_template.dart';
+import '../types/type_template.dart';
 import '../runtime/call_stack.dart';
 import '../runtime/class_info.dart';
 import '../runtime/error.dart';

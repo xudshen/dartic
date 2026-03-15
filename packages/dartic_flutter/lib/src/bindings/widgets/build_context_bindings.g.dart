@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -30,8 +29,8 @@ abstract final class BuildContextBindings {
         'findRenderObject#0': (args) => (args[0] as BuildContext).findRenderObject(),
         'dependOnInheritedElement#2': (args) => (args[0] as BuildContext).dependOnInheritedElement(args[1] as InheritedElement, aspect: identical(args[2], darticAbsent) ? null : args[2]),
         'dependOnInheritedWidgetOfExactType#1': (args) => (args[0] as BuildContext).dependOnInheritedWidgetOfExactType(aspect: identical(args[1], darticAbsent) ? null : args[1]),
-        'visitAncestorElements#1': (args) { (args[0] as BuildContext).visitAncestorElements(args[1] as bool Function(Element)); return null; },
-        'visitChildElements#1': (args) { (args[0] as BuildContext).visitChildElements(args[1] as void Function(Element)); return null; },
+        'visitAncestorElements#1': (args) { (args[0] as BuildContext).visitAncestorElements((a) => (args[1] as Function)(a) as bool); return null; },
+        'visitChildElements#1': (args) { (args[0] as BuildContext).visitChildElements((a) => (args[1] as Function)(a)); return null; },
         'dispatchNotification#1': (args) { (args[0] as BuildContext).dispatchNotification(args[1] as Notification); return null; },
         'describeElement#2': (args) => (args[0] as BuildContext).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
         'describeWidget#2': (args) => (args[0] as BuildContext).describeWidget(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

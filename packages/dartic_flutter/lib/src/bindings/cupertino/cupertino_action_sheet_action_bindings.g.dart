@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -40,7 +39,7 @@ abstract final class CupertinoActionSheetActionBindings {
         'mouseCursor#0': (args) => (args[0] as CupertinoActionSheetAction).mouseCursor,
         'child#0': (args) => (args[0] as CupertinoActionSheetAction).child,
         'key#0': (args) => (args[0] as CupertinoActionSheetAction).key,
-        '#6': (args) => CupertinoActionSheetAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: args[1] as void Function(), isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, child: args[5] as Widget),
+        '#6': (args) => CupertinoActionSheetAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: () => (args[1] as Function)(), isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, child: args[5] as Widget),
         '_#fromFields#5': (args) => CupertinoActionSheetAction(child: args[0] as Widget, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, mouseCursor: args[3] as MouseCursor?, onPressed: args[4] as void Function()),
       };
 }

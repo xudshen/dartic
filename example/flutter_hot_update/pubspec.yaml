@@ -19,7 +19,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # Kernel is needed by the compile tool only.
+  # Compiler and kernel are needed by the compile tool only.
+  dartic_compiler:
+    path: ../../packages/dartic_compiler
   kernel:
     path: ../../vendor/dart-sdk/pkg/kernel
 

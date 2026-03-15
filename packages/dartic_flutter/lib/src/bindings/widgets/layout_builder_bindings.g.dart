@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -41,6 +40,6 @@ abstract final class LayoutBuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as LayoutBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as LayoutBuilder).builder,
         'key#0': (args) => (args[0] as LayoutBuilder).key,
-        '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext, BoxConstraints)),
+        '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
       };
 }

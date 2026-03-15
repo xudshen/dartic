@@ -6,8 +6,7 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import '../bindings/collection/linked_hash_map_bindings.g.dart';
 import '../bindings/collection/linked_hash_set_bindings.g.dart';
 import '../bindings/collection/hash_map_bindings.g.dart';

@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -47,7 +46,7 @@ abstract final class DraggableScrollableSheetBindings {
         'shouldCloseOnMinExtent#0': (args) => (args[0] as DraggableScrollableSheet).shouldCloseOnMinExtent,
         'builder#0': (args) => (args[0] as DraggableScrollableSheet).builder,
         'key#0': (args) => (args[0] as DraggableScrollableSheet).key,
-        '#11': (args) => DraggableScrollableSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialChildSize: identical(args[1], darticAbsent) ? 0.5 : args[1] as double, minChildSize: identical(args[2], darticAbsent) ? 0.25 : args[2] as double, maxChildSize: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, expand: identical(args[4], darticAbsent) ? true : args[4] as bool, snap: identical(args[5], darticAbsent) ? false : args[5] as bool, snapSizes: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<double>(), snapAnimationDuration: identical(args[7], darticAbsent) ? null : args[7] as Duration?, controller: identical(args[8], darticAbsent) ? null : args[8] as DraggableScrollableController?, shouldCloseOnMinExtent: identical(args[9], darticAbsent) ? true : args[9] as bool, builder: args[10] as Widget Function(BuildContext, ScrollController)),
+        '#11': (args) => DraggableScrollableSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialChildSize: identical(args[1], darticAbsent) ? 0.5 : args[1] as double, minChildSize: identical(args[2], darticAbsent) ? 0.25 : args[2] as double, maxChildSize: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, expand: identical(args[4], darticAbsent) ? true : args[4] as bool, snap: identical(args[5], darticAbsent) ? false : args[5] as bool, snapSizes: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<double>(), snapAnimationDuration: identical(args[7], darticAbsent) ? null : args[7] as Duration?, controller: identical(args[8], darticAbsent) ? null : args[8] as DraggableScrollableController?, shouldCloseOnMinExtent: identical(args[9], darticAbsent) ? true : args[9] as bool, builder: (a, b) => (args[10] as Function)(a, b) as Widget),
         '_#fromFields#10': (args) => DraggableScrollableSheet(builder: args[0] as Widget Function(BuildContext, ScrollController), controller: args[1] as DraggableScrollableController?, expand: args[2] as bool, initialChildSize: args[3] as double, maxChildSize: args[4] as double, minChildSize: args[5] as double, shouldCloseOnMinExtent: args[6] as bool, snap: args[7] as bool, snapAnimationDuration: args[8] as Duration?, snapSizes: args[9] == null ? null : (args[9] as List).cast<double>()),
       };
 }

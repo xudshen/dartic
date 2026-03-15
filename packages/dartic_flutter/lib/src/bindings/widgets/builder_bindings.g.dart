@@ -5,8 +5,7 @@
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/src/api/dartic_absent.dart';
-import 'package:dartic/src/runtime/object.dart';
+import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -38,7 +37,7 @@ abstract final class BuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Builder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as Builder).builder,
         'key#0': (args) => (args[0] as Builder).key,
-        '#2': (args) => Builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: args[1] as Widget Function(BuildContext)),
+        '#2': (args) => Builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a) => (args[1] as Function)(a) as Widget),
         '_#fromFields#1': (args) => Builder(builder: args[0] as Widget Function(BuildContext)),
       };
 }
