@@ -50,9 +50,12 @@ class CompilePipeline {
   /// [target] selects the Stage 1 subprocess (Dart or Flutter).
   /// [sdkPath] overrides SDK discovery (passed to [SdkResolver]).
   /// [onProgress] is called with a short stage description for progress UI.
+  /// [compilablePackages] overrides auto-discovery when provided.
+  /// When `null`, packages are discovered from `pubspec.yaml` `dartic:` sections.
   Future<Uint8List> compile({
     required String sourcePath,
     required DarticTarget target,
+    Set<String>? compilablePackages,
     String? sdkPath,
     void Function(String stage)? onProgress,
     void Function(String stderr)? onStderr,
@@ -72,13 +75,15 @@ class CompilePipeline {
       onStderr: onStderr,
     );
 
-    // Discover compilable packages from the project's package_config.json.
-    onProgress?.call('Discovering compilable packages...');
-    final compilablePackages = _discoverCompilablePackages(sourcePath);
+    // Use caller-provided packages or auto-discover from pubspec.yaml.
+    final resolved = compilablePackages ?? () {
+      onProgress?.call('Discovering compilable packages...');
+      return _discoverCompilablePackages(sourcePath);
+    }();
 
     // Stage 2+3: .dill → .darb
     onProgress?.call('Compiling to darb...');
-    return compileFromDill(dillBytes, compilablePackages: compilablePackages);
+    return compileFromDill(dillBytes, compilablePackages: resolved);
   }
 
   /// Stage 1: `.dart → .dill` via subprocess.
@@ -222,7 +227,8 @@ class CompilePipeline {
   /// Discovers compilable packages from the project containing [sourcePath].
   ///
   /// Walks up to find the nearest `pubspec.yaml`, then reads
-  /// `.dart_tool/package_config.json` for `dartic.manifest` entries.
+  /// `.dart_tool/package_config.json` and checks each package's
+  /// `pubspec.yaml` for a `dartic: role: compilable` declaration.
   Set<String> _discoverCompilablePackages(String sourcePath) {
     final pubspec = findNearestPubspec(sourcePath);
     if (pubspec == null) return {};

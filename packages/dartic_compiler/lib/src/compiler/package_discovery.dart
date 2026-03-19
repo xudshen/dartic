@@ -6,6 +6,8 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:yaml/yaml.dart';
+
 /// Scans packages listed in [packageConfigUri] for `dartic:` section in
 /// their `pubspec.yaml` and returns package names that declare `role: compilable`.
 ///
@@ -47,16 +49,24 @@ Set<String> discoverCompilablePackages(Uri packageConfigUri) {
   return compilablePackages;
 }
 
-/// Parses the `role` field from the `dartic:` section in a pubspec.yaml string.
+/// Parses the `dartic.role` field from a pubspec.yaml string.
 ///
 /// Expected format:
 /// ```yaml
 /// dartic:
 ///   role: compilable
 /// ```
-/// Returns null if no `dartic:` section or `role` field is found.
+/// Returns null if the `dartic` section or `role` field is not found,
+/// or if the YAML is malformed.
 String? _parseDarticRole(String pubspecContent) {
-  final match = RegExp(r'^dartic:\s*\n\s+role:\s*(\w+)', multiLine: true)
-      .firstMatch(pubspecContent);
-  return match?.group(1);
+  try {
+    final doc = loadYaml(pubspecContent);
+    if (doc is! YamlMap) return null;
+    final dartic = doc['dartic'];
+    if (dartic is! YamlMap) return null;
+    final role = dartic['role'];
+    return role is String ? role : null;
+  } on YamlException {
+    return null;
+  }
 }

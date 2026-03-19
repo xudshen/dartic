@@ -9,15 +9,18 @@ void main() {
     late Directory tempDir;
 
     setUp(() async {
-      tempDir = await Directory.systemTemp.createTemp('dartic_manifest_test_');
+      tempDir =
+          await Directory.systemTemp.createTemp('dartic_pubspec_role_test_');
     });
 
     tearDown(() async {
       await tempDir.delete(recursive: true);
     });
 
-    test('returns empty set when no manifests exist', () {
+    test('returns empty set when no dartic section in pubspec', () {
       final pkgDir = Directory('${tempDir.path}/some_pkg')..createSync();
+      _writePubspec(pkgDir, 'name: some_pkg\n');
+
       _writePackageConfig(tempDir, [
         {
           'name': 'some_pkg',
@@ -34,9 +37,7 @@ void main() {
 
     test('discovers compilable packages with role: compilable', () {
       final pkgDir = Directory('${tempDir.path}/dartic_utils')..createSync();
-      File(
-        '${pkgDir.path}/dartic.manifest',
-      ).writeAsStringSync('role: compilable\n');
+      _writePubspec(pkgDir, 'name: dartic_utils\ndartic:\n  role: compilable\n');
 
       _writePackageConfig(tempDir, [
         {
@@ -55,9 +56,8 @@ void main() {
     test('skips packages with role: plugin', () {
       final pluginDir = Directory('${tempDir.path}/dartic_flutter')
         ..createSync();
-      File(
-        '${pluginDir.path}/dartic.manifest',
-      ).writeAsStringSync('role: plugin\n');
+      _writePubspec(
+          pluginDir, 'name: dartic_flutter\ndartic:\n  role: plugin\n');
 
       _writePackageConfig(tempDir, [
         {
@@ -76,22 +76,20 @@ void main() {
     test('handles multiple packages with mixed roles', () {
       final compilable1 = Directory('${tempDir.path}/dartic_utils')
         ..createSync();
-      File(
-        '${compilable1.path}/dartic.manifest',
-      ).writeAsStringSync('role: compilable\n');
+      _writePubspec(
+          compilable1, 'name: dartic_utils\ndartic:\n  role: compilable\n');
 
       final compilable2 = Directory('${tempDir.path}/dartic_widgets')
         ..createSync();
-      File(
-        '${compilable2.path}/dartic.manifest',
-      ).writeAsStringSync('role: compilable\n');
+      _writePubspec(compilable2,
+          'name: dartic_widgets\ndartic:\n  role: compilable\n');
 
       final plugin = Directory('${tempDir.path}/dartic_flutter')..createSync();
-      File(
-        '${plugin.path}/dartic.manifest',
-      ).writeAsStringSync('role: plugin\n');
+      _writePubspec(
+          plugin, 'name: dartic_flutter\ndartic:\n  role: plugin\n');
 
-      final noManifest = Directory('${tempDir.path}/collection')..createSync();
+      final plainPackage = Directory('${tempDir.path}/collection')..createSync();
+      _writePubspec(plainPackage, 'name: collection\n');
 
       _writePackageConfig(tempDir, [
         {
@@ -111,7 +109,7 @@ void main() {
         },
         {
           'name': 'collection',
-          'rootUri': noManifest.uri.toString(),
+          'rootUri': plainPackage.uri.toString(),
           'packageUri': 'lib/',
         },
       ]);
@@ -125,9 +123,7 @@ void main() {
     test('resolves relative rootUri correctly', () {
       final pkgDir = Directory('${tempDir.path}/packages/dartic_utils')
         ..createSync(recursive: true);
-      File(
-        '${pkgDir.path}/dartic.manifest',
-      ).writeAsStringSync('role: compilable\n');
+      _writePubspec(pkgDir, 'name: dartic_utils\ndartic:\n  role: compilable\n');
 
       _writePackageConfig(tempDir, [
         {
@@ -150,15 +146,12 @@ void main() {
       expect(result, isEmpty);
     });
 
-    test('ignores comments in YAML manifest', () {
-      final pkgDir = Directory('${tempDir.path}/dartic_utils')..createSync();
-      File('${pkgDir.path}/dartic.manifest').writeAsStringSync(
-        '# This is a dartic package\nrole: compilable\n',
-      );
+    test('skips packages without pubspec.yaml', () {
+      final pkgDir = Directory('${tempDir.path}/no_pubspec')..createSync();
 
       _writePackageConfig(tempDir, [
         {
-          'name': 'dartic_utils',
+          'name': 'no_pubspec',
           'rootUri': pkgDir.uri.toString(),
           'packageUri': 'lib/',
         },
@@ -167,9 +160,13 @@ void main() {
       final result = discoverCompilablePackages(
         Uri.file('${tempDir.path}/.dart_tool/package_config.json'),
       );
-      expect(result, {'dartic_utils'});
+      expect(result, isEmpty);
     });
   });
+}
+
+void _writePubspec(Directory pkgDir, String content) {
+  File('${pkgDir.path}/pubspec.yaml').writeAsStringSync(content);
 }
 
 void _writePackageConfig(

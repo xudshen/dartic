@@ -159,7 +159,7 @@
 | [7.2](phase7/batch-7.2-codegen.md) | dartic_generator 代码生成（CLI + YAML） | 5 | ✅ |
 | [7.3](phase7/batch-7.3-plugin-registry-reorg.md) | Plugin 与 Registry 重组 | 8 | ✅ |
 | [7.4](phase7/batch-7.4-flutter-bridge.md) | Flutter Bridge + 热更新 Demo | 4 | ✅ |
-| — | Compilable Package Discovery（编译器 compilablePackages + dartic.manifest `role: compilable` 自动发现） | — | ✅ |
+| — | Compilable Package Discovery（编译器 compilablePackages + pubspec.yaml `dartic: role: compilable` 自动发现） | — | ✅ |
 
 **里程碑：**
 - [x] DarticEngine 3 行代码加载执行 .darb 字节码

@@ -24,6 +24,7 @@ class FakeCompilePipeline extends CompilePipeline {
   Future<Uint8List> compile({
     required String sourcePath,
     required DarticTarget target,
+    Set<String>? compilablePackages,
     String? sdkPath,
     void Function(String stage)? onProgress,
     void Function(String stderr)? onStderr,

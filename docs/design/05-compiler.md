@@ -195,7 +195,7 @@ bool _isHostLibrary(ir.Library lib) {
 }
 ```
 
-`compilablePackages` 通过 `discoverCompilablePackages()` 工具函数从 plugin 包目录的 `dartic.manifest` 文件自动发现。manifest 采用 YAML 格式声明角色（`role: compilable` 或 `role: plugin`），无 manifest 的包默认为 host。详见 `docs/plans/2026-03-08-compilable-package-discovery-design.md`。
+`compilablePackages` 通过 `discoverCompilablePackages()` 工具函数从各包的 `pubspec.yaml` 中 `dartic:` section 自动发现。声明 `role: compilable` 的包参与编译，`role: plugin` 的包提供 bridge bindings，无 `dartic:` section 的包默认为 host。详见 `docs/plans/2026-03-08-compilable-package-discovery-design.md`。
 
 ### 寄存器分配
 

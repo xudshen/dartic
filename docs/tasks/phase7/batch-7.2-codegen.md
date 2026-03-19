@@ -130,10 +130,10 @@ abstract final class XxxBindings {
 - `register(DarticPluginContext ctx)` 内调用各 `XxxBindings.register(ctx)`
 - 导入所有绑定文件
 
-**ManifestEmitter（manifest_emitter.dart）：**
-- 为 plugin 包生成 `dartic.manifest` 文件（YAML 格式：`role: plugin`）
-- `dart:*` URI 不生成（编译器硬编码处理）
-- 新模型下编译器默认跳过无 manifest 的包，`role: compilable` 的包才编译为字节码
+**角色声明（已迁移到 pubspec.yaml）：**
+- plugin 包在 `pubspec.yaml` 中声明 `dartic: role: plugin`
+- `dart:*` URI 不需要声明（编译器硬编码处理）
+- 编译器默认跳过无 `dartic:` section 的包，`role: compilable` 的包才编译为字节码
 
 **Scanner（scanner.dart）：**
 - 扫描 Dart 源文件的 `@DarticExport` 注解
