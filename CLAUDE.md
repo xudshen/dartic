@@ -17,6 +17,13 @@ fvm dart run packages/dartic_cli/bin/dartic.dart gen dartic_export.yaml
 fvm dart run packages/dartic_cli/bin/dartic.dart doctor
 fvm dart run packages/dartic_cli/bin/dartic.dart version
 
+# Gen verification
+fvm dart run packages/dartic_cli/bin/dartic.dart gen --all --emit-tests --test-output test/gen_verify
+fvm dart run packages/dartic_cli/bin/dartic.dart gen --all --check
+fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify
+fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify compile
+fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify test
+
 # co19 测试（注意：目录精确到子类别，不要跑整个 vendor/co19/）
 # 所有测试输出必须重定向到临时文件，不要直接输出到终端
 # 推荐使用 in-process runner（零子进程，避免 macOS launchservicesd 风暴）：

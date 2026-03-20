@@ -6,6 +6,7 @@ import 'package:dartic_cli/src/commands/compile_command.dart';
 import 'package:dartic_cli/src/commands/doctor_command.dart';
 import 'package:dartic_cli/src/commands/dump_command.dart';
 import 'package:dartic_cli/src/commands/gen_command.dart';
+import 'package:dartic_cli/src/commands/gen_verify_command.dart';
 import 'package:dartic_cli/src/commands/run_command.dart';
 import 'package:dartic_cli/src/commands/version_command.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -35,6 +36,7 @@ class DarticCliRunner extends CommandRunner<int> {
 
     addCommand(CompileCommand(logger: _logger));
     addCommand(GenCommand(logger: _logger));
+    addCommand(GenVerifyCommand(logger: _logger));
     addCommand(RunCommand(logger: _logger));
     addCommand(VersionCommand(logger: _logger));
     addCommand(DoctorCommand(logger: _logger));
