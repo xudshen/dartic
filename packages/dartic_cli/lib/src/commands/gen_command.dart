@@ -24,6 +24,26 @@ class GenCommand extends Command<int> {
       ..addOption(
         'analysis-root',
         help: 'Analysis root directory for type resolution.',
+      )
+      ..addFlag(
+        'all',
+        help: 'Run gen on all YAML configs in the configs/ directory.',
+        negatable: false,
+      )
+      ..addFlag(
+        'check',
+        help: 'Check if generated files are up to date (exit 2 if stale).',
+        negatable: false,
+      )
+      ..addFlag(
+        'emit-tests',
+        help: 'Generate verification tests for Bridge bindings.',
+        negatable: false,
+      )
+      ..addOption(
+        'test-output',
+        help: 'Output directory for generated test files.',
+        defaultsTo: 'test/gen_verify',
       );
   }
 
@@ -40,8 +60,21 @@ class GenCommand extends Command<int> {
     final scanPath = argResults!['scan'] as String?;
     final outputDir = argResults!['output'] as String?;
     final analysisRoot = argResults!['analysis-root'] as String?;
+    final all = argResults!['all'] as bool;
+    final check = argResults!['check'] as bool;
+    final emitTests = argResults!['emit-tests'] as bool;
+    final testOutputDir = argResults!['test-output'] as String?;
 
     try {
+      if (all) {
+        return await _runAll(
+          analysisRoot: analysisRoot,
+          check: check,
+          emitTests: emitTests,
+          testOutputDir: emitTests ? testOutputDir : null,
+        );
+      }
+
       if (scanPath != null) {
         // Scan mode: discover @DarticExport annotations
         final config = await scanForExports(
@@ -57,21 +90,34 @@ class GenCommand extends Command<int> {
           return 0;
         }
 
-        final runner = Runner(analysisRoot: analysisRoot);
+        final runner = Runner(
+          analysisRoot: analysisRoot,
+          checkMode: check,
+          emitTests: emitTests,
+          testOutputDir: emitTests ? testOutputDir : null,
+        );
         await runner.runGeneratorConfig(config);
+        if (check) return _checkResults(runner);
+        if (emitTests) runner.finalizeVerifyTests();
       } else {
         // Config mode: read YAML config
         final rest = argResults!.rest;
         if (rest.isEmpty) {
           throw UsageException(
             'Missing required argument: <config> '
-            '(or use --scan to discover annotations)',
+            '(or use --scan to discover annotations, '
+            'or --all to process all configs)',
             usage,
           );
         }
 
         final configPath = rest.first;
-        final runner = Runner(analysisRoot: analysisRoot);
+        final runner = Runner(
+          analysisRoot: analysisRoot,
+          checkMode: check,
+          emitTests: emitTests,
+          testOutputDir: emitTests ? testOutputDir : null,
+        );
 
         final type = FileSystemEntity.typeSync(configPath);
         if (type == FileSystemEntityType.directory) {
@@ -81,6 +127,9 @@ class GenCommand extends Command<int> {
         } else {
           throw DarticCliError('Config path not found: $configPath');
         }
+
+        if (check) return _checkResults(runner);
+        if (emitTests) runner.finalizeVerifyTests();
       }
 
       _logger.success('Code generation complete.');
@@ -92,5 +141,119 @@ class GenCommand extends Command<int> {
     } on Exception catch (e) {
       throw DarticCliError('Code generation failed: $e');
     }
+  }
+
+  /// Runs gen on all known configs directories.
+  ///
+  /// Scans `packages/dartic_stdlib/configs/` and
+  /// `packages/dartic_flutter/configs/` relative to CWD.
+  /// If a positional arg is given, treats it as the single configs directory.
+  Future<int> _runAll({
+    String? analysisRoot,
+    required bool check,
+    bool emitTests = false,
+    String? testOutputDir,
+  }) async {
+    final rest = argResults!.rest;
+
+    if (rest.isNotEmpty) {
+      // Positional arg overrides: treat it as the configs directory
+      final configDir = rest.first;
+      final runner = Runner(
+        analysisRoot: analysisRoot,
+        checkMode: check,
+        emitTests: emitTests,
+        testOutputDir: testOutputDir,
+      );
+      await runner.runConfigDirectory(configDir);
+      if (check) return _checkResults(runner);
+      if (emitTests) runner.finalizeVerifyTests();
+      _logger.success('Code generation complete.');
+      return 0;
+    }
+
+    // Default: process well-known configs directories
+    final configsDirs = <(String path, String? analysisRootOverride)>[
+      ('packages/dartic_stdlib/configs', null),
+      ('packages/dartic_flutter/configs', 'packages/dartic_flutter'),
+    ];
+
+    // Collect all written files across all runners for --check mode
+    final allWrittenFiles = <String, String>{};
+    final runners = <Runner>[];
+
+    for (final (dirPath, rootOverride) in configsDirs) {
+      final dir = Directory(dirPath);
+      if (!dir.existsSync()) {
+        _logger.detail('Skipping $dirPath (not found)');
+        continue;
+      }
+
+      final effectiveRoot = analysisRoot ?? rootOverride;
+      _logger.info('Processing $dirPath ...');
+      final runner = Runner(
+        analysisRoot: effectiveRoot,
+        checkMode: check,
+        emitTests: emitTests,
+        testOutputDir: testOutputDir,
+      );
+      await runner.runConfigDirectory(dirPath);
+      runners.add(runner);
+
+      if (check) {
+        allWrittenFiles.addAll(runner.writtenFiles);
+      }
+    }
+
+    if (check) {
+      return _checkWrittenFiles(allWrittenFiles);
+    }
+
+    // Finalize verify tests: merge entries from all runners, write combined files
+    if (emitTests && runners.isNotEmpty) {
+      final primary = runners.first;
+      for (var i = 1; i < runners.length; i++) {
+        primary.mergeVerifyEntries(runners[i]);
+      }
+      primary.finalizeVerifyTests();
+    }
+
+    _logger.success('Code generation complete.');
+    return 0;
+  }
+
+  /// Compares written files from a single runner against disk.
+  int _checkResults(Runner runner) {
+    return _checkWrittenFiles(runner.writtenFiles);
+  }
+
+  /// Compares a map of {path: content} against actual files on disk.
+  /// Returns 0 if all match, 2 if any differ or are missing.
+  int _checkWrittenFiles(Map<String, String> writtenFiles) {
+    var hasDrift = false;
+
+    for (final entry in writtenFiles.entries) {
+      final file = File(entry.key);
+      if (!file.existsSync()) {
+        _logger.err('Missing: ${entry.key}');
+        hasDrift = true;
+      } else {
+        final actual = file.readAsStringSync();
+        if (actual != entry.value) {
+          _logger.err('Changed: ${entry.key}');
+          hasDrift = true;
+        }
+      }
+    }
+
+    if (hasDrift) {
+      _logger.err(
+        'Generated files are out of date. Run `dartic gen` to update.',
+      );
+      return 2;
+    }
+
+    _logger.success('All generated files are up to date.');
+    return 0;
   }
 }

@@ -7,21 +7,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
-import '../bindings/services/text_input_type_bindings.g.dart';
-import '../bindings/services/text_editing_value_bindings.g.dart';
-import '../bindings/services/filtering_text_input_formatter_bindings.g.dart';
-import '../bindings/services/system_ui_overlay_style_bindings.g.dart';
-import '../bindings/services/smart_dashes_type_bindings.g.dart';
-import '../bindings/services/smart_quotes_type_bindings.g.dart';
-import '../bindings/services/text_input_action_bindings.g.dart';
-import '../bindings/services/text_capitalization_bindings.g.dart';
-import '../bindings/services/max_length_enforcement_bindings.g.dart';
-import '../bindings/services/device_orientation_bindings.g.dart';
-import '../bindings/services/system_ui_overlay_bindings.g.dart';
-import '../bindings/services/system_ui_mode_bindings.g.dart';
+import '../bindings/animation/text_input_type_bindings.g.dart';
+import '../bindings/animation/text_editing_value_bindings.g.dart';
+import '../bindings/animation/filtering_text_input_formatter_bindings.g.dart';
+import '../bindings/animation/system_ui_overlay_style_bindings.g.dart';
+import '../bindings/animation/smart_dashes_type_bindings.g.dart';
+import '../bindings/animation/smart_quotes_type_bindings.g.dart';
+import '../bindings/animation/text_input_action_bindings.g.dart';
+import '../bindings/animation/text_capitalization_bindings.g.dart';
+import '../bindings/animation/max_length_enforcement_bindings.g.dart';
+import '../bindings/animation/device_orientation_bindings.g.dart';
+import '../bindings/animation/system_ui_overlay_bindings.g.dart';
+import '../bindings/animation/system_ui_mode_bindings.g.dart';
 
 class ServicesPlugin extends DarticPlugin {
   @override
