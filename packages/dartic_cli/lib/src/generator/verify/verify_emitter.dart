@@ -13,7 +13,12 @@ import 'default_values.dart' as defaults;
 /// Result of emitting verify files for a single Bridge class.
 class VerifyResult {
   final String darticSource;
+
+  /// Pre-built test source for this class. Currently unused by the runner
+  /// (which builds its own combined test from [darticSource]), but kept for
+  /// future use by the `gen-verify test` command that may emit per-class tests.
   final String testSource;
+
   final List<String> skippedMethods;
   final int coveredMethods;
   final int totalMethods;
@@ -152,10 +157,14 @@ VerifyResult? emitVerifyFiles(
           "    _callSuper('${op.name}', () => ${_unaryOpExpr(op)});",
         );
       } else {
-        final argVal = defaults.defaultValueForType(op.paramType!);
+        var argVal = defaults.defaultValueForType(op.paramType!);
         if (argVal == null) {
           skipped.add('operator ${op.name} (unconstructable arg)');
           continue;
+        }
+        // Use non-zero value for division operators to avoid division by zero.
+        if (const {'~/', '/', '%'}.contains(op.name) && argVal == '0') {
+          argVal = '1';
         }
         coveredCount++;
         superCallEntries.add(
@@ -181,14 +190,8 @@ VerifyResult? emitVerifyFiles(
     buf.writeln('  }');
   } else {
     // Implements mode — count all non-abstract members for stats.
-    // In implements mode there's nothing "non-abstract" to call via super,
-    // but we still count the members we had to implement.
-    totalCount = info.methods.where((m) => m.isAbstract).length +
-        info.getters.where((g) => g.isAbstract).length +
-        info.setters.where((s) => s.isAbstract).length +
-        info.operators.where((o) => o.isAbstract).length;
-    // In implements mode, ALL members are effectively abstract, so also count
-    // non-abstract ones from the interface.
+    // In implements mode, ALL members are effectively abstract (must be
+    // implemented), so count all of them.
     totalCount = info.methods.length +
         info.getters.length +
         info.setters.length +

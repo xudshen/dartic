@@ -378,7 +378,10 @@ class Runner {
     _allVerifyEntries.addAll(other._allVerifyEntries);
     _totalCovered += other._totalCovered;
     _totalMethods += other._totalMethods;
-    _allSkipped.addAll(other._allSkipped);
+    for (final entry in other._allSkipped.entries) {
+      _allSkipped.update(entry.key, (v) => [...v, ...entry.value],
+          ifAbsent: () => entry.value);
+    }
   }
 
   /// Writes accumulated verify test files (auto_test.dart, auto_unit_test.dart)

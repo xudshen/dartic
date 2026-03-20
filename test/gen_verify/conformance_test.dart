@@ -82,7 +82,8 @@ void main() {
       final (_, printLog) =
           await compileAndCapturePrint(source, fuelBudget: 500000);
       expect(printLog.length, greaterThanOrEqualTo(2));
-      expect(printLog[0], equals('0'));
+      // After reset, elapsed may not be exactly 0 due to timing; allow small slack.
+      expect(int.parse(printLog[0]), lessThanOrEqualTo(1));
       expect(printLog.last, equals('OK'));
     });
 

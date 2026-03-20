@@ -23,6 +23,7 @@ DarticDispatch _mockDispatch() {
   return DarticDispatch(
     module: module,
     callMethod: (m, p, r, a) => throw StateError('unexpected call'),
+    lateSentinel: Object(),
   );
 }
 
@@ -82,6 +83,7 @@ DarticDispatch _dispatchWith(Map<String, Object? Function(List<Object?>)> handle
       if (handler != null) return handler(args);
       return notOverridden;
     },
+    lateSentinel: Object(),
   );
 }
 
