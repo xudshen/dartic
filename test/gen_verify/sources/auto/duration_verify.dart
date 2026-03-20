@@ -17,7 +17,7 @@ class _VerifyDuration extends Duration {
     _callSuper('+', () => this + Duration());
     _callSuper('-', () => this - Duration());
     _callSuper('*', () => this * 0);
-    _callSuper('~/', () => this ~/ 0);
+    _callSuper('~/', () => this ~/ 1);
     _callSuper('<', () => this < Duration());
     _callSuper('>', () => this > Duration());
     _callSuper('<=', () => this <= Duration());

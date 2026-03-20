@@ -1,4 +1,5 @@
 class _VerifyStopwatch extends Stopwatch {
+  _VerifyStopwatch();
 
   void _callSuper(String name, Object? Function() fn) {
     try {

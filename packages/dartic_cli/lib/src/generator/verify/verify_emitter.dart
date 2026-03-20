@@ -52,8 +52,10 @@ VerifyResult? emitVerifyFiles(
   final isImplements = info.isInterface;
 
   // Find the unnamed constructor (or first non-factory constructor).
+  // Abstract classes (ListBase, MapBase, SetBase) may lack a public constructor
+  // — the Verify class will provide its own, so null ctor is OK for abstract classes.
   final ctor = _findUsableConstructor(info);
-  if (ctor == null && !isImplements) return null;
+  if (ctor == null && !isImplements && !info.isAbstract) return null;
 
   // Build constructor arguments string; bail out if required params
   // can't be constructed. Check for seed overrides first.
@@ -66,6 +68,13 @@ VerifyResult? emitVerifyFiles(
   final buf = StringBuffer();
 
   // --- Dartic source ---
+
+  // Import for non-core libraries (dart:core is auto-imported)
+  final libraryUri = info.libraryUri;
+  if (libraryUri != 'dart:core' && libraryUri.startsWith('dart:')) {
+    buf.writeln("import '$libraryUri';");
+    buf.writeln();
+  }
 
   // Class declaration
   if (isImplements) {
@@ -93,6 +102,9 @@ VerifyResult? emitVerifyFiles(
       '  $verifyClassName(${_buildCtorParamDecl(ctor)}) '
       ': super(${_buildCtorSuperForward(ctor)});',
     );
+  } else {
+    // Abstract class with no constructor or zero-arg constructor
+    buf.writeln('  $verifyClassName();');
   }
   buf.writeln();
 

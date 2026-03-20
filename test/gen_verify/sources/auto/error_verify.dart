@@ -1,4 +1,5 @@
 class _VerifyError extends Error {
+  _VerifyError();
 
   void _callSuper(String name, Object? Function() fn) {
     try {
