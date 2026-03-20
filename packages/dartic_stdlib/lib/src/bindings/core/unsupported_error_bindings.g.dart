@@ -49,6 +49,12 @@ class _$UnsupportedError extends UnsupportedError implements DarticObjectHolder 
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  String? get _super$message => super.message;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class UnsupportedErrorBindings {
@@ -62,9 +68,10 @@ abstract final class UnsupportedErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$UnsupportedError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::UnsupportedError::\$super\$toString#0', (args) => (args[0] as _$UnsupportedError).toString());
-    ctx.registerBinding('dart:core::UnsupportedError::\$super\$message#0', (args) => (args[0] as UnsupportedError).message);
-    ctx.registerBinding('dart:core::UnsupportedError::\$super\$stackTrace#0', (args) => (args[0] as UnsupportedError).stackTrace);
+    ctx.registerBinding('dart:core::UnsupportedError::\$super\$toString#0', (args) => (args[0] as _$UnsupportedError)._super$toString());
+    ctx.registerBinding('dart:core::UnsupportedError::\$super\$message#0', (args) => (args[0] as _$UnsupportedError)._super$message);
+    ctx.registerBinding('dart:core::UnsupportedError::\$super\$stackTrace#0', (args) => (args[0] as _$UnsupportedError)._super$stackTrace);
+    ctx.registerBinding('dart:core::UnsupportedError::\$super\$hashCode#0', (args) => (args[0] as _$UnsupportedError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

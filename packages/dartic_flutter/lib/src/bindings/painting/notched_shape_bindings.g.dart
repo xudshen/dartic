@@ -49,6 +49,10 @@ class _$NotchedShape extends NotchedShape implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class NotchedShapeBindings {
@@ -61,9 +65,11 @@ abstract final class NotchedShapeBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$NotchedShape(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/painting/notched_shapes.dart::NotchedShape::\$super\$toString#0', (args) => (args[0] as _$NotchedShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/notched_shapes.dart::NotchedShape::\$super\$hashCode#0', (args) => (args[0] as _$NotchedShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'getOuterPath#2': (args) => (args[0] as NotchedShape).getOuterPath(args[1] as Rect, args[2] as Rect?),
+        'getOuterPath#2': (args) => throw UnsupportedError('getOuterPath() is abstract — must be overridden'),
       };
 }

@@ -77,6 +77,16 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  num? get _super$start => super.start;
+  num? get _super$end => super.end;
+  num? get _super$invalidValue => super.invalidValue;
+  String? get _super$name => super.name;
+  dynamic get _super$message => super.message;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class RangeErrorBindings {
@@ -94,12 +104,14 @@ abstract final class RangeErrorBindings {
     ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', methodMap()['checkValidIndex#5']!);
     ctx.registerBinding('dart:core::RangeError::checkValidRange#6', methodMap()['checkValidRange#6']!);
     ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', methodMap()['checkNotNegative#3']!);
-    ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as RangeError).start);
-    ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as RangeError).end);
-    ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as RangeError).invalidValue);
-    ctx.registerBinding('dart:core::RangeError::\$super\$name#0', (args) => (args[0] as RangeError).name);
-    ctx.registerBinding('dart:core::RangeError::\$super\$message#0', (args) => (args[0] as RangeError).message);
-    ctx.registerBinding('dart:core::RangeError::\$super\$stackTrace#0', (args) => (args[0] as RangeError).stackTrace);
+    ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as _$RangeError)._super$start);
+    ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as _$RangeError)._super$end);
+    ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as _$RangeError)._super$invalidValue);
+    ctx.registerBinding('dart:core::RangeError::\$super\$name#0', (args) => (args[0] as _$RangeError)._super$name);
+    ctx.registerBinding('dart:core::RangeError::\$super\$message#0', (args) => (args[0] as _$RangeError)._super$message);
+    ctx.registerBinding('dart:core::RangeError::\$super\$stackTrace#0', (args) => (args[0] as _$RangeError)._super$stackTrace);
+    ctx.registerBinding('dart:core::RangeError::\$super\$toString#0', (args) => (args[0] as _$RangeError)._super$toString());
+    ctx.registerBinding('dart:core::RangeError::\$super\$hashCode#0', (args) => (args[0] as _$RangeError)._super$hashCode);
     ctx.registerBinding('dart:core::RangeError::value#3', methodMap()['value#3']!);
     ctx.registerBinding('dart:core::RangeError::range#5', methodMap()['range#5']!);
     ctx.registerBinding('dart:core::RangeError::index#5', methodMap()['index#5']!);

@@ -161,6 +161,19 @@ class _$Duration extends Duration implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  int _super$compareTo(Duration other) => super.compareTo(other);
+  String _super$toString() => super.toString();
+  Duration _super$abs() => super.abs();
+  int get _super$inDays => super.inDays;
+  int get _super$inHours => super.inHours;
+  int get _super$inMinutes => super.inMinutes;
+  int get _super$inSeconds => super.inSeconds;
+  int get _super$inMilliseconds => super.inMilliseconds;
+  int get _super$inMicroseconds => super.inMicroseconds;
+  int get _super$hashCode => super.hashCode;
+  bool get _super$isNegative => super.isNegative;
 }
 
 abstract final class DurationBindings {
@@ -190,17 +203,17 @@ abstract final class DurationBindings {
     ctx.registerBinding('dart:core::Duration::secondsPerDay#0', (args) => Duration.secondsPerDay);
     ctx.registerBinding('dart:core::Duration::minutesPerDay#0', (args) => Duration.minutesPerDay);
     ctx.registerBinding('dart:core::Duration::zero#0', (args) => Duration.zero);
-    ctx.registerBinding('dart:core::Duration::\$super\$compareTo#1', (args) => (args[0] as _$Duration).compareTo(args[1] as Duration));
-    ctx.registerBinding('dart:core::Duration::\$super\$toString#0', (args) => (args[0] as _$Duration).toString());
-    ctx.registerBinding('dart:core::Duration::\$super\$abs#0', (args) => (args[0] as _$Duration).abs());
-    ctx.registerBinding('dart:core::Duration::\$super\$inDays#0', (args) => (args[0] as Duration).inDays);
-    ctx.registerBinding('dart:core::Duration::\$super\$inHours#0', (args) => (args[0] as Duration).inHours);
-    ctx.registerBinding('dart:core::Duration::\$super\$inMinutes#0', (args) => (args[0] as Duration).inMinutes);
-    ctx.registerBinding('dart:core::Duration::\$super\$inSeconds#0', (args) => (args[0] as Duration).inSeconds);
-    ctx.registerBinding('dart:core::Duration::\$super\$inMilliseconds#0', (args) => (args[0] as Duration).inMilliseconds);
-    ctx.registerBinding('dart:core::Duration::\$super\$inMicroseconds#0', (args) => (args[0] as Duration).inMicroseconds);
-    ctx.registerBinding('dart:core::Duration::\$super\$hashCode#0', (args) => (args[0] as Duration).hashCode);
-    ctx.registerBinding('dart:core::Duration::\$super\$isNegative#0', (args) => (args[0] as Duration).isNegative);
+    ctx.registerBinding('dart:core::Duration::\$super\$compareTo#1', (args) => (args[0] as _$Duration)._super$compareTo(args[1] as Duration));
+    ctx.registerBinding('dart:core::Duration::\$super\$toString#0', (args) => (args[0] as _$Duration)._super$toString());
+    ctx.registerBinding('dart:core::Duration::\$super\$abs#0', (args) => (args[0] as _$Duration)._super$abs());
+    ctx.registerBinding('dart:core::Duration::\$super\$inDays#0', (args) => (args[0] as _$Duration)._super$inDays);
+    ctx.registerBinding('dart:core::Duration::\$super\$inHours#0', (args) => (args[0] as _$Duration)._super$inHours);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMinutes#0', (args) => (args[0] as _$Duration)._super$inMinutes);
+    ctx.registerBinding('dart:core::Duration::\$super\$inSeconds#0', (args) => (args[0] as _$Duration)._super$inSeconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMilliseconds#0', (args) => (args[0] as _$Duration)._super$inMilliseconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$inMicroseconds#0', (args) => (args[0] as _$Duration)._super$inMicroseconds);
+    ctx.registerBinding('dart:core::Duration::\$super\$hashCode#0', (args) => (args[0] as _$Duration)._super$hashCode);
+    ctx.registerBinding('dart:core::Duration::\$super\$isNegative#0', (args) => (args[0] as _$Duration)._super$isNegative);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

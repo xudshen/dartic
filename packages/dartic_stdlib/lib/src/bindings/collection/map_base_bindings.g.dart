@@ -168,6 +168,24 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  void _super$forEach(dynamic action) { super.forEach(action); }
+  void _super$addAll(Map other) { super.addAll(other); }
+  bool _super$containsValue(Object? value) => super.containsValue(value);
+  dynamic _super$putIfAbsent(dynamic key, dynamic ifAbsent) => super.putIfAbsent(key, ifAbsent);
+  dynamic _super$update(dynamic key, dynamic update, {dynamic ifAbsent}) => super.update(key, update, ifAbsent: ifAbsent);
+  void _super$updateAll(dynamic update) { super.updateAll(update); }
+  void _super$addEntries(Iterable<MapEntry> newEntries) { super.addEntries(newEntries); }
+  void _super$removeWhere(dynamic test) { super.removeWhere(test); }
+  bool _super$containsKey(Object? key) => super.containsKey(key);
+  String _super$toString() => super.toString();
+  Iterable<MapEntry> get _super$entries => super.entries;
+  int get _super$length => super.length;
+  bool get _super$isEmpty => super.isEmpty;
+  bool get _super$isNotEmpty => super.isNotEmpty;
+  Iterable get _super$values => super.values;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class MapBaseBindings {
@@ -182,23 +200,22 @@ abstract final class MapBaseBindings {
           _$MapBase(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:collection::MapBase::mapToString#1', (args) => MapBase.mapToString(args[0] as Map<Object?, Object?>));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$cast#0', (args) => (args[0] as _$MapBase).cast());
-    ctx.registerBinding('dart:collection::MapBase::\$super\$forEach#1', (args) { (args[0] as _$MapBase).forEach((a, b) => (args[1] as Function)(a, b)); return null; });
-    ctx.registerBinding('dart:collection::MapBase::\$super\$addAll#1', (args) { (args[0] as _$MapBase).addAll(args[1] as Map); return null; });
-    ctx.registerBinding('dart:collection::MapBase::\$super\$containsValue#1', (args) => (args[0] as _$MapBase).containsValue(args[1]));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$putIfAbsent#2', (args) => (args[0] as _$MapBase).putIfAbsent(args[1], () => (args[2] as Function)()));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$update#3', (args) => (args[0] as _$MapBase).update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$updateAll#1', (args) { (args[0] as _$MapBase).updateAll((a, b) => (args[1] as Function)(a, b)); return null; });
-    ctx.registerBinding('dart:collection::MapBase::\$super\$map#1', (args) => (args[0] as _$MapBase).map((a, b) => (args[1] as Function)(a, b) as MapEntry));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$addEntries#1', (args) { (args[0] as _$MapBase).addEntries((args[1] as Iterable).cast<MapEntry>()); return null; });
-    ctx.registerBinding('dart:collection::MapBase::\$super\$removeWhere#1', (args) { (args[0] as _$MapBase).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; });
-    ctx.registerBinding('dart:collection::MapBase::\$super\$containsKey#1', (args) => (args[0] as _$MapBase).containsKey(args[1]));
-    ctx.registerBinding('dart:collection::MapBase::\$super\$toString#0', (args) => (args[0] as _$MapBase).toString());
-    ctx.registerBinding('dart:collection::MapBase::\$super\$entries#0', (args) => (args[0] as MapBase).entries);
-    ctx.registerBinding('dart:collection::MapBase::\$super\$length#0', (args) => (args[0] as MapBase).length);
-    ctx.registerBinding('dart:collection::MapBase::\$super\$isEmpty#0', (args) => (args[0] as MapBase).isEmpty);
-    ctx.registerBinding('dart:collection::MapBase::\$super\$isNotEmpty#0', (args) => (args[0] as MapBase).isNotEmpty);
-    ctx.registerBinding('dart:collection::MapBase::\$super\$values#0', (args) => (args[0] as MapBase).values);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$forEach#1', (args) { (args[0] as _$MapBase)._super$forEach((a, b) => (args[1] as Function)(a, b)); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$addAll#1', (args) { (args[0] as _$MapBase)._super$addAll(args[1] as Map); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$containsValue#1', (args) => (args[0] as _$MapBase)._super$containsValue(args[1]));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$putIfAbsent#2', (args) => (args[0] as _$MapBase)._super$putIfAbsent(args[1], () => (args[2] as Function)()));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$update#3', (args) => (args[0] as _$MapBase)._super$update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$updateAll#1', (args) { (args[0] as _$MapBase)._super$updateAll((a, b) => (args[1] as Function)(a, b)); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$addEntries#1', (args) { (args[0] as _$MapBase)._super$addEntries((args[1] as Iterable).cast<MapEntry>()); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$removeWhere#1', (args) { (args[0] as _$MapBase)._super$removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; });
+    ctx.registerBinding('dart:collection::MapBase::\$super\$containsKey#1', (args) => (args[0] as _$MapBase)._super$containsKey(args[1]));
+    ctx.registerBinding('dart:collection::MapBase::\$super\$toString#0', (args) => (args[0] as _$MapBase)._super$toString());
+    ctx.registerBinding('dart:collection::MapBase::\$super\$entries#0', (args) => (args[0] as _$MapBase)._super$entries);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$length#0', (args) => (args[0] as _$MapBase)._super$length);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$isEmpty#0', (args) => (args[0] as _$MapBase)._super$isEmpty);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$isNotEmpty#0', (args) => (args[0] as _$MapBase)._super$isNotEmpty);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$values#0', (args) => (args[0] as _$MapBase)._super$values);
+    ctx.registerBinding('dart:collection::MapBase::\$super\$hashCode#0', (args) => (args[0] as _$MapBase)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

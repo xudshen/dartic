@@ -95,6 +95,19 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  void _super$start() { super.start(); }
+  void _super$stop() { super.stop(); }
+  void _super$reset() { super.reset(); }
+  int get _super$frequency => super.frequency;
+  int get _super$elapsedTicks => super.elapsedTicks;
+  Duration get _super$elapsed => super.elapsed;
+  int get _super$elapsedMicroseconds => super.elapsedMicroseconds;
+  int get _super$elapsedMilliseconds => super.elapsedMilliseconds;
+  bool get _super$isRunning => super.isRunning;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class StopwatchBindings {
@@ -107,15 +120,17 @@ abstract final class StopwatchBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$Stopwatch(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$start#0', (args) { (args[0] as _$Stopwatch).start(); return null; });
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$stop#0', (args) { (args[0] as _$Stopwatch).stop(); return null; });
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$reset#0', (args) { (args[0] as _$Stopwatch).reset(); return null; });
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$frequency#0', (args) => (args[0] as Stopwatch).frequency);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedTicks#0', (args) => (args[0] as Stopwatch).elapsedTicks);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsed#0', (args) => (args[0] as Stopwatch).elapsed);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMicroseconds#0', (args) => (args[0] as Stopwatch).elapsedMicroseconds);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMilliseconds#0', (args) => (args[0] as Stopwatch).elapsedMilliseconds);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$isRunning#0', (args) => (args[0] as Stopwatch).isRunning);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$start#0', (args) { (args[0] as _$Stopwatch)._super$start(); return null; });
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$stop#0', (args) { (args[0] as _$Stopwatch)._super$stop(); return null; });
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$reset#0', (args) { (args[0] as _$Stopwatch)._super$reset(); return null; });
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$frequency#0', (args) => (args[0] as _$Stopwatch)._super$frequency);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedTicks#0', (args) => (args[0] as _$Stopwatch)._super$elapsedTicks);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsed#0', (args) => (args[0] as _$Stopwatch)._super$elapsed);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMicroseconds#0', (args) => (args[0] as _$Stopwatch)._super$elapsedMicroseconds);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMilliseconds#0', (args) => (args[0] as _$Stopwatch)._super$elapsedMilliseconds);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$isRunning#0', (args) => (args[0] as _$Stopwatch)._super$isRunning);
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$toString#0', (args) => (args[0] as _$Stopwatch)._super$toString());
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$hashCode#0', (args) => (args[0] as _$Stopwatch)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

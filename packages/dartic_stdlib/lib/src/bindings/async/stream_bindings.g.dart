@@ -241,6 +241,38 @@ class _$Stream extends Stream implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  Stream _super$asBroadcastStream({dynamic onListen, dynamic onCancel}) => super.asBroadcastStream(onListen: onListen, onCancel: onCancel);
+  Stream _super$where(dynamic test) => super.where(test);
+  Stream _super$handleError(dynamic onError, {dynamic test}) => super.handleError(onError, test: test);
+  Future<dynamic> _super$pipe(StreamConsumer streamConsumer) => super.pipe(streamConsumer);
+  Future _super$reduce(dynamic combine) => super.reduce(combine);
+  Future<String> _super$join([String separator = ""]) => super.join(separator);
+  Future<bool> _super$contains(Object? needle) => super.contains(needle);
+  Future<void> _super$forEach(dynamic action) => super.forEach(action);
+  Future<bool> _super$every(dynamic test) => super.every(test);
+  Future<bool> _super$any(dynamic test) => super.any(test);
+  Future<List> _super$toList() => super.toList();
+  Future<Set> _super$toSet() => super.toSet();
+  Stream _super$take(int count) => super.take(count);
+  Stream _super$takeWhile(dynamic test) => super.takeWhile(test);
+  Stream _super$skip(int count) => super.skip(count);
+  Stream _super$skipWhile(dynamic test) => super.skipWhile(test);
+  Stream _super$distinct([dynamic equals]) => super.distinct(equals);
+  Future _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
+  Future _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
+  Future _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  Future _super$elementAt(int index) => super.elementAt(index);
+  Stream _super$timeout(Duration timeLimit, {dynamic onTimeout}) => super.timeout(timeLimit, onTimeout: onTimeout);
+  bool get _super$isBroadcast => super.isBroadcast;
+  Future<int> get _super$length => super.length;
+  Future<bool> get _super$isEmpty => super.isEmpty;
+  Future get _super$first => super.first;
+  Future get _super$last => super.last;
+  Future get _super$single => super.single;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class StreamBindings {
@@ -254,42 +286,36 @@ abstract final class StreamBindings {
           _$Stream(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:async::Stream::castFrom#1', (args) => Stream.castFrom(args[0] as Stream));
-    ctx.registerBinding('dart:async::Stream::\$super\$asBroadcastStream#2', (args) => (args[0] as _$Stream).asBroadcastStream(onListen: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
-    ctx.registerBinding('dart:async::Stream::\$super\$where#1', (args) => (args[0] as _$Stream).where((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:async::Stream::\$super\$map#1', (args) => (args[0] as _$Stream).map((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('dart:async::Stream::\$super\$asyncMap#1', (args) => (args[0] as _$Stream).asyncMap((a) => (args[1] as Function)(a) as FutureOr));
-    ctx.registerBinding('dart:async::Stream::\$super\$asyncExpand#1', (args) => (args[0] as _$Stream).asyncExpand((a) => (args[1] as Function)(a) as Stream?));
-    ctx.registerBinding('dart:async::Stream::\$super\$handleError#2', (args) => (args[0] as _$Stream).handleError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
-    ctx.registerBinding('dart:async::Stream::\$super\$expand#1', (args) => (args[0] as _$Stream).expand((a) => (args[1] as Function)(a) as Iterable));
-    ctx.registerBinding('dart:async::Stream::\$super\$pipe#1', (args) => (args[0] as _$Stream).pipe(args[1] as StreamConsumer));
-    ctx.registerBinding('dart:async::Stream::\$super\$transform#1', (args) => (args[0] as _$Stream).transform(args[1] as StreamTransformer));
-    ctx.registerBinding('dart:async::Stream::\$super\$reduce#1', (args) => (args[0] as _$Stream).reduce((a, b) => (args[1] as Function)(a, b)));
-    ctx.registerBinding('dart:async::Stream::\$super\$fold#2', (args) => (args[0] as _$Stream).fold(args[1], (a, b) => (args[2] as Function)(a, b)));
-    ctx.registerBinding('dart:async::Stream::\$super\$join#1', (args) => (args[0] as _$Stream).join(identical(args[1], darticAbsent) ? "" : args[1] as String));
-    ctx.registerBinding('dart:async::Stream::\$super\$contains#1', (args) => (args[0] as _$Stream).contains(args[1]));
-    ctx.registerBinding('dart:async::Stream::\$super\$forEach#1', (args) => (args[0] as _$Stream).forEach((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('dart:async::Stream::\$super\$every#1', (args) => (args[0] as _$Stream).every((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:async::Stream::\$super\$any#1', (args) => (args[0] as _$Stream).any((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:async::Stream::\$super\$cast#0', (args) => (args[0] as _$Stream).cast());
-    ctx.registerBinding('dart:async::Stream::\$super\$toList#0', (args) => (args[0] as _$Stream).toList());
-    ctx.registerBinding('dart:async::Stream::\$super\$toSet#0', (args) => (args[0] as _$Stream).toSet());
-    ctx.registerBinding('dart:async::Stream::\$super\$drain#1', (args) => (args[0] as _$Stream).drain(identical(args[1], darticAbsent) ? null : args[1]));
-    ctx.registerBinding('dart:async::Stream::\$super\$take#1', (args) => (args[0] as _$Stream).take(args[1] as int));
-    ctx.registerBinding('dart:async::Stream::\$super\$takeWhile#1', (args) => (args[0] as _$Stream).takeWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:async::Stream::\$super\$skip#1', (args) => (args[0] as _$Stream).skip(args[1] as int));
-    ctx.registerBinding('dart:async::Stream::\$super\$skipWhile#1', (args) => (args[0] as _$Stream).skipWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:async::Stream::\$super\$distinct#1', (args) => (args[0] as _$Stream).distinct(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)));
-    ctx.registerBinding('dart:async::Stream::\$super\$firstWhere#2', (args) => (args[0] as _$Stream).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:async::Stream::\$super\$lastWhere#2', (args) => (args[0] as _$Stream).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:async::Stream::\$super\$singleWhere#2', (args) => (args[0] as _$Stream).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:async::Stream::\$super\$elementAt#1', (args) => (args[0] as _$Stream).elementAt(args[1] as int));
-    ctx.registerBinding('dart:async::Stream::\$super\$timeout#2', (args) => (args[0] as _$Stream).timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
-    ctx.registerBinding('dart:async::Stream::\$super\$isBroadcast#0', (args) => (args[0] as Stream).isBroadcast);
-    ctx.registerBinding('dart:async::Stream::\$super\$length#0', (args) => (args[0] as Stream).length);
-    ctx.registerBinding('dart:async::Stream::\$super\$isEmpty#0', (args) => (args[0] as Stream).isEmpty);
-    ctx.registerBinding('dart:async::Stream::\$super\$first#0', (args) => (args[0] as Stream).first);
-    ctx.registerBinding('dart:async::Stream::\$super\$last#0', (args) => (args[0] as Stream).last);
-    ctx.registerBinding('dart:async::Stream::\$super\$single#0', (args) => (args[0] as Stream).single);
+    ctx.registerBinding('dart:async::Stream::\$super\$asBroadcastStream#2', (args) => (args[0] as _$Stream)._super$asBroadcastStream(onListen: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
+    ctx.registerBinding('dart:async::Stream::\$super\$where#1', (args) => (args[0] as _$Stream)._super$where((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:async::Stream::\$super\$handleError#2', (args) => (args[0] as _$Stream)._super$handleError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
+    ctx.registerBinding('dart:async::Stream::\$super\$pipe#1', (args) => (args[0] as _$Stream)._super$pipe(args[1] as StreamConsumer));
+    ctx.registerBinding('dart:async::Stream::\$super\$reduce#1', (args) => (args[0] as _$Stream)._super$reduce((a, b) => (args[1] as Function)(a, b)));
+    ctx.registerBinding('dart:async::Stream::\$super\$join#1', (args) => (args[0] as _$Stream)._super$join(identical(args[1], darticAbsent) ? "" : args[1] as String));
+    ctx.registerBinding('dart:async::Stream::\$super\$contains#1', (args) => (args[0] as _$Stream)._super$contains(args[1]));
+    ctx.registerBinding('dart:async::Stream::\$super\$forEach#1', (args) => (args[0] as _$Stream)._super$forEach((a) => (args[1] as Function)(a)));
+    ctx.registerBinding('dart:async::Stream::\$super\$every#1', (args) => (args[0] as _$Stream)._super$every((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:async::Stream::\$super\$any#1', (args) => (args[0] as _$Stream)._super$any((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:async::Stream::\$super\$toList#0', (args) => (args[0] as _$Stream)._super$toList());
+    ctx.registerBinding('dart:async::Stream::\$super\$toSet#0', (args) => (args[0] as _$Stream)._super$toSet());
+    ctx.registerBinding('dart:async::Stream::\$super\$take#1', (args) => (args[0] as _$Stream)._super$take(args[1] as int));
+    ctx.registerBinding('dart:async::Stream::\$super\$takeWhile#1', (args) => (args[0] as _$Stream)._super$takeWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:async::Stream::\$super\$skip#1', (args) => (args[0] as _$Stream)._super$skip(args[1] as int));
+    ctx.registerBinding('dart:async::Stream::\$super\$skipWhile#1', (args) => (args[0] as _$Stream)._super$skipWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:async::Stream::\$super\$distinct#1', (args) => (args[0] as _$Stream)._super$distinct(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)));
+    ctx.registerBinding('dart:async::Stream::\$super\$firstWhere#2', (args) => (args[0] as _$Stream)._super$firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:async::Stream::\$super\$lastWhere#2', (args) => (args[0] as _$Stream)._super$lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:async::Stream::\$super\$singleWhere#2', (args) => (args[0] as _$Stream)._super$singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:async::Stream::\$super\$elementAt#1', (args) => (args[0] as _$Stream)._super$elementAt(args[1] as int));
+    ctx.registerBinding('dart:async::Stream::\$super\$timeout#2', (args) => (args[0] as _$Stream)._super$timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
+    ctx.registerBinding('dart:async::Stream::\$super\$isBroadcast#0', (args) => (args[0] as _$Stream)._super$isBroadcast);
+    ctx.registerBinding('dart:async::Stream::\$super\$length#0', (args) => (args[0] as _$Stream)._super$length);
+    ctx.registerBinding('dart:async::Stream::\$super\$isEmpty#0', (args) => (args[0] as _$Stream)._super$isEmpty);
+    ctx.registerBinding('dart:async::Stream::\$super\$first#0', (args) => (args[0] as _$Stream)._super$first);
+    ctx.registerBinding('dart:async::Stream::\$super\$last#0', (args) => (args[0] as _$Stream)._super$last);
+    ctx.registerBinding('dart:async::Stream::\$super\$single#0', (args) => (args[0] as _$Stream)._super$single);
+    ctx.registerBinding('dart:async::Stream::\$super\$toString#0', (args) => (args[0] as _$Stream)._super$toString());
+    ctx.registerBinding('dart:async::Stream::\$super\$hashCode#0', (args) => (args[0] as _$Stream)._super$hashCode);
 
     // _EmptyStream
     for (final e in emptyStreamMethodMap().entries) {

@@ -1503,14 +1503,26 @@ void _writeSuperTrampolines(
 
 /// Generates a single `_super$methodName(...)` trampoline for a non-abstract method.
 void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
-  // Build parameter list (same structure as Bridge override).
+  // Build parameter list for the trampoline.
+  // Use untyped params (dynamic) for Function-typed parameters to avoid
+  // type mismatch when passing to super (e.g., Function? → E Function()?).
+  // The $super$ binding closures already cast arguments to proper types,
+  // so the trampoline only needs to forward them.
   final requiredParams = <String>[];
   final optionalPosParams = <String>[];
   final namedParams = <String>[];
   final argNames = <String>[];
 
   for (final p in method.paramTypes) {
-    final paramType = p.fullType ?? p.type;
+    var paramType = p.fullType ?? p.type;
+    // Erase Function-typed params to dynamic to avoid super call type mismatch.
+    // The base type (without ?) determines if it's a Function type.
+    final baseType = paramType.endsWith('?')
+        ? paramType.substring(0, paramType.length - 1)
+        : paramType;
+    if (baseType == 'Function' || baseType.contains('Function(')) {
+      paramType = 'dynamic';
+    }
     if (p.isNamed) {
       final prefix = p.isRequired ? 'required ' : '';
       final defaultSuffix =

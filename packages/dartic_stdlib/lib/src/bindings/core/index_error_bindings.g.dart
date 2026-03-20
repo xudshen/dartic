@@ -91,6 +91,18 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  Object? get _super$indexable => super.indexable;
+  int get _super$length => super.length;
+  int get _super$invalidValue => super.invalidValue;
+  int get _super$start => super.start;
+  int get _super$end => super.end;
+  String? get _super$name => super.name;
+  dynamic get _super$message => super.message;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class IndexErrorBindings {
@@ -105,14 +117,16 @@ abstract final class IndexErrorBindings {
           _$IndexError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::IndexError::check#5', (args) => IndexError.check(args[0] as int, args[1] as int, indexable: identical(args[2], darticAbsent) ? null : args[2], name: identical(args[3], darticAbsent) ? null : args[3] as String?, message: identical(args[4], darticAbsent) ? null : args[4] as String?));
-    ctx.registerBinding('dart:core::IndexError::\$super\$indexable#0', (args) => (args[0] as IndexError).indexable);
-    ctx.registerBinding('dart:core::IndexError::\$super\$length#0', (args) => (args[0] as IndexError).length);
-    ctx.registerBinding('dart:core::IndexError::\$super\$invalidValue#0', (args) => (args[0] as IndexError).invalidValue);
-    ctx.registerBinding('dart:core::IndexError::\$super\$start#0', (args) => (args[0] as IndexError).start);
-    ctx.registerBinding('dart:core::IndexError::\$super\$end#0', (args) => (args[0] as IndexError).end);
-    ctx.registerBinding('dart:core::IndexError::\$super\$name#0', (args) => (args[0] as IndexError).name);
-    ctx.registerBinding('dart:core::IndexError::\$super\$message#0', (args) => (args[0] as IndexError).message);
-    ctx.registerBinding('dart:core::IndexError::\$super\$stackTrace#0', (args) => (args[0] as IndexError).stackTrace);
+    ctx.registerBinding('dart:core::IndexError::\$super\$indexable#0', (args) => (args[0] as _$IndexError)._super$indexable);
+    ctx.registerBinding('dart:core::IndexError::\$super\$length#0', (args) => (args[0] as _$IndexError)._super$length);
+    ctx.registerBinding('dart:core::IndexError::\$super\$invalidValue#0', (args) => (args[0] as _$IndexError)._super$invalidValue);
+    ctx.registerBinding('dart:core::IndexError::\$super\$start#0', (args) => (args[0] as _$IndexError)._super$start);
+    ctx.registerBinding('dart:core::IndexError::\$super\$end#0', (args) => (args[0] as _$IndexError)._super$end);
+    ctx.registerBinding('dart:core::IndexError::\$super\$name#0', (args) => (args[0] as _$IndexError)._super$name);
+    ctx.registerBinding('dart:core::IndexError::\$super\$message#0', (args) => (args[0] as _$IndexError)._super$message);
+    ctx.registerBinding('dart:core::IndexError::\$super\$stackTrace#0', (args) => (args[0] as _$IndexError)._super$stackTrace);
+    ctx.registerBinding('dart:core::IndexError::\$super\$toString#0', (args) => (args[0] as _$IndexError)._super$toString());
+    ctx.registerBinding('dart:core::IndexError::\$super\$hashCode#0', (args) => (args[0] as _$IndexError)._super$hashCode);
     ctx.registerBinding('dart:core::IndexError::#5', methodMap()['#5']!);
   }
 

@@ -211,6 +211,34 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  Iterable _super$followedBy(Iterable other) => super.followedBy(other);
+  Iterable _super$where(dynamic test) => super.where(test);
+  bool _super$contains(Object? element) => super.contains(element);
+  void _super$forEach(dynamic action) { super.forEach(action); }
+  dynamic _super$reduce(dynamic combine) => super.reduce(combine);
+  bool _super$every(dynamic test) => super.every(test);
+  String _super$join([String separator = ""]) => super.join(separator);
+  bool _super$any(dynamic test) => super.any(test);
+  List _super$toList({bool growable = true}) => super.toList(growable: growable);
+  Set _super$toSet() => super.toSet();
+  Iterable _super$take(int count) => super.take(count);
+  Iterable _super$takeWhile(dynamic test) => super.takeWhile(test);
+  Iterable _super$skip(int count) => super.skip(count);
+  Iterable _super$skipWhile(dynamic test) => super.skipWhile(test);
+  dynamic _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
+  dynamic _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
+  dynamic _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  dynamic _super$elementAt(int index) => super.elementAt(index);
+  String _super$toString() => super.toString();
+  int get _super$length => super.length;
+  bool get _super$isEmpty => super.isEmpty;
+  bool get _super$isNotEmpty => super.isNotEmpty;
+  dynamic get _super$first => super.first;
+  dynamic get _super$last => super.last;
+  dynamic get _super$single => super.single;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class IterableBindings {
@@ -226,36 +254,32 @@ abstract final class IterableBindings {
     ctx.registerBinding('dart:core::Iterable::castFrom#1', (args) => Iterable.castFrom(args[0] as Iterable));
     ctx.registerBinding('dart:core::Iterable::iterableToShortString#3', (args) => Iterable.iterableToShortString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
     ctx.registerBinding('dart:core::Iterable::iterableToFullString#3', (args) => Iterable.iterableToFullString(args[0] as Iterable<dynamic>, identical(args[1], darticAbsent) ? '(' : args[1] as String, identical(args[2], darticAbsent) ? ')' : args[2] as String));
-    ctx.registerBinding('dart:core::Iterable::\$super\$cast#0', (args) => (args[0] as _$Iterable).cast());
-    ctx.registerBinding('dart:core::Iterable::\$super\$followedBy#1', (args) => (args[0] as _$Iterable).followedBy(args[1] as Iterable));
-    ctx.registerBinding('dart:core::Iterable::\$super\$map#1', (args) => (args[0] as _$Iterable).map((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('dart:core::Iterable::\$super\$where#1', (args) => (args[0] as _$Iterable).where((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$whereType#0', (args) => (args[0] as _$Iterable).whereType());
-    ctx.registerBinding('dart:core::Iterable::\$super\$expand#1', (args) => (args[0] as _$Iterable).expand((a) => (args[1] as Function)(a) as Iterable));
-    ctx.registerBinding('dart:core::Iterable::\$super\$contains#1', (args) => (args[0] as _$Iterable).contains(args[1]));
-    ctx.registerBinding('dart:core::Iterable::\$super\$forEach#1', (args) { (args[0] as _$Iterable).forEach((a) => (args[1] as Function)(a)); return null; });
-    ctx.registerBinding('dart:core::Iterable::\$super\$reduce#1', (args) => (args[0] as _$Iterable).reduce((a, b) => (args[1] as Function)(a, b)));
-    ctx.registerBinding('dart:core::Iterable::\$super\$fold#2', (args) => (args[0] as _$Iterable).fold(args[1], (a, b) => (args[2] as Function)(a, b)));
-    ctx.registerBinding('dart:core::Iterable::\$super\$every#1', (args) => (args[0] as _$Iterable).every((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$join#1', (args) => (args[0] as _$Iterable).join(identical(args[1], darticAbsent) ? "" : args[1] as String));
-    ctx.registerBinding('dart:core::Iterable::\$super\$any#1', (args) => (args[0] as _$Iterable).any((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$toList#1', (args) => (args[0] as _$Iterable).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$toSet#0', (args) => (args[0] as _$Iterable).toSet());
-    ctx.registerBinding('dart:core::Iterable::\$super\$take#1', (args) => (args[0] as _$Iterable).take(args[1] as int));
-    ctx.registerBinding('dart:core::Iterable::\$super\$takeWhile#1', (args) => (args[0] as _$Iterable).takeWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$skip#1', (args) => (args[0] as _$Iterable).skip(args[1] as int));
-    ctx.registerBinding('dart:core::Iterable::\$super\$skipWhile#1', (args) => (args[0] as _$Iterable).skipWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:core::Iterable::\$super\$firstWhere#2', (args) => (args[0] as _$Iterable).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:core::Iterable::\$super\$lastWhere#2', (args) => (args[0] as _$Iterable).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:core::Iterable::\$super\$singleWhere#2', (args) => (args[0] as _$Iterable).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:core::Iterable::\$super\$elementAt#1', (args) => (args[0] as _$Iterable).elementAt(args[1] as int));
-    ctx.registerBinding('dart:core::Iterable::\$super\$toString#0', (args) => (args[0] as _$Iterable).toString());
-    ctx.registerBinding('dart:core::Iterable::\$super\$length#0', (args) => (args[0] as Iterable).length);
-    ctx.registerBinding('dart:core::Iterable::\$super\$isEmpty#0', (args) => (args[0] as Iterable).isEmpty);
-    ctx.registerBinding('dart:core::Iterable::\$super\$isNotEmpty#0', (args) => (args[0] as Iterable).isNotEmpty);
-    ctx.registerBinding('dart:core::Iterable::\$super\$first#0', (args) => (args[0] as Iterable).first);
-    ctx.registerBinding('dart:core::Iterable::\$super\$last#0', (args) => (args[0] as Iterable).last);
-    ctx.registerBinding('dart:core::Iterable::\$super\$single#0', (args) => (args[0] as Iterable).single);
+    ctx.registerBinding('dart:core::Iterable::\$super\$followedBy#1', (args) => (args[0] as _$Iterable)._super$followedBy(args[1] as Iterable));
+    ctx.registerBinding('dart:core::Iterable::\$super\$where#1', (args) => (args[0] as _$Iterable)._super$where((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$contains#1', (args) => (args[0] as _$Iterable)._super$contains(args[1]));
+    ctx.registerBinding('dart:core::Iterable::\$super\$forEach#1', (args) { (args[0] as _$Iterable)._super$forEach((a) => (args[1] as Function)(a)); return null; });
+    ctx.registerBinding('dart:core::Iterable::\$super\$reduce#1', (args) => (args[0] as _$Iterable)._super$reduce((a, b) => (args[1] as Function)(a, b)));
+    ctx.registerBinding('dart:core::Iterable::\$super\$every#1', (args) => (args[0] as _$Iterable)._super$every((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$join#1', (args) => (args[0] as _$Iterable)._super$join(identical(args[1], darticAbsent) ? "" : args[1] as String));
+    ctx.registerBinding('dart:core::Iterable::\$super\$any#1', (args) => (args[0] as _$Iterable)._super$any((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$toList#1', (args) => (args[0] as _$Iterable)._super$toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$toSet#0', (args) => (args[0] as _$Iterable)._super$toSet());
+    ctx.registerBinding('dart:core::Iterable::\$super\$take#1', (args) => (args[0] as _$Iterable)._super$take(args[1] as int));
+    ctx.registerBinding('dart:core::Iterable::\$super\$takeWhile#1', (args) => (args[0] as _$Iterable)._super$takeWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$skip#1', (args) => (args[0] as _$Iterable)._super$skip(args[1] as int));
+    ctx.registerBinding('dart:core::Iterable::\$super\$skipWhile#1', (args) => (args[0] as _$Iterable)._super$skipWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:core::Iterable::\$super\$firstWhere#2', (args) => (args[0] as _$Iterable)._super$firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:core::Iterable::\$super\$lastWhere#2', (args) => (args[0] as _$Iterable)._super$lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:core::Iterable::\$super\$singleWhere#2', (args) => (args[0] as _$Iterable)._super$singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:core::Iterable::\$super\$elementAt#1', (args) => (args[0] as _$Iterable)._super$elementAt(args[1] as int));
+    ctx.registerBinding('dart:core::Iterable::\$super\$toString#0', (args) => (args[0] as _$Iterable)._super$toString());
+    ctx.registerBinding('dart:core::Iterable::\$super\$length#0', (args) => (args[0] as _$Iterable)._super$length);
+    ctx.registerBinding('dart:core::Iterable::\$super\$isEmpty#0', (args) => (args[0] as _$Iterable)._super$isEmpty);
+    ctx.registerBinding('dart:core::Iterable::\$super\$isNotEmpty#0', (args) => (args[0] as _$Iterable)._super$isNotEmpty);
+    ctx.registerBinding('dart:core::Iterable::\$super\$first#0', (args) => (args[0] as _$Iterable)._super$first);
+    ctx.registerBinding('dart:core::Iterable::\$super\$last#0', (args) => (args[0] as _$Iterable)._super$last);
+    ctx.registerBinding('dart:core::Iterable::\$super\$single#0', (args) => (args[0] as _$Iterable)._super$single);
+    ctx.registerBinding('dart:core::Iterable::\$super\$hashCode#0', (args) => (args[0] as _$Iterable)._super$hashCode);
     ctx.registerBinding('dart:_internal::EmptyIterable::#0', methodMap()['#0']!);
     ctx.registerBinding('dart:_internal::IterableElementError::noElement#0', methodMap()['noElement#0']!);
     ctx.registerBinding('dart:_internal::IterableElementError::tooMany#0', methodMap()['tooMany#0']!);

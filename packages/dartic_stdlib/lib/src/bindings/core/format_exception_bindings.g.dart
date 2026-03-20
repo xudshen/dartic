@@ -56,6 +56,13 @@ class _$FormatException extends FormatException implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  String get _super$message => super.message;
+  dynamic get _super$source => super.source;
+  int? get _super$offset => super.offset;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class FormatExceptionBindings {
@@ -69,10 +76,11 @@ abstract final class FormatExceptionBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$FormatException(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::FormatException::\$super\$toString#0', (args) => (args[0] as _$FormatException).toString());
-    ctx.registerBinding('dart:core::FormatException::\$super\$message#0', (args) => (args[0] as FormatException).message);
-    ctx.registerBinding('dart:core::FormatException::\$super\$source#0', (args) => (args[0] as FormatException).source);
-    ctx.registerBinding('dart:core::FormatException::\$super\$offset#0', (args) => (args[0] as FormatException).offset);
+    ctx.registerBinding('dart:core::FormatException::\$super\$toString#0', (args) => (args[0] as _$FormatException)._super$toString());
+    ctx.registerBinding('dart:core::FormatException::\$super\$message#0', (args) => (args[0] as _$FormatException)._super$message);
+    ctx.registerBinding('dart:core::FormatException::\$super\$source#0', (args) => (args[0] as _$FormatException)._super$source);
+    ctx.registerBinding('dart:core::FormatException::\$super\$offset#0', (args) => (args[0] as _$FormatException)._super$offset);
+    ctx.registerBinding('dart:core::FormatException::\$super\$hashCode#0', (args) => (args[0] as _$FormatException)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -43,6 +43,18 @@ class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
     }
     return r as String;
   }
+
+  // Super trampolines
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style = DiagnosticsTreeStyle.errorProperty}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Key? get _super$key => super.key;
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -62,14 +74,16 @@ abstract final class StatefulWidgetBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$StatefulWidget(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$createElement#0', (args) => (args[0] as _$StatefulWidget).createElement());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShort#0', (args) => (args[0] as _$StatefulWidget).toStringShort());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$debugFillProperties#1', (args) { (args[0] as _$StatefulWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatefulWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringDeep#4', (args) => (args[0] as _$StatefulWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StatefulWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$StatefulWidget).debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$key#0', (args) => (args[0] as StatefulWidget).key);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$createElement#0', (args) => (args[0] as _$StatefulWidget)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShort#0', (args) => (args[0] as _$StatefulWidget)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$debugFillProperties#1', (args) { (args[0] as _$StatefulWidget)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatefulWidget)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toStringDeep#4', (args) => (args[0] as _$StatefulWidget)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StatefulWidget)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$StatefulWidget)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$key#0', (args) => (args[0] as _$StatefulWidget)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$toString#0', (args) => (args[0] as _$StatefulWidget)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatefulWidget::\$super\$hashCode#0', (args) => (args[0] as _$StatefulWidget)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

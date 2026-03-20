@@ -49,6 +49,12 @@ class _$ConcurrentModificationError extends ConcurrentModificationError implemen
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Object? get _super$modifiedObject => super.modifiedObject;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class ConcurrentModificationErrorBindings {
@@ -62,9 +68,10 @@ abstract final class ConcurrentModificationErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$ConcurrentModificationError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$toString#0', (args) => (args[0] as _$ConcurrentModificationError).toString());
-    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$modifiedObject#0', (args) => (args[0] as ConcurrentModificationError).modifiedObject);
-    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$stackTrace#0', (args) => (args[0] as ConcurrentModificationError).stackTrace);
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$toString#0', (args) => (args[0] as _$ConcurrentModificationError)._super$toString());
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$modifiedObject#0', (args) => (args[0] as _$ConcurrentModificationError)._super$modifiedObject);
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$stackTrace#0', (args) => (args[0] as _$ConcurrentModificationError)._super$stackTrace);
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$hashCode#0', (args) => (args[0] as _$ConcurrentModificationError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

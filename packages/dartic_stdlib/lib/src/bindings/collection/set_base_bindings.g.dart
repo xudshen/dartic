@@ -309,6 +309,41 @@ class _$SetBase extends SetBase implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  Iterable _super$followedBy(Iterable other) => super.followedBy(other);
+  void _super$clear() { super.clear(); }
+  void _super$addAll(Iterable elements) { super.addAll(elements); }
+  void _super$removeAll(Iterable<Object?> elements) { super.removeAll(elements); }
+  void _super$retainAll(Iterable<Object?> elements) { super.retainAll(elements); }
+  void _super$removeWhere(dynamic test) { super.removeWhere(test); }
+  void _super$retainWhere(dynamic test) { super.retainWhere(test); }
+  bool _super$containsAll(Iterable<Object?> other) => super.containsAll(other);
+  Set _super$union(Set other) => super.union(other);
+  Set _super$intersection(Set<Object?> other) => super.intersection(other);
+  Set _super$difference(Set<Object?> other) => super.difference(other);
+  List _super$toList({bool growable = true}) => super.toList(growable: growable);
+  String _super$toString() => super.toString();
+  Iterable _super$where(dynamic f) => super.where(f);
+  void _super$forEach(dynamic f) { super.forEach(f); }
+  dynamic _super$reduce(dynamic combine) => super.reduce(combine);
+  bool _super$every(dynamic f) => super.every(f);
+  String _super$join([String separator = ""]) => super.join(separator);
+  bool _super$any(dynamic test) => super.any(test);
+  Iterable _super$take(int n) => super.take(n);
+  Iterable _super$takeWhile(dynamic test) => super.takeWhile(test);
+  Iterable _super$skip(int n) => super.skip(n);
+  Iterable _super$skipWhile(dynamic test) => super.skipWhile(test);
+  dynamic _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
+  dynamic _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
+  dynamic _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  dynamic _super$elementAt(int index) => super.elementAt(index);
+  bool get _super$isEmpty => super.isEmpty;
+  bool get _super$isNotEmpty => super.isNotEmpty;
+  dynamic get _super$single => super.single;
+  dynamic get _super$first => super.first;
+  dynamic get _super$last => super.last;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class SetBaseBindings {
@@ -323,43 +358,39 @@ abstract final class SetBaseBindings {
           _$SetBase(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:collection::SetBase::setToString#1', (args) => SetBase.setToString(args[0] as Set<dynamic>));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$cast#0', (args) => (args[0] as _$SetBase).cast());
-    ctx.registerBinding('dart:collection::SetBase::\$super\$followedBy#1', (args) => (args[0] as _$SetBase).followedBy(args[1] as Iterable));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$whereType#0', (args) => (args[0] as _$SetBase).whereType());
-    ctx.registerBinding('dart:collection::SetBase::\$super\$clear#0', (args) { (args[0] as _$SetBase).clear(); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$addAll#1', (args) { (args[0] as _$SetBase).addAll(args[1] as Iterable); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$removeAll#1', (args) { (args[0] as _$SetBase).removeAll(args[1] as Iterable<Object?>); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$retainAll#1', (args) { (args[0] as _$SetBase).retainAll(args[1] as Iterable<Object?>); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$removeWhere#1', (args) { (args[0] as _$SetBase).removeWhere((a) => (args[1] as Function)(a) as bool); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$retainWhere#1', (args) { (args[0] as _$SetBase).retainWhere((a) => (args[1] as Function)(a) as bool); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$containsAll#1', (args) => (args[0] as _$SetBase).containsAll(args[1] as Iterable<Object?>));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$union#1', (args) => (args[0] as _$SetBase).union(args[1] as Set));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$intersection#1', (args) => (args[0] as _$SetBase).intersection(args[1] as Set<Object?>));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$difference#1', (args) => (args[0] as _$SetBase).difference(args[1] as Set<Object?>));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$toList#1', (args) => (args[0] as _$SetBase).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$map#1', (args) => (args[0] as _$SetBase).map((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$toString#0', (args) => (args[0] as _$SetBase).toString());
-    ctx.registerBinding('dart:collection::SetBase::\$super\$where#1', (args) => (args[0] as _$SetBase).where((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$expand#1', (args) => (args[0] as _$SetBase).expand((a) => (args[1] as Function)(a) as Iterable));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$forEach#1', (args) { (args[0] as _$SetBase).forEach((a) => (args[1] as Function)(a)); return null; });
-    ctx.registerBinding('dart:collection::SetBase::\$super\$reduce#1', (args) => (args[0] as _$SetBase).reduce((a, b) => (args[1] as Function)(a, b)));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$fold#2', (args) => (args[0] as _$SetBase).fold(args[1], (a, b) => (args[2] as Function)(a, b)));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$every#1', (args) => (args[0] as _$SetBase).every((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$join#1', (args) => (args[0] as _$SetBase).join(identical(args[1], darticAbsent) ? "" : args[1] as String));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$any#1', (args) => (args[0] as _$SetBase).any((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$take#1', (args) => (args[0] as _$SetBase).take(args[1] as int));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$takeWhile#1', (args) => (args[0] as _$SetBase).takeWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$skip#1', (args) => (args[0] as _$SetBase).skip(args[1] as int));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$skipWhile#1', (args) => (args[0] as _$SetBase).skipWhile((a) => (args[1] as Function)(a) as bool));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$firstWhere#2', (args) => (args[0] as _$SetBase).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$lastWhere#2', (args) => (args[0] as _$SetBase).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$singleWhere#2', (args) => (args[0] as _$SetBase).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$elementAt#1', (args) => (args[0] as _$SetBase).elementAt(args[1] as int));
-    ctx.registerBinding('dart:collection::SetBase::\$super\$isEmpty#0', (args) => (args[0] as SetBase).isEmpty);
-    ctx.registerBinding('dart:collection::SetBase::\$super\$isNotEmpty#0', (args) => (args[0] as SetBase).isNotEmpty);
-    ctx.registerBinding('dart:collection::SetBase::\$super\$single#0', (args) => (args[0] as SetBase).single);
-    ctx.registerBinding('dart:collection::SetBase::\$super\$first#0', (args) => (args[0] as SetBase).first);
-    ctx.registerBinding('dart:collection::SetBase::\$super\$last#0', (args) => (args[0] as SetBase).last);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$followedBy#1', (args) => (args[0] as _$SetBase)._super$followedBy(args[1] as Iterable));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$clear#0', (args) { (args[0] as _$SetBase)._super$clear(); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$addAll#1', (args) { (args[0] as _$SetBase)._super$addAll(args[1] as Iterable); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$removeAll#1', (args) { (args[0] as _$SetBase)._super$removeAll(args[1] as Iterable<Object?>); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$retainAll#1', (args) { (args[0] as _$SetBase)._super$retainAll(args[1] as Iterable<Object?>); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$removeWhere#1', (args) { (args[0] as _$SetBase)._super$removeWhere((a) => (args[1] as Function)(a) as bool); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$retainWhere#1', (args) { (args[0] as _$SetBase)._super$retainWhere((a) => (args[1] as Function)(a) as bool); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$containsAll#1', (args) => (args[0] as _$SetBase)._super$containsAll(args[1] as Iterable<Object?>));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$union#1', (args) => (args[0] as _$SetBase)._super$union(args[1] as Set));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$intersection#1', (args) => (args[0] as _$SetBase)._super$intersection(args[1] as Set<Object?>));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$difference#1', (args) => (args[0] as _$SetBase)._super$difference(args[1] as Set<Object?>));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$toList#1', (args) => (args[0] as _$SetBase)._super$toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$toString#0', (args) => (args[0] as _$SetBase)._super$toString());
+    ctx.registerBinding('dart:collection::SetBase::\$super\$where#1', (args) => (args[0] as _$SetBase)._super$where((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$forEach#1', (args) { (args[0] as _$SetBase)._super$forEach((a) => (args[1] as Function)(a)); return null; });
+    ctx.registerBinding('dart:collection::SetBase::\$super\$reduce#1', (args) => (args[0] as _$SetBase)._super$reduce((a, b) => (args[1] as Function)(a, b)));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$every#1', (args) => (args[0] as _$SetBase)._super$every((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$join#1', (args) => (args[0] as _$SetBase)._super$join(identical(args[1], darticAbsent) ? "" : args[1] as String));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$any#1', (args) => (args[0] as _$SetBase)._super$any((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$take#1', (args) => (args[0] as _$SetBase)._super$take(args[1] as int));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$takeWhile#1', (args) => (args[0] as _$SetBase)._super$takeWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$skip#1', (args) => (args[0] as _$SetBase)._super$skip(args[1] as int));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$skipWhile#1', (args) => (args[0] as _$SetBase)._super$skipWhile((a) => (args[1] as Function)(a) as bool));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$firstWhere#2', (args) => (args[0] as _$SetBase)._super$firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$lastWhere#2', (args) => (args[0] as _$SetBase)._super$lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$singleWhere#2', (args) => (args[0] as _$SetBase)._super$singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$elementAt#1', (args) => (args[0] as _$SetBase)._super$elementAt(args[1] as int));
+    ctx.registerBinding('dart:collection::SetBase::\$super\$isEmpty#0', (args) => (args[0] as _$SetBase)._super$isEmpty);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$isNotEmpty#0', (args) => (args[0] as _$SetBase)._super$isNotEmpty);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$single#0', (args) => (args[0] as _$SetBase)._super$single);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$first#0', (args) => (args[0] as _$SetBase)._super$first);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$last#0', (args) => (args[0] as _$SetBase)._super$last);
+    ctx.registerBinding('dart:collection::SetBase::\$super\$hashCode#0', (args) => (args[0] as _$SetBase)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

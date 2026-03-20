@@ -63,6 +63,14 @@ class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  dynamic get _super$invalidValue => super.invalidValue;
+  String? get _super$name => super.name;
+  dynamic get _super$message => super.message;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class ArgumentErrorBindings {
@@ -77,11 +85,12 @@ abstract final class ArgumentErrorBindings {
           _$ArgumentError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::ArgumentError::checkNotNull#2', (args) => ArgumentError.checkNotNull(args[0], identical(args[1], darticAbsent) ? null : args[1] as String?));
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError).toString());
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as ArgumentError).invalidValue);
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as ArgumentError).name);
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$message#0', (args) => (args[0] as ArgumentError).message);
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$stackTrace#0', (args) => (args[0] as ArgumentError).stackTrace);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$toString#0', (args) => (args[0] as _$ArgumentError)._super$toString());
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as _$ArgumentError)._super$invalidValue);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as _$ArgumentError)._super$name);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$message#0', (args) => (args[0] as _$ArgumentError)._super$message);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$stackTrace#0', (args) => (args[0] as _$ArgumentError)._super$stackTrace);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$hashCode#0', (args) => (args[0] as _$ArgumentError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

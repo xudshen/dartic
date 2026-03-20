@@ -204,6 +204,18 @@ libraries:
               }
               return r as String;
             }
+
+            // Super trampolines
+            StatelessElement _super$createElement() => super.createElement();
+            String _super$toStringShort() => super.toStringShort();
+            void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+            String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+            String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+            DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style = DiagnosticsTreeStyle.errorProperty}) => super.toDiagnosticsNode(name: name, style: style);
+            List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+            Key? get _super$key => super.key;
+            String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+            int get _super$hashCode => super.hashCode;
           }
 
           /// Test-only factory to create Bridge instances without exposing the
@@ -254,6 +266,18 @@ libraries:
               }
               return r as String;
             }
+
+            // Super trampolines
+            StatefulElement _super$createElement() => super.createElement();
+            String _super$toStringShort() => super.toStringShort();
+            void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+            String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+            String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+            DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style = DiagnosticsTreeStyle.errorProperty}) => super.toDiagnosticsNode(name: name, style: style);
+            List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+            Key? get _super$key => super.key;
+            String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+            int get _super$hashCode => super.hashCode;
           }
 
           /// Test-only factory to create Bridge instances without exposing the

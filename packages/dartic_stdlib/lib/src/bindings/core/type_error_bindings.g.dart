@@ -42,6 +42,11 @@ class _$TypeError extends TypeError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class TypeErrorBindings {
@@ -55,7 +60,9 @@ abstract final class TypeErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$TypeError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::TypeError::\$super\$stackTrace#0', (args) => (args[0] as TypeError).stackTrace);
+    ctx.registerBinding('dart:core::TypeError::\$super\$stackTrace#0', (args) => (args[0] as _$TypeError)._super$stackTrace);
+    ctx.registerBinding('dart:core::TypeError::\$super\$toString#0', (args) => (args[0] as _$TypeError)._super$toString());
+    ctx.registerBinding('dart:core::TypeError::\$super\$hashCode#0', (args) => (args[0] as _$TypeError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

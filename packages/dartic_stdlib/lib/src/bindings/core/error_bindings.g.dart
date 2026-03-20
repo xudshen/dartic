@@ -49,6 +49,11 @@ class _$Error extends Error implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class ErrorBindings {
@@ -63,7 +68,9 @@ abstract final class ErrorBindings {
     );
     ctx.registerBinding('dart:core::Error::safeToString#1', (args) => Error.safeToString(args[0]));
     ctx.registerBinding('dart:core::Error::throwWithStackTrace#2', (args) => Error.throwWithStackTrace(args[0] as Object, args[1] as StackTrace));
-    ctx.registerBinding('dart:core::Error::\$super\$stackTrace#0', (args) => (args[0] as Error).stackTrace);
+    ctx.registerBinding('dart:core::Error::\$super\$stackTrace#0', (args) => (args[0] as _$Error)._super$stackTrace);
+    ctx.registerBinding('dart:core::Error::\$super\$toString#0', (args) => (args[0] as _$Error)._super$toString());
+    ctx.registerBinding('dart:core::Error::\$super\$hashCode#0', (args) => (args[0] as _$Error)._super$hashCode);
     ctx.registerBinding('dart:_internal::LateError::localNI#1', methodMap()['localNI#1']!);
     ctx.registerBinding('dart:_internal::LateError::fieldNI#1', methodMap()['fieldNI#1']!);
     ctx.registerBinding('dart:_internal::LateError::localADI#1', methodMap()['localADI#1']!);

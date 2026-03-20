@@ -49,6 +49,12 @@ class _$StateError extends StateError implements DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r == true;
   }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  String get _super$message => super.message;
+  StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class StateErrorBindings {
@@ -62,9 +68,10 @@ abstract final class StateErrorBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$StateError(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:core::StateError::\$super\$toString#0', (args) => (args[0] as _$StateError).toString());
-    ctx.registerBinding('dart:core::StateError::\$super\$message#0', (args) => (args[0] as StateError).message);
-    ctx.registerBinding('dart:core::StateError::\$super\$stackTrace#0', (args) => (args[0] as StateError).stackTrace);
+    ctx.registerBinding('dart:core::StateError::\$super\$toString#0', (args) => (args[0] as _$StateError)._super$toString());
+    ctx.registerBinding('dart:core::StateError::\$super\$message#0', (args) => (args[0] as _$StateError)._super$message);
+    ctx.registerBinding('dart:core::StateError::\$super\$stackTrace#0', (args) => (args[0] as _$StateError)._super$stackTrace);
+    ctx.registerBinding('dart:core::StateError::\$super\$hashCode#0', (args) => (args[0] as _$StateError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
