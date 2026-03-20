@@ -1443,7 +1443,109 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  }');
   }
 
+  // Generate super trampolines for extends-based Bridges.
+  // These allow $super$ bindings to bypass virtual dispatch.
+  if (!info.isInterface) {
+    _writeSuperTrampolines(buf, info,
+        overriddenMethods: overriddenMethods,
+        overriddenGetters: overriddenGetters,
+        overriddenOperators: overriddenOperators);
+  }
+
   buf.writeln('}');
+}
+
+/// Generates `_super$xxx` trampoline methods in the Bridge class.
+///
+/// These trampolines call `super.xxx(...)` directly, allowing `$super$`
+/// binding registrations to invoke the host super implementation without
+/// triggering Dart virtual dispatch back into the Bridge override.
+void _writeSuperTrampolines(
+  StringBuffer buf,
+  TypeInfo info, {
+  required Set<String> overriddenMethods,
+  required Set<String> overriddenGetters,
+  required Set<String> overriddenOperators,
+}) {
+  buf.writeln();
+  buf.writeln('  // ── Super trampolines ──');
+
+  // Instance methods — same skip logic as Bridge overrides (line 1377-1378).
+  for (final method in info.methods) {
+    if (method.isAbstract) continue;
+    if (method.typeParamDecl != null) continue; // skip generic methods
+    _writeSuperMethodTrampoline(buf, method);
+  }
+
+  // Getters
+  for (final getter in info.getters) {
+    if (getter.isAbstract) continue;
+    buf.writeln(
+        '  ${getter.returnType} get _super\$${getter.name} => super.${getter.name};');
+  }
+
+  // Setters
+  for (final setter in info.setters) {
+    if (setter.isAbstract) continue;
+    buf.writeln(
+        '  set _super\$${setter.name}(${setter.paramType} value) { super.${setter.name} = value; }');
+  }
+
+  // Object method trampolines (always generated, matching the always-generated
+  // Object method overrides above).
+  if (!overriddenMethods.contains('toString')) {
+    buf.writeln('  String _super\$toString() => super.toString();');
+  }
+  if (!overriddenGetters.contains('hashCode')) {
+    buf.writeln('  int get _super\$hashCode => super.hashCode;');
+  }
+}
+
+/// Generates a single `_super$methodName(...)` trampoline for a non-abstract method.
+void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
+  // Build parameter list (same structure as Bridge override).
+  final requiredParams = <String>[];
+  final optionalPosParams = <String>[];
+  final namedParams = <String>[];
+  final argNames = <String>[];
+
+  for (final p in method.paramTypes) {
+    final paramType = p.fullType ?? p.type;
+    if (p.isNamed) {
+      final prefix = p.isRequired ? 'required ' : '';
+      final defaultSuffix =
+          p.defaultValueCode != null ? ' = ${p.defaultValueCode}' : '';
+      namedParams.add('$prefix$paramType ${p.name}$defaultSuffix');
+      argNames.add('${p.name}: ${p.name}');
+    } else if (p.isOptional) {
+      final defaultSuffix =
+          p.defaultValueCode != null ? ' = ${p.defaultValueCode}' : '';
+      optionalPosParams.add('$paramType ${p.name}$defaultSuffix');
+      argNames.add(p.name);
+    } else {
+      requiredParams.add('$paramType ${p.name}');
+      argNames.add(p.name);
+    }
+  }
+
+  final paramParts = <String>[...requiredParams];
+  if (optionalPosParams.isNotEmpty) {
+    paramParts.add('[${optionalPosParams.join(', ')}]');
+  }
+  if (namedParams.isNotEmpty) {
+    paramParts.add('{${namedParams.join(', ')}}');
+  }
+  final paramStr = paramParts.join(', ');
+  final argsStr = argNames.join(', ');
+  final trampolineName = '_super\$${method.name}';
+
+  if (method.isVoid) {
+    buf.writeln(
+        '  void $trampolineName($paramStr) { super.${method.name}($argsStr); }');
+  } else {
+    buf.writeln(
+        '  ${method.returnType} $trampolineName($paramStr) => super.${method.name}($argsStr);');
+  }
 }
 
 /// Generates a dispatch-delegating method override for Bridge.
@@ -1765,33 +1867,65 @@ void _writeBridgeOperatorOverride(
 /// dartic code. Each forwarder is registered as a binding with the key
 /// `"qualifiedName::$super$methodName#arity"`.
 void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
+  // No super for implements-based Bridges — they have no `super`.
+  if (info.isInterface) return;
+
   final bridgeClassName = '_\$${info.className}';
 
-  // Instance methods — reuse absent-aware wrapper generation.
-  // Skip abstract methods (no super implementation to forward).
+  // Instance methods — call _super$ trampolines instead of the virtual method.
+  // Skip abstract methods (no super implementation to forward) and generic
+  // methods (same filter as trampoline generation).
   for (final method in info.methods) {
     if (method.isAbstract) continue;
+    if (method.typeParamDecl != null) continue;
     final key = method.allBindingKeys[0];
-    final wrapper = _emitInstanceMethodWrapper(bridgeClassName, method);
+    final wrapper =
+        _emitSuperTrampolineMethodWrapper(bridgeClassName, method);
     final indented = wrapper.replaceAll('\n', '\n    ');
     buf.writeln(
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$$key', $indented);");
   }
 
-  // Getters — skip abstract getters.
+  // Getters — call _super$ trampoline getter.
   for (final getter in info.getters) {
     if (getter.isAbstract) continue;
     buf.writeln(
-        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${getter.name}#0', (args) => (args[0] as ${info.className}).${getter.name});");
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${getter.name}#0', (args) => (args[0] as $bridgeClassName)._super\$${getter.name});");
   }
 
-  // Setters — skip abstract setters.
+  // Setters — call _super$ trampoline setter.
   for (final setter in info.setters) {
     if (setter.isAbstract) continue;
     final valueCast = _emitCast('args[1]', setter.paramType);
     buf.writeln(
-        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as ${info.className}).${setter.name} = $valueCast; return args[1]; });");
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${setter.name}=#1', (args) { (args[0] as $bridgeClassName)._super\$${setter.name} = $valueCast; return args[1]; });");
   }
+
+  // Object method super forwarders (matching always-generated trampolines).
+  final overriddenMethods = info.methods.map((m) => m.name).toSet();
+  final overriddenGetters = info.getters.map((g) => g.name).toSet();
+  if (!overriddenMethods.contains('toString')) {
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$toString#0', (args) => (args[0] as $bridgeClassName)._super\$toString());");
+  }
+  if (!overriddenGetters.contains('hashCode')) {
+    buf.writeln(
+        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$hashCode#0', (args) => (args[0] as $bridgeClassName)._super\$hashCode);");
+  }
+}
+
+/// Generates a binding closure that calls a `_super$` trampoline method.
+///
+/// Reuses [_emitInstanceMethodWrapper] to handle all edge cases (optional
+/// params, absent-aware branching, callback wrappers) and replaces the
+/// method name with the trampoline name via `replaceAll`.
+String _emitSuperTrampolineMethodWrapper(
+    String bridgeClassName, MethodInfo method) {
+  final wrapper = _emitInstanceMethodWrapper(bridgeClassName, method);
+  // The wrapper contains `.methodName(` — replace ALL occurrences with
+  // `._super$methodName(` (branching wrappers have multiple leaf calls).
+  return wrapper.replaceAll(
+      '.${method.name}(', '._super\$${method.name}(');
 }
 
 // ── Top-level function wrappers ─────────────────────────────────────────

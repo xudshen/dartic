@@ -1878,6 +1878,39 @@ class DarticCompiler {
     return '$lib::$className::$memberName#$paramCount';
   }
 
+  /// Builds a `$super$`-prefixed host binding name for super calls.
+  ///
+  /// Uses the current class's direct superclass (not the target's declaring
+  /// class) as the class component. This matches the gen tool's `$super$`
+  /// binding registration key format: `"libUri::BridgeHostClass::$super$method#N"`.
+  ///
+  /// Example: dartic class `MyList extends ListBase` calls `super.toString()`.
+  /// - target.enclosingClass = Object (declaring class)
+  /// - _currentEnclosingClass.superclass = ListBase (host superclass)
+  /// - Result: `"dart:collection::ListBase::$super$toString#0"`
+  String _superHostBindingName(ir.Member target, {int? paramCountOverride}) {
+    final superclass = _currentEnclosingClass!.supertype!.classNode;
+    final lib = superclass.enclosingLibrary.importUri.toString();
+    final className = superclass.name;
+    final memberName = target.name.text;
+
+    final int paramCount;
+    if (paramCountOverride != null) {
+      paramCount = paramCountOverride;
+    } else {
+      final fn = switch (target) {
+        ir.Procedure p => p.function,
+        ir.Constructor c => c.function,
+        _ => null,
+      };
+      paramCount = fn != null
+          ? fn.positionalParameters.length + fn.namedParameters.length
+          : 0;
+    }
+
+    return '$lib::$className::\$super\$$memberName#$paramCount';
+  }
+
   // ── Helpers ──
 
   /// Reserves a funcId for a [Procedure] by appending a placeholder to

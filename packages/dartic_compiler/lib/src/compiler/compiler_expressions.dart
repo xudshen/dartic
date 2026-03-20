@@ -2438,7 +2438,7 @@ extension on DarticCompiler {
         reg = _boxToRefIfValue(reg, loc, _inferExprType(arg.value));
         compiledArgs.add((reg, ResultLoc.ref, _inferExprType(arg.value)));
       }
-      final symbolName = _hostSymbolName(target);
+      final symbolName = _superHostBindingName(target);
       final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
       return _emitCallHost(compiledArgs, bindingIndex);
     }
@@ -2492,7 +2492,7 @@ extension on DarticCompiler {
       if (_isHostLibrary(target.enclosingLibrary)) {
         if (target.isGetter) {
           const thisReg = 2;
-          final symbolName = _hostSymbolName(target);
+          final symbolName = _superHostBindingName(target);
           final bindingIndex = _allocBinding(symbolName, 1);
           return _emitCallHost(
               [(thisReg, ResultLoc.ref, null as ir.DartType?)], bindingIndex);
@@ -2894,7 +2894,7 @@ extension on DarticCompiler {
     _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
 
     // Build CALL_HOST args: receiver + params.
-    final symbolName = _hostSymbolName(target);
+    final symbolName = _superHostBindingName(target);
     final bindingIndex = _allocBinding(symbolName, 1 + argTemps.length);
 
     final hostArgs = <(int, ResultLoc, ir.DartType?)>[
