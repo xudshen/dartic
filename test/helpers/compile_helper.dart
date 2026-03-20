@@ -183,19 +183,31 @@ Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<Strin
 }
 
 /// Like [compileAndRunWithHost] but captures print output.
+///
+/// Includes full Bridge factory resolution so dartic classes extending
+/// host classes (e.g., `class MyError extends Error`) are properly wrapped.
 Future<(Object?, List<String>)> compileAndCapturePrint(
   String source, {int? fuelBudget, Set<String> compilablePackages = const {}}
 ) async {
   final printLog = <String>[];
   final module = await compileDart(source, compilablePackages: compilablePackages);
-  final (:hostBindingRegistry, :hostClassRegistry, :hostTypeResolver) = createTestRegistries(
+  final (
+    :hostBindingRegistry,
+    :hostClassRegistry,
+    :hostTypeResolver,
+    :bridgeFactoryRegistry,
+    :pendingBridgeFactories,
+  ) = createTestRegistriesWithBridge(
     printFn: (v) => printLog.add('$v'),
   );
   hostTypeResolver.resolveClassIds(module.classes);
+  resolveBridgeFactories(module, bridgeFactoryRegistry, pendingBridgeFactories);
+
   final interp = DarticInterpreter(
     hostBindingRegistry: hostBindingRegistry,
     hostClassRegistry: hostClassRegistry,
     hostTypeResolver: hostTypeResolver,
+    bridgeFactoryRegistry: bridgeFactoryRegistry,
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
@@ -230,6 +242,67 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     hostClassRegistry: hostClassRegistry,
     hostTypeResolver: hostTypeResolver,
   );
+}
+
+/// Like [createTestRegistries] but also returns the [BridgeFactoryRegistry]
+/// and pending bridge factory map, enabling tests that exercise Bridge
+/// wrapping (e.g., dartic classes extending host classes like Error).
+({
+  HostBindingRegistry hostBindingRegistry,
+  HostClassRegistry hostClassRegistry,
+  HostTypeResolver hostTypeResolver,
+  BridgeFactoryRegistry bridgeFactoryRegistry,
+  Map<String, BridgeFactory> pendingBridgeFactories,
+}) createTestRegistriesWithBridge({void Function(Object?)? printFn}) {
+  final hostBindingRegistry = HostBindingRegistry();
+  final hostClassRegistry = HostClassRegistry(hostBindingRegistry);
+  final bridgeFactoryRegistry = BridgeFactoryRegistry();
+  final hostTypeResolver = HostTypeResolver();
+  final pendingBridgeFactories = <String, BridgeFactory>{};
+  final pluginContext = DarticPluginContext(
+    config: DarticConfig(onPrint: printFn),
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
+    bridgeFactoryRegistry: bridgeFactoryRegistry,
+    hostTypeResolver: hostTypeResolver,
+    pendingBridgeFactories: pendingBridgeFactories,
+  );
+  DarticStdlibPlugin().register(pluginContext);
+  return (
+    hostBindingRegistry: hostBindingRegistry,
+    hostClassRegistry: hostClassRegistry,
+    hostTypeResolver: hostTypeResolver,
+    bridgeFactoryRegistry: bridgeFactoryRegistry,
+    pendingBridgeFactories: pendingBridgeFactories,
+  );
+}
+
+/// Resolves pending bridge factories against module classes.
+///
+/// Mirrors the resolution logic in [DarticEngine.loadBytecode]: matches
+/// each class's name, hostSuperClassName, and hostInterfaceNames against
+/// the pending factory map, registering matches by classId.
+void resolveBridgeFactories(
+  DarticModule module,
+  BridgeFactoryRegistry registry,
+  Map<String, BridgeFactory> pending,
+) {
+  if (pending.isEmpty) return;
+  for (final classInfo in module.classes) {
+    var factory = pending[classInfo.name];
+    if (factory == null && classInfo.hostSuperClassName != null) {
+      factory = pending[classInfo.hostSuperClassName];
+    }
+    if (factory == null && classInfo.hostInterfaceNames != null) {
+      for (final ifaceName in classInfo.hostInterfaceNames!) {
+        factory = pending[ifaceName];
+        if (factory != null) break;
+      }
+    }
+    if (factory != null) {
+      registry.register(classInfo.classId, factory);
+    }
+  }
 }
 
 /// Compiles multiple Dart source files and returns a [DarticModule].
