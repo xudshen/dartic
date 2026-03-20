@@ -326,23 +326,64 @@ Flutter 编译上下文：创建专用 `test/gen_verify/flutter_context/` 最小
 
 #### Conformance 场景
 
-| 场景 | 验证点 | 类型 |
-|------|--------|------|
-| override 方法内调 super | 不递归 + 返回值正确 | Stdlib |
-| 多层继承 super | dartic → Bridge → Host → Object 每层正确路由 | Stdlib |
-| 泛型方法 super 调用 | `super.map<S>(...)` 编译器行为（应报错或回退） | Stdlib |
-| 运算符 super 调用 | `super == other`、`super + x` 的分发路径 | Stdlib |
-| 构造器 super-arg 传递 | Widget(key: key) 正确传递 | Flutter |
-| @mustCallSuper 生命周期顺序 | initState/dispose 调用次数和时机 | Flutter |
-| State 异常后 finally 兜底 | initState 抛异常后 super 仍被调 | Flutter |
-| fromFields 重建 | const Duration/Color 等能正确重建 | Stdlib/Flutter |
-| Bridge + 泛型 | `ListBase<int>` 的 super 调用类型正确 | Stdlib |
-| super method tearoff | `var f = super.toString; f()` | Stdlib |
-| StatelessWidget 渲染 | dartic StatelessWidget pumpWidget | Flutter |
-| StatefulWidget 完整生命周期 | mount → initState → build → setState → dispose | Flutter |
-| Bridge 实例作为类型参数 | dartic ListBase 传给期望 `List<int>` 的宿主函数 | Stdlib |
+基于对 Bridge dispatch 系统所有 65 条代码路径的全面审计，筛选出 gen 工具产出直接影响的 25 个场景。其余 40 条路径（解释器通用逻辑）由 co19 套件（3000+ tests）和现有单测覆盖。
 
-conformance 控制在 ~20 个测试，按 Bridge dispatch 机制分类而非按方法逐个覆盖。
+**A. Super 调用（7 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| A1 | override 方法内调 super | 不递归 + 返回值正确 | Stdlib |
+| A2 | 多层继承 super（dartic → Bridge → Host → Object） | 每层正确路由 | Stdlib |
+| A3 | super getter | `super.length` 返回正确值 | Stdlib |
+| A4 | super setter | `super.length = 5` 不递归 | Stdlib |
+| A5 | super 可选参数（显式 vs 省略） | arity 匹配正确 | Stdlib |
+| A6 | super method tearoff | `var f = super.toString; f()` | Stdlib |
+| A7 | 泛型方法 super 调用 | 编译器行为（应报错或回退） | Stdlib |
+
+**B. 反向分发 — 宿主调 dartic 覆写（4 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| B1 | 宿主代码调 Bridge 方法 → dartic 覆写 | toString/contains 等返回 dartic 的值 | Stdlib |
+| B2 | notOverridden fallback | dartic 不覆写 → super 行为保持 | Stdlib |
+| B3 | dartic 覆写 getter | `bridge.length` 返回 dartic 值 | Stdlib |
+| B4 | dartic 覆写 setter | `bridge.name = x` 写入 dartic 字段 | Stdlib |
+
+**C. @mustCallSuper 生命周期（4 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| C1 | dartic 调 super.initState() | flag 设置，super 调一次 | Flutter |
+| C2 | dartic 不调 super.initState() | finally 兜底调一次 | Flutter |
+| C3 | dartic initState 抛异常 | finally 仍保证 super 被调 | Flutter |
+| C4 | setState 回调执行 | `setState(() { _count++; })` → rebuild | Flutter |
+
+**D. 构造器 + 实例化（3 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| D1 | Bridge 构造器 superArgs 传递 | Widget(key: key) 正确传递 | Flutter |
+| D2 | fromFields 重建 | const Duration/Color 正确重建 | Stdlib/Flutter |
+| D3 | implements Bridge 实例化 | Iterator/Exception 实例化 + 方法调用不崩 | Stdlib |
+
+**E. 交互场景（4 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| E1 | Bridge 在集合中 | List&lt;Bridge&gt; 迭代、Set 去重 | Stdlib |
+| E2 | 字符串插值触发 Bridge toString | `'$darticError'` 调 dartic 覆写 | Stdlib |
+| E3 | Bridge == 运算符 | dartic 覆写的 == 在集合操作中生效 | Stdlib |
+| E4 | Closure 参数传递 | dartic 闭包传给宿主 list.where/map 等 | Stdlib |
+
+**F. Flutter Widget 渲染（3 个）**
+
+| # | 场景 | 验证点 | 类型 |
+|---|------|--------|------|
+| F1 | StatelessWidget pumpWidget | dartic widget 正确渲染 | Flutter |
+| F2 | StatefulWidget 完整生命周期 | mount → initState → build → setState → dispose | Flutter |
+| F3 | 嵌套分发 | super.where(test) 内部调 dartic 覆写的 iterator | Stdlib |
+
+**总计 25 个场景**，按 Bridge dispatch 机制分为 6 组。
 
 #### 目录结构
 
