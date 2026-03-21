@@ -1,9 +1,9 @@
-/// Pipeline orchestrator that wires YAML config → analyzer → emitters → disk.
+/// Pipeline orchestrator that wires YAML config -> analyzer -> emitters -> disk.
 ///
 /// Entry points:
-/// - [Runner.runConfig] — process a single YAML file
-/// - [Runner.runConfigDirectory] — process a directory of YAML files
-/// - [Runner.runGeneratorConfig] — process a pre-built [GeneratorConfig]
+/// - [Runner.runConfig] -- process a single YAML file
+/// - [Runner.runConfigDirectory] -- process a directory of YAML files
+/// - [Runner.runGeneratorConfig] -- process a pre-built [GeneratorConfig]
 library;
 
 import 'dart:io';
@@ -30,20 +30,15 @@ class Runner {
   /// When true, generates verification test files for Bridge bindings.
   final bool emitTests;
 
-  /// Output directory for generated test files (e.g. `test/gen_verify`).
+  /// Override output directory for generated test files.
+  /// When null, auto-detects from the config directory path
+  /// (e.g. `packages/dartic_stdlib/configs/` -> `packages/dartic_stdlib/test/gen_verify/`).
   final String? testOutputDir;
 
   /// Records all files that would be written during generation.
   /// Only populated when [checkMode] is true.
   /// Keys are absolute file paths, values are file contents.
   final Map<String, String> writtenFiles = {};
-
-  /// Accumulated verify test entries across multiple _processConfig calls.
-  /// Written to auto_test.dart by [finalizeVerifyTests].
-  final List<_VerifyTestEntry> _allVerifyEntries = [];
-  int _totalCovered = 0;
-  int _totalMethods = 0;
-  final Map<String, List<String>> _allSkipped = {};
 
   Runner({
     this.analysisRoot,
@@ -59,9 +54,176 @@ class Runner {
   }
 
   /// Runs the pipeline from a directory of YAML files.
+  ///
+  /// When [emitTests] is true, processes each YAML file individually to
+  /// preserve per-library output paths (which differ between configs).
+  /// The merged config approach loses per-library output_bindings and would
+  /// generate incorrect binding import paths for tests.
   Future<void> runConfigDirectory(String dirPath) async {
-    final config = parseConfigDirectory(dirPath);
-    await _processConfig(config);
+    if (emitTests) {
+      // Process each YAML individually to preserve per-library paths.
+      // Collect all verify entries across files, then write combined test files.
+      await _processConfigDirectoryForTests(dirPath);
+    } else {
+      final config = parseConfigDirectory(dirPath);
+      await _processConfig(config);
+    }
+  }
+
+  /// Processes a config directory by handling each YAML file individually.
+  ///
+  /// This preserves per-library output_bindings paths, which is critical for
+  /// generating correct binding import paths in test files. The verify entries
+  /// from all files are collected and written as combined test files at the end.
+  Future<void> _processConfigDirectoryForTests(String dirPath) async {
+    final dir = Directory(dirPath);
+    final files = dir
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.yaml'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+
+    if (files.isEmpty) {
+      throw ArgumentError('No YAML files found in $dirPath');
+    }
+
+    final configs = files.map((f) => parseConfigFile(f.path)).toList();
+
+    // Detect package info from the first config (all in same package).
+    // Create a merged config just for the configDirPath.
+    final mergedForPath = GeneratorConfig(
+      outputBindings: configs.first.outputBindings,
+      outputPlugins: configs.first.outputPlugins,
+      customImports: configs.first.customImports,
+      libraries: [],
+      configDirPath: Directory(dirPath).absolute.path,
+    );
+    final effectiveTestDir = testOutputDir ?? _detectTestDir(mergedForPath);
+    if (effectiveTestDir == null) return;
+
+    final packageName = _detectPackageName(mergedForPath);
+    final isFlutter = _isFlutterPackage(mergedForPath);
+    final pluginClassName = _detectPluginClassName(packageName);
+
+    final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
+
+    try {
+      // Collect all verify entries across all config files.
+      final allVerifyEntries = <verify_emitter.VerifyEntry>[];
+      var totalCovered = 0;
+      var totalMethods = 0;
+      final allSkipped = <String, List<String>>{};
+
+      for (final config in configs) {
+        // Process binding generation normally per config.
+        for (final library in config.libraries) {
+          await _processLibrary(config, library, analyzer);
+        }
+
+        // Generate per-library plugin (same as _processConfig).
+        // Skip combined plugin for individual configs.
+
+        // Collect verify entries for bridge classes.
+        final allTypeInfos = <String, TypeInfo>{};
+        final classConfigs = <({
+          String name,
+          String snakeName,
+          TypeInfo info,
+          String libraryUri,
+        })>[];
+
+        for (final library in config.libraries) {
+          for (final classConfig in library.classes) {
+            if (!classConfig.bridge) continue;
+
+            final resolvedName = classConfig.resolvedName;
+            final info =
+                await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
+
+            allTypeInfos[classConfig.name] = info;
+            classConfigs.add((
+              name: classConfig.name,
+              snakeName: _toSnakeCase(classConfig.name),
+              info: info,
+              libraryUri: library.uri,
+            ));
+          }
+        }
+
+        for (final entry in classConfigs) {
+          final result = verify_emitter.emitVerifySource(
+            entry.info,
+            allTypeInfos: allTypeInfos,
+          );
+          if (result == null) continue;
+
+          // Write dartic source file
+          final sourceDir = '$effectiveTestDir/sources/auto';
+          final sourceFileName = '${entry.snakeName}_verify.dart';
+          _writeFile(sourceDir, sourceFileName, result.darticSource);
+
+          // Compute binding path from library URI
+          final bindingFileName = _classToFileName(entry.name);
+          final libShortName = _libraryShortName(entry.libraryUri);
+          final bindingRelPath =
+              'src/bindings/$libShortName/$bindingFileName';
+
+          final expectedKeys =
+              verify_emitter.computeExpectedKeys(entry.info);
+
+          allVerifyEntries.add(verify_emitter.VerifyEntry(
+            className: entry.name,
+            snakeName: entry.snakeName,
+            bindingRelPath: bindingRelPath,
+            bindingsClassName: _toBindingsClassName(entry.name),
+            expectedKeys: expectedKeys,
+          ));
+
+          totalCovered += result.coveredMethods;
+          totalMethods += result.totalMethods;
+          if (result.skippedMethods.isNotEmpty) {
+            allSkipped[entry.name] = result.skippedMethods;
+          }
+        }
+      }
+
+      if (allVerifyEntries.isEmpty) return;
+
+      // Write combined test files
+      if (!isFlutter) {
+        final e2eSource = verify_emitter.emitAutoE2eTest(
+          entries: allVerifyEntries,
+          packageName: packageName,
+          pluginClassName: pluginClassName,
+        );
+        _writeFile(effectiveTestDir, 'auto_e2e_test.dart', e2eSource);
+      }
+
+      final completenessSource = verify_emitter.emitBindingCompletenessTest(
+        entries: allVerifyEntries,
+        packageName: packageName,
+        isFlutter: isFlutter,
+      );
+      _writeFile(
+        effectiveTestDir,
+        'binding_completeness_test.dart',
+        completenessSource,
+      );
+
+      // Write .gitignore for fixtures
+      _writeFile(effectiveTestDir, '.gitignore', 'fixtures/\n');
+
+      // Print coverage report
+      _printCoverageReport(
+        allVerifyEntries.length,
+        totalCovered,
+        totalMethods,
+        allSkipped,
+      );
+    } finally {
+      await analyzer.dispose();
+    }
   }
 
   /// Runs the pipeline from a pre-built [GeneratorConfig].
@@ -72,7 +234,7 @@ class Runner {
     await _processConfig(config);
   }
 
-  /// Core pipeline: config → analyze → emit → write.
+  /// Core pipeline: config -> analyze -> emit -> write.
   Future<void> _processConfig(GeneratorConfig config) async {
     final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
 
@@ -94,7 +256,7 @@ class Runner {
       }
 
       // ── Emit verification tests ───────────────────────────────────────
-      if (emitTests && testOutputDir != null) {
+      if (emitTests) {
         await _emitVerifyTests(config, analyzer);
       }
 
@@ -242,7 +404,7 @@ class Runner {
       final functionInfos = <FunctionInfo>[];
       for (final fnConfig in library.functions) {
         if (fnConfig.custom != null) {
-          // Custom source — skip analysis, create FunctionInfo with custom.
+          // Custom source -- skip analysis, create FunctionInfo with custom.
           // Use explicit arity from config, or default to 0.
           final arity = fnConfig.arity ?? 0;
           functionInfos.add(FunctionInfo(
@@ -311,20 +473,37 @@ class Runner {
 
   /// Generates verification test files for all Bridge classes in the config.
   ///
-  /// Produces:
-  /// 1. Individual dartic source files under `$testOutputDir/sources/auto/`
-  /// 2. Combined `auto_test.dart` that compiles and runs each source
-  /// 3. Combined `auto_unit_test.dart` with methodMap/registration checks
-  /// 4. Coverage report printed to stdout
+  /// For each Bridge class, writes:
+  /// 1. A dartic source file to `<testDir>/sources/auto/<snake_name>_verify.dart`
+  ///
+  /// Then writes combined test files:
+  /// 2. `<testDir>/auto_e2e_test.dart` -- loads .darb fixtures via DarticEngine
+  /// 3. `<testDir>/binding_completeness_test.dart` -- checks methodMap keys
+  /// 4. `<testDir>/.gitignore` -- ignores fixtures/
+  ///
+  /// The test directory is auto-detected from the config's configDirPath
+  /// (e.g. `packages/dartic_stdlib/configs/` -> `packages/dartic_stdlib/test/gen_verify/`),
+  /// or overridden by [testOutputDir].
   Future<void> _emitVerifyTests(
     GeneratorConfig config,
     TypeAnalyzer analyzer,
   ) async {
+    final effectiveTestDir = testOutputDir ?? _detectTestDir(config);
+    if (effectiveTestDir == null) return;
+
+    // Detect package info from config
+    final packageName = _detectPackageName(config);
+    final isFlutter = _isFlutterPackage(config);
+    final pluginClassName = _detectPluginClassName(packageName);
+
     // Pass 1: Analyze all bridge classes and collect TypeInfos.
-    // This map is passed to the emitter so it can resolve inherited fields
-    // when deciding which getters to skip.
     final allTypeInfos = <String, TypeInfo>{};
-    final classConfigs = <({String name, String snakeName, TypeInfo info})>[];
+    final classConfigs = <({
+      String name,
+      String snakeName,
+      TypeInfo info,
+      String libraryUri,
+    })>[];
 
     for (final library in config.libraries) {
       for (final classConfig in library.classes) {
@@ -339,151 +518,88 @@ class Runner {
           name: classConfig.name,
           snakeName: _toSnakeCase(classConfig.name),
           info: info,
+          libraryUri: library.uri,
         ));
       }
     }
 
-    // Pass 2: Emit verification files with full type info context.
+    // Pass 2: Emit verification sources and collect entries for combined tests.
+    final verifyEntries = <verify_emitter.VerifyEntry>[];
+    var totalCovered = 0;
+    var totalMethods = 0;
+    final allSkipped = <String, List<String>>{};
+
     for (final entry in classConfigs) {
-      final result = verify_emitter.emitVerifyFiles(
+      final result = verify_emitter.emitVerifySource(
         entry.info,
         allTypeInfos: allTypeInfos,
       );
       if (result == null) continue;
 
       // Write dartic source file
-      final sourceDir = '$testOutputDir/sources/auto';
+      final sourceDir = '$effectiveTestDir/sources/auto';
       final sourceFileName = '${entry.snakeName}_verify.dart';
       _writeFile(sourceDir, sourceFileName, result.darticSource);
 
-      // Accumulate test entry
-      _allVerifyEntries.add(_VerifyTestEntry(
+      // Compute binding relative path for import.
+      // Use the library URI to determine the subdirectory since the merged
+      // config.outputBindings only reflects the first config file's path.
+      // e.g. "src/bindings/core/error_bindings.g.dart"
+      final bindingFileName = _classToFileName(entry.name);
+      final libShortName = _libraryShortName(entry.libraryUri);
+      final bindingRelPath = 'src/bindings/$libShortName/$bindingFileName';
+
+      // Compute expected methodMap keys
+      final expectedKeys = verify_emitter.computeExpectedKeys(entry.info);
+
+      verifyEntries.add(verify_emitter.VerifyEntry(
         className: entry.name,
         snakeName: entry.snakeName,
-        darticSource: result.darticSource,
-        testSource: result.testSource,
+        bindingRelPath: bindingRelPath,
+        bindingsClassName: _toBindingsClassName(entry.name),
+        expectedKeys: expectedKeys,
       ));
 
-      _totalCovered += result.coveredMethods;
-      _totalMethods += result.totalMethods;
+      totalCovered += result.coveredMethods;
+      totalMethods += result.totalMethods;
       if (result.skippedMethods.isNotEmpty) {
-        _allSkipped[entry.name] = result.skippedMethods;
+        allSkipped[entry.name] = result.skippedMethods;
       }
     }
-  }
 
-  /// Merges verify test entries from another Runner into this one.
-  /// Used when multiple Runners process different config directories.
-  void mergeVerifyEntries(Runner other) {
-    _allVerifyEntries.addAll(other._allVerifyEntries);
-    _totalCovered += other._totalCovered;
-    _totalMethods += other._totalMethods;
-    for (final entry in other._allSkipped.entries) {
-      _allSkipped.update(entry.key, (v) => [...v, ...entry.value],
-          ifAbsent: () => entry.value);
+    if (verifyEntries.isEmpty) return;
+
+    // Write combined test files
+    if (!isFlutter) {
+      final e2eSource = verify_emitter.emitAutoE2eTest(
+        entries: verifyEntries,
+        packageName: packageName,
+        pluginClassName: pluginClassName,
+      );
+      _writeFile(effectiveTestDir, 'auto_e2e_test.dart', e2eSource);
     }
-  }
 
-  /// Writes accumulated verify test files (auto_test.dart, auto_unit_test.dart)
-  /// and prints coverage report. Call after all configs have been processed.
-  void finalizeVerifyTests() {
-    if (_allVerifyEntries.isEmpty) return;
-
-    _generateAutoTestFile(_allVerifyEntries);
-    _generateAutoUnitTestFile(_allVerifyEntries);
-    _printCoverageReport(
-      _allVerifyEntries.length,
-      _totalCovered,
-      _totalMethods,
-      _allSkipped,
+    final completenessSource = verify_emitter.emitBindingCompletenessTest(
+      entries: verifyEntries,
+      packageName: packageName,
+      isFlutter: isFlutter,
     );
-  }
+    _writeFile(
+      effectiveTestDir,
+      'binding_completeness_test.dart',
+      completenessSource,
+    );
 
-  /// Generates the combined `auto_test.dart` file.
-  void _generateAutoTestFile(List<_VerifyTestEntry> entries) {
-    final buf = StringBuffer();
-    buf.writeln("import 'package:test/test.dart';");
-    buf.writeln("import '../helpers/compile_helper.dart';");
-    buf.writeln();
+    // Write .gitignore for fixtures
+    _writeFile(effectiveTestDir, '.gitignore', 'fixtures/\n');
 
-    // Emit source constants
-    for (final entry in entries) {
-      final constName = '_${_toCamelCase(entry.snakeName)}VerifySource';
-      final escaped = entry.darticSource
-          .replaceAll(r'\', r'\\')
-          .replaceAll("'", r"\'")
-          .replaceAll('\n', r'\n')
-          .replaceAll(r'$', r'\$');
-      buf.writeln("const $constName = '$escaped';");
-      buf.writeln();
-    }
-
-    buf.writeln('void main() {');
-    buf.writeln("  group('Auto-gen Bridge verification', () {");
-    for (final entry in entries) {
-      final constName = '_${_toCamelCase(entry.snakeName)}VerifySource';
-      buf.writeln(
-        "    test('${entry.className} bridge: super calls', () async {",
-      );
-      buf.writeln(
-        '      final (_, log) = await compileAndCapturePrint('
-        '$constName, fuelBudget: 500000);',
-      );
-      buf.writeln(
-        "      expect(log.last, equals('OK'));",
-      );
-      buf.writeln('    });');
-      buf.writeln();
-    }
-    buf.writeln('  });');
-    buf.writeln('}');
-
-    _writeFile(testOutputDir!, 'auto_test.dart', buf.toString());
-  }
-
-  /// Generates the combined `auto_unit_test.dart` file.
-  void _generateAutoUnitTestFile(List<_VerifyTestEntry> entries) {
-    final buf = StringBuffer();
-    buf.writeln("import 'package:test/test.dart';");
-    buf.writeln("import '../helpers/compile_helper.dart';");
-    buf.writeln();
-
-    // Emit source constants for unit tests (same sources)
-    for (final entry in entries) {
-      final constName = '_${_toCamelCase(entry.snakeName)}UnitSource';
-      final escaped = entry.darticSource
-          .replaceAll(r'\', r'\\')
-          .replaceAll("'", r"\'")
-          .replaceAll('\n', r'\n')
-          .replaceAll(r'$', r'\$');
-      buf.writeln("const $constName = '$escaped';");
-      buf.writeln();
-    }
-
-    buf.writeln('void main() {');
-    buf.writeln("  group('Auto-gen Bridge unit checks', () {");
-    for (final entry in entries) {
-      final constName = '_${_toCamelCase(entry.snakeName)}UnitSource';
-      buf.writeln(
-        "    test('${entry.className} bridge: compiles without error', () async {",
-      );
-      buf.writeln(
-        '      final (_, log) = await compileAndCapturePrint('
-        '$constName, fuelBudget: 500000);',
-      );
-      buf.writeln(
-        "      expect(log, isNotEmpty, reason: 'Expected output from ${entry.className} verify');",
-      );
-      buf.writeln(
-        "      expect(log.last, equals('OK'));",
-      );
-      buf.writeln('    });');
-      buf.writeln();
-    }
-    buf.writeln('  });');
-    buf.writeln('}');
-
-    _writeFile(testOutputDir!, 'auto_unit_test.dart', buf.toString());
+    // Print coverage report
+    _printCoverageReport(
+      verifyEntries.length,
+      totalCovered,
+      totalMethods,
+      allSkipped,
+    );
   }
 
   /// Prints a coverage report for the emitted verification tests.
@@ -512,12 +628,65 @@ class Runner {
     print('');
   }
 
-  /// Converts a snake_case name to camelCase for use in constant names.
-  String _toCamelCase(String snake) {
-    final parts = snake.split('_');
-    if (parts.isEmpty) return snake;
-    return parts.first +
-        parts.skip(1).map((p) => p.isEmpty ? '' : p[0].toUpperCase() + p.substring(1)).join();
+  // ── Package detection helpers ────────────────────────────────────────
+
+  /// Auto-detects the test output directory from the config's configDirPath.
+  ///
+  /// `packages/dartic_stdlib/configs/` -> `packages/dartic_stdlib/test/gen_verify/`
+  String? _detectTestDir(GeneratorConfig config) {
+    final configDir = config.configDirPath;
+    if (configDir == null) return null;
+
+    final parts = p.split(p.normalize(configDir));
+    // Find "configs" directory in the path
+    final configsIdx = parts.lastIndexOf('configs');
+    if (configsIdx >= 1) {
+      final packageDir = p.joinAll(parts.sublist(0, configsIdx));
+      return p.join(packageDir, 'test', 'gen_verify');
+    }
+    // Fallback: use test/gen_verify relative to CWD
+    return 'test/gen_verify';
+  }
+
+  /// Detects the package name from the configDirPath.
+  ///
+  /// `packages/dartic_stdlib/configs/` -> `dartic_stdlib`
+  /// Reads pubspec.yaml if available, otherwise uses directory name.
+  String _detectPackageName(GeneratorConfig config) {
+    final configDir = config.configDirPath;
+    if (configDir != null) {
+      final parts = p.split(p.normalize(configDir));
+      final configsIdx = parts.lastIndexOf('configs');
+      if (configsIdx >= 1) {
+        final packageDir = p.joinAll(parts.sublist(0, configsIdx));
+        // Try reading pubspec.yaml for the actual package name
+        final pubspec = File(p.join(packageDir, 'pubspec.yaml'));
+        if (pubspec.existsSync()) {
+          final content = pubspec.readAsStringSync();
+          final match = RegExp(r'^name:\s*(\S+)', multiLine: true)
+              .firstMatch(content);
+          if (match != null) return match.group(1)!;
+        }
+        // Fallback: use directory name
+        return parts[configsIdx - 1];
+      }
+    }
+    return 'dartic_stdlib'; // ultimate fallback
+  }
+
+  /// Determines whether this config is for a Flutter package by checking
+  /// custom_imports for `package:flutter/`.
+  bool _isFlutterPackage(GeneratorConfig config) {
+    return config.customImports.any((i) => i.contains('package:flutter/'));
+  }
+
+  /// Maps a package name to its plugin class name.
+  ///
+  /// `dartic_stdlib` -> `DarticStdlibPlugin`
+  /// `dartic_flutter` -> `DarticFlutterPlugin`
+  String _detectPluginClassName(String packageName) {
+    final pascal = _snakeToPascal(packageName);
+    return '${pascal}Plugin';
   }
 
   // ── TypeInfo helpers ─────────────────────────────────────────────────
@@ -587,9 +756,9 @@ class Runner {
 
   /// Converts a class name to a binding file name.
   ///
-  /// `int` → `int_bindings.g.dart`
-  /// `StringBuffer` → `string_buffer_bindings.g.dart`
-  /// `_GrowableList` → `growable_list_bindings.g.dart`
+  /// `int` -> `int_bindings.g.dart`
+  /// `StringBuffer` -> `string_buffer_bindings.g.dart`
+  /// `_GrowableList` -> `growable_list_bindings.g.dart`
   String _classToFileName(String className) {
     final snaked = _toSnakeCase(className);
     return '${snaked}_bindings.g.dart';
@@ -597,8 +766,8 @@ class Runner {
 
   /// Converts a class name to a bindings class name.
   ///
-  /// `int` → `IntBindings`
-  /// `_GrowableList` → `GrowableListBindings`
+  /// `int` -> `IntBindings`
+  /// `_GrowableList` -> `GrowableListBindings`
   String _toBindingsClassName(String className) {
     var name = className;
     if (name.startsWith('_')) {
@@ -610,9 +779,9 @@ class Runner {
 
   /// Converts a CamelCase or lower name to snake_case.
   ///
-  /// `StringBuffer` → `string_buffer`
-  /// `int` → `int`
-  /// `_GrowableList` → `growable_list`
+  /// `StringBuffer` -> `string_buffer`
+  /// `int` -> `int`
+  /// `_GrowableList` -> `growable_list`
   String _toSnakeCase(String name) {
     // Strip leading underscore
     if (name.startsWith('_')) {
@@ -637,8 +806,8 @@ class Runner {
 
   /// Extracts the short name from a library URI.
   ///
-  /// `dart:core` → `core`
-  /// `dart:async` → `async`
+  /// `dart:core` -> `core`
+  /// `dart:async` -> `async`
   String _libraryShortName(String uri) {
     if (uri.startsWith('dart:')) {
       return uri.substring('dart:'.length);
@@ -652,17 +821,17 @@ class Runner {
 
   /// Maps a library URI to a plugin class name prefix (PascalCase).
   ///
-  /// `dart:core` → `Core`
-  /// `dart:async` → `Async`
-  /// `package:fab_navigator/fab_navigator.dart` → `FabNavigator`
+  /// `dart:core` -> `Core`
+  /// `dart:async` -> `Async`
+  /// `package:fab_navigator/fab_navigator.dart` -> `FabNavigator`
   String _libraryToPluginName(String uri) {
     return _snakeToPascal(_libraryShortName(uri));
   }
 
   /// Converts a snake_case string to PascalCase.
   ///
-  /// `fab_navigator` → `FabNavigator`
-  /// `core` → `Core`
+  /// `fab_navigator` -> `FabNavigator`
+  /// `core` -> `Core`
   String _snakeToPascal(String snake) {
     return snake
         .split('_')
@@ -689,21 +858,6 @@ class Runner {
     }
     File(filePath).writeAsStringSync(content);
   }
-}
-
-/// Data for a single Bridge class verification test entry.
-class _VerifyTestEntry {
-  final String className;
-  final String snakeName;
-  final String darticSource;
-  final String testSource;
-
-  _VerifyTestEntry({
-    required this.className,
-    required this.snakeName,
-    required this.darticSource,
-    required this.testSource,
-  });
 }
 
 /// Result of processing a single library, used for combined plugin generation.

@@ -3,42 +3,62 @@
 /// For each Bridge class, produces:
 /// 1. A dartic source string — extends/implements the host class, implements
 ///    abstract methods, calls `super.xxx()` for each non-abstract method.
-/// 2. A test source string — compiles the dartic source, runs it, asserts OK.
+///
+/// Additionally, generates combined test files:
+/// - `auto_e2e_test.dart` — loads .darb fixtures and executes via DarticEngine.
+/// - `binding_completeness_test.dart` — checks methodMap keys via pure Dart.
 library;
 
 import '../analyzer/type_info.dart';
 import 'abstract_seeds.dart' as seeds;
 import 'default_values.dart' as defaults;
 
-/// Result of emitting verify files for a single Bridge class.
+/// Result of emitting a verification dartic source for a single Bridge class.
 class VerifyResult {
   final String darticSource;
-
-  /// Pre-built test source for this class. Currently unused by the runner
-  /// (which builds its own combined test from [darticSource]), but kept for
-  /// future use by the `gen-verify test` command that may emit per-class tests.
-  final String testSource;
-
   final List<String> skippedMethods;
   final int coveredMethods;
   final int totalMethods;
 
   VerifyResult({
     required this.darticSource,
-    required this.testSource,
     required this.skippedMethods,
     required this.coveredMethods,
     required this.totalMethods,
   });
 }
 
-/// Emits verification source + test for a Bridge class.
+/// Entry collected during verify emission for generating combined test files.
+class VerifyEntry {
+  final String className;
+  final String snakeName;
+
+  /// Relative path from the package root to the binding file (e.g.,
+  /// `src/bindings/core/error_bindings.g.dart`).
+  final String bindingRelPath;
+
+  /// Bindings class name (e.g., `ErrorBindings`).
+  final String bindingsClassName;
+
+  /// Expected methodMap keys from TypeInfo analysis.
+  final List<String> expectedKeys;
+
+  VerifyEntry({
+    required this.className,
+    required this.snakeName,
+    required this.bindingRelPath,
+    required this.bindingsClassName,
+    required this.expectedKeys,
+  });
+}
+
+/// Emits verification dartic source for a Bridge class.
 /// Returns null if the class cannot be auto-tested (e.g., isFinal).
 ///
-/// [allTypeInfos] is an optional map of className → TypeInfo for all bridge
+/// [allTypeInfos] is an optional map of className -> TypeInfo for all bridge
 /// classes in the config. Used to resolve inherited fields when skipping
 /// field-backed getters.
-VerifyResult? emitVerifyFiles(
+VerifyResult? emitVerifySource(
   TypeInfo info, {
   Map<String, TypeInfo> allTypeInfos = const {},
 }) {
@@ -53,7 +73,7 @@ VerifyResult? emitVerifyFiles(
 
   // Find the unnamed constructor (or first non-factory constructor).
   // Abstract classes (ListBase, MapBase, SetBase) may lack a public constructor
-  // — the Verify class will provide its own, so null ctor is OK for abstract classes.
+  // -- the Verify class will provide its own, so null ctor is OK for abstract classes.
   final ctor = _findUsableConstructor(info);
   if (ctor == null && !isImplements && !info.isAbstract) return null;
 
@@ -90,7 +110,7 @@ VerifyResult? emitVerifyFiles(
     buf.writeln();
   }
 
-  // Constructor — forward to super if extends mode, plain if implements.
+  // Constructor -- forward to super if extends mode, plain if implements.
   if (isImplements) {
     if (ctor != null && ctor.params.isNotEmpty) {
       buf.writeln('  $verifyClassName(${_buildCtorParamDecl(ctor)});');
@@ -147,7 +167,7 @@ VerifyResult? emitVerifyFiles(
     for (final g in info.getters) {
       if (g.isAbstract) continue;
       totalCount++;
-      // Skip field-backed getters — dartic compiler doesn't support
+      // Skip field-backed getters -- dartic compiler doesn't support
       // SuperPropertyGet on fields (e.g. ArgumentError.message).
       if (fieldNames.contains(g.name)) {
         skipped.add('${g.name} (field-backed super access not supported)');
@@ -201,7 +221,7 @@ VerifyResult? emitVerifyFiles(
     }
     buf.writeln('  }');
   } else {
-    // Implements mode — count all non-abstract members for stats.
+    // Implements mode -- count all non-abstract members for stats.
     // In implements mode, ALL members are effectively abstract (must be
     // implemented), so count all of them.
     totalCount = info.methods.length +
@@ -227,34 +247,186 @@ VerifyResult? emitVerifyFiles(
   buf.writeln("  print('OK');");
   buf.writeln('}');
 
-  final darticSource = buf.toString();
-
-  // --- Test source ---
-  // Escape single quotes and backslashes in darticSource for embedding.
-  // We use a triple-quoted string with escaped dollars.
-  final escapedSource = darticSource
-      .replaceAll(r'\', r'\\')
-      .replaceAll("'", r"\'");
-  final testBuf = StringBuffer();
-  testBuf.writeln(
-    "test('$className bridge: super calls compile and execute', () async {",
-  );
-  testBuf.writeln("  final source = '${escapedSource.replaceAll('\n', r'\n')}';");
-  testBuf.writeln(
-    '  final (_, printLog) = await compileAndCapturePrint(source, fuelBudget: 500000);',
-  );
-  testBuf.writeln(
-    "  expect(printLog.last, equals('OK'), reason: 'Expected OK but got: \$printLog');",
-  );
-  testBuf.writeln('});');
-
   return VerifyResult(
-    darticSource: darticSource,
-    testSource: testBuf.toString(),
+    darticSource: buf.toString(),
     skippedMethods: skipped,
     coveredMethods: coveredCount,
     totalMethods: totalCount,
   );
+}
+
+// ---------------------------------------------------------------------------
+// Combined test file generators
+// ---------------------------------------------------------------------------
+
+/// Generates the `auto_e2e_test.dart` file that loads .darb fixtures and
+/// executes them via DarticEngine.
+///
+/// [entries] is the list of Bridge classes that have verify sources.
+/// [packageName] is the dart package name (e.g., `dartic_stdlib`).
+/// [pluginClassName] is the plugin class (e.g., `DarticStdlibPlugin`).
+String emitAutoE2eTest({
+  required List<VerifyEntry> entries,
+  required String packageName,
+  required String pluginClassName,
+}) {
+  final buf = StringBuffer();
+  buf.writeln('// GENERATED by dartic gen --emit-tests. DO NOT EDIT.');
+  buf.writeln('// Regenerate: dartic gen <config> --emit-tests');
+  buf.writeln('// Compile fixtures: dartic gen-verify compile');
+  buf.writeln("import 'dart:io';");
+  buf.writeln("import 'package:dartic/dartic.dart';");
+  buf.writeln("import 'package:$packageName/$packageName.dart';");
+  buf.writeln("import 'package:test/test.dart';");
+  buf.writeln();
+  buf.writeln('List<String> _runFixture(String name) {');
+  buf.writeln(
+    "  final bytes = File('test/gen_verify/fixtures/\$name.darb').readAsBytesSync();",
+  );
+  buf.writeln('  final printLog = <String>[];');
+  buf.writeln('  final engine = DarticEngine(');
+  buf.writeln('    plugins: [$pluginClassName()],');
+  buf.writeln("    config: DarticConfig(");
+  buf.writeln("      onPrint: (v) => printLog.add('\$v'),");
+  buf.writeln('      fuelBudget: 500000,');
+  buf.writeln('    ),');
+  buf.writeln('  );');
+  buf.writeln('  engine.loadBytecode(bytes);');
+  buf.writeln("  engine.call('main');");
+  buf.writeln('  engine.dispose();');
+  buf.writeln('  return printLog;');
+  buf.writeln('}');
+  buf.writeln();
+  buf.writeln('void main() {');
+  buf.writeln("  group('Auto-gen E2E Bridge verification', () {");
+
+  for (final entry in entries) {
+    buf.writeln(
+      "    test('${entry.className} bridge: super calls', () {",
+    );
+    buf.writeln(
+      "      final log = _runFixture('${entry.snakeName}_verify');",
+    );
+    buf.writeln("      expect(log.last, equals('OK'));");
+    buf.writeln('    });');
+    buf.writeln();
+  }
+
+  buf.writeln('  });');
+  buf.writeln('}');
+  return buf.toString();
+}
+
+/// Generates the `binding_completeness_test.dart` file that checks
+/// methodMap keys via pure Dart imports.
+///
+/// [entries] is the list of Bridge classes with expected binding keys.
+/// [packageName] is the dart package name (e.g., `dartic_stdlib`).
+/// [isFlutter] if true, uses `flutter_test` instead of `test`.
+String emitBindingCompletenessTest({
+  required List<VerifyEntry> entries,
+  required String packageName,
+  bool isFlutter = false,
+}) {
+  final buf = StringBuffer();
+  buf.writeln('// GENERATED by dartic gen --emit-tests. DO NOT EDIT.');
+  buf.writeln('// Regenerate: dartic gen <config> --emit-tests');
+
+  if (isFlutter) {
+    buf.writeln("import 'package:flutter_test/flutter_test.dart';");
+  } else {
+    buf.writeln("import 'package:test/test.dart';");
+  }
+  buf.writeln('// ignore_for_file: implementation_imports');
+
+  // Collect unique binding imports (only for entries with expected keys)
+  final importPaths = <String>{};
+  for (final entry in entries) {
+    if (entry.expectedKeys.isNotEmpty) {
+      importPaths.add(entry.bindingRelPath);
+    }
+  }
+  for (final path in importPaths.toList()..sort()) {
+    buf.writeln("import 'package:$packageName/$path';");
+  }
+  buf.writeln();
+
+  buf.writeln('void main() {');
+  buf.writeln("  group('Binding completeness', () {");
+
+  for (final entry in entries) {
+    if (entry.expectedKeys.isEmpty) continue;
+
+    buf.writeln(
+      "    test('${entry.bindingsClassName}.methodMap has expected keys', () {",
+    );
+    buf.writeln('      final map = ${entry.bindingsClassName}.methodMap();');
+
+    // Format the expected keys list
+    if (entry.expectedKeys.length <= 3) {
+      final keysList =
+          entry.expectedKeys.map((k) => "'$k'").join(', ');
+      buf.writeln('      expect(map.keys, containsAll([$keysList]));');
+    } else {
+      buf.writeln('      expect(map.keys, containsAll([');
+      for (final key in entry.expectedKeys) {
+        buf.writeln("        '$key',");
+      }
+      buf.writeln('      ]));');
+    }
+    buf.writeln('    });');
+    buf.writeln();
+  }
+
+  buf.writeln('  });');
+  buf.writeln('}');
+  return buf.toString();
+}
+
+/// Computes expected methodMap keys for a Bridge class from its [TypeInfo].
+///
+/// The binding emitter's `methodMap()` contains: instance methods, getters,
+/// setters, operators, and constructors. Static methods and static getters
+/// are registered separately via `registerBinding` and are NOT in methodMap.
+List<String> computeExpectedKeys(TypeInfo info) {
+  final keys = <String>[];
+
+  // Instance methods
+  for (final m in info.methods) {
+    keys.addAll(m.allBindingKeys);
+  }
+
+  // Instance getters
+  for (final g in info.getters) {
+    keys.add(g.bindingKey);
+  }
+
+  // Instance setters
+  for (final s in info.setters) {
+    keys.add(s.bindingKey);
+  }
+
+  // Operators
+  for (final op in info.operators) {
+    if (op.name == '[]=') {
+      // Index assignment uses arity 2 (index + value), not the default 1.
+      keys.add('${op.lookupName}#2');
+    } else {
+      keys.add(op.bindingKey);
+    }
+  }
+
+  // Constructors
+  for (final c in info.constructors) {
+    final arity = c.params.length;
+    if (c.name.isEmpty) {
+      keys.add('#$arity');
+    } else {
+      keys.add('${c.name}#$arity');
+    }
+  }
+
+  return keys;
 }
 
 // ---------------------------------------------------------------------------
@@ -326,7 +498,7 @@ String _buildCtorParamDecl(ConstructorInfo ctor) {
         optionalPositional.add('$type ${p.name}');
       }
     } else {
-      // Required positional — no default value syntax allowed.
+      // Required positional -- no default value syntax allowed.
       requiredPositional.add('$type ${p.name}');
     }
   }

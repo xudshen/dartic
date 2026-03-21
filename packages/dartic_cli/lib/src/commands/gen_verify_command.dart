@@ -43,7 +43,7 @@ class _GenVerifyCompileCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    // Run the compile_fixtures.dart script
+    // Run the compile_fixtures.dart script (scans all packages for sources)
     _logger.info('Compiling verification fixtures...');
     final result = await Process.run(
       'dart',
@@ -73,19 +73,40 @@ class _GenVerifyTestCommand extends Command<int> {
   @override
   Future<int> run() async {
     _logger.info('Running verification tests...');
+    var exitCode = 0;
 
-    // Run stdlib tests
-    final stdlibResult = await Process.run(
-      'dart',
-      ['test', 'test/gen_verify/', '--reporter', 'expanded'],
-      workingDirectory: Directory.current.path,
-    );
-    stdout.write(stdlibResult.stdout);
-    stderr.write(stdlibResult.stderr);
+    // Run root conformance tests
+    final rootTestDir = Directory('test/gen_verify');
+    if (rootTestDir.existsSync()) {
+      _logger.info('Running root gen_verify tests...');
+      final result = await Process.run(
+        'dart',
+        ['test', 'test/gen_verify/', '--reporter', 'expanded'],
+        workingDirectory: Directory.current.path,
+      );
+      stdout.write(result.stdout);
+      stderr.write(result.stderr);
+      if (result.exitCode != 0) exitCode = result.exitCode;
+    }
+
+    // Run stdlib gen_verify tests
+    final stdlibTestDir = Directory('packages/dartic_stdlib/test/gen_verify');
+    if (stdlibTestDir.existsSync()) {
+      _logger.info('Running dartic_stdlib gen_verify tests...');
+      final result = await Process.run(
+        'dart',
+        ['test', 'test/gen_verify/', '--reporter', 'expanded'],
+        workingDirectory: 'packages/dartic_stdlib',
+      );
+      stdout.write(result.stdout);
+      stderr.write(result.stderr);
+      if (result.exitCode != 0) exitCode = result.exitCode;
+    }
 
     // Run flutter tests (if dartic_flutter exists)
     final flutterTestDir = Directory('packages/dartic_flutter/test');
     if (flutterTestDir.existsSync()) {
+      _logger.info('Running dartic_flutter tests...');
       final flutterResult = await Process.run(
         'flutter',
         ['test', 'test/conformance_test.dart', '--reporter', 'expanded'],
@@ -93,9 +114,9 @@ class _GenVerifyTestCommand extends Command<int> {
       );
       stdout.write(flutterResult.stdout);
       stderr.write(flutterResult.stderr);
-      if (flutterResult.exitCode != 0) return flutterResult.exitCode;
+      if (flutterResult.exitCode != 0) exitCode = flutterResult.exitCode;
     }
 
-    return stdlibResult.exitCode;
+    return exitCode;
   }
 }

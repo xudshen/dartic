@@ -42,8 +42,9 @@ class GenCommand extends Command<int> {
       )
       ..addOption(
         'test-output',
-        help: 'Output directory for generated test files.',
-        defaultsTo: 'test/gen_verify',
+        help: 'Override output directory for generated test files.\n'
+            'Default: auto-detected from config path '
+            '(e.g. packages/<pkg>/test/gen_verify/).',
       );
   }
 
@@ -98,7 +99,6 @@ class GenCommand extends Command<int> {
         );
         await runner.runGeneratorConfig(config);
         if (check) return _checkResults(runner);
-        if (emitTests) runner.finalizeVerifyTests();
       } else {
         // Config mode: read YAML config
         final rest = argResults!.rest;
@@ -129,7 +129,6 @@ class GenCommand extends Command<int> {
         }
 
         if (check) return _checkResults(runner);
-        if (emitTests) runner.finalizeVerifyTests();
       }
 
       _logger.success('Code generation complete.');
@@ -167,12 +166,13 @@ class GenCommand extends Command<int> {
       );
       await runner.runConfigDirectory(configDir);
       if (check) return _checkResults(runner);
-      if (emitTests) runner.finalizeVerifyTests();
       _logger.success('Code generation complete.');
       return 0;
     }
 
-    // Default: process well-known configs directories
+    // Default: process well-known configs directories.
+    // Each runner writes tests directly to its package's test/gen_verify/
+    // directory (auto-detected from config path), so no merge step is needed.
     final configsDirs = <(String path, String? analysisRootOverride)>[
       ('packages/dartic_stdlib/configs', null),
       ('packages/dartic_flutter/configs', 'packages/dartic_flutter'),
@@ -180,7 +180,6 @@ class GenCommand extends Command<int> {
 
     // Collect all written files across all runners for --check mode
     final allWrittenFiles = <String, String>{};
-    final runners = <Runner>[];
 
     for (final (dirPath, rootOverride) in configsDirs) {
       final dir = Directory(dirPath);
@@ -198,7 +197,6 @@ class GenCommand extends Command<int> {
         testOutputDir: testOutputDir,
       );
       await runner.runConfigDirectory(dirPath);
-      runners.add(runner);
 
       if (check) {
         allWrittenFiles.addAll(runner.writtenFiles);
@@ -207,15 +205,6 @@ class GenCommand extends Command<int> {
 
     if (check) {
       return _checkWrittenFiles(allWrittenFiles);
-    }
-
-    // Finalize verify tests: merge entries from all runners, write combined files
-    if (emitTests && runners.isNotEmpty) {
-      final primary = runners.first;
-      for (var i = 1; i < runners.length; i++) {
-        primary.mergeVerifyEntries(runners[i]);
-      }
-      primary.finalizeVerifyTests();
     }
 
     _logger.success('Code generation complete.');

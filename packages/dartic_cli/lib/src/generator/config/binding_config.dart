@@ -23,12 +23,17 @@ class GeneratorConfig {
   /// When null (default), each library gets its own plugin file.
   final String? pluginName;
 
+  /// Absolute path of the configs directory this config was loaded from.
+  /// Used to auto-detect the package test directory for `--emit-tests`.
+  final String? configDirPath;
+
   GeneratorConfig({
     required this.outputBindings,
     required this.outputPlugins,
     required this.libraries,
     this.customImports = const [],
     this.pluginName,
+    this.configDirPath,
   });
 }
 

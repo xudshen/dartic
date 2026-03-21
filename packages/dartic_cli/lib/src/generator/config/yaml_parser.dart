@@ -41,6 +41,7 @@ GeneratorConfig parseConfigDirectory(String dirPath) {
     outputPlugins: configs.first.outputPlugins,
     customImports: configs.first.customImports,
     libraries: configs.expand((c) => c.libraries).toList(),
+    configDirPath: Directory(dirPath).absolute.path,
   );
 }
 
