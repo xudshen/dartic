@@ -153,7 +153,9 @@ Future<Object?> compileAndRun(String source, {int? fuelBudget, Set<String> compi
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );
   interp.execute(module);
-  return interp.entryResult;
+  final result = interp.entryResult;
+  if (result is Future) await result;
+  return result;
 }
 
 /// Compiles a Dart source string to .darb bytes via the full pipeline:
@@ -179,7 +181,9 @@ Future<Object?> compileAndRunWithHost(String source, {int? fuelBudget, Set<Strin
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
-  return interp.entryResult;
+  final result = interp.entryResult;
+  if (result is Future) await result;
+  return result;
 }
 
 /// Like [compileAndRunWithHost] but captures print output.
@@ -358,7 +362,9 @@ Future<Object?> compileAndRunMultiFile(
     fuelBudget: fuelBudget ?? DarticInterpreter.defaultFuelBudget,
   );
   interp.execute(module);
-  return interp.entryResult;
+  final result = interp.entryResult;
+  if (result is Future) await result;
+  return result;
 }
 
 /// Pads [args] with [darticAbsent] to match the arity encoded in [bindingName].
