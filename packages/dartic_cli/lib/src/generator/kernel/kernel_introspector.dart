@@ -227,10 +227,7 @@ class KernelIntrospector {
       } else if (init is ir.RedirectingInitializer) {
         _followRedirectingInitializer(init, outerParams, result, depth);
       } else if (init is ir.SuperInitializer) {
-        _extractInitializerMappings(
-          init.target, outerParams, result,
-          depth: depth + 1,
-        );
+        _followSuperInitializer(init, outerParams, result, depth);
       }
     }
   }
@@ -274,6 +271,45 @@ class KernelIntrospector {
     }
 
     // Recursively extract from target using mapped params.
+    _extractInitializerMappings(
+      target, mappedParams, result,
+      depth: depth + 1,
+    );
+  }
+
+  /// Follows a SuperInitializer, mapping current params to super params.
+  /// Symmetric to [_followRedirectingInitializer].
+  void _followSuperInitializer(
+    ir.SuperInitializer init,
+    Map<String, ir.VariableDeclaration> outerParams,
+    Map<String, (String?, bool)> result,
+    int depth,
+  ) {
+    final target = init.target;
+
+    // Map super param → outer param via super call arguments.
+    final targetToOuter = <String, String?>{};
+
+    for (var i = 0; i < init.arguments.positional.length; i++) {
+      final arg = init.arguments.positional[i];
+      final outerParam = _extractParamName(arg);
+      if (i < target.function.positionalParameters.length) {
+        final targetParam = target.function.positionalParameters[i].name!;
+        targetToOuter[targetParam] = outerParam;
+      }
+    }
+    for (final namedArg in init.arguments.named) {
+      final outerParam = _extractParamName(namedArg.value);
+      targetToOuter[namedArg.name] = outerParam;
+    }
+
+    final mappedParams = <String, ir.VariableDeclaration>{};
+    for (final entry in targetToOuter.entries) {
+      if (entry.value != null && outerParams.containsKey(entry.value)) {
+        mappedParams[entry.key] = outerParams[entry.value]!;
+      }
+    }
+
     _extractInitializerMappings(
       target, mappedParams, result,
       depth: depth + 1,
