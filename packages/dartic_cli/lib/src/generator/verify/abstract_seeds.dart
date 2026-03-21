@@ -112,7 +112,7 @@ const _seeds = <String, Map<String, String>>{
     'resume': '@override\n  void resume() {}',
     'isPaused': '@override\n  bool get isPaused => false;',
     'asFuture':
-        '@override\n  Future asFuture([dynamic futureValue]) => Future.value(futureValue);',
+        '@override\n  Future<E> asFuture<E>([E? futureValue]) => Future<E>.value(futureValue);',
   },
   'Exception': {
     '_classBody': '',

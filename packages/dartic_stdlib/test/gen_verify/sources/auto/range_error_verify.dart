@@ -4,13 +4,23 @@ class _VerifyRangeError extends RangeError {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
   }
 
   void runAllSuperCalls() {
+    _callSuper('start', () => super.start);
+    _callSuper('end', () => super.end);
+    _callSuper('invalidValue', () => super.invalidValue);
+    _callSuper('name', () => super.name);
+    _callSuper('message', () => super.message);
+    _callSuper('stackTrace', () => super.stackTrace);
   }
 }
 

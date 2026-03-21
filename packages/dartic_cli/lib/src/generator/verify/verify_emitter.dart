@@ -54,14 +54,7 @@ class VerifyEntry {
 
 /// Emits verification dartic source for a Bridge class.
 /// Returns null if the class cannot be auto-tested (e.g., isFinal).
-///
-/// [allTypeInfos] is an optional map of className -> TypeInfo for all bridge
-/// classes in the config. Used to resolve inherited fields when skipping
-/// field-backed getters.
-VerifyResult? emitVerifySource(
-  TypeInfo info, {
-  Map<String, TypeInfo> allTypeInfos = const {},
-}) {
+VerifyResult? emitVerifySource(TypeInfo info) {
   // Skip check: final classes can't be subclassed.
   if (info.isFinal) return null;
 
@@ -147,6 +140,7 @@ VerifyResult? emitVerifySource(
     for (final m in info.methods) {
       if (m.isAbstract) continue;
       totalCount++;
+      // Skip generic methods — $super$ bindings don't support type parameters.
       if (m.typeParamDecl != null) {
         skipped.add('${m.name} (generic)');
         continue;
@@ -162,17 +156,11 @@ VerifyResult? emitVerifySource(
       );
     }
 
-    // Getters
-    final fieldNames = _collectFieldNames(info, allTypeInfos);
+    // Getters (including field-backed getters — compiler now supports
+    // SuperPropertyGet on host fields via CALL_HOST $super$ bindings).
     for (final g in info.getters) {
       if (g.isAbstract) continue;
       totalCount++;
-      // Skip field-backed getters -- dartic compiler doesn't support
-      // SuperPropertyGet on fields (e.g. ArgumentError.message).
-      if (fieldNames.contains(g.name)) {
-        skipped.add('${g.name} (field-backed super access not supported)');
-        continue;
-      }
       coveredCount++;
       superCallEntries.add(
         "    _callSuper('${g.name}', () => super.${g.name});",
@@ -205,11 +193,19 @@ VerifyResult? emitVerifySource(
       }
     }
 
-    // Emit the helper and runAllSuperCalls
+    // Emit the helper and runAllSuperCalls.
+    // _callSuper is sync but handles Future results via .then/.catchError
+    // to prevent unhandled async errors from crashing the fixture
+    // (e.g., Stream.firstWhere with no match).
     buf.writeln('  void _callSuper(String name, Object? Function() fn) {');
     buf.writeln('    try {');
     buf.writeln("      final r = fn();");
-    buf.writeln("      print('\$name: \$r');");
+    buf.writeln("      if (r is Future) {");
+    buf.writeln(
+        "        r.then((ar) => print('\$name: \$ar')).catchError((e) => print('\$name: FAILED: \$e'));");
+    buf.writeln("      } else {");
+    buf.writeln("        print('\$name: \$r');");
+    buf.writeln("      }");
     buf.writeln('    } catch (e) {');
     buf.writeln("      print('\$name: FAILED: \$e');");
     buf.writeln('    }');
@@ -727,6 +723,10 @@ String? _buildMethodArgs(List<ParamInfo> params) {
 }
 
 // ---------------------------------------------------------------------------
+// Generic type argument helpers
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 // Operator expression helpers
 // ---------------------------------------------------------------------------
 
@@ -745,29 +745,4 @@ String _binaryOpExpr(OperatorInfo op, String argVal) {
 }
 
 // ---------------------------------------------------------------------------
-// Field-name collection (own + inherited)
-// ---------------------------------------------------------------------------
 
-/// Collects field names from [info] and all its superclasses (via
-/// [allTypeInfos]). Used to skip field-backed getters in super calls.
-///
-/// Superclass entries in [TypeInfo.superclasses] are fully qualified
-/// (e.g. `dart:core::ArgumentError`), while [allTypeInfos] is keyed by
-/// simple class name. We extract the simple name for lookup.
-Set<String> _collectFieldNames(
-  TypeInfo info,
-  Map<String, TypeInfo> allTypeInfos,
-) {
-  final names = info.fields.map((f) => f.name).toSet();
-  for (final qualifiedSuper in info.superclasses) {
-    // Extract simple class name: "dart:core::ArgumentError" -> "ArgumentError"
-    final simpleName = qualifiedSuper.contains('::')
-        ? qualifiedSuper.substring(qualifiedSuper.lastIndexOf('::') + 2)
-        : qualifiedSuper;
-    final superInfo = allTypeInfos[simpleName];
-    if (superInfo != null) {
-      names.addAll(superInfo.fields.map((f) => f.name));
-    }
-  }
-  return names;
-}

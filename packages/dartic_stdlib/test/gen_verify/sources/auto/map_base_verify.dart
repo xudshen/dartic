@@ -23,7 +23,11 @@ class _VerifyMapBase extends MapBase {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -36,9 +40,15 @@ class _VerifyMapBase extends MapBase {
     _callSuper('putIfAbsent', () => super.putIfAbsent(null, () => null));
     _callSuper('update', () => super.update(null, (a) => null, ifAbsent: null));
     _callSuper('updateAll', () => super.updateAll((a, b) => null));
+    _callSuper('addEntries', () => super.addEntries([]));
     _callSuper('removeWhere', () => super.removeWhere((a, b) => false));
     _callSuper('containsKey', () => super.containsKey(null));
     _callSuper('toString', () => super.toString());
+    _callSuper('entries', () => super.entries);
+    _callSuper('length', () => super.length);
+    _callSuper('isEmpty', () => super.isEmpty);
+    _callSuper('isNotEmpty', () => super.isNotEmpty);
+    _callSuper('values', () => super.values);
   }
 }
 

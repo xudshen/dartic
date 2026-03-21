@@ -1,5 +1,8 @@
-class _VerifyUnsupportedError extends UnsupportedError {
-  _VerifyUnsupportedError(String message) : super(message);
+class _VerifyNotchedShape extends NotchedShape {
+  _VerifyNotchedShape();
+
+  @override
+  Path getOuterPath(Rect host, Rect? guest) => null as Path;
 
   void _callSuper(String name, Object? Function() fn) {
     try {
@@ -15,14 +18,11 @@ class _VerifyUnsupportedError extends UnsupportedError {
   }
 
   void runAllSuperCalls() {
-    _callSuper('toString', () => super.toString());
-    _callSuper('message', () => super.message);
-    _callSuper('stackTrace', () => super.stackTrace);
   }
 }
 
 void main() {
-  final v = _VerifyUnsupportedError('');
+  final v = _VerifyNotchedShape();
   v.runAllSuperCalls();
   print('OK');
 }

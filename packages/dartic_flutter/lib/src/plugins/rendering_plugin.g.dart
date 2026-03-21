@@ -7,21 +7,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
-import '../bindings/animation/box_constraints_bindings.g.dart';
-import '../bindings/animation/relative_rect_bindings.g.dart';
-import '../bindings/animation/flex_fit_bindings.g.dart';
-import '../bindings/animation/main_axis_size_bindings.g.dart';
-import '../bindings/animation/main_axis_alignment_bindings.g.dart';
-import '../bindings/animation/cross_axis_alignment_bindings.g.dart';
-import '../bindings/animation/hit_test_behavior_bindings.g.dart';
-import '../bindings/animation/decoration_position_bindings.g.dart';
-import '../bindings/animation/stack_fit_bindings.g.dart';
-import '../bindings/animation/cache_extent_style_bindings.g.dart';
-import '../bindings/animation/growth_direction_bindings.g.dart';
-import '../bindings/animation/wrap_alignment_bindings.g.dart';
-import '../bindings/animation/wrap_cross_alignment_bindings.g.dart';
+import 'dart:ui';
+import '../bindings/rendering/box_constraints_bindings.g.dart';
+import '../bindings/rendering/relative_rect_bindings.g.dart';
+import '../bindings/rendering/flex_fit_bindings.g.dart';
+import '../bindings/rendering/main_axis_size_bindings.g.dart';
+import '../bindings/rendering/main_axis_alignment_bindings.g.dart';
+import '../bindings/rendering/cross_axis_alignment_bindings.g.dart';
+import '../bindings/rendering/hit_test_behavior_bindings.g.dart';
+import '../bindings/rendering/decoration_position_bindings.g.dart';
+import '../bindings/rendering/stack_fit_bindings.g.dart';
+import '../bindings/rendering/cache_extent_style_bindings.g.dart';
+import '../bindings/rendering/growth_direction_bindings.g.dart';
+import '../bindings/rendering/wrap_alignment_bindings.g.dart';
+import '../bindings/rendering/wrap_cross_alignment_bindings.g.dart';
 
 class RenderingPlugin extends DarticPlugin {
   @override

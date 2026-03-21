@@ -4,7 +4,11 @@ class _VerifyStopwatch extends Stopwatch {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -14,6 +18,12 @@ class _VerifyStopwatch extends Stopwatch {
     _callSuper('start', () => super.start());
     _callSuper('stop', () => super.stop());
     _callSuper('reset', () => super.reset());
+    _callSuper('frequency', () => super.frequency);
+    _callSuper('elapsedTicks', () => super.elapsedTicks);
+    _callSuper('elapsed', () => super.elapsed);
+    _callSuper('elapsedMicroseconds', () => super.elapsedMicroseconds);
+    _callSuper('elapsedMilliseconds', () => super.elapsedMilliseconds);
+    _callSuper('isRunning', () => super.isRunning);
   }
 }
 

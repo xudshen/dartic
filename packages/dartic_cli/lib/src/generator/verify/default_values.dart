@@ -36,25 +36,69 @@ String? defaultValueForType(
     return '() {}';
   }
 
-  // Priority 4: known type table
-  return _knownTypeDefaults[type] ?? _knownTypeDefaults[baseType];
+  // Priority 4: known type table (exact match)
+  final exact = _knownTypeDefaults[type] ?? _knownTypeDefaults[baseType];
+  if (exact != null) return exact;
+
+  // Priority 5: strip generic type args and retry.
+  // e.g., Iterable<MapEntry<K,V>> → Iterable, Set<int> → Set
+  final stripped = _stripGenericArgs(baseType);
+  if (stripped != baseType) {
+    return _knownTypeDefaults[stripped];
+  }
+  return null;
 }
 
 String _functionDefault(int arity, String? returnType) {
   final params =
       List.generate(arity, (i) => String.fromCharCode(97 + i)); // a, b, c, ...
   final paramStr = params.join(', ');
-  final retExpr = switch (returnType) {
-    'bool' => 'false',
-    'int' || 'num' || 'double' => '0',
-    'String' => "''",
-    'void' => null,
-    _ => 'null',
-  };
+  final retExpr = _defaultReturnExpr(returnType);
   if (retExpr == null) {
     return '($paramStr) {}';
   }
   return '($paramStr) => $retExpr';
+}
+
+/// Returns a default return expression for a callback with the given
+/// [returnType]. Returns null for void (no return expression needed).
+String? _defaultReturnExpr(String? returnType) {
+  if (returnType == null) return 'null';
+  // Strip nullable suffix for matching.
+  final base = returnType.endsWith('?')
+      ? returnType.substring(0, returnType.length - 1)
+      : returnType;
+  // Nullable return types can just return null.
+  if (returnType.endsWith('?') || base == 'dynamic') return 'null';
+  // Primitives.
+  return switch (base) {
+    'bool' => 'false',
+    'int' || 'num' || 'double' => '0',
+    'String' => "''",
+    'void' => null,
+    _ => _defaultReturnExprForComplex(base),
+  };
+}
+
+String _defaultReturnExprForComplex(String base) {
+  final stripped = _stripGenericArgs(base);
+  // Collection types — return empty collections.
+  if (stripped == 'Iterable' || stripped == 'List') return '[]';
+  if (stripped == 'Set') return '<dynamic>{}';
+  if (stripped == 'Map') return '{}';
+  if (stripped == 'MapEntry') return 'MapEntry(null, null)';
+  // Future — return completed future.
+  if (stripped == 'Future') return 'Future.value(null)';
+  // Fallback.
+  return 'null';
+}
+
+/// Strips generic type arguments from a type string.
+/// `Iterable<MapEntry<K, V>>` → `Iterable`, `Set<int>` → `Set`.
+/// Returns [type] unchanged if no generic args found.
+String _stripGenericArgs(String type) {
+  final idx = type.indexOf('<');
+  return idx > 0 ? type.substring(0, idx) : type;
 }
 
 const _knownTypeDefaults = <String, String>{

@@ -22,7 +22,7 @@ class _VerifyStreamSubscription implements StreamSubscription {
   void resume() {}
 
   @override
-  Future asFuture([dynamic futureValue]) => Future.value(futureValue);
+  Future<E> asFuture<E>([E? futureValue]) => Future<E>.value(futureValue);
 
   @override
   bool get isPaused => false;

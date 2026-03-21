@@ -4,7 +4,11 @@ class _VerifyDuration extends Duration {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -14,6 +18,14 @@ class _VerifyDuration extends Duration {
     _callSuper('compareTo', () => super.compareTo(Duration()));
     _callSuper('toString', () => super.toString());
     _callSuper('abs', () => super.abs());
+    _callSuper('inDays', () => super.inDays);
+    _callSuper('inHours', () => super.inHours);
+    _callSuper('inMinutes', () => super.inMinutes);
+    _callSuper('inSeconds', () => super.inSeconds);
+    _callSuper('inMilliseconds', () => super.inMilliseconds);
+    _callSuper('inMicroseconds', () => super.inMicroseconds);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('isNegative', () => super.isNegative);
     _callSuper('+', () => this + Duration());
     _callSuper('-', () => this - Duration());
     _callSuper('*', () => this * 0);

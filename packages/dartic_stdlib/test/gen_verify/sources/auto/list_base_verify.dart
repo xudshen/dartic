@@ -20,7 +20,11 @@ class _VerifyListBase extends ListBase {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -70,6 +74,13 @@ class _VerifyListBase extends ListBase {
     _callSuper('insertAll', () => super.insertAll(0, []));
     _callSuper('setAll', () => super.setAll(0, []));
     _callSuper('toString', () => super.toString());
+    _callSuper('iterator', () => super.iterator);
+    _callSuper('isEmpty', () => super.isEmpty);
+    _callSuper('isNotEmpty', () => super.isNotEmpty);
+    _callSuper('first', () => super.first);
+    _callSuper('last', () => super.last);
+    _callSuper('single', () => super.single);
+    _callSuper('reversed', () => super.reversed);
     _callSuper('+', () => this + []);
   }
 }

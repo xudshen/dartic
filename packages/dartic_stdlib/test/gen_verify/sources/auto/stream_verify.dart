@@ -9,7 +9,11 @@ class _VerifyStream extends Stream {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -37,6 +41,12 @@ class _VerifyStream extends Stream {
     _callSuper('singleWhere', () => super.singleWhere((a) => false, orElse: null));
     _callSuper('elementAt', () => super.elementAt(0));
     _callSuper('timeout', () => super.timeout(Duration(), onTimeout: null));
+    _callSuper('isBroadcast', () => super.isBroadcast);
+    _callSuper('length', () => super.length);
+    _callSuper('isEmpty', () => super.isEmpty);
+    _callSuper('first', () => super.first);
+    _callSuper('last', () => super.last);
+    _callSuper('single', () => super.single);
   }
 }
 

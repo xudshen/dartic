@@ -7,10 +7,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/foundation.dart';
-import '../bindings/animation/ticker_bindings.g.dart';
-import '../bindings/animation/ticker_canceled_bindings.g.dart';
+import 'package:flutter/scheduler.dart';
+import 'dart:async';
+import '../bindings/scheduler/ticker_bindings.g.dart';
+import '../bindings/scheduler/ticker_canceled_bindings.g.dart';
 
 class SchedulerPlugin extends DarticPlugin {
   @override

@@ -1306,6 +1306,11 @@ extension on DarticCompiler {
     // Restore enclosing compilation state.
     _popContext();
 
+    // The thunk captures the receiver as upvalue[0]. Ensure the enclosing
+    // function emits CLOSE_UPVALUE before RETURN so the upvalue survives
+    // frame teardown when the closure escapes (e.g., `return obj.method`).
+    _thisCapturedByInner = true;
+
     // Emit CLOSURE wrapping the thunk in the enclosing function.
     // The CLOSURE instruction automatically captures upvalues according
     // to the FuncProto's upvalueDescriptors.
@@ -1550,6 +1555,11 @@ extension on DarticCompiler {
     _functions[thunkFuncId] = thunkProto;
 
     _popContext();
+
+    // The thunk captures the receiver as upvalue[0]. Ensure the enclosing
+    // function emits CLOSE_UPVALUE before RETURN so the upvalue survives
+    // frame teardown when the closure escapes.
+    _thisCapturedByInner = true;
 
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);

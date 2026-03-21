@@ -125,7 +125,6 @@ class Runner {
         // Skip combined plugin for individual configs.
 
         // Collect verify entries for bridge classes.
-        final allTypeInfos = <String, TypeInfo>{};
         final classConfigs = <({
           String name,
           String snakeName,
@@ -141,7 +140,6 @@ class Runner {
             final info =
                 await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
 
-            allTypeInfos[classConfig.name] = info;
             classConfigs.add((
               name: classConfig.name,
               snakeName: _toSnakeCase(classConfig.name),
@@ -152,10 +150,7 @@ class Runner {
         }
 
         for (final entry in classConfigs) {
-          final result = verify_emitter.emitVerifySource(
-            entry.info,
-            allTypeInfos: allTypeInfos,
-          );
+          final result = verify_emitter.emitVerifySource(entry.info);
           if (result == null) continue;
 
           // Write dartic source file
@@ -496,8 +491,7 @@ class Runner {
     final isFlutter = _isFlutterPackage(config);
     final pluginClassName = _detectPluginClassName(packageName);
 
-    // Pass 1: Analyze all bridge classes and collect TypeInfos.
-    final allTypeInfos = <String, TypeInfo>{};
+    // Analyze all bridge classes and collect TypeInfos.
     final classConfigs = <({
       String name,
       String snakeName,
@@ -513,7 +507,6 @@ class Runner {
         final info =
             await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
 
-        allTypeInfos[classConfig.name] = info;
         classConfigs.add((
           name: classConfig.name,
           snakeName: _toSnakeCase(classConfig.name),
@@ -530,10 +523,7 @@ class Runner {
     final allSkipped = <String, List<String>>{};
 
     for (final entry in classConfigs) {
-      final result = verify_emitter.emitVerifySource(
-        entry.info,
-        allTypeInfos: allTypeInfos,
-      );
+      final result = verify_emitter.emitVerifySource(entry.info);
       if (result == null) continue;
 
       // Write dartic source file

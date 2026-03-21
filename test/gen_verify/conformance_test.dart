@@ -110,7 +110,7 @@ void main() {
       expect(printLog.last, equals('OK'));
     });
 
-    test('A6: super method tearoff', skip: 'Known limitation: super method tearoff on Bridge classes not yet supported', () async {
+    test('A6: super method tearoff', () async {
       final source = r'''
 class MyError extends Error {
   Function get superToString => super.toString;

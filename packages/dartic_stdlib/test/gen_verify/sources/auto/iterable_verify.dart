@@ -9,7 +9,11 @@ class _VerifyIterable extends Iterable {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -35,6 +39,12 @@ class _VerifyIterable extends Iterable {
     _callSuper('singleWhere', () => super.singleWhere((a) => false, orElse: null));
     _callSuper('elementAt', () => super.elementAt(0));
     _callSuper('toString', () => super.toString());
+    _callSuper('length', () => super.length);
+    _callSuper('isEmpty', () => super.isEmpty);
+    _callSuper('isNotEmpty', () => super.isNotEmpty);
+    _callSuper('first', () => super.first);
+    _callSuper('last', () => super.last);
+    _callSuper('single', () => super.single);
   }
 }
 

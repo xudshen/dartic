@@ -211,7 +211,14 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     fuelBudget: fuelBudget ?? 50000,
   );
   interp.execute(module);
-  return (interp.entryResult, printLog);
+
+  // If main() is async, entryResult is a Future — await it so async
+  // continuations (microtasks) run and print output is captured.
+  final result = interp.entryResult;
+  if (result is Future) {
+    await result;
+  }
+  return (result, printLog);
 }
 
 /// Creates fully-loaded registries for tests that need low-level registry

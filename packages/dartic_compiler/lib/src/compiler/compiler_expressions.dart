@@ -2466,6 +2466,16 @@ extension on DarticCompiler {
         }
         return _emitGetField(thisReg, layout);
       }
+
+      // Host field → CALL_HOST with $super$ field getter binding.
+      // e.g., super.message on ArgumentError, super.stackTrace on Error.
+      if (_isHostLibrary(target.enclosingLibrary)) {
+        const thisReg = 2;
+        final symbolName = _superHostBindingName(target);
+        final bindingIndex = _allocBinding(symbolName, 1);
+        return _emitCallHost(
+            [(thisReg, ResultLoc.ref, null as ir.DartType?)], bindingIndex);
+      }
     }
 
     if (target is ir.Procedure) {
@@ -2628,6 +2638,11 @@ extension on DarticCompiler {
     // Restore the outer compilation state.
     _functions[thunkFuncId] = superTearoffProto;
     _popContext();
+
+    // The thunk captures `this` as upvalue[0]. Ensure the enclosing
+    // function emits CLOSE_UPVALUE before RETURN so the upvalue survives
+    // frame teardown when the closure escapes (e.g., `return super.method`).
+    _thisCapturedByInner = true;
 
     // Emit CREATE_CLOSURE in the outer function.
     final closureReg = _allocRefReg();
@@ -2844,6 +2859,11 @@ extension on DarticCompiler {
 
     _popContext();
 
+    // The thunk captures `this` as upvalue[0]. Ensure the enclosing
+    // function emits CLOSE_UPVALUE before RETURN so the upvalue survives
+    // frame teardown when the closure escapes.
+    _thisCapturedByInner = true;
+
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);
 
@@ -2961,6 +2981,11 @@ extension on DarticCompiler {
 
     _functions[thunkFuncId] = superHostTearoffProto;
     _popContext();
+
+    // The thunk captures `this` as upvalue[0]. Ensure the enclosing
+    // function emits CLOSE_UPVALUE before RETURN so the upvalue survives
+    // frame teardown when the closure escapes.
+    _thisCapturedByInner = true;
 
     final closureReg = _allocRefReg();
     _emitter.emitABx(Op.closure, closureReg, thunkFuncId);

@@ -29,7 +29,11 @@ class _VerifySetBase extends SetBase {
   void _callSuper(String name, Object? Function() fn) {
     try {
       final r = fn();
-      print('$name: $r');
+      if (r is Future) {
+        r.then((ar) => print('$name: $ar')).catchError((e) => print('$name: FAILED: $e'));
+      } else {
+        print('$name: $r');
+      }
     } catch (e) {
       print('$name: FAILED: $e');
     }
@@ -39,9 +43,14 @@ class _VerifySetBase extends SetBase {
     _callSuper('followedBy', () => super.followedBy([]));
     _callSuper('clear', () => super.clear());
     _callSuper('addAll', () => super.addAll([]));
+    _callSuper('removeAll', () => super.removeAll([]));
+    _callSuper('retainAll', () => super.retainAll([]));
     _callSuper('removeWhere', () => super.removeWhere((a) => false));
     _callSuper('retainWhere', () => super.retainWhere((a) => false));
+    _callSuper('containsAll', () => super.containsAll([]));
     _callSuper('union', () => super.union(<dynamic>{}));
+    _callSuper('intersection', () => super.intersection(<dynamic>{}));
+    _callSuper('difference', () => super.difference(<dynamic>{}));
     _callSuper('toList', () => super.toList(growable: true));
     _callSuper('toString', () => super.toString());
     _callSuper('where', () => super.where((a) => false));
@@ -58,6 +67,11 @@ class _VerifySetBase extends SetBase {
     _callSuper('lastWhere', () => super.lastWhere((a) => false, orElse: null));
     _callSuper('singleWhere', () => super.singleWhere((a) => false, orElse: null));
     _callSuper('elementAt', () => super.elementAt(0));
+    _callSuper('isEmpty', () => super.isEmpty);
+    _callSuper('isNotEmpty', () => super.isNotEmpty);
+    _callSuper('single', () => super.single);
+    _callSuper('first', () => super.first);
+    _callSuper('last', () => super.last);
   }
 }
 
