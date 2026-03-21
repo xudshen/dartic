@@ -4,7 +4,6 @@
 #   - Callback wrapping (Function params need explicit (v) => func(v))
 #   - List<dynamic> → List<int> casting (dartic dual-stack)
 #   - Stream<dynamic>/Sink<Object?> type casting (CastSink helpers)
-#   - _#fromFields with non-standard field layouts
 #   - Internal type constructor → public factory mapping
 
 output_bindings: "../lib/src/bindings/convert"
@@ -175,7 +174,6 @@ libraries:
       # ── JsonCodec: callback wrapping for reviver/toEncodable ──
       JsonCodec:
         extra_methods:
-          "_#fromFields#2": "(args) => JsonCodec()"
           "#2": |
             (args) {
               final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;
@@ -207,10 +205,8 @@ libraries:
             }
 
       # ── JsonEncoder: callback wrapping + Sink/Stream cast ──
-      #   _#fromFields: field "indent" has no matching unnamed ctor param
       JsonEncoder:
         extra_methods:
-          "_#fromFields#2": "(args) => JsonEncoder.withIndent(args[0] as String?, args[1] as dynamic Function(dynamic)?)"
           "#1": |
             (args) {
               final toEncodable = identical(args[0], darticAbsent) ? null : args[0] as Function?;
@@ -245,15 +241,9 @@ libraries:
           "startChunkedConversion#1": "(args) => (args[0] as dynamic).startChunkedConversion(args[1])"
           "bind#1": "(args) => (args[0] as JsonDecoder).bind((args[1] as Stream).cast<String>())"
 
-      # ── JsonUtf8Encoder: callback wrapping + non-standard _#fromFields ──
+      # ── JsonUtf8Encoder: callback wrapping ──
       JsonUtf8Encoder:
         extra_methods:
-          "_#fromFields#3": |
-            (args) => JsonUtf8Encoder(
-              args[0] as String?,
-              args[1] as dynamic Function(dynamic)?,
-              args[2] as int? ?? 256,
-            )
           "#3": |
             (args) {
               final indent = identical(args[0], darticAbsent) ? null : args[0] as String?;
@@ -271,10 +261,8 @@ libraries:
           "bind#1": "(args) => (args[0] as JsonUtf8Encoder).bind((args[1] as Stream).cast<Object>())"
 
       # ── Utf8Codec: decode needs List<int> cast ──
-      #   _#fromFields: auto-gen fails (analyzer doesn't report private fields for SDK codec classes)
       Utf8Codec:
         extra_methods:
-          "_#fromFields#1": "(args) => Utf8Codec(allowMalformed: args[0] as bool)"
           "decode#2": |
             (args) {
               final self = args[0] as Utf8Codec;
@@ -306,24 +294,14 @@ libraries:
               return self.convert(codeUnits, start, end);
             }
 
-      # ── Base64Codec: non-standard _#fromFields + List<int> cast ──
+      # ── Base64Codec: List<int> cast ──
       Base64Codec:
         extra_methods:
-          "_#fromFields#1": |
-            (args) {
-              final encoder = args[0] as Base64Encoder;
-              return identical(encoder, const Base64Encoder()) ? const Base64Codec() : const Base64Codec.urlSafe();
-            }
           "encode#1": "(args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>())"
 
-      # ── Base64Encoder: non-standard _#fromFields + List<int> cast + Sink/Stream cast ──
+      # ── Base64Encoder: List<int> cast + Sink/Stream cast ──
       Base64Encoder:
         extra_methods:
-          "_#fromFields#1": |
-            (args) {
-              final urlSafe = args[0] as bool;
-              return urlSafe ? Base64Encoder.urlSafe() : const Base64Encoder();
-            }
           "convert#1": "(args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>())"
           "startChunkedConversion#1": "(args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1]))"
           "bind#1": "(args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>())"
@@ -337,7 +315,6 @@ libraries:
       # ── AsciiCodec: decode needs List<int> cast ──
       AsciiCodec:
         extra_methods:
-          "_#fromFields#1": "(args) => AsciiCodec(allowInvalid: args[0] as bool)"
           "decode#2": |
             (args) {
               final self = args[0] as AsciiCodec;
@@ -399,7 +376,6 @@ libraries:
       # ── Latin1Codec: decode needs List<int> cast ──
       Latin1Codec:
         extra_methods:
-          "_#fromFields#1": "(args) => Latin1Codec(allowInvalid: args[0] as bool)"
           "decode#2": |
             (args) {
               final self = args[0] as Latin1Codec;

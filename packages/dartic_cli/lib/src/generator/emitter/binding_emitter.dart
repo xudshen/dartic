@@ -17,6 +17,7 @@ import 'dart:io' show Platform, stderr;
 
 import '../analyzer/type_info.dart';
 import '../config/binding_config.dart' show MethodOverrideConfig;
+import '../kernel/kernel_class_info.dart';
 
 /// Generates a complete `.g.dart` binding file for a single type.
 String emitBindingFile(
@@ -30,6 +31,7 @@ String emitBindingFile(
   List<String>? ignoreForFile,
   List<String>? customImports,
   Map<String, MethodOverrideConfig>? methodOverrides,
+  KernelClassInfo? kernelInfo,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -63,7 +65,7 @@ String emitBindingFile(
       bridge: effectiveBridge,
       extraMethodKeys: extraMethods?.keys.toSet());
   body.writeln();
-  _writeMethodMap(body, info, extraMethods: extraMethods);
+  _writeMethodMap(body, info, extraMethods: extraMethods, kernelInfo: kernelInfo);
   body.writeln('}');
 
   // Build final output with header + detected imports
@@ -95,6 +97,7 @@ String emitBindingFileWithInternalTypes(
   List<String>? ignoreForFile,
   bool bridge = false,
   Map<String, MethodOverrideConfig>? methodOverrides,
+  KernelClassInfo? kernelInfo,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -124,7 +127,7 @@ String emitBindingFileWithInternalTypes(
   );
   body.writeln();
 
-  _writeMethodMap(body, mainInfo, extraMethods: mainExtraMethods);
+  _writeMethodMap(body, mainInfo, extraMethods: mainExtraMethods, kernelInfo: kernelInfo);
 
   for (final internal in internalInfos) {
     body.writeln();
@@ -481,6 +484,7 @@ void _writeMethodMap(
   StringBuffer buf,
   TypeInfo info, {
   Map<String, String>? extraMethods,
+  KernelClassInfo? kernelInfo,
 }) {
   // Collect all analyzer-generated keys so extraMethods can override them.
   final overrideKeys = extraMethods?.keys.toSet() ?? <String>{};
@@ -529,7 +533,7 @@ void _writeMethodMap(
   }
 
   // Auto-generate _#fromFields#N for platform const classes.
-  _writeFromFieldsEntry(buf, info, overrideKeys);
+  _writeFromFieldsEntry(buf, info, overrideKeys, kernelInfo: kernelInfo);
 
   // Extra methods（来自 YAML 的自定义覆盖）。
   if (extraMethods != null) {
@@ -599,29 +603,144 @@ void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
 ///
 /// **Limitation:** Only the class's own fields are considered, not inherited
 /// fields from superclasses. If Kernel emits an `InstanceConstant` that
-/// includes inherited field values, the auto-generated binding will have
-/// the wrong arity. Workaround: provide a manual `_#fromFields#N` entry
-/// via `extra_methods` in the YAML config.
+/// Auto-generates `_#fromFields#N` binding entries.
+///
+/// When [kernelInfo] is available, uses precise field→param mappings from
+/// Kernel IR's FieldInitializer nodes. Only generates for const classes
+/// (non-const classes never produce InstanceConstant).
+///
+/// Without [kernelInfo], falls back to the legacy heuristic (strip `_`
+/// prefix from field names to match constructor params).
 void _writeFromFieldsEntry(
+    StringBuffer buf, TypeInfo info, Set<String> overrideKeys,
+    {KernelClassInfo? kernelInfo}) {
+  if (kernelInfo != null) {
+    _writeFromFieldsKernel(buf, info, overrideKeys, kernelInfo);
+  } else {
+    _writeFromFieldsLegacy(buf, info, overrideKeys);
+  }
+}
+
+/// Kernel-driven fromFields generation.
+///
+/// Uses precise field→param mappings extracted from Constructor.initializers.
+/// Scans all const constructors (including named like `Color.from()`) to find
+/// the best reconstruction path. Skips enums (compiler uses LOAD_GLOBAL).
+void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
+    Set<String> overrideKeys, KernelClassInfo kernelInfo) {
+  // Enums use LOAD_GLOBAL, not fromFields. Non-const can't produce InstanceConstant.
+  if (kernelInfo.isEnum) return;
+  if (!kernelInfo.isConst) return;
+  if (kernelInfo.isAbstract) return;
+  // Private classes can't be called from generated code.
+  if (info.className.startsWith('_')) return;
+
+  final fields = kernelInfo.allFields;
+  final fieldCount = fields.length;
+  final fromFieldsKey = '_#fromFields#$fieldCount';
+
+  // Skip if YAML override already provides this key.
+  if (overrideKeys.contains(fromFieldsKey)) return;
+
+  final fromFieldsInfo = kernelInfo.fromFieldsInfo;
+
+  // Zero fields with const ctor: simple construction.
+  if (fieldCount == 0) {
+    buf.writeln(
+        "        '$fromFieldsKey': (args) => ${info.className}(),");
+    return;
+  }
+
+  if (fromFieldsInfo == null) return;
+
+  final ctorName = fromFieldsInfo.constructorName;
+  final mappings = fromFieldsInfo.mappings;
+
+  // Build constructor param lookup from Analyzer (for type strings).
+  // Match by constructor name.
+  final analyzerCtor = info.constructors
+      .where((c) => c.name == ctorName && !c.isFactory)
+      .firstOrNull;
+  final ctorParams = analyzerCtor != null
+      ? {for (final p in analyzerCtor.params) p.name: p}
+      : <String, ParamInfo>{};
+
+  // Build field index lookup: field name → position in args array.
+  final fieldIndex = <String, int>{};
+  for (var i = 0; i < fields.length; i++) {
+    fieldIndex[fields[i].name] = i;
+  }
+
+  // Build param→(argIndex, cast) mapping from Kernel mappings.
+  final paramArgs = <String, (int index, String cast, bool isNamed)>{};
+  for (final mapping in mappings) {
+    if (mapping.paramName == null) continue;
+    final idx = fieldIndex[mapping.fieldName];
+    if (idx == null) continue;
+
+    final param = ctorParams[mapping.paramName];
+    final cast = param != null
+        ? _emitCast('args[$idx]', param.type)
+        : 'args[$idx]';
+    paramArgs[mapping.paramName!] =
+        (idx, cast, mapping.paramIsNamed);
+  }
+
+  // Generate arg expressions in CONSTRUCTOR PARAMETER ORDER.
+  // Positional params must be in declaration order, not field alphabetical order.
+  final argExprs = <String>[];
+  if (analyzerCtor != null) {
+    for (final ctorParam in analyzerCtor.params) {
+      final entry = paramArgs[ctorParam.name];
+      if (entry == null) continue;
+      final (_, cast, isNamed) = entry;
+      if (isNamed) {
+        argExprs.add('${ctorParam.name}: $cast');
+      } else {
+        argExprs.add(cast);
+      }
+    }
+  } else {
+    // No analyzer ctor — fall back to Kernel order.
+    for (final mapping in mappings) {
+      if (mapping.paramName == null) continue;
+      final entry = paramArgs[mapping.paramName!];
+      if (entry == null) continue;
+      final (_, cast, isNamed) = entry;
+      if (isNamed) {
+        argExprs.add('${mapping.paramName}: $cast');
+      } else {
+        argExprs.add(cast);
+      }
+    }
+  }
+
+  // Emit constructor call — use named constructor if needed.
+  final ctorCall = ctorName.isEmpty
+      ? '${info.className}(${argExprs.join(', ')})'
+      : '${info.className}.$ctorName(${argExprs.join(', ')})';
+
+  buf.writeln("        '$fromFieldsKey': (args) => $ctorCall,");
+}
+
+/// Legacy heuristic fromFields (when Kernel data is unavailable).
+///
+/// Strips `_` prefix from field names to match constructor params.
+/// Only handles own fields (no inherited), which limits coverage.
+void _writeFromFieldsLegacy(
     StringBuffer buf, TypeInfo info, Set<String> overrideKeys) {
   final fields = info.fields;
   final fieldCount = fields.length;
   final fromFieldsKey = '_#fromFields#$fieldCount';
 
-  // Skip if extraMethods already provides this key.
   if (overrideKeys.contains(fromFieldsKey)) return;
-
-  // Skip abstract classes — they can't be instantiated.
   if (info.isAbstract) return;
 
-  // Find the unnamed constructor.
   final unnamedCtor = info.constructors
       .where((c) => c.name.isEmpty && !c.isFactory)
       .firstOrNull;
   if (unnamedCtor == null) return;
 
-  // Zero fields: generate simple `ClassName()` — but only if the
-  // constructor has no required parameters.
   if (fieldCount == 0) {
     final hasRequiredParams =
         unnamedCtor.params.any((p) => !p.isOptional);
@@ -631,17 +750,11 @@ void _writeFromFieldsEntry(
     return;
   }
 
-  // All fields must be final for const-constructibility.
   if (!fields.every((f) => f.isFinal)) return;
 
-  // Sort fields alphabetically by original name (matching compiler ordering).
   final sortedFields = [...fields]..sort((a, b) => a.name.compareTo(b.name));
-
-  // Build a map from stripped field name (no leading _) to constructor param.
   final ctorParams = {for (final p in unnamedCtor.params) p.name: p};
 
-  // Try to match each sorted field to a constructor parameter.
-  // Field name stripping: remove leading `_` prefix to get parameter name.
   final argExprs = <String>[];
   final matchedParams = <String>{};
   for (var i = 0; i < sortedFields.length; i++) {
@@ -653,7 +766,6 @@ void _writeFromFieldsEntry(
 
     final param = ctorParams[paramName];
     if (param == null) {
-      // Cannot match field to constructor param — emit warning and bail.
       stderr.writeln(
           'WARNING: _#fromFields auto-gen skipped for ${info.className}: '
           'field "${field.name}" has no matching constructor param "$paramName"');
@@ -669,9 +781,6 @@ void _writeFromFieldsEntry(
     }
   }
 
-  // Validate: all required constructor params must be matched.
-  // If the constructor has required params not covered by fields, the
-  // generated call would fail to compile (missing_required_argument).
   for (final p in unnamedCtor.params) {
     if (!p.isOptional && !matchedParams.contains(p.name)) {
       stderr.writeln(

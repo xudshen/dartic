@@ -219,7 +219,6 @@ libraries:
           "toString#0": "(args) => args[0].toString()"
           "hashCode#0": "(args) => args[0].hashCode"
           "==#1": "(args) => args[0] == args[1]"
-          "_#fromFields#0": "(args) => Object()"
 
       # ── _GrowableList: VM-internal literal constructors ──
       _GrowableList:
@@ -448,7 +447,6 @@ libraries:
       # ── FormatException: constructor with optional params ──
       FormatException:
         extra_methods:
-          "_#fromFields#3": "(args) => FormatException(args[0] as String, args[1], args[2] as int?)"
           "#3": |
             (args) {
               final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;
@@ -508,7 +506,6 @@ libraries:
               milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
               microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
             )
-          "_#fromFields#1": "(args) => Duration(microseconds: args[0] as int)"
 
       # ── int: parse with deprecated onError (Kernel compiles to arity 3) ──
       int:

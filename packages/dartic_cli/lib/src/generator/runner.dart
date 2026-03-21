@@ -16,12 +16,22 @@ import 'analyzer/type_analyzer.dart';
 import 'analyzer/type_info.dart';
 import 'emitter/binding_emitter.dart' as binding_emitter;
 import 'emitter/plugin_emitter.dart' as plugin_emitter;
+import 'audit/audit_reporter.dart';
+import 'audit/audit_result.dart';
+import 'kernel/kernel_introspector.dart';
+import 'kernel/stub_dill_compiler.dart';
 import 'verify/verify_emitter.dart' as verify_emitter;
 
 /// Orchestrates the code generation pipeline.
 class Runner {
   /// Analysis root directory for type resolution (e.g. Flutter project root).
   final String? analysisRoot;
+
+  /// Path to dart executable (for stub dill compilation).
+  final String? dartBin;
+
+  /// Path to Flutter SDK (for Flutter stub dill compilation).
+  final String? flutterSdkPath;
 
   /// When true, files are not written to disk but recorded in [writtenFiles]
   /// for comparison against existing files (used by `--check` mode).
@@ -35,16 +45,28 @@ class Runner {
   /// (e.g. `packages/dartic_stdlib/configs/` -> `packages/dartic_stdlib/test/gen_verify/`).
   final String? testOutputDir;
 
+  /// When true, audit errors (missing/stale members) cause non-zero exit.
+  final bool strict;
+
   /// Records all files that would be written during generation.
   /// Only populated when [checkMode] is true.
   /// Keys are absolute file paths, values are file contents.
   final Map<String, String> writtenFiles = {};
 
+  /// Audit results collected during generation.
+  final List<AuditResult> auditResults = [];
+
+  /// Kernel introspector — initialized lazily on first config processing.
+  KernelIntrospector? _kernelIntrospector;
+
   Runner({
     this.analysisRoot,
+    this.dartBin,
+    this.flutterSdkPath,
     this.checkMode = false,
     this.emitTests = false,
     this.testOutputDir,
+    this.strict = false,
   });
 
   /// Runs the pipeline from a single YAML config file.
@@ -106,6 +128,7 @@ class Runner {
     final isFlutter = _isFlutterPackage(mergedForPath);
     final pluginClassName = _detectPluginClassName(packageName);
 
+    await _initKernel(configs);
     final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
 
     try {
@@ -229,8 +252,44 @@ class Runner {
     await _processConfig(config);
   }
 
+  /// Initializes the Kernel introspector from a list of configs.
+  ///
+  /// Collects all library URIs, compiles a stub .dill, and loads the
+  /// Kernel Component for structural introspection. The introspector
+  /// is cached for the lifetime of this Runner.
+  Future<void> _initKernel(List<GeneratorConfig> configs) async {
+    if (_kernelIntrospector != null) return; // already initialized
+
+    final effectiveDartBin = dartBin ?? Platform.resolvedExecutable;
+
+    // Collect all library URIs from all configs.
+    final uris = <String>{};
+    for (final config in configs) {
+      for (final lib in config.libraries) {
+        uris.add(lib.uri);
+      }
+    }
+    if (uris.isEmpty) return;
+
+    try {
+      final component = await StubDillCompiler.compileAndLoad(
+        libraryUris: uris.toList(),
+        dartBin: effectiveDartBin,
+        analysisRoot: analysisRoot,
+        flutterSdkPath: flutterSdkPath,
+      );
+      _kernelIntrospector = KernelIntrospector(component);
+      stderr.writeln(
+          'Kernel introspector: loaded ${component.libraries.length} libraries');
+    } catch (e) {
+      stderr.writeln('WARNING: Kernel introspector init failed: $e');
+      // Continue without Kernel — fallback to analyzer-only mode.
+    }
+  }
+
   /// Core pipeline: config -> analyze -> emit -> write.
   Future<void> _processConfig(GeneratorConfig config) async {
+    await _initKernel([config]);
     final analyzer = await TypeAnalyzer.create(analysisRoot: analysisRoot);
 
     // Collect all binding class/file names across libraries for combined plugin.
@@ -347,6 +406,7 @@ class Runner {
               : mainOverrides?.ignoreForFile,
           bridge: classConfig.bridge,
           methodOverrides: _nullIfEmpty(mainOverrides?.methodOverrides),
+          kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
         );
 
         final fileName = _classToFileName(className);
@@ -375,6 +435,7 @@ class Runner {
               : overrides?.ignoreForFile,
           customImports: _nullIfEmpty(config.customImports),
           methodOverrides: _nullIfEmpty(overrides?.methodOverrides),
+          kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
         );
 
         final fileName = _classToFileName(className);
@@ -383,6 +444,9 @@ class Runner {
         bindingClassNames.add(_toBindingsClassName(className));
         bindingFileNames.add(fileName);
       }
+
+      // ── Audit ──
+      _auditClass(library, resolvedName, analyzer);
     }
 
     // ── Process top-level functions ────────────────────────────────────
@@ -677,6 +741,79 @@ class Runner {
   String _detectPluginClassName(String packageName) {
     final pascal = _snakeToPascal(packageName);
     return '${pascal}Plugin';
+  }
+
+  // ── Audit helpers ───────────────────────────────────────────────────
+
+  /// Runs audit for a single class if Kernel data is available.
+  void _auditClass(
+    LibraryConfig library,
+    String resolvedName,
+    TypeAnalyzer analyzer,
+  ) {
+    final kernelInfo = _kernelIntrospector?.lookup(library.uri, resolvedName);
+    if (kernelInfo == null) return; // No Kernel data, skip audit.
+
+    // Build TypeInfo from cache (analyzer already analyzed it).
+    // For private classes, use empty TypeInfo.
+    TypeInfo? info;
+    if (resolvedName.startsWith('_')) {
+      info = _emptyTypeInfo(resolvedName, library.uri);
+    } else {
+      try {
+        // Re-use the analyzer's cached result.
+        info = TypeInfo(
+          className: resolvedName,
+          libraryUri: library.uri,
+          methods: [],
+          getters: [],
+          setters: [],
+          operators: [],
+          staticMethods: [],
+          constructors: [],
+          superclasses: [],
+        );
+        // We don't have the full TypeInfo here without re-analyzing.
+        // For now, use Kernel-only audit (check YAML overrides against Kernel).
+      } catch (_) {
+        return;
+      }
+    }
+
+    final overrides = library.overrides[resolvedName];
+    final yamlOverrideKeys = overrides?.extraMethods.keys.toSet();
+
+    final result = AuditReporter.audit(
+      info: info,
+      kernelInfo: kernelInfo,
+      yamlOverrideKeys: yamlOverrideKeys,
+    );
+
+    if (!result.isClean) {
+      auditResults.add(result);
+    }
+  }
+
+  /// Prints audit summary and returns true if strict mode should fail.
+  bool printAuditSummary() {
+    if (auditResults.isEmpty) {
+      stderr.writeln('\n=== Audit: all clean ===\n');
+      return false;
+    }
+
+    stderr.writeln('');
+    AuditReporter.printSummary(auditResults);
+
+    if (strict) {
+      final hasErrors = auditResults.any(
+          (r) => r.missing.isNotEmpty || r.stale.isNotEmpty);
+      if (hasErrors) {
+        stderr.writeln(
+            'STRICT: audit failures detected. Fix missing/stale entries.');
+        return true;
+      }
+    }
+    return false;
   }
 
   // ── TypeInfo helpers ─────────────────────────────────────────────────

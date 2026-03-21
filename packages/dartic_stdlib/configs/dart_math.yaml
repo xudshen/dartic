@@ -4,7 +4,7 @@
 #   1. Top-level math functions (min, max, sqrt, pow, sin, cos, tan, log, exp,
 #      atan2, asin, acos, atan)
 #   2. Random (constructor with optional seed, secure factory, instance methods)
-#   3. Point (constructor, getters, methods, operators, _#fromFields)
+#   3. Point (constructor, getters, methods, operators)
 #   4. Rectangle + _RectangleBase (constructors, getters, methods)
 #   5. MutableRectangle (constructors, getters, setters, methods)
 #
@@ -104,10 +104,9 @@ libraries:
             }
           "secure#0": "(args) => Random.secure()"
 
-      # ── Point: _#fromFields and == override ──
+      # ── Point: == override ──
       Point:
         extra_methods:
-          "_#fromFields#2": "(args) => Point(args[0] as num, args[1] as num)"
           "==#1": "(args) => args[0] == args[1]"
 
       # ── _RectangleBase: internal base class, all methods cast to Rectangle ──

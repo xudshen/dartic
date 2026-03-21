@@ -545,7 +545,6 @@ libraries:
         extra_methods:
           "#0": "(args) => const Stream.empty()"
           "#1": "(args) => const Stream.empty()"
-          "_#fromFields#1": "(args) => const Stream.empty()"
 
       # ── StreamController ────────────────────────────────────────────────
       StreamController:
@@ -1257,18 +1256,9 @@ libraries:
               );
             }
 
-      # ── _RootZone ─────────────────────────────────────────────────────────
-      # Singleton with no fields. _#fromFields returns Zone.root.
-      _RootZone:
-        extra_methods:
-          "_#fromFields#0": "(args) => Zone.root"
-
       # ── TimeoutException ─────────────────────────────────────────────────
-      # Auto-gen _#fromFields gets field order wrong (Duration before String);
-      # explicit override fixes the constructor parameter order.
       TimeoutException:
         extra_methods:
-          "_#fromFields#2": "(args) => TimeoutException(args[0] as String?, args[1] as Duration?)"
           "#2": |
             (args) => TimeoutException(
               identical(args[0], darticAbsent) ? null : args[0] as String?,

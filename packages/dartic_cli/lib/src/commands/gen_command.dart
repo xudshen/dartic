@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import '../generator/audit/audit_reporter.dart';
+import '../generator/audit/audit_result.dart';
 import '../generator/runner.dart';
 import '../generator/scanner.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -45,6 +47,11 @@ class GenCommand extends Command<int> {
         help: 'Override output directory for generated test files.\n'
             'Default: auto-detected from config path '
             '(e.g. packages/<pkg>/test/gen_verify/).',
+      )
+      ..addFlag(
+        'strict',
+        help: 'Audit strict mode: fail on missing or stale bindings.',
+        negatable: false,
       );
   }
 
@@ -65,6 +72,7 @@ class GenCommand extends Command<int> {
     final check = argResults!['check'] as bool;
     final emitTests = argResults!['emit-tests'] as bool;
     final testOutputDir = argResults!['test-output'] as String?;
+    final strict = argResults!['strict'] as bool;
 
     try {
       if (all) {
@@ -73,6 +81,7 @@ class GenCommand extends Command<int> {
           check: check,
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
+          strict: strict,
         );
       }
 
@@ -96,6 +105,7 @@ class GenCommand extends Command<int> {
           checkMode: check,
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
+          strict: strict,
         );
         await runner.runGeneratorConfig(config);
         if (check) return _checkResults(runner);
@@ -117,6 +127,7 @@ class GenCommand extends Command<int> {
           checkMode: check,
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
+          strict: strict,
         );
 
         final type = FileSystemEntity.typeSync(configPath);
@@ -152,6 +163,7 @@ class GenCommand extends Command<int> {
     required bool check,
     bool emitTests = false,
     String? testOutputDir,
+    bool strict = false,
   }) async {
     final rest = argResults!.rest;
 
@@ -163,8 +175,10 @@ class GenCommand extends Command<int> {
         checkMode: check,
         emitTests: emitTests,
         testOutputDir: testOutputDir,
+        strict: strict,
       );
       await runner.runConfigDirectory(configDir);
+      if (runner.printAuditSummary()) return 2;
       if (check) return _checkResults(runner);
       _logger.success('Code generation complete.');
       return 0;
@@ -178,8 +192,9 @@ class GenCommand extends Command<int> {
       ('packages/dartic_flutter/configs', 'packages/dartic_flutter'),
     ];
 
-    // Collect all written files across all runners for --check mode
+    // Collect results across all runners.
     final allWrittenFiles = <String, String>{};
+    final allAuditResults = <AuditResult>[];
 
     for (final (dirPath, rootOverride) in configsDirs) {
       final dir = Directory(dirPath);
@@ -195,11 +210,26 @@ class GenCommand extends Command<int> {
         checkMode: check,
         emitTests: emitTests,
         testOutputDir: testOutputDir,
+        strict: strict,
       );
       await runner.runConfigDirectory(dirPath);
+      allAuditResults.addAll(runner.auditResults);
 
       if (check) {
         allWrittenFiles.addAll(runner.writtenFiles);
+      }
+    }
+
+    // Print audit summary across all runners.
+    if (allAuditResults.isNotEmpty) {
+      AuditReporter.printSummary(allAuditResults);
+      if (strict) {
+        final hasErrors = allAuditResults.any(
+            (r) => r.missing.isNotEmpty || r.stale.isNotEmpty);
+        if (hasErrors) {
+          _logger.err('STRICT: audit failures detected.');
+          return 2;
+        }
       }
     }
 
