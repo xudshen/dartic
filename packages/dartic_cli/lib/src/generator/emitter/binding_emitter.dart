@@ -1470,6 +1470,13 @@ bool _isAccessibleDefault(String code) {
 
   final trimmed = code.trim();
 
+  // Bare unqualified identifiers (e.g. `sentinelValue`, `defaultBuilder`)
+  // are likely same-library/same-class members not accessible from generated code.
+  if (RegExp(r'^[a-zA-Z][a-zA-Z0-9_]*$').hasMatch(trimmed) &&
+      !const {'null', 'true', 'false', 'dynamic'}.contains(trimmed)) {
+    return false;
+  }
+
   // Import-prefixed references (e.g. `math.pi`, `ui.BoxHeightStyle`).
   // These are accessible IF the generated file adds the same prefixed import.
   // Known prefixes are mapped to library URIs and added to imports automatically.

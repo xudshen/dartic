@@ -924,7 +924,7 @@ libraries:
 
 
 
-      # ── StringBuffer: optional-param methods ──
+      # ── StringBuffer: writeln/writeAll default is '' not null ──
       StringBuffer:
         extra_methods:
           "writeln#1": |
@@ -948,7 +948,7 @@ libraries:
               return null;
             }
 
-      # ── StringSink: optional-param methods ──
+      # ── StringSink: writeln default is '' not null ──
       StringSink:
         extra_methods:
           "writeln#1": |
