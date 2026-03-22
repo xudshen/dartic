@@ -60,6 +60,12 @@ class _$Error extends Error implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Error(dispatch, obj, superArgs);
+
 abstract final class ErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

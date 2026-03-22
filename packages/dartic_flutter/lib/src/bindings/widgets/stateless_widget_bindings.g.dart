@@ -126,6 +126,12 @@ class _$StatelessWidget extends StatelessWidget implements DarticObjectHolder {
   Key? get _super$key => super.key;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStatelessWidgetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StatelessWidget(dispatch, obj, superArgs);
+
 abstract final class StatelessWidgetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

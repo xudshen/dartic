@@ -347,6 +347,12 @@ class _$SetBase extends SetBase implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSetBaseBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SetBase(dispatch, obj, superArgs);
+
 abstract final class SetBaseBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

@@ -189,6 +189,12 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMapBaseBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MapBase(dispatch, obj, superArgs);
+
 abstract final class MapBaseBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

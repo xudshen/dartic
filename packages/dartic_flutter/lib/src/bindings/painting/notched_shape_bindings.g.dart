@@ -55,6 +55,12 @@ class _$NotchedShape extends NotchedShape implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createNotchedShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$NotchedShape(dispatch, obj, superArgs);
+
 abstract final class NotchedShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

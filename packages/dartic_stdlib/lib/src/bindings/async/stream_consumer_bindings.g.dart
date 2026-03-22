@@ -58,6 +58,12 @@ class _$StreamConsumer implements StreamConsumer, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamConsumerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StreamConsumer(dispatch, obj, superArgs);
+
 abstract final class StreamConsumerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

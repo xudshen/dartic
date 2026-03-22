@@ -180,6 +180,12 @@ class _$Duration extends Duration implements DarticObjectHolder {
   bool get _super$isNegative => super.isNegative;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDurationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Duration(dispatch, obj, superArgs);
+
 abstract final class DurationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

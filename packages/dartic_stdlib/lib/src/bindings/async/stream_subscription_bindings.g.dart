@@ -107,6 +107,12 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamSubscriptionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StreamSubscription(dispatch, obj, superArgs);
+
 abstract final class StreamSubscriptionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

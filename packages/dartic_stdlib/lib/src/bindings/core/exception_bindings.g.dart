@@ -41,6 +41,12 @@ class _$Exception implements Exception, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createExceptionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Exception(dispatch, obj, superArgs);
+
 abstract final class ExceptionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

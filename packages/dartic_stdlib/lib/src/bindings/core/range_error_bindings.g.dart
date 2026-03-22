@@ -93,6 +93,12 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRangeErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RangeError(dispatch, obj, superArgs);
+
 abstract final class RangeErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

@@ -472,6 +472,12 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   set _super$last(dynamic value) { super.last = value; }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createListBaseBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ListBase(dispatch, obj, superArgs);
+
 abstract final class ListBaseBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

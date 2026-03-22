@@ -166,6 +166,12 @@ class _$State extends State implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$State(dispatch, obj, superArgs);
+
 abstract final class StateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

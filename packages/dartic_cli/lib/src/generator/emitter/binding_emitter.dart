@@ -1877,6 +1877,17 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   }
 
   buf.writeln('}');
+
+  // Test-only factory to instantiate the private Bridge class from tests.
+  buf.writeln();
+  buf.writeln('/// Test-only factory to create Bridge instances without exposing the');
+  buf.writeln('/// private class.');
+  buf.writeln(
+      'Object create${info.className}Bridge(');
+  buf.writeln(
+      '        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>');
+  buf.writeln(
+      '    $bridgeClassName(dispatch, obj, superArgs);');
 }
 
 /// Generates `_super$xxx` trampoline methods in the Bridge class.

@@ -83,6 +83,12 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamSinkBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StreamSink(dispatch, obj, superArgs);
+
 abstract final class StreamSinkBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

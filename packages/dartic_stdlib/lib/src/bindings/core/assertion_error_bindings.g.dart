@@ -61,6 +61,12 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAssertionErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AssertionError(dispatch, obj, superArgs);
+
 abstract final class AssertionErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

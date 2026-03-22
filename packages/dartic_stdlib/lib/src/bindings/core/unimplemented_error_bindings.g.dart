@@ -61,6 +61,12 @@ class _$UnimplementedError extends UnimplementedError implements DarticObjectHol
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createUnimplementedErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$UnimplementedError(dispatch, obj, superArgs);
+
 abstract final class UnimplementedErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

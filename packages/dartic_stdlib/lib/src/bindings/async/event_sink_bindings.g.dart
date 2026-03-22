@@ -64,6 +64,12 @@ class _$EventSink implements EventSink, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createEventSinkBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$EventSink(dispatch, obj, superArgs);
+
 abstract final class EventSinkBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

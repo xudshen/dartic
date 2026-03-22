@@ -277,6 +277,12 @@ class _$Stream extends Stream implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Stream(dispatch, obj, superArgs);
+
 abstract final class StreamBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

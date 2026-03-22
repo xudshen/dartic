@@ -77,6 +77,12 @@ class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createArgumentErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ArgumentError(dispatch, obj, superArgs);
+
 abstract final class ArgumentErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

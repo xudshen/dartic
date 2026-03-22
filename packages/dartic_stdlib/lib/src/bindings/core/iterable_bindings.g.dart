@@ -245,6 +245,12 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIterableBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Iterable(dispatch, obj, superArgs);
+
 abstract final class IterableBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

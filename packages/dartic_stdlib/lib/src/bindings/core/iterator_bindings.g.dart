@@ -59,6 +59,12 @@ class _$Iterator implements Iterator, DarticObjectHolder {
   }
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIteratorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Iterator(dispatch, obj, superArgs);
+
 abstract final class IteratorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

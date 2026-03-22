@@ -69,6 +69,12 @@ class _$FormatException extends FormatException implements DarticObjectHolder {
   int get _super$hashCode => super.hashCode;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFormatExceptionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FormatException(dispatch, obj, superArgs);
+
 abstract final class FormatExceptionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

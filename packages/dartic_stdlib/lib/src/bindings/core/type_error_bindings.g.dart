@@ -53,6 +53,12 @@ class _$TypeError extends TypeError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTypeErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TypeError(dispatch, obj, superArgs);
+
 abstract final class TypeErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

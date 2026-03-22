@@ -61,6 +61,12 @@ class _$UnsupportedError extends UnsupportedError implements DarticObjectHolder 
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createUnsupportedErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$UnsupportedError(dispatch, obj, superArgs);
+
 abstract final class UnsupportedErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

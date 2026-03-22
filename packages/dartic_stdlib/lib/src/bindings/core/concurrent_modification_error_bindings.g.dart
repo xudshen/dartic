@@ -61,6 +61,12 @@ class _$ConcurrentModificationError extends ConcurrentModificationError implemen
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createConcurrentModificationErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ConcurrentModificationError(dispatch, obj, superArgs);
+
 abstract final class ConcurrentModificationErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

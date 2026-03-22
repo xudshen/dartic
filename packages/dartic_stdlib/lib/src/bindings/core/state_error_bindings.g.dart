@@ -61,6 +61,12 @@ class _$StateError extends StateError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStateErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StateError(dispatch, obj, superArgs);
+
 abstract final class StateErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(

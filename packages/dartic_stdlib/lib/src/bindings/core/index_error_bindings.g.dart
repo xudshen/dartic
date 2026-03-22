@@ -109,6 +109,12 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
   StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIndexErrorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$IndexError(dispatch, obj, superArgs);
+
 abstract final class IndexErrorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
