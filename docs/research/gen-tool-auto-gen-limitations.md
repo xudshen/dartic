@@ -23,9 +23,9 @@ These patterns work correctly and reliably:
 | Constructors of **concrete** classes | `_writeConstructorEntry` | `(args) => ArgumentError.value(...)` |
 | Combined callback + absent patterns | Composition of above | `Stream.listen(onData, onError:, onDone:, cancelOnError:)` |
 
-## Limitation 1: Factory Constructors on Abstract/Interface Classes
+## Limitation 1: Factory Constructors on Abstract/Interface Classes — RESOLVED
 
-**Severity:** High (blocks ~40 entry removals)
+**Severity:** ~~High~~ **Resolved** in P1 (commit 3d92a9c)
 
 **Problem:** The Dart Analyzer does not report factory constructors for abstract or interface classes. These classes have `factory` or `external factory` constructors that redirect to private implementation classes (e.g., `Uri.http()` → `_Uri`).
 
@@ -50,9 +50,9 @@ These patterns work correctly and reliably:
 2. The gen tool's `TypeAnalyzer._collectConstructors()` skips redirecting factories
 3. The gen tool's constructor emission has an abstract-class guard
 
-## Limitation 2: Object-Inherited `==` and `hashCode`
+## Limitation 2: Object-Inherited `==` and `hashCode` — RESOLVED
 
-**Severity:** Medium (blocks ~15 entry removals)
+**Severity:** ~~Medium~~ **Resolved** in P2 (commit ccbb19a)
 
 **Problem:** For some classes, the auto-gen does NOT produce `==#1` and `hashCode#0` bindings, even though it produces other inherited methods like `toString#0`.
 
@@ -118,6 +118,21 @@ These patterns work correctly and reliably:
 
 **Fix direction:** The gen tool's `extra_bindings` emission could check both main and internal method maps.
 
+## Resolution Status
+
+| Limitation | Status | Fix |
+|-----------|--------|-----|
+| 1. Factory ctors (abstract classes) | **RESOLVED** (P1, 3d92a9c) | `isAbstract && !ctor.isFactory` guard |
+| 2. Object-inherited ==, hashCode | **RESOLVED** (P2, ccbb19a) | Synthesized in TypeAnalyzer |
+| 3. Static methods/getters | Open | Low priority (~5 entries) |
+| 4. Callback type mismatch | Open | Low priority (~3 entries) |
+| 5. Cross-type factory routing | Open | Uri-specific |
+
+Additionally fixed:
+- `_isAccessibleDefault` bare identifier check (4c2b40a): `sentinelValue` and similar bare identifiers now correctly rejected
+- `$super$` compiler walk-up (a1b6551): super calls resolve to nearest host class
+- Audit warnings (ce8ed23): nullable non-null defaults + bridge-skipped detection
+
 ## Summary: What Can vs Cannot Be Removed
 
 | Category | Auto-Gen? | Count Removed | Notes |
@@ -125,15 +140,15 @@ These patterns work correctly and reliably:
 | Instance methods (public classes) | YES | ~80 | Reliable for callback wrapping + absent checks |
 | Instance getters/setters | YES | ~30 | Simple delegation |
 | Constructors (concrete classes) | YES | ~10 | With optional params |
-| Factory ctors (abstract classes) | NO | 0 | Limitation 1 |
-| `==`, `hashCode` (inherited) | PARTIAL | 0 | Limitation 2 |
+| Factory ctors (abstract classes) | **YES** | ~40 | Fixed in P1 |
+| `==`, `hashCode`, `toString` | **YES** | ~15 | Synthesized in P2 |
 | Static methods/getters | PARTIAL | 0 | Limitation 3 |
 | Callback-typed delegation | PARTIAL | ~3 (kept) | Limitation 4 |
 | Cross-type factory routing | NO | 0 | Limitation 5 |
 
-## P0 Results
+## Combined P0+P1+P2 Results
 
-- **YAML reduction:** 3,918 → 2,919 lines (999 lines, 26%)
+- **YAML reduction:** 3,918 → 2,542 lines (1,376 lines, 35%)
 - **Entries removed:** ~150 extra_methods entries across 3 files
 - **Co19 impact:** No regressions; slight improvements (+7 LanguageFeatures, +219 LibTest)
 - **Remaining optimization potential:** ~60 entries blocked by Limitations 1-5

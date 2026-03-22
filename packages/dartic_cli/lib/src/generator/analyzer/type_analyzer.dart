@@ -25,7 +25,13 @@ class TypeAnalyzer {
   TypeAnalyzer._(this._session, this._collection);
 
   /// Returns cached TypeInfo for a class name, or null if not yet analyzed.
-  TypeInfo? getCachedTypeInfo(String className) => _typeInfoCache[className];
+  TypeInfo? getCachedTypeInfo(String className) {
+    // Check both bare name and qualified keys (cache uses qualified keys).
+    return _typeInfoCache[className] ??
+        _typeInfoCache.values
+            .cast<TypeInfo?>()
+            .firstWhere((i) => i?.className == className, orElse: () => null);
+  }
 
   /// Creates a new [TypeAnalyzer].
   ///
@@ -74,7 +80,7 @@ class TypeAnalyzer {
       );
     }
     final info = _extractTypeInfo(cls, libraryUri);
-    _typeInfoCache[className] = info;
+    _typeInfoCache['$libraryUri::$className'] = info;
     return info;
   }
 
@@ -453,8 +459,6 @@ class TypeAnalyzer {
 
       if (member is MethodElement) {
         if (member.isOperator) {
-          // Skip == operator — handled by opcodes
-          if (member.name == '==') continue;
           final lookupName = _operatorLookupName(member);
           if (!existingOperatorNames.contains(lookupName)) {
             operators.add(_toOperatorInfo(member));

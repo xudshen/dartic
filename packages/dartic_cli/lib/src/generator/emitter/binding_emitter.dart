@@ -632,7 +632,6 @@ void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
   const indent = '        '; // 8 spaces: map entry level
   final trimmed = source.trim();
   // Escape $ in keys to prevent Dart string interpolation (e.g. $super$).
-  // Escape $ in keys to prevent Dart string interpolation (e.g. $super$).
   final escapedKey = key.contains(r'$')
       ? key.replaceAll(r'$', r'\$')
       : key;
