@@ -91,6 +91,75 @@ abstract final class CupertinoAppBindings {
         'key#0': (args) => (args[0] as CupertinoApp).key,
         '#30': (args) => CupertinoApp(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, navigatorKey: identical(args[1], darticAbsent) ? null : args[1] as GlobalKey<NavigatorState>?, home: identical(args[2], darticAbsent) ? null : args[2] as Widget?, theme: identical(args[3], darticAbsent) ? null : args[3] as CupertinoThemeData?, routes: identical(args[4], darticAbsent) ? const <String, WidgetBuilder>{} : (args[4] as Map).cast<String, Widget Function(BuildContext)>(), initialRoute: identical(args[5], darticAbsent) ? null : args[5] as String?, onGenerateRoute: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onGenerateInitialRoutes: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), onUnknownRoute: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), onNavigationNotification: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a) => (args[9] as Function?)!(a), navigatorObservers: identical(args[10], darticAbsent) ? const <NavigatorObserver>[] : (args[10] as List).cast<NavigatorObserver>(), builder: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : (a, b) => (args[11] as Function?)!(a, b), title: identical(args[12], darticAbsent) ? null : args[12] as String?, onGenerateTitle: identical(args[13], darticAbsent) ? null : (args[13] as Function?) == null ? null : (a) => (args[13] as Function?)!(a), color: identical(args[14], darticAbsent) ? null : args[14] as Color?, locale: identical(args[15], darticAbsent) ? null : args[15] as Locale?, localizationsDelegates: identical(args[16], darticAbsent) ? null : args[16] == null ? null : (args[16] as Iterable).cast<LocalizationsDelegate<dynamic>>(), localeListResolutionCallback: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : (a, b) => (args[17] as Function?)!(a, b), localeResolutionCallback: identical(args[18], darticAbsent) ? null : (args[18] as Function?) == null ? null : (a, b) => (args[18] as Function?)!(a, b), supportedLocales: identical(args[19], darticAbsent) ? const <Locale>[Locale('en', 'US')] : (args[19] as Iterable).cast<Locale>(), showPerformanceOverlay: identical(args[20], darticAbsent) ? false : args[20] as bool, checkerboardRasterCacheImages: identical(args[21], darticAbsent) ? false : args[21] as bool, checkerboardOffscreenLayers: identical(args[22], darticAbsent) ? false : args[22] as bool, showSemanticsDebugger: identical(args[23], darticAbsent) ? false : args[23] as bool, debugShowCheckedModeBanner: identical(args[24], darticAbsent) ? true : args[24] as bool, shortcuts: identical(args[25], darticAbsent) ? null : args[25] == null ? null : (args[25] as Map).cast<ShortcutActivator, Intent>(), actions: identical(args[26], darticAbsent) ? null : args[26] == null ? null : (args[26] as Map).cast<Type, Action<Intent>>(), restorationScopeId: identical(args[27], darticAbsent) ? null : args[27] as String?, scrollBehavior: identical(args[28], darticAbsent) ? null : args[28] as ScrollBehavior?, useInheritedMediaQuery: identical(args[29], darticAbsent) ? false : args[29] as bool),
         'router#27': (args) => CupertinoApp.router(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, routeInformationProvider: identical(args[1], darticAbsent) ? null : args[1] as RouteInformationProvider?, routeInformationParser: identical(args[2], darticAbsent) ? null : args[2] as RouteInformationParser<Object>?, routerDelegate: identical(args[3], darticAbsent) ? null : args[3] as RouterDelegate<Object>?, backButtonDispatcher: identical(args[4], darticAbsent) ? null : args[4] as BackButtonDispatcher?, routerConfig: identical(args[5], darticAbsent) ? null : args[5] as RouterConfig<Object>?, theme: identical(args[6], darticAbsent) ? null : args[6] as CupertinoThemeData?, builder: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, b) => (args[7] as Function?)!(a, b), title: identical(args[8], darticAbsent) ? null : args[8] as String?, onGenerateTitle: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a) => (args[9] as Function?)!(a), onNavigationNotification: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a) => (args[10] as Function?)!(a), color: identical(args[11], darticAbsent) ? null : args[11] as Color?, locale: identical(args[12], darticAbsent) ? null : args[12] as Locale?, localizationsDelegates: identical(args[13], darticAbsent) ? null : args[13] == null ? null : (args[13] as Iterable).cast<LocalizationsDelegate<dynamic>>(), localeListResolutionCallback: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a, b) => (args[14] as Function?)!(a, b), localeResolutionCallback: identical(args[15], darticAbsent) ? null : (args[15] as Function?) == null ? null : (a, b) => (args[15] as Function?)!(a, b), supportedLocales: identical(args[16], darticAbsent) ? const <Locale>[Locale('en', 'US')] : (args[16] as Iterable).cast<Locale>(), showPerformanceOverlay: identical(args[17], darticAbsent) ? false : args[17] as bool, checkerboardRasterCacheImages: identical(args[18], darticAbsent) ? false : args[18] as bool, checkerboardOffscreenLayers: identical(args[19], darticAbsent) ? false : args[19] as bool, showSemanticsDebugger: identical(args[20], darticAbsent) ? false : args[20] as bool, debugShowCheckedModeBanner: identical(args[21], darticAbsent) ? true : args[21] as bool, shortcuts: identical(args[22], darticAbsent) ? null : args[22] == null ? null : (args[22] as Map).cast<ShortcutActivator, Intent>(), actions: identical(args[23], darticAbsent) ? null : args[23] == null ? null : (args[23] as Map).cast<Type, Action<Intent>>(), restorationScopeId: identical(args[24], darticAbsent) ? null : args[24] as String?, scrollBehavior: identical(args[25], darticAbsent) ? null : args[25] as ScrollBehavior?, useInheritedMediaQuery: identical(args[26], darticAbsent) ? false : args[26] as bool),
-        '_#fromFields#35': (args) => CupertinoApp(key: args[9] as Key?, navigatorKey: args[14] as GlobalKey<NavigatorState>?, home: args[7] as Widget?, theme: args[32] as CupertinoThemeData?, routes: (args[26] as Map).cast<String, Widget Function(BuildContext)>(), initialRoute: args[8] as String?, onGenerateRoute: args[17] as RouteFactory?, onGenerateInitialRoutes: args[16] as InitialRouteListFactory?, onUnknownRoute: args[20] as RouteFactory?, onNavigationNotification: args[19] as NotificationListenerCallback<NavigationNotification>?, navigatorObservers: (args[15] as List).cast<NavigatorObserver>(), builder: args[2] as TransitionBuilder?, title: args[33] as String?, onGenerateTitle: args[18] as GenerateAppTitle?, color: args[5] as Color?, locale: args[10] as Locale?, localizationsDelegates: args[13] == null ? null : (args[13] as Iterable).cast<LocalizationsDelegate<dynamic>>(), localeListResolutionCallback: args[11] as LocaleListResolutionCallback?, localeResolutionCallback: args[12] as LocaleResolutionCallback?, supportedLocales: (args[31] as Iterable).cast<Locale>(), showPerformanceOverlay: args[29] as bool, checkerboardRasterCacheImages: args[4] as bool, checkerboardOffscreenLayers: args[3] as bool, showSemanticsDebugger: args[30] as bool, debugShowCheckedModeBanner: args[6] as bool, shortcuts: args[28] == null ? null : (args[28] as Map).cast<ShortcutActivator, Intent>(), actions: args[0] == null ? null : (args[0] as Map).cast<Type, Action<Intent>>(), restorationScopeId: args[21] as String?, scrollBehavior: args[27] as ScrollBehavior?, useInheritedMediaQuery: args[34] as bool),
+        '_#fromFields#35': (args) {
+            final routerDelegate = args[25];
+            final routerConfig = args[24];
+            if (routerDelegate != null || routerConfig != null) {
+              // router ctor — router#27
+              return CupertinoApp.router(
+                key: args[9] as Key?,
+                routeInformationProvider: args[23] as RouteInformationProvider?,
+                routeInformationParser: args[22] as RouteInformationParser<Object>?,
+                routerDelegate: routerDelegate as RouterDelegate<Object>?,
+                backButtonDispatcher: args[1] as BackButtonDispatcher?,
+                routerConfig: routerConfig as RouterConfig<Object>?,
+                theme: args[32] as CupertinoThemeData?,
+                builder: (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function)!(a, b),
+                title: args[33] == null ? null : args[33] as String?,
+                onGenerateTitle: (args[18] as Function?) == null ? null : (a) => (args[18] as Function)!(a),
+                onNavigationNotification: (args[19] as Function?) == null ? null : (a) => (args[19] as Function)!(a),
+                color: args[5] as Color?,
+                locale: args[10] as Locale?,
+                localizationsDelegates: args[13] == null ? null : (args[13] as Iterable).cast<LocalizationsDelegate<dynamic>>(),
+                localeListResolutionCallback: (args[11] as Function?) == null ? null : (a, b) => (args[11] as Function)!(a, b),
+                localeResolutionCallback: (args[12] as Function?) == null ? null : (a, b) => (args[12] as Function)!(a, b),
+                supportedLocales: (args[31] as Iterable).cast<Locale>(),
+                showPerformanceOverlay: args[29] as bool,
+                checkerboardRasterCacheImages: args[4] as bool,
+                checkerboardOffscreenLayers: args[3] as bool,
+                showSemanticsDebugger: args[30] as bool,
+                debugShowCheckedModeBanner: args[6] as bool,
+                shortcuts: args[28] == null ? null : (args[28] as Map).cast<ShortcutActivator, Intent>(),
+                actions: args[0] == null ? null : (args[0] as Map).cast<Type, Action<Intent>>(),
+                restorationScopeId: args[21] as String?,
+                scrollBehavior: args[27] as ScrollBehavior?,
+                useInheritedMediaQuery: args[34] as bool,
+              );
+            } else {
+              // primary ctor — #30
+              return CupertinoApp(
+                key: args[9] as Key?,
+                navigatorKey: args[14] as GlobalKey<NavigatorState>?,
+                home: args[7] as Widget?,
+                theme: args[32] as CupertinoThemeData?,
+                routes: args[26] == null ? const <String, WidgetBuilder>{} : (args[26] as Map).cast<String, Widget Function(BuildContext)>(),
+                initialRoute: args[8] as String?,
+                onGenerateRoute: (args[17] as Function?) == null ? null : (a) => (args[17] as Function)!(a),
+                onGenerateInitialRoutes: (args[16] as Function?) == null ? null : (a) => (args[16] as Function)!(a),
+                onUnknownRoute: (args[20] as Function?) == null ? null : (a) => (args[20] as Function)!(a),
+                onNavigationNotification: (args[19] as Function?) == null ? null : (a) => (args[19] as Function)!(a),
+                navigatorObservers: args[15] == null ? const <NavigatorObserver>[] : (args[15] as List).cast<NavigatorObserver>(),
+                builder: (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function)!(a, b),
+                title: args[33] == null ? null : args[33] as String?,
+                onGenerateTitle: (args[18] as Function?) == null ? null : (a) => (args[18] as Function)!(a),
+                color: args[5] as Color?,
+                locale: args[10] as Locale?,
+                localizationsDelegates: args[13] == null ? null : (args[13] as Iterable).cast<LocalizationsDelegate<dynamic>>(),
+                localeListResolutionCallback: (args[11] as Function?) == null ? null : (a, b) => (args[11] as Function)!(a, b),
+                localeResolutionCallback: (args[12] as Function?) == null ? null : (a, b) => (args[12] as Function)!(a, b),
+                supportedLocales: (args[31] as Iterable).cast<Locale>(),
+                showPerformanceOverlay: args[29] as bool,
+                checkerboardRasterCacheImages: args[4] as bool,
+                checkerboardOffscreenLayers: args[3] as bool,
+                showSemanticsDebugger: args[30] as bool,
+                debugShowCheckedModeBanner: args[6] as bool,
+                shortcuts: args[28] == null ? null : (args[28] as Map).cast<ShortcutActivator, Intent>(),
+                actions: args[0] == null ? null : (args[0] as Map).cast<Type, Action<Intent>>(),
+                restorationScopeId: args[21] as String?,
+                scrollBehavior: args[27] as ScrollBehavior?,
+                useInheritedMediaQuery: args[34] as bool,
+              );
+            }
+        },
       };
 }

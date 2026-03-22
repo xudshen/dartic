@@ -14,3 +14,7 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: package:flutter/src/gestures
     discover: all
+
+# NOTE: SelectionEdgeUpdateEvent is NOT in package:flutter/src/gestures.
+# It lives in package:flutter/src/rendering/selection.dart and is already
+# handled by the rendering config. No extra_methods override needed here.

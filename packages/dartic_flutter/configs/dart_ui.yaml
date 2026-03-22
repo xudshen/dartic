@@ -14,3 +14,19 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: dart:ui
     discover: all
+
+    overrides:
+
+      # ── ColorFilter: discriminate by _type field (args[3]) ──
+      # _type constants: 1=mode, 2=matrix, 3=linearToSrgbGamma, 4=srgbToLinearGamma
+      # Field order from Kernel IR: args[0]=_blendMode, args[1]=_color, args[2]=_matrix, args[3]=_type
+      ColorFilter:
+        extra_methods:
+          "_#fromFields#4": |
+            (args) {
+              final type = args[3] as int;
+              if (type == 2) return ColorFilter.matrix((args[2] as List).cast<double>());
+              if (type == 3) return ColorFilter.linearToSrgbGamma();
+              if (type == 4) return ColorFilter.srgbToLinearGamma();
+              return ColorFilter.mode(args[1] as Color, args[0] as BlendMode);
+            }

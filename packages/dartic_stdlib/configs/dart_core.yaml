@@ -594,6 +594,7 @@ libraries:
           "message#0": "(args) => (args[0] as Deprecated).message"
           "toString#0": "(args) => (args[0] as Deprecated).toString()"
           "expires#0": "(args) => (args[0] as Deprecated).message"
+          "_#fromFields#2": "(args) => Deprecated(args[1] as String)"
 
       # ── OutOfMemoryError: no-arg constructor ──
       OutOfMemoryError:
@@ -631,6 +632,7 @@ libraries:
               milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
               microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
             )
+          "_#fromFields#1": "(args) => Duration(microseconds: args[0] as int)"
 
       # ── int: parse with deprecated onError (Kernel compiles to arity 3) ──
       int:

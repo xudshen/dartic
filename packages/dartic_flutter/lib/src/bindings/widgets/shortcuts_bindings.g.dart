@@ -47,6 +47,10 @@ abstract final class ShortcutsBindings {
         'key#0': (args) => (args[0] as Shortcuts).key,
         '#5': (args) => Shortcuts(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shortcuts: (args[1] as Map).cast<ShortcutActivator, Intent>(), child: args[2] as Widget, debugLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, includeSemantics: identical(args[4], darticAbsent) ? true : args[4] as bool),
         'manager#5': (args) => Shortcuts.manager(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, manager: args[1] as ShortcutManager, child: args[2] as Widget, debugLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, includeSemantics: identical(args[4], darticAbsent) ? true : args[4] as bool),
-        '_#fromFields#6': (args) => Shortcuts(key: args[4] as Key?, shortcuts: (args[0] as Map).cast<ShortcutActivator, Intent>(), child: args[1] as Widget, debugLabel: args[2] as String?, includeSemantics: args[3] as bool),
+        '_#fromFields#6': (args) {
+            final manager = args[5];
+            if (manager != null) return Shortcuts.manager(key: args[4] as Key?, manager: manager as ShortcutManager, child: args[1] as Widget, debugLabel: args[2] as String?, includeSemantics: args[3] as bool);
+            return Shortcuts(key: args[4] as Key?, shortcuts: (args[0] as Map).cast<ShortcutActivator, Intent>(), child: args[1] as Widget, debugLabel: args[2] as String?, includeSemantics: args[3] as bool);
+        },
       };
 }

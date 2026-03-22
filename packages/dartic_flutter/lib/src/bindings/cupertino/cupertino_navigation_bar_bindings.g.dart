@@ -84,6 +84,93 @@ abstract final class CupertinoNavigationBarBindings {
             return CupertinoNavigationBar.large(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, largeTitle: identical(args[1], darticAbsent) ? null : args[1] as Widget?, leading: identical(args[2], darticAbsent) ? null : args[2] as Widget?, automaticallyImplyLeading: identical(args[3], darticAbsent) ? true : args[3] as bool, automaticallyImplyTitle: identical(args[4], darticAbsent) ? true : args[4] as bool, previousPageTitle: identical(args[5], darticAbsent) ? null : args[5] as String?, trailing: identical(args[6], darticAbsent) ? null : args[6] as Widget?, border: identical(args[7], darticAbsent) ? null : args[7] as Border?, backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, automaticBackgroundVisibility: identical(args[9], darticAbsent) ? true : args[9] as bool, enableBackgroundFilterBlur: identical(args[10], darticAbsent) ? true : args[10] as bool, brightness: identical(args[11], darticAbsent) ? null : args[11] as Brightness?, padding: identical(args[12], darticAbsent) ? null : args[12] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[13], darticAbsent) ? true : args[13] as bool, heroTag: args[14] as Object, bottom: identical(args[15], darticAbsent) ? null : args[15] as PreferredSizeWidget?);
           }
         },
-        '_#fromFields#17': (args) => CupertinoNavigationBar(key: args[9] as Key?, leading: args[11] as Widget?, automaticallyImplyLeading: args[1] as bool, automaticallyImplyMiddle: args[2] as bool, previousPageTitle: args[14] as String?, middle: args[12] as Widget?, trailing: args[15] as Widget?, border: args[4] as Border?, backgroundColor: args[3] as Color?, automaticBackgroundVisibility: args[0] as bool, enableBackgroundFilterBlur: args[7] as bool, brightness: args[6] as Brightness?, padding: args[13] as EdgeInsetsDirectional?, transitionBetweenRoutes: args[16] as bool, heroTag: args[8] as Object, bottom: args[5] as PreferredSizeWidget?),
+        '_#fromFields#17': (args) {
+            // Fields: automaticBackgroundVisibility(0),
+            //   automaticallyImplyLeading(1), automaticallyImplyMiddle(2),
+            //   backgroundColor(3), border(4), bottom(5), brightness(6),
+            //   enableBackgroundFilterBlur(7), heroTag(8), key(9),
+            //   largeTitle(10), leading(11), middle(12), padding(13),
+            //   previousPageTitle(14), trailing(15), transitionBetweenRoutes(16)
+            final largeTitle = args[10] as Widget?;
+            final key = args[9] as Key?;
+            final leading = args[11] as Widget?;
+            final automaticallyImplyLeading = args[1] as bool;
+            final backgroundColor = args[3] as Color?;
+            final automaticBackgroundVisibility = args[0] as bool;
+            final enableBackgroundFilterBlur = args[7] as bool;
+            final brightness = args[6] as Brightness?;
+            final padding = args[13] as EdgeInsetsDirectional?;
+            final border = args[4] as Border?;
+            final transitionBetweenRoutes = args[16] as bool;
+            final heroTag = args[8] as Object?;
+            final bottom = args[5] as PreferredSizeWidget?;
+            if (largeTitle != null) {
+              // large ctor
+              if (heroTag != null) {
+                return CupertinoNavigationBar.large(
+                  key: key, largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: args[2] as bool,
+                  previousPageTitle: args[14] as String?,
+                  trailing: args[15] as Widget?,
+                  border: border, backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  heroTag: heroTag,
+                  bottom: bottom,
+                );
+              } else {
+                return CupertinoNavigationBar.large(
+                  key: key, largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: args[2] as bool,
+                  previousPageTitle: args[14] as String?,
+                  trailing: args[15] as Widget?,
+                  border: border, backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  bottom: bottom,
+                );
+              }
+            } else {
+              // primary ctor
+              if (heroTag != null) {
+                return CupertinoNavigationBar(
+                  key: key, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyMiddle: args[2] as bool,
+                  previousPageTitle: args[14] as String?,
+                  middle: args[12] as Widget?,
+                  trailing: args[15] as Widget?,
+                  border: border, backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  heroTag: heroTag,
+                  bottom: bottom,
+                );
+              } else {
+                return CupertinoNavigationBar(
+                  key: key, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyMiddle: args[2] as bool,
+                  previousPageTitle: args[14] as String?,
+                  middle: args[12] as Widget?,
+                  trailing: args[15] as Widget?,
+                  border: border, backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  bottom: bottom,
+                );
+              }
+            }
+        },
       };
 }

@@ -241,7 +241,6 @@ abstract final class DurationBindings {
         '<=#1': (args) => (args[0] as Duration) <= (args[1] as Duration),
         '>=#1': (args) => (args[0] as Duration) >= (args[1] as Duration),
         'unary-#0': (args) => -(args[0] as Duration),
-        '_#fromFields#1': (args) => Duration(microseconds: args[0] as int),
         '#6': (args) => Duration(
             days: identical(args[0], darticAbsent) ? 0 : args[0] as int,
             hours: identical(args[1], darticAbsent) ? 0 : args[1] as int,
@@ -250,5 +249,6 @@ abstract final class DurationBindings {
             milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
             microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
         ),
+        '_#fromFields#1': (args) => Duration(microseconds: args[0] as int),
       };
 }

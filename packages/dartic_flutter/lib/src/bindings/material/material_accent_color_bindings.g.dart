@@ -48,6 +48,6 @@ abstract final class MaterialAccentColorBindings {
         'blue#0': (args) => (args[0] as MaterialAccentColor).blue,
         '[]#1': (args) => (args[0] as MaterialAccentColor)[(args[1] as int)],
         '#2': (args) => MaterialAccentColor(args[0] as int, (args[1] as Map).cast<int, Color>()),
-        '_#fromFields#6': (args) => MaterialAccentColor(args[5] as int, (args[0] as Map).cast<int, Color>()),
+        '_#fromFields#6': (args) => MaterialAccentColor(Color.from(alpha: args[1] as double, blue: args[2] as double, colorSpace: args[3] as ColorSpace, green: args[4] as double, red: args[5] as double).value, (args[0] as Map).cast<int, Color>()),
       };
 }

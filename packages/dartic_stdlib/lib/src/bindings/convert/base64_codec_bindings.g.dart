@@ -31,7 +31,7 @@ abstract final class Base64CodecBindings {
         'inverted#0': (args) => (args[0] as Base64Codec).inverted,
         '#0': (args) => Base64Codec(),
         'urlSafe#0': (args) => Base64Codec.urlSafe(),
-        '_#fromFields#1': (args) => Base64Codec(),
         'encode#1': (args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>()),
+        '_#fromFields#1': (args) => ((args[0] as Base64Encoder) == const Base64Encoder.urlSafe()) ? Base64Codec.urlSafe() : Base64Codec(),
       };
 }

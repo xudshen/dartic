@@ -72,6 +72,73 @@ abstract final class CupertinoButtonBindings {
         '#19': (args) => CupertinoButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, foregroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, disabledColor: identical(args[6], darticAbsent) ? CupertinoColors.quaternarySystemFill : args[6] as Color, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
         'tinted#19': (args) => CupertinoButton.tinted(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, foregroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, disabledColor: identical(args[6], darticAbsent) ? CupertinoColors.tertiarySystemFill : args[6] as Color, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
         'filled#19': (args) => CupertinoButton.filled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, disabledColor: identical(args[5], darticAbsent) ? CupertinoColors.tertiarySystemFill : args[5] as Color, foregroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
-        '_#fromFields#20': (args) => CupertinoButton(key: args[10] as Key?, child: args[4] as Widget, sizeStyle: args[19] as CupertinoButtonSize, padding: args[17] as EdgeInsetsGeometry?, color: args[5] as Color?, foregroundColor: args[9] as Color?, disabledColor: args[6] as Color, minSize: args[11] as double?, minimumSize: args[12] as Size?, pressedOpacity: args[18] as double?, borderRadius: args[3] as BorderRadius?, alignment: args[1] as AlignmentGeometry, focusColor: args[7] as Color?, focusNode: args[8] as FocusNode?, onFocusChange: args[14] as ValueChanged<bool>?, autofocus: args[2] as bool, mouseCursor: args[13] as MouseCursor?, onLongPress: args[15] as VoidCallback?, onPressed: args[16] as VoidCallback?),
+        '_#fromFields#20': (args) {
+            // Fields: _style(0), alignment(1), autofocus(2), borderRadius(3),
+            //   child(4), color(5), disabledColor(6), focusColor(7),
+            //   focusNode(8), foregroundColor(9), key(10), minSize(11),
+            //   minimumSize(12), mouseCursor(13), onFocusChange(14),
+            //   onLongPress(15), onPressed(16), padding(17),
+            //   pressedOpacity(18), sizeStyle(19)
+            // _style index: 0=plain (primary), 1=tinted, 2=filled
+            final styleEnum = args[0] as dynamic;
+            final styleIndex = (styleEnum as dynamic).index as int;
+            final key = args[10] as Key?;
+            final child = args[4] as Widget;
+            final sizeStyle = args[19] as CupertinoButtonSize;
+            final padding = args[17] as EdgeInsetsGeometry?;
+            final color = args[5] as Color?;
+            final foregroundColor = args[9] as Color?;
+            final disabledColor = args[6] as Color;
+            final minSize = args[11] as double?;
+            final minimumSize = args[12] as Size?;
+            final pressedOpacity = args[18] as double?;
+            final borderRadius = args[3] as BorderRadius?;
+            final alignment = args[1] as AlignmentGeometry;
+            final focusColor = args[7] as Color?;
+            final focusNode = args[8] as FocusNode?;
+            final onFocusChange = (args[14] as Function?) == null ? null : (a) => (args[14] as Function)!(a);
+            final autofocus = args[2] as bool;
+            final mouseCursor = args[13] as MouseCursor?;
+            final onLongPress = (args[15] as Function?) == null ? null : () => (args[15] as Function)!();
+            final onPressed = (args[16] as Function?) == null ? null : () => (args[16] as Function)!();
+            if (styleIndex == 1) {
+              return CupertinoButton.tinted(
+                key: key, child: child, sizeStyle: sizeStyle, padding: padding,
+                color: color, foregroundColor: foregroundColor,
+                disabledColor: disabledColor, minSize: minSize,
+                minimumSize: minimumSize, pressedOpacity: pressedOpacity,
+                borderRadius: borderRadius, alignment: alignment,
+                focusColor: focusColor, focusNode: focusNode,
+                onFocusChange: onFocusChange, autofocus: autofocus,
+                mouseCursor: mouseCursor, onLongPress: onLongPress,
+                onPressed: onPressed,
+              );
+            } else if (styleIndex == 2) {
+              return CupertinoButton.filled(
+                key: key, child: child, sizeStyle: sizeStyle, padding: padding,
+                color: color, disabledColor: disabledColor,
+                foregroundColor: foregroundColor, minSize: minSize,
+                minimumSize: minimumSize, pressedOpacity: pressedOpacity,
+                borderRadius: borderRadius, alignment: alignment,
+                focusColor: focusColor, focusNode: focusNode,
+                onFocusChange: onFocusChange, autofocus: autofocus,
+                mouseCursor: mouseCursor, onLongPress: onLongPress,
+                onPressed: onPressed,
+              );
+            } else {
+              // plain (styleIndex == 0)
+              return CupertinoButton(
+                key: key, child: child, sizeStyle: sizeStyle, padding: padding,
+                color: color, foregroundColor: foregroundColor,
+                disabledColor: disabledColor, minSize: minSize,
+                minimumSize: minimumSize, pressedOpacity: pressedOpacity,
+                borderRadius: borderRadius, alignment: alignment,
+                focusColor: focusColor, focusNode: focusNode,
+                onFocusChange: onFocusChange, autofocus: autofocus,
+                mouseCursor: mouseCursor, onLongPress: onLongPress,
+                onPressed: onPressed,
+              );
+            }
+        },
       };
 }

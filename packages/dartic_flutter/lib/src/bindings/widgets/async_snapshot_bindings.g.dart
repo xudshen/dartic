@@ -36,6 +36,15 @@ abstract final class AsyncSnapshotBindings {
         'waiting#0': (args) => AsyncSnapshot<dynamic>.waiting(),
         'withData#2': (args) => AsyncSnapshot<dynamic>.withData(args[0] as ConnectionState, args[1]),
         'withError#3': (args) => AsyncSnapshot<dynamic>.withError(args[0] as ConnectionState, args[1] as Object, identical(args[2], darticAbsent) ? StackTrace.empty : args[2] as StackTrace),
-        '_#fromFields#4': (args) => AsyncSnapshot<dynamic>.withError(args[0] as ConnectionState, args[2] as Object, args[3] as StackTrace),
+        '_#fromFields#4': (args) {
+            final cs = args[0] as ConnectionState;
+            final data = args[1];
+            final error = args[2];
+            final stackTrace = args[3];
+            if (error != null) return AsyncSnapshot<dynamic>.withError(cs, error as Object, stackTrace == null ? StackTrace.empty : stackTrace as StackTrace);
+            if (data != null) return AsyncSnapshot<dynamic>.withData(cs, data);
+            if (cs == ConnectionState.waiting) return AsyncSnapshot<dynamic>.waiting();
+            return AsyncSnapshot<dynamic>.nothing();
+        },
       };
 }

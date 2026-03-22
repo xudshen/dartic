@@ -66,6 +66,23 @@ abstract final class CupertinoDynamicColorBindings {
         '#9': (args) => CupertinoDynamicColor(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color, highContrastColor: args[3] as Color, darkHighContrastColor: args[4] as Color, elevatedColor: args[5] as Color, darkElevatedColor: args[6] as Color, highContrastElevatedColor: args[7] as Color, darkHighContrastElevatedColor: args[8] as Color),
         'withBrightnessAndContrast#5': (args) => CupertinoDynamicColor.withBrightnessAndContrast(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color, highContrastColor: args[3] as Color, darkHighContrastColor: args[4] as Color),
         'withBrightness#3': (args) => CupertinoDynamicColor.withBrightness(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color),
-        '_#fromFields#11': (args) => CupertinoDynamicColor(debugLabel: args[0] as String?, color: args[3] as Color, darkColor: args[4] as Color, highContrastColor: args[9] as Color, darkHighContrastColor: args[6] as Color, elevatedColor: args[8] as Color, darkElevatedColor: args[5] as Color, highContrastElevatedColor: args[10] as Color, darkHighContrastElevatedColor: args[7] as Color),
+        '_#fromFields#11': (args) {
+            // Fields: _debugLabel(0), _debugResolveContext(1), color(2),
+            //   darkColor(3), darkElevatedColor(4), darkHighContrastColor(5),
+            //   darkHighContrastElevatedColor(6), elevatedColor(7),
+            //   highContrastColor(8), highContrastElevatedColor(9), value(10)
+            // _debugResolveContext is transient (resolve context), ignore it.
+            return CupertinoDynamicColor(
+              debugLabel: args[0] as String?,
+              color: args[2] as Color,
+              darkColor: args[3] as Color,
+              highContrastColor: args[8] as Color,
+              darkHighContrastColor: args[5] as Color,
+              elevatedColor: args[7] as Color,
+              darkElevatedColor: args[4] as Color,
+              highContrastElevatedColor: args[9] as Color,
+              darkHighContrastElevatedColor: args[6] as Color,
+            );
+        },
       };
 }

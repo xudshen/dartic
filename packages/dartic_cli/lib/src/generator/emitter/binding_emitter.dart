@@ -753,11 +753,16 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
         '${fromFieldsInfo.constCtorCount} const constructors with '
         'uncovered fields [$unmappedNames] in $ctorDisplay. '
         'Add YAML override: "$fromFieldsKey"');
+    _printFieldLayout(info.className, fields, mappings, ctorName);
     return;
   }
 
   // Check 2: identity — computed mappings cause double-computation.
-  final computed = mappings.where((m) => !m.isIdentity).toList();
+  // Only check fields that HAVE a param mapping; unmapped fields (paramName
+  // == null) are handled by the coverage check above.
+  final computed = mappings
+      .where((m) => m.paramName != null && !m.isIdentity)
+      .toList();
   if (computed.isNotEmpty) {
     final computedNames = computed.map((m) =>
         '${m.fieldName}←${m.paramName}').join(', ');
@@ -767,6 +772,7 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
         'constructor $ctorDisplay has computed field initializers [$computedNames]. '
         'Passing field values back would cause double-computation. '
         'Add YAML override: "$fromFieldsKey"');
+    _printFieldLayout(info.className, fields, mappings, ctorName);
     return;
   }
 
@@ -911,6 +917,33 @@ void _writeFromFieldsLegacy(
 
   buf.writeln(
       "        '$fromFieldsKey': (args) => ${info.className}(${argExprs.join(', ')}),");
+}
+
+/// Prints detailed field layout to stderr for classes that can't auto-generate
+/// fromFields. Gives the user all info needed to write the YAML override.
+void _printFieldLayout(
+  String className,
+  List<KernelFieldInfo> fields,
+  List<FieldParamMapping> mappings,
+  String ctorName,
+) {
+  final ctorDisplay = ctorName.isEmpty ? '(unnamed)' : '.$ctorName()';
+  stderr.writeln('  Field layout for $className ($ctorDisplay):');
+  for (var i = 0; i < fields.length; i++) {
+    final f = fields[i];
+    final m = i < mappings.length ? mappings[i] : null;
+    final tag = m == null
+        ? '?'
+        : m.paramName == null
+            ? 'UNMAPPED'
+            : m.isIdentity
+                ? 'ID'
+                : 'COMPUTED';
+    final param = m?.paramName != null
+        ? ' -> ${m!.paramName}${m.paramIsNamed ? " (named)" : ""}'
+        : '';
+    stderr.writeln('    args[$i] = ${f.name} (${f.declaringClass}) [$tag]$param');
+  }
 }
 
 /// Returns true if any of the given keys are in the override set.

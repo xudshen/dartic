@@ -14,3 +14,20 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: package:flutter/src/rendering
     discover: all
+
+    overrides:
+      # SelectionEdgeUpdateEvent: 2 ctors (.forStart, .forEnd), discriminate by type
+      # Fields: globalPosition(0), granularity(1), type(2)
+      SelectionEdgeUpdateEvent:
+        extra_methods:
+          "_#fromFields#3": |
+            (args) {
+              if ((args[2] as Enum).index == 0) {
+                return SelectionEdgeUpdateEvent.forStart(
+                  globalPosition: args[0] as Offset,
+                  granularity: args[1] as TextGranularity?);
+              }
+              return SelectionEdgeUpdateEvent.forEnd(
+                globalPosition: args[0] as Offset,
+                granularity: args[1] as TextGranularity?);
+            }

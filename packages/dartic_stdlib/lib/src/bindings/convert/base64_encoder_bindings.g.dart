@@ -27,9 +27,9 @@ abstract final class Base64EncoderBindings {
         'cast#0': (args) => (args[0] as Base64Encoder).cast(),
         '#0': (args) => Base64Encoder(),
         'urlSafe#0': (args) => Base64Encoder.urlSafe(),
-        '_#fromFields#1': (args) => Base64Encoder(),
         'convert#1': (args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>()),
         'startChunkedConversion#1': (args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>()),
+        '_#fromFields#1': (args) => (args[0] as bool) ? Base64Encoder.urlSafe() : Base64Encoder(),
       };
 }

@@ -30,6 +30,15 @@ abstract final class SelectionEdgeUpdateEventBindings {
         'type#0': (args) => (args[0] as SelectionEdgeUpdateEvent).type,
         'forStart#2': (args) => SelectionEdgeUpdateEvent.forStart(globalPosition: args[0] as Offset, granularity: identical(args[1], darticAbsent) ? null : args[1] as TextGranularity?),
         'forEnd#2': (args) => SelectionEdgeUpdateEvent.forEnd(globalPosition: args[0] as Offset, granularity: identical(args[1], darticAbsent) ? null : args[1] as TextGranularity?),
-        '_#fromFields#3': (args) => SelectionEdgeUpdateEvent.forStart(globalPosition: args[0] as Offset, granularity: args[1] as TextGranularity?),
+        '_#fromFields#3': (args) {
+            if ((args[2] as Enum).index == 0) {
+              return SelectionEdgeUpdateEvent.forStart(
+                globalPosition: args[0] as Offset,
+                granularity: args[1] as TextGranularity?);
+            }
+            return SelectionEdgeUpdateEvent.forEnd(
+              globalPosition: args[0] as Offset,
+              granularity: args[1] as TextGranularity?);
+        },
       };
 }

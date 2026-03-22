@@ -89,6 +89,112 @@ abstract final class CupertinoSliverNavigationBarBindings {
             return CupertinoSliverNavigationBar.search(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, searchField: args[1] as Widget, largeTitle: identical(args[2], darticAbsent) ? null : args[2] as Widget?, leading: identical(args[3], darticAbsent) ? null : args[3] as Widget?, automaticallyImplyLeading: identical(args[4], darticAbsent) ? true : args[4] as bool, automaticallyImplyTitle: identical(args[5], darticAbsent) ? true : args[5] as bool, alwaysShowMiddle: identical(args[6], darticAbsent) ? true : args[6] as bool, previousPageTitle: identical(args[7], darticAbsent) ? null : args[7] as String?, middle: identical(args[8], darticAbsent) ? null : args[8] as Widget?, trailing: identical(args[9], darticAbsent) ? null : args[9] as Widget?, border: identical(args[10], darticAbsent) ? null : args[10] as Border?, backgroundColor: identical(args[11], darticAbsent) ? null : args[11] as Color?, automaticBackgroundVisibility: identical(args[12], darticAbsent) ? true : args[12] as bool, enableBackgroundFilterBlur: identical(args[13], darticAbsent) ? true : args[13] as bool, brightness: identical(args[14], darticAbsent) ? null : args[14] as Brightness?, padding: identical(args[15], darticAbsent) ? null : args[15] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[16], darticAbsent) ? true : args[16] as bool, heroTag: args[17] as Object, stretch: identical(args[18], darticAbsent) ? false : args[18] as bool, bottomMode: identical(args[19], darticAbsent) ? null : args[19] as NavigationBarBottomMode?, onSearchableBottomTap: identical(args[20], darticAbsent) ? null : (args[20] as Function?) == null ? null : (a) => (args[20] as Function?)!(a));
           }
         },
-        '_#fromFields#23': (args) => CupertinoSliverNavigationBar.search(key: args[12] as Key?, searchField: args[19] as Widget, largeTitle: args[13] as Widget?, leading: args[14] as Widget?, automaticallyImplyLeading: args[3] as bool, automaticallyImplyTitle: args[4] as bool, alwaysShowMiddle: args[1] as bool, previousPageTitle: args[18] as String?, middle: args[15] as Widget?, trailing: args[21] as Widget?, border: args[6] as Border?, backgroundColor: args[5] as Color?, automaticBackgroundVisibility: args[2] as bool, enableBackgroundFilterBlur: args[10] as bool, brightness: args[9] as Brightness?, padding: args[17] as EdgeInsetsDirectional?, transitionBetweenRoutes: args[22] as bool, heroTag: args[11] as Object, stretch: args[20] as bool, bottomMode: args[8] as NavigationBarBottomMode?, onSearchableBottomTap: args[16] as ValueChanged<bool>?),
+        '_#fromFields#23': (args) {
+            // Fields: _searchable(0), alwaysShowMiddle(1),
+            //   automaticBackgroundVisibility(2), automaticallyImplyLeading(3),
+            //   automaticallyImplyTitle(4), backgroundColor(5), border(6),
+            //   bottom(7), bottomMode(8), brightness(9),
+            //   enableBackgroundFilterBlur(10), heroTag(11), key(12),
+            //   largeTitle(13), leading(14), middle(15),
+            //   onSearchableBottomTap(16), padding(17), previousPageTitle(18),
+            //   searchField(19), stretch(20), trailing(21),
+            //   transitionBetweenRoutes(22)
+            final searchable = args[0] as bool;
+            final key = args[12] as Key?;
+            final largeTitle = args[13] as Widget?;
+            final leading = args[14] as Widget?;
+            final automaticallyImplyLeading = args[3] as bool;
+            final automaticallyImplyTitle = args[4] as bool;
+            final alwaysShowMiddle = args[1] as bool;
+            final previousPageTitle = args[18] as String?;
+            final middle = args[15] as Widget?;
+            final trailing = args[21] as Widget?;
+            final border = args[6] as Border?;
+            final backgroundColor = args[5] as Color?;
+            final automaticBackgroundVisibility = args[2] as bool;
+            final enableBackgroundFilterBlur = args[10] as bool;
+            final brightness = args[9] as Brightness?;
+            final padding = args[17] as EdgeInsetsDirectional?;
+            final transitionBetweenRoutes = args[22] as bool;
+            final heroTag = args[11] as Object?;
+            final stretch = args[20] as bool;
+            final bottom = args[7] as PreferredSizeWidget?;
+            final bottomMode = args[8] as NavigationBarBottomMode?;
+            final onSearchableBottomTap = (args[16] as Function?) == null ? null : (a) => (args[16] as Function)!(a);
+            final searchField = args[19] as Widget?;
+            if (searchable) {
+              // search ctor
+              if (heroTag != null) {
+                return CupertinoSliverNavigationBar.search(
+                  key: key, searchField: searchField!,
+                  largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: automaticallyImplyTitle,
+                  alwaysShowMiddle: alwaysShowMiddle,
+                  previousPageTitle: previousPageTitle, middle: middle,
+                  trailing: trailing, border: border,
+                  backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  heroTag: heroTag, stretch: stretch,
+                  bottomMode: bottomMode,
+                  onSearchableBottomTap: onSearchableBottomTap,
+                );
+              } else {
+                return CupertinoSliverNavigationBar.search(
+                  key: key, searchField: searchField!,
+                  largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: automaticallyImplyTitle,
+                  alwaysShowMiddle: alwaysShowMiddle,
+                  previousPageTitle: previousPageTitle, middle: middle,
+                  trailing: trailing, border: border,
+                  backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  stretch: stretch, bottomMode: bottomMode,
+                  onSearchableBottomTap: onSearchableBottomTap,
+                );
+              }
+            } else {
+              // primary ctor
+              if (heroTag != null) {
+                return CupertinoSliverNavigationBar(
+                  key: key, largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: automaticallyImplyTitle,
+                  alwaysShowMiddle: alwaysShowMiddle,
+                  previousPageTitle: previousPageTitle, middle: middle,
+                  trailing: trailing, border: border,
+                  backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  heroTag: heroTag, stretch: stretch,
+                  bottom: bottom, bottomMode: bottomMode,
+                );
+              } else {
+                return CupertinoSliverNavigationBar(
+                  key: key, largeTitle: largeTitle, leading: leading,
+                  automaticallyImplyLeading: automaticallyImplyLeading,
+                  automaticallyImplyTitle: automaticallyImplyTitle,
+                  alwaysShowMiddle: alwaysShowMiddle,
+                  previousPageTitle: previousPageTitle, middle: middle,
+                  trailing: trailing, border: border,
+                  backgroundColor: backgroundColor,
+                  automaticBackgroundVisibility: automaticBackgroundVisibility,
+                  enableBackgroundFilterBlur: enableBackgroundFilterBlur,
+                  brightness: brightness, padding: padding,
+                  transitionBetweenRoutes: transitionBetweenRoutes,
+                  stretch: stretch, bottom: bottom, bottomMode: bottomMode,
+                );
+              }
+            }
+        },
       };
 }

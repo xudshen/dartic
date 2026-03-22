@@ -43,8 +43,8 @@ abstract final class RectangleBindings {
         'bottomLeft#0': (args) => (args[0] as Rectangle).bottomLeft,
         '#4': (args) => Rectangle<num>(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
         'fromPoints#2': (args) => Rectangle<num>.fromPoints(args[0] as Point<num>, args[1] as Point<num>),
-        '_#fromFields#4': (args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num),
         '==#1': (args) => args[0] == args[1],
+        '_#fromFields#4': (args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num),
       };
 
   static Map<String, Object? Function(List<Object?>)> rectangleBaseMethodMap() => {

@@ -56,6 +56,22 @@ abstract final class CardBindings {
         '#11': (args) => Card(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),
         'filled#11': (args) => Card.filled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),
         'outlined#11': (args) => Card.outlined(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),
-        '_#fromFields#12': (args) => Card(key: args[6] as Key?, color: args[4] as Color?, shadowColor: args[9] as Color?, surfaceTintColor: args[11] as Color?, elevation: args[5] as double?, shape: args[10] as ShapeBorder?, borderOnForeground: args[1] as bool, margin: args[7] as EdgeInsetsGeometry?, clipBehavior: args[3] as Clip?, child: args[2] as Widget?, semanticContainer: args[8] as bool),
+        '_#fromFields#12': (args) {
+            final key = args[6] as Key?;
+            final color = args[4] as Color?;
+            final shadowColor = args[9] as Color?;
+            final surfaceTintColor = args[11] as Color?;
+            final elevation = args[5] as double?;
+            final shape = args[10] as ShapeBorder?;
+            final borderOnForeground = args[1] as bool;
+            final margin = args[7] as EdgeInsetsGeometry?;
+            final clipBehavior = args[3] as Clip?;
+            final child = args[2] as Widget?;
+            final semanticContainer = args[8] as bool;
+            final v = (args[0] as Enum).index;
+            if (v == 1) return Card.filled(key: key, color: color, shadowColor: shadowColor, surfaceTintColor: surfaceTintColor, elevation: elevation, shape: shape, borderOnForeground: borderOnForeground, margin: margin, clipBehavior: clipBehavior, child: child, semanticContainer: semanticContainer);
+            if (v == 2) return Card.outlined(key: key, color: color, shadowColor: shadowColor, surfaceTintColor: surfaceTintColor, elevation: elevation, shape: shape, borderOnForeground: borderOnForeground, margin: margin, clipBehavior: clipBehavior, child: child, semanticContainer: semanticContainer);
+            return Card(key: key, color: color, shadowColor: shadowColor, surfaceTintColor: surfaceTintColor, elevation: elevation, shape: shape, borderOnForeground: borderOnForeground, margin: margin, clipBehavior: clipBehavior, child: child, semanticContainer: semanticContainer);
+        },
       };
 }

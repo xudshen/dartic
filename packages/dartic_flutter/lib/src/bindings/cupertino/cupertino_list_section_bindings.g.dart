@@ -74,6 +74,83 @@ abstract final class CupertinoListSectionBindings {
             return CupertinoListSection.insetGrouped(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as List).cast<Widget>(), header: identical(args[2], darticAbsent) ? null : args[2] as Widget?, footer: identical(args[3], darticAbsent) ? null : args[3] as Widget?, margin: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsetsGeometry?, backgroundColor: identical(args[5], darticAbsent) ? CupertinoColors.systemGroupedBackground : args[5] as Color, decoration: identical(args[6], darticAbsent) ? null : args[6] as BoxDecoration?, clipBehavior: identical(args[7], darticAbsent) ? Clip.hardEdge : args[7] as Clip, dividerMargin: args[8] as double, additionalDividerMargin: identical(args[9], darticAbsent) ? null : args[9] as double?, topMargin: identical(args[10], darticAbsent) ? null : args[10] as double?, hasLeading: identical(args[11], darticAbsent) ? true : args[11] as bool, separatorColor: identical(args[12], darticAbsent) ? null : args[12] as Color?);
           }
         },
-        '_#fromFields#13': (args) => CupertinoListSection(key: args[8] as Key?, children: args[2] == null ? null : (args[2] as List).cast<Widget>(), header: args[7] as Widget?, footer: args[6] as Widget?, margin: args[9] as EdgeInsetsGeometry, backgroundColor: args[1] as Color, decoration: args[4] as BoxDecoration?, clipBehavior: args[3] as Clip, dividerMargin: args[5] as double, additionalDividerMargin: args[0] as double?, topMargin: args[11] as double?, separatorColor: args[10] as Color?),
+        '_#fromFields#13': (args) {
+            // Fields: additionalDividerMargin(0), backgroundColor(1),
+            //   children(2), clipBehavior(3), decoration(4),
+            //   dividerMargin(5), footer(6), header(7), key(8),
+            //   margin(9), separatorColor(10), topMargin(11), type(12)
+            final typeEnum = args[12] as dynamic;
+            final typeIndex = (typeEnum as dynamic).index as int;
+            final key = args[8] as Key?;
+            final children = args[2] == null ? null : (args[2] as List).cast<Widget>();
+            final header = args[7] as Widget?;
+            final footer = args[6] as Widget?;
+            final margin = args[9] as EdgeInsetsGeometry?;
+            final backgroundColor = args[1] as Color;
+            final decoration = args[4] as BoxDecoration?;
+            final clipBehavior = args[3] as Clip;
+            final dividerMargin = args[5] as double?;
+            final additionalDividerMargin = args[0] as double?;
+            final topMargin = args[11] as double?;
+            final separatorColor = args[10] as Color?;
+            if (typeIndex == 1) {
+              // insetGrouped ctor
+              if (dividerMargin != null) {
+                return CupertinoListSection.insetGrouped(
+                  key: key, children: children, header: header, footer: footer,
+                  margin: margin, backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  dividerMargin: dividerMargin,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              } else {
+                return CupertinoListSection.insetGrouped(
+                  key: key, children: children, header: header, footer: footer,
+                  margin: margin, backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              }
+            } else {
+              // primary (base) ctor
+              if (margin != null && dividerMargin != null) {
+                return CupertinoListSection(
+                  key: key, children: children, header: header, footer: footer,
+                  margin: margin, backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  dividerMargin: dividerMargin,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              } else if (margin != null) {
+                return CupertinoListSection(
+                  key: key, children: children, header: header, footer: footer,
+                  margin: margin, backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              } else if (dividerMargin != null) {
+                return CupertinoListSection(
+                  key: key, children: children, header: header, footer: footer,
+                  backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  dividerMargin: dividerMargin,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              } else {
+                return CupertinoListSection(
+                  key: key, children: children, header: header, footer: footer,
+                  backgroundColor: backgroundColor,
+                  decoration: decoration, clipBehavior: clipBehavior,
+                  additionalDividerMargin: additionalDividerMargin,
+                  topMargin: topMargin, separatorColor: separatorColor,
+                );
+              }
+            }
+        },
       };
 }

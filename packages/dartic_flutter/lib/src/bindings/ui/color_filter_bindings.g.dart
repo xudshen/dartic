@@ -36,6 +36,12 @@ abstract final class ColorFilterBindings {
         'matrix#1': (args) => ColorFilter.matrix((args[0] as List).cast<double>()),
         'linearToSrgbGamma#0': (args) => ColorFilter.linearToSrgbGamma(),
         'srgbToLinearGamma#0': (args) => ColorFilter.srgbToLinearGamma(),
-        '_#fromFields#4': (args) => ColorFilter.mode(args[1] as Color, args[0] as BlendMode),
+        '_#fromFields#4': (args) {
+            final type = args[3] as int;
+            if (type == 2) return ColorFilter.matrix((args[2] as List).cast<double>());
+            if (type == 3) return ColorFilter.linearToSrgbGamma();
+            if (type == 4) return ColorFilter.srgbToLinearGamma();
+            return ColorFilter.mode(args[1] as Color, args[0] as BlendMode);
+        },
       };
 }

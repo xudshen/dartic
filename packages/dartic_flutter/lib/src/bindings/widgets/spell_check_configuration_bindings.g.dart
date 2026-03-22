@@ -39,6 +39,10 @@ abstract final class SpellCheckConfigurationBindings {
         'hashCode#0': (args) => (args[0] as SpellCheckConfiguration).hashCode,
         '#4': (args) => SpellCheckConfiguration(spellCheckService: identical(args[0], darticAbsent) ? null : args[0] as SpellCheckService?, misspelledSelectionColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, misspelledTextStyle: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, spellCheckSuggestionsToolbarBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b)),
         'disabled#0': (args) => SpellCheckConfiguration.disabled(),
-        '_#fromFields#5': (args) => SpellCheckConfiguration(spellCheckService: args[3] as SpellCheckService?, misspelledSelectionColor: args[1] as Color?, misspelledTextStyle: args[2] as TextStyle?, spellCheckSuggestionsToolbarBuilder: args[4] as EditableTextContextMenuBuilder?),
+        '_#fromFields#5': (args) {
+            final enabled = args[0];
+            if (enabled == false) return SpellCheckConfiguration.disabled();
+            return SpellCheckConfiguration(spellCheckService: args[3] as SpellCheckService?, misspelledSelectionColor: args[1] as Color?, misspelledTextStyle: args[2] as TextStyle?, spellCheckSuggestionsToolbarBuilder: args[4] == null ? null : (a, b) => (args[4] as Function)(a, b));
+        },
       };
 }

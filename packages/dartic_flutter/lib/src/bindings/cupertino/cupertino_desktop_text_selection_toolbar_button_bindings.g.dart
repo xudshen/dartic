@@ -48,6 +48,31 @@ abstract final class CupertinoDesktopTextSelectionToolbarButtonBindings {
         '#3': (args) => CupertinoDesktopTextSelectionToolbarButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), child: args[2] as Widget),
         'text#3': (args) => CupertinoDesktopTextSelectionToolbarButton.text(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), text: args[2] as String?),
         'buttonItem#2': (args) => CupertinoDesktopTextSelectionToolbarButton.buttonItem(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, buttonItem: args[1] as ContextMenuButtonItem),
-        '_#fromFields#5': (args) => CupertinoDesktopTextSelectionToolbarButton(key: args[2] as Key?, onPressed: args[3] as VoidCallback?, child: args[1] as Widget),
+        '_#fromFields#5': (args) {
+            // Fields: buttonItem(0), child(1), key(2), onPressed(3), text(4)
+            final buttonItem = args[0] as ContextMenuButtonItem?;
+            final child = args[1] as Widget?;
+            final key = args[2] as Key?;
+            final onPressed = (args[3] as Function?) == null ? null : () => (args[3] as Function)!();
+            final text = args[4] as String?;
+            if (buttonItem != null) {
+              return CupertinoDesktopTextSelectionToolbarButton.buttonItem(
+                key: key,
+                buttonItem: buttonItem,
+              );
+            } else if (child != null) {
+              return CupertinoDesktopTextSelectionToolbarButton(
+                key: key,
+                onPressed: onPressed,
+                child: child,
+              );
+            } else {
+              return CupertinoDesktopTextSelectionToolbarButton.text(
+                key: key,
+                onPressed: onPressed,
+                text: text,
+              );
+            }
+        },
       };
 }

@@ -61,6 +61,6 @@ abstract final class AdaptiveTextSelectionToolbarBindings {
         'editableText#2': (args) => AdaptiveTextSelectionToolbar.editableText(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, editableTextState: args[1] as EditableTextState),
         'selectable#6': (args) => AdaptiveTextSelectionToolbar.selectable(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onCopy: () => (args[1] as Function)(), onSelectAll: () => (args[2] as Function)(), onShare: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), selectionGeometry: args[4] as SelectionGeometry, anchors: args[5] as TextSelectionToolbarAnchors),
         'selectableRegion#2': (args) => AdaptiveTextSelectionToolbar.selectableRegion(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, selectableRegionState: args[1] as SelectableRegionState),
-        '_#fromFields#4': (args) => AdaptiveTextSelectionToolbar(key: args[3] as Key?, children: args[2] == null ? null : (args[2] as List).cast<Widget>(), anchors: args[0] as TextSelectionToolbarAnchors),
+        '_#fromFields#4': (args) => args[1] != null ? AdaptiveTextSelectionToolbar.buttonItems(key: args[3] as Key?, buttonItems: (args[1] as List).cast<ContextMenuButtonItem>(), anchors: args[0] as TextSelectionToolbarAnchors) : AdaptiveTextSelectionToolbar(key: args[3] as Key?, children: args[2] == null ? null : (args[2] as List).cast<Widget>(), anchors: args[0] as TextSelectionToolbarAnchors),
       };
 }

@@ -55,6 +55,48 @@ abstract final class CupertinoActivityIndicatorBindings {
             return CupertinoActivityIndicator.partiallyRevealed(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, radius: args[2] as double, progress: identical(args[3], darticAbsent) ? 1.0 : args[3] as double);
           }
         },
-        '_#fromFields#5': (args) => CupertinoActivityIndicator(key: args[2] as Key?, color: args[1] as Color?, animating: args[0] as bool, radius: args[4] as double),
+        '_#fromFields#5': (args) {
+            // Fields: animating(0), color(1), key(2), progress(3), radius(4)
+            // Discriminate by progress: partiallyRevealed stores a user value (!= 1.0);
+            // the primary ctor always stores the default 1.0.
+            final animating = args[0] as bool;
+            final color = args[1] as dynamic;
+            final key = args[2] as dynamic;
+            final progress = args[3] as double;
+            final radius = args[4] as dynamic;
+            if (progress != 1.0) {
+              // partiallyRevealed ctor
+              if (identical(radius, darticAbsent) || radius == null) {
+                return CupertinoActivityIndicator.partiallyRevealed(
+                  key: key,
+                  color: color,
+                  progress: progress,
+                );
+              } else {
+                return CupertinoActivityIndicator.partiallyRevealed(
+                  key: key,
+                  color: color,
+                  radius: radius as double,
+                  progress: progress,
+                );
+              }
+            } else {
+              // primary ctor
+              if (identical(radius, darticAbsent) || radius == null) {
+                return CupertinoActivityIndicator(
+                  key: key,
+                  color: color,
+                  animating: animating,
+                );
+              } else {
+                return CupertinoActivityIndicator(
+                  key: key,
+                  color: color,
+                  animating: animating,
+                  radius: radius as double,
+                );
+              }
+            }
+        },
       };
 }

@@ -274,6 +274,7 @@ libraries:
       Base64Codec:
         extra_methods:
           "encode#1": "(args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>())"
+          "_#fromFields#1": "(args) => ((args[0] as Base64Encoder) == const Base64Encoder.urlSafe()) ? Base64Codec.urlSafe() : Base64Codec()"
 
       # ── Base64Encoder: List<int> cast + Sink/Stream cast ──
       Base64Encoder:
@@ -281,6 +282,7 @@ libraries:
           "convert#1": "(args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>())"
           "startChunkedConversion#1": "(args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1]))"
           "bind#1": "(args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>())"
+          "_#fromFields#1": "(args) => (args[0] as bool) ? Base64Encoder.urlSafe() : Base64Encoder()"
 
       # ── Base64Decoder: Sink/Stream cast ──
       Base64Decoder:

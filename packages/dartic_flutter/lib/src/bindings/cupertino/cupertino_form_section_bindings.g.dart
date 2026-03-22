@@ -55,6 +55,35 @@ abstract final class CupertinoFormSectionBindings {
             return CupertinoFormSection.insetGrouped(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), header: identical(args[2], darticAbsent) ? null : args[2] as Widget?, footer: identical(args[3], darticAbsent) ? null : args[3] as Widget?, margin: args[4] as EdgeInsetsGeometry, backgroundColor: identical(args[5], darticAbsent) ? CupertinoColors.systemGroupedBackground : args[5] as Color, decoration: identical(args[6], darticAbsent) ? null : args[6] as BoxDecoration?, clipBehavior: identical(args[7], darticAbsent) ? Clip.none : args[7] as Clip);
           }
         },
-        '_#fromFields#9': (args) => CupertinoFormSection(key: args[7] as Key?, children: (args[2] as List).cast<Widget>(), header: args[6] as Widget?, footer: args[5] as Widget?, margin: args[8] as EdgeInsetsGeometry, backgroundColor: args[1] as Color, decoration: args[4] as BoxDecoration?, clipBehavior: args[3] as Clip),
+        '_#fromFields#9': (args) {
+            // Fields: _type(0), backgroundColor(1), children(2),
+            //   clipBehavior(3), decoration(4), footer(5), header(6),
+            //   key(7), margin(8)
+            final typeEnum = args[0] as dynamic;
+            final typeIndex = (typeEnum as dynamic).index as int;
+            final key = args[7] as Key?;
+            final children = (args[2] as List).cast<Widget>();
+            final header = args[6] as Widget?;
+            final footer = args[5] as Widget?;
+            final margin = args[8] as EdgeInsetsGeometry;
+            final backgroundColor = args[1] as Color;
+            final decoration = args[4] as BoxDecoration?;
+            final clipBehavior = args[3] as Clip;
+            if (typeIndex == 1) {
+              // insetGrouped ctor
+              return CupertinoFormSection.insetGrouped(
+                key: key, children: children, header: header, footer: footer,
+                margin: margin, backgroundColor: backgroundColor,
+                decoration: decoration, clipBehavior: clipBehavior,
+              );
+            } else {
+              // primary (base) ctor
+              return CupertinoFormSection(
+                key: key, children: children, header: header, footer: footer,
+                margin: margin, backgroundColor: backgroundColor,
+                decoration: decoration, clipBehavior: clipBehavior,
+              );
+            }
+        },
       };
 }

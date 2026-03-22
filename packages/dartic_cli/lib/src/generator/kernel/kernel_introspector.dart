@@ -652,8 +652,8 @@ class KernelIntrospector {
 
   /// Extracts param name AND whether the mapping is identity.
   ///
-  /// Identity: `field = param`, `field = param as T`, `field = param!`
-  /// (value-preserving transformations only).
+  /// Identity: `field = param`, `field = param as T`, `field = param!`,
+  /// `field = param ?? default` (value-preserving transformations only).
   ///
   /// Computed: `field = param * 2`, `field = param + other * 1000`
   /// (any arithmetic, method call, or multi-param expression).
@@ -665,6 +665,24 @@ class KernelIntrospector {
     if (expr is ir.VariableGet) return (expr.variable.name, true);
     // Type cast / null-check: value-preserving wrappers
     if (expr is ir.AsExpression) return _extractParamInfo(expr.operand);
+    // Null-coalescing: `param ?? default` in Kernel IR is
+    //   Let(v = param, v == null ? default : v)
+    // This is identity-safe: passing the computed field value back as param
+    // yields the same result regardless of null/non-null path.
+    if (expr is ir.Let) {
+      final init = expr.variable.initializer;
+      final body = expr.body;
+      if (init != null && body is ir.ConditionalExpression) {
+        // Check for `v == null ? default : v` pattern
+        final cond = body.condition;
+        if (cond is ir.EqualsNull &&
+            cond.expression is ir.VariableGet &&
+            body.otherwise is ir.VariableGet &&
+            (body.otherwise as ir.VariableGet).variable == expr.variable) {
+          return _extractParamInfo(init);
+        }
+      }
+    }
     if (expr is ir.NullCheck) return _extractParamInfo(expr.operand);
     // Anything else is a computation — extract param name but mark non-identity
     final paramName = _extractParamName(expr);
