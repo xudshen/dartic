@@ -1880,16 +1880,22 @@ class DarticCompiler {
 
   /// Builds a `$super$`-prefixed host binding name for super calls.
   ///
-  /// Uses the current class's direct superclass (not the target's declaring
-  /// class) as the class component. This matches the gen tool's `$super$`
-  /// binding registration key format: `"libUri::BridgeHostClass::$super$method#N"`.
+  /// Walks up from the current class's direct superclass to find the nearest
+  /// host class. This handles cases where user classes are in the super chain:
+  /// e.g., `class C extends S {}` where S is a user class → walks up to Object.
   ///
   /// Example: dartic class `MyList extends ListBase` calls `super.toString()`.
-  /// - target.enclosingClass = Object (declaring class)
-  /// - _currentEnclosingClass.superclass = ListBase (host superclass)
-  /// - Result: `"dart:collection::ListBase::$super$toString#0"`
+  /// - _currentEnclosingClass.superclass = ListBase (host) → use directly
+  /// Example: `class C extends S {}` calls `super == this`.
+  /// - _currentEnclosingClass.superclass = S (user) → walk to Object (host)
+  /// - Result: `"dart:core::Object::$super$==#1"`
   String _superHostBindingName(ir.Member target, {int? paramCountOverride}) {
-    final superclass = _currentEnclosingClass!.supertype!.classNode;
+    var superclass = _currentEnclosingClass!.supertype!.classNode;
+    // Walk up to the nearest host class in the super chain.
+    while (!_isHostLibrary(superclass.enclosingLibrary) &&
+        superclass.supertype != null) {
+      superclass = superclass.supertype!.classNode;
+    }
     final lib = superclass.enclosingLibrary.importUri.toString();
     final className = superclass.name;
     final memberName = target.name.text;
