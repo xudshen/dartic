@@ -493,7 +493,7 @@ class KernelIntrospector {
     for (final field in allFields) {
       final info = initMap[field.name];
       if (info != null) {
-        final (paramName, _) = info;
+        final (paramName, isIdentity) = info;
         final isNamed = paramName != null &&
             ctor.function.namedParameters
                 .any((p) => p.name == paramName);
@@ -508,6 +508,7 @@ class KernelIntrospector {
           paramName: paramName,
           paramIsNamed: isNamed,
           paramIsOptional: isOptional,
+          isIdentity: isIdentity,
           paramIndex: paramName != null
               ? (paramIndexMap[paramName] ?? -1)
               : -1,
@@ -526,6 +527,11 @@ class KernelIntrospector {
 
   /// Recursively extracts FieldInitializer mappings, following
   /// RedirectingInitializer and SuperInitializer chains.
+  ///
+  /// Result tuple: (paramName, isIdentity).
+  /// isIdentity = true when the field initializer is `field = param` (with
+  /// only type casts / null-checks). false when the value is computed
+  /// (e.g. `field = param * 2 + other`).
   void _extractInitializerMappings(
     ir.Constructor ctor,
     Map<String, ir.VariableDeclaration> outerParams,
@@ -537,7 +543,7 @@ class KernelIntrospector {
     for (final init in ctor.initializers) {
       if (init is ir.FieldInitializer) {
         final fieldName = init.field.name.text;
-        final paramName = _extractParamName(init.value);
+        final (paramName, isIdentity) = _extractParamInfo(init.value);
         // Map to the outer constructor's param name via VariableDeclaration.
         // When called through redirect chains, outerParams maps inner param
         // names to outer VariableDeclarations — use the declaration's name.
@@ -545,7 +551,7 @@ class KernelIntrospector {
         if (paramName != null && outerParams.containsKey(paramName)) {
           resolvedName = outerParams[paramName]!.name;
         }
-        result[fieldName] = (resolvedName, false);
+        result[fieldName] = (resolvedName, isIdentity);
       } else if (init is ir.RedirectingInitializer) {
         _followRedirectingInitializer(init, outerParams, result, depth);
       } else if (init is ir.SuperInitializer) {
@@ -639,6 +645,27 @@ class KernelIntrospector {
   }
 
   // ── Expression param extraction ───────────────────────────────────────
+
+  /// Extracts param name AND whether the mapping is identity.
+  ///
+  /// Identity: `field = param`, `field = param as T`, `field = param!`
+  /// (value-preserving transformations only).
+  ///
+  /// Computed: `field = param * 2`, `field = param + other * 1000`
+  /// (any arithmetic, method call, or multi-param expression).
+  ///
+  /// For fromFields, only identity mappings are safe — computed mappings
+  /// cause double-computation when the field value is passed back to the param.
+  (String?, bool) _extractParamInfo(ir.Expression expr) {
+    // Pure identity: just reading a variable
+    if (expr is ir.VariableGet) return (expr.variable.name, true);
+    // Type cast / null-check: value-preserving wrappers
+    if (expr is ir.AsExpression) return _extractParamInfo(expr.operand);
+    if (expr is ir.NullCheck) return _extractParamInfo(expr.operand);
+    // Anything else is a computation — extract param name but mark non-identity
+    final paramName = _extractParamName(expr);
+    return (paramName, false);
+  }
 
   /// Recursively extracts the first VariableDeclaration reference name
   /// from an expression. Returns null if no variable reference is found

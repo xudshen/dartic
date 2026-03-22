@@ -736,6 +736,39 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
   final ctorName = fromFieldsInfo.constructorName;
   final mappings = fromFieldsInfo.mappings;
 
+  // ── Validate fromFields safety ──────────────────────────────────────
+  // fromFields passes InstanceConstant field VALUES to a constructor.
+  // This is only safe when:
+  //   1. ALL fields are mapped to constructor params (full coverage)
+  //   2. ALL mappings are identity (field = param, no computation)
+  // Violations are reported as errors — user must provide YAML override.
+
+  // Check 1: field coverage — unmapped fields mean multi-constructor ambiguity.
+  final unmapped = mappings.where((m) => m.paramName == null).toList();
+  if (unmapped.isNotEmpty) {
+    final unmappedNames = unmapped.map((m) => m.fieldName).join(', ');
+    final ctorDisplay = ctorName.isEmpty ? '(unnamed)' : '.$ctorName()';
+    stderr.writeln(
+        'ERROR: _#fromFields cannot auto-generate for ${info.className}: '
+        'constructor $ctorDisplay does not cover fields [$unmappedNames]. '
+        'Add YAML override: "$fromFieldsKey"');
+    return;
+  }
+
+  // Check 2: identity — computed mappings cause double-computation.
+  final computed = mappings.where((m) => !m.isIdentity).toList();
+  if (computed.isNotEmpty) {
+    final computedNames = computed.map((m) =>
+        '${m.fieldName}←${m.paramName}').join(', ');
+    final ctorDisplay = ctorName.isEmpty ? '(unnamed)' : '.$ctorName()';
+    stderr.writeln(
+        'ERROR: _#fromFields cannot auto-generate for ${info.className}: '
+        'constructor $ctorDisplay has computed field initializers [$computedNames]. '
+        'Passing field values back would cause double-computation. '
+        'Add YAML override: "$fromFieldsKey"');
+    return;
+  }
+
   // Build constructor param lookup from Analyzer (for type strings).
   // Match by constructor name.
   final analyzerCtor = info.constructors

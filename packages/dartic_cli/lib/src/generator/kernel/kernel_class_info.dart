@@ -94,6 +94,15 @@ class FieldParamMapping {
   /// Whether the parameter is optional.
   final bool paramIsOptional;
 
+  /// Whether the field initializer is an identity mapping (`field = param`)
+  /// with only type casts/null-checks — no computation.
+  ///
+  /// When false, the field value is computed from the param (e.g.
+  /// `_duration = microseconds + seconds * 1000000`). Passing the computed
+  /// field value back to the param would cause double-computation.
+  /// fromFields is only safe when ALL mapped fields are identity.
+  final bool isIdentity;
+
   /// Position of this parameter in the constructor's parameter list.
   /// For positional params: 0-based index in positionalParameters.
   /// For named params: index after all positional params.
@@ -105,6 +114,7 @@ class FieldParamMapping {
     this.paramName,
     this.paramIsNamed = false,
     this.paramIsOptional = false,
+    this.isIdentity = true,
     this.paramIndex = -1,
   });
 }
