@@ -72,42 +72,12 @@ abstract final class DateTimeBindings {
         'millisecond#0': (args) => (args[0] as DateTime).millisecond,
         'microsecond#0': (args) => (args[0] as DateTime).microsecond,
         'weekday#0': (args) => (args[0] as DateTime).weekday,
+        '==#1': (args) => (args[0] as DateTime) == (args[1] as Object),
+        '#8': (args) => DateTime(args[0] as int, identical(args[1], darticAbsent) ? 1 : args[1] as int, identical(args[2], darticAbsent) ? 1 : args[2] as int, identical(args[3], darticAbsent) ? 0 : args[3] as int, identical(args[4], darticAbsent) ? 0 : args[4] as int, identical(args[5], darticAbsent) ? 0 : args[5] as int, identical(args[6], darticAbsent) ? 0 : args[6] as int, identical(args[7], darticAbsent) ? 0 : args[7] as int),
+        'utc#8': (args) => DateTime.utc(args[0] as int, identical(args[1], darticAbsent) ? 1 : args[1] as int, identical(args[2], darticAbsent) ? 1 : args[2] as int, identical(args[3], darticAbsent) ? 0 : args[3] as int, identical(args[4], darticAbsent) ? 0 : args[4] as int, identical(args[5], darticAbsent) ? 0 : args[5] as int, identical(args[6], darticAbsent) ? 0 : args[6] as int, identical(args[7], darticAbsent) ? 0 : args[7] as int),
         'now#0': (args) => DateTime.now(),
         'timestamp#0': (args) => DateTime.timestamp(),
-        '==#1': (args) => args[0] == args[1],
-        '#8': (args) => DateTime(
-            args[0] as int,
-            identical(args[1], darticAbsent) ? 1 : args[1] as int,
-            identical(args[2], darticAbsent) ? 1 : args[2] as int,
-            identical(args[3], darticAbsent) ? 0 : args[3] as int,
-            identical(args[4], darticAbsent) ? 0 : args[4] as int,
-            identical(args[5], darticAbsent) ? 0 : args[5] as int,
-            identical(args[6], darticAbsent) ? 0 : args[6] as int,
-            identical(args[7], darticAbsent) ? 0 : args[7] as int,
-        ),
-        'utc#8': (args) => DateTime.utc(
-            args[0] as int,
-            identical(args[1], darticAbsent) ? 1 : args[1] as int,
-            identical(args[2], darticAbsent) ? 1 : args[2] as int,
-            identical(args[3], darticAbsent) ? 0 : args[3] as int,
-            identical(args[4], darticAbsent) ? 0 : args[4] as int,
-            identical(args[5], darticAbsent) ? 0 : args[5] as int,
-            identical(args[6], darticAbsent) ? 0 : args[6] as int,
-            identical(args[7], darticAbsent) ? 0 : args[7] as int,
-        ),
-        'fromMillisecondsSinceEpoch#2': (args) {
-            final ms = args[0] as int;
-            if (!identical(args[1], darticAbsent)) {
-              return DateTime.fromMillisecondsSinceEpoch(ms, isUtc: args[1] as bool);
-            }
-            return DateTime.fromMillisecondsSinceEpoch(ms);
-        },
-        'fromMicrosecondsSinceEpoch#2': (args) {
-            final us = args[0] as int;
-            if (!identical(args[1], darticAbsent)) {
-              return DateTime.fromMicrosecondsSinceEpoch(us, isUtc: args[1] as bool);
-            }
-            return DateTime.fromMicrosecondsSinceEpoch(us);
-        },
+        'fromMillisecondsSinceEpoch#2': (args) => DateTime.fromMillisecondsSinceEpoch(args[0] as int, isUtc: identical(args[1], darticAbsent) ? false : args[1] as bool),
+        'fromMicrosecondsSinceEpoch#2': (args) => DateTime.fromMicrosecondsSinceEpoch(args[0] as int, isUtc: identical(args[1], darticAbsent) ? false : args[1] as bool),
       };
 }

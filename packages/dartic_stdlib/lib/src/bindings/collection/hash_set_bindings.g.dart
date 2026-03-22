@@ -64,20 +64,9 @@ abstract final class HashSetBindings {
         'first#0': (args) => (args[0] as HashSet).first,
         'last#0': (args) => (args[0] as HashSet).last,
         'single#0': (args) => (args[0] as HashSet).single,
-        '#3': (args) {
-            final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-            final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            return HashSet<Object?>(
-              equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-              hashCode:
-                  hashCodeFn != null ? (e) => hashCodeFn(e) as int : null,
-              isValidKey:
-                  isValidKey != null ? (k) => isValidKey(k) as bool : null,
-            );
-        },
-        'from#1': (args) => HashSet.from(args[0] as Iterable),
-        'of#1': (args) => HashSet.of(args[0] as Iterable),
-        'identity#0': (args) => HashSet.identity(),
+        '#3': (args) => HashSet<dynamic>(equals: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a, b) => (args[0] as Function?)!(a, b), hashCode: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), isValidKey: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'identity#0': (args) => HashSet<dynamic>.identity(),
+        'from#1': (args) => HashSet<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => HashSet<dynamic>.of(args[0] as Iterable),
       };
 }

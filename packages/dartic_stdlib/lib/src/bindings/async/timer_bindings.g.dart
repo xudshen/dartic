@@ -18,27 +18,14 @@ abstract final class TimerBindings {
       test: (o) => o is Timer,
       methods: methodMap(),
     );
-    ctx.registerBinding('dart:async::Timer::run#1', methodMap()['run#1']!);
+    ctx.registerBinding('dart:async::Timer::run#1', (args) { Timer.run(() => (args[0] as Function)()); return null; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cancel#0': (args) { (args[0] as Timer).cancel(); return null; },
         'tick#0': (args) => (args[0] as Timer).tick,
         'isActive#0': (args) => (args[0] as Timer).isActive,
-        '#2': (args) {
-            final duration = args[0] as Duration;
-            final callback = args[1] as Function;
-            return Timer(duration, () => callback());
-        },
-        'periodic#2': (args) {
-            final duration = args[0] as Duration;
-            final callback = args[1] as Function;
-            return Timer.periodic(duration, (t) => callback(t));
-        },
-        'run#1': (args) {
-            final callback = args[0] as Function;
-            Timer.run(() => callback());
-            return null;
-        },
+        '#2': (args) => Timer(args[0] as Duration, () => (args[1] as Function)()),
+        'periodic#2': (args) => Timer.periodic(args[0] as Duration, (a) => (args[1] as Function)(a)),
       };
 }

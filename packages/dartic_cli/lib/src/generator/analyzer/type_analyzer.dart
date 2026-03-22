@@ -205,11 +205,11 @@ class TypeAnalyzer {
           staticMethods.add(_toMethodInfo(method));
         }
       } else if (method.isOperator) {
-        // Skip == operator — handled by opcodes in the VM
-        if (name == '==') continue;
         operators.add(_toOperatorInfo(method));
       } else {
-        // Skip Object methods unless explicitly overridden in this class
+        // Skip Object methods (toString, noSuchMethod) unless the class
+        // declares them — avoids redundant bindings on every class.
+        // Note: == is an operator, handled above (not filtered).
         if (objectMethodNames.contains(name) &&
             !_isDeclaredInClass(method, cls)) {
           continue;
@@ -269,15 +269,18 @@ class TypeAnalyzer {
       ));
     }
 
-    // Extract constructors — skip for abstract classes and enums
-    // Also skip private constructors
+    // Extract constructors — skip enums and generative ctors on abstract classes.
+    // Factory constructors on abstract classes are kept (e.g., BigInt.from,
+    // Stream.fromIterable, Map.of) since they're callable and needed for CALL_HOST.
     final constructors = <ConstructorInfo>[];
     final isEnum = cls is EnumElement;
-    if (!isAbstract && !isEnum) {
+    if (!isEnum) {
       for (final ctor in cls.constructors) {
         final ctorName = ctor.name ?? '';
         // Skip private constructors
         if (ctorName.startsWith('_')) continue;
+        // Skip generative constructors on abstract classes (can't instantiate)
+        if (isAbstract && !ctor.isFactory) continue;
         // 'new' is the unnamed constructor — normalize to empty string
         final normalizedName = ctorName == 'new' ? '' : ctorName;
         constructors.add(ConstructorInfo(

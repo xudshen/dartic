@@ -25,5 +25,6 @@ abstract final class RecordBindings {
         'toString#0': (args) => (args[0] as Record).toString(),
         'runtimeType#0': (args) => (args[0] as Record).runtimeType,
         'hashCode#0': (args) => (args[0] as Record).hashCode,
+        '==#1': (args) => (args[0] as Record) == (args[1] as Object),
       };
 }

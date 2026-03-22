@@ -24,5 +24,6 @@ abstract final class TypeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as Type).toString(),
         'hashCode#0': (args) => (args[0] as Type).hashCode,
+        '==#1': (args) => (args[0] as Type) == (args[1] as Object),
       };
 }

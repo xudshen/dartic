@@ -34,13 +34,7 @@ abstract final class RegExpBindings {
         'isCaseSensitive#0': (args) => (args[0] as RegExp).isCaseSensitive,
         'isUnicode#0': (args) => (args[0] as RegExp).isUnicode,
         'isDotAll#0': (args) => (args[0] as RegExp).isDotAll,
-        '#5': (args) => RegExp(
-            args[0] as String,
-            multiLine: identical(args[1], darticAbsent) ? false : args[1] as bool,
-            caseSensitive: identical(args[2], darticAbsent) ? true : args[2] as bool,
-            unicode: identical(args[3], darticAbsent) ? false : args[3] as bool,
-            dotAll: identical(args[4], darticAbsent) ? false : args[4] as bool,
-        ),
+        '#5': (args) => RegExp(args[0] as String, multiLine: identical(args[1], darticAbsent) ? false : args[1] as bool, caseSensitive: identical(args[2], darticAbsent) ? true : args[2] as bool, unicode: identical(args[3], darticAbsent) ? false : args[3] as bool, dotAll: identical(args[4], darticAbsent) ? false : args[4] as bool),
         'hashCode#0': (args) => (args[0] as RegExp).hashCode,
         'toString#0': (args) => (args[0] as RegExp).toString(),
       };

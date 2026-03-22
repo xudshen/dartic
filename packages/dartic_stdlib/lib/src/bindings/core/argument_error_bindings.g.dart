@@ -106,7 +106,6 @@ abstract final class ArgumentErrorBindings {
         '#2': (args) => ArgumentError(identical(args[0], darticAbsent) ? null : args[0], identical(args[1], darticAbsent) ? null : args[1] as String?),
         'notNull#1': (args) => ArgumentError.notNull(identical(args[0], darticAbsent) ? null : args[0] as String?),
         '#1': (args) => ArgumentError(args[0]),
-        'value#1': (args) => ArgumentError.value(args[0]),
         'value#3': (args) => ArgumentError.value(
             args[0],
             identical(args[1], darticAbsent) ? null : args[1] as String?,

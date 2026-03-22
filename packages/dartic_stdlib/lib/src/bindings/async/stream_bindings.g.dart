@@ -363,41 +363,21 @@ abstract final class StreamBindings {
         'first#0': (args) => (args[0] as Stream).first,
         'last#0': (args) => (args[0] as Stream).last,
         'single#0': (args) => (args[0] as Stream).single,
-        'fromIterable#1': (args) => Stream.fromIterable(args[0] as Iterable),
-        'fromFuture#1': (args) => Stream.fromFuture(args[0] as Future),
-        'value#1': (args) => Stream.value(args[0]),
-        'error#2': (args) {
-            final error = args[0] as Object;
-            final st = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
-            return Stream.error(error, st);
+        'empty#1': (args) {
+          if (identical(args[0], darticAbsent)) {
+            return Stream<dynamic>.empty();
+          } else {
+            return Stream<dynamic>.empty(broadcast: args[0] as bool);
+          }
         },
-        'empty#0': (args) => const Stream.empty(),
-        'fromFutures#1': (args) => Stream.fromFutures((args[0] as Iterable).cast<Future>()),
-        'periodic#2': (args) {
-            final period = args[0] as Duration;
-            final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            if (computation != null) {
-              return Stream.periodic(period, (i) => computation(i));
-            }
-            return Stream.periodic(period);
-        },
-        'multi#2': (args) {
-            final onListen = args[0] as Function;
-            final isBroadcast =
-                identical(args[1], darticAbsent) ? false : args[1] as bool? ?? false;
-            return Stream.multi(
-              (controller) => onListen(controller),
-              isBroadcast: isBroadcast,
-            );
-        },
-        'eventTransformed#2': (args) {
-            final source = args[0] as Stream;
-            final mapSink = args[1] as Function;
-            return Stream.eventTransformed(
-              source,
-              (sink) => mapSink(sink) as EventSink,
-            );
-        },
+        'value#1': (args) => Stream<dynamic>.value(args[0]),
+        'error#2': (args) => Stream<dynamic>.error(args[0] as Object, identical(args[1], darticAbsent) ? null : args[1] as StackTrace?),
+        'fromFuture#1': (args) => Stream<dynamic>.fromFuture(args[0] as Future),
+        'fromFutures#1': (args) => Stream<dynamic>.fromFutures((args[0] as Iterable).cast<Future>()),
+        'fromIterable#1': (args) => Stream<dynamic>.fromIterable(args[0] as Iterable),
+        'multi#2': (args) => Stream<dynamic>.multi((a) => (args[0] as Function)(a), isBroadcast: identical(args[1], darticAbsent) ? false : args[1] as bool),
+        'periodic#2': (args) => Stream<dynamic>.periodic(args[0] as Duration, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)),
+        'eventTransformed#2': (args) => Stream<dynamic>.eventTransformed(args[0] as Stream<dynamic>, (a) => (args[1] as Function)(a) as EventSink<dynamic>),
         'drain#1': (args) {
             final stream = args[0] as Stream;
             if (identical(args[1], darticAbsent)) return stream.drain();

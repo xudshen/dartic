@@ -81,20 +81,6 @@ libraries:
 
     overrides:
 
-      # ── Random: optional seed in constructor + secure factory ──
-      Random:
-        extra_methods:
-          "#1": |
-            (args) {
-              final seed = identical(args[0], darticAbsent) ? null : args[0] as int?;
-              return Random(seed);
-            }
-          "secure#0": "(args) => Random.secure()"
-
-      # ── Point: == override ──
-      Point:
-        extra_methods:
-          "==#1": "(args) => args[0] == args[1]"
 
       # ── _RectangleBase: internal base class, all methods cast to Rectangle ──
       _RectangleBase:
@@ -118,13 +104,17 @@ libraries:
           "hashCode#0": "(args) => (args[0] as Rectangle).hashCode"
           "==#1": "(args) => args[0] == args[1]"
 
-      # ── Rectangle: == override + fromFields ──
-      Rectangle:
+      # ── Point: Object-inherited members ──
+      Point:
         extra_methods:
           "==#1": "(args) => args[0] == args[1]"
+
+      # ── Rectangle: fromFields override ──
+      Rectangle:
+        extra_methods:
           "_#fromFields#4": "(args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num)"
 
-      # ── MutableRectangle: == override + toString + hashCode ──
+      # ── MutableRectangle: Object-inherited members ──
       MutableRectangle:
         extra_methods:
           "==#1": "(args) => args[0] == args[1]"

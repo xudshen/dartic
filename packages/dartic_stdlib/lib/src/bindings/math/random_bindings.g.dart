@@ -22,10 +22,7 @@ abstract final class RandomBindings {
         'nextInt#1': (args) => (args[0] as Random).nextInt(args[1] as int),
         'nextDouble#0': (args) => (args[0] as Random).nextDouble(),
         'nextBool#0': (args) => (args[0] as Random).nextBool(),
-        '#1': (args) {
-            final seed = identical(args[0], darticAbsent) ? null : args[0] as int?;
-            return Random(seed);
-        },
+        '#1': (args) => Random(identical(args[0], darticAbsent) ? null : args[0] as int?),
         'secure#0': (args) => Random.secure(),
       };
 }

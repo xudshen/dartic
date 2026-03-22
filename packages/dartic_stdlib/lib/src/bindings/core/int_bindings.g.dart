@@ -75,6 +75,7 @@ abstract final class IntBindings {
         '<=#1': (args) => (args[0] as int) <= (args[1] as num),
         '>#1': (args) => (args[0] as int) > (args[1] as num),
         '>=#1': (args) => (args[0] as int) >= (args[1] as num),
+        'fromEnvironment#2': (args) => int.fromEnvironment(args[0] as String, defaultValue: identical(args[1], darticAbsent) ? 0 : args[1] as int),
         'parse#3': (args) {
             final source = args[0] as String;
             if (!identical(args[1], darticAbsent)) {

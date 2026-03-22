@@ -27,10 +27,10 @@ abstract final class StreamIteratorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        '#1': (args) => StreamIterator(args[0] as Stream),
         'moveNext#0': (args) => (args[0] as StreamIterator).moveNext(),
         'cancel#0': (args) => (args[0] as StreamIterator).cancel(),
         'current#0': (args) => (args[0] as StreamIterator).current,
+        '#1': (args) => StreamIterator<dynamic>(args[0] as Stream),
       };
 
   static Map<String, Object? Function(List<Object?>)> streamIteratorMethodMap() => {

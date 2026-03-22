@@ -70,6 +70,11 @@ abstract final class SetBindings {
         'first#0': (args) => (args[0] as Set).first,
         'last#0': (args) => (args[0] as Set).last,
         'single#0': (args) => (args[0] as Set).single,
+        '#0': (args) => Set<dynamic>(),
+        'identity#0': (args) => Set<dynamic>.identity(),
+        'from#1': (args) => Set<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => Set<dynamic>.of(args[0] as Iterable),
+        'unmodifiable#1': (args) => Set<dynamic>.unmodifiable(args[0] as Iterable),
         'castFrom#2': (args) => Set.castFrom(args[0] as Set),
         'symmetricDifference#1': (args) {
             final a = args[0] as Set;

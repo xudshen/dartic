@@ -49,6 +49,7 @@ abstract final class NumBindings {
         'isInfinite#0': (args) => (args[0] as num).isInfinite,
         'isFinite#0': (args) => (args[0] as num).isFinite,
         'sign#0': (args) => (args[0] as num).sign,
+        '==#1': (args) => (args[0] as num) == (args[1] as Object),
         '+#1': (args) => (args[0] as num) + (args[1] as num),
         '-#1': (args) => (args[0] as num) - (args[1] as num),
         '*#1': (args) => (args[0] as num) * (args[1] as num),

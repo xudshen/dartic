@@ -62,13 +62,8 @@ abstract final class ListQueueBindings {
         'last#0': (args) => (args[0] as ListQueue).last,
         'single#0': (args) => (args[0] as ListQueue).single,
         'isNotEmpty#0': (args) => (args[0] as ListQueue).isNotEmpty,
+        '#1': (args) => ListQueue<dynamic>(identical(args[0], darticAbsent) ? null : args[0] as int?),
         'from#1': (args) => ListQueue<dynamic>.from(args[0] as Iterable<dynamic>),
         'of#1': (args) => ListQueue<dynamic>.of(args[0] as Iterable),
-        '#1': (args) {
-            if (!identical(args[0], darticAbsent)) {
-              return ListQueue<Object?>(args[0] as int);
-            }
-            return ListQueue<Object?>();
-        },
       };
 }

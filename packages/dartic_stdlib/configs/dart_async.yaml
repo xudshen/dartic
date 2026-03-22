@@ -253,54 +253,10 @@ libraries:
               return future.timeout(timeLimit);
             }
 
-      # ── Completer ───────────────────────────────────────────────────────
-      Completer:
-        extra_methods:
-          "#0": "(args) => Completer<Object?>()"
-          "sync#0": "(args) => Completer<Object?>.sync()"
 
       # ── Stream ──────────────────────────────────────────────────────────
       Stream:
         extra_methods:
-          "fromIterable#1": "(args) => Stream.fromIterable(args[0] as Iterable)"
-          "fromFuture#1": "(args) => Stream.fromFuture(args[0] as Future)"
-          "value#1": "(args) => Stream.value(args[0])"
-          "error#2": |
-            (args) {
-              final error = args[0] as Object;
-              final st = identical(args[1], darticAbsent) ? null : args[1] as StackTrace?;
-              return Stream.error(error, st);
-            }
-          "empty#0": "(args) => const Stream.empty()"
-          "fromFutures#1": "(args) => Stream.fromFutures((args[0] as Iterable).cast<Future>())"
-          "periodic#2": |
-            (args) {
-              final period = args[0] as Duration;
-              final computation = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              if (computation != null) {
-                return Stream.periodic(period, (i) => computation(i));
-              }
-              return Stream.periodic(period);
-            }
-          "multi#2": |
-            (args) {
-              final onListen = args[0] as Function;
-              final isBroadcast =
-                  identical(args[1], darticAbsent) ? false : args[1] as bool? ?? false;
-              return Stream.multi(
-                (controller) => onListen(controller),
-                isBroadcast: isBroadcast,
-              );
-            }
-          "eventTransformed#2": |
-            (args) {
-              final source = args[0] as Stream;
-              final mapSink = args[1] as Function;
-              return Stream.eventTransformed(
-                source,
-                (sink) => mapSink(sink) as EventSink,
-              );
-            }
           # drain: must omit arg when absent, not pass null (typed streams reject null)
           "drain#1": |
             (args) {
@@ -318,7 +274,8 @@ libraries:
           "#1": "(args) => const Stream.empty()"
           "_#fromFields#1": "(args) => const Stream.empty()"
 
-      # ── StreamController ────────────────────────────────────────────────
+
+      # ── StreamController: constructors with callback wrapping ───────────
       StreamController:
         extra_methods:
           "#5": |
@@ -395,13 +352,6 @@ libraries:
               );
             }
 
-      # ── StreamIterator ──────────────────────────────────────────────────
-      StreamIterator:
-        extra_methods:
-          "#1": "(args) => StreamIterator(args[0] as Stream)"
-          "moveNext#0": "(args) => (args[0] as StreamIterator).moveNext()"
-          "cancel#0": "(args) => (args[0] as StreamIterator).cancel()"
-          "current#0": "(args) => (args[0] as StreamIterator).current"
 
       # ── _StreamIterator ─────────────────────────────────────────────────
       _StreamIterator:
@@ -412,33 +362,7 @@ libraries:
           "current#0": "(args) => (args[0] as StreamIterator).current"
           "_subscription#0": "(args) => args[0]"
 
-      # ── Timer ───────────────────────────────────────────────────────────
-      Timer:
-        extra_methods:
-          "#2": |
-            (args) {
-              final duration = args[0] as Duration;
-              final callback = args[1] as Function;
-              return Timer(duration, () => callback());
-            }
-          "periodic#2": |
-            (args) {
-              final duration = args[0] as Duration;
-              final callback = args[1] as Function;
-              return Timer.periodic(duration, (t) => callback(t));
-            }
-          "run#1": |
-            (args) {
-              final callback = args[0] as Function;
-              Timer.run(() => callback());
-              return null;
-            }
 
-      # ── Zone ────────────────────────────────────────────────────────────
-      Zone:
-        extra_methods:
-          "current#0": "(args) => Zone.current"
-          "root#0": "(args) => Zone.root"
 
       # ── ZoneSpecification ───────────────────────────────────────────────
       # Methods are registered under both dart:async::ZoneSpecification:: and
@@ -685,20 +609,4 @@ libraries:
         extra_methods:
           "_#fromFields#0": "(args) => Zone.root"
 
-      # ── TimeoutException ─────────────────────────────────────────────────
-      TimeoutException:
-        extra_methods:
-          "#2": |
-            (args) => TimeoutException(
-              identical(args[0], darticAbsent) ? null : args[0] as String?,
-              identical(args[1], darticAbsent) ? null : args[1] as Duration?,
-            )
-          "message#0": "(args) => (args[0] as TimeoutException).message"
-          "duration#0": "(args) => (args[0] as TimeoutException).duration"
-          "toString#0": "(args) => (args[0] as TimeoutException).toString()"
-
-      # ── StreamView ───────────────────────────────────────────────────────
-      StreamView:
-        extra_methods:
-          "#1": "(args) => StreamView(args[0] as Stream)"
 

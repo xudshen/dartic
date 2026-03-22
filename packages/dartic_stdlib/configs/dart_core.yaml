@@ -489,11 +489,11 @@ libraries:
           - "dart:_internal::LateError::fieldAI#1"
           - "dart:core::NoSuchMethodError::_forExternal#1"
 
-      # ── ArgumentError: constructor aliases + factory with optional params ──
+
+      # ── ArgumentError: constructor + factory + Object-inherited members ──
       ArgumentError:
         extra_methods:
           "#1": "(args) => ArgumentError(args[0])"
-          "value#1": "(args) => ArgumentError.value(args[0])"
           "value#3": |
             (args) => ArgumentError.value(
               args[0],
@@ -501,87 +501,27 @@ libraries:
               identical(args[2], darticAbsent) ? null : args[2],
             )
 
-      # ── RangeError: factory constructors with optional params ──
-      # extra_bindings override auto-generated registerBinding calls that
-      # don't handle optional params (hard args[N] indexing).
+      # ── RangeError: extra_bindings for factory aliases ──
       RangeError:
         extra_methods:
           "toString#0": "(args) => (args[0] as RangeError).toString()"
-          "value#3": |
-            (args) => RangeError.value(
-              args[0] as num,
-              identical(args[1], darticAbsent) ? null : args[1] as String?,
-              identical(args[2], darticAbsent) ? null : args[2] as String?,
-            )
-          "range#5": |
-            (args) => RangeError.range(
-              args[0] as num,
-              args[1] as int?,
-              args[2] as int?,
-              identical(args[3], darticAbsent) ? null : args[3] as String?,
-              identical(args[4], darticAbsent) ? null : args[4] as String?,
-            )
-          "index#5": |
-            (args) => RangeError.index(
-              args[0] as int,
-              args[1],
-              identical(args[2], darticAbsent) ? null : args[2] as String?,
-              identical(args[3], darticAbsent) ? null : args[3] as String?,
-              identical(args[4], darticAbsent) ? null : args[4] as int?,
-            )
-          "checkValidIndex#5": |
-            (args) => RangeError.checkValidIndex(
-              args[0] as int,
-              args[1],
-              identical(args[2], darticAbsent) ? null : args[2] as String?,
-              identical(args[3], darticAbsent) ? null : args[3] as int?,
-              identical(args[4], darticAbsent) ? null : args[4] as String?,
-            )
-          "checkValidRange#6": |
-            (args) => RangeError.checkValidRange(
-              args[0] as int,
-              args[1] as int?,
-              args[2] as int,
-              identical(args[3], darticAbsent) ? null : args[3] as String?,
-              identical(args[4], darticAbsent) ? null : args[4] as String?,
-              identical(args[5], darticAbsent) ? null : args[5] as String?,
-            )
-          "checkNotNegative#3": |
-            (args) => RangeError.checkNotNegative(
-              args[0] as int,
-              identical(args[1], darticAbsent) ? null : args[1] as String?,
-              identical(args[2], darticAbsent) ? null : args[2] as String?,
-            )
         extra_bindings:
           - "dart:core::RangeError::value#3"
           - "dart:core::RangeError::range#5"
           - "dart:core::RangeError::index#5"
 
-      # ── IndexError: constructor with optional params ──
+      # ── IndexError: extra_bindings for constructor alias ──
       IndexError:
         extra_methods:
           "toString#0": "(args) => (args[0] as IndexError).toString()"
-          "#5": |
-            (args) => IndexError(
-              args[0] as int,
-              args[1],
-              identical(args[2], darticAbsent) ? null : args[2] as String?,
-              identical(args[3], darticAbsent) ? null : args[3] as String?,
-              identical(args[4], darticAbsent) ? null : args[4] as int?,
-            )
         extra_bindings:
           - "dart:core::IndexError::#5"
 
-      # ── FormatException: constructor with optional params ──
-      FormatException:
+      # ── Exception: constructor + toString ──
+      Exception:
         extra_methods:
-          "#3": |
-            (args) {
-              final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;
-              final source = identical(args[1], darticAbsent) ? null : args[1];
-              final offset = identical(args[2], darticAbsent) ? null : args[2] as int?;
-              return FormatException(msg, source, offset);
-            }
+          "#1": "(args) => Exception(identical(args[0], darticAbsent) ? null : args[0])"
+          "toString#0": "(args) => args[0].toString()"
 
       # ── TypeError: toString ──
       TypeError:
@@ -593,17 +533,9 @@ libraries:
       # exist at runtime; override it to suppress auto-generation.
       Deprecated:
         extra_methods:
-          "#1": "(args) => Deprecated(args[0] as String)"
-          "message#0": "(args) => (args[0] as Deprecated).message"
-          "toString#0": "(args) => (args[0] as Deprecated).toString()"
           "expires#0": "(args) => (args[0] as Deprecated).message"
           "_#fromFields#2": "(args) => Deprecated(args[1] as String)"
 
-      # ── OutOfMemoryError: no-arg constructor ──
-      OutOfMemoryError:
-        extra_methods:
-          "#0": "(args) => OutOfMemoryError()"
-          "toString#0": "(args) => (args[0] as OutOfMemoryError).toString()"
 
       # ── NoSuchMethodError: _withInvocation (private factory used by CFE) ──
       NoSuchMethodError:
@@ -612,29 +544,12 @@ libraries:
         extra_bindings:
           - "dart:core::NoSuchMethodError::_withInvocation#2"
 
-      # ── Exception: constructor and toString ──
-      Exception:
-        extra_methods:
-          "#1": "(args) => Exception(identical(args[0], darticAbsent) ? null : args[0])"
-          "toString#0": "(args) => args[0].toString()"
 
       # ── MapEntry: private constructor variant ──
       MapEntry:
         extra_methods:
           "_#2": "(args) => MapEntry(args[0], args[1])"
 
-      # ── StringSink: writeln default is '' not null ──
-      StringSink:
-        extra_methods:
-          "writeln#1": |
-            (args) {
-              if (!identical(args[1], darticAbsent)) {
-                (args[0] as StringSink).writeln(args[1]);
-              } else {
-                (args[0] as StringSink).writeln();
-              }
-              return null;
-            }
 
       # ── Duration: constructor with all-named params + internal variant ──
       Duration:
@@ -653,26 +568,7 @@ libraries:
               return int.parse(source);
             }
 
-      # ── BigInt: factory constructor + inherited methods ──
-      BigInt:
-        extra_methods:
-          "from#1": "(args) => BigInt.from(args[0] as num)"
-          "==#1": "(args) => args[0] == args[1]"
-          "hashCode#0": "(args) => (args[0] as BigInt).hashCode"
 
-      # ── RegExp: constructor + inherited + optional param methods ──
-      RegExp:
-        extra_methods:
-          "#5": |
-            (args) => RegExp(
-              args[0] as String,
-              multiLine: identical(args[1], darticAbsent) ? false : args[1] as bool,
-              caseSensitive: identical(args[2], darticAbsent) ? true : args[2] as bool,
-              unicode: identical(args[3], darticAbsent) ? false : args[3] as bool,
-              dotAll: identical(args[4], darticAbsent) ? false : args[4] as bool,
-            )
-          "hashCode#0": "(args) => (args[0] as RegExp).hashCode"
-          "toString#0": "(args) => (args[0] as RegExp).toString()"
 
       # ── Iterable: generate factory + callback methods + optional params ──
       Iterable:
@@ -729,15 +625,6 @@ libraries:
                 value = fn(value, iter.current);
               }
               return value;
-            }
-          "generate#2": |
-            (args) {
-              final count = args[0] as int;
-              if (!identical(args[1], darticAbsent)) {
-                final generator = args[1] as Function;
-                return Iterable.generate(count, (i) => generator(i));
-              }
-              return Iterable.generate(count);
             }
           "#0": "(args) => const Iterable.empty()"
           # IterableElementError static factories (dart:_internal)
@@ -810,42 +697,33 @@ libraries:
               }
               return map;
             }
-          "from#1": "(args) => Map<dynamic, dynamic>.from(args[0] as Map)"
-          "of#1": "(args) => Map<dynamic, dynamic>.of(args[0] as Map)"
-          "identity#0": "(args) => Map<dynamic, dynamic>.identity()"
-          "fromIterable#3": |
-            (args) {
-              final iterable = args[0] as Iterable;
-              final keyFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final valueFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return Map<dynamic, dynamic>.fromIterable(
-                iterable,
-                key: keyFn != null ? (e) => keyFn(e) : null,
-                value: valueFn != null ? (e) => valueFn(e) : null,
-              );
-            }
-          "fromIterables#2": "(args) => Map<dynamic, dynamic>.fromIterables(args[0] as Iterable, args[1] as Iterable)"
-          "fromEntries#1": "(args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>())"
-          "unmodifiable#1": "(args) => Map.unmodifiable(args[0] as Map)"
           "toString#0": "(args) => (args[0] as Map).toString()"
           "updateAll#1": |
             (args) {
-              final fn = args[1] as Function;
               final map = args[0] as Map;
+              final update = args[1] as Function;
               for (final key in map.keys.toList()) {
-                map[key] = fn(key, map[key]);
+                map[key] = update(key, map[key]);
               }
               return null;
             }
           "update#3": |
             (args) {
-              final updateFn = args[2] as Function;
-              final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-              return (args[0] as Map).update(
-                args[1],
-                (v) => updateFn(v),
-                ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
-              );
+              final map = args[0] as Map;
+              final key = args[1];
+              final update = args[2] as Function;
+              final ifAbsent = identical(args[3], darticAbsent) ? null : args[3] as Function?;
+              if (map.containsKey(key)) {
+                final newValue = update(map[key]);
+                map[key] = newValue;
+                return newValue;
+              }
+              if (ifAbsent != null) {
+                final newValue = ifAbsent();
+                map[key] = newValue;
+                return newValue;
+              }
+              throw ArgumentError.value(key, 'key', 'Key not in map.');
             }
 
       # ── Set: callback methods + symmetricDifference + toString ──
@@ -882,85 +760,7 @@ libraries:
             }
           "toString#0": "(args) => (args[0] as Set).toString()"
 
-      # ── Runes: inherited methods + optional param methods ──
-      Runes:
-        extra_methods:
-          "hashCode#0": "(args) => (args[0] as Runes).hashCode"
-          "toString#0": "(args) => (args[0] as Runes).toString()"
 
-      # ── StringBuffer: optional param constructors/methods ──
-      StringBuffer:
-        extra_methods:
-          "#1": |
-            (args) {
-              if (!identical(args[0], darticAbsent)) {
-                return StringBuffer(args[0]!);
-              }
-              return StringBuffer();
-            }
-          "writeln#1": |
-            (args) {
-              if (!identical(args[1], darticAbsent)) {
-                (args[0] as StringBuffer).writeln(args[1]);
-              } else {
-                (args[0] as StringBuffer).writeln();
-              }
-              return null;
-            }
-          "writeAll#2": |
-            (args) {
-              final sb = args[0] as StringBuffer;
-              final objects = args[1] as Iterable;
-              if (!identical(args[2], darticAbsent)) {
-                sb.writeAll(objects, args[2] as String);
-              } else {
-                sb.writeAll(objects);
-              }
-              return null;
-            }
-
-      # ── DateTime: constructors with optional params ──
-      DateTime:
-        extra_methods:
-          "==#1": "(args) => args[0] == args[1]"
-          "#8": |
-            (args) => DateTime(
-              args[0] as int,
-              identical(args[1], darticAbsent) ? 1 : args[1] as int,
-              identical(args[2], darticAbsent) ? 1 : args[2] as int,
-              identical(args[3], darticAbsent) ? 0 : args[3] as int,
-              identical(args[4], darticAbsent) ? 0 : args[4] as int,
-              identical(args[5], darticAbsent) ? 0 : args[5] as int,
-              identical(args[6], darticAbsent) ? 0 : args[6] as int,
-              identical(args[7], darticAbsent) ? 0 : args[7] as int,
-            )
-          "utc#8": |
-            (args) => DateTime.utc(
-              args[0] as int,
-              identical(args[1], darticAbsent) ? 1 : args[1] as int,
-              identical(args[2], darticAbsent) ? 1 : args[2] as int,
-              identical(args[3], darticAbsent) ? 0 : args[3] as int,
-              identical(args[4], darticAbsent) ? 0 : args[4] as int,
-              identical(args[5], darticAbsent) ? 0 : args[5] as int,
-              identical(args[6], darticAbsent) ? 0 : args[6] as int,
-              identical(args[7], darticAbsent) ? 0 : args[7] as int,
-            )
-          "fromMillisecondsSinceEpoch#2": |
-            (args) {
-              final ms = args[0] as int;
-              if (!identical(args[1], darticAbsent)) {
-                return DateTime.fromMillisecondsSinceEpoch(ms, isUtc: args[1] as bool);
-              }
-              return DateTime.fromMillisecondsSinceEpoch(ms);
-            }
-          "fromMicrosecondsSinceEpoch#2": |
-            (args) {
-              final us = args[0] as int;
-              if (!identical(args[1], darticAbsent)) {
-                return DateTime.fromMicrosecondsSinceEpoch(us, isUtc: args[1] as bool);
-              }
-              return DateTime.fromMicrosecondsSinceEpoch(us);
-            }
 
       # ── Uri: factory constructors + static methods + inherited methods ──
       # ── Uri: only factory constructors need overrides ──
@@ -1143,24 +943,67 @@ libraries:
               return String.fromCharCodes(codes);
             }
 
-      # ── Comparable: abstract interface, compareTo + static compare ──
-      Comparable:
-        extra_methods:
-          "compare#2": "(args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable)"
 
-      # ── WeakReference: factory constructor + target getter ──
-      WeakReference:
+      # ── BigInt: Object-inherited members ──
+      BigInt:
         extra_methods:
-          "#1": "(args) => WeakReference(args[0]!)"
-          "target#0": "(args) => (args[0] as WeakReference).target"
+          "==#1": "(args) => args[0] == args[1]"
+          "hashCode#0": "(args) => (args[0] as BigInt).hashCode"
 
-      # ── Finalizer: factory with callback + attach with optional detach ──
-      Finalizer:
+      # ── RegExp: Object-inherited members ──
+      RegExp:
+        extra_methods:
+          "hashCode#0": "(args) => (args[0] as RegExp).hashCode"
+          "toString#0": "(args) => (args[0] as RegExp).toString()"
+
+      # ── Runes: Object-inherited members ──
+      Runes:
+        extra_methods:
+          "hashCode#0": "(args) => (args[0] as Runes).hashCode"
+          "toString#0": "(args) => (args[0] as Runes).toString()"
+
+      # ── StringBuffer: constructor + optional-param methods ──
+      StringBuffer:
         extra_methods:
           "#1": |
             (args) {
-              final fn = args[0] as Function;
-              return Finalizer((token) => fn(token));
+              if (!identical(args[0], darticAbsent)) {
+                return StringBuffer(args[0]!);
+              }
+              return StringBuffer();
+            }
+          "writeln#1": |
+            (args) {
+              if (!identical(args[1], darticAbsent)) {
+                (args[0] as StringBuffer).writeln(args[1]);
+              } else {
+                (args[0] as StringBuffer).writeln();
+              }
+              return null;
+            }
+          "writeAll#2": |
+            (args) {
+              final sb = args[0] as StringBuffer;
+              final objects = args[1] as Iterable;
+              if (!identical(args[2], darticAbsent)) {
+                sb.writeAll(objects, args[2] as String);
+              } else {
+                sb.writeAll(objects);
+              }
+              return null;
+            }
+
+      # ── StringSink: optional-param methods ──
+      StringSink:
+        extra_methods:
+          "writeln#1": |
+            (args) {
+              if (!identical(args[1], darticAbsent)) {
+                (args[0] as StringSink).writeln(args[1]);
+              } else {
+                (args[0] as StringSink).writeln();
+              }
+              return null;
             }
 
       # ── Invocation + _InvocationMirror: noSuchMethod forwarder support ─

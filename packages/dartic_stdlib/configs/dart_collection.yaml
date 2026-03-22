@@ -45,34 +45,7 @@ libraries:
       LinkedHashMap:
         extra_methods:
           "#0": "(args) => LinkedHashMap<Object?, Object?>()"
-          "#3": |
-            (args) {
-              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return LinkedHashMap<Object?, Object?>(
-                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-                hashCode:
-                    hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
-                isValidKey:
-                    isValidKey != null ? (k) => isValidKey(k) as bool : null,
-              );
-            }
-          "from#1": "(args) => LinkedHashMap.from(args[0] as Map)"
-          "of#1": "(args) => LinkedHashMap.of(args[0] as Map)"
           "_fromEntries#1": "(args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>())"
-          "fromIterable#3": |
-            (args) {
-              final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return LinkedHashMap.fromIterable(
-                args[0] as Iterable,
-                key: key != null ? (e) => key(e) : null,
-                value: value != null ? (e) => value(e) : null,
-              );
-            }
-          "fromIterables#2": "(args) => LinkedHashMap.fromIterables(args[0] as Iterable, args[1] as Iterable)"
-          "identity#0": "(args) => LinkedHashMap.identity()"
         extra_bindings:
           - "dart:_compact_hash::_Map::#0"
 
@@ -81,90 +54,12 @@ libraries:
       LinkedHashSet:
         extra_methods:
           "#0": "(args) => LinkedHashSet<Object?>()"
-          "#3": |
-            (args) {
-              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return LinkedHashSet<Object?>(
-                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-                hashCode: hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
-                isValidKey: isValidKey != null ? (k) => isValidKey(k) as bool : null,
-              );
-            }
-          "from#1": "(args) => LinkedHashSet.from(args[0] as Iterable)"
-          "of#1": "(args) => LinkedHashSet.of(args[0] as Iterable)"
           "identity#0": "(args) => Set.identity()"
         extra_bindings:
           - "dart:_compact_hash::_Set::#0"
 
-      # ── HashMap: constructor with callback wrapping ──
-      HashMap:
-        extra_methods:
-          "#3": |
-            (args) {
-              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return HashMap<Object?, Object?>(
-                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-                hashCode:
-                    hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
-                isValidKey:
-                    isValidKey != null ? (k) => isValidKey(k) as bool : null,
-              );
-            }
-          "from#1": "(args) => HashMap.from(args[0] as Map)"
-          "of#1": "(args) => HashMap.of(args[0] as Map)"
-          "fromIterable#3": |
-            (args) {
-              final key = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final value = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return HashMap.fromIterable(
-                args[0] as Iterable,
-                key: key != null ? (e) => key(e) : null,
-                value: value != null ? (e) => value(e) : null,
-              );
-            }
-          "fromIterables#2": "(args) => HashMap.fromIterables(args[0] as Iterable, args[1] as Iterable)"
-          "identity#0": "(args) => HashMap.identity()"
 
-      # ── HashSet: constructor with callback wrapping ──
-      HashSet:
-        extra_methods:
-          "#3": |
-            (args) {
-              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              return HashSet<Object?>(
-                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-                hashCode:
-                    hashCodeFn != null ? (e) => hashCodeFn(e) as int : null,
-                isValidKey:
-                    isValidKey != null ? (k) => isValidKey(k) as bool : null,
-              );
-            }
-          "from#1": "(args) => HashSet.from(args[0] as Iterable)"
-          "of#1": "(args) => HashSet.of(args[0] as Iterable)"
-          "identity#0": "(args) => HashSet.identity()"
 
-      # ── ListQueue: constructor with optional capacity ──
-      ListQueue:
-        extra_methods:
-          "#1": |
-            (args) {
-              if (!identical(args[0], darticAbsent)) {
-                return ListQueue<Object?>(args[0] as int);
-              }
-              return ListQueue<Object?>();
-            }
-
-      # ── Queue: interface methods ──
-      Queue:
-        extra_methods:
-          "from#1": "(args) => Queue.from(args[0] as Iterable)"
-          "of#1": "(args) => Queue.of(args[0] as Iterable)"
 
       # ── SplayTreeMap: constructor with callback wrapping ──
       SplayTreeMap:
@@ -352,17 +247,10 @@ libraries:
       # NOTE: LinkedListEntry.element doesn't exist — element is on
       # DoubleLinkedQueueEntry, which gets auto-discovered by gen tool.
 
-      # ── HasNextIterator: constructor ──
-      HasNextIterator:
-        extra_methods:
-          "#1": "(args) => HasNextIterator(args[0] as Iterator)"
 
       # ── DoubleLinkedQueue: constructors + Queue methods + callback methods ──
       DoubleLinkedQueue:
         extra_methods:
-          "#0": "(args) => DoubleLinkedQueue()"
-          "from#1": "(args) => DoubleLinkedQueue.from(args[0] as Iterable)"
-          "of#1": "(args) => DoubleLinkedQueue.of(args[0] as Iterable)"
           # _DoubleLinkedQueueIterator: private class, methods go here
           "moveNext#0": "(args) => (args[0] as Iterator).moveNext()"
           "current#0": "(args) => (args[0] as Iterator).current"

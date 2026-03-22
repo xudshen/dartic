@@ -99,6 +99,7 @@ abstract final class ListBindings {
         '[]#1': (args) => (args[0] as List)[(args[1] as int)],
         '[]=#2': (args) { (args[0] as List)[args[1] as int] = args[2]; return args[2]; },
         '+#1': (args) => (args[0] as List) + (args[1] as List),
+        '==#1': (args) => (args[0] as List) == (args[1] as Object),
         'unmodifiable#1': (args) => List.unmodifiable(args[0] as Iterable),
         'from#2': (args) {
             final growable = (args.length > 1 && !identical(args[1], darticAbsent))

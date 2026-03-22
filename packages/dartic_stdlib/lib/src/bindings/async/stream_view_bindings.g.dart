@@ -59,7 +59,7 @@ abstract final class StreamViewBindings {
         'first#0': (args) => (args[0] as StreamView).first,
         'last#0': (args) => (args[0] as StreamView).last,
         'single#0': (args) => (args[0] as StreamView).single,
+        '#1': (args) => StreamView<dynamic>(args[0] as Stream),
         '_#fromFields#1': (args) => StreamView<dynamic>(args[0] as Stream),
-        '#1': (args) => StreamView(args[0] as Stream),
       };
 }

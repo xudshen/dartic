@@ -62,7 +62,8 @@ abstract final class QueueBindings {
         'first#0': (args) => (args[0] as Queue).first,
         'last#0': (args) => (args[0] as Queue).last,
         'single#0': (args) => (args[0] as Queue).single,
-        'from#1': (args) => Queue.from(args[0] as Iterable),
-        'of#1': (args) => Queue.of(args[0] as Iterable),
+        '#0': (args) => Queue<dynamic>(),
+        'from#1': (args) => Queue<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => Queue<dynamic>.of(args[0] as Iterable),
       };
 }

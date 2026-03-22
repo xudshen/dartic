@@ -92,12 +92,7 @@ abstract final class FormatExceptionBindings {
         'message#0': (args) => (args[0] as FormatException).message,
         'source#0': (args) => (args[0] as FormatException).source,
         'offset#0': (args) => (args[0] as FormatException).offset,
+        '#3': (args) => FormatException(identical(args[0], darticAbsent) ? "" : args[0] as String, identical(args[1], darticAbsent) ? null : args[1], identical(args[2], darticAbsent) ? null : args[2] as int?),
         '_#fromFields#3': (args) => FormatException(args[0] as String, args[2], args[1] as int?),
-        '#3': (args) {
-            final msg = identical(args[0], darticAbsent) ? '' : args[0] as String;
-            final source = identical(args[1], darticAbsent) ? null : args[1];
-            final offset = identical(args[2], darticAbsent) ? null : args[2] as int?;
-            return FormatException(msg, source, offset);
-        },
       };
 }

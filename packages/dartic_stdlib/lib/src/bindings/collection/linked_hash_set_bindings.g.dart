@@ -65,19 +65,10 @@ abstract final class LinkedHashSetBindings {
         'first#0': (args) => (args[0] as LinkedHashSet).first,
         'last#0': (args) => (args[0] as LinkedHashSet).last,
         'single#0': (args) => (args[0] as LinkedHashSet).single,
+        '#3': (args) => LinkedHashSet<dynamic>(equals: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a, b) => (args[0] as Function?)!(a, b), hashCode: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), isValidKey: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'from#1': (args) => LinkedHashSet<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => LinkedHashSet<dynamic>.of(args[0] as Iterable),
         '#0': (args) => LinkedHashSet<Object?>(),
-        '#3': (args) {
-            final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
-            final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            return LinkedHashSet<Object?>(
-              equals: equals != null ? (a, b) => equals(a, b) as bool : null,
-              hashCode: hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
-              isValidKey: isValidKey != null ? (k) => isValidKey(k) as bool : null,
-            );
-        },
-        'from#1': (args) => LinkedHashSet.from(args[0] as Iterable),
-        'of#1': (args) => LinkedHashSet.of(args[0] as Iterable),
         'identity#0': (args) => Set.identity(),
       };
 }

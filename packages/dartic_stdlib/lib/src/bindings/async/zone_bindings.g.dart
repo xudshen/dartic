@@ -55,8 +55,6 @@ abstract final class ZoneBindings {
         'parent#0': (args) => (args[0] as Zone).parent,
         'errorZone#0': (args) => (args[0] as Zone).errorZone,
         '[]#1': (args) => (args[0] as Zone)[(args[1])],
-        'current#0': (args) => Zone.current,
-        'root#0': (args) => Zone.root,
       };
 
   static Map<String, Object? Function(List<Object?>)> rootZoneMethodMap() => {

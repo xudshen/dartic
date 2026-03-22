@@ -25,6 +25,7 @@ abstract final class FutureBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'syncValue#1': (args) => Future<dynamic>.syncValue(args[0]),
         '#1': (args) {
             final computation = args[0] as Function;
             return Future(() {

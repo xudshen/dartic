@@ -67,9 +67,9 @@ abstract final class DoubleLinkedQueueBindings {
         'isEmpty#0': (args) => (args[0] as DoubleLinkedQueue).isEmpty,
         'iterator#0': (args) => (args[0] as DoubleLinkedQueue).iterator,
         'isNotEmpty#0': (args) => (args[0] as DoubleLinkedQueue).isNotEmpty,
-        '#0': (args) => DoubleLinkedQueue(),
-        'from#1': (args) => DoubleLinkedQueue.from(args[0] as Iterable),
-        'of#1': (args) => DoubleLinkedQueue.of(args[0] as Iterable),
+        '#0': (args) => DoubleLinkedQueue<dynamic>(),
+        'from#1': (args) => DoubleLinkedQueue<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => DoubleLinkedQueue<dynamic>.of(args[0] as Iterable),
         'moveNext#0': (args) => (args[0] as Iterator).moveNext(),
         'current#0': (args) => (args[0] as Iterator).current,
       };

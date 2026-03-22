@@ -143,14 +143,8 @@ abstract final class IndexErrorBindings {
         'name#0': (args) => (args[0] as IndexError).name,
         'message#0': (args) => (args[0] as IndexError).message,
         'stackTrace#0': (args) => (args[0] as IndexError).stackTrace,
+        '#5': (args) => IndexError(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as int?),
         'withLength#5': (args) => IndexError.withLength(args[0] as int, args[1] as int, indexable: identical(args[2], darticAbsent) ? null : args[2], name: identical(args[3], darticAbsent) ? null : args[3] as String?, message: identical(args[4], darticAbsent) ? null : args[4] as String?),
         'toString#0': (args) => (args[0] as IndexError).toString(),
-        '#5': (args) => IndexError(
-            args[0] as int,
-            args[1],
-            identical(args[2], darticAbsent) ? null : args[2] as String?,
-            identical(args[3], darticAbsent) ? null : args[3] as String?,
-            identical(args[4], darticAbsent) ? null : args[4] as int?,
-        ),
       };
 }

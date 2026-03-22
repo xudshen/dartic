@@ -23,9 +23,9 @@ abstract final class OutOfMemoryErrorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'stackTrace#0': (args) => (args[0] as OutOfMemoryError).stackTrace,
-        '_#fromFields#0': (args) => OutOfMemoryError(),
-        '#0': (args) => OutOfMemoryError(),
         'toString#0': (args) => (args[0] as OutOfMemoryError).toString(),
+        'stackTrace#0': (args) => (args[0] as OutOfMemoryError).stackTrace,
+        '#0': (args) => OutOfMemoryError(),
+        '_#fromFields#0': (args) => OutOfMemoryError(),
       };
 }

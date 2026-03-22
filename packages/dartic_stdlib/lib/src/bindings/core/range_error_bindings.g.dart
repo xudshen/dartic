@@ -105,9 +105,9 @@ abstract final class RangeErrorBindings {
           _$RangeError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::RangeError::checkValueInInterval#5', (args) => RangeError.checkValueInInterval(args[0] as int, args[1] as int, args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?));
-    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', methodMap()['checkValidIndex#5']!);
-    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', methodMap()['checkValidRange#6']!);
-    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', methodMap()['checkNotNegative#3']!);
+    ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', (args) => RangeError.checkValidIndex(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as int?, identical(args[4], darticAbsent) ? null : args[4] as String?));
+    ctx.registerBinding('dart:core::RangeError::checkValidRange#6', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?, identical(args[5], darticAbsent) ? null : args[5] as String?));
+    ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) => RangeError.checkNotNegative(args[0] as int, identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2] as String?));
     ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as _$RangeError)._super$start);
     ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as _$RangeError)._super$end);
     ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as _$RangeError)._super$invalidValue);
@@ -129,45 +129,9 @@ abstract final class RangeErrorBindings {
         'message#0': (args) => (args[0] as RangeError).message,
         'stackTrace#0': (args) => (args[0] as RangeError).stackTrace,
         '#1': (args) => RangeError(args[0]),
+        'value#3': (args) => RangeError.value(args[0] as num, identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2] as String?),
+        'range#5': (args) => RangeError.range(args[0] as num, args[1] as int?, args[2] as int?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?),
+        'index#5': (args) => RangeError.index(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as int?),
         'toString#0': (args) => (args[0] as RangeError).toString(),
-        'value#3': (args) => RangeError.value(
-            args[0] as num,
-            identical(args[1], darticAbsent) ? null : args[1] as String?,
-            identical(args[2], darticAbsent) ? null : args[2] as String?,
-        ),
-        'range#5': (args) => RangeError.range(
-            args[0] as num,
-            args[1] as int?,
-            args[2] as int?,
-            identical(args[3], darticAbsent) ? null : args[3] as String?,
-            identical(args[4], darticAbsent) ? null : args[4] as String?,
-        ),
-        'index#5': (args) => RangeError.index(
-            args[0] as int,
-            args[1],
-            identical(args[2], darticAbsent) ? null : args[2] as String?,
-            identical(args[3], darticAbsent) ? null : args[3] as String?,
-            identical(args[4], darticAbsent) ? null : args[4] as int?,
-        ),
-        'checkValidIndex#5': (args) => RangeError.checkValidIndex(
-            args[0] as int,
-            args[1],
-            identical(args[2], darticAbsent) ? null : args[2] as String?,
-            identical(args[3], darticAbsent) ? null : args[3] as int?,
-            identical(args[4], darticAbsent) ? null : args[4] as String?,
-        ),
-        'checkValidRange#6': (args) => RangeError.checkValidRange(
-            args[0] as int,
-            args[1] as int?,
-            args[2] as int,
-            identical(args[3], darticAbsent) ? null : args[3] as String?,
-            identical(args[4], darticAbsent) ? null : args[4] as String?,
-            identical(args[5], darticAbsent) ? null : args[5] as String?,
-        ),
-        'checkNotNegative#3': (args) => RangeError.checkNotNegative(
-            args[0] as int,
-            identical(args[1], darticAbsent) ? null : args[1] as String?,
-            identical(args[2], darticAbsent) ? null : args[2] as String?,
-        ),
       };
 }

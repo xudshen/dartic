@@ -25,7 +25,7 @@ abstract final class CompleterBindings {
         'completeError#2': (args) { (args[0] as Completer).completeError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'future#0': (args) => (args[0] as Completer).future,
         'isCompleted#0': (args) => (args[0] as Completer).isCompleted,
-        '#0': (args) => Completer<Object?>(),
-        'sync#0': (args) => Completer<Object?>.sync(),
+        '#0': (args) => Completer<dynamic>(),
+        'sync#0': (args) => Completer<dynamic>.sync(),
       };
 }

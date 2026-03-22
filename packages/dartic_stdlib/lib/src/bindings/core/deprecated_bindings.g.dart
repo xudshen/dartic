@@ -22,15 +22,15 @@ abstract final class DeprecatedBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Deprecated).toString(),
+        'message#0': (args) => (args[0] as Deprecated).message,
+        '#1': (args) => Deprecated(args[0] as String?),
         'implement#1': (args) => Deprecated.implement(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'extend#1': (args) => Deprecated.extend(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'subclass#1': (args) => Deprecated.subclass(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'instantiate#1': (args) => Deprecated.instantiate(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'mixin#1': (args) => Deprecated.mixin(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'optional#1': (args) => Deprecated.optional(identical(args[0], darticAbsent) ? null : args[0] as String?),
-        '#1': (args) => Deprecated(args[0] as String),
-        'message#0': (args) => (args[0] as Deprecated).message,
-        'toString#0': (args) => (args[0] as Deprecated).toString(),
         'expires#0': (args) => (args[0] as Deprecated).message,
         '_#fromFields#2': (args) => Deprecated(args[1] as String),
       };

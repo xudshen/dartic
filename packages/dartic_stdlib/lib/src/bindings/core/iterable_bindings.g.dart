@@ -415,6 +415,9 @@ abstract final class IterableBindings {
         'first#0': (args) => (args[0] as Iterable).first,
         'last#0': (args) => (args[0] as Iterable).last,
         'single#0': (args) => (args[0] as Iterable).single,
+        'generate#2': (args) => Iterable<dynamic>.generate(args[0] as int, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)),
+        'withIterator#1': (args) => Iterable<dynamic>.withIterator(() => (args[0] as Function)() as Iterator),
+        'empty#0': (args) => Iterable<dynamic>.empty(),
         'firstWhere#2': (args) {
             final fn = args[1] as Function;
             final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
@@ -460,14 +463,6 @@ abstract final class IterableBindings {
               value = fn(value, iter.current);
             }
             return value;
-        },
-        'generate#2': (args) {
-            final count = args[0] as int;
-            if (!identical(args[1], darticAbsent)) {
-              final generator = args[1] as Function;
-              return Iterable.generate(count, (i) => generator(i));
-            }
-            return Iterable.generate(count);
         },
         '#0': (args) => const Iterable.empty(),
         'noElement#0': (args) => StateError('No element'),

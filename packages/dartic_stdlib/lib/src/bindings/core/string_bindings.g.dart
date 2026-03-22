@@ -54,8 +54,10 @@ abstract final class StringBindings {
         'codeUnits#0': (args) => (args[0] as String).codeUnits,
         'runes#0': (args) => (args[0] as String).runes,
         '[]#1': (args) => (args[0] as String)[(args[1] as int)],
+        '==#1': (args) => (args[0] as String) == (args[1] as Object),
         '+#1': (args) => (args[0] as String) + (args[1] as String),
         '*#1': (args) => (args[0] as String) * (args[1] as int),
+        'fromEnvironment#2': (args) => String.fromEnvironment(args[0] as String, defaultValue: identical(args[1], darticAbsent) ? "" : args[1] as String),
         'fromCharCode#1': (args) => String.fromCharCode(args[0] as int),
         'fromCharCodes#3': (args) {
             final codes = (args[0] as Iterable).cast<int>();

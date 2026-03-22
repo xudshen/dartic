@@ -22,12 +22,9 @@ abstract final class TimeoutExceptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        '#2': (args) => TimeoutException(
-            identical(args[0], darticAbsent) ? null : args[0] as String?,
-            identical(args[1], darticAbsent) ? null : args[1] as Duration?,
-        ),
+        'toString#0': (args) => (args[0] as TimeoutException).toString(),
         'message#0': (args) => (args[0] as TimeoutException).message,
         'duration#0': (args) => (args[0] as TimeoutException).duration,
-        'toString#0': (args) => (args[0] as TimeoutException).toString(),
+        '#2': (args) => TimeoutException(args[0] as String?, identical(args[1], darticAbsent) ? null : args[1] as Duration?),
       };
 }

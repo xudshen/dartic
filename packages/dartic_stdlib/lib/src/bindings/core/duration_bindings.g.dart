@@ -153,17 +153,17 @@ class _$Duration extends Duration implements DarticObjectHolder {
   }
 
   @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  @override
   Duration operator -() {
     final r = _dispatch.invoke(this, $darticObject, 'unary-', const []);
     if (identical(r, notOverridden)) return -super;
     return r as Duration;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r == true;
   }
 
   // ── Super trampolines ──
@@ -240,6 +240,7 @@ abstract final class DurationBindings {
         '>#1': (args) => (args[0] as Duration) > (args[1] as Duration),
         '<=#1': (args) => (args[0] as Duration) <= (args[1] as Duration),
         '>=#1': (args) => (args[0] as Duration) >= (args[1] as Duration),
+        '==#1': (args) => (args[0] as Duration) == (args[1] as Object),
         'unary-#0': (args) => -(args[0] as Duration),
         '#6': (args) => Duration(days: identical(args[0], darticAbsent) ? 0 : args[0] as int, hours: identical(args[1], darticAbsent) ? 0 : args[1] as int, minutes: identical(args[2], darticAbsent) ? 0 : args[2] as int, seconds: identical(args[3], darticAbsent) ? 0 : args[3] as int, milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int, microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int),
         '_#fromFields#1': (args) => Duration(microseconds: args[0] as int),

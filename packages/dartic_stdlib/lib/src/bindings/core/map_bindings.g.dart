@@ -49,6 +49,13 @@ abstract final class MapBindings {
         'isNotEmpty#0': (args) => (args[0] as Map).isNotEmpty,
         '[]#1': (args) => (args[0] as Map)[(args[1])],
         '[]=#2': (args) { (args[0] as Map)[args[1]] = args[2]; return args[2]; },
+        'from#1': (args) => Map<dynamic, dynamic>.from(args[0] as Map<dynamic, dynamic>),
+        'of#1': (args) => Map<dynamic, dynamic>.of(args[0] as Map),
+        'unmodifiable#1': (args) => Map<dynamic, dynamic>.unmodifiable(args[0] as Map<dynamic, dynamic>),
+        'identity#0': (args) => Map<dynamic, dynamic>.identity(),
+        'fromIterable#3': (args) => Map<dynamic, dynamic>.fromIterable(args[0] as Iterable<dynamic>, key: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), value: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'fromIterables#2': (args) => Map<dynamic, dynamic>.fromIterables(args[0] as Iterable, args[1] as Iterable),
+        'fromEntries#1': (args) => Map<dynamic, dynamic>.fromEntries((args[0] as Iterable).cast<MapEntry>()),
         '#0': (args) => <dynamic, dynamic>{},
         '_fromLiteral#1': (args) {
             final elements = args[0] as List;
@@ -67,39 +74,31 @@ abstract final class MapBindings {
             }
             return map;
         },
-        'from#1': (args) => Map<dynamic, dynamic>.from(args[0] as Map),
-        'of#1': (args) => Map<dynamic, dynamic>.of(args[0] as Map),
-        'identity#0': (args) => Map<dynamic, dynamic>.identity(),
-        'fromIterable#3': (args) {
-            final iterable = args[0] as Iterable;
-            final keyFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            final valueFn = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            return Map<dynamic, dynamic>.fromIterable(
-              iterable,
-              key: keyFn != null ? (e) => keyFn(e) : null,
-              value: valueFn != null ? (e) => valueFn(e) : null,
-            );
-        },
-        'fromIterables#2': (args) => Map<dynamic, dynamic>.fromIterables(args[0] as Iterable, args[1] as Iterable),
-        'fromEntries#1': (args) => Map.fromEntries((args[0] as Iterable).cast<MapEntry>()),
-        'unmodifiable#1': (args) => Map.unmodifiable(args[0] as Map),
         'toString#0': (args) => (args[0] as Map).toString(),
         'updateAll#1': (args) {
-            final fn = args[1] as Function;
             final map = args[0] as Map;
+            final update = args[1] as Function;
             for (final key in map.keys.toList()) {
-              map[key] = fn(key, map[key]);
+              map[key] = update(key, map[key]);
             }
             return null;
         },
         'update#3': (args) {
-            final updateFn = args[2] as Function;
-            final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-            return (args[0] as Map).update(
-              args[1],
-              (v) => updateFn(v),
-              ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
-            );
+            final map = args[0] as Map;
+            final key = args[1];
+            final update = args[2] as Function;
+            final ifAbsent = identical(args[3], darticAbsent) ? null : args[3] as Function?;
+            if (map.containsKey(key)) {
+              final newValue = update(map[key]);
+              map[key] = newValue;
+              return newValue;
+            }
+            if (ifAbsent != null) {
+              final newValue = ifAbsent();
+              map[key] = newValue;
+              return newValue;
+            }
+            throw ArgumentError.value(key, 'key', 'Key not in map.');
         },
       };
 
