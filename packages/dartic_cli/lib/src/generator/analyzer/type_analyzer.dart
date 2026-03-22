@@ -763,17 +763,6 @@ class TypeAnalyzer {
       if (hasErasable) {
         final returnStr = _sanitizeType(type.returnType,
             preserveTypeParams: preserveTypeParams, visiting: visiting);
-        final params = <String>[];
-        for (final p in type.formalParameters) {
-          final pType = _sanitizeType(p.type,
-              preserveTypeParams: preserveTypeParams, visiting: visiting);
-          if (p.isNamed) {
-            final req = p.isRequired ? 'required ' : '';
-            params.add('$req$pType ${p.name}');
-          } else {
-            params.add(pType);
-          }
-        }
         // Build named param group if any
         final positional = <String>[];
         final named = <String>[];
@@ -907,9 +896,9 @@ class TypeAnalyzer {
       if (knownLiterals.contains(member)) continue;
 
       // Match word-boundary: not preceded by dot/letter/digit (already qualified),
-      // not followed by letter/digit (partial match).
+      // not followed by letter/digit or colon (partial match or named arg label).
       result = result.replaceAllMapped(
-        RegExp('(?<![.a-zA-Z0-9])($member)(?![a-zA-Z0-9])'),
+        RegExp('(?<![.a-zA-Z0-9])($member)(?![a-zA-Z0-9:])'),
         (match) => '$className.${match.group(1)}',
       );
     }

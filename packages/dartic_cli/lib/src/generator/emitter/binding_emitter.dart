@@ -187,7 +187,12 @@ String emitTopLevelBindingFile(
   _writeHeader(buf, configPath: configPath);
   // Top-level functions don't have source imports — use basic detection.
   final detected = _detectRequiredImports(body.toString(), libraryUri: libraryUri);
-  _writeImports(buf, detected.map((u) => "import '$u';").toList(), const {});
+  final importLines = detected.map((u) {
+    // Prefixed imports are already full `import '...' as prefix;` lines.
+    if (u.startsWith("import '")) return u;
+    return "import '$u';";
+  }).toList();
+  _writeImports(buf, importLines, const {});
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -264,17 +269,6 @@ void _writeImports(
         importedUris.add(imp);
       }
     }
-  }
-}
-
-/// Writes a single import line, handling the `"uri AS prefix"` format
-/// for prefixed imports (e.g. `"dart:math AS math"` → `import 'dart:math' as math;`).
-void _writeImportLine(StringBuffer buf, String imp) {
-  if (imp.contains(' AS ')) {
-    final parts = imp.split(' AS ');
-    buf.writeln("import '${parts[0]}' as ${parts[1]};");
-  } else {
-    buf.writeln("import '$imp';");
   }
 }
 
@@ -357,12 +351,11 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
   }
 
   // Detect import-prefixed references (e.g. `math.pi`, `ui.BoxHeightStyle`)
-  // and add corresponding `import ... as prefix` entries.
-  // Format: "dart:math AS math" — handled specially by _writeImport.
+  // and add corresponding `import ... as prefix;` lines directly.
   for (final entry in _knownImportPrefixes.entries) {
     final prefix = entry.key;
     if (RegExp('\\b${prefix}\\.').hasMatch(source)) {
-      imports.add('${entry.value} AS $prefix');
+      imports.add("import '${entry.value}' as $prefix;");
     }
   }
 

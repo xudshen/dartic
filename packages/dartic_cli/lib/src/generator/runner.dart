@@ -608,13 +608,15 @@ class Runner {
       String libraryUri,
     })>[];
 
-    for (final library in config.libraries) {
+    for (var library in config.libraries) {
+      library = _resolveDiscovery(library);
       for (final classConfig in library.classes) {
         if (!classConfig.bridge) continue;
 
         final resolvedName = classConfig.resolvedName;
+        final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
         final info =
-            await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
+            await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
         classConfigs.add((
           name: classConfig.name,

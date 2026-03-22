@@ -11,7 +11,7 @@ import 'package:dartic_compiler/dartic_compiler.dart'
         SdkNotFoundError,
         SdkResolver,
         SdkVersionMismatchError;
-// import 'package:dartic_stdlib/dartic_stdlib.dart';
+import 'package:dartic_stdlib/dartic_stdlib.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
@@ -116,8 +116,7 @@ class RunCommand extends Command<int> {
       );
 
       final engine = DarticEngine(
-        // TODO: load plugins dynamically instead of hardcoding
-        plugins: [], // [DarticStdlibPlugin()],
+        plugins: [DarticStdlibPlugin()],
         config: config,
       );
       engine.loadBytecode(darbBytes);
