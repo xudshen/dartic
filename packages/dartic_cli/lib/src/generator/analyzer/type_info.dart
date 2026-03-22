@@ -250,12 +250,21 @@ class FunctionInfo {
   final String returnType;
   final String? customSource;
 
+  /// Import lines from the function's declaring source file (preserves `as` prefixes).
+  final List<String> sourceImports;
+
+  /// Library URI → type names used from that library.
+  /// Auto-detected from parameter and return types by the analyzer.
+  final Map<String, Set<String>> referencedTypes;
+
   FunctionInfo({
     required this.name,
     required this.libraryUri,
     required this.paramTypes,
     required this.returnType,
     this.customSource,
+    this.sourceImports = const [],
+    this.referencedTypes = const {},
   });
 
   /// 完整 binding 名，如 'dart:core::::identical#2'。

@@ -124,7 +124,13 @@ class FunctionConfig {
   /// If null, arity is derived from analyzer results.
   final int? arity;
 
-  FunctionConfig({required this.name, this.custom, this.arity});
+  /// Actual declaring library URI from Kernel discovery.
+  /// Used when `discover: all` resolves functions from sub-libraries
+  /// (e.g. `package:flutter/src/foundation/diagnostics.dart` for a function
+  /// discovered under `package:flutter/src/foundation`).
+  final String? sourceLibraryUri;
+
+  FunctionConfig({required this.name, this.custom, this.arity, this.sourceLibraryUri});
 }
 
 /// Per-method configuration for Bridge class generation.

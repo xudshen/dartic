@@ -5,7 +5,6 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:convert';
-import 'package:dartic/dartic_internal.dart';
 
 abstract final class ConvertTopLevelBindings {
   static void register(DarticPluginContext ctx) {

@@ -776,6 +776,7 @@ import '../bindings/widgets/window_scope_bindings.g.dart';
 import '../bindings/widgets/windowing_owner_bindings.g.dart';
 import '../bindings/widgets/windowing_owner_win32_bindings.g.dart';
 import '../bindings/widgets/wrap_bindings.g.dart';
+import '../bindings/widgets/widgets_top_level_bindings.g.dart';
 
 class WidgetsPlugin extends DarticPlugin {
   @override
@@ -1553,5 +1554,6 @@ class WidgetsPlugin extends DarticPlugin {
     WindowingOwnerBindings.register(ctx);
     WindowingOwnerWin32Bindings.register(ctx);
     WrapBindings.register(ctx);
+    WidgetsTopLevelBindings.register(ctx);
   }
 }

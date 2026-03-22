@@ -78,6 +78,7 @@ import '../bindings/foundation/value_key_bindings.g.dart';
 import '../bindings/foundation/value_listenable_bindings.g.dart';
 import '../bindings/foundation/value_notifier_bindings.g.dart';
 import '../bindings/foundation/write_buffer_bindings.g.dart';
+import '../bindings/foundation/foundation_top_level_bindings.g.dart';
 
 class FoundationPlugin extends DarticPlugin {
   @override
@@ -157,5 +158,6 @@ class FoundationPlugin extends DarticPlugin {
     ValueListenableBindings.register(ctx);
     ValueNotifierBindings.register(ctx);
     WriteBufferBindings.register(ctx);
+    FoundationTopLevelBindings.register(ctx);
   }
 }

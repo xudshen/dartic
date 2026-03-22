@@ -124,6 +124,73 @@ class KernelIntrospector {
     return result;
   }
 
+  /// Lists all public top-level functions discoverable from [libraryUri].
+  ///
+  /// Uses the same URI resolution as [listPublicClasses] (single library
+  /// or directory prefix). Returns (name, libraryUri) pairs sorted by name.
+  /// Filters out private functions (name starts with `_`).
+  List<({String name, String libraryUri})> listPublicTopLevelFunctions(
+      String libraryUri,
+      {String discoverMode = 'all'}) {
+    final seen = <String>{};
+    final result = <({String name, String libraryUri})>[];
+
+    void addFromLibrary(ir.Library lib) {
+      final libUri = lib.importUri.toString();
+      for (final proc in lib.procedures) {
+        final name = proc.name.text;
+        if (name.startsWith('_')) continue;
+        // Skip extension methods (Kernel encodes as 'ExtName|method').
+        if (name.contains('|')) continue;
+        // Only discover callable functions (ProcedureKind.Method).
+        // Top-level getters/setters need different binding mechanisms.
+        if (proc.kind != ir.ProcedureKind.Method) continue;
+        if (seen.contains(name)) continue;
+        seen.add(name);
+        result.add((name: name, libraryUri: libUri));
+      }
+    }
+
+    if (libraryUri.endsWith('.dart') || libraryUri.startsWith('dart:')) {
+      for (final lib in _component.libraries) {
+        if (lib.importUri.toString() != libraryUri) continue;
+        addFromLibrary(lib);
+        final packagePrefix = _packagePrefix(libraryUri);
+        for (final ref in lib.additionalExports) {
+          final node = ref.node;
+          if (node is ir.Procedure &&
+              node.kind == ir.ProcedureKind.Method &&
+              !node.name.text.startsWith('_') &&
+              !seen.contains(node.name.text) &&
+              _belongsToPackage(
+                  node.enclosingLibrary.importUri.toString(), packagePrefix)) {
+            seen.add(node.name.text);
+            result.add((
+              name: node.name.text,
+              libraryUri: node.enclosingLibrary.importUri.toString(),
+            ));
+          }
+        }
+        break;
+      }
+    } else {
+      final dirPrefix =
+          libraryUri.endsWith('/') ? libraryUri : '$libraryUri/';
+      for (final lib in _component.libraries) {
+        final libUri = lib.importUri.toString();
+        if (!libUri.startsWith(dirPrefix)) continue;
+        if (discoverMode == 'current') {
+          final remainder = libUri.substring(dirPrefix.length);
+          if (remainder.contains('/')) continue;
+        }
+        addFromLibrary(lib);
+      }
+    }
+
+    result.sort((a, b) => a.name.compareTo(b.name));
+    return result;
+  }
+
   /// Discovers classes from a single library and its additionalExports.
   void _discoverFromLibrary(
     String libraryUri,

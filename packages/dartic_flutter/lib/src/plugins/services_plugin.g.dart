@@ -167,6 +167,7 @@ import '../bindings/services/ui_kit_view_controller_bindings.g.dart';
 import '../bindings/services/undo_direction_bindings.g.dart';
 import '../bindings/services/undo_manager_bindings.g.dart';
 import '../bindings/services/undo_manager_client_bindings.g.dart';
+import '../bindings/services/services_top_level_bindings.g.dart';
 
 class ServicesPlugin extends DarticPlugin {
   @override
@@ -335,5 +336,6 @@ class ServicesPlugin extends DarticPlugin {
     UndoDirectionBindings.register(ctx);
     UndoManagerBindings.register(ctx);
     UndoManagerClientBindings.register(ctx);
+    ServicesTopLevelBindings.register(ctx);
   }
 }

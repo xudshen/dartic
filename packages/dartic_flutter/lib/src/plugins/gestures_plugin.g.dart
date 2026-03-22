@@ -103,6 +103,7 @@ import '../bindings/gestures/velocity_estimate_bindings.g.dart';
 import '../bindings/gestures/velocity_tracker_bindings.g.dart';
 import '../bindings/gestures/vertical_drag_gesture_recognizer_bindings.g.dart';
 import '../bindings/gestures/vertical_multi_drag_gesture_recognizer_bindings.g.dart';
+import '../bindings/gestures/gestures_top_level_bindings.g.dart';
 
 class GesturesPlugin extends DarticPlugin {
   @override
@@ -207,5 +208,6 @@ class GesturesPlugin extends DarticPlugin {
     VelocityTrackerBindings.register(ctx);
     VerticalDragGestureRecognizerBindings.register(ctx);
     VerticalMultiDragGestureRecognizerBindings.register(ctx);
+    GesturesTopLevelBindings.register(ctx);
   }
 }

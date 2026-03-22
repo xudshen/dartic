@@ -32,6 +32,7 @@ import '../bindings/semantics/semantics_sort_key_bindings.g.dart';
 import '../bindings/semantics/semantics_tag_bindings.g.dart';
 import '../bindings/semantics/tap_semantic_event_bindings.g.dart';
 import '../bindings/semantics/tooltip_semantics_event_bindings.g.dart';
+import '../bindings/semantics/semantics_top_level_bindings.g.dart';
 
 class SemanticsPlugin extends DarticPlugin {
   @override
@@ -65,5 +66,6 @@ class SemanticsPlugin extends DarticPlugin {
     SemanticsTagBindings.register(ctx);
     TapSemanticEventBindings.register(ctx);
     TooltipSemanticsEventBindings.register(ctx);
+    SemanticsTopLevelBindings.register(ctx);
   }
 }

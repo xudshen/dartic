@@ -150,6 +150,7 @@ import '../bindings/ui/view_focus_direction_bindings.g.dart';
 import '../bindings/ui/view_focus_event_bindings.g.dart';
 import '../bindings/ui/view_focus_state_bindings.g.dart';
 import '../bindings/ui/view_padding_bindings.g.dart';
+import '../bindings/ui/ui_top_level_bindings.g.dart';
 
 class UiPlugin extends DarticPlugin {
   @override
@@ -301,5 +302,6 @@ class UiPlugin extends DarticPlugin {
     ViewFocusEventBindings.register(ctx);
     ViewFocusStateBindings.register(ctx);
     ViewPaddingBindings.register(ctx);
+    UiTopLevelBindings.register(ctx);
   }
 }

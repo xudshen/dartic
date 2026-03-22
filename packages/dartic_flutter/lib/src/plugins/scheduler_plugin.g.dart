@@ -15,6 +15,7 @@ import '../bindings/scheduler/ticker_bindings.g.dart';
 import '../bindings/scheduler/ticker_canceled_bindings.g.dart';
 import '../bindings/scheduler/ticker_future_bindings.g.dart';
 import '../bindings/scheduler/ticker_provider_bindings.g.dart';
+import '../bindings/scheduler/scheduler_top_level_bindings.g.dart';
 
 class SchedulerPlugin extends DarticPlugin {
   @override
@@ -31,5 +32,6 @@ class SchedulerPlugin extends DarticPlugin {
     TickerCanceledBindings.register(ctx);
     TickerFutureBindings.register(ctx);
     TickerProviderBindings.register(ctx);
+    SchedulerTopLevelBindings.register(ctx);
   }
 }

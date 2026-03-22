@@ -107,6 +107,7 @@ import '../bindings/painting/vertical_direction_bindings.g.dart';
 import '../bindings/painting/web_html_element_strategy_bindings.g.dart';
 import '../bindings/painting/web_image_info_bindings.g.dart';
 import '../bindings/painting/word_boundary_bindings.g.dart';
+import '../bindings/painting/painting_top_level_bindings.g.dart';
 
 class PaintingPlugin extends DarticPlugin {
   @override
@@ -215,5 +216,6 @@ class PaintingPlugin extends DarticPlugin {
     WebHtmlElementStrategyBindings.register(ctx);
     WebImageInfoBindings.register(ctx);
     WordBoundaryBindings.register(ctx);
+    PaintingTopLevelBindings.register(ctx);
   }
 }

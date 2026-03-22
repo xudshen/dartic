@@ -94,6 +94,7 @@ import '../bindings/cupertino/obstructing_preferred_size_widget_bindings.g.dart'
 import '../bindings/cupertino/overlay_visibility_mode_bindings.g.dart';
 import '../bindings/cupertino/refresh_indicator_mode_bindings.g.dart';
 import '../bindings/cupertino/restorable_cupertino_tab_controller_bindings.g.dart';
+import '../bindings/cupertino/cupertino_top_level_bindings.g.dart';
 
 class CupertinoPlugin extends DarticPlugin {
   @override
@@ -189,5 +190,6 @@ class CupertinoPlugin extends DarticPlugin {
     OverlayVisibilityModeBindings.register(ctx);
     RefreshIndicatorModeBindings.register(ctx);
     RestorableCupertinoTabControllerBindings.register(ctx);
+    CupertinoTopLevelBindings.register(ctx);
   }
 }

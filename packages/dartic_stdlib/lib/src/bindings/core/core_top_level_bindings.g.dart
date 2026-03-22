@@ -4,6 +4,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert';
+import 'dart:math';
+import 'dart:typed_data';
 
 abstract final class CoreTopLevelBindings {
   static void register(DarticPluginContext ctx) {

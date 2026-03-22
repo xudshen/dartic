@@ -16,6 +16,7 @@ import '../bindings/physics/spring_description_bindings.g.dart';
 import '../bindings/physics/spring_simulation_bindings.g.dart';
 import '../bindings/physics/spring_type_bindings.g.dart';
 import '../bindings/physics/tolerance_bindings.g.dart';
+import '../bindings/physics/physics_top_level_bindings.g.dart';
 
 class PhysicsPlugin extends DarticPlugin {
   @override
@@ -33,5 +34,6 @@ class PhysicsPlugin extends DarticPlugin {
     SpringSimulationBindings.register(ctx);
     SpringTypeBindings.register(ctx);
     ToleranceBindings.register(ctx);
+    PhysicsTopLevelBindings.register(ctx);
   }
 }

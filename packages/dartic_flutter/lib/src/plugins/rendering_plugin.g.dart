@@ -272,6 +272,7 @@ import '../bindings/rendering/viewport_offset_bindings.g.dart';
 import '../bindings/rendering/wrap_alignment_bindings.g.dart';
 import '../bindings/rendering/wrap_cross_alignment_bindings.g.dart';
 import '../bindings/rendering/wrap_parent_data_bindings.g.dart';
+import '../bindings/rendering/rendering_top_level_bindings.g.dart';
 
 class RenderingPlugin extends DarticPlugin {
   @override
@@ -545,5 +546,6 @@ class RenderingPlugin extends DarticPlugin {
     WrapAlignmentBindings.register(ctx);
     WrapCrossAlignmentBindings.register(ctx);
     WrapParentDataBindings.register(ctx);
+    RenderingTopLevelBindings.register(ctx);
   }
 }

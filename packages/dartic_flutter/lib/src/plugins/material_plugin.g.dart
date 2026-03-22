@@ -442,6 +442,7 @@ import '../bindings/material/visual_density_bindings.g.dart';
 import '../bindings/material/widget_state_input_border_bindings.g.dart';
 import '../bindings/material/year_picker_bindings.g.dart';
 import '../bindings/material/zoom_page_transitions_builder_bindings.g.dart';
+import '../bindings/material/material_top_level_bindings.g.dart';
 
 class MaterialPlugin extends DarticPlugin {
   @override
@@ -885,5 +886,6 @@ class MaterialPlugin extends DarticPlugin {
     WidgetStateInputBorderBindings.register(ctx);
     YearPickerBindings.register(ctx);
     ZoomPageTransitionsBuilderBindings.register(ctx);
+    MaterialTopLevelBindings.register(ctx);
   }
 }

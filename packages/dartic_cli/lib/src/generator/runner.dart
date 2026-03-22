@@ -513,21 +513,28 @@ class Runner {
         if (fnConfig.custom != null) {
           // Custom source -- skip analysis, create FunctionInfo with custom.
           // Use explicit arity from config, or default to 0.
+          // Add the library's own URI as a source import so the function
+          // and its parameter types are accessible in the generated file.
           final arity = fnConfig.arity ?? 0;
+          final uri = library.uri;
+          final needsImport = uri != 'dart:core' && !uri.startsWith('dart:_');
           functionInfos.add(FunctionInfo(
             name: fnConfig.name,
-            libraryUri: library.uri,
+            libraryUri: uri,
             paramTypes: [
               for (var i = 0; i < arity; i++)
                 ParamInfo(name: 'arg$i', type: 'dynamic'),
             ],
             returnType: 'dynamic',
             customSource: fnConfig.custom,
+            sourceImports: needsImport ? ["import '$uri';"] : const [],
           ));
         } else {
-          // Analyze the function
+          // Analyze the function — use sourceLibraryUri when available
+          // (discovered functions have their actual declaring library URI).
+          final analysisUri = fnConfig.sourceLibraryUri ?? library.uri;
           final fnInfo = await analyzer.analyzeFunction(
-            library.uri,
+            analysisUri,
             fnConfig.name,
           );
           functionInfos.add(fnInfo);
@@ -985,10 +992,29 @@ class Runner {
           '(${merged.length} total)');
     }
 
+    // Auto-discover top-level functions not already in YAML.
+    final explicitFunctions = library.functions.map((f) => f.name).toSet();
+    final discoveredFunctions = _kernelIntrospector!
+        .listPublicTopLevelFunctions(library.uri, discoverMode: mode);
+    final mergedFunctions = [...library.functions];
+    var addedFnCount = 0;
+    for (final fn in discoveredFunctions) {
+      if (explicitFunctions.contains(fn.name)) continue;
+      mergedFunctions.add(FunctionConfig(
+        name: fn.name,
+        sourceLibraryUri: fn.libraryUri,
+      ));
+      addedFnCount++;
+    }
+    if (addedFnCount > 0) {
+      stderr.writeln(
+          '  discover: ${library.uri}: $addedFnCount new top-level functions');
+    }
+
     return LibraryConfig(
       uri: library.uri,
       classes: merged,
-      functions: library.functions,
+      functions: mergedFunctions,
       overrides: library.overrides,
       discover: library.discover,
       exclude: library.exclude,

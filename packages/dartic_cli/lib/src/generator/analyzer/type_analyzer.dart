@@ -1194,11 +1194,31 @@ class TypeAnalyzer {
     TopLevelFunctionElement func,
     String libraryUri,
   ) {
+    // Set import prefix context for _sanitizeType — same as class analysis.
+    _activeImportPrefixes = _extractImportPrefixes(func.library);
+
+    // Collect referenced types from parameter and return types.
+    final refTypes = <String, Set<String>>{};
+    _collectReferencedTypes(func.returnType, refTypes);
+    for (final p in func.formalParameters) {
+      _collectReferencedTypes(p.type, refTypes);
+    }
+    refTypes.remove('dart:core');
+    refTypes.removeWhere((u, _) => u.startsWith('dart:_'));
+
+    // Extract source imports from the function's declaring library
+    // (preserves `as` prefixes so types like `ui.Color` resolve correctly).
+    final sourceImports = _extractSourceImports(
+        func.library, libraryUri,
+        referencedTypes: refTypes);
+
     return FunctionInfo(
       name: func.name!,
       libraryUri: libraryUri,
       paramTypes: _toParamInfoList(func.formalParameters),
       returnType: func.returnType.getDisplayString(),
+      referencedTypes: refTypes,
+      sourceImports: sourceImports,
     );
   }
 }

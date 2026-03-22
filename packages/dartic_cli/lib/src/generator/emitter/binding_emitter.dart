@@ -189,17 +189,59 @@ String emitTopLevelBindingFile(
   body.writeln('  }');
   body.writeln('}');
 
-  // Build final output with header + detected imports
+  // Build final output with header + imports from analyzer-resolved types.
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
-  // Top-level functions don't have source imports — use basic detection.
-  final detected = _detectRequiredImports(body.toString(), libraryUri: libraryUri);
-  final importLines = detected.map((u) {
-    // Prefixed imports are already full `import '...' as prefix;` lines.
-    if (u.startsWith("import '")) return u;
-    return "import '$u';";
-  }).toList();
-  _writeImports(buf, importLines, const {});
+
+  // Merge sourceImports from all functions.
+  // When multiple functions from different source files import the same
+  // library with different `show` lists, merge them into a single import
+  // without `show` to ensure all types are accessible.
+  final importsByUri = <String, List<String>>{};
+  final allRefUris = <String>{};
+  for (final fn in functions) {
+    for (final imp in fn.sourceImports) {
+      final uriMatch = RegExp(r"import '([^']+)'").firstMatch(imp);
+      final uri = uriMatch?.group(1);
+      if (uri == null) continue;
+      importsByUri.putIfAbsent(uri, () => []).add(imp);
+    }
+    allRefUris.addAll(fn.referencedTypes.keys);
+  }
+  // For each URI, if there are multiple import lines (from different source
+  // files), or if the import has a `show` clause, use a plain import without
+  // `show` to ensure all types are accessible. Preserve `as` prefixes.
+  final allSourceImports = <String>[];
+  for (final entry in importsByUri.entries) {
+    final uri = entry.key;
+    final lines = entry.value;
+    if (lines.length == 1 && !lines[0].contains(' show ')) {
+      allSourceImports.add(lines[0]);
+    } else {
+      // Multiple sources or has show clause — drop show.
+      // Collect all distinct prefixes used across source files.
+      // If some files use a prefix (e.g. `import 'dart:ui' as ui`) and
+      // others use it unprefixed, emit BOTH imports — Dart allows
+      // `import 'x'; import 'x' as p;` simultaneously.
+      final prefixes = <String>{};
+      var hasUnprefixed = false;
+      for (final line in lines) {
+        final m = RegExp(r"import '[^']+' as (\w+)").firstMatch(line);
+        if (m != null) {
+          prefixes.add(m.group(1)!);
+        } else {
+          hasUnprefixed = true;
+        }
+      }
+      if (hasUnprefixed || prefixes.isEmpty) {
+        allSourceImports.add("import '$uri';");
+      }
+      for (final p in prefixes) {
+        allSourceImports.add("import '$uri' as $p;");
+      }
+    }
+  }
+  _writeImports(buf, allSourceImports, allRefUris);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -293,80 +335,6 @@ String? _resolveToPublicImport(String srcUri) {
     return '$packagePrefix/$category.dart';
   }
   return null;
-}
-
-/// Scans source code for types that require additional imports.
-///
-/// [libraryUri] is the URI of the library being generated (e.g. 'dart:convert').
-/// It is always added to imports when it starts with 'dart:' (since the
-/// generated binding file references the library's own types).
-///
-/// Cross-library references (e.g. dart:async's Stream used in a dart:convert
-/// binding) are detected by scanning the source for known type names.
-Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
-  final imports = <String>{};
-
-  // Always import the library we're generating bindings for (dart:core is
-  // implicitly imported by Dart, so skip it; dart:_ private libraries
-  // cannot be imported directly — the class is available via re-export).
-  if (libraryUri != null &&
-      libraryUri.startsWith('dart:') &&
-      libraryUri != 'dart:core' &&
-      !libraryUri.startsWith('dart:_')) {
-    imports.add(libraryUri);
-  }
-
-  // DarticObject is always available via package:dartic/dartic_internal.dart
-  // which is unconditionally added by _writeImports.
-  // dart:async types — the most common cross-library dependency (Stream,
-  // Future, etc. appear in bindings for many libraries).
-  const asyncTypes = [
-    'Future', 'FutureOr', 'Completer', 'Stream', 'StreamController',
-    'StreamSubscription', 'StreamTransformer', 'StreamConsumer',
-    'StreamSink', 'EventSink', 'MultiStreamController', 'StreamIterator',
-    'Timer', 'Zone', 'ZoneDelegate', 'ZoneSpecification', 'AsyncError',
-    'scheduleMicrotask', 'runZoned', 'runZonedGuarded',
-  ];
-  for (final type in asyncTypes) {
-    if (RegExp('\\b$type\\b').hasMatch(source)) {
-      imports.add('dart:async');
-      break;
-    }
-  }
-  // Cross-library references: types from other dart: libraries that may
-  // appear in extra_methods or auto-generated code.
-  const crossLibraryTypes = <String, List<String>>{
-    'dart:convert': ['Encoding', 'JsonCodec', 'JsonEncoder', 'JsonDecoder',
-        'Utf8Codec', 'Utf8Encoder', 'Utf8Decoder', 'Base64Codec',
-        'AsciiCodec', 'Latin1Codec', 'HtmlEscape'],
-    'dart:collection': ['LinkedHashMap', 'LinkedHashSet', 'HashMap', 'HashSet',
-        'Queue', 'ListQueue', 'DoubleLinkedQueueEntry', 'LinkedListEntry',
-        'LinkedList', 'HasNextIterator', 'DoubleLinkedQueue'],
-    'dart:math': ['Random', 'Point', 'Rectangle'],
-  };
-  for (final entry in crossLibraryTypes.entries) {
-    if (imports.contains(entry.key)) continue; // already imported
-    for (final type in entry.value) {
-      if (RegExp('\\b$type\\b').hasMatch(source)) {
-        imports.add(entry.key);
-        break;
-      }
-    }
-  }
-  if (RegExp(r'\bdarticAbsent\b').hasMatch(source)) {
-    imports.add('package:dartic/dartic_internal.dart');
-  }
-
-  // Detect import-prefixed references (e.g. `math.pi`, `ui.BoxHeightStyle`)
-  // and add corresponding `import ... as prefix;` lines directly.
-  for (final entry in _knownImportPrefixes.entries) {
-    final prefix = entry.key;
-    if (RegExp('\\b${prefix}\\.').hasMatch(source)) {
-      imports.add("import '${entry.value}' as $prefix;");
-    }
-  }
-
-  return imports;
 }
 
 // ── Class name conversion ───────────────────────────────────────────────
