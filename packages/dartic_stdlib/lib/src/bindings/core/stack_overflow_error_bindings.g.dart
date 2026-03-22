@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class StackOverflowErrorBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,5 +26,6 @@ abstract final class StackOverflowErrorBindings {
         'toString#0': (args) => (args[0] as StackOverflowError).toString(),
         'stackTrace#0': (args) => (args[0] as StackOverflowError).stackTrace,
         '#0': (args) => StackOverflowError(),
+        '_#fromFields#0': (args) => StackOverflowError(),
       };
 }

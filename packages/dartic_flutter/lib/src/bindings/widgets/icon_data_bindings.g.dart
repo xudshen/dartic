@@ -6,14 +6,8 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
 
 abstract final class IconDataBindings {
   static void register(DarticPluginContext ctx) {
@@ -34,6 +28,6 @@ abstract final class IconDataBindings {
         'fontFamilyFallback#0': (args) => (args[0] as IconData).fontFamilyFallback,
         'hashCode#0': (args) => (args[0] as IconData).hashCode,
         '#5': (args) => IconData(args[0] as int, fontFamily: identical(args[1], darticAbsent) ? null : args[1] as String?, fontPackage: identical(args[2], darticAbsent) ? null : args[2] as String?, matchTextDirection: identical(args[3], darticAbsent) ? false : args[3] as bool, fontFamilyFallback: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<String>()),
-        '_#fromFields#5': (args) => IconData(args[0] as int, fontFamily: args[1] as String?, fontFamilyFallback: args[2] == null ? null : (args[2] as List).cast<String>(), fontPackage: args[3] as String?, matchTextDirection: args[4] as bool),
+        '_#fromFields#5': (args) => IconData(args[0] as int, fontFamily: args[1] as String?, fontPackage: args[3] as String?, matchTextDirection: args[4] as bool, fontFamilyFallback: args[2] == null ? null : (args[2] as List).cast<String>()),
       };
 }

@@ -6,9 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/services/text_formatter.dart';
+import 'dart:math' as math;
+import 'package:characters/characters.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/services/text_input.dart';
 
 abstract final class MaxLengthEnforcementBindings {
   static void register(DarticPluginContext ctx) {

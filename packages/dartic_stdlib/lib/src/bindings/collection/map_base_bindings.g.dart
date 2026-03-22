@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 class _$MapBase extends MapBase implements DarticObjectHolder {
   _$MapBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -34,7 +35,7 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
-  void forEach(Function action) {
+  void forEach(void Function(dynamic, dynamic) action) {
     final r = _dispatch.invoke(this, $darticObject, 'forEach', [action]);
     if (identical(r, notOverridden)) { super.forEach((a, b) => action(a, b)); return; }
   }
@@ -53,21 +54,21 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
-  dynamic putIfAbsent(dynamic key, Function ifAbsent) {
+  dynamic putIfAbsent(dynamic key, dynamic Function() ifAbsent) {
     final r = _dispatch.invoke(this, $darticObject, 'putIfAbsent', [key, ifAbsent]);
     if (identical(r, notOverridden)) return super.putIfAbsent(key, () => ifAbsent());
     return r as dynamic;
   }
 
   @override
-  dynamic update(dynamic key, Function update, {Function? ifAbsent}) {
+  dynamic update(dynamic key, dynamic Function(dynamic) update, {dynamic Function()? ifAbsent}) {
     final r = _dispatch.invoke(this, $darticObject, 'update', [key, update, ifAbsent]);
     if (identical(r, notOverridden)) return super.update(key, (a) => update(a), ifAbsent: ifAbsent != null ? () => ifAbsent() : null);
     return r as dynamic;
   }
 
   @override
-  void updateAll(Function update) {
+  void updateAll(dynamic Function(dynamic, dynamic) update) {
     final r = _dispatch.invoke(this, $darticObject, 'updateAll', [update]);
     if (identical(r, notOverridden)) { super.updateAll((a, b) => update(a, b)); return; }
   }
@@ -79,7 +80,7 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
-  void removeWhere(Function test) {
+  void removeWhere(bool Function(dynamic, dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'removeWhere', [test]);
     if (identical(r, notOverridden)) { super.removeWhere((a, b) => test(a, b) as bool); return; }
   }
@@ -216,6 +217,12 @@ abstract final class MapBaseBindings {
     ctx.registerBinding('dart:collection::MapBase::\$super\$isNotEmpty#0', (args) => (args[0] as _$MapBase)._super$isNotEmpty);
     ctx.registerBinding('dart:collection::MapBase::\$super\$values#0', (args) => (args[0] as _$MapBase)._super$values);
     ctx.registerBinding('dart:collection::MapBase::\$super\$hashCode#0', (args) => (args[0] as _$MapBase)._super$hashCode);
+
+    // _MapBaseValueIterable
+    for (final e in mapBaseValueIterableMethodMap().entries) {
+      ctx.registerBinding('dart:collection::_MapBaseValueIterable::${e.key}', e.value);
+      ctx.registerBinding('dart:collection::::_MapBaseValueIterable${e.key}', e.value);
+    }
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -241,5 +248,9 @@ abstract final class MapBaseBindings {
         'values#0': (args) => (args[0] as MapBase).values,
         '[]#1': (args) => (args[0] as MapBase)[(args[1])],
         '[]=#2': (args) { (args[0] as MapBase)[args[1]] = args[2]; return args[2]; },
+      };
+
+  static Map<String, Object? Function(List<Object?>)> mapBaseValueIterableMethodMap() => {
+        '#1': (args) => (args[0] as Map).values,
       };
 }

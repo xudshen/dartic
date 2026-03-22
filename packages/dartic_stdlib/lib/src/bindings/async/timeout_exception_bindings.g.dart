@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class TimeoutExceptionBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,7 +22,6 @@ abstract final class TimeoutExceptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        '_#fromFields#2': (args) => TimeoutException(args[0] as String?, args[1] as Duration?),
         '#2': (args) => TimeoutException(
             identical(args[0], darticAbsent) ? null : args[0] as String?,
             identical(args[1], darticAbsent) ? null : args[1] as Duration?,

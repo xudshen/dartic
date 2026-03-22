@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, Rect, SemanticsInputType, TextDirection, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/rendering/stack.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PositionedBindings {
   static void register(DarticPluginContext ctx) {
@@ -48,9 +58,10 @@ abstract final class PositionedBindings {
         'child#0': (args) => (args[0] as Positioned).child,
         'key#0': (args) => (args[0] as Positioned).key,
         '#8': (args) => Positioned(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, left: identical(args[1], darticAbsent) ? null : args[1] as double?, top: identical(args[2], darticAbsent) ? null : args[2] as double?, right: identical(args[3], darticAbsent) ? null : args[3] as double?, bottom: identical(args[4], darticAbsent) ? null : args[4] as double?, width: identical(args[5], darticAbsent) ? null : args[5] as double?, height: identical(args[6], darticAbsent) ? null : args[6] as double?, child: args[7] as Widget),
-        'fromRect#3': (args) => Positioned.fromRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as Rect, child: args[2] as Widget),
+        'fromRect#3': (args) => Positioned.fromRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as ui.Rect, child: args[2] as Widget),
         'fromRelativeRect#3': (args) => Positioned.fromRelativeRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as RelativeRect, child: args[2] as Widget),
         'fill#6': (args) => Positioned.fill(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, left: identical(args[1], darticAbsent) ? null : args[1] as double?, top: identical(args[2], darticAbsent) ? null : args[2] as double?, right: identical(args[3], darticAbsent) ? null : args[3] as double?, bottom: identical(args[4], darticAbsent) ? null : args[4] as double?, child: args[5] as Widget),
-        'directional#9': (args) => Positioned.directional(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textDirection: args[1] as TextDirection, start: identical(args[2], darticAbsent) ? null : args[2] as double?, top: identical(args[3], darticAbsent) ? null : args[3] as double?, end: identical(args[4], darticAbsent) ? null : args[4] as double?, bottom: identical(args[5], darticAbsent) ? null : args[5] as double?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, child: args[8] as Widget),
+        'directional#9': (args) => Positioned.directional(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textDirection: args[1] as ui.TextDirection, start: identical(args[2], darticAbsent) ? null : args[2] as double?, top: identical(args[3], darticAbsent) ? null : args[3] as double?, end: identical(args[4], darticAbsent) ? null : args[4] as double?, bottom: identical(args[5], darticAbsent) ? null : args[5] as double?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, child: args[8] as Widget),
+        '_#fromFields#8': (args) => Positioned(key: args[3] as Key?, left: args[4] as double?, top: args[6] as double?, right: args[5] as double?, bottom: args[0] as double?, width: args[7] as double?, height: args[2] as double?, child: args[1] as Widget),
       };
 }

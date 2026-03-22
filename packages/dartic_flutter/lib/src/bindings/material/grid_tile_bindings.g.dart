@@ -6,14 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/grid_tile.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class GridTileBindings {
   static void register(DarticPluginContext ctx) {
@@ -40,6 +38,6 @@ abstract final class GridTileBindings {
         'child#0': (args) => (args[0] as GridTile).child,
         'key#0': (args) => (args[0] as GridTile).key,
         '#4': (args) => GridTile(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, header: identical(args[1], darticAbsent) ? null : args[1] as Widget?, footer: identical(args[2], darticAbsent) ? null : args[2] as Widget?, child: args[3] as Widget),
-        '_#fromFields#3': (args) => GridTile(child: args[0] as Widget, footer: args[1] as Widget?, header: args[2] as Widget?),
+        '_#fromFields#4': (args) => GridTile(key: args[3] as Key?, header: args[2] as Widget?, footer: args[1] as Widget?, child: args[0] as Widget),
       };
 }

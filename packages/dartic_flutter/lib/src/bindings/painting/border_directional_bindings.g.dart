@@ -6,11 +6,13 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/box_border.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'dart:ui';
 
 abstract final class BorderDirectionalBindings {
   static void register(DarticPluginContext ctx) {
@@ -45,5 +47,6 @@ abstract final class BorderDirectionalBindings {
         'preferPaintInterior#0': (args) => (args[0] as BorderDirectional).preferPaintInterior,
         '+#1': (args) => (args[0] as BorderDirectional) + (args[1] as ShapeBorder),
         '#4': (args) => BorderDirectional(top: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, start: identical(args[1], darticAbsent) ? BorderSide.none : args[1] as BorderSide, end: identical(args[2], darticAbsent) ? BorderSide.none : args[2] as BorderSide, bottom: identical(args[3], darticAbsent) ? BorderSide.none : args[3] as BorderSide),
+        '_#fromFields#4': (args) => BorderDirectional(top: args[3] as BorderSide, start: args[2] as BorderSide, end: args[1] as BorderSide, bottom: args[0] as BorderSide),
       };
 }

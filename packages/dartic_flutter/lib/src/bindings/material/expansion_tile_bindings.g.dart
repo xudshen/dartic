@@ -6,14 +6,34 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/expansion_tile.dart';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/expansion_tile_theme.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/list_tile.dart';
+import 'package:flutter/src/material/list_tile_theme.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/widgets/expansible.dart';
+import 'package:flutter/src/animation/animation_style.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ExpansionTileBindings {
   static void register(DarticPluginContext ctx) {
@@ -69,6 +89,6 @@ abstract final class ExpansionTileBindings {
         'internalAddSemanticForOnTap#0': (args) => (args[0] as ExpansionTile).internalAddSemanticForOnTap,
         'key#0': (args) => (args[0] as ExpansionTile).key,
         '#33': (args) => ExpansionTile(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, leading: identical(args[1], darticAbsent) ? null : args[1] as Widget?, title: args[2] as Widget, subtitle: identical(args[3], darticAbsent) ? null : args[3] as Widget?, onExpansionChanged: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), children: identical(args[5], darticAbsent) ? const <Widget>[] : (args[5] as List).cast<Widget>(), trailing: identical(args[6], darticAbsent) ? null : args[6] as Widget?, showTrailingIcon: identical(args[7], darticAbsent) ? true : args[7] as bool, initiallyExpanded: identical(args[8], darticAbsent) ? false : args[8] as bool, maintainState: identical(args[9], darticAbsent) ? false : args[9] as bool, tilePadding: identical(args[10], darticAbsent) ? null : args[10] as EdgeInsetsGeometry?, expandedCrossAxisAlignment: identical(args[11], darticAbsent) ? null : args[11] as CrossAxisAlignment?, expandedAlignment: identical(args[12], darticAbsent) ? null : args[12] as Alignment?, childrenPadding: identical(args[13], darticAbsent) ? null : args[13] as EdgeInsetsGeometry?, backgroundColor: identical(args[14], darticAbsent) ? null : args[14] as Color?, collapsedBackgroundColor: identical(args[15], darticAbsent) ? null : args[15] as Color?, textColor: identical(args[16], darticAbsent) ? null : args[16] as Color?, collapsedTextColor: identical(args[17], darticAbsent) ? null : args[17] as Color?, iconColor: identical(args[18], darticAbsent) ? null : args[18] as Color?, collapsedIconColor: identical(args[19], darticAbsent) ? null : args[19] as Color?, shape: identical(args[20], darticAbsent) ? null : args[20] as ShapeBorder?, collapsedShape: identical(args[21], darticAbsent) ? null : args[21] as ShapeBorder?, clipBehavior: identical(args[22], darticAbsent) ? null : args[22] as Clip?, controlAffinity: identical(args[23], darticAbsent) ? null : args[23] as ListTileControlAffinity?, controller: identical(args[24], darticAbsent) ? null : args[24] as ExpansibleController?, dense: identical(args[25], darticAbsent) ? null : args[25] as bool?, splashColor: identical(args[26], darticAbsent) ? null : args[26] as Color?, visualDensity: identical(args[27], darticAbsent) ? null : args[27] as VisualDensity?, minTileHeight: identical(args[28], darticAbsent) ? null : args[28] as double?, enableFeedback: identical(args[29], darticAbsent) ? null : args[29] as bool?, enabled: identical(args[30], darticAbsent) ? true : args[30] as bool, expansionAnimationStyle: identical(args[31], darticAbsent) ? null : args[31] as AnimationStyle?, internalAddSemanticForOnTap: identical(args[32], darticAbsent) ? false : args[32] as bool),
-        '_#fromFields#32': (args) => ExpansionTile(backgroundColor: args[0] as Color?, children: (args[1] as List).cast<Widget>(), childrenPadding: args[2] as EdgeInsetsGeometry?, clipBehavior: args[3] as Clip?, collapsedBackgroundColor: args[4] as Color?, collapsedIconColor: args[5] as Color?, collapsedShape: args[6] as ShapeBorder?, collapsedTextColor: args[7] as Color?, controlAffinity: args[8] as ListTileControlAffinity?, controller: args[9] as ExpansibleController?, dense: args[10] as bool?, enableFeedback: args[11] as bool?, enabled: args[12] as bool, expandedAlignment: args[13] as Alignment?, expandedCrossAxisAlignment: args[14] as CrossAxisAlignment?, expansionAnimationStyle: args[15] as AnimationStyle?, iconColor: args[16] as Color?, initiallyExpanded: args[17] as bool, internalAddSemanticForOnTap: args[18] as bool, leading: args[19] as Widget?, maintainState: args[20] as bool, minTileHeight: args[21] as double?, onExpansionChanged: args[22] as void Function(bool)?, shape: args[23] as ShapeBorder?, showTrailingIcon: args[24] as bool, splashColor: args[25] as Color?, subtitle: args[26] as Widget?, textColor: args[27] as Color?, tilePadding: args[28] as EdgeInsetsGeometry?, title: args[29] as Widget, trailing: args[30] as Widget?, visualDensity: args[31] as VisualDensity?),
+        '_#fromFields#33': (args) => ExpansionTile(key: args[19] as Key?, leading: args[20] as Widget?, title: args[30] as Widget, subtitle: args[27] as Widget?, onExpansionChanged: args[23] as ValueChanged<bool>?, children: (args[1] as List).cast<Widget>(), trailing: args[31] as Widget?, showTrailingIcon: args[25] as bool, initiallyExpanded: args[17] as bool, maintainState: args[21] as bool, tilePadding: args[29] as EdgeInsetsGeometry?, expandedCrossAxisAlignment: args[14] as CrossAxisAlignment?, expandedAlignment: args[13] as Alignment?, childrenPadding: args[2] as EdgeInsetsGeometry?, backgroundColor: args[0] as Color?, collapsedBackgroundColor: args[4] as Color?, textColor: args[28] as Color?, collapsedTextColor: args[7] as Color?, iconColor: args[16] as Color?, collapsedIconColor: args[5] as Color?, shape: args[24] as ShapeBorder?, collapsedShape: args[6] as ShapeBorder?, clipBehavior: args[3] as Clip?, controlAffinity: args[8] as ListTileControlAffinity?, controller: args[9] as ExpansibleController?, dense: args[10] as bool?, splashColor: args[26] as Color?, visualDensity: args[32] as VisualDensity?, minTileHeight: args[22] as double?, enableFeedback: args[11] as bool?, enabled: args[12] as bool, expansionAnimationStyle: args[15] as AnimationStyle?, internalAddSemanticForOnTap: args[18] as bool),
       };
 }

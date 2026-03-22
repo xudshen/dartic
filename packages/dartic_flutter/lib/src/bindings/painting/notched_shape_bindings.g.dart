@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/painting/notched_shapes.dart';
+import 'dart:math' as math;
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/borders.dart';
 import 'dart:ui';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
 
 class _$NotchedShape extends NotchedShape implements DarticObjectHolder {
   _$NotchedShape(this._dispatch, this.$darticObject, List<Object?> superArgs);

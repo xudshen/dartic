@@ -1,3 +1,7 @@
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+
 class _VerifyState implements State {
   _VerifyState();
 
@@ -11,7 +15,7 @@ class _VerifyState implements State {
   void reassemble() {}
 
   @override
-  void setState(void Function() fn) {}
+  void setState(VoidCallback fn) {}
 
   @override
   void deactivate() {}
@@ -45,6 +49,9 @@ class _VerifyState implements State {
 
   @override
   bool get mounted => false;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => '';
 
 }
 

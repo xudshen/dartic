@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/binding.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/lsq_solver.dart';
 import 'dart:ui';
 
 abstract final class VelocityBindings {
@@ -30,5 +33,6 @@ abstract final class VelocityBindings {
         '-#1': (args) => (args[0] as Velocity) - (args[1] as Velocity),
         '+#1': (args) => (args[0] as Velocity) + (args[1] as Velocity),
         '#1': (args) => Velocity(pixelsPerSecond: args[0] as Offset),
+        '_#fromFields#1': (args) => Velocity(pixelsPerSecond: args[0] as Offset),
       };
 }

@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class AsciiDecoderBindings {
   static void register(DarticPluginContext ctx) {
@@ -23,6 +24,7 @@ abstract final class AsciiDecoderBindings {
     // _UnicodeSubsetDecoder
     for (final e in unicodeSubsetDecoderMethodMap().entries) {
       ctx.registerBinding('dart:convert::_UnicodeSubsetDecoder::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_UnicodeSubsetDecoder${e.key}', e.value);
     }
   }
 
@@ -30,7 +32,7 @@ abstract final class AsciiDecoderBindings {
         'fuse#1': (args) => (args[0] as AsciiDecoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as AsciiDecoder).cast(),
         '#1': (args) => AsciiDecoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
-        '_#fromFields#0': (args) => AsciiDecoder(),
+        '_#fromFields#2': (args) => AsciiDecoder(allowInvalid: args[0] as bool),
         'startChunkedConversion#1': (args) => (args[0] as AsciiDecoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as AsciiDecoder).bind((args[1] as Stream).cast<List<int>>()),
         'convert#3': (args) {

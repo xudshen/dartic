@@ -1,3 +1,6 @@
+import 'package:flutter/src/painting/notched_shapes.dart';
+import 'dart:ui';
+
 class _VerifyNotchedShape extends NotchedShape {
   _VerifyNotchedShape();
 

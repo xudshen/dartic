@@ -6,14 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/input_border.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Canvas, Paint, Path, Rect, TextDirection, lerpDouble;
+import 'package:flutter/foundation.dart' show clampDouble;
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
 
 abstract final class InputBorderBindings {
   static void register(DarticPluginContext ctx) {

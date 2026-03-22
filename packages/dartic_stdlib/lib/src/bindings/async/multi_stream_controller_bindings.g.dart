@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class MultiStreamControllerBindings {
   static void register(DarticPluginContext ctx) {

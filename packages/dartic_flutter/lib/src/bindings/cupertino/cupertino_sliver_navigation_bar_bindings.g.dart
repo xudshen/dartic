@@ -6,12 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/nav_bar.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Brightness, Color, ImageFilter;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/button.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/constants.dart';
+import 'package:flutter/src/cupertino/icons.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/page_scaffold.dart';
+import 'package:flutter/src/cupertino/route.dart';
+import 'package:flutter/src/cupertino/search_field.dart';
+import 'package:flutter/src/cupertino/sheet.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/box_border.dart';
+import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoSliverNavigationBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -70,5 +89,6 @@ abstract final class CupertinoSliverNavigationBarBindings {
             return CupertinoSliverNavigationBar.search(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, searchField: args[1] as Widget, largeTitle: identical(args[2], darticAbsent) ? null : args[2] as Widget?, leading: identical(args[3], darticAbsent) ? null : args[3] as Widget?, automaticallyImplyLeading: identical(args[4], darticAbsent) ? true : args[4] as bool, automaticallyImplyTitle: identical(args[5], darticAbsent) ? true : args[5] as bool, alwaysShowMiddle: identical(args[6], darticAbsent) ? true : args[6] as bool, previousPageTitle: identical(args[7], darticAbsent) ? null : args[7] as String?, middle: identical(args[8], darticAbsent) ? null : args[8] as Widget?, trailing: identical(args[9], darticAbsent) ? null : args[9] as Widget?, border: identical(args[10], darticAbsent) ? null : args[10] as Border?, backgroundColor: identical(args[11], darticAbsent) ? null : args[11] as Color?, automaticBackgroundVisibility: identical(args[12], darticAbsent) ? true : args[12] as bool, enableBackgroundFilterBlur: identical(args[13], darticAbsent) ? true : args[13] as bool, brightness: identical(args[14], darticAbsent) ? null : args[14] as Brightness?, padding: identical(args[15], darticAbsent) ? null : args[15] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[16], darticAbsent) ? true : args[16] as bool, heroTag: args[17] as Object, stretch: identical(args[18], darticAbsent) ? false : args[18] as bool, bottomMode: identical(args[19], darticAbsent) ? null : args[19] as NavigationBarBottomMode?, onSearchableBottomTap: identical(args[20], darticAbsent) ? null : (args[20] as Function?) == null ? null : (a) => (args[20] as Function?)!(a));
           }
         },
+        '_#fromFields#23': (args) => CupertinoSliverNavigationBar.search(key: args[12] as Key?, searchField: args[19] as Widget, largeTitle: args[13] as Widget?, leading: args[14] as Widget?, automaticallyImplyLeading: args[3] as bool, automaticallyImplyTitle: args[4] as bool, alwaysShowMiddle: args[1] as bool, previousPageTitle: args[18] as String?, middle: args[15] as Widget?, trailing: args[21] as Widget?, border: args[6] as Border?, backgroundColor: args[5] as Color?, automaticBackgroundVisibility: args[2] as bool, enableBackgroundFilterBlur: args[10] as bool, brightness: args[9] as Brightness?, padding: args[17] as EdgeInsetsDirectional?, transitionBetweenRoutes: args[22] as bool, heroTag: args[11] as Object, stretch: args[20] as bool, bottomMode: args[8] as NavigationBarBottomMode?, onSearchableBottomTap: args[16] as ValueChanged<bool>?),
       };
 }

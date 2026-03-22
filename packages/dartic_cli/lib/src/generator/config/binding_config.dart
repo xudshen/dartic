@@ -9,13 +9,6 @@ class GeneratorConfig {
   final String outputPlugins;
   final List<LibraryConfig> libraries;
 
-  /// Custom import lines to use instead of default relative imports.
-  ///
-  /// When non-empty, these replace the hardcoded relative imports
-  /// (e.g. `../../api/plugin_context.dart`). Useful for external packages
-  /// like `dartic_flutter` that need `package:dartic/dartic.dart`.
-  final List<String> customImports;
-
   /// When set, generates a single combined plugin aggregating all libraries
   /// instead of per-library plugins. The value is the PascalCase prefix
   /// (e.g. `'FabService'` → generates `FabServicePlugin`).
@@ -31,7 +24,6 @@ class GeneratorConfig {
     required this.outputBindings,
     required this.outputPlugins,
     required this.libraries,
-    this.customImports = const [],
     this.pluginName,
     this.configDirPath,
   });
@@ -44,11 +36,32 @@ class LibraryConfig {
   final List<FunctionConfig> functions;
   final Map<String, OverrideConfig> overrides;
 
+  /// Discovery mode for auto-discovering public classes from Kernel IR.
+  ///
+  /// - `'all'`: discovers classes in the URI and all subdirectories
+  /// - `'current'`: discovers classes only in the exact URI directory (no subdirs)
+  /// - `null`: no auto-discovery, only explicit [classes] are used
+  ///
+  /// For library URIs (ending with `.dart`): scans the library + its exports.
+  /// For directory URIs (no `.dart` suffix): scans all Kernel libraries
+  /// whose URI starts with this prefix.
+  final String? discover;
+
+  /// Class names to exclude from auto-discovery (only used when [discover] is set).
+  final List<String> exclude;
+
+  /// Extra imports needed by hand-written `extra_methods` code.
+  /// These are added to every generated binding file in this library.
+  final List<String> extraImports;
+
   LibraryConfig({
     required this.uri,
     required this.classes,
     required this.functions,
     this.overrides = const {},
+    this.discover,
+    this.exclude = const [],
+    this.extraImports = const [],
   });
 }
 
@@ -71,11 +84,17 @@ class ClassConfig {
   /// 3. 注册 super 转发器到 HostBindingRegistry
   final bool bridge;
 
+  /// The actual declaring library URI for this class (from Kernel IR).
+  /// Used by directory discovery to resolve the correct library for analysis.
+  /// null for explicitly configured classes (uses LibraryConfig.uri instead).
+  final String? sourceLibraryUri;
+
   ClassConfig({
     required this.name,
     this.sourceName,
     this.internalTypes = const [],
     this.bridge = false,
+    this.sourceLibraryUri,
   });
 
   /// 用于 analyzer 查找的实际类名。

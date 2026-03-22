@@ -6,14 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/progress_indicator.dart';
+import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/progress_indicator_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/animation/animation_controller.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class RefreshProgressIndicatorBindings {
   static void register(DarticPluginContext ctx) {
@@ -55,5 +67,6 @@ abstract final class RefreshProgressIndicatorBindings {
         'semanticsValue#0': (args) => (args[0] as RefreshProgressIndicator).semanticsValue,
         'key#0': (args) => (args[0] as RefreshProgressIndicator).key,
         '#13': (args) => RefreshProgressIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1] as double?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, valueColor: identical(args[4], darticAbsent) ? null : args[4] as Animation<Color?>?, strokeWidth: identical(args[5], darticAbsent) ? null : args[5] as double?, strokeAlign: identical(args[6], darticAbsent) ? null : args[6] as double?, semanticsLabel: identical(args[7], darticAbsent) ? null : args[7] as String?, semanticsValue: identical(args[8], darticAbsent) ? null : args[8] as String?, strokeCap: identical(args[9], darticAbsent) ? null : args[9] as StrokeCap?, elevation: identical(args[10], darticAbsent) ? 2.0 : args[10] as double, indicatorMargin: identical(args[11], darticAbsent) ? const EdgeInsets.all(4.0) : args[11] as EdgeInsetsGeometry, indicatorPadding: identical(args[12], darticAbsent) ? const EdgeInsets.all(12.0) : args[12] as EdgeInsetsGeometry),
+        '_#fromFields#19': (args) => RefreshProgressIndicator(key: args[8] as Key?, value: args[16] as double?, backgroundColor: args[1] as Color?, color: args[2] as Color?, valueColor: args[17] as Animation<Color?>?, strokeWidth: args[14] as double?, strokeAlign: args[12] as double?, semanticsLabel: args[10] as String?, semanticsValue: args[11] as String?, strokeCap: args[13] as StrokeCap?, elevation: args[5] as double, indicatorMargin: args[6] as EdgeInsetsGeometry, indicatorPadding: args[7] as EdgeInsetsGeometry),
       };
 }

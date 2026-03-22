@@ -6,7 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:math';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class ListBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,11 +27,13 @@ abstract final class ListBindings {
     // _GrowableList
     for (final e in growableListMethodMap().entries) {
       ctx.registerBinding('dart:core::_GrowableList::${e.key}', e.value);
+      ctx.registerBinding('dart:core::::_GrowableList${e.key}', e.value);
     }
 
     // _List
     for (final e in listMethodMap().entries) {
       ctx.registerBinding('dart:core::_List::${e.key}', e.value);
+      ctx.registerBinding('dart:core::::_List${e.key}', e.value);
     }
   }
 
@@ -118,6 +123,8 @@ abstract final class ListBindings {
             }
             return List.generate(length, (i) => generator(i));
         },
+        'empty#1': (args) => (identical(args[0], darticAbsent) ? false : args[0] as bool) ? <dynamic>[] : List<dynamic>.empty(),
+        'filled#3': (args) => List<dynamic>.filled(args[0] as int, args[1], growable: identical(args[2], darticAbsent) ? true : args[2] as bool),
       };
 
   static Map<String, Object? Function(List<Object?>)> growableListMethodMap() => {

@@ -1,0 +1,38 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/painting/image_provider.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/painting/_network_image_io.dart' as network_image;
+import 'package:flutter/src/painting/binding.dart';
+import 'package:flutter/src/painting/image_cache.dart';
+import 'package:flutter/src/painting/image_stream.dart';
+
+abstract final class ResizeImagePolicyBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/painting/image_provider.dart::ResizeImagePolicy',
+      type: ResizeImagePolicy,
+      test: (o) => o is ResizeImagePolicy,
+      methods: methodMap(),
+      superclasses: ['dart:core::Enum'],
+    );
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::ResizeImagePolicy::exact#0', (args) => ResizeImagePolicy.exact);
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::ResizeImagePolicy::fit#0', (args) => ResizeImagePolicy.fit);
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::ResizeImagePolicy::values#0', (args) => ResizeImagePolicy.values);
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'index#0': (args) => (args[0] as ResizeImagePolicy).index,
+      };
+}

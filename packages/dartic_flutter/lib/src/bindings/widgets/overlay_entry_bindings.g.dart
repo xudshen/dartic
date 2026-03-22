@@ -6,13 +6,16 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/layout_builder.dart';
+import 'package:flutter/src/widgets/lookup_boundary.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
 import 'dart:ui';
 
 abstract final class OverlayEntryBindings {

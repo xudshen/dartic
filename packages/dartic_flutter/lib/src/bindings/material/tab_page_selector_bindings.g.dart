@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/tabs.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Color, SemanticsRole, lerpDouble;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/app_bar.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/tab_bar_theme.dart';
+import 'package:flutter/src/material/tab_controller.dart';
+import 'package:flutter/src/material/tab_indicator.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class TabPageSelectorBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +59,6 @@ abstract final class TabPageSelectorBindings {
         'borderStyle#0': (args) => (args[0] as TabPageSelector).borderStyle,
         'key#0': (args) => (args[0] as TabPageSelector).key,
         '#6': (args) => TabPageSelector(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: identical(args[1], darticAbsent) ? null : args[1] as TabController?, indicatorSize: identical(args[2], darticAbsent) ? 12.0 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, selectedColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, borderStyle: identical(args[5], darticAbsent) ? null : args[5] as BorderStyle?),
-        '_#fromFields#5': (args) => TabPageSelector(borderStyle: args[0] as BorderStyle?, color: args[1] as Color?, controller: args[2] as TabController?, indicatorSize: args[3] as double, selectedColor: args[4] as Color?),
+        '_#fromFields#6': (args) => TabPageSelector(key: args[4] as Key?, controller: args[2] as TabController?, indicatorSize: args[3] as double, color: args[1] as Color?, selectedColor: args[5] as Color?, borderStyle: args[0] as BorderStyle?),
       };
 }

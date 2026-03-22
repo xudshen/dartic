@@ -6,14 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/async.dart';
+import 'dart:async' show StreamSubscription;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/framework.dart';
 
 abstract final class ConnectionStateBindings {
   static void register(DarticPluginContext ctx) {

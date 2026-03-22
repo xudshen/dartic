@@ -6,14 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/text_theme.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/typography.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class TextThemeBindings {
   static void register(DarticPluginContext ctx) {
@@ -53,5 +54,6 @@ abstract final class TextThemeBindings {
         'labelSmall#0': (args) => (args[0] as TextTheme).labelSmall,
         'hashCode#0': (args) => (args[0] as TextTheme).hashCode,
         '#15': (args) => TextTheme(displayLarge: identical(args[0], darticAbsent) ? null : args[0] as TextStyle?, displayMedium: identical(args[1], darticAbsent) ? null : args[1] as TextStyle?, displaySmall: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, headlineLarge: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?, headlineMedium: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, headlineSmall: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, titleLarge: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, titleMedium: identical(args[7], darticAbsent) ? null : args[7] as TextStyle?, titleSmall: identical(args[8], darticAbsent) ? null : args[8] as TextStyle?, bodyLarge: identical(args[9], darticAbsent) ? null : args[9] as TextStyle?, bodyMedium: identical(args[10], darticAbsent) ? null : args[10] as TextStyle?, bodySmall: identical(args[11], darticAbsent) ? null : args[11] as TextStyle?, labelLarge: identical(args[12], darticAbsent) ? null : args[12] as TextStyle?, labelMedium: identical(args[13], darticAbsent) ? null : args[13] as TextStyle?, labelSmall: identical(args[14], darticAbsent) ? null : args[14] as TextStyle?),
+        '_#fromFields#15': (args) => TextTheme(displayLarge: args[3] as TextStyle?, displayMedium: args[4] as TextStyle?, displaySmall: args[5] as TextStyle?, headlineLarge: args[6] as TextStyle?, headlineMedium: args[7] as TextStyle?, headlineSmall: args[8] as TextStyle?, titleLarge: args[12] as TextStyle?, titleMedium: args[13] as TextStyle?, titleSmall: args[14] as TextStyle?, bodyLarge: args[0] as TextStyle?, bodyMedium: args[1] as TextStyle?, bodySmall: args[2] as TextStyle?, labelLarge: args[9] as TextStyle?, labelMedium: args[10] as TextStyle?, labelSmall: args[11] as TextStyle?),
       };
 }

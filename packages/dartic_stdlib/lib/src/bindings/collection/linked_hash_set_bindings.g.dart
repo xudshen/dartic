@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class LinkedHashSetBindings {
   static void register(DarticPluginContext ctx) {
@@ -65,6 +66,16 @@ abstract final class LinkedHashSetBindings {
         'last#0': (args) => (args[0] as LinkedHashSet).last,
         'single#0': (args) => (args[0] as LinkedHashSet).single,
         '#0': (args) => LinkedHashSet<Object?>(),
+        '#3': (args) {
+            final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+            final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+            final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+            return LinkedHashSet<Object?>(
+              equals: equals != null ? (a, b) => equals(a, b) as bool : null,
+              hashCode: hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
+              isValidKey: isValidKey != null ? (k) => isValidKey(k) as bool : null,
+            );
+        },
         'from#1': (args) => LinkedHashSet.from(args[0] as Iterable),
         'of#1': (args) => LinkedHashSet.of(args[0] as Iterable),
         'identity#0': (args) => Set.identity(),

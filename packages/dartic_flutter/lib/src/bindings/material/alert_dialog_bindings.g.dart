@@ -6,14 +6,36 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/dialog.dart';
+import 'dart:ui' show Clip, Color, SemanticsRole, clampDouble, lerpDouble;
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/dialog_theme.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/overflow_bar.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
 
 abstract final class AlertDialogBindings {
   static void register(DarticPluginContext ctx) {
@@ -127,6 +149,6 @@ abstract final class AlertDialogBindings {
             }
           }
         },
-        '_#fromFields#27': (args) => AlertDialog(actions: args[0] == null ? null : (args[0] as List).cast<Widget>(), actionsAlignment: args[1] as MainAxisAlignment?, actionsOverflowAlignment: args[2] as OverflowBarAlignment?, actionsOverflowButtonSpacing: args[3] as double?, actionsOverflowDirection: args[4] as VerticalDirection?, actionsPadding: args[5] as EdgeInsetsGeometry?, alignment: args[6] as AlignmentGeometry?, backgroundColor: args[7] as Color?, buttonPadding: args[8] as EdgeInsetsGeometry?, clipBehavior: args[9] as Clip?, constraints: args[10] as BoxConstraints?, content: args[11] as Widget?, contentPadding: args[12] as EdgeInsetsGeometry?, contentTextStyle: args[13] as TextStyle?, elevation: args[14] as double?, icon: args[15] as Widget?, iconColor: args[16] as Color?, iconPadding: args[17] as EdgeInsetsGeometry?, insetPadding: args[18] as EdgeInsets?, scrollable: args[19] as bool, semanticLabel: args[20] as String?, shadowColor: args[21] as Color?, shape: args[22] as ShapeBorder?, surfaceTintColor: args[23] as Color?, title: args[24] as Widget?, titlePadding: args[25] as EdgeInsetsGeometry?, titleTextStyle: args[26] as TextStyle?),
+        '_#fromFields#28': (args) => AlertDialog(key: args[19] as Key?, icon: args[15] as Widget?, iconPadding: args[17] as EdgeInsetsGeometry?, iconColor: args[16] as Color?, title: args[25] as Widget?, titlePadding: args[26] as EdgeInsetsGeometry?, titleTextStyle: args[27] as TextStyle?, content: args[11] as Widget?, contentPadding: args[12] as EdgeInsetsGeometry?, contentTextStyle: args[13] as TextStyle?, actions: args[0] == null ? null : (args[0] as List).cast<Widget>(), actionsPadding: args[5] as EdgeInsetsGeometry?, actionsAlignment: args[1] as MainAxisAlignment?, actionsOverflowAlignment: args[2] as OverflowBarAlignment?, actionsOverflowDirection: args[4] as VerticalDirection?, actionsOverflowButtonSpacing: args[3] as double?, buttonPadding: args[8] as EdgeInsetsGeometry?, backgroundColor: args[7] as Color?, elevation: args[14] as double?, shadowColor: args[22] as Color?, surfaceTintColor: args[24] as Color?, semanticLabel: args[21] as String?, insetPadding: args[18] as EdgeInsets?, clipBehavior: args[9] as Clip?, shape: args[23] as ShapeBorder?, alignment: args[6] as AlignmentGeometry?, constraints: args[10] as BoxConstraints?, scrollable: args[20] as bool),
       };
 }

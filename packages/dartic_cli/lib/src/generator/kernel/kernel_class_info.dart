@@ -94,10 +94,17 @@ class FieldParamMapping {
   /// Whether the parameter is optional.
   final bool paramIsOptional;
 
+  /// Position of this parameter in the constructor's parameter list.
+  /// For positional params: 0-based index in positionalParameters.
+  /// For named params: index after all positional params.
+  /// -1 if paramName is null (constant-initialized, no param).
+  final int paramIndex;
+
   FieldParamMapping({
     required this.fieldName,
     this.paramName,
     this.paramIsNamed = false,
     this.paramIsOptional = false,
+    this.paramIndex = -1,
   });
 }

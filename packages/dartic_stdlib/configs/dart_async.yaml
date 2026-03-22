@@ -22,82 +22,35 @@
 output_bindings: "../lib/src/bindings/async"
 output_plugins: "../lib/src/plugins"
 
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-
 libraries:
   - uri: dart:async
+    discover: all
     classes:
-      # ── Future ──────────────────────────────────────────────────────────
-      - Future
-
-      # ── Completer ───────────────────────────────────────────────────────
-      - Completer
-
-      # ── Stream + _EmptyStream ───────────────────────────────────────────
       - name: Stream
         bridge: true
         internal_types:
           - _EmptyStream
-
-      # ── StreamController ────────────────────────────────────────────────
-      - StreamController
-
-      # ── StreamSubscription ──────────────────────────────────────────────
       - name: StreamSubscription
         bridge: true
-
-      # ── StreamTransformer + internal types ──────────────────────────────
       - name: StreamTransformer
         internal_types:
           - _StreamHandlerTransformer
           - _StreamSubscriptionTransformer
-
-      # ── EventSink ───────────────────────────────────────────────────────
       - name: EventSink
         bridge: true
-
-      # ── StreamSink ──────────────────────────────────────────────────────
       - name: StreamSink
         bridge: true
-
-      # ── StreamConsumer ──────────────────────────────────────────────────
       - name: StreamConsumer
         bridge: true
-
-      # ── MultiStreamController ───────────────────────────────────────────
-      - MultiStreamController
-
-      # ── StreamIterator + _StreamIterator ────────────────────────────────
       - name: StreamIterator
         internal_types:
           - _StreamIterator
-
-      # ── Timer ───────────────────────────────────────────────────────────
-      - Timer
-
-      # ── Zone ────────────────────────────────────────────────────────────
       - name: Zone
         internal_types:
           - _RootZone
-
-      # ── ZoneSpecification + _ZoneSpecification ──────────────────────────
       - name: ZoneSpecification
         internal_types:
           - _ZoneSpecification
-
-      # ── TimeoutException ─────────────────────────────────────────────
-      - TimeoutException
-
-      # ── ZoneDelegate (abstract final, passed to zone handlers) ───────
-      - ZoneDelegate
-
-      # ── StreamView (read-only Stream wrapper) ────────────────────────
-      - StreamView
-
-      # ── StreamTransformerBase (abstract base for custom transformers) ─
-      - StreamTransformerBase
 
     # ── Top-level functions ──────────────────────────────────────────────
 

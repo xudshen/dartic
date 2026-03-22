@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/border_radius.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
+import 'dart:ui';
 
 abstract final class BorderRadiusDirectionalBindings {
   static void register(DarticPluginContext ctx) {
@@ -45,5 +45,6 @@ abstract final class BorderRadiusDirectionalBindings {
         'vertical#2': (args) => BorderRadiusDirectional.vertical(top: identical(args[0], darticAbsent) ? Radius.zero : args[0] as Radius, bottom: identical(args[1], darticAbsent) ? Radius.zero : args[1] as Radius),
         'horizontal#2': (args) => BorderRadiusDirectional.horizontal(start: identical(args[0], darticAbsent) ? Radius.zero : args[0] as Radius, end: identical(args[1], darticAbsent) ? Radius.zero : args[1] as Radius),
         'only#4': (args) => BorderRadiusDirectional.only(topStart: identical(args[0], darticAbsent) ? Radius.zero : args[0] as Radius, topEnd: identical(args[1], darticAbsent) ? Radius.zero : args[1] as Radius, bottomStart: identical(args[2], darticAbsent) ? Radius.zero : args[2] as Radius, bottomEnd: identical(args[3], darticAbsent) ? Radius.zero : args[3] as Radius),
+        '_#fromFields#4': (args) => BorderRadiusDirectional.all(args[3] as Radius),
       };
 }

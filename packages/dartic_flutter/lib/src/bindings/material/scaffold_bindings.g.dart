@@ -6,14 +6,40 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'dart:async';
+import 'dart:collection';
+import 'dart:math' as math;
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/material/app_bar.dart';
+import 'package:flutter/src/material/banner.dart';
+import 'package:flutter/src/material/banner_theme.dart';
+import 'package:flutter/src/material/bottom_sheet.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/curves.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/divider.dart';
+import 'package:flutter/src/material/drawer.dart';
+import 'package:flutter/src/material/flexible_space_bar.dart';
+import 'package:flutter/src/material/floating_action_button.dart';
+import 'package:flutter/src/material/floating_action_button_location.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/snack_bar.dart';
+import 'package:flutter/src/material/snack_bar_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/box_decoration.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ScaffoldBindings {
   static void register(DarticPluginContext ctx) {
@@ -74,6 +100,6 @@ abstract final class ScaffoldBindings {
             return Scaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, appBar: identical(args[1], darticAbsent) ? null : args[1] as PreferredSizeWidget?, body: identical(args[2], darticAbsent) ? null : args[2] as Widget?, floatingActionButton: identical(args[3], darticAbsent) ? null : args[3] as Widget?, floatingActionButtonLocation: identical(args[4], darticAbsent) ? null : args[4] as FloatingActionButtonLocation?, floatingActionButtonAnimator: identical(args[5], darticAbsent) ? null : args[5] as FloatingActionButtonAnimator?, persistentFooterButtons: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<Widget>(), persistentFooterAlignment: identical(args[7], darticAbsent) ? AlignmentDirectional.centerEnd : args[7] as AlignmentDirectional, persistentFooterDecoration: identical(args[8], darticAbsent) ? null : args[8] as BoxDecoration?, drawer: identical(args[9], darticAbsent) ? null : args[9] as Widget?, onDrawerChanged: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a) => (args[10] as Function?)!(a), endDrawer: identical(args[11], darticAbsent) ? null : args[11] as Widget?, onEndDrawerChanged: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : (a) => (args[12] as Function?)!(a), bottomNavigationBar: identical(args[13], darticAbsent) ? null : args[13] as Widget?, bottomSheet: identical(args[14], darticAbsent) ? null : args[14] as Widget?, backgroundColor: identical(args[15], darticAbsent) ? null : args[15] as Color?, resizeToAvoidBottomInset: identical(args[16], darticAbsent) ? null : args[16] as bool?, primary: identical(args[17], darticAbsent) ? true : args[17] as bool, drawerDragStartBehavior: identical(args[18], darticAbsent) ? DragStartBehavior.start : args[18] as DragStartBehavior, extendBody: identical(args[19], darticAbsent) ? false : args[19] as bool, drawerBarrierDismissible: identical(args[20], darticAbsent) ? true : args[20] as bool, extendBodyBehindAppBar: identical(args[21], darticAbsent) ? false : args[21] as bool, drawerScrimColor: identical(args[22], darticAbsent) ? null : args[22] as Color?, bottomSheetScrimBuilder: (a, b) => (args[23] as Function)(a, b) as Widget?, drawerEdgeDragWidth: identical(args[24], darticAbsent) ? null : args[24] as double?, drawerEnableOpenDragGesture: identical(args[25], darticAbsent) ? true : args[25] as bool, endDrawerEnableOpenDragGesture: identical(args[26], darticAbsent) ? true : args[26] as bool, restorationId: identical(args[27], darticAbsent) ? null : args[27] as String?);
           }
         },
-        '_#fromFields#27': (args) => Scaffold(appBar: args[0] as PreferredSizeWidget?, backgroundColor: args[1] as Color?, body: args[2] as Widget?, bottomNavigationBar: args[3] as Widget?, bottomSheet: args[4] as Widget?, bottomSheetScrimBuilder: args[5] as Widget? Function(BuildContext, Animation<double>), drawer: args[6] as Widget?, drawerBarrierDismissible: args[7] as bool, drawerDragStartBehavior: args[8] as DragStartBehavior, drawerEdgeDragWidth: args[9] as double?, drawerEnableOpenDragGesture: args[10] as bool, drawerScrimColor: args[11] as Color?, endDrawer: args[12] as Widget?, endDrawerEnableOpenDragGesture: args[13] as bool, extendBody: args[14] as bool, extendBodyBehindAppBar: args[15] as bool, floatingActionButton: args[16] as Widget?, floatingActionButtonAnimator: args[17] as FloatingActionButtonAnimator?, floatingActionButtonLocation: args[18] as FloatingActionButtonLocation?, onDrawerChanged: args[19] as void Function(bool)?, onEndDrawerChanged: args[20] as void Function(bool)?, persistentFooterAlignment: args[21] as AlignmentDirectional, persistentFooterButtons: args[22] == null ? null : (args[22] as List).cast<Widget>(), persistentFooterDecoration: args[23] as BoxDecoration?, primary: args[24] as bool, resizeToAvoidBottomInset: args[25] as bool?, restorationId: args[26] as String?),
+        '_#fromFields#28': (args) => Scaffold(key: args[19] as Key?, appBar: args[0] as PreferredSizeWidget?, body: args[2] as Widget?, floatingActionButton: args[16] as Widget?, floatingActionButtonLocation: args[18] as FloatingActionButtonLocation?, floatingActionButtonAnimator: args[17] as FloatingActionButtonAnimator?, persistentFooterButtons: args[23] == null ? null : (args[23] as List).cast<Widget>(), persistentFooterAlignment: args[22] as AlignmentDirectional, persistentFooterDecoration: args[24] as BoxDecoration?, drawer: args[6] as Widget?, onDrawerChanged: args[20] as DrawerCallback?, endDrawer: args[12] as Widget?, onEndDrawerChanged: args[21] as DrawerCallback?, bottomNavigationBar: args[3] as Widget?, bottomSheet: args[4] as Widget?, backgroundColor: args[1] as Color?, resizeToAvoidBottomInset: args[26] as bool?, primary: args[25] as bool, drawerDragStartBehavior: args[8] as DragStartBehavior, extendBody: args[14] as bool, drawerBarrierDismissible: args[7] as bool, extendBodyBehindAppBar: args[15] as bool, drawerScrimColor: args[11] as Color?, bottomSheetScrimBuilder: args[5] as Widget? Function(BuildContext, Animation<double>), drawerEdgeDragWidth: args[9] as double?, drawerEnableOpenDragGesture: args[10] as bool, endDrawerEnableOpenDragGesture: args[13] as bool, restorationId: args[27] as String?),
       };
 }

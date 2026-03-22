@@ -6,12 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/activity_indicator.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoActivityIndicatorBindings {
   static void register(DarticPluginContext ctx) {
@@ -52,5 +55,6 @@ abstract final class CupertinoActivityIndicatorBindings {
             return CupertinoActivityIndicator.partiallyRevealed(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, radius: args[2] as double, progress: identical(args[3], darticAbsent) ? 1.0 : args[3] as double);
           }
         },
+        '_#fromFields#5': (args) => CupertinoActivityIndicator(key: args[2] as Key?, color: args[1] as Color?, animating: args[0] as bool, radius: args[4] as double),
       };
 }

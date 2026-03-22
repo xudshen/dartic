@@ -6,8 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/long_press.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class LongPressEndDetailsBindings {

@@ -6,14 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, SemanticsInputType, TextBaseline, TextDirection, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ColumnBindings {
   static void register(DarticPluginContext ctx) {
@@ -49,7 +61,7 @@ abstract final class ColumnBindings {
         'spacing#0': (args) => (args[0] as Column).spacing,
         'children#0': (args) => (args[0] as Column).children,
         'key#0': (args) => (args[0] as Column).key,
-        '#9': (args) => Column(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxisAlignment: identical(args[1], darticAbsent) ? MainAxisAlignment.start : args[1] as MainAxisAlignment, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, crossAxisAlignment: identical(args[3], darticAbsent) ? CrossAxisAlignment.center : args[3] as CrossAxisAlignment, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?, verticalDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textBaseline: identical(args[6], darticAbsent) ? null : args[6] as TextBaseline?, spacing: identical(args[7], darticAbsent) ? 0.0 : args[7] as double, children: identical(args[8], darticAbsent) ? const <Widget>[] : (args[8] as List).cast<Widget>()),
-        '_#fromFields#0': (args) => Column(),
+        '#9': (args) => Column(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxisAlignment: identical(args[1], darticAbsent) ? MainAxisAlignment.start : args[1] as MainAxisAlignment, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, crossAxisAlignment: identical(args[3], darticAbsent) ? CrossAxisAlignment.center : args[3] as CrossAxisAlignment, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?, verticalDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textBaseline: identical(args[6], darticAbsent) ? null : args[6] as ui.TextBaseline?, spacing: identical(args[7], darticAbsent) ? 0.0 : args[7] as double, children: identical(args[8], darticAbsent) ? const <Widget>[] : (args[8] as List).cast<Widget>()),
+        '_#fromFields#11': (args) => Column(key: args[4] as Key?, mainAxisAlignment: args[5] as MainAxisAlignment, mainAxisSize: args[6] as MainAxisSize, crossAxisAlignment: args[2] as CrossAxisAlignment, textDirection: args[9] as ui.TextDirection?, verticalDirection: args[10] as VerticalDirection, textBaseline: args[8] as ui.TextBaseline?, spacing: args[7] as double, children: (args[0] as List).cast<Widget>()),
       };
 }

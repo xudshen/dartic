@@ -6,14 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/input_border.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Canvas, Paint, Path, Rect, TextDirection, lerpDouble;
+import 'package:flutter/foundation.dart' show clampDouble;
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
 
 abstract final class OutlineInputBorderBindings {
   static void register(DarticPluginContext ctx) {
@@ -45,5 +46,6 @@ abstract final class OutlineInputBorderBindings {
         'borderSide#0': (args) => (args[0] as OutlineInputBorder).borderSide,
         '+#1': (args) => (args[0] as OutlineInputBorder) + (args[1] as ShapeBorder),
         '#3': (args) => OutlineInputBorder(borderSide: identical(args[0], darticAbsent) ? const BorderSide() : args[0] as BorderSide, borderRadius: identical(args[1], darticAbsent) ? const BorderRadius.all(Radius.circular(4.0)) : args[1] as BorderRadius, gapPadding: identical(args[2], darticAbsent) ? 4.0 : args[2] as double),
+        '_#fromFields#3': (args) => OutlineInputBorder(borderSide: args[1] as BorderSide, borderRadius: args[0] as BorderRadius, gapPadding: args[2] as double),
       };
 }

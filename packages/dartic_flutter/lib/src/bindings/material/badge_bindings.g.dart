@@ -6,14 +6,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/badge.dart';
+import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/badge_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class BadgeBindings {
   static void register(DarticPluginContext ctx) {
@@ -49,6 +57,6 @@ abstract final class BadgeBindings {
         'key#0': (args) => (args[0] as Badge).key,
         '#12': (args) => Badge(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, textColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, smallSize: identical(args[3], darticAbsent) ? null : args[3] as double?, largeSize: identical(args[4], darticAbsent) ? null : args[4] as double?, textStyle: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, padding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, alignment: identical(args[7], darticAbsent) ? null : args[7] as AlignmentGeometry?, offset: identical(args[8], darticAbsent) ? null : args[8] as Offset?, label: identical(args[9], darticAbsent) ? null : args[9] as Widget?, isLabelVisible: identical(args[10], darticAbsent) ? true : args[10] as bool, child: identical(args[11], darticAbsent) ? null : args[11] as Widget?),
         'count#13': (args) => Badge.count(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, textColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, smallSize: identical(args[3], darticAbsent) ? null : args[3] as double?, largeSize: identical(args[4], darticAbsent) ? null : args[4] as double?, textStyle: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, padding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, alignment: identical(args[7], darticAbsent) ? null : args[7] as AlignmentGeometry?, offset: identical(args[8], darticAbsent) ? null : args[8] as Offset?, count: args[9] as int, maxCount: identical(args[10], darticAbsent) ? 999 : args[10] as int, isLabelVisible: identical(args[11], darticAbsent) ? true : args[11] as bool, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?),
-        '_#fromFields#11': (args) => Badge(alignment: args[0] as AlignmentGeometry?, backgroundColor: args[1] as Color?, child: args[2] as Widget?, isLabelVisible: args[3] as bool, label: args[4] as Widget?, largeSize: args[5] as double?, offset: args[6] as Offset?, padding: args[7] as EdgeInsetsGeometry?, smallSize: args[8] as double?, textColor: args[9] as Color?, textStyle: args[10] as TextStyle?),
+        '_#fromFields#12': (args) => Badge(key: args[4] as Key?, backgroundColor: args[1] as Color?, textColor: args[10] as Color?, smallSize: args[9] as double?, largeSize: args[6] as double?, textStyle: args[11] as TextStyle?, padding: args[8] as EdgeInsetsGeometry?, alignment: args[0] as AlignmentGeometry?, offset: args[7] as Offset?, label: args[5] as Widget?, isLabelVisible: args[3] as bool, child: args[2] as Widget?),
       };
 }

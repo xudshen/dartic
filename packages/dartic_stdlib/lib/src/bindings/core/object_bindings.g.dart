@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class ObjectBindings {
   static void register(DarticPluginContext ctx) {
@@ -23,9 +27,9 @@ abstract final class ObjectBindings {
         'noSuchMethod#1': (args) => (args[0] as Object).noSuchMethod(args[1] as Invocation),
         'runtimeType#0': (args) => (args[0] as Object).runtimeType,
         '#0': (args) => Object(),
+        '_#fromFields#0': (args) => Object(),
         'toString#0': (args) => args[0].toString(),
         'hashCode#0': (args) => args[0].hashCode,
         '==#1': (args) => args[0] == args[1],
-        '_#fromFields#0': (args) => Object(),
       };
 }

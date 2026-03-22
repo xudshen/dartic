@@ -6,12 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/cupertino/date_picker.dart';
+import 'dart:math' as math;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/picker.dart';
+import 'package:flutter/src/cupertino/theme.dart';
 
 abstract final class CupertinoTimerPickerModeBindings {
   static void register(DarticPluginContext ctx) {

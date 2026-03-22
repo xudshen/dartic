@@ -6,12 +6,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/bottom_tab_bar.dart';
+import 'dart:ui' show Color, ImageFilter, Size;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/bottom_navigation_bar_item.dart';
+import 'package:flutter/src/painting/box_border.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class CupertinoTabBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -61,5 +69,6 @@ abstract final class CupertinoTabBarBindings {
             }
           }
         },
+        '_#fromFields#10': (args) => CupertinoTabBar(key: args[8] as Key?, items: (args[7] as List).cast<BottomNavigationBarItem>(), onTap: args[9] as ValueChanged<int>?, currentIndex: args[3] as int, backgroundColor: args[1] as Color?, activeColor: args[0] as Color?, inactiveColor: args[6] as Color, iconSize: args[5] as double, height: args[4] as double, border: args[2] as Border?),
       };
 }

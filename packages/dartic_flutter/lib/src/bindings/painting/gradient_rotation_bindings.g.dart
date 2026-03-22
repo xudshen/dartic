@@ -6,11 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/gradient.dart';
+import 'dart:collection';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Gradient, Rect, TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/painting/basic_types.dart';
 
 abstract final class GradientRotationBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,10 +27,11 @@ abstract final class GradientRotationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'transform#2': (args) => (args[0] as GradientRotation).transform(args[1] as Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?),
+        'transform#2': (args) => (args[0] as GradientRotation).transform(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
         'toString#0': (args) => (args[0] as GradientRotation).toString(),
         'radians#0': (args) => (args[0] as GradientRotation).radians,
         'hashCode#0': (args) => (args[0] as GradientRotation).hashCode,
         '#1': (args) => GradientRotation(args[0] as double),
+        '_#fromFields#1': (args) => GradientRotation(args[0] as double),
       };
 }

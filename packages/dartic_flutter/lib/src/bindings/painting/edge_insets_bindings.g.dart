@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'dart:ui' as ui show Offset, RRect, Rect, Size, TextDirection, ViewPadding, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class EdgeInsetsBindings {
   static void register(DarticPluginContext ctx) {
@@ -26,18 +26,18 @@ abstract final class EdgeInsetsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'inflateRect#1': (args) => (args[0] as EdgeInsets).inflateRect(args[1] as Rect),
-        'deflateRect#1': (args) => (args[0] as EdgeInsets).deflateRect(args[1] as Rect),
-        'inflateRRect#1': (args) => (args[0] as EdgeInsets).inflateRRect(args[1] as RRect),
-        'deflateRRect#1': (args) => (args[0] as EdgeInsets).deflateRRect(args[1] as RRect),
+        'inflateRect#1': (args) => (args[0] as EdgeInsets).inflateRect(args[1] as ui.Rect),
+        'deflateRect#1': (args) => (args[0] as EdgeInsets).deflateRect(args[1] as ui.Rect),
+        'inflateRRect#1': (args) => (args[0] as EdgeInsets).inflateRRect(args[1] as ui.RRect),
+        'deflateRRect#1': (args) => (args[0] as EdgeInsets).deflateRRect(args[1] as ui.RRect),
         'subtract#1': (args) => (args[0] as EdgeInsets).subtract(args[1] as EdgeInsetsGeometry),
         'add#1': (args) => (args[0] as EdgeInsets).add(args[1] as EdgeInsetsGeometry),
         'clamp#2': (args) => (args[0] as EdgeInsets).clamp(args[1] as EdgeInsetsGeometry, args[2] as EdgeInsetsGeometry),
-        'resolve#1': (args) => (args[0] as EdgeInsets).resolve(args[1] as TextDirection?),
+        'resolve#1': (args) => (args[0] as EdgeInsets).resolve(args[1] as ui.TextDirection?),
         'copyWith#4': (args) => (args[0] as EdgeInsets).copyWith(left: identical(args[1], darticAbsent) ? null : args[1] as double?, top: identical(args[2], darticAbsent) ? null : args[2] as double?, right: identical(args[3], darticAbsent) ? null : args[3] as double?, bottom: identical(args[4], darticAbsent) ? null : args[4] as double?),
         'along#1': (args) => (args[0] as EdgeInsets).along(args[1] as Axis),
-        'inflateSize#1': (args) => (args[0] as EdgeInsets).inflateSize(args[1] as Size),
-        'deflateSize#1': (args) => (args[0] as EdgeInsets).deflateSize(args[1] as Size),
+        'inflateSize#1': (args) => (args[0] as EdgeInsets).inflateSize(args[1] as ui.Size),
+        'deflateSize#1': (args) => (args[0] as EdgeInsets).deflateSize(args[1] as ui.Size),
         'left#0': (args) => (args[0] as EdgeInsets).left,
         'top#0': (args) => (args[0] as EdgeInsets).top,
         'right#0': (args) => (args[0] as EdgeInsets).right,
@@ -62,7 +62,8 @@ abstract final class EdgeInsetsBindings {
         'all#1': (args) => EdgeInsets.all(args[0] as double),
         'only#4': (args) => EdgeInsets.only(left: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, top: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, right: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, bottom: identical(args[3], darticAbsent) ? 0.0 : args[3] as double),
         'symmetric#2': (args) => EdgeInsets.symmetric(vertical: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, horizontal: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
-        'fromViewPadding#2': (args) => EdgeInsets.fromViewPadding(args[0] as ViewPadding, args[1] as double),
-        'fromWindowPadding#2': (args) => EdgeInsets.fromWindowPadding(args[0] as ViewPadding, args[1] as double),
+        'fromViewPadding#2': (args) => EdgeInsets.fromViewPadding(args[0] as ui.ViewPadding, args[1] as double),
+        'fromWindowPadding#2': (args) => EdgeInsets.fromWindowPadding(args[0] as ui.ViewPadding, args[1] as double),
+        '_#fromFields#4': (args) => EdgeInsets.fromLTRB(args[1] as double, args[3] as double, args[2] as double, args[0] as double),
       };
 }

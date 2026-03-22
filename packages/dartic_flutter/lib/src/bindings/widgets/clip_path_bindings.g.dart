@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, Path, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ClipPathBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,7 +33,7 @@ abstract final class ClipPathBindings {
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::SingleChildRenderObjectWidget', 'package:flutter/src/widgets/framework.dart::RenderObjectWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
     );
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ClipPath::shape#4', (args) => ClipPath.shape(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shape: args[1] as ShapeBorder, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?));
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ClipPath::shape#4', (args) => ClipPath.shape(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shape: args[1] as ShapeBorder, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?));
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -42,7 +51,7 @@ abstract final class ClipPathBindings {
         'clipBehavior#0': (args) => (args[0] as ClipPath).clipBehavior,
         'child#0': (args) => (args[0] as ClipPath).child,
         'key#0': (args) => (args[0] as ClipPath).key,
-        '#4': (args) => ClipPath(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<Path>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
-        '_#fromFields#2': (args) => ClipPath(clipBehavior: args[0] as Clip, clipper: args[1] as CustomClipper<Path>?),
+        '#4': (args) => ClipPath(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<ui.Path>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
+        '_#fromFields#4': (args) => ClipPath(key: args[3] as Key?, clipper: args[2] as CustomClipper<ui.Path>?, clipBehavior: args[1] as ui.Clip, child: args[0] as Widget?),
       };
 }

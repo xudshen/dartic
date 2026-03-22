@@ -1,0 +1,45 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/services/hardware_keyboard.dart';
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/binding.dart';
+import 'package:flutter/src/services/debug.dart';
+import 'package:flutter/src/services/raw_keyboard.dart';
+import 'package:flutter/src/services/raw_keyboard_android.dart';
+import 'package:flutter/src/services/system_channels.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:flutter/services.dart';
+
+abstract final class KeyDownEventBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/services/hardware_keyboard.dart::KeyDownEvent',
+      type: KeyDownEvent,
+      test: (o) => o is KeyDownEvent,
+      methods: methodMap(),
+      superclasses: ['package:flutter/src/services/hardware_keyboard.dart::KeyEvent', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+    );
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'debugFillProperties#1': (args) { (args[0] as KeyDownEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toStringShort#0': (args) => (args[0] as KeyDownEvent).toStringShort(),
+        'toDiagnosticsNode#2': (args) => (args[0] as KeyDownEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'physicalKey#0': (args) => (args[0] as KeyDownEvent).physicalKey,
+        'logicalKey#0': (args) => (args[0] as KeyDownEvent).logicalKey,
+        'character#0': (args) => (args[0] as KeyDownEvent).character,
+        'timeStamp#0': (args) => (args[0] as KeyDownEvent).timeStamp,
+        'deviceType#0': (args) => (args[0] as KeyDownEvent).deviceType,
+        'synthesized#0': (args) => (args[0] as KeyDownEvent).synthesized,
+        '#6': (args) => KeyDownEvent(physicalKey: args[0] as PhysicalKeyboardKey, logicalKey: args[1] as LogicalKeyboardKey, character: identical(args[2], darticAbsent) ? null : args[2] as String?, timeStamp: args[3] as Duration, synthesized: identical(args[4], darticAbsent) ? false : args[4] as bool, deviceType: identical(args[5], darticAbsent) ? ui.KeyEventDeviceType.keyboard : args[5] as ui.KeyEventDeviceType),
+        '_#fromFields#6': (args) => KeyDownEvent(physicalKey: args[3] as PhysicalKeyboardKey, logicalKey: args[2] as LogicalKeyboardKey, character: args[0] as String?, timeStamp: args[5] as Duration, synthesized: args[4] as bool, deviceType: args[1] as ui.KeyEventDeviceType),
+      };
+}

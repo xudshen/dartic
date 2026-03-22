@@ -6,15 +6,29 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/page_transitions_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/widgets/routes.dart';
 import 'dart:ui';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
+import 'package:flutter/scheduler.dart';
 import 'dart:async';
+import 'package:flutter/src/widgets/navigator.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'package:flutter/src/widgets/focus_traversal.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/animation_controller.dart';
+import 'package:flutter/src/physics/simulation.dart';
+import 'package:flutter/physics.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/foundation.dart';
 
 abstract final class MaterialPageRouteBindings {
   static void register(DarticPluginContext ctx) {
@@ -113,9 +127,9 @@ abstract final class MaterialPageRouteBindings {
         'isActive#0': (args) => (args[0] as MaterialPageRoute).isActive,
         'hashCode#0': (args) => (args[0] as MaterialPageRoute).hashCode,
         'runtimeType#0': (args) => (args[0] as MaterialPageRoute).runtimeType,
-        'receivedTransition=#1': (args) { (args[0] as MaterialPageRoute).receivedTransition = args[1] as Widget? Function(BuildContext, Animation<double>, Animation<double>, bool, Widget?)?; return args[1]; },
+        'receivedTransition=#1': (args) { (args[0] as MaterialPageRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as MaterialPageRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as MaterialPageRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
-        '#9': (args) => MaterialPageRoute(builder: (a) => (args[0] as Function)(a) as Widget, settings: identical(args[1], darticAbsent) ? null : args[1] as RouteSettings?, requestFocus: identical(args[2], darticAbsent) ? null : args[2] as bool?, maintainState: identical(args[3], darticAbsent) ? true : args[3] as bool, fullscreenDialog: identical(args[4], darticAbsent) ? false : args[4] as bool, allowSnapshotting: identical(args[5], darticAbsent) ? true : args[5] as bool, barrierDismissible: identical(args[6], darticAbsent) ? false : args[6] as bool, traversalEdgeBehavior: identical(args[7], darticAbsent) ? null : args[7] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[8], darticAbsent) ? null : args[8] as TraversalEdgeBehavior?),
+        '#9': (args) => MaterialPageRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, settings: identical(args[1], darticAbsent) ? null : args[1] as RouteSettings?, requestFocus: identical(args[2], darticAbsent) ? null : args[2] as bool?, maintainState: identical(args[3], darticAbsent) ? true : args[3] as bool, fullscreenDialog: identical(args[4], darticAbsent) ? false : args[4] as bool, allowSnapshotting: identical(args[5], darticAbsent) ? true : args[5] as bool, barrierDismissible: identical(args[6], darticAbsent) ? false : args[6] as bool, traversalEdgeBehavior: identical(args[7], darticAbsent) ? null : args[7] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[8], darticAbsent) ? null : args[8] as TraversalEdgeBehavior?),
       };
 }

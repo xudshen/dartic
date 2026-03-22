@@ -6,12 +6,27 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/button.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/constants.dart';
+import 'package:flutter/src/cupertino/text_theme.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'dart:ui';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoButtonBindings {
   static void register(DarticPluginContext ctx) {
@@ -57,5 +72,6 @@ abstract final class CupertinoButtonBindings {
         '#19': (args) => CupertinoButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, foregroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, disabledColor: identical(args[6], darticAbsent) ? CupertinoColors.quaternarySystemFill : args[6] as Color, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
         'tinted#19': (args) => CupertinoButton.tinted(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, foregroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, disabledColor: identical(args[6], darticAbsent) ? CupertinoColors.tertiarySystemFill : args[6] as Color, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
         'filled#19': (args) => CupertinoButton.filled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, sizeStyle: identical(args[2], darticAbsent) ? CupertinoButtonSize.large : args[2] as CupertinoButtonSize, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, color: identical(args[4], darticAbsent) ? null : args[4] as Color?, disabledColor: identical(args[5], darticAbsent) ? CupertinoColors.tertiarySystemFill : args[5] as Color, foregroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, minSize: identical(args[7], darticAbsent) ? null : args[7] as double?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as Size?, pressedOpacity: identical(args[9], darticAbsent) ? null : args[9] as double?, borderRadius: identical(args[10], darticAbsent) ? null : args[10] as BorderRadius?, alignment: identical(args[11], darticAbsent) ? Alignment.center : args[11] as AlignmentGeometry, focusColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, focusNode: identical(args[13], darticAbsent) ? null : args[13] as FocusNode?, onFocusChange: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a) => (args[14] as Function?)!(a), autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as MouseCursor?, onLongPress: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), onPressed: (args[18] as Function?) == null ? null : () => (args[18] as Function?)!()),
+        '_#fromFields#20': (args) => CupertinoButton(key: args[10] as Key?, child: args[4] as Widget, sizeStyle: args[19] as CupertinoButtonSize, padding: args[17] as EdgeInsetsGeometry?, color: args[5] as Color?, foregroundColor: args[9] as Color?, disabledColor: args[6] as Color, minSize: args[11] as double?, minimumSize: args[12] as Size?, pressedOpacity: args[18] as double?, borderRadius: args[3] as BorderRadius?, alignment: args[1] as AlignmentGeometry, focusColor: args[7] as Color?, focusNode: args[8] as FocusNode?, onFocusChange: args[14] as ValueChanged<bool>?, autofocus: args[2] as bool, mouseCursor: args[13] as MouseCursor?, onLongPress: args[15] as VoidCallback?, onPressed: args[16] as VoidCallback?),
       };
 }

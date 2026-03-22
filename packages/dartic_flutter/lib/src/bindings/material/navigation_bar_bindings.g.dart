@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/navigation_bar.dart';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/elevation_overlay.dart';
+import 'package:flutter/src/material/ink_decoration.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/material_state.dart';
+import 'package:flutter/src/material/navigation_bar_theme.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/tooltip.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class NavigationBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -53,6 +70,5 @@ abstract final class NavigationBarBindings {
         'maintainBottomViewPadding#0': (args) => (args[0] as NavigationBar).maintainBottomViewPadding,
         'key#0': (args) => (args[0] as NavigationBar).key,
         '#17': (args) => NavigationBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationDuration: identical(args[1], darticAbsent) ? null : args[1] as Duration?, selectedIndex: identical(args[2], darticAbsent) ? 0 : args[2] as int, destinations: (args[3] as List).cast<Widget>(), onDestinationSelected: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), backgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, elevation: identical(args[6], darticAbsent) ? null : args[6] as double?, shadowColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, surfaceTintColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, indicatorColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, indicatorShape: identical(args[10], darticAbsent) ? null : args[10] as ShapeBorder?, height: identical(args[11], darticAbsent) ? null : args[11] as double?, labelBehavior: identical(args[12], darticAbsent) ? null : args[12] as NavigationDestinationLabelBehavior?, overlayColor: identical(args[13], darticAbsent) ? null : args[13] as WidgetStateProperty<Color?>?, labelTextStyle: identical(args[14], darticAbsent) ? null : args[14] as WidgetStateProperty<TextStyle?>?, labelPadding: identical(args[15], darticAbsent) ? null : args[15] as EdgeInsetsGeometry?, maintainBottomViewPadding: identical(args[16], darticAbsent) ? false : args[16] as bool),
-        '_#fromFields#16': (args) => NavigationBar(animationDuration: args[0] as Duration?, backgroundColor: args[1] as Color?, destinations: (args[2] as List).cast<Widget>(), elevation: args[3] as double?, height: args[4] as double?, indicatorColor: args[5] as Color?, indicatorShape: args[6] as ShapeBorder?, labelBehavior: args[7] as NavigationDestinationLabelBehavior?, labelPadding: args[8] as EdgeInsetsGeometry?, labelTextStyle: args[9] as WidgetStateProperty<TextStyle?>?, maintainBottomViewPadding: args[10] as bool, onDestinationSelected: args[11] as void Function(int)?, overlayColor: args[12] as WidgetStateProperty<Color?>?, selectedIndex: args[13] as int, shadowColor: args[14] as Color?, surfaceTintColor: args[15] as Color?),
       };
 }

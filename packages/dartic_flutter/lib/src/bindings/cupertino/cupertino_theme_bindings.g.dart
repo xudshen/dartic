@@ -6,12 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/theme.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/icon_theme_data.dart';
+import 'package:flutter/src/cupertino/text_theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoThemeBindings {
   static void register(DarticPluginContext ctx) {
@@ -40,6 +43,6 @@ abstract final class CupertinoThemeBindings {
         'child#0': (args) => (args[0] as CupertinoTheme).child,
         'key#0': (args) => (args[0] as CupertinoTheme).key,
         '#3': (args) => CupertinoTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as CupertinoThemeData, child: args[2] as Widget),
-        '_#fromFields#2': (args) => CupertinoTheme(child: args[0] as Widget, data: args[1] as CupertinoThemeData),
+        '_#fromFields#3': (args) => CupertinoTheme(key: args[2] as Key?, data: args[1] as CupertinoThemeData, child: args[0] as Widget),
       };
 }

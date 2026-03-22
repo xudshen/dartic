@@ -6,14 +6,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SlideTransitionBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,5 +49,6 @@ abstract final class SlideTransitionBindings {
         'listenable#0': (args) => (args[0] as SlideTransition).listenable,
         'key#0': (args) => (args[0] as SlideTransition).key,
         '#5': (args) => SlideTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, position: args[1] as Animation<Offset>, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        '_#fromFields#5': (args) => SlideTransition(key: args[1] as Key?, position: args[2] as Animation<Offset>, transformHitTests: args[4] as bool, textDirection: args[3] as TextDirection?, child: args[0] as Widget?),
       };
 }

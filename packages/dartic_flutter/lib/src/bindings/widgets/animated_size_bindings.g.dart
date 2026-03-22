@@ -6,14 +6,19 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/animated_size.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedSizeBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,6 +49,6 @@ abstract final class AnimatedSizeBindings {
         'onEnd#0': (args) => (args[0] as AnimatedSize).onEnd,
         'key#0': (args) => (args[0] as AnimatedSize).key,
         '#8': (args) => AnimatedSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, reverseDuration: identical(args[5], darticAbsent) ? null : args[5] as Duration?, clipBehavior: identical(args[6], darticAbsent) ? Clip.hardEdge : args[6] as Clip, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
-        '_#fromFields#7': (args) => AnimatedSize(alignment: args[0] as AlignmentGeometry, child: args[1] as Widget?, clipBehavior: args[2] as Clip, curve: args[3] as Curve, duration: args[4] as Duration, onEnd: args[5] as void Function()?, reverseDuration: args[6] as Duration?),
+        '_#fromFields#8': (args) => AnimatedSize(key: args[5] as Key?, child: args[1] as Widget?, alignment: args[0] as AlignmentGeometry, curve: args[3] as Curve, duration: args[4] as Duration, reverseDuration: args[7] as Duration?, clipBehavior: args[2] as Clip, onEnd: args[6] as VoidCallback?),
       };
 }

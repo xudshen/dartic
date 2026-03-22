@@ -6,9 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/debug_overflow_indicator.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
 
 abstract final class MainAxisSizeBindings {
   static void register(DarticPluginContext ctx) {

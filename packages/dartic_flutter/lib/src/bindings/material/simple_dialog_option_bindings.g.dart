@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/dialog.dart';
+import 'dart:ui' show SemanticsRole, VoidCallback, clampDouble, lerpDouble;
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/dialog_theme.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SimpleDialogOptionBindings {
   static void register(DarticPluginContext ctx) {
@@ -40,6 +51,6 @@ abstract final class SimpleDialogOptionBindings {
         'padding#0': (args) => (args[0] as SimpleDialogOption).padding,
         'key#0': (args) => (args[0] as SimpleDialogOption).key,
         '#4': (args) => SimpleDialogOption(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsets?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
-        '_#fromFields#3': (args) => SimpleDialogOption(child: args[0] as Widget?, onPressed: args[1] as void Function()?, padding: args[2] as EdgeInsets?),
+        '_#fromFields#4': (args) => SimpleDialogOption(key: args[1] as Key?, onPressed: args[2] as VoidCallback?, padding: args[3] as EdgeInsets?, child: args[0] as Widget?),
       };
 }

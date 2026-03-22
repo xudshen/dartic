@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class ChunkedConversionSinkBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,6 +24,7 @@ abstract final class ChunkedConversionSinkBindings {
     // _SimpleCallbackSink
     for (final e in simpleCallbackSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_SimpleCallbackSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_SimpleCallbackSink${e.key}', e.value);
     }
   }
 

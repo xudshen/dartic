@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Color, Image, ImageFilter, Path, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PhysicalShapeBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,7 +54,7 @@ abstract final class PhysicalShapeBindings {
         'shadowColor#0': (args) => (args[0] as PhysicalShape).shadowColor,
         'child#0': (args) => (args[0] as PhysicalShape).child,
         'key#0': (args) => (args[0] as PhysicalShape).key,
-        '#7': (args) => PhysicalShape(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: args[1] as CustomClipper<Path>, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as Clip, elevation: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, color: args[4] as Color, shadowColor: identical(args[5], darticAbsent) ? const Color(0xFF000000) : args[5] as Color, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        '_#fromFields#5': (args) => PhysicalShape(clipBehavior: args[0] as Clip, clipper: args[1] as CustomClipper<Path>, color: args[2] as Color, elevation: args[3] as double, shadowColor: args[4] as Color),
+        '#7': (args) => PhysicalShape(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: args[1] as CustomClipper<ui.Path>, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as ui.Clip, elevation: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, color: args[4] as ui.Color, shadowColor: identical(args[5], darticAbsent) ? const Color(0xFF000000) : args[5] as ui.Color, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        '_#fromFields#7': (args) => PhysicalShape(key: args[5] as Key?, clipper: args[2] as CustomClipper<ui.Path>, clipBehavior: args[1] as ui.Clip, elevation: args[4] as double, color: args[3] as ui.Color, shadowColor: args[6] as ui.Color, child: args[0] as Widget?),
       };
 }

@@ -6,7 +6,6 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/dartic_internal.dart';
 import '../bindings/core/int_bindings.g.dart';
 import '../bindings/core/double_bindings.g.dart';
 import '../bindings/core/string_bindings.g.dart';
@@ -61,6 +60,10 @@ import '../bindings/core/comparable_bindings.g.dart';
 import '../bindings/core/sink_bindings.g.dart';
 import '../bindings/core/weak_reference_bindings.g.dart';
 import '../bindings/core/finalizer_bindings.g.dart';
+import '../bindings/core/integer_division_by_zero_exception_bindings.g.dart';
+import '../bindings/core/null_bindings.g.dart';
+import '../bindings/core/record_bindings.g.dart';
+import '../bindings/core/pragma_bindings.g.dart';
 import '../bindings/core/core_top_level_bindings.g.dart';
 
 class CorePlugin extends DarticPlugin {
@@ -123,6 +126,10 @@ class CorePlugin extends DarticPlugin {
     SinkBindings.register(ctx);
     WeakReferenceBindings.register(ctx);
     FinalizerBindings.register(ctx);
+    IntegerDivisionByZeroExceptionBindings.register(ctx);
+    NullBindings.register(ctx);
+    RecordBindings.register(ctx);
+    PragmaBindings.register(ctx);
     CoreTopLevelBindings.register(ctx);
   }
 }

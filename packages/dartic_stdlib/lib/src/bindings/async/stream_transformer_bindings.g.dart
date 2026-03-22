@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class StreamTransformerBindings {
   static void register(DarticPluginContext ctx) {
@@ -21,11 +23,13 @@ abstract final class StreamTransformerBindings {
     // _StreamHandlerTransformer
     for (final e in streamHandlerTransformerMethodMap().entries) {
       ctx.registerBinding('dart:async::_StreamHandlerTransformer::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_StreamHandlerTransformer${e.key}', e.value);
     }
 
     // _StreamSubscriptionTransformer
     for (final e in streamSubscriptionTransformerMethodMap().entries) {
       ctx.registerBinding('dart:async::_StreamSubscriptionTransformer::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_StreamSubscriptionTransformer${e.key}', e.value);
     }
   }
 

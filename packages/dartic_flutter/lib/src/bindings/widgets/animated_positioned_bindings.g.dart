@@ -6,14 +6,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'dart:ui' as ui show Rect, TextHeightBehavior, VoidCallback;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedPositionedBindings {
   static void register(DarticPluginContext ctx) {
@@ -47,6 +55,7 @@ abstract final class AnimatedPositionedBindings {
         'onEnd#0': (args) => (args[0] as AnimatedPositioned).onEnd,
         'key#0': (args) => (args[0] as AnimatedPositioned).key,
         '#11': (args) => AnimatedPositioned(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, left: identical(args[2], darticAbsent) ? null : args[2] as double?, top: identical(args[3], darticAbsent) ? null : args[3] as double?, right: identical(args[4], darticAbsent) ? null : args[4] as double?, bottom: identical(args[5], darticAbsent) ? null : args[5] as double?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, curve: identical(args[8], darticAbsent) ? Curves.linear : args[8] as Curve, duration: args[9] as Duration, onEnd: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : () => (args[10] as Function?)!()),
-        'fromRect#6': (args) => AnimatedPositioned.fromRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, rect: args[2] as Rect, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
+        'fromRect#6': (args) => AnimatedPositioned.fromRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, rect: args[2] as ui.Rect, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
+        '_#fromFields#11': (args) => AnimatedPositioned(key: args[5] as Key?, child: args[1] as Widget, left: args[6] as double?, top: args[9] as double?, right: args[8] as double?, bottom: args[0] as double?, width: args[10] as double?, height: args[4] as double?, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[7] as ui.VoidCallback?),
       };
 }

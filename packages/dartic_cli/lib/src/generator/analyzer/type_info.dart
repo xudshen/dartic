@@ -36,8 +36,22 @@ class TypeInfo {
   /// null means no type arguments needed (non-generic or simple erasure).
   final String? bridgeSuperTypeArgs;
 
+  /// Erased type argument string for generic classes (e.g. `'<Object, Widget>'`).
+  /// Empty string for non-generic classes.
+  /// Used to generate explicit type args in constructor calls.
+  final String erasedTypeArgs;
+
   /// Instance fields (including private ones) for `_#fromFields` generation.
   final List<FieldInfo> fields;
+
+  /// Import lines from the class's declaring source file (preserving `as` prefixes).
+  /// Combined with auto-detected `referencedLibraryUris` for complete import coverage.
+  final List<String> sourceImports;
+
+  /// Library URI → type names used from that library.
+  /// Auto-detected from parameter/return types (including inherited).
+  /// Used to supplement `show` lists in source imports.
+  final Map<String, Set<String>> referencedTypes;
 
   TypeInfo({
     required this.className,
@@ -55,7 +69,10 @@ class TypeInfo {
     this.isInterface = false,
     this.isBase = false,
     this.bridgeSuperTypeArgs,
+    this.erasedTypeArgs = '',
     this.fields = const [],
+    this.sourceImports = const [],
+    this.referencedTypes = const {},
   });
 
   /// 完整限定名，如 'dart:core::int'。

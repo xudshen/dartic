@@ -118,4 +118,11 @@ const _seeds = <String, Map<String, String>>{
     '_classBody': '',
     // Exception is an interface bridge, constructor handled separately
   },
+  'State': {
+    // Diagnosticable.toString has a different signature from Object.toString
+    // ({DiagnosticLevel minLevel}), but the type analyzer filters Object
+    // method names. Provide explicit override for implements mode.
+    'toString':
+        "@override\n  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => '';",
+  },
 };

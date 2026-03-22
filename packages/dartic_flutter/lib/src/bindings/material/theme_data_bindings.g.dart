@@ -6,14 +6,80 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'dart:ui' show Brightness, Color, SystemColor, SystemColorPalette, lerpDouble;
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/action_buttons.dart';
+import 'package:flutter/src/material/action_icons_theme.dart';
+import 'package:flutter/src/material/app_bar_theme.dart';
+import 'package:flutter/src/material/badge_theme.dart';
+import 'package:flutter/src/material/banner_theme.dart';
+import 'package:flutter/src/material/bottom_app_bar_theme.dart';
+import 'package:flutter/src/material/bottom_navigation_bar_theme.dart';
+import 'package:flutter/src/material/bottom_sheet_theme.dart';
+import 'package:flutter/src/material/button_bar_theme.dart';
+import 'package:flutter/src/material/button_theme.dart';
+import 'package:flutter/src/material/card_theme.dart';
+import 'package:flutter/src/material/carousel_theme.dart';
+import 'package:flutter/src/material/checkbox_theme.dart';
+import 'package:flutter/src/material/chip_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/data_table_theme.dart';
+import 'package:flutter/src/material/date_picker_theme.dart';
+import 'package:flutter/src/material/dialog_theme.dart';
+import 'package:flutter/src/material/divider_theme.dart';
+import 'package:flutter/src/material/drawer_theme.dart';
+import 'package:flutter/src/material/dropdown_menu_theme.dart';
+import 'package:flutter/src/material/elevated_button.dart';
+import 'package:flutter/src/material/elevated_button_theme.dart';
+import 'package:flutter/src/material/expansion_tile_theme.dart';
+import 'package:flutter/src/material/filled_button.dart';
+import 'package:flutter/src/material/filled_button_theme.dart';
+import 'package:flutter/src/material/floating_action_button_theme.dart';
+import 'package:flutter/src/material/icon_button_theme.dart';
+import 'package:flutter/src/material/ink_ripple.dart';
+import 'package:flutter/src/material/ink_sparkle.dart';
+import 'package:flutter/src/material/ink_splash.dart';
+import 'package:flutter/src/material/ink_well.dart' show InteractiveInkFeatureFactory;
+import 'package:flutter/src/material/input_decorator.dart';
+import 'package:flutter/src/material/list_tile.dart';
+import 'package:flutter/src/material/list_tile_theme.dart';
+import 'package:flutter/src/material/menu_bar_theme.dart';
+import 'package:flutter/src/material/menu_button_theme.dart';
+import 'package:flutter/src/material/menu_theme.dart';
+import 'package:flutter/src/material/navigation_bar_theme.dart';
+import 'package:flutter/src/material/navigation_drawer_theme.dart';
+import 'package:flutter/src/material/navigation_rail_theme.dart';
+import 'package:flutter/src/material/outlined_button.dart';
+import 'package:flutter/src/material/outlined_button_theme.dart';
+import 'package:flutter/src/material/page_transitions_theme.dart';
+import 'package:flutter/src/material/popup_menu_theme.dart';
+import 'package:flutter/src/material/progress_indicator_theme.dart';
+import 'package:flutter/src/material/radio_theme.dart';
+import 'package:flutter/src/material/scrollbar_theme.dart';
+import 'package:flutter/src/material/search_bar_theme.dart';
+import 'package:flutter/src/material/search_view_theme.dart';
+import 'package:flutter/src/material/segmented_button_theme.dart';
+import 'package:flutter/src/material/slider_theme.dart';
+import 'package:flutter/src/material/snack_bar_theme.dart';
+import 'package:flutter/src/material/switch_theme.dart';
+import 'package:flutter/src/material/tab_bar_theme.dart';
+import 'package:flutter/src/material/text_button.dart';
+import 'package:flutter/src/material/text_button_theme.dart';
+import 'package:flutter/src/material/text_selection_theme.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/time_picker_theme.dart';
+import 'package:flutter/src/material/toggle_buttons_theme.dart';
+import 'package:flutter/src/material/tooltip_theme.dart';
+import 'package:flutter/src/material/typography.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/foundation/platform.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class ThemeDataBindings {
   static void register(DarticPluginContext ctx) {
@@ -127,5 +193,6 @@ abstract final class ThemeDataBindings {
         'light#1': (args) => ThemeData.light(useMaterial3: identical(args[0], darticAbsent) ? null : args[0] as bool?),
         'dark#1': (args) => ThemeData.dark(useMaterial3: identical(args[0], darticAbsent) ? null : args[0] as bool?),
         'fallback#1': (args) => ThemeData.fallback(useMaterial3: identical(args[0], darticAbsent) ? null : args[0] as bool?),
+        '_#fromFields#83': (args) => ThemeData.raw(adaptationMap: (args[2] as Map).cast<Type, Adaptation<Object>>(), applyElevationOverlayColor: args[4] as bool, cupertinoOverrideTheme: args[18] as NoDefaultCupertinoThemeData?, extensions: (args[30] as Map).cast<Object, ThemeExtension<dynamic>>(), inputDecorationTheme: args[40] as InputDecorationThemeData, materialTapTargetSize: args[42] as MaterialTapTargetSize, pageTransitionsTheme: args[50] as PageTransitionsTheme, platform: args[51] as TargetPlatform, scrollbarTheme: args[61] as ScrollbarThemeData, splashFactory: args[70] as InteractiveInkFeatureFactory, useMaterial3: args[81] as bool, visualDensity: args[82] as VisualDensity, colorScheme: args[17] as ColorScheme, canvasColor: args[11] as Color, cardColor: args[12] as Color, disabledColor: args[23] as Color, dividerColor: args[24] as Color, focusColor: args[33] as Color, highlightColor: args[34] as Color, hintColor: args[35] as Color, hoverColor: args[36] as Color, primaryColor: args[53] as Color, primaryColorDark: args[54] as Color, primaryColorLight: args[55] as Color, scaffoldBackgroundColor: args[60] as Color, secondaryHeaderColor: args[64] as Color, shadowColor: args[66] as Color, splashColor: args[69] as Color, unselectedWidgetColor: args[80] as Color, iconTheme: args[38] as IconThemeData, primaryIconTheme: args[56] as IconThemeData, primaryTextTheme: args[57] as TextTheme, textTheme: args[75] as TextTheme, typography: args[79] as Typography, actionIconTheme: args[1] as ActionIconThemeData?, appBarTheme: args[3] as AppBarThemeData, badgeTheme: args[5] as BadgeThemeData, bannerTheme: args[6] as MaterialBannerThemeData, bottomAppBarTheme: args[7] as BottomAppBarThemeData, bottomNavigationBarTheme: args[8] as BottomNavigationBarThemeData, bottomSheetTheme: args[9] as BottomSheetThemeData, buttonTheme: args[10] as ButtonThemeData, cardTheme: args[13] as CardThemeData, carouselViewTheme: args[14] as CarouselViewThemeData, checkboxTheme: args[15] as CheckboxThemeData, chipTheme: args[16] as ChipThemeData, dataTableTheme: args[19] as DataTableThemeData, datePickerTheme: args[20] as DatePickerThemeData, dialogTheme: args[22] as DialogThemeData, dividerTheme: args[25] as DividerThemeData, drawerTheme: args[26] as DrawerThemeData, dropdownMenuTheme: args[27] as DropdownMenuThemeData, elevatedButtonTheme: args[28] as ElevatedButtonThemeData, expansionTileTheme: args[29] as ExpansionTileThemeData, filledButtonTheme: args[31] as FilledButtonThemeData, floatingActionButtonTheme: args[32] as FloatingActionButtonThemeData, iconButtonTheme: args[37] as IconButtonThemeData, listTileTheme: args[41] as ListTileThemeData, menuBarTheme: args[43] as MenuBarThemeData, menuButtonTheme: args[44] as MenuButtonThemeData, menuTheme: args[45] as MenuThemeData, navigationBarTheme: args[46] as NavigationBarThemeData, navigationDrawerTheme: args[47] as NavigationDrawerThemeData, navigationRailTheme: args[48] as NavigationRailThemeData, outlinedButtonTheme: args[49] as OutlinedButtonThemeData, popupMenuTheme: args[52] as PopupMenuThemeData, progressIndicatorTheme: args[58] as ProgressIndicatorThemeData, radioTheme: args[59] as RadioThemeData, searchBarTheme: args[62] as SearchBarThemeData, searchViewTheme: args[63] as SearchViewThemeData, segmentedButtonTheme: args[65] as SegmentedButtonThemeData, sliderTheme: args[67] as SliderThemeData, snackBarTheme: args[68] as SnackBarThemeData, switchTheme: args[71] as SwitchThemeData, tabBarTheme: args[72] as TabBarThemeData, textButtonTheme: args[73] as TextButtonThemeData, textSelectionTheme: args[74] as TextSelectionThemeData, timePickerTheme: args[76] as TimePickerThemeData, toggleButtonsTheme: args[77] as ToggleButtonsThemeData, tooltipTheme: args[78] as TooltipThemeData, buttonBarTheme: args[0] as ButtonBarThemeData?, dialogBackgroundColor: args[21] as Color, indicatorColor: args[39] as Color),
       };
 }

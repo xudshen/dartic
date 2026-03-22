@@ -6,9 +6,17 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'dart:async';
+import 'dart:collection';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/gestures/arena.dart';
+import 'package:flutter/src/gestures/binding.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/debug.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/pointer_router.dart';
+import 'package:flutter/src/gestures/team.dart';
 
 abstract final class DragStartBehaviorBindings {
   static void register(DarticPluginContext ctx) {

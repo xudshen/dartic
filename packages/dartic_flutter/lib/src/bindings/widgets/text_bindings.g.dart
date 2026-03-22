@@ -6,14 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'dart:math';
+import 'dart:ui' as ui show Color, Locale, TextAlign, TextDirection, TextHeightBehavior;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/default_selection_style.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/inherited_theme.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/selectable_region.dart';
+import 'package:flutter/src/widgets/selection_container.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/inline_span.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/src/painting/strut_style.dart';
+import 'package:flutter/src/painting/text_painter.dart';
+import 'package:flutter/src/painting/text_scaler.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class TextBindings {
   static void register(DarticPluginContext ctx) {
@@ -53,7 +65,8 @@ abstract final class TextBindings {
         'textHeightBehavior#0': (args) => (args[0] as Text).textHeightBehavior,
         'selectionColor#0': (args) => (args[0] as Text).selectionColor,
         'key#0': (args) => (args[0] as Text).key,
-        '#17': (args) => Text(args[0] as String, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, strutStyle: identical(args[3], darticAbsent) ? null : args[3] as StrutStyle?, textAlign: identical(args[4], darticAbsent) ? null : args[4] as TextAlign?, textDirection: identical(args[5], darticAbsent) ? null : args[5] as TextDirection?, locale: identical(args[6], darticAbsent) ? null : args[6] as Locale?, softWrap: identical(args[7], darticAbsent) ? null : args[7] as bool?, overflow: identical(args[8], darticAbsent) ? null : args[8] as TextOverflow?, textScaleFactor: identical(args[9], darticAbsent) ? null : args[9] as double?, textScaler: identical(args[10], darticAbsent) ? null : args[10] as TextScaler?, maxLines: identical(args[11], darticAbsent) ? null : args[11] as int?, semanticsLabel: identical(args[12], darticAbsent) ? null : args[12] as String?, semanticsIdentifier: identical(args[13], darticAbsent) ? null : args[13] as String?, textWidthBasis: identical(args[14], darticAbsent) ? null : args[14] as TextWidthBasis?, textHeightBehavior: identical(args[15], darticAbsent) ? null : args[15] as TextHeightBehavior?, selectionColor: identical(args[16], darticAbsent) ? null : args[16] as Color?),
-        'rich#17': (args) => Text.rich(args[0] as InlineSpan, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, strutStyle: identical(args[3], darticAbsent) ? null : args[3] as StrutStyle?, textAlign: identical(args[4], darticAbsent) ? null : args[4] as TextAlign?, textDirection: identical(args[5], darticAbsent) ? null : args[5] as TextDirection?, locale: identical(args[6], darticAbsent) ? null : args[6] as Locale?, softWrap: identical(args[7], darticAbsent) ? null : args[7] as bool?, overflow: identical(args[8], darticAbsent) ? null : args[8] as TextOverflow?, textScaleFactor: identical(args[9], darticAbsent) ? null : args[9] as double?, textScaler: identical(args[10], darticAbsent) ? null : args[10] as TextScaler?, maxLines: identical(args[11], darticAbsent) ? null : args[11] as int?, semanticsLabel: identical(args[12], darticAbsent) ? null : args[12] as String?, semanticsIdentifier: identical(args[13], darticAbsent) ? null : args[13] as String?, textWidthBasis: identical(args[14], darticAbsent) ? null : args[14] as TextWidthBasis?, textHeightBehavior: identical(args[15], darticAbsent) ? null : args[15] as TextHeightBehavior?, selectionColor: identical(args[16], darticAbsent) ? null : args[16] as Color?),
+        '#17': (args) => Text(args[0] as String, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, strutStyle: identical(args[3], darticAbsent) ? null : args[3] as StrutStyle?, textAlign: identical(args[4], darticAbsent) ? null : args[4] as ui.TextAlign?, textDirection: identical(args[5], darticAbsent) ? null : args[5] as ui.TextDirection?, locale: identical(args[6], darticAbsent) ? null : args[6] as ui.Locale?, softWrap: identical(args[7], darticAbsent) ? null : args[7] as bool?, overflow: identical(args[8], darticAbsent) ? null : args[8] as TextOverflow?, textScaleFactor: identical(args[9], darticAbsent) ? null : args[9] as double?, textScaler: identical(args[10], darticAbsent) ? null : args[10] as TextScaler?, maxLines: identical(args[11], darticAbsent) ? null : args[11] as int?, semanticsLabel: identical(args[12], darticAbsent) ? null : args[12] as String?, semanticsIdentifier: identical(args[13], darticAbsent) ? null : args[13] as String?, textWidthBasis: identical(args[14], darticAbsent) ? null : args[14] as TextWidthBasis?, textHeightBehavior: identical(args[15], darticAbsent) ? null : args[15] as ui.TextHeightBehavior?, selectionColor: identical(args[16], darticAbsent) ? null : args[16] as ui.Color?),
+        'rich#17': (args) => Text.rich(args[0] as InlineSpan, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, strutStyle: identical(args[3], darticAbsent) ? null : args[3] as StrutStyle?, textAlign: identical(args[4], darticAbsent) ? null : args[4] as ui.TextAlign?, textDirection: identical(args[5], darticAbsent) ? null : args[5] as ui.TextDirection?, locale: identical(args[6], darticAbsent) ? null : args[6] as ui.Locale?, softWrap: identical(args[7], darticAbsent) ? null : args[7] as bool?, overflow: identical(args[8], darticAbsent) ? null : args[8] as TextOverflow?, textScaleFactor: identical(args[9], darticAbsent) ? null : args[9] as double?, textScaler: identical(args[10], darticAbsent) ? null : args[10] as TextScaler?, maxLines: identical(args[11], darticAbsent) ? null : args[11] as int?, semanticsLabel: identical(args[12], darticAbsent) ? null : args[12] as String?, semanticsIdentifier: identical(args[13], darticAbsent) ? null : args[13] as String?, textWidthBasis: identical(args[14], darticAbsent) ? null : args[14] as TextWidthBasis?, textHeightBehavior: identical(args[15], darticAbsent) ? null : args[15] as ui.TextHeightBehavior?, selectionColor: identical(args[16], darticAbsent) ? null : args[16] as ui.Color?),
+        '_#fromFields#18': (args) => Text(args[0] as String, key: args[1] as Key?, style: args[10] as TextStyle?, strutStyle: args[9] as StrutStyle?, textAlign: args[11] as ui.TextAlign?, textDirection: args[12] as ui.TextDirection?, locale: args[2] as ui.Locale?, softWrap: args[8] as bool?, overflow: args[4] as TextOverflow?, textScaleFactor: args[14] as double?, textScaler: args[15] as TextScaler?, maxLines: args[3] as int?, semanticsLabel: args[7] as String?, semanticsIdentifier: args[6] as String?, textWidthBasis: args[17] as TextWidthBasis?, textHeightBehavior: args[13] as ui.TextHeightBehavior?, selectionColor: args[5] as ui.Color?),
       };
 }

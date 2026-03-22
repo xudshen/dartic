@@ -6,14 +6,34 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/input_chip.dart';
+import 'package:flutter/foundation.dart' show clampDouble;
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/chip.dart';
+import 'package:flutter/src/material/chip_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class InputChipBindings {
   static void register(DarticPluginContext ctx) {
@@ -75,6 +95,6 @@ abstract final class InputChipBindings {
         'mouseCursor#0': (args) => (args[0] as InputChip).mouseCursor,
         'key#0': (args) => (args[0] as InputChip).key,
         '#39': (args) => InputChip(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, avatar: identical(args[1], darticAbsent) ? null : args[1] as Widget?, label: args[2] as Widget, labelStyle: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?, labelPadding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsetsGeometry?, selected: identical(args[5], darticAbsent) ? false : args[5] as bool, isEnabled: identical(args[6], darticAbsent) ? true : args[6] as bool, onSelected: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), deleteIcon: identical(args[8], darticAbsent) ? null : args[8] as Widget?, onDeleted: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!(), deleteIconColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, deleteButtonTooltipMessage: identical(args[11], darticAbsent) ? null : args[11] as String?, onPressed: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : () => (args[12] as Function?)!(), pressElevation: identical(args[13], darticAbsent) ? null : args[13] as double?, disabledColor: identical(args[14], darticAbsent) ? null : args[14] as Color?, selectedColor: identical(args[15], darticAbsent) ? null : args[15] as Color?, tooltip: identical(args[16], darticAbsent) ? null : args[16] as String?, side: identical(args[17], darticAbsent) ? null : args[17] as BorderSide?, shape: identical(args[18], darticAbsent) ? null : args[18] as OutlinedBorder?, clipBehavior: identical(args[19], darticAbsent) ? Clip.none : args[19] as Clip, focusNode: identical(args[20], darticAbsent) ? null : args[20] as FocusNode?, autofocus: identical(args[21], darticAbsent) ? false : args[21] as bool, color: identical(args[22], darticAbsent) ? null : args[22] as WidgetStateProperty<Color?>?, backgroundColor: identical(args[23], darticAbsent) ? null : args[23] as Color?, padding: identical(args[24], darticAbsent) ? null : args[24] as EdgeInsetsGeometry?, visualDensity: identical(args[25], darticAbsent) ? null : args[25] as VisualDensity?, materialTapTargetSize: identical(args[26], darticAbsent) ? null : args[26] as MaterialTapTargetSize?, elevation: identical(args[27], darticAbsent) ? null : args[27] as double?, shadowColor: identical(args[28], darticAbsent) ? null : args[28] as Color?, surfaceTintColor: identical(args[29], darticAbsent) ? null : args[29] as Color?, iconTheme: identical(args[30], darticAbsent) ? null : args[30] as IconThemeData?, selectedShadowColor: identical(args[31], darticAbsent) ? null : args[31] as Color?, showCheckmark: identical(args[32], darticAbsent) ? null : args[32] as bool?, checkmarkColor: identical(args[33], darticAbsent) ? null : args[33] as Color?, avatarBorder: identical(args[34], darticAbsent) ? const CircleBorder() : args[34] as ShapeBorder, avatarBoxConstraints: identical(args[35], darticAbsent) ? null : args[35] as BoxConstraints?, deleteIconBoxConstraints: identical(args[36], darticAbsent) ? null : args[36] as BoxConstraints?, chipAnimationStyle: identical(args[37], darticAbsent) ? null : args[37] as ChipAnimationStyle?, mouseCursor: identical(args[38], darticAbsent) ? null : args[38] as MouseCursor?),
-        '_#fromFields#38': (args) => InputChip(autofocus: args[0] as bool, avatar: args[1] as Widget?, avatarBorder: args[2] as ShapeBorder, avatarBoxConstraints: args[3] as BoxConstraints?, backgroundColor: args[4] as Color?, checkmarkColor: args[5] as Color?, chipAnimationStyle: args[6] as ChipAnimationStyle?, clipBehavior: args[7] as Clip, color: args[8] as WidgetStateProperty<Color?>?, deleteButtonTooltipMessage: args[9] as String?, deleteIcon: args[10] as Widget?, deleteIconBoxConstraints: args[11] as BoxConstraints?, deleteIconColor: args[12] as Color?, disabledColor: args[13] as Color?, elevation: args[14] as double?, focusNode: args[15] as FocusNode?, iconTheme: args[16] as IconThemeData?, isEnabled: args[17] as bool, label: args[18] as Widget, labelPadding: args[19] as EdgeInsetsGeometry?, labelStyle: args[20] as TextStyle?, materialTapTargetSize: args[21] as MaterialTapTargetSize?, mouseCursor: args[22] as MouseCursor?, onDeleted: args[23] as void Function()?, onPressed: args[24] as void Function()?, onSelected: args[25] as void Function(bool)?, padding: args[26] as EdgeInsetsGeometry?, pressElevation: args[27] as double?, selected: args[28] as bool, selectedColor: args[29] as Color?, selectedShadowColor: args[30] as Color?, shadowColor: args[31] as Color?, shape: args[32] as OutlinedBorder?, showCheckmark: args[33] as bool?, side: args[34] as BorderSide?, surfaceTintColor: args[35] as Color?, tooltip: args[36] as String?, visualDensity: args[37] as VisualDensity?),
+        '_#fromFields#39': (args) => InputChip(key: args[18] as Key?, avatar: args[1] as Widget?, label: args[19] as Widget, labelStyle: args[21] as TextStyle?, labelPadding: args[20] as EdgeInsetsGeometry?, selected: args[29] as bool, isEnabled: args[17] as bool, onSelected: args[26] as ValueChanged<bool>?, deleteIcon: args[10] as Widget?, onDeleted: args[24] as VoidCallback?, deleteIconColor: args[12] as Color?, deleteButtonTooltipMessage: args[9] as String?, onPressed: args[25] as VoidCallback?, pressElevation: args[28] as double?, disabledColor: args[13] as Color?, selectedColor: args[30] as Color?, tooltip: args[37] as String?, side: args[35] as BorderSide?, shape: args[33] as OutlinedBorder?, clipBehavior: args[7] as Clip, focusNode: args[15] as FocusNode?, autofocus: args[0] as bool, color: args[8] as WidgetStateProperty<Color?>?, backgroundColor: args[4] as Color?, padding: args[27] as EdgeInsetsGeometry?, visualDensity: args[38] as VisualDensity?, materialTapTargetSize: args[22] as MaterialTapTargetSize?, elevation: args[14] as double?, shadowColor: args[32] as Color?, surfaceTintColor: args[36] as Color?, iconTheme: args[16] as IconThemeData?, selectedShadowColor: args[31] as Color?, showCheckmark: args[34] as bool?, checkmarkColor: args[5] as Color?, avatarBorder: args[2] as ShapeBorder, avatarBoxConstraints: args[3] as BoxConstraints?, deleteIconBoxConstraints: args[11] as BoxConstraints?, chipAnimationStyle: args[6] as ChipAnimationStyle?, mouseCursor: args[23] as MouseCursor?),
       };
 }

@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 class _$TypeError extends TypeError implements DarticObjectHolder {
   _$TypeError(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -68,7 +72,6 @@ abstract final class TypeErrorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'stackTrace#0': (args) => (args[0] as TypeError).stackTrace,
         '#0': (args) => TypeError(),
-        '_#fromFields#0': (args) => TypeError(),
         'toString#0': (args) => (args[0] as TypeError).toString(),
       };
 }

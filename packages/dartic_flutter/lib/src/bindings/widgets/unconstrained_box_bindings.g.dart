@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, SemanticsInputType, TextDirection, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class UnconstrainedBoxBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,7 +52,7 @@ abstract final class UnconstrainedBoxBindings {
         'clipBehavior#0': (args) => (args[0] as UnconstrainedBox).clipBehavior,
         'child#0': (args) => (args[0] as UnconstrainedBox).child,
         'key#0': (args) => (args[0] as UnconstrainedBox).key,
-        '#6': (args) => UnconstrainedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as AlignmentGeometry, constrainedAxis: identical(args[4], darticAbsent) ? null : args[4] as Axis?, clipBehavior: identical(args[5], darticAbsent) ? Clip.none : args[5] as Clip),
-        '_#fromFields#5': (args) => UnconstrainedBox(alignment: args[0] as AlignmentGeometry, child: args[1] as Widget?, clipBehavior: args[2] as Clip, constrainedAxis: args[3] as Axis?, textDirection: args[4] as TextDirection?),
+        '#6': (args) => UnconstrainedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as AlignmentGeometry, constrainedAxis: identical(args[4], darticAbsent) ? null : args[4] as Axis?, clipBehavior: identical(args[5], darticAbsent) ? Clip.none : args[5] as ui.Clip),
+        '_#fromFields#6': (args) => UnconstrainedBox(key: args[4] as Key?, child: args[1] as Widget?, textDirection: args[5] as ui.TextDirection?, alignment: args[0] as AlignmentGeometry, constrainedAxis: args[3] as Axis?, clipBehavior: args[2] as ui.Clip),
       };
 }

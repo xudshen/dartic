@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, SemanticsInputType, TextDirection, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/stack.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class IndexedStackBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,7 +53,7 @@ abstract final class IndexedStackBindings {
         'index#0': (args) => (args[0] as IndexedStack).index,
         'children#0': (args) => (args[0] as IndexedStack).children,
         'key#0': (args) => (args[0] as IndexedStack).key,
-        '#7': (args) => IndexedStack(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as Clip, sizing: identical(args[4], darticAbsent) ? StackFit.loose : args[4] as StackFit, index: identical(args[5], darticAbsent) ? null : args[5] as int?, children: identical(args[6], darticAbsent) ? const <Widget>[] : (args[6] as List).cast<Widget>()),
-        '_#fromFields#6': (args) => IndexedStack(alignment: args[0] as AlignmentGeometry, children: (args[1] as List).cast<Widget>(), clipBehavior: args[2] as Clip, index: args[3] as int?, sizing: args[4] as StackFit, textDirection: args[5] as TextDirection?),
+        '#7': (args) => IndexedStack(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as ui.Clip, sizing: identical(args[4], darticAbsent) ? StackFit.loose : args[4] as StackFit, index: identical(args[5], darticAbsent) ? null : args[5] as int?, children: identical(args[6], darticAbsent) ? const <Widget>[] : (args[6] as List).cast<Widget>()),
+        '_#fromFields#7': (args) => IndexedStack(key: args[4] as Key?, alignment: args[0] as AlignmentGeometry, textDirection: args[6] as ui.TextDirection?, clipBehavior: args[2] as ui.Clip, sizing: args[5] as StackFit, index: args[3] as int?, children: (args[1] as List).cast<Widget>()),
       };
 }

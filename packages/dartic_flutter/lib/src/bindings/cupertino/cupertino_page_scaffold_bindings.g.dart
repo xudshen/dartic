@@ -6,12 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/page_scaffold.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoPageScaffoldBindings {
   static void register(DarticPluginContext ctx) {
@@ -39,6 +42,6 @@ abstract final class CupertinoPageScaffoldBindings {
         'resizeToAvoidBottomInset#0': (args) => (args[0] as CupertinoPageScaffold).resizeToAvoidBottomInset,
         'key#0': (args) => (args[0] as CupertinoPageScaffold).key,
         '#5': (args) => CupertinoPageScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, navigationBar: identical(args[1], darticAbsent) ? null : args[1] as ObstructingPreferredSizeWidget?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, resizeToAvoidBottomInset: identical(args[3], darticAbsent) ? true : args[3] as bool, child: args[4] as Widget),
-        '_#fromFields#4': (args) => CupertinoPageScaffold(backgroundColor: args[0] as Color?, child: args[1] as Widget, navigationBar: args[2] as ObstructingPreferredSizeWidget?, resizeToAvoidBottomInset: args[3] as bool),
+        '_#fromFields#5': (args) => CupertinoPageScaffold(key: args[2] as Key?, navigationBar: args[3] as ObstructingPreferredSizeWidget?, backgroundColor: args[0] as Color?, resizeToAvoidBottomInset: args[4] as bool, child: args[1] as Widget),
       };
 }

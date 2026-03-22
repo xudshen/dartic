@@ -7,48 +7,10 @@
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.
-#
-# Types covered (~14):
-#   Binding-only (dartic code uses, not extends):
-#     - DragDownDetails, DragStartDetails, DragUpdateDetails, DragEndDetails,
-#       LongPressStartDetails, LongPressMoveUpdateDetails, LongPressEndDetails,
-#       TapDownDetails, TapUpDetails, ScaleStartDetails, ScaleUpdateDetails,
-#       ScaleEndDetails, Velocity
-#   Enums:
-#     - DragStartBehavior
-#
-# Excluded types (code gen limitations):
-#   - GestureRecognizer: abstract class with complex generics
-#   - MultitouchDragStrategy, GestureRecognizerState: may cause issues
 
 output_bindings: "../lib/src/bindings/gestures"
 output_plugins: "../lib/src/plugins"
 
-# Use package: imports instead of relative imports (external package).
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:flutter/gestures.dart"
-  - "package:flutter/foundation.dart"
-  - "dart:ui"
-
 libraries:
-  - uri: package:flutter/gestures.dart
-    classes:
-      # ── Detail classes ───────────────────────────────────────────────
-      - DragDownDetails
-      - DragStartDetails
-      - DragUpdateDetails
-      - DragEndDetails
-      - LongPressStartDetails
-      - LongPressMoveUpdateDetails
-      - LongPressEndDetails
-      - TapDownDetails
-      - TapUpDetails
-      - ScaleStartDetails
-      - ScaleUpdateDetails
-      - ScaleEndDetails
-      - Velocity
-
-      # ── Enums ────────────────────────────────────────────────────────
-      - DragStartBehavior
+  - uri: package:flutter/src/gestures
+    discover: all

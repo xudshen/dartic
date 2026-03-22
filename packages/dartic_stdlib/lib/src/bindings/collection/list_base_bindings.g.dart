@@ -7,7 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
-import 'dart:math';
+import 'dart:math' show Random;
 
 class _$ListBase extends ListBase implements DarticObjectHolder {
   _$ListBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -32,7 +32,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  void forEach(Function action) {
+  void forEach(void Function(dynamic) action) {
     final r = _dispatch.invoke(this, $darticObject, 'forEach', [action]);
     if (identical(r, notOverridden)) { super.forEach((a) => action(a)); return; }
   }
@@ -45,35 +45,35 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  bool every(Function test) {
+  bool every(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'every', [test]);
     if (identical(r, notOverridden)) return super.every((a) => test(a) as bool);
     return r as bool;
   }
 
   @override
-  bool any(Function test) {
+  bool any(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'any', [test]);
     if (identical(r, notOverridden)) return super.any((a) => test(a) as bool);
     return r as bool;
   }
 
   @override
-  dynamic firstWhere(Function test, {Function? orElse}) {
+  dynamic firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'firstWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.firstWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
   }
 
   @override
-  dynamic lastWhere(Function test, {Function? orElse}) {
+  dynamic lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'lastWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.lastWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
   }
 
   @override
-  dynamic singleWhere(Function test, {Function? orElse}) {
+  dynamic singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'singleWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.singleWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
@@ -87,14 +87,14 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  Iterable where(Function test) {
+  Iterable where(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'where', [test]);
     if (identical(r, notOverridden)) return super.where((a) => test(a) as bool);
     return r as Iterable;
   }
 
   @override
-  dynamic reduce(Function combine) {
+  dynamic reduce(dynamic Function(dynamic, dynamic) combine) {
     final r = _dispatch.invoke(this, $darticObject, 'reduce', [combine]);
     if (identical(r, notOverridden)) return super.reduce((a, b) => combine(a, b));
     return r as dynamic;
@@ -108,7 +108,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  Iterable skipWhile(Function test) {
+  Iterable skipWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'skipWhile', [test]);
     if (identical(r, notOverridden)) return super.skipWhile((a) => test(a) as bool);
     return r as Iterable;
@@ -122,7 +122,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  Iterable takeWhile(Function test) {
+  Iterable takeWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'takeWhile', [test]);
     if (identical(r, notOverridden)) return super.takeWhile((a) => test(a) as bool);
     return r as Iterable;
@@ -162,13 +162,13 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  void removeWhere(Function test) {
+  void removeWhere(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'removeWhere', [test]);
     if (identical(r, notOverridden)) { super.removeWhere((a) => test(a) as bool); return; }
   }
 
   @override
-  void retainWhere(Function test) {
+  void retainWhere(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'retainWhere', [test]);
     if (identical(r, notOverridden)) { super.retainWhere((a) => test(a) as bool); return; }
   }
@@ -187,7 +187,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  void sort([Function? compare]) {
+  void sort([int Function(dynamic, dynamic)? compare]) {
     final r = _dispatch.invoke(this, $darticObject, 'sort', [compare]);
     if (identical(r, notOverridden)) { super.sort(compare != null ? (a, b) => compare(a, b) as int : null); return; }
   }
@@ -251,7 +251,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  int indexWhere(Function test, [int start = 0]) {
+  int indexWhere(bool Function(dynamic) test, [int start = 0]) {
     final r = _dispatch.invoke(this, $darticObject, 'indexWhere', [test, start]);
     if (identical(r, notOverridden)) return super.indexWhere((a) => test(a) as bool, start);
     return r as int;
@@ -265,7 +265,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  int lastIndexWhere(Function test, [int? start]) {
+  int lastIndexWhere(bool Function(dynamic) test, [int? start]) {
     final r = _dispatch.invoke(this, $darticObject, 'lastIndexWhere', [test, start]);
     if (identical(r, notOverridden)) return super.lastIndexWhere((a) => test(a) as bool, start);
     return r as int;
@@ -602,5 +602,11 @@ abstract final class ListBaseBindings {
         '+#1': (args) => (args[0] as ListBase) + (args[1] as List),
         '[]#1': (args) => (args[0] as ListBase)[(args[1] as int)],
         '[]=#2': (args) { (args[0] as ListBase)[args[1] as int] = args[2]; return args[2]; },
+        '_closeGap#2': (args) => null,
+        '_compareAny#2': (args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable),
+        '_filter#2': (args) {
+            (args[0] as List).removeWhere(args[1] as bool Function(dynamic));
+            return null;
+        },
       };
 }

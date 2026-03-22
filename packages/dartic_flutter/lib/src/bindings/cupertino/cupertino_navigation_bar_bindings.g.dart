@@ -6,12 +6,30 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/nav_bar.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Brightness, Color, ImageFilter, Size;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/button.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/constants.dart';
+import 'package:flutter/src/cupertino/icons.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/page_scaffold.dart';
+import 'package:flutter/src/cupertino/route.dart';
+import 'package:flutter/src/cupertino/search_field.dart';
+import 'package:flutter/src/cupertino/sheet.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/box_border.dart';
+import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoNavigationBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -66,5 +84,6 @@ abstract final class CupertinoNavigationBarBindings {
             return CupertinoNavigationBar.large(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, largeTitle: identical(args[1], darticAbsent) ? null : args[1] as Widget?, leading: identical(args[2], darticAbsent) ? null : args[2] as Widget?, automaticallyImplyLeading: identical(args[3], darticAbsent) ? true : args[3] as bool, automaticallyImplyTitle: identical(args[4], darticAbsent) ? true : args[4] as bool, previousPageTitle: identical(args[5], darticAbsent) ? null : args[5] as String?, trailing: identical(args[6], darticAbsent) ? null : args[6] as Widget?, border: identical(args[7], darticAbsent) ? null : args[7] as Border?, backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, automaticBackgroundVisibility: identical(args[9], darticAbsent) ? true : args[9] as bool, enableBackgroundFilterBlur: identical(args[10], darticAbsent) ? true : args[10] as bool, brightness: identical(args[11], darticAbsent) ? null : args[11] as Brightness?, padding: identical(args[12], darticAbsent) ? null : args[12] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[13], darticAbsent) ? true : args[13] as bool, heroTag: args[14] as Object, bottom: identical(args[15], darticAbsent) ? null : args[15] as PreferredSizeWidget?);
           }
         },
+        '_#fromFields#17': (args) => CupertinoNavigationBar(key: args[9] as Key?, leading: args[11] as Widget?, automaticallyImplyLeading: args[1] as bool, automaticallyImplyMiddle: args[2] as bool, previousPageTitle: args[14] as String?, middle: args[12] as Widget?, trailing: args[15] as Widget?, border: args[4] as Border?, backgroundColor: args[3] as Color?, automaticBackgroundVisibility: args[0] as bool, enableBackgroundFilterBlur: args[7] as bool, brightness: args[6] as Brightness?, padding: args[13] as EdgeInsetsDirectional?, transitionBetweenRoutes: args[16] as bool, heroTag: args[8] as Object, bottom: args[5] as PreferredSizeWidget?),
       };
 }

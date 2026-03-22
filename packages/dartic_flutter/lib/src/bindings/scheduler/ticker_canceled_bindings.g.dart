@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/scheduler/binding.dart';
 
 abstract final class TickerCanceledBindings {
   static void register(DarticPluginContext ctx) {

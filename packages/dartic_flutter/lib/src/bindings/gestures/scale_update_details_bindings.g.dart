@@ -6,8 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/scale.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class ScaleUpdateDetailsBindings {
@@ -35,6 +41,5 @@ abstract final class ScaleUpdateDetailsBindings {
         'pointerCount#0': (args) => (args[0] as ScaleUpdateDetails).pointerCount,
         'sourceTimeStamp#0': (args) => (args[0] as ScaleUpdateDetails).sourceTimeStamp,
         '#9': (args) => ScaleUpdateDetails(focalPoint: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localFocalPoint: identical(args[1], darticAbsent) ? null : args[1] as Offset?, scale: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, horizontalScale: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, verticalScale: identical(args[4], darticAbsent) ? 1.0 : args[4] as double, rotation: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, pointerCount: identical(args[6], darticAbsent) ? 0 : args[6] as int, focalPointDelta: identical(args[7], darticAbsent) ? Offset.zero : args[7] as Offset, sourceTimeStamp: identical(args[8], darticAbsent) ? null : args[8] as Duration?),
-        '_#fromFields#9': (args) => ScaleUpdateDetails(focalPoint: args[0] as Offset, focalPointDelta: args[1] as Offset, horizontalScale: args[2] as double, localFocalPoint: args[3] as Offset?, pointerCount: args[4] as int, rotation: args[5] as double, scale: args[6] as double, sourceTimeStamp: args[7] as Duration?, verticalScale: args[8] as double),
       };
 }

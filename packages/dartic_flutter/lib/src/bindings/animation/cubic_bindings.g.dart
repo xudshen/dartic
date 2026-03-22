@@ -6,7 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'dart:math' as math;
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 abstract final class CubicBindings {

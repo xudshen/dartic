@@ -6,14 +6,19 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/layout_builder.dart';
+import 'package:flutter/src/widgets/lookup_boundary.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class OverlayBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +47,6 @@ abstract final class OverlayBindings {
         'clipBehavior#0': (args) => (args[0] as Overlay).clipBehavior,
         'key#0': (args) => (args[0] as Overlay).key,
         '#3': (args) => Overlay(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialEntries: identical(args[1], darticAbsent) ? const <OverlayEntry>[] : (args[1] as List).cast<OverlayEntry>(), clipBehavior: identical(args[2], darticAbsent) ? Clip.hardEdge : args[2] as Clip),
-        '_#fromFields#2': (args) => Overlay(clipBehavior: args[0] as Clip, initialEntries: (args[1] as List).cast<OverlayEntry>()),
+        '_#fromFields#3': (args) => Overlay(key: args[2] as Key?, initialEntries: (args[1] as List).cast<OverlayEntry>(), clipBehavior: args[0] as Clip),
       };
 }

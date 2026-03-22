@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class EnumBindings {
   static void register(DarticPluginContext ctx) {
@@ -16,6 +20,7 @@ abstract final class EnumBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as dynamic).toString(),
         'index#0': (args) {
             final obj = args[0] as DarticObject;
             return obj.valueFields[0];

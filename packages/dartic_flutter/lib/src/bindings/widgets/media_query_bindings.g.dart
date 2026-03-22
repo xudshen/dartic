@@ -6,14 +6,18 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/inherited_model.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class MediaQueryBindings {
   static void register(DarticPluginContext ctx) {
@@ -25,7 +29,7 @@ abstract final class MediaQueryBindings {
       superclasses: ['package:flutter/src/widgets/inherited_model.dart::InheritedModel', 'package:flutter/src/widgets/framework.dart::InheritedWidget', 'package:flutter/src/widgets/framework.dart::ProxyWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
     );
     ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::fromWindow#2', (args) => MediaQuery.fromWindow(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget));
-    ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::fromView#3', (args) => MediaQuery.fromView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, view: args[1] as FlutterView, child: args[2] as Widget));
+    ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::fromView#3', (args) => MediaQuery.fromView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, view: args[1] as ui.FlutterView, child: args[2] as Widget));
     ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::withNoTextScaling#2', (args) => MediaQuery.withNoTextScaling(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget));
     ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::withClampedTextScaling#4', (args) => MediaQuery.withClampedTextScaling(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, minScaleFactor: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, maxScaleFactor: identical(args[2], darticAbsent) ? double.infinity : args[2] as double, child: args[3] as Widget));
     ctx.registerBinding('package:flutter/src/widgets/media_query.dart::MediaQuery::of#1', (args) => MediaQuery.of(args[0] as BuildContext));
@@ -98,5 +102,6 @@ abstract final class MediaQueryBindings {
         'removePadding#7': (args) => MediaQuery.removePadding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, context: args[1] as BuildContext, removeLeft: identical(args[2], darticAbsent) ? false : args[2] as bool, removeTop: identical(args[3], darticAbsent) ? false : args[3] as bool, removeRight: identical(args[4], darticAbsent) ? false : args[4] as bool, removeBottom: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
         'removeViewInsets#7': (args) => MediaQuery.removeViewInsets(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, context: args[1] as BuildContext, removeLeft: identical(args[2], darticAbsent) ? false : args[2] as bool, removeTop: identical(args[3], darticAbsent) ? false : args[3] as bool, removeRight: identical(args[4], darticAbsent) ? false : args[4] as bool, removeBottom: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
         'removeViewPadding#7': (args) => MediaQuery.removeViewPadding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, context: args[1] as BuildContext, removeLeft: identical(args[2], darticAbsent) ? false : args[2] as bool, removeTop: identical(args[3], darticAbsent) ? false : args[3] as bool, removeRight: identical(args[4], darticAbsent) ? false : args[4] as bool, removeBottom: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
+        '_#fromFields#3': (args) => MediaQuery(key: args[2] as Key?, data: args[1] as MediaQueryData, child: args[0] as Widget),
       };
 }

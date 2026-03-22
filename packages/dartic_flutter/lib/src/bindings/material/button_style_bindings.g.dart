@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/button_style.dart';
+import 'dart:ui' show Color, Size, lerpDouble;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/button_style_button.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class ButtonStyleBindings {
   static void register(DarticPluginContext ctx) {
@@ -60,5 +70,6 @@ abstract final class ButtonStyleBindings {
         'foregroundBuilder#0': (args) => (args[0] as ButtonStyle).foregroundBuilder,
         'hashCode#0': (args) => (args[0] as ButtonStyle).hashCode,
         '#25': (args) => ButtonStyle(textStyle: identical(args[0], darticAbsent) ? null : args[0] as WidgetStateProperty<TextStyle?>?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as WidgetStateProperty<Color?>?, foregroundColor: identical(args[2], darticAbsent) ? null : args[2] as WidgetStateProperty<Color?>?, overlayColor: identical(args[3], darticAbsent) ? null : args[3] as WidgetStateProperty<Color?>?, shadowColor: identical(args[4], darticAbsent) ? null : args[4] as WidgetStateProperty<Color?>?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as WidgetStateProperty<Color?>?, elevation: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<double?>?, padding: identical(args[7], darticAbsent) ? null : args[7] as WidgetStateProperty<EdgeInsetsGeometry?>?, minimumSize: identical(args[8], darticAbsent) ? null : args[8] as WidgetStateProperty<Size?>?, fixedSize: identical(args[9], darticAbsent) ? null : args[9] as WidgetStateProperty<Size?>?, maximumSize: identical(args[10], darticAbsent) ? null : args[10] as WidgetStateProperty<Size?>?, iconColor: identical(args[11], darticAbsent) ? null : args[11] as WidgetStateProperty<Color?>?, iconSize: identical(args[12], darticAbsent) ? null : args[12] as WidgetStateProperty<double?>?, iconAlignment: identical(args[13], darticAbsent) ? null : args[13] as IconAlignment?, side: identical(args[14], darticAbsent) ? null : args[14] as WidgetStateProperty<BorderSide?>?, shape: identical(args[15], darticAbsent) ? null : args[15] as WidgetStateProperty<OutlinedBorder?>?, mouseCursor: identical(args[16], darticAbsent) ? null : args[16] as WidgetStateProperty<MouseCursor?>?, visualDensity: identical(args[17], darticAbsent) ? null : args[17] as VisualDensity?, tapTargetSize: identical(args[18], darticAbsent) ? null : args[18] as MaterialTapTargetSize?, animationDuration: identical(args[19], darticAbsent) ? null : args[19] as Duration?, enableFeedback: identical(args[20], darticAbsent) ? null : args[20] as bool?, alignment: identical(args[21], darticAbsent) ? null : args[21] as AlignmentGeometry?, splashFactory: identical(args[22], darticAbsent) ? null : args[22] as InteractiveInkFeatureFactory?, backgroundBuilder: identical(args[23], darticAbsent) ? null : (args[23] as Function?) == null ? null : (a, b, c) => (args[23] as Function?)!(a, b, c), foregroundBuilder: identical(args[24], darticAbsent) ? null : (args[24] as Function?) == null ? null : (a, b, c) => (args[24] as Function?)!(a, b, c)),
+        '_#fromFields#25': (args) => ButtonStyle(textStyle: args[23] as WidgetStateProperty<TextStyle?>?, backgroundColor: args[3] as WidgetStateProperty<Color?>?, foregroundColor: args[8] as WidgetStateProperty<Color?>?, overlayColor: args[15] as WidgetStateProperty<Color?>?, shadowColor: args[17] as WidgetStateProperty<Color?>?, surfaceTintColor: args[21] as WidgetStateProperty<Color?>?, elevation: args[4] as WidgetStateProperty<double?>?, padding: args[16] as WidgetStateProperty<EdgeInsetsGeometry?>?, minimumSize: args[13] as WidgetStateProperty<Size?>?, fixedSize: args[6] as WidgetStateProperty<Size?>?, maximumSize: args[12] as WidgetStateProperty<Size?>?, iconColor: args[10] as WidgetStateProperty<Color?>?, iconSize: args[11] as WidgetStateProperty<double?>?, iconAlignment: args[9] as IconAlignment?, side: args[19] as WidgetStateProperty<BorderSide?>?, shape: args[18] as WidgetStateProperty<OutlinedBorder?>?, mouseCursor: args[14] as WidgetStateProperty<MouseCursor?>?, visualDensity: args[24] as VisualDensity?, tapTargetSize: args[22] as MaterialTapTargetSize?, animationDuration: args[1] as Duration?, enableFeedback: args[5] as bool?, alignment: args[0] as AlignmentGeometry?, splashFactory: args[20] as InteractiveInkFeatureFactory?, backgroundBuilder: args[2] as ButtonLayerBuilder?, foregroundBuilder: args[7] as ButtonLayerBuilder?),
       };
 }

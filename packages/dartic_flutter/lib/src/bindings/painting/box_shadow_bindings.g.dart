@@ -6,11 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/box_shadow.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show BlurStyle, Color, Offset, Paint, Shadow, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class BoxShadowBindings {
   static void register(DarticPluginContext ctx) {
@@ -28,7 +29,7 @@ abstract final class BoxShadowBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toPaint#0': (args) => (args[0] as BoxShadow).toPaint(),
         'scale#1': (args) => (args[0] as BoxShadow).scale(args[1] as double),
-        'copyWith#5': (args) => (args[0] as BoxShadow).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, offset: identical(args[2], darticAbsent) ? null : args[2] as Offset?, blurRadius: identical(args[3], darticAbsent) ? null : args[3] as double?, spreadRadius: identical(args[4], darticAbsent) ? null : args[4] as double?, blurStyle: identical(args[5], darticAbsent) ? null : args[5] as BlurStyle?),
+        'copyWith#5': (args) => (args[0] as BoxShadow).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as ui.Color?, offset: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, blurRadius: identical(args[3], darticAbsent) ? null : args[3] as double?, spreadRadius: identical(args[4], darticAbsent) ? null : args[4] as double?, blurStyle: identical(args[5], darticAbsent) ? null : args[5] as ui.BlurStyle?),
         'toString#0': (args) => (args[0] as BoxShadow).toString(),
         'spreadRadius#0': (args) => (args[0] as BoxShadow).spreadRadius,
         'blurStyle#0': (args) => (args[0] as BoxShadow).blurStyle,
@@ -39,10 +40,11 @@ abstract final class BoxShadowBindings {
         'blurSigma#0': (args) => (args[0] as BoxShadow).blurSigma,
         '#5': (args) {
           if (identical(args[0], darticAbsent)) {
-            return BoxShadow(offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, spreadRadius: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, blurStyle: identical(args[4], darticAbsent) ? BlurStyle.normal : args[4] as BlurStyle);
+            return BoxShadow(offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, spreadRadius: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, blurStyle: identical(args[4], darticAbsent) ? BlurStyle.normal : args[4] as ui.BlurStyle);
           } else {
-            return BoxShadow(color: args[0] as Color, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, spreadRadius: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, blurStyle: identical(args[4], darticAbsent) ? BlurStyle.normal : args[4] as BlurStyle);
+            return BoxShadow(color: args[0] as ui.Color, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, spreadRadius: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, blurStyle: identical(args[4], darticAbsent) ? BlurStyle.normal : args[4] as ui.BlurStyle);
           }
         },
+        '_#fromFields#5': (args) => BoxShadow(color: args[2] as ui.Color, offset: args[3] as ui.Offset, blurRadius: args[0] as double, spreadRadius: args[4] as double, blurStyle: args[1] as ui.BlurStyle),
       };
 }

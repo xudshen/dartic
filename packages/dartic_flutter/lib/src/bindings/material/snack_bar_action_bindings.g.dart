@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/snack_bar.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/icon_button.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/snack_bar_theme.dart';
+import 'package:flutter/src/material/text_button.dart';
+import 'package:flutter/src/material/text_button_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SnackBarActionBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,6 +54,6 @@ abstract final class SnackBarActionBindings {
         'onPressed#0': (args) => (args[0] as SnackBarAction).onPressed,
         'key#0': (args) => (args[0] as SnackBarAction).key,
         '#7': (args) => SnackBarAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, disabledTextColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, disabledBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, label: args[5] as String, onPressed: () => (args[6] as Function)()),
-        '_#fromFields#6': (args) => SnackBarAction(backgroundColor: args[0] as Color?, disabledBackgroundColor: args[1] as Color?, disabledTextColor: args[2] as Color?, label: args[3] as String, onPressed: args[4] as void Function(), textColor: args[5] as Color?),
+        '_#fromFields#7': (args) => SnackBarAction(key: args[3] as Key?, textColor: args[6] as Color?, disabledTextColor: args[2] as Color?, backgroundColor: args[0] as Color?, disabledBackgroundColor: args[1] as Color?, label: args[4] as String, onPressed: args[5] as VoidCallback),
       };
 }

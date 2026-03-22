@@ -6,9 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/debug_overflow_indicator.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
 
 abstract final class CrossAxisAlignmentBindings {
   static void register(DarticPluginContext ctx) {
@@ -29,6 +34,5 @@ abstract final class CrossAxisAlignmentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'index#0': (args) => (args[0] as CrossAxisAlignment).index,
-        '_#fromFields#2': (args) => CrossAxisAlignment.values[args[1] as int],
       };
 }

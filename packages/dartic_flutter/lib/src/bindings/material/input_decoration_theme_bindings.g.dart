@@ -6,14 +6,32 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/input_decorator.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Color, lerpDouble;
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/button_style.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/icon_button_theme.dart';
+import 'package:flutter/src/material/input_border.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_state.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class InputDecorationThemeBindings {
   static void register(DarticPluginContext ctx) {
@@ -80,5 +98,6 @@ abstract final class InputDecorationThemeBindings {
         'child#0': (args) => (args[0] as InputDecorationTheme).child,
         'key#0': (args) => (args[0] as InputDecorationTheme).key,
         '#40': (args) => InputDecorationTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, labelStyle: identical(args[1], darticAbsent) ? null : args[1] as TextStyle?, floatingLabelStyle: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, helperStyle: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?, helperMaxLines: identical(args[4], darticAbsent) ? null : args[4] as int?, hintStyle: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, hintFadeDuration: identical(args[6], darticAbsent) ? null : args[6] as Duration?, hintMaxLines: identical(args[7], darticAbsent) ? null : args[7] as int?, errorStyle: identical(args[8], darticAbsent) ? null : args[8] as TextStyle?, errorMaxLines: identical(args[9], darticAbsent) ? null : args[9] as int?, floatingLabelBehavior: identical(args[10], darticAbsent) ? null : args[10] as FloatingLabelBehavior?, floatingLabelAlignment: identical(args[11], darticAbsent) ? null : args[11] as FloatingLabelAlignment?, isDense: identical(args[12], darticAbsent) ? null : args[12] as bool?, contentPadding: identical(args[13], darticAbsent) ? null : args[13] as EdgeInsetsGeometry?, isCollapsed: identical(args[14], darticAbsent) ? null : args[14] as bool?, iconColor: identical(args[15], darticAbsent) ? null : args[15] as Color?, prefixStyle: identical(args[16], darticAbsent) ? null : args[16] as TextStyle?, prefixIconColor: identical(args[17], darticAbsent) ? null : args[17] as Color?, prefixIconConstraints: identical(args[18], darticAbsent) ? null : args[18] as BoxConstraints?, suffixStyle: identical(args[19], darticAbsent) ? null : args[19] as TextStyle?, suffixIconColor: identical(args[20], darticAbsent) ? null : args[20] as Color?, suffixIconConstraints: identical(args[21], darticAbsent) ? null : args[21] as BoxConstraints?, counterStyle: identical(args[22], darticAbsent) ? null : args[22] as TextStyle?, filled: identical(args[23], darticAbsent) ? null : args[23] as bool?, fillColor: identical(args[24], darticAbsent) ? null : args[24] as Color?, activeIndicatorBorder: identical(args[25], darticAbsent) ? null : args[25] as BorderSide?, outlineBorder: identical(args[26], darticAbsent) ? null : args[26] as BorderSide?, focusColor: identical(args[27], darticAbsent) ? null : args[27] as Color?, hoverColor: identical(args[28], darticAbsent) ? null : args[28] as Color?, errorBorder: identical(args[29], darticAbsent) ? null : args[29] as InputBorder?, focusedBorder: identical(args[30], darticAbsent) ? null : args[30] as InputBorder?, focusedErrorBorder: identical(args[31], darticAbsent) ? null : args[31] as InputBorder?, disabledBorder: identical(args[32], darticAbsent) ? null : args[32] as InputBorder?, enabledBorder: identical(args[33], darticAbsent) ? null : args[33] as InputBorder?, border: identical(args[34], darticAbsent) ? null : args[34] as InputBorder?, alignLabelWithHint: identical(args[35], darticAbsent) ? null : args[35] as bool?, constraints: identical(args[36], darticAbsent) ? null : args[36] as BoxConstraints?, visualDensity: identical(args[37], darticAbsent) ? null : args[37] as VisualDensity?, data: identical(args[38], darticAbsent) ? null : args[38] as InputDecorationThemeData?, child: identical(args[39], darticAbsent) ? null : args[39] as Widget?),
+        '_#fromFields#40': (args) => InputDecorationTheme(key: args[39] as Key?, labelStyle: args[29] as TextStyle?, floatingLabelStyle: args[16] as TextStyle?, helperStyle: args[21] as TextStyle?, helperMaxLines: args[20] as int?, hintStyle: args[24] as TextStyle?, hintFadeDuration: args[22] as Duration?, hintMaxLines: args[23] as int?, errorStyle: args[11] as TextStyle?, errorMaxLines: args[10] as int?, floatingLabelBehavior: args[15] as FloatingLabelBehavior?, floatingLabelAlignment: args[14] as FloatingLabelAlignment?, isDense: args[28] as bool?, contentPadding: args[4] as EdgeInsetsGeometry?, isCollapsed: args[27] as bool?, iconColor: args[26] as Color?, prefixStyle: args[33] as TextStyle?, prefixIconColor: args[31] as Color?, prefixIconConstraints: args[32] as BoxConstraints?, suffixStyle: args[36] as TextStyle?, suffixIconColor: args[34] as Color?, suffixIconConstraints: args[35] as BoxConstraints?, counterStyle: args[5] as TextStyle?, filled: args[13] as bool?, fillColor: args[12] as Color?, activeIndicatorBorder: args[0] as BorderSide?, outlineBorder: args[30] as BorderSide?, focusColor: args[17] as Color?, hoverColor: args[25] as Color?, errorBorder: args[9] as InputBorder?, focusedBorder: args[18] as InputBorder?, focusedErrorBorder: args[19] as InputBorder?, disabledBorder: args[7] as InputBorder?, enabledBorder: args[8] as InputBorder?, border: args[2] as InputBorder?, alignLabelWithHint: args[1] as bool?, constraints: args[3] as BoxConstraints?, visualDensity: args[37] as VisualDensity?, data: args[6] as InputDecorationThemeData?, child: args[38] as Widget?),
       };
 }

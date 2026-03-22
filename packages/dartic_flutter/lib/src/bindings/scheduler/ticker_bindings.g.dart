@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/src/scheduler/ticker.dart';
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/scheduler/binding.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class TickerBindings {
   static void register(DarticPluginContext ctx) {

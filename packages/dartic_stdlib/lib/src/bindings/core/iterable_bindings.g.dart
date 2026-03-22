@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 class _$Iterable extends Iterable implements DarticObjectHolder {
   _$Iterable(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -23,7 +27,7 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   }
 
   @override
-  Iterable where(Function test) {
+  Iterable where(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'where', [test]);
     if (identical(r, notOverridden)) return super.where((a) => test(a) as bool);
     return r as Iterable;
@@ -37,20 +41,20 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   }
 
   @override
-  void forEach(Function action) {
+  void forEach(void Function(dynamic) action) {
     final r = _dispatch.invoke(this, $darticObject, 'forEach', [action]);
     if (identical(r, notOverridden)) { super.forEach((a) => action(a)); return; }
   }
 
   @override
-  dynamic reduce(Function combine) {
+  dynamic reduce(dynamic Function(dynamic, dynamic) combine) {
     final r = _dispatch.invoke(this, $darticObject, 'reduce', [combine]);
     if (identical(r, notOverridden)) return super.reduce((a, b) => combine(a, b));
     return r as dynamic;
   }
 
   @override
-  bool every(Function test) {
+  bool every(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'every', [test]);
     if (identical(r, notOverridden)) return super.every((a) => test(a) as bool);
     return r as bool;
@@ -64,7 +68,7 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   }
 
   @override
-  bool any(Function test) {
+  bool any(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'any', [test]);
     if (identical(r, notOverridden)) return super.any((a) => test(a) as bool);
     return r as bool;
@@ -92,7 +96,7 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   }
 
   @override
-  Iterable takeWhile(Function test) {
+  Iterable takeWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'takeWhile', [test]);
     if (identical(r, notOverridden)) return super.takeWhile((a) => test(a) as bool);
     return r as Iterable;
@@ -106,28 +110,28 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   }
 
   @override
-  Iterable skipWhile(Function test) {
+  Iterable skipWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'skipWhile', [test]);
     if (identical(r, notOverridden)) return super.skipWhile((a) => test(a) as bool);
     return r as Iterable;
   }
 
   @override
-  dynamic firstWhere(Function test, {Function? orElse}) {
+  dynamic firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'firstWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.firstWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
   }
 
   @override
-  dynamic lastWhere(Function test, {Function? orElse}) {
+  dynamic lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'lastWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.lastWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
   }
 
   @override
-  dynamic singleWhere(Function test, {Function? orElse}) {
+  dynamic singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'singleWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.singleWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as dynamic;
@@ -280,6 +284,103 @@ abstract final class IterableBindings {
     ctx.registerBinding('dart:core::Iterable::\$super\$last#0', (args) => (args[0] as _$Iterable)._super$last);
     ctx.registerBinding('dart:core::Iterable::\$super\$single#0', (args) => (args[0] as _$Iterable)._super$single);
     ctx.registerBinding('dart:core::Iterable::\$super\$hashCode#0', (args) => (args[0] as _$Iterable)._super$hashCode);
+
+    // WhereIterable
+    for (final e in whereIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::WhereIterable::${e.key}', e.value);
+    }
+
+    // MappedIterable
+    for (final e in mappedIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::MappedIterable::${e.key}', e.value);
+    }
+
+    // ExpandIterable
+    for (final e in expandIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::ExpandIterable::${e.key}', e.value);
+    }
+
+    // TakeIterable
+    for (final e in takeIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::TakeIterable::${e.key}', e.value);
+    }
+
+    // TakeWhileIterable
+    for (final e in takeWhileIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::TakeWhileIterable::${e.key}', e.value);
+    }
+
+    // SkipIterable
+    for (final e in skipIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::SkipIterable::${e.key}', e.value);
+    }
+
+    // SkipWhileIterable
+    for (final e in skipWhileIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::SkipWhileIterable::${e.key}', e.value);
+    }
+
+    // CastIterable
+    for (final e in castIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::CastIterable::${e.key}', e.value);
+    }
+
+    // WhereTypeIterable
+    for (final e in whereTypeIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::WhereTypeIterable::${e.key}', e.value);
+    }
+
+    // FollowedByIterable
+    for (final e in followedByIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::FollowedByIterable::${e.key}', e.value);
+    }
+
+    // SubListIterable
+    for (final e in subListIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::SubListIterable::${e.key}', e.value);
+    }
+
+    // ReversedListIterable
+    for (final e in reversedListIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::ReversedListIterable::${e.key}', e.value);
+    }
+
+    // MappedListIterable
+    for (final e in mappedListIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::MappedListIterable::${e.key}', e.value);
+    }
+
+    // ListMapView
+    for (final e in listMapViewMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::ListMapView::${e.key}', e.value);
+    }
+
+    // ListIterator
+    for (final e in listIteratorMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::ListIterator::${e.key}', e.value);
+    }
+
+    // EfficientLengthMappedIterable
+    for (final e in efficientLengthMappedIterableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::EfficientLengthMappedIterable::${e.key}', e.value);
+    }
+
+    // Sort
+    for (final e in sortMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::Sort::${e.key}', e.value);
+    }
+
+    // checkNotNullable
+    for (final e in checkNotNullableMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::checkNotNullable::${e.key}', e.value);
+      ctx.registerBinding('dart:_internal::::checkNotNullable${e.key}', e.value);
+    }
+
+    // IterableElementError
+    for (final e in iterableElementErrorMethodMap().entries) {
+      ctx.registerBinding('dart:_internal::IterableElementError::${e.key}', e.value);
+    }
+
     ctx.registerBinding('dart:_internal::EmptyIterable::#0', methodMap()['#0']!);
     ctx.registerBinding('dart:_internal::IterableElementError::noElement#0', methodMap()['noElement#0']!);
     ctx.registerBinding('dart:_internal::IterableElementError::tooMany#0', methodMap()['tooMany#0']!);
@@ -385,6 +486,103 @@ abstract final class IterableBindings {
             return value;
         },
         '#0': (args) => const Iterable.empty(),
+        'noElement#0': (args) => StateError('No element'),
+        'tooMany#0': (args) => StateError('Too many elements'),
+        'tooFew#0': (args) => StateError('Too few elements'),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> whereIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).where(args[1] as bool Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> mappedIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> expandIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).expand(args[1] as Iterable Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> takeIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).take(args[1] as int),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> takeWhileIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).takeWhile(args[1] as bool Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> skipIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).skip(args[1] as int),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> skipWhileIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).skipWhile(args[1] as bool Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> castIterableMethodMap() => {
+        '#1': (args) => (args[0] as Iterable).cast(),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> whereTypeIterableMethodMap() => {
+        '#1': (args) => args[0] as Iterable,
+      };
+
+  static Map<String, Object? Function(List<Object?>)> followedByIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).followedBy(args[1] as Iterable),
+        'firstEfficient#2': (args) => (args[0] as Iterable).followedBy(args[1] as Iterable),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> subListIterableMethodMap() => {
+        '#3': (args) => (args[0] as List).getRange(args[1] as int, (args[2] as int?) ?? (args[0] as List).length),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> reversedListIterableMethodMap() => {
+        '#1': (args) => (args[0] as List).reversed,
+      };
+
+  static Map<String, Object? Function(List<Object?>)> mappedListIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> listMapViewMethodMap() => {
+        '#1': (args) => (args[0] as List).asMap(),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> listIteratorMethodMap() => {
+        '#1': (args) => (args[0] as List).iterator,
+      };
+
+  static Map<String, Object? Function(List<Object?>)> efficientLengthMappedIterableMethodMap() => {
+        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+      };
+
+  static Map<String, Object? Function(List<Object?>)> sortMethodMap() => {
+        'sort#2': (args) {
+            final list = args[0] as List;
+            final compare = args[1] as int Function(dynamic, dynamic)?;
+            if (compare != null) { list.sort(compare); } else { list.sort(); }
+            return null;
+        },
+        'sort#3': (args) {
+            (args[0] as List).sort();
+            return null;
+        },
+        'sort#4': (args) {
+            final list = args[0] as List;
+            final compare = args[3] as int Function(dynamic, dynamic)?;
+            if (compare != null) { list.sort(compare); } else { list.sort(); }
+            return null;
+        },
+      };
+
+  static Map<String, Object? Function(List<Object?>)> checkNotNullableMethodMap() => {
+        '#2': (args) {
+            if (args[0] == null) throw TypeError();
+            return args[0];
+        },
+      };
+
+  static Map<String, Object? Function(List<Object?>)> iterableElementErrorMethodMap() => {
         'noElement#0': (args) => StateError('No element'),
         'tooMany#0': (args) => StateError('Too many elements'),
         'tooFew#0': (args) => StateError('Too few elements'),

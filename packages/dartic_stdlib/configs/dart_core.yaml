@@ -17,12 +17,9 @@
 output_bindings: "../lib/src/bindings/core"
 output_plugins: "../lib/src/plugins"
 
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-
 libraries:
   - uri: dart:core
+    discover: all
     classes:
       # ── Non-generic types (type-only dispatcher, no test needed) ──────
 
@@ -53,6 +50,48 @@ libraries:
       # extend Iterable (or the typedef aliases IterableBase/IterableMixin).
       - name: Iterable
         bridge: true
+        internal_types:
+          # dart:_internal iterable wrappers — VM-internal classes returned by
+          # Iterable/List methods (where, map, take, etc.). Can't be imported
+          # directly; we redirect constructors to the equivalent host method.
+          - name: WhereIterable
+            source: "dart:_internal"
+          - name: MappedIterable
+            source: "dart:_internal"
+          - name: ExpandIterable
+            source: "dart:_internal"
+          - name: TakeIterable
+            source: "dart:_internal"
+          - name: TakeWhileIterable
+            source: "dart:_internal"
+          - name: SkipIterable
+            source: "dart:_internal"
+          - name: SkipWhileIterable
+            source: "dart:_internal"
+          - name: CastIterable
+            source: "dart:_internal"
+          - name: WhereTypeIterable
+            source: "dart:_internal"
+          - name: FollowedByIterable
+            source: "dart:_internal"
+          - name: SubListIterable
+            source: "dart:_internal"
+          - name: ReversedListIterable
+            source: "dart:_internal"
+          - name: MappedListIterable
+            source: "dart:_internal"
+          - name: ListMapView
+            source: "dart:_internal"
+          - name: ListIterator
+            source: "dart:_internal"
+          - name: EfficientLengthMappedIterable
+            source: "dart:_internal"
+          - name: Sort
+            source: "dart:_internal"
+          - name: checkNotNullable
+            source: "dart:_internal"
+          - name: IterableElementError
+            source: "dart:_internal"
 
       # List -- dispatcher prefix chain: List, _GrowableList, Iterable
       - name: List
@@ -280,6 +319,92 @@ libraries:
           "#0": "(args) => <dynamic>{}"
           "add#1": "(args) => (args[0] as Set).add(args[1])"
           "cast#0": "(args) => (args[0] as Set).cast()"
+
+      # ── dart:_internal iterable wrappers ──
+      # VM-internal classes returned by Iterable/List methods. Constructor
+      # bindings redirect to the equivalent host Iterable/List method.
+      WhereIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).where(args[1] as bool Function(dynamic))"
+      MappedIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+      ExpandIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).expand(args[1] as Iterable Function(dynamic))"
+      TakeIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).take(args[1] as int)"
+      TakeWhileIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).takeWhile(args[1] as bool Function(dynamic))"
+      SkipIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).skip(args[1] as int)"
+      SkipWhileIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).skipWhile(args[1] as bool Function(dynamic))"
+      CastIterable:
+        extra_methods:
+          "#1": "(args) => (args[0] as Iterable).cast()"
+      WhereTypeIterable:
+        extra_methods:
+          "#1": "(args) => args[0] as Iterable"
+      FollowedByIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).followedBy(args[1] as Iterable)"
+          "firstEfficient#2": "(args) => (args[0] as Iterable).followedBy(args[1] as Iterable)"
+      SubListIterable:
+        extra_methods:
+          "#3": "(args) => (args[0] as List).getRange(args[1] as int, (args[2] as int?) ?? (args[0] as List).length)"
+      ReversedListIterable:
+        extra_methods:
+          "#1": "(args) => (args[0] as List).reversed"
+      MappedListIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+      ListMapView:
+        extra_methods:
+          "#1": "(args) => (args[0] as List).asMap()"
+      ListIterator:
+        extra_methods:
+          "#1": "(args) => (args[0] as List).iterator"
+      EfficientLengthMappedIterable:
+        extra_methods:
+          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+      Sort:
+        extra_methods:
+          "sort#2": |
+            (args) {
+              final list = args[0] as List;
+              final compare = args[1] as int Function(dynamic, dynamic)?;
+              if (compare != null) { list.sort(compare); } else { list.sort(); }
+              return null;
+            }
+          "sort#3": |
+            (args) {
+              (args[0] as List).sort();
+              return null;
+            }
+          "sort#4": |
+            (args) {
+              final list = args[0] as List;
+              final compare = args[3] as int Function(dynamic, dynamic)?;
+              if (compare != null) { list.sort(compare); } else { list.sort(); }
+              return null;
+            }
+      checkNotNullable:
+        extra_methods:
+          "#2": |
+            (args) {
+              if (args[0] == null) throw TypeError();
+              return args[0];
+            }
+      IterableElementError:
+        extra_methods:
+          "noElement#0": "(args) => StateError('No element')"
+          "tooMany#0": "(args) => StateError('Too many elements')"
+          "tooFew#0": "(args) => StateError('Too few elements')"
 
       # ── LinkedHashMap: CFE lowers map literals to LinkedHashMap ──
       LinkedHashMap:
@@ -675,6 +800,9 @@ libraries:
               }
               return List.generate(length, (i) => generator(i));
             }
+          # Extra arities from iterable_wrappers (named params)
+          "empty#1": "(args) => (identical(args[0], darticAbsent) ? false : args[0] as bool) ? <dynamic>[] : List<dynamic>.empty()"
+          "filled#3": "(args) => List<dynamic>.filled(args[0] as int, args[1], growable: identical(args[2], darticAbsent) ? true : args[2] as bool)"
 
       # ── Map: factories + callback methods + toString ──
       # CFE generates typedef constructor tear-offs that call Map factories
@@ -742,6 +870,7 @@ libraries:
       # ── Set: callback methods + symmetricDifference + toString ──
       Set:
         extra_methods:
+          "castFrom#2": "(args) => Set.castFrom(args[0] as Set)"
           "toString#0": "(args) => (args[0] as Set).toString()"
           "symmetricDifference#1": |
             (args) {

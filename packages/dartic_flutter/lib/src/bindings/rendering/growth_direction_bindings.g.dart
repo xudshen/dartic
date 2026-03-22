@@ -6,9 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/sliver.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/debug.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/rendering/viewport.dart';
+import 'package:flutter/src/rendering/viewport_offset.dart';
 
 abstract final class GrowthDirectionBindings {
   static void register(DarticPluginContext ctx) {

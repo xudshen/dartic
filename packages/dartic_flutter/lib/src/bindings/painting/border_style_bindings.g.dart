@@ -6,11 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
 
 abstract final class BorderStyleBindings {
   static void register(DarticPluginContext ctx) {

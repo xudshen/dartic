@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/alignment.dart';
+import 'dart:ui' as ui show Offset, Rect, Size, TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class AlignmentBindings {
   static void register(DarticPluginContext ctx) {
@@ -35,11 +35,11 @@ abstract final class AlignmentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#1': (args) => (args[0] as Alignment).add(args[1] as AlignmentGeometry),
-        'alongOffset#1': (args) => (args[0] as Alignment).alongOffset(args[1] as Offset),
-        'alongSize#1': (args) => (args[0] as Alignment).alongSize(args[1] as Size),
-        'withinRect#1': (args) => (args[0] as Alignment).withinRect(args[1] as Rect),
-        'inscribe#2': (args) => (args[0] as Alignment).inscribe(args[1] as Size, args[2] as Rect),
-        'resolve#1': (args) => (args[0] as Alignment).resolve(args[1] as TextDirection?),
+        'alongOffset#1': (args) => (args[0] as Alignment).alongOffset(args[1] as ui.Offset),
+        'alongSize#1': (args) => (args[0] as Alignment).alongSize(args[1] as ui.Size),
+        'withinRect#1': (args) => (args[0] as Alignment).withinRect(args[1] as ui.Rect),
+        'inscribe#2': (args) => (args[0] as Alignment).inscribe(args[1] as ui.Size, args[2] as ui.Rect),
+        'resolve#1': (args) => (args[0] as Alignment).resolve(args[1] as ui.TextDirection?),
         'toString#0': (args) => (args[0] as Alignment).toString(),
         'x#0': (args) => (args[0] as Alignment).x,
         'y#0': (args) => (args[0] as Alignment).y,
@@ -51,5 +51,6 @@ abstract final class AlignmentBindings {
         '~/#1': (args) => (args[0] as Alignment) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as Alignment) % (args[1] as double),
         '#2': (args) => Alignment(args[0] as double, args[1] as double),
+        '_#fromFields#2': (args) => Alignment(args[0] as double, args[1] as double),
       };
 }

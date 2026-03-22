@@ -6,8 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animation_controller.dart';
+import 'dart:ui' as ui show lerpDouble;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/physics.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/listener_helpers.dart';
 
 abstract final class AnimationBehaviorBindings {
   static void register(DarticPluginContext ctx) {

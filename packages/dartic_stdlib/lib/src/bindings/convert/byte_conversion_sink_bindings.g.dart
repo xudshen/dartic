@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class ByteConversionSinkBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,11 +24,13 @@ abstract final class ByteConversionSinkBindings {
     // _ByteAdapterSink
     for (final e in byteAdapterSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_ByteAdapterSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_ByteAdapterSink${e.key}', e.value);
     }
 
     // _ByteCallbackSink
     for (final e in byteCallbackSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_ByteCallbackSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_ByteCallbackSink${e.key}', e.value);
     }
   }
 

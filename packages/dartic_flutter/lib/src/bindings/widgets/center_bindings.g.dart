@@ -6,14 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/shifted_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CenterBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,6 +55,6 @@ abstract final class CenterBindings {
         'child#0': (args) => (args[0] as Center).child,
         'key#0': (args) => (args[0] as Center).key,
         '#4': (args) => Center(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, widthFactor: identical(args[1], darticAbsent) ? null : args[1] as double?, heightFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
-        '_#fromFields#0': (args) => Center(),
+        '_#fromFields#5': (args) => Center(key: args[3] as Key?, widthFactor: args[4] as double?, heightFactor: args[2] as double?, child: args[1] as Widget?),
       };
 }

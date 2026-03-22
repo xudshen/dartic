@@ -6,11 +6,13 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/decoration.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/image_provider.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class DecorationBindings {
   static void register(DarticPluginContext ctx) {

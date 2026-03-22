@@ -7,55 +7,10 @@
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.
-#
-# Types covered (~14):
-#   Binding-only (dartic code uses, not extends):
-#     - TextInputType, TextEditingValue, FilteringTextInputFormatter,
-#       LengthLimitingTextInputFormatter, SystemUiOverlayStyle
-#   Enums:
-#     - SmartDashesType, SmartQuotesType, TextInputAction,
-#       TextCapitalization, MaxLengthEnforcement, DeviceOrientation,
-#       SystemUiOverlay, SystemUiMode
-#
-# Excluded types (code gen limitations):
-#   - ClipboardData: may not be a public class
-#   - TextInputConfiguration: complex
-#   - BasicMessageChannel, MethodChannel, EventChannel: complex generics
-#   - TextInputFormatter Bridge: skip Bridge for formatters
-#   - LengthLimitingTextInputFormatter: gen emits call to @visibleForTesting `truncate`
 
 output_bindings: "../lib/src/bindings/services"
 output_plugins: "../lib/src/plugins"
 
-# Use package: imports instead of relative imports (external package).
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:flutter/services.dart"
-  - "package:flutter/foundation.dart"
-  - "dart:ui"
-
 libraries:
-  - uri: package:flutter/services.dart
-    classes:
-      # ── Input ────────────────────────────────────────────────────────
-      - TextInputType
-      - TextEditingValue
-
-      # ── Formatters (binding-only, skip Bridge) ───────────────────────
-      - FilteringTextInputFormatter
-      # LengthLimitingTextInputFormatter removed: gen emits call to
-      # @visibleForTesting member `truncate`
-
-      # ── System ───────────────────────────────────────────────────────
-      - SystemUiOverlayStyle
-
-      # ── Enums ────────────────────────────────────────────────────────
-      - SmartDashesType
-      - SmartQuotesType
-      - TextInputAction
-      - TextCapitalization
-      - MaxLengthEnforcement
-      - DeviceOrientation
-      - SystemUiOverlay
-      - SystemUiMode
+  - uri: package:flutter/src/services
+    discover: all

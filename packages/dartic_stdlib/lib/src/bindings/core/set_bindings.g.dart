@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class SetBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,6 +24,7 @@ abstract final class SetBindings {
     // _Set
     for (final e in setMethodMap().entries) {
       ctx.registerBinding('dart:_compact_hash::_Set::${e.key}', e.value);
+      ctx.registerBinding('dart:_compact_hash::::_Set${e.key}', e.value);
     }
   }
 
@@ -64,6 +69,7 @@ abstract final class SetBindings {
         'first#0': (args) => (args[0] as Set).first,
         'last#0': (args) => (args[0] as Set).last,
         'single#0': (args) => (args[0] as Set).single,
+        'castFrom#2': (args) => Set.castFrom(args[0] as Set),
         'toString#0': (args) => (args[0] as Set).toString(),
         'symmetricDifference#1': (args) {
             final a = args[0] as Set;

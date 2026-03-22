@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class TextPositionBindings {
   static void register(DarticPluginContext ctx) {
@@ -26,5 +34,6 @@ abstract final class TextPositionBindings {
         'affinity#0': (args) => (args[0] as TextPosition).affinity,
         'hashCode#0': (args) => (args[0] as TextPosition).hashCode,
         '#2': (args) => TextPosition(offset: args[0] as int, affinity: identical(args[1], darticAbsent) ? TextAffinity.downstream : args[1] as TextAffinity),
+        '_#fromFields#2': (args) => TextPosition(offset: args[1] as int, affinity: args[0] as TextAffinity),
       };
 }

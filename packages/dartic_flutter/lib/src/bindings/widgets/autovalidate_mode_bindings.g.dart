@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/form.dart';
+import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/navigator.dart';
+import 'package:flutter/src/widgets/pop_scope.dart';
+import 'package:flutter/src/widgets/restoration.dart';
+import 'package:flutter/src/widgets/restoration_properties.dart';
+import 'package:flutter/src/widgets/routes.dart';
+import 'package:flutter/src/widgets/view.dart';
+import 'package:flutter/src/widgets/will_pop_scope.dart';
 
 abstract final class AutovalidateModeBindings {
   static void register(DarticPluginContext ctx) {

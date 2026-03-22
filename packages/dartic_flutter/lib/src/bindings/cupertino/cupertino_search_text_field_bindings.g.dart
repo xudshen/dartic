@@ -6,12 +6,30 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/cupertino/search_field.dart';
+import 'dart:math' as math;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/button.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/icons.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/text_field.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/editable_text.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/box_decoration.dart';
+import 'dart:ui';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/services/text_input.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/widgets/icon.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoSearchTextFieldBindings {
   static void register(DarticPluginContext ctx) {
@@ -68,6 +86,6 @@ abstract final class CupertinoSearchTextFieldBindings {
         'cursorColor#0': (args) => (args[0] as CupertinoSearchTextField).cursorColor,
         'key#0': (args) => (args[0] as CupertinoSearchTextField).key,
         '#34': (args) => CupertinoSearchTextField(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: identical(args[1], darticAbsent) ? null : args[1] as TextEditingController?, onChanged: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onSubmitted: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), style: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, placeholder: identical(args[5], darticAbsent) ? null : args[5] as String?, placeholderStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, decoration: identical(args[7], darticAbsent) ? null : args[7] as BoxDecoration?, backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, borderRadius: identical(args[9], darticAbsent) ? null : args[9] as BorderRadius?, keyboardType: identical(args[10], darticAbsent) ? null : args[10] as TextInputType?, padding: identical(args[11], darticAbsent) ? const EdgeInsetsDirectional.fromSTEB(5.5, 8, 5.5, 8) : args[11] as EdgeInsetsGeometry, itemColor: identical(args[12], darticAbsent) ? CupertinoColors.secondaryLabel : args[12] as Color, itemSize: identical(args[13], darticAbsent) ? 20.0 : args[13] as double, prefixInsets: identical(args[14], darticAbsent) ? const EdgeInsetsDirectional.fromSTEB(6, 8, 0, 8) : args[14] as EdgeInsetsGeometry, prefixIcon: identical(args[15], darticAbsent) ? const Icon(CupertinoIcons.search) : args[15] as Widget, suffixInsets: identical(args[16], darticAbsent) ? const EdgeInsetsDirectional.fromSTEB(0, 8, 5, 8) : args[16] as EdgeInsetsGeometry, suffixIcon: identical(args[17], darticAbsent) ? const Icon(CupertinoIcons.xmark_circle_fill) : args[17] as Icon, suffixMode: identical(args[18], darticAbsent) ? OverlayVisibilityMode.editing : args[18] as OverlayVisibilityMode, onSuffixTap: identical(args[19], darticAbsent) ? null : (args[19] as Function?) == null ? null : () => (args[19] as Function?)!(), restorationId: identical(args[20], darticAbsent) ? null : args[20] as String?, focusNode: identical(args[21], darticAbsent) ? null : args[21] as FocusNode?, smartQuotesType: identical(args[22], darticAbsent) ? null : args[22] as SmartQuotesType?, smartDashesType: identical(args[23], darticAbsent) ? null : args[23] as SmartDashesType?, enableIMEPersonalizedLearning: identical(args[24], darticAbsent) ? true : args[24] as bool, autofocus: identical(args[25], darticAbsent) ? false : args[25] as bool, onTap: identical(args[26], darticAbsent) ? null : (args[26] as Function?) == null ? null : () => (args[26] as Function?)!(), autocorrect: identical(args[27], darticAbsent) ? true : args[27] as bool, enabled: identical(args[28], darticAbsent) ? null : args[28] as bool?, cursorWidth: identical(args[29], darticAbsent) ? 2.0 : args[29] as double, cursorHeight: identical(args[30], darticAbsent) ? null : args[30] as double?, cursorRadius: identical(args[31], darticAbsent) ? const Radius.circular(2.0) : args[31] as Radius, cursorOpacityAnimates: identical(args[32], darticAbsent) ? true : args[32] as bool, cursorColor: identical(args[33], darticAbsent) ? null : args[33] as Color?),
-        '_#fromFields#33': (args) => CupertinoSearchTextField(autocorrect: args[0] as bool, autofocus: args[1] as bool, backgroundColor: args[2] as Color?, borderRadius: args[3] as BorderRadius?, controller: args[4] as TextEditingController?, cursorColor: args[5] as Color?, cursorHeight: args[6] as double?, cursorOpacityAnimates: args[7] as bool, cursorRadius: args[8] as Radius, cursorWidth: args[9] as double, decoration: args[10] as BoxDecoration?, enableIMEPersonalizedLearning: args[11] as bool, enabled: args[12] as bool?, focusNode: args[13] as FocusNode?, itemColor: args[14] as Color, itemSize: args[15] as double, keyboardType: args[16] as TextInputType?, onChanged: args[17] as void Function(String)?, onSubmitted: args[18] as void Function(String)?, onSuffixTap: args[19] as void Function()?, onTap: args[20] as void Function()?, padding: args[21] as EdgeInsetsGeometry, placeholder: args[22] as String?, placeholderStyle: args[23] as TextStyle?, prefixIcon: args[24] as Widget, prefixInsets: args[25] as EdgeInsetsGeometry, restorationId: args[26] as String?, smartDashesType: args[27] as SmartDashesType?, smartQuotesType: args[28] as SmartQuotesType?, style: args[29] as TextStyle?, suffixIcon: args[30] as Icon, suffixInsets: args[31] as EdgeInsetsGeometry, suffixMode: args[32] as OverlayVisibilityMode),
+        '_#fromFields#34': (args) => CupertinoSearchTextField(key: args[16] as Key?, controller: args[4] as TextEditingController?, onChanged: args[18] as ValueChanged<String>?, onSubmitted: args[19] as ValueChanged<String>?, style: args[30] as TextStyle?, placeholder: args[23] as String?, placeholderStyle: args[24] as TextStyle?, decoration: args[10] as BoxDecoration?, backgroundColor: args[2] as Color?, borderRadius: args[3] as BorderRadius?, keyboardType: args[17] as TextInputType?, padding: args[22] as EdgeInsetsGeometry, itemColor: args[14] as Color, itemSize: args[15] as double, prefixInsets: args[26] as EdgeInsetsGeometry, prefixIcon: args[25] as Widget, suffixInsets: args[32] as EdgeInsetsGeometry, suffixIcon: args[31] as Icon, suffixMode: args[33] as OverlayVisibilityMode, onSuffixTap: args[20] as VoidCallback?, restorationId: args[27] as String?, focusNode: args[13] as FocusNode?, smartQuotesType: args[29] as SmartQuotesType?, smartDashesType: args[28] as SmartDashesType?, enableIMEPersonalizedLearning: args[11] as bool, autofocus: args[1] as bool, onTap: args[21] as VoidCallback?, autocorrect: args[0] as bool, enabled: args[12] as bool?, cursorWidth: args[9] as double, cursorHeight: args[6] as double?, cursorRadius: args[8] as Radius, cursorOpacityAnimates: args[7] as bool, cursorColor: args[5] as Color?),
       };
 }

@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import '../generator/audit/audit_reporter.dart';
 import '../generator/audit/audit_result.dart';
+import '../generator/discover/discover_runner.dart';
+import '../generator/kernel/kernel_introspector.dart';
+import '../generator/kernel/stub_dill_compiler.dart';
 import '../generator/runner.dart';
 import '../generator/scanner.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -52,6 +55,11 @@ class GenCommand extends Command<int> {
         'strict',
         help: 'Audit strict mode: fail on missing or stale bindings.',
         negatable: false,
+      )
+      ..addOption(
+        'discover',
+        help: 'Run auto-discovery for a library URI and compare against YAML.\n'
+            'Example: dartic gen --discover dart:collection',
       );
   }
 
@@ -73,8 +81,13 @@ class GenCommand extends Command<int> {
     final emitTests = argResults!['emit-tests'] as bool;
     final testOutputDir = argResults!['test-output'] as String?;
     final strict = argResults!['strict'] as bool;
+    final discoverUri = argResults!['discover'] as String?;
 
     try {
+      if (discoverUri != null) {
+        return await _runDiscover(discoverUri, analysisRoot: analysisRoot);
+      }
+
       if (all) {
         return await _runAll(
           analysisRoot: analysisRoot,
@@ -244,6 +257,38 @@ class GenCommand extends Command<int> {
   /// Compares written files from a single runner against disk.
   int _checkResults(Runner runner) {
     return _checkWrittenFiles(runner.writtenFiles);
+  }
+
+  /// Runs auto-discovery for a single library URI.
+  Future<int> _runDiscover(
+    String libraryUri, {
+    String? analysisRoot,
+  }) async {
+    _logger.info('Discovering: $libraryUri ...');
+
+    final dartBin = Platform.resolvedExecutable;
+
+    final component = await StubDillCompiler.compileAndLoad(
+      libraryUris: [libraryUri],
+      dartBin: dartBin,
+      analysisRoot: analysisRoot,
+    );
+    final introspector = KernelIntrospector(component);
+
+    final runner = DiscoverRunner(introspector);
+    final report = runner.discover(libraryUri);
+
+    final yamlConfig = DiscoverRunner.findYamlConfig(libraryUri);
+    if (yamlConfig != null) {
+      _logger.info('Found YAML config, comparing...');
+    } else {
+      _logger.info('No YAML config found, showing discovery only.');
+    }
+
+    final comparison = runner.compare(report, yamlConfig);
+    runner.printReport(comparison);
+
+    return 0;
   }
 
   /// Compares a map of {path: content} against actual files on disk.

@@ -6,14 +6,27 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'dart:ui' as ui show Clip, Color, TextHeightBehavior, VoidCallback;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedContainerBindings {
   static void register(DarticPluginContext ctx) {
@@ -49,6 +62,6 @@ abstract final class AnimatedContainerBindings {
         'duration#0': (args) => (args[0] as AnimatedContainer).duration,
         'onEnd#0': (args) => (args[0] as AnimatedContainer).onEnd,
         'key#0': (args) => (args[0] as AnimatedContainer).key,
-        '#17': (args) => AnimatedContainer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? null : args[1] as AlignmentGeometry?, padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, decoration: identical(args[4], darticAbsent) ? null : args[4] as Decoration?, foregroundDecoration: identical(args[5], darticAbsent) ? null : args[5] as Decoration?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, constraints: identical(args[8], darticAbsent) ? null : args[8] as BoxConstraints?, margin: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, transform: identical(args[10], darticAbsent) ? null : args[10] as Matrix4?, transformAlignment: identical(args[11], darticAbsent) ? null : args[11] as AlignmentGeometry?, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, clipBehavior: identical(args[13], darticAbsent) ? Clip.none : args[13] as Clip, curve: identical(args[14], darticAbsent) ? Curves.linear : args[14] as Curve, duration: args[15] as Duration, onEnd: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : () => (args[16] as Function?)!()),
+        '#17': (args) => AnimatedContainer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? null : args[1] as AlignmentGeometry?, padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, color: identical(args[3], darticAbsent) ? null : args[3] as ui.Color?, decoration: identical(args[4], darticAbsent) ? null : args[4] as Decoration?, foregroundDecoration: identical(args[5], darticAbsent) ? null : args[5] as Decoration?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, constraints: identical(args[8], darticAbsent) ? null : args[8] as BoxConstraints?, margin: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, transform: identical(args[10], darticAbsent) ? null : args[10] as Matrix4?, transformAlignment: identical(args[11], darticAbsent) ? null : args[11] as AlignmentGeometry?, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, clipBehavior: identical(args[13], darticAbsent) ? Clip.none : args[13] as ui.Clip, curve: identical(args[14], darticAbsent) ? Curves.linear : args[14] as Curve, duration: args[15] as Duration, onEnd: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : () => (args[16] as Function?)!()),
       };
 }

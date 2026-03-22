@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ConstrainedBoxBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,6 +52,5 @@ abstract final class ConstrainedBoxBindings {
         'child#0': (args) => (args[0] as ConstrainedBox).child,
         'key#0': (args) => (args[0] as ConstrainedBox).key,
         '#3': (args) => ConstrainedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, constraints: args[1] as BoxConstraints, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
-        '_#fromFields#1': (args) => ConstrainedBox(constraints: args[0] as BoxConstraints),
       };
 }

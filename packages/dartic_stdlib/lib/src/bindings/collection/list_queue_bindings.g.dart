@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class ListQueueBindings {
   static void register(DarticPluginContext ctx) {
@@ -61,8 +62,8 @@ abstract final class ListQueueBindings {
         'last#0': (args) => (args[0] as ListQueue).last,
         'single#0': (args) => (args[0] as ListQueue).single,
         'isNotEmpty#0': (args) => (args[0] as ListQueue).isNotEmpty,
-        'from#1': (args) => ListQueue.from(args[0] as Iterable<dynamic>),
-        'of#1': (args) => ListQueue.of(args[0] as Iterable),
+        'from#1': (args) => ListQueue<dynamic>.from(args[0] as Iterable<dynamic>),
+        'of#1': (args) => ListQueue<dynamic>.of(args[0] as Iterable),
         '#1': (args) {
             if (!identical(args[0], darticAbsent)) {
               return ListQueue<Object?>(args[0] as int);

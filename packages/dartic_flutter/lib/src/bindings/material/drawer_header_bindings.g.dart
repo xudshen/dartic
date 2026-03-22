@@ -6,14 +6,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/drawer_header.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/divider.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DrawerHeaderBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,6 +49,6 @@ abstract final class DrawerHeaderBindings {
         'child#0': (args) => (args[0] as DrawerHeader).child,
         'key#0': (args) => (args[0] as DrawerHeader).key,
         '#7': (args) => DrawerHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: identical(args[1], darticAbsent) ? null : args[1] as Decoration?, margin: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, padding: identical(args[3], darticAbsent) ? const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0) : args[3] as EdgeInsetsGeometry, duration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 250) : args[4] as Duration, curve: identical(args[5], darticAbsent) ? Curves.fastOutSlowIn : args[5] as Curve, child: args[6] as Widget?),
-        '_#fromFields#6': (args) => DrawerHeader(child: args[0] as Widget?, curve: args[1] as Curve, decoration: args[2] as Decoration?, duration: args[3] as Duration, margin: args[4] as EdgeInsetsGeometry?, padding: args[5] as EdgeInsetsGeometry),
+        '_#fromFields#7': (args) => DrawerHeader(key: args[4] as Key?, decoration: args[2] as Decoration?, margin: args[5] as EdgeInsetsGeometry?, padding: args[6] as EdgeInsetsGeometry, duration: args[3] as Duration, curve: args[1] as Curve, child: args[0] as Widget?),
       };
 }

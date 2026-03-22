@@ -7,6 +7,11 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
+import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class MapBindings {
   static void register(DarticPluginContext ctx) {

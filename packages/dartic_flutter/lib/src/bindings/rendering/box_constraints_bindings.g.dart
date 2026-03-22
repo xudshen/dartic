@@ -6,9 +6,18 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Size, ViewConstraints, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/gestures.dart';
+import 'package:vector_math/vector_math_64.dart' show Matrix4, Vector3;
+import 'package:flutter/src/rendering/debug.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/assertions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class BoxConstraintsBindings {
   static void register(DarticPluginContext ctx) {
@@ -32,10 +41,10 @@ abstract final class BoxConstraintsBindings {
         'heightConstraints#0': (args) => (args[0] as BoxConstraints).heightConstraints(),
         'constrainWidth#1': (args) => (args[0] as BoxConstraints).constrainWidth(identical(args[1], darticAbsent) ? double.infinity : args[1] as double),
         'constrainHeight#1': (args) => (args[0] as BoxConstraints).constrainHeight(identical(args[1], darticAbsent) ? double.infinity : args[1] as double),
-        'constrain#1': (args) => (args[0] as BoxConstraints).constrain(args[1] as Size),
+        'constrain#1': (args) => (args[0] as BoxConstraints).constrain(args[1] as ui.Size),
         'constrainDimensions#2': (args) => (args[0] as BoxConstraints).constrainDimensions(args[1] as double, args[2] as double),
-        'constrainSizeAndAttemptToPreserveAspectRatio#1': (args) => (args[0] as BoxConstraints).constrainSizeAndAttemptToPreserveAspectRatio(args[1] as Size),
-        'isSatisfiedBy#1': (args) => (args[0] as BoxConstraints).isSatisfiedBy(args[1] as Size),
+        'constrainSizeAndAttemptToPreserveAspectRatio#1': (args) => (args[0] as BoxConstraints).constrainSizeAndAttemptToPreserveAspectRatio(args[1] as ui.Size),
+        'isSatisfiedBy#1': (args) => (args[0] as BoxConstraints).isSatisfiedBy(args[1] as ui.Size),
         'debugAssertIsValid#2': (args) => (args[0] as BoxConstraints).debugAssertIsValid(isAppliedConstraint: identical(args[1], darticAbsent) ? false : args[1] as bool, informationCollector: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'normalize#0': (args) => (args[0] as BoxConstraints).normalize(),
         'toString#0': (args) => (args[0] as BoxConstraints).toString(),
@@ -60,11 +69,12 @@ abstract final class BoxConstraintsBindings {
         '~/#1': (args) => (args[0] as BoxConstraints) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as BoxConstraints) % (args[1] as double),
         '#4': (args) => BoxConstraints(minWidth: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, maxWidth: identical(args[1], darticAbsent) ? double.infinity : args[1] as double, minHeight: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, maxHeight: identical(args[3], darticAbsent) ? double.infinity : args[3] as double),
-        'tight#1': (args) => BoxConstraints.tight(args[0] as Size),
+        'tight#1': (args) => BoxConstraints.tight(args[0] as ui.Size),
         'tightFor#2': (args) => BoxConstraints.tightFor(width: identical(args[0], darticAbsent) ? null : args[0] as double?, height: identical(args[1], darticAbsent) ? null : args[1] as double?),
         'tightForFinite#2': (args) => BoxConstraints.tightForFinite(width: identical(args[0], darticAbsent) ? double.infinity : args[0] as double, height: identical(args[1], darticAbsent) ? double.infinity : args[1] as double),
-        'loose#1': (args) => BoxConstraints.loose(args[0] as Size),
+        'loose#1': (args) => BoxConstraints.loose(args[0] as ui.Size),
         'expand#2': (args) => BoxConstraints.expand(width: identical(args[0], darticAbsent) ? null : args[0] as double?, height: identical(args[1], darticAbsent) ? null : args[1] as double?),
-        'fromViewConstraints#1': (args) => BoxConstraints.fromViewConstraints(args[0] as ViewConstraints),
+        'fromViewConstraints#1': (args) => BoxConstraints.fromViewConstraints(args[0] as ui.ViewConstraints),
+        '_#fromFields#4': (args) => BoxConstraints(minWidth: args[3] as double, maxWidth: args[1] as double, minHeight: args[2] as double, maxHeight: args[0] as double),
       };
 }

@@ -6,14 +6,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PositionedDirectionalBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,6 +52,6 @@ abstract final class PositionedDirectionalBindings {
         'child#0': (args) => (args[0] as PositionedDirectional).child,
         'key#0': (args) => (args[0] as PositionedDirectional).key,
         '#8': (args) => PositionedDirectional(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, start: identical(args[1], darticAbsent) ? null : args[1] as double?, top: identical(args[2], darticAbsent) ? null : args[2] as double?, end: identical(args[3], darticAbsent) ? null : args[3] as double?, bottom: identical(args[4], darticAbsent) ? null : args[4] as double?, width: identical(args[5], darticAbsent) ? null : args[5] as double?, height: identical(args[6], darticAbsent) ? null : args[6] as double?, child: args[7] as Widget),
-        '_#fromFields#7': (args) => PositionedDirectional(bottom: args[0] as double?, child: args[1] as Widget, end: args[2] as double?, height: args[3] as double?, start: args[4] as double?, top: args[5] as double?, width: args[6] as double?),
+        '_#fromFields#8': (args) => PositionedDirectional(key: args[4] as Key?, start: args[5] as double?, top: args[6] as double?, end: args[2] as double?, bottom: args[0] as double?, width: args[7] as double?, height: args[3] as double?, child: args[1] as Widget),
       };
 }

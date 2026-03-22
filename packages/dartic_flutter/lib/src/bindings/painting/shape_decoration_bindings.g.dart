@@ -6,11 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/shape_decoration.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/box_border.dart';
+import 'package:flutter/src/painting/box_decoration.dart';
+import 'package:flutter/src/painting/box_shadow.dart';
+import 'package:flutter/src/painting/circle_border.dart';
+import 'package:flutter/src/painting/colors.dart';
+import 'package:flutter/src/painting/debug.dart';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/src/painting/decoration_image.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/gradient.dart';
+import 'package:flutter/src/painting/image_provider.dart';
+import 'package:flutter/src/painting/rounded_rectangle_border.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class ShapeDecorationBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,5 +57,6 @@ abstract final class ShapeDecorationBindings {
         'hashCode#0': (args) => (args[0] as ShapeDecoration).hashCode,
         '#5': (args) => ShapeDecoration(color: identical(args[0], darticAbsent) ? null : args[0] as Color?, image: identical(args[1], darticAbsent) ? null : args[1] as DecorationImage?, gradient: identical(args[2], darticAbsent) ? null : args[2] as Gradient?, shadows: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<BoxShadow>(), shape: args[4] as ShapeBorder),
         'fromBoxDecoration#1': (args) => ShapeDecoration.fromBoxDecoration(args[0] as BoxDecoration),
+        '_#fromFields#5': (args) => ShapeDecoration(color: args[0] as Color?, image: args[2] as DecorationImage?, gradient: args[1] as Gradient?, shadows: args[3] == null ? null : (args[3] as List).cast<BoxShadow>(), shape: args[4] as ShapeBorder),
       };
 }

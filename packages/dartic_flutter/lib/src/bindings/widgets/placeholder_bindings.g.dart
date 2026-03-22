@@ -6,14 +6,13 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PlaceholderBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +41,6 @@ abstract final class PlaceholderBindings {
         'child#0': (args) => (args[0] as Placeholder).child,
         'key#0': (args) => (args[0] as Placeholder).key,
         '#6': (args) => Placeholder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? const Color(0xFF455A64) : args[1] as Color, strokeWidth: identical(args[2], darticAbsent) ? 2.0 : args[2] as double, fallbackWidth: identical(args[3], darticAbsent) ? 400.0 : args[3] as double, fallbackHeight: identical(args[4], darticAbsent) ? 400.0 : args[4] as double, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
-        '_#fromFields#5': (args) => Placeholder(child: args[0] as Widget?, color: args[1] as Color, fallbackHeight: args[2] as double, fallbackWidth: args[3] as double, strokeWidth: args[4] as double),
+        '_#fromFields#6': (args) => Placeholder(key: args[4] as Key?, color: args[1] as Color, strokeWidth: args[5] as double, fallbackWidth: args[3] as double, fallbackHeight: args[2] as double, child: args[0] as Widget?),
       };
 }

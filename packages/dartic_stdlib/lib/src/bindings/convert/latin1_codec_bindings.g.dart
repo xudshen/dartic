@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class Latin1CodecBindings {
   static void register(DarticPluginContext ctx) {

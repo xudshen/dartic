@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class SplayTreeSetBindings {
   static void register(DarticPluginContext ctx) {
@@ -59,7 +60,7 @@ abstract final class SplayTreeSetBindings {
         'isEmpty#0': (args) => (args[0] as SplayTreeSet).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SplayTreeSet).isNotEmpty,
         'single#0': (args) => (args[0] as SplayTreeSet).single,
-        'of#3': (args) => SplayTreeSet.of(args[0] as Iterable, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'of#3': (args) => SplayTreeSet<dynamic>.of(args[0] as Iterable, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         '#2': (args) {
             final compare =
                 identical(args[0], darticAbsent) ? null : args[0] as Function?;

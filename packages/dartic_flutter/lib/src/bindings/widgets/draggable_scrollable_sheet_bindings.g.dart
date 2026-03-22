@@ -6,14 +6,28 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/draggable_scrollable_sheet.dart';
+import 'dart:math' as math;
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/inherited_notifier.dart';
+import 'package:flutter/src/widgets/layout_builder.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/scroll_activity.dart';
+import 'package:flutter/src/widgets/scroll_context.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_physics.dart';
+import 'package:flutter/src/widgets/scroll_position.dart';
+import 'package:flutter/src/widgets/scroll_position_with_single_context.dart';
+import 'package:flutter/src/widgets/scroll_simulation.dart';
+import 'package:flutter/src/widgets/value_listenable_builder.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DraggableScrollableSheetBindings {
   static void register(DarticPluginContext ctx) {
@@ -47,6 +61,6 @@ abstract final class DraggableScrollableSheetBindings {
         'builder#0': (args) => (args[0] as DraggableScrollableSheet).builder,
         'key#0': (args) => (args[0] as DraggableScrollableSheet).key,
         '#11': (args) => DraggableScrollableSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialChildSize: identical(args[1], darticAbsent) ? 0.5 : args[1] as double, minChildSize: identical(args[2], darticAbsent) ? 0.25 : args[2] as double, maxChildSize: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, expand: identical(args[4], darticAbsent) ? true : args[4] as bool, snap: identical(args[5], darticAbsent) ? false : args[5] as bool, snapSizes: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<double>(), snapAnimationDuration: identical(args[7], darticAbsent) ? null : args[7] as Duration?, controller: identical(args[8], darticAbsent) ? null : args[8] as DraggableScrollableController?, shouldCloseOnMinExtent: identical(args[9], darticAbsent) ? true : args[9] as bool, builder: (a, b) => (args[10] as Function)(a, b) as Widget),
-        '_#fromFields#10': (args) => DraggableScrollableSheet(builder: args[0] as Widget Function(BuildContext, ScrollController), controller: args[1] as DraggableScrollableController?, expand: args[2] as bool, initialChildSize: args[3] as double, maxChildSize: args[4] as double, minChildSize: args[5] as double, shouldCloseOnMinExtent: args[6] as bool, snap: args[7] as bool, snapAnimationDuration: args[8] as Duration?, snapSizes: args[9] == null ? null : (args[9] as List).cast<double>()),
+        '_#fromFields#11': (args) => DraggableScrollableSheet(key: args[4] as Key?, initialChildSize: args[3] as double, minChildSize: args[6] as double, maxChildSize: args[5] as double, expand: args[2] as bool, snap: args[8] as bool, snapSizes: args[10] == null ? null : (args[10] as List).cast<double>(), snapAnimationDuration: args[9] as Duration?, controller: args[1] as DraggableScrollableController?, shouldCloseOnMinExtent: args[7] as bool, builder: args[0] as ScrollableWidgetBuilder),
       };
 }

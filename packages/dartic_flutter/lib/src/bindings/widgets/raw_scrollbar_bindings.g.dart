@@ -1,0 +1,113 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/scrollbar.dart';
+import 'dart:async';
+import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/gesture_detector.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/primary_scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_configuration.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_metrics.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_position.dart';
+import 'package:flutter/src/widgets/scrollable.dart';
+import 'package:flutter/src/widgets/scrollable_helpers.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
+
+abstract final class RawScrollbarBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/widgets/scrollbar.dart::RawScrollbar',
+      type: RawScrollbar,
+      test: (o) => o is RawScrollbar,
+      methods: methodMap(),
+      superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+    );
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'createState#0': (args) => (args[0] as RawScrollbar).createState(),
+        'createElement#0': (args) => (args[0] as RawScrollbar).createElement(),
+        'toStringShort#0': (args) => (args[0] as RawScrollbar).toStringShort(),
+        'debugFillProperties#1': (args) { (args[0] as RawScrollbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toStringShallow#2': (args) => (args[0] as RawScrollbar).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'toStringDeep#4': (args) => (args[0] as RawScrollbar).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toDiagnosticsNode#2': (args) => (args[0] as RawScrollbar).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'debugDescribeChildren#0': (args) => (args[0] as RawScrollbar).debugDescribeChildren(),
+        'child#0': (args) => (args[0] as RawScrollbar).child,
+        'controller#0': (args) => (args[0] as RawScrollbar).controller,
+        'thumbVisibility#0': (args) => (args[0] as RawScrollbar).thumbVisibility,
+        'shape#0': (args) => (args[0] as RawScrollbar).shape,
+        'radius#0': (args) => (args[0] as RawScrollbar).radius,
+        'thickness#0': (args) => (args[0] as RawScrollbar).thickness,
+        'thumbColor#0': (args) => (args[0] as RawScrollbar).thumbColor,
+        'minThumbLength#0': (args) => (args[0] as RawScrollbar).minThumbLength,
+        'minOverscrollLength#0': (args) => (args[0] as RawScrollbar).minOverscrollLength,
+        'trackVisibility#0': (args) => (args[0] as RawScrollbar).trackVisibility,
+        'trackRadius#0': (args) => (args[0] as RawScrollbar).trackRadius,
+        'trackColor#0': (args) => (args[0] as RawScrollbar).trackColor,
+        'trackBorderColor#0': (args) => (args[0] as RawScrollbar).trackBorderColor,
+        'fadeDuration#0': (args) => (args[0] as RawScrollbar).fadeDuration,
+        'timeToFade#0': (args) => (args[0] as RawScrollbar).timeToFade,
+        'pressDuration#0': (args) => (args[0] as RawScrollbar).pressDuration,
+        'notificationPredicate#0': (args) => (args[0] as RawScrollbar).notificationPredicate,
+        'interactive#0': (args) => (args[0] as RawScrollbar).interactive,
+        'scrollbarOrientation#0': (args) => (args[0] as RawScrollbar).scrollbarOrientation,
+        'mainAxisMargin#0': (args) => (args[0] as RawScrollbar).mainAxisMargin,
+        'crossAxisMargin#0': (args) => (args[0] as RawScrollbar).crossAxisMargin,
+        'padding#0': (args) => (args[0] as RawScrollbar).padding,
+        'key#0': (args) => (args[0] as RawScrollbar).key,
+        '#23': (args) {
+          if (identical(args[8], darticAbsent)) {
+            if (identical(args[14], darticAbsent)) {
+              if (identical(args[15], darticAbsent)) {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              } else {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, timeToFade: args[15] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              }
+            } else {
+              if (identical(args[15], darticAbsent)) {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, fadeDuration: args[14] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              } else {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, fadeDuration: args[14] as Duration, timeToFade: args[15] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              }
+            }
+          } else {
+            if (identical(args[14], darticAbsent)) {
+              if (identical(args[15], darticAbsent)) {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minThumbLength: args[8] as double, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              } else {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minThumbLength: args[8] as double, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, timeToFade: args[15] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              }
+            } else {
+              if (identical(args[15], darticAbsent)) {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minThumbLength: args[8] as double, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, fadeDuration: args[14] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              } else {
+                return RawScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, shape: identical(args[4], darticAbsent) ? null : args[4] as OutlinedBorder?, radius: identical(args[5], darticAbsent) ? null : args[5] as Radius?, thickness: identical(args[6], darticAbsent) ? null : args[6] as double?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, minThumbLength: args[8] as double, minOverscrollLength: identical(args[9], darticAbsent) ? null : args[9] as double?, trackVisibility: identical(args[10], darticAbsent) ? null : args[10] as bool?, trackRadius: identical(args[11], darticAbsent) ? null : args[11] as Radius?, trackColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, trackBorderColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, fadeDuration: args[14] as Duration, timeToFade: args[15] as Duration, pressDuration: identical(args[16], darticAbsent) ? Duration.zero : args[16] as Duration, notificationPredicate: identical(args[17], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[17] as Function)(a) as bool, interactive: identical(args[18], darticAbsent) ? null : args[18] as bool?, scrollbarOrientation: identical(args[19], darticAbsent) ? null : args[19] as ScrollbarOrientation?, mainAxisMargin: identical(args[20], darticAbsent) ? 0.0 : args[20] as double, crossAxisMargin: identical(args[21], darticAbsent) ? 0.0 : args[21] as double, padding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?);
+              }
+            }
+          }
+        },
+        '_#fromFields#23': (args) => RawScrollbar(key: args[5] as Key?, child: args[0] as Widget, controller: args[1] as ScrollController?, thumbVisibility: args[17] as bool?, shape: args[14] as OutlinedBorder?, radius: args[12] as Radius?, thickness: args[15] as double?, thumbColor: args[16] as Color?, minThumbLength: args[8] as double, minOverscrollLength: args[7] as double?, trackVisibility: args[22] as bool?, trackRadius: args[21] as Radius?, trackColor: args[20] as Color?, trackBorderColor: args[19] as Color?, fadeDuration: args[3] as Duration, timeToFade: args[18] as Duration, pressDuration: args[11] as Duration, notificationPredicate: args[9] as ScrollNotificationPredicate, interactive: args[4] as bool?, scrollbarOrientation: args[13] as ScrollbarOrientation?, mainAxisMargin: args[6] as double, crossAxisMargin: args[2] as double, padding: args[10] as EdgeInsetsGeometry?),
+      };
+}

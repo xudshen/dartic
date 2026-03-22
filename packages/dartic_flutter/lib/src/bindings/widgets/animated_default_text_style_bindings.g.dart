@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'dart:ui' as ui show TextAlign, TextHeightBehavior, VoidCallback;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/text_painter.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedDefaultTextStyleBindings {
   static void register(DarticPluginContext ctx) {
@@ -47,6 +58,7 @@ abstract final class AnimatedDefaultTextStyleBindings {
         'duration#0': (args) => (args[0] as AnimatedDefaultTextStyle).duration,
         'onEnd#0': (args) => (args[0] as AnimatedDefaultTextStyle).onEnd,
         'key#0': (args) => (args[0] as AnimatedDefaultTextStyle).key,
-        '#12': (args) => AnimatedDefaultTextStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, style: args[2] as TextStyle, textAlign: identical(args[3], darticAbsent) ? null : args[3] as TextAlign?, softWrap: identical(args[4], darticAbsent) ? true : args[4] as bool, overflow: identical(args[5], darticAbsent) ? TextOverflow.clip : args[5] as TextOverflow, maxLines: identical(args[6], darticAbsent) ? null : args[6] as int?, textWidthBasis: identical(args[7], darticAbsent) ? TextWidthBasis.parent : args[7] as TextWidthBasis, textHeightBehavior: identical(args[8], darticAbsent) ? null : args[8] as TextHeightBehavior?, curve: identical(args[9], darticAbsent) ? Curves.linear : args[9] as Curve, duration: args[10] as Duration, onEnd: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : () => (args[11] as Function?)!()),
+        '#12': (args) => AnimatedDefaultTextStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, style: args[2] as TextStyle, textAlign: identical(args[3], darticAbsent) ? null : args[3] as ui.TextAlign?, softWrap: identical(args[4], darticAbsent) ? true : args[4] as bool, overflow: identical(args[5], darticAbsent) ? TextOverflow.clip : args[5] as TextOverflow, maxLines: identical(args[6], darticAbsent) ? null : args[6] as int?, textWidthBasis: identical(args[7], darticAbsent) ? TextWidthBasis.parent : args[7] as TextWidthBasis, textHeightBehavior: identical(args[8], darticAbsent) ? null : args[8] as ui.TextHeightBehavior?, curve: identical(args[9], darticAbsent) ? Curves.linear : args[9] as Curve, duration: args[10] as Duration, onEnd: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : () => (args[11] as Function?)!()),
+        '_#fromFields#12': (args) => AnimatedDefaultTextStyle(key: args[3] as Key?, child: args[0] as Widget, style: args[8] as TextStyle, textAlign: args[9] as ui.TextAlign?, softWrap: args[7] as bool, overflow: args[6] as TextOverflow, maxLines: args[4] as int?, textWidthBasis: args[11] as TextWidthBasis, textHeightBehavior: args[10] as ui.TextHeightBehavior?, curve: args[1] as Curve, duration: args[2] as Duration, onEnd: args[5] as ui.VoidCallback?),
       };
 }

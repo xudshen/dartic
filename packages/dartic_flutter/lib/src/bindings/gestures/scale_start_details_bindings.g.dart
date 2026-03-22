@@ -6,8 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/scale.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class ScaleStartDetailsBindings {
@@ -31,6 +37,5 @@ abstract final class ScaleStartDetailsBindings {
         'sourceTimeStamp#0': (args) => (args[0] as ScaleStartDetails).sourceTimeStamp,
         'kind#0': (args) => (args[0] as ScaleStartDetails).kind,
         '#5': (args) => ScaleStartDetails(focalPoint: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localFocalPoint: identical(args[1], darticAbsent) ? null : args[1] as Offset?, pointerCount: identical(args[2], darticAbsent) ? 0 : args[2] as int, sourceTimeStamp: identical(args[3], darticAbsent) ? null : args[3] as Duration?, kind: identical(args[4], darticAbsent) ? null : args[4] as PointerDeviceKind?),
-        '_#fromFields#5': (args) => ScaleStartDetails(focalPoint: args[0] as Offset, kind: args[1] as PointerDeviceKind?, localFocalPoint: args[2] as Offset?, pointerCount: args[3] as int, sourceTimeStamp: args[4] as Duration?),
       };
 }

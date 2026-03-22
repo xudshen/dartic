@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
   _$StreamSubscription(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -26,7 +28,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
   }
 
   @override
-  void onData(Function? handleData) {
+  void onData(void Function(dynamic)? handleData) {
     final r = _dispatch.invoke(this, $darticObject, 'onData', [handleData]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method onData must be overridden in dartic code');

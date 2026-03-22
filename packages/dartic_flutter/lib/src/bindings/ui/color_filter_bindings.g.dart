@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class ColorFilterBindings {
   static void register(DarticPluginContext ctx) {
@@ -28,5 +36,6 @@ abstract final class ColorFilterBindings {
         'matrix#1': (args) => ColorFilter.matrix((args[0] as List).cast<double>()),
         'linearToSrgbGamma#0': (args) => ColorFilter.linearToSrgbGamma(),
         'srgbToLinearGamma#0': (args) => ColorFilter.srgbToLinearGamma(),
+        '_#fromFields#4': (args) => ColorFilter.mode(args[1] as Color, args[0] as BlendMode),
       };
 }

@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/tabs.dart';
+import 'dart:math' as math;
+import 'dart:ui' show SemanticsRole, Size, lerpDouble;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/app_bar.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/tab_bar_theme.dart';
+import 'package:flutter/src/material/tab_controller.dart';
+import 'package:flutter/src/material/tab_indicator.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class TabBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,5 +60,6 @@ abstract final class TabBindings {
         'preferredSize#0': (args) => (args[0] as Tab).preferredSize,
         'key#0': (args) => (args[0] as Tab).key,
         '#6': (args) => Tab(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, text: identical(args[1], darticAbsent) ? null : args[1] as String?, icon: identical(args[2], darticAbsent) ? null : args[2] as Widget?, iconMargin: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
+        '_#fromFields#6': (args) => Tab(key: args[4] as Key?, text: args[5] as String?, icon: args[2] as Widget?, iconMargin: args[3] as EdgeInsetsGeometry?, height: args[1] as double?, child: args[0] as Widget?),
       };
 }

@@ -6,14 +6,28 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/checkbox.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/checkbox_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CheckboxBindings {
   static void register(DarticPluginContext ctx) {
@@ -58,5 +72,6 @@ abstract final class CheckboxBindings {
         'key#0': (args) => (args[0] as Checkbox).key,
         '#20': (args) => Checkbox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as bool?, tristate: identical(args[2], darticAbsent) ? false : args[2] as bool, onChanged: (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, activeColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, fillColor: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<Color?>?, checkColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, focusColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, hoverColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, overlayColor: identical(args[10], darticAbsent) ? null : args[10] as WidgetStateProperty<Color?>?, splashRadius: identical(args[11], darticAbsent) ? null : args[11] as double?, materialTapTargetSize: identical(args[12], darticAbsent) ? null : args[12] as MaterialTapTargetSize?, visualDensity: identical(args[13], darticAbsent) ? null : args[13] as VisualDensity?, focusNode: identical(args[14], darticAbsent) ? null : args[14] as FocusNode?, autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, shape: identical(args[16], darticAbsent) ? null : args[16] as OutlinedBorder?, side: identical(args[17], darticAbsent) ? null : args[17] as BorderSide?, isError: identical(args[18], darticAbsent) ? false : args[18] as bool, semanticLabel: identical(args[19], darticAbsent) ? null : args[19] as String?),
         'adaptive#20': (args) => Checkbox.adaptive(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as bool?, tristate: identical(args[2], darticAbsent) ? false : args[2] as bool, onChanged: (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, activeColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, fillColor: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<Color?>?, checkColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, focusColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, hoverColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, overlayColor: identical(args[10], darticAbsent) ? null : args[10] as WidgetStateProperty<Color?>?, splashRadius: identical(args[11], darticAbsent) ? null : args[11] as double?, materialTapTargetSize: identical(args[12], darticAbsent) ? null : args[12] as MaterialTapTargetSize?, visualDensity: identical(args[13], darticAbsent) ? null : args[13] as VisualDensity?, focusNode: identical(args[14], darticAbsent) ? null : args[14] as FocusNode?, autofocus: identical(args[15], darticAbsent) ? false : args[15] as bool, shape: identical(args[16], darticAbsent) ? null : args[16] as OutlinedBorder?, side: identical(args[17], darticAbsent) ? null : args[17] as BorderSide?, isError: identical(args[18], darticAbsent) ? false : args[18] as bool, semanticLabel: identical(args[19], darticAbsent) ? null : args[19] as String?),
+        '_#fromFields#21': (args) => Checkbox(key: args[9] as Key?, value: args[19] as bool?, tristate: args[18] as bool, onChanged: args[12] as ValueChanged<bool?>?, mouseCursor: args[11] as MouseCursor?, activeColor: args[1] as Color?, fillColor: args[4] as WidgetStateProperty<Color?>?, checkColor: args[3] as Color?, focusColor: args[5] as Color?, hoverColor: args[7] as Color?, overlayColor: args[13] as WidgetStateProperty<Color?>?, splashRadius: args[17] as double?, materialTapTargetSize: args[10] as MaterialTapTargetSize?, visualDensity: args[20] as VisualDensity?, focusNode: args[6] as FocusNode?, autofocus: args[2] as bool, shape: args[15] as OutlinedBorder?, side: args[16] as BorderSide?, isError: args[8] as bool, semanticLabel: args[14] as String?),
       };
 }

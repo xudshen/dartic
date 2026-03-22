@@ -6,14 +6,40 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/scroll_view.dart';
+import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/primary_scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_configuration.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_delegate.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_physics.dart';
+import 'package:flutter/src/widgets/scrollable.dart';
+import 'package:flutter/src/widgets/scrollable_helpers.dart';
+import 'package:flutter/src/widgets/sliver.dart';
+import 'package:flutter/src/widgets/sliver_prototype_extent_list.dart';
+import 'package:flutter/src/widgets/viewport.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/rendering/sliver.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/rendering/viewport_offset.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/rendering/viewport.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
 import 'dart:ui';
+import 'package:flutter/src/rendering/proxy_box.dart';
 
 abstract final class ListViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -66,5 +92,6 @@ abstract final class ListViewBindings {
         'builder#24': (args) => ListView.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, itemExtent: identical(args[8], darticAbsent) ? null : args[8] as double?, itemExtentBuilder: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a, b) => (args[9] as Function?)!(a, b), prototypeItem: identical(args[10], darticAbsent) ? null : args[10] as Widget?, itemBuilder: (a, b) => (args[11] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : (a) => (args[12] as Function?)!(a), itemCount: identical(args[13], darticAbsent) ? null : args[13] as int?, addAutomaticKeepAlives: identical(args[14], darticAbsent) ? true : args[14] as bool, addRepaintBoundaries: identical(args[15], darticAbsent) ? true : args[15] as bool, addSemanticIndexes: identical(args[16], darticAbsent) ? true : args[16] as bool, cacheExtent: identical(args[17], darticAbsent) ? null : args[17] as double?, semanticChildCount: identical(args[18], darticAbsent) ? null : args[18] as int?, dragStartBehavior: identical(args[19], darticAbsent) ? DragStartBehavior.start : args[19] as DragStartBehavior, keyboardDismissBehavior: identical(args[20], darticAbsent) ? null : args[20] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[21], darticAbsent) ? null : args[21] as String?, clipBehavior: identical(args[22], darticAbsent) ? Clip.hardEdge : args[22] as Clip, hitTestBehavior: identical(args[23], darticAbsent) ? HitTestBehavior.opaque : args[23] as HitTestBehavior),
         'separated#21': (args) => ListView.separated(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, itemBuilder: (a, b) => (args[8] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a) => (args[9] as Function?)!(a), separatorBuilder: (a, b) => (args[10] as Function)(a, b) as Widget, itemCount: args[11] as int, addAutomaticKeepAlives: identical(args[12], darticAbsent) ? true : args[12] as bool, addRepaintBoundaries: identical(args[13], darticAbsent) ? true : args[13] as bool, addSemanticIndexes: identical(args[14], darticAbsent) ? true : args[14] as bool, cacheExtent: identical(args[15], darticAbsent) ? null : args[15] as double?, dragStartBehavior: identical(args[16], darticAbsent) ? DragStartBehavior.start : args[16] as DragStartBehavior, keyboardDismissBehavior: identical(args[17], darticAbsent) ? null : args[17] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[18], darticAbsent) ? null : args[18] as String?, clipBehavior: identical(args[19], darticAbsent) ? Clip.hardEdge : args[19] as Clip, hitTestBehavior: identical(args[20], darticAbsent) ? HitTestBehavior.opaque : args[20] as HitTestBehavior),
         'custom#19': (args) => ListView.custom(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, itemExtent: identical(args[8], darticAbsent) ? null : args[8] as double?, prototypeItem: identical(args[9], darticAbsent) ? null : args[9] as Widget?, itemExtentBuilder: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a, b) => (args[10] as Function?)!(a, b), childrenDelegate: args[11] as SliverChildDelegate, cacheExtent: identical(args[12], darticAbsent) ? null : args[12] as double?, semanticChildCount: identical(args[13], darticAbsent) ? null : args[13] as int?, dragStartBehavior: identical(args[14], darticAbsent) ? DragStartBehavior.start : args[14] as DragStartBehavior, keyboardDismissBehavior: identical(args[15], darticAbsent) ? null : args[15] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[16], darticAbsent) ? null : args[16] as String?, clipBehavior: identical(args[17], darticAbsent) ? Clip.hardEdge : args[17] as Clip, hitTestBehavior: identical(args[18], darticAbsent) ? HitTestBehavior.opaque : args[18] as HitTestBehavior),
+        '_#fromFields#23': (args) => ListView.custom(key: args[10] as Key?, scrollDirection: args[20] as Axis, reverse: args[18] as bool, controller: args[5] as ScrollController?, primary: args[15] as bool?, physics: args[14] as ScrollPhysics?, shrinkWrap: args[22] as bool, padding: args[12] as EdgeInsetsGeometry?, itemExtent: args[8] as double?, prototypeItem: args[16] as Widget?, itemExtentBuilder: args[9] as ItemExtentBuilder?, childrenDelegate: args[3] as SliverChildDelegate, cacheExtent: args[1] as double?, semanticChildCount: args[21] as int?, dragStartBehavior: args[6] as DragStartBehavior, keyboardDismissBehavior: args[11] as ScrollViewKeyboardDismissBehavior?, restorationId: args[17] as String?, clipBehavior: args[4] as Clip, hitTestBehavior: args[7] as HitTestBehavior),
       };
 }

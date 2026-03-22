@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class MaskFilterBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,5 +32,6 @@ abstract final class MaskFilterBindings {
         'toString#0': (args) => (args[0] as MaskFilter).toString(),
         'hashCode#0': (args) => (args[0] as MaskFilter).hashCode,
         'blur#2': (args) => MaskFilter.blur(args[0] as BlurStyle, args[1] as double),
+        '_#fromFields#2': (args) => MaskFilter.blur(args[1] as BlurStyle, args[0] as double),
       };
 }

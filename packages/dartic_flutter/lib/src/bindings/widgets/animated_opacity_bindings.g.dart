@@ -6,14 +6,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'dart:ui' as ui show TextHeightBehavior, VoidCallback;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedOpacityBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,5 +51,6 @@ abstract final class AnimatedOpacityBindings {
         'onEnd#0': (args) => (args[0] as AnimatedOpacity).onEnd,
         'key#0': (args) => (args[0] as AnimatedOpacity).key,
         '#7': (args) => AnimatedOpacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, opacity: args[2] as double, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), alwaysIncludeSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool),
+        '_#fromFields#7': (args) => AnimatedOpacity(key: args[4] as Key?, child: args[1] as Widget?, opacity: args[6] as double, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[5] as ui.VoidCallback?, alwaysIncludeSemantics: args[0] as bool),
       };
 }

@@ -7,7 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
-import 'dart:math';
+import 'dart:math' show Random;
 
 abstract final class UnmodifiableListViewBindings {
   static void register(DarticPluginContext ctx) {

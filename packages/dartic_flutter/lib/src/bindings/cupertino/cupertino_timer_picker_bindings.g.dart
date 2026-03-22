@@ -6,12 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/cupertino/date_picker.dart';
+import 'dart:math' as math;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/picker.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'dart:ui';
+import 'package:flutter/src/widgets/list_wheel_scroll_view.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoTimerPickerBindings {
   static void register(DarticPluginContext ctx) {
@@ -51,6 +62,5 @@ abstract final class CupertinoTimerPickerBindings {
             return CupertinoTimerPicker(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mode: identical(args[1], darticAbsent) ? CupertinoTimerPickerMode.hms : args[1] as CupertinoTimerPickerMode, initialTimerDuration: identical(args[2], darticAbsent) ? Duration.zero : args[2] as Duration, minuteInterval: identical(args[3], darticAbsent) ? 1 : args[3] as int, secondInterval: identical(args[4], darticAbsent) ? 1 : args[4] as int, alignment: identical(args[5], darticAbsent) ? Alignment.center : args[5] as AlignmentGeometry, backgroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, itemExtent: args[7] as double, onTimerDurationChanged: (a) => (args[8] as Function)(a), changeReportingBehavior: identical(args[9], darticAbsent) ? ChangeReportingBehavior.onScrollUpdate : args[9] as ChangeReportingBehavior, selectionOverlayBuilder: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a, {required int columnCount, required int selectedIndex}) => (args[10] as Function?)!(a, columnCount: columnCount, selectedIndex: selectedIndex));
           }
         },
-        '_#fromFields#10': (args) => CupertinoTimerPicker(alignment: args[0] as AlignmentGeometry, backgroundColor: args[1] as Color?, changeReportingBehavior: args[2] as ChangeReportingBehavior, initialTimerDuration: args[3] as Duration, itemExtent: args[4] as double, minuteInterval: args[5] as int, mode: args[6] as CupertinoTimerPickerMode, onTimerDurationChanged: args[7] as void Function(Duration), secondInterval: args[8] as int, selectionOverlayBuilder: args[9] as Widget? Function(BuildContext, {required int columnCount, required int selectedIndex})?),
       };
 }

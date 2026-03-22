@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 class _$ConcurrentModificationError extends ConcurrentModificationError implements DarticObjectHolder {
   _$ConcurrentModificationError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(identical(superArgs[0], darticAbsent) ? null : superArgs[0]);
@@ -79,6 +83,5 @@ abstract final class ConcurrentModificationErrorBindings {
         'modifiedObject#0': (args) => (args[0] as ConcurrentModificationError).modifiedObject,
         'stackTrace#0': (args) => (args[0] as ConcurrentModificationError).stackTrace,
         '#1': (args) => ConcurrentModificationError(identical(args[0], darticAbsent) ? null : args[0]),
-        '_#fromFields#1': (args) => ConcurrentModificationError(args[0]),
       };
 }

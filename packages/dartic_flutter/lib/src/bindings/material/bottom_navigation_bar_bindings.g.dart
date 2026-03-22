@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/bottom_navigation_bar.dart';
+import 'dart:collection' show Queue;
+import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
+import 'package:flutter/src/material/bottom_navigation_bar_theme.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/tooltip.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/widgets/bottom_navigation_bar_item.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class BottomNavigationBarBindings {
   static void register(DarticPluginContext ctx) {

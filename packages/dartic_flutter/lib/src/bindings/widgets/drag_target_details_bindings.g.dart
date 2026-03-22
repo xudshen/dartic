@@ -1,0 +1,38 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/drag_target.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'package:flutter/src/widgets/view.dart';
+import 'dart:ui';
+
+abstract final class DragTargetDetailsBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/widgets/drag_target.dart::DragTargetDetails',
+      type: DragTargetDetails,
+      test: (o) => o is DragTargetDetails,
+      methods: methodMap(),
+    );
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'data#0': (args) => (args[0] as DragTargetDetails).data,
+        'offset#0': (args) => (args[0] as DragTargetDetails).offset,
+        '#2': (args) => DragTargetDetails<dynamic>(data: args[0], offset: args[1] as Offset),
+      };
+}

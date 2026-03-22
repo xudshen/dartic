@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class OutOfMemoryErrorBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,6 +24,7 @@ abstract final class OutOfMemoryErrorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'stackTrace#0': (args) => (args[0] as OutOfMemoryError).stackTrace,
+        '_#fromFields#0': (args) => OutOfMemoryError(),
         '#0': (args) => OutOfMemoryError(),
         'toString#0': (args) => (args[0] as OutOfMemoryError).toString(),
       };

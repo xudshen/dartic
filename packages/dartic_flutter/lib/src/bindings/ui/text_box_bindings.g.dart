@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class TextBoxBindings {
   static void register(DarticPluginContext ctx) {
@@ -32,5 +40,6 @@ abstract final class TextBoxBindings {
         'end#0': (args) => (args[0] as TextBox).end,
         'hashCode#0': (args) => (args[0] as TextBox).hashCode,
         'fromLTRBD#5': (args) => TextBox.fromLTRBD(args[0] as double, args[1] as double, args[2] as double, args[3] as double, args[4] as TextDirection),
+        '_#fromFields#5': (args) => TextBox.fromLTRBD(args[2] as double, args[4] as double, args[3] as double, args[0] as double, args[1] as TextDirection),
       };
 }

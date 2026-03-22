@@ -6,8 +6,9 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/tween.dart';
 
 abstract final class AnimationStatusBindings {
   static void register(DarticPluginContext ctx) {

@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class DeprecatedBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,6 +28,7 @@ abstract final class DeprecatedBindings {
         'instantiate#1': (args) => Deprecated.instantiate(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'mixin#1': (args) => Deprecated.mixin(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'optional#1': (args) => Deprecated.optional(identical(args[0], darticAbsent) ? null : args[0] as String?),
+        '_#fromFields#2': (args) => Deprecated(args[1] as String?),
         '#1': (args) => Deprecated(args[0] as String),
         'message#0': (args) => (args[0] as Deprecated).message,
         'toString#0': (args) => (args[0] as Deprecated).toString(),

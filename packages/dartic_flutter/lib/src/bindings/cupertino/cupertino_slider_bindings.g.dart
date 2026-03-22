@@ -6,12 +6,21 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/slider.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Color, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/cupertino/thumb_painter.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoSliderBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,6 +53,6 @@ abstract final class CupertinoSliderBindings {
         'thumbColor#0': (args) => (args[0] as CupertinoSlider).thumbColor,
         'key#0': (args) => (args[0] as CupertinoSlider).key,
         '#10': (args) => CupertinoSlider(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as double, onChanged: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onChangeStart: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onChangeEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), min: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, max: identical(args[6], darticAbsent) ? 1.0 : args[6] as double, divisions: identical(args[7], darticAbsent) ? null : args[7] as int?, activeColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, thumbColor: identical(args[9], darticAbsent) ? CupertinoColors.white : args[9] as Color),
-        '_#fromFields#9': (args) => CupertinoSlider(activeColor: args[0] as Color?, divisions: args[1] as int?, max: args[2] as double, min: args[3] as double, onChangeEnd: args[4] as void Function(double)?, onChangeStart: args[5] as void Function(double)?, onChanged: args[6] as void Function(double)?, thumbColor: args[7] as Color, value: args[8] as double),
+        '_#fromFields#10': (args) => CupertinoSlider(key: args[2] as Key?, value: args[9] as double, onChanged: args[7] as ValueChanged<double>?, onChangeStart: args[6] as ValueChanged<double>?, onChangeEnd: args[5] as ValueChanged<double>?, min: args[4] as double, max: args[3] as double, divisions: args[1] as int?, activeColor: args[0] as Color?, thumbColor: args[8] as Color),
       };
 }

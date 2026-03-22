@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class MapViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -21,6 +22,7 @@ abstract final class MapViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         '[]=#2': (args) { (args[0] as MapView)[args[1]] = args[2]; return args[2]; },
+        '_#fromFields#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
         '#1': (args) => MapView(args[0] as Map),
         'cast#0': (args) => (args[0] as MapView).cast(),
         '[]#1': (args) => (args[0] as MapView)[args[1]],

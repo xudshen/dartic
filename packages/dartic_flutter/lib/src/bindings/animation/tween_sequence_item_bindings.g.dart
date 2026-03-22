@@ -6,8 +6,8 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/tween_sequence.dart';
+import 'package:flutter/src/animation/tween.dart';
 
 abstract final class TweenSequenceItemBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,7 +22,7 @@ abstract final class TweenSequenceItemBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'tween#0': (args) => (args[0] as TweenSequenceItem).tween,
         'weight#0': (args) => (args[0] as TweenSequenceItem).weight,
-        '#2': (args) => TweenSequenceItem(tween: args[0] as Animatable, weight: args[1] as double),
-        '_#fromFields#2': (args) => TweenSequenceItem(tween: args[0] as Animatable, weight: args[1] as double),
+        '#2': (args) => TweenSequenceItem<dynamic>(tween: args[0] as Animatable, weight: args[1] as double),
+        '_#fromFields#2': (args) => TweenSequenceItem<dynamic>(tween: args[0] as Animatable, weight: args[1] as double),
       };
 }

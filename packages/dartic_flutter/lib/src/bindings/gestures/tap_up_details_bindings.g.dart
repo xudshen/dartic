@@ -6,8 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/tap.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/arena.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class TapUpDetailsBindings {
@@ -29,6 +35,5 @@ abstract final class TapUpDetailsBindings {
         'localPosition#0': (args) => (args[0] as TapUpDetails).localPosition,
         'kind#0': (args) => (args[0] as TapUpDetails).kind,
         '#3': (args) => TapUpDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, kind: args[2] as PointerDeviceKind),
-        '_#fromFields#3': (args) => TapUpDetails(globalPosition: args[0] as Offset, kind: args[1] as PointerDeviceKind, localPosition: args[2] as Offset?),
       };
 }

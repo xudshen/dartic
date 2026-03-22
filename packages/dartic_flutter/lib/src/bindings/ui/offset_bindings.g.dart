@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class OffsetBindings {
   static void register(DarticPluginContext ctx) {
@@ -50,5 +58,6 @@ abstract final class OffsetBindings {
         '>=#1': (args) => (args[0] as Offset) >= (args[1] as OffsetBase),
         '#2': (args) => Offset(args[0] as double, args[1] as double),
         'fromDirection#2': (args) => Offset.fromDirection(args[0] as double, identical(args[1], darticAbsent) ? 1.0 : args[1] as double),
+        '_#fromFields#2': (args) => Offset(args[0] as double, args[1] as double),
       };
 }

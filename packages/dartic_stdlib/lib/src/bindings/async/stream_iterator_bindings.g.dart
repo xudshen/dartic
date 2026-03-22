@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class StreamIteratorBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,6 +22,7 @@ abstract final class StreamIteratorBindings {
     // _StreamIterator
     for (final e in streamIteratorMethodMap().entries) {
       ctx.registerBinding('dart:async::_StreamIterator::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_StreamIterator${e.key}', e.value);
     }
   }
 

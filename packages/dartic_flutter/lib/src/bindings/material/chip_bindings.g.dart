@@ -6,14 +6,39 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/chip.dart';
+import 'dart:math' as math;
+import 'package:flutter/foundation.dart' show clampDouble, kIsWeb;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/chip_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/ink_decoration.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/material/tooltip.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/borders.dart';
 import 'dart:ui';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ChipBindings {
   static void register(DarticPluginContext ctx) {
@@ -63,6 +88,6 @@ abstract final class ChipBindings {
         'mouseCursor#0': (args) => (args[0] as Chip).mouseCursor,
         'key#0': (args) => (args[0] as Chip).key,
         '#27': (args) => Chip(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, avatar: identical(args[1], darticAbsent) ? null : args[1] as Widget?, label: args[2] as Widget, labelStyle: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?, labelPadding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsetsGeometry?, deleteIcon: identical(args[5], darticAbsent) ? null : args[5] as Widget?, onDeleted: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), deleteIconColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, deleteButtonTooltipMessage: identical(args[8], darticAbsent) ? null : args[8] as String?, side: identical(args[9], darticAbsent) ? null : args[9] as BorderSide?, shape: identical(args[10], darticAbsent) ? null : args[10] as OutlinedBorder?, clipBehavior: identical(args[11], darticAbsent) ? Clip.none : args[11] as Clip, focusNode: identical(args[12], darticAbsent) ? null : args[12] as FocusNode?, autofocus: identical(args[13], darticAbsent) ? false : args[13] as bool, color: identical(args[14], darticAbsent) ? null : args[14] as WidgetStateProperty<Color?>?, backgroundColor: identical(args[15], darticAbsent) ? null : args[15] as Color?, padding: identical(args[16], darticAbsent) ? null : args[16] as EdgeInsetsGeometry?, visualDensity: identical(args[17], darticAbsent) ? null : args[17] as VisualDensity?, materialTapTargetSize: identical(args[18], darticAbsent) ? null : args[18] as MaterialTapTargetSize?, elevation: identical(args[19], darticAbsent) ? null : args[19] as double?, shadowColor: identical(args[20], darticAbsent) ? null : args[20] as Color?, surfaceTintColor: identical(args[21], darticAbsent) ? null : args[21] as Color?, iconTheme: identical(args[22], darticAbsent) ? null : args[22] as IconThemeData?, avatarBoxConstraints: identical(args[23], darticAbsent) ? null : args[23] as BoxConstraints?, deleteIconBoxConstraints: identical(args[24], darticAbsent) ? null : args[24] as BoxConstraints?, chipAnimationStyle: identical(args[25], darticAbsent) ? null : args[25] as ChipAnimationStyle?, mouseCursor: identical(args[26], darticAbsent) ? null : args[26] as MouseCursor?),
-        '_#fromFields#26': (args) => Chip(autofocus: args[0] as bool, avatar: args[1] as Widget?, avatarBoxConstraints: args[2] as BoxConstraints?, backgroundColor: args[3] as Color?, chipAnimationStyle: args[4] as ChipAnimationStyle?, clipBehavior: args[5] as Clip, color: args[6] as WidgetStateProperty<Color?>?, deleteButtonTooltipMessage: args[7] as String?, deleteIcon: args[8] as Widget?, deleteIconBoxConstraints: args[9] as BoxConstraints?, deleteIconColor: args[10] as Color?, elevation: args[11] as double?, focusNode: args[12] as FocusNode?, iconTheme: args[13] as IconThemeData?, label: args[14] as Widget, labelPadding: args[15] as EdgeInsetsGeometry?, labelStyle: args[16] as TextStyle?, materialTapTargetSize: args[17] as MaterialTapTargetSize?, mouseCursor: args[18] as MouseCursor?, onDeleted: args[19] as void Function()?, padding: args[20] as EdgeInsetsGeometry?, shadowColor: args[21] as Color?, shape: args[22] as OutlinedBorder?, side: args[23] as BorderSide?, surfaceTintColor: args[24] as Color?, visualDensity: args[25] as VisualDensity?),
+        '_#fromFields#27': (args) => Chip(key: args[14] as Key?, avatar: args[1] as Widget?, label: args[15] as Widget, labelStyle: args[17] as TextStyle?, labelPadding: args[16] as EdgeInsetsGeometry?, deleteIcon: args[8] as Widget?, onDeleted: args[20] as VoidCallback?, deleteIconColor: args[10] as Color?, deleteButtonTooltipMessage: args[7] as String?, side: args[24] as BorderSide?, shape: args[23] as OutlinedBorder?, clipBehavior: args[5] as Clip, focusNode: args[12] as FocusNode?, autofocus: args[0] as bool, color: args[6] as WidgetStateProperty<Color?>?, backgroundColor: args[3] as Color?, padding: args[21] as EdgeInsetsGeometry?, visualDensity: args[26] as VisualDensity?, materialTapTargetSize: args[18] as MaterialTapTargetSize?, elevation: args[11] as double?, shadowColor: args[22] as Color?, surfaceTintColor: args[25] as Color?, iconTheme: args[13] as IconThemeData?, avatarBoxConstraints: args[2] as BoxConstraints?, deleteIconBoxConstraints: args[9] as BoxConstraints?, chipAnimationStyle: args[4] as ChipAnimationStyle?, mouseCursor: args[19] as MouseCursor?),
       };
 }

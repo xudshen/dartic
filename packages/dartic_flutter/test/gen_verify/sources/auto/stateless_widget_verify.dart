@@ -1,3 +1,7 @@
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
+
 class _VerifyStatelessWidget extends StatelessWidget {
   _VerifyStatelessWidget();
 

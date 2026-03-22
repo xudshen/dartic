@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animation_style.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/tween.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class AnimationStyleBindings {
   static void register(DarticPluginContext ctx) {
@@ -33,5 +36,6 @@ abstract final class AnimationStyleBindings {
         'reverseDuration#0': (args) => (args[0] as AnimationStyle).reverseDuration,
         'hashCode#0': (args) => (args[0] as AnimationStyle).hashCode,
         '#4': (args) => AnimationStyle(curve: identical(args[0], darticAbsent) ? null : args[0] as Curve?, duration: identical(args[1], darticAbsent) ? null : args[1] as Duration?, reverseCurve: identical(args[2], darticAbsent) ? null : args[2] as Curve?, reverseDuration: identical(args[3], darticAbsent) ? null : args[3] as Duration?),
+        '_#fromFields#4': (args) => AnimationStyle(curve: args[0] as Curve?, duration: args[1] as Duration?, reverseCurve: args[2] as Curve?, reverseDuration: args[3] as Duration?),
       };
 }

@@ -6,9 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/services/text_formatter.dart';
+import 'dart:math' as math;
+import 'package:characters/characters.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/services/text_input.dart';
 
 abstract final class FilteringTextInputFormatterBindings {
   static void register(DarticPluginContext ctx) {
@@ -31,6 +33,5 @@ abstract final class FilteringTextInputFormatterBindings {
         '#3': (args) => FilteringTextInputFormatter(args[0] as Pattern, allow: args[1] as bool, replacementString: identical(args[2], darticAbsent) ? '' : args[2] as String),
         'allow#2': (args) => FilteringTextInputFormatter.allow(args[0] as Pattern, replacementString: identical(args[1], darticAbsent) ? '' : args[1] as String),
         'deny#2': (args) => FilteringTextInputFormatter.deny(args[0] as Pattern, replacementString: identical(args[1], darticAbsent) ? '' : args[1] as String),
-        '_#fromFields#3': (args) => FilteringTextInputFormatter(allow: args[0] as bool, args[1] as Pattern, replacementString: args[2] as String),
       };
 }

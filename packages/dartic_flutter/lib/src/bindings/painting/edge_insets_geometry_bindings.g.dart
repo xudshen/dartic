@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'dart:ui' as ui show Size, TextDirection, ViewPadding, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class EdgeInsetsGeometryBindings {
   static void register(DarticPluginContext ctx) {
@@ -27,12 +27,12 @@ abstract final class EdgeInsetsGeometryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'along#1': (args) => (args[0] as EdgeInsetsGeometry).along(args[1] as Axis),
-        'inflateSize#1': (args) => (args[0] as EdgeInsetsGeometry).inflateSize(args[1] as Size),
-        'deflateSize#1': (args) => (args[0] as EdgeInsetsGeometry).deflateSize(args[1] as Size),
+        'inflateSize#1': (args) => (args[0] as EdgeInsetsGeometry).inflateSize(args[1] as ui.Size),
+        'deflateSize#1': (args) => (args[0] as EdgeInsetsGeometry).deflateSize(args[1] as ui.Size),
         'subtract#1': (args) => (args[0] as EdgeInsetsGeometry).subtract(args[1] as EdgeInsetsGeometry),
         'add#1': (args) => (args[0] as EdgeInsetsGeometry).add(args[1] as EdgeInsetsGeometry),
         'clamp#2': (args) => (args[0] as EdgeInsetsGeometry).clamp(args[1] as EdgeInsetsGeometry, args[2] as EdgeInsetsGeometry),
-        'resolve#1': (args) => (args[0] as EdgeInsetsGeometry).resolve(args[1] as TextDirection?),
+        'resolve#1': (args) => (args[0] as EdgeInsetsGeometry).resolve(args[1] as ui.TextDirection?),
         'toString#0': (args) => (args[0] as EdgeInsetsGeometry).toString(),
         'isNonNegative#0': (args) => (args[0] as EdgeInsetsGeometry).isNonNegative,
         'horizontal#0': (args) => (args[0] as EdgeInsetsGeometry).horizontal,

@@ -6,14 +6,32 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/material/bottom_sheet.dart';
+import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/bottom_sheet_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/motion.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/animation/animation_controller.dart';
+import 'package:flutter/animation.dart';
 import 'dart:ui';
+import 'package:flutter/src/gestures/drag_details.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class BottomSheetBindings {
   static void register(DarticPluginContext ctx) {
@@ -53,6 +71,6 @@ abstract final class BottomSheetBindings {
         'constraints#0': (args) => (args[0] as BottomSheet).constraints,
         'key#0': (args) => (args[0] as BottomSheet).key,
         '#16': (args) => BottomSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationController: identical(args[1], darticAbsent) ? null : args[1] as AnimationController?, enableDrag: identical(args[2], darticAbsent) ? true : args[2] as bool, showDragHandle: identical(args[3], darticAbsent) ? null : args[3] as bool?, dragHandleColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, dragHandleSize: identical(args[5], darticAbsent) ? null : args[5] as Size?, onDragStart: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onDragEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, {required bool isClosing}) => (args[7] as Function?)!(a, isClosing: isClosing), backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, shadowColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, elevation: identical(args[10], darticAbsent) ? null : args[10] as double?, shape: identical(args[11], darticAbsent) ? null : args[11] as ShapeBorder?, clipBehavior: identical(args[12], darticAbsent) ? null : args[12] as Clip?, constraints: identical(args[13], darticAbsent) ? null : args[13] as BoxConstraints?, onClosing: () => (args[14] as Function)(), builder: (a) => (args[15] as Function)(a) as Widget),
-        '_#fromFields#15': (args) => BottomSheet(animationController: args[0] as AnimationController?, backgroundColor: args[1] as Color?, builder: args[2] as Widget Function(BuildContext), clipBehavior: args[3] as Clip?, constraints: args[4] as BoxConstraints?, dragHandleColor: args[5] as Color?, dragHandleSize: args[6] as Size?, elevation: args[7] as double?, enableDrag: args[8] as bool, onClosing: args[9] as void Function(), onDragEnd: args[10] as void Function(DragEndDetails, {required bool isClosing})?, onDragStart: args[11] as void Function(DragStartDetails)?, shadowColor: args[12] as Color?, shape: args[13] as ShapeBorder?, showDragHandle: args[14] as bool?),
+        '_#fromFields#16': (args) => BottomSheet(key: args[9] as Key?, animationController: args[0] as AnimationController?, enableDrag: args[8] as bool, showDragHandle: args[15] as bool?, dragHandleColor: args[5] as Color?, dragHandleSize: args[6] as Size?, onDragStart: args[12] as BottomSheetDragStartHandler?, onDragEnd: args[11] as BottomSheetDragEndHandler?, backgroundColor: args[1] as Color?, shadowColor: args[13] as Color?, elevation: args[7] as double?, shape: args[14] as ShapeBorder?, clipBehavior: args[3] as Clip?, constraints: args[4] as BoxConstraints?, onClosing: args[10] as VoidCallback, builder: args[2] as WidgetBuilder),
       };
 }

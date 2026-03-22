@@ -6,14 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/orientation_builder.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/layout_builder.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class OrientationBuilderBindings {
   static void register(DarticPluginContext ctx) {
@@ -38,6 +38,6 @@ abstract final class OrientationBuilderBindings {
         'builder#0': (args) => (args[0] as OrientationBuilder).builder,
         'key#0': (args) => (args[0] as OrientationBuilder).key,
         '#2': (args) => OrientationBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
-        '_#fromFields#1': (args) => OrientationBuilder(builder: args[0] as Widget Function(BuildContext, Orientation)),
+        '_#fromFields#2': (args) => OrientationBuilder(key: args[1] as Key?, builder: args[0] as OrientationWidgetBuilder),
       };
 }

@@ -6,9 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/system_chrome.dart';
+import 'dart:async';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/binding.dart';
+import 'package:flutter/src/services/system_channels.dart';
 
 abstract final class SystemUiOverlayBindings {
   static void register(DarticPluginContext ctx) {

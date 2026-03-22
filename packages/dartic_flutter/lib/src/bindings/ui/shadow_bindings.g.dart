@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class ShadowBindings {
   static void register(DarticPluginContext ctx) {
@@ -39,5 +47,6 @@ abstract final class ShadowBindings {
             return Shadow(color: args[0] as Color, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double);
           }
         },
+        '_#fromFields#3': (args) => Shadow(color: args[1] as Color, offset: args[2] as Offset, blurRadius: args[0] as double),
       };
 }

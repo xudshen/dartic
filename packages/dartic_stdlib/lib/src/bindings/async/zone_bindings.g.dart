@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class ZoneBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,6 +24,7 @@ abstract final class ZoneBindings {
     // _RootZone
     for (final e in rootZoneMethodMap().entries) {
       ctx.registerBinding('dart:async::_RootZone::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_RootZone${e.key}', e.value);
     }
   }
 

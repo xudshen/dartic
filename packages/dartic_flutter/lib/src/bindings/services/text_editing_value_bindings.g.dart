@@ -6,9 +6,21 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/services/text_input.dart';
+import 'dart:async';
+import 'dart:io' show Platform;
+import 'dart:ui' show FlutterView, FontWeight, Locale, Offset, Rect, Size, TextAlign, TextDirection, TextRange;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart' show Matrix4;
+import 'package:flutter/src/services/autofill.dart';
+import 'package:flutter/src/services/binding.dart';
+import 'package:flutter/src/services/clipboard.dart' show Clipboard;
+import 'package:flutter/src/services/keyboard_inserted_content.dart';
+import 'package:flutter/src/services/message_codec.dart';
+import 'package:flutter/src/services/platform_channel.dart';
+import 'package:flutter/src/services/system_channels.dart';
+import 'package:flutter/src/services/text_editing.dart';
+import 'package:flutter/src/services/text_editing_delta.dart';
 
 abstract final class TextEditingValueBindings {
   static void register(DarticPluginContext ctx) {
@@ -33,5 +45,6 @@ abstract final class TextEditingValueBindings {
         'hashCode#0': (args) => (args[0] as TextEditingValue).hashCode,
         '#3': (args) => TextEditingValue(text: identical(args[0], darticAbsent) ? '' : args[0] as String, selection: identical(args[1], darticAbsent) ? const TextSelection.collapsed(offset: -1) : args[1] as TextSelection, composing: identical(args[2], darticAbsent) ? TextRange.empty : args[2] as TextRange),
         'fromJSON#1': (args) => TextEditingValue.fromJSON((args[0] as Map).cast<String, dynamic>()),
+        '_#fromFields#3': (args) => TextEditingValue(text: args[2] as String, selection: args[1] as TextSelection, composing: args[0] as TextRange),
       };
 }

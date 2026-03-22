@@ -7,6 +7,7 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
+import 'dart:math' show Random;
 
 abstract final class UnmodifiableMapViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -35,6 +36,11 @@ abstract final class UnmodifiableMapViewBindings {
     ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::updateAll#1', methodMap()['updateAll#1']!);
     ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::removeWhere#1', methodMap()['removeWhere#1']!);
     ctx.registerBinding('dart:_internal::UnmodifiableMapMixin::addEntries#1', methodMap()['addEntries#1']!);
+    ctx.registerBinding('dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::addAll#1', methodMap()['addAll#1']!);
+    ctx.registerBinding('dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::clear#0', methodMap()['clear#0']!);
+    ctx.registerBinding('dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::[]=#2', methodMap()['[]=#2']!);
+    ctx.registerBinding('dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::putIfAbsent#2', methodMap()['putIfAbsent#2']!);
+    ctx.registerBinding('dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::remove#1', methodMap()['remove#1']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class AsciiEncoderBindings {
   static void register(DarticPluginContext ctx) {
@@ -23,6 +24,7 @@ abstract final class AsciiEncoderBindings {
     // _UnicodeSubsetEncoder
     for (final e in unicodeSubsetEncoderMethodMap().entries) {
       ctx.registerBinding('dart:convert::_UnicodeSubsetEncoder::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_UnicodeSubsetEncoder${e.key}', e.value);
     }
   }
 
@@ -31,7 +33,7 @@ abstract final class AsciiEncoderBindings {
         'fuse#1': (args) => (args[0] as AsciiEncoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as AsciiEncoder).cast(),
         '#0': (args) => AsciiEncoder(),
-        '_#fromFields#0': (args) => AsciiEncoder(),
+        '_#fromFields#1': (args) => AsciiEncoder(),
         'startChunkedConversion#1': (args) => (args[0] as AsciiEncoder).startChunkedConversion(castToBytesSink(args[1])),
         'bind#1': (args) => (args[0] as AsciiEncoder).bind((args[1] as Stream).cast<String>()),
       };

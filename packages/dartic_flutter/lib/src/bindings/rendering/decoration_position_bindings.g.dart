@@ -6,9 +6,17 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'dart:ui' as ui show Color, Gradient, Image, ImageFilter;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
 
 abstract final class DecorationPositionBindings {
   static void register(DarticPluginContext ctx) {

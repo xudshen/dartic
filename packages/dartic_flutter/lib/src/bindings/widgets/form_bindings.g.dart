@@ -6,15 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/form.dart';
+import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
-import 'dart:async';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/navigator.dart';
+import 'package:flutter/src/widgets/pop_scope.dart';
+import 'package:flutter/src/widgets/restoration.dart';
+import 'package:flutter/src/widgets/restoration_properties.dart';
+import 'package:flutter/src/widgets/routes.dart';
+import 'package:flutter/src/widgets/view.dart';
+import 'package:flutter/src/widgets/will_pop_scope.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class FormBindings {
   static void register(DarticPluginContext ctx) {
@@ -47,6 +58,6 @@ abstract final class FormBindings {
         'autovalidateMode#0': (args) => (args[0] as Form).autovalidateMode,
         'key#0': (args) => (args[0] as Form).key,
         '#8': (args) => Form(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, canPop: identical(args[2], darticAbsent) ? null : args[2] as bool?, onPopInvoked: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onPopInvokedWithResult: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b) => (args[4] as Function?)!(a, b), onWillPop: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), autovalidateMode: identical(args[7], darticAbsent) ? null : args[7] as AutovalidateMode?),
-        '_#fromFields#7': (args) => Form(autovalidateMode: args[0] as AutovalidateMode?, canPop: args[1] as bool?, child: args[2] as Widget, onChanged: args[3] as void Function()?, onPopInvoked: args[4] as void Function(bool)?, onPopInvokedWithResult: args[5] as void Function(bool, Object?)?, onWillPop: args[6] as Future<bool> Function()?),
+        '_#fromFields#8': (args) => Form(key: args[3] as Key?, child: args[2] as Widget, canPop: args[1] as bool?, onPopInvoked: args[5] as PopInvokedCallback?, onPopInvokedWithResult: args[6] as PopInvokedWithResultCallback<Object?>?, onWillPop: args[7] as WillPopCallback?, onChanged: args[4] as VoidCallback?, autovalidateMode: args[0] as AutovalidateMode?),
       };
 }

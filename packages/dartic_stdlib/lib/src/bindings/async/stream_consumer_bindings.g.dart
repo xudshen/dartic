@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 class _$StreamConsumer implements StreamConsumer, DarticObjectHolder {
   _$StreamConsumer(this._dispatch, this.$darticObject, List<Object?> superArgs);

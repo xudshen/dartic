@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, Size, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SizedBoxBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,7 +54,8 @@ abstract final class SizedBoxBindings {
         '#4': (args) => SizedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, width: identical(args[1], darticAbsent) ? null : args[1] as double?, height: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         'expand#2': (args) => SizedBox.expand(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
         'shrink#2': (args) => SizedBox.shrink(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
-        'fromSize#3': (args) => SizedBox.fromSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, size: identical(args[2], darticAbsent) ? null : args[2] as Size?),
+        'fromSize#3': (args) => SizedBox.fromSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, size: identical(args[2], darticAbsent) ? null : args[2] as ui.Size?),
         'square#3': (args) => SizedBox.square(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, dimension: identical(args[2], darticAbsent) ? null : args[2] as double?),
+        '_#fromFields#4': (args) => SizedBox(key: args[2] as Key?, width: args[3] as double?, height: args[1] as double?, child: args[0] as Widget?),
       };
 }

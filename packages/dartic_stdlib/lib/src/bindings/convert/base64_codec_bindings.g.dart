@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class Base64CodecBindings {
   static void register(DarticPluginContext ctx) {
@@ -29,10 +31,7 @@ abstract final class Base64CodecBindings {
         'inverted#0': (args) => (args[0] as Base64Codec).inverted,
         '#0': (args) => Base64Codec(),
         'urlSafe#0': (args) => Base64Codec.urlSafe(),
-        '_#fromFields#1': (args) {
-            final encoder = args[0] as Base64Encoder;
-            return identical(encoder, const Base64Encoder()) ? const Base64Codec() : const Base64Codec.urlSafe();
-        },
+        '_#fromFields#1': (args) => Base64Codec(),
         'encode#1': (args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>()),
       };
 }

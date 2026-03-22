@@ -6,14 +6,21 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SizeTransitionBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,5 +51,6 @@ abstract final class SizeTransitionBindings {
         'listenable#0': (args) => (args[0] as SizeTransition).listenable,
         'key#0': (args) => (args[0] as SizeTransition).key,
         '#6': (args) => SizeTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axis: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, sizeFactor: args[2] as Animation<double>, axisAlignment: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, fixedCrossAxisSizeFactor: identical(args[4], darticAbsent) ? null : args[4] as double?, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
+        '_#fromFields#6': (args) => SizeTransition(key: args[4] as Key?, axis: args[0] as Axis, sizeFactor: args[5] as Animation<double>, axisAlignment: args[1] as double, fixedCrossAxisSizeFactor: args[3] as double?, child: args[2] as Widget?),
       };
 }

@@ -1,0 +1,174 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Dart SDK: 3.10.7
+
+// ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
+
+import 'package:dartic/dartic.dart';
+import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'dart:ui' as ui show Color, Gradient, Image, ImageFilter, Offset, Rect, SemanticsAction, Size, TextBaseline;
+import 'package:flutter/animation.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/semantics/semantics.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/gestures/tap.dart';
+import 'package:flutter/src/gestures/long_press.dart';
+import 'package:flutter/src/gestures/drag_details.dart';
+import 'package:flutter/src/foundation/assertions.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/hit_test.dart';
+import 'package:flutter/src/semantics/semantics_event.dart';
+import 'package:flutter/src/animation/curves.dart';
+
+abstract final class RenderSemanticsGestureHandlerBindings {
+  static void register(DarticPluginContext ctx) {
+    ctx.registerClass(
+      name: 'package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler',
+      type: RenderSemanticsGestureHandler,
+      test: (o) => o is RenderSemanticsGestureHandler,
+      methods: methodMap(),
+      superclasses: ['package:flutter/src/rendering/proxy_box.dart::RenderProxyBoxWithHitTestBehavior', 'package:flutter/src/rendering/proxy_box.dart::RenderProxyBox', 'package:flutter/src/rendering/box.dart::RenderBox', 'package:flutter/src/rendering/object.dart::RenderObject', 'package:flutter/src/gestures/hit_test.dart::HitTestTarget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTreeMixin', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/rendering/object.dart::RenderObjectWithChildMixin', 'package:flutter/src/rendering/proxy_box.dart::RenderProxyBoxMixin'],
+    );
+  }
+
+  static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSemanticsGestureHandler).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
+        'debugFillProperties#1': (args) { (args[0] as RenderSemanticsGestureHandler).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hitTest#2': (args) => (args[0] as RenderSemanticsGestureHandler).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
+        'hitTestSelf#1': (args) => (args[0] as RenderSemanticsGestureHandler).hitTestSelf(args[1] as ui.Offset),
+        'setupParentData#1': (args) { (args[0] as RenderSemanticsGestureHandler).setupParentData(args[1] as RenderObject); return null; },
+        'getMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsGestureHandler).getMinIntrinsicWidth(args[1] as double),
+        'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeMinIntrinsicWidth(args[1] as double),
+        'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsGestureHandler).getMaxIntrinsicWidth(args[1] as double),
+        'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeMaxIntrinsicWidth(args[1] as double),
+        'getMinIntrinsicHeight#1': (args) => (args[0] as RenderSemanticsGestureHandler).getMinIntrinsicHeight(args[1] as double),
+        'computeMinIntrinsicHeight#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeMinIntrinsicHeight(args[1] as double),
+        'getMaxIntrinsicHeight#1': (args) => (args[0] as RenderSemanticsGestureHandler).getMaxIntrinsicHeight(args[1] as double),
+        'computeMaxIntrinsicHeight#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeMaxIntrinsicHeight(args[1] as double),
+        'getDryLayout#1': (args) => (args[0] as RenderSemanticsGestureHandler).getDryLayout(args[1] as BoxConstraints),
+        'computeDryLayout#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeDryLayout(args[1] as BoxConstraints),
+        'getDryBaseline#2': (args) => (args[0] as RenderSemanticsGestureHandler).getDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
+        'computeDryBaseline#2': (args) => (args[0] as RenderSemanticsGestureHandler).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
+        'debugCannotComputeDryLayout#2': (args) => (args[0] as RenderSemanticsGestureHandler).debugCannotComputeDryLayout(reason: identical(args[1], darticAbsent) ? null : args[1] as String?, error: identical(args[2], darticAbsent) ? null : args[2] as FlutterError?),
+        'debugAdoptSize#1': (args) => (args[0] as RenderSemanticsGestureHandler).debugAdoptSize(args[1] as ui.Size),
+        'debugResetSize#0': (args) { (args[0] as RenderSemanticsGestureHandler).debugResetSize(); return null; },
+        'getDistanceToBaseline#2': (args) => (args[0] as RenderSemanticsGestureHandler).getDistanceToBaseline(args[1] as ui.TextBaseline, onlyReal: identical(args[2], darticAbsent) ? false : args[2] as bool),
+        'getDistanceToActualBaseline#1': (args) => (args[0] as RenderSemanticsGestureHandler).getDistanceToActualBaseline(args[1] as ui.TextBaseline),
+        'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeDistanceToActualBaseline(args[1] as ui.TextBaseline),
+        'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSemanticsGestureHandler).debugAssertDoesMeetConstraints(); return null; },
+        'markNeedsLayout#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsLayout(); return null; },
+        'performResize#0': (args) { (args[0] as RenderSemanticsGestureHandler).performResize(); return null; },
+        'performLayout#0': (args) { (args[0] as RenderSemanticsGestureHandler).performLayout(); return null; },
+        'hitTestChildren#2': (args) => (args[0] as RenderSemanticsGestureHandler).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
+        'applyPaintTransform#2': (args) { (args[0] as RenderSemanticsGestureHandler).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
+        'globalToLocal#2': (args) => (args[0] as RenderSemanticsGestureHandler).globalToLocal(args[1] as ui.Offset, ancestor: identical(args[2], darticAbsent) ? null : args[2] as RenderObject?),
+        'localToGlobal#2': (args) => (args[0] as RenderSemanticsGestureHandler).localToGlobal(args[1] as ui.Offset, ancestor: identical(args[2], darticAbsent) ? null : args[2] as RenderObject?),
+        'handleEvent#2': (args) { (args[0] as RenderSemanticsGestureHandler).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
+        'debugHandleEvent#2': (args) => (args[0] as RenderSemanticsGestureHandler).debugHandleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>),
+        'debugPaint#2': (args) { (args[0] as RenderSemanticsGestureHandler).debugPaint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'debugPaintSize#2': (args) { (args[0] as RenderSemanticsGestureHandler).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'debugPaintBaselines#2': (args) { (args[0] as RenderSemanticsGestureHandler).debugPaintBaselines(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'debugPaintPointers#2': (args) { (args[0] as RenderSemanticsGestureHandler).debugPaintPointers(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'reassemble#0': (args) { (args[0] as RenderSemanticsGestureHandler).reassemble(); return null; },
+        'dispose#0': (args) { (args[0] as RenderSemanticsGestureHandler).dispose(); return null; },
+        'redepthChild#1': (args) { (args[0] as RenderSemanticsGestureHandler).redepthChild(args[1] as RenderObject); return null; },
+        'redepthChildren#0': (args) { (args[0] as RenderSemanticsGestureHandler).redepthChildren(); return null; },
+        'adoptChild#1': (args) { (args[0] as RenderSemanticsGestureHandler).adoptChild(args[1] as RenderObject); return null; },
+        'dropChild#1': (args) { (args[0] as RenderSemanticsGestureHandler).dropChild(args[1] as RenderObject); return null; },
+        'visitChildren#1': (args) { (args[0] as RenderSemanticsGestureHandler).visitChildren((a) => (args[1] as Function)(a)); return null; },
+        'attach#1': (args) { (args[0] as RenderSemanticsGestureHandler).attach(args[1] as PipelineOwner); return null; },
+        'detach#0': (args) { (args[0] as RenderSemanticsGestureHandler).detach(); return null; },
+        'markParentNeedsLayout#0': (args) { (args[0] as RenderSemanticsGestureHandler).markParentNeedsLayout(); return null; },
+        'markNeedsLayoutForSizedByParentChange#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsLayoutForSizedByParentChange(); return null; },
+        'scheduleInitialLayout#0': (args) { (args[0] as RenderSemanticsGestureHandler).scheduleInitialLayout(); return null; },
+        'layout#2': (args) { (args[0] as RenderSemanticsGestureHandler).layout(args[1] as Constraints, parentUsesSize: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
+        'invokeLayoutCallback#1': (args) { (args[0] as RenderSemanticsGestureHandler).invokeLayoutCallback((a) => (args[1] as Function)(a)); return null; },
+        'debugRegisterRepaintBoundaryPaint#2': (args) { (args[0] as RenderSemanticsGestureHandler).debugRegisterRepaintBoundaryPaint(includedParent: identical(args[1], darticAbsent) ? true : args[1] as bool, includedChild: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
+        'updateCompositedLayer#1': (args) => (args[0] as RenderSemanticsGestureHandler).updateCompositedLayer(oldLayer: args[1] as OffsetLayer?),
+        'markNeedsCompositingBitsUpdate#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsCompositingBitsUpdate(); return null; },
+        'markNeedsPaint#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsPaint(); return null; },
+        'markNeedsCompositedLayerUpdate#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsCompositedLayerUpdate(); return null; },
+        'scheduleInitialPaint#1': (args) { (args[0] as RenderSemanticsGestureHandler).scheduleInitialPaint(args[1] as ContainerLayer); return null; },
+        'replaceRootLayer#1': (args) { (args[0] as RenderSemanticsGestureHandler).replaceRootLayer(args[1] as OffsetLayer); return null; },
+        'paint#2': (args) { (args[0] as RenderSemanticsGestureHandler).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'paintsChild#1': (args) => (args[0] as RenderSemanticsGestureHandler).paintsChild(args[1] as RenderObject),
+        'getTransformTo#1': (args) => (args[0] as RenderSemanticsGestureHandler).getTransformTo(args[1] as RenderObject?),
+        'describeApproximatePaintClip#1': (args) => (args[0] as RenderSemanticsGestureHandler).describeApproximatePaintClip(args[1] as RenderObject),
+        'describeSemanticsClip#1': (args) => (args[0] as RenderSemanticsGestureHandler).describeSemanticsClip(args[1] as RenderObject?),
+        'scheduleInitialSemantics#0': (args) { (args[0] as RenderSemanticsGestureHandler).scheduleInitialSemantics(); return null; },
+        'sendSemanticsEvent#1': (args) { (args[0] as RenderSemanticsGestureHandler).sendSemanticsEvent(args[1] as SemanticsEvent); return null; },
+        'clearSemantics#0': (args) { (args[0] as RenderSemanticsGestureHandler).clearSemantics(); return null; },
+        'markNeedsSemanticsUpdate#0': (args) { (args[0] as RenderSemanticsGestureHandler).markNeedsSemanticsUpdate(); return null; },
+        'visitChildrenForSemantics#1': (args) { (args[0] as RenderSemanticsGestureHandler).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
+        'assembleSemanticsNode#3': (args) { (args[0] as RenderSemanticsGestureHandler).assembleSemanticsNode(args[1] as SemanticsNode, args[2] as SemanticsConfiguration, (args[3] as Iterable).cast<SemanticsNode>()); return null; },
+        'toStringShort#0': (args) => (args[0] as RenderSemanticsGestureHandler).toStringShort(),
+        'toStringDeep#4': (args) => (args[0] as RenderSemanticsGestureHandler).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'toStringShallow#2': (args) => (args[0] as RenderSemanticsGestureHandler).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
+        'debugDescribeChildren#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDescribeChildren(),
+        'showOnScreen#4': (args) { (args[0] as RenderSemanticsGestureHandler).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as ui.Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
+        'describeForError#2': (args) => (args[0] as RenderSemanticsGestureHandler).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
+        'toDiagnosticsNode#2': (args) => (args[0] as RenderSemanticsGestureHandler).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'debugValidateChild#1': (args) => (args[0] as RenderSemanticsGestureHandler).debugValidateChild(args[1] as RenderObject),
+        'computeSizeForNoChild#1': (args) => (args[0] as RenderSemanticsGestureHandler).computeSizeForNoChild(args[1] as BoxConstraints),
+        'validActions#0': (args) => (args[0] as RenderSemanticsGestureHandler).validActions,
+        'onTap#0': (args) => (args[0] as RenderSemanticsGestureHandler).onTap,
+        'onLongPress#0': (args) => (args[0] as RenderSemanticsGestureHandler).onLongPress,
+        'onHorizontalDragUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).onHorizontalDragUpdate,
+        'onVerticalDragUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).onVerticalDragUpdate,
+        'scrollFactor#0': (args) => (args[0] as RenderSemanticsGestureHandler).scrollFactor,
+        'behavior#0': (args) => (args[0] as RenderSemanticsGestureHandler).behavior,
+        'hasSize#0': (args) => (args[0] as RenderSemanticsGestureHandler).hasSize,
+        'size#0': (args) => (args[0] as RenderSemanticsGestureHandler).size,
+        'semanticBounds#0': (args) => (args[0] as RenderSemanticsGestureHandler).semanticBounds,
+        'constraints#0': (args) => (args[0] as RenderSemanticsGestureHandler).constraints,
+        'paintBounds#0': (args) => (args[0] as RenderSemanticsGestureHandler).paintBounds,
+        'debugDisposed#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDisposed,
+        'parentData#0': (args) => (args[0] as RenderSemanticsGestureHandler).parentData,
+        'depth#0': (args) => (args[0] as RenderSemanticsGestureHandler).depth,
+        'parent#0': (args) => (args[0] as RenderSemanticsGestureHandler).parent,
+        'semanticsParent#0': (args) => (args[0] as RenderSemanticsGestureHandler).semanticsParent,
+        'debugCreator#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugCreator,
+        'debugDoingThisResize#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDoingThisResize,
+        'debugDoingThisLayout#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDoingThisLayout,
+        'debugCanParentUseSize#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugCanParentUseSize,
+        'debugLayoutParent#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugLayoutParent,
+        'owner#0': (args) => (args[0] as RenderSemanticsGestureHandler).owner,
+        'attached#0': (args) => (args[0] as RenderSemanticsGestureHandler).attached,
+        'debugNeedsLayout#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugNeedsLayout,
+        'debugDoingThisLayoutWithCallback#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDoingThisLayoutWithCallback,
+        'sizedByParent#0': (args) => (args[0] as RenderSemanticsGestureHandler).sizedByParent,
+        'debugDoingThisPaint#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugDoingThisPaint,
+        'isRepaintBoundary#0': (args) => (args[0] as RenderSemanticsGestureHandler).isRepaintBoundary,
+        'alwaysNeedsCompositing#0': (args) => (args[0] as RenderSemanticsGestureHandler).alwaysNeedsCompositing,
+        'layer#0': (args) => (args[0] as RenderSemanticsGestureHandler).layer,
+        'debugLayer#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugLayer,
+        'needsCompositing#0': (args) => (args[0] as RenderSemanticsGestureHandler).needsCompositing,
+        'debugNeedsPaint#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugNeedsPaint,
+        'debugNeedsCompositedLayerUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugNeedsCompositedLayerUpdate,
+        'debugNeedsSemanticsUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugNeedsSemanticsUpdate,
+        'debugSemantics#0': (args) => (args[0] as RenderSemanticsGestureHandler).debugSemantics,
+        'child#0': (args) => (args[0] as RenderSemanticsGestureHandler).child,
+        'validActions=#1': (args) { (args[0] as RenderSemanticsGestureHandler).validActions = args[1] == null ? null : (args[1] as Set).cast<ui.SemanticsAction>(); return args[1]; },
+        'onTap=#1': (args) { (args[0] as RenderSemanticsGestureHandler).onTap = args[1] as GestureTapCallback?; return args[1]; },
+        'onLongPress=#1': (args) { (args[0] as RenderSemanticsGestureHandler).onLongPress = args[1] as GestureLongPressCallback?; return args[1]; },
+        'onHorizontalDragUpdate=#1': (args) { (args[0] as RenderSemanticsGestureHandler).onHorizontalDragUpdate = args[1] as GestureDragUpdateCallback?; return args[1]; },
+        'onVerticalDragUpdate=#1': (args) { (args[0] as RenderSemanticsGestureHandler).onVerticalDragUpdate = args[1] as GestureDragUpdateCallback?; return args[1]; },
+        'scrollFactor=#1': (args) { (args[0] as RenderSemanticsGestureHandler).scrollFactor = args[1] as double; return args[1]; },
+        'behavior=#1': (args) { (args[0] as RenderSemanticsGestureHandler).behavior = args[1] as HitTestBehavior; return args[1]; },
+        'size=#1': (args) { (args[0] as RenderSemanticsGestureHandler).size = args[1] as ui.Size; return args[1]; },
+        'parentData=#1': (args) { (args[0] as RenderSemanticsGestureHandler).parentData = args[1] as ParentData?; return args[1]; },
+        'debugCreator=#1': (args) { (args[0] as RenderSemanticsGestureHandler).debugCreator = args[1]; return args[1]; },
+        'layer=#1': (args) { (args[0] as RenderSemanticsGestureHandler).layer = args[1] as ContainerLayer?; return args[1]; },
+        'child=#1': (args) { (args[0] as RenderSemanticsGestureHandler).child = args[1] as RenderBox?; return args[1]; },
+        '#7': (args) => RenderSemanticsGestureHandler(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, onTap: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onLongPress: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onHorizontalDragUpdate: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onVerticalDragUpdate: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), scrollFactor: identical(args[5], darticAbsent) ? 0.8 : args[5] as double, behavior: identical(args[6], darticAbsent) ? HitTestBehavior.deferToChild : args[6] as HitTestBehavior),
+      };
+}

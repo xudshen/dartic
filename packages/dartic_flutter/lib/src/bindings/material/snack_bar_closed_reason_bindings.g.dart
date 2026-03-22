@@ -6,14 +6,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/snack_bar.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/icon_button.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/snack_bar_theme.dart';
+import 'package:flutter/src/material/text_button.dart';
+import 'package:flutter/src/material/text_button_theme.dart';
+import 'package:flutter/src/material/theme.dart';
 
 abstract final class SnackBarClosedReasonBindings {
   static void register(DarticPluginContext ctx) {

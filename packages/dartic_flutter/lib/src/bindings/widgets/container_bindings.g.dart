@@ -6,14 +6,21 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/image.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ContainerBindings {
   static void register(DarticPluginContext ctx) {

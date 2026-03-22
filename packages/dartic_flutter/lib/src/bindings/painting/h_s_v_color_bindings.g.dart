@@ -6,11 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/colors.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Color, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
 
 abstract final class HSVColorBindings {
   static void register(DarticPluginContext ctx) {
@@ -37,5 +36,6 @@ abstract final class HSVColorBindings {
         'hashCode#0': (args) => (args[0] as HSVColor).hashCode,
         'fromAHSV#4': (args) => HSVColor.fromAHSV(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromColor#1': (args) => HSVColor.fromColor(args[0] as Color),
+        '_#fromFields#4': (args) => HSVColor.fromAHSV(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
       };
 }

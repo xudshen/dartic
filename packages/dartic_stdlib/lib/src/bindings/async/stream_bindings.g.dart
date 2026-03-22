@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 class _$Stream extends Stream implements DarticObjectHolder {
   _$Stream(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -17,14 +19,14 @@ class _$Stream extends Stream implements DarticObjectHolder {
   final DarticObject $darticObject;
 
   @override
-  Stream asBroadcastStream({Function? onListen, Function? onCancel}) {
+  Stream asBroadcastStream({void Function(StreamSubscription)? onListen, void Function(StreamSubscription)? onCancel}) {
     final r = _dispatch.invoke(this, $darticObject, 'asBroadcastStream', [onListen, onCancel]);
     if (identical(r, notOverridden)) return super.asBroadcastStream(onListen: onListen != null ? (a) => onListen(a) : null, onCancel: onCancel != null ? (a) => onCancel(a) : null);
     return r as Stream;
   }
 
   @override
-  StreamSubscription listen(Function? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+  StreamSubscription listen(void Function(dynamic)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
     final r = _dispatch.invoke(this, $darticObject, 'listen', [onData, onError, onDone, cancelOnError]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method listen must be overridden in dartic code');
@@ -33,7 +35,7 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Stream where(Function test) {
+  Stream where(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'where', [test]);
     if (identical(r, notOverridden)) return super.where((a) => test(a) as bool);
     return r as Stream;
@@ -54,7 +56,7 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Future reduce(Function combine) {
+  Future reduce(dynamic Function(dynamic, dynamic) combine) {
     final r = _dispatch.invoke(this, $darticObject, 'reduce', [combine]);
     if (identical(r, notOverridden)) return super.reduce((a, b) => combine(a, b));
     return r as Future;
@@ -75,21 +77,21 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Future<void> forEach(Function action) {
+  Future<void> forEach(void Function(dynamic) action) {
     final r = _dispatch.invoke(this, $darticObject, 'forEach', [action]);
     if (identical(r, notOverridden)) return super.forEach((a) => action(a));
     return r as Future<void>;
   }
 
   @override
-  Future<bool> every(Function test) {
+  Future<bool> every(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'every', [test]);
     if (identical(r, notOverridden)) return super.every((a) => test(a) as bool);
     return r as Future<bool>;
   }
 
   @override
-  Future<bool> any(Function test) {
+  Future<bool> any(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'any', [test]);
     if (identical(r, notOverridden)) return super.any((a) => test(a) as bool);
     return r as Future<bool>;
@@ -117,7 +119,7 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Stream takeWhile(Function test) {
+  Stream takeWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'takeWhile', [test]);
     if (identical(r, notOverridden)) return super.takeWhile((a) => test(a) as bool);
     return r as Stream;
@@ -131,35 +133,35 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Stream skipWhile(Function test) {
+  Stream skipWhile(bool Function(dynamic) test) {
     final r = _dispatch.invoke(this, $darticObject, 'skipWhile', [test]);
     if (identical(r, notOverridden)) return super.skipWhile((a) => test(a) as bool);
     return r as Stream;
   }
 
   @override
-  Stream distinct([Function? equals]) {
+  Stream distinct([bool Function(dynamic, dynamic)? equals]) {
     final r = _dispatch.invoke(this, $darticObject, 'distinct', [equals]);
     if (identical(r, notOverridden)) return super.distinct(equals != null ? (a, b) => equals(a, b) as bool : null);
     return r as Stream;
   }
 
   @override
-  Future firstWhere(Function test, {Function? orElse}) {
+  Future firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'firstWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.firstWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as Future;
   }
 
   @override
-  Future lastWhere(Function test, {Function? orElse}) {
+  Future lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'lastWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.lastWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as Future;
   }
 
   @override
-  Future singleWhere(Function test, {Function? orElse}) {
+  Future singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
     final r = _dispatch.invoke(this, $darticObject, 'singleWhere', [test, orElse]);
     if (identical(r, notOverridden)) return super.singleWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return r as Future;
@@ -173,7 +175,7 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  Stream timeout(Duration timeLimit, {Function? onTimeout}) {
+  Stream timeout(Duration timeLimit, {void Function(EventSink)? onTimeout}) {
     final r = _dispatch.invoke(this, $darticObject, 'timeout', [timeLimit, onTimeout]);
     if (identical(r, notOverridden)) return super.timeout(timeLimit, onTimeout: onTimeout != null ? (a) => onTimeout(a) : null);
     return r as Stream;
@@ -320,6 +322,7 @@ abstract final class StreamBindings {
     // _EmptyStream
     for (final e in emptyStreamMethodMap().entries) {
       ctx.registerBinding('dart:async::_EmptyStream::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_EmptyStream${e.key}', e.value);
     }
   }
 

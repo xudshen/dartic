@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/heroes.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/navigator.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'package:flutter/src/widgets/pages.dart';
+import 'package:flutter/src/widgets/routes.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart' show TickerMode;
+import 'package:flutter/src/widgets/transitions.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/animation/tween.dart';
+import 'package:flutter/animation.dart';
 import 'dart:ui';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class HeroBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,6 +54,6 @@ abstract final class HeroBindings {
         'transitionOnUserGestures#0': (args) => (args[0] as Hero).transitionOnUserGestures,
         'key#0': (args) => (args[0] as Hero).key,
         '#7': (args) => Hero(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tag: args[1] as Object, createRectTween: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), flightShuttleBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b, c, d, e) => (args[3] as Function?)!(a, b, c, d, e), placeholderBuilder: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b, c) => (args[4] as Function?)!(a, b, c), transitionOnUserGestures: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
-        '_#fromFields#6': (args) => Hero(child: args[0] as Widget, createRectTween: args[1] as Tween<Rect?> Function(Rect?, Rect?)?, flightShuttleBuilder: args[2] as Widget Function(BuildContext, Animation<double>, HeroFlightDirection, BuildContext, BuildContext)?, placeholderBuilder: args[3] as Widget Function(BuildContext, Size, Widget)?, tag: args[4] as Object, transitionOnUserGestures: args[5] as bool),
+        '_#fromFields#7': (args) => Hero(key: args[3] as Key?, tag: args[5] as Object, createRectTween: args[1] as CreateRectTween?, flightShuttleBuilder: args[2] as HeroFlightShuttleBuilder?, placeholderBuilder: args[4] as HeroPlaceholderBuilder?, transitionOnUserGestures: args[6] as bool, child: args[0] as Widget),
       };
 }

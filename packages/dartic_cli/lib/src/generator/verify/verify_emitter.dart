@@ -82,10 +82,18 @@ VerifyResult? emitVerifySource(TypeInfo info) {
 
   // --- Dartic source ---
 
-  // Import for non-core libraries (dart:core is auto-imported)
+  // Import the class's library (dart:core is auto-imported).
   final libraryUri = info.libraryUri;
-  if (libraryUri != 'dart:core' && libraryUri.startsWith('dart:')) {
+  if (libraryUri != 'dart:core') {
     buf.writeln("import '$libraryUri';");
+  }
+  // Import referenced types from method signatures (params, return types).
+  for (final uri in info.referencedTypes.keys) {
+    if (uri == libraryUri || uri == 'dart:core') continue;
+    if (uri.startsWith('dart:_')) continue;
+    buf.writeln("import '$uri';");
+  }
+  if (libraryUri != 'dart:core' || info.referencedTypes.isNotEmpty) {
     buf.writeln();
   }
 
@@ -129,6 +137,25 @@ VerifyResult? emitVerifySource(TypeInfo info) {
   _emitAbstractGetters(buf, info, seededMembers, isImplements);
   _emitAbstractSetters(buf, info, seededMembers, isImplements);
   _emitAbstractOperators(buf, info, seededMembers, isImplements);
+
+  // Emit seeded members that aren't in info's member lists (e.g. Object
+  // methods with overridden signatures like Diagnosticable.toString).
+  final emittedNames = {
+    ...info.methods.map((m) => m.name),
+    ...info.getters.map((g) => g.name),
+    ...info.setters.map((s) => s.name),
+    ...info.setters.map((s) => '${s.name}='), // seed key format
+    ...info.operators.map((o) => o.name),
+  };
+  for (final name in seededMembers) {
+    if (!emittedNames.contains(name)) {
+      final seed = seeds.getSeed(className, name);
+      if (seed != null) {
+        buf.writeln('  $seed');
+        buf.writeln();
+      }
+    }
+  }
 
   // --- Super call wrappers (extends mode only) ---
   final superCallEntries = <String>[];

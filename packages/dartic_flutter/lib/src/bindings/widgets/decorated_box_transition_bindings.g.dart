@@ -6,14 +6,22 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DecoratedBoxTransitionBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +50,6 @@ abstract final class DecoratedBoxTransitionBindings {
         'listenable#0': (args) => (args[0] as DecoratedBoxTransition).listenable,
         'key#0': (args) => (args[0] as DecoratedBoxTransition).key,
         '#4': (args) => DecoratedBoxTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: args[1] as Animation<Decoration>, position: identical(args[2], darticAbsent) ? DecorationPosition.background : args[2] as DecorationPosition, child: args[3] as Widget),
-        '_#fromFields#3': (args) => DecoratedBoxTransition(child: args[0] as Widget, decoration: args[1] as Animation<Decoration>, position: args[2] as DecorationPosition),
+        '_#fromFields#5': (args) => DecoratedBoxTransition(key: args[2] as Key?, decoration: args[3] as Animation<Decoration>, position: args[4] as DecorationPosition, child: args[0] as Widget),
       };
 }

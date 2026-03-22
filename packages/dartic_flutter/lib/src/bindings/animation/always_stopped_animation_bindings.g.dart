@@ -6,8 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animations.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/listener_helpers.dart';
+import 'dart:ui';
+import 'package:flutter/src/animation/tween.dart';
+import 'package:flutter/animation.dart';
 
 abstract final class AlwaysStoppedAnimationBindings {
   static void register(DarticPluginContext ctx) {
@@ -33,6 +40,7 @@ abstract final class AlwaysStoppedAnimationBindings {
         'isCompleted#0': (args) => (args[0] as AlwaysStoppedAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as AlwaysStoppedAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as AlwaysStoppedAnimation).isForwardOrCompleted,
-        '#1': (args) => AlwaysStoppedAnimation(args[0]),
+        '#1': (args) => AlwaysStoppedAnimation<dynamic>(args[0]),
+        '_#fromFields#1': (args) => AlwaysStoppedAnimation<dynamic>(args[0]),
       };
 }

@@ -6,14 +6,16 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/theme.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/material/typography.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ThemeBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +44,6 @@ abstract final class ThemeBindings {
         'child#0': (args) => (args[0] as Theme).child,
         'key#0': (args) => (args[0] as Theme).key,
         '#3': (args) => Theme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, child: args[2] as Widget),
-        '_#fromFields#2': (args) => Theme(child: args[0] as Widget, data: args[1] as ThemeData),
+        '_#fromFields#3': (args) => Theme(key: args[2] as Key?, data: args[1] as ThemeData, child: args[0] as Widget),
       };
 }

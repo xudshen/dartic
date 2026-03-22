@@ -6,11 +6,13 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/box_border.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'dart:ui';
 
 abstract final class BorderBindings {
   static void register(DarticPluginContext ctx) {
@@ -48,5 +50,6 @@ abstract final class BorderBindings {
         'fromBorderSide#1': (args) => Border.fromBorderSide(args[0] as BorderSide),
         'symmetric#2': (args) => Border.symmetric(vertical: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, horizontal: identical(args[1], darticAbsent) ? BorderSide.none : args[1] as BorderSide),
         'all#4': (args) => Border.all(color: identical(args[0], darticAbsent) ? const Color(0xFF000000) : args[0] as Color, width: identical(args[1], darticAbsent) ? 1.0 : args[1] as double, style: identical(args[2], darticAbsent) ? BorderStyle.solid : args[2] as BorderStyle, strokeAlign: identical(args[3], darticAbsent) ? BorderSide.strokeAlignInside : args[3] as double),
+        '_#fromFields#4': (args) => Border(top: args[3] as BorderSide, right: args[2] as BorderSide, bottom: args[0] as BorderSide, left: args[1] as BorderSide),
       };
 }

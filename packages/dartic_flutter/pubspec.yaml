@@ -12,6 +12,11 @@ dependencies:
     sdk: flutter
   dartic:
     path: ../../
+  characters: '^1.4.0'
+  collection: '^1.19.1'
+  material_color_utilities: '^0.11.1'
+  meta: '^1.17.0'
+  vector_math: '^2.2.0'
 
 dartic:
   role: plugin

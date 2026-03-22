@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ScaleTransitionBindings {
   static void register(DarticPluginContext ctx) {
@@ -45,5 +54,6 @@ abstract final class ScaleTransitionBindings {
         'listenable#0': (args) => (args[0] as ScaleTransition).listenable,
         'key#0': (args) => (args[0] as ScaleTransition).key,
         '#5': (args) => ScaleTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scale: args[1] as Animation<double>, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as Alignment, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        '_#fromFields#6': (args) => ScaleTransition(key: args[3] as Key?, scale: args[4] as Animation<double>, alignment: args[0] as Alignment, filterQuality: args[2] as FilterQuality?, child: args[1] as Widget?),
       };
 }

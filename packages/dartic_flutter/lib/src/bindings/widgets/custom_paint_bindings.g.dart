@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, Size, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/custom_paint.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CustomPaintBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,7 +53,7 @@ abstract final class CustomPaintBindings {
         'willChange#0': (args) => (args[0] as CustomPaint).willChange,
         'child#0': (args) => (args[0] as CustomPaint).child,
         'key#0': (args) => (args[0] as CustomPaint).key,
-        '#7': (args) => CustomPaint(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, painter: identical(args[1], darticAbsent) ? null : args[1] as CustomPainter?, foregroundPainter: identical(args[2], darticAbsent) ? null : args[2] as CustomPainter?, size: identical(args[3], darticAbsent) ? Size.zero : args[3] as Size, isComplex: identical(args[4], darticAbsent) ? false : args[4] as bool, willChange: identical(args[5], darticAbsent) ? false : args[5] as bool, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        '_#fromFields#5': (args) => CustomPaint(foregroundPainter: args[0] as CustomPainter?, isComplex: args[1] as bool, painter: args[2] as CustomPainter?, size: args[3] as Size, willChange: args[4] as bool),
+        '#7': (args) => CustomPaint(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, painter: identical(args[1], darticAbsent) ? null : args[1] as CustomPainter?, foregroundPainter: identical(args[2], darticAbsent) ? null : args[2] as CustomPainter?, size: identical(args[3], darticAbsent) ? Size.zero : args[3] as ui.Size, isComplex: identical(args[4], darticAbsent) ? false : args[4] as bool, willChange: identical(args[5], darticAbsent) ? false : args[5] as bool, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        '_#fromFields#7': (args) => CustomPaint(key: args[3] as Key?, painter: args[4] as CustomPainter?, foregroundPainter: args[1] as CustomPainter?, size: args[5] as ui.Size, isComplex: args[2] as bool, willChange: args[6] as bool, child: args[0] as Widget?),
       };
 }

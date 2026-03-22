@@ -6,14 +6,26 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, RRect, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ClipRRectBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,7 +54,7 @@ abstract final class ClipRRectBindings {
         'clipBehavior#0': (args) => (args[0] as ClipRRect).clipBehavior,
         'child#0': (args) => (args[0] as ClipRRect).child,
         'key#0': (args) => (args[0] as ClipRRect).key,
-        '#5': (args) => ClipRRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry, clipper: identical(args[2], darticAbsent) ? null : args[2] as CustomClipper<RRect>?, clipBehavior: identical(args[3], darticAbsent) ? Clip.antiAlias : args[3] as Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
-        '_#fromFields#3': (args) => ClipRRect(borderRadius: args[0] as BorderRadiusGeometry, clipBehavior: args[1] as Clip, clipper: args[2] as CustomClipper<RRect>?),
+        '#5': (args) => ClipRRect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry, clipper: identical(args[2], darticAbsent) ? null : args[2] as CustomClipper<ui.RRect>?, clipBehavior: identical(args[3], darticAbsent) ? Clip.antiAlias : args[3] as ui.Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        '_#fromFields#5': (args) => ClipRRect(key: args[4] as Key?, borderRadius: args[0] as BorderRadiusGeometry, clipper: args[3] as CustomClipper<ui.RRect>?, clipBehavior: args[2] as ui.Clip, child: args[1] as Widget?),
       };
 }

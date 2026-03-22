@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   _$ArgumentError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0], identical(superArgs[1], darticAbsent) ? null : superArgs[1] as String?);

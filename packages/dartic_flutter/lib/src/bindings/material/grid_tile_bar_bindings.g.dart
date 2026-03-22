@@ -6,14 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/grid_tile_bar.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class GridTileBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +43,6 @@ abstract final class GridTileBarBindings {
         'trailing#0': (args) => (args[0] as GridTileBar).trailing,
         'key#0': (args) => (args[0] as GridTileBar).key,
         '#6': (args) => GridTileBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, leading: identical(args[2], darticAbsent) ? null : args[2] as Widget?, title: identical(args[3], darticAbsent) ? null : args[3] as Widget?, subtitle: identical(args[4], darticAbsent) ? null : args[4] as Widget?, trailing: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
-        '_#fromFields#5': (args) => GridTileBar(backgroundColor: args[0] as Color?, leading: args[1] as Widget?, subtitle: args[2] as Widget?, title: args[3] as Widget?, trailing: args[4] as Widget?),
+        '_#fromFields#6': (args) => GridTileBar(key: args[1] as Key?, backgroundColor: args[0] as Color?, leading: args[2] as Widget?, title: args[4] as Widget?, subtitle: args[3] as Widget?, trailing: args[5] as Widget?),
       };
 }

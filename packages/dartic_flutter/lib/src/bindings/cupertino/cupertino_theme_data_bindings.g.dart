@@ -6,12 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/theme.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/icon_theme_data.dart';
+import 'package:flutter/src/cupertino/text_theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class CupertinoThemeDataBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,5 +45,6 @@ abstract final class CupertinoThemeDataBindings {
         'brightness#0': (args) => (args[0] as CupertinoThemeData).brightness,
         '#8': (args) => CupertinoThemeData(brightness: identical(args[0], darticAbsent) ? null : args[0] as Brightness?, primaryColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, primaryContrastingColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, textTheme: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTextThemeData?, barBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, scaffoldBackgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, selectionHandleColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, applyThemeToAll: identical(args[7], darticAbsent) ? null : args[7] as bool?),
         'raw#8': (args) => CupertinoThemeData.raw(args[0] as Brightness?, args[1] as Color?, args[2] as Color?, args[3] as CupertinoTextThemeData?, args[4] as Color?, args[5] as Color?, args[6] as Color?, args[7] as bool?),
+        '_#fromFields#9': (args) => CupertinoThemeData(brightness: args[3] as Brightness?, primaryColor: args[4] as Color?, primaryContrastingColor: args[5] as Color?, textTheme: args[8] as CupertinoTextThemeData?, barBackgroundColor: args[2] as Color?, scaffoldBackgroundColor: args[6] as Color?, selectionHandleColor: args[7] as Color?, applyThemeToAll: args[1] as bool?),
       };
 }

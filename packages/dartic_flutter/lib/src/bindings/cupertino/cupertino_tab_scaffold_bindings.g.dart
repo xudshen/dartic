@@ -6,12 +6,16 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/cupertino/tab_scaffold.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/bottom_tab_bar.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoTabScaffoldBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,6 +45,5 @@ abstract final class CupertinoTabScaffoldBindings {
         'restorationId#0': (args) => (args[0] as CupertinoTabScaffold).restorationId,
         'key#0': (args) => (args[0] as CupertinoTabScaffold).key,
         '#7': (args) => CupertinoTabScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tabBar: args[1] as CupertinoTabBar, tabBuilder: (a, b) => (args[2] as Function)(a, b) as Widget, controller: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTabController?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, resizeToAvoidBottomInset: identical(args[5], darticAbsent) ? true : args[5] as bool, restorationId: identical(args[6], darticAbsent) ? null : args[6] as String?),
-        '_#fromFields#6': (args) => CupertinoTabScaffold(backgroundColor: args[0] as Color?, controller: args[1] as CupertinoTabController?, resizeToAvoidBottomInset: args[2] as bool, restorationId: args[3] as String?, tabBar: args[4] as CupertinoTabBar, tabBuilder: args[5] as Widget Function(BuildContext, int)),
       };
 }

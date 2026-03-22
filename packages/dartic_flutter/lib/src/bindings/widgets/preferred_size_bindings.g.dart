@@ -6,14 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/preferred_size.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PreferredSizeBindings {
   static void register(DarticPluginContext ctx) {
@@ -39,6 +39,6 @@ abstract final class PreferredSizeBindings {
         'preferredSize#0': (args) => (args[0] as PreferredSize).preferredSize,
         'key#0': (args) => (args[0] as PreferredSize).key,
         '#3': (args) => PreferredSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, preferredSize: args[1] as Size, child: args[2] as Widget),
-        '_#fromFields#2': (args) => PreferredSize(child: args[0] as Widget, preferredSize: args[1] as Size),
+        '_#fromFields#3': (args) => PreferredSize(key: args[1] as Key?, preferredSize: args[2] as Size, child: args[0] as Widget),
       };
 }

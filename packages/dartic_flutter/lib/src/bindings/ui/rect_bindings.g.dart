@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class RectBindings {
   static void register(DarticPluginContext ctx) {
@@ -61,5 +69,6 @@ abstract final class RectBindings {
         'fromCircle#2': (args) => Rect.fromCircle(center: args[0] as Offset, radius: args[1] as double),
         'fromCenter#3': (args) => Rect.fromCenter(center: args[0] as Offset, width: args[1] as double, height: args[2] as double),
         'fromPoints#2': (args) => Rect.fromPoints(args[0] as Offset, args[1] as Offset),
+        '_#fromFields#4': (args) => Rect.fromLTRB(args[1] as double, args[3] as double, args[2] as double, args[0] as double),
       };
 }

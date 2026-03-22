@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class StreamViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -55,6 +57,7 @@ abstract final class StreamViewBindings {
         'first#0': (args) => (args[0] as StreamView).first,
         'last#0': (args) => (args[0] as StreamView).last,
         'single#0': (args) => (args[0] as StreamView).single,
+        '_#fromFields#1': (args) => StreamView<dynamic>(args[0] as Stream),
         '#1': (args) => StreamView(args[0] as Stream),
         'isBroadcast#0': (args) => (args[0] as StreamView).isBroadcast,
         'listen#4': (args) {

@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class MapEntryBindings {
   static void register(DarticPluginContext ctx) {
@@ -21,7 +25,7 @@ abstract final class MapEntryBindings {
         'toString#0': (args) => (args[0] as MapEntry).toString(),
         'key#0': (args) => (args[0] as MapEntry).key,
         'value#0': (args) => (args[0] as MapEntry).value,
-        '#2': (args) => MapEntry(args[0], args[1]),
+        '#2': (args) => MapEntry<dynamic, dynamic>(args[0], args[1]),
         '_#2': (args) => MapEntry(args[0], args[1]),
       };
 }

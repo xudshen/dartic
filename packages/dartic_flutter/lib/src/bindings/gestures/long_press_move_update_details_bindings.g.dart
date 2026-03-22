@@ -6,8 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/long_press.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class LongPressMoveUpdateDetailsBindings {
@@ -30,6 +36,6 @@ abstract final class LongPressMoveUpdateDetailsBindings {
         'offsetFromOrigin#0': (args) => (args[0] as LongPressMoveUpdateDetails).offsetFromOrigin,
         'localOffsetFromOrigin#0': (args) => (args[0] as LongPressMoveUpdateDetails).localOffsetFromOrigin,
         '#4': (args) => LongPressMoveUpdateDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, offsetFromOrigin: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, localOffsetFromOrigin: identical(args[3], darticAbsent) ? null : args[3] as Offset?),
-        '_#fromFields#4': (args) => LongPressMoveUpdateDetails(globalPosition: args[0] as Offset, localOffsetFromOrigin: args[1] as Offset?, localPosition: args[2] as Offset?, offsetFromOrigin: args[3] as Offset),
+        '_#fromFields#4': (args) => LongPressMoveUpdateDetails(globalPosition: args[0] as Offset, localPosition: args[2] as Offset?, offsetFromOrigin: args[3] as Offset, localOffsetFromOrigin: args[1] as Offset?),
       };
 }

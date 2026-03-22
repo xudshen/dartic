@@ -6,12 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/dialog.dart';
+import 'dart:math' as math;
+import 'dart:ui' show ImageFilter, SemanticsRole, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/interface_level.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/scrollbar.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoAlertDialogBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +55,6 @@ abstract final class CupertinoAlertDialogBindings {
         'insetAnimationCurve#0': (args) => (args[0] as CupertinoAlertDialog).insetAnimationCurve,
         'key#0': (args) => (args[0] as CupertinoAlertDialog).key,
         '#8': (args) => CupertinoAlertDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? null : args[1] as Widget?, content: identical(args[2], darticAbsent) ? null : args[2] as Widget?, actions: identical(args[3], darticAbsent) ? const <Widget>[] : (args[3] as List).cast<Widget>(), scrollController: identical(args[4], darticAbsent) ? null : args[4] as ScrollController?, actionScrollController: identical(args[5], darticAbsent) ? null : args[5] as ScrollController?, insetAnimationDuration: identical(args[6], darticAbsent) ? const Duration(milliseconds: 100) : args[6] as Duration, insetAnimationCurve: identical(args[7], darticAbsent) ? Curves.decelerate : args[7] as Curve),
-        '_#fromFields#7': (args) => CupertinoAlertDialog(actionScrollController: args[0] as ScrollController?, actions: (args[1] as List).cast<Widget>(), content: args[2] as Widget?, insetAnimationCurve: args[3] as Curve, insetAnimationDuration: args[4] as Duration, scrollController: args[5] as ScrollController?, title: args[6] as Widget?),
+        '_#fromFields#8': (args) => CupertinoAlertDialog(key: args[5] as Key?, title: args[7] as Widget?, content: args[2] as Widget?, actions: (args[1] as List).cast<Widget>(), scrollController: args[6] as ScrollController?, actionScrollController: args[0] as ScrollController?, insetAnimationDuration: args[4] as Duration, insetAnimationCurve: args[3] as Curve),
       };
 }

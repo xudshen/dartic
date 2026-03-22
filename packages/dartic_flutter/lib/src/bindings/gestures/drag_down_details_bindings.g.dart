@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/drag_details.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class DragDownDetailsBindings {
@@ -28,6 +31,5 @@ abstract final class DragDownDetailsBindings {
         'globalPosition#0': (args) => (args[0] as DragDownDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as DragDownDetails).localPosition,
         '#2': (args) => DragDownDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?),
-        '_#fromFields#2': (args) => DragDownDetails(globalPosition: args[0] as Offset, localPosition: args[1] as Offset?),
       };
 }

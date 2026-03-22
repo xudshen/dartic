@@ -6,14 +6,37 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/page_view.dart';
+import 'dart:math' as math;
+import 'package:flutter/foundation.dart' show clampDouble, precisionErrorTolerance;
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/page_storage.dart';
+import 'package:flutter/src/widgets/scroll_configuration.dart';
+import 'package:flutter/src/widgets/scroll_context.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_delegate.dart';
+import 'package:flutter/src/widgets/scroll_metrics.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_physics.dart';
+import 'package:flutter/src/widgets/scroll_position.dart';
+import 'package:flutter/src/widgets/scroll_position_with_single_context.dart';
+import 'package:flutter/src/widgets/scroll_view.dart';
+import 'package:flutter/src/widgets/scrollable.dart';
+import 'package:flutter/src/widgets/sliver_fill.dart';
+import 'package:flutter/src/widgets/viewport.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
 import 'dart:ui';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class PageViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -53,5 +76,6 @@ abstract final class PageViewBindings {
         '#15': (args) => PageView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as PageController?, physics: identical(args[4], darticAbsent) ? null : args[4] as ScrollPhysics?, pageSnapping: identical(args[5], darticAbsent) ? true : args[5] as bool, onPageChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), children: identical(args[7], darticAbsent) ? const <Widget>[] : (args[7] as List).cast<Widget>(), dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, allowImplicitScrolling: identical(args[9], darticAbsent) ? false : args[9] as bool, restorationId: identical(args[10], darticAbsent) ? null : args[10] as String?, clipBehavior: identical(args[11], darticAbsent) ? Clip.hardEdge : args[11] as Clip, hitTestBehavior: identical(args[12], darticAbsent) ? HitTestBehavior.opaque : args[12] as HitTestBehavior, scrollBehavior: identical(args[13], darticAbsent) ? null : args[13] as ScrollBehavior?, padEnds: identical(args[14], darticAbsent) ? true : args[14] as bool),
         'builder#17': (args) => PageView.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as PageController?, physics: identical(args[4], darticAbsent) ? null : args[4] as ScrollPhysics?, pageSnapping: identical(args[5], darticAbsent) ? true : args[5] as bool, onPageChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), itemBuilder: (a, b) => (args[7] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), itemCount: identical(args[9], darticAbsent) ? null : args[9] as int?, dragStartBehavior: identical(args[10], darticAbsent) ? DragStartBehavior.start : args[10] as DragStartBehavior, allowImplicitScrolling: identical(args[11], darticAbsent) ? false : args[11] as bool, restorationId: identical(args[12], darticAbsent) ? null : args[12] as String?, clipBehavior: identical(args[13], darticAbsent) ? Clip.hardEdge : args[13] as Clip, hitTestBehavior: identical(args[14], darticAbsent) ? HitTestBehavior.opaque : args[14] as HitTestBehavior, scrollBehavior: identical(args[15], darticAbsent) ? null : args[15] as ScrollBehavior?, padEnds: identical(args[16], darticAbsent) ? true : args[16] as bool),
         'custom#15': (args) => PageView.custom(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as PageController?, physics: identical(args[4], darticAbsent) ? null : args[4] as ScrollPhysics?, pageSnapping: identical(args[5], darticAbsent) ? true : args[5] as bool, onPageChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), childrenDelegate: args[7] as SliverChildDelegate, dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, allowImplicitScrolling: identical(args[9], darticAbsent) ? false : args[9] as bool, restorationId: identical(args[10], darticAbsent) ? null : args[10] as String?, clipBehavior: identical(args[11], darticAbsent) ? Clip.hardEdge : args[11] as Clip, hitTestBehavior: identical(args[12], darticAbsent) ? HitTestBehavior.opaque : args[12] as HitTestBehavior, scrollBehavior: identical(args[13], darticAbsent) ? null : args[13] as ScrollBehavior?, padEnds: identical(args[14], darticAbsent) ? true : args[14] as bool),
+        '_#fromFields#15': (args) => PageView.custom(key: args[6] as Key?, scrollDirection: args[14] as Axis, reverse: args[12] as bool, controller: args[3] as PageController?, physics: args[10] as ScrollPhysics?, pageSnapping: args[9] as bool, onPageChanged: args[7] as ValueChanged<int>?, childrenDelegate: args[1] as SliverChildDelegate, dragStartBehavior: args[4] as DragStartBehavior, allowImplicitScrolling: args[0] as bool, restorationId: args[11] as String?, clipBehavior: args[2] as Clip, hitTestBehavior: args[5] as HitTestBehavior, scrollBehavior: args[13] as ScrollBehavior?, padEnds: args[8] as bool),
       };
 }

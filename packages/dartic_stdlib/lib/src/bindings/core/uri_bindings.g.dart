@@ -6,7 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:convert';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class UriBindings {
   static void register(DarticPluginContext ctx) {
@@ -32,7 +35,15 @@ abstract final class UriBindings {
     // _Uri
     for (final e in uriMethodMap().entries) {
       ctx.registerBinding('dart:core::_Uri::${e.key}', e.value);
+      ctx.registerBinding('dart:core::::_Uri${e.key}', e.value);
     }
+
+    ctx.registerBinding('dart:core::Uri::http#3', methodMap()['http#3']!);
+    ctx.registerBinding('dart:core::Uri::https#3', methodMap()['https#3']!);
+    ctx.registerBinding('dart:core::Uri::file#2', methodMap()['file#2']!);
+    ctx.registerBinding('dart:core::Uri::directory#2', methodMap()['directory#2']!);
+    ctx.registerBinding('dart:core::Uri::dataFromString#5', methodMap()['dataFromString#5']!);
+    ctx.registerBinding('dart:core::Uri::dataFromBytes#4', methodMap()['dataFromBytes#4']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

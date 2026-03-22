@@ -6,8 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animations.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/listener_helpers.dart';
+import 'dart:ui';
+import 'package:flutter/src/animation/tween.dart';
+import 'package:flutter/animation.dart';
 
 abstract final class TrainHoppingAnimationBindings {
   static void register(DarticPluginContext ctx) {
@@ -43,7 +50,7 @@ abstract final class TrainHoppingAnimationBindings {
         'isCompleted#0': (args) => (args[0] as TrainHoppingAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as TrainHoppingAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as TrainHoppingAnimation).isForwardOrCompleted,
-        'onSwitchedTrain=#1': (args) { (args[0] as TrainHoppingAnimation).onSwitchedTrain = args[1] as void Function()?; return args[1]; },
+        'onSwitchedTrain=#1': (args) { (args[0] as TrainHoppingAnimation).onSwitchedTrain = args[1] as VoidCallback?; return args[1]; },
         '#3': (args) => TrainHoppingAnimation(args[0] as Animation<double>, args[1] as Animation<double>?, onSwitchedTrain: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
       };
 }

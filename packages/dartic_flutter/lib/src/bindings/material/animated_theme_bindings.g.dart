@@ -6,14 +6,20 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/src/material/typography.dart';
+import 'package:flutter/src/widgets/implicit_animations.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AnimatedThemeBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +48,6 @@ abstract final class AnimatedThemeBindings {
         'onEnd#0': (args) => (args[0] as AnimatedTheme).onEnd,
         'key#0': (args) => (args[0] as AnimatedTheme).key,
         '#6': (args) => AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, duration: identical(args[3], darticAbsent) ? kThemeAnimationDuration : args[3] as Duration, onEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), child: args[5] as Widget),
-        '_#fromFields#2': (args) => AnimatedTheme(child: args[0] as Widget, data: args[1] as ThemeData),
+        '_#fromFields#6': (args) => AnimatedTheme(key: args[4] as Key?, data: args[2] as ThemeData, curve: args[1] as Curve, duration: args[3] as Duration, onEnd: args[5] as VoidCallback?, child: args[0] as Widget),
       };
 }

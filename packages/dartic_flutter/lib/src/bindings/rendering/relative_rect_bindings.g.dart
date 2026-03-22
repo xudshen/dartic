@@ -6,9 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/stack.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Offset, Rect, Size, TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
 
 abstract final class RelativeRectBindings {
   static void register(DarticPluginContext ctx) {
@@ -40,5 +45,6 @@ abstract final class RelativeRectBindings {
         'fromSize#2': (args) => RelativeRect.fromSize(args[0] as Rect, args[1] as Size),
         'fromRect#2': (args) => RelativeRect.fromRect(args[0] as Rect, args[1] as Rect),
         'fromDirectional#5': (args) => RelativeRect.fromDirectional(textDirection: args[0] as TextDirection, start: args[1] as double, top: args[2] as double, end: args[3] as double, bottom: args[4] as double),
+        '_#fromFields#4': (args) => RelativeRect.fromLTRB(args[1] as double, args[3] as double, args[2] as double, args[0] as double),
       };
 }

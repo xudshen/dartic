@@ -6,8 +6,15 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/animations.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/src/animation/listener_helpers.dart';
+import 'dart:ui';
+import 'package:flutter/src/animation/tween.dart';
+import 'package:flutter/animation.dart';
 
 abstract final class ProxyAnimationBindings {
   static void register(DarticPluginContext ctx) {

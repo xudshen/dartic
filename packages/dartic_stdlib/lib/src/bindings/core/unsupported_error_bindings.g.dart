@@ -6,6 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'dart:collection';
+import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 class _$UnsupportedError extends UnsupportedError implements DarticObjectHolder {
   _$UnsupportedError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String);
@@ -79,6 +83,5 @@ abstract final class UnsupportedErrorBindings {
         'message#0': (args) => (args[0] as UnsupportedError).message,
         'stackTrace#0': (args) => (args[0] as UnsupportedError).stackTrace,
         '#1': (args) => UnsupportedError(args[0] as String),
-        '_#fromFields#1': (args) => UnsupportedError(args[0] as String),
       };
 }

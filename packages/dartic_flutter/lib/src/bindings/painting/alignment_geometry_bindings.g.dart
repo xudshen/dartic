@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/alignment.dart';
+import 'dart:ui' as ui show TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class AlignmentGeometryBindings {
   static void register(DarticPluginContext ctx) {
@@ -34,7 +34,7 @@ abstract final class AlignmentGeometryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#1': (args) => (args[0] as AlignmentGeometry).add(args[1] as AlignmentGeometry),
-        'resolve#1': (args) => (args[0] as AlignmentGeometry).resolve(args[1] as TextDirection?),
+        'resolve#1': (args) => (args[0] as AlignmentGeometry).resolve(args[1] as ui.TextDirection?),
         'toString#0': (args) => (args[0] as AlignmentGeometry).toString(),
         'hashCode#0': (args) => (args[0] as AlignmentGeometry).hashCode,
         'unary-#0': (args) => -(args[0] as AlignmentGeometry),

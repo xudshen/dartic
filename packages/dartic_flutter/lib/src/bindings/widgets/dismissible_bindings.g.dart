@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/dismissible.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/automatic_keep_alive.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/gesture_detector.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:flutter/src/widgets/transitions.dart';
+import 'dart:async';
 import 'dart:ui';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DismissibleBindings {
   static void register(DarticPluginContext ctx) {
@@ -51,5 +60,6 @@ abstract final class DismissibleBindings {
         'onUpdate#0': (args) => (args[0] as Dismissible).onUpdate,
         'key#0': (args) => (args[0] as Dismissible).key,
         '#15': (args) => Dismissible(key: args[0] as Key, child: args[1] as Widget, background: identical(args[2], darticAbsent) ? null : args[2] as Widget?, secondaryBackground: identical(args[3], darticAbsent) ? null : args[3] as Widget?, confirmDismiss: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onResize: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onUpdate: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onDismissed: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), direction: identical(args[8], darticAbsent) ? DismissDirection.horizontal : args[8] as DismissDirection, resizeDuration: identical(args[9], darticAbsent) ? null : args[9] as Duration?, dismissThresholds: identical(args[10], darticAbsent) ? const <DismissDirection, double>{} : (args[10] as Map).cast<DismissDirection, double>(), movementDuration: identical(args[11], darticAbsent) ? const Duration(milliseconds: 200) : args[11] as Duration, crossAxisEndOffset: identical(args[12], darticAbsent) ? 0.0 : args[12] as double, dragStartBehavior: identical(args[13], darticAbsent) ? DragStartBehavior.start : args[13] as DragStartBehavior, behavior: identical(args[14], darticAbsent) ? HitTestBehavior.opaque : args[14] as HitTestBehavior),
+        '_#fromFields#15': (args) => Dismissible(key: args[8] as Key, child: args[2] as Widget, background: args[0] as Widget?, secondaryBackground: args[14] as Widget?, confirmDismiss: args[3] as ConfirmDismissCallback?, onResize: args[11] as VoidCallback?, onUpdate: args[12] as DismissUpdateCallback?, onDismissed: args[10] as DismissDirectionCallback?, direction: args[5] as DismissDirection, resizeDuration: args[13] as Duration?, dismissThresholds: (args[6] as Map).cast<DismissDirection, double>(), movementDuration: args[9] as Duration, crossAxisEndOffset: args[4] as double, dragStartBehavior: args[7] as DragStartBehavior, behavior: args[1] as HitTestBehavior),
       };
 }

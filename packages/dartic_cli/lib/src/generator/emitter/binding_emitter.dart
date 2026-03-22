@@ -29,9 +29,9 @@ String emitBindingFile(
   bool bridge = false,
   bool customBridge = false,
   List<String>? ignoreForFile,
-  List<String>? customImports,
   Map<String, MethodOverrideConfig>? methodOverrides,
   KernelClassInfo? kernelInfo,
+  List<String>? extraImports,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -75,11 +75,8 @@ String emitBindingFile(
     buf.writeln('// ignore_for_file: ${ignoreForFile.join(', ')}');
     buf.writeln();
   }
-  _writeImport(buf,
-      additionalImports:
-          _detectRequiredImports(body.toString(), libraryUri: info.libraryUri),
-      bridge: effectiveBridge,
-      customImports: customImports);
+  _writeImports(buf, info.sourceImports, info.referencedTypes.keys.toSet(),
+      extraImports: extraImports);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -93,11 +90,12 @@ String emitBindingFileWithInternalTypes(
   String? configPath,
   Map<String, Map<String, String>>? extraMethods,
   Map<String, String>? mainExtraMethods,
-  List<String>? customImports,
+  List<String>? extraBindings,
   List<String>? ignoreForFile,
   bool bridge = false,
   Map<String, MethodOverrideConfig>? methodOverrides,
   KernelClassInfo? kernelInfo,
+  List<String>? extraImports,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -123,6 +121,7 @@ String emitBindingFileWithInternalTypes(
     mainInfo,
     internalInfos,
     extraMethods: extraMethods,
+    extraBindings: extraBindings,
     bridge: effectiveBridge,
   );
   body.writeln();
@@ -147,11 +146,17 @@ String emitBindingFileWithInternalTypes(
     buf.writeln('// ignore_for_file: ${ignoreForFile.join(', ')}');
     buf.writeln();
   }
-  _writeImport(buf,
-      additionalImports: _detectRequiredImports(body.toString(),
-          libraryUri: mainInfo.libraryUri),
-      bridge: effectiveBridge,
-      customImports: customImports);
+  // Merge source imports from main + internal types.
+  final allSourceImports = [...mainInfo.sourceImports];
+  for (final intInfo in internalInfos) {
+    allSourceImports.addAll(intInfo.sourceImports);
+  }
+  final allRefUris = <String>{...mainInfo.referencedTypes.keys};
+  for (final intInfo in internalInfos) {
+    allRefUris.addAll(intInfo.referencedTypes.keys);
+  }
+  _writeImports(buf, allSourceImports, allRefUris,
+      extraImports: extraImports);
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -163,7 +168,6 @@ String emitTopLevelBindingFile(
   String name,
   List<FunctionInfo> functions, {
   String? configPath,
-  List<String>? customImports,
 }) {
   // Build body first to detect required imports
   final body = StringBuffer();
@@ -181,15 +185,9 @@ String emitTopLevelBindingFile(
   // Build final output with header + detected imports
   final buf = StringBuffer();
   _writeHeader(buf, configPath: configPath);
-  if (customImports != null && customImports.isNotEmpty) {
-    buf.writeln(
-        '// ignore_for_file: unused_import, unnecessary_import, implementation_imports');
-    buf.writeln();
-  }
-  _writeImport(buf,
-      additionalImports:
-          _detectRequiredImports(body.toString(), libraryUri: libraryUri),
-      customImports: customImports);
+  // Top-level functions don't have source imports — use basic detection.
+  final detected = _detectRequiredImports(body.toString(), libraryUri: libraryUri);
+  _writeImports(buf, detected.map((u) => "import '$u';").toList(), const {});
   buf.writeln();
   buf.write(body);
   return buf.toString();
@@ -207,39 +205,93 @@ void _writeHeader(StringBuffer buf, {String? configPath}) {
   buf.writeln();
 }
 
-void _writeImport(StringBuffer buf,
-    {Set<String>? additionalImports,
-    bool bridge = false,
-    List<String>? customImports}) {
-  if (customImports != null && customImports.isNotEmpty) {
-    // Use custom imports instead of default relative imports.
-    for (final imp in customImports) {
-      buf.writeln("import '$imp';");
-    }
-    // Still add SDK dart: imports detected from source (e.g., dart:async).
-    // Relative and package: imports are already covered by customImports.
-    if (additionalImports != null) {
-      for (final imp in additionalImports) {
-        if (imp.startsWith('dart:')) {
-          buf.writeln("import '$imp';");
-        }
-      }
-    }
-  } else {
-    buf.writeln("import '../../api/plugin_context.dart';");
-    if (bridge) {
-      buf.writeln("import '../dartic_dispatch.dart';");
-      buf.writeln("import '../dartic_object_holder.dart';");
-      buf.writeln("import '../../dartic_internal.dart';");
-    }
-    if (additionalImports != null) {
-      for (final imp in additionalImports) {
-        // Skip imports already added by bridge mode
-        if (bridge && imp == '../../dartic_internal.dart') continue;
-        buf.writeln("import '$imp';");
+/// Writes import lines for a binding file.
+///
+/// Outputs base dartic imports + source file imports (from TypeInfo.sourceImports)
+/// + optional extra imports from YAML config.
+/// Writes import lines for a binding file.
+///
+/// Merges three sources:
+/// 1. Source file imports (preserves `as` prefixes, `show`/`hide`)
+/// 2. Referenced library URIs (auto-detected from inherited member types)
+/// 3. Extra imports from YAML (for hand-written helpers)
+void _writeImports(
+  StringBuffer buf,
+  List<String> sourceImports,
+  Set<String> referencedUris, {
+  List<String>? extraImports,
+}) {
+  // Base dartic imports — always needed.
+  buf.writeln("import 'package:dartic/dartic.dart';");
+  buf.writeln("import 'package:dartic/dartic_internal.dart';");
+
+  // Track imported URIs to avoid duplicates.
+  final importedUris = <String>{
+    'package:dartic/dartic.dart',
+    'package:dartic/dartic_internal.dart',
+    'dart:core',
+  };
+
+  // 1. Source file imports — preserves `as` prefixes and show/hide.
+  for (final imp in sourceImports) {
+    buf.writeln(imp);
+    // Extract URI from import line for dedup.
+    final uriMatch = RegExp(r"import '([^']+)'").firstMatch(imp);
+    if (uriMatch != null) importedUris.add(uriMatch.group(1)!);
+  }
+
+  // 2. Referenced URIs — fill gaps from inherited member types.
+  for (final uri in referencedUris) {
+    if (importedUris.contains(uri)) continue;
+    if (uri.startsWith('dart:_')) continue;
+    buf.writeln("import '$uri';");
+    importedUris.add(uri);
+    // For src/ paths, also add resolved barrel.
+    if (uri.contains('/src/')) {
+      final resolved = _resolveToPublicImport(uri);
+      if (resolved != null && !importedUris.contains(resolved)) {
+        buf.writeln("import '$resolved';");
+        importedUris.add(resolved);
       }
     }
   }
+
+  // 3. Extra imports from YAML.
+  if (extraImports != null) {
+    for (final imp in extraImports) {
+      if (!importedUris.contains(imp)) {
+        buf.writeln("import '$imp';");
+        importedUris.add(imp);
+      }
+    }
+  }
+}
+
+/// Writes a single import line, handling the `"uri AS prefix"` format
+/// for prefixed imports (e.g. `"dart:math AS math"` → `import 'dart:math' as math;`).
+void _writeImportLine(StringBuffer buf, String imp) {
+  if (imp.contains(' AS ')) {
+    final parts = imp.split(' AS ');
+    buf.writeln("import '${parts[0]}' as ${parts[1]};");
+  } else {
+    buf.writeln("import '$imp';");
+  }
+}
+
+/// Resolves a `package:*/src/category/file.dart` URI to its public barrel import.
+///
+/// E.g. `package:flutter/src/widgets/framework.dart` → `package:flutter/widgets.dart`
+/// Returns null if the URI doesn't match the convention.
+String? _resolveToPublicImport(String srcUri) {
+  // Pattern: package:<pkg>/src/<category>/...
+  final match =
+      RegExp(r'^(package:[^/]+)/src/([^/]+)/').firstMatch(srcUri);
+  if (match != null) {
+    final packagePrefix = match.group(1)!; // e.g. "package:flutter"
+    final category = match.group(2)!; // e.g. "widgets"
+    return '$packagePrefix/$category.dart';
+  }
+  return null;
 }
 
 /// Scans source code for types that require additional imports.
@@ -263,9 +315,8 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
     imports.add(libraryUri);
   }
 
-  if (source.contains('DarticObject')) {
-    imports.add('../../dartic_internal.dart');
-  }
+  // DarticObject is always available via package:dartic/dartic_internal.dart
+  // which is unconditionally added by _writeImports.
   // dart:async types — the most common cross-library dependency (Stream,
   // Future, etc. appear in bindings for many libraries).
   const asyncTypes = [
@@ -304,6 +355,17 @@ Set<String> _detectRequiredImports(String source, {String? libraryUri}) {
   if (RegExp(r'\bdarticAbsent\b').hasMatch(source)) {
     imports.add('package:dartic/dartic_internal.dart');
   }
+
+  // Detect import-prefixed references (e.g. `math.pi`, `ui.BoxHeightStyle`)
+  // and add corresponding `import ... as prefix` entries.
+  // Format: "dart:math AS math" — handled specially by _writeImport.
+  for (final entry in _knownImportPrefixes.entries) {
+    final prefix = entry.key;
+    if (RegExp('\\b${prefix}\\.').hasMatch(source)) {
+      imports.add('${entry.value} AS $prefix');
+    }
+  }
+
   return imports;
 }
 
@@ -397,6 +459,7 @@ void _writeRegisterMethodWithInternalTypes(
   TypeInfo mainInfo,
   List<TypeInfo> internalInfos, {
   Map<String, Map<String, String>>? extraMethods,
+  List<String>? extraBindings,
   bool bridge = false,
 }) {
   buf.writeln('  static void register(DarticPluginContext ctx) {');
@@ -441,7 +504,22 @@ void _writeRegisterMethodWithInternalTypes(
     buf.writeln("    // ${internal.className}");
     buf.writeln('    for (final e in $mapName().entries) {');
     buf.writeln("      ctx.registerBinding('${internal.qualifiedName}::\${e.key}', e.value);");
+    // Top-level function alias: compiler emits 'lib::::name#N' for functions.
+    // Register both class-style ('lib::name::#N') and function-style ('lib::::name#N').
+    if (internal.className[0].toLowerCase() == internal.className[0]) {
+      buf.writeln("      ctx.registerBinding('${internal.libraryUri}::::${internal.className}\${e.key}', e.value);");
+    }
     buf.writeln('    }');
+  }
+
+  // Extra cross-namespace bindings (e.g. dart:_internal::::checkNotNullable#2)
+  if (extraBindings != null) {
+    buf.writeln();
+    for (final bindingName in extraBindings) {
+      final lastSep = bindingName.lastIndexOf('::');
+      final methodKey = lastSep >= 0 ? bindingName.substring(lastSep + 2) : bindingName;
+      buf.writeln("    ctx.registerBinding('$bindingName', methodMap()['$methodKey']!);");
+    }
   }
 
   buf.writeln('  }');
@@ -492,11 +570,16 @@ void _writeMethodMap(
   buf.writeln(
       '  static Map<String, Object? Function(List<Object?>)> methodMap() => {');
 
+  // For private classes (e.g. _Enum), use `dynamic` as the receiver cast type
+  // since the private class name isn't accessible in generated code.
+  final castType =
+      info.className.startsWith('_') ? 'dynamic' : info.className;
+
   // Instance methods
   for (final method in info.methods) {
     // Skip methods whose keys are overridden by extraMethods
     if (!_anyKeyOverridden(method.allBindingKeys, overrideKeys)) {
-      _writeInstanceMethodEntries(buf, info.className, method);
+      _writeInstanceMethodEntries(buf, castType, method);
     }
   }
 
@@ -504,21 +587,21 @@ void _writeMethodMap(
   for (final getter in info.getters) {
     if (!overrideKeys.contains(getter.bindingKey)) {
       buf.writeln(
-          "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+          "        '${getter.bindingKey}': (args) => (args[0] as $castType).${getter.name},");
     }
   }
 
   // Setters
   for (final setter in info.setters) {
     if (!overrideKeys.contains(setter.bindingKey)) {
-      _writeSetterEntry(buf, info.className, setter);
+      _writeSetterEntry(buf, castType, setter);
     }
   }
 
   // Operators
   for (final op in info.operators) {
     if (!overrideKeys.contains(op.bindingKey)) {
-      _writeOperatorEntry(buf, info.className, op);
+      _writeOperatorEntry(buf, castType, op);
     }
   }
 
@@ -528,7 +611,8 @@ void _writeMethodMap(
         ? '#${ctor.params.length}'
         : '${ctor.name}#${ctor.params.length}';
     if (!overrideKeys.contains(key)) {
-      _writeConstructorEntry(buf, info.className, ctor);
+      _writeConstructorEntry(buf, info.className, ctor,
+          erasedTypeArgs: info.erasedTypeArgs);
     }
   }
 
@@ -645,9 +729,12 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
   final fromFieldsInfo = kernelInfo.fromFieldsInfo;
 
   // Zero fields with const ctor: simple construction.
+  // Only generate if the class has an unnamed constructor.
   if (fieldCount == 0) {
-    buf.writeln(
-        "        '$fromFieldsKey': (args) => ${info.className}(),");
+    if (kernelInfo.hasUnnamedCtor) {
+      buf.writeln(
+          "        '$fromFieldsKey': (args) => ${info.className}(),");
+    }
     return;
   }
 
@@ -701,11 +788,14 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
       }
     }
   } else {
-    // No analyzer ctor — fall back to Kernel order.
-    for (final mapping in mappings) {
-      if (mapping.paramName == null) continue;
-      final entry = paramArgs[mapping.paramName!];
-      if (entry == null) continue;
+    // No analyzer ctor — fall back to Kernel param order.
+    // Sort by paramIndex to emit positional params in declaration order.
+    final sorted = mappings
+        .where((m) => m.paramName != null && paramArgs.containsKey(m.paramName))
+        .toList()
+      ..sort((a, b) => a.paramIndex.compareTo(b.paramIndex));
+    for (final mapping in sorted) {
+      final entry = paramArgs[mapping.paramName!]!;
       final (_, cast, isNamed) = entry;
       if (isNamed) {
         argExprs.add('${mapping.paramName}: $cast');
@@ -716,9 +806,11 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
   }
 
   // Emit constructor call — use named constructor if needed.
+  // Include erased type args for generic classes.
+  final typeArgs = info.erasedTypeArgs;
   final ctorCall = ctorName.isEmpty
-      ? '${info.className}(${argExprs.join(', ')})'
-      : '${info.className}.$ctorName(${argExprs.join(', ')})';
+      ? '${info.className}$typeArgs(${argExprs.join(', ')})'
+      : '${info.className}$typeArgs.$ctorName(${argExprs.join(', ')})';
 
   buf.writeln("        '$fromFieldsKey': (args) => $ctorCall,");
 }
@@ -811,10 +903,13 @@ void _writeInternalMethodMap(
   buf.writeln(
       '  static Map<String, Object? Function(List<Object?>)> $mapName() => {');
 
+  final castType =
+      info.className.startsWith('_') ? 'dynamic' : info.className;
+
   // Instance methods
   for (final method in info.methods) {
     if (!_anyKeyOverridden(method.allBindingKeys, overrideKeys)) {
-      _writeInstanceMethodEntries(buf, info.className, method);
+      _writeInstanceMethodEntries(buf, castType, method);
     }
   }
 
@@ -822,21 +917,21 @@ void _writeInternalMethodMap(
   for (final getter in info.getters) {
     if (!overrideKeys.contains(getter.bindingKey)) {
       buf.writeln(
-          "        '${getter.bindingKey}': (args) => (args[0] as ${info.className}).${getter.name},");
+          "        '${getter.bindingKey}': (args) => (args[0] as $castType).${getter.name},");
     }
   }
 
   // Setters
   for (final setter in info.setters) {
     if (!overrideKeys.contains(setter.bindingKey)) {
-      _writeSetterEntry(buf, info.className, setter);
+      _writeSetterEntry(buf, castType, setter);
     }
   }
 
   // Operators
   for (final op in info.operators) {
     if (!overrideKeys.contains(op.bindingKey)) {
-      _writeOperatorEntry(buf, info.className, op);
+      _writeOperatorEntry(buf, castType, op);
     }
   }
 
@@ -963,8 +1058,8 @@ String _emitArgExpression(ParamInfo param, int argsIndex) {
 /// at runtime, and Dart's reified generics reject `as List<Widget>` unless
 /// the list was originally created with that exact type argument.
 String _emitCast(String expr, String type) {
-  // Skip cast for dynamic and Object? — already Object?.
-  if (type == 'dynamic' || type == 'Object?') return expr;
+  // Skip cast for dynamic, Object?, and void — no narrowing needed.
+  if (type == 'dynamic' || type == 'Object?' || type == 'void') return expr;
 
   // Check for nullable generic collection.
   final isNullable = type.endsWith('?');
@@ -1050,13 +1145,28 @@ String _emitCallbackWrapper(ParamInfo param, int argsIndex) {
       final cp = cbParams[i];
       if (cp.isNamed) {
         // Named params must use the original name (Dart requires name match).
-        final req = cp.isRequired ? 'required ' : '';
-        named.add('$req${cp.type} ${cp.name}');
+        if (cp.isRequired) {
+          named.add('required ${cp.type} ${cp.name}');
+        } else {
+          // Optional named params: make non-nullable types nullable in the
+          // wrapper, since we don't know the original default value (it's
+          // part of the function implementation, not the type signature).
+          // The inner function call will handle the actual default.
+          final wrapperType = cp.type.endsWith('?') || cp.type == 'dynamic'
+              ? cp.type
+              : '${cp.type}?';
+          named.add('$wrapperType ${cp.name}');
+        }
         callNamed.add('${cp.name}: ${cp.name}');
       } else {
-        final varName = _callbackParamName(i);
-        positional.add(varName);
-        callPositional.add(varName);
+        if (cp.type == 'void') {
+          // void params can't be used — declare as _ and don't forward.
+          positional.add('_');
+        } else {
+          final varName = _callbackParamName(i);
+          positional.add(varName);
+          callPositional.add(varName);
+        }
       }
     }
 
@@ -1148,12 +1258,17 @@ void _writeOperatorEntry(
 // ── Constructor entries ──────────────────────────────────────────────────
 
 void _writeConstructorEntry(
-    StringBuffer buf, String className, ConstructorInfo ctor) {
+    StringBuffer buf, String className, ConstructorInfo ctor,
+    {String erasedTypeArgs = ''}) {
   final name = ctor.name.isEmpty ? '' : ctor.name;
   final key = '#${ctor.params.length}';
   final bindingKey = name.isEmpty ? key : '$name$key';
   final hasOptional = ctor.params.any((p) => p.isOptional);
-  final ctorName = name.isEmpty ? className : '$className.$name';
+  // For generic classes, add explicit type args to help Dart inference.
+  // E.g. Radio<Object>(...) instead of Radio(...) which can't infer T.
+  final ctorName = name.isEmpty
+      ? '$className$erasedTypeArgs'
+      : '$className$erasedTypeArgs.$name';
 
   if (!hasOptional) {
     // No optional params — simple direct call.
@@ -1233,7 +1348,7 @@ String _emitAbsentAwareArgExpression(ParamInfo param, int argsIndex) {
   }
   // Non-nullable optional param — use extracted default value if accessible.
   final defaultVal = param.defaultValueCode;
-  if (defaultVal != null && !_containsPrivateIdentifier(defaultVal)) {
+  if (defaultVal != null && _isAccessibleDefault(defaultVal)) {
     return 'identical(args[$argsIndex], darticAbsent) ? $defaultVal : $argExpr';
   }
   // Fallback: should not be reached if caller uses _needsOmissionBranching
@@ -1265,12 +1380,56 @@ bool _needsOmissionBranching(ParamInfo param) {
   if (type.endsWith('?') || type == 'dynamic') return false;
   // Public accessible default → ternary is fine.
   final defaultVal = param.defaultValueCode;
-  if (defaultVal != null && !_containsPrivateIdentifier(defaultVal)) {
+  if (defaultVal != null && _isAccessibleDefault(defaultVal)) {
     return false;
   }
-  // Non-nullable with private/unknown default → must branch.
+  // Non-nullable with inaccessible/unknown default → must branch.
   return true;
 }
+
+/// Whether a default value expression is accessible from generated code.
+///
+/// Returns false for:
+/// - Private identifiers (`_kDefault`, `_defaultBuilder`)
+/// - Unqualified bare identifiers (`defaultLayoutBuilder`) — likely
+///   same-class static members that need `ClassName.member` qualification
+///   which generated code doesn't have
+///
+/// Returns true for:
+/// - Literals: `null`, `true`, `false`, numbers, strings
+/// - Qualified references: `Curves.linear`, `Alignment.topCenter`
+/// - Const expressions: `const EdgeInsets.all(0)`
+/// - Known keyword values: `double.infinity`
+bool _isAccessibleDefault(String code) {
+  if (_containsPrivateIdentifier(code)) return false;
+
+  final trimmed = code.trim();
+
+  // Import-prefixed references (e.g. `math.pi`, `ui.BoxHeightStyle`).
+  // These are accessible IF the generated file adds the same prefixed import.
+  // Known prefixes are mapped to library URIs and added to imports automatically.
+  if (RegExp(r'^[a-z]+\.[A-Za-z]').hasMatch(trimmed)) {
+    // Allow known Dart type qualifiers.
+    if (trimmed.startsWith('double.') || trimmed.startsWith('int.')) {
+      return true;
+    }
+    // Allow known import prefixes — these will be added as `import ... as` in imports.
+    final prefix = trimmed.split('.').first;
+    if (_knownImportPrefixes.containsKey(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  return true;
+}
+
+/// Known import prefixes used in Flutter/SDK source code.
+/// Maps prefix → library URI for `import '...' as prefix;` generation.
+const _knownImportPrefixes = <String, String>{
+  'math': 'dart:math',
+  'ui': 'dart:ui',
+};
 
 /// Builds the argument list for a call, respecting omitted and branch params.
 ///

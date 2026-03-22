@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/single_child_scroll_view.dart';
+import 'dart:math' as math;
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/primary_scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_configuration.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_physics.dart';
+import 'package:flutter/src/widgets/scroll_view.dart';
+import 'package:flutter/src/widgets/scrollable.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
 import 'dart:ui';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class SingleChildScrollViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -49,6 +66,6 @@ abstract final class SingleChildScrollViewBindings {
         'keyboardDismissBehavior#0': (args) => (args[0] as SingleChildScrollView).keyboardDismissBehavior,
         'key#0': (args) => (args[0] as SingleChildScrollView).key,
         '#13': (args) => SingleChildScrollView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, controller: identical(args[6], darticAbsent) ? null : args[6] as ScrollController?, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?, dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, clipBehavior: identical(args[9], darticAbsent) ? Clip.hardEdge : args[9] as Clip, hitTestBehavior: identical(args[10], darticAbsent) ? HitTestBehavior.opaque : args[10] as HitTestBehavior, restorationId: identical(args[11], darticAbsent) ? null : args[11] as String?, keyboardDismissBehavior: identical(args[12], darticAbsent) ? null : args[12] as ScrollViewKeyboardDismissBehavior?),
-        '_#fromFields#12': (args) => SingleChildScrollView(child: args[0] as Widget?, clipBehavior: args[1] as Clip, controller: args[2] as ScrollController?, dragStartBehavior: args[3] as DragStartBehavior, hitTestBehavior: args[4] as HitTestBehavior, keyboardDismissBehavior: args[5] as ScrollViewKeyboardDismissBehavior?, padding: args[6] as EdgeInsetsGeometry?, physics: args[7] as ScrollPhysics?, primary: args[8] as bool?, restorationId: args[9] as String?, reverse: args[10] as bool, scrollDirection: args[11] as Axis),
+        '_#fromFields#13': (args) => SingleChildScrollView(key: args[5] as Key?, scrollDirection: args[12] as Axis, reverse: args[11] as bool, padding: args[7] as EdgeInsetsGeometry?, primary: args[9] as bool?, physics: args[8] as ScrollPhysics?, controller: args[2] as ScrollController?, child: args[0] as Widget?, dragStartBehavior: args[3] as DragStartBehavior, clipBehavior: args[1] as Clip, hitTestBehavior: args[4] as HitTestBehavior, restorationId: args[10] as String?, keyboardDismissBehavior: args[6] as ScrollViewKeyboardDismissBehavior?),
       };
 }

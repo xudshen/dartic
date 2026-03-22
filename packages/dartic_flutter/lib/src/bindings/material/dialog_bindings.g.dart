@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/src/material/dialog.dart';
+import 'dart:ui' show Clip, Color, SemanticsRole, clampDouble, lerpDouble;
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/dialog_theme.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DialogBindings {
   static void register(DarticPluginContext ctx) {
@@ -51,5 +68,6 @@ abstract final class DialogBindings {
         'key#0': (args) => (args[0] as Dialog).key,
         '#14': (args) => Dialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, insetAnimationDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 100) : args[5] as Duration, insetAnimationCurve: identical(args[6], darticAbsent) ? Curves.decelerate : args[6] as Curve, insetPadding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsets?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, shape: identical(args[9], darticAbsent) ? null : args[9] as ShapeBorder?, alignment: identical(args[10], darticAbsent) ? null : args[10] as AlignmentGeometry?, child: identical(args[11], darticAbsent) ? null : args[11] as Widget?, semanticsRole: identical(args[12], darticAbsent) ? SemanticsRole.dialog : args[12] as SemanticsRole, constraints: identical(args[13], darticAbsent) ? null : args[13] as BoxConstraints?),
         'fullscreen#6': (args) => Dialog.fullscreen(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, insetAnimationDuration: identical(args[2], darticAbsent) ? Duration.zero : args[2] as Duration, insetAnimationCurve: identical(args[3], darticAbsent) ? Curves.decelerate : args[3] as Curve, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?, semanticsRole: identical(args[5], darticAbsent) ? SemanticsRole.dialog : args[5] as SemanticsRole),
+        '_#fromFields#15': (args) => Dialog(key: args[10] as Key?, backgroundColor: args[2] as Color?, elevation: args[6] as double?, shadowColor: args[12] as Color?, surfaceTintColor: args[14] as Color?, insetAnimationDuration: args[8] as Duration, insetAnimationCurve: args[7] as Curve, insetPadding: args[9] as EdgeInsets?, clipBehavior: args[4] as Clip?, shape: args[13] as ShapeBorder?, alignment: args[1] as AlignmentGeometry?, child: args[3] as Widget?, semanticsRole: args[11] as SemanticsRole, constraints: args[5] as BoxConstraints?),
       };
 }

@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/drag_details.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class DragUpdateDetailsBindings {
@@ -32,6 +35,5 @@ abstract final class DragUpdateDetailsBindings {
         'primaryDelta#0': (args) => (args[0] as DragUpdateDetails).primaryDelta,
         'kind#0': (args) => (args[0] as DragUpdateDetails).kind,
         '#6': (args) => DragUpdateDetails(globalPosition: args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, sourceTimeStamp: identical(args[2], darticAbsent) ? null : args[2] as Duration?, delta: identical(args[3], darticAbsent) ? Offset.zero : args[3] as Offset, primaryDelta: identical(args[4], darticAbsent) ? null : args[4] as double?, kind: identical(args[5], darticAbsent) ? null : args[5] as PointerDeviceKind?),
-        '_#fromFields#6': (args) => DragUpdateDetails(delta: args[0] as Offset, globalPosition: args[1] as Offset, kind: args[2] as PointerDeviceKind?, localPosition: args[3] as Offset?, primaryDelta: args[4] as double?, sourceTimeStamp: args[5] as Duration?),
       };
 }

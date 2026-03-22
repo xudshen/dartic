@@ -6,14 +6,27 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show FilterQuality, Image, ImageFilter, Offset, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class TransformBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,11 +57,11 @@ abstract final class TransformBindings {
         'filterQuality#0': (args) => (args[0] as Transform).filterQuality,
         'child#0': (args) => (args[0] as Transform).child,
         'key#0': (args) => (args[0] as Transform).key,
-        '#7': (args) => Transform(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, transform: args[1] as Matrix4, origin: identical(args[2], darticAbsent) ? null : args[2] as Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        'rotate#7': (args) => Transform.rotate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, angle: args[1] as double, origin: identical(args[2], darticAbsent) ? null : args[2] as Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        'translate#5': (args) => Transform.translate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, offset: args[1] as Offset, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
-        'scale#9': (args) => Transform.scale(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scale: identical(args[1], darticAbsent) ? null : args[1] as double?, scaleX: identical(args[2], darticAbsent) ? null : args[2] as double?, scaleY: identical(args[3], darticAbsent) ? null : args[3] as double?, origin: identical(args[4], darticAbsent) ? null : args[4] as Offset?, alignment: identical(args[5], darticAbsent) ? null : args[5] as AlignmentGeometry?, transformHitTests: identical(args[6], darticAbsent) ? true : args[6] as bool, filterQuality: identical(args[7], darticAbsent) ? null : args[7] as FilterQuality?, child: identical(args[8], darticAbsent) ? null : args[8] as Widget?),
-        'flip#7': (args) => Transform.flip(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flipX: identical(args[1], darticAbsent) ? false : args[1] as bool, flipY: identical(args[2], darticAbsent) ? false : args[2] as bool, origin: identical(args[3], darticAbsent) ? null : args[3] as Offset?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        '_#fromFields#5': (args) => Transform(alignment: args[0] as AlignmentGeometry?, filterQuality: args[1] as FilterQuality?, origin: args[2] as Offset?, transform: args[3] as Matrix4, transformHitTests: args[4] as bool),
+        '#7': (args) => Transform(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, transform: args[1] as Matrix4, origin: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        'rotate#7': (args) => Transform.rotate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, angle: args[1] as double, origin: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        'translate#5': (args) => Transform.translate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, offset: args[1] as ui.Offset, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as ui.FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        'scale#9': (args) => Transform.scale(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scale: identical(args[1], darticAbsent) ? null : args[1] as double?, scaleX: identical(args[2], darticAbsent) ? null : args[2] as double?, scaleY: identical(args[3], darticAbsent) ? null : args[3] as double?, origin: identical(args[4], darticAbsent) ? null : args[4] as ui.Offset?, alignment: identical(args[5], darticAbsent) ? null : args[5] as AlignmentGeometry?, transformHitTests: identical(args[6], darticAbsent) ? true : args[6] as bool, filterQuality: identical(args[7], darticAbsent) ? null : args[7] as ui.FilterQuality?, child: identical(args[8], darticAbsent) ? null : args[8] as Widget?),
+        'flip#7': (args) => Transform.flip(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flipX: identical(args[1], darticAbsent) ? false : args[1] as bool, flipY: identical(args[2], darticAbsent) ? false : args[2] as bool, origin: identical(args[3], darticAbsent) ? null : args[3] as ui.Offset?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        '_#fromFields#7': (args) => Transform(key: args[3] as Key?, transform: args[5] as Matrix4, origin: args[4] as ui.Offset?, alignment: args[0] as AlignmentGeometry?, transformHitTests: args[6] as bool, filterQuality: args[2] as ui.FilterQuality?, child: args[1] as Widget?),
       };
 }

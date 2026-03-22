@@ -34,6 +34,9 @@ class StubDillCompiler {
     final cacheDir = cachePath ?? _defaultCacheDir();
     Directory(cacheDir).createSync(recursive: true);
 
+    // Resolve directory URIs to actual barrel file imports.
+    libraryUris = _resolveDirectoryUris(libraryUris, analysisRoot);
+
     final isFlutter = _needsFlutterCompiler(libraryUris);
     final cacheKey = _computeCacheKey(
         libraryUris, dartBin, isFlutter ? 'flutter' : 'dart');
@@ -76,6 +79,85 @@ class StubDillCompiler {
     try { File(stubPath).deleteSync(); } catch (_) {}
 
     return _loadComponent(dillPath);
+  }
+
+  /// Resolves directory-style URIs to actual importable barrel file URIs.
+  ///
+  /// For `package:flutter/src/animation` → scans the `flutter` package root
+  /// for barrel files (`lib/*.dart`, excluding `lib/src/`) and imports them all.
+  /// File URIs and `dart:` URIs pass through unchanged.
+  static List<String> _resolveDirectoryUris(
+    List<String> uris,
+    String? analysisRoot,
+  ) {
+    final result = <String>{};
+    final resolvedPackages = <String>{};
+
+    for (final uri in uris) {
+      if (uri.endsWith('.dart') || uri.startsWith('dart:')) {
+        result.add(uri);
+      } else if (uri.startsWith('package:')) {
+        // Directory URI — find all barrel files in this package.
+        final slashIdx = uri.indexOf('/', 8);
+        if (slashIdx == -1) continue;
+        final packageName = uri.substring(8, slashIdx);
+
+        // Only scan each package once.
+        if (resolvedPackages.contains(packageName)) continue;
+        resolvedPackages.add(packageName);
+
+        final barrels = _findPackageBarrelFiles(packageName, analysisRoot);
+        result.addAll(barrels);
+      }
+    }
+
+    return result.toList();
+  }
+
+  /// Finds all barrel files (lib/*.dart, excluding lib/src/) for a package.
+  ///
+  /// Uses the package_config.json from [analysisRoot] (or CWD) to locate
+  /// the package root directory.
+  static List<String> _findPackageBarrelFiles(
+    String packageName,
+    String? analysisRoot,
+  ) {
+    // Find package_config.json.
+    final root = analysisRoot ?? '.';
+    final configFile = File('$root/.dart_tool/package_config.json');
+    if (!configFile.existsSync()) return [];
+
+    try {
+      final config = json.decode(configFile.readAsStringSync()) as Map;
+      final packages = config['packages'] as List? ?? [];
+
+      for (final pkg in packages) {
+        if ((pkg as Map)['name'] != packageName) continue;
+        final rootUri = pkg['rootUri'] as String?;
+        if (rootUri == null) continue;
+
+        // Resolve rootUri relative to package_config.json's directory.
+        final configDir = configFile.parent.parent.path; // .dart_tool/..
+        final packageRoot = Uri.parse(rootUri).isAbsolute
+            ? Uri.parse(rootUri).toFilePath()
+            : '$configDir/${Uri.parse(rootUri).toFilePath()}';
+
+        final libDir = Directory('$packageRoot/lib');
+        if (!libDir.existsSync()) return [];
+
+        final barrels = <String>[];
+        for (final entity in libDir.listSync()) {
+          if (entity is File && entity.path.endsWith('.dart')) {
+            final fileName = entity.uri.pathSegments.last;
+            barrels.add('package:$packageName/$fileName');
+          }
+        }
+        return barrels;
+      }
+    } catch (_) {
+      // Fallback: can't read package config.
+    }
+    return [];
   }
 
   /// Whether any URI requires the Flutter compiler (dart:ui or package:flutter).

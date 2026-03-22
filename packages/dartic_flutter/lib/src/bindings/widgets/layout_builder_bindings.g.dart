@@ -6,14 +6,16 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/layout_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class LayoutBuilderBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,5 +43,6 @@ abstract final class LayoutBuilderBindings {
         'builder#0': (args) => (args[0] as LayoutBuilder).builder,
         'key#0': (args) => (args[0] as LayoutBuilder).key,
         '#2': (args) => LayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
+        '_#fromFields#2': (args) => LayoutBuilder(key: args[1] as Key?, builder: args[0] as Widget Function(BuildContext, BoxConstraints)),
       };
 }

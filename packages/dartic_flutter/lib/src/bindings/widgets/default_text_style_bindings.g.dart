@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/text.dart';
+import 'dart:math';
+import 'dart:ui' as ui show TextAlign, TextHeightBehavior;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/default_selection_style.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/inherited_theme.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/selectable_region.dart';
+import 'package:flutter/src/widgets/selection_container.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/text_painter.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DefaultTextStyleBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,7 +33,7 @@ abstract final class DefaultTextStyleBindings {
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/inherited_theme.dart::InheritedTheme', 'package:flutter/src/widgets/framework.dart::InheritedWidget', 'package:flutter/src/widgets/framework.dart::ProxyWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
     );
-    ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::merge#9', (args) => DefaultTextStyle.merge(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: identical(args[1], darticAbsent) ? null : args[1] as TextStyle?, textAlign: identical(args[2], darticAbsent) ? null : args[2] as TextAlign?, softWrap: identical(args[3], darticAbsent) ? null : args[3] as bool?, overflow: identical(args[4], darticAbsent) ? null : args[4] as TextOverflow?, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, textWidthBasis: identical(args[6], darticAbsent) ? null : args[6] as TextWidthBasis?, textHeightBehavior: identical(args[7], darticAbsent) ? null : args[7] as TextHeightBehavior?, child: args[8] as Widget));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::merge#9', (args) => DefaultTextStyle.merge(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: identical(args[1], darticAbsent) ? null : args[1] as TextStyle?, textAlign: identical(args[2], darticAbsent) ? null : args[2] as ui.TextAlign?, softWrap: identical(args[3], darticAbsent) ? null : args[3] as bool?, overflow: identical(args[4], darticAbsent) ? null : args[4] as TextOverflow?, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, textWidthBasis: identical(args[6], darticAbsent) ? null : args[6] as TextWidthBasis?, textHeightBehavior: identical(args[7], darticAbsent) ? null : args[7] as ui.TextHeightBehavior?, child: args[8] as Widget));
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::of#1', (args) => DefaultTextStyle.of(args[0] as BuildContext));
   }
 
@@ -47,7 +56,8 @@ abstract final class DefaultTextStyleBindings {
         'textHeightBehavior#0': (args) => (args[0] as DefaultTextStyle).textHeightBehavior,
         'child#0': (args) => (args[0] as DefaultTextStyle).child,
         'key#0': (args) => (args[0] as DefaultTextStyle).key,
-        '#9': (args) => DefaultTextStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: args[1] as TextStyle, textAlign: identical(args[2], darticAbsent) ? null : args[2] as TextAlign?, softWrap: identical(args[3], darticAbsent) ? true : args[3] as bool, overflow: identical(args[4], darticAbsent) ? TextOverflow.clip : args[4] as TextOverflow, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, textWidthBasis: identical(args[6], darticAbsent) ? TextWidthBasis.parent : args[6] as TextWidthBasis, textHeightBehavior: identical(args[7], darticAbsent) ? null : args[7] as TextHeightBehavior?, child: args[8] as Widget),
+        '#9': (args) => DefaultTextStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: args[1] as TextStyle, textAlign: identical(args[2], darticAbsent) ? null : args[2] as ui.TextAlign?, softWrap: identical(args[3], darticAbsent) ? true : args[3] as bool, overflow: identical(args[4], darticAbsent) ? TextOverflow.clip : args[4] as TextOverflow, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, textWidthBasis: identical(args[6], darticAbsent) ? TextWidthBasis.parent : args[6] as TextWidthBasis, textHeightBehavior: identical(args[7], darticAbsent) ? null : args[7] as ui.TextHeightBehavior?, child: args[8] as Widget),
         'fallback#1': (args) => DefaultTextStyle.fallback(key: identical(args[0], darticAbsent) ? null : args[0] as Key?),
+        '_#fromFields#9': (args) => DefaultTextStyle(key: args[1] as Key?, style: args[5] as TextStyle, textAlign: args[6] as ui.TextAlign?, softWrap: args[4] as bool, overflow: args[3] as TextOverflow, maxLines: args[2] as int?, textWidthBasis: args[8] as TextWidthBasis, textHeightBehavior: args[7] as ui.TextHeightBehavior?, child: args[0] as Widget),
       };
 }

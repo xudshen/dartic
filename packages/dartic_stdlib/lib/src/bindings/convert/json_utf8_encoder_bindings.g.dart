@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class JsonUtf8EncoderBindings {
   static void register(DarticPluginContext ctx) {
@@ -25,11 +26,6 @@ abstract final class JsonUtf8EncoderBindings {
         'convert#1': (args) => (args[0] as JsonUtf8Encoder).convert(args[1]),
         'fuse#1': (args) => (args[0] as JsonUtf8Encoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as JsonUtf8Encoder).cast(),
-        '_#fromFields#3': (args) => JsonUtf8Encoder(
-            args[0] as String?,
-            args[1] as dynamic Function(dynamic)?,
-            args[2] as int? ?? 256,
-        ),
         '#3': (args) {
             final indent = identical(args[0], darticAbsent) ? null : args[0] as String?;
             final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;

@@ -7,31 +7,9 @@
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.
-#
-# Types covered (~97):
-#   Bridge classes (dartic code can extend):
-#     - StatelessWidget, StatefulWidget, State
-#   Binding-only (dartic code uses, not extends):
-#     - Widget, BuildContext, Navigator, Center, Column, Row, etc.
-#     - Layout, scroll, animation, transition, navigation widgets
-#
-# Material types are in material.yaml, cupertino in cupertino.yaml.
 
 output_bindings: "../lib/src/bindings/widgets"
 output_plugins: "../lib/src/plugins"
-
-# Use package: imports instead of relative imports (external package).
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:flutter/foundation.dart"
-  - "package:flutter/rendering.dart"
-  - "package:flutter/gestures.dart"
-  - "package:flutter/services.dart"
-  - "package:flutter/widgets.dart"
-  - "package:flutter/material.dart"
-  - "package:flutter/cupertino.dart"
-  - "dart:ui"
 
 libraries:
   # ── Framework types (from package:flutter/widgets.dart) ───────────────
@@ -39,133 +17,25 @@ libraries:
   # The analyzer resolves these to their actual src/ URIs automatically
   # (e.g. package:flutter/src/widgets/framework.dart::StatelessWidget).
 
-  - uri: package:flutter/widgets.dart
+  - uri: package:flutter/src/widgets
+    discover: all
     classes:
-      # Widget — abstract base, binding-only
-      - Widget
-
-      # StatelessWidget — bridge with custom lifecycle
       - name: StatelessWidget
         bridge: true
 
-      # StatefulWidget — bridge with custom lifecycle
       - name: StatefulWidget
         bridge: true
 
-      # State — bridge with @mustCallSuper lifecycle methods
       - name: State
         bridge: true
 
-      # BuildContext — binding-only
-      - BuildContext
-
-      # Navigator — binding-only
-      - Navigator
-
-      # Layout widgets — binding-only
-      - Center
-      - Column
-      - Row
-      - SizedBox
-      - Padding
-      - Expanded
-      - Container
-      - Text
-      - Icon
-      - IconData
-
-      # ── Task 12: Layout & Basic (~34 types) ──────────────────────────────
-      - Stack
-      - Positioned
-      - PositionedDirectional
-      - IndexedStack
-      - Flex
-      - Flexible
-      - Wrap
-      - Align
-      - FittedBox
-      - FractionallySizedBox
-      - LimitedBox
-      - OverflowBox
-      - AspectRatio
-      - ConstrainedBox
-      - UnconstrainedBox
-      - IntrinsicWidth
-      - IntrinsicHeight
-      - Opacity
-      - ClipRect
-      - ClipRRect
-      - ClipOval
-      - ClipPath
-      - Transform
-      - RotatedBox
-      - FractionalTranslation
-      - Offstage
-      - IgnorePointer
-      - AbsorbPointer
-      - RepaintBoundary
-      - ColoredBox
-      - PhysicalModel
-      - PhysicalShape
-      - CustomPaint
-      - Directionality
-
-      # ── Task 13: Interaction & Scroll (~20 types) ────────────────────────
-      - GestureDetector
-      - ListView
-      - GridView
-      - CustomScrollView
-      - SingleChildScrollView
-      - PageView
-      - Builder
-      - StatefulBuilder
-      - FadeInImage
-      - Form
-      - MediaQuery
-      - DefaultTextStyle
-      - RichText
-
-      # ── Task 14: Animation & Navigation (~22 types) ──────────────────────
-      - AnimatedContainer
-      - AnimatedPadding
-      - AnimatedAlign
-      - AnimatedPositioned
-      - AnimatedOpacity
-      - AnimatedDefaultTextStyle
-      - AnimatedPhysicalModel
-      - AnimatedScale
-      - AnimatedRotation
-      - AnimatedSlide
-      - AnimatedSwitcher
-      - AnimatedSize
-      - SlideTransition
-      - ScaleTransition
-      - RotationTransition
-      - FadeTransition
-      - SizeTransition
-      - DecoratedBoxTransition
-      - Hero
-      - PageRouteBuilder
-      - RouteSettings
-
-      # ── Task 15: Other (~11 types) ───────────────────────────────────────
-      - Dismissible
-      - DraggableScrollableSheet
-      - Placeholder
-      - PreferredSize
-      - Overlay
-      - OverlayEntry
-      - LayoutBuilder
-      - OrientationBuilder
-      - Tooltip
-
-      # ── Task 13: Enums ──────────────────────────────────────────────────
-      - ScrollViewKeyboardDismissBehavior
-      - ConnectionState
-      - AutovalidateMode
-      - Orientation
-
     overrides:
+      # ── TweenAnimationBuilder: fromFields needs ValueWidgetBuilder<Object?> ──
+      TweenAnimationBuilder:
+        extra_methods:
+          "_#fromFields#7": |
+            (args) => TweenAnimationBuilder<Object?>(key: args[4] as Key?, tween: args[6] as Tween<Object>, duration: args[3] as Duration, curve: args[2] as Curve, builder: args[0] as ValueWidgetBuilder<Object?>, onEnd: args[5] as VoidCallback?, child: args[1] as Widget?)
+
       # ── StatelessWidget: custom Bridge (Widget @nonVirtual hashCode/==) ──
       StatelessWidget:
         custom_bridge: true

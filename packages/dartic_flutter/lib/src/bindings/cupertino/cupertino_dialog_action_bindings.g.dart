@@ -6,12 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/dialog.dart';
+import 'dart:math' as math;
+import 'dart:ui' show ImageFilter, SemanticsRole, VoidCallback, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/interface_level.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/scrollbar.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoDialogActionBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,6 +54,6 @@ abstract final class CupertinoDialogActionBindings {
         'child#0': (args) => (args[0] as CupertinoDialogAction).child,
         'key#0': (args) => (args[0] as CupertinoDialogAction).key,
         '#7': (args) => CupertinoDialogAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, textStyle: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, mouseCursor: identical(args[5], darticAbsent) ? null : args[5] as MouseCursor?, child: args[6] as Widget),
-        '_#fromFields#6': (args) => CupertinoDialogAction(child: args[0] as Widget, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, mouseCursor: args[3] as MouseCursor?, onPressed: args[4] as void Function()?, textStyle: args[5] as TextStyle?),
+        '_#fromFields#7': (args) => CupertinoDialogAction(key: args[3] as Key?, onPressed: args[5] as VoidCallback?, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, textStyle: args[6] as TextStyle?, mouseCursor: args[4] as MouseCursor?, child: args[0] as Widget),
       };
 }

@@ -7,8 +7,16 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:ui';
+import 'dart:async';
+import 'dart:collection' as collection;
+import 'dart:convert' hide Codec;
+import 'dart:developer' as developer;
+import 'dart:ffi' hide Size;
+import 'dart:io';
+import 'dart:isolate' show Isolate, IsolateSpawnException, RawReceivePort, RemoteError, SendPort;
+import 'dart:math' as math;
+import 'dart:nativewrappers';
 import 'dart:typed_data';
-import 'dart:ui';
 
 abstract final class RRectBindings {
   static void register(DarticPluginContext ctx) {
@@ -69,5 +77,6 @@ abstract final class RRectBindings {
         'fromRectAndRadius#2': (args) => RRect.fromRectAndRadius(args[0] as Rect, args[1] as Radius),
         'fromLTRBAndCorners#8': (args) => RRect.fromLTRBAndCorners(args[0] as double, args[1] as double, args[2] as double, args[3] as double, topLeft: identical(args[4], darticAbsent) ? Radius.zero : args[4] as Radius, topRight: identical(args[5], darticAbsent) ? Radius.zero : args[5] as Radius, bottomRight: identical(args[6], darticAbsent) ? Radius.zero : args[6] as Radius, bottomLeft: identical(args[7], darticAbsent) ? Radius.zero : args[7] as Radius),
         'fromRectAndCorners#5': (args) => RRect.fromRectAndCorners(args[0] as Rect, topLeft: identical(args[1], darticAbsent) ? Radius.zero : args[1] as Radius, topRight: identical(args[2], darticAbsent) ? Radius.zero : args[2] as Radius, bottomRight: identical(args[3], darticAbsent) ? Radius.zero : args[3] as Radius, bottomLeft: identical(args[4], darticAbsent) ? Radius.zero : args[4] as Radius),
+        '_#fromFields#12': (args) => RRect.fromLTRBXY(args[5] as double, args[9] as double, args[6] as double, args[2] as double, args[10] as double, args[11] as double),
       };
 }

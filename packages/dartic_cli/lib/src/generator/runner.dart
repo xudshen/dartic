@@ -87,16 +87,39 @@ class Runner {
       // Collect all verify entries across files, then write combined test files.
       await _processConfigDirectoryForTests(dirPath);
     } else {
-      final config = parseConfigDirectory(dirPath);
+      // Process each YAML individually to preserve per-library output paths.
+      // Merging via parseConfigDirectory loses per-config outputBindings,
+      // causing all libraries to write to the first config's output dir.
+      await _processConfigDirectoryIndividually(dirPath);
+    }
+  }
+
+  /// Processes each YAML file individually, preserving per-config output paths.
+  Future<void> _processConfigDirectoryIndividually(String dirPath) async {
+    final dir = Directory(dirPath);
+    final files = dir
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.yaml'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+
+    if (files.isEmpty) {
+      throw ArgumentError('No YAML files found in $dirPath');
+    }
+
+    for (final file in files) {
+      final config = parseConfigFile(file.path);
       await _processConfig(config);
     }
   }
 
-  /// Processes a config directory by handling each YAML file individually.
+  /// Processes a config directory for test emission.
   ///
-  /// This preserves per-library output_bindings paths, which is critical for
-  /// generating correct binding import paths in test files. The verify entries
-  /// from all files are collected and written as combined test files at the end.
+  /// Handles each YAML individually to preserve per-library output_bindings
+  /// paths (critical for correct binding import paths in test files).
+  /// Verify entries from all files are collected and written as combined
+  /// test files at the end.
   Future<void> _processConfigDirectoryForTests(String dirPath) async {
     final dir = Directory(dirPath);
     final files = dir
@@ -117,7 +140,7 @@ class Runner {
     final mergedForPath = GeneratorConfig(
       outputBindings: configs.first.outputBindings,
       outputPlugins: configs.first.outputPlugins,
-      customImports: configs.first.customImports,
+
       libraries: [],
       configDirPath: Directory(dirPath).absolute.path,
     );
@@ -125,7 +148,8 @@ class Runner {
     if (effectiveTestDir == null) return;
 
     final packageName = _detectPackageName(mergedForPath);
-    final isFlutter = _isFlutterPackage(mergedForPath);
+    // Check Flutter across all configs (mergedForPath has empty libraries).
+    final isFlutter = configs.any((c) => _isFlutterPackage(c));
     final pluginClassName = _detectPluginClassName(packageName);
 
     await _initKernel(configs);
@@ -140,7 +164,11 @@ class Runner {
 
       for (final config in configs) {
         // Process binding generation normally per config.
-        for (final library in config.libraries) {
+        // Keep resolved libraries for verify entry collection.
+        final resolvedLibraries = <LibraryConfig>[];
+        for (var library in config.libraries) {
+          library = _resolveDiscovery(library);
+          resolvedLibraries.add(library);
           await _processLibrary(config, library, analyzer);
         }
 
@@ -148,6 +176,7 @@ class Runner {
         // Skip combined plugin for individual configs.
 
         // Collect verify entries for bridge classes.
+        // Use resolved libraries so sourceLibraryUri is available.
         final classConfigs = <({
           String name,
           String snakeName,
@@ -155,13 +184,14 @@ class Runner {
           String libraryUri,
         })>[];
 
-        for (final library in config.libraries) {
+        for (final library in resolvedLibraries) {
           for (final classConfig in library.classes) {
             if (!classConfig.bridge) continue;
 
             final resolvedName = classConfig.resolvedName;
+            final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
             final info =
-                await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
+                await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
             classConfigs.add((
               name: classConfig.name,
@@ -263,6 +293,7 @@ class Runner {
     final effectiveDartBin = dartBin ?? Platform.resolvedExecutable;
 
     // Collect all library URIs from all configs.
+    // Directory-style URIs are resolved to barrel files by StubDillCompiler.
     final uris = <String>{};
     for (final config in configs) {
       for (final lib in config.libraries) {
@@ -299,7 +330,10 @@ class Runner {
     final allTopLevelFileNames = <String>[];
 
     try {
-      for (final library in config.libraries) {
+      for (var library in config.libraries) {
+        // Auto-discover classes when discover: all is set.
+        library = _resolveDiscovery(library);
+
         final result = await _processLibrary(config, library, analyzer);
         allBindingClassNames.addAll(result.bindingClassNames);
         allBindingFileNames.addAll(result.bindingFileNames);
@@ -339,7 +373,7 @@ class Runner {
           bindingClassNames: allClassNames,
           bindingFileNames: allFileNames,
           hasTopLevel: false, // Already included in allClassNames
-          customImports: _nullIfEmpty(config.customImports),
+
           bindingsImportPrefix: bindingsRelPath,
         );
         final pluginFileName = '${snakeName}_plugin.g.dart';
@@ -400,13 +434,12 @@ class Runner {
           internalInfos,
           extraMethods: extraMethods,
           mainExtraMethods: _nullIfEmpty(mainExtraMethods),
-          customImports: _nullIfEmpty(config.customImports),
-          ignoreForFile: config.customImports.isNotEmpty
-              ? _mergeIgnoreForFile(mainOverrides?.ignoreForFile)
-              : mainOverrides?.ignoreForFile,
+          extraBindings: _nullIfEmpty(mainOverrides?.extraBindings),
+          ignoreForFile: _mergeIgnoreForFile(mainOverrides?.ignoreForFile),
           bridge: classConfig.bridge,
           methodOverrides: _nullIfEmpty(mainOverrides?.methodOverrides),
           kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
+          extraImports: _nullIfEmpty(library.extraImports),
         );
 
         final fileName = _classToFileName(className);
@@ -416,8 +449,23 @@ class Runner {
         bindingFileNames.add(fileName);
       } else {
         // Simple class (no internal types)
-        final info =
-            await _analyzeOrEmpty(analyzer, library.uri, resolvedName);
+        // Use sourceLibraryUri from discovery if available (directory mode),
+        // otherwise fall back to library.uri.
+        final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
+        TypeInfo info;
+        try {
+          info = await analyzer.analyzeClass(analysisUri, resolvedName);
+        } on StateError {
+          // Class not resolvable (platform-specific, wrong SDK version, etc.)
+          // Skip binding generation for this class.
+          if (resolvedName.startsWith('_')) {
+            info = _emptyTypeInfo(resolvedName, library.uri);
+          } else {
+            stderr.writeln(
+                '  SKIP: $resolvedName (not resolvable from ${library.uri})');
+            continue;
+          }
+        }
         // Check for overrides on this class
         final overrides = library.overrides[resolvedName];
         final extraMethods = overrides?.extraMethods;
@@ -430,12 +478,11 @@ class Runner {
           preamble: preamble,
           bridge: classConfig.bridge,
           customBridge: overrides?.customBridge ?? false,
-          ignoreForFile: config.customImports.isNotEmpty
-              ? _mergeIgnoreForFile(overrides?.ignoreForFile)
-              : overrides?.ignoreForFile,
-          customImports: _nullIfEmpty(config.customImports),
+          ignoreForFile: _mergeIgnoreForFile(overrides?.ignoreForFile),
+
           methodOverrides: _nullIfEmpty(overrides?.methodOverrides),
-          kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
+          kernelInfo: _kernelIntrospector?.lookup(analysisUri, resolvedName),
+          extraImports: _nullIfEmpty(library.extraImports),
         );
 
         final fileName = _classToFileName(className);
@@ -490,7 +537,6 @@ class Runner {
         library.uri,
         pluginName,
         functionInfos,
-        customImports: _nullIfEmpty(config.customImports),
       );
 
       _writeFile(config.outputBindings, topLevelFileName, source);
@@ -511,7 +557,6 @@ class Runner {
         hasTopLevel: hasTopLevel,
         topLevelBindingClassName: topLevelBindingClassName,
         topLevelFileName: topLevelFileName,
-        customImports: _nullIfEmpty(config.customImports),
         bindingsImportPrefix: bindingsRelPath,
       );
 
@@ -729,9 +774,10 @@ class Runner {
   }
 
   /// Determines whether this config is for a Flutter package by checking
-  /// custom_imports for `package:flutter/`.
+  /// Whether any library URI references Flutter packages.
   bool _isFlutterPackage(GeneratorConfig config) {
-    return config.customImports.any((i) => i.contains('package:flutter/'));
+    return config.libraries.any((lib) =>
+        lib.uri.startsWith('package:flutter/') || lib.uri == 'dart:ui');
   }
 
   /// Maps a package name to its plugin class name.
@@ -836,13 +882,20 @@ class Runner {
   }
 
   /// Attempts to analyze a class; returns an empty [TypeInfo] if the class
-  /// is private (starts with `_`) or not visible to the analyzer.
+  /// is private (starts with `_`), from a private library (`dart:_*`),
+  /// or not visible to the analyzer.
   Future<TypeInfo> _analyzeOrEmpty(
     TypeAnalyzer analyzer,
     String libraryUri,
     String className,
   ) async {
+    // Private class names can't be referenced in generated code.
     if (className.startsWith('_')) {
+      return _emptyTypeInfo(className, libraryUri);
+    }
+    // Private dart: libraries (dart:_internal, dart:_compact_hash, etc.)
+    // can be analyzed but can't be imported — skip to avoid unreachable casts.
+    if (libraryUri.startsWith('dart:_')) {
       return _emptyTypeInfo(className, libraryUri);
     }
     try {
@@ -883,6 +936,81 @@ class Runner {
 
   /// Converts a class name to a binding file name.
   ///
+  // ── Auto-discovery ─────────────────────────────────────────────────
+
+  /// Resolves `discover: all` on a [LibraryConfig] by merging
+  /// Kernel-discovered public classes with explicit YAML classes.
+  ///
+  /// Explicit ClassConfig takes precedence — if a class appears in both
+  /// YAML and discovery, the YAML version (with bridge, internalTypes, etc.)
+  /// is kept. Discovered-only classes get a default ClassConfig.
+  LibraryConfig _resolveDiscovery(LibraryConfig library) {
+    final mode = library.discover;
+    if (mode != 'all' && mode != 'current') return library;
+    if (_kernelIntrospector == null) {
+      stderr.writeln(
+          'WARNING: discover: $mode on ${library.uri} but Kernel not loaded');
+      return library;
+    }
+
+    final discovered = _kernelIntrospector!
+        .listPublicClasses(library.uri, discoverMode: mode!);
+    final excludeSet = library.exclude.toSet();
+    final explicitNames = library.classes.map((c) => c.name).toSet();
+
+    // Build discovered name → libraryUri lookup for enriching explicit classes.
+    final discoveredUris = <String, String>{};
+    for (final cls in discovered) {
+      discoveredUris[cls.name] = cls.libraryUri;
+    }
+
+    // Start with explicit classes — enrich with sourceLibraryUri from discovery.
+    final merged = <ClassConfig>[];
+    for (final cls in library.classes) {
+      if (cls.sourceLibraryUri == null && discoveredUris.containsKey(cls.name)) {
+        merged.add(ClassConfig(
+          name: cls.name,
+          sourceName: cls.sourceName,
+          internalTypes: cls.internalTypes,
+          bridge: cls.bridge,
+          sourceLibraryUri: discoveredUris[cls.name],
+        ));
+      } else {
+        merged.add(cls);
+      }
+    }
+
+    // Add discovered classes not already explicit and not excluded.
+    // Exclude uses qualified format: 'libraryUri::ClassName'.
+    var addedCount = 0;
+    for (final cls in discovered) {
+      if (explicitNames.contains(cls.name)) continue;
+      if (excludeSet.contains('${cls.libraryUri}::${cls.name}')) continue;
+
+      merged.add(ClassConfig(
+        name: cls.name,
+        sourceLibraryUri: cls.libraryUri,
+      ));
+      addedCount++;
+    }
+
+    if (addedCount > 0) {
+      stderr.writeln(
+          '  discover: ${library.uri}: $addedCount new classes '
+          '(${merged.length} total)');
+    }
+
+    return LibraryConfig(
+      uri: library.uri,
+      classes: merged,
+      functions: library.functions,
+      overrides: library.overrides,
+      discover: library.discover,
+      exclude: library.exclude,
+      extraImports: library.extraImports,
+    );
+  }
+
   /// `int` -> `int_bindings.g.dart`
   /// `StringBuffer` -> `string_buffer_bindings.g.dart`
   /// `_GrowableList` -> `growable_list_bindings.g.dart`

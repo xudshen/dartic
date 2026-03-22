@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class JsonCodecBindings {
   static void register(DarticPluginContext ctx) {
@@ -26,7 +28,7 @@ abstract final class JsonCodecBindings {
         'decoder#0': (args) => (args[0] as JsonCodec).decoder,
         'inverted#0': (args) => (args[0] as JsonCodec).inverted,
         'withReviver#1': (args) => JsonCodec.withReviver((a, b) => (args[0] as Function)(a, b)),
-        '_#fromFields#2': (args) => JsonCodec(),
+        '_#fromFields#2': (args) => JsonCodec(reviver: args[0] as Object? Function(Object?, Object?)?, toEncodable: args[1] as Object? Function(dynamic)?),
         '#2': (args) {
             final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;
             final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;

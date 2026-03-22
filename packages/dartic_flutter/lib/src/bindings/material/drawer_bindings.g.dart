@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/src/material/drawer.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/drawer_theme.dart';
+import 'package:flutter/src/material/list_tile.dart';
+import 'package:flutter/src/material/list_tile_theme.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class DrawerBindings {
   static void register(DarticPluginContext ctx) {
@@ -46,6 +56,6 @@ abstract final class DrawerBindings {
         'clipBehavior#0': (args) => (args[0] as Drawer).clipBehavior,
         'key#0': (args) => (args[0] as Drawer).key,
         '#10': (args) => Drawer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?, semanticLabel: identical(args[8], darticAbsent) ? null : args[8] as String?, clipBehavior: identical(args[9], darticAbsent) ? null : args[9] as Clip?),
-        '_#fromFields#9': (args) => Drawer(backgroundColor: args[0] as Color?, child: args[1] as Widget?, clipBehavior: args[2] as Clip?, elevation: args[3] as double?, semanticLabel: args[4] as String?, shadowColor: args[5] as Color?, shape: args[6] as ShapeBorder?, surfaceTintColor: args[7] as Color?, width: args[8] as double?),
+        '_#fromFields#10': (args) => Drawer(key: args[4] as Key?, backgroundColor: args[0] as Color?, elevation: args[3] as double?, shadowColor: args[6] as Color?, surfaceTintColor: args[8] as Color?, shape: args[7] as ShapeBorder?, width: args[9] as double?, child: args[1] as Widget?, semanticLabel: args[5] as String?, clipBehavior: args[2] as Clip?),
       };
 }

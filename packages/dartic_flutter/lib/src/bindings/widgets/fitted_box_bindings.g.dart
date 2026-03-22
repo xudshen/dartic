@@ -6,14 +6,27 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Clip, Image, ImageFilter, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/painting/box_fit.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class FittedBoxBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,7 +55,7 @@ abstract final class FittedBoxBindings {
         'clipBehavior#0': (args) => (args[0] as FittedBox).clipBehavior,
         'child#0': (args) => (args[0] as FittedBox).child,
         'key#0': (args) => (args[0] as FittedBox).key,
-        '#5': (args) => FittedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, fit: identical(args[1], darticAbsent) ? BoxFit.contain : args[1] as BoxFit, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
-        '_#fromFields#3': (args) => FittedBox(alignment: args[0] as AlignmentGeometry, clipBehavior: args[1] as Clip, fit: args[2] as BoxFit),
+        '#5': (args) => FittedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, fit: identical(args[1], darticAbsent) ? BoxFit.contain : args[1] as BoxFit, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as ui.Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        '_#fromFields#5': (args) => FittedBox(key: args[4] as Key?, fit: args[3] as BoxFit, alignment: args[0] as AlignmentGeometry, clipBehavior: args[2] as ui.Clip, child: args[1] as Widget?),
       };
 }

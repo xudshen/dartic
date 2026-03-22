@@ -39,7 +39,6 @@ GeneratorConfig parseConfigDirectory(String dirPath) {
   return GeneratorConfig(
     outputBindings: configs.first.outputBindings,
     outputPlugins: configs.first.outputPlugins,
-    customImports: configs.first.customImports,
     libraries: configs.expand((c) => c.libraries).toList(),
     configDirPath: Directory(dirPath).absolute.path,
   );
@@ -68,18 +67,12 @@ GeneratorConfig _parseConfig(YamlMap yaml, [String? configDir]) {
     outputPlugins = _resolvePath(configDir, outputPlugins);
   }
 
-  final customImports = (yaml['custom_imports'] as YamlList?)
-          ?.map((e) => e as String)
-          .toList() ??
-      [];
-
   final pluginName = yaml['plugin_name'] as String?;
 
   return GeneratorConfig(
     outputBindings: outputBindings,
     outputPlugins: outputPlugins,
     libraries: libraries,
-    customImports: customImports,
     pluginName: pluginName,
   );
 }
@@ -103,11 +96,23 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
     throw ArgumentError("Missing or invalid required field 'uri' in library");
   }
 
+  final discover = yaml['discover'] as String?;
+  final exclude = (yaml['exclude'] as YamlList?)
+          ?.map((e) => e as String)
+          .toList() ??
+      [];
+
   return LibraryConfig(
     uri: uri,
     classes: classes,
     functions: functions,
     overrides: overrides,
+    discover: discover,
+    exclude: exclude,
+    extraImports: (yaml['extra_imports'] as YamlList?)
+            ?.map((e) => e as String)
+            .toList() ??
+        [],
   );
 }
 

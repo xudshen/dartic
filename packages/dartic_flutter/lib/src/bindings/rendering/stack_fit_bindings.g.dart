@@ -6,9 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/stack.dart';
+import 'dart:math' as math;
+import 'dart:ui' show lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/layout_helper.dart';
+import 'package:flutter/src/rendering/object.dart';
 
 abstract final class StackFitBindings {
   static void register(DarticPluginContext ctx) {

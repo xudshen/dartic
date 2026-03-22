@@ -6,7 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:collection';
+import 'dart:collection' hide LinkedList, LinkedListEntry;
+import 'dart:async' show Future, Stream, StreamSubscription, StreamTransformer, StreamTransformerBase, Zone;
+import 'dart:convert' show Converter;
+import 'dart:math' show Random;
+import 'dart:typed_data' show Uint8List;
 
 abstract final class DoubleLinkedQueueEntryBindings {
   static void register(DarticPluginContext ctx) {
@@ -26,6 +30,6 @@ abstract final class DoubleLinkedQueueEntryBindings {
         'nextEntry#0': (args) => (args[0] as DoubleLinkedQueueEntry).nextEntry(),
         'element#0': (args) => (args[0] as DoubleLinkedQueueEntry).element,
         'element=#1': (args) { (args[0] as DoubleLinkedQueueEntry).element = args[1]; return args[1]; },
-        '#1': (args) => DoubleLinkedQueueEntry(args[0]),
+        '#1': (args) => DoubleLinkedQueueEntry<dynamic>(args[0]),
       };
 }

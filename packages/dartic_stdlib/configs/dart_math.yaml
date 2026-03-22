@@ -14,26 +14,13 @@
 output_bindings: "../lib/src/bindings/math"
 output_plugins: "../lib/src/plugins"
 
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-
 libraries:
   - uri: dart:math
+    discover: all
     classes:
-      # ── Random ──────────────────────────────────────────────────────────
-      - Random
-
-      # ── Point ───────────────────────────────────────────────────────────
-      - Point
-
-      # ── Rectangle + _RectangleBase ──────────────────────────────────────
       - name: Rectangle
         internal_types:
           - _RectangleBase
-
-      # ── MutableRectangle ────────────────────────────────────────────────
-      - MutableRectangle
 
     # ── Top-level functions ──────────────────────────────────────────────
 

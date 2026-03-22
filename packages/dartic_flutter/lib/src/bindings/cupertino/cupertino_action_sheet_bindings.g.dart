@@ -6,12 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/dialog.dart';
+import 'dart:math' as math;
+import 'dart:ui' show ImageFilter, SemanticsRole, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/interface_level.dart';
+import 'package:flutter/src/cupertino/localizations.dart';
+import 'package:flutter/src/cupertino/scrollbar.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoActionSheetBindings {
   static void register(DarticPluginContext ctx) {
@@ -41,6 +52,6 @@ abstract final class CupertinoActionSheetBindings {
         'cancelButton#0': (args) => (args[0] as CupertinoActionSheet).cancelButton,
         'key#0': (args) => (args[0] as CupertinoActionSheet).key,
         '#7': (args) => CupertinoActionSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? null : args[1] as Widget?, message: identical(args[2], darticAbsent) ? null : args[2] as Widget?, actions: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<Widget>(), messageScrollController: identical(args[4], darticAbsent) ? null : args[4] as ScrollController?, actionScrollController: identical(args[5], darticAbsent) ? null : args[5] as ScrollController?, cancelButton: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
-        '_#fromFields#6': (args) => CupertinoActionSheet(actionScrollController: args[0] as ScrollController?, actions: args[1] == null ? null : (args[1] as List).cast<Widget>(), cancelButton: args[2] as Widget?, message: args[3] as Widget?, messageScrollController: args[4] as ScrollController?, title: args[5] as Widget?),
+        '_#fromFields#7': (args) => CupertinoActionSheet(key: args[3] as Key?, title: args[6] as Widget?, message: args[4] as Widget?, actions: args[1] == null ? null : (args[1] as List).cast<Widget>(), messageScrollController: args[5] as ScrollController?, actionScrollController: args[0] as ScrollController?, cancelButton: args[2] as Widget?),
       };
 }

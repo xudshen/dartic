@@ -6,14 +6,25 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/navigation_bar.dart';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/elevation_overlay.dart';
+import 'package:flutter/src/material/ink_decoration.dart';
+import 'package:flutter/src/material/ink_well.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/material_state.dart';
+import 'package:flutter/src/material/navigation_bar_theme.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/tooltip.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class NavigationDestinationBindings {
   static void register(DarticPluginContext ctx) {
@@ -42,6 +53,6 @@ abstract final class NavigationDestinationBindings {
         'enabled#0': (args) => (args[0] as NavigationDestination).enabled,
         'key#0': (args) => (args[0] as NavigationDestination).key,
         '#6': (args) => NavigationDestination(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, icon: args[1] as Widget, selectedIcon: identical(args[2], darticAbsent) ? null : args[2] as Widget?, label: args[3] as String, tooltip: identical(args[4], darticAbsent) ? null : args[4] as String?, enabled: identical(args[5], darticAbsent) ? true : args[5] as bool),
-        '_#fromFields#5': (args) => NavigationDestination(enabled: args[0] as bool, icon: args[1] as Widget, label: args[2] as String, selectedIcon: args[3] as Widget?, tooltip: args[4] as String?),
+        '_#fromFields#6': (args) => NavigationDestination(key: args[2] as Key?, icon: args[1] as Widget, selectedIcon: args[4] as Widget?, label: args[3] as String, tooltip: args[5] as String?, enabled: args[0] as bool),
       };
 }

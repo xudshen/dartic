@@ -21,6 +21,7 @@ abstract final class RectangleBindings {
     // _RectangleBase
     for (final e in rectangleBaseMethodMap().entries) {
       ctx.registerBinding('dart:math::_RectangleBase::${e.key}', e.value);
+      ctx.registerBinding('dart:math::::_RectangleBase${e.key}', e.value);
     }
   }
 
@@ -40,9 +41,9 @@ abstract final class RectangleBindings {
         'topRight#0': (args) => (args[0] as Rectangle).topRight,
         'bottomRight#0': (args) => (args[0] as Rectangle).bottomRight,
         'bottomLeft#0': (args) => (args[0] as Rectangle).bottomLeft,
-        '#4': (args) => Rectangle(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
-        'fromPoints#2': (args) => Rectangle.fromPoints(args[0] as Point<num>, args[1] as Point<num>),
-        '_#fromFields#4': (args) => Rectangle(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
+        '#4': (args) => Rectangle<num>(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
+        'fromPoints#2': (args) => Rectangle<num>.fromPoints(args[0] as Point<num>, args[1] as Point<num>),
+        '_#fromFields#4': (args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num),
         '==#1': (args) => args[0] == args[1],
       };
 

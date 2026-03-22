@@ -6,14 +6,19 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/icon_data.dart';
+import 'package:flutter/src/widgets/icon_theme.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class IconBindings {
   static void register(DarticPluginContext ctx) {
@@ -50,6 +55,6 @@ abstract final class IconBindings {
         'fontWeight#0': (args) => (args[0] as Icon).fontWeight,
         'key#0': (args) => (args[0] as Icon).key,
         '#14': (args) => Icon(args[0] as IconData?, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, size: identical(args[2], darticAbsent) ? null : args[2] as double?, fill: identical(args[3], darticAbsent) ? null : args[3] as double?, weight: identical(args[4], darticAbsent) ? null : args[4] as double?, grade: identical(args[5], darticAbsent) ? null : args[5] as double?, opticalSize: identical(args[6], darticAbsent) ? null : args[6] as double?, color: identical(args[7], darticAbsent) ? null : args[7] as Color?, shadows: identical(args[8], darticAbsent) ? null : args[8] == null ? null : (args[8] as List).cast<Shadow>(), semanticLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, textDirection: identical(args[10], darticAbsent) ? null : args[10] as TextDirection?, applyTextScaling: identical(args[11], darticAbsent) ? null : args[11] as bool?, blendMode: identical(args[12], darticAbsent) ? null : args[12] as BlendMode?, fontWeight: identical(args[13], darticAbsent) ? null : args[13] as FontWeight?),
-        '_#fromFields#13': (args) => Icon(applyTextScaling: args[0] as bool?, blendMode: args[1] as BlendMode?, color: args[2] as Color?, fill: args[3] as double?, fontWeight: args[4] as FontWeight?, grade: args[5] as double?, args[6] as IconData?, opticalSize: args[7] as double?, semanticLabel: args[8] as String?, shadows: args[9] == null ? null : (args[9] as List).cast<Shadow>(), size: args[10] as double?, textDirection: args[11] as TextDirection?, weight: args[12] as double?),
+        '_#fromFields#14': (args) => Icon(args[6] as IconData?, key: args[7] as Key?, size: args[11] as double?, fill: args[3] as double?, weight: args[13] as double?, grade: args[5] as double?, opticalSize: args[8] as double?, color: args[2] as Color?, shadows: args[10] == null ? null : (args[10] as List).cast<Shadow>(), semanticLabel: args[9] as String?, textDirection: args[12] as TextDirection?, applyTextScaling: args[0] as bool?, blendMode: args[1] as BlendMode?, fontWeight: args[4] as FontWeight?),
       };
 }

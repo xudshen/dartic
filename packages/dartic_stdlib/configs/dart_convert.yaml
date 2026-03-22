@@ -9,45 +9,24 @@
 output_bindings: "../lib/src/bindings/convert"
 output_plugins: "../lib/src/plugins"
 
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:dartic_stdlib/src/bindings/convert/convert_helpers.dart"
-
 libraries:
   - uri: dart:convert
+    discover: all
+    extra_imports:
+      - "package:dartic_stdlib/src/bindings/convert/convert_helpers.dart"
     classes:
-      - Codec
-      - Converter
-      - Encoding
-      - JsonCodec
-      - JsonEncoder
-      - JsonDecoder
-      - JsonUtf8Encoder
-      - JsonUnsupportedObjectError
-      - Utf8Codec
-      - Utf8Encoder
-      - Utf8Decoder
-      - Base64Codec
-      - Base64Encoder
-      - Base64Decoder
-      - AsciiCodec
       - name: AsciiEncoder
         internal_types:
           - _UnicodeSubsetEncoder
       - name: AsciiDecoder
         internal_types:
           - _UnicodeSubsetDecoder
-      - Latin1Codec
       - name: Latin1Encoder
         internal_types:
           - _UnicodeSubsetEncoder
       - name: Latin1Decoder
         internal_types:
           - _UnicodeSubsetDecoder
-      - HtmlEscape
-      - HtmlEscapeMode
-      - LineSplitter
       - name: ChunkedConversionSink
         internal_types:
           - _SimpleCallbackSink
@@ -63,9 +42,6 @@ libraries:
       - name: ClosableStringSink
         internal_types:
           - _ClosableStringSink
-
-      # ── JsonCyclicError (subclass of JsonUnsupportedObjectError) ────────
-      - JsonCyclicError
 
     functions:
       - name: jsonEncode

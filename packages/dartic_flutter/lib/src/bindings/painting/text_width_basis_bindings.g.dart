@@ -6,11 +6,18 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/text_painter.dart';
+import 'dart:math' show max;
+import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle, GlyphInfo, LineMetrics, Paragraph, ParagraphBuilder, ParagraphConstraints, ParagraphStyle, PlaceholderAlignment, TextStyle;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/inline_span.dart';
+import 'package:flutter/src/painting/placeholder_span.dart';
+import 'package:flutter/src/painting/strut_style.dart';
+import 'package:flutter/src/painting/text_scaler.dart';
+import 'package:flutter/src/painting/text_span.dart';
+import 'package:flutter/src/painting/text_style.dart';
 
 abstract final class TextWidthBasisBindings {
   static void register(DarticPluginContext ctx) {

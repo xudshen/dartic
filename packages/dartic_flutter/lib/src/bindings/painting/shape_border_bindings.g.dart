@@ -6,11 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Canvas, Paint, Path, Rect, TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
 
 abstract final class ShapeBorderBindings {
   static void register(DarticPluginContext ctx) {
@@ -28,10 +29,10 @@ abstract final class ShapeBorderBindings {
         'scale#1': (args) => (args[0] as ShapeBorder).scale(args[1] as double),
         'lerpFrom#2': (args) => (args[0] as ShapeBorder).lerpFrom(args[1] as ShapeBorder?, args[2] as double),
         'lerpTo#2': (args) => (args[0] as ShapeBorder).lerpTo(args[1] as ShapeBorder?, args[2] as double),
-        'getOuterPath#2': (args) => (args[0] as ShapeBorder).getOuterPath(args[1] as Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?),
-        'getInnerPath#2': (args) => (args[0] as ShapeBorder).getInnerPath(args[1] as Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?),
-        'paintInterior#4': (args) { (args[0] as ShapeBorder).paintInterior(args[1] as Canvas, args[2] as Rect, args[3] as Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?); return null; },
-        'paint#3': (args) { (args[0] as ShapeBorder).paint(args[1] as Canvas, args[2] as Rect, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?); return null; },
+        'getOuterPath#2': (args) => (args[0] as ShapeBorder).getOuterPath(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
+        'getInnerPath#2': (args) => (args[0] as ShapeBorder).getInnerPath(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
+        'paintInterior#4': (args) { (args[0] as ShapeBorder).paintInterior(args[1] as ui.Canvas, args[2] as ui.Rect, args[3] as ui.Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?); return null; },
+        'paint#3': (args) { (args[0] as ShapeBorder).paint(args[1] as ui.Canvas, args[2] as ui.Rect, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?); return null; },
         'toString#0': (args) => (args[0] as ShapeBorder).toString(),
         'dimensions#0': (args) => (args[0] as ShapeBorder).dimensions,
         'preferPaintInterior#0': (args) => (args[0] as ShapeBorder).preferPaintInterior,

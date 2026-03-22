@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class StringConversionSinkBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,16 +24,19 @@ abstract final class StringConversionSinkBindings {
     // _StringCallbackSink
     for (final e in stringCallbackSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_StringCallbackSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_StringCallbackSink${e.key}', e.value);
     }
 
     // _StringAdapterSink
     for (final e in stringAdapterSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_StringAdapterSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_StringAdapterSink${e.key}', e.value);
     }
 
     // _StringSinkConversionSink
     for (final e in stringSinkConversionSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_StringSinkConversionSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_StringSinkConversionSink${e.key}', e.value);
     }
   }
 

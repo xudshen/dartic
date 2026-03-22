@@ -6,11 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/alignment.dart';
+import 'dart:ui' as ui show TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/debug.dart';
 
 abstract final class AlignmentDirectionalBindings {
   static void register(DarticPluginContext ctx) {
@@ -35,7 +35,7 @@ abstract final class AlignmentDirectionalBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#1': (args) => (args[0] as AlignmentDirectional).add(args[1] as AlignmentGeometry),
-        'resolve#1': (args) => (args[0] as AlignmentDirectional).resolve(args[1] as TextDirection?),
+        'resolve#1': (args) => (args[0] as AlignmentDirectional).resolve(args[1] as ui.TextDirection?),
         'toString#0': (args) => (args[0] as AlignmentDirectional).toString(),
         'start#0': (args) => (args[0] as AlignmentDirectional).start,
         'y#0': (args) => (args[0] as AlignmentDirectional).y,
@@ -47,5 +47,6 @@ abstract final class AlignmentDirectionalBindings {
         '~/#1': (args) => (args[0] as AlignmentDirectional) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as AlignmentDirectional) % (args[1] as double),
         '#2': (args) => AlignmentDirectional(args[0] as double, args[1] as double),
+        '_#fromFields#2': (args) => AlignmentDirectional(args[0] as double, args[1] as double),
       };
 }

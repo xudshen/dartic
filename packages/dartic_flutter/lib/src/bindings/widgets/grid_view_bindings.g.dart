@@ -6,14 +6,40 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/scroll_view.dart';
+import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/media_query.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/primary_scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_configuration.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/src/widgets/scroll_delegate.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
+import 'package:flutter/src/widgets/scroll_physics.dart';
+import 'package:flutter/src/widgets/scrollable.dart';
+import 'package:flutter/src/widgets/scrollable_helpers.dart';
+import 'package:flutter/src/widgets/sliver.dart';
+import 'package:flutter/src/widgets/sliver_prototype_extent_list.dart';
+import 'package:flutter/src/widgets/viewport.dart';
+import 'package:flutter/src/rendering/sliver_grid.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/rendering/viewport_offset.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/rendering/viewport.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
 import 'dart:ui';
+import 'package:flutter/src/rendering/proxy_box.dart';
 
 abstract final class GridViewBindings {
   static void register(DarticPluginContext ctx) {
@@ -65,5 +91,6 @@ abstract final class GridViewBindings {
         'custom#17': (args) => GridView.custom(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, gridDelegate: args[8] as SliverGridDelegate, childrenDelegate: args[9] as SliverChildDelegate, cacheExtent: identical(args[10], darticAbsent) ? null : args[10] as double?, semanticChildCount: identical(args[11], darticAbsent) ? null : args[11] as int?, dragStartBehavior: identical(args[12], darticAbsent) ? DragStartBehavior.start : args[12] as DragStartBehavior, keyboardDismissBehavior: identical(args[13], darticAbsent) ? null : args[13] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[14], darticAbsent) ? null : args[14] as String?, clipBehavior: identical(args[15], darticAbsent) ? Clip.hardEdge : args[15] as Clip, hitTestBehavior: identical(args[16], darticAbsent) ? HitTestBehavior.opaque : args[16] as HitTestBehavior),
         'count#23': (args) => GridView.count(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, crossAxisCount: args[8] as int, mainAxisSpacing: identical(args[9], darticAbsent) ? 0.0 : args[9] as double, crossAxisSpacing: identical(args[10], darticAbsent) ? 0.0 : args[10] as double, childAspectRatio: identical(args[11], darticAbsent) ? 1.0 : args[11] as double, addAutomaticKeepAlives: identical(args[12], darticAbsent) ? true : args[12] as bool, addRepaintBoundaries: identical(args[13], darticAbsent) ? true : args[13] as bool, addSemanticIndexes: identical(args[14], darticAbsent) ? true : args[14] as bool, cacheExtent: identical(args[15], darticAbsent) ? null : args[15] as double?, children: identical(args[16], darticAbsent) ? const <Widget>[] : (args[16] as List).cast<Widget>(), semanticChildCount: identical(args[17], darticAbsent) ? null : args[17] as int?, dragStartBehavior: identical(args[18], darticAbsent) ? DragStartBehavior.start : args[18] as DragStartBehavior, keyboardDismissBehavior: identical(args[19], darticAbsent) ? null : args[19] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[20], darticAbsent) ? null : args[20] as String?, clipBehavior: identical(args[21], darticAbsent) ? Clip.hardEdge : args[21] as Clip, hitTestBehavior: identical(args[22], darticAbsent) ? HitTestBehavior.opaque : args[22] as HitTestBehavior),
         'extent#23': (args) => GridView.extent(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, shrinkWrap: identical(args[6], darticAbsent) ? false : args[6] as bool, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, maxCrossAxisExtent: args[8] as double, mainAxisSpacing: identical(args[9], darticAbsent) ? 0.0 : args[9] as double, crossAxisSpacing: identical(args[10], darticAbsent) ? 0.0 : args[10] as double, childAspectRatio: identical(args[11], darticAbsent) ? 1.0 : args[11] as double, addAutomaticKeepAlives: identical(args[12], darticAbsent) ? true : args[12] as bool, addRepaintBoundaries: identical(args[13], darticAbsent) ? true : args[13] as bool, addSemanticIndexes: identical(args[14], darticAbsent) ? true : args[14] as bool, cacheExtent: identical(args[15], darticAbsent) ? null : args[15] as double?, children: identical(args[16], darticAbsent) ? const <Widget>[] : (args[16] as List).cast<Widget>(), semanticChildCount: identical(args[17], darticAbsent) ? null : args[17] as int?, dragStartBehavior: identical(args[18], darticAbsent) ? DragStartBehavior.start : args[18] as DragStartBehavior, keyboardDismissBehavior: identical(args[19], darticAbsent) ? null : args[19] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[20], darticAbsent) ? null : args[20] as String?, clipBehavior: identical(args[21], darticAbsent) ? Clip.hardEdge : args[21] as Clip, hitTestBehavior: identical(args[22], darticAbsent) ? HitTestBehavior.opaque : args[22] as HitTestBehavior),
+        '_#fromFields#21': (args) => GridView.custom(key: args[9] as Key?, scrollDirection: args[18] as Axis, reverse: args[16] as bool, controller: args[5] as ScrollController?, primary: args[14] as bool?, physics: args[13] as ScrollPhysics?, shrinkWrap: args[20] as bool, padding: args[11] as EdgeInsetsGeometry?, gridDelegate: args[7] as SliverGridDelegate, childrenDelegate: args[3] as SliverChildDelegate, cacheExtent: args[1] as double?, semanticChildCount: args[19] as int?, dragStartBehavior: args[6] as DragStartBehavior, keyboardDismissBehavior: args[10] as ScrollViewKeyboardDismissBehavior?, restorationId: args[15] as String?, clipBehavior: args[4] as Clip, hitTestBehavior: args[8] as HitTestBehavior),
       };
 }

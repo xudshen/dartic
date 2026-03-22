@@ -6,14 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/bottom_app_bar.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/bottom_app_bar_theme.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/elevation_overlay.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/notched_shapes.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class BottomAppBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -47,6 +56,6 @@ abstract final class BottomAppBarBindings {
         'height#0': (args) => (args[0] as BottomAppBar).height,
         'key#0': (args) => (args[0] as BottomAppBar).key,
         '#11': (args) => BottomAppBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shape: identical(args[3], darticAbsent) ? null : args[3] as NotchedShape?, clipBehavior: identical(args[4], darticAbsent) ? Clip.none : args[4] as Clip, notchMargin: identical(args[5], darticAbsent) ? 4.0 : args[5] as double, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, surfaceTintColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, shadowColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, height: identical(args[10], darticAbsent) ? null : args[10] as double?),
-        '_#fromFields#10': (args) => BottomAppBar(child: args[0] as Widget?, clipBehavior: args[1] as Clip, color: args[2] as Color?, elevation: args[3] as double?, height: args[4] as double?, notchMargin: args[5] as double, padding: args[6] as EdgeInsetsGeometry?, shadowColor: args[7] as Color?, shape: args[8] as NotchedShape?, surfaceTintColor: args[9] as Color?),
+        '_#fromFields#11': (args) => BottomAppBar(key: args[5] as Key?, color: args[2] as Color?, elevation: args[3] as double?, shape: args[9] as NotchedShape?, clipBehavior: args[1] as Clip, notchMargin: args[6] as double, child: args[0] as Widget?, padding: args[7] as EdgeInsetsGeometry?, surfaceTintColor: args[10] as Color?, shadowColor: args[8] as Color?, height: args[4] as double?),
       };
 }

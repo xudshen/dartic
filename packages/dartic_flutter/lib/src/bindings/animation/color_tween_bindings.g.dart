@@ -6,8 +6,12 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/tween.dart';
+import 'dart:ui' show Color, Rect, Size;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/animation/animations.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
 
 abstract final class ColorTweenBindings {
   static void register(DarticPluginContext ctx) {
@@ -31,6 +35,5 @@ abstract final class ColorTweenBindings {
         'begin=#1': (args) { (args[0] as ColorTween).begin = args[1] as Color?; return args[1]; },
         'end=#1': (args) { (args[0] as ColorTween).end = args[1] as Color?; return args[1]; },
         '#2': (args) => ColorTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Color?, end: identical(args[1], darticAbsent) ? null : args[1] as Color?),
-        '_#fromFields#0': (args) => ColorTween(),
       };
 }

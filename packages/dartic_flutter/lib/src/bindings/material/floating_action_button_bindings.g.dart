@@ -6,14 +6,31 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/floating_action_button.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/button.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/floating_action_button_theme.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/material/tooltip.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/material/theme_data.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class FloatingActionButtonBindings {
   static void register(DarticPluginContext ctx) {
@@ -66,5 +83,6 @@ abstract final class FloatingActionButtonBindings {
         'small#22': (args) => FloatingActionButton.small(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, tooltip: identical(args[2], darticAbsent) ? null : args[2] as String?, foregroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, focusColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, hoverColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, splashColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, heroTag: identical(args[8], darticAbsent) ? null : args[8], elevation: identical(args[9], darticAbsent) ? null : args[9] as double?, focusElevation: identical(args[10], darticAbsent) ? null : args[10] as double?, hoverElevation: identical(args[11], darticAbsent) ? null : args[11] as double?, highlightElevation: identical(args[12], darticAbsent) ? null : args[12] as double?, disabledElevation: identical(args[13], darticAbsent) ? null : args[13] as double?, onPressed: (args[14] as Function?) == null ? null : () => (args[14] as Function?)!(), mouseCursor: identical(args[15], darticAbsent) ? null : args[15] as MouseCursor?, shape: identical(args[16], darticAbsent) ? null : args[16] as ShapeBorder?, clipBehavior: identical(args[17], darticAbsent) ? Clip.none : args[17] as Clip, focusNode: identical(args[18], darticAbsent) ? null : args[18] as FocusNode?, autofocus: identical(args[19], darticAbsent) ? false : args[19] as bool, materialTapTargetSize: identical(args[20], darticAbsent) ? null : args[20] as MaterialTapTargetSize?, enableFeedback: identical(args[21], darticAbsent) ? null : args[21] as bool?),
         'large#22': (args) => FloatingActionButton.large(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, tooltip: identical(args[2], darticAbsent) ? null : args[2] as String?, foregroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, focusColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, hoverColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, splashColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, heroTag: identical(args[8], darticAbsent) ? null : args[8], elevation: identical(args[9], darticAbsent) ? null : args[9] as double?, focusElevation: identical(args[10], darticAbsent) ? null : args[10] as double?, hoverElevation: identical(args[11], darticAbsent) ? null : args[11] as double?, highlightElevation: identical(args[12], darticAbsent) ? null : args[12] as double?, disabledElevation: identical(args[13], darticAbsent) ? null : args[13] as double?, onPressed: (args[14] as Function?) == null ? null : () => (args[14] as Function?)!(), mouseCursor: identical(args[15], darticAbsent) ? null : args[15] as MouseCursor?, shape: identical(args[16], darticAbsent) ? null : args[16] as ShapeBorder?, clipBehavior: identical(args[17], darticAbsent) ? Clip.none : args[17] as Clip, focusNode: identical(args[18], darticAbsent) ? null : args[18] as FocusNode?, autofocus: identical(args[19], darticAbsent) ? false : args[19] as bool, materialTapTargetSize: identical(args[20], darticAbsent) ? null : args[20] as MaterialTapTargetSize?, enableFeedback: identical(args[21], darticAbsent) ? null : args[21] as bool?),
         'extended#27': (args) => FloatingActionButton.extended(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tooltip: identical(args[1], darticAbsent) ? null : args[1] as String?, foregroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, focusColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, hoverColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, heroTag: identical(args[6], darticAbsent) ? null : args[6], elevation: identical(args[7], darticAbsent) ? null : args[7] as double?, focusElevation: identical(args[8], darticAbsent) ? null : args[8] as double?, hoverElevation: identical(args[9], darticAbsent) ? null : args[9] as double?, splashColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, highlightElevation: identical(args[11], darticAbsent) ? null : args[11] as double?, disabledElevation: identical(args[12], darticAbsent) ? null : args[12] as double?, onPressed: (args[13] as Function?) == null ? null : () => (args[13] as Function?)!(), mouseCursor: identical(args[14], darticAbsent) ? null : args[14] as MouseCursor?, shape: identical(args[15], darticAbsent) ? null : args[15] as ShapeBorder?, isExtended: identical(args[16], darticAbsent) ? true : args[16] as bool, materialTapTargetSize: identical(args[17], darticAbsent) ? null : args[17] as MaterialTapTargetSize?, clipBehavior: identical(args[18], darticAbsent) ? Clip.none : args[18] as Clip, focusNode: identical(args[19], darticAbsent) ? null : args[19] as FocusNode?, autofocus: identical(args[20], darticAbsent) ? false : args[20] as bool, extendedIconLabelSpacing: identical(args[21], darticAbsent) ? null : args[21] as double?, extendedPadding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsetsGeometry?, extendedTextStyle: identical(args[23], darticAbsent) ? null : args[23] as TextStyle?, icon: identical(args[24], darticAbsent) ? null : args[24] as Widget?, label: args[25] as Widget, enableFeedback: identical(args[26], darticAbsent) ? null : args[26] as bool?),
+        '_#fromFields#29': (args) => FloatingActionButton.extended(key: args[21] as Key?, tooltip: args[28] as String?, foregroundColor: args[15] as Color?, backgroundColor: args[3] as Color?, focusColor: args[12] as Color?, hoverColor: args[18] as Color?, heroTag: args[16], elevation: args[7] as double?, focusElevation: args[13] as double?, hoverElevation: args[19] as double?, splashColor: args[27] as Color?, highlightElevation: args[17] as double?, disabledElevation: args[6] as double?, onPressed: args[25] as VoidCallback?, mouseCursor: args[24] as MouseCursor?, shape: args[26] as ShapeBorder?, isExtended: args[20] as bool, materialTapTargetSize: args[22] as MaterialTapTargetSize?, clipBehavior: args[5] as Clip, focusNode: args[14] as FocusNode?, autofocus: args[2] as bool, extendedIconLabelSpacing: args[9] as double?, extendedPadding: args[10] as EdgeInsetsGeometry?, extendedTextStyle: args[11] as TextStyle?, icon: args[4] as Widget?, label: args[0] as Widget, enableFeedback: args[8] as bool?),
       };
 }

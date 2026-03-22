@@ -7,6 +7,7 @@ library;
 
 import 'package:kernel/ast.dart' as ir;
 
+import 'discovery_result.dart';
 import 'kernel_class_info.dart';
 
 /// Extracts [KernelClassInfo] from a loaded Kernel [ir.Component].
@@ -66,6 +67,314 @@ class KernelIntrospector {
       isFinal: cls.isFinal,
       isAbstract: cls.isAbstract,
     );
+  }
+
+  // ── Library-level discovery ──────────────────────────────────────────
+
+  /// Lists all public classes discoverable from [libraryUri].
+  ///
+  /// Supports two URI forms:
+  /// - **Library URI** (ends with `.dart`): scans a single library and its
+  ///   `additionalExports`, filtering out re-exports from other packages.
+  /// - **Directory URI** (no `.dart` suffix): scans ALL libraries whose URI
+  ///   starts with this prefix. Used for directory-based discovery like
+  ///   `package:flutter/src/animation`.
+  ///
+  /// [discoverMode] controls depth for directory URIs:
+  /// - `'all'` (default): matches all libraries under the prefix (recursive)
+  /// - `'current'`: matches only libraries directly in the prefix directory
+  ///   (one level deep, no subdirectories)
+  ///
+  /// Filters out:
+  /// - Private classes (name starts with `_`)
+  /// - Anonymous mixin application classes
+  List<DiscoveredClass> listPublicClasses(String libraryUri,
+      {String discoverMode = 'all'}) {
+    final result = <DiscoveredClass>[];
+    final seen = <String>{};
+
+    if (libraryUri.endsWith('.dart') || libraryUri.startsWith('dart:')) {
+      // Single library mode: scan this library + its additionalExports.
+      // dart: URIs are always single libraries (no sub-path structure).
+      _discoverFromLibrary(libraryUri, seen, result);
+    } else {
+      // Directory mode: scan all libraries under this prefix.
+      final dirPrefix = libraryUri.endsWith('/')
+          ? libraryUri
+          : '$libraryUri/';
+
+      for (final lib in _component.libraries) {
+        final libUri = lib.importUri.toString();
+        if (!libUri.startsWith(dirPrefix)) continue;
+
+        // For 'current' mode, only match files directly in the directory
+        // (no further '/' after the prefix).
+        if (discoverMode == 'current') {
+          final remainder = libUri.substring(dirPrefix.length);
+          if (remainder.contains('/')) continue;
+        }
+
+        for (final cls in lib.classes) {
+          _addDiscoveredClass(cls, seen, result);
+        }
+      }
+    }
+
+    result.sort((a, b) => a.name.compareTo(b.name));
+    return result;
+  }
+
+  /// Discovers classes from a single library and its additionalExports.
+  void _discoverFromLibrary(
+    String libraryUri,
+    Set<String> seen,
+    List<DiscoveredClass> result,
+  ) {
+    final packagePrefix = _packagePrefix(libraryUri);
+
+    for (final lib in _component.libraries) {
+      if (lib.importUri.toString() != libraryUri) continue;
+
+      for (final cls in lib.classes) {
+        _addDiscoveredClass(cls, seen, result);
+      }
+
+      // Re-exported classes — filter to same package only.
+      for (final ref in lib.additionalExports) {
+        final node = ref.node;
+        if (node is ir.Class) {
+          final declaringUri =
+              node.enclosingLibrary.importUri.toString();
+          if (_belongsToPackage(declaringUri, packagePrefix)) {
+            _addDiscoveredClass(node, seen, result);
+          }
+        }
+      }
+      break;
+    }
+  }
+
+  /// Extracts the package prefix from a library URI for ownership checks.
+  ///
+  /// `package:flutter/widgets.dart` → `package:flutter/`
+  /// `dart:ui` → `dart:ui`
+  /// `dart:core` → `dart:core`
+  static String _packagePrefix(String uri) {
+    if (uri.startsWith('package:')) {
+      final slashIdx = uri.indexOf('/', 8); // after "package:"
+      if (slashIdx != -1) return uri.substring(0, slashIdx + 1);
+    }
+    return uri; // dart: URIs are their own prefix
+  }
+
+  /// Checks if [declaringUri] belongs to the same package as [prefix].
+  ///
+  /// `package:flutter/src/widgets/basic.dart` belongs to `package:flutter/` → true
+  /// `package:vector_math/vector_math_64.dart` belongs to `package:flutter/` → false
+  /// `dart:ui` belongs to `dart:ui` → true
+  /// `dart:ui` belongs to `package:flutter/` → false
+  static bool _belongsToPackage(String declaringUri, String packagePrefix) {
+    if (packagePrefix.startsWith('dart:')) {
+      return declaringUri == packagePrefix;
+    }
+    return declaringUri.startsWith(packagePrefix);
+  }
+
+  void _addDiscoveredClass(
+    ir.Class cls,
+    Set<String> seen,
+    List<DiscoveredClass> result,
+  ) {
+    final name = cls.name;
+    if (name.startsWith('_')) return;
+    if (cls.isAnonymousMixin) return;
+    if (seen.contains(name)) return;
+    seen.add(name);
+
+    result.add(DiscoveredClass(
+      name: name,
+      libraryUri: cls.enclosingLibrary.importUri.toString(),
+      isAbstract: cls.isAbstract,
+      isFinal: cls.isFinal,
+      hasGenerativeCtor: cls.constructors.any((c) => !c.isExternal),
+    ));
+  }
+
+  /// Finds private VM-internal classes that implement/extend [className]
+  /// from [libraryUri] through recursive inheritance chain scanning.
+  ///
+  /// Scans all libraries including platform private libs like
+  /// `dart:_internal`, `dart:_compact_hash`.
+  List<DiscoveredInternalType> findInternalTypes(
+    String libraryUri,
+    String className,
+  ) {
+    final result = <DiscoveredInternalType>[];
+
+    for (final lib in _component.libraries) {
+      final libUri = lib.importUri.toString();
+
+      for (final cls in lib.classes) {
+        if (!cls.name.startsWith('_')) continue;
+        if (cls.isAnonymousMixin) continue;
+
+        if (_classExtendsOrImplements(cls, libraryUri, className, 0)) {
+          result.add(DiscoveredInternalType(
+            name: cls.name,
+            sourceLibraryUri: libUri,
+          ));
+        }
+      }
+    }
+
+    result.sort((a, b) => a.toString().compareTo(b.toString()));
+    return result;
+  }
+
+  /// Recursively checks if [cls] extends or implements [targetClassName]
+  /// from [targetLibraryUri] within [depth] levels.
+  bool _classExtendsOrImplements(
+    ir.Class cls,
+    String targetLibraryUri,
+    String targetClassName,
+    int depth,
+  ) {
+    if (depth > 10) return false;
+
+    final superCls = cls.superclass;
+    if (superCls != null) {
+      if (_isTargetClass(superCls, targetLibraryUri, targetClassName)) {
+        return true;
+      }
+      if (_classExtendsOrImplements(
+          superCls, targetLibraryUri, targetClassName, depth + 1)) {
+        return true;
+      }
+    }
+
+    for (final impl in cls.implementedTypes) {
+      final implCls = impl.classNode;
+      if (_isTargetClass(implCls, targetLibraryUri, targetClassName)) {
+        return true;
+      }
+      if (_classExtendsOrImplements(
+          implCls, targetLibraryUri, targetClassName, depth + 1)) {
+        return true;
+      }
+    }
+
+    final mixedIn = cls.mixedInClass;
+    if (mixedIn != null) {
+      if (_isTargetClass(mixedIn, targetLibraryUri, targetClassName)) {
+        return true;
+      }
+      if (_classExtendsOrImplements(
+          mixedIn, targetLibraryUri, targetClassName, depth + 1)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  bool _isTargetClass(
+    ir.Class cls,
+    String targetLibraryUri,
+    String targetClassName,
+  ) {
+    return cls.name == targetClassName &&
+        cls.enclosingLibrary.importUri.toString() == targetLibraryUri;
+  }
+
+  /// Finds ancestor classes from different libraries in [className]'s
+  /// inheritance chain, along with their public members.
+  ///
+  /// For anonymous mixin applications (same library but mixedInClass from
+  /// another library), uses the mixedInClass identity as the ancestor.
+  List<DiscoveredAncestor> findCrossNamespaceAncestors(
+    String libraryUri,
+    String className,
+  ) {
+    ir.Class? targetCls;
+    for (final lib in _component.libraries) {
+      if (lib.importUri.toString() != libraryUri) continue;
+      for (final cls in lib.classes) {
+        if (cls.name == className) {
+          targetCls = cls;
+          break;
+        }
+      }
+      break;
+    }
+    if (targetCls == null) return [];
+
+    final result = <DiscoveredAncestor>[];
+    final seen = <String>{};
+
+    // Check implementedTypes on the target class itself.
+    for (final impl in targetCls.implementedTypes) {
+      final implCls = impl.classNode;
+      final implUri = implCls.enclosingLibrary.importUri.toString();
+      if (implUri != libraryUri) {
+        _addAncestor(implCls, implUri, seen, result);
+      }
+    }
+
+    _walkAncestors(targetCls, libraryUri, seen, result);
+
+    result.sort((a, b) => a.toString().compareTo(b.toString()));
+    return result;
+  }
+
+  void _walkAncestors(
+    ir.Class cls,
+    String targetLibraryUri,
+    Set<String> seen,
+    List<DiscoveredAncestor> result,
+  ) {
+    ir.Class? current = cls.superclass;
+
+    while (current != null) {
+      final currentUri = current.enclosingLibrary.importUri.toString();
+
+      if (current.isAnonymousMixin && current.mixedInClass != null) {
+        final mixedIn = current.mixedInClass!;
+        final mixedInUri = mixedIn.enclosingLibrary.importUri.toString();
+
+        if (mixedInUri != targetLibraryUri) {
+          _addAncestor(mixedIn, mixedInUri, seen, result);
+        }
+      } else if (currentUri != targetLibraryUri) {
+        _addAncestor(current, currentUri, seen, result);
+      }
+
+      for (final impl in current.implementedTypes) {
+        final implCls = impl.classNode;
+        final implUri = implCls.enclosingLibrary.importUri.toString();
+        if (implUri != targetLibraryUri) {
+          _addAncestor(implCls, implUri, seen, result);
+        }
+      }
+
+      current = current.superclass;
+    }
+  }
+
+  void _addAncestor(
+    ir.Class cls,
+    String libraryUri,
+    Set<String> seen,
+    List<DiscoveredAncestor> result,
+  ) {
+    final key = '$libraryUri::${cls.name}';
+    if (seen.contains(key)) return;
+    seen.add(key);
+
+    result.add(DiscoveredAncestor(
+      className: cls.name,
+      libraryUri: libraryUri,
+      publicMembers: _collectPublicMembers(cls),
+    ));
   }
 
   // ── Field collection ──────────────────────────────────────────────────
@@ -168,6 +477,16 @@ class KernelIntrospector {
     final initMap = <String, (String?, bool)>{}; // fieldName → (outerParamName, _)
     _extractInitializerMappings(ctor, outerParams, initMap);
 
+    // Build param index lookup: paramName → position in constructor.
+    final paramIndexMap = <String, int>{};
+    for (var i = 0; i < ctor.function.positionalParameters.length; i++) {
+      paramIndexMap[ctor.function.positionalParameters[i].name!] = i;
+    }
+    final namedOffset = ctor.function.positionalParameters.length;
+    for (var i = 0; i < ctor.function.namedParameters.length; i++) {
+      paramIndexMap[ctor.function.namedParameters[i].name!] = namedOffset + i;
+    }
+
     // Build mappings for all fields.
     final mappings = <FieldParamMapping>[];
 
@@ -189,6 +508,9 @@ class KernelIntrospector {
           paramName: paramName,
           paramIsNamed: isNamed,
           paramIsOptional: isOptional,
+          paramIndex: paramName != null
+              ? (paramIndexMap[paramName] ?? -1)
+              : -1,
         ));
       } else {
         // Field not in initializer list — default/inherited value.

@@ -7,29 +7,10 @@
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.
-#
-# Types covered (~3):
-#   Binding-only (dartic code uses, not extends):
-#     - Ticker, TickerFuture, TickerCanceled
-#
-# Excluded types (code gen limitations):
-#   - TickerProvider: mixin, not class
-#   - TickerFuture: gen emits `(a) => ... as FutureOr` for Future<void>.then(),
-#     void result cannot be used as expression
 
 output_bindings: "../lib/src/bindings/scheduler"
 output_plugins: "../lib/src/plugins"
 
-# Use package: imports instead of relative imports (external package).
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:flutter/scheduler.dart"
-  - "dart:async"
-
 libraries:
-  - uri: package:flutter/scheduler.dart
-    classes:
-      - Ticker
-      # TickerFuture removed: gen bug with Future<void>.then() — void as expression
-      - TickerCanceled
+  - uri: package:flutter/src/scheduler
+    discover: all

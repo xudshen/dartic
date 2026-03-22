@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/drag_details.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class DragStartDetailsBindings {
@@ -30,6 +33,5 @@ abstract final class DragStartDetailsBindings {
         'sourceTimeStamp#0': (args) => (args[0] as DragStartDetails).sourceTimeStamp,
         'kind#0': (args) => (args[0] as DragStartDetails).kind,
         '#4': (args) => DragStartDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, sourceTimeStamp: identical(args[2], darticAbsent) ? null : args[2] as Duration?, kind: identical(args[3], darticAbsent) ? null : args[3] as PointerDeviceKind?),
-        '_#fromFields#4': (args) => DragStartDetails(globalPosition: args[0] as Offset, kind: args[1] as PointerDeviceKind?, localPosition: args[2] as Offset?, sourceTimeStamp: args[3] as Duration?),
       };
 }

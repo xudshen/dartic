@@ -6,8 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class ClosableStringSinkBindings {
   static void register(DarticPluginContext ctx) {
@@ -22,6 +24,7 @@ abstract final class ClosableStringSinkBindings {
     // _ClosableStringSink
     for (final e in closableStringSinkMethodMap().entries) {
       ctx.registerBinding('dart:convert::_ClosableStringSink::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_ClosableStringSink${e.key}', e.value);
     }
   }
 

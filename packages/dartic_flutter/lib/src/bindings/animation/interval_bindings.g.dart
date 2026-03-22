@@ -6,7 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/animation.dart';
+import 'package:flutter/src/animation/curves.dart';
+import 'dart:math' as math;
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 abstract final class IntervalBindings {
@@ -29,6 +32,6 @@ abstract final class IntervalBindings {
         'curve#0': (args) => (args[0] as Interval).curve,
         'flipped#0': (args) => (args[0] as Interval).flipped,
         '#3': (args) => Interval(args[0] as double, args[1] as double, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve),
-        '_#fromFields#3': (args) => Interval(args[0] as double, curve: args[1] as Curve, args[2] as double),
+        '_#fromFields#3': (args) => Interval(args[0] as double, args[2] as double, curve: args[1] as Curve),
       };
 }

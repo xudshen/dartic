@@ -6,14 +6,29 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/navigator.dart';
+import 'dart:async';
+import 'dart:collection';
+import 'dart:convert';
+import 'dart:developer' as developer;
+import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/widgets/focus_scope.dart';
+import 'package:flutter/src/widgets/focus_traversal.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/heroes.dart';
+import 'package:flutter/src/widgets/notification_listener.dart';
+import 'package:flutter/src/widgets/overlay.dart';
+import 'package:flutter/src/widgets/restoration.dart';
+import 'package:flutter/src/widgets/restoration_properties.dart';
+import 'package:flutter/src/widgets/routes.dart';
+import 'package:flutter/src/widgets/ticker_provider.dart';
 
 abstract final class RouteSettingsBindings {
   static void register(DarticPluginContext ctx) {
@@ -30,6 +45,6 @@ abstract final class RouteSettingsBindings {
         'name#0': (args) => (args[0] as RouteSettings).name,
         'arguments#0': (args) => (args[0] as RouteSettings).arguments,
         '#2': (args) => RouteSettings(name: identical(args[0], darticAbsent) ? null : args[0] as String?, arguments: identical(args[1], darticAbsent) ? null : args[1]),
-        '_#fromFields#2': (args) => RouteSettings(arguments: args[0], name: args[1] as String?),
+        '_#fromFields#2': (args) => RouteSettings(name: args[1] as String?, arguments: args[0]),
       };
 }

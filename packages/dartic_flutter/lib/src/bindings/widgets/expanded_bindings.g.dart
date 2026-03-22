@@ -6,14 +6,24 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Image, ImageFilter, SemanticsInputType, TextHeightBehavior;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui';
+import 'package:flutter/src/widgets/binding.dart';
+import 'package:flutter/src/widgets/debug.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/localizations.dart';
+import 'package:flutter/src/widgets/visibility.dart';
+import 'package:flutter/src/widgets/widget_span.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/rendering/flex.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class ExpandedBindings {
   static void register(DarticPluginContext ctx) {
@@ -44,5 +54,6 @@ abstract final class ExpandedBindings {
         'child#0': (args) => (args[0] as Expanded).child,
         'key#0': (args) => (args[0] as Expanded).key,
         '#3': (args) => Expanded(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int, child: args[2] as Widget),
+        '_#fromFields#4': (args) => Expanded(key: args[3] as Key?, flex: args[2] as int, child: args[0] as Widget),
       };
 }

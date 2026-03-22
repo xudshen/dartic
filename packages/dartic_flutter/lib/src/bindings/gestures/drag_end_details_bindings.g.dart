@@ -6,8 +6,11 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/drag_details.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/gestures/gesture_details.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
 abstract final class DragEndDetailsBindings {
@@ -30,6 +33,5 @@ abstract final class DragEndDetailsBindings {
         'velocity#0': (args) => (args[0] as DragEndDetails).velocity,
         'primaryVelocity#0': (args) => (args[0] as DragEndDetails).primaryVelocity,
         '#4': (args) => DragEndDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, velocity: identical(args[2], darticAbsent) ? Velocity.zero : args[2] as Velocity, primaryVelocity: identical(args[3], darticAbsent) ? null : args[3] as double?),
-        '_#fromFields#4': (args) => DragEndDetails(globalPosition: args[0] as Offset, localPosition: args[1] as Offset?, primaryVelocity: args[2] as double?, velocity: args[3] as Velocity),
       };
 }

@@ -6,14 +6,40 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/material/app_bar.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/action_buttons.dart';
+import 'package:flutter/src/material/app_bar_theme.dart';
+import 'package:flutter/src/material/button_style.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/constants.dart';
+import 'package:flutter/src/material/debug.dart';
+import 'package:flutter/src/material/flexible_space_bar.dart';
+import 'package:flutter/src/material/icon_button.dart';
+import 'package:flutter/src/material/icon_button_theme.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/tabs.dart';
+import 'package:flutter/src/material/text_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/preferred_size.dart';
+import 'package:flutter/src/widgets/scroll_notification.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/widgets/icon_theme_data.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/src/services/system_chrome.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class AppBarBindings {
   static void register(DarticPluginContext ctx) {

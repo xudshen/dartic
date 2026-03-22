@@ -22,75 +22,21 @@
 output_bindings: "../lib/src/bindings/collection"
 output_plugins: "../lib/src/plugins"
 
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-
 libraries:
   - uri: dart:collection
+    discover: all
     classes:
-      # ── LinkedHashMap ──────────────────────────────────────────────────
-      - LinkedHashMap
-
-      # ── LinkedHashSet ──────────────────────────────────────────────────
-      - LinkedHashSet
-
-      # ── HashMap ────────────────────────────────────────────────────────
-      - HashMap
-
-      # ── HashSet ────────────────────────────────────────────────────────
-      - HashSet
-
-      # ── ListQueue ──────────────────────────────────────────────────────
-      - ListQueue
-
-      # ── Queue ──────────────────────────────────────────────────────────
-      - Queue
-
-      # ── SplayTreeMap ───────────────────────────────────────────────────
-      - SplayTreeMap
-
-      # ── SplayTreeSet ───────────────────────────────────────────────────
-      - SplayTreeSet
-
-      # ── UnmodifiableListView ───────────────────────────────────────────
-      - UnmodifiableListView
-
-      # ── UnmodifiableMapView ────────────────────────────────────────────
-      - UnmodifiableMapView
-
-      # ── UnmodifiableSetView ────────────────────────────────────────────
-      - UnmodifiableSetView
-
-      # ── ListBase (abstract, bridge for extends-host subclasses) ────────
       - name: ListBase
         bridge: true
-
-      # ── MapBase (abstract, bridge for extends-host subclasses) ────────
       - name: MapBase
         bridge: true
-
-      # ── SetBase (abstract, bridge for extends-host subclasses) ─────────
+        internal_types:
+          - _MapBaseValueIterable
       - name: SetBase
         bridge: true
-
-      # ── LinkedList ──────────────────────────────────────────────────────
-      - LinkedList
-
-      # ── LinkedListEntry ─────────────────────────────────────────────
-      - LinkedListEntry
-
-      # ── HasNextIterator ──────────────────────────────────────────────
-      - HasNextIterator
-
-      # ── DoubleLinkedQueueEntry ──────────────────────────────────────────
       - DoubleLinkedQueueEntry
-
-      # ── DoubleLinkedQueue ────────────────────────────────────────────────
-      - DoubleLinkedQueue
-
-      # ── MapView (read-only Map wrapper) ──────────────────────────────────
-      - MapView
+      # Cross-namespace: UnmodifiableMapBase from dart:_internal
+      - UnmodifiableMapBase
 
     overrides:
 
@@ -135,6 +81,17 @@ libraries:
       LinkedHashSet:
         extra_methods:
           "#0": "(args) => LinkedHashSet<Object?>()"
+          "#3": |
+            (args) {
+              final equals = identical(args[0], darticAbsent) ? null : args[0] as Function?;
+              final hashCodeFn = identical(args[1], darticAbsent) ? null : args[1] as Function?;
+              final isValidKey = identical(args[2], darticAbsent) ? null : args[2] as Function?;
+              return LinkedHashSet<Object?>(
+                equals: equals != null ? (a, b) => equals(a, b) as bool : null,
+                hashCode: hashCodeFn != null ? (k) => hashCodeFn(k) as int : null,
+                isValidKey: isValidKey != null ? (k) => isValidKey(k) as bool : null,
+              );
+            }
           "from#1": "(args) => LinkedHashSet.from(args[0] as Iterable)"
           "of#1": "(args) => LinkedHashSet.of(args[0] as Iterable)"
           "identity#0": "(args) => Set.identity()"
@@ -384,6 +341,12 @@ libraries:
           - "dart:_internal::UnmodifiableMapMixin::updateAll#1"
           - "dart:_internal::UnmodifiableMapMixin::removeWhere#1"
           - "dart:_internal::UnmodifiableMapMixin::addEntries#1"
+          # Synthetic mixin application class (name contains &, can't be internal_type)
+          - "dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::addAll#1"
+          - "dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::clear#0"
+          - "dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::[]=#2"
+          - "dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::putIfAbsent#2"
+          - "dart:collection::_UnmodifiableMapView&MapView&_UnmodifiableMapMixin::remove#1"
 
       # ── UnmodifiableSetView ──
       UnmodifiableSetView:
@@ -395,11 +358,54 @@ libraries:
           "lookup#1": "(args) => (args[0] as UnmodifiableSetView).lookup(args[1])"
           "toSet#0": "(args) => (args[0] as UnmodifiableSetView).toSet()"
 
-      # ── ListBase: abstract, gen auto-discovers all inherited methods ──
-      # No extra_methods needed — analyzer finds forEach, where, map, etc.
+      # ── ListBase: private helper methods called by sort/remove/etc. ──
+      ListBase:
+        extra_methods:
+          "_closeGap#2": "(args) => null"
+          "_compareAny#2": "(args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable)"
+          "_filter#2": |
+            (args) {
+              (args[0] as List).removeWhere(args[1] as bool Function(dynamic));
+              return null;
+            }
 
       # ── MapBase: abstract, gen auto-discovers all methods ──
       # No extra_methods needed.
+
+      # ── _MapBaseValueIterable: private class returned by MapBase.values ──
+      _MapBaseValueIterable:
+        extra_methods:
+          "#1": "(args) => (args[0] as Map).values"
+
+      # ── SetBase: cross-namespace bindings for dartic classes extending SetBase ──
+      SetBase:
+        extra_methods:
+          "add#1": "(args) => (args[0] as Set).add(args[1])"
+          "contains#1": "(args) => (args[0] as Set).contains(args[1])"
+          "isEmpty#0": "(args) => (args[0] as Set).isEmpty"
+          "iterator#0": "(args) => (args[0] as Set).iterator"
+          "length#0": "(args) => (args[0] as Set).length"
+          "remove#1": "(args) => (args[0] as Set).remove(args[1])"
+          "removeAll#1": |
+            (args) {
+              (args[0] as Set).removeAll(args[1] as Iterable);
+              return null;
+            }
+          "setToString#1": "(args) => (args[0] as Set).toString()"
+          "toList#1": "(args) => (args[0] as Set).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool)"
+          "toSet#0": "(args) => (args[0] as Set).toSet()"
+
+      # ── UnmodifiableMapBase: cross-namespace for dart:_internal ──
+      UnmodifiableMapBase:
+        extra_methods:
+          "addAll#1": |
+            (args) { (args[0] as Map).addAll(args[1] as Map); return null; }
+          "clear#0": |
+            (args) { (args[0] as Map).clear(); return null; }
+          "[]=#2": |
+            (args) { (args[0] as Map)[args[1]] = args[2]; return args[2]; }
+          "putIfAbsent#2": "(args) => (args[0] as Map).putIfAbsent(args[1], () => (args[2] as Function)())"
+          "remove#1": "(args) => (args[0] as Map).remove(args[1])"
 
       # ── DoubleLinkedQueueEntry: gen auto-discovers public methods ──
 

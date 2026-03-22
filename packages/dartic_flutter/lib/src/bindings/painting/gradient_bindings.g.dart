@@ -6,11 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/gradient.dart';
+import 'dart:collection';
+import 'dart:math' as math;
+import 'dart:ui' as ui show Color, Gradient, Rect, Shader, TextDirection, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/src/painting/alignment.dart';
+import 'package:flutter/src/painting/basic_types.dart';
 
 abstract final class GradientBindings {
   static void register(DarticPluginContext ctx) {
@@ -24,7 +27,7 @@ abstract final class GradientBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'createShader#2': (args) => (args[0] as Gradient).createShader(args[1] as Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?),
+        'createShader#2': (args) => (args[0] as Gradient).createShader(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
         'scale#1': (args) => (args[0] as Gradient).scale(args[1] as double),
         'withOpacity#1': (args) => (args[0] as Gradient).withOpacity(args[1] as double),
         'lerpFrom#2': (args) => (args[0] as Gradient).lerpFrom(args[1] as Gradient?, args[2] as double),

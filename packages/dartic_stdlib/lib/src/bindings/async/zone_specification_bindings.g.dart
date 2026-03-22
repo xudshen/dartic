@@ -7,6 +7,8 @@
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
+import 'dart:collection' show HashMap;
+import 'dart:developer' show Timeline;
 
 abstract final class ZoneSpecificationBindings {
   static void register(DarticPluginContext ctx) {
@@ -20,6 +22,7 @@ abstract final class ZoneSpecificationBindings {
     // _ZoneSpecification
     for (final e in zoneSpecificationMethodMap().entries) {
       ctx.registerBinding('dart:async::_ZoneSpecification::${e.key}', e.value);
+      ctx.registerBinding('dart:async::::_ZoneSpecification${e.key}', e.value);
     }
   }
 

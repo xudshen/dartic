@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class JsonDecoderBindings {
   static void register(DarticPluginContext ctx) {
@@ -23,7 +24,7 @@ abstract final class JsonDecoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#1': (args) => (args[0] as JsonDecoder).convert(args[1] as String),
-        'fuse#1': (args) => (args[0] as JsonDecoder).fuse(args[1] as Converter<Object?, dynamic>),
+        'fuse#1': (args) => (args[0] as JsonDecoder).fuse(args[1] as Converter),
         'cast#0': (args) => (args[0] as JsonDecoder).cast(),
         '_#fromFields#1': (args) => JsonDecoder(args[0] as Object? Function(Object?, Object?)?),
         '#1': (args) {

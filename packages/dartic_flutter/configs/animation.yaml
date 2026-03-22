@@ -7,66 +7,10 @@
 #
 # The --analysis-root must point to a Flutter project so the analyzer
 # can resolve package:flutter/* types.
-#
-# Types covered (~25):
-#   Binding-only (dartic code uses, not extends):
-#     - Curves, Tweens, Animation wrappers, AnimationStyle, etc.
-#
-# Excluded types (code gen / generic limitations):
-#   - AnimationController: requires TickerProvider mixin, complex
-#   - Animation<T>, Tween<T>, Animatable<T>: generic base classes
-#   - CompoundAnimation, TweenSequence, FlippedTweenSequence: generic
-#   - AnimationMean/AnimationMax/AnimationMin: generic
-#   - CatmullRomSpline: complex constructor
-#   - CurveTween: generic dependency
-#   - Split, ThreePointCubic: may not exist in all Flutter versions
-#   - ConstantTween: generated _#fromFields missing required positional arg
 
 output_bindings: "../lib/src/bindings/animation"
 output_plugins: "../lib/src/plugins"
 
-# Use package: imports instead of relative imports (external package).
-custom_imports:
-  - "package:dartic/dartic.dart"
-  - "package:dartic/dartic_internal.dart"
-  - "package:flutter/animation.dart"
-  - "package:flutter/foundation.dart"
-
 libraries:
-  - uri: package:flutter/animation.dart
-    classes:
-      # ── Enums ─────────────────────────────────────────────────────────
-      - AnimationStatus
-      - AnimationBehavior
-
-      # ── Curves (binding-only) ─────────────────────────────────────────
-      - Cubic
-      - Threshold
-      - SawTooth
-      - Interval
-      - FlippedCurve
-      - ElasticInCurve
-      - ElasticOutCurve
-      - ElasticInOutCurve
-      - CatmullRomCurve
-
-      # ── Animation classes (binding-only) ──────────────────────────────
-      # Generics make Bridge difficult, so all binding-only.
-      - AlwaysStoppedAnimation
-      - ReverseAnimation
-      - CurvedAnimation
-      - ProxyAnimation
-      - TrainHoppingAnimation
-
-      # ── Tween classes (binding-only) ──────────────────────────────────
-      - ColorTween
-      - SizeTween
-      - RectTween
-      - IntTween
-      - StepTween
-
-      # ── Sequence ──────────────────────────────────────────────────────
-      - TweenSequenceItem
-
-      # ── Style ─────────────────────────────────────────────────────────
-      - AnimationStyle
+  - uri: package:flutter/src/animation
+    discover: all

@@ -6,9 +6,17 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/src/rendering/viewport.dart';
+import 'dart:math' as math;
+import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/src/rendering/box.dart';
+import 'package:flutter/src/rendering/debug.dart';
+import 'package:flutter/src/rendering/layer.dart';
+import 'package:flutter/src/rendering/object.dart';
+import 'package:flutter/src/rendering/sliver.dart';
+import 'package:flutter/src/rendering/viewport_offset.dart';
 
 abstract final class CacheExtentStyleBindings {
   static void register(DarticPluginContext ctx) {

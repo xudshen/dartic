@@ -6,11 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/colors.dart';
+import 'dart:math' as math;
+import 'dart:ui' show Color, ColorSpace, lerpDouble;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
 
 abstract final class ColorSwatchBindings {
   static void register(DarticPluginContext ctx) {
@@ -48,6 +47,7 @@ abstract final class ColorSwatchBindings {
         'green#0': (args) => (args[0] as ColorSwatch).green,
         'blue#0': (args) => (args[0] as ColorSwatch).blue,
         '[]#1': (args) => (args[0] as ColorSwatch)[(args[1])],
-        '#2': (args) => ColorSwatch(args[0] as int, (args[1] as Map).cast<dynamic, Color>()),
+        '#2': (args) => ColorSwatch<dynamic>(args[0] as int, (args[1] as Map).cast<dynamic, Color>()),
+        '_#fromFields#6': (args) => ColorSwatch<dynamic>(args[5] as int, (args[0] as Map).cast<dynamic, Color>()),
       };
 }

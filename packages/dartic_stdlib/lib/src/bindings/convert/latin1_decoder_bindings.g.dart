@@ -6,9 +6,10 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
 abstract final class Latin1DecoderBindings {
   static void register(DarticPluginContext ctx) {
@@ -23,6 +24,7 @@ abstract final class Latin1DecoderBindings {
     // _UnicodeSubsetDecoder
     for (final e in unicodeSubsetDecoderMethodMap().entries) {
       ctx.registerBinding('dart:convert::_UnicodeSubsetDecoder::${e.key}', e.value);
+      ctx.registerBinding('dart:convert::::_UnicodeSubsetDecoder${e.key}', e.value);
     }
   }
 
@@ -30,7 +32,7 @@ abstract final class Latin1DecoderBindings {
         'fuse#1': (args) => (args[0] as Latin1Decoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Latin1Decoder).cast(),
         '#1': (args) => Latin1Decoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
-        '_#fromFields#0': (args) => Latin1Decoder(),
+        '_#fromFields#2': (args) => Latin1Decoder(allowInvalid: args[0] as bool),
         'startChunkedConversion#1': (args) => (args[0] as Latin1Decoder).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).cast<List<int>>()),
         'convert#3': (args) {

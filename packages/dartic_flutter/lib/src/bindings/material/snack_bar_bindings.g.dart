@@ -6,14 +6,32 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/material/snack_bar.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/material/color_scheme.dart';
+import 'package:flutter/src/material/colors.dart';
+import 'package:flutter/src/material/icon_button.dart';
+import 'package:flutter/src/material/icons.dart';
+import 'package:flutter/src/material/material.dart';
+import 'package:flutter/src/material/material_localizations.dart';
+import 'package:flutter/src/material/scaffold.dart';
+import 'package:flutter/src/material/snack_bar_theme.dart';
+import 'package:flutter/src/material/text_button.dart';
+import 'package:flutter/src/material/text_button_theme.dart';
+import 'package:flutter/src/material/theme.dart';
+import 'package:flutter/src/animation/animation.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/rendering/proxy_box.dart';
+import 'package:flutter/src/widgets/dismissible.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class SnackBarBindings {
   static void register(DarticPluginContext ctx) {
@@ -64,6 +82,6 @@ abstract final class SnackBarBindings {
             return SnackBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, content: args[1] as Widget, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, elevation: identical(args[3], darticAbsent) ? null : args[3] as double?, margin: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsetsGeometry?, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsetsGeometry?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, shape: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, hitTestBehavior: identical(args[8], darticAbsent) ? null : args[8] as HitTestBehavior?, behavior: identical(args[9], darticAbsent) ? null : args[9] as SnackBarBehavior?, action: identical(args[10], darticAbsent) ? null : args[10] as SnackBarAction?, actionOverflowThreshold: identical(args[11], darticAbsent) ? null : args[11] as double?, showCloseIcon: identical(args[12], darticAbsent) ? null : args[12] as bool?, closeIconColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, duration: args[14] as Duration, persist: identical(args[15], darticAbsent) ? null : args[15] as bool?, animation: identical(args[16], darticAbsent) ? null : args[16] as Animation<double>?, onVisible: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : () => (args[17] as Function?)!(), dismissDirection: identical(args[18], darticAbsent) ? null : args[18] as DismissDirection?, clipBehavior: identical(args[19], darticAbsent) ? Clip.hardEdge : args[19] as Clip);
           }
         },
-        '_#fromFields#19': (args) => SnackBar(action: args[0] as SnackBarAction?, actionOverflowThreshold: args[1] as double?, animation: args[2] as Animation<double>?, backgroundColor: args[3] as Color?, behavior: args[4] as SnackBarBehavior?, clipBehavior: args[5] as Clip, closeIconColor: args[6] as Color?, content: args[7] as Widget, dismissDirection: args[8] as DismissDirection?, duration: args[9] as Duration, elevation: args[10] as double?, hitTestBehavior: args[11] as HitTestBehavior?, margin: args[12] as EdgeInsetsGeometry?, onVisible: args[13] as void Function()?, padding: args[14] as EdgeInsetsGeometry?, persist: args[15] as bool?, shape: args[16] as ShapeBorder?, showCloseIcon: args[17] as bool?, width: args[18] as double?),
+        '_#fromFields#20': (args) => SnackBar(key: args[12] as Key?, content: args[7] as Widget, backgroundColor: args[3] as Color?, elevation: args[10] as double?, margin: args[13] as EdgeInsetsGeometry?, padding: args[15] as EdgeInsetsGeometry?, width: args[19] as double?, shape: args[17] as ShapeBorder?, hitTestBehavior: args[11] as HitTestBehavior?, behavior: args[4] as SnackBarBehavior?, action: args[0] as SnackBarAction?, actionOverflowThreshold: args[1] as double?, showCloseIcon: args[18] as bool?, closeIconColor: args[6] as Color?, duration: args[9] as Duration, persist: args[16] as bool?, animation: args[2] as Animation<double>?, onVisible: args[14] as VoidCallback?, dismissDirection: args[8] as DismissDirection?, clipBehavior: args[5] as Clip),
       };
 }

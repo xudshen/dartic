@@ -6,9 +6,14 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/src/gestures/scale.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'dart:ui';
+import 'package:flutter/src/gestures/constants.dart';
+import 'package:flutter/src/gestures/events.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/gestures/velocity_tracker.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class ScaleEndDetailsBindings {
   static void register(DarticPluginContext ctx) {
@@ -29,6 +34,5 @@ abstract final class ScaleEndDetailsBindings {
         'scaleVelocity#0': (args) => (args[0] as ScaleEndDetails).scaleVelocity,
         'pointerCount#0': (args) => (args[0] as ScaleEndDetails).pointerCount,
         '#3': (args) => ScaleEndDetails(velocity: identical(args[0], darticAbsent) ? Velocity.zero : args[0] as Velocity, scaleVelocity: identical(args[1], darticAbsent) ? 0 : args[1] as double, pointerCount: identical(args[2], darticAbsent) ? 0 : args[2] as int),
-        '_#fromFields#3': (args) => ScaleEndDetails(pointerCount: args[0] as int, scaleVelocity: args[1] as double, velocity: args[2] as Velocity),
       };
 }

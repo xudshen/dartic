@@ -6,11 +6,23 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'dart:ui';
+import 'package:flutter/src/painting/box_decoration.dart';
+import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/basic_types.dart';
+import 'package:flutter/src/painting/border_radius.dart';
+import 'package:flutter/src/painting/borders.dart';
+import 'package:flutter/src/painting/box_border.dart';
+import 'package:flutter/src/painting/box_shadow.dart';
+import 'package:flutter/src/painting/colors.dart';
+import 'package:flutter/src/painting/debug.dart';
+import 'package:flutter/src/painting/decoration.dart';
+import 'package:flutter/src/painting/decoration_image.dart';
+import 'package:flutter/src/painting/edge_insets.dart';
+import 'package:flutter/src/painting/gradient.dart';
+import 'package:flutter/src/painting/image_provider.dart';
+import 'dart:ui';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class BoxDecorationBindings {
   static void register(DarticPluginContext ctx) {
@@ -48,5 +60,6 @@ abstract final class BoxDecorationBindings {
         'isComplex#0': (args) => (args[0] as BoxDecoration).isComplex,
         'hashCode#0': (args) => (args[0] as BoxDecoration).hashCode,
         '#8': (args) => BoxDecoration(color: identical(args[0], darticAbsent) ? null : args[0] as Color?, image: identical(args[1], darticAbsent) ? null : args[1] as DecorationImage?, border: identical(args[2], darticAbsent) ? null : args[2] as BoxBorder?, borderRadius: identical(args[3], darticAbsent) ? null : args[3] as BorderRadiusGeometry?, boxShadow: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<BoxShadow>(), gradient: identical(args[5], darticAbsent) ? null : args[5] as Gradient?, backgroundBlendMode: identical(args[6], darticAbsent) ? null : args[6] as BlendMode?, shape: identical(args[7], darticAbsent) ? BoxShape.rectangle : args[7] as BoxShape),
+        '_#fromFields#8': (args) => BoxDecoration(color: args[4] as Color?, image: args[6] as DecorationImage?, border: args[1] as BoxBorder?, borderRadius: args[2] as BorderRadiusGeometry?, boxShadow: args[3] == null ? null : (args[3] as List).cast<BoxShadow>(), gradient: args[5] as Gradient?, backgroundBlendMode: args[0] as BlendMode?, shape: args[7] as BoxShape),
       };
 }

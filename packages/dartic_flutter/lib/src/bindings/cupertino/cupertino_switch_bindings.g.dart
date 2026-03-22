@@ -6,12 +6,28 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
+import 'package:flutter/src/cupertino/switch.dart';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/cupertino/colors.dart';
+import 'package:flutter/src/cupertino/constants.dart';
+import 'package:flutter/src/cupertino/theme.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/src/foundation/basic_types.dart';
+import 'package:flutter/src/painting/image_provider.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/src/painting/image_stream.dart';
+import 'package:flutter/src/widgets/widget_state.dart';
+import 'package:flutter/src/widgets/icon.dart';
+import 'package:flutter/src/services/mouse_cursor.dart';
+import 'package:flutter/src/widgets/focus_manager.dart';
+import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/src/foundation/key.dart';
 
 abstract final class CupertinoSwitchBindings {
   static void register(DarticPluginContext ctx) {
@@ -59,5 +75,6 @@ abstract final class CupertinoSwitchBindings {
         'dragStartBehavior#0': (args) => (args[0] as CupertinoSwitch).dragStartBehavior,
         'key#0': (args) => (args[0] as CupertinoSwitch).key,
         '#25': (args) => CupertinoSwitch(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as bool, onChanged: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), activeColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, trackColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, activeTrackColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, inactiveTrackColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, thumbColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, inactiveThumbColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, applyTheme: identical(args[9], darticAbsent) ? null : args[9] as bool?, focusColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, onLabelColor: identical(args[11], darticAbsent) ? null : args[11] as Color?, offLabelColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, activeThumbImage: identical(args[13], darticAbsent) ? null : args[13] as ImageProvider<Object>?, onActiveThumbImageError: identical(args[14], darticAbsent) ? null : (args[14] as Function?) == null ? null : (a, b) => (args[14] as Function?)!(a, b), inactiveThumbImage: identical(args[15], darticAbsent) ? null : args[15] as ImageProvider<Object>?, onInactiveThumbImageError: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : (a, b) => (args[16] as Function?)!(a, b), trackOutlineColor: identical(args[17], darticAbsent) ? null : args[17] as WidgetStateProperty<Color?>?, trackOutlineWidth: identical(args[18], darticAbsent) ? null : args[18] as WidgetStateProperty<double?>?, thumbIcon: identical(args[19], darticAbsent) ? null : args[19] as WidgetStateProperty<Icon?>?, mouseCursor: identical(args[20], darticAbsent) ? null : args[20] as WidgetStateProperty<MouseCursor>?, focusNode: identical(args[21], darticAbsent) ? null : args[21] as FocusNode?, onFocusChange: identical(args[22], darticAbsent) ? null : (args[22] as Function?) == null ? null : (a) => (args[22] as Function?)!(a), autofocus: identical(args[23], darticAbsent) ? false : args[23] as bool, dragStartBehavior: identical(args[24], darticAbsent) ? DragStartBehavior.start : args[24] as DragStartBehavior),
+        '_#fromFields#23': (args) => CupertinoSwitch(key: args[10] as Key?, value: args[22] as bool, onChanged: args[14] as ValueChanged<bool>?, activeTrackColor: args[1] as Color?, inactiveTrackColor: args[9] as Color?, thumbColor: args[18] as Color?, inactiveThumbColor: args[7] as Color?, applyTheme: args[2] as bool?, focusColor: args[5] as Color?, onLabelColor: args[17] as Color?, offLabelColor: args[12] as Color?, activeThumbImage: args[0] as ImageProvider<Object>?, onActiveThumbImageError: args[13] as ImageErrorListener?, inactiveThumbImage: args[8] as ImageProvider<Object>?, onInactiveThumbImageError: args[16] as ImageErrorListener?, trackOutlineColor: args[20] as WidgetStateProperty<Color?>?, trackOutlineWidth: args[21] as WidgetStateProperty<double?>?, thumbIcon: args[19] as WidgetStateProperty<Icon?>?, mouseCursor: args[11] as WidgetStateProperty<MouseCursor>?, focusNode: args[6] as FocusNode?, onFocusChange: args[15] as ValueChanged<bool>?, autofocus: args[3] as bool, dragStartBehavior: args[4] as DragStartBehavior),
       };
 }

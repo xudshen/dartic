@@ -6,9 +6,13 @@
 
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/system_chrome.dart';
+import 'dart:async';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/src/services/binding.dart';
+import 'package:flutter/src/services/system_channels.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 
 abstract final class SystemUiOverlayStyleBindings {
   static void register(DarticPluginContext ctx) {
@@ -38,5 +42,6 @@ abstract final class SystemUiOverlayStyleBindings {
         'systemStatusBarContrastEnforced#0': (args) => (args[0] as SystemUiOverlayStyle).systemStatusBarContrastEnforced,
         'hashCode#0': (args) => (args[0] as SystemUiOverlayStyle).hashCode,
         '#8': (args) => SystemUiOverlayStyle(systemNavigationBarColor: identical(args[0], darticAbsent) ? null : args[0] as Color?, systemNavigationBarDividerColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, systemNavigationBarIconBrightness: identical(args[2], darticAbsent) ? null : args[2] as Brightness?, systemNavigationBarContrastEnforced: identical(args[3], darticAbsent) ? null : args[3] as bool?, statusBarColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, statusBarBrightness: identical(args[5], darticAbsent) ? null : args[5] as Brightness?, statusBarIconBrightness: identical(args[6], darticAbsent) ? null : args[6] as Brightness?, systemStatusBarContrastEnforced: identical(args[7], darticAbsent) ? null : args[7] as bool?),
+        '_#fromFields#8': (args) => SystemUiOverlayStyle(systemNavigationBarColor: args[3] as Color?, systemNavigationBarDividerColor: args[5] as Color?, systemNavigationBarIconBrightness: args[6] as Brightness?, systemNavigationBarContrastEnforced: args[4] as bool?, statusBarColor: args[1] as Color?, statusBarBrightness: args[0] as Brightness?, statusBarIconBrightness: args[2] as Brightness?, systemStatusBarContrastEnforced: args[7] as bool?),
       };
 }
