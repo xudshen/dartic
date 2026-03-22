@@ -38,7 +38,7 @@ abstract final class ComponentElementBindings {
         'build#0': (args) => (args[0] as ComponentElement).build(),
         'visitChildren#1': (args) { (args[0] as ComponentElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as ComponentElement).forgetChild(args[1] as Element); return null; },
-        'toString#0': (args) => (args[0] as ComponentElement).toString(),
+        'toString#1': (args) => (args[0] as ComponentElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as ComponentElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as ComponentElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as ComponentElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

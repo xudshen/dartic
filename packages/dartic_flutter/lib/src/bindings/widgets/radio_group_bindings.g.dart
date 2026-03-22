@@ -36,7 +36,7 @@ abstract final class RadioGroupBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RadioGroup).createState(),
-        'toString#0': (args) => (args[0] as RadioGroup).toString(),
+        'toString#1': (args) => (args[0] as RadioGroup).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RadioGroup).createElement(),
         'toStringShort#0': (args) => (args[0] as RadioGroup).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RadioGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

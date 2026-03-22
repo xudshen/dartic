@@ -52,7 +52,7 @@ abstract final class RenderListBodyBindings {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderListBody).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderListBody).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderListBody).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
-        'toString#0': (args) => (args[0] as RenderListBody).toString(),
+        'toString#1': (args) => (args[0] as RenderListBody).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderListBody).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderListBody).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderListBody).getMinIntrinsicHeight(args[1] as double),

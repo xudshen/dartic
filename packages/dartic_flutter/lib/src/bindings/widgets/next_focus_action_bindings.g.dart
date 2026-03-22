@@ -31,7 +31,7 @@ abstract final class NextFocusActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as NextFocusAction).invoke(args[1] as NextFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as NextFocusAction).toKeyEventResult(args[1] as NextFocusIntent, args[2] as bool),
-        'toString#0': (args) => (args[0] as NextFocusAction).toString(),
+        'toString#1': (args) => (args[0] as NextFocusAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as NextFocusAction).isEnabled(args[1] as NextFocusIntent),
         'consumesKey#1': (args) => (args[0] as NextFocusAction).consumesKey(args[1] as NextFocusIntent),
         'addActionListener#1': (args) { (args[0] as NextFocusAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

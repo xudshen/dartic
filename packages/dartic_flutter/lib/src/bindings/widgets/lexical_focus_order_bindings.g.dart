@@ -31,7 +31,7 @@ abstract final class LexicalFocusOrderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'doCompare#1': (args) => (args[0] as LexicalFocusOrder).doCompare(args[1] as LexicalFocusOrder),
         'debugFillProperties#1': (args) { (args[0] as LexicalFocusOrder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as LexicalFocusOrder).toString(),
+        'toString#1': (args) => (args[0] as LexicalFocusOrder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'compareTo#1': (args) => (args[0] as LexicalFocusOrder).compareTo(args[1] as FocusOrder),
         'toStringShort#0': (args) => (args[0] as LexicalFocusOrder).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LexicalFocusOrder).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

@@ -41,7 +41,7 @@ abstract final class OffstageBindings {
         'updateRenderObject#2': (args) { (args[0] as Offstage).updateRenderObject(args[1] as BuildContext, args[2] as RenderOffstage); return null; },
         'debugFillProperties#1': (args) { (args[0] as Offstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as Offstage).createElement(),
-        'toString#0': (args) => (args[0] as Offstage).toString(),
+        'toString#1': (args) => (args[0] as Offstage).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as Offstage).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Offstage).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Offstage).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

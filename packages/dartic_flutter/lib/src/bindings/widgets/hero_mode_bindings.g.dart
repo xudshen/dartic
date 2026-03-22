@@ -36,7 +36,7 @@ abstract final class HeroModeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as HeroMode).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as HeroMode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as HeroMode).toString(),
+        'toString#1': (args) => (args[0] as HeroMode).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as HeroMode).createElement(),
         'toStringShort#0': (args) => (args[0] as HeroMode).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as HeroMode).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

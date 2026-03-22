@@ -32,5 +32,6 @@ abstract final class StandardComponentTypeBindings {
         'hashCode#0': (args) => (args[0] as StandardComponentType).hashCode,
         'index#0': (args) => (args[0] as StandardComponentType).index,
         '==#1': (args) => (args[0] as StandardComponentType) == (args[1] as Object),
+        '_#fromFields#2': (args) => StandardComponentType.values[args[1] as int],
       };
 }

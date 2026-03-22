@@ -31,7 +31,7 @@ abstract final class StretchEffectBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as StretchEffect).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as StretchEffect).toString(),
+        'toString#1': (args) => (args[0] as StretchEffect).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as StretchEffect).createElement(),
         'toStringShort#0': (args) => (args[0] as StretchEffect).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StretchEffect).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -34,7 +34,7 @@ abstract final class ThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Theme).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Theme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Theme).toString(),
+        'toString#1': (args) => (args[0] as Theme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Theme).createElement(),
         'toStringShort#0': (args) => (args[0] as Theme).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Theme).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

@@ -204,12 +204,17 @@ class OperatorInfo {
   final String returnType;
   final bool isAbstract;
 
+  /// Value type for `[]=` operator (the second parameter after the index).
+  /// null for all operators except `[]=`.
+  final String? valueType;
+
   OperatorInfo({
     required this.name,
     required this.lookupName,
     required this.paramType,
     required this.returnType,
     this.isAbstract = false,
+    this.valueType,
   });
 
   bool get isUnary => paramType == null;

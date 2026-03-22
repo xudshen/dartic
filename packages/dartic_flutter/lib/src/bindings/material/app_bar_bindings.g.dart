@@ -55,7 +55,7 @@ abstract final class AppBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AppBar).createState(),
-        'toString#0': (args) => (args[0] as AppBar).toString(),
+        'toString#1': (args) => (args[0] as AppBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AppBar).createElement(),
         'toStringShort#0': (args) => (args[0] as AppBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AppBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

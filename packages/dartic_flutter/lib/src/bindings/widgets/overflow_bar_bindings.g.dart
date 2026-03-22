@@ -35,7 +35,7 @@ abstract final class OverflowBarBindings {
         'createRenderObject#1': (args) => (args[0] as OverflowBar).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as OverflowBar).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as OverflowBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as OverflowBar).toString(),
+        'toString#1': (args) => (args[0] as OverflowBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as OverflowBar).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as OverflowBar).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as OverflowBar).toStringShort(),

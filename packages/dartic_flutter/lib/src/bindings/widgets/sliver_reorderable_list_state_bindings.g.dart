@@ -53,7 +53,7 @@ abstract final class SliverReorderableListStateBindings {
         'startItemDragReorder#3': (args) { (args[0] as SliverReorderableListState).startItemDragReorder(index: args[1] as int, event: args[2] as PointerDownEvent, recognizer: args[3] as MultiDragGestureRecognizer); return null; },
         'cancelReorder#0': (args) { (args[0] as SliverReorderableListState).cancelReorder(); return null; },
         'build#1': (args) => (args[0] as SliverReorderableListState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverReorderableListState).toString(),
+        'toString#1': (args) => (args[0] as SliverReorderableListState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as SliverReorderableListState).initState(); return null; },
         'reassemble#0': (args) { (args[0] as SliverReorderableListState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SliverReorderableListState).setState(() => (args[1] as Function)()); return null; },

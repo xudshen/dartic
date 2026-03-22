@@ -32,7 +32,7 @@ abstract final class SliverPrototypeExtentListBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverPrototypeExtentList).createRenderObject(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as SliverPrototypeExtentList).createElement(),
-        'toString#0': (args) => (args[0] as SliverPrototypeExtentList).toString(),
+        'toString#1': (args) => (args[0] as SliverPrototypeExtentList).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverPrototypeExtentList).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverPrototypeExtentList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'updateRenderObject#2': (args) { (args[0] as SliverPrototypeExtentList).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },

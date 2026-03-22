@@ -30,7 +30,7 @@ abstract final class SlottedMultiChildRenderObjectWidgetMixinBindings {
         'createRenderObject#1': (args) => (args[0] as SlottedMultiChildRenderObjectWidgetMixin).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SlottedMultiChildRenderObjectWidgetMixin).updateRenderObject(args[1] as BuildContext, args[2] as SlottedContainerRenderObjectMixin<dynamic, RenderObject>); return null; },
         'createElement#0': (args) => (args[0] as SlottedMultiChildRenderObjectWidgetMixin).createElement(),
-        'toString#0': (args) => (args[0] as SlottedMultiChildRenderObjectWidgetMixin).toString(),
+        'toString#1': (args) => (args[0] as SlottedMultiChildRenderObjectWidgetMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as SlottedMultiChildRenderObjectWidgetMixin).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SlottedMultiChildRenderObjectWidgetMixin).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SlottedMultiChildRenderObjectWidgetMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

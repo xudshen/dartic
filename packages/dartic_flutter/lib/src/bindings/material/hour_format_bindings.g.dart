@@ -32,5 +32,6 @@ abstract final class HourFormatBindings {
         'hashCode#0': (args) => (args[0] as HourFormat).hashCode,
         'index#0': (args) => (args[0] as HourFormat).index,
         '==#1': (args) => (args[0] as HourFormat) == (args[1] as Object),
+        '_#fromFields#2': (args) => HourFormat.values[args[1] as int],
       };
 }

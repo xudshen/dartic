@@ -44,7 +44,7 @@ abstract final class StepStyleBindings {
         'copyWith#8': (args) => (args[0] as StepStyle).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, errorColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, connectorColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, connectorThickness: identical(args[4], darticAbsent) ? null : args[4] as double?, border: identical(args[5], darticAbsent) ? null : args[5] as BoxBorder?, boxShadow: identical(args[6], darticAbsent) ? null : args[6] as BoxShadow?, gradient: identical(args[7], darticAbsent) ? null : args[7] as Gradient?, indexStyle: identical(args[8], darticAbsent) ? null : args[8] as TextStyle?),
         'merge#1': (args) => (args[0] as StepStyle).merge(args[1] as StepStyle?),
         'debugFillProperties#1': (args) { (args[0] as StepStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as StepStyle).toString(),
+        'toString#1': (args) => (args[0] as StepStyle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as StepStyle).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as StepStyle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'color#0': (args) => (args[0] as StepStyle).color,

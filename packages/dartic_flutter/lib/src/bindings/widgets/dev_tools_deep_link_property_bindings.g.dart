@@ -39,7 +39,7 @@ abstract final class DevToolsDeepLinkPropertyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as DevToolsDeepLinkProperty).toString(),
+        'toString#2': (args) => (args[0] as DevToolsDeepLinkProperty).toString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.info : args[2] as DiagnosticLevel),
         'toJsonMap#1': (args) => (args[0] as DevToolsDeepLinkProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'valueToString#1': (args) => (args[0] as DevToolsDeepLinkProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as DevToolsDeepLinkProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),

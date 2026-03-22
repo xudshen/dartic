@@ -40,7 +40,7 @@ abstract final class RelayoutWhenSystemFontsChangeMixinBindings {
         'systemFontsDidChange#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).systemFontsDidChange(); return null; },
         'attach#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).detach(); return null; },
-        'toString#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).toString(),
+        'toString#1': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).setupParentData(args[1] as RenderObject); return null; },

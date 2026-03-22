@@ -30,7 +30,7 @@ abstract final class ColorFilteredBindings {
         'createRenderObject#1': (args) => (args[0] as ColorFiltered).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ColorFiltered).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as ColorFiltered).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ColorFiltered).toString(),
+        'toString#1': (args) => (args[0] as ColorFiltered).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ColorFiltered).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ColorFiltered).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ColorFiltered).toStringShort(),

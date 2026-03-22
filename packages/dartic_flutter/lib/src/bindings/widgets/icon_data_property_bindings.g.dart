@@ -23,7 +23,7 @@ abstract final class IconDataPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toJsonMap#1': (args) => (args[0] as IconDataProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
-        'toString#0': (args) => (args[0] as IconDataProperty).toString(),
+        'toString#2': (args) => (args[0] as IconDataProperty).toString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.info : args[2] as DiagnosticLevel),
         'valueToString#1': (args) => (args[0] as IconDataProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as IconDataProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as IconDataProperty).getProperties(),

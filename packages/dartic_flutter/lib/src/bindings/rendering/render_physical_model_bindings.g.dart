@@ -44,7 +44,7 @@ abstract final class RenderPhysicalModelBindings {
         'hitTest#2': (args) => (args[0] as RenderPhysicalModel).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderPhysicalModel).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPhysicalModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderPhysicalModel).toString(),
+        'toString#1': (args) => (args[0] as RenderPhysicalModel).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attach#1': (args) { (args[0] as RenderPhysicalModel).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderPhysicalModel).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderPhysicalModel).performLayout(); return null; },

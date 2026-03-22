@@ -47,7 +47,7 @@ abstract final class DragGestureRecognizerBindings {
         'didStopTrackingLastPointer#1': (args) { (args[0] as DragGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as DragGestureRecognizer).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as DragGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as DragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as DragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'handleNonAllowedPointer#1': (args) { (args[0] as DragGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as DragGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as DragGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },

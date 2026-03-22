@@ -43,7 +43,7 @@ abstract final class ImplicitlyAnimatedWidgetStateBindings {
         'dispose#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).dispose(); return null; },
         'forEachTween#1': (args) { (args[0] as ImplicitlyAnimatedWidgetState).forEachTween((a, b, c) => (args[1] as Function)(a, b, c) as Tween<dynamic>?); return null; },
         'didUpdateTweens#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).didUpdateTweens(); return null; },
-        'toString#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).toString(),
+        'toString#1': (args) => (args[0] as ImplicitlyAnimatedWidgetState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ImplicitlyAnimatedWidgetState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).deactivate(); return null; },

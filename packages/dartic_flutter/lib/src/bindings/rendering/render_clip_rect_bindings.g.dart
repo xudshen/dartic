@@ -41,7 +41,7 @@ abstract final class RenderClipRectBindings {
         'hitTest#2': (args) => (args[0] as RenderClipRect).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipRect).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipRect).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderClipRect).toString(),
+        'toString#1': (args) => (args[0] as RenderClipRect).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attach#1': (args) { (args[0] as RenderClipRect).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipRect).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipRect).performLayout(); return null; },

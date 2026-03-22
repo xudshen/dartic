@@ -55,7 +55,7 @@ abstract final class BoxScrollViewBindings {
         'buildSlivers#1': (args) => (args[0] as BoxScrollView).buildSlivers(args[1] as BuildContext),
         'buildChildLayout#1': (args) => (args[0] as BoxScrollView).buildChildLayout(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as BoxScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as BoxScrollView).toString(),
+        'toString#1': (args) => (args[0] as BoxScrollView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getDirection#1': (args) => (args[0] as BoxScrollView).getDirection(args[1] as BuildContext),
         'buildViewport#4': (args) => (args[0] as BoxScrollView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as AxisDirection, (args[4] as List).cast<Widget>()),
         'build#1': (args) => (args[0] as BoxScrollView).build(args[1] as BuildContext),

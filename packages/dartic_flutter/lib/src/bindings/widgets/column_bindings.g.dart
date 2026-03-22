@@ -39,7 +39,7 @@ abstract final class ColumnBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as Column).toString(),
+        'toString#1': (args) => (args[0] as Column).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getEffectiveTextDirection#1': (args) => (args[0] as Column).getEffectiveTextDirection(args[1] as BuildContext),
         'createRenderObject#1': (args) => (args[0] as Column).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Column).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlex); return null; },

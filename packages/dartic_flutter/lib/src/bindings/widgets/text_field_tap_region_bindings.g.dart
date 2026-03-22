@@ -31,7 +31,7 @@ abstract final class TextFieldTapRegionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as TextFieldTapRegion).toString(),
+        'toString#1': (args) => (args[0] as TextFieldTapRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createRenderObject#1': (args) => (args[0] as TextFieldTapRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as TextFieldTapRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderTapRegion); return null; },
         'debugFillProperties#1': (args) { (args[0] as TextFieldTapRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -31,7 +31,7 @@ abstract final class InheritedModelElementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateDependencies#2': (args) { (args[0] as InheritedModelElement).updateDependencies(args[1] as Element, args[2]); return null; },
         'notifyDependent#2': (args) { (args[0] as InheritedModelElement).notifyDependent(args[1] as InheritedModel, args[2] as Element); return null; },
-        'toString#0': (args) => (args[0] as InheritedModelElement).toString(),
+        'toString#1': (args) => (args[0] as InheritedModelElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugDeactivated#0': (args) { (args[0] as InheritedModelElement).debugDeactivated(); return null; },
         'getDependencies#1': (args) => (args[0] as InheritedModelElement).getDependencies(args[1] as Element),
         'setDependencies#2': (args) { (args[0] as InheritedModelElement).setDependencies(args[1] as Element, args[2]); return null; },

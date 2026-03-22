@@ -44,7 +44,7 @@ abstract final class AdaptiveTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AdaptiveTextSelectionToolbar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).toString(),
+        'toString#1': (args) => (args[0] as AdaptiveTextSelectionToolbar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AdaptiveTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

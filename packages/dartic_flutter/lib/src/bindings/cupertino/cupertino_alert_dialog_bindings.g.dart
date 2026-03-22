@@ -39,7 +39,7 @@ abstract final class CupertinoAlertDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoAlertDialog).createState(),
-        'toString#0': (args) => (args[0] as CupertinoAlertDialog).toString(),
+        'toString#1': (args) => (args[0] as CupertinoAlertDialog).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoAlertDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoAlertDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoAlertDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

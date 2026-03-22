@@ -122,7 +122,7 @@ abstract final class EditableTextStateBindings {
         'showAutocorrectionPromptRect#2': (args) { (args[0] as EditableTextState).showAutocorrectionPromptRect(args[1] as int, args[2] as int); return null; },
         'build#1': (args) => (args[0] as EditableTextState).build(args[1] as BuildContext),
         'buildTextSpan#0': (args) => (args[0] as EditableTextState).buildTextSpan(),
-        'toString#0': (args) => (args[0] as EditableTextState).toString(),
+        'toString#1': (args) => (args[0] as EditableTextState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as EditableTextState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as EditableTextState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as EditableTextState).deactivate(); return null; },

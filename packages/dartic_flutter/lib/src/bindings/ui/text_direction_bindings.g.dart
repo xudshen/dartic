@@ -37,5 +37,6 @@ abstract final class TextDirectionBindings {
         'hashCode#0': (args) => (args[0] as TextDirection).hashCode,
         'index#0': (args) => (args[0] as TextDirection).index,
         '==#1': (args) => (args[0] as TextDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => TextDirection.values[args[1] as int],
       };
 }

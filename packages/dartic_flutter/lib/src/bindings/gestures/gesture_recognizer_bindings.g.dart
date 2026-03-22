@@ -46,7 +46,7 @@ abstract final class GestureRecognizerBindings {
         'dispose#0': (args) { (args[0] as GestureRecognizer).dispose(); return null; },
         'invokeCallback#3': (args) => (args[0] as GestureRecognizer).invokeCallback(args[1] as String, () => (args[2] as Function)(), debugReport: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         'debugFillProperties#1': (args) { (args[0] as GestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as GestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as GestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'acceptGesture#1': (args) { (args[0] as GestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as GestureRecognizer).rejectGesture(args[1] as int); return null; },
         'toStringShallow#2': (args) => (args[0] as GestureRecognizer).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

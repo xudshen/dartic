@@ -71,7 +71,7 @@ abstract final class RenderViewportBaseBindings {
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderViewportBase).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderViewportBase).labelForChild(args[1] as int),
         'showOnScreen#4': (args) { (args[0] as RenderViewportBase).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
-        'toString#0': (args) => (args[0] as RenderViewportBase).toString(),
+        'toString#1': (args) => (args[0] as RenderViewportBase).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderViewportBase).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderViewportBase).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderViewportBase).getMaxIntrinsicWidth(args[1] as double),

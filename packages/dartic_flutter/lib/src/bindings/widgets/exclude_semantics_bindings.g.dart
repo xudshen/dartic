@@ -40,7 +40,7 @@ abstract final class ExcludeSemanticsBindings {
         'createRenderObject#1': (args) => (args[0] as ExcludeSemantics).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ExcludeSemantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderExcludeSemantics); return null; },
         'debugFillProperties#1': (args) { (args[0] as ExcludeSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ExcludeSemantics).toString(),
+        'toString#1': (args) => (args[0] as ExcludeSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ExcludeSemantics).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ExcludeSemantics).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ExcludeSemantics).toStringShort(),

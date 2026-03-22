@@ -54,7 +54,7 @@ abstract final class GridViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildChildLayout#1': (args) => (args[0] as GridView).buildChildLayout(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as GridView).toString(),
+        'toString#1': (args) => (args[0] as GridView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'buildSlivers#1': (args) => (args[0] as GridView).buildSlivers(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as GridView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'getDirection#1': (args) => (args[0] as GridView).getDirection(args[1] as BuildContext),

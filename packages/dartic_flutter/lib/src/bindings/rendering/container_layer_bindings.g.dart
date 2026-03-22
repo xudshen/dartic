@@ -44,7 +44,7 @@ abstract final class ContainerLayerBindings {
         'applyTransform#2': (args) { (args[0] as ContainerLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'depthFirstIterateChildren#0': (args) => (args[0] as ContainerLayer).depthFirstIterateChildren(),
         'debugDescribeChildren#0': (args) => (args[0] as ContainerLayer).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as ContainerLayer).toString(),
+        'toString#1': (args) => (args[0] as ContainerLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'describeClipBounds#0': (args) => (args[0] as ContainerLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as ContainerLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
         'markNeedsAddToScene#0': (args) { (args[0] as ContainerLayer).markNeedsAddToScene(); return null; },

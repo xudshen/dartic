@@ -35,7 +35,7 @@ abstract final class ParentDataElementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyWidgetOutOfTurn#1': (args) { (args[0] as ParentDataElement).applyWidgetOutOfTurn(args[1] as ParentDataWidget<ParentData>); return null; },
         'notifyClients#1': (args) { (args[0] as ParentDataElement).notifyClients(args[1] as ParentDataWidget<ParentData>); return null; },
-        'toString#0': (args) => (args[0] as ParentDataElement).toString(),
+        'toString#1': (args) => (args[0] as ParentDataElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#0': (args) => (args[0] as ParentDataElement).build(),
         'update#1': (args) { (args[0] as ParentDataElement).update(args[1] as ProxyWidget); return null; },
         'updated#1': (args) { (args[0] as ParentDataElement).updated(args[1] as ProxyWidget); return null; },

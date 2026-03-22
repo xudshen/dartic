@@ -33,5 +33,6 @@ abstract final class SelectionExtendDirectionBindings {
         'hashCode#0': (args) => (args[0] as SelectionExtendDirection).hashCode,
         'index#0': (args) => (args[0] as SelectionExtendDirection).index,
         '==#1': (args) => (args[0] as SelectionExtendDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => SelectionExtendDirection.values[args[1] as int],
       };
 }

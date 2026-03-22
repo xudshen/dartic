@@ -32,7 +32,7 @@ abstract final class NavigationBarThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as NavigationBarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as NavigationBarTheme).updateShouldNotify(args[1] as NavigationBarTheme),
-        'toString#0': (args) => (args[0] as NavigationBarTheme).toString(),
+        'toString#1': (args) => (args[0] as NavigationBarTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as NavigationBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

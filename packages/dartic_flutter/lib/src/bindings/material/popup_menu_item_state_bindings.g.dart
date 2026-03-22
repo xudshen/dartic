@@ -48,7 +48,7 @@ abstract final class PopupMenuItemStateBindings {
         'handleTap#0': (args) { (args[0] as PopupMenuItemState).handleTap(); return null; },
         'build#1': (args) => (args[0] as PopupMenuItemState).build(args[1] as BuildContext),
         'buildSemantics#1': (args) => (args[0] as PopupMenuItemState).buildSemantics(child: args[1] as Widget),
-        'toString#0': (args) => (args[0] as PopupMenuItemState).toString(),
+        'toString#1': (args) => (args[0] as PopupMenuItemState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as PopupMenuItemState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as PopupMenuItemState).didUpdateWidget(args[1] as PopupMenuItem); return null; },
         'reassemble#0': (args) { (args[0] as PopupMenuItemState).reassemble(); return null; },

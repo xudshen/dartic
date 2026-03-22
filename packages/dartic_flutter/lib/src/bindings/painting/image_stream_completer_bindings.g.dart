@@ -38,7 +38,7 @@ abstract final class ImageStreamCompleterBindings {
         'reportError#5': (args) { (args[0] as ImageStreamCompleter).reportError(context: identical(args[1], darticAbsent) ? null : args[1] as DiagnosticsNode?, exception: args[2] as Object, stack: identical(args[3], darticAbsent) ? null : args[3] as StackTrace?, informationCollector: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), silent: identical(args[5], darticAbsent) ? false : args[5] as bool); return null; },
         'reportImageChunkEvent#1': (args) { (args[0] as ImageStreamCompleter).reportImageChunkEvent(args[1] as ImageChunkEvent); return null; },
         'debugFillProperties#1': (args) { (args[0] as ImageStreamCompleter).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ImageStreamCompleter).toString(),
+        'toString#1': (args) => (args[0] as ImageStreamCompleter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ImageStreamCompleter).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ImageStreamCompleter).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugLabel#0': (args) => (args[0] as ImageStreamCompleter).debugLabel,

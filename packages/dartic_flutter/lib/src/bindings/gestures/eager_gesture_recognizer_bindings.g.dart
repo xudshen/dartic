@@ -33,7 +33,7 @@ abstract final class EagerGestureRecognizerBindings {
         'addAllowedPointer#1': (args) { (args[0] as EagerGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as EagerGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'handleEvent#1': (args) { (args[0] as EagerGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
-        'toString#0': (args) => (args[0] as EagerGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as EagerGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'handleNonAllowedPointer#1': (args) { (args[0] as EagerGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as EagerGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as EagerGestureRecognizer).rejectGesture(args[1] as int); return null; },

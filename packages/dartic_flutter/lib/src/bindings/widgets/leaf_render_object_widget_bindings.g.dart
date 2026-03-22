@@ -34,7 +34,7 @@ abstract final class LeafRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as LeafRenderObjectWidget).createElement(),
-        'toString#0': (args) => (args[0] as LeafRenderObjectWidget).toString(),
+        'toString#1': (args) => (args[0] as LeafRenderObjectWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createRenderObject#1': (args) => (args[0] as LeafRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as LeafRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as LeafRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },

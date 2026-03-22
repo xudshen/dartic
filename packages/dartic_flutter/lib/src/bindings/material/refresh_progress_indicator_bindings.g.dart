@@ -41,7 +41,7 @@ abstract final class RefreshProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RefreshProgressIndicator).createState(),
-        'toString#0': (args) => (args[0] as RefreshProgressIndicator).toString(),
+        'toString#1': (args) => (args[0] as RefreshProgressIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugFillProperties#1': (args) { (args[0] as RefreshProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as RefreshProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as RefreshProgressIndicator).toStringShort(),

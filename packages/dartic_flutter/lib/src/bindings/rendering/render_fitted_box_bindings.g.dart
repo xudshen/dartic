@@ -48,7 +48,7 @@ abstract final class RenderFittedBoxBindings {
         'paintsChild#1': (args) => (args[0] as RenderFittedBox).paintsChild(args[1] as RenderBox),
         'applyPaintTransform#2': (args) { (args[0] as RenderFittedBox).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFittedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderFittedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderFittedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderFittedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFittedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderFittedBox).computeMinIntrinsicWidth(args[1] as double),

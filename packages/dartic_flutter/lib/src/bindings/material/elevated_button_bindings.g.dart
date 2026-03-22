@@ -43,7 +43,7 @@ abstract final class ElevatedButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'defaultStyleOf#1': (args) => (args[0] as ElevatedButton).defaultStyleOf(args[1] as BuildContext),
         'themeStyleOf#1': (args) => (args[0] as ElevatedButton).themeStyleOf(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ElevatedButton).toString(),
+        'toString#1': (args) => (args[0] as ElevatedButton).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as ElevatedButton).createState(),
         'debugFillProperties#1': (args) { (args[0] as ElevatedButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as ElevatedButton).createElement(),

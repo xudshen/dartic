@@ -36,7 +36,7 @@ abstract final class TextSelectionToolbarTextButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#4': (args) => (args[0] as TextSelectionToolbarTextButton).copyWith(child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, onPressed: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, alignment: identical(args[4], darticAbsent) ? null : args[4] as AlignmentGeometry?),
         'build#1': (args) => (args[0] as TextSelectionToolbarTextButton).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as TextSelectionToolbarTextButton).toString(),
+        'toString#1': (args) => (args[0] as TextSelectionToolbarTextButton).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TextSelectionToolbarTextButton).createElement(),
         'toStringShort#0': (args) => (args[0] as TextSelectionToolbarTextButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSelectionToolbarTextButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

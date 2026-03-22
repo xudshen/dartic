@@ -32,7 +32,7 @@ abstract final class IconThemeBindings {
         'updateShouldNotify#1': (args) => (args[0] as IconTheme).updateShouldNotify(args[1] as IconTheme),
         'wrap#2': (args) => (args[0] as IconTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'debugFillProperties#1': (args) { (args[0] as IconTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as IconTheme).toString(),
+        'toString#1': (args) => (args[0] as IconTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as IconTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as IconTheme).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as IconTheme).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

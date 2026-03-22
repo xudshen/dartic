@@ -59,7 +59,7 @@ abstract final class MenuAnchorBindings {
         'createState#0': (args) => (args[0] as MenuAnchor).createState(),
         'debugDescribeChildren#0': (args) => (args[0] as MenuAnchor).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as MenuAnchor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as MenuAnchor).toString(),
+        'toString#1': (args) => (args[0] as MenuAnchor).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MenuAnchor).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuAnchor).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as MenuAnchor).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

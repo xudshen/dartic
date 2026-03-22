@@ -39,7 +39,7 @@ abstract final class DismissMenuActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) { (args[0] as DismissMenuAction).invoke(args[1] as DismissIntent); return null; },
         'isEnabled#1': (args) => (args[0] as DismissMenuAction).isEnabled(args[1] as DismissIntent),
-        'toString#0': (args) => (args[0] as DismissMenuAction).toString(),
+        'toString#1': (args) => (args[0] as DismissMenuAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'consumesKey#1': (args) => (args[0] as DismissMenuAction).consumesKey(args[1] as DismissIntent),
         'toKeyEventResult#2': (args) => (args[0] as DismissMenuAction).toKeyEventResult(args[1] as DismissIntent, args[2]),
         'addActionListener#1': (args) { (args[0] as DismissMenuAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

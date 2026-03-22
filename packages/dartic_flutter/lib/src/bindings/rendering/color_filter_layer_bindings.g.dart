@@ -30,7 +30,7 @@ abstract final class ColorFilterLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as ColorFilterLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ColorFilterLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ColorFilterLayer).toString(),
+        'toString#1': (args) => (args[0] as ColorFilterLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as ColorFilterLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ColorFilterLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ColorFilterLayer).dispose(); return null; },

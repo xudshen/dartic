@@ -52,7 +52,7 @@ abstract final class TwoDimensionalScrollableStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as TwoDimensionalScrollableState).didUpdateWidget(args[1] as TwoDimensionalScrollable); return null; },
         'build#1': (args) => (args[0] as TwoDimensionalScrollableState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as TwoDimensionalScrollableState).dispose(); return null; },
-        'toString#0': (args) => (args[0] as TwoDimensionalScrollableState).toString(),
+        'toString#1': (args) => (args[0] as TwoDimensionalScrollableState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as TwoDimensionalScrollableState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as TwoDimensionalScrollableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as TwoDimensionalScrollableState).deactivate(); return null; },

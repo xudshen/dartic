@@ -40,7 +40,7 @@ abstract final class RenderIgnoreBaselineBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderIgnoreBaseline).computeDistanceToActualBaseline(args[1] as ui.TextBaseline),
         'computeDryBaseline#2': (args) => (args[0] as RenderIgnoreBaseline).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
-        'toString#0': (args) => (args[0] as RenderIgnoreBaseline).toString(),
+        'toString#1': (args) => (args[0] as RenderIgnoreBaseline).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderIgnoreBaseline).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnoreBaseline).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnoreBaseline).computeMinIntrinsicWidth(args[1] as double),

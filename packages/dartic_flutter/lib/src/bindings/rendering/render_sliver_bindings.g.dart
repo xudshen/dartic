@@ -56,7 +56,7 @@ abstract final class RenderSliverBindings {
         'debugPaint#2': (args) { (args[0] as RenderSliver).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'handleEvent#2': (args) { (args[0] as RenderSliver).handleEvent(args[1] as PointerEvent, args[2] as SliverHitTestEntry); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliver).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliver).toString(),
+        'toString#1': (args) => (args[0] as RenderSliver).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderSliver).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderSliver).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderSliver).setupParentData(args[1] as RenderObject); return null; },

@@ -30,5 +30,6 @@ abstract final class CupertinoListSectionTypeBindings {
         'hashCode#0': (args) => (args[0] as CupertinoListSectionType).hashCode,
         'index#0': (args) => (args[0] as CupertinoListSectionType).index,
         '==#1': (args) => (args[0] as CupertinoListSectionType) == (args[1] as Object),
+        '_#fromFields#2': (args) => CupertinoListSectionType.values[args[1] as int],
       };
 }

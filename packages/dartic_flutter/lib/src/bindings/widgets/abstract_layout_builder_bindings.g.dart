@@ -31,7 +31,7 @@ abstract final class AbstractLayoutBuilderBindings {
         'createElement#0': (args) => (args[0] as AbstractLayoutBuilder).createElement(),
         'updateShouldRebuild#1': (args) => (args[0] as AbstractLayoutBuilder).updateShouldRebuild(args[1] as AbstractLayoutBuilder),
         'createRenderObject#1': (args) => (args[0] as AbstractLayoutBuilder).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AbstractLayoutBuilder).toString(),
+        'toString#1': (args) => (args[0] as AbstractLayoutBuilder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateRenderObject#2': (args) { (args[0] as AbstractLayoutBuilder).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as AbstractLayoutBuilder).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AbstractLayoutBuilder).toStringShort(),

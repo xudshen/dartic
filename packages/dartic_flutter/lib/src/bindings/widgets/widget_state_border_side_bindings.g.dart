@@ -30,7 +30,7 @@ abstract final class WidgetStateBorderSideBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) => (args[0] as WidgetStateBorderSide).resolve((args[1] as Set).cast<WidgetState>()),
-        'toString#0': (args) => (args[0] as WidgetStateBorderSide).toString(),
+        'toString#1': (args) => (args[0] as WidgetStateBorderSide).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'copyWith#4': (args) => (args[0] as WidgetStateBorderSide).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, width: identical(args[2], darticAbsent) ? null : args[2] as double?, style: identical(args[3], darticAbsent) ? null : args[3] as BorderStyle?, strokeAlign: identical(args[4], darticAbsent) ? null : args[4] as double?),
         'scale#1': (args) => (args[0] as WidgetStateBorderSide).scale(args[1] as double),
         'toPaint#0': (args) => (args[0] as WidgetStateBorderSide).toPaint(),

@@ -45,7 +45,7 @@ abstract final class InspectorButtonBindings {
         'foregroundColor#1': (args) => (args[0] as InspectorButton).foregroundColor(args[1] as BuildContext),
         'backgroundColor#1': (args) => (args[0] as InspectorButton).backgroundColor(args[1] as BuildContext),
         'build#1': (args) => (args[0] as InspectorButton).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as InspectorButton).toString(),
+        'toString#1': (args) => (args[0] as InspectorButton).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as InspectorButton).createElement(),
         'toStringShort#0': (args) => (args[0] as InspectorButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InspectorButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

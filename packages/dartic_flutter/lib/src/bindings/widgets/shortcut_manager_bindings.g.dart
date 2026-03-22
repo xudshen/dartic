@@ -34,7 +34,7 @@ abstract final class ShortcutManagerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'handleKeypress#2': (args) => (args[0] as ShortcutManager).handleKeypress(args[1] as BuildContext, args[2] as KeyEvent),
         'debugFillProperties#1': (args) { (args[0] as ShortcutManager).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ShortcutManager).toString(),
+        'toString#1': (args) => (args[0] as ShortcutManager).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ShortcutManager).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ShortcutManager).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'addListener#1': (args) { (args[0] as ShortcutManager).addListener(() => (args[1] as Function)()); return null; },

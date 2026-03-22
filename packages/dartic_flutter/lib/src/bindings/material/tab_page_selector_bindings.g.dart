@@ -45,7 +45,7 @@ abstract final class TabPageSelectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TabPageSelector).createState(),
-        'toString#0': (args) => (args[0] as TabPageSelector).toString(),
+        'toString#1': (args) => (args[0] as TabPageSelector).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TabPageSelector).createElement(),
         'toStringShort#0': (args) => (args[0] as TabPageSelector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TabPageSelector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

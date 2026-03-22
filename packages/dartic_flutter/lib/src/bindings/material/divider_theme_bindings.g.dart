@@ -30,7 +30,7 @@ abstract final class DividerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as DividerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as DividerTheme).updateShouldNotify(args[1] as DividerTheme),
-        'toString#0': (args) => (args[0] as DividerTheme).toString(),
+        'toString#1': (args) => (args[0] as DividerTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DividerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DividerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DividerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

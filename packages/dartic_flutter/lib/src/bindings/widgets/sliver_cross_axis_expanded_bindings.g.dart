@@ -33,7 +33,7 @@ abstract final class SliverCrossAxisExpandedBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as SliverCrossAxisExpanded).applyParentData(args[1] as RenderObject); return null; },
-        'toString#0': (args) => (args[0] as SliverCrossAxisExpanded).toString(),
+        'toString#1': (args) => (args[0] as SliverCrossAxisExpanded).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverCrossAxisExpanded).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as SliverCrossAxisExpanded).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as SliverCrossAxisExpanded).debugCanApplyOutOfTurn(),

@@ -29,7 +29,7 @@ abstract final class ActionIconThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#4': (args) => (args[0] as ActionIconThemeData).copyWith(backButtonIconBuilder: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), closeButtonIconBuilder: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), drawerButtonIconBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), endDrawerButtonIconBuilder: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
         'debugFillProperties#1': (args) { (args[0] as ActionIconThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ActionIconThemeData).toString(),
+        'toString#1': (args) => (args[0] as ActionIconThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ActionIconThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ActionIconThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'backButtonIconBuilder#0': (args) => (args[0] as ActionIconThemeData).backButtonIconBuilder,

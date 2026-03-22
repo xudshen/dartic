@@ -32,7 +32,7 @@ abstract final class CupertinoExpansionTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoExpansionTile).createState(),
-        'toString#0': (args) => (args[0] as CupertinoExpansionTile).toString(),
+        'toString#1': (args) => (args[0] as CupertinoExpansionTile).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoExpansionTile).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoExpansionTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoExpansionTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -32,7 +32,7 @@ abstract final class SelectActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as SelectAction).toString(),
+        'toString#1': (args) => (args[0] as SelectAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as SelectAction).isEnabled(args[1] as SelectIntent),
         'consumesKey#1': (args) => (args[0] as SelectAction).consumesKey(args[1] as SelectIntent),
         'toKeyEventResult#2': (args) => (args[0] as SelectAction).toKeyEventResult(args[1] as SelectIntent, args[2]),

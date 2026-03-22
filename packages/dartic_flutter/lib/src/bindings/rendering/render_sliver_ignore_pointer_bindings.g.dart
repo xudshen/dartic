@@ -41,7 +41,7 @@ abstract final class RenderSliverIgnorePointerBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverIgnorePointer).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSliverIgnorePointer).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverIgnorePointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverIgnorePointer).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverIgnorePointer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverIgnorePointer).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverIgnorePointer).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderSliverIgnorePointer).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },

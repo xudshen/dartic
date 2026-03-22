@@ -38,5 +38,6 @@ abstract final class StrokeJoinBindings {
         'hashCode#0': (args) => (args[0] as StrokeJoin).hashCode,
         'index#0': (args) => (args[0] as StrokeJoin).index,
         '==#1': (args) => (args[0] as StrokeJoin) == (args[1] as Object),
+        '_#fromFields#2': (args) => StrokeJoin.values[args[1] as int],
       };
 }

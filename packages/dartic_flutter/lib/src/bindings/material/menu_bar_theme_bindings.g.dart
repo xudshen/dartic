@@ -32,7 +32,7 @@ abstract final class MenuBarThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MenuBarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MenuBarTheme).updateShouldNotify(args[1] as MenuBarTheme),
-        'toString#0': (args) => (args[0] as MenuBarTheme).toString(),
+        'toString#1': (args) => (args[0] as MenuBarTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MenuBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

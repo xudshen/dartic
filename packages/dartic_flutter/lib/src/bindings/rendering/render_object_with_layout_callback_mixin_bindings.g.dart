@@ -40,7 +40,7 @@ abstract final class RenderObjectWithLayoutCallbackMixinBindings {
         'layoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).layoutCallback(); return null; },
         'runLayoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).runLayoutCallback(); return null; },
         'scheduleLayoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).scheduleLayoutCallback(); return null; },
-        'toString#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).toString(),
+        'toString#1': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).setupParentData(args[1] as RenderObject); return null; },

@@ -43,7 +43,7 @@ abstract final class SlottedContainerRenderObjectMixinBindings {
         'redepthChildren#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).redepthChildren(); return null; },
         'visitChildren#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).toString(),
+        'toString#1': (args) => (args[0] as SlottedContainerRenderObjectMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).setupParentData(args[1] as RenderObject); return null; },

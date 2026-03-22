@@ -42,7 +42,7 @@ abstract final class NavigationDrawerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationDrawer).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as NavigationDrawer).toString(),
+        'toString#1': (args) => (args[0] as NavigationDrawer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as NavigationDrawer).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationDrawer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationDrawer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -31,7 +31,7 @@ abstract final class TableCellBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TableCell).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as TableCell).toString(),
+        'toString#1': (args) => (args[0] as TableCell).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TableCell).createElement(),
         'toStringShort#0': (args) => (args[0] as TableCell).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TableCell).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

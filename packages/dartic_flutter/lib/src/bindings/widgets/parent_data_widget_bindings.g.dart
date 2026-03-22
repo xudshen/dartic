@@ -37,7 +37,7 @@ abstract final class ParentDataWidgetBindings {
         'debugIsValidRenderObject#1': (args) => (args[0] as ParentDataWidget).debugIsValidRenderObject(args[1] as RenderObject),
         'applyParentData#1': (args) { (args[0] as ParentDataWidget).applyParentData(args[1] as RenderObject); return null; },
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as ParentDataWidget).debugCanApplyOutOfTurn(),
-        'toString#0': (args) => (args[0] as ParentDataWidget).toString(),
+        'toString#1': (args) => (args[0] as ParentDataWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ParentDataWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ParentDataWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as ParentDataWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

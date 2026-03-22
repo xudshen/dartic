@@ -30,7 +30,7 @@ abstract final class RequestFocusActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) { (args[0] as RequestFocusAction).invoke(args[1] as RequestFocusIntent); return null; },
-        'toString#0': (args) => (args[0] as RequestFocusAction).toString(),
+        'toString#1': (args) => (args[0] as RequestFocusAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as RequestFocusAction).isEnabled(args[1] as RequestFocusIntent),
         'consumesKey#1': (args) => (args[0] as RequestFocusAction).consumesKey(args[1] as RequestFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as RequestFocusAction).toKeyEventResult(args[1] as RequestFocusIntent, args[2]),

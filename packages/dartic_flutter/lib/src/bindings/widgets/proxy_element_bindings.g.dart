@@ -37,7 +37,7 @@ abstract final class ProxyElementBindings {
         'update#1': (args) { (args[0] as ProxyElement).update(args[1] as ProxyWidget); return null; },
         'updated#1': (args) { (args[0] as ProxyElement).updated(args[1] as ProxyWidget); return null; },
         'notifyClients#1': (args) { (args[0] as ProxyElement).notifyClients(args[1] as ProxyWidget); return null; },
-        'toString#0': (args) => (args[0] as ProxyElement).toString(),
+        'toString#1': (args) => (args[0] as ProxyElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as ProxyElement).mount(args[1] as Element?, args[2]); return null; },
         'performRebuild#0': (args) { (args[0] as ProxyElement).performRebuild(); return null; },
         'visitChildren#1': (args) { (args[0] as ProxyElement).visitChildren((a) => (args[1] as Function)(a)); return null; },

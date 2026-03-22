@@ -32,7 +32,7 @@ abstract final class StreamBuilderBindings {
         'afterDone#1': (args) => (args[0] as StreamBuilder).afterDone(args[1] as AsyncSnapshot),
         'afterDisconnected#1': (args) => (args[0] as StreamBuilder).afterDisconnected(args[1] as AsyncSnapshot),
         'build#2': (args) => (args[0] as StreamBuilder).build(args[1] as BuildContext, args[2] as AsyncSnapshot),
-        'toString#0': (args) => (args[0] as StreamBuilder).toString(),
+        'toString#1': (args) => (args[0] as StreamBuilder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as StreamBuilder).createState(),
         'createElement#0': (args) => (args[0] as StreamBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as StreamBuilder).toStringShort(),

@@ -51,7 +51,7 @@ abstract final class RenderPositionedBoxBindings {
         'performLayout#0': (args) { (args[0] as RenderPositionedBox).performLayout(); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderPositionedBox).debugPaintSize(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPositionedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderPositionedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderPositionedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderPositionedBox).alignChild(); return null; },
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderPositionedBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderPositionedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },

@@ -33,7 +33,7 @@ abstract final class AutofillGroupStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as AutofillGroupState).didChangeDependencies(); return null; },
         'build#1': (args) => (args[0] as AutofillGroupState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as AutofillGroupState).dispose(); return null; },
-        'toString#0': (args) => (args[0] as AutofillGroupState).toString(),
+        'toString#1': (args) => (args[0] as AutofillGroupState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as AutofillGroupState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as AutofillGroupState).didUpdateWidget(args[1] as AutofillGroup); return null; },
         'reassemble#0': (args) { (args[0] as AutofillGroupState).reassemble(); return null; },

@@ -31,5 +31,6 @@ abstract final class SnackBarBehaviorBindings {
         'hashCode#0': (args) => (args[0] as SnackBarBehavior).hashCode,
         'index#0': (args) => (args[0] as SnackBarBehavior).index,
         '==#1': (args) => (args[0] as SnackBarBehavior) == (args[1] as Object),
+        '_#fromFields#2': (args) => SnackBarBehavior.values[args[1] as int],
       };
 }

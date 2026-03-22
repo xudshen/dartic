@@ -41,7 +41,7 @@ abstract final class FocusTraversalPolicyBindings {
         'previous#1': (args) => (args[0] as FocusTraversalPolicy).previous(args[1] as FocusNode),
         'inDirection#2': (args) => (args[0] as FocusTraversalPolicy).inDirection(args[1] as FocusNode, args[2] as TraversalDirection),
         'sortDescendants#2': (args) => (args[0] as FocusTraversalPolicy).sortDescendants((args[1] as Iterable).cast<FocusNode>(), args[2] as FocusNode),
-        'toString#0': (args) => (args[0] as FocusTraversalPolicy).toString(),
+        'toString#1': (args) => (args[0] as FocusTraversalPolicy).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as FocusTraversalPolicy).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as FocusTraversalPolicy).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as FocusTraversalPolicy).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

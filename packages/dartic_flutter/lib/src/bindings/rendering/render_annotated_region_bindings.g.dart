@@ -40,7 +40,7 @@ abstract final class RenderAnnotatedRegionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as RenderAnnotatedRegion).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAnnotatedRegion).dispose(); return null; },
-        'toString#0': (args) => (args[0] as RenderAnnotatedRegion).toString(),
+        'toString#1': (args) => (args[0] as RenderAnnotatedRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderAnnotatedRegion).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAnnotatedRegion).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnnotatedRegion).computeMinIntrinsicWidth(args[1] as double),

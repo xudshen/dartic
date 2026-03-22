@@ -39,7 +39,7 @@ abstract final class IntrinsicWidthBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as IntrinsicWidth).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as IntrinsicWidth).updateRenderObject(args[1] as BuildContext, args[2] as RenderIntrinsicWidth); return null; },
-        'toString#0': (args) => (args[0] as IntrinsicWidth).toString(),
+        'toString#1': (args) => (args[0] as IntrinsicWidth).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as IntrinsicWidth).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as IntrinsicWidth).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as IntrinsicWidth).toStringShort(),

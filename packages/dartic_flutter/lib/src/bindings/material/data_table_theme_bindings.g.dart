@@ -29,7 +29,7 @@ abstract final class DataTableThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DataTableTheme).updateShouldNotify(args[1] as DataTableTheme),
-        'toString#0': (args) => (args[0] as DataTableTheme).toString(),
+        'toString#1': (args) => (args[0] as DataTableTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DataTableTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DataTableTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DataTableTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -25,7 +25,7 @@ abstract final class NotificationListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as NotificationListener).createElement(),
-        'toString#0': (args) => (args[0] as NotificationListener).toString(),
+        'toString#1': (args) => (args[0] as NotificationListener).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as NotificationListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NotificationListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as NotificationListener).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

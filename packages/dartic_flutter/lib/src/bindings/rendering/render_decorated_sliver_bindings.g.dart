@@ -45,7 +45,7 @@ abstract final class RenderDecoratedSliverBindings {
         'detach#0': (args) { (args[0] as RenderDecoratedSliver).detach(); return null; },
         'dispose#0': (args) { (args[0] as RenderDecoratedSliver).dispose(); return null; },
         'paint#2': (args) { (args[0] as RenderDecoratedSliver).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderDecoratedSliver).toString(),
+        'toString#1': (args) => (args[0] as RenderDecoratedSliver).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderDecoratedSliver).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderDecoratedSliver).performLayout(); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderDecoratedSliver).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),

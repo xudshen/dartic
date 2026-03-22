@@ -45,7 +45,7 @@ abstract final class RenderAbstractViewportBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOffsetToReveal#4': (args) => (args[0] as RenderAbstractViewport).getOffsetToReveal(args[1] as RenderObject, args[2] as double, rect: identical(args[3], darticAbsent) ? null : args[3] as Rect?, axis: identical(args[4], darticAbsent) ? null : args[4] as Axis?),
-        'toString#0': (args) => (args[0] as RenderAbstractViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderAbstractViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderAbstractViewport).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderAbstractViewport).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderAbstractViewport).setupParentData(args[1] as RenderObject); return null; },

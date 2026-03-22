@@ -45,5 +45,6 @@ abstract final class OverlayVisibilityModeBindings {
         'hashCode#0': (args) => (args[0] as OverlayVisibilityMode).hashCode,
         'index#0': (args) => (args[0] as OverlayVisibilityMode).index,
         '==#1': (args) => (args[0] as OverlayVisibilityMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => OverlayVisibilityMode.values[args[1] as int],
       };
 }

@@ -41,7 +41,7 @@ abstract final class SizedBoxBindings {
         'updateRenderObject#2': (args) { (args[0] as SizedBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderConstrainedBox); return null; },
         'toStringShort#0': (args) => (args[0] as SizedBox).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SizedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as SizedBox).toString(),
+        'toString#1': (args) => (args[0] as SizedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SizedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SizedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShallow#2': (args) => (args[0] as SizedBox).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

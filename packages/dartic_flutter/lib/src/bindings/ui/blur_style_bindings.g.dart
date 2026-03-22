@@ -39,5 +39,6 @@ abstract final class BlurStyleBindings {
         'hashCode#0': (args) => (args[0] as BlurStyle).hashCode,
         'index#0': (args) => (args[0] as BlurStyle).index,
         '==#1': (args) => (args[0] as BlurStyle) == (args[1] as Object),
+        '_#fromFields#2': (args) => BlurStyle.values[args[1] as int],
       };
 }

@@ -41,7 +41,7 @@ abstract final class RenderClipPathBindings {
         'hitTest#2': (args) => (args[0] as RenderClipPath).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipPath).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipPath).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderClipPath).toString(),
+        'toString#1': (args) => (args[0] as RenderClipPath).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attach#1': (args) { (args[0] as RenderClipPath).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipPath).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipPath).performLayout(); return null; },

@@ -32,7 +32,7 @@ abstract final class TextMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TextMagnifier).createState(),
-        'toString#0': (args) => (args[0] as TextMagnifier).toString(),
+        'toString#1': (args) => (args[0] as TextMagnifier).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TextMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as TextMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

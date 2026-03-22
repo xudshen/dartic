@@ -67,5 +67,6 @@ abstract final class SemanticsFlagBindings {
         'name#0': (args) => (args[0] as SemanticsFlag).name,
         'hashCode#0': (args) => (args[0] as SemanticsFlag).hashCode,
         '==#1': (args) => (args[0] as SemanticsFlag) == (args[1] as Object),
+        '_#fromFields#2': (args) => SemanticsFlag.values[args[0] as int],
       };
 }

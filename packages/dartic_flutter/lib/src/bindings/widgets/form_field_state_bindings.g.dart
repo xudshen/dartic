@@ -52,7 +52,7 @@ abstract final class FormFieldStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as FormFieldState).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as FormFieldState).dispose(); return null; },
         'build#1': (args) => (args[0] as FormFieldState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as FormFieldState).toString(),
+        'toString#1': (args) => (args[0] as FormFieldState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as FormFieldState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as FormFieldState).setState(() => (args[1] as Function)()); return null; },
         'activate#0': (args) { (args[0] as FormFieldState).activate(); return null; },

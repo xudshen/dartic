@@ -45,7 +45,7 @@ abstract final class CupertinoNavigationBarBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'shouldFullyObstruct#1': (args) => (args[0] as CupertinoNavigationBar).shouldFullyObstruct(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as CupertinoNavigationBar).createState(),
-        'toString#0': (args) => (args[0] as CupertinoNavigationBar).toString(),
+        'toString#1': (args) => (args[0] as CupertinoNavigationBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoNavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoNavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoNavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

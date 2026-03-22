@@ -50,7 +50,7 @@ abstract final class InputDecorationThemeBindings {
         'merge#1': (args) => (args[0] as InputDecorationTheme).merge(args[1] as InputDecorationTheme?),
         'updateShouldNotify#1': (args) => (args[0] as InputDecorationTheme).updateShouldNotify(args[1] as InputDecorationTheme),
         'wrap#2': (args) => (args[0] as InputDecorationTheme).wrap(args[1] as BuildContext, args[2] as Widget),
-        'toString#0': (args) => (args[0] as InputDecorationTheme).toString(),
+        'toString#1': (args) => (args[0] as InputDecorationTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as InputDecorationTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as InputDecorationTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InputDecorationTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

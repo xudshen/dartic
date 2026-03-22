@@ -54,7 +54,7 @@ abstract final class TableRowInkWellBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getRectCallback#1': (args) => (args[0] as TableRowInkWell).getRectCallback(args[1] as RenderBox),
         'debugCheckContext#1': (args) => (args[0] as TableRowInkWell).debugCheckContext(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as TableRowInkWell).toString(),
+        'toString#1': (args) => (args[0] as TableRowInkWell).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#1': (args) => (args[0] as TableRowInkWell).build(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as TableRowInkWell).createElement(),
         'toStringShort#0': (args) => (args[0] as TableRowInkWell).toStringShort(),

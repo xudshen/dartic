@@ -44,5 +44,6 @@ abstract final class StepStateBindings {
         'hashCode#0': (args) => (args[0] as StepState).hashCode,
         'index#0': (args) => (args[0] as StepState).index,
         '==#1': (args) => (args[0] as StepState) == (args[1] as Object),
+        '_#fromFields#2': (args) => StepState.values[args[1] as int],
       };
 }

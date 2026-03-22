@@ -34,5 +34,6 @@ abstract final class SelectionResultBindings {
         'hashCode#0': (args) => (args[0] as SelectionResult).hashCode,
         'index#0': (args) => (args[0] as SelectionResult).index,
         '==#1': (args) => (args[0] as SelectionResult) == (args[1] as Object),
+        '_#fromFields#2': (args) => SelectionResult.values[args[1] as int],
       };
 }

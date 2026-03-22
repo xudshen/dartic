@@ -36,7 +36,7 @@ abstract final class TableBindings {
         'createElement#0': (args) => (args[0] as Table).createElement(),
         'createRenderObject#1': (args) => (args[0] as Table).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Table).updateRenderObject(args[1] as BuildContext, args[2] as RenderTable); return null; },
-        'toString#0': (args) => (args[0] as Table).toString(),
+        'toString#1': (args) => (args[0] as Table).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as Table).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Table).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Table).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

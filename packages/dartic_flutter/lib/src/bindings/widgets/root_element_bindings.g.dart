@@ -49,7 +49,7 @@ abstract final class RootElementBindings {
         'update#1': (args) { (args[0] as RootElement).update(args[1] as RootWidget); return null; },
         'performRebuild#0': (args) { (args[0] as RootElement).performRebuild(); return null; },
         'debugExpectsRenderObjectForSlot#1': (args) => (args[0] as RootElement).debugExpectsRenderObjectForSlot(args[1]),
-        'toString#0': (args) => (args[0] as RootElement).toString(),
+        'toString#1': (args) => (args[0] as RootElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RootElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RootElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RootElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

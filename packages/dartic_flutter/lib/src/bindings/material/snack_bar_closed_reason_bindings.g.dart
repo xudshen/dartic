@@ -44,5 +44,6 @@ abstract final class SnackBarClosedReasonBindings {
         'hashCode#0': (args) => (args[0] as SnackBarClosedReason).hashCode,
         'index#0': (args) => (args[0] as SnackBarClosedReason).index,
         '==#1': (args) => (args[0] as SnackBarClosedReason) == (args[1] as Object),
+        '_#fromFields#2': (args) => SnackBarClosedReason.values[args[1] as int],
       };
 }

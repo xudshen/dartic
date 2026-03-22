@@ -41,5 +41,6 @@ abstract final class StepperTypeBindings {
         'hashCode#0': (args) => (args[0] as StepperType).hashCode,
         'index#0': (args) => (args[0] as StepperType).index,
         '==#1': (args) => (args[0] as StepperType) == (args[1] as Object),
+        '_#fromFields#2': (args) => StepperType.values[args[1] as int],
       };
 }

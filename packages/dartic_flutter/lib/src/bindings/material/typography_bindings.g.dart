@@ -50,7 +50,7 @@ abstract final class TypographyBindings {
         'geometryThemeFor#1': (args) => (args[0] as Typography).geometryThemeFor(args[1] as ScriptCategory),
         'copyWith#5': (args) => (args[0] as Typography).copyWith(black: identical(args[1], darticAbsent) ? null : args[1] as TextTheme?, white: identical(args[2], darticAbsent) ? null : args[2] as TextTheme?, englishLike: identical(args[3], darticAbsent) ? null : args[3] as TextTheme?, dense: identical(args[4], darticAbsent) ? null : args[4] as TextTheme?, tall: identical(args[5], darticAbsent) ? null : args[5] as TextTheme?),
         'debugFillProperties#1': (args) { (args[0] as Typography).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Typography).toString(),
+        'toString#1': (args) => (args[0] as Typography).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as Typography).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as Typography).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'black#0': (args) => (args[0] as Typography).black,

@@ -47,7 +47,7 @@ abstract final class RenderErrorBoxBindings {
         'hitTestSelf#1': (args) => (args[0] as RenderErrorBox).hitTestSelf(args[1] as ui.Offset),
         'computeDryLayout#1': (args) => (args[0] as RenderErrorBox).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderErrorBox).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderErrorBox).toString(),
+        'toString#1': (args) => (args[0] as RenderErrorBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderErrorBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderErrorBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderErrorBox).computeMinIntrinsicWidth(args[1] as double),

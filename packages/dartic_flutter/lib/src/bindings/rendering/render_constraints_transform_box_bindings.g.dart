@@ -54,7 +54,7 @@ abstract final class RenderConstraintsTransformBoxBindings {
         'dispose#0': (args) { (args[0] as RenderConstraintsTransformBox).dispose(); return null; },
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderConstraintsTransformBox).describeApproximatePaintClip(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as RenderConstraintsTransformBox).toStringShort(),
-        'toString#0': (args) => (args[0] as RenderConstraintsTransformBox).toString(),
+        'toString#1': (args) => (args[0] as RenderConstraintsTransformBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderConstraintsTransformBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstraintsTransformBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderConstraintsTransformBox).computeDistanceToActualBaseline(args[1] as TextBaseline),

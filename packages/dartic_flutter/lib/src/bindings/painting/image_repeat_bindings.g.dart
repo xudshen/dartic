@@ -42,5 +42,6 @@ abstract final class ImageRepeatBindings {
         'hashCode#0': (args) => (args[0] as ImageRepeat).hashCode,
         'index#0': (args) => (args[0] as ImageRepeat).index,
         '==#1': (args) => (args[0] as ImageRepeat) == (args[1] as Object),
+        '_#fromFields#2': (args) => ImageRepeat.values[args[1] as int],
       };
 }

@@ -44,7 +44,7 @@ abstract final class RenderSliverScrollingPersistentHeaderBindings {
         'updateGeometry#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).updateGeometry(),
         'performLayout#0': (args) { (args[0] as RenderSliverScrollingPersistentHeader).performLayout(); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverScrollingPersistentHeader).childMainAxisPosition(args[1] as RenderBox),
-        'toString#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverScrollingPersistentHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateChild#2': (args) { (args[0] as RenderSliverScrollingPersistentHeader).updateChild(args[1] as double, args[2] as bool); return null; },
         'markNeedsLayout#0': (args) { (args[0] as RenderSliverScrollingPersistentHeader).markNeedsLayout(); return null; },
         'layoutChild#3': (args) { (args[0] as RenderSliverScrollingPersistentHeader).layoutChild(args[1] as double, args[2] as double, overlapsContent: identical(args[3], darticAbsent) ? false : args[3] as bool); return null; },

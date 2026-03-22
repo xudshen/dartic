@@ -34,7 +34,7 @@ abstract final class SingleChildRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as SingleChildRenderObjectWidget).createElement(),
-        'toString#0': (args) => (args[0] as SingleChildRenderObjectWidget).toString(),
+        'toString#1': (args) => (args[0] as SingleChildRenderObjectWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createRenderObject#1': (args) => (args[0] as SingleChildRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SingleChildRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SingleChildRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },

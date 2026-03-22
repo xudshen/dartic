@@ -32,7 +32,7 @@ abstract final class CupertinoTextMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoTextMagnifier).createState(),
-        'toString#0': (args) => (args[0] as CupertinoTextMagnifier).toString(),
+        'toString#1': (args) => (args[0] as CupertinoTextMagnifier).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoTextMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTextMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTextMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

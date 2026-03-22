@@ -31,5 +31,6 @@ abstract final class PopupMenuPositionBindings {
         'hashCode#0': (args) => (args[0] as PopupMenuPosition).hashCode,
         'index#0': (args) => (args[0] as PopupMenuPosition).index,
         '==#1': (args) => (args[0] as PopupMenuPosition) == (args[1] as Object),
+        '_#fromFields#2': (args) => PopupMenuPosition.values[args[1] as int],
       };
 }

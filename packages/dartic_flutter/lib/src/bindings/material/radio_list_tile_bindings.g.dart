@@ -41,7 +41,7 @@ abstract final class RadioListTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RadioListTile).createState(),
-        'toString#0': (args) => (args[0] as RadioListTile).toString(),
+        'toString#1': (args) => (args[0] as RadioListTile).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RadioListTile).createElement(),
         'toStringShort#0': (args) => (args[0] as RadioListTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RadioListTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

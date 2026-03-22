@@ -41,5 +41,6 @@ abstract final class FlutterLogoStyleBindings {
         'hashCode#0': (args) => (args[0] as FlutterLogoStyle).hashCode,
         'index#0': (args) => (args[0] as FlutterLogoStyle).index,
         '==#1': (args) => (args[0] as FlutterLogoStyle) == (args[1] as Object),
+        '_#fromFields#2': (args) => FlutterLogoStyle.values[args[1] as int],
       };
 }

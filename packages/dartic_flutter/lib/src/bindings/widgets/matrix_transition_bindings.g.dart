@@ -37,7 +37,7 @@ abstract final class MatrixTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as MatrixTransition).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as MatrixTransition).toString(),
+        'toString#1': (args) => (args[0] as MatrixTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as MatrixTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as MatrixTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as MatrixTransition).createElement(),

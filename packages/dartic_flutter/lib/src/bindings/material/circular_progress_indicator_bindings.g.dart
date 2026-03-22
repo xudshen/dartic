@@ -44,7 +44,7 @@ abstract final class CircularProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CircularProgressIndicator).createState(),
-        'toString#0': (args) => (args[0] as CircularProgressIndicator).toString(),
+        'toString#1': (args) => (args[0] as CircularProgressIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugFillProperties#1': (args) { (args[0] as CircularProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as CircularProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as CircularProgressIndicator).toStringShort(),

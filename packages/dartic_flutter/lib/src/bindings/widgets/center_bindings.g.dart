@@ -39,7 +39,7 @@ abstract final class CenterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as Center).toString(),
+        'toString#1': (args) => (args[0] as Center).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createRenderObject#1': (args) => (args[0] as Center).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Center).updateRenderObject(args[1] as BuildContext, args[2] as RenderPositionedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as Center).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

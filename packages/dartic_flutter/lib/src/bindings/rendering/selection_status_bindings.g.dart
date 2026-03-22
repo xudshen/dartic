@@ -32,5 +32,6 @@ abstract final class SelectionStatusBindings {
         'hashCode#0': (args) => (args[0] as SelectionStatus).hashCode,
         'index#0': (args) => (args[0] as SelectionStatus).index,
         '==#1': (args) => (args[0] as SelectionStatus) == (args[1] as Object),
+        '_#fromFields#2': (args) => SelectionStatus.values[args[1] as int],
       };
 }

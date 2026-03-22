@@ -47,7 +47,7 @@ abstract final class PopupMenuButtonStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as PopupMenuButtonState).didChangeDependencies(); return null; },
         'showButtonMenu#0': (args) { (args[0] as PopupMenuButtonState).showButtonMenu(); return null; },
         'build#1': (args) => (args[0] as PopupMenuButtonState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as PopupMenuButtonState).toString(),
+        'toString#1': (args) => (args[0] as PopupMenuButtonState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as PopupMenuButtonState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as PopupMenuButtonState).didUpdateWidget(args[1] as PopupMenuButton); return null; },
         'reassemble#0': (args) { (args[0] as PopupMenuButtonState).reassemble(); return null; },

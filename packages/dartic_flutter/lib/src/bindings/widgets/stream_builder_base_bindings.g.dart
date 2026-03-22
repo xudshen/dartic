@@ -33,7 +33,7 @@ abstract final class StreamBuilderBaseBindings {
         'afterDisconnected#1': (args) => (args[0] as StreamBuilderBase).afterDisconnected(args[1]),
         'build#2': (args) => (args[0] as StreamBuilderBase).build(args[1] as BuildContext, args[2]),
         'createState#0': (args) => (args[0] as StreamBuilderBase).createState(),
-        'toString#0': (args) => (args[0] as StreamBuilderBase).toString(),
+        'toString#1': (args) => (args[0] as StreamBuilderBase).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as StreamBuilderBase).createElement(),
         'toStringShort#0': (args) => (args[0] as StreamBuilderBase).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StreamBuilderBase).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

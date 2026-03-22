@@ -37,5 +37,6 @@ abstract final class ResizeImagePolicyBindings {
         'hashCode#0': (args) => (args[0] as ResizeImagePolicy).hashCode,
         'index#0': (args) => (args[0] as ResizeImagePolicy).index,
         '==#1': (args) => (args[0] as ResizeImagePolicy) == (args[1] as Object),
+        '_#fromFields#2': (args) => ResizeImagePolicy.values[args[1] as int],
       };
 }

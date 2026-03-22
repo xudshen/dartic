@@ -41,7 +41,7 @@ abstract final class WidgetInspectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as WidgetInspector).createState(),
-        'toString#0': (args) => (args[0] as WidgetInspector).toString(),
+        'toString#1': (args) => (args[0] as WidgetInspector).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as WidgetInspector).createElement(),
         'toStringShort#0': (args) => (args[0] as WidgetInspector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WidgetInspector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

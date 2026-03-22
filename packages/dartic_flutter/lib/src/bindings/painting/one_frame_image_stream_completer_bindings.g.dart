@@ -26,7 +26,7 @@ abstract final class OneFrameImageStreamCompleterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as OneFrameImageStreamCompleter).toString(),
+        'toString#1': (args) => (args[0] as OneFrameImageStreamCompleter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addListener#1': (args) { (args[0] as OneFrameImageStreamCompleter).addListener(args[1] as ImageStreamListener); return null; },
         'addEphemeralErrorListener#1': (args) { (args[0] as OneFrameImageStreamCompleter).addEphemeralErrorListener((a, b) => (args[1] as Function)(a, b)); return null; },
         'keepAlive#0': (args) => (args[0] as OneFrameImageStreamCompleter).keepAlive(),

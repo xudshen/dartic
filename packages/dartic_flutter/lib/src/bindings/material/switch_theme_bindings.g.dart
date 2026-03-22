@@ -30,7 +30,7 @@ abstract final class SwitchThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SwitchTheme).updateShouldNotify(args[1] as SwitchTheme),
-        'toString#0': (args) => (args[0] as SwitchTheme).toString(),
+        'toString#1': (args) => (args[0] as SwitchTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SwitchTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as SwitchTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SwitchTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

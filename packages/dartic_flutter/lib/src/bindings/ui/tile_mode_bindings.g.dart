@@ -39,5 +39,6 @@ abstract final class TileModeBindings {
         'hashCode#0': (args) => (args[0] as TileMode).hashCode,
         'index#0': (args) => (args[0] as TileMode).index,
         '==#1': (args) => (args[0] as TileMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => TileMode.values[args[1] as int],
       };
 }

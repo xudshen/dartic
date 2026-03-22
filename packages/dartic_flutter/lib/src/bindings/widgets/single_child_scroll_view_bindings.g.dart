@@ -45,7 +45,7 @@ abstract final class SingleChildScrollViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SingleChildScrollView).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SingleChildScrollView).toString(),
+        'toString#1': (args) => (args[0] as SingleChildScrollView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SingleChildScrollView).createElement(),
         'toStringShort#0': (args) => (args[0] as SingleChildScrollView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SingleChildScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

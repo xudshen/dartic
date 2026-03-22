@@ -48,7 +48,7 @@ abstract final class FocusManagerBindings {
         'listenToApplicationLifecycleChangesIfSupported#0': (args) { (args[0] as FocusManager).listenToApplicationLifecycleChangesIfSupported(); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as FocusManager).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as FocusManager).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as FocusManager).toString(),
+        'toString#1': (args) => (args[0] as FocusManager).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShallow#2': (args) => (args[0] as FocusManager).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as FocusManager).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toStringShort#0': (args) => (args[0] as FocusManager).toStringShort(),

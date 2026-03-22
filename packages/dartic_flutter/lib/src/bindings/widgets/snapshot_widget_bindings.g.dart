@@ -32,7 +32,7 @@ abstract final class SnapshotWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SnapshotWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SnapshotWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
-        'toString#0': (args) => (args[0] as SnapshotWidget).toString(),
+        'toString#1': (args) => (args[0] as SnapshotWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SnapshotWidget).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SnapshotWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SnapshotWidget).toStringShort(),

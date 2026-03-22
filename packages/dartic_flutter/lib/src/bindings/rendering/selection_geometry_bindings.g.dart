@@ -28,7 +28,7 @@ abstract final class SelectionGeometryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#5': (args) => (args[0] as SelectionGeometry).copyWith(startSelectionPoint: identical(args[1], darticAbsent) ? null : args[1] as SelectionPoint?, endSelectionPoint: identical(args[2], darticAbsent) ? null : args[2] as SelectionPoint?, selectionRects: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<Rect>(), status: identical(args[4], darticAbsent) ? null : args[4] as SelectionStatus?, hasContent: identical(args[5], darticAbsent) ? null : args[5] as bool?),
         'debugFillProperties#1': (args) { (args[0] as SelectionGeometry).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as SelectionGeometry).toString(),
+        'toString#1': (args) => (args[0] as SelectionGeometry).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as SelectionGeometry).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SelectionGeometry).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'startSelectionPoint#0': (args) => (args[0] as SelectionGeometry).startSelectionPoint,

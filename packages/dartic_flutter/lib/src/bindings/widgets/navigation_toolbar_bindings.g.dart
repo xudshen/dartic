@@ -29,7 +29,7 @@ abstract final class NavigationToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationToolbar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as NavigationToolbar).toString(),
+        'toString#1': (args) => (args[0] as NavigationToolbar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as NavigationToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

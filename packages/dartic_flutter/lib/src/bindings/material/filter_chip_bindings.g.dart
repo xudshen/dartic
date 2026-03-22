@@ -48,7 +48,7 @@ abstract final class FilterChipBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as FilterChip).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as FilterChip).toString(),
+        'toString#1': (args) => (args[0] as FilterChip).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as FilterChip).createElement(),
         'toStringShort#0': (args) => (args[0] as FilterChip).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FilterChip).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

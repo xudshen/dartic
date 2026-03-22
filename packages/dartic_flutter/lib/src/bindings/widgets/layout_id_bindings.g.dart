@@ -39,7 +39,7 @@ abstract final class LayoutIdBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as LayoutId).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as LayoutId).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as LayoutId).toString(),
+        'toString#1': (args) => (args[0] as LayoutId).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as LayoutId).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as LayoutId).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as LayoutId).debugCanApplyOutOfTurn(),

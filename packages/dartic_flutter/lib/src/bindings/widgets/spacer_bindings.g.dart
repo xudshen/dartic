@@ -26,7 +26,7 @@ abstract final class SpacerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Spacer).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as Spacer).toString(),
+        'toString#1': (args) => (args[0] as Spacer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Spacer).createElement(),
         'toStringShort#0': (args) => (args[0] as Spacer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Spacer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

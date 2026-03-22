@@ -33,7 +33,7 @@ abstract final class TransformLayerBindings {
         'findAnnotations#3': (args) => (args[0] as TransformLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'applyTransform#2': (args) { (args[0] as TransformLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as TransformLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as TransformLayer).toString(),
+        'toString#1': (args) => (args[0] as TransformLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toImage#2': (args) => (args[0] as TransformLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'toImageSync#2': (args) => (args[0] as TransformLayer).toImageSync(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'supportsRasterization#0': (args) => (args[0] as TransformLayer).supportsRasterization(),

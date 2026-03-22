@@ -34,7 +34,7 @@ abstract final class ViewAnchorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ViewAnchor).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ViewAnchor).toString(),
+        'toString#1': (args) => (args[0] as ViewAnchor).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ViewAnchor).createElement(),
         'toStringShort#0': (args) => (args[0] as ViewAnchor).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ViewAnchor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

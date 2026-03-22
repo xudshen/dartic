@@ -34,7 +34,7 @@ abstract final class AppLifecycleListenerBindings {
         'didRequestAppExit#0': (args) => (args[0] as AppLifecycleListener).didRequestAppExit(),
         'didChangeAppLifecycleState#1': (args) { (args[0] as AppLifecycleListener).didChangeAppLifecycleState(args[1] as AppLifecycleState); return null; },
         'debugFillProperties#1': (args) { (args[0] as AppLifecycleListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as AppLifecycleListener).toString(),
+        'toString#1': (args) => (args[0] as AppLifecycleListener).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didPopRoute#0': (args) => (args[0] as AppLifecycleListener).didPopRoute(),
         'handleStartBackGesture#1': (args) => (args[0] as AppLifecycleListener).handleStartBackGesture(args[1] as PredictiveBackEvent),
         'handleUpdateBackGestureProgress#1': (args) { (args[0] as AppLifecycleListener).handleUpdateBackGestureProgress(args[1] as PredictiveBackEvent); return null; },

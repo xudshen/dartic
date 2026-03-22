@@ -37,7 +37,7 @@ abstract final class SliverAnimatedListStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverAnimatedListState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverAnimatedListState).toString(),
+        'toString#1': (args) => (args[0] as SliverAnimatedListState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as SliverAnimatedListState).initState(); return null; },
         'dispose#0': (args) { (args[0] as SliverAnimatedListState).dispose(); return null; },
         'insertItem#2': (args) {

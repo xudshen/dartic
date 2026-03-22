@@ -48,7 +48,7 @@ abstract final class SnackBarBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'withAnimation#2': (args) => (args[0] as SnackBar).withAnimation(args[1] as Animation<double>, fallbackKey: identical(args[2], darticAbsent) ? null : args[2] as Key?),
         'createState#0': (args) => (args[0] as SnackBar).createState(),
-        'toString#0': (args) => (args[0] as SnackBar).toString(),
+        'toString#1': (args) => (args[0] as SnackBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SnackBar).createElement(),
         'toStringShort#0': (args) => (args[0] as SnackBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SnackBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

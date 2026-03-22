@@ -35,7 +35,7 @@ abstract final class RootElementMixinBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'assignOwner#1': (args) { (args[0] as RootElementMixin).assignOwner(args[1] as BuildOwner); return null; },
         'mount#2': (args) { (args[0] as RootElementMixin).mount(args[1] as Element?, args[2]); return null; },
-        'toString#0': (args) => (args[0] as RootElementMixin).toString(),
+        'toString#1': (args) => (args[0] as RootElementMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RootElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RootElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RootElementMixin).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

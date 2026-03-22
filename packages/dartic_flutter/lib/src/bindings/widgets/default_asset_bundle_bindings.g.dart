@@ -38,7 +38,7 @@ abstract final class DefaultAssetBundleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DefaultAssetBundle).updateShouldNotify(args[1] as DefaultAssetBundle),
-        'toString#0': (args) => (args[0] as DefaultAssetBundle).toString(),
+        'toString#1': (args) => (args[0] as DefaultAssetBundle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DefaultAssetBundle).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultAssetBundle).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultAssetBundle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

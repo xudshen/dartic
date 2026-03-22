@@ -36,7 +36,7 @@ abstract final class SliverGridBindings {
         'createRenderObject#1': (args) => (args[0] as SliverGrid).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverGrid).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverGrid); return null; },
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverGrid).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
-        'toString#0': (args) => (args[0] as SliverGrid).toString(),
+        'toString#1': (args) => (args[0] as SliverGrid).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverGrid).createElement(),
         'debugFillProperties#1': (args) { (args[0] as SliverGrid).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SliverGrid).didUnmountRenderObject(args[1] as RenderObject); return null; },

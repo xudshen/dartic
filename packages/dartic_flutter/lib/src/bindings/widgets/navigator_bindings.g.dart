@@ -73,7 +73,7 @@ abstract final class NavigatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Navigator).createState(),
-        'toString#0': (args) => (args[0] as Navigator).toString(),
+        'toString#1': (args) => (args[0] as Navigator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Navigator).createElement(),
         'toStringShort#0': (args) => (args[0] as Navigator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Navigator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

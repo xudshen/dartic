@@ -43,7 +43,7 @@ abstract final class DraggableScrollableActuatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DraggableScrollableActuator).createState(),
-        'toString#0': (args) => (args[0] as DraggableScrollableActuator).toString(),
+        'toString#1': (args) => (args[0] as DraggableScrollableActuator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DraggableScrollableActuator).createElement(),
         'toStringShort#0': (args) => (args[0] as DraggableScrollableActuator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DraggableScrollableActuator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

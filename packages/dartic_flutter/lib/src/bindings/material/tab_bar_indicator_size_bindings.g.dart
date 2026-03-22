@@ -46,5 +46,6 @@ abstract final class TabBarIndicatorSizeBindings {
         'hashCode#0': (args) => (args[0] as TabBarIndicatorSize).hashCode,
         'index#0': (args) => (args[0] as TabBarIndicatorSize).index,
         '==#1': (args) => (args[0] as TabBarIndicatorSize) == (args[1] as Object),
+        '_#fromFields#2': (args) => TabBarIndicatorSize.values[args[1] as int],
       };
 }

@@ -39,7 +39,7 @@ abstract final class RenderSliverListBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverList).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverList).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverList).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverList).setupParentData(args[1] as RenderObject); return null; },
         'adoptChild#1': (args) { (args[0] as RenderSliverList).adoptChild(args[1] as RenderObject); return null; },
         'insert#2': (args) { (args[0] as RenderSliverList).insert(args[1] as RenderBox, after: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?); return null; },

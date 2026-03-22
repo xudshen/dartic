@@ -41,5 +41,6 @@ abstract final class SmartQuotesTypeBindings {
         'hashCode#0': (args) => (args[0] as SmartQuotesType).hashCode,
         'index#0': (args) => (args[0] as SmartQuotesType).index,
         '==#1': (args) => (args[0] as SmartQuotesType) == (args[1] as Object),
+        '_#fromFields#2': (args) => SmartQuotesType.values[args[1] as int],
       };
 }

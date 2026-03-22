@@ -35,7 +35,7 @@ abstract final class LogicalKeySetBindings {
         'accepts#2': (args) => (args[0] as LogicalKeySet).accepts(args[1] as KeyEvent, args[2] as HardwareKeyboard),
         'debugDescribeKeys#0': (args) => (args[0] as LogicalKeySet).debugDescribeKeys(),
         'debugFillProperties#1': (args) { (args[0] as LogicalKeySet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as LogicalKeySet).toString(),
+        'toString#1': (args) => (args[0] as LogicalKeySet).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as LogicalKeySet).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LogicalKeySet).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'triggers#0': (args) => (args[0] as LogicalKeySet).triggers,

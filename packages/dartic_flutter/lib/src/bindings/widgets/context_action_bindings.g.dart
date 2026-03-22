@@ -34,7 +34,7 @@ abstract final class ContextActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isEnabled#2': (args) => (args[0] as ContextAction).isEnabled(args[1] as Intent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
         'invoke#2': (args) => (args[0] as ContextAction).invoke(args[1] as Intent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
-        'toString#0': (args) => (args[0] as ContextAction).toString(),
+        'toString#1': (args) => (args[0] as ContextAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'consumesKey#1': (args) => (args[0] as ContextAction).consumesKey(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as ContextAction).toKeyEventResult(args[1] as Intent, args[2]),
         'addActionListener#1': (args) { (args[0] as ContextAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

@@ -32,7 +32,7 @@ abstract final class ScrollNotificationObserverStateBindings {
         'removeListener#1': (args) { (args[0] as ScrollNotificationObserverState).removeListener((a) => (args[1] as Function)(a)); return null; },
         'build#1': (args) => (args[0] as ScrollNotificationObserverState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as ScrollNotificationObserverState).dispose(); return null; },
-        'toString#0': (args) => (args[0] as ScrollNotificationObserverState).toString(),
+        'toString#1': (args) => (args[0] as ScrollNotificationObserverState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as ScrollNotificationObserverState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ScrollNotificationObserverState).didUpdateWidget(args[1] as ScrollNotificationObserver); return null; },
         'reassemble#0': (args) { (args[0] as ScrollNotificationObserverState).reassemble(); return null; },

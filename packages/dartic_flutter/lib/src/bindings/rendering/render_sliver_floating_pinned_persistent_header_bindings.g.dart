@@ -43,7 +43,7 @@ abstract final class RenderSliverFloatingPinnedPersistentHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateGeometry#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).updateGeometry(),
-        'toString#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'detach#0': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).detach(); return null; },
         'updateScrollStartDirection#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).updateScrollStartDirection(args[1] as ScrollDirection); return null; },
         'maybeStartSnapAnimation#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).maybeStartSnapAnimation(args[1] as ScrollDirection); return null; },

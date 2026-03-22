@@ -30,5 +30,6 @@ abstract final class ContentSensitivityBindings {
         'hashCode#0': (args) => (args[0] as ContentSensitivity).hashCode,
         'index#0': (args) => (args[0] as ContentSensitivity).index,
         '==#1': (args) => (args[0] as ContentSensitivity) == (args[1] as Object),
+        '_#fromFields#2': (args) => ContentSensitivity.values[args[1] as int],
       };
 }

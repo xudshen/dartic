@@ -48,7 +48,7 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
         'performLayout#0': (args) { (args[0] as RenderCustomMultiChildLayoutBox).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderCustomMultiChildLayoutBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderCustomMultiChildLayoutBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
-        'toString#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).toString(),
+        'toString#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMinIntrinsicHeight(args[1] as double),

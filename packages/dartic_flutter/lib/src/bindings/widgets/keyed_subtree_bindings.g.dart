@@ -37,7 +37,7 @@ abstract final class KeyedSubtreeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as KeyedSubtree).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as KeyedSubtree).toString(),
+        'toString#1': (args) => (args[0] as KeyedSubtree).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as KeyedSubtree).createElement(),
         'toStringShort#0': (args) => (args[0] as KeyedSubtree).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as KeyedSubtree).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

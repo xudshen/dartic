@@ -37,5 +37,6 @@ abstract final class LockStateBindings {
         'hashCode#0': (args) => (args[0] as LockState).hashCode,
         'index#0': (args) => (args[0] as LockState).index,
         '==#1': (args) => (args[0] as LockState) == (args[1] as Object),
+        '_#fromFields#2': (args) => LockState.values[args[1] as int],
       };
 }

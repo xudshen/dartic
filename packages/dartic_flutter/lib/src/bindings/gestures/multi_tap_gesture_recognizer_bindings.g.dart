@@ -38,7 +38,7 @@ abstract final class MultiTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as MultiTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as MultiTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as MultiTapGestureRecognizer).dispose(); return null; },
-        'toString#0': (args) => (args[0] as MultiTapGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as MultiTapGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addPointerPanZoom#1': (args) { (args[0] as MultiTapGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as MultiTapGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as MultiTapGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },

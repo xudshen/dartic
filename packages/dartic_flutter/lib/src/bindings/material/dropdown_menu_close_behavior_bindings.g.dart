@@ -45,5 +45,6 @@ abstract final class DropdownMenuCloseBehaviorBindings {
         'hashCode#0': (args) => (args[0] as DropdownMenuCloseBehavior).hashCode,
         'index#0': (args) => (args[0] as DropdownMenuCloseBehavior).index,
         '==#1': (args) => (args[0] as DropdownMenuCloseBehavior) == (args[1] as Object),
+        '_#fromFields#2': (args) => DropdownMenuCloseBehavior.values[args[1] as int],
       };
 }

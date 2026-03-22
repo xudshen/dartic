@@ -32,5 +32,6 @@ abstract final class DatePickerDateTimeOrderBindings {
         'hashCode#0': (args) => (args[0] as DatePickerDateTimeOrder).hashCode,
         'index#0': (args) => (args[0] as DatePickerDateTimeOrder).index,
         '==#1': (args) => (args[0] as DatePickerDateTimeOrder) == (args[1] as Object),
+        '_#fromFields#2': (args) => DatePickerDateTimeOrder.values[args[1] as int],
       };
 }

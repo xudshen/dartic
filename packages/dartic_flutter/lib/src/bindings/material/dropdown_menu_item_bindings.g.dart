@@ -44,7 +44,7 @@ abstract final class DropdownMenuItemBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as DropdownMenuItem).toString(),
+        'toString#1': (args) => (args[0] as DropdownMenuItem).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#1': (args) => (args[0] as DropdownMenuItem).build(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as DropdownMenuItem).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownMenuItem).toStringShort(),

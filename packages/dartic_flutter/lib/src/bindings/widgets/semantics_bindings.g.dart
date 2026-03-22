@@ -43,7 +43,7 @@ abstract final class SemanticsBindings {
         'createRenderObject#1': (args) => (args[0] as Semantics).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Semantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderSemanticsAnnotations); return null; },
         'debugFillProperties#1': (args) { (args[0] as Semantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Semantics).toString(),
+        'toString#1': (args) => (args[0] as Semantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Semantics).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Semantics).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Semantics).toStringShort(),

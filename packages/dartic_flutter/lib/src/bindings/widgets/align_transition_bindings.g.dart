@@ -35,7 +35,7 @@ abstract final class AlignTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AlignTransition).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AlignTransition).toString(),
+        'toString#1': (args) => (args[0] as AlignTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as AlignTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as AlignTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as AlignTransition).createElement(),

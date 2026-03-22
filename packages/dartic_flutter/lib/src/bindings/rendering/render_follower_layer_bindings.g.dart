@@ -47,7 +47,7 @@ abstract final class RenderFollowerLayerBindings {
         'paint#2': (args) { (args[0] as RenderFollowerLayer).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderFollowerLayer).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFollowerLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderFollowerLayer).toString(),
+        'toString#1': (args) => (args[0] as RenderFollowerLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderFollowerLayer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFollowerLayer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderFollowerLayer).computeMinIntrinsicWidth(args[1] as double),

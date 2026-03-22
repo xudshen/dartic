@@ -41,5 +41,6 @@ abstract final class DynamicSchemeVariantBindings {
         'hashCode#0': (args) => (args[0] as DynamicSchemeVariant).hashCode,
         'index#0': (args) => (args[0] as DynamicSchemeVariant).index,
         '==#1': (args) => (args[0] as DynamicSchemeVariant) == (args[1] as Object),
+        '_#fromFields#2': (args) => DynamicSchemeVariant.values[args[1] as int],
       };
 }

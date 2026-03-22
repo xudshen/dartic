@@ -45,7 +45,7 @@ abstract final class RenderUiKitViewBindings {
         'handleEvent#2': (args) { (args[0] as RenderUiKitView).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
         'detach#0': (args) { (args[0] as RenderUiKitView).detach(); return null; },
         'dispose#0': (args) { (args[0] as RenderUiKitView).dispose(); return null; },
-        'toString#0': (args) => (args[0] as RenderUiKitView).toString(),
+        'toString#1': (args) => (args[0] as RenderUiKitView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeDryLayout#1': (args) => (args[0] as RenderUiKitView).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderUiKitView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTest#2': (args) => (args[0] as RenderUiKitView).hitTest(args[1] as BoxHitTestResult, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),

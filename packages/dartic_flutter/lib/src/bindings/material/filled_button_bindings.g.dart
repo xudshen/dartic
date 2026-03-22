@@ -42,7 +42,7 @@ abstract final class FilledButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'defaultStyleOf#1': (args) => (args[0] as FilledButton).defaultStyleOf(args[1] as BuildContext),
         'themeStyleOf#1': (args) => (args[0] as FilledButton).themeStyleOf(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as FilledButton).toString(),
+        'toString#1': (args) => (args[0] as FilledButton).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as FilledButton).createState(),
         'debugFillProperties#1': (args) { (args[0] as FilledButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as FilledButton).createElement(),

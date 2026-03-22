@@ -66,7 +66,7 @@ abstract final class RenderSliverMultiBoxAdaptorBindings {
         'debugFillProperties#1': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugAssertChildListIsNonEmptyAndContiguous#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).debugAssertChildListIsNonEmptyAndContiguous(),
         'debugDescribeChildren#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverMultiBoxAdaptor).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).performResize(); return null; },

@@ -45,7 +45,7 @@ abstract final class RenderSliverFixedExtentBoxAdaptorBindings {
         'estimateMaxScrollOffset#5': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).estimateMaxScrollOffset(args[1] as SliverConstraints, firstIndex: identical(args[2], darticAbsent) ? null : args[2] as int?, lastIndex: identical(args[3], darticAbsent) ? null : args[3] as int?, leadingScrollOffset: identical(args[4], darticAbsent) ? null : args[4] as double?, trailingScrollOffset: identical(args[5], darticAbsent) ? null : args[5] as double?),
         'computeMaxScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).computeMaxScrollOffset(args[1] as SliverConstraints, args[2] as double),
         'performLayout#0': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).setupParentData(args[1] as RenderObject); return null; },
         'adoptChild#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).adoptChild(args[1] as RenderObject); return null; },
         'insert#2': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).insert(args[1] as RenderBox, after: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?); return null; },

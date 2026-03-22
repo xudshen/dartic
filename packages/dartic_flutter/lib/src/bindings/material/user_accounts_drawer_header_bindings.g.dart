@@ -38,7 +38,7 @@ abstract final class UserAccountsDrawerHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as UserAccountsDrawerHeader).createState(),
-        'toString#0': (args) => (args[0] as UserAccountsDrawerHeader).toString(),
+        'toString#1': (args) => (args[0] as UserAccountsDrawerHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as UserAccountsDrawerHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as UserAccountsDrawerHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UserAccountsDrawerHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

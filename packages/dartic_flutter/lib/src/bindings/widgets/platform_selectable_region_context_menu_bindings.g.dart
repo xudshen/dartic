@@ -30,7 +30,7 @@ abstract final class PlatformSelectableRegionContextMenuBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PlatformSelectableRegionContextMenu).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).toString(),
+        'toString#1': (args) => (args[0] as PlatformSelectableRegionContextMenu).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).createElement(),
         'toStringShort#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PlatformSelectableRegionContextMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

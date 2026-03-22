@@ -40,7 +40,7 @@ abstract final class SemanticsAnnotationsMixinBindings {
         'initSemanticsAnnotations#7': (args) { (args[0] as SemanticsAnnotationsMixin).initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as SemanticsAnnotationsMixin).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as SemanticsAnnotationsMixin).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
-        'toString#0': (args) => (args[0] as SemanticsAnnotationsMixin).toString(),
+        'toString#1': (args) => (args[0] as SemanticsAnnotationsMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as SemanticsAnnotationsMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as SemanticsAnnotationsMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as SemanticsAnnotationsMixin).setupParentData(args[1] as RenderObject); return null; },

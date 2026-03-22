@@ -32,7 +32,7 @@ abstract final class ProxyWidgetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as ProxyWidget).toString(),
+        'toString#1': (args) => (args[0] as ProxyWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ProxyWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as ProxyWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ProxyWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

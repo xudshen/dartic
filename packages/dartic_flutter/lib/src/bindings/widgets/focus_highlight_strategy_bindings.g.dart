@@ -40,5 +40,6 @@ abstract final class FocusHighlightStrategyBindings {
         'hashCode#0': (args) => (args[0] as FocusHighlightStrategy).hashCode,
         'index#0': (args) => (args[0] as FocusHighlightStrategy).index,
         '==#1': (args) => (args[0] as FocusHighlightStrategy) == (args[1] as Object),
+        '_#fromFields#2': (args) => FocusHighlightStrategy.values[args[1] as int],
       };
 }

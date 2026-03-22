@@ -30,7 +30,7 @@ abstract final class TooltipThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as TooltipTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as TooltipTheme).updateShouldNotify(args[1] as TooltipTheme),
-        'toString#0': (args) => (args[0] as TooltipTheme).toString(),
+        'toString#1': (args) => (args[0] as TooltipTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TooltipTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as TooltipTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TooltipTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

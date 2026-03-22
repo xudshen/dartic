@@ -47,7 +47,7 @@ abstract final class InkWellBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as InkWell).toString(),
+        'toString#1': (args) => (args[0] as InkWell).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getRectCallback#1': (args) => (args[0] as InkWell).getRectCallback(args[1] as RenderBox),
         'build#1': (args) => (args[0] as InkWell).build(args[1] as BuildContext),
         'debugCheckContext#1': (args) => (args[0] as InkWell).debugCheckContext(args[1] as BuildContext),

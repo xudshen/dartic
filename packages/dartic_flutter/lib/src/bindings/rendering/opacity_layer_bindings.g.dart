@@ -31,7 +31,7 @@ abstract final class OpacityLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as OpacityLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as OpacityLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as OpacityLayer).toString(),
+        'toString#1': (args) => (args[0] as OpacityLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'findAnnotations#3': (args) => (args[0] as OpacityLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'applyTransform#2': (args) { (args[0] as OpacityLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'toImage#2': (args) => (args[0] as OpacityLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),

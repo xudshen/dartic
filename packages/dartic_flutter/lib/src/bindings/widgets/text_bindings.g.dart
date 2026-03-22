@@ -41,7 +41,7 @@ abstract final class TextBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Text).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Text).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Text).toString(),
+        'toString#1': (args) => (args[0] as Text).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Text).createElement(),
         'toStringShort#0': (args) => (args[0] as Text).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Text).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

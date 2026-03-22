@@ -55,7 +55,7 @@ abstract final class SliverAppBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverAppBar).createState(),
-        'toString#0': (args) => (args[0] as SliverAppBar).toString(),
+        'toString#1': (args) => (args[0] as SliverAppBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverAppBar).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverAppBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverAppBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

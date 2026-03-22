@@ -74,7 +74,7 @@ abstract final class RenderBoxBindings {
         'debugPaintBaselines#2': (args) { (args[0] as RenderBox).debugPaintBaselines(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintPointers#2': (args) { (args[0] as RenderBox).debugPaintPointers(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderBox).toString(),
+        'toString#1': (args) => (args[0] as RenderBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderBox).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderBox).dispose(); return null; },
         'redepthChild#1': (args) { (args[0] as RenderBox).redepthChild(args[1] as RenderObject); return null; },

@@ -37,7 +37,7 @@ abstract final class BottomAppBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomAppBar).createState(),
-        'toString#0': (args) => (args[0] as BottomAppBar).toString(),
+        'toString#1': (args) => (args[0] as BottomAppBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BottomAppBar).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomAppBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomAppBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

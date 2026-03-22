@@ -38,5 +38,6 @@ abstract final class DisplayFeatureStateBindings {
         'hashCode#0': (args) => (args[0] as DisplayFeatureState).hashCode,
         'index#0': (args) => (args[0] as DisplayFeatureState).index,
         '==#1': (args) => (args[0] as DisplayFeatureState) == (args[1] as Object),
+        '_#fromFields#2': (args) => DisplayFeatureState.values[args[1] as int],
       };
 }

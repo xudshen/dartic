@@ -49,7 +49,7 @@ abstract final class RenderAnimatedSizeBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderAnimatedSize).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderAnimatedSize).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAnimatedSize).dispose(); return null; },
-        'toString#0': (args) => (args[0] as RenderAnimatedSize).toString(),
+        'toString#1': (args) => (args[0] as RenderAnimatedSize).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderAnimatedSize).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAnimatedSize).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedSize).computeMinIntrinsicWidth(args[1] as double),

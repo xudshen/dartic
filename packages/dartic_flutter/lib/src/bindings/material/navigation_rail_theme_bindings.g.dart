@@ -32,7 +32,7 @@ abstract final class NavigationRailThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as NavigationRailTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as NavigationRailTheme).updateShouldNotify(args[1] as NavigationRailTheme),
-        'toString#0': (args) => (args[0] as NavigationRailTheme).toString(),
+        'toString#1': (args) => (args[0] as NavigationRailTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as NavigationRailTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationRailTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationRailTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

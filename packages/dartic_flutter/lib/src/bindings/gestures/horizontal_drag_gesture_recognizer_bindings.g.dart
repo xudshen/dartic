@@ -38,7 +38,7 @@ abstract final class HorizontalDragGestureRecognizerBindings {
         'isFlingGesture#2': (args) => (args[0] as HorizontalDragGestureRecognizer).isFlingGesture(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'considerFling#2': (args) => (args[0] as HorizontalDragGestureRecognizer).considerFling(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'hasSufficientGlobalDistanceToAccept#2': (args) => (args[0] as HorizontalDragGestureRecognizer).hasSufficientGlobalDistanceToAccept(args[1] as PointerDeviceKind, args[2] as double?),
-        'toString#0': (args) => (args[0] as HorizontalDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as HorizontalDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isPointerAllowed#1': (args) => (args[0] as HorizontalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as HorizontalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as HorizontalDragGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },

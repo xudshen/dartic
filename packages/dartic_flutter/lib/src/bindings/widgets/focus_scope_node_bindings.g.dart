@@ -39,7 +39,7 @@ abstract final class FocusScopeNodeBindings {
         'autofocus#1': (args) { (args[0] as FocusScopeNode).autofocus(args[1] as FocusNode); return null; },
         'requestScopeFocus#0': (args) { (args[0] as FocusScopeNode).requestScopeFocus(); return null; },
         'debugFillProperties#1': (args) { (args[0] as FocusScopeNode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as FocusScopeNode).toString(),
+        'toString#1': (args) => (args[0] as FocusScopeNode).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'unfocus#1': (args) { (args[0] as FocusScopeNode).unfocus(disposition: identical(args[1], darticAbsent) ? UnfocusDisposition.scope : args[1] as UnfocusDisposition); return null; },
         'consumeKeyboardToken#0': (args) => (args[0] as FocusScopeNode).consumeKeyboardToken(),
         'attach#3': (args) => (args[0] as FocusScopeNode).attach(args[1] as BuildContext?, onKeyEvent: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), onKey: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b)),

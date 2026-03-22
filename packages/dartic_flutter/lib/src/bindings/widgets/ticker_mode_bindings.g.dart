@@ -28,7 +28,7 @@ abstract final class TickerModeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TickerMode).createState(),
-        'toString#0': (args) => (args[0] as TickerMode).toString(),
+        'toString#1': (args) => (args[0] as TickerMode).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TickerMode).createElement(),
         'toStringShort#0': (args) => (args[0] as TickerMode).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TickerMode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

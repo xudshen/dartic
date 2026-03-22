@@ -38,7 +38,7 @@ abstract final class RenderSemanticsAnnotationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderSemanticsAnnotations).toString(),
+        'toString#1': (args) => (args[0] as RenderSemanticsAnnotations).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSemanticsAnnotations).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsAnnotations).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsAnnotations).computeMinIntrinsicWidth(args[1] as double),

@@ -30,7 +30,7 @@ abstract final class CupertinoIconThemeDataBindings {
         'resolve#1': (args) => (args[0] as CupertinoIconThemeData).resolve(args[1] as BuildContext),
         'copyWith#9': (args) => (args[0] as CupertinoIconThemeData).copyWith(size: identical(args[1], darticAbsent) ? null : args[1] as double?, fill: identical(args[2], darticAbsent) ? null : args[2] as double?, weight: identical(args[3], darticAbsent) ? null : args[3] as double?, grade: identical(args[4], darticAbsent) ? null : args[4] as double?, opticalSize: identical(args[5], darticAbsent) ? null : args[5] as double?, color: identical(args[6], darticAbsent) ? null : args[6] as Color?, opacity: identical(args[7], darticAbsent) ? null : args[7] as double?, shadows: identical(args[8], darticAbsent) ? null : args[8] == null ? null : (args[8] as List).cast<Shadow>(), applyTextScaling: identical(args[9], darticAbsent) ? null : args[9] as bool?),
         'debugFillProperties#1': (args) { (args[0] as CupertinoIconThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as CupertinoIconThemeData).toString(),
+        'toString#1': (args) => (args[0] as CupertinoIconThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'merge#1': (args) => (args[0] as CupertinoIconThemeData).merge(args[1] as IconThemeData?),
         'toStringShort#0': (args) => (args[0] as CupertinoIconThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as CupertinoIconThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

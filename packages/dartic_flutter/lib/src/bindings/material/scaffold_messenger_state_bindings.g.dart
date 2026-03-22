@@ -60,7 +60,7 @@ abstract final class ScaffoldMessengerStateBindings {
         'clearMaterialBanners#0': (args) { (args[0] as ScaffoldMessengerState).clearMaterialBanners(); return null; },
         'build#1': (args) => (args[0] as ScaffoldMessengerState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as ScaffoldMessengerState).dispose(); return null; },
-        'toString#0': (args) => (args[0] as ScaffoldMessengerState).toString(),
+        'toString#1': (args) => (args[0] as ScaffoldMessengerState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as ScaffoldMessengerState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ScaffoldMessengerState).didUpdateWidget(args[1] as ScaffoldMessenger); return null; },
         'reassemble#0': (args) { (args[0] as ScaffoldMessengerState).reassemble(); return null; },

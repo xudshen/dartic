@@ -56,7 +56,7 @@ abstract final class RenderFlexBindings {
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderFlex).describeApproximatePaintClip(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as RenderFlex).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RenderFlex).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderFlex).toString(),
+        'toString#1': (args) => (args[0] as RenderFlex).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFlex).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderFlex).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderFlex).getMinIntrinsicHeight(args[1] as double),

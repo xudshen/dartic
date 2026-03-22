@@ -53,7 +53,7 @@ abstract final class RenderOffstageBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderOffstage).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderOffstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderOffstage).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderOffstage).toString(),
+        'toString#1': (args) => (args[0] as RenderOffstage).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderOffstage).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderOffstage).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderOffstage).getMaxIntrinsicWidth(args[1] as double),

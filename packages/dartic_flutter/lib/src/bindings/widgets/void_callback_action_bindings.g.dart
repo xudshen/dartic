@@ -33,7 +33,7 @@ abstract final class VoidCallbackActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as VoidCallbackAction).invoke(args[1] as VoidCallbackIntent),
-        'toString#0': (args) => (args[0] as VoidCallbackAction).toString(),
+        'toString#1': (args) => (args[0] as VoidCallbackAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as VoidCallbackAction).isEnabled(args[1] as VoidCallbackIntent),
         'consumesKey#1': (args) => (args[0] as VoidCallbackAction).consumesKey(args[1] as VoidCallbackIntent),
         'toKeyEventResult#2': (args) => (args[0] as VoidCallbackAction).toKeyEventResult(args[1] as VoidCallbackIntent, args[2]),

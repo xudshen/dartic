@@ -54,7 +54,7 @@ abstract final class RenderImageBindings {
         'paint#2': (args) { (args[0] as RenderImage).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderImage).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderImage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderImage).toString(),
+        'toString#1': (args) => (args[0] as RenderImage).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderImage).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderImage).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderImage).getMaxIntrinsicWidth(args[1] as double),

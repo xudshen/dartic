@@ -44,7 +44,7 @@ abstract final class StatefulElementBindings {
         'didChangeDependencies#0': (args) { (args[0] as StatefulElement).didChangeDependencies(); return null; },
         'toDiagnosticsNode#2': (args) => (args[0] as StatefulElement).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as StatefulElement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as StatefulElement).toString(),
+        'toString#1': (args) => (args[0] as StatefulElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as StatefulElement).mount(args[1] as Element?, args[2]); return null; },
         'visitChildren#1': (args) { (args[0] as StatefulElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as StatefulElement).forgetChild(args[1] as Element); return null; },

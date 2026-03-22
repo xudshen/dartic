@@ -47,7 +47,7 @@ abstract final class RenderConstrainedOverflowBoxBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderConstrainedOverflowBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderConstrainedOverflowBox).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstrainedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderConstrainedOverflowBox).toString(),
+        'toString#1': (args) => (args[0] as RenderConstrainedOverflowBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderConstrainedOverflowBox).alignChild(); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedOverflowBox).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedOverflowBox).computeMaxIntrinsicWidth(args[1] as double),

@@ -55,7 +55,7 @@ abstract final class TabBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TabBar).createState(),
-        'toString#0': (args) => (args[0] as TabBar).toString(),
+        'toString#1': (args) => (args[0] as TabBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TabBar).createElement(),
         'toStringShort#0': (args) => (args[0] as TabBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TabBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -30,7 +30,7 @@ abstract final class ElevatedButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ElevatedButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ElevatedButtonTheme).updateShouldNotify(args[1] as ElevatedButtonTheme),
-        'toString#0': (args) => (args[0] as ElevatedButtonTheme).toString(),
+        'toString#1': (args) => (args[0] as ElevatedButtonTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ElevatedButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ElevatedButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ElevatedButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

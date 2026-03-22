@@ -63,7 +63,7 @@ abstract final class ScrollableStateBindings {
         'setIgnorePointer#1': (args) { (args[0] as ScrollableState).setIgnorePointer(args[1] as bool); return null; },
         'build#1': (args) => (args[0] as ScrollableState).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as ScrollableState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ScrollableState).toString(),
+        'toString#1': (args) => (args[0] as ScrollableState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as ScrollableState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ScrollableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ScrollableState).deactivate(); return null; },

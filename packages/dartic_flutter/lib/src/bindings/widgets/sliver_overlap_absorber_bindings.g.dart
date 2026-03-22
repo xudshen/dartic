@@ -44,7 +44,7 @@ abstract final class SliverOverlapAbsorberBindings {
         'createRenderObject#1': (args) => (args[0] as SliverOverlapAbsorber).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverOverlapAbsorber).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverOverlapAbsorber); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverOverlapAbsorber).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as SliverOverlapAbsorber).toString(),
+        'toString#1': (args) => (args[0] as SliverOverlapAbsorber).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverOverlapAbsorber).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverOverlapAbsorber).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverOverlapAbsorber).toStringShort(),

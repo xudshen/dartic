@@ -40,7 +40,7 @@ abstract final class AspectRatioBindings {
         'createRenderObject#1': (args) => (args[0] as AspectRatio).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as AspectRatio).updateRenderObject(args[1] as BuildContext, args[2] as RenderAspectRatio); return null; },
         'debugFillProperties#1': (args) { (args[0] as AspectRatio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as AspectRatio).toString(),
+        'toString#1': (args) => (args[0] as AspectRatio).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AspectRatio).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as AspectRatio).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AspectRatio).toStringShort(),

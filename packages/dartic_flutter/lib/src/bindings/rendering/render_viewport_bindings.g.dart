@@ -56,7 +56,7 @@ abstract final class RenderViewportBindings {
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderViewport).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderViewport).labelForChild(args[1] as int),
         'debugFillProperties#1': (args) { (args[0] as RenderViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderViewport).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderViewport).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'attach#1': (args) { (args[0] as RenderViewport).attach(args[1] as PipelineOwner); return null; },

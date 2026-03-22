@@ -73,7 +73,7 @@ abstract final class RenderParagraphBindings {
         'clearSemantics#0': (args) { (args[0] as RenderParagraph).clearSemantics(); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderParagraph).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as RenderParagraph).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderParagraph).toString(),
+        'toString#1': (args) => (args[0] as RenderParagraph).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderParagraph).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderParagraph).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderParagraph).getMaxIntrinsicWidth(args[1] as double),

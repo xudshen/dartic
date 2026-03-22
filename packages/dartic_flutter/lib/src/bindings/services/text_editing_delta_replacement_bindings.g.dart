@@ -27,7 +27,7 @@ abstract final class TextEditingDeltaReplacementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaReplacement).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaReplacement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as TextEditingDeltaReplacement).toString(),
+        'toString#1': (args) => (args[0] as TextEditingDeltaReplacement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaReplacement).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaReplacement).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'replacementText#0': (args) => (args[0] as TextEditingDeltaReplacement).replacementText,

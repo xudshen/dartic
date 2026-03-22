@@ -37,7 +37,7 @@ abstract final class AnimatedGridStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AnimatedGridState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AnimatedGridState).toString(),
+        'toString#1': (args) => (args[0] as AnimatedGridState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'insertItem#2': (args) {
                   if (identical(args[2], darticAbsent)) {
                     (args[0] as AnimatedGridState).insertItem(args[1] as int);

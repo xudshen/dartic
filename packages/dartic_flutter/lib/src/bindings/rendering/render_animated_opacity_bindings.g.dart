@@ -39,7 +39,7 @@ abstract final class RenderAnimatedOpacityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderAnimatedOpacity).toString(),
+        'toString#1': (args) => (args[0] as RenderAnimatedOpacity).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderAnimatedOpacity).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedOpacity).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedOpacity).computeMinIntrinsicWidth(args[1] as double),

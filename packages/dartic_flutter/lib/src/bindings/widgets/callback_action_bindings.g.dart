@@ -33,7 +33,7 @@ abstract final class CallbackActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as CallbackAction).invoke(args[1] as Intent),
-        'toString#0': (args) => (args[0] as CallbackAction).toString(),
+        'toString#1': (args) => (args[0] as CallbackAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as CallbackAction).isEnabled(args[1] as Intent),
         'consumesKey#1': (args) => (args[0] as CallbackAction).consumesKey(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as CallbackAction).toKeyEventResult(args[1] as Intent, args[2]),

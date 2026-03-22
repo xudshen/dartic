@@ -36,7 +36,7 @@ abstract final class RenderTreeRootElementBindings {
         'attachRenderObject#1': (args) { (args[0] as RenderTreeRootElement).attachRenderObject(args[1]); return null; },
         'detachRenderObject#0': (args) { (args[0] as RenderTreeRootElement).detachRenderObject(); return null; },
         'updateSlot#1': (args) { (args[0] as RenderTreeRootElement).updateSlot(args[1]); return null; },
-        'toString#0': (args) => (args[0] as RenderTreeRootElement).toString(),
+        'toString#1': (args) => (args[0] as RenderTreeRootElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as RenderTreeRootElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as RenderTreeRootElement).update(args[1] as RenderObjectWidget); return null; },
         'performRebuild#0': (args) { (args[0] as RenderTreeRootElement).performRebuild(); return null; },

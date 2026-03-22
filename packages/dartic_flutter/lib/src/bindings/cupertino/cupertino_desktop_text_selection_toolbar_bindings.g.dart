@@ -28,7 +28,7 @@ abstract final class CupertinoDesktopTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoDesktopTextSelectionToolbar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbar).toString(),
+        'toString#1': (args) => (args[0] as CupertinoDesktopTextSelectionToolbar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoDesktopTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

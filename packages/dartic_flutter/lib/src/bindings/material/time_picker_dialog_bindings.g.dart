@@ -54,7 +54,7 @@ abstract final class TimePickerDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TimePickerDialog).createState(),
-        'toString#0': (args) => (args[0] as TimePickerDialog).toString(),
+        'toString#1': (args) => (args[0] as TimePickerDialog).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TimePickerDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as TimePickerDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TimePickerDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

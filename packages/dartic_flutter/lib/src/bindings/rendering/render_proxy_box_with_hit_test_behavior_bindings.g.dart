@@ -41,7 +41,7 @@ abstract final class RenderProxyBoxWithHitTestBehaviorBindings {
         'hitTest#2': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hitTestSelf(args[1] as ui.Offset),
         'debugFillProperties#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).toString(),
+        'toString#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).computeMinIntrinsicWidth(args[1] as double),

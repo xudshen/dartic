@@ -35,7 +35,7 @@ abstract final class FlexibleSpaceBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FlexibleSpaceBar).createState(),
-        'toString#0': (args) => (args[0] as FlexibleSpaceBar).toString(),
+        'toString#1': (args) => (args[0] as FlexibleSpaceBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as FlexibleSpaceBar).createElement(),
         'toStringShort#0': (args) => (args[0] as FlexibleSpaceBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FlexibleSpaceBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

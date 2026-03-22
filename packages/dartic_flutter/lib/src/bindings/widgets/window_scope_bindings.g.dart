@@ -48,7 +48,7 @@ abstract final class WindowScopeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as WindowScope).updateShouldNotify(args[1] as WindowScope),
         'updateShouldNotifyDependent#2': (args) => (args[0] as WindowScope).updateShouldNotifyDependent(args[1] as WindowScope, (args[2] as Set).cast<Object>()),
-        'toString#0': (args) => (args[0] as WindowScope).toString(),
+        'toString#1': (args) => (args[0] as WindowScope).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as WindowScope).createElement(),
         'isSupportedAspect#1': (args) => (args[0] as WindowScope).isSupportedAspect(args[1] as Object),
         'toStringShort#0': (args) => (args[0] as WindowScope).toStringShort(),

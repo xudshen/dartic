@@ -37,5 +37,6 @@ abstract final class DecorationPositionBindings {
         'hashCode#0': (args) => (args[0] as DecorationPosition).hashCode,
         'index#0': (args) => (args[0] as DecorationPosition).index,
         '==#1': (args) => (args[0] as DecorationPosition) == (args[1] as Object),
+        '_#fromFields#2': (args) => DecorationPosition.values[args[1] as int],
       };
 }

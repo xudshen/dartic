@@ -29,7 +29,7 @@ abstract final class GridTileBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as GridTileBar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as GridTileBar).toString(),
+        'toString#1': (args) => (args[0] as GridTileBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as GridTileBar).createElement(),
         'toStringShort#0': (args) => (args[0] as GridTileBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as GridTileBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

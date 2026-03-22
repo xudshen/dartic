@@ -38,7 +38,7 @@ abstract final class RenderProxyBoxBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderProxyBox).toString(),
+        'toString#1': (args) => (args[0] as RenderProxyBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderProxyBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBox).computeMinIntrinsicWidth(args[1] as double),

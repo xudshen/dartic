@@ -55,7 +55,7 @@ abstract final class RenderSliverOverlapInjectorBindings {
         'performLayout#0': (args) { (args[0] as RenderSliverOverlapInjector).performLayout(); return null; },
         'debugPaint#2': (args) { (args[0] as RenderSliverOverlapInjector).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOverlapInjector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverOverlapInjector).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverOverlapInjector).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverOverlapInjector).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverOverlapInjector).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverOverlapInjector).performResize(); return null; },

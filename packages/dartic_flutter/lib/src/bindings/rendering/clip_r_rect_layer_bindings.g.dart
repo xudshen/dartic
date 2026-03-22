@@ -32,7 +32,7 @@ abstract final class ClipRRectLayerBindings {
         'findAnnotations#3': (args) => (args[0] as ClipRRectLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'addToScene#1': (args) { (args[0] as ClipRRectLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipRRectLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ClipRRectLayer).toString(),
+        'toString#1': (args) => (args[0] as ClipRRectLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as ClipRRectLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ClipRRectLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ClipRRectLayer).dispose(); return null; },

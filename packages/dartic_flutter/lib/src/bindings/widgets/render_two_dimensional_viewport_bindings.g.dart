@@ -78,7 +78,7 @@ abstract final class RenderTwoDimensionalViewportBindings {
         'computeMaxIntrinsicHeight#1': (args) => (args[0] as RenderTwoDimensionalViewport).computeMaxIntrinsicHeight(args[1] as double),
         'applyPaintTransform#2': (args) { (args[0] as RenderTwoDimensionalViewport).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'dispose#0': (args) { (args[0] as RenderTwoDimensionalViewport).dispose(); return null; },
-        'toString#0': (args) => (args[0] as RenderTwoDimensionalViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderTwoDimensionalViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMinIntrinsicHeight(args[1] as double),

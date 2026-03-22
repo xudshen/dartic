@@ -58,7 +58,7 @@ abstract final class RenderSliverOverlapAbsorberBindings {
         'hitTestChildren#3': (args) => (args[0] as RenderSliverOverlapAbsorber).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
         'paint#2': (args) { (args[0] as RenderSliverOverlapAbsorber).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOverlapAbsorber).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverOverlapAbsorber).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverOverlapAbsorber).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverOverlapAbsorber).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverOverlapAbsorber).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverOverlapAbsorber).performResize(); return null; },

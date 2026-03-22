@@ -40,5 +40,6 @@ abstract final class ImageByteFormatBindings {
         'hashCode#0': (args) => (args[0] as ImageByteFormat).hashCode,
         'index#0': (args) => (args[0] as ImageByteFormat).index,
         '==#1': (args) => (args[0] as ImageByteFormat) == (args[1] as Object),
+        '_#fromFields#2': (args) => ImageByteFormat.values[args[1] as int],
       };
 }

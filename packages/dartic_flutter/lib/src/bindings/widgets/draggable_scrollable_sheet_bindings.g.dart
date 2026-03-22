@@ -42,7 +42,7 @@ abstract final class DraggableScrollableSheetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DraggableScrollableSheet).createState(),
-        'toString#0': (args) => (args[0] as DraggableScrollableSheet).toString(),
+        'toString#1': (args) => (args[0] as DraggableScrollableSheet).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DraggableScrollableSheet).createElement(),
         'toStringShort#0': (args) => (args[0] as DraggableScrollableSheet).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DraggableScrollableSheet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

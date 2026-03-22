@@ -42,7 +42,7 @@ abstract final class SystemContextMenuControllerBindings {
         'hide#0': (args) => (args[0] as SystemContextMenuController).hide(),
         'debugFillProperties#1': (args) { (args[0] as SystemContextMenuController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'dispose#0': (args) { (args[0] as SystemContextMenuController).dispose(); return null; },
-        'toString#0': (args) => (args[0] as SystemContextMenuController).toString(),
+        'toString#1': (args) => (args[0] as SystemContextMenuController).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as SystemContextMenuController).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SystemContextMenuController).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'onSystemHide#0': (args) => (args[0] as SystemContextMenuController).onSystemHide,

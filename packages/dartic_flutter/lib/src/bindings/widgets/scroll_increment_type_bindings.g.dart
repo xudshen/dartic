@@ -40,5 +40,6 @@ abstract final class ScrollIncrementTypeBindings {
         'hashCode#0': (args) => (args[0] as ScrollIncrementType).hashCode,
         'index#0': (args) => (args[0] as ScrollIncrementType).index,
         '==#1': (args) => (args[0] as ScrollIncrementType) == (args[1] as Object),
+        '_#fromFields#2': (args) => ScrollIncrementType.values[args[1] as int],
       };
 }

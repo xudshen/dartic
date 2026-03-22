@@ -32,7 +32,7 @@ abstract final class ActivateActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as ActivateAction).toString(),
+        'toString#1': (args) => (args[0] as ActivateAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as ActivateAction).isEnabled(args[1] as ActivateIntent),
         'consumesKey#1': (args) => (args[0] as ActivateAction).consumesKey(args[1] as ActivateIntent),
         'toKeyEventResult#2': (args) => (args[0] as ActivateAction).toKeyEventResult(args[1] as ActivateIntent, args[2]),

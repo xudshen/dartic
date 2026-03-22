@@ -39,7 +39,7 @@ abstract final class RenderSliverFixedExtentListBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderSliverFixedExtentList).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverFixedExtentList).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'indexToLayoutOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).indexToLayoutOffset(args[1] as double, args[2] as int),
         'getMinChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).getMinChildIndexForScrollOffset(args[1] as double, args[2] as double),
         'getMaxChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).getMaxChildIndexForScrollOffset(args[1] as double, args[2] as double),

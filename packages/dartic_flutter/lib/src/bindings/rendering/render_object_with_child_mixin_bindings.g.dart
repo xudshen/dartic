@@ -43,7 +43,7 @@ abstract final class RenderObjectWithChildMixinBindings {
         'redepthChildren#0': (args) { (args[0] as RenderObjectWithChildMixin).redepthChildren(); return null; },
         'visitChildren#1': (args) { (args[0] as RenderObjectWithChildMixin).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderObjectWithChildMixin).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderObjectWithChildMixin).toString(),
+        'toString#1': (args) => (args[0] as RenderObjectWithChildMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderObjectWithChildMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderObjectWithChildMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderObjectWithChildMixin).setupParentData(args[1] as RenderObject); return null; },

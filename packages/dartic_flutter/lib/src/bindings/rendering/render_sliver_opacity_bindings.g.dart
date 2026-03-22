@@ -40,7 +40,7 @@ abstract final class RenderSliverOpacityBindings {
         'paint#2': (args) { (args[0] as RenderSliverOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverOpacity).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverOpacity).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverOpacity).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverOpacity).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverOpacity).performLayout(); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverOpacity).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),

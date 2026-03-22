@@ -41,7 +41,7 @@ abstract final class RenderSliverHelpersBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverHelpers).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverHelpers).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverHelpers).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverHelpers).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverHelpers).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverHelpers).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverHelpers).performResize(); return null; },

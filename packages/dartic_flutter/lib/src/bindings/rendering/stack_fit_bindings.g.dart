@@ -35,5 +35,6 @@ abstract final class StackFitBindings {
         'hashCode#0': (args) => (args[0] as StackFit).hashCode,
         'index#0': (args) => (args[0] as StackFit).index,
         '==#1': (args) => (args[0] as StackFit) == (args[1] as Object),
+        '_#fromFields#2': (args) => StackFit.values[args[1] as int],
       };
 }

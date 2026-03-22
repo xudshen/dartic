@@ -42,7 +42,7 @@ abstract final class StackBindings {
         'createRenderObject#1': (args) => (args[0] as Stack).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Stack).updateRenderObject(args[1] as BuildContext, args[2] as RenderStack); return null; },
         'debugFillProperties#1': (args) { (args[0] as Stack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Stack).toString(),
+        'toString#1': (args) => (args[0] as Stack).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Stack).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Stack).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Stack).toStringShort(),

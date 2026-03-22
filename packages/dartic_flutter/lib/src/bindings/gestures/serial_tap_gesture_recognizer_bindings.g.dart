@@ -39,7 +39,7 @@ abstract final class SerialTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as SerialTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as SerialTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as SerialTapGestureRecognizer).dispose(); return null; },
-        'toString#0': (args) => (args[0] as SerialTapGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as SerialTapGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addPointerPanZoom#1': (args) { (args[0] as SerialTapGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as SerialTapGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as SerialTapGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },

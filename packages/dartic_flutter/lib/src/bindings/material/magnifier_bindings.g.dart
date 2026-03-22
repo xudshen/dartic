@@ -34,7 +34,7 @@ abstract final class MagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Magnifier).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as Magnifier).toString(),
+        'toString#1': (args) => (args[0] as Magnifier).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Magnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as Magnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Magnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -41,7 +41,7 @@ abstract final class TooltipStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as TooltipState).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as TooltipState).dispose(); return null; },
         'build#1': (args) => (args[0] as TooltipState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as TooltipState).toString(),
+        'toString#1': (args) => (args[0] as TooltipState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUpdateWidget#1': (args) { (args[0] as TooltipState).didUpdateWidget(args[1] as Tooltip); return null; },
         'reassemble#0': (args) { (args[0] as TooltipState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as TooltipState).setState(() => (args[1] as Function)()); return null; },

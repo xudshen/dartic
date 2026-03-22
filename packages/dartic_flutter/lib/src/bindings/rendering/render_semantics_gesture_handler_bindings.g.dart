@@ -43,7 +43,7 @@ abstract final class RenderSemanticsGestureHandlerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSemanticsGestureHandler).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSemanticsGestureHandler).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSemanticsGestureHandler).toString(),
+        'toString#1': (args) => (args[0] as RenderSemanticsGestureHandler).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTest#2': (args) => (args[0] as RenderSemanticsGestureHandler).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderSemanticsGestureHandler).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderSemanticsGestureHandler).setupParentData(args[1] as RenderObject); return null; },

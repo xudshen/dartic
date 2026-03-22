@@ -32,5 +32,6 @@ abstract final class BoxShapeBindings {
         'hashCode#0': (args) => (args[0] as BoxShape).hashCode,
         'index#0': (args) => (args[0] as BoxShape).index,
         '==#1': (args) => (args[0] as BoxShape) == (args[1] as Object),
+        '_#fromFields#2': (args) => BoxShape.values[args[1] as int],
       };
 }

@@ -42,7 +42,7 @@ abstract final class RenderAbsorbPointerBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderAbsorbPointer).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderAbsorbPointer).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAbsorbPointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderAbsorbPointer).toString(),
+        'toString#1': (args) => (args[0] as RenderAbsorbPointer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderAbsorbPointer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAbsorbPointer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAbsorbPointer).computeMinIntrinsicWidth(args[1] as double),

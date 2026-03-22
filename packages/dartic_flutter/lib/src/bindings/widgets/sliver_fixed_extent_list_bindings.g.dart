@@ -35,7 +35,7 @@ abstract final class SliverFixedExtentListBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverFixedExtentList).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverFixedExtentList).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverFixedExtentList); return null; },
-        'toString#0': (args) => (args[0] as SliverFixedExtentList).toString(),
+        'toString#1': (args) => (args[0] as SliverFixedExtentList).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverFixedExtentList).createElement(),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverFixedExtentList).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverFixedExtentList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

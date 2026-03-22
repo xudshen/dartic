@@ -28,7 +28,7 @@ abstract final class MultiFrameImageStreamCompleterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).addListener(args[1] as ImageStreamListener); return null; },
         'removeListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).removeListener(args[1] as ImageStreamListener); return null; },
-        'toString#0': (args) => (args[0] as MultiFrameImageStreamCompleter).toString(),
+        'toString#1': (args) => (args[0] as MultiFrameImageStreamCompleter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addEphemeralErrorListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).addEphemeralErrorListener((a, b) => (args[1] as Function)(a, b)); return null; },
         'keepAlive#0': (args) => (args[0] as MultiFrameImageStreamCompleter).keepAlive(),
         'onDisposed#0': (args) { (args[0] as MultiFrameImageStreamCompleter).onDisposed(); return null; },

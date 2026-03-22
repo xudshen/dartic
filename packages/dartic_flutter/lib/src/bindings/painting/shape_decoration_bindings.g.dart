@@ -44,7 +44,7 @@ abstract final class ShapeDecorationBindings {
         'debugFillProperties#1': (args) { (args[0] as ShapeDecoration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'hitTest#3': (args) => (args[0] as ShapeDecoration).hitTest(args[1] as Size, args[2] as Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),
         'createBoxPainter#1': (args) => (args[0] as ShapeDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
-        'toString#0': (args) => (args[0] as ShapeDecoration).toString(),
+        'toString#1': (args) => (args[0] as ShapeDecoration).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ShapeDecoration).toStringShort(),
         'debugAssertIsValid#0': (args) => (args[0] as ShapeDecoration).debugAssertIsValid(),
         'toDiagnosticsNode#2': (args) => (args[0] as ShapeDecoration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

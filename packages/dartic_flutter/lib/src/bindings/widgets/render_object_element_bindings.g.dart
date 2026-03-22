@@ -45,7 +45,7 @@ abstract final class RenderObjectElementBindings {
         'moveRenderObjectChild#3': (args) { (args[0] as RenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as RenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderObjectElement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderObjectElement).toString(),
+        'toString#1': (args) => (args[0] as RenderObjectElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderObjectElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RenderObjectElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RenderObjectElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

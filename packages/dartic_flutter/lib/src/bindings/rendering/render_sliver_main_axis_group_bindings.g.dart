@@ -46,7 +46,7 @@ abstract final class RenderSliverMainAxisGroupBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverMainAxisGroup).applyPaintTransform(args[1] as RenderSliver, args[2] as Matrix4); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverMainAxisGroup).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverMainAxisGroup).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverMainAxisGroup).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverMainAxisGroup).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverMainAxisGroup).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverMainAxisGroup).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverMainAxisGroup).performResize(); return null; },

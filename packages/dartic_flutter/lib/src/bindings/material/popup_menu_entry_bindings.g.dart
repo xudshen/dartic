@@ -46,7 +46,7 @@ abstract final class PopupMenuEntryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'represents#1': (args) => (args[0] as PopupMenuEntry).represents(args[1]),
-        'toString#0': (args) => (args[0] as PopupMenuEntry).toString(),
+        'toString#1': (args) => (args[0] as PopupMenuEntry).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PopupMenuEntry).createElement(),
         'createState#0': (args) => (args[0] as PopupMenuEntry).createState(),
         'toStringShort#0': (args) => (args[0] as PopupMenuEntry).toStringShort(),

@@ -49,7 +49,7 @@ abstract final class SelectableRegionSelectionStatusScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SelectableRegionSelectionStatusScope).updateShouldNotify(args[1] as SelectableRegionSelectionStatusScope),
-        'toString#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).toString(),
+        'toString#1': (args) => (args[0] as SelectableRegionSelectionStatusScope).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectableRegionSelectionStatusScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

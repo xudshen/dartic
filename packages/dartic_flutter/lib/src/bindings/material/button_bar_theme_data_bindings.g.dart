@@ -34,7 +34,7 @@ abstract final class ButtonBarThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#9': (args) => (args[0] as ButtonBarThemeData).copyWith(alignment: identical(args[1], darticAbsent) ? null : args[1] as MainAxisAlignment?, mainAxisSize: identical(args[2], darticAbsent) ? null : args[2] as MainAxisSize?, buttonTextTheme: identical(args[3], darticAbsent) ? null : args[3] as ButtonTextTheme?, buttonMinWidth: identical(args[4], darticAbsent) ? null : args[4] as double?, buttonHeight: identical(args[5], darticAbsent) ? null : args[5] as double?, buttonPadding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, buttonAlignedDropdown: identical(args[7], darticAbsent) ? null : args[7] as bool?, layoutBehavior: identical(args[8], darticAbsent) ? null : args[8] as ButtonBarLayoutBehavior?, overflowDirection: identical(args[9], darticAbsent) ? null : args[9] as VerticalDirection?),
         'debugFillProperties#1': (args) { (args[0] as ButtonBarThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ButtonBarThemeData).toString(),
+        'toString#1': (args) => (args[0] as ButtonBarThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ButtonBarThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ButtonBarThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'alignment#0': (args) => (args[0] as ButtonBarThemeData).alignment,

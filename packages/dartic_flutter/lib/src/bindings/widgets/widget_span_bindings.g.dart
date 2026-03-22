@@ -42,7 +42,7 @@ abstract final class WidgetSpanBindings {
         'getSpanForPosition#1': (args) => (args[0] as WidgetSpan).getSpanForPosition(args[1] as ui.TextPosition),
         'debugAssertIsValid#0': (args) => (args[0] as WidgetSpan).debugAssertIsValid(),
         'debugFillProperties#1': (args) { (args[0] as WidgetSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as WidgetSpan).toString(),
+        'toString#1': (args) => (args[0] as WidgetSpan).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeToPlainText#3': (args) { (args[0] as WidgetSpan).computeToPlainText(args[1] as StringBuffer, includeSemanticsLabels: identical(args[2], darticAbsent) ? true : args[2] as bool, includePlaceholders: identical(args[3], darticAbsent) ? true : args[3] as bool); return null; },
         'computeSemanticsInformation#1': (args) { (args[0] as WidgetSpan).computeSemanticsInformation((args[1] as List).cast<InlineSpanSemanticsInformation>()); return null; },
         'toPlainText#2': (args) => (args[0] as WidgetSpan).toPlainText(includeSemanticsLabels: identical(args[1], darticAbsent) ? true : args[1] as bool, includePlaceholders: identical(args[2], darticAbsent) ? true : args[2] as bool),

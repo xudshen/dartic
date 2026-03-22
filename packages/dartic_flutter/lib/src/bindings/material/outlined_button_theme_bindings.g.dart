@@ -30,7 +30,7 @@ abstract final class OutlinedButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as OutlinedButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as OutlinedButtonTheme).updateShouldNotify(args[1] as OutlinedButtonTheme),
-        'toString#0': (args) => (args[0] as OutlinedButtonTheme).toString(),
+        'toString#1': (args) => (args[0] as OutlinedButtonTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as OutlinedButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as OutlinedButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as OutlinedButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

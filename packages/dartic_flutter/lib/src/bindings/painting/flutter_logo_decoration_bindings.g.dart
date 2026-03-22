@@ -42,7 +42,7 @@ abstract final class FlutterLogoDecorationBindings {
         'createBoxPainter#1': (args) => (args[0] as FlutterLogoDecoration).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
         'getClipPath#2': (args) => (args[0] as FlutterLogoDecoration).getClipPath(args[1] as ui.Rect, args[2] as ui.TextDirection),
         'debugFillProperties#1': (args) { (args[0] as FlutterLogoDecoration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as FlutterLogoDecoration).toString(),
+        'toString#1': (args) => (args[0] as FlutterLogoDecoration).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as FlutterLogoDecoration).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as FlutterLogoDecoration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'textColor#0': (args) => (args[0] as FlutterLogoDecoration).textColor,

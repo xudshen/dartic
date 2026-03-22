@@ -36,7 +36,7 @@ abstract final class WidgetBindings {
         'createElement#0': (args) => (args[0] as Widget).createElement(),
         'toStringShort#0': (args) => (args[0] as Widget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Widget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Widget).toString(),
+        'toString#1': (args) => (args[0] as Widget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShallow#2': (args) => (args[0] as Widget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as Widget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as Widget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

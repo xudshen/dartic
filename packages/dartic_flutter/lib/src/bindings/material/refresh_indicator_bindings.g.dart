@@ -36,7 +36,7 @@ abstract final class RefreshIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RefreshIndicator).createState(),
-        'toString#0': (args) => (args[0] as RefreshIndicator).toString(),
+        'toString#1': (args) => (args[0] as RefreshIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RefreshIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as RefreshIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RefreshIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

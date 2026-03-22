@@ -47,7 +47,7 @@ abstract final class RenderRotatedBoxBindings {
         'paint#2': (args) { (args[0] as RenderRotatedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderRotatedBox).dispose(); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderRotatedBox).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
-        'toString#0': (args) => (args[0] as RenderRotatedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderRotatedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderRotatedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderRotatedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderRotatedBox).getMaxIntrinsicWidth(args[1] as double),

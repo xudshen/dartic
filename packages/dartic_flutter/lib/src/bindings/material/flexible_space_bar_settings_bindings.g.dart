@@ -32,7 +32,7 @@ abstract final class FlexibleSpaceBarSettingsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as FlexibleSpaceBarSettings).updateShouldNotify(args[1] as FlexibleSpaceBarSettings),
-        'toString#0': (args) => (args[0] as FlexibleSpaceBarSettings).toString(),
+        'toString#1': (args) => (args[0] as FlexibleSpaceBarSettings).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as FlexibleSpaceBarSettings).createElement(),
         'toStringShort#0': (args) => (args[0] as FlexibleSpaceBarSettings).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FlexibleSpaceBarSettings).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

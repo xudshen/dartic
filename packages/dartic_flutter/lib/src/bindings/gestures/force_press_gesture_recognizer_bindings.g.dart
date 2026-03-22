@@ -36,7 +36,7 @@ abstract final class ForcePressGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as ForcePressGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as ForcePressGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as ForcePressGestureRecognizer).rejectGesture(args[1] as int); return null; },
-        'toString#0': (args) => (args[0] as ForcePressGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as ForcePressGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'handleNonAllowedPointer#1': (args) { (args[0] as ForcePressGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as ForcePressGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as ForcePressGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },

@@ -37,7 +37,7 @@ abstract final class UndoHistoryStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as UndoHistoryState).didUpdateWidget(args[1] as UndoHistory); return null; },
         'dispose#0': (args) { (args[0] as UndoHistoryState).dispose(); return null; },
         'build#1': (args) => (args[0] as UndoHistoryState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as UndoHistoryState).toString(),
+        'toString#1': (args) => (args[0] as UndoHistoryState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as UndoHistoryState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as UndoHistoryState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as UndoHistoryState).deactivate(); return null; },

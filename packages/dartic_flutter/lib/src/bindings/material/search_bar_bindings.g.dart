@@ -66,7 +66,7 @@ abstract final class SearchBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SearchBar).createState(),
-        'toString#0': (args) => (args[0] as SearchBar).toString(),
+        'toString#1': (args) => (args[0] as SearchBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SearchBar).createElement(),
         'toStringShort#0': (args) => (args[0] as SearchBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SearchBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

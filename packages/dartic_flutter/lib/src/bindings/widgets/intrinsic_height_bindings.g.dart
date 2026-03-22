@@ -38,7 +38,7 @@ abstract final class IntrinsicHeightBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as IntrinsicHeight).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as IntrinsicHeight).toString(),
+        'toString#1': (args) => (args[0] as IntrinsicHeight).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as IntrinsicHeight).createElement(),
         'updateRenderObject#2': (args) { (args[0] as IntrinsicHeight).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as IntrinsicHeight).didUnmountRenderObject(args[1] as RenderObject); return null; },

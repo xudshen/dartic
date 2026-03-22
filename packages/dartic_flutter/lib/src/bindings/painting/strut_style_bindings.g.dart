@@ -30,7 +30,7 @@ abstract final class StrutStyleBindings {
         'inheritFromTextStyle#1': (args) => (args[0] as StrutStyle).inheritFromTextStyle(args[1] as TextStyle?),
         'toStringShort#0': (args) => (args[0] as StrutStyle).toStringShort(),
         'debugFillProperties#2': (args) { (args[0] as StrutStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder, prefix: identical(args[2], darticAbsent) ? '' : args[2] as String); return null; },
-        'toString#0': (args) => (args[0] as StrutStyle).toString(),
+        'toString#1': (args) => (args[0] as StrutStyle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toDiagnosticsNode#2': (args) => (args[0] as StrutStyle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'fontFamily#0': (args) => (args[0] as StrutStyle).fontFamily,
         'fontFamilyFallback#0': (args) => (args[0] as StrutStyle).fontFamilyFallback,

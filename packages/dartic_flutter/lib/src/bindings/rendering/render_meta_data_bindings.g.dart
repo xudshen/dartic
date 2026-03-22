@@ -39,7 +39,7 @@ abstract final class RenderMetaDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as RenderMetaData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderMetaData).toString(),
+        'toString#1': (args) => (args[0] as RenderMetaData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTest#2': (args) => (args[0] as RenderMetaData).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderMetaData).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderMetaData).setupParentData(args[1] as RenderObject); return null; },

@@ -42,7 +42,7 @@ abstract final class RenderPerformanceOverlayBindings {
         'computeMaxIntrinsicHeight#1': (args) => (args[0] as RenderPerformanceOverlay).computeMaxIntrinsicHeight(args[1] as double),
         'computeDryLayout#1': (args) => (args[0] as RenderPerformanceOverlay).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderPerformanceOverlay).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderPerformanceOverlay).toString(),
+        'toString#1': (args) => (args[0] as RenderPerformanceOverlay).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderPerformanceOverlay).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderPerformanceOverlay).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderPerformanceOverlay).getMaxIntrinsicWidth(args[1] as double),

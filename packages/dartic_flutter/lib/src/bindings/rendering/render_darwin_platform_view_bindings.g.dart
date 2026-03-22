@@ -49,7 +49,7 @@ abstract final class RenderDarwinPlatformViewBindings {
         'attach#1': (args) { (args[0] as RenderDarwinPlatformView).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderDarwinPlatformView).detach(); return null; },
         'updateGestureRecognizers#1': (args) { (args[0] as RenderDarwinPlatformView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
-        'toString#0': (args) => (args[0] as RenderDarwinPlatformView).toString(),
+        'toString#1': (args) => (args[0] as RenderDarwinPlatformView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderDarwinPlatformView).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderDarwinPlatformView).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderDarwinPlatformView).computeMinIntrinsicWidth(args[1] as double),

@@ -32,7 +32,7 @@ abstract final class SliverEnsureSemanticsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverEnsureSemantics).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverEnsureSemantics).toString(),
+        'toString#1': (args) => (args[0] as SliverEnsureSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverEnsureSemantics).createElement(),
         'updateRenderObject#2': (args) { (args[0] as SliverEnsureSemantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SliverEnsureSemantics).didUnmountRenderObject(args[1] as RenderObject); return null; },

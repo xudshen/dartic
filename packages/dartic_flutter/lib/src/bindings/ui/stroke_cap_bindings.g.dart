@@ -38,5 +38,6 @@ abstract final class StrokeCapBindings {
         'hashCode#0': (args) => (args[0] as StrokeCap).hashCode,
         'index#0': (args) => (args[0] as StrokeCap).index,
         '==#1': (args) => (args[0] as StrokeCap) == (args[1] as Object),
+        '_#fromFields#2': (args) => StrokeCap.values[args[1] as int],
       };
 }

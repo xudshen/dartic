@@ -39,7 +39,7 @@ abstract final class LinearProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as LinearProgressIndicator).createState(),
-        'toString#0': (args) => (args[0] as LinearProgressIndicator).toString(),
+        'toString#1': (args) => (args[0] as LinearProgressIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugFillProperties#1': (args) { (args[0] as LinearProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as LinearProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as LinearProgressIndicator).toStringShort(),

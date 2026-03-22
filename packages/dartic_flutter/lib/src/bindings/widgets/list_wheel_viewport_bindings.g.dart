@@ -47,7 +47,7 @@ abstract final class ListWheelViewportBindings {
         'createElement#0': (args) => (args[0] as ListWheelViewport).createElement(),
         'createRenderObject#1': (args) => (args[0] as ListWheelViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ListWheelViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderListWheelViewport); return null; },
-        'toString#0': (args) => (args[0] as ListWheelViewport).toString(),
+        'toString#1': (args) => (args[0] as ListWheelViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as ListWheelViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ListWheelViewport).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ListWheelViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

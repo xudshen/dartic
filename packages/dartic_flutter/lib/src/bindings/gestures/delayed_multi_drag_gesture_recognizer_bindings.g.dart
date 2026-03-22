@@ -35,7 +35,7 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as DelayedMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
-        'toString#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as DelayedMultiDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addAllowedPointer#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },

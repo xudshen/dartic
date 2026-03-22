@@ -29,5 +29,6 @@ abstract final class UndoDirectionBindings {
         'hashCode#0': (args) => (args[0] as UndoDirection).hashCode,
         'index#0': (args) => (args[0] as UndoDirection).index,
         '==#1': (args) => (args[0] as UndoDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => UndoDirection.values[args[1] as int],
       };
 }

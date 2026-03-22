@@ -64,7 +64,7 @@ abstract final class SelectableRegionStateBindings {
         'remove#1': (args) { (args[0] as SelectableRegionState).remove(args[1] as Selectable); return null; },
         'dispose#0': (args) { (args[0] as SelectableRegionState).dispose(); return null; },
         'build#1': (args) => (args[0] as SelectableRegionState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SelectableRegionState).toString(),
+        'toString#1': (args) => (args[0] as SelectableRegionState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as SelectableRegionState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SelectableRegionState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as SelectableRegionState).deactivate(); return null; },

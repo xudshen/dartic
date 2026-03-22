@@ -42,5 +42,6 @@ abstract final class FloatingCursorDragStateBindings {
         'hashCode#0': (args) => (args[0] as FloatingCursorDragState).hashCode,
         'index#0': (args) => (args[0] as FloatingCursorDragState).index,
         '==#1': (args) => (args[0] as FloatingCursorDragState) == (args[1] as Object),
+        '_#fromFields#2': (args) => FloatingCursorDragState.values[args[1] as int],
       };
 }

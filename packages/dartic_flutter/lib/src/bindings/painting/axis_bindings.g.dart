@@ -28,5 +28,6 @@ abstract final class AxisBindings {
         'hashCode#0': (args) => (args[0] as Axis).hashCode,
         'index#0': (args) => (args[0] as Axis).index,
         '==#1': (args) => (args[0] as Axis) == (args[1] as Object),
+        '_#fromFields#2': (args) => Axis.values[args[1] as int],
       };
 }

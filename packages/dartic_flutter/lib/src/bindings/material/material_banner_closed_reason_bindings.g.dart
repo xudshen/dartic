@@ -38,5 +38,6 @@ abstract final class MaterialBannerClosedReasonBindings {
         'hashCode#0': (args) => (args[0] as MaterialBannerClosedReason).hashCode,
         'index#0': (args) => (args[0] as MaterialBannerClosedReason).index,
         '==#1': (args) => (args[0] as MaterialBannerClosedReason) == (args[1] as Object),
+        '_#fromFields#2': (args) => MaterialBannerClosedReason.values[args[1] as int],
       };
 }

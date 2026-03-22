@@ -51,7 +51,7 @@ abstract final class RenderFractionallySizedOverflowBoxBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderFractionallySizedOverflowBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderFractionallySizedOverflowBox).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFractionallySizedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderFractionallySizedOverflowBox).toString(),
+        'toString#1': (args) => (args[0] as RenderFractionallySizedOverflowBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderFractionallySizedOverflowBox).alignChild(); return null; },
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderFractionallySizedOverflowBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderFractionallySizedOverflowBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },

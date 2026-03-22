@@ -43,7 +43,7 @@ abstract final class FlexBindings {
         'createRenderObject#1': (args) => (args[0] as Flex).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Flex).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlex); return null; },
         'debugFillProperties#1': (args) { (args[0] as Flex).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Flex).toString(),
+        'toString#1': (args) => (args[0] as Flex).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Flex).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Flex).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Flex).toStringShort(),

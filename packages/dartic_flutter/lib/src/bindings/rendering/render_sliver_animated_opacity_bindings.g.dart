@@ -38,7 +38,7 @@ abstract final class RenderSliverAnimatedOpacityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderSliverAnimatedOpacity).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverAnimatedOpacity).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverAnimatedOpacity).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverAnimatedOpacity).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderSliverAnimatedOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },

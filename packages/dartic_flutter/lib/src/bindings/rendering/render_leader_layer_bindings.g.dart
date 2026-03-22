@@ -41,7 +41,7 @@ abstract final class RenderLeaderLayerBindings {
         'performLayout#0': (args) { (args[0] as RenderLeaderLayer).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderLeaderLayer).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderLeaderLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderLeaderLayer).toString(),
+        'toString#1': (args) => (args[0] as RenderLeaderLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderLeaderLayer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderLeaderLayer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderLeaderLayer).computeMinIntrinsicWidth(args[1] as double),

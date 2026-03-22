@@ -40,7 +40,7 @@ abstract final class RenderIndexedSemanticsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderIndexedSemantics).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIndexedSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderIndexedSemantics).toString(),
+        'toString#1': (args) => (args[0] as RenderIndexedSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderIndexedSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedSemantics).computeMinIntrinsicWidth(args[1] as double),

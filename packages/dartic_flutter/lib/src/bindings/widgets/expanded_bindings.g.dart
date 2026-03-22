@@ -37,7 +37,7 @@ abstract final class ExpandedBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as Expanded).toString(),
+        'toString#1': (args) => (args[0] as Expanded).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'applyParentData#1': (args) { (args[0] as Expanded).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as Expanded).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as Expanded).createElement(),

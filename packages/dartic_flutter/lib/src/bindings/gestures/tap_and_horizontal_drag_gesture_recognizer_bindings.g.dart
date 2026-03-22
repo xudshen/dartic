@@ -36,7 +36,7 @@ abstract final class TapAndHorizontalDragGestureRecognizerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isPointerAllowed#1': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },

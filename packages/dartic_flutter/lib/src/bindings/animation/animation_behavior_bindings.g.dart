@@ -35,5 +35,6 @@ abstract final class AnimationBehaviorBindings {
         'hashCode#0': (args) => (args[0] as AnimationBehavior).hashCode,
         'index#0': (args) => (args[0] as AnimationBehavior).index,
         '==#1': (args) => (args[0] as AnimationBehavior) == (args[1] as Object),
+        '_#fromFields#2': (args) => AnimationBehavior.values[args[1] as int],
       };
 }

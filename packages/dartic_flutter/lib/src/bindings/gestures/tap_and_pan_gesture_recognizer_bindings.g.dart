@@ -36,7 +36,7 @@ abstract final class TapAndPanGestureRecognizerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as TapAndPanGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as TapAndPanGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isPointerAllowed#1': (args) => (args[0] as TapAndPanGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as TapAndPanGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as TapAndPanGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },

@@ -52,5 +52,6 @@ abstract final class TextInputActionBindings {
         'hashCode#0': (args) => (args[0] as TextInputAction).hashCode,
         'index#0': (args) => (args[0] as TextInputAction).index,
         '==#1': (args) => (args[0] as TextInputAction) == (args[1] as Object),
+        '_#fromFields#2': (args) => TextInputAction.values[args[1] as int],
       };
 }

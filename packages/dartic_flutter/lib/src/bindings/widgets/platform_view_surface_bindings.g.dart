@@ -40,7 +40,7 @@ abstract final class PlatformViewSurfaceBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as PlatformViewSurface).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as PlatformViewSurface).updateRenderObject(args[1] as BuildContext, args[2] as PlatformViewRenderBox); return null; },
-        'toString#0': (args) => (args[0] as PlatformViewSurface).toString(),
+        'toString#1': (args) => (args[0] as PlatformViewSurface).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PlatformViewSurface).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as PlatformViewSurface).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as PlatformViewSurface).toStringShort(),

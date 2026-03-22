@@ -43,7 +43,7 @@ abstract final class FormStateBindings {
         'reset#0': (args) { (args[0] as FormState).reset(); return null; },
         'validate#0': (args) => (args[0] as FormState).validate(),
         'validateGranularly#0': (args) => (args[0] as FormState).validateGranularly(),
-        'toString#0': (args) => (args[0] as FormState).toString(),
+        'toString#1': (args) => (args[0] as FormState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as FormState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as FormState).didUpdateWidget(args[1] as Form); return null; },
         'reassemble#0': (args) { (args[0] as FormState).reassemble(); return null; },

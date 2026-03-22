@@ -44,7 +44,7 @@ abstract final class BaseTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as BaseTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as BaseTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'debugFillProperties#1': (args) { (args[0] as BaseTapGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as BaseTapGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as BaseTapGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'handleNonAllowedPointer#1': (args) { (args[0] as BaseTapGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleEvent#1': (args) { (args[0] as BaseTapGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
         'didExceedDeadlineWithEvent#1': (args) { (args[0] as BaseTapGestureRecognizer).didExceedDeadlineWithEvent(args[1] as PointerDownEvent); return null; },

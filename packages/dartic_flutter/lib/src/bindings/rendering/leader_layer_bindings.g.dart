@@ -34,7 +34,7 @@ abstract final class LeaderLayerBindings {
         'addToScene#1': (args) { (args[0] as LeaderLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'applyTransform#2': (args) { (args[0] as LeaderLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as LeaderLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as LeaderLayer).toString(),
+        'toString#1': (args) => (args[0] as LeaderLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as LeaderLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as LeaderLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as LeaderLayer).dispose(); return null; },

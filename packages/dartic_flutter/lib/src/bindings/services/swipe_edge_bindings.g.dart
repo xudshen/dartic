@@ -29,5 +29,6 @@ abstract final class SwipeEdgeBindings {
         'hashCode#0': (args) => (args[0] as SwipeEdge).hashCode,
         'index#0': (args) => (args[0] as SwipeEdge).index,
         '==#1': (args) => (args[0] as SwipeEdge) == (args[1] as Object),
+        '_#fromFields#2': (args) => SwipeEdge.values[args[1] as int],
       };
 }

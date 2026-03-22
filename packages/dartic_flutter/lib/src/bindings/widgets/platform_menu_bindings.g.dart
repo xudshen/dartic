@@ -36,7 +36,7 @@ abstract final class PlatformMenuBindings {
         'toChannelRepresentation#2': (args) => (args[0] as PlatformMenu).toChannelRepresentation(args[1] as PlatformMenuDelegate, getId: (a) => (args[2] as Function)(a) as int),
         'debugDescribeChildren#0': (args) => (args[0] as PlatformMenu).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as PlatformMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as PlatformMenu).toString(),
+        'toString#1': (args) => (args[0] as PlatformMenu).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as PlatformMenu).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformMenu).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'toStringShallow#2': (args) => (args[0] as PlatformMenu).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

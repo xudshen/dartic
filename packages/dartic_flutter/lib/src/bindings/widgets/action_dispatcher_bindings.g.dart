@@ -34,7 +34,7 @@ abstract final class ActionDispatcherBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invokeAction#3': (args) => (args[0] as ActionDispatcher).invokeAction(args[1] as Action<Intent>, args[2] as Intent, identical(args[3], darticAbsent) ? null : args[3] as BuildContext?),
         'invokeActionIfEnabled#3': (args) => (args[0] as ActionDispatcher).invokeActionIfEnabled(args[1] as Action<Intent>, args[2] as Intent, identical(args[3], darticAbsent) ? null : args[3] as BuildContext?),
-        'toString#0': (args) => (args[0] as ActionDispatcher).toString(),
+        'toString#1': (args) => (args[0] as ActionDispatcher).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ActionDispatcher).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ActionDispatcher).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ActionDispatcher).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

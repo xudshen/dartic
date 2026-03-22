@@ -36,7 +36,7 @@ abstract final class CupertinoTabBarBindings {
         'opaque#1': (args) => (args[0] as CupertinoTabBar).opaque(args[1] as BuildContext),
         'build#1': (args) => (args[0] as CupertinoTabBar).build(args[1] as BuildContext),
         'copyWith#10': (args) => (args[0] as CupertinoTabBar).copyWith(key: identical(args[1], darticAbsent) ? null : args[1] as Key?, items: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as List).cast<BottomNavigationBarItem>(), backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, activeColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, inactiveColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, iconSize: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, border: identical(args[8], darticAbsent) ? null : args[8] as Border?, currentIndex: identical(args[9], darticAbsent) ? null : args[9] as int?, onTap: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a) => (args[10] as Function?)!(a)),
-        'toString#0': (args) => (args[0] as CupertinoTabBar).toString(),
+        'toString#1': (args) => (args[0] as CupertinoTabBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoTabBar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTabBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTabBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

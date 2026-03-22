@@ -34,5 +34,6 @@ abstract final class CrossFadeStateBindings {
         'hashCode#0': (args) => (args[0] as CrossFadeState).hashCode,
         'index#0': (args) => (args[0] as CrossFadeState).index,
         '==#1': (args) => (args[0] as CrossFadeState) == (args[1] as Object),
+        '_#fromFields#2': (args) => CrossFadeState.values[args[1] as int],
       };
 }

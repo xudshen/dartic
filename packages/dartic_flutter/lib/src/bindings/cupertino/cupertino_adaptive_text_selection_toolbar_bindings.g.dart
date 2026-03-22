@@ -38,7 +38,7 @@ abstract final class CupertinoAdaptiveTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoAdaptiveTextSelectionToolbar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as CupertinoAdaptiveTextSelectionToolbar).toString(),
+        'toString#1': (args) => (args[0] as CupertinoAdaptiveTextSelectionToolbar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoAdaptiveTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoAdaptiveTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoAdaptiveTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

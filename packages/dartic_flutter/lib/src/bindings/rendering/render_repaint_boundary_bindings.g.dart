@@ -44,7 +44,7 @@ abstract final class RenderRepaintBoundaryBindings {
         'debugResetMetrics#0': (args) { (args[0] as RenderRepaintBoundary).debugResetMetrics(); return null; },
         'debugRegisterRepaintBoundaryPaint#2': (args) { (args[0] as RenderRepaintBoundary).debugRegisterRepaintBoundaryPaint(includedParent: identical(args[1], darticAbsent) ? true : args[1] as bool, includedChild: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderRepaintBoundary).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderRepaintBoundary).toString(),
+        'toString#1': (args) => (args[0] as RenderRepaintBoundary).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderRepaintBoundary).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderRepaintBoundary).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderRepaintBoundary).computeMinIntrinsicWidth(args[1] as double),

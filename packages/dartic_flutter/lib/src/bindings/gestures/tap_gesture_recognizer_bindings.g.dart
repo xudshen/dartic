@@ -37,7 +37,7 @@ abstract final class TapGestureRecognizerBindings {
         'handleTapUp#2': (args) { (args[0] as TapGestureRecognizer).handleTapUp(down: args[1] as PointerDownEvent, up: args[2] as PointerUpEvent); return null; },
         'handleTapMove#1': (args) { (args[0] as TapGestureRecognizer).handleTapMove(move: args[1] as PointerMoveEvent); return null; },
         'handleTapCancel#3': (args) { (args[0] as TapGestureRecognizer).handleTapCancel(down: args[1] as PointerDownEvent, cancel: identical(args[2], darticAbsent) ? null : args[2] as PointerCancelEvent?, reason: args[3] as String); return null; },
-        'toString#0': (args) => (args[0] as TapGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as TapGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addAllowedPointer#1': (args) { (args[0] as TapGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'startTrackingPointer#2': (args) { (args[0] as TapGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
         'handlePrimaryPointer#1': (args) { (args[0] as TapGestureRecognizer).handlePrimaryPointer(args[1] as PointerEvent); return null; },

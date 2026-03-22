@@ -45,7 +45,7 @@ abstract final class RenderAligningShiftedBoxBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'alignChild#0': (args) { (args[0] as RenderAligningShiftedBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAligningShiftedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderAligningShiftedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderAligningShiftedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAligningShiftedBox).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderAligningShiftedBox).computeMaxIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicHeight#1': (args) => (args[0] as RenderAligningShiftedBox).computeMinIntrinsicHeight(args[1] as double),

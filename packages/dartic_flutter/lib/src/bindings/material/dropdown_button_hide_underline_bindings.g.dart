@@ -44,7 +44,7 @@ abstract final class DropdownButtonHideUnderlineBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DropdownButtonHideUnderline).updateShouldNotify(args[1] as DropdownButtonHideUnderline),
-        'toString#0': (args) => (args[0] as DropdownButtonHideUnderline).toString(),
+        'toString#1': (args) => (args[0] as DropdownButtonHideUnderline).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DropdownButtonHideUnderline).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownButtonHideUnderline).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DropdownButtonHideUnderline).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -36,14 +36,6 @@ String emitBindingFile(
   // Build body first to detect required imports
   final body = StringBuffer();
 
-  // Preamble (e.g. private helper classes)
-  if (preamble != null) {
-    body.writeln(preamble.trim());
-    body.writeln();
-  }
-
-  final bindingsClassName = _toBindingsClassName(info.className);
-
   // Effective bridge flag: skip final, private, or factory-only classes.
   final hasGenerativeCtor =
       info.constructors.any((c) => !c.isFactory) || info.isAbstract;
@@ -51,6 +43,21 @@ String emitBindingFile(
       !info.isFinal &&
       !info.className.startsWith('_') &&
       hasGenerativeCtor;
+
+  // Preamble (e.g. private helper classes / hand-written Bridge class).
+  // For custom_bridge, auto-append missing super trampolines so that
+  // $super$ binding registrations can reference them.
+  if (preamble != null) {
+    if (effectiveBridge && customBridge) {
+      body.writeln(
+          _appendMissingSuperTrampolines(preamble.trim(), info));
+    } else {
+      body.writeln(preamble.trim());
+    }
+    body.writeln();
+  }
+
+  final bindingsClassName = _toBindingsClassName(info.className);
 
   // If customBridge is set, the preamble provides a hand-written Bridge class.
   // Skip auto-generation but still emit bridgeFactory registration.
@@ -706,11 +713,18 @@ void _writeFromFieldsEntry(
 ///
 /// Uses precise field→param mappings extracted from Constructor.initializers.
 /// Scans all const constructors (including named like `Color.from()`) to find
-/// the best reconstruction path. Skips enums (compiler uses LOAD_GLOBAL).
+/// the best reconstruction path. Enums get a specialised `values[index]`
+/// lookup instead of constructor reconstruction.
 void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
     Set<String> overrideKeys, KernelClassInfo kernelInfo) {
-  // Enums use LOAD_GLOBAL, not fromFields. Non-const can't produce InstanceConstant.
-  if (kernelInfo.isEnum) return;
+  // Enums: reconstruct by looking up values[index].
+  // The compiler emits _#fromFields for host enum InstanceConstants (which
+  // carry inherited _Enum fields like `index` and `_name`). Instead of
+  // calling a constructor, we look up the singleton via the index field.
+  if (kernelInfo.isEnum) {
+    _writeEnumFromFields(buf, info, overrideKeys, kernelInfo);
+    return;
+  }
   if (!kernelInfo.isConst) return;
   if (kernelInfo.isAbstract) return;
   // Private classes can't be called from generated code.
@@ -735,7 +749,14 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
     return;
   }
 
-  if (fromFieldsInfo == null) return;
+  if (fromFieldsInfo == null) {
+    // Pseudo-enum pattern: classes with private constructors that have an
+    // `index` field and a `values` static getter (e.g. dart:ui FontWeight,
+    // BlendMode, Clip, etc.). These are reconstructed like real enums via
+    // `values[index]`.
+    _writePseudoEnumFromFields(buf, info, overrideKeys, kernelInfo);
+    return;
+  }
 
   final ctorName = fromFieldsInfo.constructorName;
   final mappings = fromFieldsInfo.mappings;
@@ -921,6 +942,67 @@ void _writeFromFieldsLegacy(
 
   buf.writeln(
       "        '$fromFieldsKey': (args) => ${info.className}(${argExprs.join(', ')}),");
+}
+
+/// Enum-specific fromFields generation.
+///
+/// Enums are singletons — instead of reconstructing via a constructor, we
+/// look up the existing value by its `index` field using `values[index]`.
+/// The field list is sorted alphabetically (matching Kernel InstanceConstant
+/// field ordering), so we find the position of the inherited `index` field
+/// to determine which arg slot to read.
+void _writeEnumFromFields(StringBuffer buf, TypeInfo info,
+    Set<String> overrideKeys, KernelClassInfo kernelInfo) {
+  if (info.className.startsWith('_')) return;
+
+  final fields = kernelInfo.allFields;
+  final fieldCount = fields.length;
+  final fromFieldsKey = '_#fromFields#$fieldCount';
+
+  if (overrideKeys.contains(fromFieldsKey)) return;
+
+  // Find the position of the 'index' field (inherited from _Enum) in the
+  // alphabetically sorted field list.
+  final indexPos = fields.indexWhere((f) => f.name == 'index');
+  if (indexPos < 0) {
+    stderr.writeln(
+        'WARNING: _#fromFields auto-gen skipped for enum ${info.className}: '
+        'no "index" field found in Kernel field list');
+    return;
+  }
+
+  buf.writeln(
+      "        '$fromFieldsKey': (args) => ${info.className}.values[args[$indexPos] as int],");
+}
+
+/// Pseudo-enum fromFields generation.
+///
+/// Detects classes that follow the pseudo-enum pattern common in dart:ui:
+/// - All constructors are private or factory (no accessible generative ctor)
+/// - Has an `index` instance field
+/// - Has a `values` static getter
+///
+/// Examples: FontWeight, BlendMode, FilterQuality, Clip, StrokeCap, etc.
+/// Reconstructs via `ClassName.values[index]`, same as real enums.
+void _writePseudoEnumFromFields(StringBuffer buf, TypeInfo info,
+    Set<String> overrideKeys, KernelClassInfo kernelInfo) {
+  if (info.className.startsWith('_')) return;
+
+  final fields = kernelInfo.allFields;
+  final fieldCount = fields.length;
+  final fromFieldsKey = '_#fromFields#$fieldCount';
+
+  if (overrideKeys.contains(fromFieldsKey)) return;
+
+  // Check pseudo-enum criteria: has `index` field and `values` static getter.
+  final indexPos = fields.indexWhere((f) => f.name == 'index');
+  if (indexPos < 0) return;
+
+  final hasValues = info.staticGetters.any((g) => g.name == 'values');
+  if (!hasValues) return;
+
+  buf.writeln(
+      "        '$fromFieldsKey': (args) => ${info.className}.values[args[$indexPos] as int],");
 }
 
 /// Prints detailed field layout to stderr for classes that can't auto-generate
@@ -1309,8 +1391,11 @@ void _writeOperatorEntry(
     // Special key: []=#2 (receiver + index + value = 3 args, arity 2)
     final key = '${op.lookupName}#2';
     final keyCast = _emitCast('args[1]', op.paramType!);
+    final valueCast = op.valueType != null
+        ? _emitCast('args[2]', op.valueType!)
+        : 'args[2]';
     buf.writeln(
-        "        '$key': (args) { $receiver[$keyCast] = args[2]; return args[2]; },");
+        "        '$key': (args) { $receiver[$keyCast] = $valueCast; return args[2]; },");
   } else {
     // Binary operator
     final paramCast = _emitCast('args[1]', op.paramType!);
@@ -1840,7 +1925,72 @@ void _writeSuperTrampolines(
   }
 }
 
+/// Appends auto-generated super trampolines to a custom Bridge preamble.
+///
+/// Custom Bridge preambles define hand-written trampolines for methods that
+/// need special handling (e.g. State lifecycle methods with bit-flag logic).
+/// This function generates standard trampolines for the remaining methods,
+/// getters, and setters that the preamble doesn't cover, and inserts them
+/// before the last `}` of the Bridge class.
+String _appendMissingSuperTrampolines(String preamble, TypeInfo info) {
+  // Collect existing _super$ trampoline names from the preamble.
+  final existing = RegExp(r'_super\$(\w+)')
+      .allMatches(preamble)
+      .map((m) => m.group(1)!)
+      .toSet();
+
+  final buf = StringBuffer();
+
+  // Methods
+  for (final method in info.methods) {
+    if (method.isAbstract) continue;
+    if (method.typeParamDecl != null) continue;
+    if (existing.contains(method.name)) continue;
+    _writeSuperMethodTrampoline(buf, method);
+  }
+
+  // Getters
+  for (final getter in info.getters) {
+    if (getter.isAbstract) continue;
+    if (existing.contains(getter.name)) continue;
+    buf.writeln(
+        '  ${getter.returnType} get _super\$${getter.name} => super.${getter.name};');
+  }
+
+  // Setters
+  for (final setter in info.setters) {
+    if (setter.isAbstract) continue;
+    if (existing.contains(setter.name)) continue;
+    buf.writeln(
+        '  set _super\$${setter.name}(${setter.paramType} value) { super.${setter.name} = value; }');
+  }
+
+  // Object methods (toString, hashCode) — add if not already present.
+  final overriddenMethods = info.methods.map((m) => m.name).toSet();
+  final overriddenGetters = info.getters.map((g) => g.name).toSet();
+  if (!overriddenMethods.contains('toString') &&
+      !existing.contains('toString')) {
+    buf.writeln('  String _super\$toString() => super.toString();');
+  }
+  if (!overriddenGetters.contains('hashCode') &&
+      !existing.contains('hashCode')) {
+    buf.writeln('  int get _super\$hashCode => super.hashCode;');
+  }
+
+  if (buf.isEmpty) return preamble;
+
+  // Insert before the last `}` of the Bridge class.
+  final lastBrace = preamble.lastIndexOf('}');
+  if (lastBrace < 0) return preamble;
+
+  return '${preamble.substring(0, lastBrace)}'
+      '\n  // ── Auto-generated super trampolines ──\n'
+      '$buf'
+      '${preamble.substring(lastBrace)}';
+}
+
 /// Generates a single `_super$methodName(...)` trampoline for a non-abstract method.
+///
 void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
   // Build parameter list for the trampoline.
   // Use untyped params (dynamic) for Function-typed parameters to avoid
@@ -1968,49 +2118,7 @@ void _writeBridgeMethodOverride(
 
   buf.writeln('  @override');
 
-  // Determine which pattern to use (priority order).
-  // An overrideConfig with defaultReturn means "return this value instead of
-  // calling super", which is a distinct pattern from mustCallSuper. Only
-  // treat overrideConfig as triggering mustCallSuper when defaultReturn is
-  // not set.
-  final hasDefaultReturn = overrideConfig?.defaultReturn != null;
-  final isMustCallSuper = method.mustCallSuper ||
-      (overrideConfig != null && !method.isAbstract && !hasDefaultReturn);
-  final superOrder = overrideConfig?.superOrder ?? 'before';
-
-  if (isMustCallSuper && !method.isAbstract) {
-    // ── Pattern: mustCallSuper ──
-    // Super is always called; order depends on superOrder.
-    if (method.isVoid) {
-      buf.writeln('  void ${method.name}$typeParamDecl($paramStr) {');
-      if (superOrder == 'before') {
-        buf.writeln('    $superCall;');
-        buf.writeln('    $dispatchCall;');
-      } else {
-        // after
-        buf.writeln('    $dispatchCall;');
-        buf.writeln('    $superCall;');
-      }
-      buf.writeln('  }');
-    } else {
-      buf.writeln('  ${method.returnType} ${method.name}$typeParamDecl($paramStr) {');
-      if (superOrder == 'before') {
-        buf.writeln('    final superResult = $superCall;');
-        buf.writeln('    final r = $dispatchCall;');
-        buf.writeln(
-            '    if (identical(r, notOverridden)) return superResult;');
-        buf.writeln('    return r as ${method.returnType};');
-      } else {
-        // after
-        buf.writeln('    final r = $dispatchCall;');
-        buf.writeln('    final superResult = $superCall;');
-        buf.writeln(
-            '    if (identical(r, notOverridden)) return superResult;');
-        buf.writeln('    return r as ${method.returnType};');
-      }
-      buf.writeln('  }');
-    }
-  } else if (method.isAbstract) {
+  if (method.isAbstract) {
     // ── Pattern: abstract ──
     // No super call; throw if dartic code didn't override.
     if (method.isVoid) {

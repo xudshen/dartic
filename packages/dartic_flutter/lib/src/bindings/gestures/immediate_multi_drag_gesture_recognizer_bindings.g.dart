@@ -35,7 +35,7 @@ abstract final class ImmediateMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
-        'toString#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addAllowedPointer#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },

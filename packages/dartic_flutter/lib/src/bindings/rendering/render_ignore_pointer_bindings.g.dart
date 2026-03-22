@@ -42,7 +42,7 @@ abstract final class RenderIgnorePointerBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderIgnorePointer).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderIgnorePointer).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIgnorePointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderIgnorePointer).toString(),
+        'toString#1': (args) => (args[0] as RenderIgnorePointer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderIgnorePointer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnorePointer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnorePointer).computeMinIntrinsicWidth(args[1] as double),

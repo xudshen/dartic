@@ -36,7 +36,7 @@ abstract final class IOSSystemContextMenuItemDataShareBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as IOSSystemContextMenuItemDataShare).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemDataShare).toString(),
+        'toString#1': (args) => (args[0] as IOSSystemContextMenuItemDataShare).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as IOSSystemContextMenuItemDataShare).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IOSSystemContextMenuItemDataShare).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemDataShare).title,

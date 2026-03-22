@@ -44,7 +44,7 @@ abstract final class RenderSliverCrossAxisGroupBindings {
         'paint#2': (args) { (args[0] as RenderSliverCrossAxisGroup).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverCrossAxisGroup).applyPaintTransform(args[1] as RenderSliver, args[2] as Matrix4); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverCrossAxisGroup).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
-        'toString#0': (args) => (args[0] as RenderSliverCrossAxisGroup).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverCrossAxisGroup).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverCrossAxisGroup).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverCrossAxisGroup).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverCrossAxisGroup).performResize(); return null; },

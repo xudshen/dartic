@@ -40,7 +40,7 @@ abstract final class DebugOverflowIndicatorMixinBindings {
         'dispose#0': (args) { (args[0] as DebugOverflowIndicatorMixin).dispose(); return null; },
         'paintOverflowIndicator#5': (args) { (args[0] as DebugOverflowIndicatorMixin).paintOverflowIndicator(args[1] as PaintingContext, args[2] as ui.Offset, args[3] as ui.Rect, args[4] as ui.Rect, overflowHints: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<DiagnosticsNode>()); return null; },
         'reassemble#0': (args) { (args[0] as DebugOverflowIndicatorMixin).reassemble(); return null; },
-        'toString#0': (args) => (args[0] as DebugOverflowIndicatorMixin).toString(),
+        'toString#1': (args) => (args[0] as DebugOverflowIndicatorMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as DebugOverflowIndicatorMixin).setupParentData(args[1] as RenderObject); return null; },
         'redepthChild#1': (args) { (args[0] as DebugOverflowIndicatorMixin).redepthChild(args[1] as RenderObject); return null; },
         'redepthChildren#0': (args) { (args[0] as DebugOverflowIndicatorMixin).redepthChildren(); return null; },

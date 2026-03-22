@@ -33,7 +33,7 @@ abstract final class FollowerLayerBindings {
         'addToScene#1': (args) { (args[0] as FollowerLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'applyTransform#2': (args) { (args[0] as FollowerLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as FollowerLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as FollowerLayer).toString(),
+        'toString#1': (args) => (args[0] as FollowerLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as FollowerLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as FollowerLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as FollowerLayer).dispose(); return null; },

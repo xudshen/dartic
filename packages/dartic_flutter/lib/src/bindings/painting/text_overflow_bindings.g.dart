@@ -40,5 +40,6 @@ abstract final class TextOverflowBindings {
         'hashCode#0': (args) => (args[0] as TextOverflow).hashCode,
         'index#0': (args) => (args[0] as TextOverflow).index,
         '==#1': (args) => (args[0] as TextOverflow) == (args[1] as Object),
+        '_#fromFields#2': (args) => TextOverflow.values[args[1] as int],
       };
 }

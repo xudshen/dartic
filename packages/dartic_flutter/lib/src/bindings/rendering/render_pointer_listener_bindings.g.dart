@@ -42,7 +42,7 @@ abstract final class RenderPointerListenerBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderPointerListener).computeSizeForNoChild(args[1] as BoxConstraints),
         'handleEvent#2': (args) { (args[0] as RenderPointerListener).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPointerListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderPointerListener).toString(),
+        'toString#1': (args) => (args[0] as RenderPointerListener).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTest#2': (args) => (args[0] as RenderPointerListener).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderPointerListener).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderPointerListener).setupParentData(args[1] as RenderObject); return null; },

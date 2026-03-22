@@ -59,7 +59,7 @@ abstract final class DatePickerDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DatePickerDialog).createState(),
-        'toString#0': (args) => (args[0] as DatePickerDialog).toString(),
+        'toString#1': (args) => (args[0] as DatePickerDialog).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DatePickerDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as DatePickerDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DatePickerDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

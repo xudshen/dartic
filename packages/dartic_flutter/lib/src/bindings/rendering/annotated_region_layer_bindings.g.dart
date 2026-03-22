@@ -30,7 +30,7 @@ abstract final class AnnotatedRegionLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'findAnnotations#3': (args) => (args[0] as AnnotatedRegionLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'debugFillProperties#1': (args) { (args[0] as AnnotatedRegionLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as AnnotatedRegionLayer).toString(),
+        'toString#1': (args) => (args[0] as AnnotatedRegionLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as AnnotatedRegionLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as AnnotatedRegionLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as AnnotatedRegionLayer).dispose(); return null; },

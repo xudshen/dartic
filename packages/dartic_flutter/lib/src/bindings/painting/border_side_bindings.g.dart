@@ -38,7 +38,7 @@ abstract final class BorderSideBindings {
         'toPaint#0': (args) => (args[0] as BorderSide).toPaint(),
         'toStringShort#0': (args) => (args[0] as BorderSide).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BorderSide).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as BorderSide).toString(),
+        'toString#1': (args) => (args[0] as BorderSide).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toDiagnosticsNode#2': (args) => (args[0] as BorderSide).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'color#0': (args) => (args[0] as BorderSide).color,
         'width#0': (args) => (args[0] as BorderSide).width,

@@ -35,5 +35,6 @@ abstract final class ButtonTextThemeBindings {
         'hashCode#0': (args) => (args[0] as ButtonTextTheme).hashCode,
         'index#0': (args) => (args[0] as ButtonTextTheme).index,
         '==#1': (args) => (args[0] as ButtonTextTheme) == (args[1] as Object),
+        '_#fromFields#2': (args) => ButtonTextTheme.values[args[1] as int],
       };
 }

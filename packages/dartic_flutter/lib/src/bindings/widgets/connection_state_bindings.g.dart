@@ -32,5 +32,6 @@ abstract final class ConnectionStateBindings {
         'hashCode#0': (args) => (args[0] as ConnectionState).hashCode,
         'index#0': (args) => (args[0] as ConnectionState).index,
         '==#1': (args) => (args[0] as ConnectionState) == (args[1] as Object),
+        '_#fromFields#2': (args) => ConnectionState.values[args[1] as int],
       };
 }

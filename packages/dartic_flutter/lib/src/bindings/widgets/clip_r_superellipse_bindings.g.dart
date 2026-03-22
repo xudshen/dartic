@@ -42,7 +42,7 @@ abstract final class ClipRSuperellipseBindings {
         'createRenderObject#1': (args) => (args[0] as ClipRSuperellipse).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ClipRSuperellipse).updateRenderObject(args[1] as BuildContext, args[2] as RenderClipRSuperellipse); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipRSuperellipse).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ClipRSuperellipse).toString(),
+        'toString#1': (args) => (args[0] as ClipRSuperellipse).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ClipRSuperellipse).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ClipRSuperellipse).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ClipRSuperellipse).toStringShort(),

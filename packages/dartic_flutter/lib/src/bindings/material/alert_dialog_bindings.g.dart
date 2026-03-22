@@ -50,7 +50,7 @@ abstract final class AlertDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AlertDialog).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AlertDialog).toString(),
+        'toString#1': (args) => (args[0] as AlertDialog).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AlertDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as AlertDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AlertDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

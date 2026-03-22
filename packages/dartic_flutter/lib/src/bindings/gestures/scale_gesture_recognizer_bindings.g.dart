@@ -41,7 +41,7 @@ abstract final class ScaleGestureRecognizerBindings {
         'rejectGesture#1': (args) { (args[0] as ScaleGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as ScaleGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as ScaleGestureRecognizer).dispose(); return null; },
-        'toString#0': (args) => (args[0] as ScaleGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as ScaleGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'handleNonAllowedPointer#1': (args) { (args[0] as ScaleGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as ScaleGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as ScaleGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },

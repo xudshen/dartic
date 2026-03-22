@@ -51,7 +51,7 @@ abstract final class RenderTransformBindings {
         'paint#2': (args) { (args[0] as RenderTransform).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderTransform).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTransform).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderTransform).toString(),
+        'toString#1': (args) => (args[0] as RenderTransform).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderTransform).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTransform).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderTransform).computeMinIntrinsicWidth(args[1] as double),

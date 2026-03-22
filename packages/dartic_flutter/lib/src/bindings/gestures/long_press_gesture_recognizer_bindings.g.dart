@@ -38,7 +38,7 @@ abstract final class LongPressGestureRecognizerBindings {
         'handlePrimaryPointer#1': (args) { (args[0] as LongPressGestureRecognizer).handlePrimaryPointer(args[1] as PointerEvent); return null; },
         'resolve#1': (args) { (args[0] as LongPressGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'acceptGesture#1': (args) { (args[0] as LongPressGestureRecognizer).acceptGesture(args[1] as int); return null; },
-        'toString#0': (args) => (args[0] as LongPressGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as LongPressGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addAllowedPointer#1': (args) { (args[0] as LongPressGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as LongPressGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleEvent#1': (args) { (args[0] as LongPressGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },

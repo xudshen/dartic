@@ -39,7 +39,7 @@ abstract final class SimpleDialogOptionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SimpleDialogOption).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SimpleDialogOption).toString(),
+        'toString#1': (args) => (args[0] as SimpleDialogOption).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SimpleDialogOption).createElement(),
         'toStringShort#0': (args) => (args[0] as SimpleDialogOption).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SimpleDialogOption).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

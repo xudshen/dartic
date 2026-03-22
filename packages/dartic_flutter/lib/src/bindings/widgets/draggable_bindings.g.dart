@@ -44,7 +44,7 @@ abstract final class DraggableBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRecognizer#1': (args) => (args[0] as Draggable).createRecognizer((a) => (args[1] as Function)(a) as Drag?),
         'createState#0': (args) => (args[0] as Draggable).createState(),
-        'toString#0': (args) => (args[0] as Draggable).toString(),
+        'toString#1': (args) => (args[0] as Draggable).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Draggable).createElement(),
         'toStringShort#0': (args) => (args[0] as Draggable).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Draggable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

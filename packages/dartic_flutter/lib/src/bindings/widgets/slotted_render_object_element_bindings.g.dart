@@ -35,7 +35,7 @@ abstract final class SlottedRenderObjectElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as SlottedRenderObjectElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as SlottedRenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as SlottedRenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
-        'toString#0': (args) => (args[0] as SlottedRenderObjectElement).toString(),
+        'toString#1': (args) => (args[0] as SlottedRenderObjectElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'performRebuild#0': (args) { (args[0] as SlottedRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as SlottedRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SlottedRenderObjectElement).unmount(); return null; },

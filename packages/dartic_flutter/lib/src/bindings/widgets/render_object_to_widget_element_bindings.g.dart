@@ -36,7 +36,7 @@ abstract final class RenderObjectToWidgetElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as RenderObjectToWidgetElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as RenderObjectToWidgetElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as RenderObjectToWidgetElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
-        'toString#0': (args) => (args[0] as RenderObjectToWidgetElement).toString(),
+        'toString#1': (args) => (args[0] as RenderObjectToWidgetElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attachRenderObject#1': (args) { (args[0] as RenderObjectToWidgetElement).attachRenderObject(args[1]); return null; },
         'detachRenderObject#0': (args) { (args[0] as RenderObjectToWidgetElement).detachRenderObject(); return null; },
         'updateSlot#1': (args) { (args[0] as RenderObjectToWidgetElement).updateSlot(args[1]); return null; },

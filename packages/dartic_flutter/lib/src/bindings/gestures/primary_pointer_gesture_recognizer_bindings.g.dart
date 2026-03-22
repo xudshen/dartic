@@ -46,7 +46,7 @@ abstract final class PrimaryPointerGestureRecognizerBindings {
         'didStopTrackingLastPointer#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as PrimaryPointerGestureRecognizer).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as PrimaryPointerGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'resolve#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as PrimaryPointerGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
         'startTrackingPointer#2': (args) { (args[0] as PrimaryPointerGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },

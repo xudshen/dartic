@@ -32,7 +32,7 @@ abstract final class MaterialStateMixinBindings {
         'addMaterialState#1': (args) { (args[0] as MaterialStateMixin).addMaterialState(args[1] as WidgetState); return null; },
         'removeMaterialState#1': (args) { (args[0] as MaterialStateMixin).removeMaterialState(args[1] as WidgetState); return null; },
         'debugFillProperties#1': (args) { (args[0] as MaterialStateMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as MaterialStateMixin).toString(),
+        'toString#1': (args) => (args[0] as MaterialStateMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as MaterialStateMixin).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as MaterialStateMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as MaterialStateMixin).reassemble(); return null; },

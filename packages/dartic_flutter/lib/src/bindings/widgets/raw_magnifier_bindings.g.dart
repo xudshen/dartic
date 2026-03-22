@@ -33,7 +33,7 @@ abstract final class RawMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RawMagnifier).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as RawMagnifier).toString(),
+        'toString#1': (args) => (args[0] as RawMagnifier).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RawMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as RawMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -33,7 +33,7 @@ abstract final class TimePickerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as TimePickerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as TimePickerTheme).updateShouldNotify(args[1] as TimePickerTheme),
-        'toString#0': (args) => (args[0] as TimePickerTheme).toString(),
+        'toString#1': (args) => (args[0] as TimePickerTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TimePickerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as TimePickerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TimePickerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

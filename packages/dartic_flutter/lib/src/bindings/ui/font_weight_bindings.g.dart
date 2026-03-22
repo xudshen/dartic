@@ -47,5 +47,6 @@ abstract final class FontWeightBindings {
         'value#0': (args) => (args[0] as FontWeight).value,
         'hashCode#0': (args) => (args[0] as FontWeight).hashCode,
         '==#1': (args) => (args[0] as FontWeight) == (args[1] as Object),
+        '_#fromFields#2': (args) => FontWeight.values[args[0] as int],
       };
 }

@@ -38,7 +38,7 @@ abstract final class RenderSliverConstrainedCrossAxisBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverConstrainedCrossAxis).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverConstrainedCrossAxis).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverConstrainedCrossAxis).setupParentData(args[1] as RenderObject); return null; },
         'paint#2': (args) { (args[0] as RenderSliverConstrainedCrossAxis).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverConstrainedCrossAxis).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),

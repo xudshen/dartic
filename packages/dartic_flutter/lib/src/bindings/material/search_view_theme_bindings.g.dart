@@ -31,7 +31,7 @@ abstract final class SearchViewThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as SearchViewTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as SearchViewTheme).updateShouldNotify(args[1] as SearchViewTheme),
-        'toString#0': (args) => (args[0] as SearchViewTheme).toString(),
+        'toString#1': (args) => (args[0] as SearchViewTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SearchViewTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as SearchViewTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SearchViewTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

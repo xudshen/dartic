@@ -36,7 +36,7 @@ abstract final class RestorationMixinBindings {
         'didUpdateWidget#1': (args) { (args[0] as RestorationMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'didChangeDependencies#0': (args) { (args[0] as RestorationMixin).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as RestorationMixin).dispose(); return null; },
-        'toString#0': (args) => (args[0] as RestorationMixin).toString(),
+        'toString#1': (args) => (args[0] as RestorationMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as RestorationMixin).initState(); return null; },
         'reassemble#0': (args) { (args[0] as RestorationMixin).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RestorationMixin).setState(() => (args[1] as Function)()); return null; },

@@ -46,7 +46,7 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverSingleBoxAdapter).childMainAxisPosition(args[1] as RenderBox),
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverSingleBoxAdapter).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'paint#2': (args) { (args[0] as RenderSliverSingleBoxAdapter).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverSingleBoxAdapter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).performResize(); return null; },

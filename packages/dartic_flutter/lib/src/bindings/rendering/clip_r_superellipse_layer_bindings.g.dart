@@ -32,7 +32,7 @@ abstract final class ClipRSuperellipseLayerBindings {
         'findAnnotations#3': (args) => (args[0] as ClipRSuperellipseLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'addToScene#1': (args) { (args[0] as ClipRSuperellipseLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipRSuperellipseLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ClipRSuperellipseLayer).toString(),
+        'toString#1': (args) => (args[0] as ClipRSuperellipseLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as ClipRSuperellipseLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ClipRSuperellipseLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ClipRSuperellipseLayer).dispose(); return null; },

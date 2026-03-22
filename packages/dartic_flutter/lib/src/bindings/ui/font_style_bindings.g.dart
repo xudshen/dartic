@@ -37,5 +37,6 @@ abstract final class FontStyleBindings {
         'hashCode#0': (args) => (args[0] as FontStyle).hashCode,
         'index#0': (args) => (args[0] as FontStyle).index,
         '==#1': (args) => (args[0] as FontStyle) == (args[1] as Object),
+        '_#fromFields#2': (args) => FontStyle.values[args[1] as int],
       };
 }

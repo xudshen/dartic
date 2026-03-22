@@ -52,7 +52,7 @@ abstract final class CheckedPopupMenuItemBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CheckedPopupMenuItem).createState(),
-        'toString#0': (args) => (args[0] as CheckedPopupMenuItem).toString(),
+        'toString#1': (args) => (args[0] as CheckedPopupMenuItem).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'represents#1': (args) => (args[0] as CheckedPopupMenuItem).represents(args[1]),
         'createElement#0': (args) => (args[0] as CheckedPopupMenuItem).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckedPopupMenuItem).toStringShort(),

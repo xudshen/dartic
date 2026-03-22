@@ -40,7 +40,7 @@ abstract final class CupertinoContextMenuBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoContextMenu).createState(),
-        'toString#0': (args) => (args[0] as CupertinoContextMenu).toString(),
+        'toString#1': (args) => (args[0] as CupertinoContextMenu).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoContextMenu).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoContextMenu).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoContextMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

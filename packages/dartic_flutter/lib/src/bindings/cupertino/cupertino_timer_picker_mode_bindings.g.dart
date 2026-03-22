@@ -35,5 +35,6 @@ abstract final class CupertinoTimerPickerModeBindings {
         'hashCode#0': (args) => (args[0] as CupertinoTimerPickerMode).hashCode,
         'index#0': (args) => (args[0] as CupertinoTimerPickerMode).index,
         '==#1': (args) => (args[0] as CupertinoTimerPickerMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => CupertinoTimerPickerMode.values[args[1] as int],
       };
 }

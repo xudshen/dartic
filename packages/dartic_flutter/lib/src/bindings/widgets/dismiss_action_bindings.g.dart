@@ -32,7 +32,7 @@ abstract final class DismissActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as DismissAction).toString(),
+        'toString#1': (args) => (args[0] as DismissAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as DismissAction).isEnabled(args[1] as DismissIntent),
         'consumesKey#1': (args) => (args[0] as DismissAction).consumesKey(args[1] as DismissIntent),
         'toKeyEventResult#2': (args) => (args[0] as DismissAction).toKeyEventResult(args[1] as DismissIntent, args[2]),

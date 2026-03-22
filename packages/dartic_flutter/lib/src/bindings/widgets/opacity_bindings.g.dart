@@ -40,7 +40,7 @@ abstract final class OpacityBindings {
         'createRenderObject#1': (args) => (args[0] as Opacity).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Opacity).updateRenderObject(args[1] as BuildContext, args[2] as RenderOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as Opacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Opacity).toString(),
+        'toString#1': (args) => (args[0] as Opacity).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Opacity).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Opacity).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Opacity).toStringShort(),

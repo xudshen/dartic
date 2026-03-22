@@ -31,7 +31,7 @@ abstract final class VerticalDividerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as VerticalDivider).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as VerticalDivider).toString(),
+        'toString#1': (args) => (args[0] as VerticalDivider).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as VerticalDivider).createElement(),
         'toStringShort#0': (args) => (args[0] as VerticalDivider).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as VerticalDivider).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

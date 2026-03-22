@@ -32,7 +32,7 @@ abstract final class WidgetOrderTraversalPolicyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'sortDescendants#2': (args) => (args[0] as WidgetOrderTraversalPolicy).sortDescendants((args[1] as Iterable).cast<FocusNode>(), args[2] as FocusNode),
-        'toString#0': (args) => (args[0] as WidgetOrderTraversalPolicy).toString(),
+        'toString#1': (args) => (args[0] as WidgetOrderTraversalPolicy).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'findFirstFocus#2': (args) => (args[0] as WidgetOrderTraversalPolicy).findFirstFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'findLastFocus#2': (args) => (args[0] as WidgetOrderTraversalPolicy).findLastFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'findFirstFocusInDirection#2': (args) => (args[0] as WidgetOrderTraversalPolicy).findFirstFocusInDirection(args[1] as FocusNode, args[2] as TraversalDirection),

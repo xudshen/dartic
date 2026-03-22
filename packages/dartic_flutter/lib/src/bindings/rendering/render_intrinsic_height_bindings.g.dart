@@ -44,7 +44,7 @@ abstract final class RenderIntrinsicHeightBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderIntrinsicHeight).computeDryLayout(args[1] as BoxConstraints),
         'computeDryBaseline#2': (args) => (args[0] as RenderIntrinsicHeight).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderIntrinsicHeight).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderIntrinsicHeight).toString(),
+        'toString#1': (args) => (args[0] as RenderIntrinsicHeight).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderIntrinsicHeight).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicHeight).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicHeight).getMaxIntrinsicWidth(args[1] as double),

@@ -54,7 +54,7 @@ abstract final class RawChipBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RawChip).createState(),
-        'toString#0': (args) => (args[0] as RawChip).toString(),
+        'toString#1': (args) => (args[0] as RawChip).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RawChip).createElement(),
         'toStringShort#0': (args) => (args[0] as RawChip).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawChip).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

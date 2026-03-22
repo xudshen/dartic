@@ -49,7 +49,7 @@ abstract final class TextSpanBindings {
         'toStringShort#0': (args) => (args[0] as TextSpan).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as TextSpan).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as TextSpan).toString(),
+        'toString#1': (args) => (args[0] as TextSpan).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getSpanForPosition#1': (args) => (args[0] as TextSpan).getSpanForPosition(args[1] as ui.TextPosition),
         'toPlainText#2': (args) => (args[0] as TextSpan).toPlainText(includeSemanticsLabels: identical(args[1], darticAbsent) ? true : args[1] as bool, includePlaceholders: identical(args[2], darticAbsent) ? true : args[2] as bool),
         'getSemanticsInformation#0': (args) => (args[0] as TextSpan).getSemanticsInformation(),

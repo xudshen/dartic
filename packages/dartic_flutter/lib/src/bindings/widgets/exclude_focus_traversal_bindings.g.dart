@@ -31,7 +31,7 @@ abstract final class ExcludeFocusTraversalBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ExcludeFocusTraversal).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ExcludeFocusTraversal).toString(),
+        'toString#1': (args) => (args[0] as ExcludeFocusTraversal).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ExcludeFocusTraversal).createElement(),
         'toStringShort#0': (args) => (args[0] as ExcludeFocusTraversal).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ExcludeFocusTraversal).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

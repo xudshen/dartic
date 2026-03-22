@@ -37,5 +37,6 @@ abstract final class CrossAxisAlignmentBindings {
         'hashCode#0': (args) => (args[0] as CrossAxisAlignment).hashCode,
         'index#0': (args) => (args[0] as CrossAxisAlignment).index,
         '==#1': (args) => (args[0] as CrossAxisAlignment) == (args[1] as Object),
+        '_#fromFields#2': (args) => CrossAxisAlignment.values[args[1] as int],
       };
 }

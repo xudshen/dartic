@@ -39,5 +39,6 @@ abstract final class WidgetStateBindings {
         'hashCode#0': (args) => (args[0] as WidgetState).hashCode,
         'index#0': (args) => (args[0] as WidgetState).index,
         '==#1': (args) => (args[0] as WidgetState) == (args[1] as Object),
+        '_#fromFields#2': (args) => WidgetState.values[args[1] as int],
       };
 }

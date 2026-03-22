@@ -33,7 +33,7 @@ abstract final class RootRenderObjectElementBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RootRenderObjectElement).toString(),
+        'toString#1': (args) => (args[0] as RootRenderObjectElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as RootRenderObjectElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as RootRenderObjectElement).update(args[1] as Widget); return null; },
         'performRebuild#0': (args) { (args[0] as RootRenderObjectElement).performRebuild(); return null; },

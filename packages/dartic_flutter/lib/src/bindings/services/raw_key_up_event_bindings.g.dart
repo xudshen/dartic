@@ -35,7 +35,7 @@ abstract final class RawKeyUpEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RawKeyUpEvent).toString(),
+        'toString#1': (args) => (args[0] as RawKeyUpEvent).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isKeyPressed#1': (args) => (args[0] as RawKeyUpEvent).isKeyPressed(args[1] as LogicalKeyboardKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyUpEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as RawKeyUpEvent).toStringShort(),

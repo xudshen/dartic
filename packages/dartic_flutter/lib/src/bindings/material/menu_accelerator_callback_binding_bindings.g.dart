@@ -54,7 +54,7 @@ abstract final class MenuAcceleratorCallbackBindingBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as MenuAcceleratorCallbackBinding).updateShouldNotify(args[1] as MenuAcceleratorCallbackBinding),
-        'toString#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).toString(),
+        'toString#1': (args) => (args[0] as MenuAcceleratorCallbackBinding).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuAcceleratorCallbackBinding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

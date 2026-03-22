@@ -102,7 +102,7 @@ abstract final class RenderEditableBindings {
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderEditable).describeApproximatePaintClip(args[1] as RenderObject),
         'debugFillProperties#1': (args) { (args[0] as RenderEditable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderEditable).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderEditable).toString(),
+        'toString#1': (args) => (args[0] as RenderEditable).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderEditable).setupParentData(args[1] as RenderBox); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderEditable).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderEditable).getMaxIntrinsicWidth(args[1] as double),

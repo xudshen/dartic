@@ -38,5 +38,6 @@ abstract final class AndroidOverscrollIndicatorBindings {
         'hashCode#0': (args) => (args[0] as AndroidOverscrollIndicator).hashCode,
         'index#0': (args) => (args[0] as AndroidOverscrollIndicator).index,
         '==#1': (args) => (args[0] as AndroidOverscrollIndicator) == (args[1] as Object),
+        '_#fromFields#2': (args) => AndroidOverscrollIndicator.values[args[1] as int],
       };
 }

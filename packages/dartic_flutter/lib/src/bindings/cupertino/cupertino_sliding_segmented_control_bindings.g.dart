@@ -36,7 +36,7 @@ abstract final class CupertinoSlidingSegmentedControlBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).createState(),
-        'toString#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).toString(),
+        'toString#1': (args) => (args[0] as CupertinoSlidingSegmentedControl).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSlidingSegmentedControl).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

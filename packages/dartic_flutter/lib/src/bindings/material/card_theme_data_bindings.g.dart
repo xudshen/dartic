@@ -31,7 +31,7 @@ abstract final class CardThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#7': (args) => (args[0] as CardThemeData).copyWith(clipBehavior: identical(args[1], darticAbsent) ? null : args[1] as Clip?, color: identical(args[2], darticAbsent) ? null : args[2] as Color?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, elevation: identical(args[5], darticAbsent) ? null : args[5] as double?, margin: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, shape: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?),
         'debugFillProperties#1': (args) { (args[0] as CardThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as CardThemeData).toString(),
+        'toString#1': (args) => (args[0] as CardThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as CardThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as CardThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'clipBehavior#0': (args) => (args[0] as CardThemeData).clipBehavior,

@@ -67,7 +67,7 @@ abstract final class ContainerRenderObjectMixinBindings {
         'childBefore#1': (args) => (args[0] as ContainerRenderObjectMixin).childBefore(args[1] as RenderObject),
         'childAfter#1': (args) => (args[0] as ContainerRenderObjectMixin).childAfter(args[1] as RenderObject),
         'debugDescribeChildren#0': (args) => (args[0] as ContainerRenderObjectMixin).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as ContainerRenderObjectMixin).toString(),
+        'toString#1': (args) => (args[0] as ContainerRenderObjectMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as ContainerRenderObjectMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as ContainerRenderObjectMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as ContainerRenderObjectMixin).setupParentData(args[1] as RenderObject); return null; },

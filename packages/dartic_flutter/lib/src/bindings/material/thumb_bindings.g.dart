@@ -37,5 +37,6 @@ abstract final class ThumbBindings {
         'hashCode#0': (args) => (args[0] as Thumb).hashCode,
         'index#0': (args) => (args[0] as Thumb).index,
         '==#1': (args) => (args[0] as Thumb) == (args[1] as Object),
+        '_#fromFields#2': (args) => Thumb.values[args[1] as int],
       };
 }

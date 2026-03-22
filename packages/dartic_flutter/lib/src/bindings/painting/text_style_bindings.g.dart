@@ -38,7 +38,7 @@ abstract final class TextStyleBindings {
         'compareTo#1': (args) => (args[0] as TextStyle).compareTo(args[1] as TextStyle),
         'toStringShort#0': (args) => (args[0] as TextStyle).toStringShort(),
         'debugFillProperties#2': (args) { (args[0] as TextStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder, prefix: identical(args[2], darticAbsent) ? '' : args[2] as String); return null; },
-        'toString#0': (args) => (args[0] as TextStyle).toString(),
+        'toString#1': (args) => (args[0] as TextStyle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toDiagnosticsNode#2': (args) => (args[0] as TextStyle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'inherit#0': (args) => (args[0] as TextStyle).inherit,
         'color#0': (args) => (args[0] as TextStyle).color,

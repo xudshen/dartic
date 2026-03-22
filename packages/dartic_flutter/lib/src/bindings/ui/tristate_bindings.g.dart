@@ -42,5 +42,6 @@ abstract final class TristateBindings {
         'hashCode#0': (args) => (args[0] as Tristate).hashCode,
         'index#0': (args) => (args[0] as Tristate).index,
         '==#1': (args) => (args[0] as Tristate) == (args[1] as Object),
+        '_#fromFields#3': (args) => Tristate.values[args[1] as int],
       };
 }

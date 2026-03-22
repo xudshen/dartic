@@ -34,5 +34,6 @@ abstract final class MainAxisSizeBindings {
         'hashCode#0': (args) => (args[0] as MainAxisSize).hashCode,
         'index#0': (args) => (args[0] as MainAxisSize).index,
         '==#1': (args) => (args[0] as MainAxisSize) == (args[1] as Object),
+        '_#fromFields#2': (args) => MainAxisSize.values[args[1] as int],
       };
 }

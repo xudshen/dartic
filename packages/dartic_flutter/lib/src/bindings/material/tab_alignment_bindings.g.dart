@@ -48,5 +48,6 @@ abstract final class TabAlignmentBindings {
         'hashCode#0': (args) => (args[0] as TabAlignment).hashCode,
         'index#0': (args) => (args[0] as TabAlignment).index,
         '==#1': (args) => (args[0] as TabAlignment) == (args[1] as Object),
+        '_#fromFields#2': (args) => TabAlignment.values[args[1] as int],
       };
 }

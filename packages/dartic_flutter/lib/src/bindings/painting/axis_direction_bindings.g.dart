@@ -30,5 +30,6 @@ abstract final class AxisDirectionBindings {
         'hashCode#0': (args) => (args[0] as AxisDirection).hashCode,
         'index#0': (args) => (args[0] as AxisDirection).index,
         '==#1': (args) => (args[0] as AxisDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => AxisDirection.values[args[1] as int],
       };
 }

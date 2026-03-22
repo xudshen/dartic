@@ -53,7 +53,7 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
         'removeRenderObjectChild#2': (args) { (args[0] as SliverMultiBoxAdaptorElement).removeRenderObjectChild(args[1] as RenderObject, args[2] as int); return null; },
         'visitChildren#1': (args) { (args[0] as SliverMultiBoxAdaptorElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugVisitOnstageChildren#1': (args) { (args[0] as SliverMultiBoxAdaptorElement).debugVisitOnstageChildren((a) => (args[1] as Function)(a)); return null; },
-        'toString#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).toString(),
+        'toString#1': (args) => (args[0] as SliverMultiBoxAdaptorElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as SliverMultiBoxAdaptorElement).mount(args[1] as Element?, args[2]); return null; },
         'deactivate#0': (args) { (args[0] as SliverMultiBoxAdaptorElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SliverMultiBoxAdaptorElement).unmount(); return null; },

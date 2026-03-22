@@ -34,5 +34,6 @@ abstract final class FlexFitBindings {
         'hashCode#0': (args) => (args[0] as FlexFit).hashCode,
         'index#0': (args) => (args[0] as FlexFit).index,
         '==#1': (args) => (args[0] as FlexFit) == (args[1] as Object),
+        '_#fromFields#2': (args) => FlexFit.values[args[1] as int],
       };
 }

@@ -35,7 +35,7 @@ abstract final class OffsetLayerBindings {
         'debugFillProperties#1': (args) { (args[0] as OffsetLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toImage#2': (args) => (args[0] as OffsetLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'toImageSync#2': (args) => (args[0] as OffsetLayer).toImageSync(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
-        'toString#0': (args) => (args[0] as OffsetLayer).toString(),
+        'toString#1': (args) => (args[0] as OffsetLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as OffsetLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as OffsetLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as OffsetLayer).dispose(); return null; },

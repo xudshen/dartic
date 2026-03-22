@@ -35,7 +35,7 @@ abstract final class NotifiableElementMixinBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onNotification#1': (args) => (args[0] as NotifiableElementMixin).onNotification(args[1] as Notification),
         'attachNotificationTree#0': (args) { (args[0] as NotifiableElementMixin).attachNotificationTree(); return null; },
-        'toString#0': (args) => (args[0] as NotifiableElementMixin).toString(),
+        'toString#1': (args) => (args[0] as NotifiableElementMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as NotifiableElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as NotifiableElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as NotifiableElementMixin).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),

@@ -45,7 +45,7 @@ abstract final class RenderTapRegionSurfaceBindings {
         'unregisterTapRegion#1': (args) { (args[0] as RenderTapRegionSurface).unregisterTapRegion(args[1] as RenderTapRegion); return null; },
         'hitTest#2': (args) => (args[0] as RenderTapRegionSurface).hitTest(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'handleEvent#2': (args) { (args[0] as RenderTapRegionSurface).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
-        'toString#0': (args) => (args[0] as RenderTapRegionSurface).toString(),
+        'toString#1': (args) => (args[0] as RenderTapRegionSurface).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTestSelf#1': (args) => (args[0] as RenderTapRegionSurface).hitTestSelf(args[1] as Offset),
         'debugFillProperties#1': (args) { (args[0] as RenderTapRegionSurface).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'setupParentData#1': (args) { (args[0] as RenderTapRegionSurface).setupParentData(args[1] as RenderObject); return null; },

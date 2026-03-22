@@ -31,7 +31,7 @@ abstract final class FocusOrderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'compareTo#1': (args) => (args[0] as FocusOrder).compareTo(args[1] as FocusOrder),
         'doCompare#1': (args) => (args[0] as FocusOrder).doCompare(args[1] as FocusOrder),
-        'toString#0': (args) => (args[0] as FocusOrder).toString(),
+        'toString#1': (args) => (args[0] as FocusOrder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as FocusOrder).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as FocusOrder).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as FocusOrder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

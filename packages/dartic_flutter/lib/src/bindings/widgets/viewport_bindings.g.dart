@@ -39,7 +39,7 @@ abstract final class ViewportBindings {
         'updateRenderObject#2': (args) { (args[0] as Viewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderViewport); return null; },
         'createElement#0': (args) => (args[0] as Viewport).createElement(),
         'debugFillProperties#1': (args) { (args[0] as Viewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Viewport).toString(),
+        'toString#1': (args) => (args[0] as Viewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as Viewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Viewport).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Viewport).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

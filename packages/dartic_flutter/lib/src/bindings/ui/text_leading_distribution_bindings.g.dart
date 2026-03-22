@@ -37,5 +37,6 @@ abstract final class TextLeadingDistributionBindings {
         'hashCode#0': (args) => (args[0] as TextLeadingDistribution).hashCode,
         'index#0': (args) => (args[0] as TextLeadingDistribution).index,
         '==#1': (args) => (args[0] as TextLeadingDistribution) == (args[1] as Object),
+        '_#fromFields#2': (args) => TextLeadingDistribution.values[args[1] as int],
       };
 }

@@ -30,7 +30,7 @@ abstract final class FilledButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as FilledButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as FilledButtonTheme).updateShouldNotify(args[1] as FilledButtonTheme),
-        'toString#0': (args) => (args[0] as FilledButtonTheme).toString(),
+        'toString#1': (args) => (args[0] as FilledButtonTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as FilledButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as FilledButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FilledButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -30,7 +30,7 @@ abstract final class ViewportElementMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onNotification#1': (args) => (args[0] as ViewportElementMixin).onNotification(args[1] as Notification),
-        'toString#0': (args) => (args[0] as ViewportElementMixin).toString(),
+        'toString#1': (args) => (args[0] as ViewportElementMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attachNotificationTree#0': (args) { (args[0] as ViewportElementMixin).attachNotificationTree(); return null; },
         'reassemble#0': (args) { (args[0] as ViewportElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as ViewportElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),

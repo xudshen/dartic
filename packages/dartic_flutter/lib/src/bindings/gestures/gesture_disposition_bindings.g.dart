@@ -30,5 +30,6 @@ abstract final class GestureDispositionBindings {
         'hashCode#0': (args) => (args[0] as GestureDisposition).hashCode,
         'index#0': (args) => (args[0] as GestureDisposition).index,
         '==#1': (args) => (args[0] as GestureDisposition) == (args[1] as Object),
+        '_#fromFields#2': (args) => GestureDisposition.values[args[1] as int],
       };
 }

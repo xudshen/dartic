@@ -30,7 +30,7 @@ abstract final class ShaderMaskLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as ShaderMaskLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ShaderMaskLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ShaderMaskLayer).toString(),
+        'toString#1': (args) => (args[0] as ShaderMaskLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as ShaderMaskLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ShaderMaskLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ShaderMaskLayer).dispose(); return null; },

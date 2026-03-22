@@ -39,7 +39,7 @@ abstract final class AnimatedWidgetBaseStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'initState#0': (args) { (args[0] as AnimatedWidgetBaseState).initState(); return null; },
-        'toString#0': (args) => (args[0] as AnimatedWidgetBaseState).toString(),
+        'toString#1': (args) => (args[0] as AnimatedWidgetBaseState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUpdateWidget#1': (args) { (args[0] as AnimatedWidgetBaseState).didUpdateWidget(args[1] as ImplicitlyAnimatedWidget); return null; },
         'dispose#0': (args) { (args[0] as AnimatedWidgetBaseState).dispose(); return null; },
         'forEachTween#1': (args) { (args[0] as AnimatedWidgetBaseState).forEachTween((a, b, c) => (args[1] as Function)(a, b, c) as Tween<dynamic>?); return null; },

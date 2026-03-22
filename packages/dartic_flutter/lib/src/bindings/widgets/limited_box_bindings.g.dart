@@ -40,7 +40,7 @@ abstract final class LimitedBoxBindings {
         'createRenderObject#1': (args) => (args[0] as LimitedBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as LimitedBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderLimitedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as LimitedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as LimitedBox).toString(),
+        'toString#1': (args) => (args[0] as LimitedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as LimitedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as LimitedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as LimitedBox).toStringShort(),

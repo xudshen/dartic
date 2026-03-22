@@ -47,7 +47,7 @@ abstract final class HeroControllerScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as HeroControllerScope).updateShouldNotify(args[1] as HeroControllerScope),
-        'toString#0': (args) => (args[0] as HeroControllerScope).toString(),
+        'toString#1': (args) => (args[0] as HeroControllerScope).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as HeroControllerScope).createElement(),
         'toStringShort#0': (args) => (args[0] as HeroControllerScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as HeroControllerScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

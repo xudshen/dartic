@@ -39,7 +39,7 @@ abstract final class TextureBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as TextureBox).computeDryLayout(args[1] as BoxConstraints),
         'hitTestSelf#1': (args) => (args[0] as TextureBox).hitTestSelf(args[1] as Offset),
         'paint#2': (args) { (args[0] as TextureBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
-        'toString#0': (args) => (args[0] as TextureBox).toString(),
+        'toString#1': (args) => (args[0] as TextureBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as TextureBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as TextureBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as TextureBox).computeMinIntrinsicWidth(args[1] as double),

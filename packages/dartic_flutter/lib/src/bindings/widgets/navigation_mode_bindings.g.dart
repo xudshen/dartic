@@ -36,5 +36,6 @@ abstract final class NavigationModeBindings {
         'hashCode#0': (args) => (args[0] as NavigationMode).hashCode,
         'index#0': (args) => (args[0] as NavigationMode).index,
         '==#1': (args) => (args[0] as NavigationMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => NavigationMode.values[args[1] as int],
       };
 }

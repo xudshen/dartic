@@ -27,7 +27,7 @@ abstract final class InheritedThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as InheritedTheme).wrap(args[1] as BuildContext, args[2] as Widget),
-        'toString#0': (args) => (args[0] as InheritedTheme).toString(),
+        'toString#1': (args) => (args[0] as InheritedTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as InheritedTheme).createElement(),
         'updateShouldNotify#1': (args) => (args[0] as InheritedTheme).updateShouldNotify(args[1] as InheritedWidget),
         'toStringShort#0': (args) => (args[0] as InheritedTheme).toStringShort(),

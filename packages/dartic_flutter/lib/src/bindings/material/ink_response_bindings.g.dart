@@ -50,7 +50,7 @@ abstract final class InkResponseBindings {
         'getRectCallback#1': (args) => (args[0] as InkResponse).getRectCallback(args[1] as RenderBox),
         'build#1': (args) => (args[0] as InkResponse).build(args[1] as BuildContext),
         'debugCheckContext#1': (args) => (args[0] as InkResponse).debugCheckContext(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as InkResponse).toString(),
+        'toString#1': (args) => (args[0] as InkResponse).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as InkResponse).createElement(),
         'toStringShort#0': (args) => (args[0] as InkResponse).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InkResponse).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -57,5 +57,6 @@ abstract final class TimePickerEntryModeBindings {
         'hashCode#0': (args) => (args[0] as TimePickerEntryMode).hashCode,
         'index#0': (args) => (args[0] as TimePickerEntryMode).index,
         '==#1': (args) => (args[0] as TimePickerEntryMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => TimePickerEntryMode.values[args[1] as int],
       };
 }

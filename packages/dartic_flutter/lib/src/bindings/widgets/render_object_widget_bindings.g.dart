@@ -37,7 +37,7 @@ abstract final class RenderObjectWidgetBindings {
         'createRenderObject#1': (args) => (args[0] as RenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as RenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as RenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
-        'toString#0': (args) => (args[0] as RenderObjectWidget).toString(),
+        'toString#1': (args) => (args[0] as RenderObjectWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as RenderObjectWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RenderObjectWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as RenderObjectWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

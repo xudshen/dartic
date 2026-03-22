@@ -52,7 +52,7 @@ abstract final class CustomScrollViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildSlivers#1': (args) => (args[0] as CustomScrollView).buildSlivers(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as CustomScrollView).toString(),
+        'toString#1': (args) => (args[0] as CustomScrollView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getDirection#1': (args) => (args[0] as CustomScrollView).getDirection(args[1] as BuildContext),
         'buildViewport#4': (args) => (args[0] as CustomScrollView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as AxisDirection, (args[4] as List).cast<Widget>()),
         'build#1': (args) => (args[0] as CustomScrollView).build(args[1] as BuildContext),

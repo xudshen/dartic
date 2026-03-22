@@ -47,7 +47,7 @@ abstract final class BottomSheetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomSheet).createState(),
-        'toString#0': (args) => (args[0] as BottomSheet).toString(),
+        'toString#1': (args) => (args[0] as BottomSheet).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BottomSheet).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomSheet).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomSheet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

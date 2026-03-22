@@ -45,7 +45,7 @@ abstract final class RenderBaselineBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderBaseline).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderBaseline).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderBaseline).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderBaseline).toString(),
+        'toString#1': (args) => (args[0] as RenderBaseline).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderBaseline).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderBaseline).computeMaxIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicHeight#1': (args) => (args[0] as RenderBaseline).computeMinIntrinsicHeight(args[1] as double),

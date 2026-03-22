@@ -53,7 +53,7 @@ abstract final class RenderShrinkWrappingViewportBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderShrinkWrappingViewport).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderShrinkWrappingViewport).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderShrinkWrappingViewport).labelForChild(args[1] as int),
-        'toString#0': (args) => (args[0] as RenderShrinkWrappingViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderShrinkWrappingViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderShrinkWrappingViewport).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderShrinkWrappingViewport).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'attach#1': (args) { (args[0] as RenderShrinkWrappingViewport).attach(args[1] as PipelineOwner); return null; },

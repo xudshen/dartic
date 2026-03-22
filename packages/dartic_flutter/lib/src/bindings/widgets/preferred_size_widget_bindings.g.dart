@@ -27,7 +27,7 @@ abstract final class PreferredSizeWidgetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as PreferredSizeWidget).toString(),
+        'toString#1': (args) => (args[0] as PreferredSizeWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PreferredSizeWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as PreferredSizeWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PreferredSizeWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

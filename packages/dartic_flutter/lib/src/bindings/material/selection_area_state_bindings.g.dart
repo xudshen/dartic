@@ -35,7 +35,7 @@ abstract final class SelectionAreaStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SelectionAreaState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SelectionAreaState).toString(),
+        'toString#1': (args) => (args[0] as SelectionAreaState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as SelectionAreaState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as SelectionAreaState).didUpdateWidget(args[1] as SelectionArea); return null; },
         'reassemble#0': (args) { (args[0] as SelectionAreaState).reassemble(); return null; },

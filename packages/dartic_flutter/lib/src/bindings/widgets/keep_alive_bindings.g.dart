@@ -35,7 +35,7 @@ abstract final class KeepAliveBindings {
         'applyParentData#1': (args) { (args[0] as KeepAlive).applyParentData(args[1] as RenderObject); return null; },
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as KeepAlive).debugCanApplyOutOfTurn(),
         'debugFillProperties#1': (args) { (args[0] as KeepAlive).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as KeepAlive).toString(),
+        'toString#1': (args) => (args[0] as KeepAlive).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as KeepAlive).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as KeepAlive).debugIsValidRenderObject(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as KeepAlive).toStringShort(),

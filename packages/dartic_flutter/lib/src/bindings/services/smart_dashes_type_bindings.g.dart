@@ -41,5 +41,6 @@ abstract final class SmartDashesTypeBindings {
         'hashCode#0': (args) => (args[0] as SmartDashesType).hashCode,
         'index#0': (args) => (args[0] as SmartDashesType).index,
         '==#1': (args) => (args[0] as SmartDashesType) == (args[1] as Object),
+        '_#fromFields#2': (args) => SmartDashesType.values[args[1] as int],
       };
 }

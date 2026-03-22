@@ -40,7 +40,7 @@ abstract final class DecorationBindings {
                   }
                 },
         'getClipPath#2': (args) => (args[0] as Decoration).getClipPath(args[1] as Rect, args[2] as TextDirection),
-        'toString#0': (args) => (args[0] as Decoration).toString(),
+        'toString#1': (args) => (args[0] as Decoration).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toDiagnosticsNode#2': (args) => (args[0] as Decoration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as Decoration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'padding#0': (args) => (args[0] as Decoration).padding,

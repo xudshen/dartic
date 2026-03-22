@@ -29,7 +29,7 @@ abstract final class SliverLayoutBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverLayoutBuilder).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverLayoutBuilder).toString(),
+        'toString#1': (args) => (args[0] as SliverLayoutBuilder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverLayoutBuilder).createElement(),
         'updateShouldRebuild#1': (args) => (args[0] as SliverLayoutBuilder).updateShouldRebuild(args[1] as AbstractLayoutBuilder<SliverConstraints>),
         'updateRenderObject#2': (args) { (args[0] as SliverLayoutBuilder).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },

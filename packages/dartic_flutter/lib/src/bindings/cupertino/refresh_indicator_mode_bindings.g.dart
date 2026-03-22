@@ -37,5 +37,6 @@ abstract final class RefreshIndicatorModeBindings {
         'hashCode#0': (args) => (args[0] as RefreshIndicatorMode).hashCode,
         'index#0': (args) => (args[0] as RefreshIndicatorMode).index,
         '==#1': (args) => (args[0] as RefreshIndicatorMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => RefreshIndicatorMode.values[args[1] as int],
       };
 }

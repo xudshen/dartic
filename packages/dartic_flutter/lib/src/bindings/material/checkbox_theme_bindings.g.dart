@@ -31,7 +31,7 @@ abstract final class CheckboxThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as CheckboxTheme).updateShouldNotify(args[1] as CheckboxTheme),
-        'toString#0': (args) => (args[0] as CheckboxTheme).toString(),
+        'toString#1': (args) => (args[0] as CheckboxTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CheckboxTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckboxTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CheckboxTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

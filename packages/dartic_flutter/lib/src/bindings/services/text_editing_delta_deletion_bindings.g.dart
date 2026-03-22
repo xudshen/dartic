@@ -27,7 +27,7 @@ abstract final class TextEditingDeltaDeletionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaDeletion).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaDeletion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as TextEditingDeltaDeletion).toString(),
+        'toString#1': (args) => (args[0] as TextEditingDeltaDeletion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaDeletion).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaDeletion).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'deletedRange#0': (args) => (args[0] as TextEditingDeltaDeletion).deletedRange,

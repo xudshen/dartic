@@ -40,7 +40,7 @@ abstract final class UiKitViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as UiKitView).createState(),
-        'toString#0': (args) => (args[0] as UiKitView).toString(),
+        'toString#1': (args) => (args[0] as UiKitView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as UiKitView).createElement(),
         'toStringShort#0': (args) => (args[0] as UiKitView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UiKitView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

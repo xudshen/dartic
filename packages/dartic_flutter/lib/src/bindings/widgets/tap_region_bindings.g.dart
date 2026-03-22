@@ -34,7 +34,7 @@ abstract final class TapRegionBindings {
         'createRenderObject#1': (args) => (args[0] as TapRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as TapRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderTapRegion); return null; },
         'debugFillProperties#1': (args) { (args[0] as TapRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as TapRegion).toString(),
+        'toString#1': (args) => (args[0] as TapRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TapRegion).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as TapRegion).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as TapRegion).toStringShort(),

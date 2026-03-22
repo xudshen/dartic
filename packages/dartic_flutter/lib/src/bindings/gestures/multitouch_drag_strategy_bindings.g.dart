@@ -38,5 +38,6 @@ abstract final class MultitouchDragStrategyBindings {
         'hashCode#0': (args) => (args[0] as MultitouchDragStrategy).hashCode,
         'index#0': (args) => (args[0] as MultitouchDragStrategy).index,
         '==#1': (args) => (args[0] as MultitouchDragStrategy) == (args[1] as Object),
+        '_#fromFields#2': (args) => MultitouchDragStrategy.values[args[1] as int],
       };
 }

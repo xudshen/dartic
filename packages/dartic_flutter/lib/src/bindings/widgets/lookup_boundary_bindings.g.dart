@@ -37,7 +37,7 @@ abstract final class LookupBoundaryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as LookupBoundary).updateShouldNotify(args[1] as InheritedWidget),
-        'toString#0': (args) => (args[0] as LookupBoundary).toString(),
+        'toString#1': (args) => (args[0] as LookupBoundary).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as LookupBoundary).createElement(),
         'toStringShort#0': (args) => (args[0] as LookupBoundary).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as LookupBoundary).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

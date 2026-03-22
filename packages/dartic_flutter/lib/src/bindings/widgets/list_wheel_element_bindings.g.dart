@@ -55,7 +55,7 @@ abstract final class ListWheelElementBindings {
         'removeRenderObjectChild#2': (args) { (args[0] as ListWheelElement).removeRenderObjectChild(args[1] as RenderObject, args[2] as int); return null; },
         'visitChildren#1': (args) { (args[0] as ListWheelElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as ListWheelElement).forgetChild(args[1] as Element); return null; },
-        'toString#0': (args) => (args[0] as ListWheelElement).toString(),
+        'toString#1': (args) => (args[0] as ListWheelElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as ListWheelElement).mount(args[1] as Element?, args[2]); return null; },
         'deactivate#0': (args) { (args[0] as ListWheelElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as ListWheelElement).unmount(); return null; },

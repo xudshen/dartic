@@ -34,7 +34,7 @@ abstract final class PrimaryScrollControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as PrimaryScrollController).updateShouldNotify(args[1] as PrimaryScrollController),
         'debugFillProperties#1': (args) { (args[0] as PrimaryScrollController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as PrimaryScrollController).toString(),
+        'toString#1': (args) => (args[0] as PrimaryScrollController).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PrimaryScrollController).createElement(),
         'toStringShort#0': (args) => (args[0] as PrimaryScrollController).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as PrimaryScrollController).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

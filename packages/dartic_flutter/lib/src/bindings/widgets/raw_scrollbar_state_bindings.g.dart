@@ -66,7 +66,7 @@ abstract final class RawScrollbarStateBindings {
         'handleHoverExit#1': (args) { (args[0] as RawScrollbarState).handleHoverExit(args[1] as PointerExitEvent); return null; },
         'dispose#0': (args) { (args[0] as RawScrollbarState).dispose(); return null; },
         'build#1': (args) => (args[0] as RawScrollbarState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as RawScrollbarState).toString(),
+        'toString#1': (args) => (args[0] as RawScrollbarState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RawScrollbarState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RawScrollbarState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as RawScrollbarState).deactivate(); return null; },

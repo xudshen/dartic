@@ -45,7 +45,7 @@ abstract final class BottomNavigationBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomNavigationBar).createState(),
-        'toString#0': (args) => (args[0] as BottomNavigationBar).toString(),
+        'toString#1': (args) => (args[0] as BottomNavigationBar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BottomNavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomNavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomNavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

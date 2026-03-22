@@ -45,7 +45,7 @@ abstract final class PaginatedDataTableStateBindings {
         'dispose#0': (args) { (args[0] as PaginatedDataTableState).dispose(); return null; },
         'pageTo#1': (args) { (args[0] as PaginatedDataTableState).pageTo(args[1] as int); return null; },
         'build#1': (args) => (args[0] as PaginatedDataTableState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as PaginatedDataTableState).toString(),
+        'toString#1': (args) => (args[0] as PaginatedDataTableState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setState#1': (args) { (args[0] as PaginatedDataTableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as PaginatedDataTableState).deactivate(); return null; },
         'activate#0': (args) { (args[0] as PaginatedDataTableState).activate(); return null; },

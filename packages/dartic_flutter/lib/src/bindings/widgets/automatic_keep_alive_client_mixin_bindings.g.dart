@@ -33,7 +33,7 @@ abstract final class AutomaticKeepAliveClientMixinBindings {
         'initState#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).initState(); return null; },
         'deactivate#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).deactivate(); return null; },
         'build#1': (args) => (args[0] as AutomaticKeepAliveClientMixin).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).toString(),
+        'toString#1': (args) => (args[0] as AutomaticKeepAliveClientMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUpdateWidget#1': (args) { (args[0] as AutomaticKeepAliveClientMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).reassemble(); return null; },
         'setState#1': (args) { (args[0] as AutomaticKeepAliveClientMixin).setState(() => (args[1] as Function)()); return null; },

@@ -34,7 +34,7 @@ abstract final class UnderlineTabIndicatorBindings {
         'lerpTo#2': (args) => (args[0] as UnderlineTabIndicator).lerpTo(args[1] as Decoration?, args[2] as double),
         'createBoxPainter#1': (args) => (args[0] as UnderlineTabIndicator).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
         'getClipPath#2': (args) => (args[0] as UnderlineTabIndicator).getClipPath(args[1] as Rect, args[2] as TextDirection),
-        'toString#0': (args) => (args[0] as UnderlineTabIndicator).toString(),
+        'toString#1': (args) => (args[0] as UnderlineTabIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as UnderlineTabIndicator).toStringShort(),
         'debugAssertIsValid#0': (args) => (args[0] as UnderlineTabIndicator).debugAssertIsValid(),
         'hitTest#3': (args) => (args[0] as UnderlineTabIndicator).hitTest(args[1] as Size, args[2] as Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),

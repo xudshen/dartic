@@ -35,7 +35,7 @@ abstract final class PlaceholderSpanBindings {
         'computeSemanticsInformation#1': (args) { (args[0] as PlaceholderSpan).computeSemanticsInformation((args[1] as List).cast<InlineSpanSemanticsInformation>()); return null; },
         'debugFillProperties#1': (args) { (args[0] as PlaceholderSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugAssertIsValid#0': (args) => (args[0] as PlaceholderSpan).debugAssertIsValid(),
-        'toString#0': (args) => (args[0] as PlaceholderSpan).toString(),
+        'toString#1': (args) => (args[0] as PlaceholderSpan).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#3': (args) { (args[0] as PlaceholderSpan).build(args[1] as ui.ParagraphBuilder, textScaler: identical(args[2], darticAbsent) ? TextScaler.noScaling : args[2] as TextScaler, dimensions: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<PlaceholderDimensions>()); return null; },
         'visitChildren#1': (args) => (args[0] as PlaceholderSpan).visitChildren((a) => (args[1] as Function)(a) as bool),
         'visitDirectChildren#1': (args) => (args[0] as PlaceholderSpan).visitDirectChildren((a) => (args[1] as Function)(a) as bool),

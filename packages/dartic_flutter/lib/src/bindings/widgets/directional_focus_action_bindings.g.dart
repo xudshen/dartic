@@ -30,7 +30,7 @@ abstract final class DirectionalFocusActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) { (args[0] as DirectionalFocusAction).invoke(args[1] as DirectionalFocusIntent); return null; },
-        'toString#0': (args) => (args[0] as DirectionalFocusAction).toString(),
+        'toString#1': (args) => (args[0] as DirectionalFocusAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as DirectionalFocusAction).isEnabled(args[1] as DirectionalFocusIntent),
         'consumesKey#1': (args) => (args[0] as DirectionalFocusAction).consumesKey(args[1] as DirectionalFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as DirectionalFocusAction).toKeyEventResult(args[1] as DirectionalFocusIntent, args[2]),

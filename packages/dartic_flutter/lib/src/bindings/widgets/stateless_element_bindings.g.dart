@@ -35,7 +35,7 @@ abstract final class StatelessElementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#0': (args) => (args[0] as StatelessElement).build(),
         'update#1': (args) { (args[0] as StatelessElement).update(args[1] as StatelessWidget); return null; },
-        'toString#0': (args) => (args[0] as StatelessElement).toString(),
+        'toString#1': (args) => (args[0] as StatelessElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'mount#2': (args) { (args[0] as StatelessElement).mount(args[1] as Element?, args[2]); return null; },
         'performRebuild#0': (args) { (args[0] as StatelessElement).performRebuild(); return null; },
         'visitChildren#1': (args) { (args[0] as StatelessElement).visitChildren((a) => (args[1] as Function)(a)); return null; },

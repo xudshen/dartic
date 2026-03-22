@@ -50,7 +50,7 @@ abstract final class ConstraintsTransformBoxBindings {
         'createRenderObject#1': (args) => (args[0] as ConstraintsTransformBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ConstraintsTransformBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderConstraintsTransformBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as ConstraintsTransformBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ConstraintsTransformBox).toString(),
+        'toString#1': (args) => (args[0] as ConstraintsTransformBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ConstraintsTransformBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ConstraintsTransformBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ConstraintsTransformBox).toStringShort(),

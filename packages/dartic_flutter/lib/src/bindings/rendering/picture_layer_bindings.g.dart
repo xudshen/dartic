@@ -32,7 +32,7 @@ abstract final class PictureLayerBindings {
         'addToScene#1': (args) { (args[0] as PictureLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as PictureLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'findAnnotations#3': (args) => (args[0] as PictureLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
-        'toString#0': (args) => (args[0] as PictureLayer).toString(),
+        'toString#1': (args) => (args[0] as PictureLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as PictureLayer).supportsRasterization(),
         'describeClipBounds#0': (args) => (args[0] as PictureLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PictureLayer).addCompositionCallback((a) => (args[1] as Function)(a)),

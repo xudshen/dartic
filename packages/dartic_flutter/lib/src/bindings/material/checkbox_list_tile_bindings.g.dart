@@ -41,7 +41,7 @@ abstract final class CheckboxListTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CheckboxListTile).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as CheckboxListTile).toString(),
+        'toString#1': (args) => (args[0] as CheckboxListTile).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CheckboxListTile).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckboxListTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CheckboxListTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

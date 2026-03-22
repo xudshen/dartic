@@ -44,7 +44,7 @@ abstract final class RootWidgetBindings {
         'createElement#0': (args) => (args[0] as RootWidget).createElement(),
         'attach#2': (args) => (args[0] as RootWidget).attach(args[1] as BuildOwner, identical(args[2], darticAbsent) ? null : args[2] as RootElement?),
         'toStringShort#0': (args) => (args[0] as RootWidget).toStringShort(),
-        'toString#0': (args) => (args[0] as RootWidget).toString(),
+        'toString#1': (args) => (args[0] as RootWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugFillProperties#1': (args) { (args[0] as RootWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as RootWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as RootWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),

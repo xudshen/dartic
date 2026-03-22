@@ -36,7 +36,7 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).toString(),
+        'toString#1': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'copyWith#7': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).copyWith(context: identical(args[1], darticAbsent) ? null : args[1] as DiagnosticsNode?, exception: identical(args[2], darticAbsent) ? null : args[2], informationCollector: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), library: identical(args[4], darticAbsent) ? null : args[4] as String?, silent: identical(args[5], darticAbsent) ? null : args[5] as bool?, stack: identical(args[6], darticAbsent) ? null : args[6] as StackTrace?, stackFilter: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a)),
         'exceptionAsString#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).exceptionAsString(),
         'debugFillProperties#1': (args) { (args[0] as FlutterErrorDetailsForPointerEventDispatcher).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

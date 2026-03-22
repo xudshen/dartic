@@ -40,7 +40,7 @@ abstract final class ListTileThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ListTileTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ListTileTheme).updateShouldNotify(args[1] as ListTileTheme),
-        'toString#0': (args) => (args[0] as ListTileTheme).toString(),
+        'toString#1': (args) => (args[0] as ListTileTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ListTileTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ListTileTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ListTileTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

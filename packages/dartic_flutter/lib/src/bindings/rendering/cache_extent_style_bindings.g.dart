@@ -37,5 +37,6 @@ abstract final class CacheExtentStyleBindings {
         'hashCode#0': (args) => (args[0] as CacheExtentStyle).hashCode,
         'index#0': (args) => (args[0] as CacheExtentStyle).index,
         '==#1': (args) => (args[0] as CacheExtentStyle) == (args[1] as Object),
+        '_#fromFields#2': (args) => CacheExtentStyle.values[args[1] as int],
       };
 }

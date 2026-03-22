@@ -30,7 +30,7 @@ abstract final class TextureBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as Texture).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Texture).updateRenderObject(args[1] as BuildContext, args[2] as TextureBox); return null; },
-        'toString#0': (args) => (args[0] as Texture).toString(),
+        'toString#1': (args) => (args[0] as Texture).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Texture).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Texture).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Texture).toStringShort(),

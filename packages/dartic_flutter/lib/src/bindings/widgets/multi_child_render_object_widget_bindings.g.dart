@@ -34,7 +34,7 @@ abstract final class MultiChildRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as MultiChildRenderObjectWidget).createElement(),
-        'toString#0': (args) => (args[0] as MultiChildRenderObjectWidget).toString(),
+        'toString#1': (args) => (args[0] as MultiChildRenderObjectWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createRenderObject#1': (args) => (args[0] as MultiChildRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as MultiChildRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as MultiChildRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },

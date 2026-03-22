@@ -31,7 +31,7 @@ abstract final class PreviousFocusActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as PreviousFocusAction).invoke(args[1] as PreviousFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as PreviousFocusAction).toKeyEventResult(args[1] as PreviousFocusIntent, args[2] as bool),
-        'toString#0': (args) => (args[0] as PreviousFocusAction).toString(),
+        'toString#1': (args) => (args[0] as PreviousFocusAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as PreviousFocusAction).isEnabled(args[1] as PreviousFocusIntent),
         'consumesKey#1': (args) => (args[0] as PreviousFocusAction).consumesKey(args[1] as PreviousFocusIntent),
         'addActionListener#1': (args) { (args[0] as PreviousFocusAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

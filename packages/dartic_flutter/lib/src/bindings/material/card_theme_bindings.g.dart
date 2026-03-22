@@ -35,7 +35,7 @@ abstract final class CardThemeBindings {
         'copyWith#7': (args) => (args[0] as CardTheme).copyWith(clipBehavior: identical(args[1], darticAbsent) ? null : args[1] as Clip?, color: identical(args[2], darticAbsent) ? null : args[2] as Color?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, elevation: identical(args[5], darticAbsent) ? null : args[5] as double?, margin: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, shape: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?),
         'updateShouldNotify#1': (args) => (args[0] as CardTheme).updateShouldNotify(args[1] as CardTheme),
         'debugFillProperties#1': (args) { (args[0] as CardTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as CardTheme).toString(),
+        'toString#1': (args) => (args[0] as CardTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CardTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as CardTheme).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CardTheme).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

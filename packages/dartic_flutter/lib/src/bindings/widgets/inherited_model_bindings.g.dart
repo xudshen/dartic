@@ -29,7 +29,7 @@ abstract final class InheritedModelBindings {
         'createElement#0': (args) => (args[0] as InheritedModel).createElement(),
         'updateShouldNotifyDependent#2': (args) => (args[0] as InheritedModel).updateShouldNotifyDependent(args[1] as InheritedModel, args[2] as Set),
         'isSupportedAspect#1': (args) => (args[0] as InheritedModel).isSupportedAspect(args[1] as Object),
-        'toString#0': (args) => (args[0] as InheritedModel).toString(),
+        'toString#1': (args) => (args[0] as InheritedModel).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateShouldNotify#1': (args) => (args[0] as InheritedModel).updateShouldNotify(args[1] as InheritedWidget),
         'toStringShort#0': (args) => (args[0] as InheritedModel).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

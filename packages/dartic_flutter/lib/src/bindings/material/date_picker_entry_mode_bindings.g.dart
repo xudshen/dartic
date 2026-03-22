@@ -32,5 +32,6 @@ abstract final class DatePickerEntryModeBindings {
         'hashCode#0': (args) => (args[0] as DatePickerEntryMode).hashCode,
         'index#0': (args) => (args[0] as DatePickerEntryMode).index,
         '==#1': (args) => (args[0] as DatePickerEntryMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => DatePickerEntryMode.values[args[1] as int],
       };
 }

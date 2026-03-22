@@ -30,7 +30,7 @@ abstract final class IconThemeDataBindings {
         'merge#1': (args) => (args[0] as IconThemeData).merge(args[1] as IconThemeData?),
         'resolve#1': (args) => (args[0] as IconThemeData).resolve(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as IconThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as IconThemeData).toString(),
+        'toString#1': (args) => (args[0] as IconThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as IconThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IconThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'isConcrete#0': (args) => (args[0] as IconThemeData).isConcrete,

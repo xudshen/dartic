@@ -50,7 +50,7 @@ abstract final class RenderSliverPersistentHeaderBindings {
         'paint#2': (args) { (args[0] as RenderSliverPersistentHeader).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSliverPersistentHeader).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverPersistentHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverPersistentHeader).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverPersistentHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverPersistentHeader).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverPersistentHeader).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverPersistentHeader).performResize(); return null; },

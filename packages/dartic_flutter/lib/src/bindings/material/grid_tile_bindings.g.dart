@@ -26,7 +26,7 @@ abstract final class GridTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as GridTile).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as GridTile).toString(),
+        'toString#1': (args) => (args[0] as GridTile).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as GridTile).createElement(),
         'toStringShort#0': (args) => (args[0] as GridTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as GridTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

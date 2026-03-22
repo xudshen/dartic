@@ -26,5 +26,6 @@ abstract final class SchedulerServiceExtensionsBindings {
         'hashCode#0': (args) => (args[0] as SchedulerServiceExtensions).hashCode,
         'index#0': (args) => (args[0] as SchedulerServiceExtensions).index,
         '==#1': (args) => (args[0] as SchedulerServiceExtensions) == (args[1] as Object),
+        '_#fromFields#2': (args) => SchedulerServiceExtensions.values[args[1] as int],
       };
 }

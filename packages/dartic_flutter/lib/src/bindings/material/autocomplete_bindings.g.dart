@@ -38,7 +38,7 @@ abstract final class AutocompleteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Autocomplete).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as Autocomplete).toString(),
+        'toString#1': (args) => (args[0] as Autocomplete).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Autocomplete).createElement(),
         'toStringShort#0': (args) => (args[0] as Autocomplete).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Autocomplete).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

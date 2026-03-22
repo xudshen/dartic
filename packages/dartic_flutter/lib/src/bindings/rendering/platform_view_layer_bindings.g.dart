@@ -30,7 +30,7 @@ abstract final class PlatformViewLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'supportsRasterization#0': (args) => (args[0] as PlatformViewLayer).supportsRasterization(),
         'addToScene#1': (args) { (args[0] as PlatformViewLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
-        'toString#0': (args) => (args[0] as PlatformViewLayer).toString(),
+        'toString#1': (args) => (args[0] as PlatformViewLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'describeClipBounds#0': (args) => (args[0] as PlatformViewLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PlatformViewLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
         'dispose#0': (args) { (args[0] as PlatformViewLayer).dispose(); return null; },

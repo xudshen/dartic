@@ -95,7 +95,7 @@ abstract final class MaterialBasedCupertinoThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#8': (args) => (args[0] as MaterialBasedCupertinoThemeData).copyWith(brightness: identical(args[1], darticAbsent) ? null : args[1] as Brightness?, primaryColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, primaryContrastingColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, textTheme: identical(args[4], darticAbsent) ? null : args[4] as CupertinoTextThemeData?, barBackgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, scaffoldBackgroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, selectionHandleColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, applyThemeToAll: identical(args[8], darticAbsent) ? null : args[8] as bool?),
         'resolveFrom#1': (args) => (args[0] as MaterialBasedCupertinoThemeData).resolveFrom(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as MaterialBasedCupertinoThemeData).toString(),
+        'toString#1': (args) => (args[0] as MaterialBasedCupertinoThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'noDefault#0': (args) => (args[0] as MaterialBasedCupertinoThemeData).noDefault(),
         'debugFillProperties#1': (args) { (args[0] as MaterialBasedCupertinoThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as MaterialBasedCupertinoThemeData).toStringShort(),

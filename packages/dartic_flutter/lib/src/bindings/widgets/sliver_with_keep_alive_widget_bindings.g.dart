@@ -33,7 +33,7 @@ abstract final class SliverWithKeepAliveWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverWithKeepAliveWidget).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverWithKeepAliveWidget).toString(),
+        'toString#1': (args) => (args[0] as SliverWithKeepAliveWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverWithKeepAliveWidget).createElement(),
         'updateRenderObject#2': (args) { (args[0] as SliverWithKeepAliveWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SliverWithKeepAliveWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },

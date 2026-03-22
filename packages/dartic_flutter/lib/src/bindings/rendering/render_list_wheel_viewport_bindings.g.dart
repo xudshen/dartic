@@ -66,7 +66,7 @@ abstract final class RenderListWheelViewportBindings {
         'hitTestChildren#2': (args) => (args[0] as RenderListWheelViewport).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'getOffsetToReveal#4': (args) => (args[0] as RenderListWheelViewport).getOffsetToReveal(args[1] as RenderObject, args[2] as double, rect: identical(args[3], darticAbsent) ? null : args[3] as Rect?, axis: identical(args[4], darticAbsent) ? null : args[4] as Axis?),
         'showOnScreen#4': (args) { (args[0] as RenderListWheelViewport).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
-        'toString#0': (args) => (args[0] as RenderListWheelViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderListWheelViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderListWheelViewport).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderListWheelViewport).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderListWheelViewport).getMinIntrinsicHeight(args[1] as double),

@@ -29,7 +29,7 @@ abstract final class CupertinoLinearActivityIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoLinearActivityIndicator).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as CupertinoLinearActivityIndicator).toString(),
+        'toString#1': (args) => (args[0] as CupertinoLinearActivityIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CupertinoLinearActivityIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoLinearActivityIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoLinearActivityIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

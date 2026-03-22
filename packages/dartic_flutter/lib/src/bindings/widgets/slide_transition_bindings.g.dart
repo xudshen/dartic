@@ -34,7 +34,7 @@ abstract final class SlideTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SlideTransition).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SlideTransition).toString(),
+        'toString#1': (args) => (args[0] as SlideTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as SlideTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as SlideTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as SlideTransition).createElement(),

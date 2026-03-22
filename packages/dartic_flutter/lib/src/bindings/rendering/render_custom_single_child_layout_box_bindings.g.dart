@@ -50,7 +50,7 @@ abstract final class RenderCustomSingleChildLayoutBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDryLayout(args[1] as BoxConstraints),
         'computeDryBaseline#2': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderCustomSingleChildLayoutBox).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).toString(),
+        'toString#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderCustomSingleChildLayoutBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderCustomSingleChildLayoutBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),

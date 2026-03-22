@@ -59,7 +59,7 @@ abstract final class RenderNestedScrollViewViewportBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'markNeedsLayout#0': (args) { (args[0] as RenderNestedScrollViewViewport).markNeedsLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderNestedScrollViewViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderNestedScrollViewViewport).toString(),
+        'toString#1': (args) => (args[0] as RenderNestedScrollViewViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderNestedScrollViewViewport).setupParentData(args[1] as RenderObject); return null; },
         'computeDryLayout#1': (args) => (args[0] as RenderNestedScrollViewViewport).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderNestedScrollViewViewport).performLayout(); return null; },

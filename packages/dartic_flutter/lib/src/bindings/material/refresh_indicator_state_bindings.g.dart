@@ -40,7 +40,7 @@ abstract final class RefreshIndicatorStateBindings {
         'dispose#0': (args) { (args[0] as RefreshIndicatorState).dispose(); return null; },
         'show#1': (args) => (args[0] as RefreshIndicatorState).show(atTop: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'build#1': (args) => (args[0] as RefreshIndicatorState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as RefreshIndicatorState).toString(),
+        'toString#1': (args) => (args[0] as RefreshIndicatorState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RefreshIndicatorState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RefreshIndicatorState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as RefreshIndicatorState).deactivate(); return null; },

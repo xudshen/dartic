@@ -44,7 +44,7 @@ abstract final class RenderSliverOffstageBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverOffstage).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOffstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderSliverOffstage).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderSliverOffstage).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverOffstage).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverOffstage).setupParentData(args[1] as RenderObject); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverOffstage).childMainAxisPosition(args[1] as RenderSliver),
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverOffstage).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },

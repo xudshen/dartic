@@ -36,5 +36,6 @@ abstract final class StretchModeBindings {
         'hashCode#0': (args) => (args[0] as StretchMode).hashCode,
         'index#0': (args) => (args[0] as StretchMode).index,
         '==#1': (args) => (args[0] as StretchMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => StretchMode.values[args[1] as int],
       };
 }

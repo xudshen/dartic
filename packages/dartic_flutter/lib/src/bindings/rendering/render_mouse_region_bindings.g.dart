@@ -46,7 +46,7 @@ abstract final class RenderMouseRegionBindings {
         'detach#0': (args) { (args[0] as RenderMouseRegion).detach(); return null; },
         'computeSizeForNoChild#1': (args) => (args[0] as RenderMouseRegion).computeSizeForNoChild(args[1] as BoxConstraints),
         'debugFillProperties#1': (args) { (args[0] as RenderMouseRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderMouseRegion).toString(),
+        'toString#1': (args) => (args[0] as RenderMouseRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTestSelf#1': (args) => (args[0] as RenderMouseRegion).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderMouseRegion).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderMouseRegion).getMinIntrinsicWidth(args[1] as double),

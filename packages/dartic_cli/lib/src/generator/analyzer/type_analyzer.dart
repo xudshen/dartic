@@ -166,13 +166,10 @@ class TypeAnalyzer {
     final isFinal = cls is ClassElement &&
         (cls.isFinal || cls.isSealed);
 
-    // Check if the class is an interface class (abstract interface class).
-    // Interface Bridges use `implements` instead of `extends`.
-    final isInterface = cls is ClassElement &&
-        cls.isAbstract &&
-        !cls.isSealed &&
-        !cls.isMixinClass &&
-        cls.constructors.every((c) => c.isFactory || c.isSynthetic);
+    // Check if the class uses the Dart 3 `interface` modifier.
+    // Interface classes can only be `implements`-ed, not `extends`-ed from
+    // outside their library. Bridge generation uses `implements` for these.
+    final isInterface = cls is ClassElement && cls.isInterface;
 
     // Check if the class uses the `base` modifier (Bridge must also be base).
     final isBase = cls is ClassElement && cls.isBase;
@@ -219,11 +216,16 @@ class TypeAnalyzer {
       } else if (method.isOperator) {
         operators.add(_toOperatorInfo(method));
       } else {
-        // Skip Object methods (toString, noSuchMethod) unless the class
-        // declares them — avoids redundant bindings on every class.
-        // Note: == is an operator, handled above (not filtered).
+        // Skip Object methods (toString, noSuchMethod) unless:
+        // 1. The class declares them directly, OR
+        // 2. An ancestor overrides them with a different signature
+        //    (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})).
+        // When the signature differs (has params Object's version doesn't),
+        // the Bridge must use the correct signature, not the hardcoded
+        // Object fallback.
         if (objectMethodNames.contains(name) &&
-            !_isDeclaredInClass(method, cls)) {
+            !_isDeclaredInClass(method, cls) &&
+            method.formalParameters.isEmpty) {
           continue;
         }
         methods.add(_toMethodInfo(method));
@@ -302,11 +304,19 @@ class TypeAnalyzer {
       }
       if (!methods.any((m) => m.name == 'toString') &&
           !staticMethods.any((m) => m.name == 'toString')) {
-        methods.add(MethodInfo(
-          name: 'toString',
-          paramTypes: const [],
-          returnType: 'String',
-        ));
+        // Check if an ancestor overrides toString with a different signature
+        // (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})).
+        // If so, use the inherited signature instead of Object's plain version.
+        final inheritedToString = _findInheritedToString(cls);
+        if (inheritedToString != null) {
+          methods.add(inheritedToString);
+        } else {
+          methods.add(MethodInfo(
+            name: 'toString',
+            paramTypes: const [],
+            returnType: 'String',
+          ));
+        }
       }
     }
 
@@ -534,6 +544,27 @@ class TypeAnalyzer {
     return member.enclosingElement == cls;
   }
 
+  /// Finds an inherited `toString` with a non-Object signature (has parameters).
+  ///
+  /// Walks the supertype chain looking for `toString` with named/optional
+  /// params (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})).
+  /// Returns a [MethodInfo] with the correct signature, or null if only
+  /// Object's plain `toString()` is found.
+  MethodInfo? _findInheritedToString(InterfaceElement cls) {
+    // Walk supertypes (skip Object itself).
+    for (final supertype in cls.allSupertypes) {
+      final superCls = supertype.element;
+      if (superCls.name == 'Object') continue;
+      for (final method in superCls.methods) {
+        if (method.name == 'toString' &&
+            method.formalParameters.isNotEmpty) {
+          return _toMethodInfo(method);
+        }
+      }
+    }
+    return null;
+  }
+
   /// Checks if an element has the `@mustCallSuper` annotation.
   bool _hasMustCallSuper(ExecutableElement element) {
     for (final annotation in element.metadata.annotations) {
@@ -593,12 +624,21 @@ class TypeAnalyzer {
     final params = method.formalParameters;
     final isUnary = params.isEmpty;
 
+    // For []=, the second parameter is the value type.
+    final String? valueType;
+    if (name == '[]=' && params.length >= 2) {
+      valueType = _sanitizeType(params[1].type);
+    } else {
+      valueType = null;
+    }
+
     return OperatorInfo(
       name: name,
       lookupName: lookupName,
       paramType: isUnary ? null : _sanitizeType(params.first.type),
       returnType: _sanitizeType(method.returnType),
       isAbstract: method.isAbstract,
+      valueType: valueType,
     );
   }
 

@@ -30,7 +30,7 @@ abstract final class SystemUiOverlayStyleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#8': (args) => (args[0] as SystemUiOverlayStyle).copyWith(systemNavigationBarColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, systemNavigationBarDividerColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, systemNavigationBarContrastEnforced: identical(args[3], darticAbsent) ? null : args[3] as bool?, statusBarColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, statusBarBrightness: identical(args[5], darticAbsent) ? null : args[5] as Brightness?, statusBarIconBrightness: identical(args[6], darticAbsent) ? null : args[6] as Brightness?, systemStatusBarContrastEnforced: identical(args[7], darticAbsent) ? null : args[7] as bool?, systemNavigationBarIconBrightness: identical(args[8], darticAbsent) ? null : args[8] as Brightness?),
         'debugFillProperties#1': (args) { (args[0] as SystemUiOverlayStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as SystemUiOverlayStyle).toString(),
+        'toString#1': (args) => (args[0] as SystemUiOverlayStyle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as SystemUiOverlayStyle).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SystemUiOverlayStyle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'systemNavigationBarColor#0': (args) => (args[0] as SystemUiOverlayStyle).systemNavigationBarColor,

@@ -39,7 +39,7 @@ abstract final class ScrollActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isEnabled#2': (args) => (args[0] as ScrollAction).isEnabled(args[1] as ScrollIntent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
         'invoke#2': (args) { (args[0] as ScrollAction).invoke(args[1] as ScrollIntent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?); return null; },
-        'toString#0': (args) => (args[0] as ScrollAction).toString(),
+        'toString#1': (args) => (args[0] as ScrollAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'consumesKey#1': (args) => (args[0] as ScrollAction).consumesKey(args[1] as ScrollIntent),
         'toKeyEventResult#2': (args) => (args[0] as ScrollAction).toKeyEventResult(args[1] as ScrollIntent, args[2]),
         'addActionListener#1': (args) { (args[0] as ScrollAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

@@ -47,7 +47,7 @@ abstract final class RawKeyEventDataAndroidBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataAndroid).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataAndroid).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataAndroid).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RawKeyEventDataAndroid).toString(),
+        'toString#1': (args) => (args[0] as RawKeyEventDataAndroid).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataAndroid).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataAndroid).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataAndroid).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

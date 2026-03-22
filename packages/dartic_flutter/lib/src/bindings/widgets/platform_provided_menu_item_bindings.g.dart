@@ -34,7 +34,7 @@ abstract final class PlatformProvidedMenuItemBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toChannelRepresentation#2': (args) => (args[0] as PlatformProvidedMenuItem).toChannelRepresentation(args[1] as PlatformMenuDelegate, getId: (a) => (args[2] as Function)(a) as int),
         'debugFillProperties#1': (args) { (args[0] as PlatformProvidedMenuItem).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as PlatformProvidedMenuItem).toString(),
+        'toString#1': (args) => (args[0] as PlatformProvidedMenuItem).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as PlatformProvidedMenuItem).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformProvidedMenuItem).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'type#0': (args) => (args[0] as PlatformProvidedMenuItem).type,

@@ -37,5 +37,6 @@ abstract final class TraversalDirectionBindings {
         'hashCode#0': (args) => (args[0] as TraversalDirection).hashCode,
         'index#0': (args) => (args[0] as TraversalDirection).index,
         '==#1': (args) => (args[0] as TraversalDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => TraversalDirection.values[args[1] as int],
       };
 }

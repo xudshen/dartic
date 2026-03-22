@@ -39,7 +39,7 @@ abstract final class PositionedBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as Positioned).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as Positioned).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Positioned).toString(),
+        'toString#1': (args) => (args[0] as Positioned).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Positioned).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as Positioned).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as Positioned).debugCanApplyOutOfTurn(),

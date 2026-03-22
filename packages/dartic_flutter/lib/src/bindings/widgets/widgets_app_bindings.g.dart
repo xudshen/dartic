@@ -61,7 +61,7 @@ abstract final class WidgetsAppBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as WidgetsApp).createState(),
-        'toString#0': (args) => (args[0] as WidgetsApp).toString(),
+        'toString#1': (args) => (args[0] as WidgetsApp).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as WidgetsApp).createElement(),
         'toStringShort#0': (args) => (args[0] as WidgetsApp).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WidgetsApp).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

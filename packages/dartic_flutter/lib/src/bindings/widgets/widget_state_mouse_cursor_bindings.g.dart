@@ -30,7 +30,7 @@ abstract final class WidgetStateMouseCursorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createSession#1': (args) => (args[0] as WidgetStateMouseCursor).createSession(args[1] as int),
         'resolve#1': (args) => (args[0] as WidgetStateMouseCursor).resolve((args[1] as Set).cast<WidgetState>()),
-        'toString#0': (args) => (args[0] as WidgetStateMouseCursor).toString(),
+        'toString#1': (args) => (args[0] as WidgetStateMouseCursor).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as WidgetStateMouseCursor).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as WidgetStateMouseCursor).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as WidgetStateMouseCursor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

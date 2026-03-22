@@ -31,7 +31,7 @@ abstract final class MenuThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MenuTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MenuTheme).updateShouldNotify(args[1] as MenuTheme),
-        'toString#0': (args) => (args[0] as MenuTheme).toString(),
+        'toString#1': (args) => (args[0] as MenuTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MenuTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

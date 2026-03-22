@@ -51,7 +51,7 @@ abstract final class PageViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as PageView).createState(),
-        'toString#0': (args) => (args[0] as PageView).toString(),
+        'toString#1': (args) => (args[0] as PageView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as PageView).createElement(),
         'toStringShort#0': (args) => (args[0] as PageView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PageView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

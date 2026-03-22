@@ -50,5 +50,6 @@ abstract final class RoutePopDispositionBindings {
         'hashCode#0': (args) => (args[0] as RoutePopDisposition).hashCode,
         'index#0': (args) => (args[0] as RoutePopDisposition).index,
         '==#1': (args) => (args[0] as RoutePopDisposition) == (args[1] as Object),
+        '_#fromFields#2': (args) => RoutePopDisposition.values[args[1] as int],
       };
 }

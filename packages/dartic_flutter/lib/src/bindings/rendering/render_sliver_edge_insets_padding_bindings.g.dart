@@ -49,7 +49,7 @@ abstract final class RenderSliverEdgeInsetsPaddingBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'paint#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugPaint#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverEdgeInsetsPadding).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugResetSize#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).performResize(); return null; },

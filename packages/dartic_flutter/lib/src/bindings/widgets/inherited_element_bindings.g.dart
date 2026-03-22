@@ -41,7 +41,7 @@ abstract final class InheritedElementBindings {
         'removeDependent#1': (args) { (args[0] as InheritedElement).removeDependent(args[1] as Element); return null; },
         'updated#1': (args) { (args[0] as InheritedElement).updated(args[1] as InheritedWidget); return null; },
         'notifyClients#1': (args) { (args[0] as InheritedElement).notifyClients(args[1] as InheritedWidget); return null; },
-        'toString#0': (args) => (args[0] as InheritedElement).toString(),
+        'toString#1': (args) => (args[0] as InheritedElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#0': (args) => (args[0] as InheritedElement).build(),
         'update#1': (args) { (args[0] as InheritedElement).update(args[1] as ProxyWidget); return null; },
         'mount#2': (args) { (args[0] as InheritedElement).mount(args[1] as Element?, args[2]); return null; },

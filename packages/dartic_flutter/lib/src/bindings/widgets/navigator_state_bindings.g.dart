@@ -82,7 +82,7 @@ abstract final class NavigatorStateBindings {
         'didStartUserGesture#0': (args) { (args[0] as NavigatorState).didStartUserGesture(); return null; },
         'didStopUserGesture#0': (args) { (args[0] as NavigatorState).didStopUserGesture(); return null; },
         'build#1': (args) => (args[0] as NavigatorState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as NavigatorState).toString(),
+        'toString#1': (args) => (args[0] as NavigatorState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as NavigatorState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as NavigatorState).setState(() => (args[1] as Function)()); return null; },
         'debugFillProperties#1': (args) { (args[0] as NavigatorState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -41,7 +41,7 @@ abstract final class AutocompleteHighlightedOptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as AutocompleteHighlightedOption).toString(),
+        'toString#1': (args) => (args[0] as AutocompleteHighlightedOption).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateShouldNotify#1': (args) => (args[0] as AutocompleteHighlightedOption).updateShouldNotify(args[1] as InheritedNotifier<ValueNotifier<int>>),
         'createElement#0': (args) => (args[0] as AutocompleteHighlightedOption).createElement(),
         'toStringShort#0': (args) => (args[0] as AutocompleteHighlightedOption).toStringShort(),

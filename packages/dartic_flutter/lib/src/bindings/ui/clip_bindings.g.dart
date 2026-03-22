@@ -39,5 +39,6 @@ abstract final class ClipBindings {
         'hashCode#0': (args) => (args[0] as Clip).hashCode,
         'index#0': (args) => (args[0] as Clip).index,
         '==#1': (args) => (args[0] as Clip) == (args[1] as Object),
+        '_#fromFields#2': (args) => Clip.values[args[1] as int],
       };
 }

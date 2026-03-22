@@ -48,7 +48,7 @@ abstract final class RenderAndroidViewBindings {
         'paint#2': (args) { (args[0] as RenderAndroidView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAndroidView).dispose(); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderAndroidView).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
-        'toString#0': (args) => (args[0] as RenderAndroidView).toString(),
+        'toString#1': (args) => (args[0] as RenderAndroidView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateGestureRecognizers#1': (args) { (args[0] as RenderAndroidView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
         'setupParentData#1': (args) { (args[0] as RenderAndroidView).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAndroidView).getMinIntrinsicWidth(args[1] as double),

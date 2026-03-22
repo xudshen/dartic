@@ -28,7 +28,7 @@ abstract final class AnimationStyleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#4': (args) => (args[0] as AnimationStyle).copyWith(curve: identical(args[1], darticAbsent) ? null : args[1] as Curve?, duration: identical(args[2], darticAbsent) ? null : args[2] as Duration?, reverseCurve: identical(args[3], darticAbsent) ? null : args[3] as Curve?, reverseDuration: identical(args[4], darticAbsent) ? null : args[4] as Duration?),
         'debugFillProperties#1': (args) { (args[0] as AnimationStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as AnimationStyle).toString(),
+        'toString#1': (args) => (args[0] as AnimationStyle).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as AnimationStyle).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AnimationStyle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'curve#0': (args) => (args[0] as AnimationStyle).curve,

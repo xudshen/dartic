@@ -38,7 +38,7 @@ abstract final class InputDatePickerFormFieldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as InputDatePickerFormField).createState(),
-        'toString#0': (args) => (args[0] as InputDatePickerFormField).toString(),
+        'toString#1': (args) => (args[0] as InputDatePickerFormField).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as InputDatePickerFormField).createElement(),
         'toStringShort#0': (args) => (args[0] as InputDatePickerFormField).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InputDatePickerFormField).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

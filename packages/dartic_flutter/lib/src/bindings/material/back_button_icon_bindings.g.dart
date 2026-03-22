@@ -34,7 +34,7 @@ abstract final class BackButtonIconBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as BackButtonIcon).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as BackButtonIcon).toString(),
+        'toString#1': (args) => (args[0] as BackButtonIcon).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BackButtonIcon).createElement(),
         'toStringShort#0': (args) => (args[0] as BackButtonIcon).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BackButtonIcon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

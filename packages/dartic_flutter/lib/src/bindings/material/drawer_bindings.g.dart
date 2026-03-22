@@ -38,7 +38,7 @@ abstract final class DrawerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Drawer).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as Drawer).toString(),
+        'toString#1': (args) => (args[0] as Drawer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Drawer).createElement(),
         'toStringShort#0': (args) => (args[0] as Drawer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Drawer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

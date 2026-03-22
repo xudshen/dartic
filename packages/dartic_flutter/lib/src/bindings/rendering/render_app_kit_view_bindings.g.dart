@@ -42,7 +42,7 @@ abstract final class RenderAppKitViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateGestureRecognizers#1': (args) { (args[0] as RenderAppKitView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
-        'toString#0': (args) => (args[0] as RenderAppKitView).toString(),
+        'toString#1': (args) => (args[0] as RenderAppKitView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'computeDryLayout#1': (args) => (args[0] as RenderAppKitView).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderAppKitView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTest#2': (args) => (args[0] as RenderAppKitView).hitTest(args[1] as BoxHitTestResult, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),

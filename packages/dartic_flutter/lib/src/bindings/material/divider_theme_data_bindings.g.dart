@@ -30,7 +30,7 @@ abstract final class DividerThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#6': (args) => (args[0] as DividerThemeData).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, space: identical(args[2], darticAbsent) ? null : args[2] as double?, thickness: identical(args[3], darticAbsent) ? null : args[3] as double?, indent: identical(args[4], darticAbsent) ? null : args[4] as double?, endIndent: identical(args[5], darticAbsent) ? null : args[5] as double?, radius: identical(args[6], darticAbsent) ? null : args[6] as BorderRadiusGeometry?),
         'debugFillProperties#1': (args) { (args[0] as DividerThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as DividerThemeData).toString(),
+        'toString#1': (args) => (args[0] as DividerThemeData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as DividerThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DividerThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'color#0': (args) => (args[0] as DividerThemeData).color,

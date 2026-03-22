@@ -42,7 +42,7 @@ abstract final class CarouselViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CarouselView).createState(),
-        'toString#0': (args) => (args[0] as CarouselView).toString(),
+        'toString#1': (args) => (args[0] as CarouselView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CarouselView).createElement(),
         'toStringShort#0': (args) => (args[0] as CarouselView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CarouselView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

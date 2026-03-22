@@ -38,5 +38,6 @@ abstract final class PointModeBindings {
         'hashCode#0': (args) => (args[0] as PointMode).hashCode,
         'index#0': (args) => (args[0] as PointMode).index,
         '==#1': (args) => (args[0] as PointMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => PointMode.values[args[1] as int],
       };
 }

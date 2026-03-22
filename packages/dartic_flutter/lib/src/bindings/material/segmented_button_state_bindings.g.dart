@@ -46,7 +46,7 @@ abstract final class SegmentedButtonStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as SegmentedButtonState).didUpdateWidget(args[1] as SegmentedButton); return null; },
         'build#1': (args) => (args[0] as SegmentedButtonState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as SegmentedButtonState).dispose(); return null; },
-        'toString#0': (args) => (args[0] as SegmentedButtonState).toString(),
+        'toString#1': (args) => (args[0] as SegmentedButtonState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as SegmentedButtonState).initState(); return null; },
         'reassemble#0': (args) { (args[0] as SegmentedButtonState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SegmentedButtonState).setState(() => (args[1] as Function)()); return null; },

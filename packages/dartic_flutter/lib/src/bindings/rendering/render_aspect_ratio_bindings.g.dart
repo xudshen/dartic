@@ -46,7 +46,7 @@ abstract final class RenderAspectRatioBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderAspectRatio).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderAspectRatio).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAspectRatio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderAspectRatio).toString(),
+        'toString#1': (args) => (args[0] as RenderAspectRatio).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderAspectRatio).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAspectRatio).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderAspectRatio).getMaxIntrinsicWidth(args[1] as double),

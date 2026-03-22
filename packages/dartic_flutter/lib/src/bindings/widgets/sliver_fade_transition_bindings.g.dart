@@ -36,7 +36,7 @@ abstract final class SliverFadeTransitionBindings {
         'createRenderObject#1': (args) => (args[0] as SliverFadeTransition).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverFadeTransition).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverAnimatedOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverFadeTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as SliverFadeTransition).toString(),
+        'toString#1': (args) => (args[0] as SliverFadeTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverFadeTransition).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverFadeTransition).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverFadeTransition).toStringShort(),

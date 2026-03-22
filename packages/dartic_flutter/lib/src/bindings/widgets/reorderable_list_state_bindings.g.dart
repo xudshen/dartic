@@ -49,7 +49,7 @@ abstract final class ReorderableListStateBindings {
         'startItemDragReorder#3': (args) { (args[0] as ReorderableListState).startItemDragReorder(index: args[1] as int, event: args[2] as PointerDownEvent, recognizer: args[3] as MultiDragGestureRecognizer); return null; },
         'cancelReorder#0': (args) { (args[0] as ReorderableListState).cancelReorder(); return null; },
         'build#1': (args) => (args[0] as ReorderableListState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ReorderableListState).toString(),
+        'toString#1': (args) => (args[0] as ReorderableListState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as ReorderableListState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ReorderableListState).didUpdateWidget(args[1] as ReorderableList); return null; },
         'reassemble#0': (args) { (args[0] as ReorderableListState).reassemble(); return null; },

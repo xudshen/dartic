@@ -43,7 +43,7 @@ abstract final class RenderClipRSuperellipseBindings {
         'hitTest#2': (args) => (args[0] as RenderClipRSuperellipse).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipRSuperellipse).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipRSuperellipse).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderClipRSuperellipse).toString(),
+        'toString#1': (args) => (args[0] as RenderClipRSuperellipse).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'attach#1': (args) { (args[0] as RenderClipRSuperellipse).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipRSuperellipse).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipRSuperellipse).performLayout(); return null; },

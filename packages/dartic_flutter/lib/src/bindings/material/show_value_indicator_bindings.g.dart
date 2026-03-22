@@ -41,5 +41,6 @@ abstract final class ShowValueIndicatorBindings {
         'hashCode#0': (args) => (args[0] as ShowValueIndicator).hashCode,
         'index#0': (args) => (args[0] as ShowValueIndicator).index,
         '==#1': (args) => (args[0] as ShowValueIndicator) == (args[1] as Object),
+        '_#fromFields#2': (args) => ShowValueIndicator.values[args[1] as int],
       };
 }

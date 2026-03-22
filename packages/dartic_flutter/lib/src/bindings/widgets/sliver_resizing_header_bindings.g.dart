@@ -30,7 +30,7 @@ abstract final class SliverResizingHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverResizingHeader).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverResizingHeader).toString(),
+        'toString#1': (args) => (args[0] as SliverResizingHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverResizingHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverResizingHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverResizingHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

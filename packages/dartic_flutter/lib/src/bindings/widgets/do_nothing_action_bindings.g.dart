@@ -34,7 +34,7 @@ abstract final class DoNothingActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'consumesKey#1': (args) => (args[0] as DoNothingAction).consumesKey(args[1] as Intent),
         'invoke#1': (args) { (args[0] as DoNothingAction).invoke(args[1] as Intent); return null; },
-        'toString#0': (args) => (args[0] as DoNothingAction).toString(),
+        'toString#1': (args) => (args[0] as DoNothingAction).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isEnabled#1': (args) => (args[0] as DoNothingAction).isEnabled(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as DoNothingAction).toKeyEventResult(args[1] as Intent, args[2]),
         'addActionListener#1': (args) { (args[0] as DoNothingAction).addActionListener((a) => (args[1] as Function)(a)); return null; },

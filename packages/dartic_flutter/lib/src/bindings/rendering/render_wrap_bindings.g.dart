@@ -53,7 +53,7 @@ abstract final class RenderWrapBindings {
         'paint#2': (args) { (args[0] as RenderWrap).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderWrap).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderWrap).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderWrap).toString(),
+        'toString#1': (args) => (args[0] as RenderWrap).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderWrap).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderWrap).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderWrap).getMinIntrinsicHeight(args[1] as double),

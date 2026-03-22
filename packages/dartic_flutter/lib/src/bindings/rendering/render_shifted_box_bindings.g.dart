@@ -48,7 +48,7 @@ abstract final class RenderShiftedBoxBindings {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderShiftedBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderShiftedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderShiftedBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
-        'toString#0': (args) => (args[0] as RenderShiftedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderShiftedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderShiftedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderShiftedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderShiftedBox).getMaxIntrinsicWidth(args[1] as double),

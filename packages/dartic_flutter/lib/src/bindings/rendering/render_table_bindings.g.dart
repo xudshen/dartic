@@ -70,7 +70,7 @@ abstract final class RenderTableBindings {
         'paint#2': (args) { (args[0] as RenderTable).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderTable).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderTable).toString(),
+        'toString#1': (args) => (args[0] as RenderTable).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTable).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderTable).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderTable).getMinIntrinsicHeight(args[1] as double),

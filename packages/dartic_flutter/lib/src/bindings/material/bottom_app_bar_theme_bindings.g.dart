@@ -35,7 +35,7 @@ abstract final class BottomAppBarThemeBindings {
         'copyWith#7': (args) => (args[0] as BottomAppBarTheme).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shape: identical(args[3], darticAbsent) ? null : args[3] as NotchedShape?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, shadowColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?),
         'updateShouldNotify#1': (args) => (args[0] as BottomAppBarTheme).updateShouldNotify(args[1] as BottomAppBarTheme),
         'wrap#2': (args) => (args[0] as BottomAppBarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
-        'toString#0': (args) => (args[0] as BottomAppBarTheme).toString(),
+        'toString#1': (args) => (args[0] as BottomAppBarTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BottomAppBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomAppBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomAppBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

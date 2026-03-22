@@ -34,7 +34,7 @@ abstract final class PositionedTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PositionedTransition).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as PositionedTransition).toString(),
+        'toString#1': (args) => (args[0] as PositionedTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as PositionedTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as PositionedTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as PositionedTransition).createElement(),

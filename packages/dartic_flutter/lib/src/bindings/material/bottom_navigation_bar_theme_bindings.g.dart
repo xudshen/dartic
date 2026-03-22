@@ -30,7 +30,7 @@ abstract final class BottomNavigationBarThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as BottomNavigationBarTheme).updateShouldNotify(args[1] as BottomNavigationBarTheme),
-        'toString#0': (args) => (args[0] as BottomNavigationBarTheme).toString(),
+        'toString#1': (args) => (args[0] as BottomNavigationBarTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BottomNavigationBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomNavigationBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomNavigationBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -46,7 +46,7 @@ abstract final class FocusNodeBindings {
         'debugFillProperties#1': (args) { (args[0] as FocusNode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as FocusNode).debugDescribeChildren(),
         'toStringShort#0': (args) => (args[0] as FocusNode).toStringShort(),
-        'toString#0': (args) => (args[0] as FocusNode).toString(),
+        'toString#1': (args) => (args[0] as FocusNode).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShallow#2': (args) => (args[0] as FocusNode).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as FocusNode).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as FocusNode).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),

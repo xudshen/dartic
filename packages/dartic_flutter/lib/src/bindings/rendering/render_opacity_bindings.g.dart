@@ -43,7 +43,7 @@ abstract final class RenderOpacityBindings {
         'paint#2': (args) { (args[0] as RenderOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderOpacity).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderOpacity).toString(),
+        'toString#1': (args) => (args[0] as RenderOpacity).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderOpacity).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderOpacity).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderOpacity).computeMinIntrinsicWidth(args[1] as double),

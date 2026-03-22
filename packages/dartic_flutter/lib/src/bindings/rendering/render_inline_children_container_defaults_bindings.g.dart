@@ -49,7 +49,7 @@ abstract final class RenderInlineChildrenContainerDefaultsBindings {
         'defaultApplyPaintTransform#2': (args) { (args[0] as RenderInlineChildrenContainerDefaults).defaultApplyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'paintInlineChildren#2': (args) { (args[0] as RenderInlineChildrenContainerDefaults).paintInlineChildren(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'hitTestInlineChildren#2': (args) => (args[0] as RenderInlineChildrenContainerDefaults).hitTestInlineChildren(args[1] as BoxHitTestResult, args[2] as ui.Offset),
-        'toString#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).toString(),
+        'toString#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).computeMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).getMaxIntrinsicWidth(args[1] as double),

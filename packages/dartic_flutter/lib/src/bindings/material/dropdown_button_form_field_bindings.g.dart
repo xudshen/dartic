@@ -51,7 +51,7 @@ abstract final class DropdownButtonFormFieldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DropdownButtonFormField).createState(),
-        'toString#0': (args) => (args[0] as DropdownButtonFormField).toString(),
+        'toString#1': (args) => (args[0] as DropdownButtonFormField).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DropdownButtonFormField).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownButtonFormField).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DropdownButtonFormField).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

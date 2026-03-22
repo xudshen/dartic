@@ -40,7 +40,7 @@ abstract final class RenderBlockSemanticsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderBlockSemantics).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderBlockSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderBlockSemantics).toString(),
+        'toString#1': (args) => (args[0] as RenderBlockSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderBlockSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderBlockSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderBlockSemantics).computeMinIntrinsicWidth(args[1] as double),

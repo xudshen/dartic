@@ -37,7 +37,7 @@ abstract final class SliverAnimatedGridStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverAnimatedGridState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverAnimatedGridState).toString(),
+        'toString#1': (args) => (args[0] as SliverAnimatedGridState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as SliverAnimatedGridState).initState(); return null; },
         'dispose#0': (args) { (args[0] as SliverAnimatedGridState).dispose(); return null; },
         'insertItem#2': (args) {

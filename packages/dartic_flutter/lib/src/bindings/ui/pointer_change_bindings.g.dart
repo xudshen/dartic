@@ -45,5 +45,6 @@ abstract final class PointerChangeBindings {
         'hashCode#0': (args) => (args[0] as PointerChange).hashCode,
         'index#0': (args) => (args[0] as PointerChange).index,
         '==#1': (args) => (args[0] as PointerChange) == (args[1] as Object),
+        '_#fromFields#2': (args) => PointerChange.values[args[1] as int],
       };
 }

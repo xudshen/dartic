@@ -44,7 +44,7 @@ abstract final class YearPickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as YearPicker).createState(),
-        'toString#0': (args) => (args[0] as YearPicker).toString(),
+        'toString#1': (args) => (args[0] as YearPicker).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as YearPicker).createElement(),
         'toStringShort#0': (args) => (args[0] as YearPicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as YearPicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -44,7 +44,7 @@ abstract final class NavigationIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationIndicator).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as NavigationIndicator).toString(),
+        'toString#1': (args) => (args[0] as NavigationIndicator).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as NavigationIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

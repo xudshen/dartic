@@ -46,7 +46,7 @@ abstract final class ActionChipBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ActionChip).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ActionChip).toString(),
+        'toString#1': (args) => (args[0] as ActionChip).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ActionChip).createElement(),
         'toStringShort#0': (args) => (args[0] as ActionChip).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ActionChip).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

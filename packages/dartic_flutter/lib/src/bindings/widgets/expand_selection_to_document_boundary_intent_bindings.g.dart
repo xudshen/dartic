@@ -26,7 +26,7 @@ abstract final class ExpandSelectionToDocumentBoundaryIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as ExpandSelectionToDocumentBoundaryIntent).toString(),
+        'toString#1': (args) => (args[0] as ExpandSelectionToDocumentBoundaryIntent).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as ExpandSelectionToDocumentBoundaryIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExpandSelectionToDocumentBoundaryIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExpandSelectionToDocumentBoundaryIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

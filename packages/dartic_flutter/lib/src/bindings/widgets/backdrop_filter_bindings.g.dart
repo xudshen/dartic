@@ -40,7 +40,7 @@ abstract final class BackdropFilterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as BackdropFilter).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as BackdropFilter).updateRenderObject(args[1] as BuildContext, args[2] as RenderBackdropFilter); return null; },
-        'toString#0': (args) => (args[0] as BackdropFilter).toString(),
+        'toString#1': (args) => (args[0] as BackdropFilter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as BackdropFilter).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as BackdropFilter).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as BackdropFilter).toStringShort(),

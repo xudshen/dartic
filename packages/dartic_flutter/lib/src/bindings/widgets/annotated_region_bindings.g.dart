@@ -29,7 +29,7 @@ abstract final class AnnotatedRegionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as AnnotatedRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as AnnotatedRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderAnnotatedRegion<Object>); return null; },
-        'toString#0': (args) => (args[0] as AnnotatedRegion).toString(),
+        'toString#1': (args) => (args[0] as AnnotatedRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AnnotatedRegion).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as AnnotatedRegion).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AnnotatedRegion).toStringShort(),

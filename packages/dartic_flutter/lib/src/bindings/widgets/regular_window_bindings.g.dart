@@ -33,7 +33,7 @@ abstract final class RegularWindowBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RegularWindow).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as RegularWindow).toString(),
+        'toString#1': (args) => (args[0] as RegularWindow).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RegularWindow).createElement(),
         'toStringShort#0': (args) => (args[0] as RegularWindow).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RegularWindow).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

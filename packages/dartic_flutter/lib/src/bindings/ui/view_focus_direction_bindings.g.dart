@@ -38,5 +38,6 @@ abstract final class ViewFocusDirectionBindings {
         'hashCode#0': (args) => (args[0] as ViewFocusDirection).hashCode,
         'index#0': (args) => (args[0] as ViewFocusDirection).index,
         '==#1': (args) => (args[0] as ViewFocusDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => ViewFocusDirection.values[args[1] as int],
       };
 }

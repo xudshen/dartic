@@ -47,7 +47,7 @@ abstract final class RenderConstrainedBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderConstrainedBox).computeDryLayout(args[1] as BoxConstraints),
         'debugPaintSize#2': (args) { (args[0] as RenderConstrainedBox).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstrainedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderConstrainedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderConstrainedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderConstrainedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedBox).getMaxIntrinsicWidth(args[1] as double),

@@ -41,5 +41,6 @@ abstract final class PointerDeviceKindBindings {
         'hashCode#0': (args) => (args[0] as PointerDeviceKind).hashCode,
         'index#0': (args) => (args[0] as PointerDeviceKind).index,
         '==#1': (args) => (args[0] as PointerDeviceKind) == (args[1] as Object),
+        '_#fromFields#2': (args) => PointerDeviceKind.values[args[1] as int],
       };
 }

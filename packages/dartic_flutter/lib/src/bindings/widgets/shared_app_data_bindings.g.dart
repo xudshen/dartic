@@ -28,7 +28,7 @@ abstract final class SharedAppDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SharedAppData).createState(),
-        'toString#0': (args) => (args[0] as SharedAppData).toString(),
+        'toString#1': (args) => (args[0] as SharedAppData).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SharedAppData).createElement(),
         'toStringShort#0': (args) => (args[0] as SharedAppData).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SharedAppData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

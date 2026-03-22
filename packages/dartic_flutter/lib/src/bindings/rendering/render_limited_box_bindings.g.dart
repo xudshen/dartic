@@ -41,7 +41,7 @@ abstract final class RenderLimitedBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderLimitedBox).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderLimitedBox).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderLimitedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderLimitedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderLimitedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderLimitedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderLimitedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderLimitedBox).computeMinIntrinsicWidth(args[1] as double),

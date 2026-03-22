@@ -32,7 +32,7 @@ abstract final class CarouselViewThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as CarouselViewTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as CarouselViewTheme).updateShouldNotify(args[1] as CarouselViewTheme),
-        'toString#0': (args) => (args[0] as CarouselViewTheme).toString(),
+        'toString#1': (args) => (args[0] as CarouselViewTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as CarouselViewTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as CarouselViewTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CarouselViewTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

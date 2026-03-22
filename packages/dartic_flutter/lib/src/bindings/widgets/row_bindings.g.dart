@@ -39,7 +39,7 @@ abstract final class RowBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as Row).toString(),
+        'toString#1': (args) => (args[0] as Row).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getEffectiveTextDirection#1': (args) => (args[0] as Row).getEffectiveTextDirection(args[1] as BuildContext),
         'createRenderObject#1': (args) => (args[0] as Row).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Row).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlex); return null; },

@@ -26,7 +26,7 @@ abstract final class ValueListenableBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ValueListenableBuilder).createState(),
-        'toString#0': (args) => (args[0] as ValueListenableBuilder).toString(),
+        'toString#1': (args) => (args[0] as ValueListenableBuilder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ValueListenableBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as ValueListenableBuilder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ValueListenableBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -36,7 +36,7 @@ abstract final class FocusableActionDetectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FocusableActionDetector).createState(),
-        'toString#0': (args) => (args[0] as FocusableActionDetector).toString(),
+        'toString#1': (args) => (args[0] as FocusableActionDetector).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as FocusableActionDetector).createElement(),
         'toStringShort#0': (args) => (args[0] as FocusableActionDetector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FocusableActionDetector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

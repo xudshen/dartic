@@ -51,7 +51,7 @@ abstract final class RenderViewBindings {
         'compositeFrame#0': (args) { (args[0] as RenderView).compositeFrame(); return null; },
         'updateSemantics#1': (args) { (args[0] as RenderView).updateSemantics(args[1] as ui.SemanticsUpdate); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderView).toString(),
+        'toString#1': (args) => (args[0] as RenderView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as RenderView).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderView).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderView).setupParentData(args[1] as RenderObject); return null; },

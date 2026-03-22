@@ -40,7 +40,7 @@ abstract final class RenderSliverFillRemainingAndOverscrollBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverFillRemainingAndOverscroll).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverFillRemainingAndOverscroll).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverFillRemainingAndOverscroll).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverFillRemainingAndOverscroll).setupParentData(args[1] as RenderObject); return null; },
         'setChildParentData#3': (args) { (args[0] as RenderSliverFillRemainingAndOverscroll).setChildParentData(args[1] as RenderObject, args[2] as SliverConstraints, args[3] as SliverGeometry); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverFillRemainingAndOverscroll).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),

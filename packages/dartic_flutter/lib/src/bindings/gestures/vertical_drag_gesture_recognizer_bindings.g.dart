@@ -38,7 +38,7 @@ abstract final class VerticalDragGestureRecognizerBindings {
         'isFlingGesture#2': (args) => (args[0] as VerticalDragGestureRecognizer).isFlingGesture(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'considerFling#2': (args) => (args[0] as VerticalDragGestureRecognizer).considerFling(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'hasSufficientGlobalDistanceToAccept#2': (args) => (args[0] as VerticalDragGestureRecognizer).hasSufficientGlobalDistanceToAccept(args[1] as PointerDeviceKind, args[2] as double?),
-        'toString#0': (args) => (args[0] as VerticalDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as VerticalDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'isPointerAllowed#1': (args) => (args[0] as VerticalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as VerticalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as VerticalDragGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },

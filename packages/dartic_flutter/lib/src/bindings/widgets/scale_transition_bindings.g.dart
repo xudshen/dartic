@@ -36,7 +36,7 @@ abstract final class ScaleTransitionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as ScaleTransition).toString(),
+        'toString#1': (args) => (args[0] as ScaleTransition).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'build#1': (args) => (args[0] as ScaleTransition).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as ScaleTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as ScaleTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -40,5 +40,6 @@ abstract final class KeyEventResultBindings {
         'hashCode#0': (args) => (args[0] as KeyEventResult).hashCode,
         'index#0': (args) => (args[0] as KeyEventResult).index,
         '==#1': (args) => (args[0] as KeyEventResult) == (args[1] as Object),
+        '_#fromFields#2': (args) => KeyEventResult.values[args[1] as int],
       };
 }

@@ -44,5 +44,6 @@ abstract final class ListTileStyleBindings {
         'hashCode#0': (args) => (args[0] as ListTileStyle).hashCode,
         'index#0': (args) => (args[0] as ListTileStyle).index,
         '==#1': (args) => (args[0] as ListTileStyle) == (args[1] as Object),
+        '_#fromFields#2': (args) => ListTileStyle.values[args[1] as int],
       };
 }

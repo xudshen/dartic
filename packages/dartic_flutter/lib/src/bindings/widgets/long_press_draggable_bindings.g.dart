@@ -43,7 +43,7 @@ abstract final class LongPressDraggableBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRecognizer#1': (args) => (args[0] as LongPressDraggable).createRecognizer((a) => (args[1] as Function)(a) as Drag?),
-        'toString#0': (args) => (args[0] as LongPressDraggable).toString(),
+        'toString#1': (args) => (args[0] as LongPressDraggable).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as LongPressDraggable).createState(),
         'createElement#0': (args) => (args[0] as LongPressDraggable).createElement(),
         'toStringShort#0': (args) => (args[0] as LongPressDraggable).toStringShort(),

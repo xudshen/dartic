@@ -40,7 +40,7 @@ abstract final class RenderExcludeSemanticsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderExcludeSemantics).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderExcludeSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderExcludeSemantics).toString(),
+        'toString#1': (args) => (args[0] as RenderExcludeSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderExcludeSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderExcludeSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderExcludeSemantics).computeMinIntrinsicWidth(args[1] as double),

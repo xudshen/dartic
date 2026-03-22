@@ -30,7 +30,7 @@ abstract final class IconButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as IconButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as IconButtonTheme).updateShouldNotify(args[1] as IconButtonTheme),
-        'toString#0': (args) => (args[0] as IconButtonTheme).toString(),
+        'toString#1': (args) => (args[0] as IconButtonTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as IconButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as IconButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as IconButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

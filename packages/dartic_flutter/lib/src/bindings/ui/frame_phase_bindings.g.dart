@@ -41,5 +41,6 @@ abstract final class FramePhaseBindings {
         'hashCode#0': (args) => (args[0] as FramePhase).hashCode,
         'index#0': (args) => (args[0] as FramePhase).index,
         '==#1': (args) => (args[0] as FramePhase) == (args[1] as Object),
+        '_#fromFields#2': (args) => FramePhase.values[args[1] as int],
       };
 }

@@ -40,7 +40,7 @@ abstract final class TextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TextSelectionToolbar).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as TextSelectionToolbar).toString(),
+        'toString#1': (args) => (args[0] as TextSelectionToolbar).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as TextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as TextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

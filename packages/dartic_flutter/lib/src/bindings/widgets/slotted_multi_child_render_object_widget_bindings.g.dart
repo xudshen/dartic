@@ -26,7 +26,7 @@ abstract final class SlottedMultiChildRenderObjectWidgetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as SlottedMultiChildRenderObjectWidget).toString(),
+        'toString#1': (args) => (args[0] as SlottedMultiChildRenderObjectWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SlottedMultiChildRenderObjectWidget).createElement(),
         'createRenderObject#1': (args) => (args[0] as SlottedMultiChildRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SlottedMultiChildRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as SlottedContainerRenderObjectMixin<dynamic, RenderObject>); return null; },

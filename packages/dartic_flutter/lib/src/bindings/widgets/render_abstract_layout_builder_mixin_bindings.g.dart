@@ -39,7 +39,7 @@ abstract final class RenderAbstractLayoutBuilderMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'layoutCallback#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).layoutCallback(); return null; },
-        'toString#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).toString(),
+        'toString#1': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugValidateChild#1': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).debugValidateChild(args[1] as RenderObject),
         'attach#1': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).detach(); return null; },

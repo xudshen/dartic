@@ -38,7 +38,7 @@ abstract final class DatePickerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as DatePickerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as DatePickerTheme).updateShouldNotify(args[1] as DatePickerTheme),
-        'toString#0': (args) => (args[0] as DatePickerTheme).toString(),
+        'toString#1': (args) => (args[0] as DatePickerTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DatePickerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DatePickerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DatePickerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

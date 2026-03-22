@@ -42,7 +42,7 @@ abstract final class RenderBoxContainerDefaultsMixinBindings {
         'defaultHitTestChildren#2': (args) => (args[0] as RenderBoxContainerDefaultsMixin).defaultHitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'defaultPaint#2': (args) { (args[0] as RenderBoxContainerDefaultsMixin).defaultPaint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'getChildrenAsList#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).getChildrenAsList(),
-        'toString#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).toString(),
+        'toString#1': (args) => (args[0] as RenderBoxContainerDefaultsMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugValidateChild#1': (args) => (args[0] as RenderBoxContainerDefaultsMixin).debugValidateChild(args[1] as RenderObject),
         'insert#2': (args) {
                   if (identical(args[2], darticAbsent)) {

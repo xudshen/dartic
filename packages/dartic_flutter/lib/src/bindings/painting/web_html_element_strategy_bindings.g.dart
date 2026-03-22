@@ -38,5 +38,6 @@ abstract final class WebHtmlElementStrategyBindings {
         'hashCode#0': (args) => (args[0] as WebHtmlElementStrategy).hashCode,
         'index#0': (args) => (args[0] as WebHtmlElementStrategy).index,
         '==#1': (args) => (args[0] as WebHtmlElementStrategy) == (args[1] as Object),
+        '_#fromFields#2': (args) => WebHtmlElementStrategy.values[args[1] as int],
       };
 }

@@ -40,7 +40,7 @@ abstract final class SingleChildRenderObjectElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as SingleChildRenderObjectElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as SingleChildRenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as SingleChildRenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
-        'toString#0': (args) => (args[0] as SingleChildRenderObjectElement).toString(),
+        'toString#1': (args) => (args[0] as SingleChildRenderObjectElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'performRebuild#0': (args) { (args[0] as SingleChildRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as SingleChildRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SingleChildRenderObjectElement).unmount(); return null; },

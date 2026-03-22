@@ -46,7 +46,7 @@ abstract final class RenderDecoratedBoxBindings {
         'hitTestSelf#1': (args) => (args[0] as RenderDecoratedBox).hitTestSelf(args[1] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderDecoratedBox).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderDecoratedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderDecoratedBox).toString(),
+        'toString#1': (args) => (args[0] as RenderDecoratedBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderDecoratedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderDecoratedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderDecoratedBox).computeMinIntrinsicWidth(args[1] as double),

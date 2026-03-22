@@ -41,7 +41,7 @@ abstract final class MultiChildRenderObjectElementBindings {
         'inflateWidget#2': (args) => (args[0] as MultiChildRenderObjectElement).inflateWidget(args[1] as Widget, args[2]),
         'mount#2': (args) { (args[0] as MultiChildRenderObjectElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as MultiChildRenderObjectElement).update(args[1] as MultiChildRenderObjectWidget); return null; },
-        'toString#0': (args) => (args[0] as MultiChildRenderObjectElement).toString(),
+        'toString#1': (args) => (args[0] as MultiChildRenderObjectElement).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'performRebuild#0': (args) { (args[0] as MultiChildRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as MultiChildRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as MultiChildRenderObjectElement).unmount(); return null; },

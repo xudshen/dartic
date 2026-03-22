@@ -31,7 +31,7 @@ abstract final class SliverConstrainedCrossAxisBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverConstrainedCrossAxis).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SliverConstrainedCrossAxis).toString(),
+        'toString#1': (args) => (args[0] as SliverConstrainedCrossAxis).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SliverConstrainedCrossAxis).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverConstrainedCrossAxis).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverConstrainedCrossAxis).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

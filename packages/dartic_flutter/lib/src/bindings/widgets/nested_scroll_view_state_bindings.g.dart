@@ -45,7 +45,7 @@ abstract final class NestedScrollViewStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as NestedScrollViewState).didUpdateWidget(args[1] as NestedScrollView); return null; },
         'dispose#0': (args) { (args[0] as NestedScrollViewState).dispose(); return null; },
         'build#1': (args) => (args[0] as NestedScrollViewState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as NestedScrollViewState).toString(),
+        'toString#1': (args) => (args[0] as NestedScrollViewState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as NestedScrollViewState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as NestedScrollViewState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as NestedScrollViewState).deactivate(); return null; },

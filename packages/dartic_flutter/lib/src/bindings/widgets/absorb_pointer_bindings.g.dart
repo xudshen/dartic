@@ -40,7 +40,7 @@ abstract final class AbsorbPointerBindings {
         'createRenderObject#1': (args) => (args[0] as AbsorbPointer).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as AbsorbPointer).updateRenderObject(args[1] as BuildContext, args[2] as RenderAbsorbPointer); return null; },
         'debugFillProperties#1': (args) { (args[0] as AbsorbPointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as AbsorbPointer).toString(),
+        'toString#1': (args) => (args[0] as AbsorbPointer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as AbsorbPointer).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as AbsorbPointer).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AbsorbPointer).toStringShort(),

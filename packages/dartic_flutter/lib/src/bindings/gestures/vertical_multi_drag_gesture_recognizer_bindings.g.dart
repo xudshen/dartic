@@ -35,7 +35,7 @@ abstract final class VerticalMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as VerticalMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
-        'toString#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).toString(),
+        'toString#1': (args) => (args[0] as VerticalMultiDragGestureRecognizer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'addAllowedPointer#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },

@@ -47,7 +47,7 @@ abstract final class PlatformViewRenderBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as PlatformViewRenderBox).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as PlatformViewRenderBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as PlatformViewRenderBox).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
-        'toString#0': (args) => (args[0] as PlatformViewRenderBox).toString(),
+        'toString#1': (args) => (args[0] as PlatformViewRenderBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as PlatformViewRenderBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as PlatformViewRenderBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as PlatformViewRenderBox).computeMinIntrinsicWidth(args[1] as double),

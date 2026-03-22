@@ -39,7 +39,7 @@ abstract final class InkBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as Ink).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createState#0': (args) => (args[0] as Ink).createState(),
-        'toString#0': (args) => (args[0] as Ink).toString(),
+        'toString#1': (args) => (args[0] as Ink).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Ink).createElement(),
         'toStringShort#0': (args) => (args[0] as Ink).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Ink).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

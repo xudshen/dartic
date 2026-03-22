@@ -42,7 +42,7 @@ abstract final class DrawerControllerStateBindings {
         'open#0': (args) { (args[0] as DrawerControllerState).open(); return null; },
         'close#0': (args) { (args[0] as DrawerControllerState).close(); return null; },
         'build#1': (args) => (args[0] as DrawerControllerState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as DrawerControllerState).toString(),
+        'toString#1': (args) => (args[0] as DrawerControllerState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as DrawerControllerState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as DrawerControllerState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as DrawerControllerState).deactivate(); return null; },

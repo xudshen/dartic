@@ -28,7 +28,7 @@ abstract final class RootRestorationScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RootRestorationScope).createState(),
-        'toString#0': (args) => (args[0] as RootRestorationScope).toString(),
+        'toString#1': (args) => (args[0] as RootRestorationScope).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as RootRestorationScope).createElement(),
         'toStringShort#0': (args) => (args[0] as RootRestorationScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RootRestorationScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

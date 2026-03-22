@@ -30,7 +30,7 @@ abstract final class TickerProviderStateMixinBindings {
         'activate#0': (args) { (args[0] as TickerProviderStateMixin).activate(); return null; },
         'dispose#0': (args) { (args[0] as TickerProviderStateMixin).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as TickerProviderStateMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as TickerProviderStateMixin).toString(),
+        'toString#1': (args) => (args[0] as TickerProviderStateMixin).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'initState#0': (args) { (args[0] as TickerProviderStateMixin).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as TickerProviderStateMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as TickerProviderStateMixin).reassemble(); return null; },

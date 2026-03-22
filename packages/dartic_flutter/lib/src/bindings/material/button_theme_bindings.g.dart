@@ -39,7 +39,7 @@ abstract final class ButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ButtonTheme).updateShouldNotify(args[1] as ButtonTheme),
-        'toString#0': (args) => (args[0] as ButtonTheme).toString(),
+        'toString#1': (args) => (args[0] as ButtonTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

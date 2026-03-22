@@ -31,7 +31,7 @@ abstract final class SearchBarThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SearchBarTheme).updateShouldNotify(args[1] as SearchBarTheme),
-        'toString#0': (args) => (args[0] as SearchBarTheme).toString(),
+        'toString#1': (args) => (args[0] as SearchBarTheme).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SearchBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as SearchBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SearchBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

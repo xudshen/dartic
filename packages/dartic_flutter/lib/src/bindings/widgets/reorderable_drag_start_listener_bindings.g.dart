@@ -47,7 +47,7 @@ abstract final class ReorderableDragStartListenerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ReorderableDragStartListener).build(args[1] as BuildContext),
         'createRecognizer#0': (args) => (args[0] as ReorderableDragStartListener).createRecognizer(),
-        'toString#0': (args) => (args[0] as ReorderableDragStartListener).toString(),
+        'toString#1': (args) => (args[0] as ReorderableDragStartListener).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ReorderableDragStartListener).createElement(),
         'toStringShort#0': (args) => (args[0] as ReorderableDragStartListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ReorderableDragStartListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

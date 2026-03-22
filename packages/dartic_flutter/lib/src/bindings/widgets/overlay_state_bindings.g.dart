@@ -39,7 +39,7 @@ abstract final class OverlayStateBindings {
         'debugIsVisible#1': (args) => (args[0] as OverlayState).debugIsVisible(args[1] as OverlayEntry),
         'build#1': (args) => (args[0] as OverlayState).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as OverlayState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as OverlayState).toString(),
+        'toString#1': (args) => (args[0] as OverlayState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUpdateWidget#1': (args) { (args[0] as OverlayState).didUpdateWidget(args[1] as Overlay); return null; },
         'reassemble#0': (args) { (args[0] as OverlayState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as OverlayState).setState(() => (args[1] as Function)()); return null; },

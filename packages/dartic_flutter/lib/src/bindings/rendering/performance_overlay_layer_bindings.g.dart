@@ -30,7 +30,7 @@ abstract final class PerformanceOverlayLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as PerformanceOverlayLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'findAnnotations#3': (args) => (args[0] as PerformanceOverlayLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
-        'toString#0': (args) => (args[0] as PerformanceOverlayLayer).toString(),
+        'toString#1': (args) => (args[0] as PerformanceOverlayLayer).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'supportsRasterization#0': (args) => (args[0] as PerformanceOverlayLayer).supportsRasterization(),
         'describeClipBounds#0': (args) => (args[0] as PerformanceOverlayLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PerformanceOverlayLayer).addCompositionCallback((a) => (args[1] as Function)(a)),

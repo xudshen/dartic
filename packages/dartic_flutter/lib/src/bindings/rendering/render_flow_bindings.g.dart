@@ -51,7 +51,7 @@ abstract final class RenderFlowBindings {
         'dispose#0': (args) { (args[0] as RenderFlow).dispose(); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderFlow).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'applyPaintTransform#2': (args) { (args[0] as RenderFlow).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
-        'toString#0': (args) => (args[0] as RenderFlow).toString(),
+        'toString#1': (args) => (args[0] as RenderFlow).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFlow).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderFlow).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderFlow).getMinIntrinsicHeight(args[1] as double),

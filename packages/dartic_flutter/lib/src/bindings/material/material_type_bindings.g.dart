@@ -36,5 +36,6 @@ abstract final class MaterialTypeBindings {
         'hashCode#0': (args) => (args[0] as MaterialType).hashCode,
         'index#0': (args) => (args[0] as MaterialType).index,
         '==#1': (args) => (args[0] as MaterialType) == (args[1] as Object),
+        '_#fromFields#2': (args) => MaterialType.values[args[1] as int],
       };
 }

@@ -1,15 +1,18 @@
 import 'package:dartic/dartic.dart';
 
 import 'plugins/animation_plugin.g.dart';
-import 'plugins/ui_plugin.g.dart';
-import 'plugins/painting_plugin.g.dart';
-import 'plugins/rendering_plugin.g.dart';
-import 'plugins/gestures_plugin.g.dart';
-import 'plugins/services_plugin.g.dart';
-import 'plugins/scheduler_plugin.g.dart';
-import 'plugins/widgets_plugin.g.dart';
-import 'plugins/material_plugin.g.dart';
 import 'plugins/cupertino_plugin.g.dart';
+import 'plugins/foundation_plugin.g.dart';
+import 'plugins/gestures_plugin.g.dart';
+import 'plugins/material_plugin.g.dart';
+import 'plugins/painting_plugin.g.dart';
+import 'plugins/physics_plugin.g.dart';
+import 'plugins/rendering_plugin.g.dart';
+import 'plugins/scheduler_plugin.g.dart';
+import 'plugins/semantics_plugin.g.dart';
+import 'plugins/services_plugin.g.dart';
+import 'plugins/ui_plugin.g.dart';
+import 'plugins/widgets_plugin.g.dart';
 
 /// Flutter widget Bridge bindings plugin for dartic.
 ///
@@ -27,13 +30,18 @@ class DarticFlutterPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext context) {
+    // Foundation must register before other modules that reference
+    // Diagnosticable, ChangeNotifier, FlutterError, etc.
+    FoundationPlugin().register(context);
     AnimationPlugin().register(context);
     CupertinoPlugin().register(context);
     GesturesPlugin().register(context);
     MaterialPlugin().register(context);
     PaintingPlugin().register(context);
+    PhysicsPlugin().register(context);
     RenderingPlugin().register(context);
     SchedulerPlugin().register(context);
+    SemanticsPlugin().register(context);
     ServicesPlugin().register(context);
     UiPlugin().register(context);
     WidgetsPlugin().register(context);

@@ -34,5 +34,6 @@ abstract final class DeviceOrientationBindings {
         'hashCode#0': (args) => (args[0] as DeviceOrientation).hashCode,
         'index#0': (args) => (args[0] as DeviceOrientation).index,
         '==#1': (args) => (args[0] as DeviceOrientation) == (args[1] as Object),
+        '_#fromFields#2': (args) => DeviceOrientation.values[args[1] as int],
       };
 }

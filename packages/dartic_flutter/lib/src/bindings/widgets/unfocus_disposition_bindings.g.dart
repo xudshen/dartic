@@ -39,5 +39,6 @@ abstract final class UnfocusDispositionBindings {
         'hashCode#0': (args) => (args[0] as UnfocusDisposition).hashCode,
         'index#0': (args) => (args[0] as UnfocusDisposition).index,
         '==#1': (args) => (args[0] as UnfocusDisposition) == (args[1] as Object),
+        '_#fromFields#2': (args) => UnfocusDisposition.values[args[1] as int],
       };
 }

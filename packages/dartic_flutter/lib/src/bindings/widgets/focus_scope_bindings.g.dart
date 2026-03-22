@@ -33,7 +33,7 @@ abstract final class FocusScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FocusScope).createState(),
-        'toString#0': (args) => (args[0] as FocusScope).toString(),
+        'toString#1': (args) => (args[0] as FocusScope).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'debugFillProperties#1': (args) { (args[0] as FocusScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as FocusScope).createElement(),
         'toStringShort#0': (args) => (args[0] as FocusScope).toStringShort(),

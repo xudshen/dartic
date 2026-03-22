@@ -53,7 +53,7 @@ abstract final class ChipBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Chip).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as Chip).toString(),
+        'toString#1': (args) => (args[0] as Chip).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Chip).createElement(),
         'toStringShort#0': (args) => (args[0] as Chip).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Chip).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

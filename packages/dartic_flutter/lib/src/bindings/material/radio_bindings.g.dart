@@ -43,7 +43,7 @@ abstract final class RadioBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Radio).createState(),
-        'toString#0': (args) => (args[0] as Radio).toString(),
+        'toString#1': (args) => (args[0] as Radio).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Radio).createElement(),
         'toStringShort#0': (args) => (args[0] as Radio).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Radio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

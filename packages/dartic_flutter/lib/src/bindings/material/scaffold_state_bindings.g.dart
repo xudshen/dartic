@@ -69,7 +69,7 @@ abstract final class ScaffoldStateBindings {
         'dispose#0': (args) { (args[0] as ScaffoldState).dispose(); return null; },
         'showBodyScrim#2': (args) { (args[0] as ScaffoldState).showBodyScrim(args[1] as bool, args[2] as double); return null; },
         'build#1': (args) => (args[0] as ScaffoldState).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as ScaffoldState).toString(),
+        'toString#1': (args) => (args[0] as ScaffoldState).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'reassemble#0': (args) { (args[0] as ScaffoldState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ScaffoldState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ScaffoldState).deactivate(); return null; },

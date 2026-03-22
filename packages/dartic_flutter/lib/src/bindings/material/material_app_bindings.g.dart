@@ -54,7 +54,7 @@ abstract final class MaterialAppBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as MaterialApp).createState(),
-        'toString#0': (args) => (args[0] as MaterialApp).toString(),
+        'toString#1': (args) => (args[0] as MaterialApp).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MaterialApp).createElement(),
         'toStringShort#0': (args) => (args[0] as MaterialApp).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MaterialApp).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

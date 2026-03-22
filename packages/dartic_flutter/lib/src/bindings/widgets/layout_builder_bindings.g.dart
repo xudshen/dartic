@@ -30,7 +30,7 @@ abstract final class LayoutBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as LayoutBuilder).createRenderObject(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as LayoutBuilder).toString(),
+        'toString#1': (args) => (args[0] as LayoutBuilder).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as LayoutBuilder).createElement(),
         'updateShouldRebuild#1': (args) => (args[0] as LayoutBuilder).updateShouldRebuild(args[1] as AbstractLayoutBuilder<BoxConstraints>),
         'updateRenderObject#2': (args) { (args[0] as LayoutBuilder).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },

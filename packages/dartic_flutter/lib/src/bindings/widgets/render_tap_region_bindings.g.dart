@@ -44,7 +44,7 @@ abstract final class RenderTapRegionBindings {
         'layout#2': (args) { (args[0] as RenderTapRegion).layout(args[1] as Constraints, parentUsesSize: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
         'dispose#0': (args) { (args[0] as RenderTapRegion).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTapRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as RenderTapRegion).toString(),
+        'toString#1': (args) => (args[0] as RenderTapRegion).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'hitTest#2': (args) => (args[0] as RenderTapRegion).hitTest(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderTapRegion).hitTestSelf(args[1] as Offset),
         'setupParentData#1': (args) { (args[0] as RenderTapRegion).setupParentData(args[1] as RenderObject); return null; },

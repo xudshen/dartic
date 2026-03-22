@@ -34,7 +34,7 @@ abstract final class InheritedWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as InheritedWidget).createElement(),
         'updateShouldNotify#1': (args) => (args[0] as InheritedWidget).updateShouldNotify(args[1] as InheritedWidget),
-        'toString#0': (args) => (args[0] as InheritedWidget).toString(),
+        'toString#1': (args) => (args[0] as InheritedWidget).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'toStringShort#0': (args) => (args[0] as InheritedWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as InheritedWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

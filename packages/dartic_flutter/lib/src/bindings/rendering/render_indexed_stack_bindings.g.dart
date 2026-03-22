@@ -47,7 +47,7 @@ abstract final class RenderIndexedStackBindings {
         'paintStack#2': (args) { (args[0] as RenderIndexedStack).paintStack(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIndexedStack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderIndexedStack).debugDescribeChildren(),
-        'toString#0': (args) => (args[0] as RenderIndexedStack).toString(),
+        'toString#1': (args) => (args[0] as RenderIndexedStack).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderIndexedStack).setupParentData(args[1] as RenderBox); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedStack).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderIndexedStack).computeMaxIntrinsicWidth(args[1] as double),

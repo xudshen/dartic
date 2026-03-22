@@ -37,7 +37,7 @@ abstract final class ShrinkWrappingViewportBindings {
         'createRenderObject#1': (args) => (args[0] as ShrinkWrappingViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ShrinkWrappingViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderShrinkWrappingViewport); return null; },
         'debugFillProperties#1': (args) { (args[0] as ShrinkWrappingViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ShrinkWrappingViewport).toString(),
+        'toString#1': (args) => (args[0] as ShrinkWrappingViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ShrinkWrappingViewport).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ShrinkWrappingViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ShrinkWrappingViewport).toStringShort(),

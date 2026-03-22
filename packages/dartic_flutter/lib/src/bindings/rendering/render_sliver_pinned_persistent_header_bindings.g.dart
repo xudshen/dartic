@@ -44,7 +44,7 @@ abstract final class RenderSliverPinnedPersistentHeaderBindings {
         'performLayout#0': (args) { (args[0] as RenderSliverPinnedPersistentHeader).performLayout(); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverPinnedPersistentHeader).childMainAxisPosition(args[1] as RenderBox),
         'showOnScreen#4': (args) { (args[0] as RenderSliverPinnedPersistentHeader).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
-        'toString#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverPinnedPersistentHeader).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'updateChild#2': (args) { (args[0] as RenderSliverPinnedPersistentHeader).updateChild(args[1] as double, args[2] as bool); return null; },
         'markNeedsLayout#0': (args) { (args[0] as RenderSliverPinnedPersistentHeader).markNeedsLayout(); return null; },
         'layoutChild#3': (args) { (args[0] as RenderSliverPinnedPersistentHeader).layoutChild(args[1] as double, args[2] as double, overlapsContent: identical(args[3], darticAbsent) ? false : args[3] as bool); return null; },

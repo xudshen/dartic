@@ -41,5 +41,6 @@ abstract final class PlaceholderAlignmentBindings {
         'hashCode#0': (args) => (args[0] as PlaceholderAlignment).hashCode,
         'index#0': (args) => (args[0] as PlaceholderAlignment).index,
         '==#1': (args) => (args[0] as PlaceholderAlignment) == (args[1] as Object),
+        '_#fromFields#2': (args) => PlaceholderAlignment.values[args[1] as int],
       };
 }

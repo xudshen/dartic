@@ -39,7 +39,7 @@ abstract final class DirectionalityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as Directionality).updateShouldNotify(args[1] as Directionality),
         'debugFillProperties#1': (args) { (args[0] as Directionality).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as Directionality).toString(),
+        'toString#1': (args) => (args[0] as Directionality).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as Directionality).createElement(),
         'toStringShort#0': (args) => (args[0] as Directionality).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Directionality).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),

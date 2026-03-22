@@ -42,7 +42,7 @@ abstract final class ClipRRectBindings {
         'createRenderObject#1': (args) => (args[0] as ClipRRect).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ClipRRect).updateRenderObject(args[1] as BuildContext, args[2] as RenderClipRRect); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipRRect).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ClipRRect).toString(),
+        'toString#1': (args) => (args[0] as ClipRRect).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as ClipRRect).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ClipRRect).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ClipRRect).toStringShort(),

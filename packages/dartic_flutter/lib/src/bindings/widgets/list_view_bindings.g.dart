@@ -55,7 +55,7 @@ abstract final class ListViewBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildChildLayout#1': (args) => (args[0] as ListView).buildChildLayout(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as ListView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
-        'toString#0': (args) => (args[0] as ListView).toString(),
+        'toString#1': (args) => (args[0] as ListView).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'buildSlivers#1': (args) => (args[0] as ListView).buildSlivers(args[1] as BuildContext),
         'getDirection#1': (args) => (args[0] as ListView).getDirection(args[1] as BuildContext),
         'buildViewport#4': (args) => (args[0] as ListView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as AxisDirection, (args[4] as List).cast<Widget>()),

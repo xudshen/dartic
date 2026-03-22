@@ -38,7 +38,7 @@ abstract final class TwoDimensionalViewportBindings {
         'createElement#0': (args) => (args[0] as TwoDimensionalViewport).createElement(),
         'createRenderObject#1': (args) => (args[0] as TwoDimensionalViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as TwoDimensionalViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderTwoDimensionalViewport); return null; },
-        'toString#0': (args) => (args[0] as TwoDimensionalViewport).toString(),
+        'toString#1': (args) => (args[0] as TwoDimensionalViewport).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'didUnmountRenderObject#1': (args) { (args[0] as TwoDimensionalViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as TwoDimensionalViewport).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TwoDimensionalViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

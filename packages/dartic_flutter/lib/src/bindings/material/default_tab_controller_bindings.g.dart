@@ -30,7 +30,7 @@ abstract final class DefaultTabControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DefaultTabController).createState(),
-        'toString#0': (args) => (args[0] as DefaultTabController).toString(),
+        'toString#1': (args) => (args[0] as DefaultTabController).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as DefaultTabController).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultTabController).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultTabController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

@@ -34,5 +34,6 @@ abstract final class BannerLocationBindings {
         'hashCode#0': (args) => (args[0] as BannerLocation).hashCode,
         'index#0': (args) => (args[0] as BannerLocation).index,
         '==#1': (args) => (args[0] as BannerLocation) == (args[1] as Object),
+        '_#fromFields#2': (args) => BannerLocation.values[args[1] as int],
       };
 }

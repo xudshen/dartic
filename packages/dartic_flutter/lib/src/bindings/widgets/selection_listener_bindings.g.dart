@@ -47,7 +47,7 @@ abstract final class SelectionListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SelectionListener).createState(),
-        'toString#0': (args) => (args[0] as SelectionListener).toString(),
+        'toString#1': (args) => (args[0] as SelectionListener).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SelectionListener).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectionListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectionListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

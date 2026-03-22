@@ -39,7 +39,7 @@ abstract final class RenderBackdropFilterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as RenderBackdropFilter).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'toString#0': (args) => (args[0] as RenderBackdropFilter).toString(),
+        'toString#1': (args) => (args[0] as RenderBackdropFilter).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderBackdropFilter).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderBackdropFilter).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderBackdropFilter).computeMinIntrinsicWidth(args[1] as double),

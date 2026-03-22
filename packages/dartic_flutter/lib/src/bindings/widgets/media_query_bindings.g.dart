@@ -88,7 +88,7 @@ abstract final class MediaQueryBindings {
         'updateShouldNotify#1': (args) => (args[0] as MediaQuery).updateShouldNotify(args[1] as MediaQuery),
         'debugFillProperties#1': (args) { (args[0] as MediaQuery).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'updateShouldNotifyDependent#2': (args) => (args[0] as MediaQuery).updateShouldNotifyDependent(args[1] as MediaQuery, (args[2] as Set).cast<Object>()),
-        'toString#0': (args) => (args[0] as MediaQuery).toString(),
+        'toString#1': (args) => (args[0] as MediaQuery).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as MediaQuery).createElement(),
         'isSupportedAspect#1': (args) => (args[0] as MediaQuery).isSupportedAspect(args[1] as Object),
         'toStringShort#0': (args) => (args[0] as MediaQuery).toStringShort(),

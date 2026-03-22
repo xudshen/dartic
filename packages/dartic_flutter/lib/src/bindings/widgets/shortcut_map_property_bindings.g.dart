@@ -31,7 +31,7 @@ abstract final class ShortcutMapPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'valueToString#1': (args) => (args[0] as ShortcutMapProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
-        'toString#0': (args) => (args[0] as ShortcutMapProperty).toString(),
+        'toString#2': (args) => (args[0] as ShortcutMapProperty).toString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.info : args[2] as DiagnosticLevel),
         'toJsonMap#1': (args) => (args[0] as ShortcutMapProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'toDescription#1': (args) => (args[0] as ShortcutMapProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as ShortcutMapProperty).getProperties(),

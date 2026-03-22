@@ -39,7 +39,7 @@ abstract final class RenderMergeSemanticsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderMergeSemantics).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
-        'toString#0': (args) => (args[0] as RenderMergeSemantics).toString(),
+        'toString#1': (args) => (args[0] as RenderMergeSemantics).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderMergeSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderMergeSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderMergeSemantics).computeMinIntrinsicWidth(args[1] as double),

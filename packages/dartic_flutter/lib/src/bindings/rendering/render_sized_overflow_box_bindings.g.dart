@@ -51,7 +51,7 @@ abstract final class RenderSizedOverflowBoxBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderSizedOverflowBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'computeDryLayout#1': (args) => (args[0] as RenderSizedOverflowBox).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderSizedOverflowBox).performLayout(); return null; },
-        'toString#0': (args) => (args[0] as RenderSizedOverflowBox).toString(),
+        'toString#1': (args) => (args[0] as RenderSizedOverflowBox).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'alignChild#0': (args) { (args[0] as RenderSizedOverflowBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSizedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'paint#2': (args) { (args[0] as RenderSizedOverflowBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },

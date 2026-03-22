@@ -43,7 +43,7 @@ abstract final class OutlinedButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'defaultStyleOf#1': (args) => (args[0] as OutlinedButton).defaultStyleOf(args[1] as BuildContext),
         'themeStyleOf#1': (args) => (args[0] as OutlinedButton).themeStyleOf(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as OutlinedButton).toString(),
+        'toString#1': (args) => (args[0] as OutlinedButton).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createState#0': (args) => (args[0] as OutlinedButton).createState(),
         'debugFillProperties#1': (args) { (args[0] as OutlinedButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as OutlinedButton).createElement(),

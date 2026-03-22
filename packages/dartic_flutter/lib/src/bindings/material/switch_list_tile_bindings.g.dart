@@ -46,7 +46,7 @@ abstract final class SwitchListTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SwitchListTile).build(args[1] as BuildContext),
-        'toString#0': (args) => (args[0] as SwitchListTile).toString(),
+        'toString#1': (args) => (args[0] as SwitchListTile).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'createElement#0': (args) => (args[0] as SwitchListTile).createElement(),
         'toStringShort#0': (args) => (args[0] as SwitchListTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SwitchListTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },

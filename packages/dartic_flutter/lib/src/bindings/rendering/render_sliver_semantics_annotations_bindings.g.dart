@@ -37,7 +37,7 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'toString#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).toString(),
+        'toString#1': (args) => (args[0] as RenderSliverSemanticsAnnotations).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'setupParentData#1': (args) { (args[0] as RenderSliverSemanticsAnnotations).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverSemanticsAnnotations).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderSliverSemanticsAnnotations).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },

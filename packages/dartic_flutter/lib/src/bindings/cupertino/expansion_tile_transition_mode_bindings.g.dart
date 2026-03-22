@@ -34,5 +34,6 @@ abstract final class ExpansionTileTransitionModeBindings {
         'hashCode#0': (args) => (args[0] as ExpansionTileTransitionMode).hashCode,
         'index#0': (args) => (args[0] as ExpansionTileTransitionMode).index,
         '==#1': (args) => (args[0] as ExpansionTileTransitionMode) == (args[1] as Object),
+        '_#fromFields#2': (args) => ExpansionTileTransitionMode.values[args[1] as int],
       };
 }

@@ -25,7 +25,7 @@ abstract final class TransformPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'valueToString#1': (args) => (args[0] as TransformProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
-        'toString#0': (args) => (args[0] as TransformProperty).toString(),
+        'toString#2': (args) => (args[0] as TransformProperty).toString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.info : args[2] as DiagnosticLevel),
         'toJsonMap#1': (args) => (args[0] as TransformProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'toDescription#1': (args) => (args[0] as TransformProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as TransformProperty).getProperties(),

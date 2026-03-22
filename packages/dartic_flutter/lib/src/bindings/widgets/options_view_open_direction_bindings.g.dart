@@ -44,5 +44,6 @@ abstract final class OptionsViewOpenDirectionBindings {
         'hashCode#0': (args) => (args[0] as OptionsViewOpenDirection).hashCode,
         'index#0': (args) => (args[0] as OptionsViewOpenDirection).index,
         '==#1': (args) => (args[0] as OptionsViewOpenDirection) == (args[1] as Object),
+        '_#fromFields#2': (args) => OptionsViewOpenDirection.values[args[1] as int],
       };
 }

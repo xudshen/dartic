@@ -39,5 +39,6 @@ abstract final class SchedulerPhaseBindings {
         'hashCode#0': (args) => (args[0] as SchedulerPhase).hashCode,
         'index#0': (args) => (args[0] as SchedulerPhase).index,
         '==#1': (args) => (args[0] as SchedulerPhase) == (args[1] as Object),
+        '_#fromFields#2': (args) => SchedulerPhase.values[args[1] as int],
       };
 }
