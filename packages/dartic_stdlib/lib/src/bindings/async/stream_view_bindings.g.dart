@@ -24,6 +24,7 @@ abstract final class StreamViewBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'asBroadcastStream#2': (args) => (args[0] as StreamView).asBroadcastStream(onListen: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         'listen#4': (args) => (args[0] as StreamView).listen((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onError: identical(args[2], darticAbsent) ? null : args[2] as Function?, onDone: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), cancelOnError: identical(args[4], darticAbsent) ? null : args[4] as bool?),
+        'toString#0': (args) => (args[0] as StreamView).toString(),
         'where#1': (args) => (args[0] as StreamView).where((a) => (args[1] as Function)(a) as bool),
         'map#1': (args) => (args[0] as StreamView).map((a) => (args[1] as Function)(a)),
         'asyncMap#1': (args) => (args[0] as StreamView).asyncMap((a) => (args[1] as Function)(a) as FutureOr),

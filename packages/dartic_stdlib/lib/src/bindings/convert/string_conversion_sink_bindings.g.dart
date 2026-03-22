@@ -44,7 +44,13 @@ abstract final class StringConversionSinkBindings {
         'addSlice#4': (args) { (args[0] as StringConversionSink).addSlice(args[1] as String, args[2] as int, args[3] as int, args[4] as bool); return null; },
         'add#1': (args) { (args[0] as StringConversionSink).add(args[1] as String); return null; },
         'asStringSink#0': (args) => (args[0] as StringConversionSink).asStringSink(),
+        'toString#0': (args) => (args[0] as StringConversionSink).toString(),
         'close#0': (args) { (args[0] as StringConversionSink).close(); return null; },
+        'hashCode#0': (args) => (args[0] as StringConversionSink).hashCode,
+        '==#1': (args) => (args[0] as StringConversionSink) == (args[1] as Object),
+        'withCallback#1': (args) => StringConversionSink.withCallback((a) => (args[0] as Function)(a)),
+        'from#1': (args) => StringConversionSink.from(args[0] as Sink<String>),
+        'fromStringSink#1': (args) => StringConversionSink.fromStringSink(args[0] as StringSink),
         'asUtf8Sink#1': (args) {
             final allowMalformed = identical(args[1], darticAbsent) ? false : args[1] as bool;
             return (args[0] as StringConversionSink).asUtf8Sink(allowMalformed);

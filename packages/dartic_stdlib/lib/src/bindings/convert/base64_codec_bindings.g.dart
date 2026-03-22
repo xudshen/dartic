@@ -25,10 +25,13 @@ abstract final class Base64CodecBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'decode#1': (args) => (args[0] as Base64Codec).decode(args[1] as String),
         'normalize#3': (args) => (args[0] as Base64Codec).normalize(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
+        'toString#0': (args) => (args[0] as Base64Codec).toString(),
         'fuse#1': (args) => (args[0] as Base64Codec).fuse(args[1] as Codec<String, dynamic>),
         'encoder#0': (args) => (args[0] as Base64Codec).encoder,
         'decoder#0': (args) => (args[0] as Base64Codec).decoder,
+        'hashCode#0': (args) => (args[0] as Base64Codec).hashCode,
         'inverted#0': (args) => (args[0] as Base64Codec).inverted,
+        '==#1': (args) => (args[0] as Base64Codec) == (args[1] as Object),
         '#0': (args) => Base64Codec(),
         'urlSafe#0': (args) => Base64Codec.urlSafe(),
         'encode#1': (args) => (args[0] as Base64Codec).encode((args[1] as List).cast<int>()),

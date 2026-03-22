@@ -29,6 +29,7 @@ abstract final class StreamIteratorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'moveNext#0': (args) => (args[0] as StreamIterator).moveNext(),
         'cancel#0': (args) => (args[0] as StreamIterator).cancel(),
+        'toString#0': (args) => (args[0] as StreamIterator).toString(),
         'current#0': (args) => (args[0] as StreamIterator).current,
         'hashCode#0': (args) => (args[0] as StreamIterator).hashCode,
         '==#1': (args) => (args[0] as StreamIterator) == (args[1] as Object),

@@ -22,6 +22,7 @@ abstract final class LinkedHashMapBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as LinkedHashMap).toString(),
         'cast#0': (args) => (args[0] as LinkedHashMap).cast(),
         'containsValue#1': (args) => (args[0] as LinkedHashMap).containsValue(args[1]),
         'containsKey#1': (args) => (args[0] as LinkedHashMap).containsKey(args[1]),

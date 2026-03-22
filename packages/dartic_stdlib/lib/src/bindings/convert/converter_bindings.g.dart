@@ -26,6 +26,9 @@ abstract final class ConverterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as Converter).fuse(args[1] as Converter),
         'cast#0': (args) => (args[0] as Converter).cast(),
+        'toString#0': (args) => (args[0] as Converter).toString(),
+        'hashCode#0': (args) => (args[0] as Converter).hashCode,
+        '==#1': (args) => (args[0] as Converter) == (args[1] as Object),
         'convert#1': (args) {
             final converter = args[0] as Converter;
             var input = args[1];

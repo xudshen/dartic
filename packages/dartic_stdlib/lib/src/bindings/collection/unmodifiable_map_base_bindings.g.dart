@@ -21,6 +21,7 @@ abstract final class UnmodifiableMapBaseBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UnmodifiableMapBase).toString(),
         'cast#0': (args) => (args[0] as UnmodifiableMapBase).cast(),
         'forEach#1': (args) { (args[0] as UnmodifiableMapBase).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
         'containsValue#1': (args) => (args[0] as UnmodifiableMapBase).containsValue(args[1]),

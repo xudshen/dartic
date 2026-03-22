@@ -25,7 +25,10 @@ abstract final class LineSplitterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#1': (args) => (args[0] as LineSplitter).convert(args[1] as String),
+        'toString#0': (args) => (args[0] as LineSplitter).toString(),
         'cast#0': (args) => (args[0] as LineSplitter).cast(),
+        'hashCode#0': (args) => (args[0] as LineSplitter).hashCode,
+        '==#1': (args) => (args[0] as LineSplitter) == (args[1] as Object),
         '#0': (args) => LineSplitter(),
         '_#fromFields#0': (args) => LineSplitter(),
         'startChunkedConversion#1': (args) => (args[0] as LineSplitter).startChunkedConversion(castToStringSink(args[1])),

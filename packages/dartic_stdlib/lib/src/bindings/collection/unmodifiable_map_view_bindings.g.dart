@@ -45,6 +45,7 @@ abstract final class UnmodifiableMapViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as UnmodifiableMapView).cast(),
+        'toString#0': (args) => (args[0] as UnmodifiableMapView).toString(),
         'addAll#1': (args) { (args[0] as UnmodifiableMapView).addAll(args[1] as Map); return null; },
         'clear#0': (args) { (args[0] as UnmodifiableMapView).clear(); return null; },
         'putIfAbsent#2': (args) => (args[0] as UnmodifiableMapView).putIfAbsent(args[1], () => (args[2] as Function)()),

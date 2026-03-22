@@ -25,6 +25,7 @@ abstract final class SynchronousStreamControllerBindings {
         'add#1': (args) { (args[0] as SynchronousStreamController).add(args[1]); return null; },
         'addError#2': (args) { (args[0] as SynchronousStreamController).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'close#0': (args) => (args[0] as SynchronousStreamController).close(),
+        'toString#0': (args) => (args[0] as SynchronousStreamController).toString(),
         'addStream#2': (args) => (args[0] as SynchronousStreamController).addStream(args[1] as Stream, cancelOnError: identical(args[2], darticAbsent) ? null : args[2] as bool?),
         'hashCode#0': (args) => (args[0] as SynchronousStreamController).hashCode,
         'stream#0': (args) => (args[0] as SynchronousStreamController).stream,

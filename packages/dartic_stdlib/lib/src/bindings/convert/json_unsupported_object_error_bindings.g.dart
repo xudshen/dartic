@@ -27,7 +27,9 @@ abstract final class JsonUnsupportedObjectErrorBindings {
         'unsupportedObject#0': (args) => (args[0] as JsonUnsupportedObjectError).unsupportedObject,
         'cause#0': (args) => (args[0] as JsonUnsupportedObjectError).cause,
         'partialResult#0': (args) => (args[0] as JsonUnsupportedObjectError).partialResult,
+        'hashCode#0': (args) => (args[0] as JsonUnsupportedObjectError).hashCode,
         'stackTrace#0': (args) => (args[0] as JsonUnsupportedObjectError).stackTrace,
+        '==#1': (args) => (args[0] as JsonUnsupportedObjectError) == (args[1] as Object),
         '#3': (args) => JsonUnsupportedObjectError(args[0], cause: identical(args[1], darticAbsent) ? null : args[1], partialResult: identical(args[2], darticAbsent) ? null : args[2] as String?),
       };
 }

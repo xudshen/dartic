@@ -23,6 +23,7 @@ abstract final class StreamTransformerBaseBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as StreamTransformerBase).cast(),
+        'toString#0': (args) => (args[0] as StreamTransformerBase).toString(),
         'bind#1': (args) => (args[0] as StreamTransformerBase).bind(args[1] as Stream),
         'hashCode#0': (args) => (args[0] as StreamTransformerBase).hashCode,
         '==#1': (args) => (args[0] as StreamTransformerBase) == (args[1] as Object),

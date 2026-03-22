@@ -52,6 +52,7 @@ abstract final class ZoneBindings {
         'createTimer#2': (args) => (args[0] as Zone).createTimer(args[1] as Duration, () => (args[2] as Function)()),
         'createPeriodicTimer#2': (args) => (args[0] as Zone).createPeriodicTimer(args[1] as Duration, (a) => (args[2] as Function)(a)),
         'print#1': (args) { (args[0] as Zone).print(args[1] as String); return null; },
+        'toString#0': (args) => (args[0] as Zone).toString(),
         'parent#0': (args) => (args[0] as Zone).parent,
         'errorZone#0': (args) => (args[0] as Zone).errorZone,
         'hashCode#0': (args) => (args[0] as Zone).hashCode,

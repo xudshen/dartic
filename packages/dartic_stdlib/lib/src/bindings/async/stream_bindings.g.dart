@@ -182,6 +182,13 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   bool get isBroadcast {
     final r = _dispatch.get(this, $darticObject, 'isBroadcast');
     if (identical(r, notOverridden)) return super.isBroadcast;
@@ -237,13 +244,6 @@ class _$Stream extends Stream implements DarticObjectHolder {
     return r as bool;
   }
 
-  @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
   // ── Super trampolines ──
   Stream _super$asBroadcastStream({dynamic onListen, dynamic onCancel}) => super.asBroadcastStream(onListen: onListen, onCancel: onCancel);
   Stream _super$where(dynamic test) => super.where(test);
@@ -267,6 +267,7 @@ class _$Stream extends Stream implements DarticObjectHolder {
   Future _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
   Future _super$elementAt(int index) => super.elementAt(index);
   Stream _super$timeout(Duration timeLimit, {dynamic onTimeout}) => super.timeout(timeLimit, onTimeout: onTimeout);
+  String _super$toString() => super.toString();
   bool get _super$isBroadcast => super.isBroadcast;
   Future<int> get _super$length => super.length;
   Future<bool> get _super$isEmpty => super.isEmpty;
@@ -274,7 +275,6 @@ class _$Stream extends Stream implements DarticObjectHolder {
   Future get _super$last => super.last;
   Future get _super$single => super.single;
   int get _super$hashCode => super.hashCode;
-  String _super$toString() => super.toString();
 }
 
 abstract final class StreamBindings {
@@ -310,6 +310,7 @@ abstract final class StreamBindings {
     ctx.registerBinding('dart:async::Stream::\$super\$singleWhere#2', (args) => (args[0] as _$Stream)._super$singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
     ctx.registerBinding('dart:async::Stream::\$super\$elementAt#1', (args) => (args[0] as _$Stream)._super$elementAt(args[1] as int));
     ctx.registerBinding('dart:async::Stream::\$super\$timeout#2', (args) => (args[0] as _$Stream)._super$timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
+    ctx.registerBinding('dart:async::Stream::\$super\$toString#0', (args) => (args[0] as _$Stream)._super$toString());
     ctx.registerBinding('dart:async::Stream::\$super\$isBroadcast#0', (args) => (args[0] as _$Stream)._super$isBroadcast);
     ctx.registerBinding('dart:async::Stream::\$super\$length#0', (args) => (args[0] as _$Stream)._super$length);
     ctx.registerBinding('dart:async::Stream::\$super\$isEmpty#0', (args) => (args[0] as _$Stream)._super$isEmpty);
@@ -317,7 +318,6 @@ abstract final class StreamBindings {
     ctx.registerBinding('dart:async::Stream::\$super\$last#0', (args) => (args[0] as _$Stream)._super$last);
     ctx.registerBinding('dart:async::Stream::\$super\$single#0', (args) => (args[0] as _$Stream)._super$single);
     ctx.registerBinding('dart:async::Stream::\$super\$hashCode#0', (args) => (args[0] as _$Stream)._super$hashCode);
-    ctx.registerBinding('dart:async::Stream::\$super\$toString#0', (args) => (args[0] as _$Stream)._super$toString());
 
     // _EmptyStream
     for (final e in emptyStreamMethodMap().entries) {
@@ -357,6 +357,7 @@ abstract final class StreamBindings {
         'singleWhere#2': (args) => (args[0] as Stream).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as Stream).elementAt(args[1] as int),
         'timeout#2': (args) => (args[0] as Stream).timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'toString#0': (args) => (args[0] as Stream).toString(),
         'isBroadcast#0': (args) => (args[0] as Stream).isBroadcast,
         'length#0': (args) => (args[0] as Stream).length,
         'isEmpty#0': (args) => (args[0] as Stream).isEmpty,

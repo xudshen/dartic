@@ -64,6 +64,7 @@ abstract final class UnmodifiableListViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as UnmodifiableListView).cast(),
+        'toString#0': (args) => (args[0] as UnmodifiableListView).toString(),
         'elementAt#1': (args) => (args[0] as UnmodifiableListView).elementAt(args[1] as int),
         'followedBy#1': (args) => (args[0] as UnmodifiableListView).followedBy(args[1] as Iterable),
         'forEach#1': (args) { (args[0] as UnmodifiableListView).forEach((a) => (args[1] as Function)(a)); return null; },

@@ -23,8 +23,11 @@ abstract final class Base64EncoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Base64Encoder).toString(),
         'fuse#1': (args) => (args[0] as Base64Encoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Base64Encoder).cast(),
+        'hashCode#0': (args) => (args[0] as Base64Encoder).hashCode,
+        '==#1': (args) => (args[0] as Base64Encoder) == (args[1] as Object),
         '#0': (args) => Base64Encoder(),
         'urlSafe#0': (args) => Base64Encoder.urlSafe(),
         'convert#1': (args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>()),

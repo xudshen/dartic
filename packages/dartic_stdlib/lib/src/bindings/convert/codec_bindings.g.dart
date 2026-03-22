@@ -23,9 +23,12 @@ abstract final class CodecBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fuse#1': (args) => (args[0] as Codec).fuse(args[1] as Codec),
+        'toString#0': (args) => (args[0] as Codec).toString(),
         'encoder#0': (args) => (args[0] as Codec).encoder,
         'decoder#0': (args) => (args[0] as Codec).decoder,
         'inverted#0': (args) => (args[0] as Codec).inverted,
+        'hashCode#0': (args) => (args[0] as Codec).hashCode,
+        '==#1': (args) => (args[0] as Codec) == (args[1] as Object),
         'encode#1': (args) {
             final codec = args[0] as Codec;
             var input = args[1];

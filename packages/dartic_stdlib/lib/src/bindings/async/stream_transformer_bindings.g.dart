@@ -36,6 +36,7 @@ abstract final class StreamTransformerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'bind#1': (args) => (args[0] as StreamTransformer).bind(args[1] as Stream),
         'cast#0': (args) => (args[0] as StreamTransformer).cast(),
+        'toString#0': (args) => (args[0] as StreamTransformer).toString(),
         'hashCode#0': (args) => (args[0] as StreamTransformer).hashCode,
         '==#1': (args) => (args[0] as StreamTransformer) == (args[1] as Object),
         '#1': (args) => StreamTransformer<dynamic, dynamic>((a, b) => (args[0] as Function)(a, b) as StreamSubscription),

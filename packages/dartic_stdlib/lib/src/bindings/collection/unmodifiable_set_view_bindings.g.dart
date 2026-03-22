@@ -24,6 +24,7 @@ abstract final class UnmodifiableSetViewBindings {
         'contains#1': (args) => (args[0] as UnmodifiableSetView).contains(args[1]),
         'lookup#1': (args) => (args[0] as UnmodifiableSetView).lookup(args[1]),
         'toSet#0': (args) => (args[0] as UnmodifiableSetView).toSet(),
+        'toString#0': (args) => (args[0] as UnmodifiableSetView).toString(),
         'add#1': (args) => (args[0] as UnmodifiableSetView).add(args[1]),
         'remove#1': (args) => (args[0] as UnmodifiableSetView).remove(args[1]),
         'cast#0': (args) => (args[0] as UnmodifiableSetView).cast(),

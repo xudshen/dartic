@@ -23,10 +23,12 @@ abstract final class JsonCyclicErrorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'hashCode#0': (args) => (args[0] as JsonCyclicError).hashCode,
         'unsupportedObject#0': (args) => (args[0] as JsonCyclicError).unsupportedObject,
         'cause#0': (args) => (args[0] as JsonCyclicError).cause,
         'partialResult#0': (args) => (args[0] as JsonCyclicError).partialResult,
         'stackTrace#0': (args) => (args[0] as JsonCyclicError).stackTrace,
+        '==#1': (args) => (args[0] as JsonCyclicError) == (args[1] as Object),
         '#1': (args) => JsonCyclicError(args[0]),
         'toString#0': (args) => (args[0] as JsonCyclicError).toString(),
       };

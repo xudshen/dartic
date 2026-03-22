@@ -24,8 +24,11 @@ abstract final class JsonDecoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#1': (args) => (args[0] as JsonDecoder).convert(args[1] as String),
+        'toString#0': (args) => (args[0] as JsonDecoder).toString(),
         'fuse#1': (args) => (args[0] as JsonDecoder).fuse(args[1] as Converter),
         'cast#0': (args) => (args[0] as JsonDecoder).cast(),
+        'hashCode#0': (args) => (args[0] as JsonDecoder).hashCode,
+        '==#1': (args) => (args[0] as JsonDecoder) == (args[1] as Object),
         '_#fromFields#1': (args) => JsonDecoder(args[0] as Object? Function(Object?, Object?)?),
         '#1': (args) {
             final reviver = identical(args[0], darticAbsent) ? null : args[0] as Function?;

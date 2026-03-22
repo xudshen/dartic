@@ -25,8 +25,11 @@ abstract final class JsonEncoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#1': (args) => (args[0] as JsonEncoder).convert(args[1]),
         'fuse#1': (args) => (args[0] as JsonEncoder).fuse(args[1] as Converter<String, dynamic>),
+        'toString#0': (args) => (args[0] as JsonEncoder).toString(),
         'cast#0': (args) => (args[0] as JsonEncoder).cast(),
         'indent#0': (args) => (args[0] as JsonEncoder).indent,
+        'hashCode#0': (args) => (args[0] as JsonEncoder).hashCode,
+        '==#1': (args) => (args[0] as JsonEncoder) == (args[1] as Object),
         '_#fromFields#2': (args) => JsonEncoder.withIndent(args[1] as String?, args[0] as Object? Function(dynamic)?),
         '#1': (args) {
             final toEncodable = identical(args[0], darticAbsent) ? null : args[0] as Function?;

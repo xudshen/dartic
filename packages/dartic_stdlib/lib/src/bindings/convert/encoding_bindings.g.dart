@@ -24,12 +24,15 @@ abstract final class EncodingBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Encoding).toString(),
         'encode#1': (args) => (args[0] as Encoding).encode(args[1] as String),
         'fuse#1': (args) => (args[0] as Encoding).fuse(args[1] as Codec<List<int>, dynamic>),
         'encoder#0': (args) => (args[0] as Encoding).encoder,
         'decoder#0': (args) => (args[0] as Encoding).decoder,
         'name#0': (args) => (args[0] as Encoding).name,
+        'hashCode#0': (args) => (args[0] as Encoding).hashCode,
         'inverted#0': (args) => (args[0] as Encoding).inverted,
+        '==#1': (args) => (args[0] as Encoding) == (args[1] as Object),
         'decodeStream#1': (args) => (args[0] as Encoding).decodeStream((args[1] as Stream).cast<List<int>>()),
         'decode#1': (args) => (args[0] as Encoding).decode((args[1] as List).cast<int>()),
       };

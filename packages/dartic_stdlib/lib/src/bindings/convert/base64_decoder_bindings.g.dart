@@ -24,8 +24,11 @@ abstract final class Base64DecoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#3': (args) => (args[0] as Base64Decoder).convert(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
+        'toString#0': (args) => (args[0] as Base64Decoder).toString(),
         'fuse#1': (args) => (args[0] as Base64Decoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as Base64Decoder).cast(),
+        'hashCode#0': (args) => (args[0] as Base64Decoder).hashCode,
+        '==#1': (args) => (args[0] as Base64Decoder) == (args[1] as Object),
         '#0': (args) => Base64Decoder(),
         '_#fromFields#0': (args) => Base64Decoder(),
         'startChunkedConversion#1': (args) => (args[0] as Base64Decoder).startChunkedConversion(castToBytesSink(args[1])),

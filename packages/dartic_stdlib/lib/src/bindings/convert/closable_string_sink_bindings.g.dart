@@ -30,10 +30,14 @@ abstract final class ClosableStringSinkBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'close#0': (args) { (args[0] as ClosableStringSink).close(); return null; },
+        'toString#0': (args) => (args[0] as ClosableStringSink).toString(),
         'write#1': (args) { (args[0] as ClosableStringSink).write(args[1]); return null; },
         'writeAll#2': (args) { (args[0] as ClosableStringSink).writeAll(args[1] as Iterable<dynamic>, identical(args[2], darticAbsent) ? "" : args[2] as String); return null; },
         'writeln#1': (args) { (args[0] as ClosableStringSink).writeln(identical(args[1], darticAbsent) ? null : args[1]); return null; },
         'writeCharCode#1': (args) { (args[0] as ClosableStringSink).writeCharCode(args[1] as int); return null; },
+        'hashCode#0': (args) => (args[0] as ClosableStringSink).hashCode,
+        '==#1': (args) => (args[0] as ClosableStringSink) == (args[1] as Object),
+        'fromStringSink#2': (args) => ClosableStringSink.fromStringSink(args[0] as StringSink, () => (args[1] as Function)()),
       };
 
   static Map<String, Object? Function(List<Object?>)> closableStringSinkMethodMap() => {

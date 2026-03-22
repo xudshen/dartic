@@ -28,6 +28,7 @@ abstract final class DoubleLinkedQueueEntryBindings {
         'remove#0': (args) => (args[0] as DoubleLinkedQueueEntry).remove(),
         'previousEntry#0': (args) => (args[0] as DoubleLinkedQueueEntry).previousEntry(),
         'nextEntry#0': (args) => (args[0] as DoubleLinkedQueueEntry).nextEntry(),
+        'toString#0': (args) => (args[0] as DoubleLinkedQueueEntry).toString(),
         'element#0': (args) => (args[0] as DoubleLinkedQueueEntry).element,
         'hashCode#0': (args) => (args[0] as DoubleLinkedQueueEntry).hashCode,
         'element=#1': (args) { (args[0] as DoubleLinkedQueueEntry).element = args[1]; return args[1]; },

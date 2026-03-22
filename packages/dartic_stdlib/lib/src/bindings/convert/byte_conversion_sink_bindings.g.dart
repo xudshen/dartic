@@ -35,7 +35,12 @@ abstract final class ByteConversionSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ByteConversionSink).toString(),
         'close#0': (args) { (args[0] as ByteConversionSink).close(); return null; },
+        'hashCode#0': (args) => (args[0] as ByteConversionSink).hashCode,
+        '==#1': (args) => (args[0] as ByteConversionSink) == (args[1] as Object),
+        'withCallback#1': (args) => ByteConversionSink.withCallback((a) => (args[0] as Function)(a)),
+        'from#1': (args) => ByteConversionSink.from(args[0] as Sink<List<int>>),
         'add#1': (args) {
             (args[0] as ByteConversionSink).add((args[1] as List).cast<int>());
             return null;

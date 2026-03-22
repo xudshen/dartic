@@ -26,6 +26,7 @@ abstract final class StreamControllerBindings {
         'addError#2': (args) { (args[0] as StreamController).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'close#0': (args) => (args[0] as StreamController).close(),
         'addStream#2': (args) => (args[0] as StreamController).addStream(args[1] as Stream, cancelOnError: identical(args[2], darticAbsent) ? null : args[2] as bool?),
+        'toString#0': (args) => (args[0] as StreamController).toString(),
         'stream#0': (args) => (args[0] as StreamController).stream,
         'onListen#0': (args) => (args[0] as StreamController).onListen,
         'onPause#0': (args) => (args[0] as StreamController).onPause,

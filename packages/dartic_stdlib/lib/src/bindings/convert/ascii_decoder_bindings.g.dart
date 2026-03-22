@@ -29,8 +29,11 @@ abstract final class AsciiDecoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AsciiDecoder).toString(),
         'fuse#1': (args) => (args[0] as AsciiDecoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as AsciiDecoder).cast(),
+        'hashCode#0': (args) => (args[0] as AsciiDecoder).hashCode,
+        '==#1': (args) => (args[0] as AsciiDecoder) == (args[1] as Object),
         '#1': (args) => AsciiDecoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#2': (args) => AsciiDecoder(allowInvalid: args[0] as bool),
         'startChunkedConversion#1': (args) => (args[0] as AsciiDecoder).startChunkedConversion(castToStringSink(args[1])),

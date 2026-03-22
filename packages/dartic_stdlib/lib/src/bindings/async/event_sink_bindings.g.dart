@@ -43,6 +43,13 @@ class _$EventSink implements EventSink, DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -54,13 +61,6 @@ class _$EventSink implements EventSink, DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
-  }
-
-  @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
   }
 }
 
@@ -81,6 +81,7 @@ abstract final class EventSinkBindings {
         'add#1': (args) { (args[0] as EventSink).add(args[1]); return null; },
         'addError#2': (args) { (args[0] as EventSink).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'close#0': (args) { (args[0] as EventSink).close(); return null; },
+        'toString#0': (args) => (args[0] as EventSink).toString(),
         'hashCode#0': (args) => (args[0] as EventSink).hashCode,
         '==#1': (args) => (args[0] as EventSink) == (args[1] as Object),
       };

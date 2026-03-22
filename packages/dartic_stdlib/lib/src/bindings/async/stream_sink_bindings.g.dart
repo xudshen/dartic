@@ -28,6 +28,13 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   void add(dynamic event) {
     final r = _dispatch.invoke(this, $darticObject, 'add', [event]);
     if (identical(r, notOverridden)) {
@@ -74,13 +81,6 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
   }
-
-  @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
 }
 
 abstract final class StreamSinkBindings {
@@ -98,6 +98,7 @@ abstract final class StreamSinkBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'close#0': (args) => (args[0] as StreamSink).close(),
+        'toString#0': (args) => (args[0] as StreamSink).toString(),
         'add#1': (args) { (args[0] as StreamSink).add(args[1]); return null; },
         'addError#2': (args) { (args[0] as StreamSink).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'addStream#1': (args) => (args[0] as StreamSink).addStream(args[1] as Stream),

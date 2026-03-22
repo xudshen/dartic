@@ -24,8 +24,11 @@ abstract final class Utf8EncoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#3': (args) => (args[0] as Utf8Encoder).convert(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
+        'toString#0': (args) => (args[0] as Utf8Encoder).toString(),
         'fuse#1': (args) => (args[0] as Utf8Encoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as Utf8Encoder).cast(),
+        'hashCode#0': (args) => (args[0] as Utf8Encoder).hashCode,
+        '==#1': (args) => (args[0] as Utf8Encoder) == (args[1] as Object),
         '#0': (args) => Utf8Encoder(),
         '_#fromFields#0': (args) => Utf8Encoder(),
         'startChunkedConversion#1': (args) => (args[0] as Utf8Encoder).startChunkedConversion(castToBytesSink(args[1])),

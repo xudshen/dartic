@@ -33,6 +33,7 @@ abstract final class QueueBindings {
         'removeWhere#1': (args) { (args[0] as Queue).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as Queue).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'clear#0': (args) { (args[0] as Queue).clear(); return null; },
+        'toString#0': (args) => (args[0] as Queue).toString(),
         'followedBy#1': (args) => (args[0] as Queue).followedBy(args[1] as Iterable),
         'map#1': (args) => (args[0] as Queue).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as Queue).where((a) => (args[1] as Function)(a) as bool),

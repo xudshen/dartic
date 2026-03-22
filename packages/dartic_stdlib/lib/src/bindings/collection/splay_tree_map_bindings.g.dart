@@ -34,6 +34,7 @@ abstract final class SplayTreeMapBindings {
         'lastKey#0': (args) => (args[0] as SplayTreeMap).lastKey(),
         'lastKeyBefore#1': (args) => (args[0] as SplayTreeMap).lastKeyBefore(args[1]),
         'firstKeyAfter#1': (args) => (args[0] as SplayTreeMap).firstKeyAfter(args[1]),
+        'toString#0': (args) => (args[0] as SplayTreeMap).toString(),
         'cast#0': (args) => (args[0] as SplayTreeMap).cast(),
         'map#1': (args) => (args[0] as SplayTreeMap).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
         'addEntries#1': (args) { (args[0] as SplayTreeMap).addEntries((args[1] as Iterable).cast<MapEntry>()); return null; },

@@ -23,6 +23,7 @@ abstract final class LinkedListEntryBindings {
         'unlink#0': (args) { (args[0] as LinkedListEntry).unlink(); return null; },
         'insertAfter#1': (args) { (args[0] as LinkedListEntry).insertAfter(args[1] as LinkedListEntry); return null; },
         'insertBefore#1': (args) { (args[0] as LinkedListEntry).insertBefore(args[1] as LinkedListEntry); return null; },
+        'toString#0': (args) => (args[0] as LinkedListEntry).toString(),
         'list#0': (args) => (args[0] as LinkedListEntry).list,
         'next#0': (args) => (args[0] as LinkedListEntry).next,
         'previous#0': (args) => (args[0] as LinkedListEntry).previous,

@@ -29,8 +29,11 @@ abstract final class Latin1DecoderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Latin1Decoder).toString(),
         'fuse#1': (args) => (args[0] as Latin1Decoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Latin1Decoder).cast(),
+        'hashCode#0': (args) => (args[0] as Latin1Decoder).hashCode,
+        '==#1': (args) => (args[0] as Latin1Decoder) == (args[1] as Object),
         '#1': (args) => Latin1Decoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#2': (args) => Latin1Decoder(allowInvalid: args[0] as bool),
         'startChunkedConversion#1': (args) => (args[0] as Latin1Decoder).startChunkedConversion(castToStringSink(args[1])),

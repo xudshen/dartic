@@ -24,12 +24,15 @@ abstract final class Latin1CodecBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'encode#1': (args) => (args[0] as Latin1Codec).encode(args[1] as String),
+        'toString#0': (args) => (args[0] as Latin1Codec).toString(),
         'decodeStream#1': (args) => (args[0] as Latin1Codec).decodeStream(args[1] as Stream<List<int>>),
         'fuse#1': (args) => (args[0] as Latin1Codec).fuse(args[1] as Codec<List<int>, dynamic>),
         'name#0': (args) => (args[0] as Latin1Codec).name,
         'encoder#0': (args) => (args[0] as Latin1Codec).encoder,
         'decoder#0': (args) => (args[0] as Latin1Codec).decoder,
+        'hashCode#0': (args) => (args[0] as Latin1Codec).hashCode,
         'inverted#0': (args) => (args[0] as Latin1Codec).inverted,
+        '==#1': (args) => (args[0] as Latin1Codec) == (args[1] as Object),
         '#1': (args) => Latin1Codec(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#1': (args) => Latin1Codec(allowInvalid: args[0] as bool),
         'decode#2': (args) {

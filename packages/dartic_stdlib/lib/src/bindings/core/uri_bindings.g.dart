@@ -22,12 +22,30 @@ abstract final class UriBindings {
     ctx.registerBinding('dart:core::Uri::parse#3', (args) => Uri.parse(args[0] as String, identical(args[1], darticAbsent) ? 0 : args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?));
     ctx.registerBinding('dart:core::Uri::tryParse#3', (args) => Uri.tryParse(args[0] as String, identical(args[1], darticAbsent) ? 0 : args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?));
     ctx.registerBinding('dart:core::Uri::encodeComponent#1', (args) => Uri.encodeComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', (args) => Uri.encodeQueryComponent(args[0] as String, encoding: identical(args[1], darticAbsent) ? utf8 : args[1] as Encoding));
+    ctx.registerBinding('dart:core::Uri::encodeQueryComponent#2', (args) {
+              if (identical(args[1], darticAbsent)) {
+                return Uri.encodeQueryComponent(args[0] as String);
+              } else {
+                return Uri.encodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+              }
+            });
     ctx.registerBinding('dart:core::Uri::decodeComponent#1', (args) => Uri.decodeComponent(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', (args) => Uri.decodeQueryComponent(args[0] as String, encoding: identical(args[1], darticAbsent) ? utf8 : args[1] as Encoding));
+    ctx.registerBinding('dart:core::Uri::decodeQueryComponent#2', (args) {
+              if (identical(args[1], darticAbsent)) {
+                return Uri.decodeQueryComponent(args[0] as String);
+              } else {
+                return Uri.decodeQueryComponent(args[0] as String, encoding: args[1] as Encoding);
+              }
+            });
     ctx.registerBinding('dart:core::Uri::encodeFull#1', (args) => Uri.encodeFull(args[0] as String));
     ctx.registerBinding('dart:core::Uri::decodeFull#1', (args) => Uri.decodeFull(args[0] as String));
-    ctx.registerBinding('dart:core::Uri::splitQueryString#2', (args) => Uri.splitQueryString(args[0] as String, encoding: identical(args[1], darticAbsent) ? utf8 : args[1] as Encoding));
+    ctx.registerBinding('dart:core::Uri::splitQueryString#2', (args) {
+              if (identical(args[1], darticAbsent)) {
+                return Uri.splitQueryString(args[0] as String);
+              } else {
+                return Uri.splitQueryString(args[0] as String, encoding: args[1] as Encoding);
+              }
+            });
     ctx.registerBinding('dart:core::Uri::parseIPv4Address#3', (args) => Uri.parseIPv4Address(args[0] as String, identical(args[1], darticAbsent) ? 0 : args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?));
     ctx.registerBinding('dart:core::Uri::parseIPv6Address#3', (args) => Uri.parseIPv6Address(args[0] as String, identical(args[1], darticAbsent) ? 0 : args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as int?));
     ctx.registerBinding('dart:core::Uri::base#0', (args) => Uri.base);

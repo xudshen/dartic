@@ -24,12 +24,15 @@ abstract final class AsciiCodecBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'encode#1': (args) => (args[0] as AsciiCodec).encode(args[1] as String),
+        'toString#0': (args) => (args[0] as AsciiCodec).toString(),
         'decodeStream#1': (args) => (args[0] as AsciiCodec).decodeStream(args[1] as Stream<List<int>>),
         'fuse#1': (args) => (args[0] as AsciiCodec).fuse(args[1] as Codec<List<int>, dynamic>),
         'name#0': (args) => (args[0] as AsciiCodec).name,
         'encoder#0': (args) => (args[0] as AsciiCodec).encoder,
         'decoder#0': (args) => (args[0] as AsciiCodec).decoder,
+        'hashCode#0': (args) => (args[0] as AsciiCodec).hashCode,
         'inverted#0': (args) => (args[0] as AsciiCodec).inverted,
+        '==#1': (args) => (args[0] as AsciiCodec) == (args[1] as Object),
         '#1': (args) => AsciiCodec(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#1': (args) => AsciiCodec(allowInvalid: args[0] as bool),
         'decode#2': (args) {

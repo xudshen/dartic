@@ -21,6 +21,7 @@ abstract final class HashSetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HashSet).toString(),
         'cast#0': (args) => (args[0] as HashSet).cast(),
         'contains#1': (args) => (args[0] as HashSet).contains(args[1]),
         'add#1': (args) => (args[0] as HashSet).add(args[1]),

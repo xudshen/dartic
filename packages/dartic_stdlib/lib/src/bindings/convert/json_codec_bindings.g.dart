@@ -23,10 +23,13 @@ abstract final class JsonCodecBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as JsonCodec).toString(),
         'fuse#1': (args) => (args[0] as JsonCodec).fuse(args[1] as Codec<String, dynamic>),
         'encoder#0': (args) => (args[0] as JsonCodec).encoder,
         'decoder#0': (args) => (args[0] as JsonCodec).decoder,
+        'hashCode#0': (args) => (args[0] as JsonCodec).hashCode,
         'inverted#0': (args) => (args[0] as JsonCodec).inverted,
+        '==#1': (args) => (args[0] as JsonCodec) == (args[1] as Object),
         'withReviver#1': (args) => JsonCodec.withReviver((a, b) => (args[0] as Function)(a, b)),
         '_#fromFields#2': (args) => JsonCodec(reviver: args[0] as Object? Function(Object?, Object?)?, toEncodable: args[1] as Object? Function(dynamic)?),
         '#2': (args) {

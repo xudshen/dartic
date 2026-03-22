@@ -28,6 +28,7 @@ abstract final class LinkedListBindings {
         'contains#1': (args) => (args[0] as LinkedList).contains(args[1]),
         'clear#0': (args) { (args[0] as LinkedList).clear(); return null; },
         'forEach#1': (args) { (args[0] as LinkedList).forEach((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as LinkedList).toString(),
         'cast#0': (args) => (args[0] as LinkedList).cast(),
         'followedBy#1': (args) => (args[0] as LinkedList).followedBy((args[1] as Iterable).cast<LinkedListEntry>()),
         'map#1': (args) => (args[0] as LinkedList).map((a) => (args[1] as Function)(a)),

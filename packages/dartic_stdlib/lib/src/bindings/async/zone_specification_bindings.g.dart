@@ -27,6 +27,7 @@ abstract final class ZoneSpecificationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ZoneSpecification).toString(),
         'handleUncaughtError#0': (args) => (args[0] as ZoneSpecification).handleUncaughtError,
         'run#0': (args) => (args[0] as ZoneSpecification).run,
         'runUnary#0': (args) => (args[0] as ZoneSpecification).runUnary,

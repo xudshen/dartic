@@ -34,6 +34,7 @@ abstract final class ZoneDelegateBindings {
         'createPeriodicTimer#3': (args) => (args[0] as ZoneDelegate).createPeriodicTimer(args[1] as Zone, args[2] as Duration, (a) => (args[3] as Function)(a)),
         'print#2': (args) { (args[0] as ZoneDelegate).print(args[1] as Zone, args[2] as String); return null; },
         'fork#3': (args) => (args[0] as ZoneDelegate).fork(args[1] as Zone, args[2] as ZoneSpecification?, args[3] as Map<dynamic, dynamic>?),
+        'toString#0': (args) => (args[0] as ZoneDelegate).toString(),
         'hashCode#0': (args) => (args[0] as ZoneDelegate).hashCode,
         '==#1': (args) => (args[0] as ZoneDelegate) == (args[1] as Object),
       };

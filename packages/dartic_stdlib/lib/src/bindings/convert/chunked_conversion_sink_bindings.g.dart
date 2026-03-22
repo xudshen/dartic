@@ -30,6 +30,10 @@ abstract final class ChunkedConversionSinkBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'close#0': (args) { (args[0] as ChunkedConversionSink).close(); return null; },
+        'toString#0': (args) => (args[0] as ChunkedConversionSink).toString(),
+        'hashCode#0': (args) => (args[0] as ChunkedConversionSink).hashCode,
+        '==#1': (args) => (args[0] as ChunkedConversionSink) == (args[1] as Object),
+        'withCallback#1': (args) => ChunkedConversionSink<dynamic>.withCallback((a) => (args[0] as Function)(a)),
         'add#1': (args) {
             var item = args[1];
             if (item is List && item is! List<int> && item is! List<String>) {

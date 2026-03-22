@@ -37,6 +37,13 @@ class _$StreamConsumer implements StreamConsumer, DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -48,13 +55,6 @@ class _$StreamConsumer implements StreamConsumer, DarticObjectHolder {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
-  }
-
-  @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
   }
 }
 
@@ -73,6 +73,7 @@ abstract final class StreamConsumerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addStream#1': (args) => (args[0] as StreamConsumer).addStream(args[1] as Stream),
         'close#0': (args) => (args[0] as StreamConsumer).close(),
+        'toString#0': (args) => (args[0] as StreamConsumer).toString(),
         'hashCode#0': (args) => (args[0] as StreamConsumer).hashCode,
         '==#1': (args) => (args[0] as StreamConsumer) == (args[1] as Object),
       };

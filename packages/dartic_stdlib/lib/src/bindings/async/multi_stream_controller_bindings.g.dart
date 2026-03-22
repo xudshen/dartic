@@ -25,6 +25,7 @@ abstract final class MultiStreamControllerBindings {
         'addSync#1': (args) { (args[0] as MultiStreamController).addSync(args[1]); return null; },
         'addErrorSync#2': (args) { (args[0] as MultiStreamController).addErrorSync(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'closeSync#0': (args) { (args[0] as MultiStreamController).closeSync(); return null; },
+        'toString#0': (args) => (args[0] as MultiStreamController).toString(),
         'add#1': (args) { (args[0] as MultiStreamController).add(args[1]); return null; },
         'addError#2': (args) { (args[0] as MultiStreamController).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'close#0': (args) => (args[0] as MultiStreamController).close(),

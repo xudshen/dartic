@@ -21,6 +21,7 @@ abstract final class HashMapBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HashMap).toString(),
         'cast#0': (args) => (args[0] as HashMap).cast(),
         'containsValue#1': (args) => (args[0] as HashMap).containsValue(args[1]),
         'containsKey#1': (args) => (args[0] as HashMap).containsKey(args[1]),

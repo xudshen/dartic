@@ -23,6 +23,7 @@ abstract final class LinkedHashSetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'forEach#1': (args) { (args[0] as LinkedHashSet).forEach((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as LinkedHashSet).toString(),
         'cast#0': (args) => (args[0] as LinkedHashSet).cast(),
         'contains#1': (args) => (args[0] as LinkedHashSet).contains(args[1]),
         'add#1': (args) => (args[0] as LinkedHashSet).add(args[1]),

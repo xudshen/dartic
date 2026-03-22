@@ -23,6 +23,7 @@ abstract final class TimerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cancel#0': (args) { (args[0] as Timer).cancel(); return null; },
+        'toString#0': (args) => (args[0] as Timer).toString(),
         'tick#0': (args) => (args[0] as Timer).tick,
         'isActive#0': (args) => (args[0] as Timer).isActive,
         'hashCode#0': (args) => (args[0] as Timer).hashCode,

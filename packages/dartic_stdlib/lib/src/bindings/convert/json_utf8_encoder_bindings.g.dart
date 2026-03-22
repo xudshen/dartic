@@ -24,8 +24,11 @@ abstract final class JsonUtf8EncoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'convert#1': (args) => (args[0] as JsonUtf8Encoder).convert(args[1]),
+        'toString#0': (args) => (args[0] as JsonUtf8Encoder).toString(),
         'fuse#1': (args) => (args[0] as JsonUtf8Encoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as JsonUtf8Encoder).cast(),
+        'hashCode#0': (args) => (args[0] as JsonUtf8Encoder).hashCode,
+        '==#1': (args) => (args[0] as JsonUtf8Encoder) == (args[1] as Object),
         '#3': (args) {
             final indent = identical(args[0], darticAbsent) ? null : args[0] as String?;
             final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
