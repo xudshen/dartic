@@ -27,6 +27,7 @@ abstract final class LinkedListBindings {
         'remove#1': (args) => (args[0] as LinkedList).remove(args[1] as LinkedListEntry),
         'contains#1': (args) => (args[0] as LinkedList).contains(args[1]),
         'clear#0': (args) { (args[0] as LinkedList).clear(); return null; },
+        'forEach#1': (args) { (args[0] as LinkedList).forEach((a) => (args[1] as Function)(a)); return null; },
         'cast#0': (args) => (args[0] as LinkedList).cast(),
         'followedBy#1': (args) => (args[0] as LinkedList).followedBy((args[1] as Iterable).cast<LinkedListEntry>()),
         'map#1': (args) => (args[0] as LinkedList).map((a) => (args[1] as Function)(a)),
@@ -56,10 +57,5 @@ abstract final class LinkedListBindings {
         'isEmpty#0': (args) => (args[0] as LinkedList).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as LinkedList).isNotEmpty,
         '#0': (args) => LinkedList<Never>(),
-        'forEach#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as LinkedList).forEach((e) => fn(e));
-            return null;
-        },
       };
 }

@@ -110,6 +110,8 @@ abstract final class UnmodifiableListViewBindings {
         'removeAt#1': (args) => (args[0] as UnmodifiableListView).removeAt(args[1] as int),
         'insertAll#2': (args) { (args[0] as UnmodifiableListView).insertAll(args[1] as int, args[2] as Iterable); return null; },
         'setAll#2': (args) { (args[0] as UnmodifiableListView).setAll(args[1] as int, args[2] as Iterable); return null; },
+        'length#0': (args) => (args[0] as UnmodifiableListView).length,
+        'iterator#0': (args) => (args[0] as UnmodifiableListView).iterator,
         'isEmpty#0': (args) => (args[0] as UnmodifiableListView).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as UnmodifiableListView).isNotEmpty,
         'first#0': (args) => (args[0] as UnmodifiableListView).first,
@@ -119,11 +121,9 @@ abstract final class UnmodifiableListViewBindings {
         'first=#1': (args) { (args[0] as UnmodifiableListView).first = args[1]; return args[1]; },
         'last=#1': (args) { (args[0] as UnmodifiableListView).last = args[1]; return args[1]; },
         'length=#1': (args) { (args[0] as UnmodifiableListView).length = args[1] as int; return args[1]; },
+        '[]#1': (args) => (args[0] as UnmodifiableListView)[(args[1] as int)],
         '+#1': (args) => (args[0] as UnmodifiableListView) + (args[1] as List),
         '[]=#2': (args) { (args[0] as UnmodifiableListView)[args[1] as int] = args[2]; return args[2]; },
         '#1': (args) => UnmodifiableListView(args[0] as Iterable),
-        '[]#1': (args) => (args[0] as UnmodifiableListView)[args[1] as int],
-        'length#0': (args) => (args[0] as UnmodifiableListView).length,
-        'iterator#0': (args) => (args[0] as UnmodifiableListView).iterator,
       };
 }

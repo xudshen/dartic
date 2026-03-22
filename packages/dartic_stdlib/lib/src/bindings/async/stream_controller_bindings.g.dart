@@ -22,10 +22,20 @@ abstract final class StreamControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'add#1': (args) { (args[0] as StreamController).add(args[1]); return null; },
+        'addError#2': (args) { (args[0] as StreamController).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
+        'close#0': (args) => (args[0] as StreamController).close(),
+        'addStream#2': (args) => (args[0] as StreamController).addStream(args[1] as Stream, cancelOnError: identical(args[2], darticAbsent) ? null : args[2] as bool?),
+        'stream#0': (args) => (args[0] as StreamController).stream,
         'onListen#0': (args) => (args[0] as StreamController).onListen,
         'onPause#0': (args) => (args[0] as StreamController).onPause,
         'onResume#0': (args) => (args[0] as StreamController).onResume,
         'onCancel#0': (args) => (args[0] as StreamController).onCancel,
+        'sink#0': (args) => (args[0] as StreamController).sink,
+        'isClosed#0': (args) => (args[0] as StreamController).isClosed,
+        'isPaused#0': (args) => (args[0] as StreamController).isPaused,
+        'hasListener#0': (args) => (args[0] as StreamController).hasListener,
+        'done#0': (args) => (args[0] as StreamController).done,
         'onListen=#1': (args) { (args[0] as StreamController).onListen = args[1] as void Function()?; return args[1]; },
         'onPause=#1': (args) { (args[0] as StreamController).onPause = args[1] as void Function()?; return args[1]; },
         'onResume=#1': (args) { (args[0] as StreamController).onResume = args[1] as void Function()?; return args[1]; },
@@ -63,37 +73,6 @@ abstract final class StreamControllerBindings {
               onCancel: onCancel != null ? () => onCancel() : null,
               sync: sync,
             );
-        },
-        'add#1': (args) {
-            (args[0] as StreamController).add(args[1]);
-            return null;
-        },
-        'addError#2': (args) {
-            final controller = args[0] as StreamController;
-            final error = args[1] as Object;
-            final st =
-                identical(args[2], darticAbsent) ? null : args[2] as StackTrace?;
-            if (st != null) {
-              controller.addError(error, st);
-            } else {
-              controller.addError(error);
-            }
-            return null;
-        },
-        'close#0': (args) => (args[0] as StreamController).close(),
-        'stream#0': (args) => (args[0] as StreamController).stream,
-        'sink#0': (args) => (args[0] as StreamController).sink,
-        'done#0': (args) => (args[0] as StreamController).done,
-        'hasListener#0': (args) => (args[0] as StreamController).hasListener,
-        'isClosed#0': (args) => (args[0] as StreamController).isClosed,
-        'isPaused#0': (args) => (args[0] as StreamController).isPaused,
-        'addStream#2': (args) {
-            final controller = args[0] as StreamController;
-            final source = args[1] as Stream;
-            final cancelOnError =
-                identical(args[2], darticAbsent) ? null : args[2] as bool?;
-            return controller.addStream(source,
-                cancelOnError: cancelOnError);
         },
       };
 }

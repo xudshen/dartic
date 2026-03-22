@@ -47,6 +47,7 @@ abstract final class SetBindings {
         'toSet#0': (args) => (args[0] as Set).toSet(),
         'followedBy#1': (args) => (args[0] as Set).followedBy(args[1] as Iterable),
         'map#1': (args) => (args[0] as Set).map((a) => (args[1] as Function)(a)),
+        'where#1': (args) => (args[0] as Set).where((a) => (args[1] as Function)(a) as bool),
         'whereType#0': (args) => (args[0] as Set).whereType(),
         'expand#1': (args) => (args[0] as Set).expand((a) => (args[1] as Function)(a) as Iterable),
         'forEach#1': (args) { (args[0] as Set).forEach((a) => (args[1] as Function)(a)); return null; },
@@ -70,15 +71,10 @@ abstract final class SetBindings {
         'last#0': (args) => (args[0] as Set).last,
         'single#0': (args) => (args[0] as Set).single,
         'castFrom#2': (args) => Set.castFrom(args[0] as Set),
-        'toString#0': (args) => (args[0] as Set).toString(),
         'symmetricDifference#1': (args) {
             final a = args[0] as Set;
             final b = args[1] as Set;
             return a.union(b).difference(a.intersection(b));
-        },
-        'where#1': (args) {
-            final fn = args[1] as Function;
-            return (args[0] as Set).where((e) => fn(e) as bool);
         },
         'firstWhere#2': (args) {
             final fn = args[1] as Function;
@@ -100,6 +96,7 @@ abstract final class SetBindings {
             }
             return value;
         },
+        'toString#0': (args) => (args[0] as Set).toString(),
       };
 
   static Map<String, Object? Function(List<Object?>)> setMethodMap() => {

@@ -23,6 +23,21 @@ abstract final class DoubleLinkedQueueBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'cast#0': (args) => (args[0] as DoubleLinkedQueue).cast(),
+        'addLast#1': (args) { (args[0] as DoubleLinkedQueue).addLast(args[1]); return null; },
+        'addFirst#1': (args) { (args[0] as DoubleLinkedQueue).addFirst(args[1]); return null; },
+        'add#1': (args) { (args[0] as DoubleLinkedQueue).add(args[1]); return null; },
+        'addAll#1': (args) { (args[0] as DoubleLinkedQueue).addAll(args[1] as Iterable); return null; },
+        'removeLast#0': (args) => (args[0] as DoubleLinkedQueue).removeLast(),
+        'removeFirst#0': (args) => (args[0] as DoubleLinkedQueue).removeFirst(),
+        'remove#1': (args) => (args[0] as DoubleLinkedQueue).remove(args[1]),
+        'removeWhere#1': (args) { (args[0] as DoubleLinkedQueue).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
+        'retainWhere#1': (args) { (args[0] as DoubleLinkedQueue).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
+        'firstEntry#0': (args) => (args[0] as DoubleLinkedQueue).firstEntry(),
+        'lastEntry#0': (args) => (args[0] as DoubleLinkedQueue).lastEntry(),
+        'clear#0': (args) { (args[0] as DoubleLinkedQueue).clear(); return null; },
+        'forEachEntry#1': (args) { (args[0] as DoubleLinkedQueue).forEachEntry((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as DoubleLinkedQueue).toString(),
         'followedBy#1': (args) => (args[0] as DoubleLinkedQueue).followedBy(args[1] as Iterable),
         'map#1': (args) => (args[0] as DoubleLinkedQueue).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as DoubleLinkedQueue).where((a) => (args[1] as Function)(a) as bool),
@@ -45,58 +60,16 @@ abstract final class DoubleLinkedQueueBindings {
         'lastWhere#2': (args) => (args[0] as DoubleLinkedQueue).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'singleWhere#2': (args) => (args[0] as DoubleLinkedQueue).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as DoubleLinkedQueue).elementAt(args[1] as int),
+        'length#0': (args) => (args[0] as DoubleLinkedQueue).length,
+        'first#0': (args) => (args[0] as DoubleLinkedQueue).first,
+        'last#0': (args) => (args[0] as DoubleLinkedQueue).last,
+        'single#0': (args) => (args[0] as DoubleLinkedQueue).single,
+        'isEmpty#0': (args) => (args[0] as DoubleLinkedQueue).isEmpty,
+        'iterator#0': (args) => (args[0] as DoubleLinkedQueue).iterator,
         'isNotEmpty#0': (args) => (args[0] as DoubleLinkedQueue).isNotEmpty,
         '#0': (args) => DoubleLinkedQueue(),
         'from#1': (args) => DoubleLinkedQueue.from(args[0] as Iterable),
         'of#1': (args) => DoubleLinkedQueue.of(args[0] as Iterable),
-        'cast#0': (args) => (args[0] as DoubleLinkedQueue).cast(),
-        'length#0': (args) => (args[0] as DoubleLinkedQueue).length,
-        'isEmpty#0': (args) => (args[0] as DoubleLinkedQueue).isEmpty,
-        'first#0': (args) => (args[0] as DoubleLinkedQueue).first,
-        'last#0': (args) => (args[0] as DoubleLinkedQueue).last,
-        'single#0': (args) => (args[0] as DoubleLinkedQueue).single,
-        'iterator#0': (args) => (args[0] as DoubleLinkedQueue).iterator,
-        'firstEntry#0': (args) => (args[0] as DoubleLinkedQueue).firstEntry(),
-        'lastEntry#0': (args) => (args[0] as DoubleLinkedQueue).lastEntry(),
-        'add#1': (args) {
-            (args[0] as DoubleLinkedQueue).add(args[1]);
-            return null;
-        },
-        'addFirst#1': (args) {
-            (args[0] as DoubleLinkedQueue).addFirst(args[1]);
-            return null;
-        },
-        'addLast#1': (args) {
-            (args[0] as DoubleLinkedQueue).addLast(args[1]);
-            return null;
-        },
-        'addAll#1': (args) {
-            (args[0] as DoubleLinkedQueue).addAll(args[1] as Iterable);
-            return null;
-        },
-        'removeFirst#0': (args) => (args[0] as DoubleLinkedQueue).removeFirst(),
-        'removeLast#0': (args) => (args[0] as DoubleLinkedQueue).removeLast(),
-        'remove#1': (args) => (args[0] as DoubleLinkedQueue).remove(args[1]),
-        'clear#0': (args) {
-            (args[0] as DoubleLinkedQueue).clear();
-            return null;
-        },
-        'removeWhere#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as DoubleLinkedQueue).removeWhere((e) => fn(e) as bool);
-            return null;
-        },
-        'retainWhere#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as DoubleLinkedQueue).retainWhere((e) => fn(e) as bool);
-            return null;
-        },
-        'forEachEntry#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as DoubleLinkedQueue).forEachEntry((entry) => fn(entry));
-            return null;
-        },
-        'toString#0': (args) => (args[0] as DoubleLinkedQueue).toString(),
         'moveNext#0': (args) => (args[0] as Iterator).moveNext(),
         'current#0': (args) => (args[0] as Iterator).current,
       };

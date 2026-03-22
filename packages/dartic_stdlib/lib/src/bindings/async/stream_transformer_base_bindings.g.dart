@@ -22,7 +22,7 @@ abstract final class StreamTransformerBaseBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'cast#0': (args) => (args[0] as StreamTransformerBase).cast(),
         'bind#1': (args) => (args[0] as StreamTransformerBase).bind(args[1] as Stream),
-        'cast#0': (args) => (args[0] as StreamTransformer).cast(),
       };
 }

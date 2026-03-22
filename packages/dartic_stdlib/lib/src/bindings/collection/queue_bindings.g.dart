@@ -23,10 +23,16 @@ abstract final class QueueBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as Queue).cast(),
+        'removeFirst#0': (args) => (args[0] as Queue).removeFirst(),
+        'removeLast#0': (args) => (args[0] as Queue).removeLast(),
+        'addFirst#1': (args) { (args[0] as Queue).addFirst(args[1]); return null; },
+        'addLast#1': (args) { (args[0] as Queue).addLast(args[1]); return null; },
+        'add#1': (args) { (args[0] as Queue).add(args[1]); return null; },
         'remove#1': (args) => (args[0] as Queue).remove(args[1]),
         'addAll#1': (args) { (args[0] as Queue).addAll(args[1] as Iterable); return null; },
         'removeWhere#1': (args) { (args[0] as Queue).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as Queue).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
+        'clear#0': (args) { (args[0] as Queue).clear(); return null; },
         'followedBy#1': (args) => (args[0] as Queue).followedBy(args[1] as Iterable),
         'map#1': (args) => (args[0] as Queue).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as Queue).where((a) => (args[1] as Function)(a) as bool),
@@ -58,23 +64,5 @@ abstract final class QueueBindings {
         'single#0': (args) => (args[0] as Queue).single,
         'from#1': (args) => Queue.from(args[0] as Iterable),
         'of#1': (args) => Queue.of(args[0] as Iterable),
-        'add#1': (args) {
-            (args[0] as Queue).add(args[1]);
-            return null;
-        },
-        'addFirst#1': (args) {
-            (args[0] as Queue).addFirst(args[1]);
-            return null;
-        },
-        'addLast#1': (args) {
-            (args[0] as Queue).addLast(args[1]);
-            return null;
-        },
-        'removeFirst#0': (args) => (args[0] as Queue).removeFirst(),
-        'removeLast#0': (args) => (args[0] as Queue).removeLast(),
-        'clear#0': (args) {
-            (args[0] as Queue).clear();
-            return null;
-        },
       };
 }

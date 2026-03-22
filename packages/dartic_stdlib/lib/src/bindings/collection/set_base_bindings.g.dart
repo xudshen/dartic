@@ -358,7 +358,7 @@ abstract final class SetBaseBindings {
       bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$SetBase(dispatch, darticObject, superArgs),
     );
-    ctx.registerBinding('dart:collection::SetBase::setToString#1', methodMap()['setToString#1']!);
+    ctx.registerBinding('dart:collection::SetBase::setToString#1', (args) => SetBase.setToString(args[0] as Set<dynamic>));
     ctx.registerBinding('dart:collection::SetBase::\$super\$followedBy#1', (args) => (args[0] as _$SetBase)._super$followedBy(args[1] as Iterable));
     ctx.registerBinding('dart:collection::SetBase::\$super\$clear#0', (args) { (args[0] as _$SetBase)._super$clear(); return null; });
     ctx.registerBinding('dart:collection::SetBase::\$super\$addAll#1', (args) { (args[0] as _$SetBase)._super$addAll(args[1] as Iterable); return null; });
@@ -395,12 +395,17 @@ abstract final class SetBaseBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'add#1': (args) => (args[0] as SetBase).add(args[1]),
+        'contains#1': (args) => (args[0] as SetBase).contains(args[1]),
         'lookup#1': (args) => (args[0] as SetBase).lookup(args[1]),
+        'remove#1': (args) => (args[0] as SetBase).remove(args[1]),
+        'toSet#0': (args) => (args[0] as SetBase).toSet(),
         'cast#0': (args) => (args[0] as SetBase).cast(),
         'followedBy#1': (args) => (args[0] as SetBase).followedBy(args[1] as Iterable),
         'whereType#0': (args) => (args[0] as SetBase).whereType(),
         'clear#0': (args) { (args[0] as SetBase).clear(); return null; },
         'addAll#1': (args) { (args[0] as SetBase).addAll(args[1] as Iterable); return null; },
+        'removeAll#1': (args) { (args[0] as SetBase).removeAll(args[1] as Iterable<Object?>); return null; },
         'retainAll#1': (args) { (args[0] as SetBase).retainAll(args[1] as Iterable<Object?>); return null; },
         'removeWhere#1': (args) { (args[0] as SetBase).removeWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'retainWhere#1': (args) { (args[0] as SetBase).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
@@ -408,6 +413,7 @@ abstract final class SetBaseBindings {
         'union#1': (args) => (args[0] as SetBase).union(args[1] as Set),
         'intersection#1': (args) => (args[0] as SetBase).intersection(args[1] as Set<Object?>),
         'difference#1': (args) => (args[0] as SetBase).difference(args[1] as Set<Object?>),
+        'toList#1': (args) => (args[0] as SetBase).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'map#1': (args) => (args[0] as SetBase).map((a) => (args[1] as Function)(a)),
         'toString#0': (args) => (args[0] as SetBase).toString(),
         'where#1': (args) => (args[0] as SetBase).where((a) => (args[1] as Function)(a) as bool),
@@ -426,22 +432,12 @@ abstract final class SetBaseBindings {
         'lastWhere#2': (args) => (args[0] as SetBase).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'singleWhere#2': (args) => (args[0] as SetBase).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as SetBase).elementAt(args[1] as int),
+        'iterator#0': (args) => (args[0] as SetBase).iterator,
+        'length#0': (args) => (args[0] as SetBase).length,
+        'isEmpty#0': (args) => (args[0] as SetBase).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SetBase).isNotEmpty,
         'single#0': (args) => (args[0] as SetBase).single,
         'first#0': (args) => (args[0] as SetBase).first,
         'last#0': (args) => (args[0] as SetBase).last,
-        'add#1': (args) => (args[0] as Set).add(args[1]),
-        'contains#1': (args) => (args[0] as Set).contains(args[1]),
-        'isEmpty#0': (args) => (args[0] as Set).isEmpty,
-        'iterator#0': (args) => (args[0] as Set).iterator,
-        'length#0': (args) => (args[0] as Set).length,
-        'remove#1': (args) => (args[0] as Set).remove(args[1]),
-        'removeAll#1': (args) {
-            (args[0] as Set).removeAll(args[1] as Iterable);
-            return null;
-        },
-        'setToString#1': (args) => (args[0] as Set).toString(),
-        'toList#1': (args) => (args[0] as Set).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool),
-        'toSet#0': (args) => (args[0] as Set).toSet(),
       };
 }

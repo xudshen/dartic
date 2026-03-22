@@ -22,6 +22,9 @@ abstract final class TimerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'cancel#0': (args) { (args[0] as Timer).cancel(); return null; },
+        'tick#0': (args) => (args[0] as Timer).tick,
+        'isActive#0': (args) => (args[0] as Timer).isActive,
         '#2': (args) {
             final duration = args[0] as Duration;
             final callback = args[1] as Function;
@@ -37,11 +40,5 @@ abstract final class TimerBindings {
             Timer.run(() => callback());
             return null;
         },
-        'cancel#0': (args) {
-            (args[0] as Timer).cancel();
-            return null;
-        },
-        'isActive#0': (args) => (args[0] as Timer).isActive,
-        'tick#0': (args) => (args[0] as Timer).tick,
       };
 }

@@ -29,134 +29,34 @@ abstract final class ZoneBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'handleUncaughtError#2': (args) { (args[0] as Zone).handleUncaughtError(args[1] as Object, args[2] as StackTrace); return null; },
         'inSameErrorZone#1': (args) => (args[0] as Zone).inSameErrorZone(args[1] as Zone),
+        'fork#2': (args) => (args[0] as Zone).fork(specification: identical(args[1], darticAbsent) ? null : args[1] as ZoneSpecification?, zoneValues: identical(args[2], darticAbsent) ? null : args[2] as Map<Object?, Object?>?),
+        'run#1': (args) => (args[0] as Zone).run(() => (args[1] as Function)()),
+        'runUnary#2': (args) => (args[0] as Zone).runUnary((a) => (args[1] as Function)(a), args[2]),
+        'runBinary#3': (args) => (args[0] as Zone).runBinary((a, b) => (args[1] as Function)(a, b), args[2], args[3]),
+        'runGuarded#1': (args) { (args[0] as Zone).runGuarded(() => (args[1] as Function)()); return null; },
+        'runUnaryGuarded#2': (args) { (args[0] as Zone).runUnaryGuarded((a) => (args[1] as Function)(a), args[2]); return null; },
+        'runBinaryGuarded#3': (args) { (args[0] as Zone).runBinaryGuarded((a, b) => (args[1] as Function)(a, b), args[2], args[3]); return null; },
+        'registerCallback#1': (args) => (args[0] as Zone).registerCallback(() => (args[1] as Function)()),
+        'registerUnaryCallback#1': (args) => (args[0] as Zone).registerUnaryCallback((a) => (args[1] as Function)(a)),
+        'registerBinaryCallback#1': (args) => (args[0] as Zone).registerBinaryCallback((a, b) => (args[1] as Function)(a, b)),
+        'bindCallback#1': (args) => (args[0] as Zone).bindCallback(() => (args[1] as Function)()),
+        'bindUnaryCallback#1': (args) => (args[0] as Zone).bindUnaryCallback((a) => (args[1] as Function)(a)),
+        'bindBinaryCallback#1': (args) => (args[0] as Zone).bindBinaryCallback((a, b) => (args[1] as Function)(a, b)),
+        'bindCallbackGuarded#1': (args) => (args[0] as Zone).bindCallbackGuarded(() => (args[1] as Function)()),
+        'bindUnaryCallbackGuarded#1': (args) => (args[0] as Zone).bindUnaryCallbackGuarded((a) => (args[1] as Function)(a)),
+        'bindBinaryCallbackGuarded#1': (args) => (args[0] as Zone).bindBinaryCallbackGuarded((a, b) => (args[1] as Function)(a, b)),
+        'errorCallback#2': (args) => (args[0] as Zone).errorCallback(args[1] as Object, args[2] as StackTrace?),
+        'scheduleMicrotask#1': (args) { (args[0] as Zone).scheduleMicrotask(() => (args[1] as Function)()); return null; },
+        'createTimer#2': (args) => (args[0] as Zone).createTimer(args[1] as Duration, () => (args[2] as Function)()),
+        'createPeriodicTimer#2': (args) => (args[0] as Zone).createPeriodicTimer(args[1] as Duration, (a) => (args[2] as Function)(a)),
+        'print#1': (args) { (args[0] as Zone).print(args[1] as String); return null; },
+        'parent#0': (args) => (args[0] as Zone).parent,
         'errorZone#0': (args) => (args[0] as Zone).errorZone,
+        '[]#1': (args) => (args[0] as Zone)[(args[1])],
         'current#0': (args) => Zone.current,
         'root#0': (args) => Zone.root,
-        'run#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.run(() => body());
-        },
-        'runGuarded#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            zone.runGuarded(() => body());
-            return null;
-        },
-        'runUnary#2': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.runUnary((a) => body(a), args[2]);
-        },
-        'runBinary#3': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.runBinary((a, b) => body(a, b), args[2], args[3]);
-        },
-        'bindCallback#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindCallback(() => body());
-        },
-        'bindUnaryCallback#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindUnaryCallback((a) => body(a));
-        },
-        'bindBinaryCallback#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindBinaryCallback((a, b) => body(a, b));
-        },
-        'handleUncaughtError#2': (args) {
-            final zone = args[0] as Zone;
-            zone.handleUncaughtError(args[1] as Object, args[2] as StackTrace);
-            return null;
-        },
-        'fork#2': (args) {
-            final zone = args[0] as Zone;
-            final spec = identical(args[1], darticAbsent) ? null : args[1] as ZoneSpecification?;
-            final zoneValues = identical(args[2], darticAbsent) ? null : args[2] as Map?;
-            return zone.fork(
-              specification: spec,
-              zoneValues: zoneValues != null
-                  ? Map<Object?, Object?>.from(zoneValues)
-                  : null,
-            );
-        },
-        '[]#1': (args) {
-            final zone = args[0] as Zone;
-            return zone[args[1]];
-        },
-        'runUnaryGuarded#2': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            zone.runUnaryGuarded((a) => body(a), args[2]);
-            return null;
-        },
-        'runBinaryGuarded#3': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            zone.runBinaryGuarded((a, b) => body(a, b), args[2], args[3]);
-            return null;
-        },
-        'bindCallbackGuarded#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindCallbackGuarded(() => body());
-        },
-        'bindUnaryCallbackGuarded#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindUnaryCallbackGuarded((a) => body(a));
-        },
-        'bindBinaryCallbackGuarded#1': (args) {
-            final zone = args[0] as Zone;
-            final body = args[1] as Function;
-            return zone.bindBinaryCallbackGuarded((a, b) => body(a, b));
-        },
-        'registerCallback#1': (args) {
-            final zone = args[0] as Zone;
-            return zone.registerCallback(args[1] as dynamic Function());
-        },
-        'registerUnaryCallback#1': (args) {
-            final zone = args[0] as Zone;
-            return zone.registerUnaryCallback(args[1] as dynamic Function(dynamic));
-        },
-        'registerBinaryCallback#1': (args) {
-            final zone = args[0] as Zone;
-            return zone.registerBinaryCallback(args[1] as dynamic Function(dynamic, dynamic));
-        },
-        'createTimer#2': (args) {
-            final zone = args[0] as Zone;
-            final duration = args[1] as Duration;
-            final callback = args[2] as Function;
-            return zone.createTimer(duration, () => callback());
-        },
-        'createPeriodicTimer#2': (args) {
-            final zone = args[0] as Zone;
-            final period = args[1] as Duration;
-            final callback = args[2] as Function;
-            return zone.createPeriodicTimer(period, (t) => callback(t));
-        },
-        'parent#0': (args) => (args[0] as Zone).parent,
-        'print#1': (args) {
-            final zone = args[0] as Zone;
-            zone.print(args[1] as String);
-            return null;
-        },
-        'scheduleMicrotask#1': (args) {
-            final zone = args[0] as Zone;
-            final callback = args[1] as Function;
-            zone.scheduleMicrotask(() => callback());
-            return null;
-        },
-        'errorCallback#2': (args) {
-            final zone = args[0] as Zone;
-            return zone.errorCallback(
-                args[1] as Object, args[2] as StackTrace?);
-        },
       };
 
   static Map<String, Object? Function(List<Object?>)> rootZoneMethodMap() => {

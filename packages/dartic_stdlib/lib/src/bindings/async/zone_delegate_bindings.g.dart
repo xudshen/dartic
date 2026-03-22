@@ -21,63 +21,18 @@ abstract final class ZoneDelegateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'handleUncaughtError#3': (args) {
-            (args[0] as ZoneDelegate).handleUncaughtError(
-              args[1] as Zone, args[2] as Object, args[3] as StackTrace);
-            return null;
-        },
-        'run#2': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            return delegate.run(args[1] as Zone, () => (args[2] as Function)());
-        },
-        'runUnary#3': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            return delegate.runUnary(args[1] as Zone, (a) => f(a), args[3]);
-        },
-        'runBinary#4': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            return delegate.runBinary(args[1] as Zone, (a, b) => f(a, b), args[3], args[4]);
-        },
-        'registerCallback#2': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            return delegate.registerCallback(args[1] as Zone, args[2] as dynamic Function());
-        },
-        'registerUnaryCallback#2': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            return delegate.registerUnaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic));
-        },
-        'registerBinaryCallback#2': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            return delegate.registerBinaryCallback(args[1] as Zone, args[2] as dynamic Function(dynamic, dynamic));
-        },
-        'errorCallback#3': (args) => (args[0] as ZoneDelegate).errorCallback(
-        args[1] as Zone, args[2] as Object, args[3] as StackTrace?),
-        'scheduleMicrotask#2': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            final f = args[2] as Function;
-            delegate.scheduleMicrotask(args[1] as Zone, () => f());
-            return null;
-        },
-        'createTimer#3': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            final f = args[3] as Function;
-            return delegate.createTimer(args[1] as Zone, args[2] as Duration, () => f());
-        },
-        'createPeriodicTimer#3': (args) {
-            final delegate = args[0] as ZoneDelegate;
-            final f = args[3] as Function;
-            return delegate.createPeriodicTimer(args[1] as Zone, args[2] as Duration, (t) => f(t));
-        },
-        'print#2': (args) {
-            (args[0] as ZoneDelegate).print(args[1] as Zone, args[2] as String);
-            return null;
-        },
-        'fork#3': (args) => (args[0] as ZoneDelegate).fork(
-            args[1] as Zone,
-            identical(args[2], darticAbsent) ? null : args[2] as ZoneSpecification?,
-            identical(args[3], darticAbsent) ? null : args[3] as Map?,
-        ),
+        'handleUncaughtError#3': (args) { (args[0] as ZoneDelegate).handleUncaughtError(args[1] as Zone, args[2] as Object, args[3] as StackTrace); return null; },
+        'run#2': (args) => (args[0] as ZoneDelegate).run(args[1] as Zone, () => (args[2] as Function)()),
+        'runUnary#3': (args) => (args[0] as ZoneDelegate).runUnary(args[1] as Zone, (a) => (args[2] as Function)(a), args[3]),
+        'runBinary#4': (args) => (args[0] as ZoneDelegate).runBinary(args[1] as Zone, (a, b) => (args[2] as Function)(a, b), args[3], args[4]),
+        'registerCallback#2': (args) => (args[0] as ZoneDelegate).registerCallback(args[1] as Zone, () => (args[2] as Function)()),
+        'registerUnaryCallback#2': (args) => (args[0] as ZoneDelegate).registerUnaryCallback(args[1] as Zone, (a) => (args[2] as Function)(a)),
+        'registerBinaryCallback#2': (args) => (args[0] as ZoneDelegate).registerBinaryCallback(args[1] as Zone, (a, b) => (args[2] as Function)(a, b)),
+        'errorCallback#3': (args) => (args[0] as ZoneDelegate).errorCallback(args[1] as Zone, args[2] as Object, args[3] as StackTrace?),
+        'scheduleMicrotask#2': (args) { (args[0] as ZoneDelegate).scheduleMicrotask(args[1] as Zone, () => (args[2] as Function)()); return null; },
+        'createTimer#3': (args) => (args[0] as ZoneDelegate).createTimer(args[1] as Zone, args[2] as Duration, () => (args[3] as Function)()),
+        'createPeriodicTimer#3': (args) => (args[0] as ZoneDelegate).createPeriodicTimer(args[1] as Zone, args[2] as Duration, (a) => (args[3] as Function)(a)),
+        'print#2': (args) { (args[0] as ZoneDelegate).print(args[1] as Zone, args[2] as String); return null; },
+        'fork#3': (args) => (args[0] as ZoneDelegate).fork(args[1] as Zone, args[2] as ZoneSpecification?, args[3] as Map<dynamic, dynamic>?),
       };
 }

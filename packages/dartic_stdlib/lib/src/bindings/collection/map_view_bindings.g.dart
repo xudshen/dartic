@@ -21,68 +21,29 @@ abstract final class MapViewBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        '[]=#2': (args) { (args[0] as MapView)[args[1]] = args[2]; return args[2]; },
-        '_#fromFields#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
-        '#1': (args) => MapView(args[0] as Map),
         'cast#0': (args) => (args[0] as MapView).cast(),
-        '[]#1': (args) => (args[0] as MapView)[args[1]],
-        '[]=2': (args) {
-            (args[0] as MapView)[args[1]] = args[2];
-            return null;
-        },
-        'length#0': (args) => (args[0] as MapView).length,
+        'addAll#1': (args) { (args[0] as MapView).addAll(args[1] as Map); return null; },
+        'clear#0': (args) { (args[0] as MapView).clear(); return null; },
+        'putIfAbsent#2': (args) => (args[0] as MapView).putIfAbsent(args[1], () => (args[2] as Function)()),
+        'containsKey#1': (args) => (args[0] as MapView).containsKey(args[1]),
+        'containsValue#1': (args) => (args[0] as MapView).containsValue(args[1]),
+        'forEach#1': (args) { (args[0] as MapView).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
+        'remove#1': (args) => (args[0] as MapView).remove(args[1]),
+        'toString#0': (args) => (args[0] as MapView).toString(),
+        'addEntries#1': (args) { (args[0] as MapView).addEntries((args[1] as Iterable).cast<MapEntry>()); return null; },
+        'map#1': (args) => (args[0] as MapView).map((a, b) => (args[1] as Function)(a, b) as MapEntry),
+        'update#3': (args) => (args[0] as MapView).update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
+        'updateAll#1': (args) { (args[0] as MapView).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
+        'removeWhere#1': (args) { (args[0] as MapView).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'isEmpty#0': (args) => (args[0] as MapView).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as MapView).isNotEmpty,
+        'length#0': (args) => (args[0] as MapView).length,
         'keys#0': (args) => (args[0] as MapView).keys,
         'values#0': (args) => (args[0] as MapView).values,
         'entries#0': (args) => (args[0] as MapView).entries,
-        'containsKey#1': (args) => (args[0] as MapView).containsKey(args[1]),
-        'containsValue#1': (args) => (args[0] as MapView).containsValue(args[1]),
-        'remove#1': (args) => (args[0] as MapView).remove(args[1]),
-        'toString#0': (args) => (args[0] as MapView).toString(),
-        'clear#0': (args) {
-            (args[0] as MapView).clear();
-            return null;
-        },
-        'addAll#1': (args) {
-            (args[0] as MapView).addAll(args[1] as Map);
-            return null;
-        },
-        'addEntries#1': (args) {
-            (args[0] as MapView).addEntries((args[1] as Iterable).cast<MapEntry>());
-            return null;
-        },
-        'forEach#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as MapView).forEach((k, v) => fn(k, v));
-            return null;
-        },
-        'putIfAbsent#2': (args) {
-            final fn = args[2] as Function;
-            return (args[0] as MapView).putIfAbsent(args[1], () => fn());
-        },
-        'update#3': (args) {
-            final updateFn = args[2] as Function;
-            final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-            return (args[0] as MapView).update(
-              args[1],
-              (v) => updateFn(v),
-              ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
-            );
-        },
-        'updateAll#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as MapView).updateAll((k, v) => fn(k, v));
-            return null;
-        },
-        'removeWhere#1': (args) {
-            final fn = args[1] as Function;
-            (args[0] as MapView).removeWhere((k, v) => fn(k, v) as bool);
-            return null;
-        },
-        'map#1': (args) {
-            final fn = args[1] as Function;
-            return (args[0] as MapView).map((k, v) => fn(k, v) as MapEntry);
-        },
+        '[]#1': (args) => (args[0] as MapView)[(args[1])],
+        '[]=#2': (args) { (args[0] as MapView)[args[1]] = args[2]; return args[2]; },
+        '#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
+        '_#fromFields#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
       };
 }

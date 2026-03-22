@@ -22,30 +22,15 @@ abstract final class StringSinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'write#1': (args) {
-            (args[0] as StringSink).write(args[1]);
-            return null;
-        },
+        'write#1': (args) { (args[0] as StringSink).write(args[1]); return null; },
+        'writeAll#2': (args) { (args[0] as StringSink).writeAll(args[1] as Iterable<dynamic>, identical(args[2], darticAbsent) ? "" : args[2] as String); return null; },
+        'writeCharCode#1': (args) { (args[0] as StringSink).writeCharCode(args[1] as int); return null; },
         'writeln#1': (args) {
             if (!identical(args[1], darticAbsent)) {
               (args[0] as StringSink).writeln(args[1]);
             } else {
               (args[0] as StringSink).writeln();
             }
-            return null;
-        },
-        'writeAll#2': (args) {
-            final sink = args[0] as StringSink;
-            final objects = args[1] as Iterable;
-            if (!identical(args[2], darticAbsent)) {
-              sink.writeAll(objects, args[2] as String);
-            } else {
-              sink.writeAll(objects);
-            }
-            return null;
-        },
-        'writeCharCode#1': (args) {
-            (args[0] as StringSink).writeCharCode(args[1] as int);
             return null;
         },
       };

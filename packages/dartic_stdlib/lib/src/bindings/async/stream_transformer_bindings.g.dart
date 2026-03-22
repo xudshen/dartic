@@ -34,11 +34,7 @@ abstract final class StreamTransformerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'bind#1': (args) {
-            final transformer = args[0] as StreamTransformer;
-            final stream = args[1] as Stream;
-            return transformer.bind(stream);
-        },
+        'bind#1': (args) => (args[0] as StreamTransformer).bind(args[1] as Stream),
         'cast#0': (args) => (args[0] as StreamTransformer).cast(),
       };
 

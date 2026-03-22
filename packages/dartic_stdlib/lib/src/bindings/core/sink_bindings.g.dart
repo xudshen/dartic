@@ -22,13 +22,7 @@ abstract final class SinkBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'add#1': (args) {
-            (args[0] as Sink).add(args[1]);
-            return null;
-        },
-        'close#0': (args) {
-            (args[0] as Sink).close();
-            return null;
-        },
+        'add#1': (args) { (args[0] as Sink).add(args[1]); return null; },
+        'close#0': (args) { (args[0] as Sink).close(); return null; },
       };
 }

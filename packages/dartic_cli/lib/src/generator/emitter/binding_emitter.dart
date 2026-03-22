@@ -631,9 +631,14 @@ void _writeMethodMap(
 void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
   const indent = '        '; // 8 spaces: map entry level
   final trimmed = source.trim();
+  // Escape $ in keys to prevent Dart string interpolation (e.g. $super$).
+  // Escape $ in keys to prevent Dart string interpolation (e.g. $super$).
+  final escapedKey = key.contains(r'$')
+      ? key.replaceAll(r'$', r'\$')
+      : key;
   final lines = trimmed.split('\n');
   if (lines.length == 1) {
-    buf.writeln("$indent'$key': $trimmed,");
+    buf.writeln("$indent'$escapedKey': $trimmed,");
     return;
   }
 
@@ -648,7 +653,7 @@ void _writeExtraMethodEntry(StringBuffer buf, String key, String source) {
   if (minIndent == 999) minIndent = 0;
 
   // First line: opening of closure.
-  buf.writeln("$indent'$key': ${lines.first.trim()}");
+  buf.writeln("$indent'$escapedKey': ${lines.first.trim()}");
   // Body lines: re-indent relative to map entry level + 2.
   for (var i = 1; i < lines.length - 1; i++) {
     final line = lines[i];

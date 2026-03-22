@@ -21,13 +21,17 @@ abstract final class SplayTreeMapBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'remove#1': (args) => (args[0] as SplayTreeMap).remove(args[1]),
         'putIfAbsent#2': (args) => (args[0] as SplayTreeMap).putIfAbsent(args[1], () => (args[2] as Function)()),
         'update#3': (args) => (args[0] as SplayTreeMap).update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         'updateAll#1': (args) { (args[0] as SplayTreeMap).updateAll((a, b) => (args[1] as Function)(a, b)); return null; },
         'addAll#1': (args) { (args[0] as SplayTreeMap).addAll(args[1] as Map); return null; },
         'forEach#1': (args) { (args[0] as SplayTreeMap).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
         'clear#0': (args) { (args[0] as SplayTreeMap).clear(); return null; },
+        'containsKey#1': (args) => (args[0] as SplayTreeMap).containsKey(args[1]),
         'containsValue#1': (args) => (args[0] as SplayTreeMap).containsValue(args[1]),
+        'firstKey#0': (args) => (args[0] as SplayTreeMap).firstKey(),
+        'lastKey#0': (args) => (args[0] as SplayTreeMap).lastKey(),
         'lastKeyBefore#1': (args) => (args[0] as SplayTreeMap).lastKeyBefore(args[1]),
         'firstKeyAfter#1': (args) => (args[0] as SplayTreeMap).firstKeyAfter(args[1]),
         'cast#0': (args) => (args[0] as SplayTreeMap).cast(),
@@ -36,7 +40,11 @@ abstract final class SplayTreeMapBindings {
         'removeWhere#1': (args) { (args[0] as SplayTreeMap).removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; },
         'isEmpty#0': (args) => (args[0] as SplayTreeMap).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SplayTreeMap).isNotEmpty,
+        'length#0': (args) => (args[0] as SplayTreeMap).length,
+        'keys#0': (args) => (args[0] as SplayTreeMap).keys,
+        'values#0': (args) => (args[0] as SplayTreeMap).values,
         'entries#0': (args) => (args[0] as SplayTreeMap).entries,
+        '[]#1': (args) => (args[0] as SplayTreeMap)[(args[1])],
         '[]=#2': (args) { (args[0] as SplayTreeMap)[args[1]] = args[2]; return args[2]; },
         'of#3': (args) => SplayTreeMap<dynamic, dynamic>.of(args[0] as Map, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         'fromIterable#5': (args) => SplayTreeMap<dynamic, dynamic>.fromIterable(args[0] as Iterable<dynamic>, key: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), value: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), compare: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), isValidKey: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
@@ -60,13 +68,5 @@ abstract final class SplayTreeMapBindings {
               isValidKey != null ? (k) => isValidKey(k) as bool : null,
             );
         },
-        '[]#1': (args) => (args[0] as SplayTreeMap)[args[1]],
-        'firstKey#0': (args) => (args[0] as SplayTreeMap).firstKey(),
-        'lastKey#0': (args) => (args[0] as SplayTreeMap).lastKey(),
-        'remove#1': (args) => (args[0] as SplayTreeMap).remove(args[1]),
-        'containsKey#1': (args) => (args[0] as SplayTreeMap).containsKey(args[1]),
-        'length#0': (args) => (args[0] as SplayTreeMap).length,
-        'keys#0': (args) => (args[0] as SplayTreeMap).keys,
-        'values#0': (args) => (args[0] as SplayTreeMap).values,
       };
 }

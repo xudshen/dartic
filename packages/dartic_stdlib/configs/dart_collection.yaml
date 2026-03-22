@@ -165,28 +165,6 @@ libraries:
         extra_methods:
           "from#1": "(args) => Queue.from(args[0] as Iterable)"
           "of#1": "(args) => Queue.of(args[0] as Iterable)"
-          "add#1": |
-            (args) {
-              (args[0] as Queue).add(args[1]);
-              return null;
-            }
-          "addFirst#1": |
-            (args) {
-              (args[0] as Queue).addFirst(args[1]);
-              return null;
-            }
-          "addLast#1": |
-            (args) {
-              (args[0] as Queue).addLast(args[1]);
-              return null;
-            }
-          "removeFirst#0": "(args) => (args[0] as Queue).removeFirst()"
-          "removeLast#0": "(args) => (args[0] as Queue).removeLast()"
-          "clear#0": |
-            (args) {
-              (args[0] as Queue).clear();
-              return null;
-            }
 
       # ── SplayTreeMap: constructor with callback wrapping ──
       SplayTreeMap:
@@ -212,14 +190,6 @@ libraries:
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,
               );
             }
-          "[]#1": "(args) => (args[0] as SplayTreeMap)[args[1]]"
-          "firstKey#0": "(args) => (args[0] as SplayTreeMap).firstKey()"
-          "lastKey#0": "(args) => (args[0] as SplayTreeMap).lastKey()"
-          "remove#1": "(args) => (args[0] as SplayTreeMap).remove(args[1])"
-          "containsKey#1": "(args) => (args[0] as SplayTreeMap).containsKey(args[1])"
-          "length#0": "(args) => (args[0] as SplayTreeMap).length"
-          "keys#0": "(args) => (args[0] as SplayTreeMap).keys"
-          "values#0": "(args) => (args[0] as SplayTreeMap).values"
 
       # ── SplayTreeSet: constructor with callback wrapping ──
       SplayTreeSet:
@@ -245,12 +215,6 @@ libraries:
                 isValidKey != null ? (k) => isValidKey(k) as bool : null,
               );
             }
-          "add#1": "(args) => (args[0] as SplayTreeSet).add(args[1])"
-          "first#0": "(args) => (args[0] as SplayTreeSet).first"
-          "last#0": "(args) => (args[0] as SplayTreeSet).last"
-          "contains#1": "(args) => (args[0] as SplayTreeSet).contains(args[1])"
-          "remove#1": "(args) => (args[0] as SplayTreeSet).remove(args[1])"
-          "length#0": "(args) => (args[0] as SplayTreeSet).length"
         extra_bindings:
           - "dart:collection::_SplayTreeSet&_SplayTree&Iterable&SetMixin::elementAt#1"
 
@@ -261,9 +225,6 @@ libraries:
       UnmodifiableListView:
         extra_methods:
           "#1": "(args) => UnmodifiableListView(args[0] as Iterable)"
-          "[]#1": "(args) => (args[0] as UnmodifiableListView)[args[1] as int]"
-          "length#0": "(args) => (args[0] as UnmodifiableListView).length"
-          "iterator#0": "(args) => (args[0] as UnmodifiableListView).iterator"
         extra_bindings:
           # UnmodifiableListBase write methods (all throw UnsupportedError)
           - "dart:_internal::UnmodifiableListBase::[]=#2"
@@ -315,11 +276,6 @@ libraries:
       UnmodifiableMapView:
         extra_methods:
           "#1": "(args) => UnmodifiableMapView(args[0] as Map)"
-          "[]#1": "(args) => (args[0] as UnmodifiableMapView)[args[1]]"
-          "length#0": "(args) => (args[0] as UnmodifiableMapView).length"
-          "keys#0": "(args) => (args[0] as UnmodifiableMapView).keys"
-          "values#0": "(args) => (args[0] as UnmodifiableMapView).values"
-          "containsKey#1": "(args) => (args[0] as UnmodifiableMapView).containsKey(args[1])"
         extra_bindings:
           # UnmodifiableMapBase write methods (all throw UnsupportedError)
           - "dart:_internal::UnmodifiableMapBase::[]=#2"
@@ -352,11 +308,6 @@ libraries:
       UnmodifiableSetView:
         extra_methods:
           "#1": "(args) => UnmodifiableSetView(args[0] as Set)"
-          "length#0": "(args) => (args[0] as UnmodifiableSetView).length"
-          "contains#1": "(args) => (args[0] as UnmodifiableSetView).contains(args[1])"
-          "iterator#0": "(args) => (args[0] as UnmodifiableSetView).iterator"
-          "lookup#1": "(args) => (args[0] as UnmodifiableSetView).lookup(args[1])"
-          "toSet#0": "(args) => (args[0] as UnmodifiableSetView).toSet()"
 
       # ── ListBase: private helper methods called by sort/remove/etc. ──
       ListBase:
@@ -376,24 +327,6 @@ libraries:
       _MapBaseValueIterable:
         extra_methods:
           "#1": "(args) => (args[0] as Map).values"
-
-      # ── SetBase: cross-namespace bindings for dartic classes extending SetBase ──
-      SetBase:
-        extra_methods:
-          "add#1": "(args) => (args[0] as Set).add(args[1])"
-          "contains#1": "(args) => (args[0] as Set).contains(args[1])"
-          "isEmpty#0": "(args) => (args[0] as Set).isEmpty"
-          "iterator#0": "(args) => (args[0] as Set).iterator"
-          "length#0": "(args) => (args[0] as Set).length"
-          "remove#1": "(args) => (args[0] as Set).remove(args[1])"
-          "removeAll#1": |
-            (args) {
-              (args[0] as Set).removeAll(args[1] as Iterable);
-              return null;
-            }
-          "setToString#1": "(args) => (args[0] as Set).toString()"
-          "toList#1": "(args) => (args[0] as Set).toList(growable: identical(args[1], darticAbsent) ? true : args[1] as bool)"
-          "toSet#0": "(args) => (args[0] as Set).toSet()"
 
       # ── UnmodifiableMapBase: cross-namespace for dart:_internal ──
       UnmodifiableMapBase:
@@ -415,12 +348,6 @@ libraries:
       LinkedList:
         extra_methods:
           "#0": "(args) => LinkedList<Never>()"
-          "forEach#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as LinkedList).forEach((e) => fn(e));
-              return null;
-            }
 
       # NOTE: LinkedListEntry.element doesn't exist — element is on
       # DoubleLinkedQueueEntry, which gets auto-discovered by gen tool.
@@ -436,62 +363,6 @@ libraries:
           "#0": "(args) => DoubleLinkedQueue()"
           "from#1": "(args) => DoubleLinkedQueue.from(args[0] as Iterable)"
           "of#1": "(args) => DoubleLinkedQueue.of(args[0] as Iterable)"
-          "cast#0": "(args) => (args[0] as DoubleLinkedQueue).cast()"
-          "length#0": "(args) => (args[0] as DoubleLinkedQueue).length"
-          "isEmpty#0": "(args) => (args[0] as DoubleLinkedQueue).isEmpty"
-          "first#0": "(args) => (args[0] as DoubleLinkedQueue).first"
-          "last#0": "(args) => (args[0] as DoubleLinkedQueue).last"
-          "single#0": "(args) => (args[0] as DoubleLinkedQueue).single"
-          "iterator#0": "(args) => (args[0] as DoubleLinkedQueue).iterator"
-          "firstEntry#0": "(args) => (args[0] as DoubleLinkedQueue).firstEntry()"
-          "lastEntry#0": "(args) => (args[0] as DoubleLinkedQueue).lastEntry()"
-          "add#1": |
-            (args) {
-              (args[0] as DoubleLinkedQueue).add(args[1]);
-              return null;
-            }
-          "addFirst#1": |
-            (args) {
-              (args[0] as DoubleLinkedQueue).addFirst(args[1]);
-              return null;
-            }
-          "addLast#1": |
-            (args) {
-              (args[0] as DoubleLinkedQueue).addLast(args[1]);
-              return null;
-            }
-          "addAll#1": |
-            (args) {
-              (args[0] as DoubleLinkedQueue).addAll(args[1] as Iterable);
-              return null;
-            }
-          "removeFirst#0": "(args) => (args[0] as DoubleLinkedQueue).removeFirst()"
-          "removeLast#0": "(args) => (args[0] as DoubleLinkedQueue).removeLast()"
-          "remove#1": "(args) => (args[0] as DoubleLinkedQueue).remove(args[1])"
-          "clear#0": |
-            (args) {
-              (args[0] as DoubleLinkedQueue).clear();
-              return null;
-            }
-          "removeWhere#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as DoubleLinkedQueue).removeWhere((e) => fn(e) as bool);
-              return null;
-            }
-          "retainWhere#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as DoubleLinkedQueue).retainWhere((e) => fn(e) as bool);
-              return null;
-            }
-          "forEachEntry#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as DoubleLinkedQueue).forEachEntry((entry) => fn(entry));
-              return null;
-            }
-          "toString#0": "(args) => (args[0] as DoubleLinkedQueue).toString()"
           # _DoubleLinkedQueueIterator: private class, methods go here
           "moveNext#0": "(args) => (args[0] as Iterator).moveNext()"
           "current#0": "(args) => (args[0] as Iterator).current"
@@ -500,77 +371,3 @@ libraries:
           - "dart:collection::_DoubleLinkedQueueIterator::moveNext#0"
           - "dart:collection::_DoubleLinkedQueueIterator::current#0"
 
-      # ── MapView: constructor + delegating Map methods + callback wrapping ──
-      MapView:
-        extra_methods:
-          "#1": "(args) => MapView(args[0] as Map)"
-          "cast#0": "(args) => (args[0] as MapView).cast()"
-          "[]#1": "(args) => (args[0] as MapView)[args[1]]"
-          "[]=2": |
-            (args) {
-              (args[0] as MapView)[args[1]] = args[2];
-              return null;
-            }
-          "length#0": "(args) => (args[0] as MapView).length"
-          "isEmpty#0": "(args) => (args[0] as MapView).isEmpty"
-          "isNotEmpty#0": "(args) => (args[0] as MapView).isNotEmpty"
-          "keys#0": "(args) => (args[0] as MapView).keys"
-          "values#0": "(args) => (args[0] as MapView).values"
-          "entries#0": "(args) => (args[0] as MapView).entries"
-          "containsKey#1": "(args) => (args[0] as MapView).containsKey(args[1])"
-          "containsValue#1": "(args) => (args[0] as MapView).containsValue(args[1])"
-          "remove#1": "(args) => (args[0] as MapView).remove(args[1])"
-          "toString#0": "(args) => (args[0] as MapView).toString()"
-          "clear#0": |
-            (args) {
-              (args[0] as MapView).clear();
-              return null;
-            }
-          "addAll#1": |
-            (args) {
-              (args[0] as MapView).addAll(args[1] as Map);
-              return null;
-            }
-          "addEntries#1": |
-            (args) {
-              (args[0] as MapView).addEntries((args[1] as Iterable).cast<MapEntry>());
-              return null;
-            }
-          "forEach#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as MapView).forEach((k, v) => fn(k, v));
-              return null;
-            }
-          "putIfAbsent#2": |
-            (args) {
-              final fn = args[2] as Function;
-              return (args[0] as MapView).putIfAbsent(args[1], () => fn());
-            }
-          "update#3": |
-            (args) {
-              final updateFn = args[2] as Function;
-              final ifAbsentFn = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-              return (args[0] as MapView).update(
-                args[1],
-                (v) => updateFn(v),
-                ifAbsent: ifAbsentFn != null ? () => ifAbsentFn() : null,
-              );
-            }
-          "updateAll#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as MapView).updateAll((k, v) => fn(k, v));
-              return null;
-            }
-          "removeWhere#1": |
-            (args) {
-              final fn = args[1] as Function;
-              (args[0] as MapView).removeWhere((k, v) => fn(k, v) as bool);
-              return null;
-            }
-          "map#1": |
-            (args) {
-              final fn = args[1] as Function;
-              return (args[0] as MapView).map((k, v) => fn(k, v) as MapEntry);
-            }

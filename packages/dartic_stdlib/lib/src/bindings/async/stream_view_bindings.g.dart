@@ -23,6 +23,7 @@ abstract final class StreamViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'asBroadcastStream#2': (args) => (args[0] as StreamView).asBroadcastStream(onListen: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'listen#4': (args) => (args[0] as StreamView).listen((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onError: identical(args[2], darticAbsent) ? null : args[2] as Function?, onDone: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), cancelOnError: identical(args[4], darticAbsent) ? null : args[4] as bool?),
         'where#1': (args) => (args[0] as StreamView).where((a) => (args[1] as Function)(a) as bool),
         'map#1': (args) => (args[0] as StreamView).map((a) => (args[1] as Function)(a)),
         'asyncMap#1': (args) => (args[0] as StreamView).asyncMap((a) => (args[1] as Function)(a) as FutureOr),
@@ -52,6 +53,7 @@ abstract final class StreamViewBindings {
         'singleWhere#2': (args) => (args[0] as StreamView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as StreamView).elementAt(args[1] as int),
         'timeout#2': (args) => (args[0] as StreamView).timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'isBroadcast#0': (args) => (args[0] as StreamView).isBroadcast,
         'length#0': (args) => (args[0] as StreamView).length,
         'isEmpty#0': (args) => (args[0] as StreamView).isEmpty,
         'first#0': (args) => (args[0] as StreamView).first,
@@ -59,19 +61,5 @@ abstract final class StreamViewBindings {
         'single#0': (args) => (args[0] as StreamView).single,
         '_#fromFields#1': (args) => StreamView<dynamic>(args[0] as Stream),
         '#1': (args) => StreamView(args[0] as Stream),
-        'isBroadcast#0': (args) => (args[0] as StreamView).isBroadcast,
-        'listen#4': (args) {
-            final stream = args[0] as Stream;
-            final onData = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            final onDone = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-            final cancelOnError = identical(args[4], darticAbsent) ? null : args[4] as bool?;
-            return stream.listen(
-              onData != null ? (data) => onData(data) : null,
-              onError: onError,
-              onDone: onDone != null ? () => onDone() : null,
-              cancelOnError: cancelOnError,
-            );
-        },
       };
 }

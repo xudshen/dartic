@@ -121,39 +121,12 @@ abstract final class StreamSubscriptionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cancel#0': (args) => (args[0] as StreamSubscription).cancel(),
-        'pause#1': (args) {
-            final sub = args[0] as StreamSubscription;
-            final resumeSignal =
-                identical(args[1], darticAbsent) ? null : args[1] as Future<void>?;
-            sub.pause(resumeSignal);
-            return null;
-        },
-        'resume#0': (args) {
-            (args[0] as StreamSubscription).resume();
-            return null;
-        },
+        'onData#1': (args) { (args[0] as StreamSubscription).onData((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; },
+        'onError#1': (args) { (args[0] as StreamSubscription).onError(args[1] as Function?); return null; },
+        'onDone#1': (args) { (args[0] as StreamSubscription).onDone((args[1] as Function?) == null ? null : () => (args[1] as Function?)!()); return null; },
+        'pause#1': (args) { (args[0] as StreamSubscription).pause(identical(args[1], darticAbsent) ? null : args[1] as Future<void>?); return null; },
+        'resume#0': (args) { (args[0] as StreamSubscription).resume(); return null; },
+        'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(identical(args[1], darticAbsent) ? null : args[1]),
         'isPaused#0': (args) => (args[0] as StreamSubscription).isPaused,
-        'onData#1': (args) {
-            final sub = args[0] as StreamSubscription;
-            final handler = args[1] as Function?;
-            sub.onData(handler != null ? (e) => handler(e) : null);
-            return null;
-        },
-        'onError#1': (args) {
-            (args[0] as StreamSubscription)
-                .onError(args[1] as Function?);
-            return null;
-        },
-        'onDone#1': (args) {
-            final sub = args[0] as StreamSubscription;
-            final handler = args[1] as Function?;
-            sub.onDone(handler != null ? () => handler() : null);
-            return null;
-        },
-        'asFuture#1': (args) {
-            final sub = args[0] as StreamSubscription;
-            if (identical(args[1], darticAbsent)) return sub.asFuture();
-            return sub.asFuture(args[1]);
-        },
       };
 }

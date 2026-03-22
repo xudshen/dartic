@@ -258,6 +258,9 @@ libraries:
           "toString#0": "(args) => args[0].toString()"
           "hashCode#0": "(args) => args[0].hashCode"
           "==#1": "(args) => args[0] == args[1]"
+          "$super$==#1": "(args) => identical(args[0], args[1])"
+          "$super$toString#0": "(args) => args[0].toString()"
+          "$super$noSuchMethod#1": "(args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation)"
 
       # ── _GrowableList: VM-internal literal constructors ──
       _GrowableList:
@@ -620,18 +623,22 @@ libraries:
         extra_methods:
           "_#2": "(args) => MapEntry(args[0], args[1])"
 
+      # ── StringSink: writeln default is '' not null ──
+      StringSink:
+        extra_methods:
+          "writeln#1": |
+            (args) {
+              if (!identical(args[1], darticAbsent)) {
+                (args[0] as StringSink).writeln(args[1]);
+              } else {
+                (args[0] as StringSink).writeln();
+              }
+              return null;
+            }
+
       # ── Duration: constructor with all-named params + internal variant ──
       Duration:
         extra_methods:
-          "#6": |
-            (args) => Duration(
-              days: identical(args[0], darticAbsent) ? 0 : args[0] as int,
-              hours: identical(args[1], darticAbsent) ? 0 : args[1] as int,
-              minutes: identical(args[2], darticAbsent) ? 0 : args[2] as int,
-              seconds: identical(args[3], darticAbsent) ? 0 : args[3] as int,
-              milliseconds: identical(args[4], darticAbsent) ? 0 : args[4] as int,
-              microseconds: identical(args[5], darticAbsent) ? 0 : args[5] as int,
-            )
           "_#fromFields#1": "(args) => Duration(microseconds: args[0] as int)"
 
       # ── int: parse with deprecated onError (Kernel compiles to arity 3) ──
@@ -670,40 +677,6 @@ libraries:
       # ── Iterable: generate factory + callback methods + optional params ──
       Iterable:
         extra_methods:
-          "generate#2": |
-            (args) {
-              final count = args[0] as int;
-              if (!identical(args[1], darticAbsent)) {
-                final generator = args[1] as Function;
-                return Iterable.generate(count, (i) => generator(i));
-              }
-              return Iterable.generate(count);
-            }
-          "toList#1": |
-            (args) {
-              if (!identical(args[1], darticAbsent)) {
-                return (args[0] as Iterable).toList(growable: args[1] as bool);
-              }
-              return (args[0] as Iterable).toList();
-            }
-          "join#1": |
-            (args) {
-              if (!identical(args[1], darticAbsent)) {
-                return (args[0] as Iterable).join(args[1] as String);
-              }
-              return (args[0] as Iterable).join();
-            }
-          "where#1": |
-            (args) {
-              final fn = args[1] as Function;
-              return (args[0] as Iterable).where((e) => fn(e) as bool);
-            }
-          "map#1": |
-            (args) {
-              final fn = args[1] as Function;
-              return (args[0] as Iterable).map((e) => fn(e));
-            }
-          "expand#1": "(args) => (args[0] as Iterable).expand((e) => (args[1] as Function)(e) as Iterable)"
           # Manual iteration to avoid orElse type mismatch:
           # Dart enforces `(() => E)?` at runtime for typed iterables (e.g. Runes),
           # but our `() => orElse()` returns `() => dynamic` which fails the check.
@@ -746,9 +719,6 @@ libraries:
               if (orElse != null) return orElse();
               throw StateError('No element');
             }
-          "takeWhile#1": "(args) => (args[0] as Iterable).takeWhile((e) => (args[1] as Function)(e) as bool)"
-          "skipWhile#1": "(args) => (args[0] as Iterable).skipWhile((e) => (args[1] as Function)(e) as bool)"
-          "followedBy#1": "(args) => (args[0] as Iterable).followedBy(args[1] as Iterable)"
           "reduce#1": |
             (args) {
               final fn = args[1] as Function;
@@ -759,6 +729,15 @@ libraries:
                 value = fn(value, iter.current);
               }
               return value;
+            }
+          "generate#2": |
+            (args) {
+              final count = args[0] as int;
+              if (!identical(args[1], darticAbsent)) {
+                final generator = args[1] as Function;
+                return Iterable.generate(count, (i) => generator(i));
+              }
+              return Iterable.generate(count);
             }
           "#0": "(args) => const Iterable.empty()"
           # IterableElementError static factories (dart:_internal)
@@ -873,17 +852,11 @@ libraries:
       Set:
         extra_methods:
           "castFrom#2": "(args) => Set.castFrom(args[0] as Set)"
-          "toString#0": "(args) => (args[0] as Set).toString()"
           "symmetricDifference#1": |
             (args) {
               final a = args[0] as Set;
               final b = args[1] as Set;
               return a.union(b).difference(a.intersection(b));
-            }
-          "where#1": |
-            (args) {
-              final fn = args[1] as Function;
-              return (args[0] as Set).where((e) => fn(e) as bool);
             }
           "firstWhere#2": |
             (args) {
@@ -907,6 +880,7 @@ libraries:
               }
               return value;
             }
+          "toString#0": "(args) => (args[0] as Set).toString()"
 
       # ── Runes: inherited methods + optional param methods ──
       Runes:
@@ -942,40 +916,6 @@ libraries:
               } else {
                 sb.writeAll(objects);
               }
-              return null;
-            }
-
-      # ── StringSink: abstract interface for write/writeln/writeAll/writeCharCode ──
-      StringSink:
-        extra_methods:
-          "write#1": |
-            (args) {
-              (args[0] as StringSink).write(args[1]);
-              return null;
-            }
-          "writeln#1": |
-            (args) {
-              if (!identical(args[1], darticAbsent)) {
-                (args[0] as StringSink).writeln(args[1]);
-              } else {
-                (args[0] as StringSink).writeln();
-              }
-              return null;
-            }
-          "writeAll#2": |
-            (args) {
-              final sink = args[0] as StringSink;
-              final objects = args[1] as Iterable;
-              if (!identical(args[2], darticAbsent)) {
-                sink.writeAll(objects, args[2] as String);
-              } else {
-                sink.writeAll(objects);
-              }
-              return null;
-            }
-          "writeCharCode#1": |
-            (args) {
-              (args[0] as StringSink).writeCharCode(args[1] as int);
               return null;
             }
 
@@ -1202,55 +1142,11 @@ libraries:
               }
               return String.fromCharCodes(codes);
             }
-          "replaceAllMapped#2": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              final fn = args[2] as Function;
-              return self.replaceAllMapped(pattern, (m) => fn(m) as String);
-            }
-          "replaceFirstMapped#3": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              final fn = args[2] as Function;
-              final start = identical(args[3], darticAbsent) ? 0 : args[3] as int;
-              return self.replaceFirstMapped(pattern, (m) => fn(m) as String, start);
-            }
-          # splitMapJoin: ClosureAdapter returns (Object?)=>Object? which can't be
-          # directly cast to ((Match)=>String)? or ((String)=>String)?. Use wrapper lambdas.
-          "splitMapJoin#3": |
-            (args) {
-              final self = args[0] as String;
-              final pattern = args[1] as Pattern;
-              final onMatch = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-              final onNonMatch = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-              return self.splitMapJoin(
-                pattern,
-                onMatch: onMatch != null ? (m) => onMatch(m) as String : null,
-                onNonMatch: onNonMatch != null ? (s) => onNonMatch(s) as String : null,
-              );
-            }
 
       # ── Comparable: abstract interface, compareTo + static compare ──
       Comparable:
         extra_methods:
-          "compareTo#1": "(args) => (args[0] as Comparable).compareTo(args[1])"
           "compare#2": "(args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable)"
-
-      # ── Sink: abstract interface, add + close (both void) ──
-      Sink:
-        extra_methods:
-          "add#1": |
-            (args) {
-              (args[0] as Sink).add(args[1]);
-              return null;
-            }
-          "close#0": |
-            (args) {
-              (args[0] as Sink).close();
-              return null;
-            }
 
       # ── WeakReference: factory constructor + target getter ──
       WeakReference:
@@ -1265,24 +1161,6 @@ libraries:
             (args) {
               final fn = args[0] as Function;
               return Finalizer((token) => fn(token));
-            }
-          "attach#3": |
-            (args) {
-              final finalizer = args[0] as Finalizer;
-              final value = args[1]!;
-              final token = args[2];
-              final detach = identical(args[3], darticAbsent) ? null : args[3];
-              if (detach != null) {
-                finalizer.attach(value, token, detach: detach);
-              } else {
-                finalizer.attach(value, token);
-              }
-              return null;
-            }
-          "detach#1": |
-            (args) {
-              (args[0] as Finalizer).detach(args[1]!);
-              return null;
             }
 
       # ── Invocation + _InvocationMirror: noSuchMethod forwarder support ─

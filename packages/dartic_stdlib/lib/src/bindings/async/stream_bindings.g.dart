@@ -327,7 +327,42 @@ abstract final class StreamBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'asBroadcastStream#2': (args) => (args[0] as Stream).asBroadcastStream(onListen: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'listen#4': (args) => (args[0] as Stream).listen((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onError: identical(args[2], darticAbsent) ? null : args[2] as Function?, onDone: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), cancelOnError: identical(args[4], darticAbsent) ? null : args[4] as bool?),
+        'where#1': (args) => (args[0] as Stream).where((a) => (args[1] as Function)(a) as bool),
+        'map#1': (args) => (args[0] as Stream).map((a) => (args[1] as Function)(a)),
+        'asyncMap#1': (args) => (args[0] as Stream).asyncMap((a) => (args[1] as Function)(a) as FutureOr),
+        'asyncExpand#1': (args) => (args[0] as Stream).asyncExpand((a) => (args[1] as Function)(a) as Stream?),
+        'handleError#2': (args) => (args[0] as Stream).handleError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'expand#1': (args) => (args[0] as Stream).expand((a) => (args[1] as Function)(a) as Iterable),
+        'pipe#1': (args) => (args[0] as Stream).pipe(args[1] as StreamConsumer),
+        'transform#1': (args) => (args[0] as Stream).transform(args[1] as StreamTransformer),
+        'reduce#1': (args) => (args[0] as Stream).reduce((a, b) => (args[1] as Function)(a, b)),
+        'fold#2': (args) => (args[0] as Stream).fold(args[1], (a, b) => (args[2] as Function)(a, b)),
+        'join#1': (args) => (args[0] as Stream).join(identical(args[1], darticAbsent) ? "" : args[1] as String),
+        'contains#1': (args) => (args[0] as Stream).contains(args[1]),
+        'forEach#1': (args) => (args[0] as Stream).forEach((a) => (args[1] as Function)(a)),
+        'every#1': (args) => (args[0] as Stream).every((a) => (args[1] as Function)(a) as bool),
+        'any#1': (args) => (args[0] as Stream).any((a) => (args[1] as Function)(a) as bool),
+        'cast#0': (args) => (args[0] as Stream).cast(),
+        'toList#0': (args) => (args[0] as Stream).toList(),
+        'toSet#0': (args) => (args[0] as Stream).toSet(),
+        'take#1': (args) => (args[0] as Stream).take(args[1] as int),
+        'takeWhile#1': (args) => (args[0] as Stream).takeWhile((a) => (args[1] as Function)(a) as bool),
+        'skip#1': (args) => (args[0] as Stream).skip(args[1] as int),
+        'skipWhile#1': (args) => (args[0] as Stream).skipWhile((a) => (args[1] as Function)(a) as bool),
+        'distinct#1': (args) => (args[0] as Stream).distinct(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b)),
+        'firstWhere#2': (args) => (args[0] as Stream).firstWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'lastWhere#2': (args) => (args[0] as Stream).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'singleWhere#2': (args) => (args[0] as Stream).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as Stream).elementAt(args[1] as int),
+        'timeout#2': (args) => (args[0] as Stream).timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
+        'isBroadcast#0': (args) => (args[0] as Stream).isBroadcast,
+        'length#0': (args) => (args[0] as Stream).length,
+        'isEmpty#0': (args) => (args[0] as Stream).isEmpty,
+        'first#0': (args) => (args[0] as Stream).first,
+        'last#0': (args) => (args[0] as Stream).last,
+        'single#0': (args) => (args[0] as Stream).single,
         'fromIterable#1': (args) => Stream.fromIterable(args[0] as Iterable),
         'fromFuture#1': (args) => Stream.fromFuture(args[0] as Future),
         'value#1': (args) => Stream.value(args[0]),
@@ -363,171 +398,11 @@ abstract final class StreamBindings {
               (sink) => mapSink(sink) as EventSink,
             );
         },
-        'listen#4': (args) {
-            final stream = args[0] as Stream;
-            final onData = args[1] as Function?;
-            final onError = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            final onDone = identical(args[3], darticAbsent) ? null : args[3] as Function?;
-            final cancelOnError =
-                identical(args[4], darticAbsent) ? null : args[4] as bool?;
-            return stream.listen(
-              onData != null ? (e) => onData(e) : null,
-              onError: onError,
-              onDone: onDone != null ? () => onDone() : null,
-              cancelOnError: cancelOnError,
-            );
-        },
-        'toList#0': (args) => (args[0] as Stream).toList(),
-        'map#1': (args) {
-            final stream = args[0] as Stream;
-            final convert = args[1] as Function;
-            return stream.map((e) => convert(e));
-        },
-        'where#1': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            return stream.where((e) => test(e) as bool);
-        },
-        'first#0': (args) => (args[0] as Stream).first,
-        'last#0': (args) => (args[0] as Stream).last,
-        'length#0': (args) => (args[0] as Stream).length,
-        'isEmpty#0': (args) => (args[0] as Stream).isEmpty,
-        'expand#1': (args) {
-            final stream = args[0] as Stream;
-            final convert = args[1] as Function;
-            return stream.expand((e) => convert(e) as Iterable);
-        },
-        'take#1': (args) => (args[0] as Stream).take(args[1] as int),
-        'skip#1': (args) => (args[0] as Stream).skip(args[1] as int),
-        'every#1': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            return stream.every((e) => test(e) as bool);
-        },
-        'any#1': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            return stream.any((e) => test(e) as bool);
-        },
-        'contains#1': (args) => (args[0] as Stream).contains(args[1]),
-        'forEach#1': (args) {
-            final stream = args[0] as Stream;
-            final action = args[1] as Function;
-            return stream.forEach((e) => action(e));
-        },
         'drain#1': (args) {
             final stream = args[0] as Stream;
             if (identical(args[1], darticAbsent)) return stream.drain();
             return stream.drain(args[1]);
         },
-        'handleError#2': (args) {
-            final stream = args[0] as Stream;
-            final onError = args[1] as Function;
-            final test = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            return stream.handleError(
-              onError,
-              test: test != null ? (e) => test(e) as bool : null,
-            );
-        },
-        'asyncMap#1': (args) {
-            final stream = args[0] as Stream;
-            final convert = args[1] as Function;
-            return stream.asyncMap((e) => convert(e) as FutureOr);
-        },
-        'asyncExpand#1': (args) {
-            final stream = args[0] as Stream;
-            final convert = args[1] as Function;
-            return stream.asyncExpand((e) => convert(e) as Stream?);
-        },
-        'isBroadcast#0': (args) => (args[0] as Stream).isBroadcast,
-        'asBroadcastStream#2': (args) {
-            final stream = args[0] as Stream;
-            final onListen = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            final onCancel = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            return stream.asBroadcastStream(
-              onListen: onListen != null ? (sub) => onListen(sub) : null,
-              onCancel: onCancel != null ? (sub) => onCancel(sub) : null,
-            );
-        },
-        'join#1': (args) {
-            final stream = args[0] as Stream;
-            final sep = identical(args[1], darticAbsent) ? null : args[1] as String?;
-            return stream.join(sep ?? '');
-        },
-        'reduce#1': (args) {
-            final stream = args[0] as Stream;
-            final combine = args[1] as Function;
-            return stream.reduce((a, b) => combine(a, b));
-        },
-        'fold#2': (args) {
-            final stream = args[0] as Stream;
-            final initial = args[1];
-            final combine = args[2] as Function;
-            return stream.fold(initial, (prev, e) => combine(prev, e));
-        },
-        'toSet#0': (args) => (args[0] as Stream).toSet(),
-        'distinct#1': (args) {
-            final stream = args[0] as Stream;
-            final equals = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-            if (equals != null) {
-              return stream.distinct((a, b) => equals(a, b) as bool);
-            }
-            return stream.distinct();
-        },
-        'takeWhile#1': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            return stream.takeWhile((e) => test(e) as bool);
-        },
-        'skipWhile#1': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            return stream.skipWhile((e) => test(e) as bool);
-        },
-        'singleWhere#2': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            if (orElse != null) {
-              return stream.singleWhere((e) => test(e) as bool,
-                  orElse: () => orElse());
-            }
-            return stream.singleWhere((e) => test(e) as bool);
-        },
-        'firstWhere#2': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            if (orElse != null) {
-              return stream.firstWhere((e) => test(e) as bool,
-                  orElse: () => orElse());
-            }
-            return stream.firstWhere((e) => test(e) as bool);
-        },
-        'lastWhere#2': (args) {
-            final stream = args[0] as Stream;
-            final test = args[1] as Function;
-            final orElse = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            if (orElse != null) {
-              return stream.lastWhere((e) => test(e) as bool,
-                  orElse: () => orElse());
-            }
-            return stream.lastWhere((e) => test(e) as bool);
-        },
-        'single#0': (args) => (args[0] as Stream).single,
-        'cast#0': (args) => (args[0] as Stream).cast(),
-        'pipe#1': (args) => (args[0] as Stream).pipe(args[1] as StreamConsumer),
-        'timeout#2': (args) {
-            final stream = args[0] as Stream;
-            final timeLimit = args[1] as Duration;
-            final onTimeout = identical(args[2], darticAbsent) ? null : args[2] as Function?;
-            if (onTimeout != null) {
-              return stream.timeout(timeLimit,
-                  onTimeout: (sink) => onTimeout(sink));
-            }
-            return stream.timeout(timeLimit);
-        },
-        'transform#1': (args) => (args[0] as Stream).transform(args[1] as StreamTransformer),
       };
 
   static Map<String, Object? Function(List<Object?>)> emptyStreamMethodMap() => {

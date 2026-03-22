@@ -21,6 +21,9 @@ abstract final class UnmodifiableSetViewBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'contains#1': (args) => (args[0] as UnmodifiableSetView).contains(args[1]),
+        'lookup#1': (args) => (args[0] as UnmodifiableSetView).lookup(args[1]),
+        'toSet#0': (args) => (args[0] as UnmodifiableSetView).toSet(),
         'add#1': (args) => (args[0] as UnmodifiableSetView).add(args[1]),
         'remove#1': (args) => (args[0] as UnmodifiableSetView).remove(args[1]),
         'cast#0': (args) => (args[0] as UnmodifiableSetView).cast(),
@@ -54,16 +57,13 @@ abstract final class UnmodifiableSetViewBindings {
         'lastWhere#2': (args) => (args[0] as UnmodifiableSetView).lastWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'singleWhere#2': (args) => (args[0] as UnmodifiableSetView).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as UnmodifiableSetView).elementAt(args[1] as int),
+        'length#0': (args) => (args[0] as UnmodifiableSetView).length,
+        'iterator#0': (args) => (args[0] as UnmodifiableSetView).iterator,
         'isEmpty#0': (args) => (args[0] as UnmodifiableSetView).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as UnmodifiableSetView).isNotEmpty,
         'single#0': (args) => (args[0] as UnmodifiableSetView).single,
         'first#0': (args) => (args[0] as UnmodifiableSetView).first,
         'last#0': (args) => (args[0] as UnmodifiableSetView).last,
         '#1': (args) => UnmodifiableSetView(args[0] as Set),
-        'length#0': (args) => (args[0] as UnmodifiableSetView).length,
-        'contains#1': (args) => (args[0] as UnmodifiableSetView).contains(args[1]),
-        'iterator#0': (args) => (args[0] as UnmodifiableSetView).iterator,
-        'lookup#1': (args) => (args[0] as UnmodifiableSetView).lookup(args[1]),
-        'toSet#0': (args) => (args[0] as UnmodifiableSetView).toSet(),
       };
 }

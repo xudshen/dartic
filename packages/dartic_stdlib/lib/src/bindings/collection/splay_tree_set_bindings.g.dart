@@ -23,6 +23,9 @@ abstract final class SplayTreeSetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cast#0': (args) => (args[0] as SplayTreeSet).cast(),
+        'contains#1': (args) => (args[0] as SplayTreeSet).contains(args[1]),
+        'add#1': (args) => (args[0] as SplayTreeSet).add(args[1]),
+        'remove#1': (args) => (args[0] as SplayTreeSet).remove(args[1]),
         'addAll#1': (args) { (args[0] as SplayTreeSet).addAll(args[1] as Iterable); return null; },
         'removeAll#1': (args) { (args[0] as SplayTreeSet).removeAll(args[1] as Iterable<Object?>); return null; },
         'retainAll#1': (args) { (args[0] as SplayTreeSet).retainAll(args[1] as Iterable<Object?>); return null; },
@@ -57,8 +60,11 @@ abstract final class SplayTreeSetBindings {
         'retainWhere#1': (args) { (args[0] as SplayTreeSet).retainWhere((a) => (args[1] as Function)(a) as bool); return null; },
         'containsAll#1': (args) => (args[0] as SplayTreeSet).containsAll(args[1] as Iterable<Object?>),
         'iterator#0': (args) => (args[0] as SplayTreeSet).iterator,
+        'length#0': (args) => (args[0] as SplayTreeSet).length,
         'isEmpty#0': (args) => (args[0] as SplayTreeSet).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as SplayTreeSet).isNotEmpty,
+        'first#0': (args) => (args[0] as SplayTreeSet).first,
+        'last#0': (args) => (args[0] as SplayTreeSet).last,
         'single#0': (args) => (args[0] as SplayTreeSet).single,
         'of#3': (args) => SplayTreeSet<dynamic>.of(args[0] as Iterable, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         '#2': (args) {
@@ -80,11 +86,5 @@ abstract final class SplayTreeSetBindings {
               isValidKey != null ? (k) => isValidKey(k) as bool : null,
             );
         },
-        'add#1': (args) => (args[0] as SplayTreeSet).add(args[1]),
-        'first#0': (args) => (args[0] as SplayTreeSet).first,
-        'last#0': (args) => (args[0] as SplayTreeSet).last,
-        'contains#1': (args) => (args[0] as SplayTreeSet).contains(args[1]),
-        'remove#1': (args) => (args[0] as SplayTreeSet).remove(args[1]),
-        'length#0': (args) => (args[0] as SplayTreeSet).length,
       };
 }
