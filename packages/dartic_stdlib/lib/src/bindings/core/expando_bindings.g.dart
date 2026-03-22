@@ -24,8 +24,10 @@ abstract final class ExpandoBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as Expando).toString(),
         'name#0': (args) => (args[0] as Expando).name,
+        'hashCode#0': (args) => (args[0] as Expando).hashCode,
         '[]#1': (args) => (args[0] as Expando)[(args[1] as Object)],
         '[]=#2': (args) { (args[0] as Expando)[args[1] as Object] = args[2]; return args[2]; },
+        '==#1': (args) => (args[0] as Expando) == (args[1] as Object),
         '#1': (args) => Expando<Object>(identical(args[0], darticAbsent) ? null : args[0] as String?),
       };
 }

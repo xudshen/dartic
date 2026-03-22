@@ -269,6 +269,35 @@ class TypeAnalyzer {
       ));
     }
 
+    // Synthesize Object-inherited members that the analyzer may not report.
+    // Every class inherits ==, hashCode, and toString from Object. The host
+    // implementation handles dispatch correctly (e.g., BigInt's == uses value
+    // equality via _BigIntImpl). Without these, CALL_HOST fails.
+    if (cls.name != 'Object') {
+      if (!operators.any((op) => op.name == '==')) {
+        operators.add(OperatorInfo(
+          name: '==',
+          lookupName: '==',
+          paramType: 'Object',
+          returnType: 'bool',
+        ));
+      }
+      if (!getters.any((g) => g.name == 'hashCode')) {
+        getters.add(GetterInfo(
+          name: 'hashCode',
+          returnType: 'int',
+        ));
+      }
+      if (!methods.any((m) => m.name == 'toString') &&
+          !staticMethods.any((m) => m.name == 'toString')) {
+        methods.add(MethodInfo(
+          name: 'toString',
+          paramTypes: const [],
+          returnType: 'String',
+        ));
+      }
+    }
+
     // Extract constructors — skip enums and generative ctors on abstract classes.
     // Factory constructors on abstract classes are kept (e.g., BigInt.from,
     // Stream.fromIterable, Map.of) since they're callable and needed for CALL_HOST.

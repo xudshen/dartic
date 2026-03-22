@@ -144,6 +144,13 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   Object? operator [](Object? index) {
     final r = _dispatch.invoke(this, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator [] must be overridden in dartic code'); }
@@ -157,17 +164,10 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -246,8 +246,10 @@ abstract final class MapBaseBindings {
         'isEmpty#0': (args) => (args[0] as MapBase).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as MapBase).isNotEmpty,
         'values#0': (args) => (args[0] as MapBase).values,
+        'hashCode#0': (args) => (args[0] as MapBase).hashCode,
         '[]#1': (args) => (args[0] as MapBase)[(args[1])],
         '[]=#2': (args) { (args[0] as MapBase)[args[1]] = args[2]; return args[2]; },
+        '==#1': (args) => (args[0] as MapBase) == (args[1] as Object),
       };
 
   static Map<String, Object? Function(List<Object?>)> mapBaseValueIterableMethodMap() => {

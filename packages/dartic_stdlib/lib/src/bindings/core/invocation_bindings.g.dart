@@ -70,6 +70,7 @@ abstract final class InvocationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Invocation).toString(),
         'memberName#0': (args) => (args[0] as Invocation).memberName,
         'typeArguments#0': (args) => (args[0] as Invocation).typeArguments,
         'positionalArguments#0': (args) => (args[0] as Invocation).positionalArguments,
@@ -78,6 +79,8 @@ abstract final class InvocationBindings {
         'isGetter#0': (args) => (args[0] as Invocation).isGetter,
         'isSetter#0': (args) => (args[0] as Invocation).isSetter,
         'isAccessor#0': (args) => (args[0] as Invocation).isAccessor,
+        'hashCode#0': (args) => (args[0] as Invocation).hashCode,
+        '==#1': (args) => (args[0] as Invocation) == (args[1] as Object),
         '_withType#5': (args) => _DarticInvocationMirror(
             args[0] as Symbol,
             args[1] as int,

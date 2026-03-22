@@ -23,6 +23,8 @@ abstract final class DeferredLoadExceptionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as DeferredLoadException).toString(),
+        'hashCode#0': (args) => (args[0] as DeferredLoadException).hashCode,
+        '==#1': (args) => (args[0] as DeferredLoadException) == (args[1] as Object),
         '#1': (args) => DeferredLoadException(args[0] as String),
       };
 }

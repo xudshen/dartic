@@ -213,7 +213,7 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -415,6 +415,8 @@ abstract final class IterableBindings {
         'first#0': (args) => (args[0] as Iterable).first,
         'last#0': (args) => (args[0] as Iterable).last,
         'single#0': (args) => (args[0] as Iterable).single,
+        'hashCode#0': (args) => (args[0] as Iterable).hashCode,
+        '==#1': (args) => (args[0] as Iterable) == (args[1] as Object),
         'generate#2': (args) => Iterable<dynamic>.generate(args[0] as int, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)),
         'withIterator#1': (args) => Iterable<dynamic>.withIterator(() => (args[0] as Function)() as Iterator),
         'empty#0': (args) => Iterable<dynamic>.empty(),

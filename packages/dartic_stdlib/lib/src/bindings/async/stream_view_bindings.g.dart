@@ -54,11 +54,13 @@ abstract final class StreamViewBindings {
         'elementAt#1': (args) => (args[0] as StreamView).elementAt(args[1] as int),
         'timeout#2': (args) => (args[0] as StreamView).timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         'isBroadcast#0': (args) => (args[0] as StreamView).isBroadcast,
+        'hashCode#0': (args) => (args[0] as StreamView).hashCode,
         'length#0': (args) => (args[0] as StreamView).length,
         'isEmpty#0': (args) => (args[0] as StreamView).isEmpty,
         'first#0': (args) => (args[0] as StreamView).first,
         'last#0': (args) => (args[0] as StreamView).last,
         'single#0': (args) => (args[0] as StreamView).single,
+        '==#1': (args) => (args[0] as StreamView) == (args[1] as Object),
         '#1': (args) => StreamView<dynamic>(args[0] as Stream),
         '_#fromFields#1': (args) => StreamView<dynamic>(args[0] as Stream),
       };

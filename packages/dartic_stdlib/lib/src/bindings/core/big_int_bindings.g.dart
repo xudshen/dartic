@@ -47,6 +47,7 @@ abstract final class BigIntBindings {
         'isOdd#0': (args) => (args[0] as BigInt).isOdd,
         'isNegative#0': (args) => (args[0] as BigInt).isNegative,
         'isValidInt#0': (args) => (args[0] as BigInt).isValidInt,
+        'hashCode#0': (args) => (args[0] as BigInt).hashCode,
         'unary-#0': (args) => -(args[0] as BigInt),
         '+#1': (args) => (args[0] as BigInt) + (args[1] as BigInt),
         '-#1': (args) => (args[0] as BigInt) - (args[1] as BigInt),
@@ -64,8 +65,7 @@ abstract final class BigIntBindings {
         '<=#1': (args) => (args[0] as BigInt) <= (args[1] as BigInt),
         '>#1': (args) => (args[0] as BigInt) > (args[1] as BigInt),
         '>=#1': (args) => (args[0] as BigInt) >= (args[1] as BigInt),
+        '==#1': (args) => (args[0] as BigInt) == (args[1] as Object),
         'from#1': (args) => BigInt.from(args[0] as num),
-        '==#1': (args) => args[0] == args[1],
-        'hashCode#0': (args) => (args[0] as BigInt).hashCode,
       };
 }

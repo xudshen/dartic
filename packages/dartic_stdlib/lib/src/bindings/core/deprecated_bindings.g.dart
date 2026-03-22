@@ -24,6 +24,8 @@ abstract final class DeprecatedBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as Deprecated).toString(),
         'message#0': (args) => (args[0] as Deprecated).message,
+        'hashCode#0': (args) => (args[0] as Deprecated).hashCode,
+        '==#1': (args) => (args[0] as Deprecated) == (args[1] as Object),
         '#1': (args) => Deprecated(args[0] as String?),
         'implement#1': (args) => Deprecated.implement(identical(args[0], darticAbsent) ? null : args[0] as String?),
         'extend#1': (args) => Deprecated.extend(identical(args[0], darticAbsent) ? null : args[0] as String?),

@@ -66,6 +66,8 @@ abstract final class SplayTreeSetBindings {
         'first#0': (args) => (args[0] as SplayTreeSet).first,
         'last#0': (args) => (args[0] as SplayTreeSet).last,
         'single#0': (args) => (args[0] as SplayTreeSet).single,
+        'hashCode#0': (args) => (args[0] as SplayTreeSet).hashCode,
+        '==#1': (args) => (args[0] as SplayTreeSet) == (args[1] as Object),
         'of#3': (args) => SplayTreeSet<dynamic>.of(args[0] as Iterable, identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         '#2': (args) {
             final compare =

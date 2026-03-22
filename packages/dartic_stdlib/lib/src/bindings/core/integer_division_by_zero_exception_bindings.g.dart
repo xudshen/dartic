@@ -26,6 +26,8 @@ abstract final class IntegerDivisionByZeroExceptionBindings {
         'toString#0': (args) => (args[0] as IntegerDivisionByZeroException).toString(),
         'message#0': (args) => (args[0] as IntegerDivisionByZeroException).message,
         'stackTrace#0': (args) => (args[0] as IntegerDivisionByZeroException).stackTrace,
+        'hashCode#0': (args) => (args[0] as IntegerDivisionByZeroException).hashCode,
+        '==#1': (args) => (args[0] as IntegerDivisionByZeroException) == (args[1] as Object),
         '#0': (args) => IntegerDivisionByZeroException(),
         '_#fromFields#0': (args) => IntegerDivisionByZeroException(),
       };

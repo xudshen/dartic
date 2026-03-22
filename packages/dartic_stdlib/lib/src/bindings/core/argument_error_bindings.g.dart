@@ -48,13 +48,6 @@ class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   }
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -62,10 +55,17 @@ class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   }
 
   @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -73,8 +73,8 @@ class _$ArgumentError extends ArgumentError implements DarticObjectHolder {
   dynamic get _super$invalidValue => super.invalidValue;
   String? get _super$name => super.name;
   dynamic get _super$message => super.message;
-  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
+  StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
 abstract final class ArgumentErrorBindings {
@@ -93,8 +93,8 @@ abstract final class ArgumentErrorBindings {
     ctx.registerBinding('dart:core::ArgumentError::\$super\$invalidValue#0', (args) => (args[0] as _$ArgumentError)._super$invalidValue);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$name#0', (args) => (args[0] as _$ArgumentError)._super$name);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$message#0', (args) => (args[0] as _$ArgumentError)._super$message);
-    ctx.registerBinding('dart:core::ArgumentError::\$super\$stackTrace#0', (args) => (args[0] as _$ArgumentError)._super$stackTrace);
     ctx.registerBinding('dart:core::ArgumentError::\$super\$hashCode#0', (args) => (args[0] as _$ArgumentError)._super$hashCode);
+    ctx.registerBinding('dart:core::ArgumentError::\$super\$stackTrace#0', (args) => (args[0] as _$ArgumentError)._super$stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -102,14 +102,12 @@ abstract final class ArgumentErrorBindings {
         'invalidValue#0': (args) => (args[0] as ArgumentError).invalidValue,
         'name#0': (args) => (args[0] as ArgumentError).name,
         'message#0': (args) => (args[0] as ArgumentError).message,
+        'hashCode#0': (args) => (args[0] as ArgumentError).hashCode,
         'stackTrace#0': (args) => (args[0] as ArgumentError).stackTrace,
+        '==#1': (args) => (args[0] as ArgumentError) == (args[1] as Object),
         '#2': (args) => ArgumentError(identical(args[0], darticAbsent) ? null : args[0], identical(args[1], darticAbsent) ? null : args[1] as String?),
+        'value#3': (args) => ArgumentError.value(args[0], identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2]),
         'notNull#1': (args) => ArgumentError.notNull(identical(args[0], darticAbsent) ? null : args[0] as String?),
         '#1': (args) => ArgumentError(args[0]),
-        'value#3': (args) => ArgumentError.value(
-            args[0],
-            identical(args[1], darticAbsent) ? null : args[1] as String?,
-            identical(args[2], darticAbsent) ? null : args[2],
-        ),
       };
 }

@@ -23,6 +23,7 @@ abstract final class FunctionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Function).toString(),
         'hashCode#0': (args) => (args[0] as Function).hashCode,
         '==#1': (args) => (args[0] as Function) == (args[1] as Object),
       };

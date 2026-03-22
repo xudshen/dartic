@@ -25,6 +25,8 @@ abstract final class StackOverflowErrorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as StackOverflowError).toString(),
         'stackTrace#0': (args) => (args[0] as StackOverflowError).stackTrace,
+        'hashCode#0': (args) => (args[0] as StackOverflowError).hashCode,
+        '==#1': (args) => (args[0] as StackOverflowError) == (args[1] as Object),
         '#0': (args) => StackOverflowError(),
         '_#fromFields#0': (args) => StackOverflowError(),
       };

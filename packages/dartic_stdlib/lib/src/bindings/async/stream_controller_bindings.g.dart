@@ -36,10 +36,12 @@ abstract final class StreamControllerBindings {
         'isPaused#0': (args) => (args[0] as StreamController).isPaused,
         'hasListener#0': (args) => (args[0] as StreamController).hasListener,
         'done#0': (args) => (args[0] as StreamController).done,
+        'hashCode#0': (args) => (args[0] as StreamController).hashCode,
         'onListen=#1': (args) { (args[0] as StreamController).onListen = args[1] as void Function()?; return args[1]; },
         'onPause=#1': (args) { (args[0] as StreamController).onPause = args[1] as void Function()?; return args[1]; },
         'onResume=#1': (args) { (args[0] as StreamController).onResume = args[1] as void Function()?; return args[1]; },
         'onCancel=#1': (args) { (args[0] as StreamController).onCancel = args[1] as FutureOr<void> Function()?; return args[1]; },
+        '==#1': (args) => (args[0] as StreamController) == (args[1] as Object),
         '#5': (args) {
             final onListen =
                 identical(args[0], darticAbsent) ? null : args[0] as Function?;

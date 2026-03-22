@@ -29,7 +29,9 @@ abstract final class DoubleLinkedQueueEntryBindings {
         'previousEntry#0': (args) => (args[0] as DoubleLinkedQueueEntry).previousEntry(),
         'nextEntry#0': (args) => (args[0] as DoubleLinkedQueueEntry).nextEntry(),
         'element#0': (args) => (args[0] as DoubleLinkedQueueEntry).element,
+        'hashCode#0': (args) => (args[0] as DoubleLinkedQueueEntry).hashCode,
         'element=#1': (args) { (args[0] as DoubleLinkedQueueEntry).element = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as DoubleLinkedQueueEntry) == (args[1] as Object),
         '#1': (args) => DoubleLinkedQueueEntry<dynamic>(args[0]),
       };
 }

@@ -34,13 +34,6 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
   }
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -48,17 +41,24 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
   }
 
   @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Object? get _super$message => super.message;
-  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
+  StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
 abstract final class AssertionErrorBindings {
@@ -74,14 +74,16 @@ abstract final class AssertionErrorBindings {
     );
     ctx.registerBinding('dart:core::AssertionError::\$super\$toString#0', (args) => (args[0] as _$AssertionError)._super$toString());
     ctx.registerBinding('dart:core::AssertionError::\$super\$message#0', (args) => (args[0] as _$AssertionError)._super$message);
-    ctx.registerBinding('dart:core::AssertionError::\$super\$stackTrace#0', (args) => (args[0] as _$AssertionError)._super$stackTrace);
     ctx.registerBinding('dart:core::AssertionError::\$super\$hashCode#0', (args) => (args[0] as _$AssertionError)._super$hashCode);
+    ctx.registerBinding('dart:core::AssertionError::\$super\$stackTrace#0', (args) => (args[0] as _$AssertionError)._super$stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as AssertionError).toString(),
         'message#0': (args) => (args[0] as AssertionError).message,
+        'hashCode#0': (args) => (args[0] as AssertionError).hashCode,
         'stackTrace#0': (args) => (args[0] as AssertionError).stackTrace,
+        '==#1': (args) => (args[0] as AssertionError) == (args[1] as Object),
         '#1': (args) => AssertionError(identical(args[0], darticAbsent) ? null : args[0]),
       };
 }

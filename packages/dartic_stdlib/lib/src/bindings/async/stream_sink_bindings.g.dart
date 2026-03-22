@@ -62,13 +62,6 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -79,7 +72,14 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
   }
 }
 
@@ -102,5 +102,7 @@ abstract final class StreamSinkBindings {
         'addError#2': (args) { (args[0] as StreamSink).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'addStream#1': (args) => (args[0] as StreamSink).addStream(args[1] as Stream),
         'done#0': (args) => (args[0] as StreamSink).done,
+        'hashCode#0': (args) => (args[0] as StreamSink).hashCode,
+        '==#1': (args) => (args[0] as StreamSink) == (args[1] as Object),
       };
 }

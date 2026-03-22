@@ -24,6 +24,9 @@ abstract final class FinalizerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'attach#3': (args) { (args[0] as Finalizer).attach(args[1] as Object, args[2], detach: identical(args[3], darticAbsent) ? null : args[3]); return null; },
         'detach#1': (args) { (args[0] as Finalizer).detach(args[1] as Object); return null; },
+        'toString#0': (args) => (args[0] as Finalizer).toString(),
+        'hashCode#0': (args) => (args[0] as Finalizer).hashCode,
+        '==#1': (args) => (args[0] as Finalizer) == (args[1] as Object),
         '#1': (args) => Finalizer<dynamic>((a) => (args[0] as Function)(a)),
       };
 }

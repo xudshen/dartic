@@ -20,6 +20,13 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
   final DarticObject $darticObject;
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   Object? get indexable {
     final r = _dispatch.get(this, $darticObject, 'indexable');
     if (identical(r, notOverridden)) return super.indexable;
@@ -55,6 +62,13 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   String? get name {
     final r = _dispatch.get(this, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -76,37 +90,23 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
-  int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
+  String _super$toString() => super.toString();
   Object? get _super$indexable => super.indexable;
   int get _super$length => super.length;
   int get _super$invalidValue => super.invalidValue;
   int get _super$start => super.start;
   int get _super$end => super.end;
+  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   dynamic get _super$message => super.message;
   StackTrace? get _super$stackTrace => super.stackTrace;
-  String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class IndexErrorBindings {
@@ -121,30 +121,32 @@ abstract final class IndexErrorBindings {
           _$IndexError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:core::IndexError::check#5', (args) => IndexError.check(args[0] as int, args[1] as int, indexable: identical(args[2], darticAbsent) ? null : args[2], name: identical(args[3], darticAbsent) ? null : args[3] as String?, message: identical(args[4], darticAbsent) ? null : args[4] as String?));
+    ctx.registerBinding('dart:core::IndexError::\$super\$toString#0', (args) => (args[0] as _$IndexError)._super$toString());
     ctx.registerBinding('dart:core::IndexError::\$super\$indexable#0', (args) => (args[0] as _$IndexError)._super$indexable);
     ctx.registerBinding('dart:core::IndexError::\$super\$length#0', (args) => (args[0] as _$IndexError)._super$length);
     ctx.registerBinding('dart:core::IndexError::\$super\$invalidValue#0', (args) => (args[0] as _$IndexError)._super$invalidValue);
     ctx.registerBinding('dart:core::IndexError::\$super\$start#0', (args) => (args[0] as _$IndexError)._super$start);
     ctx.registerBinding('dart:core::IndexError::\$super\$end#0', (args) => (args[0] as _$IndexError)._super$end);
+    ctx.registerBinding('dart:core::IndexError::\$super\$hashCode#0', (args) => (args[0] as _$IndexError)._super$hashCode);
     ctx.registerBinding('dart:core::IndexError::\$super\$name#0', (args) => (args[0] as _$IndexError)._super$name);
     ctx.registerBinding('dart:core::IndexError::\$super\$message#0', (args) => (args[0] as _$IndexError)._super$message);
     ctx.registerBinding('dart:core::IndexError::\$super\$stackTrace#0', (args) => (args[0] as _$IndexError)._super$stackTrace);
-    ctx.registerBinding('dart:core::IndexError::\$super\$toString#0', (args) => (args[0] as _$IndexError)._super$toString());
-    ctx.registerBinding('dart:core::IndexError::\$super\$hashCode#0', (args) => (args[0] as _$IndexError)._super$hashCode);
     ctx.registerBinding('dart:core::IndexError::#5', methodMap()['#5']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as IndexError).toString(),
         'indexable#0': (args) => (args[0] as IndexError).indexable,
         'length#0': (args) => (args[0] as IndexError).length,
         'invalidValue#0': (args) => (args[0] as IndexError).invalidValue,
         'start#0': (args) => (args[0] as IndexError).start,
         'end#0': (args) => (args[0] as IndexError).end,
+        'hashCode#0': (args) => (args[0] as IndexError).hashCode,
         'name#0': (args) => (args[0] as IndexError).name,
         'message#0': (args) => (args[0] as IndexError).message,
         'stackTrace#0': (args) => (args[0] as IndexError).stackTrace,
+        '==#1': (args) => (args[0] as IndexError) == (args[1] as Object),
         '#5': (args) => IndexError(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as int?),
         'withLength#5': (args) => IndexError.withLength(args[0] as int, args[1] as int, indexable: identical(args[2], darticAbsent) ? null : args[2], name: identical(args[3], darticAbsent) ? null : args[3] as String?, message: identical(args[4], darticAbsent) ? null : args[4] as String?),
-        'toString#0': (args) => (args[0] as IndexError).toString(),
       };
 }

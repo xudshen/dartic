@@ -26,11 +26,11 @@ abstract final class PointBindings {
         'y#0': (args) => (args[0] as Point).y,
         'hashCode#0': (args) => (args[0] as Point).hashCode,
         'magnitude#0': (args) => (args[0] as Point).magnitude,
+        '==#1': (args) => (args[0] as Point) == (args[1] as Object),
         '+#1': (args) => (args[0] as Point) + (args[1] as Point<num>),
         '-#1': (args) => (args[0] as Point) - (args[1] as Point<num>),
         '*#1': (args) => (args[0] as Point) * (args[1] as num),
         '#2': (args) => Point<num>(args[0] as num, args[1] as num),
         '_#fromFields#2': (args) => Point<num>(args[0] as num, args[1] as num),
-        '==#1': (args) => args[0] == args[1],
       };
 }

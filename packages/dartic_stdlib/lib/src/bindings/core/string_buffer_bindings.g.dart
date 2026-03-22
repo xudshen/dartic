@@ -30,12 +30,9 @@ abstract final class StringBufferBindings {
         'length#0': (args) => (args[0] as StringBuffer).length,
         'isEmpty#0': (args) => (args[0] as StringBuffer).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as StringBuffer).isNotEmpty,
-        '#1': (args) {
-            if (!identical(args[0], darticAbsent)) {
-              return StringBuffer(args[0]!);
-            }
-            return StringBuffer();
-        },
+        'hashCode#0': (args) => (args[0] as StringBuffer).hashCode,
+        '==#1': (args) => (args[0] as StringBuffer) == (args[1] as Object),
+        '#1': (args) => StringBuffer(identical(args[0], darticAbsent) ? "" : args[0] as Object),
         'writeln#1': (args) {
             if (!identical(args[1], darticAbsent)) {
               (args[0] as StringBuffer).writeln(args[1]);

@@ -55,7 +55,9 @@ abstract final class LinkedListBindings {
         'last#0': (args) => (args[0] as LinkedList).last,
         'single#0': (args) => (args[0] as LinkedList).single,
         'isEmpty#0': (args) => (args[0] as LinkedList).isEmpty,
+        'hashCode#0': (args) => (args[0] as LinkedList).hashCode,
         'isNotEmpty#0': (args) => (args[0] as LinkedList).isNotEmpty,
+        '==#1': (args) => (args[0] as LinkedList) == (args[1] as Object),
         '#0': (args) => LinkedList<Never>(),
       };
 }

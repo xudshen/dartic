@@ -308,7 +308,7 @@ class _$SetBase extends SetBase implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -439,5 +439,7 @@ abstract final class SetBaseBindings {
         'single#0': (args) => (args[0] as SetBase).single,
         'first#0': (args) => (args[0] as SetBase).first,
         'last#0': (args) => (args[0] as SetBase).last,
+        'hashCode#0': (args) => (args[0] as SetBase).hashCode,
+        '==#1': (args) => (args[0] as SetBase) == (args[1] as Object),
       };
 }

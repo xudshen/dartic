@@ -58,7 +58,7 @@ class _$FormatException extends FormatException implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -92,6 +92,8 @@ abstract final class FormatExceptionBindings {
         'message#0': (args) => (args[0] as FormatException).message,
         'source#0': (args) => (args[0] as FormatException).source,
         'offset#0': (args) => (args[0] as FormatException).offset,
+        'hashCode#0': (args) => (args[0] as FormatException).hashCode,
+        '==#1': (args) => (args[0] as FormatException) == (args[1] as Object),
         '#3': (args) => FormatException(identical(args[0], darticAbsent) ? "" : args[0] as String, identical(args[1], darticAbsent) ? null : args[1], identical(args[2], darticAbsent) ? null : args[2] as int?),
         '_#fromFields#3': (args) => FormatException(args[0] as String, args[2], args[1] as int?),
       };

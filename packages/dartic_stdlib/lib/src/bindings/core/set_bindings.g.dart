@@ -45,6 +45,7 @@ abstract final class SetBindings {
         'difference#1': (args) => (args[0] as Set).difference(args[1] as Set<Object?>),
         'clear#0': (args) { (args[0] as Set).clear(); return null; },
         'toSet#0': (args) => (args[0] as Set).toSet(),
+        'toString#0': (args) => (args[0] as Set).toString(),
         'followedBy#1': (args) => (args[0] as Set).followedBy(args[1] as Iterable),
         'map#1': (args) => (args[0] as Set).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as Set).where((a) => (args[1] as Function)(a) as bool),
@@ -64,12 +65,14 @@ abstract final class SetBindings {
         'singleWhere#2': (args) => (args[0] as Set).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as Set).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as Set).iterator,
+        'hashCode#0': (args) => (args[0] as Set).hashCode,
         'length#0': (args) => (args[0] as Set).length,
         'isEmpty#0': (args) => (args[0] as Set).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as Set).isNotEmpty,
         'first#0': (args) => (args[0] as Set).first,
         'last#0': (args) => (args[0] as Set).last,
         'single#0': (args) => (args[0] as Set).single,
+        '==#1': (args) => (args[0] as Set) == (args[1] as Object),
         '#0': (args) => Set<dynamic>(),
         'identity#0': (args) => Set<dynamic>.identity(),
         'from#1': (args) => Set<dynamic>.from(args[0] as Iterable<dynamic>),
@@ -101,7 +104,6 @@ abstract final class SetBindings {
             }
             return value;
         },
-        'toString#0': (args) => (args[0] as Set).toString(),
       };
 
   static Map<String, Object? Function(List<Object?>)> setMethodMap() => {

@@ -22,7 +22,10 @@ abstract final class WeakReferenceBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WeakReference).toString(),
         'target#0': (args) => (args[0] as WeakReference).target,
+        'hashCode#0': (args) => (args[0] as WeakReference).hashCode,
+        '==#1': (args) => (args[0] as WeakReference) == (args[1] as Object),
         '#1': (args) => WeakReference<Object>(args[0] as Object),
       };
 }

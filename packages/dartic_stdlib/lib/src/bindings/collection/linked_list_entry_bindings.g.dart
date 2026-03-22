@@ -26,5 +26,7 @@ abstract final class LinkedListEntryBindings {
         'list#0': (args) => (args[0] as LinkedListEntry).list,
         'next#0': (args) => (args[0] as LinkedListEntry).next,
         'previous#0': (args) => (args[0] as LinkedListEntry).previous,
+        'hashCode#0': (args) => (args[0] as LinkedListEntry).hashCode,
+        '==#1': (args) => (args[0] as LinkedListEntry) == (args[1] as Object),
       };
 }

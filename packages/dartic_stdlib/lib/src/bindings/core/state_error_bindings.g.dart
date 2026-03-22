@@ -34,13 +34,6 @@ class _$StateError extends StateError implements DarticObjectHolder {
   }
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -48,17 +41,24 @@ class _$StateError extends StateError implements DarticObjectHolder {
   }
 
   @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   String get _super$message => super.message;
-  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
+  StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
 abstract final class StateErrorBindings {
@@ -74,14 +74,16 @@ abstract final class StateErrorBindings {
     );
     ctx.registerBinding('dart:core::StateError::\$super\$toString#0', (args) => (args[0] as _$StateError)._super$toString());
     ctx.registerBinding('dart:core::StateError::\$super\$message#0', (args) => (args[0] as _$StateError)._super$message);
-    ctx.registerBinding('dart:core::StateError::\$super\$stackTrace#0', (args) => (args[0] as _$StateError)._super$stackTrace);
     ctx.registerBinding('dart:core::StateError::\$super\$hashCode#0', (args) => (args[0] as _$StateError)._super$hashCode);
+    ctx.registerBinding('dart:core::StateError::\$super\$stackTrace#0', (args) => (args[0] as _$StateError)._super$stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as StateError).toString(),
         'message#0': (args) => (args[0] as StateError).message,
+        'hashCode#0': (args) => (args[0] as StateError).hashCode,
         'stackTrace#0': (args) => (args[0] as StateError).stackTrace,
+        '==#1': (args) => (args[0] as StateError) == (args[1] as Object),
         '#1': (args) => StateError(args[0] as String),
       };
 }

@@ -26,6 +26,8 @@ abstract final class AsyncErrorBindings {
         'toString#0': (args) => (args[0] as AsyncError).toString(),
         'error#0': (args) => (args[0] as AsyncError).error,
         'stackTrace#0': (args) => (args[0] as AsyncError).stackTrace,
+        'hashCode#0': (args) => (args[0] as AsyncError).hashCode,
+        '==#1': (args) => (args[0] as AsyncError) == (args[1] as Object),
         '#2': (args) => AsyncError(args[0] as Object, args[1] as StackTrace?),
       };
 }

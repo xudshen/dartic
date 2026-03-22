@@ -27,17 +27,17 @@ class _$Error extends Error implements DarticObjectHolder {
   final DarticObject $darticObject;
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   String toString() {
     final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return super.toString();
     return r as String;
+  }
+
+  @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
   }
 
   @override
@@ -51,12 +51,12 @@ class _$Error extends Error implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
-  StackTrace? get _super$stackTrace => super.stackTrace;
   String _super$toString() => super.toString();
+  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
 }
 
@@ -72,8 +72,8 @@ abstract final class ErrorBindings {
     );
     ctx.registerBinding('dart:core::Error::safeToString#1', (args) => Error.safeToString(args[0]));
     ctx.registerBinding('dart:core::Error::throwWithStackTrace#2', (args) => Error.throwWithStackTrace(args[0] as Object, args[1] as StackTrace));
-    ctx.registerBinding('dart:core::Error::\$super\$stackTrace#0', (args) => (args[0] as _$Error)._super$stackTrace);
     ctx.registerBinding('dart:core::Error::\$super\$toString#0', (args) => (args[0] as _$Error)._super$toString());
+    ctx.registerBinding('dart:core::Error::\$super\$stackTrace#0', (args) => (args[0] as _$Error)._super$stackTrace);
     ctx.registerBinding('dart:core::Error::\$super\$hashCode#0', (args) => (args[0] as _$Error)._super$hashCode);
     ctx.registerBinding('dart:_internal::LateError::localNI#1', methodMap()['localNI#1']!);
     ctx.registerBinding('dart:_internal::LateError::fieldNI#1', methodMap()['fieldNI#1']!);
@@ -86,6 +86,8 @@ abstract final class ErrorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'stackTrace#0': (args) => (args[0] as Error).stackTrace,
+        'hashCode#0': (args) => (args[0] as Error).hashCode,
+        '==#1': (args) => (args[0] as Error) == (args[1] as Object),
         '#0': (args) => _DarticErrorBacking(),
         'toString#0': (args) => (args[0] as Error).toString(),
         'localNI#1': (args) => DarticLateError("Local '${args[0]}' has not been initialized."),

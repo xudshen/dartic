@@ -25,6 +25,8 @@ abstract final class MapEntryBindings {
         'toString#0': (args) => (args[0] as MapEntry).toString(),
         'key#0': (args) => (args[0] as MapEntry).key,
         'value#0': (args) => (args[0] as MapEntry).value,
+        'hashCode#0': (args) => (args[0] as MapEntry).hashCode,
+        '==#1': (args) => (args[0] as MapEntry) == (args[1] as Object),
         '#2': (args) => MapEntry<dynamic, dynamic>(args[0], args[1]),
         '_#2': (args) => MapEntry(args[0], args[1]),
       };

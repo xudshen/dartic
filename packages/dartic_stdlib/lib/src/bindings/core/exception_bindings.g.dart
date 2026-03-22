@@ -37,7 +37,7 @@ class _$Exception implements Exception, DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 }
 
@@ -54,7 +54,9 @@ abstract final class ExceptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Exception).toString(),
+        'hashCode#0': (args) => (args[0] as Exception).hashCode,
+        '==#1': (args) => (args[0] as Exception) == (args[1] as Object),
         '#1': (args) => Exception(identical(args[0], darticAbsent) ? null : args[0]),
-        'toString#0': (args) => args[0].toString(),
       };
 }

@@ -30,6 +30,8 @@ abstract final class StreamIteratorBindings {
         'moveNext#0': (args) => (args[0] as StreamIterator).moveNext(),
         'cancel#0': (args) => (args[0] as StreamIterator).cancel(),
         'current#0': (args) => (args[0] as StreamIterator).current,
+        'hashCode#0': (args) => (args[0] as StreamIterator).hashCode,
+        '==#1': (args) => (args[0] as StreamIterator) == (args[1] as Object),
         '#1': (args) => StreamIterator<dynamic>(args[0] as Stream),
       };
 

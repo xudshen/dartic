@@ -255,6 +255,7 @@ libraries:
       # ── Object: null-safe toString + const Object() reconstruction ──
       Object:
         extra_methods:
+          # Object methods must NOT cast args[0] to Object — null.toString() is valid
           "toString#0": "(args) => args[0].toString()"
           "hashCode#0": "(args) => args[0].hashCode"
           "==#1": "(args) => args[0] == args[1]"
@@ -490,21 +491,13 @@ libraries:
           - "dart:core::NoSuchMethodError::_forExternal#1"
 
 
-      # ── ArgumentError: constructor + factory + Object-inherited members ──
+      # ── ArgumentError: arity-1 variant for CFE backward compat ──
       ArgumentError:
         extra_methods:
           "#1": "(args) => ArgumentError(args[0])"
-          "value#3": |
-            (args) => ArgumentError.value(
-              args[0],
-              identical(args[1], darticAbsent) ? null : args[1] as String?,
-              identical(args[2], darticAbsent) ? null : args[2],
-            )
 
       # ── RangeError: extra_bindings for factory aliases ──
       RangeError:
-        extra_methods:
-          "toString#0": "(args) => (args[0] as RangeError).toString()"
         extra_bindings:
           - "dart:core::RangeError::value#3"
           - "dart:core::RangeError::range#5"
@@ -512,21 +505,8 @@ libraries:
 
       # ── IndexError: extra_bindings for constructor alias ──
       IndexError:
-        extra_methods:
-          "toString#0": "(args) => (args[0] as IndexError).toString()"
         extra_bindings:
           - "dart:core::IndexError::#5"
-
-      # ── Exception: constructor + toString ──
-      Exception:
-        extra_methods:
-          "#1": "(args) => Exception(identical(args[0], darticAbsent) ? null : args[0])"
-          "toString#0": "(args) => args[0].toString()"
-
-      # ── TypeError: toString ──
-      TypeError:
-        extra_methods:
-          "toString#0": "(args) => (args[0] as TypeError).toString()"
 
       # ── Deprecated: constructor + message getter ──
       # Note: The analyzer may discover a phantom 'expires' getter that doesn't
@@ -697,7 +677,6 @@ libraries:
               }
               return map;
             }
-          "toString#0": "(args) => (args[0] as Map).toString()"
           "updateAll#1": |
             (args) {
               final map = args[0] as Map;
@@ -758,8 +737,6 @@ libraries:
               }
               return value;
             }
-          "toString#0": "(args) => (args[0] as Set).toString()"
-
 
 
       # ── Uri: factory constructors + static methods + inherited methods ──
@@ -943,35 +920,13 @@ libraries:
               return String.fromCharCodes(codes);
             }
 
+      # ── BigInt: (testing auto-gen) ──
 
-      # ── BigInt: Object-inherited members ──
-      BigInt:
-        extra_methods:
-          "==#1": "(args) => args[0] == args[1]"
-          "hashCode#0": "(args) => (args[0] as BigInt).hashCode"
 
-      # ── RegExp: Object-inherited members ──
-      RegExp:
-        extra_methods:
-          "hashCode#0": "(args) => (args[0] as RegExp).hashCode"
-          "toString#0": "(args) => (args[0] as RegExp).toString()"
 
-      # ── Runes: Object-inherited members ──
-      Runes:
-        extra_methods:
-          "hashCode#0": "(args) => (args[0] as Runes).hashCode"
-          "toString#0": "(args) => (args[0] as Runes).toString()"
-
-      # ── StringBuffer: constructor + optional-param methods ──
+      # ── StringBuffer: optional-param methods ──
       StringBuffer:
         extra_methods:
-          "#1": |
-            (args) {
-              if (!identical(args[0], darticAbsent)) {
-                return StringBuffer(args[0]!);
-              }
-              return StringBuffer();
-            }
           "writeln#1": |
             (args) {
               if (!identical(args[1], darticAbsent)) {

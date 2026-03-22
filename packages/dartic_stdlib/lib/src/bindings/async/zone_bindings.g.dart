@@ -54,7 +54,9 @@ abstract final class ZoneBindings {
         'print#1': (args) { (args[0] as Zone).print(args[1] as String); return null; },
         'parent#0': (args) => (args[0] as Zone).parent,
         'errorZone#0': (args) => (args[0] as Zone).errorZone,
+        'hashCode#0': (args) => (args[0] as Zone).hashCode,
         '[]#1': (args) => (args[0] as Zone)[(args[1])],
+        '==#1': (args) => (args[0] as Zone) == (args[1] as Object),
       };
 
   static Map<String, Object? Function(List<Object?>)> rootZoneMethodMap() => {

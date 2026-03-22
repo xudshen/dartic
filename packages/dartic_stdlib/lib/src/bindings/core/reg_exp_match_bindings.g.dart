@@ -24,14 +24,17 @@ abstract final class RegExpMatchBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'namedGroup#1': (args) => (args[0] as RegExpMatch).namedGroup(args[1] as String),
+        'toString#0': (args) => (args[0] as RegExpMatch).toString(),
         'group#1': (args) => (args[0] as RegExpMatch).group(args[1] as int),
         'groups#1': (args) => (args[0] as RegExpMatch).groups((args[1] as List).cast<int>()),
         'groupNames#0': (args) => (args[0] as RegExpMatch).groupNames,
         'pattern#0': (args) => (args[0] as RegExpMatch).pattern,
+        'hashCode#0': (args) => (args[0] as RegExpMatch).hashCode,
         'start#0': (args) => (args[0] as RegExpMatch).start,
         'end#0': (args) => (args[0] as RegExpMatch).end,
         'groupCount#0': (args) => (args[0] as RegExpMatch).groupCount,
         'input#0': (args) => (args[0] as RegExpMatch).input,
+        '==#1': (args) => (args[0] as RegExpMatch) == (args[1] as Object),
         '[]#1': (args) => (args[0] as RegExpMatch)[(args[1] as int)],
       };
 }

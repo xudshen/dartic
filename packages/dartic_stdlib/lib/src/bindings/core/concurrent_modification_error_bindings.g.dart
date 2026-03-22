@@ -34,13 +34,6 @@ class _$ConcurrentModificationError extends ConcurrentModificationError implemen
   }
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -48,17 +41,24 @@ class _$ConcurrentModificationError extends ConcurrentModificationError implemen
   }
 
   @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Object? get _super$modifiedObject => super.modifiedObject;
-  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
+  StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
 abstract final class ConcurrentModificationErrorBindings {
@@ -74,14 +74,16 @@ abstract final class ConcurrentModificationErrorBindings {
     );
     ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$toString#0', (args) => (args[0] as _$ConcurrentModificationError)._super$toString());
     ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$modifiedObject#0', (args) => (args[0] as _$ConcurrentModificationError)._super$modifiedObject);
-    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$stackTrace#0', (args) => (args[0] as _$ConcurrentModificationError)._super$stackTrace);
     ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$hashCode#0', (args) => (args[0] as _$ConcurrentModificationError)._super$hashCode);
+    ctx.registerBinding('dart:core::ConcurrentModificationError::\$super\$stackTrace#0', (args) => (args[0] as _$ConcurrentModificationError)._super$stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as ConcurrentModificationError).toString(),
         'modifiedObject#0': (args) => (args[0] as ConcurrentModificationError).modifiedObject,
+        'hashCode#0': (args) => (args[0] as ConcurrentModificationError).hashCode,
         'stackTrace#0': (args) => (args[0] as ConcurrentModificationError).stackTrace,
+        '==#1': (args) => (args[0] as ConcurrentModificationError) == (args[1] as Object),
         '#1': (args) => ConcurrentModificationError(identical(args[0], darticAbsent) ? null : args[0]),
       };
 }

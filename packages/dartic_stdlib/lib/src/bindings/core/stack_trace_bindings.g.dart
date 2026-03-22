@@ -25,6 +25,8 @@ abstract final class StackTraceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as StackTrace).toString(),
+        'hashCode#0': (args) => (args[0] as StackTrace).hashCode,
+        '==#1': (args) => (args[0] as StackTrace) == (args[1] as Object),
         'fromString#1': (args) => StackTrace.fromString(args[0] as String),
       };
 }

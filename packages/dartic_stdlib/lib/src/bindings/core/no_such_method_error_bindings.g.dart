@@ -25,7 +25,9 @@ abstract final class NoSuchMethodErrorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as NoSuchMethodError).toString(),
+        'hashCode#0': (args) => (args[0] as NoSuchMethodError).hashCode,
         'stackTrace#0': (args) => (args[0] as NoSuchMethodError).stackTrace,
+        '==#1': (args) => (args[0] as NoSuchMethodError) == (args[1] as Object),
         'withInvocation#2': (args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation),
         '_withInvocation#2': (args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation),
       };

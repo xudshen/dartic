@@ -29,19 +29,19 @@ class _$Iterator implements Iterator, DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   dynamic get current {
     final r = _dispatch.get(this, $darticObject, 'current');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter current must be overridden in dartic code');
     }
     return r as dynamic;
-  }
-
-  @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
   }
 
   @override
@@ -55,7 +55,7 @@ class _$Iterator implements Iterator, DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 }
 
@@ -73,6 +73,9 @@ abstract final class IteratorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'moveNext#0': (args) => (args[0] as Iterator).moveNext(),
+        'toString#0': (args) => (args[0] as Iterator).toString(),
         'current#0': (args) => (args[0] as Iterator).current,
+        'hashCode#0': (args) => (args[0] as Iterator).hashCode,
+        '==#1': (args) => (args[0] as Iterator) == (args[1] as Object),
       };
 }

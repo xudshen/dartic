@@ -24,11 +24,14 @@ abstract final class MatchBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'group#1': (args) => (args[0] as Match).group(args[1] as int),
         'groups#1': (args) => (args[0] as Match).groups((args[1] as List).cast<int>()),
+        'toString#0': (args) => (args[0] as Match).toString(),
         'start#0': (args) => (args[0] as Match).start,
         'end#0': (args) => (args[0] as Match).end,
         'groupCount#0': (args) => (args[0] as Match).groupCount,
         'input#0': (args) => (args[0] as Match).input,
         'pattern#0': (args) => (args[0] as Match).pattern,
+        'hashCode#0': (args) => (args[0] as Match).hashCode,
         '[]#1': (args) => (args[0] as Match)[(args[1] as int)],
+        '==#1': (args) => (args[0] as Match) == (args[1] as Object),
       };
 }

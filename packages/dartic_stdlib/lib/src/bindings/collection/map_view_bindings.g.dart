@@ -41,8 +41,10 @@ abstract final class MapViewBindings {
         'keys#0': (args) => (args[0] as MapView).keys,
         'values#0': (args) => (args[0] as MapView).values,
         'entries#0': (args) => (args[0] as MapView).entries,
+        'hashCode#0': (args) => (args[0] as MapView).hashCode,
         '[]#1': (args) => (args[0] as MapView)[(args[1])],
         '[]=#2': (args) { (args[0] as MapView)[args[1]] = args[2]; return args[2]; },
+        '==#1': (args) => (args[0] as MapView) == (args[1] as Object),
         '#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
         '_#fromFields#1': (args) => MapView<dynamic, dynamic>(args[0] as Map),
       };

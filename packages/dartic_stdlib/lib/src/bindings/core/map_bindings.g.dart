@@ -41,14 +41,17 @@ abstract final class MapBindings {
         'remove#1': (args) => (args[0] as Map).remove(args[1]),
         'clear#0': (args) { (args[0] as Map).clear(); return null; },
         'forEach#1': (args) { (args[0] as Map).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
+        'toString#0': (args) => (args[0] as Map).toString(),
         'entries#0': (args) => (args[0] as Map).entries,
         'keys#0': (args) => (args[0] as Map).keys,
         'values#0': (args) => (args[0] as Map).values,
         'length#0': (args) => (args[0] as Map).length,
         'isEmpty#0': (args) => (args[0] as Map).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as Map).isNotEmpty,
+        'hashCode#0': (args) => (args[0] as Map).hashCode,
         '[]#1': (args) => (args[0] as Map)[(args[1])],
         '[]=#2': (args) { (args[0] as Map)[args[1]] = args[2]; return args[2]; },
+        '==#1': (args) => (args[0] as Map) == (args[1] as Object),
         'from#1': (args) => Map<dynamic, dynamic>.from(args[0] as Map<dynamic, dynamic>),
         'of#1': (args) => Map<dynamic, dynamic>.of(args[0] as Map),
         'unmodifiable#1': (args) => Map<dynamic, dynamic>.unmodifiable(args[0] as Map<dynamic, dynamic>),
@@ -74,7 +77,6 @@ abstract final class MapBindings {
             }
             return map;
         },
-        'toString#0': (args) => (args[0] as Map).toString(),
         'updateAll#1': (args) {
             final map = args[0] as Map;
             final update = args[1] as Function;
@@ -103,6 +105,7 @@ abstract final class MapBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> linkedHashMapMethodMap() => {
+        'toString#0': (args) => (args[0] as LinkedHashMap).toString(),
         'cast#0': (args) => (args[0] as LinkedHashMap).cast(),
         'containsValue#1': (args) => (args[0] as LinkedHashMap).containsValue(args[1]),
         'containsKey#1': (args) => (args[0] as LinkedHashMap).containsKey(args[1]),
@@ -116,12 +119,14 @@ abstract final class MapBindings {
         'remove#1': (args) => (args[0] as LinkedHashMap).remove(args[1]),
         'clear#0': (args) { (args[0] as LinkedHashMap).clear(); return null; },
         'forEach#1': (args) { (args[0] as LinkedHashMap).forEach((a, b) => (args[1] as Function)(a, b)); return null; },
+        'hashCode#0': (args) => (args[0] as LinkedHashMap).hashCode,
         'entries#0': (args) => (args[0] as LinkedHashMap).entries,
         'keys#0': (args) => (args[0] as LinkedHashMap).keys,
         'values#0': (args) => (args[0] as LinkedHashMap).values,
         'length#0': (args) => (args[0] as LinkedHashMap).length,
         'isEmpty#0': (args) => (args[0] as LinkedHashMap).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as LinkedHashMap).isNotEmpty,
+        '==#1': (args) => (args[0] as LinkedHashMap) == (args[1] as Object),
         '[]#1': (args) => (args[0] as LinkedHashMap)[(args[1])],
         '[]=#2': (args) { (args[0] as LinkedHashMap)[args[1]] = args[2]; return args[2]; },
         'of#1': (args) => LinkedHashMap<dynamic, dynamic>.of(args[0] as Map),

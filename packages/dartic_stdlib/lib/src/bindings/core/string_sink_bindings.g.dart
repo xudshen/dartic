@@ -25,6 +25,9 @@ abstract final class StringSinkBindings {
         'write#1': (args) { (args[0] as StringSink).write(args[1]); return null; },
         'writeAll#2': (args) { (args[0] as StringSink).writeAll(args[1] as Iterable<dynamic>, identical(args[2], darticAbsent) ? "" : args[2] as String); return null; },
         'writeCharCode#1': (args) { (args[0] as StringSink).writeCharCode(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as StringSink).toString(),
+        'hashCode#0': (args) => (args[0] as StringSink).hashCode,
+        '==#1': (args) => (args[0] as StringSink) == (args[1] as Object),
         'writeln#1': (args) {
             if (!identical(args[1], darticAbsent)) {
               (args[0] as StringSink).writeln(args[1]);

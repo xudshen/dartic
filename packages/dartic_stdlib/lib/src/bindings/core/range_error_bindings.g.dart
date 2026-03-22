@@ -20,6 +20,13 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   final DarticObject $darticObject;
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   num? get start {
     final r = _dispatch.get(this, $darticObject, 'start');
     if (identical(r, notOverridden)) return super.start;
@@ -38,6 +45,13 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
     final r = _dispatch.get(this, $darticObject, 'invalidValue');
     if (identical(r, notOverridden)) return super.invalidValue;
     return r as num?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
   }
 
   @override
@@ -62,35 +76,21 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
-  int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
+  String _super$toString() => super.toString();
   num? get _super$start => super.start;
   num? get _super$end => super.end;
   num? get _super$invalidValue => super.invalidValue;
+  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   dynamic get _super$message => super.message;
   StackTrace? get _super$stackTrace => super.stackTrace;
-  String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
 }
 
 abstract final class RangeErrorBindings {
@@ -108,30 +108,32 @@ abstract final class RangeErrorBindings {
     ctx.registerBinding('dart:core::RangeError::checkValidIndex#5', (args) => RangeError.checkValidIndex(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as int?, identical(args[4], darticAbsent) ? null : args[4] as String?));
     ctx.registerBinding('dart:core::RangeError::checkValidRange#6', (args) => RangeError.checkValidRange(args[0] as int, args[1] as int?, args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?, identical(args[5], darticAbsent) ? null : args[5] as String?));
     ctx.registerBinding('dart:core::RangeError::checkNotNegative#3', (args) => RangeError.checkNotNegative(args[0] as int, identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2] as String?));
+    ctx.registerBinding('dart:core::RangeError::\$super\$toString#0', (args) => (args[0] as _$RangeError)._super$toString());
     ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as _$RangeError)._super$start);
     ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as _$RangeError)._super$end);
     ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as _$RangeError)._super$invalidValue);
+    ctx.registerBinding('dart:core::RangeError::\$super\$hashCode#0', (args) => (args[0] as _$RangeError)._super$hashCode);
     ctx.registerBinding('dart:core::RangeError::\$super\$name#0', (args) => (args[0] as _$RangeError)._super$name);
     ctx.registerBinding('dart:core::RangeError::\$super\$message#0', (args) => (args[0] as _$RangeError)._super$message);
     ctx.registerBinding('dart:core::RangeError::\$super\$stackTrace#0', (args) => (args[0] as _$RangeError)._super$stackTrace);
-    ctx.registerBinding('dart:core::RangeError::\$super\$toString#0', (args) => (args[0] as _$RangeError)._super$toString());
-    ctx.registerBinding('dart:core::RangeError::\$super\$hashCode#0', (args) => (args[0] as _$RangeError)._super$hashCode);
     ctx.registerBinding('dart:core::RangeError::value#3', methodMap()['value#3']!);
     ctx.registerBinding('dart:core::RangeError::range#5', methodMap()['range#5']!);
     ctx.registerBinding('dart:core::RangeError::index#5', methodMap()['index#5']!);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RangeError).toString(),
         'start#0': (args) => (args[0] as RangeError).start,
         'end#0': (args) => (args[0] as RangeError).end,
         'invalidValue#0': (args) => (args[0] as RangeError).invalidValue,
+        'hashCode#0': (args) => (args[0] as RangeError).hashCode,
         'name#0': (args) => (args[0] as RangeError).name,
         'message#0': (args) => (args[0] as RangeError).message,
         'stackTrace#0': (args) => (args[0] as RangeError).stackTrace,
+        '==#1': (args) => (args[0] as RangeError) == (args[1] as Object),
         '#1': (args) => RangeError(args[0]),
         'value#3': (args) => RangeError.value(args[0] as num, identical(args[1], darticAbsent) ? null : args[1] as String?, identical(args[2], darticAbsent) ? null : args[2] as String?),
         'range#5': (args) => RangeError.range(args[0] as num, args[1] as int?, args[2] as int?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as String?),
         'index#5': (args) => RangeError.index(args[0] as int, args[1], identical(args[2], darticAbsent) ? null : args[2] as String?, identical(args[3], darticAbsent) ? null : args[3] as String?, identical(args[4], darticAbsent) ? null : args[4] as int?),
-        'toString#0': (args) => (args[0] as RangeError).toString(),
       };
 }

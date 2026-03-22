@@ -59,11 +59,13 @@ abstract final class UnmodifiableSetViewBindings {
         'elementAt#1': (args) => (args[0] as UnmodifiableSetView).elementAt(args[1] as int),
         'length#0': (args) => (args[0] as UnmodifiableSetView).length,
         'iterator#0': (args) => (args[0] as UnmodifiableSetView).iterator,
+        'hashCode#0': (args) => (args[0] as UnmodifiableSetView).hashCode,
         'isEmpty#0': (args) => (args[0] as UnmodifiableSetView).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as UnmodifiableSetView).isNotEmpty,
         'single#0': (args) => (args[0] as UnmodifiableSetView).single,
         'first#0': (args) => (args[0] as UnmodifiableSetView).first,
         'last#0': (args) => (args[0] as UnmodifiableSetView).last,
+        '==#1': (args) => (args[0] as UnmodifiableSetView) == (args[1] as Object),
         '#1': (args) => UnmodifiableSetView(args[0] as Set),
       };
 }

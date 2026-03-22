@@ -45,6 +45,7 @@ abstract final class StringBindings {
         'splitMapJoin#3': (args) => (args[0] as String).splitMapJoin(args[1] as Pattern, onMatch: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onNonMatch: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a)),
         'toLowerCase#0': (args) => (args[0] as String).toLowerCase(),
         'toUpperCase#0': (args) => (args[0] as String).toUpperCase(),
+        'toString#0': (args) => (args[0] as String).toString(),
         'allMatches#2': (args) => (args[0] as String).allMatches(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int),
         'matchAsPrefix#2': (args) => (args[0] as String).matchAsPrefix(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int),
         'length#0': (args) => (args[0] as String).length,

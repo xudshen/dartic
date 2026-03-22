@@ -23,6 +23,7 @@ abstract final class RunesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Runes).toString(),
         'cast#0': (args) => (args[0] as Runes).cast(),
         'followedBy#1': (args) => (args[0] as Runes).followedBy((args[1] as Iterable).cast<int>()),
         'map#1': (args) => (args[0] as Runes).map((a) => (args[1] as Function)(a)),
@@ -49,13 +50,13 @@ abstract final class RunesBindings {
         'string#0': (args) => (args[0] as Runes).string,
         'iterator#0': (args) => (args[0] as Runes).iterator,
         'last#0': (args) => (args[0] as Runes).last,
+        'hashCode#0': (args) => (args[0] as Runes).hashCode,
         'length#0': (args) => (args[0] as Runes).length,
         'isEmpty#0': (args) => (args[0] as Runes).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as Runes).isNotEmpty,
         'first#0': (args) => (args[0] as Runes).first,
         'single#0': (args) => (args[0] as Runes).single,
+        '==#1': (args) => (args[0] as Runes) == (args[1] as Object),
         '#1': (args) => Runes(args[0] as String),
-        'hashCode#0': (args) => (args[0] as Runes).hashCode,
-        'toString#0': (args) => (args[0] as Runes).toString(),
       };
 }

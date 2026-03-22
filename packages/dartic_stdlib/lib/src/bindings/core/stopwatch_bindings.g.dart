@@ -38,6 +38,13 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   }
 
   @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
   int get frequency {
     final r = _dispatch.get(this, $darticObject, 'frequency');
     if (identical(r, notOverridden)) return super.frequency;
@@ -80,13 +87,6 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -97,20 +97,20 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
   void _super$start() { super.start(); }
   void _super$stop() { super.stop(); }
   void _super$reset() { super.reset(); }
+  String _super$toString() => super.toString();
   int get _super$frequency => super.frequency;
   int get _super$elapsedTicks => super.elapsedTicks;
   Duration get _super$elapsed => super.elapsed;
   int get _super$elapsedMicroseconds => super.elapsedMicroseconds;
   int get _super$elapsedMilliseconds => super.elapsedMilliseconds;
   bool get _super$isRunning => super.isRunning;
-  String _super$toString() => super.toString();
   int get _super$hashCode => super.hashCode;
 }
 
@@ -127,13 +127,13 @@ abstract final class StopwatchBindings {
     ctx.registerBinding('dart:core::Stopwatch::\$super\$start#0', (args) { (args[0] as _$Stopwatch)._super$start(); return null; });
     ctx.registerBinding('dart:core::Stopwatch::\$super\$stop#0', (args) { (args[0] as _$Stopwatch)._super$stop(); return null; });
     ctx.registerBinding('dart:core::Stopwatch::\$super\$reset#0', (args) { (args[0] as _$Stopwatch)._super$reset(); return null; });
+    ctx.registerBinding('dart:core::Stopwatch::\$super\$toString#0', (args) => (args[0] as _$Stopwatch)._super$toString());
     ctx.registerBinding('dart:core::Stopwatch::\$super\$frequency#0', (args) => (args[0] as _$Stopwatch)._super$frequency);
     ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedTicks#0', (args) => (args[0] as _$Stopwatch)._super$elapsedTicks);
     ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsed#0', (args) => (args[0] as _$Stopwatch)._super$elapsed);
     ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMicroseconds#0', (args) => (args[0] as _$Stopwatch)._super$elapsedMicroseconds);
     ctx.registerBinding('dart:core::Stopwatch::\$super\$elapsedMilliseconds#0', (args) => (args[0] as _$Stopwatch)._super$elapsedMilliseconds);
     ctx.registerBinding('dart:core::Stopwatch::\$super\$isRunning#0', (args) => (args[0] as _$Stopwatch)._super$isRunning);
-    ctx.registerBinding('dart:core::Stopwatch::\$super\$toString#0', (args) => (args[0] as _$Stopwatch)._super$toString());
     ctx.registerBinding('dart:core::Stopwatch::\$super\$hashCode#0', (args) => (args[0] as _$Stopwatch)._super$hashCode);
   }
 
@@ -141,12 +141,15 @@ abstract final class StopwatchBindings {
         'start#0': (args) { (args[0] as Stopwatch).start(); return null; },
         'stop#0': (args) { (args[0] as Stopwatch).stop(); return null; },
         'reset#0': (args) { (args[0] as Stopwatch).reset(); return null; },
+        'toString#0': (args) => (args[0] as Stopwatch).toString(),
         'frequency#0': (args) => (args[0] as Stopwatch).frequency,
         'elapsedTicks#0': (args) => (args[0] as Stopwatch).elapsedTicks,
         'elapsed#0': (args) => (args[0] as Stopwatch).elapsed,
         'elapsedMicroseconds#0': (args) => (args[0] as Stopwatch).elapsedMicroseconds,
         'elapsedMilliseconds#0': (args) => (args[0] as Stopwatch).elapsedMilliseconds,
         'isRunning#0': (args) => (args[0] as Stopwatch).isRunning,
+        'hashCode#0': (args) => (args[0] as Stopwatch).hashCode,
+        '==#1': (args) => (args[0] as Stopwatch) == (args[1] as Object),
         '#0': (args) => Stopwatch(),
       };
 }

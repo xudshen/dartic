@@ -25,6 +25,8 @@ abstract final class TimerBindings {
         'cancel#0': (args) { (args[0] as Timer).cancel(); return null; },
         'tick#0': (args) => (args[0] as Timer).tick,
         'isActive#0': (args) => (args[0] as Timer).isActive,
+        'hashCode#0': (args) => (args[0] as Timer).hashCode,
+        '==#1': (args) => (args[0] as Timer) == (args[1] as Object),
         '#2': (args) => Timer(args[0] as Duration, () => (args[1] as Function)()),
         'periodic#2': (args) => Timer.periodic(args[0] as Duration, (a) => (args[1] as Function)(a)),
       };

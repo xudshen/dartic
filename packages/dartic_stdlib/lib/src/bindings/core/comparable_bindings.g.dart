@@ -24,5 +24,8 @@ abstract final class ComparableBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'compareTo#1': (args) => (args[0] as Comparable).compareTo(args[1]),
+        'toString#0': (args) => (args[0] as Comparable).toString(),
+        'hashCode#0': (args) => (args[0] as Comparable).hashCode,
+        '==#1': (args) => (args[0] as Comparable) == (args[1] as Object),
       };
 }

@@ -34,13 +34,6 @@ class _$UnsupportedError extends UnsupportedError implements DarticObjectHolder 
   }
 
   @override
-  StackTrace? get stackTrace {
-    final r = _dispatch.get(this, $darticObject, 'stackTrace');
-    if (identical(r, notOverridden)) return super.stackTrace;
-    return r as StackTrace?;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -48,17 +41,24 @@ class _$UnsupportedError extends UnsupportedError implements DarticObjectHolder 
   }
 
   @override
+  StackTrace? get stackTrace {
+    final r = _dispatch.get(this, $darticObject, 'stackTrace');
+    if (identical(r, notOverridden)) return super.stackTrace;
+    return r as StackTrace?;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   String? get _super$message => super.message;
-  StackTrace? get _super$stackTrace => super.stackTrace;
   int get _super$hashCode => super.hashCode;
+  StackTrace? get _super$stackTrace => super.stackTrace;
 }
 
 abstract final class UnsupportedErrorBindings {
@@ -74,14 +74,16 @@ abstract final class UnsupportedErrorBindings {
     );
     ctx.registerBinding('dart:core::UnsupportedError::\$super\$toString#0', (args) => (args[0] as _$UnsupportedError)._super$toString());
     ctx.registerBinding('dart:core::UnsupportedError::\$super\$message#0', (args) => (args[0] as _$UnsupportedError)._super$message);
-    ctx.registerBinding('dart:core::UnsupportedError::\$super\$stackTrace#0', (args) => (args[0] as _$UnsupportedError)._super$stackTrace);
     ctx.registerBinding('dart:core::UnsupportedError::\$super\$hashCode#0', (args) => (args[0] as _$UnsupportedError)._super$hashCode);
+    ctx.registerBinding('dart:core::UnsupportedError::\$super\$stackTrace#0', (args) => (args[0] as _$UnsupportedError)._super$stackTrace);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as UnsupportedError).toString(),
         'message#0': (args) => (args[0] as UnsupportedError).message,
+        'hashCode#0': (args) => (args[0] as UnsupportedError).hashCode,
         'stackTrace#0': (args) => (args[0] as UnsupportedError).stackTrace,
+        '==#1': (args) => (args[0] as UnsupportedError) == (args[1] as Object),
         '#1': (args) => UnsupportedError(args[0] as String),
       };
 }

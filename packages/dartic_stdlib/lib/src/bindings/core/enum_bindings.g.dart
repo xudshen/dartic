@@ -21,6 +21,8 @@ abstract final class EnumBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as dynamic).toString(),
+        'hashCode#0': (args) => (args[0] as dynamic).hashCode,
+        '==#1': (args) => (args[0] as dynamic) == (args[1] as Object),
         'index#0': (args) {
             final obj = args[0] as DarticObject;
             return obj.valueFields[0];

@@ -224,13 +224,6 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -241,7 +234,14 @@ class _$Stream extends Stream implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
   }
 
   // ── Super trampolines ──
@@ -273,8 +273,8 @@ class _$Stream extends Stream implements DarticObjectHolder {
   Future get _super$first => super.first;
   Future get _super$last => super.last;
   Future get _super$single => super.single;
-  String _super$toString() => super.toString();
   int get _super$hashCode => super.hashCode;
+  String _super$toString() => super.toString();
 }
 
 abstract final class StreamBindings {
@@ -316,8 +316,8 @@ abstract final class StreamBindings {
     ctx.registerBinding('dart:async::Stream::\$super\$first#0', (args) => (args[0] as _$Stream)._super$first);
     ctx.registerBinding('dart:async::Stream::\$super\$last#0', (args) => (args[0] as _$Stream)._super$last);
     ctx.registerBinding('dart:async::Stream::\$super\$single#0', (args) => (args[0] as _$Stream)._super$single);
-    ctx.registerBinding('dart:async::Stream::\$super\$toString#0', (args) => (args[0] as _$Stream)._super$toString());
     ctx.registerBinding('dart:async::Stream::\$super\$hashCode#0', (args) => (args[0] as _$Stream)._super$hashCode);
+    ctx.registerBinding('dart:async::Stream::\$super\$toString#0', (args) => (args[0] as _$Stream)._super$toString());
 
     // _EmptyStream
     for (final e in emptyStreamMethodMap().entries) {
@@ -363,6 +363,8 @@ abstract final class StreamBindings {
         'first#0': (args) => (args[0] as Stream).first,
         'last#0': (args) => (args[0] as Stream).last,
         'single#0': (args) => (args[0] as Stream).single,
+        'hashCode#0': (args) => (args[0] as Stream).hashCode,
+        '==#1': (args) => (args[0] as Stream) == (args[1] as Object),
         'empty#1': (args) {
           if (identical(args[0], darticAbsent)) {
             return Stream<dynamic>.empty();

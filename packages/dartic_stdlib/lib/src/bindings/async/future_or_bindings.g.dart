@@ -21,5 +21,7 @@ abstract final class FutureOrBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'hashCode#0': (args) => (args[0] as FutureOr).hashCode,
+        '==#1': (args) => (args[0] as FutureOr) == (args[1] as Object),
       };
 }

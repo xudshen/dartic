@@ -38,6 +38,8 @@ abstract final class UriDataBindings {
         'isBase64#0': (args) => (args[0] as UriData).isBase64,
         'contentText#0': (args) => (args[0] as UriData).contentText,
         'parameters#0': (args) => (args[0] as UriData).parameters,
+        'hashCode#0': (args) => (args[0] as UriData).hashCode,
+        '==#1': (args) => (args[0] as UriData) == (args[1] as Object),
         'fromString#5': (args) => UriData.fromString(
             args[0] as String,
             mimeType: identical(args[1], darticAbsent) ? null : args[1] as String?,

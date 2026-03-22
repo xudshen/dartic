@@ -29,6 +29,7 @@ abstract final class BoolBindings {
         '&#1': (args) => (args[0] as bool) & (args[1] as bool),
         '|#1': (args) => (args[0] as bool) | (args[1] as bool),
         '^#1': (args) => (args[0] as bool) ^ (args[1] as bool),
+        '==#1': (args) => (args[0] as bool) == (args[1] as Object),
         'fromEnvironment#2': (args) => bool.fromEnvironment(args[0] as String, defaultValue: identical(args[1], darticAbsent) ? false : args[1] as bool),
         'hasEnvironment#1': (args) => bool.hasEnvironment(args[0] as String),
       };

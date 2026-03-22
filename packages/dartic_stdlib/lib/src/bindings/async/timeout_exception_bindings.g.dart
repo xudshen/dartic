@@ -25,6 +25,8 @@ abstract final class TimeoutExceptionBindings {
         'toString#0': (args) => (args[0] as TimeoutException).toString(),
         'message#0': (args) => (args[0] as TimeoutException).message,
         'duration#0': (args) => (args[0] as TimeoutException).duration,
+        'hashCode#0': (args) => (args[0] as TimeoutException).hashCode,
+        '==#1': (args) => (args[0] as TimeoutException) == (args[1] as Object),
         '#2': (args) => TimeoutException(args[0] as String?, identical(args[1], darticAbsent) ? null : args[1] as Duration?),
       };
 }

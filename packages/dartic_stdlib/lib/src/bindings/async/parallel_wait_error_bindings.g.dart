@@ -26,6 +26,8 @@ abstract final class ParallelWaitErrorBindings {
         'values#0': (args) => (args[0] as ParallelWaitError).values,
         'errors#0': (args) => (args[0] as ParallelWaitError).errors,
         'stackTrace#0': (args) => (args[0] as ParallelWaitError).stackTrace,
+        'hashCode#0': (args) => (args[0] as ParallelWaitError).hashCode,
+        '==#1': (args) => (args[0] as ParallelWaitError) == (args[1] as Object),
         '#4': (args) => ParallelWaitError<dynamic, dynamic>(args[0], args[1], errorCount: identical(args[2], darticAbsent) ? null : args[2] as int?, defaultError: identical(args[3], darticAbsent) ? null : args[3] as AsyncError?),
       };
 }

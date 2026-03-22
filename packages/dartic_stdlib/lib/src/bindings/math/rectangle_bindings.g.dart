@@ -26,6 +26,7 @@ abstract final class RectangleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Rectangle).toString(),
         'intersection#1': (args) => (args[0] as Rectangle).intersection(args[1] as Rectangle<num>),
         'intersects#1': (args) => (args[0] as Rectangle).intersects(args[1] as Rectangle<num>),
         'boundingBox#1': (args) => (args[0] as Rectangle).boundingBox(args[1] as Rectangle<num>),
@@ -35,12 +36,14 @@ abstract final class RectangleBindings {
         'top#0': (args) => (args[0] as Rectangle).top,
         'width#0': (args) => (args[0] as Rectangle).width,
         'height#0': (args) => (args[0] as Rectangle).height,
+        'hashCode#0': (args) => (args[0] as Rectangle).hashCode,
         'right#0': (args) => (args[0] as Rectangle).right,
         'bottom#0': (args) => (args[0] as Rectangle).bottom,
         'topLeft#0': (args) => (args[0] as Rectangle).topLeft,
         'topRight#0': (args) => (args[0] as Rectangle).topRight,
         'bottomRight#0': (args) => (args[0] as Rectangle).bottomRight,
         'bottomLeft#0': (args) => (args[0] as Rectangle).bottomLeft,
+        '==#1': (args) => (args[0] as Rectangle) == (args[1] as Object),
         '#4': (args) => Rectangle<num>(args[0] as num, args[1] as num, args[2] as num, args[3] as num),
         'fromPoints#2': (args) => Rectangle<num>.fromPoints(args[0] as Point<num>, args[1] as Point<num>),
         '_#fromFields#4': (args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num),

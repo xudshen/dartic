@@ -22,8 +22,11 @@ abstract final class PragmaBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as pragma).toString(),
         'name#0': (args) => (args[0] as pragma).name,
         'options#0': (args) => (args[0] as pragma).options,
+        'hashCode#0': (args) => (args[0] as pragma).hashCode,
+        '==#1': (args) => (args[0] as pragma) == (args[1] as Object),
         '#2': (args) => pragma(args[0] as String, identical(args[1], darticAbsent) ? null : args[1]),
       };
 }

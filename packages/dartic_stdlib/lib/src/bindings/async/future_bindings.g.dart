@@ -25,6 +25,8 @@ abstract final class FutureBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'hashCode#0': (args) => (args[0] as Future).hashCode,
+        '==#1': (args) => (args[0] as Future) == (args[1] as Object),
         'syncValue#1': (args) => Future<dynamic>.syncValue(args[0]),
         '#1': (args) {
             final computation = args[0] as Function;

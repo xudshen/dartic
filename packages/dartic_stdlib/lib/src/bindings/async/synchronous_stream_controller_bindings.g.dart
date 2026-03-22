@@ -26,6 +26,7 @@ abstract final class SynchronousStreamControllerBindings {
         'addError#2': (args) { (args[0] as SynchronousStreamController).addError(args[1] as Object, identical(args[2], darticAbsent) ? null : args[2] as StackTrace?); return null; },
         'close#0': (args) => (args[0] as SynchronousStreamController).close(),
         'addStream#2': (args) => (args[0] as SynchronousStreamController).addStream(args[1] as Stream, cancelOnError: identical(args[2], darticAbsent) ? null : args[2] as bool?),
+        'hashCode#0': (args) => (args[0] as SynchronousStreamController).hashCode,
         'stream#0': (args) => (args[0] as SynchronousStreamController).stream,
         'onListen#0': (args) => (args[0] as SynchronousStreamController).onListen,
         'onPause#0': (args) => (args[0] as SynchronousStreamController).onPause,
@@ -40,5 +41,6 @@ abstract final class SynchronousStreamControllerBindings {
         'onPause=#1': (args) { (args[0] as SynchronousStreamController).onPause = args[1] as void Function()?; return args[1]; },
         'onResume=#1': (args) { (args[0] as SynchronousStreamController).onResume = args[1] as void Function()?; return args[1]; },
         'onCancel=#1': (args) { (args[0] as SynchronousStreamController).onCancel = args[1] as FutureOr<void> Function()?; return args[1]; },
+        '==#1': (args) => (args[0] as SynchronousStreamController) == (args[1] as Object),
       };
 }

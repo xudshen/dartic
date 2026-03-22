@@ -22,6 +22,8 @@ abstract final class HasNextIteratorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'next#0': (args) => (args[0] as HasNextIterator).next(),
         'hasNext#0': (args) => (args[0] as HasNextIterator).hasNext,
+        'hashCode#0': (args) => (args[0] as HasNextIterator).hashCode,
+        '==#1': (args) => (args[0] as HasNextIterator) == (args[1] as Object),
         '#1': (args) => HasNextIterator<dynamic>(args[0] as Iterator),
       };
 }

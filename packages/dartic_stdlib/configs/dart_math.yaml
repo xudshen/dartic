@@ -104,19 +104,8 @@ libraries:
           "hashCode#0": "(args) => (args[0] as Rectangle).hashCode"
           "==#1": "(args) => args[0] == args[1]"
 
-      # ── Point: Object-inherited members ──
-      Point:
-        extra_methods:
-          "==#1": "(args) => args[0] == args[1]"
-
       # ── Rectangle: fromFields override ──
       Rectangle:
         extra_methods:
           "_#fromFields#4": "(args) => Rectangle<num>(args[1] as num, args[2] as num, args[3] as num, args[0] as num)"
 
-      # ── MutableRectangle: Object-inherited members ──
-      MutableRectangle:
-        extra_methods:
-          "==#1": "(args) => args[0] == args[1]"
-          "toString#0": "(args) => (args[0] as MutableRectangle).toString()"
-          "hashCode#0": "(args) => (args[0] as MutableRectangle).hashCode"

@@ -20,6 +20,8 @@ abstract final class StringStackTraceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as dynamic).toString(),
+        'hashCode#0': (args) => (args[0] as dynamic).hashCode,
+        '==#1': (args) => (args[0] as dynamic) == (args[1] as Object),
         '#1': (args) => StackTrace.fromString(args[0] as String),
       };
 }

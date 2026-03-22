@@ -86,13 +86,6 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
   }
 
   @override
-  String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
   int get hashCode {
     final r = _dispatch.get(this, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
@@ -103,7 +96,14 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
   }
 }
 
@@ -128,5 +128,7 @@ abstract final class StreamSubscriptionBindings {
         'resume#0': (args) { (args[0] as StreamSubscription).resume(); return null; },
         'asFuture#1': (args) => (args[0] as StreamSubscription).asFuture(identical(args[1], darticAbsent) ? null : args[1]),
         'isPaused#0': (args) => (args[0] as StreamSubscription).isPaused,
+        'hashCode#0': (args) => (args[0] as StreamSubscription).hashCode,
+        '==#1': (args) => (args[0] as StreamSubscription) == (args[1] as Object),
       };
 }
