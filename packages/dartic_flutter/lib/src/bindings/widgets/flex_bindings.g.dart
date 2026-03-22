@@ -43,6 +43,7 @@ abstract final class FlexBindings {
         'createRenderObject#1': (args) => (args[0] as Flex).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Flex).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlex); return null; },
         'debugFillProperties#1': (args) { (args[0] as Flex).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Flex).toString(),
         'createElement#0': (args) => (args[0] as Flex).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Flex).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Flex).toStringShort(),
@@ -59,8 +60,10 @@ abstract final class FlexBindings {
         'textBaseline#0': (args) => (args[0] as Flex).textBaseline,
         'clipBehavior#0': (args) => (args[0] as Flex).clipBehavior,
         'spacing#0': (args) => (args[0] as Flex).spacing,
+        'hashCode#0': (args) => (args[0] as Flex).hashCode,
         'children#0': (args) => (args[0] as Flex).children,
         'key#0': (args) => (args[0] as Flex).key,
+        '==#1': (args) => (args[0] as Flex) == (args[1] as Object),
         '#11': (args) => Flex(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, direction: args[1] as Axis, mainAxisAlignment: identical(args[2], darticAbsent) ? MainAxisAlignment.start : args[2] as MainAxisAlignment, mainAxisSize: identical(args[3], darticAbsent) ? MainAxisSize.max : args[3] as MainAxisSize, crossAxisAlignment: identical(args[4], darticAbsent) ? CrossAxisAlignment.center : args[4] as CrossAxisAlignment, textDirection: identical(args[5], darticAbsent) ? null : args[5] as ui.TextDirection?, verticalDirection: identical(args[6], darticAbsent) ? VerticalDirection.down : args[6] as VerticalDirection, textBaseline: identical(args[7], darticAbsent) ? null : args[7] as ui.TextBaseline?, clipBehavior: identical(args[8], darticAbsent) ? Clip.none : args[8] as ui.Clip, spacing: identical(args[9], darticAbsent) ? 0.0 : args[9] as double, children: identical(args[10], darticAbsent) ? const <Widget>[] : (args[10] as List).cast<Widget>()),
         '_#fromFields#11': (args) => Flex(key: args[4] as Key?, direction: args[3] as Axis, mainAxisAlignment: args[5] as MainAxisAlignment, mainAxisSize: args[6] as MainAxisSize, crossAxisAlignment: args[2] as CrossAxisAlignment, textDirection: args[9] as ui.TextDirection?, verticalDirection: args[10] as VerticalDirection, textBaseline: args[8] as ui.TextBaseline?, clipBehavior: args[1] as ui.Clip, spacing: args[7] as double, children: (args[0] as List).cast<Widget>()),
       };

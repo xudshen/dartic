@@ -38,9 +38,12 @@ abstract final class AutocompleteNextPageOptionIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AutocompleteNextPageOptionIntent).toString(),
         'toStringShort#0': (args) => (args[0] as AutocompleteNextPageOptionIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AutocompleteNextPageOptionIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as AutocompleteNextPageOptionIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as AutocompleteNextPageOptionIntent).hashCode,
+        '==#1': (args) => (args[0] as AutocompleteNextPageOptionIntent) == (args[1] as Object),
         '#0': (args) => AutocompleteNextPageOptionIntent(),
         '_#fromFields#0': (args) => AutocompleteNextPageOptionIntent(),
       };

@@ -32,6 +32,7 @@ abstract final class CupertinoTextMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoTextMagnifier).createState(),
+        'toString#0': (args) => (args[0] as CupertinoTextMagnifier).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTextMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTextMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTextMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class CupertinoTextMagnifierBindings {
         'hideBelowThreshold#0': (args) => (args[0] as CupertinoTextMagnifier).hideBelowThreshold,
         'horizontalScreenEdgePadding#0': (args) => (args[0] as CupertinoTextMagnifier).horizontalScreenEdgePadding,
         'magnifierInfo#0': (args) => (args[0] as CupertinoTextMagnifier).magnifierInfo,
+        'hashCode#0': (args) => (args[0] as CupertinoTextMagnifier).hashCode,
         'key#0': (args) => (args[0] as CupertinoTextMagnifier).key,
+        '==#1': (args) => (args[0] as CupertinoTextMagnifier) == (args[1] as Object),
         '#7': (args) => CupertinoTextMagnifier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationCurve: identical(args[1], darticAbsent) ? Curves.easeOut : args[1] as Curve, controller: args[2] as MagnifierController, dragResistance: identical(args[3], darticAbsent) ? 10.0 : args[3] as double, hideBelowThreshold: identical(args[4], darticAbsent) ? 48.0 : args[4] as double, horizontalScreenEdgePadding: identical(args[5], darticAbsent) ? 10.0 : args[5] as double, magnifierInfo: args[6] as ValueNotifier<MagnifierInfo>),
         '_#fromFields#7': (args) => CupertinoTextMagnifier(key: args[5] as Key?, animationCurve: args[0] as Curve, controller: args[1] as MagnifierController, dragResistance: args[2] as double, hideBelowThreshold: args[3] as double, horizontalScreenEdgePadding: args[4] as double, magnifierInfo: args[6] as ValueNotifier<MagnifierInfo>),
       };

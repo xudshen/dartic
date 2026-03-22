@@ -35,10 +35,13 @@ abstract final class LogicalKeySetBindings {
         'accepts#2': (args) => (args[0] as LogicalKeySet).accepts(args[1] as KeyEvent, args[2] as HardwareKeyboard),
         'debugDescribeKeys#0': (args) => (args[0] as LogicalKeySet).debugDescribeKeys(),
         'debugFillProperties#1': (args) { (args[0] as LogicalKeySet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LogicalKeySet).toString(),
         'toStringShort#0': (args) => (args[0] as LogicalKeySet).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LogicalKeySet).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'triggers#0': (args) => (args[0] as LogicalKeySet).triggers,
+        'hashCode#0': (args) => (args[0] as LogicalKeySet).hashCode,
         'keys#0': (args) => (args[0] as LogicalKeySet).keys,
+        '==#1': (args) => (args[0] as LogicalKeySet) == (args[1] as Object),
         '#4': (args) => LogicalKeySet(args[0] as LogicalKeyboardKey, identical(args[1], darticAbsent) ? null : args[1] as LogicalKeyboardKey?, identical(args[2], darticAbsent) ? null : args[2] as LogicalKeyboardKey?, identical(args[3], darticAbsent) ? null : args[3] as LogicalKeyboardKey?),
         'fromSet#1': (args) => LogicalKeySet.fromSet((args[0] as Set).cast<LogicalKeyboardKey>()),
       };

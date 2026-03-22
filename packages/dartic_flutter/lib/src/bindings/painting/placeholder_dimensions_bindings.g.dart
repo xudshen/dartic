@@ -37,6 +37,7 @@ abstract final class PlaceholderDimensionsBindings {
         'baselineOffset#0': (args) => (args[0] as PlaceholderDimensions).baselineOffset,
         'baseline#0': (args) => (args[0] as PlaceholderDimensions).baseline,
         'hashCode#0': (args) => (args[0] as PlaceholderDimensions).hashCode,
+        '==#1': (args) => (args[0] as PlaceholderDimensions) == (args[1] as Object),
         '#4': (args) => PlaceholderDimensions(size: args[0] as ui.Size, alignment: args[1] as ui.PlaceholderAlignment, baseline: identical(args[2], darticAbsent) ? null : args[2] as ui.TextBaseline?, baselineOffset: identical(args[3], darticAbsent) ? null : args[3] as double?),
         '_#fromFields#4': (args) => PlaceholderDimensions(size: args[3] as ui.Size, alignment: args[0] as ui.PlaceholderAlignment, baseline: args[1] as ui.TextBaseline?, baselineOffset: args[2] as double?),
       };

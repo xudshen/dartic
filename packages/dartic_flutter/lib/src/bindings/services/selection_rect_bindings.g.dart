@@ -38,6 +38,7 @@ abstract final class SelectionRectBindings {
         'bounds#0': (args) => (args[0] as SelectionRect).bounds,
         'direction#0': (args) => (args[0] as SelectionRect).direction,
         'hashCode#0': (args) => (args[0] as SelectionRect).hashCode,
+        '==#1': (args) => (args[0] as SelectionRect) == (args[1] as Object),
         '#3': (args) => SelectionRect(position: args[0] as int, bounds: args[1] as Rect, direction: identical(args[2], darticAbsent) ? TextDirection.ltr : args[2] as TextDirection),
         '_#fromFields#3': (args) => SelectionRect(position: args[2] as int, bounds: args[0] as Rect, direction: args[1] as TextDirection),
       };

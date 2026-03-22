@@ -31,6 +31,7 @@ abstract final class PreviousFocusActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as PreviousFocusAction).invoke(args[1] as PreviousFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as PreviousFocusAction).toKeyEventResult(args[1] as PreviousFocusIntent, args[2] as bool),
+        'toString#0': (args) => (args[0] as PreviousFocusAction).toString(),
         'isEnabled#1': (args) => (args[0] as PreviousFocusAction).isEnabled(args[1] as PreviousFocusIntent),
         'consumesKey#1': (args) => (args[0] as PreviousFocusAction).consumesKey(args[1] as PreviousFocusIntent),
         'addActionListener#1': (args) { (args[0] as PreviousFocusAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -39,9 +40,11 @@ abstract final class PreviousFocusActionBindings {
         'toStringShort#0': (args) => (args[0] as PreviousFocusAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PreviousFocusAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as PreviousFocusAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as PreviousFocusAction).hashCode,
         'callingAction#0': (args) => (args[0] as PreviousFocusAction).callingAction,
         'intentType#0': (args) => (args[0] as PreviousFocusAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as PreviousFocusAction).isActionEnabled,
+        '==#1': (args) => (args[0] as PreviousFocusAction) == (args[1] as Object),
         '#0': (args) => PreviousFocusAction(),
       };
 }

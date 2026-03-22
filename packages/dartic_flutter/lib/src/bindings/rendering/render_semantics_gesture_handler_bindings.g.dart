@@ -43,6 +43,7 @@ abstract final class RenderSemanticsGestureHandlerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSemanticsGestureHandler).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSemanticsGestureHandler).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSemanticsGestureHandler).toString(),
         'hitTest#2': (args) => (args[0] as RenderSemanticsGestureHandler).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderSemanticsGestureHandler).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderSemanticsGestureHandler).setupParentData(args[1] as RenderObject); return null; },
@@ -125,6 +126,7 @@ abstract final class RenderSemanticsGestureHandlerBindings {
         'onHorizontalDragUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).onHorizontalDragUpdate,
         'onVerticalDragUpdate#0': (args) => (args[0] as RenderSemanticsGestureHandler).onVerticalDragUpdate,
         'scrollFactor#0': (args) => (args[0] as RenderSemanticsGestureHandler).scrollFactor,
+        'hashCode#0': (args) => (args[0] as RenderSemanticsGestureHandler).hashCode,
         'behavior#0': (args) => (args[0] as RenderSemanticsGestureHandler).behavior,
         'hasSize#0': (args) => (args[0] as RenderSemanticsGestureHandler).hasSize,
         'size#0': (args) => (args[0] as RenderSemanticsGestureHandler).size,
@@ -169,6 +171,7 @@ abstract final class RenderSemanticsGestureHandlerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSemanticsGestureHandler).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSemanticsGestureHandler).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSemanticsGestureHandler).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSemanticsGestureHandler) == (args[1] as Object),
         '#7': (args) => RenderSemanticsGestureHandler(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, onTap: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onLongPress: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onHorizontalDragUpdate: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onVerticalDragUpdate: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), scrollFactor: identical(args[5], darticAbsent) ? 0.8 : args[5] as double, behavior: identical(args[6], darticAbsent) ? HitTestBehavior.deferToChild : args[6] as HitTestBehavior),
       };
 }

@@ -45,5 +45,8 @@ abstract final class RouteAwareBindings {
         'didPush#0': (args) { (args[0] as RouteAware).didPush(); return null; },
         'didPop#0': (args) { (args[0] as RouteAware).didPop(); return null; },
         'didPushNext#0': (args) { (args[0] as RouteAware).didPushNext(); return null; },
+        'toString#0': (args) => (args[0] as RouteAware).toString(),
+        'hashCode#0': (args) => (args[0] as RouteAware).hashCode,
+        '==#1': (args) => (args[0] as RouteAware) == (args[1] as Object),
       };
 }

@@ -27,6 +27,7 @@ abstract final class PredictiveBackEventBindings {
         'swipeEdge#0': (args) => (args[0] as PredictiveBackEvent).swipeEdge,
         'isButtonEvent#0': (args) => (args[0] as PredictiveBackEvent).isButtonEvent,
         'hashCode#0': (args) => (args[0] as PredictiveBackEvent).hashCode,
+        '==#1': (args) => (args[0] as PredictiveBackEvent) == (args[1] as Object),
         'fromMap#1': (args) => PredictiveBackEvent.fromMap((args[0] as Map).cast<String?, Object?>()),
       };
 }

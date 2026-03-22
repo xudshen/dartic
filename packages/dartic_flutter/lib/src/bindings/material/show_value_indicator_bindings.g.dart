@@ -37,6 +37,9 @@ abstract final class ShowValueIndicatorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ShowValueIndicator).toString(),
+        'hashCode#0': (args) => (args[0] as ShowValueIndicator).hashCode,
         'index#0': (args) => (args[0] as ShowValueIndicator).index,
+        '==#1': (args) => (args[0] as ShowValueIndicator) == (args[1] as Object),
       };
 }

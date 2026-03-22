@@ -33,7 +33,9 @@ abstract final class LocaleStringAttributeBindings {
         'copy#1': (args) => (args[0] as LocaleStringAttribute).copy(range: args[1] as TextRange),
         'toString#0': (args) => (args[0] as LocaleStringAttribute).toString(),
         'locale#0': (args) => (args[0] as LocaleStringAttribute).locale,
+        'hashCode#0': (args) => (args[0] as LocaleStringAttribute).hashCode,
         'range#0': (args) => (args[0] as LocaleStringAttribute).range,
+        '==#1': (args) => (args[0] as LocaleStringAttribute) == (args[1] as Object),
         '#2': (args) => LocaleStringAttribute(range: args[0] as TextRange, locale: args[1] as Locale),
       };
 }

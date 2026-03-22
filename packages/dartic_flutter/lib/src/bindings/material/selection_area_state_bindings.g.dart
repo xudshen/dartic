@@ -35,6 +35,7 @@ abstract final class SelectionAreaStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SelectionAreaState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SelectionAreaState).toString(),
         'initState#0': (args) { (args[0] as SelectionAreaState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as SelectionAreaState).didUpdateWidget(args[1] as SelectionArea); return null; },
         'reassemble#0': (args) { (args[0] as SelectionAreaState).reassemble(); return null; },
@@ -47,9 +48,11 @@ abstract final class SelectionAreaStateBindings {
         'toStringShort#0': (args) => (args[0] as SelectionAreaState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SelectionAreaState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'selectableRegion#0': (args) => (args[0] as SelectionAreaState).selectableRegion,
+        'hashCode#0': (args) => (args[0] as SelectionAreaState).hashCode,
         'widget#0': (args) => (args[0] as SelectionAreaState).widget,
         'context#0': (args) => (args[0] as SelectionAreaState).context,
         'mounted#0': (args) => (args[0] as SelectionAreaState).mounted,
+        '==#1': (args) => (args[0] as SelectionAreaState) == (args[1] as Object),
         '#0': (args) => SelectionAreaState(),
       };
 }

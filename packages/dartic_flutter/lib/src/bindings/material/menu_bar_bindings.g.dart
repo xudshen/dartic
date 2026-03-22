@@ -55,6 +55,7 @@ abstract final class MenuBarBindings {
         'build#1': (args) => (args[0] as MenuBar).build(args[1] as BuildContext),
         'debugDescribeChildren#0': (args) => (args[0] as MenuBar).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as MenuBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MenuBar).toString(),
         'createElement#0': (args) => (args[0] as MenuBar).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuBar).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as MenuBar).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -64,7 +65,9 @@ abstract final class MenuBarBindings {
         'clipBehavior#0': (args) => (args[0] as MenuBar).clipBehavior,
         'controller#0': (args) => (args[0] as MenuBar).controller,
         'children#0': (args) => (args[0] as MenuBar).children,
+        'hashCode#0': (args) => (args[0] as MenuBar).hashCode,
         'key#0': (args) => (args[0] as MenuBar).key,
+        '==#1': (args) => (args[0] as MenuBar) == (args[1] as Object),
         '#5': (args) => MenuBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: identical(args[1], darticAbsent) ? null : args[1] as MenuStyle?, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as Clip, controller: identical(args[3], darticAbsent) ? null : args[3] as MenuController?, children: (args[4] as List).cast<Widget>()),
         '_#fromFields#5': (args) => MenuBar(key: args[3] as Key?, style: args[4] as MenuStyle?, clipBehavior: args[1] as Clip, controller: args[2] as MenuController?, children: (args[0] as List).cast<Widget>()),
       };

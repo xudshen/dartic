@@ -26,6 +26,7 @@ abstract final class ValueListenableBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ValueListenableBuilder).createState(),
+        'toString#0': (args) => (args[0] as ValueListenableBuilder).toString(),
         'createElement#0': (args) => (args[0] as ValueListenableBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as ValueListenableBuilder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ValueListenableBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class ValueListenableBuilderBindings {
         'valueListenable#0': (args) => (args[0] as ValueListenableBuilder).valueListenable,
         'builder#0': (args) => (args[0] as ValueListenableBuilder).builder,
         'child#0': (args) => (args[0] as ValueListenableBuilder).child,
+        'hashCode#0': (args) => (args[0] as ValueListenableBuilder).hashCode,
         'key#0': (args) => (args[0] as ValueListenableBuilder).key,
+        '==#1': (args) => (args[0] as ValueListenableBuilder) == (args[1] as Object),
         '#4': (args) => ValueListenableBuilder<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, valueListenable: args[1] as ValueListenable, builder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => ValueListenableBuilder<dynamic>(key: args[2] as Key?, valueListenable: args[3] as ValueListenable, builder: args[0] as Widget Function(BuildContext, dynamic, Widget?), child: args[1] as Widget?),
       };

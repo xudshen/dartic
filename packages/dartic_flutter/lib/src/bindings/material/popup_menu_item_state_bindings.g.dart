@@ -48,6 +48,7 @@ abstract final class PopupMenuItemStateBindings {
         'handleTap#0': (args) { (args[0] as PopupMenuItemState).handleTap(); return null; },
         'build#1': (args) => (args[0] as PopupMenuItemState).build(args[1] as BuildContext),
         'buildSemantics#1': (args) => (args[0] as PopupMenuItemState).buildSemantics(child: args[1] as Widget),
+        'toString#0': (args) => (args[0] as PopupMenuItemState).toString(),
         'initState#0': (args) { (args[0] as PopupMenuItemState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as PopupMenuItemState).didUpdateWidget(args[1] as PopupMenuItem); return null; },
         'reassemble#0': (args) { (args[0] as PopupMenuItemState).reassemble(); return null; },
@@ -59,9 +60,11 @@ abstract final class PopupMenuItemStateBindings {
         'debugFillProperties#1': (args) { (args[0] as PopupMenuItemState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as PopupMenuItemState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PopupMenuItemState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as PopupMenuItemState).hashCode,
         'widget#0': (args) => (args[0] as PopupMenuItemState).widget,
         'context#0': (args) => (args[0] as PopupMenuItemState).context,
         'mounted#0': (args) => (args[0] as PopupMenuItemState).mounted,
+        '==#1': (args) => (args[0] as PopupMenuItemState) == (args[1] as Object),
         '#0': (args) => PopupMenuItemState<dynamic, PopupMenuItem>(),
       };
 }

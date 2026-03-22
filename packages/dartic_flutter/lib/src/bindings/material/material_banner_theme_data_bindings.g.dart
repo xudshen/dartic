@@ -31,6 +31,7 @@ abstract final class MaterialBannerThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#8': (args) => (args[0] as MaterialBannerThemeData).copyWith(backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, surfaceTintColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, dividerColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, contentTextStyle: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, elevation: identical(args[6], darticAbsent) ? null : args[6] as double?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, leadingPadding: identical(args[8], darticAbsent) ? null : args[8] as EdgeInsetsGeometry?),
         'debugFillProperties#1': (args) { (args[0] as MaterialBannerThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MaterialBannerThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as MaterialBannerThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as MaterialBannerThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'backgroundColor#0': (args) => (args[0] as MaterialBannerThemeData).backgroundColor,
@@ -42,6 +43,7 @@ abstract final class MaterialBannerThemeDataBindings {
         'padding#0': (args) => (args[0] as MaterialBannerThemeData).padding,
         'leadingPadding#0': (args) => (args[0] as MaterialBannerThemeData).leadingPadding,
         'hashCode#0': (args) => (args[0] as MaterialBannerThemeData).hashCode,
+        '==#1': (args) => (args[0] as MaterialBannerThemeData) == (args[1] as Object),
         '#8': (args) => MaterialBannerThemeData(backgroundColor: identical(args[0], darticAbsent) ? null : args[0] as Color?, surfaceTintColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, dividerColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, contentTextStyle: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, elevation: identical(args[5], darticAbsent) ? null : args[5] as double?, padding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, leadingPadding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?),
         '_#fromFields#8': (args) => MaterialBannerThemeData(backgroundColor: args[0] as Color?, surfaceTintColor: args[7] as Color?, shadowColor: args[6] as Color?, dividerColor: args[2] as Color?, contentTextStyle: args[1] as TextStyle?, elevation: args[3] as double?, padding: args[5] as EdgeInsetsGeometry?, leadingPadding: args[4] as EdgeInsetsGeometry?),
       };

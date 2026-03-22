@@ -30,6 +30,7 @@ abstract final class PerformanceOverlayLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as PerformanceOverlayLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'findAnnotations#3': (args) => (args[0] as PerformanceOverlayLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
+        'toString#0': (args) => (args[0] as PerformanceOverlayLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as PerformanceOverlayLayer).supportsRasterization(),
         'describeClipBounds#0': (args) => (args[0] as PerformanceOverlayLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PerformanceOverlayLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
@@ -51,6 +52,7 @@ abstract final class PerformanceOverlayLayerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as PerformanceOverlayLayer).debugDescribeChildren(),
         'overlayRect#0': (args) => (args[0] as PerformanceOverlayLayer).overlayRect,
         'optionsMask#0': (args) => (args[0] as PerformanceOverlayLayer).optionsMask,
+        'hashCode#0': (args) => (args[0] as PerformanceOverlayLayer).hashCode,
         'subtreeHasCompositionCallbacks#0': (args) => (args[0] as PerformanceOverlayLayer).subtreeHasCompositionCallbacks,
         'debugDisposed#0': (args) => (args[0] as PerformanceOverlayLayer).debugDisposed,
         'debugHandleCount#0': (args) => (args[0] as PerformanceOverlayLayer).debugHandleCount,
@@ -67,6 +69,7 @@ abstract final class PerformanceOverlayLayerBindings {
         'overlayRect=#1': (args) { (args[0] as PerformanceOverlayLayer).overlayRect = args[1] as ui.Rect; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as PerformanceOverlayLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as PerformanceOverlayLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as PerformanceOverlayLayer) == (args[1] as Object),
         '#2': (args) => PerformanceOverlayLayer(overlayRect: args[0] as ui.Rect, optionsMask: args[1] as int),
       };
 }

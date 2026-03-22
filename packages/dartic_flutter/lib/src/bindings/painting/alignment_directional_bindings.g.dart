@@ -39,6 +39,7 @@ abstract final class AlignmentDirectionalBindings {
         'toString#0': (args) => (args[0] as AlignmentDirectional).toString(),
         'start#0': (args) => (args[0] as AlignmentDirectional).start,
         'y#0': (args) => (args[0] as AlignmentDirectional).y,
+        'hashCode#0': (args) => (args[0] as AlignmentDirectional).hashCode,
         '-#1': (args) => (args[0] as AlignmentDirectional) - (args[1] as AlignmentDirectional),
         '+#1': (args) => (args[0] as AlignmentDirectional) + (args[1] as AlignmentDirectional),
         'unary-#0': (args) => -(args[0] as AlignmentDirectional),
@@ -46,6 +47,7 @@ abstract final class AlignmentDirectionalBindings {
         '/#1': (args) => (args[0] as AlignmentDirectional) / (args[1] as double),
         '~/#1': (args) => (args[0] as AlignmentDirectional) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as AlignmentDirectional) % (args[1] as double),
+        '==#1': (args) => (args[0] as AlignmentDirectional) == (args[1] as Object),
         '#2': (args) => AlignmentDirectional(args[0] as double, args[1] as double),
         '_#fromFields#2': (args) => AlignmentDirectional(args[0] as double, args[1] as double),
       };

@@ -31,9 +31,12 @@ abstract final class RouteInformationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RouteInformation).toString(),
         'location#0': (args) => (args[0] as RouteInformation).location,
         'uri#0': (args) => (args[0] as RouteInformation).uri,
         'state#0': (args) => (args[0] as RouteInformation).state,
+        'hashCode#0': (args) => (args[0] as RouteInformation).hashCode,
+        '==#1': (args) => (args[0] as RouteInformation) == (args[1] as Object),
         '#3': (args) => RouteInformation(location: identical(args[0], darticAbsent) ? null : args[0] as String?, uri: identical(args[1], darticAbsent) ? null : args[1] as Uri?, state: identical(args[2], darticAbsent) ? null : args[2]),
         '_#fromFields#3': (args) => RouteInformation(location: args[0] as String?, uri: args[1] as Uri?, state: args[2]),
       };

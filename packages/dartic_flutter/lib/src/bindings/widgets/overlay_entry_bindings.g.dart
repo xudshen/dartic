@@ -41,8 +41,10 @@ abstract final class OverlayEntryBindings {
         'maintainState#0': (args) => (args[0] as OverlayEntry).maintainState,
         'canSizeOverlay#0': (args) => (args[0] as OverlayEntry).canSizeOverlay,
         'mounted#0': (args) => (args[0] as OverlayEntry).mounted,
+        'hashCode#0': (args) => (args[0] as OverlayEntry).hashCode,
         'opaque=#1': (args) { (args[0] as OverlayEntry).opaque = args[1] as bool; return args[1]; },
         'maintainState=#1': (args) { (args[0] as OverlayEntry).maintainState = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as OverlayEntry) == (args[1] as Object),
         '#4': (args) => OverlayEntry(builder: (a) => (args[0] as Function)(a) as Widget, opaque: identical(args[1], darticAbsent) ? false : args[1] as bool, maintainState: identical(args[2], darticAbsent) ? false : args[2] as bool, canSizeOverlay: identical(args[3], darticAbsent) ? false : args[3] as bool),
       };
 }

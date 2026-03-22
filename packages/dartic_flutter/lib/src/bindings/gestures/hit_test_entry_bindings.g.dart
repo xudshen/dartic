@@ -25,6 +25,8 @@ abstract final class HitTestEntryBindings {
         'toString#0': (args) => (args[0] as HitTestEntry).toString(),
         'target#0': (args) => (args[0] as HitTestEntry).target,
         'transform#0': (args) => (args[0] as HitTestEntry).transform,
+        'hashCode#0': (args) => (args[0] as HitTestEntry).hashCode,
+        '==#1': (args) => (args[0] as HitTestEntry) == (args[1] as Object),
         '#1': (args) => HitTestEntry<HitTestTarget>(args[0] as HitTestTarget),
       };
 }

@@ -29,5 +29,8 @@ abstract final class StandardFabLocationBindings {
         'getOffsetY#2': (args) => (args[0] as StandardFabLocation).getOffsetY(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
         'isMini#0': (args) => (args[0] as StandardFabLocation).isMini(),
         'getOffset#1': (args) => (args[0] as StandardFabLocation).getOffset(args[1] as ScaffoldPrelayoutGeometry),
+        'toString#0': (args) => (args[0] as StandardFabLocation).toString(),
+        'hashCode#0': (args) => (args[0] as StandardFabLocation).hashCode,
+        '==#1': (args) => (args[0] as StandardFabLocation) == (args[1] as Object),
       };
 }

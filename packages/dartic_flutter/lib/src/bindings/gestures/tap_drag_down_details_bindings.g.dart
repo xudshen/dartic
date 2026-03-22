@@ -32,12 +32,15 @@ abstract final class TapDragDownDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as TapDragDownDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TapDragDownDetails).toString(),
         'toStringShort#0': (args) => (args[0] as TapDragDownDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TapDragDownDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as TapDragDownDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as TapDragDownDetails).localPosition,
         'kind#0': (args) => (args[0] as TapDragDownDetails).kind,
         'consecutiveTapCount#0': (args) => (args[0] as TapDragDownDetails).consecutiveTapCount,
+        'hashCode#0': (args) => (args[0] as TapDragDownDetails).hashCode,
+        '==#1': (args) => (args[0] as TapDragDownDetails) == (args[1] as Object),
         '#4': (args) => TapDragDownDetails(globalPosition: args[0] as Offset, localPosition: args[1] as Offset, kind: identical(args[2], darticAbsent) ? null : args[2] as PointerDeviceKind?, consecutiveTapCount: args[3] as int),
       };
 }

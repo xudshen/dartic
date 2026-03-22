@@ -35,10 +35,12 @@ abstract final class RawKeyUpEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RawKeyUpEvent).toString(),
         'isKeyPressed#1': (args) => (args[0] as RawKeyUpEvent).isKeyPressed(args[1] as LogicalKeyboardKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyUpEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as RawKeyUpEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyUpEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RawKeyUpEvent).hashCode,
         'isControlPressed#0': (args) => (args[0] as RawKeyUpEvent).isControlPressed,
         'isShiftPressed#0': (args) => (args[0] as RawKeyUpEvent).isShiftPressed,
         'isAltPressed#0': (args) => (args[0] as RawKeyUpEvent).isAltPressed,
@@ -48,6 +50,7 @@ abstract final class RawKeyUpEventBindings {
         'character#0': (args) => (args[0] as RawKeyUpEvent).character,
         'repeat#0': (args) => (args[0] as RawKeyUpEvent).repeat,
         'data#0': (args) => (args[0] as RawKeyUpEvent).data,
+        '==#1': (args) => (args[0] as RawKeyUpEvent) == (args[1] as Object),
         '#2': (args) => RawKeyUpEvent(data: args[0] as RawKeyEventData, character: identical(args[1], darticAbsent) ? null : args[1] as String?),
         '_#fromFields#3': (args) => RawKeyUpEvent(data: args[1] as RawKeyEventData, character: args[0] as String?),
       };

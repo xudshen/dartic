@@ -42,6 +42,7 @@ abstract final class DataRowBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DataRow).toString(),
         'key#0': (args) => (args[0] as DataRow).key,
         'onSelectChanged#0': (args) => (args[0] as DataRow).onSelectChanged,
         'onLongPress#0': (args) => (args[0] as DataRow).onLongPress,
@@ -50,6 +51,8 @@ abstract final class DataRowBindings {
         'cells#0': (args) => (args[0] as DataRow).cells,
         'color#0': (args) => (args[0] as DataRow).color,
         'mouseCursor#0': (args) => (args[0] as DataRow).mouseCursor,
+        'hashCode#0': (args) => (args[0] as DataRow).hashCode,
+        '==#1': (args) => (args[0] as DataRow) == (args[1] as Object),
         '#8': (args) => DataRow(key: identical(args[0], darticAbsent) ? null : args[0] as LocalKey?, selected: identical(args[1], darticAbsent) ? false : args[1] as bool, onSelectChanged: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onLongPress: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onHover: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), color: identical(args[5], darticAbsent) ? null : args[5] as WidgetStateProperty<Color?>?, mouseCursor: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<MouseCursor?>?, cells: (args[7] as List).cast<DataCell>()),
         'byIndex#8': (args) => DataRow.byIndex(index: identical(args[0], darticAbsent) ? null : args[0] as int?, selected: identical(args[1], darticAbsent) ? false : args[1] as bool, onSelectChanged: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onLongPress: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onHover: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), color: identical(args[5], darticAbsent) ? null : args[5] as WidgetStateProperty<Color?>?, mouseCursor: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<MouseCursor?>?, cells: (args[7] as List).cast<DataCell>()),
         '_#fromFields#8': (args) => DataRow(key: args[2] as LocalKey?, selected: args[7] as bool, onSelectChanged: args[6] as ValueChanged<bool?>?, onLongPress: args[5] as GestureLongPressCallback?, onHover: args[4] as ValueChanged<bool>?, color: args[1] as WidgetStateProperty<Color?>?, mouseCursor: args[3] as WidgetStateProperty<MouseCursor?>?, cells: (args[0] as List).cast<DataCell>()),

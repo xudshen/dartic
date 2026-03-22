@@ -28,10 +28,12 @@ abstract final class MenuButtonThemeDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as MenuButtonThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MenuButtonThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as MenuButtonThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as MenuButtonThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'style#0': (args) => (args[0] as MenuButtonThemeData).style,
         'hashCode#0': (args) => (args[0] as MenuButtonThemeData).hashCode,
+        '==#1': (args) => (args[0] as MenuButtonThemeData) == (args[1] as Object),
         '#1': (args) => MenuButtonThemeData(style: identical(args[0], darticAbsent) ? null : args[0] as ButtonStyle?),
         '_#fromFields#1': (args) => MenuButtonThemeData(style: args[0] as ButtonStyle?),
       };

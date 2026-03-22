@@ -36,10 +36,12 @@ abstract final class MaterialPointArcTweenBindings {
         'radius#0': (args) => (args[0] as MaterialPointArcTween).radius,
         'beginAngle#0': (args) => (args[0] as MaterialPointArcTween).beginAngle,
         'endAngle#0': (args) => (args[0] as MaterialPointArcTween).endAngle,
+        'hashCode#0': (args) => (args[0] as MaterialPointArcTween).hashCode,
         'begin#0': (args) => (args[0] as MaterialPointArcTween).begin,
         'end#0': (args) => (args[0] as MaterialPointArcTween).end,
         'begin=#1': (args) { (args[0] as MaterialPointArcTween).begin = args[1] as Offset?; return args[1]; },
         'end=#1': (args) { (args[0] as MaterialPointArcTween).end = args[1] as Offset?; return args[1]; },
+        '==#1': (args) => (args[0] as MaterialPointArcTween) == (args[1] as Object),
         '#2': (args) => MaterialPointArcTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Offset?, end: identical(args[1], darticAbsent) ? null : args[1] as Offset?),
       };
 }

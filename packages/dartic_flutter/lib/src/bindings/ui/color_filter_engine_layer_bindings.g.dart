@@ -30,6 +30,9 @@ abstract final class ColorFilterEngineLayerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ColorFilterEngineLayer).toString(),
         'dispose#0': (args) { (args[0] as ColorFilterEngineLayer).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as ColorFilterEngineLayer).hashCode,
+        '==#1': (args) => (args[0] as ColorFilterEngineLayer) == (args[1] as Object),
       };
 }

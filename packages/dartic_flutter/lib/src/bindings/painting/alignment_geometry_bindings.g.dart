@@ -42,5 +42,8 @@ abstract final class AlignmentGeometryBindings {
         '/#1': (args) => (args[0] as AlignmentGeometry) / (args[1] as double),
         '~/#1': (args) => (args[0] as AlignmentGeometry) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as AlignmentGeometry) % (args[1] as double),
+        '==#1': (args) => (args[0] as AlignmentGeometry) == (args[1] as Object),
+        'xy#2': (args) => AlignmentGeometry.xy(args[0] as double, args[1] as double),
+        'directional#2': (args) => AlignmentGeometry.directional(args[0] as double, args[1] as double),
       };
 }

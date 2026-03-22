@@ -31,6 +31,7 @@ abstract final class ShortcutMapPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'valueToString#1': (args) => (args[0] as ShortcutMapProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
+        'toString#0': (args) => (args[0] as ShortcutMapProperty).toString(),
         'toJsonMap#1': (args) => (args[0] as ShortcutMapProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'toDescription#1': (args) => (args[0] as ShortcutMapProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as ShortcutMapProperty).getProperties(),
@@ -40,6 +41,7 @@ abstract final class ShortcutMapPropertyBindings {
         'toJsonMapIterative#1': (args) => (args[0] as ShortcutMapProperty).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as ShortcutMapProperty).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
         'value#0': (args) => (args[0] as ShortcutMapProperty).value,
+        'hashCode#0': (args) => (args[0] as ShortcutMapProperty).hashCode,
         'expandableValue#0': (args) => (args[0] as ShortcutMapProperty).expandableValue,
         'allowWrap#0': (args) => (args[0] as ShortcutMapProperty).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as ShortcutMapProperty).allowNameWrap,
@@ -60,6 +62,13 @@ abstract final class ShortcutMapPropertyBindings {
         'style#0': (args) => (args[0] as ShortcutMapProperty).style,
         'allowTruncate#0': (args) => (args[0] as ShortcutMapProperty).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as ShortcutMapProperty).textTreeConfiguration,
-        '#6': (args) => ShortcutMapProperty(args[0] as String, (args[1] as Map).cast<ShortcutActivator, Intent>(), showName: identical(args[2], darticAbsent) ? true : args[2] as bool, defaultValue: identical(args[3], darticAbsent) ? kNoDefaultValue : args[3] as Object, level: identical(args[4], darticAbsent) ? DiagnosticLevel.info : args[4] as DiagnosticLevel, description: identical(args[5], darticAbsent) ? null : args[5] as String?),
+        '==#1': (args) => (args[0] as ShortcutMapProperty) == (args[1] as Object),
+        '#6': (args) {
+          if (identical(args[3], darticAbsent)) {
+            return ShortcutMapProperty(args[0] as String, (args[1] as Map).cast<ShortcutActivator, Intent>(), showName: identical(args[2], darticAbsent) ? true : args[2] as bool, level: identical(args[4], darticAbsent) ? DiagnosticLevel.info : args[4] as DiagnosticLevel, description: identical(args[5], darticAbsent) ? null : args[5] as String?);
+          } else {
+            return ShortcutMapProperty(args[0] as String, (args[1] as Map).cast<ShortcutActivator, Intent>(), showName: identical(args[2], darticAbsent) ? true : args[2] as bool, defaultValue: args[3] as Object, level: identical(args[4], darticAbsent) ? DiagnosticLevel.info : args[4] as DiagnosticLevel, description: identical(args[5], darticAbsent) ? null : args[5] as String?);
+          }
+        },
       };
 }

@@ -30,11 +30,14 @@ abstract final class MenuBarThemeDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MenuBarThemeData).toString(),
         'debugFillProperties#1': (args) { (args[0] as MenuBarThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as MenuBarThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as MenuBarThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as MenuBarThemeData).hashCode,
         'style#0': (args) => (args[0] as MenuBarThemeData).style,
         'submenuIcon#0': (args) => (args[0] as MenuBarThemeData).submenuIcon,
+        '==#1': (args) => (args[0] as MenuBarThemeData) == (args[1] as Object),
         '#1': (args) => MenuBarThemeData(style: identical(args[0], darticAbsent) ? null : args[0] as MenuStyle?),
         '_#fromFields#2': (args) => MenuBarThemeData(style: args[0] as MenuStyle?),
       };

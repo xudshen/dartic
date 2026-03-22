@@ -70,8 +70,17 @@ abstract final class ContentInsertionConfigurationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ContentInsertionConfiguration).toString(),
         'onContentInserted#0': (args) => (args[0] as ContentInsertionConfiguration).onContentInserted,
         'allowedMimeTypes#0': (args) => (args[0] as ContentInsertionConfiguration).allowedMimeTypes,
-        '#2': (args) => ContentInsertionConfiguration(onContentInserted: (a) => (args[0] as Function)(a), allowedMimeTypes: identical(args[1], darticAbsent) ? kDefaultContentInsertionMimeTypes : (args[1] as List).cast<String>()),
+        'hashCode#0': (args) => (args[0] as ContentInsertionConfiguration).hashCode,
+        '==#1': (args) => (args[0] as ContentInsertionConfiguration) == (args[1] as Object),
+        '#2': (args) {
+          if (identical(args[1], darticAbsent)) {
+            return ContentInsertionConfiguration(onContentInserted: (a) => (args[0] as Function)(a));
+          } else {
+            return ContentInsertionConfiguration(onContentInserted: (a) => (args[0] as Function)(a), allowedMimeTypes: (args[1] as List).cast<String>());
+          }
+        },
       };
 }

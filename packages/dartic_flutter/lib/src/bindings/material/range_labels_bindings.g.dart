@@ -31,6 +31,7 @@ abstract final class RangeLabelsBindings {
         'start#0': (args) => (args[0] as RangeLabels).start,
         'end#0': (args) => (args[0] as RangeLabels).end,
         'hashCode#0': (args) => (args[0] as RangeLabels).hashCode,
+        '==#1': (args) => (args[0] as RangeLabels) == (args[1] as Object),
         '#2': (args) => RangeLabels(args[0] as String, args[1] as String),
         '_#fromFields#2': (args) => RangeLabels(args[1] as String, args[0] as String),
       };

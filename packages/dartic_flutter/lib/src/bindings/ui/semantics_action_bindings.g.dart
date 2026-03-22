@@ -60,5 +60,7 @@ abstract final class SemanticsActionBindings {
         'toString#0': (args) => (args[0] as SemanticsAction).toString(),
         'index#0': (args) => (args[0] as SemanticsAction).index,
         'name#0': (args) => (args[0] as SemanticsAction).name,
+        'hashCode#0': (args) => (args[0] as SemanticsAction).hashCode,
+        '==#1': (args) => (args[0] as SemanticsAction) == (args[1] as Object),
       };
 }

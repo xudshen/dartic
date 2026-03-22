@@ -35,7 +35,10 @@ abstract final class FlowPaintingContextBindings {
                     return null;
                   }
                 },
+        'toString#0': (args) => (args[0] as FlowPaintingContext).toString(),
         'size#0': (args) => (args[0] as FlowPaintingContext).size,
         'childCount#0': (args) => (args[0] as FlowPaintingContext).childCount,
+        'hashCode#0': (args) => (args[0] as FlowPaintingContext).hashCode,
+        '==#1': (args) => (args[0] as FlowPaintingContext) == (args[1] as Object),
       };
 }

@@ -29,6 +29,7 @@ abstract final class MaterialStateUnderlineInputBorderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) => (args[0] as MaterialStateUnderlineInputBorder).resolve((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).toString(),
         'copyWith#2': (args) => (args[0] as MaterialStateUnderlineInputBorder).copyWith(borderSide: identical(args[1], darticAbsent) ? null : args[1] as BorderSide?, borderRadius: identical(args[2], darticAbsent) ? null : args[2] as BorderRadius?),
         'scale#1': (args) => (args[0] as MaterialStateUnderlineInputBorder).scale(args[1] as double),
         'getInnerPath#2': (args) => (args[0] as MaterialStateUnderlineInputBorder).getInnerPath(args[1] as Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?),
@@ -38,11 +39,14 @@ abstract final class MaterialStateUnderlineInputBorderBindings {
         'lerpTo#2': (args) => (args[0] as MaterialStateUnderlineInputBorder).lerpTo(args[1] as ShapeBorder?, args[2] as double),
         'paint#6': (args) { (args[0] as MaterialStateUnderlineInputBorder).paint(args[1] as Canvas, args[2] as Rect, gapStart: identical(args[3], darticAbsent) ? null : args[3] as double?, gapExtent: identical(args[4], darticAbsent) ? 0.0 : args[4] as double, gapPercentage: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?); return null; },
         'add#2': (args) => (args[0] as MaterialStateUnderlineInputBorder).add(args[1] as ShapeBorder, reversed: identical(args[2], darticAbsent) ? false : args[2] as bool),
+        'hashCode#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).hashCode,
         'borderRadius#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).borderRadius,
         'isOutline#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).isOutline,
         'dimensions#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).dimensions,
         'preferPaintInterior#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).preferPaintInterior,
         'borderSide#0': (args) => (args[0] as MaterialStateUnderlineInputBorder).borderSide,
+        '==#1': (args) => (args[0] as MaterialStateUnderlineInputBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as MaterialStateUnderlineInputBorder) + (args[1] as ShapeBorder),
+        'resolveWith#1': (args) => MaterialStateUnderlineInputBorder.resolveWith((a) => (args[0] as Function)(a) as InputBorder),
       };
 }

@@ -29,6 +29,8 @@ abstract final class HitTestResultBindings {
         'popTransform#0': (args) { (args[0] as HitTestResult).popTransform(); return null; },
         'toString#0': (args) => (args[0] as HitTestResult).toString(),
         'path#0': (args) => (args[0] as HitTestResult).path,
+        'hashCode#0': (args) => (args[0] as HitTestResult).hashCode,
+        '==#1': (args) => (args[0] as HitTestResult) == (args[1] as Object),
         '#0': (args) => HitTestResult(),
         'wrap#1': (args) => HitTestResult.wrap(args[0] as HitTestResult),
       };

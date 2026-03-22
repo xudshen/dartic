@@ -60,7 +60,9 @@ abstract final class LocalizationsResolverBindings {
         'localeListResolutionCallback#0': (args) => (args[0] as LocalizationsResolver).localeListResolutionCallback,
         'localeResolutionCallback#0': (args) => (args[0] as LocalizationsResolver).localeResolutionCallback,
         'supportedLocales#0': (args) => (args[0] as LocalizationsResolver).supportedLocales,
+        'hashCode#0': (args) => (args[0] as LocalizationsResolver).hashCode,
         'hasListeners#0': (args) => (args[0] as LocalizationsResolver).hasListeners,
+        '==#1': (args) => (args[0] as LocalizationsResolver) == (args[1] as Object),
         '#5': (args) => LocalizationsResolver(supportedLocales: (args[0] as Iterable).cast<Locale>(), locale: identical(args[1], darticAbsent) ? null : args[1] as Locale?, localeListResolutionCallback: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), localeResolutionCallback: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), localizationsDelegates: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as Iterable).cast<LocalizationsDelegate<Object?>>()),
       };
 }

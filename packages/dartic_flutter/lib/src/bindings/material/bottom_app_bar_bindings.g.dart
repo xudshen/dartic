@@ -37,6 +37,7 @@ abstract final class BottomAppBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomAppBar).createState(),
+        'toString#0': (args) => (args[0] as BottomAppBar).toString(),
         'createElement#0': (args) => (args[0] as BottomAppBar).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomAppBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomAppBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -54,7 +55,9 @@ abstract final class BottomAppBarBindings {
         'surfaceTintColor#0': (args) => (args[0] as BottomAppBar).surfaceTintColor,
         'shadowColor#0': (args) => (args[0] as BottomAppBar).shadowColor,
         'height#0': (args) => (args[0] as BottomAppBar).height,
+        'hashCode#0': (args) => (args[0] as BottomAppBar).hashCode,
         'key#0': (args) => (args[0] as BottomAppBar).key,
+        '==#1': (args) => (args[0] as BottomAppBar) == (args[1] as Object),
         '#11': (args) => BottomAppBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shape: identical(args[3], darticAbsent) ? null : args[3] as NotchedShape?, clipBehavior: identical(args[4], darticAbsent) ? Clip.none : args[4] as Clip, notchMargin: identical(args[5], darticAbsent) ? 4.0 : args[5] as double, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, surfaceTintColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, shadowColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, height: identical(args[10], darticAbsent) ? null : args[10] as double?),
         '_#fromFields#11': (args) => BottomAppBar(key: args[5] as Key?, color: args[2] as Color?, elevation: args[3] as double?, shape: args[9] as NotchedShape?, clipBehavior: args[1] as Clip, notchMargin: args[6] as double, child: args[0] as Widget?, padding: args[7] as EdgeInsetsGeometry?, surfaceTintColor: args[10] as Color?, shadowColor: args[8] as Color?, height: args[4] as double?),
       };

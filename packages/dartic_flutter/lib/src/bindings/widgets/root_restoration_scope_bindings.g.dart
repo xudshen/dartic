@@ -28,6 +28,7 @@ abstract final class RootRestorationScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RootRestorationScope).createState(),
+        'toString#0': (args) => (args[0] as RootRestorationScope).toString(),
         'createElement#0': (args) => (args[0] as RootRestorationScope).createElement(),
         'toStringShort#0': (args) => (args[0] as RootRestorationScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RootRestorationScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class RootRestorationScopeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as RootRestorationScope).debugDescribeChildren(),
         'child#0': (args) => (args[0] as RootRestorationScope).child,
         'restorationId#0': (args) => (args[0] as RootRestorationScope).restorationId,
+        'hashCode#0': (args) => (args[0] as RootRestorationScope).hashCode,
         'key#0': (args) => (args[0] as RootRestorationScope).key,
+        '==#1': (args) => (args[0] as RootRestorationScope) == (args[1] as Object),
         '#3': (args) => RootRestorationScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, restorationId: args[1] as String?, child: args[2] as Widget),
         '_#fromFields#3': (args) => RootRestorationScope(key: args[1] as Key?, restorationId: args[2] as String?, child: args[0] as Widget),
       };

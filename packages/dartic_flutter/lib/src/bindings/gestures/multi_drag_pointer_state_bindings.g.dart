@@ -37,9 +37,12 @@ abstract final class MultiDragPointerStateBindings {
         'accepted#1': (args) { (args[0] as MultiDragPointerState).accepted((a) => (args[1] as Function)(a) as Drag?); return null; },
         'rejected#0': (args) { (args[0] as MultiDragPointerState).rejected(); return null; },
         'dispose#0': (args) { (args[0] as MultiDragPointerState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as MultiDragPointerState).toString(),
         'gestureSettings#0': (args) => (args[0] as MultiDragPointerState).gestureSettings,
         'initialPosition#0': (args) => (args[0] as MultiDragPointerState).initialPosition,
         'kind#0': (args) => (args[0] as MultiDragPointerState).kind,
         'pendingDelta#0': (args) => (args[0] as MultiDragPointerState).pendingDelta,
+        'hashCode#0': (args) => (args[0] as MultiDragPointerState).hashCode,
+        '==#1': (args) => (args[0] as MultiDragPointerState) == (args[1] as Object),
       };
 }

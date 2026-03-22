@@ -32,5 +32,8 @@ abstract final class BackgroundIsolateBinaryMessengerBindings {
         'handlePlatformMessage#3': (args) => (args[0] as BackgroundIsolateBinaryMessenger).handlePlatformMessage(args[1] as String, args[2] as ByteData?, (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a)),
         'send#2': (args) => (args[0] as BackgroundIsolateBinaryMessenger).send(args[1] as String, args[2] as ByteData?),
         'setMessageHandler#2': (args) { (args[0] as BackgroundIsolateBinaryMessenger).setMessageHandler(args[1] as String, (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)); return null; },
+        'toString#0': (args) => (args[0] as BackgroundIsolateBinaryMessenger).toString(),
+        'hashCode#0': (args) => (args[0] as BackgroundIsolateBinaryMessenger).hashCode,
+        '==#1': (args) => (args[0] as BackgroundIsolateBinaryMessenger) == (args[1] as Object),
       };
 }

@@ -42,6 +42,8 @@ abstract final class FrameTimingBindings {
         'pictureCacheBytes#0': (args) => (args[0] as FrameTiming).pictureCacheBytes,
         'pictureCacheMegabytes#0': (args) => (args[0] as FrameTiming).pictureCacheMegabytes,
         'frameNumber#0': (args) => (args[0] as FrameTiming).frameNumber,
+        'hashCode#0': (args) => (args[0] as FrameTiming).hashCode,
+        '==#1': (args) => (args[0] as FrameTiming) == (args[1] as Object),
         '#11': (args) => FrameTiming(vsyncStart: args[0] as int, buildStart: args[1] as int, buildFinish: args[2] as int, rasterStart: args[3] as int, rasterFinish: args[4] as int, rasterFinishWallTime: args[5] as int, layerCacheCount: identical(args[6], darticAbsent) ? 0 : args[6] as int, layerCacheBytes: identical(args[7], darticAbsent) ? 0 : args[7] as int, pictureCacheCount: identical(args[8], darticAbsent) ? 0 : args[8] as int, pictureCacheBytes: identical(args[9], darticAbsent) ? 0 : args[9] as int, frameNumber: identical(args[10], darticAbsent) ? -1 : args[10] as int),
       };
 }

@@ -38,11 +38,13 @@ abstract final class TextParentDataBindings {
         'toString#0': (args) => (args[0] as TextParentData).toString(),
         'offset#0': (args) => (args[0] as TextParentData).offset,
         'span#0': (args) => (args[0] as TextParentData).span,
+        'hashCode#0': (args) => (args[0] as TextParentData).hashCode,
         'previousSibling#0': (args) => (args[0] as TextParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as TextParentData).nextSibling,
         'span=#1': (args) { (args[0] as TextParentData).span = args[1] as PlaceholderSpan?; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as TextParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as TextParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as TextParentData) == (args[1] as Object),
         '#0': (args) => TextParentData(),
       };
 }

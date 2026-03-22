@@ -37,5 +37,7 @@ abstract final class CustomClipperBindings {
         'getApproximateClipRect#1': (args) => (args[0] as CustomClipper).getApproximateClipRect(args[1] as ui.Size),
         'shouldReclip#1': (args) => (args[0] as CustomClipper).shouldReclip(args[1] as CustomClipper),
         'toString#0': (args) => (args[0] as CustomClipper).toString(),
+        'hashCode#0': (args) => (args[0] as CustomClipper).hashCode,
+        '==#1': (args) => (args[0] as CustomClipper) == (args[1] as Object),
       };
 }

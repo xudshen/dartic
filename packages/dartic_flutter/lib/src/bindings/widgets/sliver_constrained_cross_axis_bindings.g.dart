@@ -31,6 +31,7 @@ abstract final class SliverConstrainedCrossAxisBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverConstrainedCrossAxis).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverConstrainedCrossAxis).toString(),
         'createElement#0': (args) => (args[0] as SliverConstrainedCrossAxis).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverConstrainedCrossAxis).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverConstrainedCrossAxis).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class SliverConstrainedCrossAxisBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SliverConstrainedCrossAxis).debugDescribeChildren(),
         'maxExtent#0': (args) => (args[0] as SliverConstrainedCrossAxis).maxExtent,
         'sliver#0': (args) => (args[0] as SliverConstrainedCrossAxis).sliver,
+        'hashCode#0': (args) => (args[0] as SliverConstrainedCrossAxis).hashCode,
         'key#0': (args) => (args[0] as SliverConstrainedCrossAxis).key,
+        '==#1': (args) => (args[0] as SliverConstrainedCrossAxis) == (args[1] as Object),
         '#3': (args) => SliverConstrainedCrossAxis(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, maxExtent: args[1] as double, sliver: args[2] as Widget),
         '_#fromFields#3': (args) => SliverConstrainedCrossAxis(key: args[0] as Key?, maxExtent: args[1] as double, sliver: args[2] as Widget),
       };

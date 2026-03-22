@@ -24,6 +24,10 @@ abstract final class TextScalerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'scale#1': (args) => (args[0] as TextScaler).scale(args[1] as double),
         'clamp#2': (args) => (args[0] as TextScaler).clamp(minScaleFactor: identical(args[1], darticAbsent) ? 0 : args[1] as double, maxScaleFactor: identical(args[2], darticAbsent) ? double.infinity : args[2] as double),
+        'toString#0': (args) => (args[0] as TextScaler).toString(),
         'textScaleFactor#0': (args) => (args[0] as TextScaler).textScaleFactor,
+        'hashCode#0': (args) => (args[0] as TextScaler).hashCode,
+        '==#1': (args) => (args[0] as TextScaler) == (args[1] as Object),
+        'linear#1': (args) => TextScaler.linear(args[0] as double),
       };
 }

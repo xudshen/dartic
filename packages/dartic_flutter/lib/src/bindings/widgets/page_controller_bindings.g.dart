@@ -52,6 +52,7 @@ abstract final class PageControllerBindings {
         'previousPage#2': (args) => (args[0] as PageController).previousPage(duration: args[1] as Duration, curve: args[2] as Curve),
         'createScrollPosition#3': (args) => (args[0] as PageController).createScrollPosition(args[1] as ScrollPhysics, args[2] as ScrollContext, args[3] as ScrollPosition?),
         'attach#1': (args) { (args[0] as PageController).attach(args[1] as ScrollPosition); return null; },
+        'toString#0': (args) => (args[0] as PageController).toString(),
         'animateTo#3': (args) => (args[0] as PageController).animateTo(args[1] as double, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpTo#1': (args) { (args[0] as PageController).jumpTo(args[1] as double); return null; },
         'detach#1': (args) { (args[0] as PageController).detach(args[1] as ScrollPosition); return null; },
@@ -64,6 +65,7 @@ abstract final class PageControllerBindings {
         'keepPage#0': (args) => (args[0] as PageController).keepPage,
         'viewportFraction#0': (args) => (args[0] as PageController).viewportFraction,
         'page#0': (args) => (args[0] as PageController).page,
+        'hashCode#0': (args) => (args[0] as PageController).hashCode,
         'initialScrollOffset#0': (args) => (args[0] as PageController).initialScrollOffset,
         'keepScrollOffset#0': (args) => (args[0] as PageController).keepScrollOffset,
         'onAttach#0': (args) => (args[0] as PageController).onAttach,
@@ -74,6 +76,7 @@ abstract final class PageControllerBindings {
         'position#0': (args) => (args[0] as PageController).position,
         'offset#0': (args) => (args[0] as PageController).offset,
         'hasListeners#0': (args) => (args[0] as PageController).hasListeners,
+        '==#1': (args) => (args[0] as PageController) == (args[1] as Object),
         '#5': (args) => PageController(initialPage: identical(args[0], darticAbsent) ? 0 : args[0] as int, keepPage: identical(args[1], darticAbsent) ? true : args[1] as bool, viewportFraction: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, onAttach: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onDetach: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
       };
 }

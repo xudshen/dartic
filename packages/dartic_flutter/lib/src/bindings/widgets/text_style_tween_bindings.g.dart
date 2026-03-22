@@ -37,14 +37,17 @@ abstract final class TextStyleTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as TextStyleTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as TextStyleTween).toString(),
         'transform#1': (args) => (args[0] as TextStyleTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as TextStyleTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as TextStyleTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as TextStyleTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as TextStyleTween).hashCode,
         'begin#0': (args) => (args[0] as TextStyleTween).begin,
         'end#0': (args) => (args[0] as TextStyleTween).end,
         'begin=#1': (args) { (args[0] as TextStyleTween).begin = args[1] as TextStyle?; return args[1]; },
         'end=#1': (args) { (args[0] as TextStyleTween).end = args[1] as TextStyle?; return args[1]; },
+        '==#1': (args) => (args[0] as TextStyleTween) == (args[1] as Object),
         '#2': (args) => TextStyleTween(begin: identical(args[0], darticAbsent) ? null : args[0] as TextStyle?, end: identical(args[1], darticAbsent) ? null : args[1] as TextStyle?),
       };
 }

@@ -33,6 +33,7 @@ abstract final class TransformLayerBindings {
         'findAnnotations#3': (args) => (args[0] as TransformLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'applyTransform#2': (args) { (args[0] as TransformLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as TransformLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TransformLayer).toString(),
         'toImage#2': (args) => (args[0] as TransformLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'toImageSync#2': (args) => (args[0] as TransformLayer).toImageSync(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'supportsRasterization#0': (args) => (args[0] as TransformLayer).supportsRasterization(),
@@ -60,6 +61,7 @@ abstract final class TransformLayerBindings {
         'toStringDeep#4': (args) => (args[0] as TransformLayer).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as TransformLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'transform#0': (args) => (args[0] as TransformLayer).transform,
+        'hashCode#0': (args) => (args[0] as TransformLayer).hashCode,
         'offset#0': (args) => (args[0] as TransformLayer).offset,
         'firstChild#0': (args) => (args[0] as TransformLayer).firstChild,
         'lastChild#0': (args) => (args[0] as TransformLayer).lastChild,
@@ -81,6 +83,7 @@ abstract final class TransformLayerBindings {
         'offset=#1': (args) { (args[0] as TransformLayer).offset = args[1] as ui.Offset; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as TransformLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as TransformLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as TransformLayer) == (args[1] as Object),
         '#2': (args) => TransformLayer(transform: identical(args[0], darticAbsent) ? null : args[0] as Matrix4?, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset),
       };
 }

@@ -42,6 +42,9 @@ abstract final class AutovalidateModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AutovalidateMode).toString(),
+        'hashCode#0': (args) => (args[0] as AutovalidateMode).hashCode,
         'index#0': (args) => (args[0] as AutovalidateMode).index,
+        '==#1': (args) => (args[0] as AutovalidateMode) == (args[1] as Object),
       };
 }

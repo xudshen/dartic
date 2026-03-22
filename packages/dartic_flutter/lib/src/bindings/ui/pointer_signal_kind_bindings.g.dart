@@ -36,6 +36,9 @@ abstract final class PointerSignalKindBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PointerSignalKind).toString(),
+        'hashCode#0': (args) => (args[0] as PointerSignalKind).hashCode,
         'index#0': (args) => (args[0] as PointerSignalKind).index,
+        '==#1': (args) => (args[0] as PointerSignalKind) == (args[1] as Object),
       };
 }

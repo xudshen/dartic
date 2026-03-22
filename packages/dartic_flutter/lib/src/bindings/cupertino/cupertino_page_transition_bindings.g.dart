@@ -37,6 +37,7 @@ abstract final class CupertinoPageTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoPageTransition).createState(),
+        'toString#0': (args) => (args[0] as CupertinoPageTransition).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPageTransition).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPageTransition).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPageTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class CupertinoPageTransitionBindings {
         'primaryRouteAnimation#0': (args) => (args[0] as CupertinoPageTransition).primaryRouteAnimation,
         'secondaryRouteAnimation#0': (args) => (args[0] as CupertinoPageTransition).secondaryRouteAnimation,
         'linearTransition#0': (args) => (args[0] as CupertinoPageTransition).linearTransition,
+        'hashCode#0': (args) => (args[0] as CupertinoPageTransition).hashCode,
         'key#0': (args) => (args[0] as CupertinoPageTransition).key,
+        '==#1': (args) => (args[0] as CupertinoPageTransition) == (args[1] as Object),
         '#5': (args) => CupertinoPageTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, primaryRouteAnimation: args[1] as Animation<double>, secondaryRouteAnimation: args[2] as Animation<double>, child: args[3] as Widget, linearTransition: args[4] as bool),
         '_#fromFields#5': (args) => CupertinoPageTransition(key: args[1] as Key?, primaryRouteAnimation: args[3] as Animation<double>, secondaryRouteAnimation: args[4] as Animation<double>, child: args[0] as Widget, linearTransition: args[2] as bool),
       };

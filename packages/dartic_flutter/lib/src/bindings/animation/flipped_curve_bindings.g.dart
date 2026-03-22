@@ -28,7 +28,9 @@ abstract final class FlippedCurveBindings {
         'toString#0': (args) => (args[0] as FlippedCurve).toString(),
         'transform#1': (args) => (args[0] as FlippedCurve).transform(args[1] as double),
         'curve#0': (args) => (args[0] as FlippedCurve).curve,
+        'hashCode#0': (args) => (args[0] as FlippedCurve).hashCode,
         'flipped#0': (args) => (args[0] as FlippedCurve).flipped,
+        '==#1': (args) => (args[0] as FlippedCurve) == (args[1] as Object),
         '#1': (args) => FlippedCurve(args[0] as Curve),
         '_#fromFields#1': (args) => FlippedCurve(args[0] as Curve),
       };

@@ -51,6 +51,7 @@ abstract final class RenderPositionedBoxBindings {
         'performLayout#0': (args) { (args[0] as RenderPositionedBox).performLayout(); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderPositionedBox).debugPaintSize(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPositionedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderPositionedBox).toString(),
         'alignChild#0': (args) { (args[0] as RenderPositionedBox).alignChild(); return null; },
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderPositionedBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderPositionedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
@@ -123,6 +124,7 @@ abstract final class RenderPositionedBoxBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderPositionedBox).debugValidateChild(args[1] as RenderObject),
         'widthFactor#0': (args) => (args[0] as RenderPositionedBox).widthFactor,
         'heightFactor#0': (args) => (args[0] as RenderPositionedBox).heightFactor,
+        'hashCode#0': (args) => (args[0] as RenderPositionedBox).hashCode,
         'resolvedAlignment#0': (args) => (args[0] as RenderPositionedBox).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderPositionedBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderPositionedBox).textDirection,
@@ -166,6 +168,7 @@ abstract final class RenderPositionedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderPositionedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPositionedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderPositionedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPositionedBox) == (args[1] as Object),
         '#5': (args) => RenderPositionedBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, widthFactor: identical(args[1], darticAbsent) ? null : args[1] as double?, heightFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as AlignmentGeometry, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?),
       };
 }

@@ -33,5 +33,7 @@ abstract final class FloatingActionButtonAnimatorBindings {
         'getRotationAnimation#1': (args) => (args[0] as FloatingActionButtonAnimator).getRotationAnimation(parent: args[1] as Animation<double>),
         'getAnimationRestart#1': (args) => (args[0] as FloatingActionButtonAnimator).getAnimationRestart(args[1] as double),
         'toString#0': (args) => (args[0] as FloatingActionButtonAnimator).toString(),
+        'hashCode#0': (args) => (args[0] as FloatingActionButtonAnimator).hashCode,
+        '==#1': (args) => (args[0] as FloatingActionButtonAnimator) == (args[1] as Object),
       };
 }

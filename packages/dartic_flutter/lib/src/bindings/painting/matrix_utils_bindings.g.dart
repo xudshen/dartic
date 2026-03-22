@@ -31,5 +31,8 @@ abstract final class MatrixUtilsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MatrixUtils).toString(),
+        'hashCode#0': (args) => (args[0] as MatrixUtils).hashCode,
+        '==#1': (args) => (args[0] as MatrixUtils) == (args[1] as Object),
       };
 }

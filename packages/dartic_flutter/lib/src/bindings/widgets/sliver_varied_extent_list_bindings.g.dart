@@ -35,6 +35,7 @@ abstract final class SliverVariedExtentListBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverVariedExtentList).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverVariedExtentList).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverVariedExtentList); return null; },
+        'toString#0': (args) => (args[0] as SliverVariedExtentList).toString(),
         'createElement#0': (args) => (args[0] as SliverVariedExtentList).createElement(),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverVariedExtentList).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverVariedExtentList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,8 +46,10 @@ abstract final class SliverVariedExtentListBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverVariedExtentList).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverVariedExtentList).debugDescribeChildren(),
         'itemExtentBuilder#0': (args) => (args[0] as SliverVariedExtentList).itemExtentBuilder,
+        'hashCode#0': (args) => (args[0] as SliverVariedExtentList).hashCode,
         'delegate#0': (args) => (args[0] as SliverVariedExtentList).delegate,
         'key#0': (args) => (args[0] as SliverVariedExtentList).key,
+        '==#1': (args) => (args[0] as SliverVariedExtentList) == (args[1] as Object),
         '#3': (args) => SliverVariedExtentList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as SliverChildDelegate, itemExtentBuilder: (a, b) => (args[2] as Function)(a, b) as double?),
         'builder#8': (args) => SliverVariedExtentList.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b) => (args[1] as Function)(a, b) as Widget?, itemExtentBuilder: (a, b) => (args[2] as Function)(a, b) as double?, findChildIndexCallback: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), itemCount: identical(args[4], darticAbsent) ? null : args[4] as int?, addAutomaticKeepAlives: identical(args[5], darticAbsent) ? true : args[5] as bool, addRepaintBoundaries: identical(args[6], darticAbsent) ? true : args[6] as bool, addSemanticIndexes: identical(args[7], darticAbsent) ? true : args[7] as bool),
         'list#6': (args) => SliverVariedExtentList.list(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), itemExtentBuilder: (a, b) => (args[2] as Function)(a, b) as double?, addAutomaticKeepAlives: identical(args[3], darticAbsent) ? true : args[3] as bool, addRepaintBoundaries: identical(args[4], darticAbsent) ? true : args[4] as bool, addSemanticIndexes: identical(args[5], darticAbsent) ? true : args[5] as bool),

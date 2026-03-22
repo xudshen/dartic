@@ -38,6 +38,7 @@ abstract final class UserAccountsDrawerHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as UserAccountsDrawerHeader).createState(),
+        'toString#0': (args) => (args[0] as UserAccountsDrawerHeader).toString(),
         'createElement#0': (args) => (args[0] as UserAccountsDrawerHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as UserAccountsDrawerHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UserAccountsDrawerHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -55,7 +56,9 @@ abstract final class UserAccountsDrawerHeaderBindings {
         'accountEmail#0': (args) => (args[0] as UserAccountsDrawerHeader).accountEmail,
         'onDetailsPressed#0': (args) => (args[0] as UserAccountsDrawerHeader).onDetailsPressed,
         'arrowColor#0': (args) => (args[0] as UserAccountsDrawerHeader).arrowColor,
+        'hashCode#0': (args) => (args[0] as UserAccountsDrawerHeader).hashCode,
         'key#0': (args) => (args[0] as UserAccountsDrawerHeader).key,
+        '==#1': (args) => (args[0] as UserAccountsDrawerHeader) == (args[1] as Object),
         '#11': (args) => UserAccountsDrawerHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: identical(args[1], darticAbsent) ? null : args[1] as Decoration?, margin: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, currentAccountPicture: identical(args[3], darticAbsent) ? null : args[3] as Widget?, otherAccountsPictures: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<Widget>(), currentAccountPictureSize: identical(args[5], darticAbsent) ? const Size.square(72.0) : args[5] as Size, otherAccountsPicturesSize: identical(args[6], darticAbsent) ? const Size.square(40.0) : args[6] as Size, accountName: args[7] as Widget?, accountEmail: args[8] as Widget?, onDetailsPressed: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!(), arrowColor: identical(args[10], darticAbsent) ? Colors.white : args[10] as Color),
         '_#fromFields#11': (args) => UserAccountsDrawerHeader(key: args[6] as Key?, decoration: args[5] as Decoration?, margin: args[7] as EdgeInsetsGeometry?, currentAccountPicture: args[3] as Widget?, otherAccountsPictures: args[9] == null ? null : (args[9] as List).cast<Widget>(), currentAccountPictureSize: args[4] as Size, otherAccountsPicturesSize: args[10] as Size, accountName: args[1] as Widget?, accountEmail: args[0] as Widget?, onDetailsPressed: args[8] as VoidCallback?, arrowColor: args[2] as Color),
       };

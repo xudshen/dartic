@@ -33,13 +33,16 @@ abstract final class TransformationControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toScene#1': (args) => (args[0] as TransformationController).toScene(args[1] as Offset),
+        'toString#0': (args) => (args[0] as TransformationController).toString(),
         'addListener#1': (args) { (args[0] as TransformationController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as TransformationController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as TransformationController).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as TransformationController).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as TransformationController).hashCode,
         'value#0': (args) => (args[0] as TransformationController).value,
         'hasListeners#0': (args) => (args[0] as TransformationController).hasListeners,
         'value=#1': (args) { (args[0] as TransformationController).value = args[1] as Matrix4; return args[1]; },
+        '==#1': (args) => (args[0] as TransformationController) == (args[1] as Object),
         '#1': (args) => TransformationController(identical(args[0], darticAbsent) ? null : args[0] as Matrix4?),
       };
 }

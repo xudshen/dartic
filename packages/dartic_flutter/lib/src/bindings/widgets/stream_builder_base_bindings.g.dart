@@ -33,6 +33,7 @@ abstract final class StreamBuilderBaseBindings {
         'afterDisconnected#1': (args) => (args[0] as StreamBuilderBase).afterDisconnected(args[1]),
         'build#2': (args) => (args[0] as StreamBuilderBase).build(args[1] as BuildContext, args[2]),
         'createState#0': (args) => (args[0] as StreamBuilderBase).createState(),
+        'toString#0': (args) => (args[0] as StreamBuilderBase).toString(),
         'createElement#0': (args) => (args[0] as StreamBuilderBase).createElement(),
         'toStringShort#0': (args) => (args[0] as StreamBuilderBase).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StreamBuilderBase).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,6 +42,8 @@ abstract final class StreamBuilderBaseBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as StreamBuilderBase).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as StreamBuilderBase).debugDescribeChildren(),
         'stream#0': (args) => (args[0] as StreamBuilderBase).stream,
+        'hashCode#0': (args) => (args[0] as StreamBuilderBase).hashCode,
         'key#0': (args) => (args[0] as StreamBuilderBase).key,
+        '==#1': (args) => (args[0] as StreamBuilderBase) == (args[1] as Object),
       };
 }

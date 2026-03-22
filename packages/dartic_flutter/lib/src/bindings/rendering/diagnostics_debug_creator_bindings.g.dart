@@ -31,6 +31,7 @@ abstract final class DiagnosticsDebugCreatorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DiagnosticsDebugCreator).toString(),
         'toJsonMap#1': (args) => (args[0] as DiagnosticsDebugCreator).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'valueToString#1': (args) => (args[0] as DiagnosticsDebugCreator).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as DiagnosticsDebugCreator).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
@@ -40,6 +41,7 @@ abstract final class DiagnosticsDebugCreatorBindings {
         'toTimelineArguments#0': (args) => (args[0] as DiagnosticsDebugCreator).toTimelineArguments(),
         'toJsonMapIterative#1': (args) => (args[0] as DiagnosticsDebugCreator).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as DiagnosticsDebugCreator).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
+        'hashCode#0': (args) => (args[0] as DiagnosticsDebugCreator).hashCode,
         'expandableValue#0': (args) => (args[0] as DiagnosticsDebugCreator).expandableValue,
         'allowWrap#0': (args) => (args[0] as DiagnosticsDebugCreator).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as DiagnosticsDebugCreator).allowNameWrap,
@@ -61,6 +63,7 @@ abstract final class DiagnosticsDebugCreatorBindings {
         'style#0': (args) => (args[0] as DiagnosticsDebugCreator).style,
         'allowTruncate#0': (args) => (args[0] as DiagnosticsDebugCreator).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as DiagnosticsDebugCreator).textTreeConfiguration,
+        '==#1': (args) => (args[0] as DiagnosticsDebugCreator) == (args[1] as Object),
         '#1': (args) => DiagnosticsDebugCreator(args[0] as Object),
       };
 }

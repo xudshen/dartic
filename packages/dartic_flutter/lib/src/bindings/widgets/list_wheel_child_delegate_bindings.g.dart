@@ -39,6 +39,9 @@ abstract final class ListWheelChildDelegateBindings {
         'build#2': (args) => (args[0] as ListWheelChildDelegate).build(args[1] as BuildContext, args[2] as int),
         'trueIndexOf#1': (args) => (args[0] as ListWheelChildDelegate).trueIndexOf(args[1] as int),
         'shouldRebuild#1': (args) => (args[0] as ListWheelChildDelegate).shouldRebuild(args[1] as ListWheelChildDelegate),
+        'toString#0': (args) => (args[0] as ListWheelChildDelegate).toString(),
         'estimatedChildCount#0': (args) => (args[0] as ListWheelChildDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as ListWheelChildDelegate).hashCode,
+        '==#1': (args) => (args[0] as ListWheelChildDelegate) == (args[1] as Object),
       };
 }

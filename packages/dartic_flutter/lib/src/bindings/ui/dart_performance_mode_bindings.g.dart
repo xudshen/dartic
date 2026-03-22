@@ -35,6 +35,9 @@ abstract final class DartPerformanceModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DartPerformanceMode).toString(),
+        'hashCode#0': (args) => (args[0] as DartPerformanceMode).hashCode,
         'index#0': (args) => (args[0] as DartPerformanceMode).index,
+        '==#1': (args) => (args[0] as DartPerformanceMode) == (args[1] as Object),
       };
 }

@@ -34,5 +34,8 @@ abstract final class DecorationImagePainterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#6': (args) { (args[0] as DecorationImagePainter).paint(args[1] as ui.Canvas, args[2] as ui.Rect, args[3] as ui.Path?, args[4] as ImageConfiguration, blend: identical(args[5], darticAbsent) ? 1.0 : args[5] as double, blendMode: identical(args[6], darticAbsent) ? BlendMode.srcOver : args[6] as ui.BlendMode); return null; },
         'dispose#0': (args) { (args[0] as DecorationImagePainter).dispose(); return null; },
+        'toString#0': (args) => (args[0] as DecorationImagePainter).toString(),
+        'hashCode#0': (args) => (args[0] as DecorationImagePainter).hashCode,
+        '==#1': (args) => (args[0] as DecorationImagePainter) == (args[1] as Object),
       };
 }

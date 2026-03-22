@@ -31,7 +31,10 @@ abstract final class IOSSystemContextMenuItemSelectAllBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemSelectAll).getData(args[1] as WidgetsLocalizations),
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemSelectAll).toString(),
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemSelectAll).hashCode,
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemSelectAll).title,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemSelectAll) == (args[1] as Object),
         '#0': (args) => IOSSystemContextMenuItemSelectAll(),
         '_#fromFields#0': (args) => IOSSystemContextMenuItemSelectAll(),
       };

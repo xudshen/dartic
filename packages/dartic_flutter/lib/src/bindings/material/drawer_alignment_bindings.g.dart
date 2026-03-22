@@ -33,6 +33,9 @@ abstract final class DrawerAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DrawerAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as DrawerAlignment).hashCode,
         'index#0': (args) => (args[0] as DrawerAlignment).index,
+        '==#1': (args) => (args[0] as DrawerAlignment) == (args[1] as Object),
       };
 }

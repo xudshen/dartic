@@ -38,6 +38,7 @@ abstract final class InputDatePickerFormFieldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as InputDatePickerFormField).createState(),
+        'toString#0': (args) => (args[0] as InputDatePickerFormField).toString(),
         'createElement#0': (args) => (args[0] as InputDatePickerFormField).createElement(),
         'toStringShort#0': (args) => (args[0] as InputDatePickerFormField).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InputDatePickerFormField).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -60,7 +61,9 @@ abstract final class InputDatePickerFormFieldBindings {
         'acceptEmptyDate#0': (args) => (args[0] as InputDatePickerFormField).acceptEmptyDate,
         'focusNode#0': (args) => (args[0] as InputDatePickerFormField).focusNode,
         'calendarDelegate#0': (args) => (args[0] as InputDatePickerFormField).calendarDelegate,
+        'hashCode#0': (args) => (args[0] as InputDatePickerFormField).hashCode,
         'key#0': (args) => (args[0] as InputDatePickerFormField).key,
+        '==#1': (args) => (args[0] as InputDatePickerFormField) == (args[1] as Object),
         '#16': (args) => InputDatePickerFormField(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialDate: identical(args[1], darticAbsent) ? null : args[1] as DateTime?, firstDate: args[2] as DateTime, lastDate: args[3] as DateTime, onDateSubmitted: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onDateSaved: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), selectableDayPredicate: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), errorFormatText: identical(args[7], darticAbsent) ? null : args[7] as String?, errorInvalidText: identical(args[8], darticAbsent) ? null : args[8] as String?, fieldHintText: identical(args[9], darticAbsent) ? null : args[9] as String?, fieldLabelText: identical(args[10], darticAbsent) ? null : args[10] as String?, keyboardType: identical(args[11], darticAbsent) ? null : args[11] as TextInputType?, autofocus: identical(args[12], darticAbsent) ? false : args[12] as bool, acceptEmptyDate: identical(args[13], darticAbsent) ? false : args[13] as bool, focusNode: identical(args[14], darticAbsent) ? null : args[14] as FocusNode?, calendarDelegate: identical(args[15], darticAbsent) ? const GregorianCalendarDelegate() : args[15] as CalendarDelegate<DateTime>),
       };
 }

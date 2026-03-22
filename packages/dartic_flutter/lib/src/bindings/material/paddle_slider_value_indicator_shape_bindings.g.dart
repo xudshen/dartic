@@ -36,6 +36,9 @@ abstract final class PaddleSliderValueIndicatorShapeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredSize#4': (args) => (args[0] as PaddleSliderValueIndicatorShape).getPreferredSize(args[1] as bool, args[2] as bool, labelPainter: identical(args[3], darticAbsent) ? null : args[3] as TextPainter?, textScaleFactor: identical(args[4], darticAbsent) ? null : args[4] as double?),
         'paint#12': (args) { (args[0] as PaddleSliderValueIndicatorShape).paint(args[1] as PaintingContext, args[2] as Offset, activationAnimation: args[3] as Animation<double>, enableAnimation: args[4] as Animation<double>, isDiscrete: args[5] as bool, labelPainter: args[6] as TextPainter, parentBox: args[7] as RenderBox, sliderTheme: args[8] as SliderThemeData, textDirection: args[9] as TextDirection, value: args[10] as double, textScaleFactor: args[11] as double, sizeWithOverflow: args[12] as Size); return null; },
+        'toString#0': (args) => (args[0] as PaddleSliderValueIndicatorShape).toString(),
+        'hashCode#0': (args) => (args[0] as PaddleSliderValueIndicatorShape).hashCode,
+        '==#1': (args) => (args[0] as PaddleSliderValueIndicatorShape) == (args[1] as Object),
         '#0': (args) => PaddleSliderValueIndicatorShape(),
         '_#fromFields#0': (args) => PaddleSliderValueIndicatorShape(),
       };

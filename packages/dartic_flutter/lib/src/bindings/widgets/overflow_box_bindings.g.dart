@@ -42,6 +42,7 @@ abstract final class OverflowBoxBindings {
         'createRenderObject#1': (args) => (args[0] as OverflowBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as OverflowBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderConstrainedOverflowBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as OverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as OverflowBox).toString(),
         'createElement#0': (args) => (args[0] as OverflowBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as OverflowBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as OverflowBox).toStringShort(),
@@ -55,8 +56,10 @@ abstract final class OverflowBoxBindings {
         'minHeight#0': (args) => (args[0] as OverflowBox).minHeight,
         'maxHeight#0': (args) => (args[0] as OverflowBox).maxHeight,
         'fit#0': (args) => (args[0] as OverflowBox).fit,
+        'hashCode#0': (args) => (args[0] as OverflowBox).hashCode,
         'child#0': (args) => (args[0] as OverflowBox).child,
         'key#0': (args) => (args[0] as OverflowBox).key,
+        '==#1': (args) => (args[0] as OverflowBox) == (args[1] as Object),
         '#8': (args) => OverflowBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? Alignment.center : args[1] as AlignmentGeometry, minWidth: identical(args[2], darticAbsent) ? null : args[2] as double?, maxWidth: identical(args[3], darticAbsent) ? null : args[3] as double?, minHeight: identical(args[4], darticAbsent) ? null : args[4] as double?, maxHeight: identical(args[5], darticAbsent) ? null : args[5] as double?, fit: identical(args[6], darticAbsent) ? OverflowBoxFit.max : args[6] as OverflowBoxFit, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?),
         '_#fromFields#8': (args) => OverflowBox(key: args[3] as Key?, alignment: args[0] as AlignmentGeometry, minWidth: args[7] as double?, maxWidth: args[5] as double?, minHeight: args[6] as double?, maxHeight: args[4] as double?, fit: args[2] as OverflowBoxFit, child: args[1] as Widget?),
       };

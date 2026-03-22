@@ -56,6 +56,7 @@ abstract final class CheckboxMenuButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CheckboxMenuButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CheckboxMenuButton).toString(),
         'createElement#0': (args) => (args[0] as CheckboxMenuButton).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckboxMenuButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CheckboxMenuButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -78,7 +79,9 @@ abstract final class CheckboxMenuButtonBindings {
         'closeOnActivate#0': (args) => (args[0] as CheckboxMenuButton).closeOnActivate,
         'child#0': (args) => (args[0] as CheckboxMenuButton).child,
         'enabled#0': (args) => (args[0] as CheckboxMenuButton).enabled,
+        'hashCode#0': (args) => (args[0] as CheckboxMenuButton).hashCode,
         'key#0': (args) => (args[0] as CheckboxMenuButton).key,
+        '==#1': (args) => (args[0] as CheckboxMenuButton) == (args[1] as Object),
         '#15': (args) => CheckboxMenuButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as bool?, tristate: identical(args[2], darticAbsent) ? false : args[2] as bool, isError: identical(args[3], darticAbsent) ? false : args[3] as bool, onChanged: (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onHover: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onFocusChange: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), focusNode: identical(args[7], darticAbsent) ? null : args[7] as FocusNode?, shortcut: identical(args[8], darticAbsent) ? null : args[8] as MenuSerializableShortcut?, style: identical(args[9], darticAbsent) ? null : args[9] as ButtonStyle?, statesController: identical(args[10], darticAbsent) ? null : args[10] as WidgetStatesController?, clipBehavior: identical(args[11], darticAbsent) ? Clip.none : args[11] as Clip, trailingIcon: identical(args[12], darticAbsent) ? null : args[12] as Widget?, closeOnActivate: identical(args[13], darticAbsent) ? true : args[13] as bool, child: args[14] as Widget?),
         '_#fromFields#15': (args) => CheckboxMenuButton(key: args[5] as Key?, value: args[14] as bool?, tristate: args[13] as bool, isError: args[4] as bool, onChanged: args[6] as ValueChanged<bool?>?, onHover: args[8] as ValueChanged<bool>?, onFocusChange: args[7] as ValueChanged<bool>?, focusNode: args[3] as FocusNode?, shortcut: args[9] as MenuSerializableShortcut?, style: args[11] as ButtonStyle?, statesController: args[10] as WidgetStatesController?, clipBehavior: args[1] as Clip, trailingIcon: args[12] as Widget?, closeOnActivate: args[2] as bool, child: args[0] as Widget?),
       };

@@ -32,6 +32,7 @@ abstract final class TabControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'animateTo#3': (args) { (args[0] as TabController).animateTo(args[1] as int, duration: identical(args[2], darticAbsent) ? null : args[2] as Duration?, curve: identical(args[3], darticAbsent) ? Curves.ease : args[3] as Curve); return null; },
         'dispose#0': (args) { (args[0] as TabController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as TabController).toString(),
         'addListener#1': (args) { (args[0] as TabController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as TabController).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as TabController).notifyListeners(); return null; },
@@ -42,9 +43,11 @@ abstract final class TabControllerBindings {
         'previousIndex#0': (args) => (args[0] as TabController).previousIndex,
         'indexIsChanging#0': (args) => (args[0] as TabController).indexIsChanging,
         'offset#0': (args) => (args[0] as TabController).offset,
+        'hashCode#0': (args) => (args[0] as TabController).hashCode,
         'hasListeners#0': (args) => (args[0] as TabController).hasListeners,
         'index=#1': (args) { (args[0] as TabController).index = args[1] as int; return args[1]; },
         'offset=#1': (args) { (args[0] as TabController).offset = args[1] as double; return args[1]; },
+        '==#1': (args) => (args[0] as TabController) == (args[1] as Object),
         '#4': (args) => TabController(initialIndex: identical(args[0], darticAbsent) ? 0 : args[0] as int, animationDuration: identical(args[1], darticAbsent) ? null : args[1] as Duration?, length: args[2] as int, vsync: args[3] as TickerProvider),
       };
 }

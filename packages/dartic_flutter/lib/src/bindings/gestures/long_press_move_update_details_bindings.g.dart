@@ -29,12 +29,15 @@ abstract final class LongPressMoveUpdateDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as LongPressMoveUpdateDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LongPressMoveUpdateDetails).toString(),
         'toStringShort#0': (args) => (args[0] as LongPressMoveUpdateDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LongPressMoveUpdateDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as LongPressMoveUpdateDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as LongPressMoveUpdateDetails).localPosition,
         'offsetFromOrigin#0': (args) => (args[0] as LongPressMoveUpdateDetails).offsetFromOrigin,
         'localOffsetFromOrigin#0': (args) => (args[0] as LongPressMoveUpdateDetails).localOffsetFromOrigin,
+        'hashCode#0': (args) => (args[0] as LongPressMoveUpdateDetails).hashCode,
+        '==#1': (args) => (args[0] as LongPressMoveUpdateDetails) == (args[1] as Object),
         '#4': (args) => LongPressMoveUpdateDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, offsetFromOrigin: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, localOffsetFromOrigin: identical(args[3], darticAbsent) ? null : args[3] as Offset?),
         '_#fromFields#4': (args) => LongPressMoveUpdateDetails(globalPosition: args[0] as Offset, localPosition: args[2] as Offset?, offsetFromOrigin: args[3] as Offset, localOffsetFromOrigin: args[1] as Offset?),
       };

@@ -24,5 +24,8 @@ abstract final class GestureArenaMemberBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'acceptGesture#1': (args) { (args[0] as GestureArenaMember).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as GestureArenaMember).rejectGesture(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as GestureArenaMember).toString(),
+        'hashCode#0': (args) => (args[0] as GestureArenaMember).hashCode,
+        '==#1': (args) => (args[0] as GestureArenaMember) == (args[1] as Object),
       };
 }

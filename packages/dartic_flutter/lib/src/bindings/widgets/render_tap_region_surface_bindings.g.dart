@@ -45,6 +45,7 @@ abstract final class RenderTapRegionSurfaceBindings {
         'unregisterTapRegion#1': (args) { (args[0] as RenderTapRegionSurface).unregisterTapRegion(args[1] as RenderTapRegion); return null; },
         'hitTest#2': (args) => (args[0] as RenderTapRegionSurface).hitTest(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'handleEvent#2': (args) { (args[0] as RenderTapRegionSurface).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
+        'toString#0': (args) => (args[0] as RenderTapRegionSurface).toString(),
         'hitTestSelf#1': (args) => (args[0] as RenderTapRegionSurface).hitTestSelf(args[1] as Offset),
         'debugFillProperties#1': (args) { (args[0] as RenderTapRegionSurface).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'setupParentData#1': (args) { (args[0] as RenderTapRegionSurface).setupParentData(args[1] as RenderObject); return null; },
@@ -121,6 +122,7 @@ abstract final class RenderTapRegionSurfaceBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderTapRegionSurface).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderTapRegionSurface).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderTapRegionSurface).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderTapRegionSurface).hashCode,
         'behavior#0': (args) => (args[0] as RenderTapRegionSurface).behavior,
         'hasSize#0': (args) => (args[0] as RenderTapRegionSurface).hasSize,
         'size#0': (args) => (args[0] as RenderTapRegionSurface).size,
@@ -159,6 +161,7 @@ abstract final class RenderTapRegionSurfaceBindings {
         'debugCreator=#1': (args) { (args[0] as RenderTapRegionSurface).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTapRegionSurface).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderTapRegionSurface).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTapRegionSurface) == (args[1] as Object),
         '#0': (args) => RenderTapRegionSurface(),
       };
 }

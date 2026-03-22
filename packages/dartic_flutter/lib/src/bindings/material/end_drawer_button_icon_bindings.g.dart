@@ -34,6 +34,7 @@ abstract final class EndDrawerButtonIconBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as EndDrawerButtonIcon).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as EndDrawerButtonIcon).toString(),
         'createElement#0': (args) => (args[0] as EndDrawerButtonIcon).createElement(),
         'toStringShort#0': (args) => (args[0] as EndDrawerButtonIcon).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as EndDrawerButtonIcon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class EndDrawerButtonIconBindings {
         'toStringDeep#4': (args) => (args[0] as EndDrawerButtonIcon).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as EndDrawerButtonIcon).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as EndDrawerButtonIcon).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as EndDrawerButtonIcon).hashCode,
         'key#0': (args) => (args[0] as EndDrawerButtonIcon).key,
+        '==#1': (args) => (args[0] as EndDrawerButtonIcon) == (args[1] as Object),
         '#1': (args) => EndDrawerButtonIcon(key: identical(args[0], darticAbsent) ? null : args[0] as Key?),
         '_#fromFields#1': (args) => EndDrawerButtonIcon(key: args[0] as Key?),
       };

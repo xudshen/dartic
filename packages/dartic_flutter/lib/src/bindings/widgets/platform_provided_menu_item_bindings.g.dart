@@ -34,10 +34,12 @@ abstract final class PlatformProvidedMenuItemBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toChannelRepresentation#2': (args) => (args[0] as PlatformProvidedMenuItem).toChannelRepresentation(args[1] as PlatformMenuDelegate, getId: (a) => (args[2] as Function)(a) as int),
         'debugFillProperties#1': (args) { (args[0] as PlatformProvidedMenuItem).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PlatformProvidedMenuItem).toString(),
         'toStringShort#0': (args) => (args[0] as PlatformProvidedMenuItem).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformProvidedMenuItem).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'type#0': (args) => (args[0] as PlatformProvidedMenuItem).type,
         'enabled#0': (args) => (args[0] as PlatformProvidedMenuItem).enabled,
+        'hashCode#0': (args) => (args[0] as PlatformProvidedMenuItem).hashCode,
         'label#0': (args) => (args[0] as PlatformProvidedMenuItem).label,
         'shortcut#0': (args) => (args[0] as PlatformProvidedMenuItem).shortcut,
         'onSelected#0': (args) => (args[0] as PlatformProvidedMenuItem).onSelected,
@@ -46,6 +48,7 @@ abstract final class PlatformProvidedMenuItemBindings {
         'onSelectedIntent#0': (args) => (args[0] as PlatformProvidedMenuItem).onSelectedIntent,
         'descendants#0': (args) => (args[0] as PlatformProvidedMenuItem).descendants,
         'members#0': (args) => (args[0] as PlatformProvidedMenuItem).members,
+        '==#1': (args) => (args[0] as PlatformProvidedMenuItem) == (args[1] as Object),
         '#2': (args) => PlatformProvidedMenuItem(type: args[0] as PlatformProvidedMenuItemType, enabled: identical(args[1], darticAbsent) ? true : args[1] as bool),
         '_#fromFields#6': (args) => PlatformProvidedMenuItem(type: args[5] as PlatformProvidedMenuItemType, enabled: args[0] as bool),
       };

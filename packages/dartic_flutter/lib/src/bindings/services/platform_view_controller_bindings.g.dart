@@ -30,7 +30,10 @@ abstract final class PlatformViewControllerBindings {
         'create#2': (args) => (args[0] as PlatformViewController).create(size: identical(args[1], darticAbsent) ? null : args[1] as Size?, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),
         'dispose#0': (args) => (args[0] as PlatformViewController).dispose(),
         'clearFocus#0': (args) => (args[0] as PlatformViewController).clearFocus(),
+        'toString#0': (args) => (args[0] as PlatformViewController).toString(),
         'viewId#0': (args) => (args[0] as PlatformViewController).viewId,
         'awaitingCreation#0': (args) => (args[0] as PlatformViewController).awaitingCreation,
+        'hashCode#0': (args) => (args[0] as PlatformViewController).hashCode,
+        '==#1': (args) => (args[0] as PlatformViewController) == (args[1] as Object),
       };
 }

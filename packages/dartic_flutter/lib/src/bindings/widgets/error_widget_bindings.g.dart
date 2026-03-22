@@ -38,6 +38,7 @@ abstract final class ErrorWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as ErrorWidget).createRenderObject(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as ErrorWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ErrorWidget).toString(),
         'createElement#0': (args) => (args[0] as ErrorWidget).createElement(),
         'updateRenderObject#2': (args) { (args[0] as ErrorWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as ErrorWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
@@ -47,7 +48,9 @@ abstract final class ErrorWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ErrorWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ErrorWidget).debugDescribeChildren(),
         'message#0': (args) => (args[0] as ErrorWidget).message,
+        'hashCode#0': (args) => (args[0] as ErrorWidget).hashCode,
         'key#0': (args) => (args[0] as ErrorWidget).key,
+        '==#1': (args) => (args[0] as ErrorWidget) == (args[1] as Object),
         '#1': (args) => ErrorWidget(args[0] as Object),
         'withDetails#2': (args) => ErrorWidget.withDetails(message: identical(args[0], darticAbsent) ? '' : args[0] as String, error: identical(args[1], darticAbsent) ? null : args[1] as FlutterError?),
       };

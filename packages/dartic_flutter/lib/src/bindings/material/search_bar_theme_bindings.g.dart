@@ -31,6 +31,7 @@ abstract final class SearchBarThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SearchBarTheme).updateShouldNotify(args[1] as SearchBarTheme),
+        'toString#0': (args) => (args[0] as SearchBarTheme).toString(),
         'createElement#0': (args) => (args[0] as SearchBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as SearchBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SearchBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class SearchBarThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SearchBarTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SearchBarTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as SearchBarTheme).data,
+        'hashCode#0': (args) => (args[0] as SearchBarTheme).hashCode,
         'child#0': (args) => (args[0] as SearchBarTheme).child,
         'key#0': (args) => (args[0] as SearchBarTheme).key,
+        '==#1': (args) => (args[0] as SearchBarTheme) == (args[1] as Object),
         '#3': (args) => SearchBarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as SearchBarThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => SearchBarTheme(key: args[2] as Key?, data: args[1] as SearchBarThemeData, child: args[0] as Widget),
       };

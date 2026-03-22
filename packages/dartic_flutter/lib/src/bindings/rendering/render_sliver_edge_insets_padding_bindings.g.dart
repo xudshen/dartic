@@ -49,6 +49,7 @@ abstract final class RenderSliverEdgeInsetsPaddingBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'paint#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugPaint#2': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverEdgeInsetsPadding).performResize(); return null; },
@@ -106,6 +107,7 @@ abstract final class RenderSliverEdgeInsetsPaddingBindings {
         'afterPadding#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).afterPadding,
         'mainAxisPadding#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).mainAxisPadding,
         'crossAxisPadding#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).crossAxisPadding,
+        'hashCode#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverEdgeInsetsPadding).geometry,
@@ -143,5 +145,6 @@ abstract final class RenderSliverEdgeInsetsPaddingBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverEdgeInsetsPadding).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverEdgeInsetsPadding).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverEdgeInsetsPadding).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverEdgeInsetsPadding) == (args[1] as Object),
       };
 }

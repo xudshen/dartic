@@ -38,6 +38,7 @@ abstract final class HorizontalDragGestureRecognizerBindings {
         'isFlingGesture#2': (args) => (args[0] as HorizontalDragGestureRecognizer).isFlingGesture(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'considerFling#2': (args) => (args[0] as HorizontalDragGestureRecognizer).considerFling(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'hasSufficientGlobalDistanceToAccept#2': (args) => (args[0] as HorizontalDragGestureRecognizer).hasSufficientGlobalDistanceToAccept(args[1] as PointerDeviceKind, args[2] as double?),
+        'toString#0': (args) => (args[0] as HorizontalDragGestureRecognizer).toString(),
         'isPointerAllowed#1': (args) => (args[0] as HorizontalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as HorizontalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as HorizontalDragGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
@@ -65,6 +66,7 @@ abstract final class HorizontalDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as HorizontalDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as HorizontalDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as HorizontalDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as HorizontalDragGestureRecognizer).hashCode,
         'dragStartBehavior#0': (args) => (args[0] as HorizontalDragGestureRecognizer).dragStartBehavior,
         'multitouchDragStrategy#0': (args) => (args[0] as HorizontalDragGestureRecognizer).multitouchDragStrategy,
         'onDown#0': (args) => (args[0] as HorizontalDragGestureRecognizer).onDown,
@@ -100,6 +102,7 @@ abstract final class HorizontalDragGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as HorizontalDragGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as HorizontalDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as HorizontalDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as HorizontalDragGestureRecognizer) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[2], darticAbsent)) {
             return HorizontalDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>());

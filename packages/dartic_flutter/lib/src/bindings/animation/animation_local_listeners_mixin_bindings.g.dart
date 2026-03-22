@@ -28,5 +28,8 @@ abstract final class AnimationLocalListenersMixinBindings {
         'removeListener#1': (args) { (args[0] as AnimationLocalListenersMixin).removeListener(() => (args[1] as Function)()); return null; },
         'clearListeners#0': (args) { (args[0] as AnimationLocalListenersMixin).clearListeners(); return null; },
         'notifyListeners#0': (args) { (args[0] as AnimationLocalListenersMixin).notifyListeners(); return null; },
+        'toString#0': (args) => (args[0] as AnimationLocalListenersMixin).toString(),
+        'hashCode#0': (args) => (args[0] as AnimationLocalListenersMixin).hashCode,
+        '==#1': (args) => (args[0] as AnimationLocalListenersMixin) == (args[1] as Object),
       };
 }

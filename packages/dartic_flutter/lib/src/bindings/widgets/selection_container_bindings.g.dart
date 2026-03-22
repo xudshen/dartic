@@ -28,6 +28,7 @@ abstract final class SelectionContainerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SelectionContainer).createState(),
+        'toString#0': (args) => (args[0] as SelectionContainer).toString(),
         'createElement#0': (args) => (args[0] as SelectionContainer).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectionContainer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectionContainer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class SelectionContainerBindings {
         'registrar#0': (args) => (args[0] as SelectionContainer).registrar,
         'child#0': (args) => (args[0] as SelectionContainer).child,
         'delegate#0': (args) => (args[0] as SelectionContainer).delegate,
+        'hashCode#0': (args) => (args[0] as SelectionContainer).hashCode,
         'key#0': (args) => (args[0] as SelectionContainer).key,
+        '==#1': (args) => (args[0] as SelectionContainer) == (args[1] as Object),
         '#4': (args) => SelectionContainer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, registrar: identical(args[1], darticAbsent) ? null : args[1] as SelectionRegistrar?, delegate: args[2] as SelectionContainerDelegate, child: args[3] as Widget),
         'disabled#2': (args) => SelectionContainer.disabled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#4': (args) => SelectionContainer(key: args[2] as Key?, registrar: args[3] as SelectionRegistrar?, delegate: args[1] as SelectionContainerDelegate, child: args[0] as Widget),

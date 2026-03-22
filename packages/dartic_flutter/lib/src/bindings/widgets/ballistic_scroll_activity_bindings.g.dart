@@ -46,7 +46,9 @@ abstract final class BallisticScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as BallisticScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as BallisticScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as BallisticScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as BallisticScrollActivity).hashCode,
         'delegate#0': (args) => (args[0] as BallisticScrollActivity).delegate,
+        '==#1': (args) => (args[0] as BallisticScrollActivity) == (args[1] as Object),
         '#4': (args) => BallisticScrollActivity(args[0] as ScrollActivityDelegate, args[1] as Simulation, args[2] as TickerProvider, args[3] as bool),
       };
 }

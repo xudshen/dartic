@@ -37,7 +37,10 @@ abstract final class VerticalCaretMovementRunBindings {
         'moveNext#0': (args) => (args[0] as VerticalCaretMovementRun).moveNext(),
         'movePrevious#0': (args) => (args[0] as VerticalCaretMovementRun).movePrevious(),
         'moveByOffset#1': (args) => (args[0] as VerticalCaretMovementRun).moveByOffset(args[1] as double),
+        'toString#0': (args) => (args[0] as VerticalCaretMovementRun).toString(),
         'isValid#0': (args) => (args[0] as VerticalCaretMovementRun).isValid,
         'current#0': (args) => (args[0] as VerticalCaretMovementRun).current,
+        'hashCode#0': (args) => (args[0] as VerticalCaretMovementRun).hashCode,
+        '==#1': (args) => (args[0] as VerticalCaretMovementRun) == (args[1] as Object),
       };
 }

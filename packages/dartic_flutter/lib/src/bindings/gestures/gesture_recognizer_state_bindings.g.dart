@@ -34,6 +34,9 @@ abstract final class GestureRecognizerStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as GestureRecognizerState).toString(),
+        'hashCode#0': (args) => (args[0] as GestureRecognizerState).hashCode,
         'index#0': (args) => (args[0] as GestureRecognizerState).index,
+        '==#1': (args) => (args[0] as GestureRecognizerState) == (args[1] as Object),
       };
 }

@@ -31,6 +31,9 @@ abstract final class AnimationBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimationBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as AnimationBehavior).hashCode,
         'index#0': (args) => (args[0] as AnimationBehavior).index,
+        '==#1': (args) => (args[0] as AnimationBehavior) == (args[1] as Object),
       };
 }

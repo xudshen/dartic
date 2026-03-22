@@ -103,11 +103,13 @@ abstract final class VisualDensityBindings {
         'effectiveConstraints#1': (args) => (args[0] as VisualDensity).effectiveConstraints(args[1] as BoxConstraints),
         'debugFillProperties#1': (args) { (args[0] as VisualDensity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as VisualDensity).toStringShort(),
+        'toString#0': (args) => (args[0] as VisualDensity).toString(),
         'toDiagnosticsNode#2': (args) => (args[0] as VisualDensity).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'horizontal#0': (args) => (args[0] as VisualDensity).horizontal,
         'vertical#0': (args) => (args[0] as VisualDensity).vertical,
         'baseSizeAdjustment#0': (args) => (args[0] as VisualDensity).baseSizeAdjustment,
         'hashCode#0': (args) => (args[0] as VisualDensity).hashCode,
+        '==#1': (args) => (args[0] as VisualDensity) == (args[1] as Object),
         '#2': (args) => VisualDensity(horizontal: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, vertical: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
         '_#fromFields#2': (args) => VisualDensity(horizontal: args[0] as double, vertical: args[1] as double),
       };

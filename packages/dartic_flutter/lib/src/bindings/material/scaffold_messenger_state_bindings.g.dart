@@ -60,6 +60,7 @@ abstract final class ScaffoldMessengerStateBindings {
         'clearMaterialBanners#0': (args) { (args[0] as ScaffoldMessengerState).clearMaterialBanners(); return null; },
         'build#1': (args) => (args[0] as ScaffoldMessengerState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as ScaffoldMessengerState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ScaffoldMessengerState).toString(),
         'initState#0': (args) { (args[0] as ScaffoldMessengerState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ScaffoldMessengerState).didUpdateWidget(args[1] as ScaffoldMessenger); return null; },
         'reassemble#0': (args) { (args[0] as ScaffoldMessengerState).reassemble(); return null; },
@@ -70,9 +71,11 @@ abstract final class ScaffoldMessengerStateBindings {
         'toStringShort#0': (args) => (args[0] as ScaffoldMessengerState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScaffoldMessengerState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as ScaffoldMessengerState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as ScaffoldMessengerState).hashCode,
         'widget#0': (args) => (args[0] as ScaffoldMessengerState).widget,
         'context#0': (args) => (args[0] as ScaffoldMessengerState).context,
         'mounted#0': (args) => (args[0] as ScaffoldMessengerState).mounted,
+        '==#1': (args) => (args[0] as ScaffoldMessengerState) == (args[1] as Object),
         '#0': (args) => ScaffoldMessengerState(),
       };
 }

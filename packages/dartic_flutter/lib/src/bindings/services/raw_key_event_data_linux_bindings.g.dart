@@ -29,6 +29,7 @@ abstract final class RawKeyEventDataLinuxBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataLinux).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataLinux).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataLinux).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataLinux).toString(),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataLinux).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataLinux).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataLinux).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -48,6 +49,7 @@ abstract final class RawKeyEventDataLinuxBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataLinux).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataLinux).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataLinux).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataLinux) == (args[1] as Object),
         '#7': (args) => RawKeyEventDataLinux(keyHelper: args[0] as KeyHelper, unicodeScalarValues: identical(args[1], darticAbsent) ? 0 : args[1] as int, scanCode: identical(args[2], darticAbsent) ? 0 : args[2] as int, keyCode: identical(args[3], darticAbsent) ? 0 : args[3] as int, modifiers: identical(args[4], darticAbsent) ? 0 : args[4] as int, isDown: args[5] as bool, specifiedLogicalKey: identical(args[6], darticAbsent) ? null : args[6] as int?),
         '_#fromFields#7': (args) => RawKeyEventDataLinux(keyHelper: args[2] as KeyHelper, unicodeScalarValues: args[6] as int, scanCode: args[4] as int, keyCode: args[1] as int, modifiers: args[3] as int, isDown: args[0] as bool, specifiedLogicalKey: args[5] as int?),
       };

@@ -65,7 +65,9 @@ abstract final class MenuAcceleratorLabelBindings {
         'displayLabel#0': (args) => (args[0] as MenuAcceleratorLabel).displayLabel,
         'builder#0': (args) => (args[0] as MenuAcceleratorLabel).builder,
         'hasAccelerator#0': (args) => (args[0] as MenuAcceleratorLabel).hasAccelerator,
+        'hashCode#0': (args) => (args[0] as MenuAcceleratorLabel).hashCode,
         'key#0': (args) => (args[0] as MenuAcceleratorLabel).key,
+        '==#1': (args) => (args[0] as MenuAcceleratorLabel) == (args[1] as Object),
         '#3': (args) => MenuAcceleratorLabel(args[0] as String, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, builder: identical(args[2], darticAbsent) ? MenuAcceleratorLabel.defaultLabelBuilder : (a, b, c) => (args[2] as Function)(a, b, c) as Widget),
         '_#fromFields#3': (args) => MenuAcceleratorLabel(args[2] as String, key: args[1] as Key?, builder: args[0] as MenuAcceleratorChildBuilder),
       };

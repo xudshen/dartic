@@ -38,8 +38,11 @@ abstract final class TappableChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TappableChipAttributes).toString(),
         'onPressed#0': (args) => (args[0] as TappableChipAttributes).onPressed,
         'pressElevation#0': (args) => (args[0] as TappableChipAttributes).pressElevation,
         'tooltip#0': (args) => (args[0] as TappableChipAttributes).tooltip,
+        'hashCode#0': (args) => (args[0] as TappableChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as TappableChipAttributes) == (args[1] as Object),
       };
 }

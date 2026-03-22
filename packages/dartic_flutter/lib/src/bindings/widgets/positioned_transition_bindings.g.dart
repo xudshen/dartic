@@ -34,6 +34,7 @@ abstract final class PositionedTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PositionedTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PositionedTransition).toString(),
         'createState#0': (args) => (args[0] as PositionedTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as PositionedTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as PositionedTransition).createElement(),
@@ -44,8 +45,10 @@ abstract final class PositionedTransitionBindings {
         'debugDescribeChildren#0': (args) => (args[0] as PositionedTransition).debugDescribeChildren(),
         'rect#0': (args) => (args[0] as PositionedTransition).rect,
         'child#0': (args) => (args[0] as PositionedTransition).child,
+        'hashCode#0': (args) => (args[0] as PositionedTransition).hashCode,
         'listenable#0': (args) => (args[0] as PositionedTransition).listenable,
         'key#0': (args) => (args[0] as PositionedTransition).key,
+        '==#1': (args) => (args[0] as PositionedTransition) == (args[1] as Object),
         '#3': (args) => PositionedTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as Animation<RelativeRect>, child: args[2] as Widget),
         '_#fromFields#3': (args) => PositionedTransition(key: args[1] as Key?, rect: args[2] as Animation<RelativeRect>, child: args[0] as Widget),
       };

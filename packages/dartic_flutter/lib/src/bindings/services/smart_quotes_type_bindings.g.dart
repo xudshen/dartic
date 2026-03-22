@@ -37,6 +37,9 @@ abstract final class SmartQuotesTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SmartQuotesType).toString(),
+        'hashCode#0': (args) => (args[0] as SmartQuotesType).hashCode,
         'index#0': (args) => (args[0] as SmartQuotesType).index,
+        '==#1': (args) => (args[0] as SmartQuotesType) == (args[1] as Object),
       };
 }

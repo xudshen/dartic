@@ -40,6 +40,7 @@ abstract final class SingleChildRenderObjectElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as SingleChildRenderObjectElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as SingleChildRenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as SingleChildRenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
+        'toString#0': (args) => (args[0] as SingleChildRenderObjectElement).toString(),
         'performRebuild#0': (args) { (args[0] as SingleChildRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as SingleChildRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SingleChildRenderObjectElement).unmount(); return null; },
@@ -85,6 +86,7 @@ abstract final class SingleChildRenderObjectElementBindings {
         'rebuild#1': (args) { (args[0] as SingleChildRenderObjectElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as SingleChildRenderObjectElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as SingleChildRenderObjectElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as SingleChildRenderObjectElement).hashCode,
         'renderObject#0': (args) => (args[0] as SingleChildRenderObjectElement).renderObject,
         'renderObjectAttachingChild#0': (args) => (args[0] as SingleChildRenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as SingleChildRenderObjectElement).debugDoingBuild,
@@ -98,6 +100,7 @@ abstract final class SingleChildRenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as SingleChildRenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as SingleChildRenderObjectElement).size,
         'dirty#0': (args) => (args[0] as SingleChildRenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as SingleChildRenderObjectElement) == (args[1] as Object),
         '#1': (args) => SingleChildRenderObjectElement(args[0] as SingleChildRenderObjectWidget),
       };
 }

@@ -29,7 +29,10 @@ abstract final class AnimationWithParentMixinBindings {
         'removeListener#1': (args) { (args[0] as AnimationWithParentMixin).removeListener(() => (args[1] as Function)()); return null; },
         'addStatusListener#1': (args) { (args[0] as AnimationWithParentMixin).addStatusListener((a) => (args[1] as Function)(a)); return null; },
         'removeStatusListener#1': (args) { (args[0] as AnimationWithParentMixin).removeStatusListener((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as AnimationWithParentMixin).toString(),
         'parent#0': (args) => (args[0] as AnimationWithParentMixin).parent,
         'status#0': (args) => (args[0] as AnimationWithParentMixin).status,
+        'hashCode#0': (args) => (args[0] as AnimationWithParentMixin).hashCode,
+        '==#1': (args) => (args[0] as AnimationWithParentMixin) == (args[1] as Object),
       };
 }

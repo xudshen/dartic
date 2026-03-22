@@ -34,5 +34,8 @@ abstract final class SingleChildLayoutDelegateBindings {
         'getConstraintsForChild#1': (args) => (args[0] as SingleChildLayoutDelegate).getConstraintsForChild(args[1] as BoxConstraints),
         'getPositionForChild#2': (args) => (args[0] as SingleChildLayoutDelegate).getPositionForChild(args[1] as Size, args[2] as Size),
         'shouldRelayout#1': (args) => (args[0] as SingleChildLayoutDelegate).shouldRelayout(args[1] as SingleChildLayoutDelegate),
+        'toString#0': (args) => (args[0] as SingleChildLayoutDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as SingleChildLayoutDelegate).hashCode,
+        '==#1': (args) => (args[0] as SingleChildLayoutDelegate) == (args[1] as Object),
       };
 }

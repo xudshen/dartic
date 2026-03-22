@@ -25,7 +25,10 @@ abstract final class CircularNotchedRectangleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOuterPath#2': (args) => (args[0] as CircularNotchedRectangle).getOuterPath(args[1] as Rect, args[2] as Rect?),
+        'toString#0': (args) => (args[0] as CircularNotchedRectangle).toString(),
         'inverted#0': (args) => (args[0] as CircularNotchedRectangle).inverted,
+        'hashCode#0': (args) => (args[0] as CircularNotchedRectangle).hashCode,
+        '==#1': (args) => (args[0] as CircularNotchedRectangle) == (args[1] as Object),
         '#1': (args) => CircularNotchedRectangle(inverted: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#1': (args) => CircularNotchedRectangle(inverted: args[0] as bool),
       };

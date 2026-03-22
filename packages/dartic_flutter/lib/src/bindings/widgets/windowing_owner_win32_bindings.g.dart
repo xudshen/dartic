@@ -32,7 +32,10 @@ abstract final class WindowingOwnerWin32Bindings {
         'createRegularWindowController#4': (args) => (args[0] as WindowingOwnerWin32).createRegularWindowController(preferredSize: identical(args[1], darticAbsent) ? null : args[1] as Size?, preferredConstraints: identical(args[2], darticAbsent) ? null : args[2] as BoxConstraints?, title: identical(args[3], darticAbsent) ? null : args[3] as String?, delegate: args[4] as RegularWindowControllerDelegate),
         'createDialogWindowController#5': (args) => (args[0] as WindowingOwnerWin32).createDialogWindowController(delegate: args[1] as DialogWindowControllerDelegate, preferredSize: identical(args[2], darticAbsent) ? null : args[2] as Size?, preferredConstraints: identical(args[3], darticAbsent) ? null : args[3] as BoxConstraints?, parent: identical(args[4], darticAbsent) ? null : args[4] as BaseWindowController?, title: identical(args[5], darticAbsent) ? null : args[5] as String?),
         'hasTopLevelWindows#0': (args) => (args[0] as WindowingOwnerWin32).hasTopLevelWindows(),
+        'toString#0': (args) => (args[0] as WindowingOwnerWin32).toString(),
         'allocator#0': (args) => (args[0] as WindowingOwnerWin32).allocator,
+        'hashCode#0': (args) => (args[0] as WindowingOwnerWin32).hashCode,
+        '==#1': (args) => (args[0] as WindowingOwnerWin32) == (args[1] as Object),
         '#0': (args) => WindowingOwnerWin32(),
       };
 }

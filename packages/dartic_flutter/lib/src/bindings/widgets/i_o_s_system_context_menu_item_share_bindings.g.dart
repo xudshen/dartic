@@ -33,9 +33,12 @@ abstract final class IOSSystemContextMenuItemShareBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemShare).getData(args[1] as WidgetsLocalizations),
         'debugFillProperties#1': (args) { (args[0] as IOSSystemContextMenuItemShare).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemShare).toString(),
         'toStringShort#0': (args) => (args[0] as IOSSystemContextMenuItemShare).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IOSSystemContextMenuItemShare).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemShare).title,
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemShare).hashCode,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemShare) == (args[1] as Object),
         '#1': (args) => IOSSystemContextMenuItemShare(title: identical(args[0], darticAbsent) ? null : args[0] as String?),
         '_#fromFields#1': (args) => IOSSystemContextMenuItemShare(title: args[0] as String?),
       };

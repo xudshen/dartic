@@ -39,6 +39,7 @@ abstract final class TextureBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as TextureBox).computeDryLayout(args[1] as BoxConstraints),
         'hitTestSelf#1': (args) => (args[0] as TextureBox).hitTestSelf(args[1] as Offset),
         'paint#2': (args) { (args[0] as TextureBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as TextureBox).toString(),
         'setupParentData#1': (args) { (args[0] as TextureBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as TextureBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as TextureBox).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class TextureBoxBindings {
         'sizedByParent#0': (args) => (args[0] as TextureBox).sizedByParent,
         'alwaysNeedsCompositing#0': (args) => (args[0] as TextureBox).alwaysNeedsCompositing,
         'isRepaintBoundary#0': (args) => (args[0] as TextureBox).isRepaintBoundary,
+        'hashCode#0': (args) => (args[0] as TextureBox).hashCode,
         'hasSize#0': (args) => (args[0] as TextureBox).hasSize,
         'size#0': (args) => (args[0] as TextureBox).size,
         'semanticBounds#0': (args) => (args[0] as TextureBox).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class TextureBoxBindings {
         'parentData=#1': (args) { (args[0] as TextureBox).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as TextureBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as TextureBox).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as TextureBox) == (args[1] as Object),
         '#3': (args) => TextureBox(textureId: args[0] as int, freeze: identical(args[1], darticAbsent) ? false : args[1] as bool, filterQuality: identical(args[2], darticAbsent) ? FilterQuality.low : args[2] as FilterQuality),
       };
 }

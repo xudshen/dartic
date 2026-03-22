@@ -43,6 +43,7 @@ abstract final class AlignmentBindings {
         'toString#0': (args) => (args[0] as Alignment).toString(),
         'x#0': (args) => (args[0] as Alignment).x,
         'y#0': (args) => (args[0] as Alignment).y,
+        'hashCode#0': (args) => (args[0] as Alignment).hashCode,
         '-#1': (args) => (args[0] as Alignment) - (args[1] as Alignment),
         '+#1': (args) => (args[0] as Alignment) + (args[1] as Alignment),
         'unary-#0': (args) => -(args[0] as Alignment),
@@ -50,6 +51,7 @@ abstract final class AlignmentBindings {
         '/#1': (args) => (args[0] as Alignment) / (args[1] as double),
         '~/#1': (args) => (args[0] as Alignment) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as Alignment) % (args[1] as double),
+        '==#1': (args) => (args[0] as Alignment) == (args[1] as Object),
         '#2': (args) => Alignment(args[0] as double, args[1] as double),
         '_#fromFields#2': (args) => Alignment(args[0] as double, args[1] as double),
       };

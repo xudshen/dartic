@@ -30,6 +30,7 @@ abstract final class IconButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as IconButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as IconButtonTheme).updateShouldNotify(args[1] as IconButtonTheme),
+        'toString#0': (args) => (args[0] as IconButtonTheme).toString(),
         'createElement#0': (args) => (args[0] as IconButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as IconButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as IconButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class IconButtonThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as IconButtonTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as IconButtonTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as IconButtonTheme).data,
+        'hashCode#0': (args) => (args[0] as IconButtonTheme).hashCode,
         'child#0': (args) => (args[0] as IconButtonTheme).child,
         'key#0': (args) => (args[0] as IconButtonTheme).key,
+        '==#1': (args) => (args[0] as IconButtonTheme) == (args[1] as Object),
         '#3': (args) => IconButtonTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as IconButtonThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => IconButtonTheme(key: args[2] as Key?, data: args[1] as IconButtonThemeData, child: args[0] as Widget),
       };

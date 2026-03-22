@@ -41,6 +41,7 @@ abstract final class CupertinoTextSelectionControlsBindings {
         'buildToolbar#8': (args) => (args[0] as CupertinoTextSelectionControls).buildToolbar(args[1] as BuildContext, args[2] as Rect, args[3] as double, args[4] as Offset, (args[5] as List).cast<TextSelectionPoint>(), args[6] as TextSelectionDelegate, args[7] as ValueListenable<ClipboardStatus>?, args[8] as Offset?),
         'buildHandle#4': (args) => (args[0] as CupertinoTextSelectionControls).buildHandle(args[1] as BuildContext, args[2] as TextSelectionHandleType, args[3] as double, identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
         'getHandleAnchor#2': (args) => (args[0] as CupertinoTextSelectionControls).getHandleAnchor(args[1] as TextSelectionHandleType, args[2] as double),
+        'toString#0': (args) => (args[0] as CupertinoTextSelectionControls).toString(),
         'canCut#1': (args) => (args[0] as CupertinoTextSelectionControls).canCut(args[1] as TextSelectionDelegate),
         'canCopy#1': (args) => (args[0] as CupertinoTextSelectionControls).canCopy(args[1] as TextSelectionDelegate),
         'canPaste#1': (args) => (args[0] as CupertinoTextSelectionControls).canPaste(args[1] as TextSelectionDelegate),
@@ -49,10 +50,10 @@ abstract final class CupertinoTextSelectionControlsBindings {
         'handleCopy#1': (args) { (args[0] as CupertinoTextSelectionControls).handleCopy(args[1] as TextSelectionDelegate); return null; },
         'handlePaste#1': (args) => (args[0] as CupertinoTextSelectionControls).handlePaste(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as CupertinoTextSelectionControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
-        'toString#0': (args) => (args[0] as CupertinoTextSelectionControls).toString(),
         'noSuchMethod#1': (args) => (args[0] as CupertinoTextSelectionControls).noSuchMethod(args[1] as Invocation),
         'hashCode#0': (args) => (args[0] as CupertinoTextSelectionControls).hashCode,
         'runtimeType#0': (args) => (args[0] as CupertinoTextSelectionControls).runtimeType,
+        '==#1': (args) => (args[0] as CupertinoTextSelectionControls) == (args[1] as Object),
         '#0': (args) => CupertinoTextSelectionControls(),
       };
 }

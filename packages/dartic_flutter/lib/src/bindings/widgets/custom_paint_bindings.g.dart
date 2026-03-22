@@ -39,6 +39,7 @@ abstract final class CustomPaintBindings {
         'createRenderObject#1': (args) => (args[0] as CustomPaint).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as CustomPaint).updateRenderObject(args[1] as BuildContext, args[2] as RenderCustomPaint); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as CustomPaint).didUnmountRenderObject(args[1] as RenderCustomPaint); return null; },
+        'toString#0': (args) => (args[0] as CustomPaint).toString(),
         'createElement#0': (args) => (args[0] as CustomPaint).createElement(),
         'toStringShort#0': (args) => (args[0] as CustomPaint).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CustomPaint).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,8 +52,10 @@ abstract final class CustomPaintBindings {
         'size#0': (args) => (args[0] as CustomPaint).size,
         'isComplex#0': (args) => (args[0] as CustomPaint).isComplex,
         'willChange#0': (args) => (args[0] as CustomPaint).willChange,
+        'hashCode#0': (args) => (args[0] as CustomPaint).hashCode,
         'child#0': (args) => (args[0] as CustomPaint).child,
         'key#0': (args) => (args[0] as CustomPaint).key,
+        '==#1': (args) => (args[0] as CustomPaint) == (args[1] as Object),
         '#7': (args) => CustomPaint(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, painter: identical(args[1], darticAbsent) ? null : args[1] as CustomPainter?, foregroundPainter: identical(args[2], darticAbsent) ? null : args[2] as CustomPainter?, size: identical(args[3], darticAbsent) ? Size.zero : args[3] as ui.Size, isComplex: identical(args[4], darticAbsent) ? false : args[4] as bool, willChange: identical(args[5], darticAbsent) ? false : args[5] as bool, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         '_#fromFields#7': (args) => CustomPaint(key: args[3] as Key?, painter: args[4] as CustomPainter?, foregroundPainter: args[1] as CustomPainter?, size: args[5] as ui.Size, isComplex: args[2] as bool, willChange: args[6] as bool, child: args[0] as Widget?),
       };

@@ -58,6 +58,7 @@ abstract final class RenderSliverOverlapAbsorberBindings {
         'hitTestChildren#3': (args) => (args[0] as RenderSliverOverlapAbsorber).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
         'paint#2': (args) { (args[0] as RenderSliverOverlapAbsorber).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOverlapAbsorber).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverOverlapAbsorber).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverOverlapAbsorber).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverOverlapAbsorber).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverOverlapAbsorber).performResize(); return null; },
@@ -113,6 +114,7 @@ abstract final class RenderSliverOverlapAbsorberBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverOverlapAbsorber).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSliverOverlapAbsorber).debugValidateChild(args[1] as RenderObject),
         'handle#0': (args) => (args[0] as RenderSliverOverlapAbsorber).handle,
+        'hashCode#0': (args) => (args[0] as RenderSliverOverlapAbsorber).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverOverlapAbsorber).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverOverlapAbsorber).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverOverlapAbsorber).geometry,
@@ -151,6 +153,7 @@ abstract final class RenderSliverOverlapAbsorberBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverOverlapAbsorber).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverOverlapAbsorber).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverOverlapAbsorber).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverOverlapAbsorber) == (args[1] as Object),
         '#2': (args) => RenderSliverOverlapAbsorber(handle: args[0] as SliverOverlapAbsorberHandle, sliver: identical(args[1], darticAbsent) ? null : args[1] as RenderSliver?),
       };
 }

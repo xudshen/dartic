@@ -112,7 +112,8 @@ class AuditReporter {
     }
 
     // WARNINGS: auto-gen patterns that may produce incorrect behavior.
-    final warnings = _detectWarnings(info, bridgeRequested: bridgeRequested);
+    final warnings = _detectWarnings(info,
+        bridgeRequested: bridgeRequested, overrideKeys: overrideKeys);
 
     return AuditResult(
       className: info.className,
@@ -129,13 +130,17 @@ class AuditReporter {
   static List<AuditEntry> _detectWarnings(
     TypeInfo info, {
     bool bridgeRequested = false,
+    Set<String> overrideKeys = const {},
   }) {
     final warnings = <AuditEntry>[];
 
     // Check methods for nullable params with non-null inaccessible defaults.
     // Auto-gen passes null for absent nullable params, but the actual default
     // may be non-null (e.g., writeln([Object? obj = '']) — '' not null).
+    // Skip methods already overridden by extra_methods (user handled it).
     for (final method in [...info.methods, ...info.staticMethods]) {
+      final key = '${method.name}#${method.paramTypes.length}';
+      if (overrideKeys.contains(key)) continue;
       for (final param in method.paramTypes) {
         if (!param.isOptional) continue;
         final type = param.type;
@@ -207,7 +212,7 @@ class AuditReporter {
   }
 
   /// Prints an audit summary to stderr.
-  static void printSummary(List<AuditResult> results) {
+  static void printSummary(List<AuditResult> results, {String? label}) {
     var cleanCount = 0;
     var missingCount = 0;
     var staleCount = 0;
@@ -254,7 +259,10 @@ class AuditReporter {
     }
 
     stderr.writeln('');
-    stderr.writeln('=== Audit Summary ===');
+    final header = label != null
+        ? '=== Audit Summary ($label) ==='
+        : '=== Audit Summary ===';
+    stderr.writeln(header);
     final parts = <String>[
       '$cleanCount clean',
       if (missingCount > 0) '$missingCount missing',
@@ -263,6 +271,6 @@ class AuditReporter {
       if (warningCount > 0) '$warningCount warnings',
     ];
     stderr.writeln('${results.length} classes: ${parts.join(', ')}');
-    stderr.writeln('=====================');
+    stderr.writeln('=' * header.length);
   }
 }

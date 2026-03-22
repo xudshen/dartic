@@ -32,6 +32,7 @@ abstract final class BadgeThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#8': (args) => (args[0] as BadgeThemeData).copyWith(backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, textColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, smallSize: identical(args[3], darticAbsent) ? null : args[3] as double?, largeSize: identical(args[4], darticAbsent) ? null : args[4] as double?, textStyle: identical(args[5], darticAbsent) ? null : args[5] as TextStyle?, padding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, alignment: identical(args[7], darticAbsent) ? null : args[7] as AlignmentGeometry?, offset: identical(args[8], darticAbsent) ? null : args[8] as Offset?),
         'debugFillProperties#1': (args) { (args[0] as BadgeThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BadgeThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as BadgeThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as BadgeThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'backgroundColor#0': (args) => (args[0] as BadgeThemeData).backgroundColor,
@@ -43,6 +44,7 @@ abstract final class BadgeThemeDataBindings {
         'alignment#0': (args) => (args[0] as BadgeThemeData).alignment,
         'offset#0': (args) => (args[0] as BadgeThemeData).offset,
         'hashCode#0': (args) => (args[0] as BadgeThemeData).hashCode,
+        '==#1': (args) => (args[0] as BadgeThemeData) == (args[1] as Object),
         '#8': (args) => BadgeThemeData(backgroundColor: identical(args[0], darticAbsent) ? null : args[0] as Color?, textColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, smallSize: identical(args[2], darticAbsent) ? null : args[2] as double?, largeSize: identical(args[3], darticAbsent) ? null : args[3] as double?, textStyle: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsetsGeometry?, alignment: identical(args[6], darticAbsent) ? null : args[6] as AlignmentGeometry?, offset: identical(args[7], darticAbsent) ? null : args[7] as Offset?),
         '_#fromFields#8': (args) => BadgeThemeData(backgroundColor: args[1] as Color?, textColor: args[6] as Color?, smallSize: args[5] as double?, largeSize: args[2] as double?, textStyle: args[7] as TextStyle?, padding: args[4] as EdgeInsetsGeometry?, alignment: args[0] as AlignmentGeometry?, offset: args[3] as Offset?),
       };

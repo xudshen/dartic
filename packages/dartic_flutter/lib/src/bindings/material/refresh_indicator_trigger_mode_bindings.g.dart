@@ -31,6 +31,9 @@ abstract final class RefreshIndicatorTriggerModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RefreshIndicatorTriggerMode).toString(),
+        'hashCode#0': (args) => (args[0] as RefreshIndicatorTriggerMode).hashCode,
         'index#0': (args) => (args[0] as RefreshIndicatorTriggerMode).index,
+        '==#1': (args) => (args[0] as RefreshIndicatorTriggerMode) == (args[1] as Object),
       };
 }

@@ -34,6 +34,9 @@ abstract final class StrokeJoinBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as StrokeJoin).toString(),
+        'hashCode#0': (args) => (args[0] as StrokeJoin).hashCode,
         'index#0': (args) => (args[0] as StrokeJoin).index,
+        '==#1': (args) => (args[0] as StrokeJoin) == (args[1] as Object),
       };
 }

@@ -59,6 +59,7 @@ abstract final class ToggleablePainterBindings {
         'isHovered#0': (args) => (args[0] as ToggleablePainter).isHovered,
         'isActive#0': (args) => (args[0] as ToggleablePainter).isActive,
         'semanticsBuilder#0': (args) => (args[0] as ToggleablePainter).semanticsBuilder,
+        'hashCode#0': (args) => (args[0] as ToggleablePainter).hashCode,
         'hasListeners#0': (args) => (args[0] as ToggleablePainter).hasListeners,
         'position=#1': (args) { (args[0] as ToggleablePainter).position = args[1] as Animation<double>; return args[1]; },
         'reaction=#1': (args) { (args[0] as ToggleablePainter).reaction = args[1] as Animation<double>; return args[1]; },
@@ -75,5 +76,6 @@ abstract final class ToggleablePainterBindings {
         'isFocused=#1': (args) { (args[0] as ToggleablePainter).isFocused = args[1] as bool?; return args[1]; },
         'isHovered=#1': (args) { (args[0] as ToggleablePainter).isHovered = args[1] as bool?; return args[1]; },
         'isActive=#1': (args) { (args[0] as ToggleablePainter).isActive = args[1] as bool?; return args[1]; },
+        '==#1': (args) => (args[0] as ToggleablePainter) == (args[1] as Object),
       };
 }

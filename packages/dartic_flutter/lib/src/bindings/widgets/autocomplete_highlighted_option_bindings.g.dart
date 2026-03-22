@@ -41,6 +41,7 @@ abstract final class AutocompleteHighlightedOptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AutocompleteHighlightedOption).toString(),
         'updateShouldNotify#1': (args) => (args[0] as AutocompleteHighlightedOption).updateShouldNotify(args[1] as InheritedNotifier<ValueNotifier<int>>),
         'createElement#0': (args) => (args[0] as AutocompleteHighlightedOption).createElement(),
         'toStringShort#0': (args) => (args[0] as AutocompleteHighlightedOption).toStringShort(),
@@ -49,9 +50,11 @@ abstract final class AutocompleteHighlightedOptionBindings {
         'toStringDeep#4': (args) => (args[0] as AutocompleteHighlightedOption).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as AutocompleteHighlightedOption).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as AutocompleteHighlightedOption).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as AutocompleteHighlightedOption).hashCode,
         'notifier#0': (args) => (args[0] as AutocompleteHighlightedOption).notifier,
         'child#0': (args) => (args[0] as AutocompleteHighlightedOption).child,
         'key#0': (args) => (args[0] as AutocompleteHighlightedOption).key,
+        '==#1': (args) => (args[0] as AutocompleteHighlightedOption) == (args[1] as Object),
         '#3': (args) => AutocompleteHighlightedOption(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, highlightIndexNotifier: args[1] as ValueNotifier<int>, child: args[2] as Widget),
         '_#fromFields#3': (args) => AutocompleteHighlightedOption(key: args[1] as Key?, highlightIndexNotifier: args[2] as ValueNotifier<int>, child: args[0] as Widget),
       };

@@ -45,6 +45,7 @@ abstract final class InspectorSerializationDelegateBindings {
         'filterProperties#2': (args) => (args[0] as InspectorSerializationDelegate).filterProperties((args[1] as List).cast<DiagnosticsNode>(), args[2] as DiagnosticsNode),
         'truncateNodesList#2': (args) => (args[0] as InspectorSerializationDelegate).truncateNodesList((args[1] as List).cast<DiagnosticsNode>(), args[2] as DiagnosticsNode?),
         'copyWith#4': (args) => (args[0] as InspectorSerializationDelegate).copyWith(subtreeDepth: identical(args[1], darticAbsent) ? null : args[1] as int?, includeProperties: identical(args[2], darticAbsent) ? null : args[2] as bool?, expandPropertyValues: identical(args[3], darticAbsent) ? null : args[3] as bool?, inDisableWidgetInspectorScope: identical(args[4], darticAbsent) ? null : args[4] as bool?),
+        'toString#0': (args) => (args[0] as InspectorSerializationDelegate).toString(),
         'service#0': (args) => (args[0] as InspectorSerializationDelegate).service,
         'groupName#0': (args) => (args[0] as InspectorSerializationDelegate).groupName,
         'summaryTree#0': (args) => (args[0] as InspectorSerializationDelegate).summaryTree,
@@ -54,6 +55,8 @@ abstract final class InspectorSerializationDelegateBindings {
         'expandPropertyValues#0': (args) => (args[0] as InspectorSerializationDelegate).expandPropertyValues,
         'inDisableWidgetInspectorScope#0': (args) => (args[0] as InspectorSerializationDelegate).inDisableWidgetInspectorScope,
         'addAdditionalPropertiesCallback#0': (args) => (args[0] as InspectorSerializationDelegate).addAdditionalPropertiesCallback,
+        'hashCode#0': (args) => (args[0] as InspectorSerializationDelegate).hashCode,
+        '==#1': (args) => (args[0] as InspectorSerializationDelegate) == (args[1] as Object),
         '#9': (args) => InspectorSerializationDelegate(groupName: identical(args[0], darticAbsent) ? null : args[0] as String?, summaryTree: identical(args[1], darticAbsent) ? false : args[1] as bool, maxDescendantsTruncatableNode: identical(args[2], darticAbsent) ? -1 : args[2] as int, expandPropertyValues: identical(args[3], darticAbsent) ? true : args[3] as bool, subtreeDepth: identical(args[4], darticAbsent) ? 1 : args[4] as int, includeProperties: identical(args[5], darticAbsent) ? false : args[5] as bool, service: args[6] as WidgetInspectorService, addAdditionalPropertiesCallback: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, b) => (args[7] as Function?)!(a, b), inDisableWidgetInspectorScope: identical(args[8], darticAbsent) ? false : args[8] as bool),
       };
 }

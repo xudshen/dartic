@@ -37,5 +37,8 @@ abstract final class AnimationBindings {
         'isCompleted#0': (args) => (args[0] as Animation).isCompleted,
         'isAnimating#0': (args) => (args[0] as Animation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as Animation).isForwardOrCompleted,
+        'hashCode#0': (args) => (args[0] as Animation).hashCode,
+        '==#1': (args) => (args[0] as Animation) == (args[1] as Object),
+        'fromValueListenable#2': (args) => Animation<dynamic>.fromValueListenable(args[0] as ValueListenable, transformer: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)),
       };
 }

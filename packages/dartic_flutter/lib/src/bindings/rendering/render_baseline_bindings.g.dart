@@ -45,6 +45,7 @@ abstract final class RenderBaselineBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderBaseline).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderBaseline).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderBaseline).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderBaseline).toString(),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderBaseline).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderBaseline).computeMaxIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicHeight#1': (args) => (args[0] as RenderBaseline).computeMinIntrinsicHeight(args[1] as double),
@@ -120,6 +121,7 @@ abstract final class RenderBaselineBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderBaseline).debugValidateChild(args[1] as RenderObject),
         'baseline#0': (args) => (args[0] as RenderBaseline).baseline,
         'baselineType#0': (args) => (args[0] as RenderBaseline).baselineType,
+        'hashCode#0': (args) => (args[0] as RenderBaseline).hashCode,
         'hasSize#0': (args) => (args[0] as RenderBaseline).hasSize,
         'size#0': (args) => (args[0] as RenderBaseline).size,
         'semanticBounds#0': (args) => (args[0] as RenderBaseline).semanticBounds,
@@ -158,6 +160,7 @@ abstract final class RenderBaselineBindings {
         'debugCreator=#1': (args) { (args[0] as RenderBaseline).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderBaseline).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderBaseline).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderBaseline) == (args[1] as Object),
         '#3': (args) => RenderBaseline(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, baseline: args[1] as double, baselineType: args[2] as TextBaseline),
       };
 }

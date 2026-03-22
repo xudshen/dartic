@@ -44,6 +44,7 @@ abstract final class ScaffoldPrelayoutGeometryBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).toString(),
         'floatingActionButtonSize#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).floatingActionButtonSize,
         'bottomSheetSize#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).bottomSheetSize,
         'contentBottom#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).contentBottom,
@@ -54,6 +55,8 @@ abstract final class ScaffoldPrelayoutGeometryBindings {
         'snackBarSize#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).snackBarSize,
         'materialBannerSize#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).materialBannerSize,
         'textDirection#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).textDirection,
+        'hashCode#0': (args) => (args[0] as ScaffoldPrelayoutGeometry).hashCode,
+        '==#1': (args) => (args[0] as ScaffoldPrelayoutGeometry) == (args[1] as Object),
         '#10': (args) => ScaffoldPrelayoutGeometry(bottomSheetSize: args[0] as Size, contentBottom: args[1] as double, contentTop: args[2] as double, floatingActionButtonSize: args[3] as Size, minInsets: args[4] as EdgeInsets, minViewPadding: args[5] as EdgeInsets, scaffoldSize: args[6] as Size, snackBarSize: args[7] as Size, materialBannerSize: args[8] as Size, textDirection: args[9] as TextDirection),
         '_#fromFields#10': (args) => ScaffoldPrelayoutGeometry(bottomSheetSize: args[0] as Size, contentBottom: args[1] as double, contentTop: args[2] as double, floatingActionButtonSize: args[3] as Size, minInsets: args[5] as EdgeInsets, minViewPadding: args[6] as EdgeInsets, scaffoldSize: args[7] as Size, snackBarSize: args[8] as Size, materialBannerSize: args[4] as Size, textDirection: args[9] as TextDirection),
       };

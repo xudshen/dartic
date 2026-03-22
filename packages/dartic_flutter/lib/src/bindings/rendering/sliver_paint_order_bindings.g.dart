@@ -33,6 +33,9 @@ abstract final class SliverPaintOrderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SliverPaintOrder).toString(),
+        'hashCode#0': (args) => (args[0] as SliverPaintOrder).hashCode,
         'index#0': (args) => (args[0] as SliverPaintOrder).index,
+        '==#1': (args) => (args[0] as SliverPaintOrder) == (args[1] as Object),
       };
 }

@@ -44,5 +44,7 @@ abstract final class FlutterViewBindings {
         'padding#0': (args) => (args[0] as FlutterView).padding,
         'gestureSettings#0': (args) => (args[0] as FlutterView).gestureSettings,
         'displayFeatures#0': (args) => (args[0] as FlutterView).displayFeatures,
+        'hashCode#0': (args) => (args[0] as FlutterView).hashCode,
+        '==#1': (args) => (args[0] as FlutterView) == (args[1] as Object),
       };
 }

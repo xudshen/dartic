@@ -32,6 +32,7 @@ abstract final class ShortcutRegistrarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ShortcutRegistrar).createState(),
+        'toString#0': (args) => (args[0] as ShortcutRegistrar).toString(),
         'createElement#0': (args) => (args[0] as ShortcutRegistrar).createElement(),
         'toStringShort#0': (args) => (args[0] as ShortcutRegistrar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ShortcutRegistrar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class ShortcutRegistrarBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ShortcutRegistrar).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ShortcutRegistrar).debugDescribeChildren(),
         'child#0': (args) => (args[0] as ShortcutRegistrar).child,
+        'hashCode#0': (args) => (args[0] as ShortcutRegistrar).hashCode,
         'key#0': (args) => (args[0] as ShortcutRegistrar).key,
+        '==#1': (args) => (args[0] as ShortcutRegistrar) == (args[1] as Object),
         '#2': (args) => ShortcutRegistrar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => ShortcutRegistrar(key: args[1] as Key?, child: args[0] as Widget),
       };

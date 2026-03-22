@@ -29,11 +29,14 @@ abstract final class PlatformAssetBundleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'load#1': (args) => (args[0] as PlatformAssetBundle).load(args[1] as String),
         'loadBuffer#1': (args) => (args[0] as PlatformAssetBundle).loadBuffer(args[1] as String),
+        'toString#0': (args) => (args[0] as PlatformAssetBundle).toString(),
         'loadString#2': (args) => (args[0] as PlatformAssetBundle).loadString(args[1] as String, cache: identical(args[2], darticAbsent) ? true : args[2] as bool),
         'loadStructuredData#2': (args) => (args[0] as PlatformAssetBundle).loadStructuredData(args[1] as String, (a) => (args[2] as Function)(a) as Future),
         'loadStructuredBinaryData#2': (args) => (args[0] as PlatformAssetBundle).loadStructuredBinaryData(args[1] as String, (a) => (args[2] as Function)(a) as FutureOr),
         'evict#1': (args) { (args[0] as PlatformAssetBundle).evict(args[1] as String); return null; },
         'clear#0': (args) { (args[0] as PlatformAssetBundle).clear(); return null; },
+        'hashCode#0': (args) => (args[0] as PlatformAssetBundle).hashCode,
+        '==#1': (args) => (args[0] as PlatformAssetBundle) == (args[1] as Object),
         '#0': (args) => PlatformAssetBundle(),
       };
 }

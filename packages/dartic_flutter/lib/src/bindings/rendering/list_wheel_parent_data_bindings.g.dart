@@ -31,9 +31,11 @@ abstract final class ListWheelParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ListWheelParentData).toString(),
         'detach#0': (args) { (args[0] as ListWheelParentData).detach(); return null; },
         'index#0': (args) => (args[0] as ListWheelParentData).index,
         'transform#0': (args) => (args[0] as ListWheelParentData).transform,
+        'hashCode#0': (args) => (args[0] as ListWheelParentData).hashCode,
         'offset#0': (args) => (args[0] as ListWheelParentData).offset,
         'previousSibling#0': (args) => (args[0] as ListWheelParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as ListWheelParentData).nextSibling,
@@ -42,6 +44,7 @@ abstract final class ListWheelParentDataBindings {
         'offset=#1': (args) { (args[0] as ListWheelParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as ListWheelParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as ListWheelParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as ListWheelParentData) == (args[1] as Object),
         '#0': (args) => ListWheelParentData(),
       };
 }

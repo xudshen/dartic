@@ -73,6 +73,7 @@ abstract final class RenderParagraphBindings {
         'clearSemantics#0': (args) { (args[0] as RenderParagraph).clearSemantics(); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderParagraph).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as RenderParagraph).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderParagraph).toString(),
         'setupParentData#1': (args) { (args[0] as RenderParagraph).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderParagraph).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderParagraph).getMaxIntrinsicWidth(args[1] as double),
@@ -164,6 +165,7 @@ abstract final class RenderParagraphBindings {
         'debugHasOverflowShader#0': (args) => (args[0] as RenderParagraph).debugHasOverflowShader,
         'textSize#0': (args) => (args[0] as RenderParagraph).textSize,
         'didExceedMaxLines#0': (args) => (args[0] as RenderParagraph).didExceedMaxLines,
+        'hashCode#0': (args) => (args[0] as RenderParagraph).hashCode,
         'hasSize#0': (args) => (args[0] as RenderParagraph).hasSize,
         'size#0': (args) => (args[0] as RenderParagraph).size,
         'semanticBounds#0': (args) => (args[0] as RenderParagraph).semanticBounds,
@@ -214,6 +216,7 @@ abstract final class RenderParagraphBindings {
         'parentData=#1': (args) { (args[0] as RenderParagraph).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderParagraph).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderParagraph).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderParagraph) == (args[1] as Object),
         '#15': (args) {
           if (identical(args[6], darticAbsent)) {
             return RenderParagraph(args[0] as InlineSpan, textAlign: identical(args[1], darticAbsent) ? TextAlign.start : args[1] as ui.TextAlign, textDirection: args[2] as ui.TextDirection, softWrap: identical(args[3], darticAbsent) ? true : args[3] as bool, overflow: identical(args[4], darticAbsent) ? TextOverflow.clip : args[4] as TextOverflow, textScaleFactor: identical(args[5], darticAbsent) ? 1.0 : args[5] as double, maxLines: identical(args[7], darticAbsent) ? null : args[7] as int?, locale: identical(args[8], darticAbsent) ? null : args[8] as ui.Locale?, strutStyle: identical(args[9], darticAbsent) ? null : args[9] as StrutStyle?, textWidthBasis: identical(args[10], darticAbsent) ? TextWidthBasis.parent : args[10] as TextWidthBasis, textHeightBehavior: identical(args[11], darticAbsent) ? null : args[11] as ui.TextHeightBehavior?, children: identical(args[12], darticAbsent) ? null : args[12] == null ? null : (args[12] as List).cast<RenderBox>(), selectionColor: identical(args[13], darticAbsent) ? null : args[13] as ui.Color?, registrar: identical(args[14], darticAbsent) ? null : args[14] as SelectionRegistrar?);

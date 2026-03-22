@@ -34,6 +34,7 @@ abstract final class CupertinoSegmentedControlBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSegmentedControl).createState(),
+        'toString#0': (args) => (args[0] as CupertinoSegmentedControl).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSegmentedControl).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSegmentedControl).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSegmentedControl).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class CupertinoSegmentedControlBindings {
         'disabledTextColor#0': (args) => (args[0] as CupertinoSegmentedControl).disabledTextColor,
         'padding#0': (args) => (args[0] as CupertinoSegmentedControl).padding,
         'disabledChildren#0': (args) => (args[0] as CupertinoSegmentedControl).disabledChildren,
+        'hashCode#0': (args) => (args[0] as CupertinoSegmentedControl).hashCode,
         'key#0': (args) => (args[0] as CupertinoSegmentedControl).key,
+        '==#1': (args) => (args[0] as CupertinoSegmentedControl) == (args[1] as Object),
         '#12': (args) => CupertinoSegmentedControl<Object>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as Map).cast<Object, Widget>(), onValueChanged: (a) => (args[2] as Function)(a), groupValue: identical(args[3], darticAbsent) ? null : args[3], unselectedColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, selectedColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, borderColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, pressedColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, disabledColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, disabledTextColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, padding: identical(args[10], darticAbsent) ? null : args[10] as EdgeInsetsGeometry?, disabledChildren: identical(args[11], darticAbsent) ? const <Never>{} : (args[11] as Set).cast<Object>()),
       };
 }

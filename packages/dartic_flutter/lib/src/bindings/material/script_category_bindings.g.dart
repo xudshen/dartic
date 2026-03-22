@@ -29,6 +29,9 @@ abstract final class ScriptCategoryBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScriptCategory).toString(),
+        'hashCode#0': (args) => (args[0] as ScriptCategory).hashCode,
         'index#0': (args) => (args[0] as ScriptCategory).index,
+        '==#1': (args) => (args[0] as ScriptCategory) == (args[1] as Object),
       };
 }

@@ -25,7 +25,10 @@ abstract final class CurveBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transform#1': (args) => (args[0] as Curve).transform(args[1] as double),
+        'toString#0': (args) => (args[0] as Curve).toString(),
         'transformInternal#1': (args) => (args[0] as Curve).transformInternal(args[1] as double),
         'flipped#0': (args) => (args[0] as Curve).flipped,
+        'hashCode#0': (args) => (args[0] as Curve).hashCode,
+        '==#1': (args) => (args[0] as Curve) == (args[1] as Object),
       };
 }

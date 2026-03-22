@@ -41,6 +41,7 @@ abstract final class TooltipStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as TooltipState).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as TooltipState).dispose(); return null; },
         'build#1': (args) => (args[0] as TooltipState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TooltipState).toString(),
         'didUpdateWidget#1': (args) { (args[0] as TooltipState).didUpdateWidget(args[1] as Tooltip); return null; },
         'reassemble#0': (args) { (args[0] as TooltipState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as TooltipState).setState(() => (args[1] as Function)()); return null; },
@@ -50,9 +51,11 @@ abstract final class TooltipStateBindings {
         'toStringShort#0': (args) => (args[0] as TooltipState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TooltipState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as TooltipState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as TooltipState).hashCode,
         'widget#0': (args) => (args[0] as TooltipState).widget,
         'context#0': (args) => (args[0] as TooltipState).context,
         'mounted#0': (args) => (args[0] as TooltipState).mounted,
+        '==#1': (args) => (args[0] as TooltipState) == (args[1] as Object),
         '#0': (args) => TooltipState(),
       };
 }

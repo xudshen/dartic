@@ -41,6 +41,7 @@ abstract final class ParagraphBindings {
         'getLineMetricsAt#1': (args) => (args[0] as Paragraph).getLineMetricsAt(args[1] as int),
         'getLineNumberAt#1': (args) => (args[0] as Paragraph).getLineNumberAt(args[1] as int),
         'dispose#0': (args) { (args[0] as Paragraph).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Paragraph).toString(),
         'width#0': (args) => (args[0] as Paragraph).width,
         'height#0': (args) => (args[0] as Paragraph).height,
         'longestLine#0': (args) => (args[0] as Paragraph).longestLine,
@@ -51,5 +52,7 @@ abstract final class ParagraphBindings {
         'didExceedMaxLines#0': (args) => (args[0] as Paragraph).didExceedMaxLines,
         'numberOfLines#0': (args) => (args[0] as Paragraph).numberOfLines,
         'debugDisposed#0': (args) => (args[0] as Paragraph).debugDisposed,
+        'hashCode#0': (args) => (args[0] as Paragraph).hashCode,
+        '==#1': (args) => (args[0] as Paragraph) == (args[1] as Object),
       };
 }

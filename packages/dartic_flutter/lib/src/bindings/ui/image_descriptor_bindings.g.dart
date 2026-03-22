@@ -32,8 +32,12 @@ abstract final class ImageDescriptorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as ImageDescriptor).dispose(); return null; },
         'instantiateCodec#2': (args) => (args[0] as ImageDescriptor).instantiateCodec(targetWidth: identical(args[1], darticAbsent) ? null : args[1] as int?, targetHeight: identical(args[2], darticAbsent) ? null : args[2] as int?),
+        'toString#0': (args) => (args[0] as ImageDescriptor).toString(),
         'width#0': (args) => (args[0] as ImageDescriptor).width,
         'height#0': (args) => (args[0] as ImageDescriptor).height,
         'bytesPerPixel#0': (args) => (args[0] as ImageDescriptor).bytesPerPixel,
+        'hashCode#0': (args) => (args[0] as ImageDescriptor).hashCode,
+        '==#1': (args) => (args[0] as ImageDescriptor) == (args[1] as Object),
+        'raw#5': (args) => ImageDescriptor.raw(args[0] as ImmutableBuffer, width: args[1] as int, height: args[2] as int, rowBytes: identical(args[3], darticAbsent) ? null : args[3] as int?, pixelFormat: args[4] as PixelFormat),
       };
 }

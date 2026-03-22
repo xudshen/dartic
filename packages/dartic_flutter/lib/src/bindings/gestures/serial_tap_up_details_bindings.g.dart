@@ -33,12 +33,15 @@ abstract final class SerialTapUpDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as SerialTapUpDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SerialTapUpDetails).toString(),
         'toStringShort#0': (args) => (args[0] as SerialTapUpDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SerialTapUpDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as SerialTapUpDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as SerialTapUpDetails).localPosition,
         'kind#0': (args) => (args[0] as SerialTapUpDetails).kind,
         'count#0': (args) => (args[0] as SerialTapUpDetails).count,
+        'hashCode#0': (args) => (args[0] as SerialTapUpDetails).hashCode,
+        '==#1': (args) => (args[0] as SerialTapUpDetails) == (args[1] as Object),
         '#4': (args) => SerialTapUpDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, kind: identical(args[2], darticAbsent) ? null : args[2] as PointerDeviceKind?, count: identical(args[3], darticAbsent) ? 1 : args[3] as int),
       };
 }

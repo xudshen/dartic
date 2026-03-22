@@ -32,6 +32,7 @@ abstract final class OrderedTraversalPolicyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'sortDescendants#2': (args) => (args[0] as OrderedTraversalPolicy).sortDescendants((args[1] as Iterable).cast<FocusNode>(), args[2] as FocusNode),
+        'toString#0': (args) => (args[0] as OrderedTraversalPolicy).toString(),
         'findFirstFocus#2': (args) => (args[0] as OrderedTraversalPolicy).findFirstFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'findLastFocus#2': (args) => (args[0] as OrderedTraversalPolicy).findLastFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'findFirstFocusInDirection#2': (args) => (args[0] as OrderedTraversalPolicy).findFirstFocusInDirection(args[1] as FocusNode, args[2] as TraversalDirection),
@@ -44,7 +45,9 @@ abstract final class OrderedTraversalPolicyBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as OrderedTraversalPolicy).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as OrderedTraversalPolicy).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'secondary#0': (args) => (args[0] as OrderedTraversalPolicy).secondary,
+        'hashCode#0': (args) => (args[0] as OrderedTraversalPolicy).hashCode,
         'requestFocusCallback#0': (args) => (args[0] as OrderedTraversalPolicy).requestFocusCallback,
+        '==#1': (args) => (args[0] as OrderedTraversalPolicy) == (args[1] as Object),
         '#2': (args) => OrderedTraversalPolicy(secondary: identical(args[0], darticAbsent) ? null : args[0] as FocusTraversalPolicy?, requestFocusCallback: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, {double? alignment, ScrollPositionAlignmentPolicy? alignmentPolicy, Curve? curve, Duration? duration}) => (args[1] as Function?)!(a, alignment: alignment, alignmentPolicy: alignmentPolicy, curve: curve, duration: duration)),
       };
 }

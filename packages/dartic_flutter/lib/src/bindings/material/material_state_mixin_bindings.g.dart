@@ -32,6 +32,7 @@ abstract final class MaterialStateMixinBindings {
         'addMaterialState#1': (args) { (args[0] as MaterialStateMixin).addMaterialState(args[1] as WidgetState); return null; },
         'removeMaterialState#1': (args) { (args[0] as MaterialStateMixin).removeMaterialState(args[1] as WidgetState); return null; },
         'debugFillProperties#1': (args) { (args[0] as MaterialStateMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MaterialStateMixin).toString(),
         'initState#0': (args) { (args[0] as MaterialStateMixin).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as MaterialStateMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as MaterialStateMixin).reassemble(); return null; },
@@ -52,9 +53,11 @@ abstract final class MaterialStateMixinBindings {
         'isPressed#0': (args) => (args[0] as MaterialStateMixin).isPressed,
         'isScrolledUnder#0': (args) => (args[0] as MaterialStateMixin).isScrolledUnder,
         'isSelected#0': (args) => (args[0] as MaterialStateMixin).isSelected,
+        'hashCode#0': (args) => (args[0] as MaterialStateMixin).hashCode,
         'widget#0': (args) => (args[0] as MaterialStateMixin).widget,
         'context#0': (args) => (args[0] as MaterialStateMixin).context,
         'mounted#0': (args) => (args[0] as MaterialStateMixin).mounted,
         'materialStates=#1': (args) { (args[0] as MaterialStateMixin).materialStates = (args[1] as Set).cast<WidgetState>(); return args[1]; },
+        '==#1': (args) => (args[0] as MaterialStateMixin) == (args[1] as Object),
       };
 }

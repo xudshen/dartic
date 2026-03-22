@@ -26,13 +26,16 @@ abstract final class WidgetStatesControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'update#2': (args) { (args[0] as WidgetStatesController).update(args[1] as WidgetState, args[2] as bool); return null; },
+        'toString#0': (args) => (args[0] as WidgetStatesController).toString(),
         'addListener#1': (args) { (args[0] as WidgetStatesController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as WidgetStatesController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as WidgetStatesController).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as WidgetStatesController).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as WidgetStatesController).hashCode,
         'value#0': (args) => (args[0] as WidgetStatesController).value,
         'hasListeners#0': (args) => (args[0] as WidgetStatesController).hasListeners,
         'value=#1': (args) { (args[0] as WidgetStatesController).value = (args[1] as Set).cast<WidgetState>(); return args[1]; },
+        '==#1': (args) => (args[0] as WidgetStatesController) == (args[1] as Object),
         '#1': (args) => WidgetStatesController(identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as Set).cast<WidgetState>()),
       };
 }

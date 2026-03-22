@@ -36,12 +36,15 @@ abstract final class ZoomPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as ZoomPageTransitionsBuilder).buildTransitions(args[1] as PageRoute, args[2] as BuildContext, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as ZoomPageTransitionsBuilder).toString(),
         'allowSnapshotting#0': (args) => (args[0] as ZoomPageTransitionsBuilder).allowSnapshotting,
         'allowEnterRouteSnapshotting#0': (args) => (args[0] as ZoomPageTransitionsBuilder).allowEnterRouteSnapshotting,
         'backgroundColor#0': (args) => (args[0] as ZoomPageTransitionsBuilder).backgroundColor,
         'delegatedTransition#0': (args) => (args[0] as ZoomPageTransitionsBuilder).delegatedTransition,
+        'hashCode#0': (args) => (args[0] as ZoomPageTransitionsBuilder).hashCode,
         'transitionDuration#0': (args) => (args[0] as ZoomPageTransitionsBuilder).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as ZoomPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as ZoomPageTransitionsBuilder) == (args[1] as Object),
         '#3': (args) => ZoomPageTransitionsBuilder(allowSnapshotting: identical(args[0], darticAbsent) ? true : args[0] as bool, allowEnterRouteSnapshotting: identical(args[1], darticAbsent) ? true : args[1] as bool, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as ui.Color?),
         '_#fromFields#3': (args) => ZoomPageTransitionsBuilder(allowSnapshotting: args[1] as bool, allowEnterRouteSnapshotting: args[0] as bool, backgroundColor: args[2] as ui.Color?),
       };

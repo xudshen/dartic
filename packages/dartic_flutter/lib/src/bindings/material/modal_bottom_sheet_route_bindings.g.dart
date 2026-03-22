@@ -61,6 +61,7 @@ abstract final class ModalBottomSheetRouteBindings {
         'createAnimationController#0': (args) => (args[0] as ModalBottomSheetRoute).createAnimationController(),
         'buildPage#3': (args) => (args[0] as ModalBottomSheetRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildModalBarrier#0': (args) => (args[0] as ModalBottomSheetRoute).buildModalBarrier(),
+        'toString#0': (args) => (args[0] as ModalBottomSheetRoute).toString(),
         'setState#1': (args) { (args[0] as ModalBottomSheetRoute).setState(() => (args[1] as Function)()); return null; },
         'buildTransitions#4': (args) => (args[0] as ModalBottomSheetRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
         'install#0': (args) { (args[0] as ModalBottomSheetRoute).install(); return null; },
@@ -116,6 +117,7 @@ abstract final class ModalBottomSheetRouteBindings {
         'barrierDismissible#0': (args) => (args[0] as ModalBottomSheetRoute).barrierDismissible,
         'barrierLabel#0': (args) => (args[0] as ModalBottomSheetRoute).barrierLabel,
         'barrierColor#0': (args) => (args[0] as ModalBottomSheetRoute).barrierColor,
+        'hashCode#0': (args) => (args[0] as ModalBottomSheetRoute).hashCode,
         'opaque#0': (args) => (args[0] as ModalBottomSheetRoute).opaque,
         'maintainState#0': (args) => (args[0] as ModalBottomSheetRoute).maintainState,
         'allowSnapshotting#0': (args) => (args[0] as ModalBottomSheetRoute).allowSnapshotting,
@@ -157,6 +159,7 @@ abstract final class ModalBottomSheetRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as ModalBottomSheetRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as ModalBottomSheetRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as ModalBottomSheetRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as ModalBottomSheetRoute) == (args[1] as Object),
         '#21': (args) {
           if (identical(args[14], darticAbsent)) {
             return ModalBottomSheetRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, capturedThemes: identical(args[1], darticAbsent) ? null : args[1] as CapturedThemes?, barrierLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, barrierOnTapHint: identical(args[3], darticAbsent) ? null : args[3] as String?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, elevation: identical(args[5], darticAbsent) ? null : args[5] as double?, shape: identical(args[6], darticAbsent) ? null : args[6] as ShapeBorder?, clipBehavior: identical(args[7], darticAbsent) ? null : args[7] as Clip?, constraints: identical(args[8], darticAbsent) ? null : args[8] as BoxConstraints?, modalBarrierColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, isDismissible: identical(args[10], darticAbsent) ? true : args[10] as bool, enableDrag: identical(args[11], darticAbsent) ? true : args[11] as bool, showDragHandle: identical(args[12], darticAbsent) ? null : args[12] as bool?, isScrollControlled: args[13] as bool, settings: identical(args[15], darticAbsent) ? null : args[15] as RouteSettings?, requestFocus: identical(args[16], darticAbsent) ? null : args[16] as bool?, transitionAnimationController: identical(args[17], darticAbsent) ? null : args[17] as AnimationController?, anchorPoint: identical(args[18], darticAbsent) ? null : args[18] as Offset?, useSafeArea: identical(args[19], darticAbsent) ? false : args[19] as bool, sheetAnimationStyle: identical(args[20], darticAbsent) ? null : args[20] as AnimationStyle?);

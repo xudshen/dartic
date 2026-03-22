@@ -43,6 +43,7 @@ abstract final class MaterialPageRouteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildContent#1': (args) => (args[0] as MaterialPageRoute).buildContent(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as MaterialPageRoute).toString(),
         'canTransitionTo#1': (args) => (args[0] as MaterialPageRoute).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as MaterialPageRoute).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
         'setState#1': (args) { (args[0] as MaterialPageRoute).setState(() => (args[1] as Function)()); return null; },
@@ -64,7 +65,6 @@ abstract final class MaterialPageRouteBindings {
         'changedExternalState#0': (args) { (args[0] as MaterialPageRoute).changedExternalState(); return null; },
         'buildModalBarrier#0': (args) => (args[0] as MaterialPageRoute).buildModalBarrier(),
         'createOverlayEntries#0': (args) => (args[0] as MaterialPageRoute).createOverlayEntries(),
-        'toString#0': (args) => (args[0] as MaterialPageRoute).toString(),
         'debugTransitionCompleted#0': (args) => (args[0] as MaterialPageRoute).debugTransitionCompleted(),
         'createAnimationController#0': (args) => (args[0] as MaterialPageRoute).createAnimationController(),
         'createAnimation#0': (args) => (args[0] as MaterialPageRoute).createAnimation(),
@@ -84,6 +84,7 @@ abstract final class MaterialPageRouteBindings {
         'builder#0': (args) => (args[0] as MaterialPageRoute).builder,
         'maintainState#0': (args) => (args[0] as MaterialPageRoute).maintainState,
         'debugLabel#0': (args) => (args[0] as MaterialPageRoute).debugLabel,
+        'hashCode#0': (args) => (args[0] as MaterialPageRoute).hashCode,
         'fullscreenDialog#0': (args) => (args[0] as MaterialPageRoute).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as MaterialPageRoute).allowSnapshotting,
         'opaque#0': (args) => (args[0] as MaterialPageRoute).opaque,
@@ -125,11 +126,11 @@ abstract final class MaterialPageRouteBindings {
         'isFirst#0': (args) => (args[0] as MaterialPageRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as MaterialPageRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as MaterialPageRoute).isActive,
-        'hashCode#0': (args) => (args[0] as MaterialPageRoute).hashCode,
         'runtimeType#0': (args) => (args[0] as MaterialPageRoute).runtimeType,
         'receivedTransition=#1': (args) { (args[0] as MaterialPageRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as MaterialPageRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as MaterialPageRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as MaterialPageRoute) == (args[1] as Object),
         '#9': (args) => MaterialPageRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, settings: identical(args[1], darticAbsent) ? null : args[1] as RouteSettings?, requestFocus: identical(args[2], darticAbsent) ? null : args[2] as bool?, maintainState: identical(args[3], darticAbsent) ? true : args[3] as bool, fullscreenDialog: identical(args[4], darticAbsent) ? false : args[4] as bool, allowSnapshotting: identical(args[5], darticAbsent) ? true : args[5] as bool, barrierDismissible: identical(args[6], darticAbsent) ? false : args[6] as bool, traversalEdgeBehavior: identical(args[7], darticAbsent) ? null : args[7] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[8], darticAbsent) ? null : args[8] as TraversalEdgeBehavior?),
       };
 }

@@ -33,6 +33,9 @@ abstract final class CachingAssetBundleBindings {
         'evict#1': (args) { (args[0] as CachingAssetBundle).evict(args[1] as String); return null; },
         'clear#0': (args) { (args[0] as CachingAssetBundle).clear(); return null; },
         'loadBuffer#1': (args) => (args[0] as CachingAssetBundle).loadBuffer(args[1] as String),
+        'toString#0': (args) => (args[0] as CachingAssetBundle).toString(),
         'load#1': (args) => (args[0] as CachingAssetBundle).load(args[1] as String),
+        'hashCode#0': (args) => (args[0] as CachingAssetBundle).hashCode,
+        '==#1': (args) => (args[0] as CachingAssetBundle) == (args[1] as Object),
       };
 }

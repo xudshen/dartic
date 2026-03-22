@@ -27,6 +27,7 @@ abstract final class PointerScaleEventBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transformed#1': (args) => (args[0] as PointerScaleEvent).transformed(args[1] as Matrix4?),
+        'toString#0': (args) => (args[0] as PointerScaleEvent).toString(),
         'copyWith#24': (args) => (args[0] as PointerScaleEvent).copyWith(viewId: identical(args[1], darticAbsent) ? null : args[1] as int?, timeStamp: identical(args[2], darticAbsent) ? null : args[2] as Duration?, pointer: identical(args[3], darticAbsent) ? null : args[3] as int?, kind: identical(args[4], darticAbsent) ? null : args[4] as PointerDeviceKind?, device: identical(args[5], darticAbsent) ? null : args[5] as int?, position: identical(args[6], darticAbsent) ? null : args[6] as Offset?, delta: identical(args[7], darticAbsent) ? null : args[7] as Offset?, buttons: identical(args[8], darticAbsent) ? null : args[8] as int?, obscured: identical(args[9], darticAbsent) ? null : args[9] as bool?, pressure: identical(args[10], darticAbsent) ? null : args[10] as double?, pressureMin: identical(args[11], darticAbsent) ? null : args[11] as double?, pressureMax: identical(args[12], darticAbsent) ? null : args[12] as double?, distance: identical(args[13], darticAbsent) ? null : args[13] as double?, distanceMax: identical(args[14], darticAbsent) ? null : args[14] as double?, size: identical(args[15], darticAbsent) ? null : args[15] as double?, radiusMajor: identical(args[16], darticAbsent) ? null : args[16] as double?, radiusMinor: identical(args[17], darticAbsent) ? null : args[17] as double?, radiusMin: identical(args[18], darticAbsent) ? null : args[18] as double?, radiusMax: identical(args[19], darticAbsent) ? null : args[19] as double?, orientation: identical(args[20], darticAbsent) ? null : args[20] as double?, tilt: identical(args[21], darticAbsent) ? null : args[21] as double?, synthesized: identical(args[22], darticAbsent) ? null : args[22] as bool?, embedderId: identical(args[23], darticAbsent) ? null : args[23] as int?, scale: identical(args[24], darticAbsent) ? null : args[24] as double?),
         'toStringShort#0': (args) => (args[0] as PointerScaleEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PointerScaleEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -34,6 +35,7 @@ abstract final class PointerScaleEventBindings {
         'respond#1': (args) { (args[0] as PointerScaleEvent).respond(allowPlatformDefault: args[1] as bool); return null; },
         'toStringFull#0': (args) => (args[0] as PointerScaleEvent).toStringFull(),
         'scale#0': (args) => (args[0] as PointerScaleEvent).scale,
+        'hashCode#0': (args) => (args[0] as PointerScaleEvent).hashCode,
         'viewId#0': (args) => (args[0] as PointerScaleEvent).viewId,
         'embedderId#0': (args) => (args[0] as PointerScaleEvent).embedderId,
         'timeStamp#0': (args) => (args[0] as PointerScaleEvent).timeStamp,
@@ -64,6 +66,7 @@ abstract final class PointerScaleEventBindings {
         'synthesized#0': (args) => (args[0] as PointerScaleEvent).synthesized,
         'transform#0': (args) => (args[0] as PointerScaleEvent).transform,
         'original#0': (args) => (args[0] as PointerScaleEvent).original,
+        '==#1': (args) => (args[0] as PointerScaleEvent) == (args[1] as Object),
         '#7': (args) => PointerScaleEvent(viewId: identical(args[0], darticAbsent) ? 0 : args[0] as int, timeStamp: identical(args[1], darticAbsent) ? Duration.zero : args[1] as Duration, kind: identical(args[2], darticAbsent) ? PointerDeviceKind.mouse : args[2] as PointerDeviceKind, device: identical(args[3], darticAbsent) ? 0 : args[3] as int, position: identical(args[4], darticAbsent) ? Offset.zero : args[4] as Offset, embedderId: identical(args[5], darticAbsent) ? 0 : args[5] as int, scale: identical(args[6], darticAbsent) ? 1.0 : args[6] as double),
         '_#fromFields#28': (args) => PointerScaleEvent(viewId: args[27] as int, timeStamp: args[25] as Duration, kind: args[7] as PointerDeviceKind, device: args[2] as int, position: args[13] as Offset, embedderId: args[6] as int, scale: args[21] as double),
       };

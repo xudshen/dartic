@@ -26,6 +26,8 @@ abstract final class Curve2DSampleBindings {
         'toString#0': (args) => (args[0] as Curve2DSample).toString(),
         't#0': (args) => (args[0] as Curve2DSample).t,
         'value#0': (args) => (args[0] as Curve2DSample).value,
+        'hashCode#0': (args) => (args[0] as Curve2DSample).hashCode,
+        '==#1': (args) => (args[0] as Curve2DSample) == (args[1] as Object),
         '#2': (args) => Curve2DSample(args[0] as double, args[1] as Offset),
         '_#fromFields#2': (args) => Curve2DSample(args[0] as double, args[1] as Offset),
       };

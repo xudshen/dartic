@@ -29,9 +29,12 @@ abstract final class SelectionHandlerBindings {
         'getSelectedContent#0': (args) => (args[0] as SelectionHandler).getSelectedContent(),
         'getSelection#0': (args) => (args[0] as SelectionHandler).getSelection(),
         'dispatchSelectionEvent#1': (args) => (args[0] as SelectionHandler).dispatchSelectionEvent(args[1] as SelectionEvent),
+        'toString#0': (args) => (args[0] as SelectionHandler).toString(),
         'addListener#1': (args) { (args[0] as SelectionHandler).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as SelectionHandler).removeListener(() => (args[1] as Function)()); return null; },
         'contentLength#0': (args) => (args[0] as SelectionHandler).contentLength,
+        'hashCode#0': (args) => (args[0] as SelectionHandler).hashCode,
         'value#0': (args) => (args[0] as SelectionHandler).value,
+        '==#1': (args) => (args[0] as SelectionHandler) == (args[1] as Object),
       };
 }

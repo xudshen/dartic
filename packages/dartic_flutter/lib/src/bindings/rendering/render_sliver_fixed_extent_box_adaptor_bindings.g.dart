@@ -45,6 +45,7 @@ abstract final class RenderSliverFixedExtentBoxAdaptorBindings {
         'estimateMaxScrollOffset#5': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).estimateMaxScrollOffset(args[1] as SliverConstraints, firstIndex: identical(args[2], darticAbsent) ? null : args[2] as int?, lastIndex: identical(args[3], darticAbsent) ? null : args[3] as int?, leadingScrollOffset: identical(args[4], darticAbsent) ? null : args[4] as double?, trailingScrollOffset: identical(args[5], darticAbsent) ? null : args[5] as double?),
         'computeMaxScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).computeMaxScrollOffset(args[1] as SliverConstraints, args[2] as double),
         'performLayout#0': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).setupParentData(args[1] as RenderObject); return null; },
         'adoptChild#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).adoptChild(args[1] as RenderObject); return null; },
         'insert#2': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).insert(args[1] as RenderBox, after: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?); return null; },
@@ -126,6 +127,7 @@ abstract final class RenderSliverFixedExtentBoxAdaptorBindings {
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'itemExtent#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).itemExtent,
         'itemExtentBuilder#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).itemExtentBuilder,
+        'hashCode#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).hashCode,
         'childManager#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).debugChildIntegrityEnabled,
         'semanticBounds#0': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor).semanticBounds,
@@ -167,5 +169,6 @@ abstract final class RenderSliverFixedExtentBoxAdaptorBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverFixedExtentBoxAdaptor).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverFixedExtentBoxAdaptor) == (args[1] as Object),
       };
 }

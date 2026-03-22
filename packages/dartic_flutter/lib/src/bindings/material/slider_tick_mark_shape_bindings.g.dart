@@ -35,5 +35,8 @@ abstract final class SliderTickMarkShapeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredSize#2': (args) => (args[0] as SliderTickMarkShape).getPreferredSize(sliderTheme: args[1] as SliderThemeData, isEnabled: args[2] as bool),
         'paint#8': (args) { (args[0] as SliderTickMarkShape).paint(args[1] as PaintingContext, args[2] as Offset, parentBox: args[3] as RenderBox, sliderTheme: args[4] as SliderThemeData, enableAnimation: args[5] as Animation<double>, thumbCenter: args[6] as Offset, isEnabled: args[7] as bool, textDirection: args[8] as TextDirection); return null; },
+        'toString#0': (args) => (args[0] as SliderTickMarkShape).toString(),
+        'hashCode#0': (args) => (args[0] as SliderTickMarkShape).hashCode,
+        '==#1': (args) => (args[0] as SliderTickMarkShape) == (args[1] as Object),
       };
 }

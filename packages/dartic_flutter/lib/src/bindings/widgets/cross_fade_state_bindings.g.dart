@@ -30,6 +30,9 @@ abstract final class CrossFadeStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CrossFadeState).toString(),
+        'hashCode#0': (args) => (args[0] as CrossFadeState).hashCode,
         'index#0': (args) => (args[0] as CrossFadeState).index,
+        '==#1': (args) => (args[0] as CrossFadeState) == (args[1] as Object),
       };
 }

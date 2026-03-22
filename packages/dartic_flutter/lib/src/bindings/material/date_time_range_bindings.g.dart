@@ -27,6 +27,7 @@ abstract final class DateTimeRangeBindings {
         'end#0': (args) => (args[0] as DateTimeRange).end,
         'duration#0': (args) => (args[0] as DateTimeRange).duration,
         'hashCode#0': (args) => (args[0] as DateTimeRange).hashCode,
+        '==#1': (args) => (args[0] as DateTimeRange) == (args[1] as Object),
         '#2': (args) => DateTimeRange<DateTime>(start: args[0] as DateTime, end: args[1] as DateTime),
       };
 }

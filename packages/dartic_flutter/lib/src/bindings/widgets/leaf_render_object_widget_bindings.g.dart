@@ -34,6 +34,7 @@ abstract final class LeafRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as LeafRenderObjectWidget).createElement(),
+        'toString#0': (args) => (args[0] as LeafRenderObjectWidget).toString(),
         'createRenderObject#1': (args) => (args[0] as LeafRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as LeafRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as LeafRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
@@ -43,6 +44,8 @@ abstract final class LeafRenderObjectWidgetBindings {
         'toStringDeep#4': (args) => (args[0] as LeafRenderObjectWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as LeafRenderObjectWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as LeafRenderObjectWidget).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as LeafRenderObjectWidget).hashCode,
         'key#0': (args) => (args[0] as LeafRenderObjectWidget).key,
+        '==#1': (args) => (args[0] as LeafRenderObjectWidget) == (args[1] as Object),
       };
 }

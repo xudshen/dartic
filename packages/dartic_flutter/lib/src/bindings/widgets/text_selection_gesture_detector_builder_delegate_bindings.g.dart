@@ -43,8 +43,11 @@ abstract final class TextSelectionGestureDetectorBuilderDelegateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate).toString(),
         'editableTextKey#0': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate).editableTextKey,
         'forcePressEnabled#0': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate).forcePressEnabled,
         'selectionEnabled#0': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate).selectionEnabled,
+        'hashCode#0': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionGestureDetectorBuilderDelegate) == (args[1] as Object),
       };
 }

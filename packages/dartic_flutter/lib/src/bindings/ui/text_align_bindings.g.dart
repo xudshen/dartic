@@ -37,6 +37,9 @@ abstract final class TextAlignBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextAlign).toString(),
+        'hashCode#0': (args) => (args[0] as TextAlign).hashCode,
         'index#0': (args) => (args[0] as TextAlign).index,
+        '==#1': (args) => (args[0] as TextAlign) == (args[1] as Object),
       };
 }

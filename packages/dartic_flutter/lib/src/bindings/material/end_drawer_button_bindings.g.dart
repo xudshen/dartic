@@ -47,6 +47,7 @@ abstract final class EndDrawerButtonBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as EndDrawerButton).toString(),
         'build#1': (args) => (args[0] as EndDrawerButton).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as EndDrawerButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as EndDrawerButton).createElement(),
@@ -55,6 +56,7 @@ abstract final class EndDrawerButtonBindings {
         'toStringDeep#4': (args) => (args[0] as EndDrawerButton).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as EndDrawerButton).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as EndDrawerButton).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as EndDrawerButton).hashCode,
         'standardComponent#0': (args) => (args[0] as EndDrawerButton).standardComponent,
         'iconSize#0': (args) => (args[0] as EndDrawerButton).iconSize,
         'visualDensity#0': (args) => (args[0] as EndDrawerButton).visualDensity,
@@ -82,6 +84,7 @@ abstract final class EndDrawerButtonBindings {
         'selectedIcon#0': (args) => (args[0] as EndDrawerButton).selectedIcon,
         'statesController#0': (args) => (args[0] as EndDrawerButton).statesController,
         'key#0': (args) => (args[0] as EndDrawerButton).key,
+        '==#1': (args) => (args[0] as EndDrawerButton) == (args[1] as Object),
         '#4': (args) => EndDrawerButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, style: identical(args[2], darticAbsent) ? null : args[2] as ButtonStyle?, onPressed: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         '_#fromFields#28': (args) => EndDrawerButton(key: args[14] as Key?, color: args[3] as Color?, style: args[25] as ButtonStyle?, onPressed: args[18] as VoidCallback?),
       };

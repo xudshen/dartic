@@ -41,6 +41,9 @@ abstract final class PointerChangeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PointerChange).toString(),
+        'hashCode#0': (args) => (args[0] as PointerChange).hashCode,
         'index#0': (args) => (args[0] as PointerChange).index,
+        '==#1': (args) => (args[0] as PointerChange) == (args[1] as Object),
       };
 }

@@ -31,6 +31,7 @@ abstract final class GradientRotationBindings {
         'toString#0': (args) => (args[0] as GradientRotation).toString(),
         'radians#0': (args) => (args[0] as GradientRotation).radians,
         'hashCode#0': (args) => (args[0] as GradientRotation).hashCode,
+        '==#1': (args) => (args[0] as GradientRotation) == (args[1] as Object),
         '#1': (args) => GradientRotation(args[0] as double),
         '_#fromFields#1': (args) => GradientRotation(args[0] as double),
       };

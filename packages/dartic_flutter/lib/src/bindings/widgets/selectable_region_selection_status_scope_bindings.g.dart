@@ -49,6 +49,7 @@ abstract final class SelectableRegionSelectionStatusScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SelectableRegionSelectionStatusScope).updateShouldNotify(args[1] as SelectableRegionSelectionStatusScope),
+        'toString#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).toString(),
         'createElement#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectableRegionSelectionStatusScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class SelectableRegionSelectionStatusScopeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SelectableRegionSelectionStatusScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).debugDescribeChildren(),
         'selectionStatusNotifier#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).selectionStatusNotifier,
+        'hashCode#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).hashCode,
         'child#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).child,
         'key#0': (args) => (args[0] as SelectableRegionSelectionStatusScope).key,
+        '==#1': (args) => (args[0] as SelectableRegionSelectionStatusScope) == (args[1] as Object),
       };
 }

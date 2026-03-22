@@ -34,6 +34,7 @@ abstract final class DrawerHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DrawerHeader).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DrawerHeader).toString(),
         'createElement#0': (args) => (args[0] as DrawerHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as DrawerHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DrawerHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class DrawerHeaderBindings {
         'duration#0': (args) => (args[0] as DrawerHeader).duration,
         'curve#0': (args) => (args[0] as DrawerHeader).curve,
         'child#0': (args) => (args[0] as DrawerHeader).child,
+        'hashCode#0': (args) => (args[0] as DrawerHeader).hashCode,
         'key#0': (args) => (args[0] as DrawerHeader).key,
+        '==#1': (args) => (args[0] as DrawerHeader) == (args[1] as Object),
         '#7': (args) => DrawerHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: identical(args[1], darticAbsent) ? null : args[1] as Decoration?, margin: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, padding: identical(args[3], darticAbsent) ? const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0) : args[3] as EdgeInsetsGeometry, duration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 250) : args[4] as Duration, curve: identical(args[5], darticAbsent) ? Curves.fastOutSlowIn : args[5] as Curve, child: args[6] as Widget?),
         '_#fromFields#7': (args) => DrawerHeader(key: args[4] as Key?, decoration: args[2] as Decoration?, margin: args[5] as EdgeInsetsGeometry?, padding: args[6] as EdgeInsetsGeometry, duration: args[3] as Duration, curve: args[1] as Curve, child: args[0] as Widget?),
       };

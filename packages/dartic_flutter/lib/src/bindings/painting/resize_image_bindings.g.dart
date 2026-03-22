@@ -34,6 +34,7 @@ abstract final class ResizeImageBindings {
         'loadBuffer#2': (args) => (args[0] as ResizeImage).loadBuffer(args[1] as ResizeImageKey, (a, {bool? allowUpscaling, int? cacheHeight, int? cacheWidth}) => (args[2] as Function)(a, allowUpscaling: allowUpscaling, cacheHeight: cacheHeight, cacheWidth: cacheWidth) as Future<ui.Codec>),
         'loadImage#2': (args) => (args[0] as ResizeImage).loadImage(args[1] as ResizeImageKey, (a, {ui.TargetImageSizeCallback? getTargetSize}) => (args[2] as Function)(a, getTargetSize: getTargetSize) as Future<ui.Codec>),
         'obtainKey#1': (args) => (args[0] as ResizeImage).obtainKey(args[1] as ImageConfiguration),
+        'toString#0': (args) => (args[0] as ResizeImage).toString(),
         'resolve#1': (args) => (args[0] as ResizeImage).resolve(args[1] as ImageConfiguration),
         'createStream#1': (args) => (args[0] as ResizeImage).createStream(args[1] as ImageConfiguration),
         'obtainCacheStatus#2': (args) => (args[0] as ResizeImage).obtainCacheStatus(configuration: args[1] as ImageConfiguration, handleError: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b)),
@@ -45,6 +46,7 @@ abstract final class ResizeImageBindings {
         'policy#0': (args) => (args[0] as ResizeImage).policy,
         'allowUpscaling#0': (args) => (args[0] as ResizeImage).allowUpscaling,
         'hashCode#0': (args) => (args[0] as ResizeImage).hashCode,
+        '==#1': (args) => (args[0] as ResizeImage) == (args[1] as Object),
         '#5': (args) => ResizeImage(args[0] as ImageProvider<Object>, width: identical(args[1], darticAbsent) ? null : args[1] as int?, height: identical(args[2], darticAbsent) ? null : args[2] as int?, policy: identical(args[3], darticAbsent) ? ResizeImagePolicy.exact : args[3] as ResizeImagePolicy, allowUpscaling: identical(args[4], darticAbsent) ? false : args[4] as bool),
         '_#fromFields#5': (args) => ResizeImage(args[2] as ImageProvider<Object>, width: args[4] as int?, height: args[1] as int?, policy: args[3] as ResizeImagePolicy, allowUpscaling: args[0] as bool),
       };

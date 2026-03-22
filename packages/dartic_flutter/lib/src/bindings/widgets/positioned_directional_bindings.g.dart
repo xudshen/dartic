@@ -36,6 +36,7 @@ abstract final class PositionedDirectionalBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PositionedDirectional).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PositionedDirectional).toString(),
         'createElement#0': (args) => (args[0] as PositionedDirectional).createElement(),
         'toStringShort#0': (args) => (args[0] as PositionedDirectional).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PositionedDirectional).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class PositionedDirectionalBindings {
         'width#0': (args) => (args[0] as PositionedDirectional).width,
         'height#0': (args) => (args[0] as PositionedDirectional).height,
         'child#0': (args) => (args[0] as PositionedDirectional).child,
+        'hashCode#0': (args) => (args[0] as PositionedDirectional).hashCode,
         'key#0': (args) => (args[0] as PositionedDirectional).key,
+        '==#1': (args) => (args[0] as PositionedDirectional) == (args[1] as Object),
         '#8': (args) => PositionedDirectional(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, start: identical(args[1], darticAbsent) ? null : args[1] as double?, top: identical(args[2], darticAbsent) ? null : args[2] as double?, end: identical(args[3], darticAbsent) ? null : args[3] as double?, bottom: identical(args[4], darticAbsent) ? null : args[4] as double?, width: identical(args[5], darticAbsent) ? null : args[5] as double?, height: identical(args[6], darticAbsent) ? null : args[6] as double?, child: args[7] as Widget),
         '_#fromFields#8': (args) => PositionedDirectional(key: args[4] as Key?, start: args[5] as double?, top: args[6] as double?, end: args[2] as double?, bottom: args[0] as double?, width: args[7] as double?, height: args[3] as double?, child: args[1] as Widget),
       };

@@ -42,6 +42,7 @@ abstract final class PageRouteBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'canTransitionTo#1': (args) => (args[0] as PageRoute).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as PageRoute).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
+        'toString#0': (args) => (args[0] as PageRoute).toString(),
         'setState#1': (args) { (args[0] as PageRoute).setState(() => (args[1] as Function)()); return null; },
         'buildPage#3': (args) => (args[0] as PageRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as PageRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
@@ -61,7 +62,6 @@ abstract final class PageRouteBindings {
         'changedExternalState#0': (args) { (args[0] as PageRoute).changedExternalState(); return null; },
         'buildModalBarrier#0': (args) => (args[0] as PageRoute).buildModalBarrier(),
         'createOverlayEntries#0': (args) => (args[0] as PageRoute).createOverlayEntries(),
-        'toString#0': (args) => (args[0] as PageRoute).toString(),
         'debugTransitionCompleted#0': (args) => (args[0] as PageRoute).debugTransitionCompleted(),
         'createAnimationController#0': (args) => (args[0] as PageRoute).createAnimationController(),
         'createAnimation#0': (args) => (args[0] as PageRoute).createAnimation(),
@@ -83,6 +83,7 @@ abstract final class PageRouteBindings {
         'opaque#0': (args) => (args[0] as PageRoute).opaque,
         'barrierDismissible#0': (args) => (args[0] as PageRoute).barrierDismissible,
         'popGestureEnabled#0': (args) => (args[0] as PageRoute).popGestureEnabled,
+        'hashCode#0': (args) => (args[0] as PageRoute).hashCode,
         'filter#0': (args) => (args[0] as PageRoute).filter,
         'traversalEdgeBehavior#0': (args) => (args[0] as PageRoute).traversalEdgeBehavior,
         'directionalTraversalEdgeBehavior#0': (args) => (args[0] as PageRoute).directionalTraversalEdgeBehavior,
@@ -121,10 +122,10 @@ abstract final class PageRouteBindings {
         'isFirst#0': (args) => (args[0] as PageRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as PageRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as PageRoute).isActive,
-        'hashCode#0': (args) => (args[0] as PageRoute).hashCode,
         'runtimeType#0': (args) => (args[0] as PageRoute).runtimeType,
         'receivedTransition=#1': (args) { (args[0] as PageRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as PageRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as PageRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as PageRoute) == (args[1] as Object),
       };
 }

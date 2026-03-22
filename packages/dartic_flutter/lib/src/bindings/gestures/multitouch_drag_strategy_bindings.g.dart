@@ -34,6 +34,9 @@ abstract final class MultitouchDragStrategyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MultitouchDragStrategy).toString(),
+        'hashCode#0': (args) => (args[0] as MultitouchDragStrategy).hashCode,
         'index#0': (args) => (args[0] as MultitouchDragStrategy).index,
+        '==#1': (args) => (args[0] as MultitouchDragStrategy) == (args[1] as Object),
       };
 }

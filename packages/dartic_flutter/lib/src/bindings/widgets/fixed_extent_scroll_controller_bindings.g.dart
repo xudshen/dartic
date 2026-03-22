@@ -44,6 +44,7 @@ abstract final class FixedExtentScrollControllerBindings {
         'animateToItem#3': (args) => (args[0] as FixedExtentScrollController).animateToItem(args[1] as int, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpToItem#1': (args) { (args[0] as FixedExtentScrollController).jumpToItem(args[1] as int); return null; },
         'createScrollPosition#3': (args) => (args[0] as FixedExtentScrollController).createScrollPosition(args[1] as ScrollPhysics, args[2] as ScrollContext, args[3] as ScrollPosition?),
+        'toString#0': (args) => (args[0] as FixedExtentScrollController).toString(),
         'animateTo#3': (args) => (args[0] as FixedExtentScrollController).animateTo(args[1] as double, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpTo#1': (args) { (args[0] as FixedExtentScrollController).jumpTo(args[1] as double); return null; },
         'attach#1': (args) { (args[0] as FixedExtentScrollController).attach(args[1] as ScrollPosition); return null; },
@@ -55,6 +56,7 @@ abstract final class FixedExtentScrollControllerBindings {
         'notifyListeners#0': (args) { (args[0] as FixedExtentScrollController).notifyListeners(); return null; },
         'initialItem#0': (args) => (args[0] as FixedExtentScrollController).initialItem,
         'selectedItem#0': (args) => (args[0] as FixedExtentScrollController).selectedItem,
+        'hashCode#0': (args) => (args[0] as FixedExtentScrollController).hashCode,
         'initialScrollOffset#0': (args) => (args[0] as FixedExtentScrollController).initialScrollOffset,
         'keepScrollOffset#0': (args) => (args[0] as FixedExtentScrollController).keepScrollOffset,
         'onAttach#0': (args) => (args[0] as FixedExtentScrollController).onAttach,
@@ -65,6 +67,7 @@ abstract final class FixedExtentScrollControllerBindings {
         'position#0': (args) => (args[0] as FixedExtentScrollController).position,
         'offset#0': (args) => (args[0] as FixedExtentScrollController).offset,
         'hasListeners#0': (args) => (args[0] as FixedExtentScrollController).hasListeners,
+        '==#1': (args) => (args[0] as FixedExtentScrollController) == (args[1] as Object),
         '#5': (args) => FixedExtentScrollController(initialItem: identical(args[0], darticAbsent) ? 0 : args[0] as int, keepScrollOffset: identical(args[1], darticAbsent) ? true : args[1] as bool, debugLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, onAttach: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onDetach: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
       };
 }

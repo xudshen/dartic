@@ -29,8 +29,10 @@ abstract final class KeySetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeySet).toString(),
         'keys#0': (args) => (args[0] as KeySet).keys,
         'hashCode#0': (args) => (args[0] as KeySet).hashCode,
+        '==#1': (args) => (args[0] as KeySet) == (args[1] as Object),
         '#4': (args) {
           if (identical(args[1], darticAbsent)) {
             if (identical(args[2], darticAbsent)) {

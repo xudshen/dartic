@@ -28,6 +28,7 @@ abstract final class SelectionGeometryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#5': (args) => (args[0] as SelectionGeometry).copyWith(startSelectionPoint: identical(args[1], darticAbsent) ? null : args[1] as SelectionPoint?, endSelectionPoint: identical(args[2], darticAbsent) ? null : args[2] as SelectionPoint?, selectionRects: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<Rect>(), status: identical(args[4], darticAbsent) ? null : args[4] as SelectionStatus?, hasContent: identical(args[5], darticAbsent) ? null : args[5] as bool?),
         'debugFillProperties#1': (args) { (args[0] as SelectionGeometry).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SelectionGeometry).toString(),
         'toStringShort#0': (args) => (args[0] as SelectionGeometry).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SelectionGeometry).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'startSelectionPoint#0': (args) => (args[0] as SelectionGeometry).startSelectionPoint,
@@ -37,6 +38,7 @@ abstract final class SelectionGeometryBindings {
         'hasContent#0': (args) => (args[0] as SelectionGeometry).hasContent,
         'hasSelection#0': (args) => (args[0] as SelectionGeometry).hasSelection,
         'hashCode#0': (args) => (args[0] as SelectionGeometry).hashCode,
+        '==#1': (args) => (args[0] as SelectionGeometry) == (args[1] as Object),
         '#5': (args) => SelectionGeometry(startSelectionPoint: identical(args[0], darticAbsent) ? null : args[0] as SelectionPoint?, endSelectionPoint: identical(args[1], darticAbsent) ? null : args[1] as SelectionPoint?, selectionRects: identical(args[2], darticAbsent) ? const <Rect>[] : (args[2] as List).cast<Rect>(), status: args[3] as SelectionStatus, hasContent: args[4] as bool),
         '_#fromFields#5': (args) => SelectionGeometry(startSelectionPoint: args[3] as SelectionPoint?, endSelectionPoint: args[0] as SelectionPoint?, selectionRects: (args[2] as List).cast<Rect>(), status: args[4] as SelectionStatus, hasContent: args[1] as bool),
       };

@@ -36,6 +36,7 @@ abstract final class TapAndDragGestureRecognizerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TapAndDragGestureRecognizer).toString(),
         'isPointerAllowed#1': (args) => (args[0] as TapAndDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as TapAndDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as TapAndDragGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
@@ -63,6 +64,7 @@ abstract final class TapAndDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as TapAndDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as TapAndDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as TapAndDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as TapAndDragGestureRecognizer).hashCode,
         'dragStartBehavior#0': (args) => (args[0] as TapAndDragGestureRecognizer).dragStartBehavior,
         'dragUpdateThrottleFrequency#0': (args) => (args[0] as TapAndDragGestureRecognizer).dragUpdateThrottleFrequency,
         'maxConsecutiveTap#0': (args) => (args[0] as TapAndDragGestureRecognizer).maxConsecutiveTap,
@@ -98,6 +100,7 @@ abstract final class TapAndDragGestureRecognizerBindings {
         'supportedDevices=#1': (args) { (args[0] as TapAndDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
         'onTapTrackStart=#1': (args) { (args[0] as TapAndDragGestureRecognizer).onTapTrackStart = args[1] as VoidCallback?; return args[1]; },
         'onTapTrackReset=#1': (args) { (args[0] as TapAndDragGestureRecognizer).onTapTrackReset = args[1] as VoidCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as TapAndDragGestureRecognizer) == (args[1] as Object),
         '#2': (args) => TapAndDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>()),
       };
 }

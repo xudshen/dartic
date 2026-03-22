@@ -23,5 +23,8 @@ abstract final class DragBindings {
         'update#1': (args) { (args[0] as Drag).update(args[1] as DragUpdateDetails); return null; },
         'end#1': (args) { (args[0] as Drag).end(args[1] as DragEndDetails); return null; },
         'cancel#0': (args) { (args[0] as Drag).cancel(); return null; },
+        'toString#0': (args) => (args[0] as Drag).toString(),
+        'hashCode#0': (args) => (args[0] as Drag).hashCode,
+        '==#1': (args) => (args[0] as Drag) == (args[1] as Object),
       };
 }

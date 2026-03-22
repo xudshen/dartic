@@ -32,6 +32,7 @@ abstract final class MenuBarThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MenuBarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MenuBarTheme).updateShouldNotify(args[1] as MenuBarTheme),
+        'toString#0': (args) => (args[0] as MenuBarTheme).toString(),
         'createElement#0': (args) => (args[0] as MenuBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,8 +41,10 @@ abstract final class MenuBarThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MenuBarTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MenuBarTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as MenuBarTheme).data,
+        'hashCode#0': (args) => (args[0] as MenuBarTheme).hashCode,
         'child#0': (args) => (args[0] as MenuBarTheme).child,
         'key#0': (args) => (args[0] as MenuBarTheme).key,
+        '==#1': (args) => (args[0] as MenuBarTheme) == (args[1] as Object),
         '#3': (args) => MenuBarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as MenuBarThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => MenuBarTheme(key: args[2] as Key?, data: args[1] as MenuBarThemeData, child: args[0] as Widget),
       };

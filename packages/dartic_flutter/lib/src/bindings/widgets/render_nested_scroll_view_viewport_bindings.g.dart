@@ -59,6 +59,7 @@ abstract final class RenderNestedScrollViewViewportBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'markNeedsLayout#0': (args) { (args[0] as RenderNestedScrollViewViewport).markNeedsLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderNestedScrollViewViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderNestedScrollViewViewport).toString(),
         'setupParentData#1': (args) { (args[0] as RenderNestedScrollViewViewport).setupParentData(args[1] as RenderObject); return null; },
         'computeDryLayout#1': (args) => (args[0] as RenderNestedScrollViewViewport).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderNestedScrollViewViewport).performLayout(); return null; },
@@ -154,6 +155,7 @@ abstract final class RenderNestedScrollViewViewportBindings {
         'childBefore#1': (args) => (args[0] as RenderNestedScrollViewViewport).childBefore(args[1] as RenderSliver),
         'childAfter#1': (args) => (args[0] as RenderNestedScrollViewViewport).childAfter(args[1] as RenderSliver),
         'handle#0': (args) => (args[0] as RenderNestedScrollViewViewport).handle,
+        'hashCode#0': (args) => (args[0] as RenderNestedScrollViewViewport).hashCode,
         'anchor#0': (args) => (args[0] as RenderNestedScrollViewViewport).anchor,
         'center#0': (args) => (args[0] as RenderNestedScrollViewViewport).center,
         'sizedByParent#0': (args) => (args[0] as RenderNestedScrollViewViewport).sizedByParent,
@@ -215,6 +217,7 @@ abstract final class RenderNestedScrollViewViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderNestedScrollViewViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderNestedScrollViewViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderNestedScrollViewViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderNestedScrollViewViewport) == (args[1] as Object),
         '#8': (args) => RenderNestedScrollViewViewport(axisDirection: identical(args[0], darticAbsent) ? AxisDirection.down : args[0] as AxisDirection, crossAxisDirection: args[1] as AxisDirection, offset: args[2] as ViewportOffset, anchor: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, children: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<RenderSliver>(), center: identical(args[5], darticAbsent) ? null : args[5] as RenderSliver?, handle: args[6] as SliverOverlapAbsorberHandle, clipBehavior: identical(args[7], darticAbsent) ? Clip.hardEdge : args[7] as Clip),
       };
 }

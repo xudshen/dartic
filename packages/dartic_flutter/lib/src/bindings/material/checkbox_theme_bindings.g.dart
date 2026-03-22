@@ -31,6 +31,7 @@ abstract final class CheckboxThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as CheckboxTheme).updateShouldNotify(args[1] as CheckboxTheme),
+        'toString#0': (args) => (args[0] as CheckboxTheme).toString(),
         'createElement#0': (args) => (args[0] as CheckboxTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckboxTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CheckboxTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class CheckboxThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CheckboxTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CheckboxTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as CheckboxTheme).data,
+        'hashCode#0': (args) => (args[0] as CheckboxTheme).hashCode,
         'child#0': (args) => (args[0] as CheckboxTheme).child,
         'key#0': (args) => (args[0] as CheckboxTheme).key,
+        '==#1': (args) => (args[0] as CheckboxTheme) == (args[1] as Object),
         '#3': (args) => CheckboxTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as CheckboxThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => CheckboxTheme(key: args[2] as Key?, data: args[1] as CheckboxThemeData, child: args[0] as Widget),
       };

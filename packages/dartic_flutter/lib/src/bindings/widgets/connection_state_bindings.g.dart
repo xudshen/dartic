@@ -28,6 +28,9 @@ abstract final class ConnectionStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ConnectionState).toString(),
+        'hashCode#0': (args) => (args[0] as ConnectionState).hashCode,
         'index#0': (args) => (args[0] as ConnectionState).index,
+        '==#1': (args) => (args[0] as ConnectionState) == (args[1] as Object),
       };
 }

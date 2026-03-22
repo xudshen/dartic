@@ -26,11 +26,12 @@ abstract final class ViewportNotificationMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as ViewportNotificationMixin).debugFillDescription((args[1] as List).cast<String>()); return null; },
-        'dispatch#1': (args) { (args[0] as ViewportNotificationMixin).dispatch(args[1] as BuildContext?); return null; },
         'toString#0': (args) => (args[0] as ViewportNotificationMixin).toString(),
+        'dispatch#1': (args) { (args[0] as ViewportNotificationMixin).dispatch(args[1] as BuildContext?); return null; },
         'noSuchMethod#1': (args) => (args[0] as ViewportNotificationMixin).noSuchMethod(args[1] as Invocation),
         'depth#0': (args) => (args[0] as ViewportNotificationMixin).depth,
         'hashCode#0': (args) => (args[0] as ViewportNotificationMixin).hashCode,
         'runtimeType#0': (args) => (args[0] as ViewportNotificationMixin).runtimeType,
+        '==#1': (args) => (args[0] as ViewportNotificationMixin) == (args[1] as Object),
       };
 }

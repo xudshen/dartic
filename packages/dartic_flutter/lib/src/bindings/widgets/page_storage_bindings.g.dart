@@ -27,6 +27,7 @@ abstract final class PageStorageBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PageStorage).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PageStorage).toString(),
         'createElement#0': (args) => (args[0] as PageStorage).createElement(),
         'toStringShort#0': (args) => (args[0] as PageStorage).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PageStorage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class PageStorageBindings {
         'debugDescribeChildren#0': (args) => (args[0] as PageStorage).debugDescribeChildren(),
         'child#0': (args) => (args[0] as PageStorage).child,
         'bucket#0': (args) => (args[0] as PageStorage).bucket,
+        'hashCode#0': (args) => (args[0] as PageStorage).hashCode,
         'key#0': (args) => (args[0] as PageStorage).key,
+        '==#1': (args) => (args[0] as PageStorage) == (args[1] as Object),
         '#3': (args) => PageStorage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, bucket: args[1] as PageStorageBucket, child: args[2] as Widget),
         '_#fromFields#3': (args) => PageStorage(key: args[2] as Key?, bucket: args[0] as PageStorageBucket, child: args[1] as Widget),
       };

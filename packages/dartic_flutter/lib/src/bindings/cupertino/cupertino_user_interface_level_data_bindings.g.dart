@@ -25,6 +25,9 @@ abstract final class CupertinoUserInterfaceLevelDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CupertinoUserInterfaceLevelData).toString(),
+        'hashCode#0': (args) => (args[0] as CupertinoUserInterfaceLevelData).hashCode,
         'index#0': (args) => (args[0] as CupertinoUserInterfaceLevelData).index,
+        '==#1': (args) => (args[0] as CupertinoUserInterfaceLevelData) == (args[1] as Object),
       };
 }

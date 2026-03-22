@@ -29,6 +29,7 @@ abstract final class ObstructingPreferredSizeWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'shouldFullyObstruct#1': (args) => (args[0] as ObstructingPreferredSizeWidget).shouldFullyObstruct(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ObstructingPreferredSizeWidget).toString(),
         'createElement#0': (args) => (args[0] as ObstructingPreferredSizeWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as ObstructingPreferredSizeWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ObstructingPreferredSizeWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class ObstructingPreferredSizeWidgetBindings {
         'toStringDeep#4': (args) => (args[0] as ObstructingPreferredSizeWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as ObstructingPreferredSizeWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ObstructingPreferredSizeWidget).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as ObstructingPreferredSizeWidget).hashCode,
         'preferredSize#0': (args) => (args[0] as ObstructingPreferredSizeWidget).preferredSize,
         'key#0': (args) => (args[0] as ObstructingPreferredSizeWidget).key,
+        '==#1': (args) => (args[0] as ObstructingPreferredSizeWidget) == (args[1] as Object),
       };
 }

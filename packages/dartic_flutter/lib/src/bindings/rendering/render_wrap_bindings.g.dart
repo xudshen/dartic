@@ -53,6 +53,7 @@ abstract final class RenderWrapBindings {
         'paint#2': (args) { (args[0] as RenderWrap).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderWrap).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderWrap).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderWrap).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderWrap).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderWrap).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderWrap).getMinIntrinsicHeight(args[1] as double),
@@ -139,6 +140,7 @@ abstract final class RenderWrapBindings {
         'textDirection#0': (args) => (args[0] as RenderWrap).textDirection,
         'verticalDirection#0': (args) => (args[0] as RenderWrap).verticalDirection,
         'clipBehavior#0': (args) => (args[0] as RenderWrap).clipBehavior,
+        'hashCode#0': (args) => (args[0] as RenderWrap).hashCode,
         'hasSize#0': (args) => (args[0] as RenderWrap).hasSize,
         'size#0': (args) => (args[0] as RenderWrap).size,
         'semanticBounds#0': (args) => (args[0] as RenderWrap).semanticBounds,
@@ -185,6 +187,7 @@ abstract final class RenderWrapBindings {
         'parentData=#1': (args) { (args[0] as RenderWrap).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderWrap).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderWrap).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderWrap) == (args[1] as Object),
         '#10': (args) => RenderWrap(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), direction: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, alignment: identical(args[2], darticAbsent) ? WrapAlignment.start : args[2] as WrapAlignment, spacing: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, runAlignment: identical(args[4], darticAbsent) ? WrapAlignment.start : args[4] as WrapAlignment, runSpacing: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, crossAxisAlignment: identical(args[6], darticAbsent) ? WrapCrossAlignment.start : args[6] as WrapCrossAlignment, textDirection: identical(args[7], darticAbsent) ? null : args[7] as TextDirection?, verticalDirection: identical(args[8], darticAbsent) ? VerticalDirection.down : args[8] as VerticalDirection, clipBehavior: identical(args[9], darticAbsent) ? Clip.none : args[9] as Clip),
       };
 }

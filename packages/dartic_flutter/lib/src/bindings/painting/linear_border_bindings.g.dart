@@ -44,6 +44,7 @@ abstract final class LinearBorderBindings {
         'hashCode#0': (args) => (args[0] as LinearBorder).hashCode,
         'side#0': (args) => (args[0] as LinearBorder).side,
         'preferPaintInterior#0': (args) => (args[0] as LinearBorder).preferPaintInterior,
+        '==#1': (args) => (args[0] as LinearBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as LinearBorder) + (args[1] as ShapeBorder),
         '#5': (args) => LinearBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, start: identical(args[1], darticAbsent) ? null : args[1] as LinearBorderEdge?, end: identical(args[2], darticAbsent) ? null : args[2] as LinearBorderEdge?, top: identical(args[3], darticAbsent) ? null : args[3] as LinearBorderEdge?, bottom: identical(args[4], darticAbsent) ? null : args[4] as LinearBorderEdge?),
         'start#3': (args) => LinearBorder.start(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, alignment: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, size: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),

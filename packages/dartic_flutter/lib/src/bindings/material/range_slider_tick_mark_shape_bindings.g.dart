@@ -48,5 +48,8 @@ abstract final class RangeSliderTickMarkShapeBindings {
                     return null;
                   }
                 },
+        'toString#0': (args) => (args[0] as RangeSliderTickMarkShape).toString(),
+        'hashCode#0': (args) => (args[0] as RangeSliderTickMarkShape).hashCode,
+        '==#1': (args) => (args[0] as RangeSliderTickMarkShape) == (args[1] as Object),
       };
 }

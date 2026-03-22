@@ -34,11 +34,14 @@ abstract final class ShapeBorderClipperBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getClip#1': (args) => (args[0] as ShapeBorderClipper).getClip(args[1] as ui.Size),
         'shouldReclip#1': (args) => (args[0] as ShapeBorderClipper).shouldReclip(args[1] as CustomClipper<ui.Path>),
+        'toString#0': (args) => (args[0] as ShapeBorderClipper).toString(),
         'addListener#1': (args) { (args[0] as ShapeBorderClipper).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as ShapeBorderClipper).removeListener(() => (args[1] as Function)()); return null; },
         'getApproximateClipRect#1': (args) => (args[0] as ShapeBorderClipper).getApproximateClipRect(args[1] as ui.Size),
         'shape#0': (args) => (args[0] as ShapeBorderClipper).shape,
         'textDirection#0': (args) => (args[0] as ShapeBorderClipper).textDirection,
+        'hashCode#0': (args) => (args[0] as ShapeBorderClipper).hashCode,
+        '==#1': (args) => (args[0] as ShapeBorderClipper) == (args[1] as Object),
         '#2': (args) => ShapeBorderClipper(shape: args[0] as ShapeBorder, textDirection: identical(args[1], darticAbsent) ? null : args[1] as ui.TextDirection?),
         '_#fromFields#3': (args) => ShapeBorderClipper(shape: args[1] as ShapeBorder, textDirection: args[2] as ui.TextDirection?),
       };

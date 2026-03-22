@@ -23,5 +23,8 @@ abstract final class TickerProviderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createTicker#1': (args) => (args[0] as TickerProvider).createTicker((a) => (args[1] as Function)(a)),
+        'toString#0': (args) => (args[0] as TickerProvider).toString(),
+        'hashCode#0': (args) => (args[0] as TickerProvider).hashCode,
+        '==#1': (args) => (args[0] as TickerProvider) == (args[1] as Object),
       };
 }

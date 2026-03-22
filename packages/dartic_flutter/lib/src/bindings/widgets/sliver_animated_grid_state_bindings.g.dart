@@ -37,6 +37,7 @@ abstract final class SliverAnimatedGridStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverAnimatedGridState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverAnimatedGridState).toString(),
         'initState#0': (args) { (args[0] as SliverAnimatedGridState).initState(); return null; },
         'dispose#0': (args) { (args[0] as SliverAnimatedGridState).dispose(); return null; },
         'insertItem#2': (args) {
@@ -85,9 +86,11 @@ abstract final class SliverAnimatedGridStateBindings {
         'toStringShort#0': (args) => (args[0] as SliverAnimatedGridState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SliverAnimatedGridState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as SliverAnimatedGridState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as SliverAnimatedGridState).hashCode,
         'widget#0': (args) => (args[0] as SliverAnimatedGridState).widget,
         'context#0': (args) => (args[0] as SliverAnimatedGridState).context,
         'mounted#0': (args) => (args[0] as SliverAnimatedGridState).mounted,
+        '==#1': (args) => (args[0] as SliverAnimatedGridState) == (args[1] as Object),
         '#0': (args) => SliverAnimatedGridState(),
       };
 }

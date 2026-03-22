@@ -33,6 +33,7 @@ abstract final class AutofillGroupStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as AutofillGroupState).didChangeDependencies(); return null; },
         'build#1': (args) => (args[0] as AutofillGroupState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as AutofillGroupState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as AutofillGroupState).toString(),
         'initState#0': (args) { (args[0] as AutofillGroupState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as AutofillGroupState).didUpdateWidget(args[1] as AutofillGroup); return null; },
         'reassemble#0': (args) { (args[0] as AutofillGroupState).reassemble(); return null; },
@@ -44,9 +45,11 @@ abstract final class AutofillGroupStateBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as AutofillGroupState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'attach#2': (args) => (args[0] as AutofillGroupState).attach(args[1] as TextInputClient, args[2] as TextInputConfiguration),
         'autofillClients#0': (args) => (args[0] as AutofillGroupState).autofillClients,
+        'hashCode#0': (args) => (args[0] as AutofillGroupState).hashCode,
         'widget#0': (args) => (args[0] as AutofillGroupState).widget,
         'context#0': (args) => (args[0] as AutofillGroupState).context,
         'mounted#0': (args) => (args[0] as AutofillGroupState).mounted,
+        '==#1': (args) => (args[0] as AutofillGroupState) == (args[1] as Object),
         '#0': (args) => AutofillGroupState(),
       };
 }

@@ -38,6 +38,7 @@ abstract final class RawKeyEventDataBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventData).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventData).getModifierSide(args[1] as ModifierKey),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventData).shouldDispatchEvent(),
+        'toString#0': (args) => (args[0] as RawKeyEventData).toString(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,5 +50,7 @@ abstract final class RawKeyEventDataBindings {
         'physicalKey#0': (args) => (args[0] as RawKeyEventData).physicalKey,
         'logicalKey#0': (args) => (args[0] as RawKeyEventData).logicalKey,
         'keyLabel#0': (args) => (args[0] as RawKeyEventData).keyLabel,
+        'hashCode#0': (args) => (args[0] as RawKeyEventData).hashCode,
+        '==#1': (args) => (args[0] as RawKeyEventData) == (args[1] as Object),
       };
 }

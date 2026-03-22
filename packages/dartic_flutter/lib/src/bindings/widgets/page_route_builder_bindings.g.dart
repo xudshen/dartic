@@ -42,6 +42,7 @@ abstract final class PageRouteBuilderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildPage#3': (args) => (args[0] as PageRouteBuilder).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as PageRouteBuilder).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
+        'toString#0': (args) => (args[0] as PageRouteBuilder).toString(),
         'canTransitionTo#1': (args) => (args[0] as PageRouteBuilder).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as PageRouteBuilder).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
         'setState#1': (args) { (args[0] as PageRouteBuilder).setState(() => (args[1] as Function)()); return null; },
@@ -61,7 +62,6 @@ abstract final class PageRouteBuilderBindings {
         'changedExternalState#0': (args) { (args[0] as PageRouteBuilder).changedExternalState(); return null; },
         'buildModalBarrier#0': (args) => (args[0] as PageRouteBuilder).buildModalBarrier(),
         'createOverlayEntries#0': (args) => (args[0] as PageRouteBuilder).createOverlayEntries(),
-        'toString#0': (args) => (args[0] as PageRouteBuilder).toString(),
         'debugTransitionCompleted#0': (args) => (args[0] as PageRouteBuilder).debugTransitionCompleted(),
         'createAnimationController#0': (args) => (args[0] as PageRouteBuilder).createAnimationController(),
         'createAnimation#0': (args) => (args[0] as PageRouteBuilder).createAnimation(),
@@ -87,6 +87,7 @@ abstract final class PageRouteBuilderBindings {
         'barrierColor#0': (args) => (args[0] as PageRouteBuilder).barrierColor,
         'barrierLabel#0': (args) => (args[0] as PageRouteBuilder).barrierLabel,
         'maintainState#0': (args) => (args[0] as PageRouteBuilder).maintainState,
+        'hashCode#0': (args) => (args[0] as PageRouteBuilder).hashCode,
         'fullscreenDialog#0': (args) => (args[0] as PageRouteBuilder).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as PageRouteBuilder).allowSnapshotting,
         'popGestureEnabled#0': (args) => (args[0] as PageRouteBuilder).popGestureEnabled,
@@ -123,11 +124,11 @@ abstract final class PageRouteBuilderBindings {
         'isFirst#0': (args) => (args[0] as PageRouteBuilder).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as PageRouteBuilder).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as PageRouteBuilder).isActive,
-        'hashCode#0': (args) => (args[0] as PageRouteBuilder).hashCode,
         'runtimeType#0': (args) => (args[0] as PageRouteBuilder).runtimeType,
         'receivedTransition=#1': (args) { (args[0] as PageRouteBuilder).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as PageRouteBuilder).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as PageRouteBuilder).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as PageRouteBuilder) == (args[1] as Object),
         '#13': (args) {
           if (identical(args[3], darticAbsent)) {
             return PageRouteBuilder<dynamic>(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, requestFocus: identical(args[1], darticAbsent) ? null : args[1] as bool?, pageBuilder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 300) : args[4] as Duration, reverseTransitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 300) : args[5] as Duration, opaque: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool, barrierColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, barrierLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, maintainState: identical(args[10], darticAbsent) ? true : args[10] as bool, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, allowSnapshotting: identical(args[12], darticAbsent) ? true : args[12] as bool);

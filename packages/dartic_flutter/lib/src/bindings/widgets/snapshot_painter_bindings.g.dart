@@ -31,10 +31,13 @@ abstract final class SnapshotPainterBindings {
         'paintSnapshot#6': (args) { (args[0] as SnapshotPainter).paintSnapshot(args[1] as PaintingContext, args[2] as ui.Offset, args[3] as ui.Size, args[4] as ui.Image, args[5] as ui.Size, args[6] as double); return null; },
         'paint#4': (args) { (args[0] as SnapshotPainter).paint(args[1] as PaintingContext, args[2] as ui.Offset, args[3] as ui.Size, (a, b) => (args[4] as Function)(a, b)); return null; },
         'shouldRepaint#1': (args) => (args[0] as SnapshotPainter).shouldRepaint(args[1] as SnapshotPainter),
+        'toString#0': (args) => (args[0] as SnapshotPainter).toString(),
         'addListener#1': (args) { (args[0] as SnapshotPainter).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as SnapshotPainter).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as SnapshotPainter).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as SnapshotPainter).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as SnapshotPainter).hashCode,
         'hasListeners#0': (args) => (args[0] as SnapshotPainter).hasListeners,
+        '==#1': (args) => (args[0] as SnapshotPainter) == (args[1] as Object),
       };
 }

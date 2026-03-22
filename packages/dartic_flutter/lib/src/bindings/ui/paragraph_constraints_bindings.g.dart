@@ -32,6 +32,7 @@ abstract final class ParagraphConstraintsBindings {
         'toString#0': (args) => (args[0] as ParagraphConstraints).toString(),
         'width#0': (args) => (args[0] as ParagraphConstraints).width,
         'hashCode#0': (args) => (args[0] as ParagraphConstraints).hashCode,
+        '==#1': (args) => (args[0] as ParagraphConstraints) == (args[1] as Object),
         '#1': (args) => ParagraphConstraints(width: args[0] as double),
         '_#fromFields#1': (args) => ParagraphConstraints(width: args[0] as double),
       };

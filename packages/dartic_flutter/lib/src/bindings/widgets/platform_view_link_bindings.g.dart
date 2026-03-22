@@ -35,6 +35,7 @@ abstract final class PlatformViewLinkBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as PlatformViewLink).createState(),
+        'toString#0': (args) => (args[0] as PlatformViewLink).toString(),
         'createElement#0': (args) => (args[0] as PlatformViewLink).createElement(),
         'toStringShort#0': (args) => (args[0] as PlatformViewLink).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PlatformViewLink).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class PlatformViewLinkBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformViewLink).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as PlatformViewLink).debugDescribeChildren(),
         'viewType#0': (args) => (args[0] as PlatformViewLink).viewType,
+        'hashCode#0': (args) => (args[0] as PlatformViewLink).hashCode,
         'key#0': (args) => (args[0] as PlatformViewLink).key,
+        '==#1': (args) => (args[0] as PlatformViewLink) == (args[1] as Object),
         '#4': (args) => PlatformViewLink(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, surfaceFactory: (a, b) => (args[1] as Function)(a, b) as Widget, onCreatePlatformView: (a) => (args[2] as Function)(a) as PlatformViewController, viewType: args[3] as String),
         '_#fromFields#4': (args) => PlatformViewLink(key: args[2] as Key?, surfaceFactory: args[1] as PlatformViewSurfaceFactory, onCreatePlatformView: args[0] as CreatePlatformViewCallback, viewType: args[3] as String),
       };

@@ -35,6 +35,7 @@ abstract final class SliverOpacityBindings {
         'createRenderObject#1': (args) => (args[0] as SliverOpacity).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverOpacity).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverOpacity).toString(),
         'createElement#0': (args) => (args[0] as SliverOpacity).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverOpacity).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverOpacity).toStringShort(),
@@ -44,8 +45,10 @@ abstract final class SliverOpacityBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SliverOpacity).debugDescribeChildren(),
         'opacity#0': (args) => (args[0] as SliverOpacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as SliverOpacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as SliverOpacity).hashCode,
         'child#0': (args) => (args[0] as SliverOpacity).child,
         'key#0': (args) => (args[0] as SliverOpacity).key,
+        '==#1': (args) => (args[0] as SliverOpacity) == (args[1] as Object),
         '#4': (args) => SliverOpacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, opacity: args[1] as double, alwaysIncludeSemantics: identical(args[2], darticAbsent) ? false : args[2] as bool, sliver: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SliverOpacity(key: args[2] as Key?, opacity: args[3] as double, alwaysIncludeSemantics: args[0] as bool, sliver: args[1] as Widget?),
       };

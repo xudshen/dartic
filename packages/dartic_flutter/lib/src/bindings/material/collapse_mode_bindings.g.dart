@@ -32,6 +32,9 @@ abstract final class CollapseModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CollapseMode).toString(),
+        'hashCode#0': (args) => (args[0] as CollapseMode).hashCode,
         'index#0': (args) => (args[0] as CollapseMode).index,
+        '==#1': (args) => (args[0] as CollapseMode) == (args[1] as Object),
       };
 }

@@ -39,6 +39,7 @@ abstract final class SliverAnimatedGridBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverAnimatedGrid).createState(),
+        'toString#0': (args) => (args[0] as SliverAnimatedGrid).toString(),
         'createElement#0': (args) => (args[0] as SliverAnimatedGrid).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverAnimatedGrid).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverAnimatedGrid).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,10 +48,12 @@ abstract final class SliverAnimatedGridBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverAnimatedGrid).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverAnimatedGrid).debugDescribeChildren(),
         'gridDelegate#0': (args) => (args[0] as SliverAnimatedGrid).gridDelegate,
+        'hashCode#0': (args) => (args[0] as SliverAnimatedGrid).hashCode,
         'itemBuilder#0': (args) => (args[0] as SliverAnimatedGrid).itemBuilder,
         'findChildIndexCallback#0': (args) => (args[0] as SliverAnimatedGrid).findChildIndexCallback,
         'initialItemCount#0': (args) => (args[0] as SliverAnimatedGrid).initialItemCount,
         'key#0': (args) => (args[0] as SliverAnimatedGrid).key,
+        '==#1': (args) => (args[0] as SliverAnimatedGrid) == (args[1] as Object),
         '#5': (args) => SliverAnimatedGrid(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, gridDelegate: args[2] as SliverGridDelegate, findChildIndexCallback: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), initialItemCount: identical(args[4], darticAbsent) ? 0 : args[4] as int),
         '_#fromFields#5': (args) => SliverAnimatedGrid(key: args[4] as Key?, itemBuilder: args[3] as AnimatedItemBuilder, gridDelegate: args[1] as SliverGridDelegate, findChildIndexCallback: args[0] as ChildIndexGetter?, initialItemCount: args[2] as int),
       };

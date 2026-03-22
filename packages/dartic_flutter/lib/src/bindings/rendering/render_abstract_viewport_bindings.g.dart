@@ -45,6 +45,7 @@ abstract final class RenderAbstractViewportBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOffsetToReveal#4': (args) => (args[0] as RenderAbstractViewport).getOffsetToReveal(args[1] as RenderObject, args[2] as double, rect: identical(args[3], darticAbsent) ? null : args[3] as Rect?, axis: identical(args[4], darticAbsent) ? null : args[4] as Axis?),
+        'toString#0': (args) => (args[0] as RenderAbstractViewport).toString(),
         'reassemble#0': (args) { (args[0] as RenderAbstractViewport).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderAbstractViewport).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderAbstractViewport).setupParentData(args[1] as RenderObject); return null; },
@@ -95,6 +96,7 @@ abstract final class RenderAbstractViewportBindings {
         'showOnScreen#4': (args) { (args[0] as RenderAbstractViewport).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderAbstractViewport).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderAbstractViewport).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderAbstractViewport).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderAbstractViewport).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderAbstractViewport).parentData,
         'depth#0': (args) => (args[0] as RenderAbstractViewport).depth,
@@ -126,5 +128,6 @@ abstract final class RenderAbstractViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderAbstractViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderAbstractViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAbstractViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAbstractViewport) == (args[1] as Object),
       };
 }

@@ -70,12 +70,15 @@ abstract final class TextSelectionGestureDetectorBuilderBindings {
         'onDragSelectionUpdate#1': (args) { (args[0] as TextSelectionGestureDetectorBuilder).onDragSelectionUpdate(args[1] as TapDragUpdateDetails); return null; },
         'onDragSelectionEnd#1': (args) { (args[0] as TextSelectionGestureDetectorBuilder).onDragSelectionEnd(args[1] as TapDragEndDetails); return null; },
         'buildGestureDetector#3': (args) => (args[0] as TextSelectionGestureDetectorBuilder).buildGestureDetector(key: identical(args[1], darticAbsent) ? null : args[1] as Key?, behavior: identical(args[2], darticAbsent) ? null : args[2] as HitTestBehavior?, child: args[3] as Widget),
+        'toString#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).toString(),
         'delegate#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).delegate,
         'shouldShowSelectionToolbar#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).shouldShowSelectionToolbar,
         'shouldShowSelectionHandles#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).shouldShowSelectionHandles,
         'editableText#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).editableText,
         'renderEditable#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).renderEditable,
         'onUserTapAlwaysCalled#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).onUserTapAlwaysCalled,
+        'hashCode#0': (args) => (args[0] as TextSelectionGestureDetectorBuilder).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionGestureDetectorBuilder) == (args[1] as Object),
         '#1': (args) => TextSelectionGestureDetectorBuilder(delegate: args[0] as TextSelectionGestureDetectorBuilderDelegate),
       };
 }

@@ -37,6 +37,7 @@ abstract final class ClampingScrollPhysicsBindings {
         'applyTo#1': (args) => (args[0] as ClampingScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'applyBoundaryConditions#2': (args) => (args[0] as ClampingScrollPhysics).applyBoundaryConditions(args[1] as ScrollMetrics, args[2] as double),
         'createBallisticSimulation#2': (args) => (args[0] as ClampingScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
+        'toString#0': (args) => (args[0] as ClampingScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as ClampingScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as ClampingScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as ClampingScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -44,6 +45,7 @@ abstract final class ClampingScrollPhysicsBindings {
         'adjustPositionForNewDimensions#4': (args) => (args[0] as ClampingScrollPhysics).adjustPositionForNewDimensions(oldPosition: args[1] as ScrollMetrics, newPosition: args[2] as ScrollMetrics, isScrolling: args[3] as bool, velocity: args[4] as double),
         'toleranceFor#1': (args) => (args[0] as ClampingScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as ClampingScrollPhysics).carriedMomentum(args[1] as double),
+        'hashCode#0': (args) => (args[0] as ClampingScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as ClampingScrollPhysics).parent,
         'spring#0': (args) => (args[0] as ClampingScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as ClampingScrollPhysics).tolerance,
@@ -53,6 +55,7 @@ abstract final class ClampingScrollPhysicsBindings {
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as ClampingScrollPhysics).dragStartDistanceMotionThreshold,
         'allowImplicitScrolling#0': (args) => (args[0] as ClampingScrollPhysics).allowImplicitScrolling,
         'allowUserScrolling#0': (args) => (args[0] as ClampingScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as ClampingScrollPhysics) == (args[1] as Object),
         '#1': (args) => ClampingScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => ClampingScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

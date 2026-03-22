@@ -28,6 +28,9 @@ abstract final class MaxLengthEnforcementBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MaxLengthEnforcement).toString(),
+        'hashCode#0': (args) => (args[0] as MaxLengthEnforcement).hashCode,
         'index#0': (args) => (args[0] as MaxLengthEnforcement).index,
+        '==#1': (args) => (args[0] as MaxLengthEnforcement) == (args[1] as Object),
       };
 }

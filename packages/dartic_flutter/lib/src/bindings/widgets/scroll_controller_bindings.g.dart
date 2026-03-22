@@ -49,7 +49,9 @@ abstract final class ScrollControllerBindings {
         'hasClients#0': (args) => (args[0] as ScrollController).hasClients,
         'position#0': (args) => (args[0] as ScrollController).position,
         'offset#0': (args) => (args[0] as ScrollController).offset,
+        'hashCode#0': (args) => (args[0] as ScrollController).hashCode,
         'hasListeners#0': (args) => (args[0] as ScrollController).hasListeners,
+        '==#1': (args) => (args[0] as ScrollController) == (args[1] as Object),
         '#5': (args) => ScrollController(initialScrollOffset: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, keepScrollOffset: identical(args[1], darticAbsent) ? true : args[1] as bool, debugLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, onAttach: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onDetach: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
       };
 }

@@ -35,8 +35,10 @@ abstract final class SliverPhysicalParentDataBindings {
         'detach#0': (args) { (args[0] as SliverPhysicalParentData).detach(); return null; },
         'paintOffset#0': (args) => (args[0] as SliverPhysicalParentData).paintOffset,
         'crossAxisFlex#0': (args) => (args[0] as SliverPhysicalParentData).crossAxisFlex,
+        'hashCode#0': (args) => (args[0] as SliverPhysicalParentData).hashCode,
         'paintOffset=#1': (args) { (args[0] as SliverPhysicalParentData).paintOffset = args[1] as Offset; return args[1]; },
         'crossAxisFlex=#1': (args) { (args[0] as SliverPhysicalParentData).crossAxisFlex = args[1] as int?; return args[1]; },
+        '==#1': (args) => (args[0] as SliverPhysicalParentData) == (args[1] as Object),
         '#0': (args) => SliverPhysicalParentData(),
       };
 }

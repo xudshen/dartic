@@ -40,6 +40,7 @@ abstract final class RenderObjectWithLayoutCallbackMixinBindings {
         'layoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).layoutCallback(); return null; },
         'runLayoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).runLayoutCallback(); return null; },
         'scheduleLayoutCallback#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).scheduleLayoutCallback(); return null; },
+        'toString#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).toString(),
         'reassemble#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -90,6 +91,7 @@ abstract final class RenderObjectWithLayoutCallbackMixinBindings {
         'showOnScreen#4': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as ui.Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).parentData,
         'depth#0': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin).depth,
@@ -121,5 +123,6 @@ abstract final class RenderObjectWithLayoutCallbackMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderObjectWithLayoutCallbackMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderObjectWithLayoutCallbackMixin) == (args[1] as Object),
       };
 }

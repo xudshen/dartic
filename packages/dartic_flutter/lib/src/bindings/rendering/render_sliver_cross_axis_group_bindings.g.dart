@@ -44,6 +44,7 @@ abstract final class RenderSliverCrossAxisGroupBindings {
         'paint#2': (args) { (args[0] as RenderSliverCrossAxisGroup).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverCrossAxisGroup).applyPaintTransform(args[1] as RenderSliver, args[2] as Matrix4); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverCrossAxisGroup).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
+        'toString#0': (args) => (args[0] as RenderSliverCrossAxisGroup).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverCrossAxisGroup).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverCrossAxisGroup).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverCrossAxisGroup).performResize(); return null; },
@@ -106,6 +107,7 @@ abstract final class RenderSliverCrossAxisGroupBindings {
         'move#2': (args) { (args[0] as RenderSliverCrossAxisGroup).move(args[1] as RenderSliver, after: identical(args[2], darticAbsent) ? null : args[2] as RenderSliver?); return null; },
         'childBefore#1': (args) => (args[0] as RenderSliverCrossAxisGroup).childBefore(args[1] as RenderSliver),
         'childAfter#1': (args) => (args[0] as RenderSliverCrossAxisGroup).childAfter(args[1] as RenderSliver),
+        'hashCode#0': (args) => (args[0] as RenderSliverCrossAxisGroup).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverCrossAxisGroup).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverCrossAxisGroup).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverCrossAxisGroup).geometry,
@@ -144,6 +146,7 @@ abstract final class RenderSliverCrossAxisGroupBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverCrossAxisGroup).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverCrossAxisGroup).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverCrossAxisGroup).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverCrossAxisGroup) == (args[1] as Object),
         '#0': (args) => RenderSliverCrossAxisGroup(),
       };
 }

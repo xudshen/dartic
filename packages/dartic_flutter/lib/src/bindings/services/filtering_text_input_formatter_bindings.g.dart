@@ -27,9 +27,12 @@ abstract final class FilteringTextInputFormatterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'formatEditUpdate#2': (args) => (args[0] as FilteringTextInputFormatter).formatEditUpdate(args[1] as TextEditingValue, args[2] as TextEditingValue),
+        'toString#0': (args) => (args[0] as FilteringTextInputFormatter).toString(),
         'filterPattern#0': (args) => (args[0] as FilteringTextInputFormatter).filterPattern,
         'allow#0': (args) => (args[0] as FilteringTextInputFormatter).allow,
         'replacementString#0': (args) => (args[0] as FilteringTextInputFormatter).replacementString,
+        'hashCode#0': (args) => (args[0] as FilteringTextInputFormatter).hashCode,
+        '==#1': (args) => (args[0] as FilteringTextInputFormatter) == (args[1] as Object),
         '#3': (args) => FilteringTextInputFormatter(args[0] as Pattern, allow: args[1] as bool, replacementString: identical(args[2], darticAbsent) ? '' : args[2] as String),
         'allow#2': (args) => FilteringTextInputFormatter.allow(args[0] as Pattern, replacementString: identical(args[1], darticAbsent) ? '' : args[1] as String),
         'deny#2': (args) => FilteringTextInputFormatter.deny(args[0] as Pattern, replacementString: identical(args[1], darticAbsent) ? '' : args[1] as String),

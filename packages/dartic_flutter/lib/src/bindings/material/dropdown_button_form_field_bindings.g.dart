@@ -51,6 +51,7 @@ abstract final class DropdownButtonFormFieldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DropdownButtonFormField).createState(),
+        'toString#0': (args) => (args[0] as DropdownButtonFormField).toString(),
         'createElement#0': (args) => (args[0] as DropdownButtonFormField).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownButtonFormField).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DropdownButtonFormField).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -61,6 +62,7 @@ abstract final class DropdownButtonFormFieldBindings {
         'onChanged#0': (args) => (args[0] as DropdownButtonFormField).onChanged,
         'decoration#0': (args) => (args[0] as DropdownButtonFormField).decoration,
         'barrierDismissible#0': (args) => (args[0] as DropdownButtonFormField).barrierDismissible,
+        'hashCode#0': (args) => (args[0] as DropdownButtonFormField).hashCode,
         'builder#0': (args) => (args[0] as DropdownButtonFormField).builder,
         'onSaved#0': (args) => (args[0] as DropdownButtonFormField).onSaved,
         'onReset#0': (args) => (args[0] as DropdownButtonFormField).onReset,
@@ -72,6 +74,7 @@ abstract final class DropdownButtonFormFieldBindings {
         'autovalidateMode#0': (args) => (args[0] as DropdownButtonFormField).autovalidateMode,
         'restorationId#0': (args) => (args[0] as DropdownButtonFormField).restorationId,
         'key#0': (args) => (args[0] as DropdownButtonFormField).key,
+        '==#1': (args) => (args[0] as DropdownButtonFormField) == (args[1] as Object),
         '#34': (args) => DropdownButtonFormField<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, items: args[1] == null ? null : (args[1] as List).cast<DropdownMenuItem>(), selectedItemBuilder: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), value: identical(args[3], darticAbsent) ? null : args[3], initialValue: identical(args[4], darticAbsent) ? null : args[4], hint: identical(args[5], darticAbsent) ? null : args[5] as Widget?, disabledHint: identical(args[6], darticAbsent) ? null : args[6] as Widget?, onChanged: (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), onTap: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : () => (args[8] as Function?)!(), elevation: identical(args[9], darticAbsent) ? 8 : args[9] as int, style: identical(args[10], darticAbsent) ? null : args[10] as TextStyle?, icon: identical(args[11], darticAbsent) ? null : args[11] as Widget?, iconDisabledColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, iconEnabledColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, iconSize: identical(args[14], darticAbsent) ? 24.0 : args[14] as double, isDense: identical(args[15], darticAbsent) ? true : args[15] as bool, isExpanded: identical(args[16], darticAbsent) ? false : args[16] as bool, itemHeight: identical(args[17], darticAbsent) ? null : args[17] as double?, focusColor: identical(args[18], darticAbsent) ? null : args[18] as Color?, focusNode: identical(args[19], darticAbsent) ? null : args[19] as FocusNode?, autofocus: identical(args[20], darticAbsent) ? false : args[20] as bool, dropdownColor: identical(args[21], darticAbsent) ? null : args[21] as Color?, decoration: identical(args[22], darticAbsent) ? null : args[22] as InputDecoration?, onSaved: identical(args[23], darticAbsent) ? null : (args[23] as Function?) == null ? null : (a) => (args[23] as Function?)!(a), validator: identical(args[24], darticAbsent) ? null : (args[24] as Function?) == null ? null : (a) => (args[24] as Function?)!(a), errorBuilder: identical(args[25], darticAbsent) ? null : (args[25] as Function?) == null ? null : (a, b) => (args[25] as Function?)!(a, b), forceErrorText: identical(args[26], darticAbsent) ? null : args[26] as String?, autovalidateMode: identical(args[27], darticAbsent) ? null : args[27] as AutovalidateMode?, menuMaxHeight: identical(args[28], darticAbsent) ? null : args[28] as double?, enableFeedback: identical(args[29], darticAbsent) ? null : args[29] as bool?, alignment: identical(args[30], darticAbsent) ? AlignmentDirectional.centerStart : args[30] as AlignmentGeometry, borderRadius: identical(args[31], darticAbsent) ? null : args[31] as BorderRadius?, padding: identical(args[32], darticAbsent) ? null : args[32] as EdgeInsetsGeometry?, barrierDismissible: identical(args[33], darticAbsent) ? true : args[33] as bool),
       };
 }

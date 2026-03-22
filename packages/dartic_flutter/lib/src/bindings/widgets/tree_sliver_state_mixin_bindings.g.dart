@@ -38,5 +38,8 @@ abstract final class TreeSliverStateMixinBindings {
         'expandAll#0': (args) { (args[0] as TreeSliverStateMixin).expandAll(); return null; },
         'getNodeFor#1': (args) => (args[0] as TreeSliverStateMixin).getNodeFor(args[1]),
         'getActiveIndexFor#1': (args) => (args[0] as TreeSliverStateMixin).getActiveIndexFor(args[1] as TreeSliverNode),
+        'toString#0': (args) => (args[0] as TreeSliverStateMixin).toString(),
+        'hashCode#0': (args) => (args[0] as TreeSliverStateMixin).hashCode,
+        '==#1': (args) => (args[0] as TreeSliverStateMixin) == (args[1] as Object),
       };
 }

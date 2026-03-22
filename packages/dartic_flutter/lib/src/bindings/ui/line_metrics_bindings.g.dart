@@ -40,6 +40,7 @@ abstract final class LineMetricsBindings {
         'baseline#0': (args) => (args[0] as LineMetrics).baseline,
         'lineNumber#0': (args) => (args[0] as LineMetrics).lineNumber,
         'hashCode#0': (args) => (args[0] as LineMetrics).hashCode,
+        '==#1': (args) => (args[0] as LineMetrics) == (args[1] as Object),
         '#9': (args) => LineMetrics(hardBreak: args[0] as bool, ascent: args[1] as double, descent: args[2] as double, unscaledAscent: args[3] as double, height: args[4] as double, width: args[5] as double, left: args[6] as double, baseline: args[7] as double, lineNumber: args[8] as int),
       };
 }

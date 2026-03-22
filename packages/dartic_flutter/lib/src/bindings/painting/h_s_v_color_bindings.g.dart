@@ -34,6 +34,7 @@ abstract final class HSVColorBindings {
         'saturation#0': (args) => (args[0] as HSVColor).saturation,
         'value#0': (args) => (args[0] as HSVColor).value,
         'hashCode#0': (args) => (args[0] as HSVColor).hashCode,
+        '==#1': (args) => (args[0] as HSVColor) == (args[1] as Object),
         'fromAHSV#4': (args) => HSVColor.fromAHSV(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromColor#1': (args) => HSVColor.fromColor(args[0] as Color),
         '_#fromFields#4': (args) => HSVColor.fromAHSV(args[0] as double, args[1] as double, args[2] as double, args[3] as double),

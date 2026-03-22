@@ -39,6 +39,7 @@ abstract final class FlowBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as Flow).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Flow).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlow); return null; },
+        'toString#0': (args) => (args[0] as Flow).toString(),
         'createElement#0': (args) => (args[0] as Flow).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Flow).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Flow).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class FlowBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Flow).debugDescribeChildren(),
         'delegate#0': (args) => (args[0] as Flow).delegate,
         'clipBehavior#0': (args) => (args[0] as Flow).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Flow).hashCode,
         'children#0': (args) => (args[0] as Flow).children,
         'key#0': (args) => (args[0] as Flow).key,
+        '==#1': (args) => (args[0] as Flow) == (args[1] as Object),
         '#4': (args) => Flow(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as FlowDelegate, children: identical(args[2], darticAbsent) ? const <Widget>[] : (args[2] as List).cast<Widget>(), clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as ui.Clip),
         'unwrapped#4': (args) => Flow.unwrapped(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as FlowDelegate, children: identical(args[2], darticAbsent) ? const <Widget>[] : (args[2] as List).cast<Widget>(), clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as ui.Clip),
         '_#fromFields#4': (args) => Flow.unwrapped(key: args[3] as Key?, delegate: args[2] as FlowDelegate, children: (args[0] as List).cast<Widget>(), clipBehavior: args[1] as ui.Clip),

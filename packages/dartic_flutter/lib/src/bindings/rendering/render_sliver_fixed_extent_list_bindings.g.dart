@@ -39,6 +39,7 @@ abstract final class RenderSliverFixedExtentListBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSliverFixedExtentList).toString(),
         'indexToLayoutOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).indexToLayoutOffset(args[1] as double, args[2] as int),
         'getMinChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).getMinChildIndexForScrollOffset(args[1] as double, args[2] as double),
         'getMaxChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFixedExtentList).getMaxChildIndexForScrollOffset(args[1] as double, args[2] as double),
@@ -125,6 +126,7 @@ abstract final class RenderSliverFixedExtentListBindings {
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverFixedExtentList).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverFixedExtentList).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'itemExtent#0': (args) => (args[0] as RenderSliverFixedExtentList).itemExtent,
+        'hashCode#0': (args) => (args[0] as RenderSliverFixedExtentList).hashCode,
         'itemExtentBuilder#0': (args) => (args[0] as RenderSliverFixedExtentList).itemExtentBuilder,
         'childManager#0': (args) => (args[0] as RenderSliverFixedExtentList).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverFixedExtentList).debugChildIntegrityEnabled,
@@ -168,6 +170,7 @@ abstract final class RenderSliverFixedExtentListBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverFixedExtentList).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverFixedExtentList).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverFixedExtentList).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverFixedExtentList) == (args[1] as Object),
         '#2': (args) => RenderSliverFixedExtentList(childManager: args[0] as RenderSliverBoxChildManager, itemExtent: args[1] as double),
       };
 }

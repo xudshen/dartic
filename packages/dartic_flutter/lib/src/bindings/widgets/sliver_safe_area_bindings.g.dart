@@ -32,6 +32,7 @@ abstract final class SliverSafeAreaBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverSafeArea).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as SliverSafeArea).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverSafeArea).toString(),
         'createElement#0': (args) => (args[0] as SliverSafeArea).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverSafeArea).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverSafeArea).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -44,7 +45,9 @@ abstract final class SliverSafeAreaBindings {
         'bottom#0': (args) => (args[0] as SliverSafeArea).bottom,
         'minimum#0': (args) => (args[0] as SliverSafeArea).minimum,
         'sliver#0': (args) => (args[0] as SliverSafeArea).sliver,
+        'hashCode#0': (args) => (args[0] as SliverSafeArea).hashCode,
         'key#0': (args) => (args[0] as SliverSafeArea).key,
+        '==#1': (args) => (args[0] as SliverSafeArea) == (args[1] as Object),
         '#7': (args) => SliverSafeArea(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, left: identical(args[1], darticAbsent) ? true : args[1] as bool, top: identical(args[2], darticAbsent) ? true : args[2] as bool, right: identical(args[3], darticAbsent) ? true : args[3] as bool, bottom: identical(args[4], darticAbsent) ? true : args[4] as bool, minimum: identical(args[5], darticAbsent) ? EdgeInsets.zero : args[5] as EdgeInsets, sliver: args[6] as Widget),
         '_#fromFields#7': (args) => SliverSafeArea(key: args[1] as Key?, left: args[2] as bool, top: args[6] as bool, right: args[4] as bool, bottom: args[0] as bool, minimum: args[3] as EdgeInsets, sliver: args[5] as Widget),
       };

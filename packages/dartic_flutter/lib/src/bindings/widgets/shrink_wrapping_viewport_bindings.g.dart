@@ -37,6 +37,7 @@ abstract final class ShrinkWrappingViewportBindings {
         'createRenderObject#1': (args) => (args[0] as ShrinkWrappingViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ShrinkWrappingViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderShrinkWrappingViewport); return null; },
         'debugFillProperties#1': (args) { (args[0] as ShrinkWrappingViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ShrinkWrappingViewport).toString(),
         'createElement#0': (args) => (args[0] as ShrinkWrappingViewport).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ShrinkWrappingViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ShrinkWrappingViewport).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class ShrinkWrappingViewportBindings {
         'offset#0': (args) => (args[0] as ShrinkWrappingViewport).offset,
         'paintOrder#0': (args) => (args[0] as ShrinkWrappingViewport).paintOrder,
         'clipBehavior#0': (args) => (args[0] as ShrinkWrappingViewport).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ShrinkWrappingViewport).hashCode,
         'children#0': (args) => (args[0] as ShrinkWrappingViewport).children,
         'key#0': (args) => (args[0] as ShrinkWrappingViewport).key,
+        '==#1': (args) => (args[0] as ShrinkWrappingViewport) == (args[1] as Object),
         '#7': (args) => ShrinkWrappingViewport(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: identical(args[1], darticAbsent) ? AxisDirection.down : args[1] as AxisDirection, crossAxisDirection: identical(args[2], darticAbsent) ? null : args[2] as AxisDirection?, offset: args[3] as ViewportOffset, paintOrder: identical(args[4], darticAbsent) ? SliverPaintOrder.firstIsTop : args[4] as SliverPaintOrder, clipBehavior: identical(args[5], darticAbsent) ? Clip.hardEdge : args[5] as Clip, slivers: identical(args[6], darticAbsent) ? const <Widget>[] : (args[6] as List).cast<Widget>()),
         '_#fromFields#7': (args) => ShrinkWrappingViewport(key: args[4] as Key?, axisDirection: args[0] as AxisDirection, crossAxisDirection: args[3] as AxisDirection?, offset: args[5] as ViewportOffset, paintOrder: args[6] as SliverPaintOrder, clipBehavior: args[2] as Clip, slivers: (args[1] as List).cast<Widget>()),
       };

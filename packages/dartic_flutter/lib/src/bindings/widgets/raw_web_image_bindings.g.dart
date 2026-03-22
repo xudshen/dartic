@@ -30,6 +30,7 @@ abstract final class RawWebImageBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RawWebImage).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RawWebImage).toString(),
         'createElement#0': (args) => (args[0] as RawWebImage).createElement(),
         'toStringShort#0': (args) => (args[0] as RawWebImage).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawWebImage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class RawWebImageBindings {
         'fit#0': (args) => (args[0] as RawWebImage).fit,
         'alignment#0': (args) => (args[0] as RawWebImage).alignment,
         'matchTextDirection#0': (args) => (args[0] as RawWebImage).matchTextDirection,
+        'hashCode#0': (args) => (args[0] as RawWebImage).hashCode,
         'key#0': (args) => (args[0] as RawWebImage).key,
+        '==#1': (args) => (args[0] as RawWebImage) == (args[1] as Object),
         '#8': (args) => RawWebImage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, image: args[1] as WebImageInfo, debugImageLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, width: identical(args[3], darticAbsent) ? null : args[3] as double?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, fit: identical(args[5], darticAbsent) ? null : args[5] as BoxFit?, alignment: identical(args[6], darticAbsent) ? Alignment.center : args[6] as AlignmentGeometry, matchTextDirection: identical(args[7], darticAbsent) ? false : args[7] as bool),
       };
 }

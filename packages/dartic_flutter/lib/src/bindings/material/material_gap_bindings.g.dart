@@ -31,7 +31,9 @@ abstract final class MaterialGapBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as MaterialGap).toString(),
         'size#0': (args) => (args[0] as MaterialGap).size,
+        'hashCode#0': (args) => (args[0] as MaterialGap).hashCode,
         'key#0': (args) => (args[0] as MaterialGap).key,
+        '==#1': (args) => (args[0] as MaterialGap) == (args[1] as Object),
         '#2': (args) => MaterialGap(key: args[0] as LocalKey, size: identical(args[1], darticAbsent) ? 16.0 : args[1] as double),
         '_#fromFields#2': (args) => MaterialGap(key: args[0] as LocalKey, size: args[1] as double),
       };

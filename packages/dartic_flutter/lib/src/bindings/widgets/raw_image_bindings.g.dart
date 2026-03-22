@@ -45,6 +45,7 @@ abstract final class RawImageBindings {
         'updateRenderObject#2': (args) { (args[0] as RawImage).updateRenderObject(args[1] as BuildContext, args[2] as RenderImage); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as RawImage).didUnmountRenderObject(args[1] as RenderImage); return null; },
         'debugFillProperties#1': (args) { (args[0] as RawImage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawImage).toString(),
         'createElement#0': (args) => (args[0] as RawImage).createElement(),
         'toStringShort#0': (args) => (args[0] as RawImage).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as RawImage).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -67,7 +68,9 @@ abstract final class RawImageBindings {
         'matchTextDirection#0': (args) => (args[0] as RawImage).matchTextDirection,
         'invertColors#0': (args) => (args[0] as RawImage).invertColors,
         'isAntiAlias#0': (args) => (args[0] as RawImage).isAntiAlias,
+        'hashCode#0': (args) => (args[0] as RawImage).hashCode,
         'key#0': (args) => (args[0] as RawImage).key,
+        '==#1': (args) => (args[0] as RawImage) == (args[1] as Object),
         '#17': (args) => RawImage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, image: identical(args[1], darticAbsent) ? null : args[1] as ui.Image?, debugImageLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, width: identical(args[3], darticAbsent) ? null : args[3] as double?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, scale: identical(args[5], darticAbsent) ? 1.0 : args[5] as double, color: identical(args[6], darticAbsent) ? null : args[6] as ui.Color?, opacity: identical(args[7], darticAbsent) ? null : args[7] as Animation<double>?, colorBlendMode: identical(args[8], darticAbsent) ? null : args[8] as ui.BlendMode?, fit: identical(args[9], darticAbsent) ? null : args[9] as BoxFit?, alignment: identical(args[10], darticAbsent) ? Alignment.center : args[10] as AlignmentGeometry, repeat: identical(args[11], darticAbsent) ? ImageRepeat.noRepeat : args[11] as ImageRepeat, centerSlice: identical(args[12], darticAbsent) ? null : args[12] as ui.Rect?, matchTextDirection: identical(args[13], darticAbsent) ? false : args[13] as bool, invertColors: identical(args[14], darticAbsent) ? false : args[14] as bool, filterQuality: identical(args[15], darticAbsent) ? FilterQuality.medium : args[15] as ui.FilterQuality, isAntiAlias: identical(args[16], darticAbsent) ? false : args[16] as bool),
         '_#fromFields#17': (args) => RawImage(key: args[11] as Key?, image: args[8] as ui.Image?, debugImageLabel: args[4] as String?, width: args[16] as double?, height: args[7] as double?, scale: args[15] as double, color: args[2] as ui.Color?, opacity: args[13] as Animation<double>?, colorBlendMode: args[3] as ui.BlendMode?, fit: args[6] as BoxFit?, alignment: args[0] as AlignmentGeometry, repeat: args[14] as ImageRepeat, centerSlice: args[1] as ui.Rect?, matchTextDirection: args[12] as bool, invertColors: args[9] as bool, filterQuality: args[5] as ui.FilterQuality, isAntiAlias: args[10] as bool),
       };

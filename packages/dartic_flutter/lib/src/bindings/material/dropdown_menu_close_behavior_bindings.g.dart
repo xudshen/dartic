@@ -41,6 +41,9 @@ abstract final class DropdownMenuCloseBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DropdownMenuCloseBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as DropdownMenuCloseBehavior).hashCode,
         'index#0': (args) => (args[0] as DropdownMenuCloseBehavior).index,
+        '==#1': (args) => (args[0] as DropdownMenuCloseBehavior) == (args[1] as Object),
       };
 }

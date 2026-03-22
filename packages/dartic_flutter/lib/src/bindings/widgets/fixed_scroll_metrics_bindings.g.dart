@@ -36,6 +36,7 @@ abstract final class FixedScrollMetricsBindings {
         'hasViewportDimension#0': (args) => (args[0] as FixedScrollMetrics).hasViewportDimension,
         'axisDirection#0': (args) => (args[0] as FixedScrollMetrics).axisDirection,
         'devicePixelRatio#0': (args) => (args[0] as FixedScrollMetrics).devicePixelRatio,
+        'hashCode#0': (args) => (args[0] as FixedScrollMetrics).hashCode,
         'axis#0': (args) => (args[0] as FixedScrollMetrics).axis,
         'outOfRange#0': (args) => (args[0] as FixedScrollMetrics).outOfRange,
         'atEdge#0': (args) => (args[0] as FixedScrollMetrics).atEdge,
@@ -43,6 +44,7 @@ abstract final class FixedScrollMetricsBindings {
         'extentInside#0': (args) => (args[0] as FixedScrollMetrics).extentInside,
         'extentAfter#0': (args) => (args[0] as FixedScrollMetrics).extentAfter,
         'extentTotal#0': (args) => (args[0] as FixedScrollMetrics).extentTotal,
+        '==#1': (args) => (args[0] as FixedScrollMetrics) == (args[1] as Object),
         '#6': (args) => FixedScrollMetrics(minScrollExtent: args[0] as double?, maxScrollExtent: args[1] as double?, pixels: args[2] as double?, viewportDimension: args[3] as double?, axisDirection: args[4] as AxisDirection, devicePixelRatio: args[5] as double),
       };
 }

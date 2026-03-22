@@ -41,6 +41,7 @@ abstract final class RefreshProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RefreshProgressIndicator).createState(),
+        'toString#0': (args) => (args[0] as RefreshProgressIndicator).toString(),
         'debugFillProperties#1': (args) { (args[0] as RefreshProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as RefreshProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as RefreshProgressIndicator).toStringShort(),
@@ -52,6 +53,7 @@ abstract final class RefreshProgressIndicatorBindings {
         'indicatorMargin#0': (args) => (args[0] as RefreshProgressIndicator).indicatorMargin,
         'indicatorPadding#0': (args) => (args[0] as RefreshProgressIndicator).indicatorPadding,
         'backgroundColor#0': (args) => (args[0] as RefreshProgressIndicator).backgroundColor,
+        'hashCode#0': (args) => (args[0] as RefreshProgressIndicator).hashCode,
         'strokeWidth#0': (args) => (args[0] as RefreshProgressIndicator).strokeWidth,
         'strokeAlign#0': (args) => (args[0] as RefreshProgressIndicator).strokeAlign,
         'strokeCap#0': (args) => (args[0] as RefreshProgressIndicator).strokeCap,
@@ -66,6 +68,7 @@ abstract final class RefreshProgressIndicatorBindings {
         'semanticsLabel#0': (args) => (args[0] as RefreshProgressIndicator).semanticsLabel,
         'semanticsValue#0': (args) => (args[0] as RefreshProgressIndicator).semanticsValue,
         'key#0': (args) => (args[0] as RefreshProgressIndicator).key,
+        '==#1': (args) => (args[0] as RefreshProgressIndicator) == (args[1] as Object),
         '#13': (args) => RefreshProgressIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1] as double?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, valueColor: identical(args[4], darticAbsent) ? null : args[4] as Animation<Color?>?, strokeWidth: identical(args[5], darticAbsent) ? null : args[5] as double?, strokeAlign: identical(args[6], darticAbsent) ? null : args[6] as double?, semanticsLabel: identical(args[7], darticAbsent) ? null : args[7] as String?, semanticsValue: identical(args[8], darticAbsent) ? null : args[8] as String?, strokeCap: identical(args[9], darticAbsent) ? null : args[9] as StrokeCap?, elevation: identical(args[10], darticAbsent) ? 2.0 : args[10] as double, indicatorMargin: identical(args[11], darticAbsent) ? const EdgeInsets.all(4.0) : args[11] as EdgeInsetsGeometry, indicatorPadding: identical(args[12], darticAbsent) ? const EdgeInsets.all(12.0) : args[12] as EdgeInsetsGeometry),
         '_#fromFields#19': (args) => RefreshProgressIndicator(key: args[8] as Key?, value: args[16] as double?, backgroundColor: args[1] as Color?, color: args[2] as Color?, valueColor: args[17] as Animation<Color?>?, strokeWidth: args[14] as double?, strokeAlign: args[12] as double?, semanticsLabel: args[10] as String?, semanticsValue: args[11] as String?, strokeCap: args[13] as StrokeCap?, elevation: args[5] as double, indicatorMargin: args[6] as EdgeInsetsGeometry, indicatorPadding: args[7] as EdgeInsetsGeometry),
       };

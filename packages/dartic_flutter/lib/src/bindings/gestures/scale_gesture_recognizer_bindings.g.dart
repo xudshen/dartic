@@ -41,6 +41,7 @@ abstract final class ScaleGestureRecognizerBindings {
         'rejectGesture#1': (args) { (args[0] as ScaleGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as ScaleGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as ScaleGestureRecognizer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ScaleGestureRecognizer).toString(),
         'handleNonAllowedPointer#1': (args) { (args[0] as ScaleGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as ScaleGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as ScaleGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
@@ -67,6 +68,7 @@ abstract final class ScaleGestureRecognizerBindings {
         'trackpadScrollToScaleFactor#0': (args) => (args[0] as ScaleGestureRecognizer).trackpadScrollToScaleFactor,
         'pointerCount#0': (args) => (args[0] as ScaleGestureRecognizer).pointerCount,
         'debugDescription#0': (args) => (args[0] as ScaleGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as ScaleGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as ScaleGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as ScaleGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as ScaleGestureRecognizer).gestureSettings,
@@ -81,11 +83,20 @@ abstract final class ScaleGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as ScaleGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as ScaleGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as ScaleGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as ScaleGestureRecognizer) == (args[1] as Object),
         '#6': (args) {
           if (identical(args[2], darticAbsent)) {
-            return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool, trackpadScrollToScaleFactor: identical(args[5], darticAbsent) ? kDefaultTrackpadScrollToScaleFactor : args[5] as Offset);
+            if (identical(args[5], darticAbsent)) {
+              return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool);
+            } else {
+              return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool, trackpadScrollToScaleFactor: args[5] as Offset);
+            }
           } else {
-            return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: (a) => (args[2] as Function)(a) as bool, dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool, trackpadScrollToScaleFactor: identical(args[5], darticAbsent) ? kDefaultTrackpadScrollToScaleFactor : args[5] as Offset);
+            if (identical(args[5], darticAbsent)) {
+              return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: (a) => (args[2] as Function)(a) as bool, dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool);
+            } else {
+              return ScaleGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: (a) => (args[2] as Function)(a) as bool, dragStartBehavior: identical(args[3], darticAbsent) ? DragStartBehavior.down : args[3] as DragStartBehavior, trackpadScrollCausesScale: identical(args[4], darticAbsent) ? false : args[4] as bool, trackpadScrollToScaleFactor: args[5] as Offset);
+            }
           }
         },
       };

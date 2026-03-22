@@ -88,7 +88,10 @@ abstract final class AdaptationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'adapt#2': (args) => (args[0] as Adaptation).adapt(args[1] as ThemeData, args[2]),
+        'toString#0': (args) => (args[0] as Adaptation).toString(),
         'type#0': (args) => (args[0] as Adaptation).type,
+        'hashCode#0': (args) => (args[0] as Adaptation).hashCode,
+        '==#1': (args) => (args[0] as Adaptation) == (args[1] as Object),
         '#0': (args) => Adaptation<dynamic>(),
         '_#fromFields#0': (args) => Adaptation(),
       };

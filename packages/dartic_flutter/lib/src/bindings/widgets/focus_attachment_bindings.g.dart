@@ -33,6 +33,9 @@ abstract final class FocusAttachmentBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'detach#0': (args) { (args[0] as FocusAttachment).detach(); return null; },
         'reparent#1': (args) { (args[0] as FocusAttachment).reparent(parent: identical(args[1], darticAbsent) ? null : args[1] as FocusNode?); return null; },
+        'toString#0': (args) => (args[0] as FocusAttachment).toString(),
         'isAttached#0': (args) => (args[0] as FocusAttachment).isAttached,
+        'hashCode#0': (args) => (args[0] as FocusAttachment).hashCode,
+        '==#1': (args) => (args[0] as FocusAttachment) == (args[1] as Object),
       };
 }

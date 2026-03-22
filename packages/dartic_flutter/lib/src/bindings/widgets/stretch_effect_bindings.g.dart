@@ -31,6 +31,7 @@ abstract final class StretchEffectBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as StretchEffect).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as StretchEffect).toString(),
         'createElement#0': (args) => (args[0] as StretchEffect).createElement(),
         'toStringShort#0': (args) => (args[0] as StretchEffect).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StretchEffect).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class StretchEffectBindings {
         'stretchStrength#0': (args) => (args[0] as StretchEffect).stretchStrength,
         'axis#0': (args) => (args[0] as StretchEffect).axis,
         'child#0': (args) => (args[0] as StretchEffect).child,
+        'hashCode#0': (args) => (args[0] as StretchEffect).hashCode,
         'key#0': (args) => (args[0] as StretchEffect).key,
+        '==#1': (args) => (args[0] as StretchEffect) == (args[1] as Object),
         '#4': (args) => StretchEffect(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, stretchStrength: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, axis: args[2] as Axis, child: args[3] as Widget),
         '_#fromFields#4': (args) => StretchEffect(key: args[2] as Key?, stretchStrength: args[3] as double, axis: args[0] as Axis, child: args[1] as Widget),
       };

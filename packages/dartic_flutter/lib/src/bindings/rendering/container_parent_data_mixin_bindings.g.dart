@@ -31,9 +31,12 @@ abstract final class ContainerParentDataMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'detach#0': (args) { (args[0] as ContainerParentDataMixin).detach(); return null; },
+        'toString#0': (args) => (args[0] as ContainerParentDataMixin).toString(),
         'previousSibling#0': (args) => (args[0] as ContainerParentDataMixin).previousSibling,
         'nextSibling#0': (args) => (args[0] as ContainerParentDataMixin).nextSibling,
+        'hashCode#0': (args) => (args[0] as ContainerParentDataMixin).hashCode,
         'previousSibling=#1': (args) { (args[0] as ContainerParentDataMixin).previousSibling = args[1] as RenderObject; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as ContainerParentDataMixin).nextSibling = args[1] as RenderObject; return args[1]; },
+        '==#1': (args) => (args[0] as ContainerParentDataMixin) == (args[1] as Object),
       };
 }

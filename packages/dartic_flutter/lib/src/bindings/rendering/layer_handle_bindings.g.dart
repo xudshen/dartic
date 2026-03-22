@@ -28,7 +28,9 @@ abstract final class LayerHandleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as LayerHandle).toString(),
         'layer#0': (args) => (args[0] as LayerHandle).layer,
+        'hashCode#0': (args) => (args[0] as LayerHandle).hashCode,
         'layer=#1': (args) { (args[0] as LayerHandle).layer = args[1] as Layer; return args[1]; },
+        '==#1': (args) => (args[0] as LayerHandle) == (args[1] as Object),
         '#1': (args) {
           if (identical(args[0], darticAbsent)) {
             return LayerHandle<Layer>();

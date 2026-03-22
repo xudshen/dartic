@@ -39,6 +39,7 @@ abstract final class RenderSliverVariedExtentListBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSliverVariedExtentList).toString(),
         'indexToLayoutOffset#2': (args) => (args[0] as RenderSliverVariedExtentList).indexToLayoutOffset(args[1] as double, args[2] as int),
         'getMinChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverVariedExtentList).getMinChildIndexForScrollOffset(args[1] as double, args[2] as double),
         'getMaxChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverVariedExtentList).getMaxChildIndexForScrollOffset(args[1] as double, args[2] as double),
@@ -126,6 +127,7 @@ abstract final class RenderSliverVariedExtentListBindings {
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverVariedExtentList).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'itemExtentBuilder#0': (args) => (args[0] as RenderSliverVariedExtentList).itemExtentBuilder,
         'itemExtent#0': (args) => (args[0] as RenderSliverVariedExtentList).itemExtent,
+        'hashCode#0': (args) => (args[0] as RenderSliverVariedExtentList).hashCode,
         'childManager#0': (args) => (args[0] as RenderSliverVariedExtentList).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverVariedExtentList).debugChildIntegrityEnabled,
         'semanticBounds#0': (args) => (args[0] as RenderSliverVariedExtentList).semanticBounds,
@@ -168,6 +170,7 @@ abstract final class RenderSliverVariedExtentListBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverVariedExtentList).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverVariedExtentList).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverVariedExtentList).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverVariedExtentList) == (args[1] as Object),
         '#2': (args) => RenderSliverVariedExtentList(childManager: args[0] as RenderSliverBoxChildManager, itemExtentBuilder: (a, b) => (args[1] as Function)(a, b) as double?),
       };
 }

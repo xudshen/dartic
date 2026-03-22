@@ -21,5 +21,8 @@ abstract final class CapturedThemesBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#1': (args) => (args[0] as CapturedThemes).wrap(args[1] as Widget),
+        'toString#0': (args) => (args[0] as CapturedThemes).toString(),
+        'hashCode#0': (args) => (args[0] as CapturedThemes).hashCode,
+        '==#1': (args) => (args[0] as CapturedThemes) == (args[1] as Object),
       };
 }

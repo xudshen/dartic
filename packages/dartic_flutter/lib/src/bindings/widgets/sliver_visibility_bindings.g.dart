@@ -31,6 +31,7 @@ abstract final class SliverVisibilityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverVisibility).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as SliverVisibility).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverVisibility).toString(),
         'createElement#0': (args) => (args[0] as SliverVisibility).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverVisibility).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverVisibility).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -45,7 +46,9 @@ abstract final class SliverVisibilityBindings {
         'maintainSize#0': (args) => (args[0] as SliverVisibility).maintainSize,
         'maintainSemantics#0': (args) => (args[0] as SliverVisibility).maintainSemantics,
         'maintainInteractivity#0': (args) => (args[0] as SliverVisibility).maintainInteractivity,
+        'hashCode#0': (args) => (args[0] as SliverVisibility).hashCode,
         'key#0': (args) => (args[0] as SliverVisibility).key,
+        '==#1': (args) => (args[0] as SliverVisibility) == (args[1] as Object),
         '#9': (args) => SliverVisibility(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, sliver: args[1] as Widget, replacementSliver: identical(args[2], darticAbsent) ? const SliverToBoxAdapter() : args[2] as Widget, visible: identical(args[3], darticAbsent) ? true : args[3] as bool, maintainState: identical(args[4], darticAbsent) ? false : args[4] as bool, maintainAnimation: identical(args[5], darticAbsent) ? false : args[5] as bool, maintainSize: identical(args[6], darticAbsent) ? false : args[6] as bool, maintainSemantics: identical(args[7], darticAbsent) ? false : args[7] as bool, maintainInteractivity: identical(args[8], darticAbsent) ? false : args[8] as bool),
         'maintain#4': (args) => SliverVisibility.maintain(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, sliver: args[1] as Widget, replacementSliver: identical(args[2], darticAbsent) ? const SliverToBoxAdapter() : args[2] as Widget, visible: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#9': (args) => SliverVisibility(key: args[0] as Key?, sliver: args[7] as Widget, replacementSliver: args[6] as Widget, visible: args[8] as bool, maintainState: args[5] as bool, maintainAnimation: args[1] as bool, maintainSize: args[4] as bool, maintainSemantics: args[3] as bool, maintainInteractivity: args[2] as bool),

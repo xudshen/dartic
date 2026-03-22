@@ -60,6 +60,7 @@ abstract final class SizeBindings {
         '/#1': (args) => (args[0] as Size) / (args[1] as double),
         '~/#1': (args) => (args[0] as Size) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as Size) % (args[1] as double),
+        '==#1': (args) => (args[0] as Size) == (args[1] as Object),
         '<#1': (args) => (args[0] as Size) < (args[1] as OffsetBase),
         '<=#1': (args) => (args[0] as Size) <= (args[1] as OffsetBase),
         '>#1': (args) => (args[0] as Size) > (args[1] as OffsetBase),

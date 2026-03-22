@@ -34,7 +34,10 @@ abstract final class KeyEventTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeyEventType).toString(),
         'label#0': (args) => (args[0] as KeyEventType).label,
+        'hashCode#0': (args) => (args[0] as KeyEventType).hashCode,
         'index#0': (args) => (args[0] as KeyEventType).index,
+        '==#1': (args) => (args[0] as KeyEventType) == (args[1] as Object),
       };
 }

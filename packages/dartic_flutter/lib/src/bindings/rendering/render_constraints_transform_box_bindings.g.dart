@@ -54,6 +54,7 @@ abstract final class RenderConstraintsTransformBoxBindings {
         'dispose#0': (args) { (args[0] as RenderConstraintsTransformBox).dispose(); return null; },
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderConstraintsTransformBox).describeApproximatePaintClip(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as RenderConstraintsTransformBox).toStringShort(),
+        'toString#0': (args) => (args[0] as RenderConstraintsTransformBox).toString(),
         'alignChild#0': (args) { (args[0] as RenderConstraintsTransformBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstraintsTransformBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderConstraintsTransformBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
@@ -124,6 +125,7 @@ abstract final class RenderConstraintsTransformBoxBindings {
         'paintOverflowIndicator#5': (args) { (args[0] as RenderConstraintsTransformBox).paintOverflowIndicator(args[1] as PaintingContext, args[2] as Offset, args[3] as Rect, args[4] as Rect, overflowHints: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<DiagnosticsNode>()); return null; },
         'constraintsTransform#0': (args) => (args[0] as RenderConstraintsTransformBox).constraintsTransform,
         'clipBehavior#0': (args) => (args[0] as RenderConstraintsTransformBox).clipBehavior,
+        'hashCode#0': (args) => (args[0] as RenderConstraintsTransformBox).hashCode,
         'resolvedAlignment#0': (args) => (args[0] as RenderConstraintsTransformBox).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderConstraintsTransformBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderConstraintsTransformBox).textDirection,
@@ -167,6 +169,7 @@ abstract final class RenderConstraintsTransformBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderConstraintsTransformBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderConstraintsTransformBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderConstraintsTransformBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderConstraintsTransformBox) == (args[1] as Object),
         '#5': (args) => RenderConstraintsTransformBox(alignment: args[0] as AlignmentGeometry, textDirection: args[1] as TextDirection?, constraintsTransform: (a) => (args[2] as Function)(a) as BoxConstraints, child: identical(args[3], darticAbsent) ? null : args[3] as RenderBox?, clipBehavior: identical(args[4], darticAbsent) ? Clip.none : args[4] as Clip),
       };
 }

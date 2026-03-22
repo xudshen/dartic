@@ -29,6 +29,7 @@ abstract final class UnmanagedRestorationScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as UnmanagedRestorationScope).updateShouldNotify(args[1] as UnmanagedRestorationScope),
+        'toString#0': (args) => (args[0] as UnmanagedRestorationScope).toString(),
         'createElement#0': (args) => (args[0] as UnmanagedRestorationScope).createElement(),
         'toStringShort#0': (args) => (args[0] as UnmanagedRestorationScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UnmanagedRestorationScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,8 +38,10 @@ abstract final class UnmanagedRestorationScopeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as UnmanagedRestorationScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as UnmanagedRestorationScope).debugDescribeChildren(),
         'bucket#0': (args) => (args[0] as UnmanagedRestorationScope).bucket,
+        'hashCode#0': (args) => (args[0] as UnmanagedRestorationScope).hashCode,
         'child#0': (args) => (args[0] as UnmanagedRestorationScope).child,
         'key#0': (args) => (args[0] as UnmanagedRestorationScope).key,
+        '==#1': (args) => (args[0] as UnmanagedRestorationScope) == (args[1] as Object),
         '#3': (args) => UnmanagedRestorationScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, bucket: identical(args[1], darticAbsent) ? null : args[1] as RestorationBucket?, child: args[2] as Widget),
         '_#fromFields#3': (args) => UnmanagedRestorationScope(key: args[2] as Key?, bucket: args[0] as RestorationBucket?, child: args[1] as Widget),
       };

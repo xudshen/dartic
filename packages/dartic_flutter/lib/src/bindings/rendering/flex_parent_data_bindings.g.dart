@@ -32,6 +32,7 @@ abstract final class FlexParentDataBindings {
         'detach#0': (args) { (args[0] as FlexParentData).detach(); return null; },
         'flex#0': (args) => (args[0] as FlexParentData).flex,
         'fit#0': (args) => (args[0] as FlexParentData).fit,
+        'hashCode#0': (args) => (args[0] as FlexParentData).hashCode,
         'offset#0': (args) => (args[0] as FlexParentData).offset,
         'previousSibling#0': (args) => (args[0] as FlexParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as FlexParentData).nextSibling,
@@ -40,6 +41,7 @@ abstract final class FlexParentDataBindings {
         'offset=#1': (args) { (args[0] as FlexParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as FlexParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as FlexParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as FlexParentData) == (args[1] as Object),
         '#0': (args) => FlexParentData(),
       };
 }

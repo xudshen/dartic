@@ -33,6 +33,9 @@ abstract final class ShortcutActivatorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'accepts#2': (args) => (args[0] as ShortcutActivator).accepts(args[1] as KeyEvent, args[2] as HardwareKeyboard),
         'debugDescribeKeys#0': (args) => (args[0] as ShortcutActivator).debugDescribeKeys(),
+        'toString#0': (args) => (args[0] as ShortcutActivator).toString(),
         'triggers#0': (args) => (args[0] as ShortcutActivator).triggers,
+        'hashCode#0': (args) => (args[0] as ShortcutActivator).hashCode,
+        '==#1': (args) => (args[0] as ShortcutActivator) == (args[1] as Object),
       };
 }

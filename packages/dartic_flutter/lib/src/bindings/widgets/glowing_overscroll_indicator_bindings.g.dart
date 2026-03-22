@@ -41,6 +41,7 @@ abstract final class GlowingOverscrollIndicatorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as GlowingOverscrollIndicator).createState(),
         'debugFillProperties#1': (args) { (args[0] as GlowingOverscrollIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as GlowingOverscrollIndicator).toString(),
         'createElement#0': (args) => (args[0] as GlowingOverscrollIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as GlowingOverscrollIndicator).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as GlowingOverscrollIndicator).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -54,8 +55,16 @@ abstract final class GlowingOverscrollIndicatorBindings {
         'color#0': (args) => (args[0] as GlowingOverscrollIndicator).color,
         'notificationPredicate#0': (args) => (args[0] as GlowingOverscrollIndicator).notificationPredicate,
         'child#0': (args) => (args[0] as GlowingOverscrollIndicator).child,
+        'hashCode#0': (args) => (args[0] as GlowingOverscrollIndicator).hashCode,
         'key#0': (args) => (args[0] as GlowingOverscrollIndicator).key,
-        '#7': (args) => GlowingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, showLeading: identical(args[1], darticAbsent) ? true : args[1] as bool, showTrailing: identical(args[2], darticAbsent) ? true : args[2] as bool, axisDirection: args[3] as AxisDirection, color: args[4] as Color, notificationPredicate: identical(args[5], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[5] as Function)(a) as bool, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
+        '==#1': (args) => (args[0] as GlowingOverscrollIndicator) == (args[1] as Object),
+        '#7': (args) {
+          if (identical(args[5], darticAbsent)) {
+            return GlowingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, showLeading: identical(args[1], darticAbsent) ? true : args[1] as bool, showTrailing: identical(args[2], darticAbsent) ? true : args[2] as bool, axisDirection: args[3] as AxisDirection, color: args[4] as Color, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?);
+          } else {
+            return GlowingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, showLeading: identical(args[1], darticAbsent) ? true : args[1] as bool, showTrailing: identical(args[2], darticAbsent) ? true : args[2] as bool, axisDirection: args[3] as AxisDirection, color: args[4] as Color, notificationPredicate: (a) => (args[5] as Function)(a) as bool, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?);
+          }
+        },
         '_#fromFields#7': (args) => GlowingOverscrollIndicator(key: args[3] as Key?, showLeading: args[5] as bool, showTrailing: args[6] as bool, axisDirection: args[0] as AxisDirection, color: args[2] as Color, notificationPredicate: args[4] as ScrollNotificationPredicate, child: args[1] as Widget?),
       };
 }

@@ -27,6 +27,7 @@ abstract final class PreferredSizeWidgetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PreferredSizeWidget).toString(),
         'createElement#0': (args) => (args[0] as PreferredSizeWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as PreferredSizeWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PreferredSizeWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -35,6 +36,8 @@ abstract final class PreferredSizeWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as PreferredSizeWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as PreferredSizeWidget).debugDescribeChildren(),
         'preferredSize#0': (args) => (args[0] as PreferredSizeWidget).preferredSize,
+        'hashCode#0': (args) => (args[0] as PreferredSizeWidget).hashCode,
         'key#0': (args) => (args[0] as PreferredSizeWidget).key,
+        '==#1': (args) => (args[0] as PreferredSizeWidget) == (args[1] as Object),
       };
 }

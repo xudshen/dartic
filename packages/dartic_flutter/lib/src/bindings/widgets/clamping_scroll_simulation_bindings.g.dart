@@ -27,11 +27,14 @@ abstract final class ClampingScrollSimulationBindings {
         'x#1': (args) => (args[0] as ClampingScrollSimulation).x(args[1] as double),
         'dx#1': (args) => (args[0] as ClampingScrollSimulation).dx(args[1] as double),
         'isDone#1': (args) => (args[0] as ClampingScrollSimulation).isDone(args[1] as double),
+        'toString#0': (args) => (args[0] as ClampingScrollSimulation).toString(),
         'position#0': (args) => (args[0] as ClampingScrollSimulation).position,
         'velocity#0': (args) => (args[0] as ClampingScrollSimulation).velocity,
         'friction#0': (args) => (args[0] as ClampingScrollSimulation).friction,
+        'hashCode#0': (args) => (args[0] as ClampingScrollSimulation).hashCode,
         'tolerance#0': (args) => (args[0] as ClampingScrollSimulation).tolerance,
         'tolerance=#1': (args) { (args[0] as ClampingScrollSimulation).tolerance = args[1] as Tolerance; return args[1]; },
+        '==#1': (args) => (args[0] as ClampingScrollSimulation) == (args[1] as Object),
         '#4': (args) => ClampingScrollSimulation(position: args[0] as double, velocity: args[1] as double, friction: identical(args[2], darticAbsent) ? 0.015 : args[2] as double, tolerance: identical(args[3], darticAbsent) ? Tolerance.defaultTolerance : args[3] as Tolerance),
       };
 }

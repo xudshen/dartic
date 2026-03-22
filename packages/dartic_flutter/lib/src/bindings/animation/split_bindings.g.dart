@@ -30,7 +30,9 @@ abstract final class SplitBindings {
         'split#0': (args) => (args[0] as Split).split,
         'beginCurve#0': (args) => (args[0] as Split).beginCurve,
         'endCurve#0': (args) => (args[0] as Split).endCurve,
+        'hashCode#0': (args) => (args[0] as Split).hashCode,
         'flipped#0': (args) => (args[0] as Split).flipped,
+        '==#1': (args) => (args[0] as Split) == (args[1] as Object),
         '#3': (args) => Split(args[0] as double, beginCurve: identical(args[1], darticAbsent) ? Curves.linear : args[1] as Curve, endCurve: identical(args[2], darticAbsent) ? Curves.easeOutCubic : args[2] as Curve),
         '_#fromFields#3': (args) => Split(args[2] as double, beginCurve: args[0] as Curve, endCurve: args[1] as Curve),
       };

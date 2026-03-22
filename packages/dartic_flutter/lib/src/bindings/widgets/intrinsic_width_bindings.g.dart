@@ -39,6 +39,7 @@ abstract final class IntrinsicWidthBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as IntrinsicWidth).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as IntrinsicWidth).updateRenderObject(args[1] as BuildContext, args[2] as RenderIntrinsicWidth); return null; },
+        'toString#0': (args) => (args[0] as IntrinsicWidth).toString(),
         'createElement#0': (args) => (args[0] as IntrinsicWidth).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as IntrinsicWidth).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as IntrinsicWidth).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class IntrinsicWidthBindings {
         'debugDescribeChildren#0': (args) => (args[0] as IntrinsicWidth).debugDescribeChildren(),
         'stepWidth#0': (args) => (args[0] as IntrinsicWidth).stepWidth,
         'stepHeight#0': (args) => (args[0] as IntrinsicWidth).stepHeight,
+        'hashCode#0': (args) => (args[0] as IntrinsicWidth).hashCode,
         'child#0': (args) => (args[0] as IntrinsicWidth).child,
         'key#0': (args) => (args[0] as IntrinsicWidth).key,
+        '==#1': (args) => (args[0] as IntrinsicWidth) == (args[1] as Object),
         '#4': (args) => IntrinsicWidth(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, stepWidth: identical(args[1], darticAbsent) ? null : args[1] as double?, stepHeight: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => IntrinsicWidth(key: args[1] as Key?, stepWidth: args[3] as double?, stepHeight: args[2] as double?, child: args[0] as Widget?),
       };

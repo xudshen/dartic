@@ -32,6 +32,9 @@ abstract final class OverlayChildLocationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OverlayChildLocation).toString(),
+        'hashCode#0': (args) => (args[0] as OverlayChildLocation).hashCode,
         'index#0': (args) => (args[0] as OverlayChildLocation).index,
+        '==#1': (args) => (args[0] as OverlayChildLocation) == (args[1] as Object),
       };
 }

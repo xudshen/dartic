@@ -40,6 +40,7 @@ abstract final class CupertinoNavigationBarBackButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoNavigationBarBackButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoNavigationBarBackButton).toString(),
         'createElement#0': (args) => (args[0] as CupertinoNavigationBarBackButton).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoNavigationBarBackButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoNavigationBarBackButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class CupertinoNavigationBarBackButtonBindings {
         'color#0': (args) => (args[0] as CupertinoNavigationBarBackButton).color,
         'previousPageTitle#0': (args) => (args[0] as CupertinoNavigationBarBackButton).previousPageTitle,
         'onPressed#0': (args) => (args[0] as CupertinoNavigationBarBackButton).onPressed,
+        'hashCode#0': (args) => (args[0] as CupertinoNavigationBarBackButton).hashCode,
         'key#0': (args) => (args[0] as CupertinoNavigationBarBackButton).key,
+        '==#1': (args) => (args[0] as CupertinoNavigationBarBackButton) == (args[1] as Object),
         '#4': (args) => CupertinoNavigationBarBackButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, previousPageTitle: identical(args[2], darticAbsent) ? null : args[2] as String?, onPressed: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         '_#fromFields#6': (args) => CupertinoNavigationBarBackButton(key: args[3] as Key?, color: args[2] as Color?, previousPageTitle: args[5] as String?, onPressed: args[4] as VoidCallback?),
       };

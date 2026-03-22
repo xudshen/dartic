@@ -29,6 +29,8 @@ abstract final class VelocityEstimateBindings {
         'confidence#0': (args) => (args[0] as VelocityEstimate).confidence,
         'duration#0': (args) => (args[0] as VelocityEstimate).duration,
         'offset#0': (args) => (args[0] as VelocityEstimate).offset,
+        'hashCode#0': (args) => (args[0] as VelocityEstimate).hashCode,
+        '==#1': (args) => (args[0] as VelocityEstimate) == (args[1] as Object),
         '#4': (args) => VelocityEstimate(pixelsPerSecond: args[0] as Offset, confidence: args[1] as double, duration: args[2] as Duration, offset: args[3] as Offset),
         '_#fromFields#4': (args) => VelocityEstimate(pixelsPerSecond: args[3] as Offset, confidence: args[0] as double, duration: args[1] as Duration, offset: args[2] as Offset),
       };

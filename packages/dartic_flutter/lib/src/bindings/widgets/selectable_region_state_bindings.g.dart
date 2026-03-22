@@ -64,6 +64,7 @@ abstract final class SelectableRegionStateBindings {
         'remove#1': (args) { (args[0] as SelectableRegionState).remove(args[1] as Selectable); return null; },
         'dispose#0': (args) { (args[0] as SelectableRegionState).dispose(); return null; },
         'build#1': (args) => (args[0] as SelectableRegionState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SelectableRegionState).toString(),
         'reassemble#0': (args) { (args[0] as SelectableRegionState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SelectableRegionState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as SelectableRegionState).deactivate(); return null; },
@@ -80,6 +81,7 @@ abstract final class SelectableRegionStateBindings {
         'cutEnabled#0': (args) => (args[0] as SelectableRegionState).cutEnabled,
         'pasteEnabled#0': (args) => (args[0] as SelectableRegionState).pasteEnabled,
         'textEditingValue#0': (args) => (args[0] as SelectableRegionState).textEditingValue,
+        'hashCode#0': (args) => (args[0] as SelectableRegionState).hashCode,
         'widget#0': (args) => (args[0] as SelectableRegionState).widget,
         'context#0': (args) => (args[0] as SelectableRegionState).context,
         'mounted#0': (args) => (args[0] as SelectableRegionState).mounted,
@@ -90,6 +92,7 @@ abstract final class SelectableRegionStateBindings {
         'shareEnabled#0': (args) => (args[0] as SelectableRegionState).shareEnabled,
         'liveTextInputEnabled#0': (args) => (args[0] as SelectableRegionState).liveTextInputEnabled,
         'textEditingValue=#1': (args) { (args[0] as SelectableRegionState).textEditingValue = args[1] as TextEditingValue; return args[1]; },
+        '==#1': (args) => (args[0] as SelectableRegionState) == (args[1] as Object),
         '#0': (args) => SelectableRegionState(),
       };
 }

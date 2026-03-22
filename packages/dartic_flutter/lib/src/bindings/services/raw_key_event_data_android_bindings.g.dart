@@ -47,6 +47,7 @@ abstract final class RawKeyEventDataAndroidBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataAndroid).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataAndroid).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataAndroid).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataAndroid).toString(),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataAndroid).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataAndroid).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataAndroid).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -70,6 +71,7 @@ abstract final class RawKeyEventDataAndroidBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataAndroid).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataAndroid).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataAndroid).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataAndroid) == (args[1] as Object),
         '#11': (args) => RawKeyEventDataAndroid(flags: identical(args[0], darticAbsent) ? 0 : args[0] as int, codePoint: identical(args[1], darticAbsent) ? 0 : args[1] as int, plainCodePoint: identical(args[2], darticAbsent) ? 0 : args[2] as int, keyCode: identical(args[3], darticAbsent) ? 0 : args[3] as int, scanCode: identical(args[4], darticAbsent) ? 0 : args[4] as int, metaState: identical(args[5], darticAbsent) ? 0 : args[5] as int, eventSource: identical(args[6], darticAbsent) ? 0 : args[6] as int, vendorId: identical(args[7], darticAbsent) ? 0 : args[7] as int, productId: identical(args[8], darticAbsent) ? 0 : args[8] as int, deviceId: identical(args[9], darticAbsent) ? 0 : args[9] as int, repeatCount: identical(args[10], darticAbsent) ? 0 : args[10] as int),
         '_#fromFields#11': (args) => RawKeyEventDataAndroid(flags: args[3] as int, codePoint: args[0] as int, plainCodePoint: args[6] as int, keyCode: args[4] as int, scanCode: args[9] as int, metaState: args[5] as int, eventSource: args[2] as int, vendorId: args[10] as int, productId: args[7] as int, deviceId: args[1] as int, repeatCount: args[8] as int),
       };

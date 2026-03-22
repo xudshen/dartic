@@ -32,9 +32,12 @@ abstract final class DismissIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DismissIntent).toString(),
         'toStringShort#0': (args) => (args[0] as DismissIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DismissIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DismissIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DismissIntent).hashCode,
+        '==#1': (args) => (args[0] as DismissIntent) == (args[1] as Object),
         '#0': (args) => DismissIntent(),
         '_#fromFields#0': (args) => DismissIntent(),
       };

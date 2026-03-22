@@ -30,6 +30,7 @@ abstract final class ImageSizeInfoBindings {
         'displaySizeInBytes#0': (args) => (args[0] as ImageSizeInfo).displaySizeInBytes,
         'decodedSizeInBytes#0': (args) => (args[0] as ImageSizeInfo).decodedSizeInBytes,
         'hashCode#0': (args) => (args[0] as ImageSizeInfo).hashCode,
+        '==#1': (args) => (args[0] as ImageSizeInfo) == (args[1] as Object),
         '#3': (args) => ImageSizeInfo(source: identical(args[0], darticAbsent) ? null : args[0] as String?, displaySize: args[1] as Size, imageSize: args[2] as Size),
         '_#fromFields#3': (args) => ImageSizeInfo(source: args[2] as String?, displaySize: args[0] as Size, imageSize: args[1] as Size),
       };

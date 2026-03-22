@@ -39,6 +39,7 @@ abstract final class RenderMetaDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as RenderMetaData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderMetaData).toString(),
         'hitTest#2': (args) => (args[0] as RenderMetaData).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderMetaData).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderMetaData).setupParentData(args[1] as RenderObject); return null; },
@@ -117,6 +118,7 @@ abstract final class RenderMetaDataBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderMetaData).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderMetaData).computeSizeForNoChild(args[1] as BoxConstraints),
         'metaData#0': (args) => (args[0] as RenderMetaData).metaData,
+        'hashCode#0': (args) => (args[0] as RenderMetaData).hashCode,
         'behavior#0': (args) => (args[0] as RenderMetaData).behavior,
         'hasSize#0': (args) => (args[0] as RenderMetaData).hasSize,
         'size#0': (args) => (args[0] as RenderMetaData).size,
@@ -156,6 +158,7 @@ abstract final class RenderMetaDataBindings {
         'debugCreator=#1': (args) { (args[0] as RenderMetaData).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderMetaData).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderMetaData).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderMetaData) == (args[1] as Object),
         '#3': (args) => RenderMetaData(metaData: identical(args[0], darticAbsent) ? null : args[0], behavior: identical(args[1], darticAbsent) ? HitTestBehavior.deferToChild : args[1] as HitTestBehavior, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

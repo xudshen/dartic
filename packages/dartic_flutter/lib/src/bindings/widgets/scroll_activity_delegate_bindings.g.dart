@@ -34,6 +34,9 @@ abstract final class ScrollActivityDelegateBindings {
         'applyUserOffset#1': (args) { (args[0] as ScrollActivityDelegate).applyUserOffset(args[1] as double); return null; },
         'goIdle#0': (args) { (args[0] as ScrollActivityDelegate).goIdle(); return null; },
         'goBallistic#1': (args) { (args[0] as ScrollActivityDelegate).goBallistic(args[1] as double); return null; },
+        'toString#0': (args) => (args[0] as ScrollActivityDelegate).toString(),
         'axisDirection#0': (args) => (args[0] as ScrollActivityDelegate).axisDirection,
+        'hashCode#0': (args) => (args[0] as ScrollActivityDelegate).hashCode,
+        '==#1': (args) => (args[0] as ScrollActivityDelegate) == (args[1] as Object),
       };
 }

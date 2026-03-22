@@ -45,6 +45,8 @@ abstract final class ScrollDragControllerBindings {
         'carriedVelocity#0': (args) => (args[0] as ScrollDragController).carriedVelocity,
         'motionStartDistanceThreshold#0': (args) => (args[0] as ScrollDragController).motionStartDistanceThreshold,
         'lastDetails#0': (args) => (args[0] as ScrollDragController).lastDetails,
+        'hashCode#0': (args) => (args[0] as ScrollDragController).hashCode,
+        '==#1': (args) => (args[0] as ScrollDragController) == (args[1] as Object),
         '#5': (args) => ScrollDragController(delegate: args[0] as ScrollActivityDelegate, details: args[1] as DragStartDetails, onDragCanceled: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), carriedVelocity: identical(args[3], darticAbsent) ? null : args[3] as double?, motionStartDistanceThreshold: identical(args[4], darticAbsent) ? null : args[4] as double?),
       };
 }

@@ -34,5 +34,7 @@ abstract final class InkFeatureBindings {
         'controller#0': (args) => (args[0] as InkFeature).controller,
         'referenceBox#0': (args) => (args[0] as InkFeature).referenceBox,
         'onRemoved#0': (args) => (args[0] as InkFeature).onRemoved,
+        'hashCode#0': (args) => (args[0] as InkFeature).hashCode,
+        '==#1': (args) => (args[0] as InkFeature) == (args[1] as Object),
       };
 }

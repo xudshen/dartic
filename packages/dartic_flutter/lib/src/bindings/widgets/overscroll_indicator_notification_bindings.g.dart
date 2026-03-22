@@ -36,13 +36,16 @@ abstract final class OverscrollIndicatorNotificationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'disallowIndicator#0': (args) { (args[0] as OverscrollIndicatorNotification).disallowIndicator(); return null; },
         'debugFillDescription#1': (args) { (args[0] as OverscrollIndicatorNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as OverscrollIndicatorNotification).toString(),
         'dispatch#1': (args) { (args[0] as OverscrollIndicatorNotification).dispatch(args[1] as BuildContext?); return null; },
         'leading#0': (args) => (args[0] as OverscrollIndicatorNotification).leading,
         'paintOffset#0': (args) => (args[0] as OverscrollIndicatorNotification).paintOffset,
         'accepted#0': (args) => (args[0] as OverscrollIndicatorNotification).accepted,
+        'hashCode#0': (args) => (args[0] as OverscrollIndicatorNotification).hashCode,
         'depth#0': (args) => (args[0] as OverscrollIndicatorNotification).depth,
         'paintOffset=#1': (args) { (args[0] as OverscrollIndicatorNotification).paintOffset = args[1] as double; return args[1]; },
         'accepted=#1': (args) { (args[0] as OverscrollIndicatorNotification).accepted = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as OverscrollIndicatorNotification) == (args[1] as Object),
         '#1': (args) => OverscrollIndicatorNotification(leading: args[0] as bool),
       };
 }

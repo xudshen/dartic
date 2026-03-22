@@ -38,6 +38,7 @@ abstract final class HardwareKeyboardBindings {
         'syncKeyboardState#0': (args) => (args[0] as HardwareKeyboard).syncKeyboardState(),
         'handleKeyEvent#1': (args) => (args[0] as HardwareKeyboard).handleKeyEvent(args[1] as KeyEvent),
         'clearState#0': (args) { (args[0] as HardwareKeyboard).clearState(); return null; },
+        'toString#0': (args) => (args[0] as HardwareKeyboard).toString(),
         'physicalKeysPressed#0': (args) => (args[0] as HardwareKeyboard).physicalKeysPressed,
         'logicalKeysPressed#0': (args) => (args[0] as HardwareKeyboard).logicalKeysPressed,
         'lockModesEnabled#0': (args) => (args[0] as HardwareKeyboard).lockModesEnabled,
@@ -45,6 +46,8 @@ abstract final class HardwareKeyboardBindings {
         'isShiftPressed#0': (args) => (args[0] as HardwareKeyboard).isShiftPressed,
         'isAltPressed#0': (args) => (args[0] as HardwareKeyboard).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as HardwareKeyboard).isMetaPressed,
+        'hashCode#0': (args) => (args[0] as HardwareKeyboard).hashCode,
+        '==#1': (args) => (args[0] as HardwareKeyboard) == (args[1] as Object),
         '#0': (args) => HardwareKeyboard(),
       };
 }

@@ -26,5 +26,8 @@ abstract final class SystemNavigatorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemNavigator).toString(),
+        'hashCode#0': (args) => (args[0] as SystemNavigator).hashCode,
+        '==#1': (args) => (args[0] as SystemNavigator) == (args[1] as Object),
       };
 }

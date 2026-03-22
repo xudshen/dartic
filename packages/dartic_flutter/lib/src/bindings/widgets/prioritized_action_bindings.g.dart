@@ -34,6 +34,7 @@ abstract final class PrioritizedActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isEnabled#2': (args) => (args[0] as PrioritizedAction).isEnabled(args[1] as PrioritizedIntents, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
         'invoke#2': (args) { (args[0] as PrioritizedAction).invoke(args[1] as PrioritizedIntents, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?); return null; },
+        'toString#0': (args) => (args[0] as PrioritizedAction).toString(),
         'consumesKey#1': (args) => (args[0] as PrioritizedAction).consumesKey(args[1] as PrioritizedIntents),
         'toKeyEventResult#2': (args) => (args[0] as PrioritizedAction).toKeyEventResult(args[1] as PrioritizedIntents, args[2]),
         'addActionListener#1': (args) { (args[0] as PrioritizedAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -42,9 +43,11 @@ abstract final class PrioritizedActionBindings {
         'toStringShort#0': (args) => (args[0] as PrioritizedAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PrioritizedAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as PrioritizedAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as PrioritizedAction).hashCode,
         'callingAction#0': (args) => (args[0] as PrioritizedAction).callingAction,
         'intentType#0': (args) => (args[0] as PrioritizedAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as PrioritizedAction).isActionEnabled,
+        '==#1': (args) => (args[0] as PrioritizedAction) == (args[1] as Object),
         '#0': (args) => PrioritizedAction(),
       };
 }

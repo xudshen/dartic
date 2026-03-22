@@ -78,6 +78,7 @@ abstract final class ScrollPositionBindings {
         'dispose#0': (args) { (args[0] as ScrollPosition).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as ScrollPosition).notifyListeners(); return null; },
         'debugFillDescription#1': (args) { (args[0] as ScrollPosition).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollPosition).toString(),
         'addListener#1': (args) { (args[0] as ScrollPosition).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as ScrollPosition).removeListener(() => (args[1] as Function)()); return null; },
         'copyWith#6': (args) => (args[0] as ScrollPosition).copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, devicePixelRatio: identical(args[6], darticAbsent) ? null : args[6] as double?),
@@ -98,6 +99,7 @@ abstract final class ScrollPositionBindings {
         'isScrollingNotifier#0': (args) => (args[0] as ScrollPosition).isScrollingNotifier,
         'allowImplicitScrolling#0': (args) => (args[0] as ScrollPosition).allowImplicitScrolling,
         'activity#0': (args) => (args[0] as ScrollPosition).activity,
+        'hashCode#0': (args) => (args[0] as ScrollPosition).hashCode,
         'userScrollDirection#0': (args) => (args[0] as ScrollPosition).userScrollDirection,
         'hasListeners#0': (args) => (args[0] as ScrollPosition).hasListeners,
         'axisDirection#0': (args) => (args[0] as ScrollPosition).axisDirection,
@@ -108,5 +110,6 @@ abstract final class ScrollPositionBindings {
         'extentInside#0': (args) => (args[0] as ScrollPosition).extentInside,
         'extentAfter#0': (args) => (args[0] as ScrollPosition).extentAfter,
         'extentTotal#0': (args) => (args[0] as ScrollPosition).extentTotal,
+        '==#1': (args) => (args[0] as ScrollPosition) == (args[1] as Object),
       };
 }

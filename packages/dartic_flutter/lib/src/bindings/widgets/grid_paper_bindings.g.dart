@@ -27,6 +27,7 @@ abstract final class GridPaperBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as GridPaper).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as GridPaper).toString(),
         'createElement#0': (args) => (args[0] as GridPaper).createElement(),
         'toStringShort#0': (args) => (args[0] as GridPaper).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as GridPaper).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,7 +40,9 @@ abstract final class GridPaperBindings {
         'divisions#0': (args) => (args[0] as GridPaper).divisions,
         'subdivisions#0': (args) => (args[0] as GridPaper).subdivisions,
         'child#0': (args) => (args[0] as GridPaper).child,
+        'hashCode#0': (args) => (args[0] as GridPaper).hashCode,
         'key#0': (args) => (args[0] as GridPaper).key,
+        '==#1': (args) => (args[0] as GridPaper) == (args[1] as Object),
         '#6': (args) => GridPaper(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? const Color(0x7FC3E8F3) : args[1] as Color, interval: identical(args[2], darticAbsent) ? 100.0 : args[2] as double, divisions: identical(args[3], darticAbsent) ? 2 : args[3] as int, subdivisions: identical(args[4], darticAbsent) ? 5 : args[4] as int, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => GridPaper(key: args[4] as Key?, color: args[1] as Color, interval: args[3] as double, divisions: args[2] as int, subdivisions: args[5] as int, child: args[0] as Widget?),
       };

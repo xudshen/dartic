@@ -35,18 +35,21 @@ abstract final class CupertinoPageBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRoute#1': (args) => (args[0] as CupertinoPage).createRoute(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoPage).toString(),
         'canUpdate#1': (args) => (args[0] as CupertinoPage).canUpdate(args[1] as Page<dynamic>),
         'child#0': (args) => (args[0] as CupertinoPage).child,
         'title#0': (args) => (args[0] as CupertinoPage).title,
         'maintainState#0': (args) => (args[0] as CupertinoPage).maintainState,
         'fullscreenDialog#0': (args) => (args[0] as CupertinoPage).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as CupertinoPage).allowSnapshotting,
+        'hashCode#0': (args) => (args[0] as CupertinoPage).hashCode,
         'key#0': (args) => (args[0] as CupertinoPage).key,
         'restorationId#0': (args) => (args[0] as CupertinoPage).restorationId,
         'onPopInvoked#0': (args) => (args[0] as CupertinoPage).onPopInvoked,
         'canPop#0': (args) => (args[0] as CupertinoPage).canPop,
         'name#0': (args) => (args[0] as CupertinoPage).name,
         'arguments#0': (args) => (args[0] as CupertinoPage).arguments,
+        '==#1': (args) => (args[0] as CupertinoPage) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[6], darticAbsent)) {
             return CupertinoPage<dynamic>(child: args[0] as Widget, maintainState: identical(args[1], darticAbsent) ? true : args[1] as bool, title: identical(args[2], darticAbsent) ? null : args[2] as String?, fullscreenDialog: identical(args[3], darticAbsent) ? false : args[3] as bool, allowSnapshotting: identical(args[4], darticAbsent) ? true : args[4] as bool, canPop: identical(args[5], darticAbsent) ? true : args[5] as bool, key: identical(args[7], darticAbsent) ? null : args[7] as LocalKey?, name: identical(args[8], darticAbsent) ? null : args[8] as String?, arguments: identical(args[9], darticAbsent) ? null : args[9], restorationId: identical(args[10], darticAbsent) ? null : args[10] as String?);

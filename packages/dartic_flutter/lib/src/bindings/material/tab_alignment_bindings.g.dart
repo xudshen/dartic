@@ -44,6 +44,9 @@ abstract final class TabAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TabAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as TabAlignment).hashCode,
         'index#0': (args) => (args[0] as TabAlignment).index,
+        '==#1': (args) => (args[0] as TabAlignment) == (args[1] as Object),
       };
 }

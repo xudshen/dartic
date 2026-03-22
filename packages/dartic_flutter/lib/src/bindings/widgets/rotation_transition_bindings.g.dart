@@ -36,6 +36,7 @@ abstract final class RotationTransitionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RotationTransition).toString(),
         'build#1': (args) => (args[0] as RotationTransition).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as RotationTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as RotationTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,6 +47,7 @@ abstract final class RotationTransitionBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RotationTransition).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as RotationTransition).debugDescribeChildren(),
         'turns#0': (args) => (args[0] as RotationTransition).turns,
+        'hashCode#0': (args) => (args[0] as RotationTransition).hashCode,
         'onTransform#0': (args) => (args[0] as RotationTransition).onTransform,
         'animation#0': (args) => (args[0] as RotationTransition).animation,
         'alignment#0': (args) => (args[0] as RotationTransition).alignment,
@@ -53,6 +55,7 @@ abstract final class RotationTransitionBindings {
         'child#0': (args) => (args[0] as RotationTransition).child,
         'listenable#0': (args) => (args[0] as RotationTransition).listenable,
         'key#0': (args) => (args[0] as RotationTransition).key,
+        '==#1': (args) => (args[0] as RotationTransition) == (args[1] as Object),
         '#5': (args) => RotationTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, turns: args[1] as Animation<double>, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as Alignment, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#6': (args) => RotationTransition(key: args[3] as Key?, turns: args[4] as Animation<double>, alignment: args[0] as Alignment, filterQuality: args[2] as FilterQuality?, child: args[1] as Widget?),
       };

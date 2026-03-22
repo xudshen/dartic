@@ -39,6 +39,7 @@ abstract final class InkBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as Ink).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createState#0': (args) => (args[0] as Ink).createState(),
+        'toString#0': (args) => (args[0] as Ink).toString(),
         'createElement#0': (args) => (args[0] as Ink).createElement(),
         'toStringShort#0': (args) => (args[0] as Ink).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Ink).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -50,7 +51,9 @@ abstract final class InkBindings {
         'decoration#0': (args) => (args[0] as Ink).decoration,
         'width#0': (args) => (args[0] as Ink).width,
         'height#0': (args) => (args[0] as Ink).height,
+        'hashCode#0': (args) => (args[0] as Ink).hashCode,
         'key#0': (args) => (args[0] as Ink).key,
+        '==#1': (args) => (args[0] as Ink) == (args[1] as Object),
         '#7': (args) => Ink(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: identical(args[1], darticAbsent) ? null : args[1] as EdgeInsetsGeometry?, color: identical(args[2], darticAbsent) ? null : args[2] as Color?, decoration: identical(args[3], darticAbsent) ? null : args[3] as Decoration?, width: identical(args[4], darticAbsent) ? null : args[4] as double?, height: identical(args[5], darticAbsent) ? null : args[5] as double?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         'image#13': (args) => Ink.image(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: identical(args[1], darticAbsent) ? null : args[1] as EdgeInsetsGeometry?, image: args[2] as ImageProvider<Object>, onImageError: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), colorFilter: identical(args[4], darticAbsent) ? null : args[4] as ColorFilter?, fit: identical(args[5], darticAbsent) ? null : args[5] as BoxFit?, alignment: identical(args[6], darticAbsent) ? Alignment.center : args[6] as AlignmentGeometry, centerSlice: identical(args[7], darticAbsent) ? null : args[7] as Rect?, repeat: identical(args[8], darticAbsent) ? ImageRepeat.noRepeat : args[8] as ImageRepeat, matchTextDirection: identical(args[9], darticAbsent) ? false : args[9] as bool, width: identical(args[10], darticAbsent) ? null : args[10] as double?, height: identical(args[11], darticAbsent) ? null : args[11] as double?, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?),
       };

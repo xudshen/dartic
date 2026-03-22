@@ -27,10 +27,13 @@ abstract final class AnimationStatusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimationStatus).toString(),
         'isDismissed#0': (args) => (args[0] as AnimationStatus).isDismissed,
         'isCompleted#0': (args) => (args[0] as AnimationStatus).isCompleted,
         'isAnimating#0': (args) => (args[0] as AnimationStatus).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as AnimationStatus).isForwardOrCompleted,
+        'hashCode#0': (args) => (args[0] as AnimationStatus).hashCode,
         'index#0': (args) => (args[0] as AnimationStatus).index,
+        '==#1': (args) => (args[0] as AnimationStatus) == (args[1] as Object),
       };
 }

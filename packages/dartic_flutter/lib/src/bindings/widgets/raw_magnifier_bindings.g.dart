@@ -33,6 +33,7 @@ abstract final class RawMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RawMagnifier).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RawMagnifier).toString(),
         'createElement#0': (args) => (args[0] as RawMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as RawMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,7 +47,9 @@ abstract final class RawMagnifierBindings {
         'focalPointOffset#0': (args) => (args[0] as RawMagnifier).focalPointOffset,
         'magnificationScale#0': (args) => (args[0] as RawMagnifier).magnificationScale,
         'size#0': (args) => (args[0] as RawMagnifier).size,
+        'hashCode#0': (args) => (args[0] as RawMagnifier).hashCode,
         'key#0': (args) => (args[0] as RawMagnifier).key,
+        '==#1': (args) => (args[0] as RawMagnifier) == (args[1] as Object),
         '#7': (args) => RawMagnifier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, decoration: identical(args[2], darticAbsent) ? const MagnifierDecoration() : args[2] as MagnifierDecoration, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as Clip, focalPointOffset: identical(args[4], darticAbsent) ? Offset.zero : args[4] as Offset, magnificationScale: identical(args[5], darticAbsent) ? 1 : args[5] as double, size: args[6] as Size),
         '_#fromFields#7': (args) => RawMagnifier(key: args[4] as Key?, child: args[0] as Widget?, decoration: args[2] as MagnifierDecoration, clipBehavior: args[1] as Clip, focalPointOffset: args[3] as Offset, magnificationScale: args[5] as double, size: args[6] as Size),
       };

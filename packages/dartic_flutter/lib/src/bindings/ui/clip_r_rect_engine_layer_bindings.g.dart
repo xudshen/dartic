@@ -30,6 +30,9 @@ abstract final class ClipRRectEngineLayerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ClipRRectEngineLayer).toString(),
         'dispose#0': (args) { (args[0] as ClipRRectEngineLayer).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as ClipRRectEngineLayer).hashCode,
+        '==#1': (args) => (args[0] as ClipRRectEngineLayer) == (args[1] as Object),
       };
 }

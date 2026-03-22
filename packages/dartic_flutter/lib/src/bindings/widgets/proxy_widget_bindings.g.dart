@@ -32,6 +32,7 @@ abstract final class ProxyWidgetBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ProxyWidget).toString(),
         'createElement#0': (args) => (args[0] as ProxyWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as ProxyWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ProxyWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,6 +41,8 @@ abstract final class ProxyWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ProxyWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ProxyWidget).debugDescribeChildren(),
         'child#0': (args) => (args[0] as ProxyWidget).child,
+        'hashCode#0': (args) => (args[0] as ProxyWidget).hashCode,
         'key#0': (args) => (args[0] as ProxyWidget).key,
+        '==#1': (args) => (args[0] as ProxyWidget) == (args[1] as Object),
       };
 }

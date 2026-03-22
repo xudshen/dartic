@@ -37,10 +37,13 @@ abstract final class InspectorReferenceDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as InspectorReferenceData).toString(),
         'id#0': (args) => (args[0] as InspectorReferenceData).id,
         'count#0': (args) => (args[0] as InspectorReferenceData).count,
         'value#0': (args) => (args[0] as InspectorReferenceData).value,
+        'hashCode#0': (args) => (args[0] as InspectorReferenceData).hashCode,
         'count=#1': (args) { (args[0] as InspectorReferenceData).count = args[1] as int; return args[1]; },
+        '==#1': (args) => (args[0] as InspectorReferenceData) == (args[1] as Object),
         '#2': (args) => InspectorReferenceData(args[0] as Object, args[1] as String),
       };
 }

@@ -37,6 +37,7 @@ abstract final class DialogWindowControllerBindings {
         'setTitle#1': (args) { (args[0] as DialogWindowController).setTitle(args[1] as String); return null; },
         'activate#0': (args) { (args[0] as DialogWindowController).activate(); return null; },
         'setMinimized#1': (args) { (args[0] as DialogWindowController).setMinimized(args[1] as bool); return null; },
+        'toString#0': (args) => (args[0] as DialogWindowController).toString(),
         'destroy#0': (args) { (args[0] as DialogWindowController).destroy(); return null; },
         'addListener#1': (args) { (args[0] as DialogWindowController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as DialogWindowController).removeListener(() => (args[1] as Function)()); return null; },
@@ -46,9 +47,12 @@ abstract final class DialogWindowControllerBindings {
         'title#0': (args) => (args[0] as DialogWindowController).title,
         'isActivated#0': (args) => (args[0] as DialogWindowController).isActivated,
         'isMinimized#0': (args) => (args[0] as DialogWindowController).isMinimized,
+        'hashCode#0': (args) => (args[0] as DialogWindowController).hashCode,
         'contentSize#0': (args) => (args[0] as DialogWindowController).contentSize,
         'rootView#0': (args) => (args[0] as DialogWindowController).rootView,
         'hasListeners#0': (args) => (args[0] as DialogWindowController).hasListeners,
         'rootView=#1': (args) { (args[0] as DialogWindowController).rootView = args[1] as FlutterView; return args[1]; },
+        '==#1': (args) => (args[0] as DialogWindowController) == (args[1] as Object),
+        '#5': (args) => DialogWindowController(preferredSize: identical(args[0], darticAbsent) ? null : args[0] as Size?, preferredConstraints: identical(args[1], darticAbsent) ? null : args[1] as BoxConstraints?, parent: identical(args[2], darticAbsent) ? null : args[2] as BaseWindowController?, title: identical(args[3], darticAbsent) ? null : args[3] as String?, delegate: identical(args[4], darticAbsent) ? null : args[4] as DialogWindowControllerDelegate?),
       };
 }

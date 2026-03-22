@@ -34,6 +34,7 @@ abstract final class ShortcutManagerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'handleKeypress#2': (args) => (args[0] as ShortcutManager).handleKeypress(args[1] as BuildContext, args[2] as KeyEvent),
         'debugFillProperties#1': (args) { (args[0] as ShortcutManager).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ShortcutManager).toString(),
         'toStringShort#0': (args) => (args[0] as ShortcutManager).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ShortcutManager).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'addListener#1': (args) { (args[0] as ShortcutManager).addListener(() => (args[1] as Function)()); return null; },
@@ -42,8 +43,10 @@ abstract final class ShortcutManagerBindings {
         'notifyListeners#0': (args) { (args[0] as ShortcutManager).notifyListeners(); return null; },
         'modal#0': (args) => (args[0] as ShortcutManager).modal,
         'shortcuts#0': (args) => (args[0] as ShortcutManager).shortcuts,
+        'hashCode#0': (args) => (args[0] as ShortcutManager).hashCode,
         'hasListeners#0': (args) => (args[0] as ShortcutManager).hasListeners,
         'shortcuts=#1': (args) { (args[0] as ShortcutManager).shortcuts = (args[1] as Map).cast<ShortcutActivator, Intent>(); return args[1]; },
+        '==#1': (args) => (args[0] as ShortcutManager) == (args[1] as Object),
         '#2': (args) => ShortcutManager(shortcuts: identical(args[0], darticAbsent) ? const <ShortcutActivator, Intent>{} : (args[0] as Map).cast<ShortcutActivator, Intent>(), modal: identical(args[1], darticAbsent) ? false : args[1] as bool),
       };
 }

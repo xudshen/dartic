@@ -45,6 +45,7 @@ abstract final class LayerBindings {
         'addToScene#1': (args) { (args[0] as Layer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as Layer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Layer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Layer).toString(),
         'toStringShallow#2': (args) => (args[0] as Layer).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as Layer).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as Layer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -62,7 +63,9 @@ abstract final class LayerBindings {
         'nextSibling#0': (args) => (args[0] as Layer).nextSibling,
         'previousSibling#0': (args) => (args[0] as Layer).previousSibling,
         'debugCreator#0': (args) => (args[0] as Layer).debugCreator,
+        'hashCode#0': (args) => (args[0] as Layer).hashCode,
         'engineLayer=#1': (args) { (args[0] as Layer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as Layer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as Layer) == (args[1] as Object),
       };
 }

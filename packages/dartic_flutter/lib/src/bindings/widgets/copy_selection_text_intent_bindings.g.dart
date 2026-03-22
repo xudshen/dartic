@@ -28,11 +28,14 @@ abstract final class CopySelectionTextIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CopySelectionTextIntent).toString(),
         'toStringShort#0': (args) => (args[0] as CopySelectionTextIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as CopySelectionTextIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as CopySelectionTextIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'cause#0': (args) => (args[0] as CopySelectionTextIntent).cause,
         'collapseSelection#0': (args) => (args[0] as CopySelectionTextIntent).collapseSelection,
+        'hashCode#0': (args) => (args[0] as CopySelectionTextIntent).hashCode,
+        '==#1': (args) => (args[0] as CopySelectionTextIntent) == (args[1] as Object),
         'cut#1': (args) => CopySelectionTextIntent.cut(args[0] as SelectionChangedCause),
         '_#fromFields#2': (args) => CopySelectionTextIntent.cut(args[0] as SelectionChangedCause),
       };

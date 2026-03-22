@@ -41,6 +41,7 @@ abstract final class ImageConfigurationBindings {
         'size#0': (args) => (args[0] as ImageConfiguration).size,
         'platform#0': (args) => (args[0] as ImageConfiguration).platform,
         'hashCode#0': (args) => (args[0] as ImageConfiguration).hashCode,
+        '==#1': (args) => (args[0] as ImageConfiguration) == (args[1] as Object),
         '#6': (args) => ImageConfiguration(bundle: identical(args[0], darticAbsent) ? null : args[0] as AssetBundle?, devicePixelRatio: identical(args[1], darticAbsent) ? null : args[1] as double?, locale: identical(args[2], darticAbsent) ? null : args[2] as ui.Locale?, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?, size: identical(args[4], darticAbsent) ? null : args[4] as ui.Size?, platform: identical(args[5], darticAbsent) ? null : args[5] as TargetPlatform?),
         '_#fromFields#6': (args) => ImageConfiguration(bundle: args[0] as AssetBundle?, devicePixelRatio: args[1] as double?, locale: args[2] as ui.Locale?, textDirection: args[5] as ui.TextDirection?, size: args[4] as ui.Size?, platform: args[3] as TargetPlatform?),
       };

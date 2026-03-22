@@ -53,6 +53,7 @@ abstract final class ColorBindings {
         'green#0': (args) => (args[0] as Color).green,
         'blue#0': (args) => (args[0] as Color).blue,
         'hashCode#0': (args) => (args[0] as Color).hashCode,
+        '==#1': (args) => (args[0] as Color) == (args[1] as Object),
         '#1': (args) => Color(args[0] as int),
         'from#5': (args) => Color.from(alpha: args[0] as double, red: args[1] as double, green: args[2] as double, blue: args[3] as double, colorSpace: identical(args[4], darticAbsent) ? ColorSpace.sRGB : args[4] as ColorSpace),
         'fromARGB#4': (args) => Color.fromARGB(args[0] as int, args[1] as int, args[2] as int, args[3] as int),

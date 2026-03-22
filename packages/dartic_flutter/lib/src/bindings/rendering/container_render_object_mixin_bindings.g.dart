@@ -67,6 +67,7 @@ abstract final class ContainerRenderObjectMixinBindings {
         'childBefore#1': (args) => (args[0] as ContainerRenderObjectMixin).childBefore(args[1] as RenderObject),
         'childAfter#1': (args) => (args[0] as ContainerRenderObjectMixin).childAfter(args[1] as RenderObject),
         'debugDescribeChildren#0': (args) => (args[0] as ContainerRenderObjectMixin).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as ContainerRenderObjectMixin).toString(),
         'reassemble#0': (args) { (args[0] as ContainerRenderObjectMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as ContainerRenderObjectMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as ContainerRenderObjectMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -115,6 +116,7 @@ abstract final class ContainerRenderObjectMixinBindings {
         'childCount#0': (args) => (args[0] as ContainerRenderObjectMixin).childCount,
         'firstChild#0': (args) => (args[0] as ContainerRenderObjectMixin).firstChild,
         'lastChild#0': (args) => (args[0] as ContainerRenderObjectMixin).lastChild,
+        'hashCode#0': (args) => (args[0] as ContainerRenderObjectMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as ContainerRenderObjectMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as ContainerRenderObjectMixin).parentData,
         'depth#0': (args) => (args[0] as ContainerRenderObjectMixin).depth,
@@ -146,5 +148,6 @@ abstract final class ContainerRenderObjectMixinBindings {
         'parentData=#1': (args) { (args[0] as ContainerRenderObjectMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ContainerRenderObjectMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as ContainerRenderObjectMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as ContainerRenderObjectMixin) == (args[1] as Object),
       };
 }

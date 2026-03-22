@@ -31,6 +31,7 @@ abstract final class RangeValuesBindings {
         'start#0': (args) => (args[0] as RangeValues).start,
         'end#0': (args) => (args[0] as RangeValues).end,
         'hashCode#0': (args) => (args[0] as RangeValues).hashCode,
+        '==#1': (args) => (args[0] as RangeValues) == (args[1] as Object),
         '#2': (args) => RangeValues(args[0] as double, args[1] as double),
         '_#fromFields#2': (args) => RangeValues(args[1] as double, args[0] as double),
       };

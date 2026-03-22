@@ -118,6 +118,7 @@ abstract final class ModalRouteBindings {
         'canPop#0': (args) => (args[0] as ModalRoute).canPop,
         'impliesAppBarDismissal#0': (args) => (args[0] as ModalRoute).impliesAppBarDismissal,
         'fullscreenDialog#0': (args) => (args[0] as ModalRoute).fullscreenDialog,
+        'hashCode#0': (args) => (args[0] as ModalRoute).hashCode,
         'completed#0': (args) => (args[0] as ModalRoute).completed,
         'transitionDuration#0': (args) => (args[0] as ModalRoute).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as ModalRoute).reverseTransitionDuration,
@@ -142,5 +143,6 @@ abstract final class ModalRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as ModalRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as ModalRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as ModalRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as ModalRoute) == (args[1] as Object),
       };
 }

@@ -32,6 +32,7 @@ abstract final class VisibilityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Visibility).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Visibility).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Visibility).toString(),
         'createElement#0': (args) => (args[0] as Visibility).createElement(),
         'toStringShort#0': (args) => (args[0] as Visibility).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Visibility).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -47,7 +48,9 @@ abstract final class VisibilityBindings {
         'maintainSemantics#0': (args) => (args[0] as Visibility).maintainSemantics,
         'maintainInteractivity#0': (args) => (args[0] as Visibility).maintainInteractivity,
         'maintainFocusability#0': (args) => (args[0] as Visibility).maintainFocusability,
+        'hashCode#0': (args) => (args[0] as Visibility).hashCode,
         'key#0': (args) => (args[0] as Visibility).key,
+        '==#1': (args) => (args[0] as Visibility) == (args[1] as Object),
         '#10': (args) => Visibility(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, replacement: identical(args[2], darticAbsent) ? const SizedBox.shrink() : args[2] as Widget, visible: identical(args[3], darticAbsent) ? true : args[3] as bool, maintainState: identical(args[4], darticAbsent) ? false : args[4] as bool, maintainAnimation: identical(args[5], darticAbsent) ? false : args[5] as bool, maintainSize: identical(args[6], darticAbsent) ? false : args[6] as bool, maintainSemantics: identical(args[7], darticAbsent) ? false : args[7] as bool, maintainInteractivity: identical(args[8], darticAbsent) ? false : args[8] as bool, maintainFocusability: identical(args[9], darticAbsent) ? false : args[9] as bool),
         'maintain#3': (args) => Visibility.maintain(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, visible: identical(args[2], darticAbsent) ? true : args[2] as bool),
         '_#fromFields#10': (args) => Visibility(key: args[1] as Key?, child: args[0] as Widget, replacement: args[8] as Widget, visible: args[9] as bool, maintainState: args[7] as bool, maintainAnimation: args[2] as bool, maintainSize: args[6] as bool, maintainSemantics: args[5] as bool, maintainInteractivity: args[4] as bool, maintainFocusability: args[3] as bool),

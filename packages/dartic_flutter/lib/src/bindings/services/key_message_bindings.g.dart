@@ -29,6 +29,8 @@ abstract final class KeyMessageBindings {
         'toString#0': (args) => (args[0] as KeyMessage).toString(),
         'events#0': (args) => (args[0] as KeyMessage).events,
         'rawEvent#0': (args) => (args[0] as KeyMessage).rawEvent,
+        'hashCode#0': (args) => (args[0] as KeyMessage).hashCode,
+        '==#1': (args) => (args[0] as KeyMessage) == (args[1] as Object),
         '#2': (args) => KeyMessage((args[0] as List).cast<KeyEvent>(), args[1] as RawKeyEvent?),
         '_#fromFields#2': (args) => KeyMessage((args[0] as List).cast<KeyEvent>(), args[1] as RawKeyEvent?),
       };

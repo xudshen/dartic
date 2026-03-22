@@ -52,6 +52,7 @@ abstract final class RenderListBodyBindings {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderListBody).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderListBody).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderListBody).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
+        'toString#0': (args) => (args[0] as RenderListBody).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderListBody).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderListBody).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderListBody).getMinIntrinsicHeight(args[1] as double),
@@ -132,6 +133,7 @@ abstract final class RenderListBodyBindings {
         'getChildrenAsList#0': (args) => (args[0] as RenderListBody).getChildrenAsList(),
         'axisDirection#0': (args) => (args[0] as RenderListBody).axisDirection,
         'mainAxis#0': (args) => (args[0] as RenderListBody).mainAxis,
+        'hashCode#0': (args) => (args[0] as RenderListBody).hashCode,
         'hasSize#0': (args) => (args[0] as RenderListBody).hasSize,
         'size#0': (args) => (args[0] as RenderListBody).size,
         'semanticBounds#0': (args) => (args[0] as RenderListBody).semanticBounds,
@@ -170,6 +172,7 @@ abstract final class RenderListBodyBindings {
         'parentData=#1': (args) { (args[0] as RenderListBody).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderListBody).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderListBody).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderListBody) == (args[1] as Object),
         '#2': (args) => RenderListBody(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), axisDirection: identical(args[1], darticAbsent) ? AxisDirection.down : args[1] as AxisDirection),
       };
 }

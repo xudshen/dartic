@@ -39,6 +39,7 @@ abstract final class FlexibleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as Flexible).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as Flexible).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Flexible).toString(),
         'createElement#0': (args) => (args[0] as Flexible).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as Flexible).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as Flexible).debugCanApplyOutOfTurn(),
@@ -50,9 +51,11 @@ abstract final class FlexibleBindings {
         'flex#0': (args) => (args[0] as Flexible).flex,
         'fit#0': (args) => (args[0] as Flexible).fit,
         'debugTypicalAncestorWidgetClass#0': (args) => (args[0] as Flexible).debugTypicalAncestorWidgetClass,
+        'hashCode#0': (args) => (args[0] as Flexible).hashCode,
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as Flexible).debugTypicalAncestorWidgetDescription,
         'child#0': (args) => (args[0] as Flexible).child,
         'key#0': (args) => (args[0] as Flexible).key,
+        '==#1': (args) => (args[0] as Flexible) == (args[1] as Object),
         '#4': (args) => Flexible(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int, fit: identical(args[2], darticAbsent) ? FlexFit.loose : args[2] as FlexFit, child: args[3] as Widget),
         '_#fromFields#4': (args) => Flexible(key: args[3] as Key?, flex: args[2] as int, fit: args[1] as FlexFit, child: args[0] as Widget),
       };

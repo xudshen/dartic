@@ -39,8 +39,11 @@ abstract final class WeakMapBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'remove#1': (args) => (args[0] as WeakMap).remove(args[1]),
         'clear#0': (args) { (args[0] as WeakMap).clear(); return null; },
+        'toString#0': (args) => (args[0] as WeakMap).toString(),
+        'hashCode#0': (args) => (args[0] as WeakMap).hashCode,
         '[]#1': (args) => (args[0] as WeakMap)[(args[1])],
         '[]=#2': (args) { (args[0] as WeakMap)[args[1]] = args[2]; return args[2]; },
+        '==#1': (args) => (args[0] as WeakMap) == (args[1] as Object),
         '#0': (args) => WeakMap<dynamic, dynamic>(),
       };
 }

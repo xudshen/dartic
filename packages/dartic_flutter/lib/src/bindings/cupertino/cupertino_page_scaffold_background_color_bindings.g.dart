@@ -31,6 +31,7 @@ abstract final class CupertinoPageScaffoldBackgroundColorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).updateShouldNotify(args[1] as CupertinoPageScaffoldBackgroundColor),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPageScaffoldBackgroundColor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -38,8 +39,10 @@ abstract final class CupertinoPageScaffoldBackgroundColorBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).debugDescribeChildren(),
         'color#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).color,
+        'hashCode#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).hashCode,
         'child#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).child,
         'key#0': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor).key,
+        '==#1': (args) => (args[0] as CupertinoPageScaffoldBackgroundColor) == (args[1] as Object),
         '#3': (args) => CupertinoPageScaffoldBackgroundColor(child: args[0] as Widget, color: args[1] as Color, key: identical(args[2], darticAbsent) ? null : args[2] as Key?),
         '_#fromFields#3': (args) => CupertinoPageScaffoldBackgroundColor(child: args[0] as Widget, color: args[1] as Color, key: args[2] as Key?),
       };

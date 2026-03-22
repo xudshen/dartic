@@ -32,8 +32,10 @@ abstract final class SliverHitTestEntryBindings {
         'toString#0': (args) => (args[0] as SliverHitTestEntry).toString(),
         'mainAxisPosition#0': (args) => (args[0] as SliverHitTestEntry).mainAxisPosition,
         'crossAxisPosition#0': (args) => (args[0] as SliverHitTestEntry).crossAxisPosition,
+        'hashCode#0': (args) => (args[0] as SliverHitTestEntry).hashCode,
         'target#0': (args) => (args[0] as SliverHitTestEntry).target,
         'transform#0': (args) => (args[0] as SliverHitTestEntry).transform,
+        '==#1': (args) => (args[0] as SliverHitTestEntry) == (args[1] as Object),
         '#3': (args) => SliverHitTestEntry(args[0] as RenderSliver, mainAxisPosition: args[1] as double, crossAxisPosition: args[2] as double),
       };
 }

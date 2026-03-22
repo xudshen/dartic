@@ -42,6 +42,9 @@ abstract final class PlatformProvidedMenuItemTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PlatformProvidedMenuItemType).toString(),
+        'hashCode#0': (args) => (args[0] as PlatformProvidedMenuItemType).hashCode,
         'index#0': (args) => (args[0] as PlatformProvidedMenuItemType).index,
+        '==#1': (args) => (args[0] as PlatformProvidedMenuItemType) == (args[1] as Object),
       };
 }

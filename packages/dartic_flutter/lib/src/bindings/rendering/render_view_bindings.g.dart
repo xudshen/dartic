@@ -51,6 +51,7 @@ abstract final class RenderViewBindings {
         'compositeFrame#0': (args) { (args[0] as RenderView).compositeFrame(); return null; },
         'updateSemantics#1': (args) { (args[0] as RenderView).updateSemantics(args[1] as ui.SemanticsUpdate); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderView).toString(),
         'reassemble#0': (args) { (args[0] as RenderView).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderView).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderView).setupParentData(args[1] as RenderObject); return null; },
@@ -105,6 +106,7 @@ abstract final class RenderViewBindings {
         'isRepaintBoundary#0': (args) => (args[0] as RenderView).isRepaintBoundary,
         'paintBounds#0': (args) => (args[0] as RenderView).paintBounds,
         'semanticBounds#0': (args) => (args[0] as RenderView).semanticBounds,
+        'hashCode#0': (args) => (args[0] as RenderView).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderView).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderView).parentData,
         'depth#0': (args) => (args[0] as RenderView).depth,
@@ -136,6 +138,7 @@ abstract final class RenderViewBindings {
         'debugCreator=#1': (args) { (args[0] as RenderView).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderView).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderView).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderView) == (args[1] as Object),
         '#3': (args) => RenderView(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, configuration: identical(args[1], darticAbsent) ? null : args[1] as ViewConfiguration?, view: args[2] as ui.FlutterView),
       };
 }

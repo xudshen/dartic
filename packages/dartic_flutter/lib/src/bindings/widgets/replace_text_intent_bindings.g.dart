@@ -28,6 +28,7 @@ abstract final class ReplaceTextIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ReplaceTextIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ReplaceTextIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ReplaceTextIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ReplaceTextIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -35,6 +36,8 @@ abstract final class ReplaceTextIntentBindings {
         'replacementText#0': (args) => (args[0] as ReplaceTextIntent).replacementText,
         'replacementRange#0': (args) => (args[0] as ReplaceTextIntent).replacementRange,
         'cause#0': (args) => (args[0] as ReplaceTextIntent).cause,
+        'hashCode#0': (args) => (args[0] as ReplaceTextIntent).hashCode,
+        '==#1': (args) => (args[0] as ReplaceTextIntent) == (args[1] as Object),
         '#4': (args) => ReplaceTextIntent(args[0] as TextEditingValue, args[1] as String, args[2] as TextRange, args[3] as SelectionChangedCause),
         '_#fromFields#4': (args) => ReplaceTextIntent(args[1] as TextEditingValue, args[3] as String, args[2] as TextRange, args[0] as SelectionChangedCause),
       };

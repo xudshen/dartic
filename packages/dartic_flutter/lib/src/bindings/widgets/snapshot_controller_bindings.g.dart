@@ -28,13 +28,16 @@ abstract final class SnapshotControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'clear#0': (args) { (args[0] as SnapshotController).clear(); return null; },
+        'toString#0': (args) => (args[0] as SnapshotController).toString(),
         'addListener#1': (args) { (args[0] as SnapshotController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as SnapshotController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as SnapshotController).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as SnapshotController).notifyListeners(); return null; },
         'allowSnapshotting#0': (args) => (args[0] as SnapshotController).allowSnapshotting,
+        'hashCode#0': (args) => (args[0] as SnapshotController).hashCode,
         'hasListeners#0': (args) => (args[0] as SnapshotController).hasListeners,
         'allowSnapshotting=#1': (args) { (args[0] as SnapshotController).allowSnapshotting = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as SnapshotController) == (args[1] as Object),
         '#1': (args) => SnapshotController(allowSnapshotting: identical(args[0], darticAbsent) ? false : args[0] as bool),
       };
 }

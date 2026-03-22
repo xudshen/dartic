@@ -25,6 +25,7 @@ abstract final class UniqueWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as UniqueWidget).createState(),
+        'toString#0': (args) => (args[0] as UniqueWidget).toString(),
         'createElement#0': (args) => (args[0] as UniqueWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as UniqueWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UniqueWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -33,6 +34,8 @@ abstract final class UniqueWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as UniqueWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as UniqueWidget).debugDescribeChildren(),
         'currentState#0': (args) => (args[0] as UniqueWidget).currentState,
+        'hashCode#0': (args) => (args[0] as UniqueWidget).hashCode,
         'key#0': (args) => (args[0] as UniqueWidget).key,
+        '==#1': (args) => (args[0] as UniqueWidget) == (args[1] as Object),
       };
 }

@@ -28,6 +28,7 @@ abstract final class AutofillGroupBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AutofillGroup).createState(),
+        'toString#0': (args) => (args[0] as AutofillGroup).toString(),
         'createElement#0': (args) => (args[0] as AutofillGroup).createElement(),
         'toStringShort#0': (args) => (args[0] as AutofillGroup).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AutofillGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class AutofillGroupBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AutofillGroup).debugDescribeChildren(),
         'child#0': (args) => (args[0] as AutofillGroup).child,
         'onDisposeAction#0': (args) => (args[0] as AutofillGroup).onDisposeAction,
+        'hashCode#0': (args) => (args[0] as AutofillGroup).hashCode,
         'key#0': (args) => (args[0] as AutofillGroup).key,
+        '==#1': (args) => (args[0] as AutofillGroup) == (args[1] as Object),
         '#3': (args) => AutofillGroup(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, onDisposeAction: identical(args[2], darticAbsent) ? AutofillContextAction.commit : args[2] as AutofillContextAction),
         '_#fromFields#3': (args) => AutofillGroup(key: args[1] as Key?, child: args[0] as Widget, onDisposeAction: args[2] as AutofillContextAction),
       };

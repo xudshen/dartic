@@ -24,7 +24,10 @@ abstract final class UndoManagerClientBindings {
         'handlePlatformUndo#1': (args) { (args[0] as UndoManagerClient).handlePlatformUndo(args[1] as UndoDirection); return null; },
         'undo#0': (args) { (args[0] as UndoManagerClient).undo(); return null; },
         'redo#0': (args) { (args[0] as UndoManagerClient).redo(); return null; },
+        'toString#0': (args) => (args[0] as UndoManagerClient).toString(),
         'canUndo#0': (args) => (args[0] as UndoManagerClient).canUndo,
         'canRedo#0': (args) => (args[0] as UndoManagerClient).canRedo,
+        'hashCode#0': (args) => (args[0] as UndoManagerClient).hashCode,
+        '==#1': (args) => (args[0] as UndoManagerClient) == (args[1] as Object),
       };
 }

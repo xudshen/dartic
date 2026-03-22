@@ -26,7 +26,10 @@ abstract final class FontLoaderBindings {
         'addFont#1': (args) { (args[0] as FontLoader).addFont(args[1] as Future<ByteData>); return null; },
         'load#0': (args) => (args[0] as FontLoader).load(),
         'loadFont#2': (args) => (args[0] as FontLoader).loadFont(args[1] as Uint8List, args[2] as String),
+        'toString#0': (args) => (args[0] as FontLoader).toString(),
         'family#0': (args) => (args[0] as FontLoader).family,
+        'hashCode#0': (args) => (args[0] as FontLoader).hashCode,
+        '==#1': (args) => (args[0] as FontLoader) == (args[1] as Object),
         '#1': (args) => FontLoader(args[0] as String),
       };
 }

@@ -37,6 +37,9 @@ abstract final class FlutterLogoStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FlutterLogoStyle).toString(),
+        'hashCode#0': (args) => (args[0] as FlutterLogoStyle).hashCode,
         'index#0': (args) => (args[0] as FlutterLogoStyle).index,
+        '==#1': (args) => (args[0] as FlutterLogoStyle) == (args[1] as Object),
       };
 }

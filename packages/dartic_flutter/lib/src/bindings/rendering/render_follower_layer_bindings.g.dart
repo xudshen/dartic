@@ -47,6 +47,7 @@ abstract final class RenderFollowerLayerBindings {
         'paint#2': (args) { (args[0] as RenderFollowerLayer).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderFollowerLayer).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFollowerLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderFollowerLayer).toString(),
         'setupParentData#1': (args) { (args[0] as RenderFollowerLayer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFollowerLayer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderFollowerLayer).computeMinIntrinsicWidth(args[1] as double),
@@ -126,6 +127,7 @@ abstract final class RenderFollowerLayerBindings {
         'followerAnchor#0': (args) => (args[0] as RenderFollowerLayer).followerAnchor,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderFollowerLayer).alwaysNeedsCompositing,
         'layer#0': (args) => (args[0] as RenderFollowerLayer).layer,
+        'hashCode#0': (args) => (args[0] as RenderFollowerLayer).hashCode,
         'hasSize#0': (args) => (args[0] as RenderFollowerLayer).hasSize,
         'size#0': (args) => (args[0] as RenderFollowerLayer).size,
         'semanticBounds#0': (args) => (args[0] as RenderFollowerLayer).semanticBounds,
@@ -165,6 +167,7 @@ abstract final class RenderFollowerLayerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderFollowerLayer).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderFollowerLayer).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderFollowerLayer).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderFollowerLayer) == (args[1] as Object),
         '#6': (args) => RenderFollowerLayer(link: args[0] as LayerLink, showWhenUnlinked: identical(args[1], darticAbsent) ? true : args[1] as bool, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as ui.Offset, leaderAnchor: identical(args[3], darticAbsent) ? Alignment.topLeft : args[3] as Alignment, followerAnchor: identical(args[4], darticAbsent) ? Alignment.topLeft : args[4] as Alignment, child: identical(args[5], darticAbsent) ? null : args[5] as RenderBox?),
       };
 }

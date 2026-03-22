@@ -60,6 +60,7 @@ abstract final class ServicesBindingBindings {
         'createRestorationManager#0': (args) => (args[0] as ServicesBinding).createRestorationManager(),
         'setSystemUiChangeCallback#1': (args) { (args[0] as ServicesBinding).setSystemUiChangeCallback((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; },
         'initializationComplete#0': (args) => (args[0] as ServicesBinding).initializationComplete(),
+        'toString#0': (args) => (args[0] as ServicesBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as ServicesBinding).debugCheckZone(args[1] as String),
         'lockEvents#1': (args) => (args[0] as ServicesBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
         'unlocked#0': (args) { (args[0] as ServicesBinding).unlocked(); return null; },
@@ -100,6 +101,7 @@ abstract final class ServicesBindingBindings {
         'channelBuffers#0': (args) => (args[0] as ServicesBinding).channelBuffers,
         'accessibilityFocus#0': (args) => (args[0] as ServicesBinding).accessibilityFocus,
         'restorationManager#0': (args) => (args[0] as ServicesBinding).restorationManager,
+        'hashCode#0': (args) => (args[0] as ServicesBinding).hashCode,
         'window#0': (args) => (args[0] as ServicesBinding).window,
         'platformDispatcher#0': (args) => (args[0] as ServicesBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as ServicesBinding).locked,
@@ -113,5 +115,6 @@ abstract final class ServicesBindingBindings {
         'currentFrameTimeStamp#0': (args) => (args[0] as ServicesBinding).currentFrameTimeStamp,
         'currentSystemFrameTimeStamp#0': (args) => (args[0] as ServicesBinding).currentSystemFrameTimeStamp,
         'schedulingStrategy=#1': (args) { (args[0] as ServicesBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
+        '==#1': (args) => (args[0] as ServicesBinding) == (args[1] as Object),
       };
 }

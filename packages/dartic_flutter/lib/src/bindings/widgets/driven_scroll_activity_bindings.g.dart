@@ -49,7 +49,9 @@ abstract final class DrivenScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as DrivenScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as DrivenScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as DrivenScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as DrivenScrollActivity).hashCode,
         'delegate#0': (args) => (args[0] as DrivenScrollActivity).delegate,
+        '==#1': (args) => (args[0] as DrivenScrollActivity) == (args[1] as Object),
         '#6': (args) => DrivenScrollActivity(args[0] as ScrollActivityDelegate, from: args[1] as double, to: args[2] as double, duration: args[3] as Duration, curve: args[4] as Curve, vsync: args[5] as TickerProvider),
         'simulation#3': (args) => DrivenScrollActivity.simulation(args[0] as ScrollActivityDelegate, args[1] as Simulation, vsync: args[2] as TickerProvider),
       };

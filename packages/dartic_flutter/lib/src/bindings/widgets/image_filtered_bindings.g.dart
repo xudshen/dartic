@@ -30,6 +30,7 @@ abstract final class ImageFilteredBindings {
         'createRenderObject#1': (args) => (args[0] as ImageFiltered).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ImageFiltered).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as ImageFiltered).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ImageFiltered).toString(),
         'createElement#0': (args) => (args[0] as ImageFiltered).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ImageFiltered).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ImageFiltered).toStringShort(),
@@ -39,8 +40,10 @@ abstract final class ImageFilteredBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ImageFiltered).debugDescribeChildren(),
         'imageFilter#0': (args) => (args[0] as ImageFiltered).imageFilter,
         'enabled#0': (args) => (args[0] as ImageFiltered).enabled,
+        'hashCode#0': (args) => (args[0] as ImageFiltered).hashCode,
         'child#0': (args) => (args[0] as ImageFiltered).child,
         'key#0': (args) => (args[0] as ImageFiltered).key,
+        '==#1': (args) => (args[0] as ImageFiltered) == (args[1] as Object),
         '#4': (args) => ImageFiltered(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, imageFilter: args[1] as ImageFilter, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => ImageFiltered(key: args[3] as Key?, imageFilter: args[2] as ImageFilter, child: args[0] as Widget?, enabled: args[1] as bool),
       };

@@ -29,11 +29,13 @@ abstract final class SegmentedButtonThemeDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#2': (args) => (args[0] as SegmentedButtonThemeData).copyWith(style: identical(args[1], darticAbsent) ? null : args[1] as ButtonStyle?, selectedIcon: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         'debugFillProperties#1': (args) { (args[0] as SegmentedButtonThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SegmentedButtonThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as SegmentedButtonThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SegmentedButtonThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'style#0': (args) => (args[0] as SegmentedButtonThemeData).style,
         'selectedIcon#0': (args) => (args[0] as SegmentedButtonThemeData).selectedIcon,
         'hashCode#0': (args) => (args[0] as SegmentedButtonThemeData).hashCode,
+        '==#1': (args) => (args[0] as SegmentedButtonThemeData) == (args[1] as Object),
         '#2': (args) => SegmentedButtonThemeData(style: identical(args[0], darticAbsent) ? null : args[0] as ButtonStyle?, selectedIcon: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
         '_#fromFields#2': (args) => SegmentedButtonThemeData(style: args[1] as ButtonStyle?, selectedIcon: args[0] as Widget?),
       };

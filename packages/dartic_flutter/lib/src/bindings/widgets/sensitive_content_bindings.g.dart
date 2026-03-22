@@ -31,6 +31,7 @@ abstract final class SensitiveContentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SensitiveContent).createState(),
+        'toString#0': (args) => (args[0] as SensitiveContent).toString(),
         'createElement#0': (args) => (args[0] as SensitiveContent).createElement(),
         'toStringShort#0': (args) => (args[0] as SensitiveContent).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SensitiveContent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class SensitiveContentBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SensitiveContent).debugDescribeChildren(),
         'sensitivity#0': (args) => (args[0] as SensitiveContent).sensitivity,
         'child#0': (args) => (args[0] as SensitiveContent).child,
+        'hashCode#0': (args) => (args[0] as SensitiveContent).hashCode,
         'key#0': (args) => (args[0] as SensitiveContent).key,
+        '==#1': (args) => (args[0] as SensitiveContent) == (args[1] as Object),
         '#3': (args) => SensitiveContent(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, sensitivity: args[1] as ContentSensitivity, child: args[2] as Widget),
         '_#fromFields#3': (args) => SensitiveContent(key: args[1] as Key?, sensitivity: args[2] as ContentSensitivity, child: args[0] as Widget),
       };

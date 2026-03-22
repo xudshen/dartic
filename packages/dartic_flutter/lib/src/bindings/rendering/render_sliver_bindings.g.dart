@@ -56,6 +56,7 @@ abstract final class RenderSliverBindings {
         'debugPaint#2': (args) { (args[0] as RenderSliver).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'handleEvent#2': (args) { (args[0] as RenderSliver).handleEvent(args[1] as PointerEvent, args[2] as SliverHitTestEntry); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliver).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliver).toString(),
         'reassemble#0': (args) { (args[0] as RenderSliver).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderSliver).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderSliver).setupParentData(args[1] as RenderObject); return null; },
@@ -105,6 +106,7 @@ abstract final class RenderSliverBindings {
         'semanticBounds#0': (args) => (args[0] as RenderSliver).semanticBounds,
         'paintBounds#0': (args) => (args[0] as RenderSliver).paintBounds,
         'centerOffsetAdjustment#0': (args) => (args[0] as RenderSliver).centerOffsetAdjustment,
+        'hashCode#0': (args) => (args[0] as RenderSliver).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderSliver).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderSliver).parentData,
         'depth#0': (args) => (args[0] as RenderSliver).depth,
@@ -134,5 +136,6 @@ abstract final class RenderSliverBindings {
         'parentData=#1': (args) { (args[0] as RenderSliver).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliver).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliver).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliver) == (args[1] as Object),
       };
 }

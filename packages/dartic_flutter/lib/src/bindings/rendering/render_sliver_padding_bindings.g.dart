@@ -42,6 +42,7 @@ abstract final class RenderSliverPaddingBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverPadding).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverPadding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverPadding).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverPadding).setupParentData(args[1] as RenderObject); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverPadding).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverPadding).childMainAxisPosition(args[1] as RenderSliver),
@@ -104,6 +105,7 @@ abstract final class RenderSliverPaddingBindings {
         'resolvedPadding#0': (args) => (args[0] as RenderSliverPadding).resolvedPadding,
         'padding#0': (args) => (args[0] as RenderSliverPadding).padding,
         'textDirection#0': (args) => (args[0] as RenderSliverPadding).textDirection,
+        'hashCode#0': (args) => (args[0] as RenderSliverPadding).hashCode,
         'beforePadding#0': (args) => (args[0] as RenderSliverPadding).beforePadding,
         'afterPadding#0': (args) => (args[0] as RenderSliverPadding).afterPadding,
         'mainAxisPadding#0': (args) => (args[0] as RenderSliverPadding).mainAxisPadding,
@@ -147,6 +149,7 @@ abstract final class RenderSliverPaddingBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverPadding).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverPadding).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverPadding).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverPadding) == (args[1] as Object),
         '#3': (args) => RenderSliverPadding(padding: args[0] as EdgeInsetsGeometry, textDirection: identical(args[1], darticAbsent) ? null : args[1] as TextDirection?, child: identical(args[2], darticAbsent) ? null : args[2] as RenderSliver?),
       };
 }

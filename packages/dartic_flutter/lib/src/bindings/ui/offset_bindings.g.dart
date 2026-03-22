@@ -52,6 +52,7 @@ abstract final class OffsetBindings {
         '~/#1': (args) => (args[0] as Offset) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as Offset) % (args[1] as double),
         '&#1': (args) => (args[0] as Offset) & (args[1] as Size),
+        '==#1': (args) => (args[0] as Offset) == (args[1] as Object),
         '<#1': (args) => (args[0] as Offset) < (args[1] as OffsetBase),
         '<=#1': (args) => (args[0] as Offset) <= (args[1] as OffsetBase),
         '>#1': (args) => (args[0] as Offset) > (args[1] as OffsetBase),

@@ -30,8 +30,11 @@ abstract final class FloatingHeaderSnapConfigurationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FloatingHeaderSnapConfiguration).toString(),
         'curve#0': (args) => (args[0] as FloatingHeaderSnapConfiguration).curve,
         'duration#0': (args) => (args[0] as FloatingHeaderSnapConfiguration).duration,
+        'hashCode#0': (args) => (args[0] as FloatingHeaderSnapConfiguration).hashCode,
+        '==#1': (args) => (args[0] as FloatingHeaderSnapConfiguration) == (args[1] as Object),
         '#2': (args) => FloatingHeaderSnapConfiguration(curve: identical(args[0], darticAbsent) ? Curves.ease : args[0] as Curve, duration: identical(args[1], darticAbsent) ? const Duration(milliseconds: 300) : args[1] as Duration),
       };
 }

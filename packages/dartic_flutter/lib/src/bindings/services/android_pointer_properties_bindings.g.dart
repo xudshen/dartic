@@ -33,6 +33,8 @@ abstract final class AndroidPointerPropertiesBindings {
         'toString#0': (args) => (args[0] as AndroidPointerProperties).toString(),
         'id#0': (args) => (args[0] as AndroidPointerProperties).id,
         'toolType#0': (args) => (args[0] as AndroidPointerProperties).toolType,
+        'hashCode#0': (args) => (args[0] as AndroidPointerProperties).hashCode,
+        '==#1': (args) => (args[0] as AndroidPointerProperties) == (args[1] as Object),
         '#2': (args) => AndroidPointerProperties(id: args[0] as int, toolType: args[1] as int),
         '_#fromFields#2': (args) => AndroidPointerProperties(id: args[0] as int, toolType: args[1] as int),
       };

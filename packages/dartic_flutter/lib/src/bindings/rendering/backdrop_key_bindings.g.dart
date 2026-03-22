@@ -26,6 +26,9 @@ abstract final class BackdropKeyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BackdropKey).toString(),
+        'hashCode#0': (args) => (args[0] as BackdropKey).hashCode,
+        '==#1': (args) => (args[0] as BackdropKey) == (args[1] as Object),
         '#0': (args) => BackdropKey(),
       };
 }

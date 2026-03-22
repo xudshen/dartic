@@ -36,6 +36,7 @@ abstract final class DecoratedBoxTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DecoratedBoxTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DecoratedBoxTransition).toString(),
         'createState#0': (args) => (args[0] as DecoratedBoxTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as DecoratedBoxTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as DecoratedBoxTransition).createElement(),
@@ -47,8 +48,10 @@ abstract final class DecoratedBoxTransitionBindings {
         'decoration#0': (args) => (args[0] as DecoratedBoxTransition).decoration,
         'position#0': (args) => (args[0] as DecoratedBoxTransition).position,
         'child#0': (args) => (args[0] as DecoratedBoxTransition).child,
+        'hashCode#0': (args) => (args[0] as DecoratedBoxTransition).hashCode,
         'listenable#0': (args) => (args[0] as DecoratedBoxTransition).listenable,
         'key#0': (args) => (args[0] as DecoratedBoxTransition).key,
+        '==#1': (args) => (args[0] as DecoratedBoxTransition) == (args[1] as Object),
         '#4': (args) => DecoratedBoxTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: args[1] as Animation<Decoration>, position: identical(args[2], darticAbsent) ? DecorationPosition.background : args[2] as DecorationPosition, child: args[3] as Widget),
         '_#fromFields#5': (args) => DecoratedBoxTransition(key: args[2] as Key?, decoration: args[3] as Animation<Decoration>, position: args[4] as DecorationPosition, child: args[0] as Widget),
       };

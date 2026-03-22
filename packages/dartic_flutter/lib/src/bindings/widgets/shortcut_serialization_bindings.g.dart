@@ -30,12 +30,15 @@ abstract final class ShortcutSerializationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toChannelRepresentation#0': (args) => (args[0] as ShortcutSerialization).toChannelRepresentation(),
+        'toString#0': (args) => (args[0] as ShortcutSerialization).toString(),
         'trigger#0': (args) => (args[0] as ShortcutSerialization).trigger,
         'character#0': (args) => (args[0] as ShortcutSerialization).character,
         'alt#0': (args) => (args[0] as ShortcutSerialization).alt,
         'control#0': (args) => (args[0] as ShortcutSerialization).control,
         'meta#0': (args) => (args[0] as ShortcutSerialization).meta,
         'shift#0': (args) => (args[0] as ShortcutSerialization).shift,
+        'hashCode#0': (args) => (args[0] as ShortcutSerialization).hashCode,
+        '==#1': (args) => (args[0] as ShortcutSerialization) == (args[1] as Object),
         'character#4': (args) => ShortcutSerialization.character(args[0] as String, alt: identical(args[1], darticAbsent) ? false : args[1] as bool, control: identical(args[2], darticAbsent) ? false : args[2] as bool, meta: identical(args[3], darticAbsent) ? false : args[3] as bool),
         'modifier#5': (args) => ShortcutSerialization.modifier(args[0] as LogicalKeyboardKey, alt: identical(args[1], darticAbsent) ? false : args[1] as bool, control: identical(args[2], darticAbsent) ? false : args[2] as bool, meta: identical(args[3], darticAbsent) ? false : args[3] as bool, shift: identical(args[4], darticAbsent) ? false : args[4] as bool),
       };

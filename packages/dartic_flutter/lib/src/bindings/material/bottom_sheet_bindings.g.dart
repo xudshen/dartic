@@ -47,6 +47,7 @@ abstract final class BottomSheetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomSheet).createState(),
+        'toString#0': (args) => (args[0] as BottomSheet).toString(),
         'createElement#0': (args) => (args[0] as BottomSheet).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomSheet).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomSheet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -69,7 +70,9 @@ abstract final class BottomSheetBindings {
         'shape#0': (args) => (args[0] as BottomSheet).shape,
         'clipBehavior#0': (args) => (args[0] as BottomSheet).clipBehavior,
         'constraints#0': (args) => (args[0] as BottomSheet).constraints,
+        'hashCode#0': (args) => (args[0] as BottomSheet).hashCode,
         'key#0': (args) => (args[0] as BottomSheet).key,
+        '==#1': (args) => (args[0] as BottomSheet) == (args[1] as Object),
         '#16': (args) => BottomSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationController: identical(args[1], darticAbsent) ? null : args[1] as AnimationController?, enableDrag: identical(args[2], darticAbsent) ? true : args[2] as bool, showDragHandle: identical(args[3], darticAbsent) ? null : args[3] as bool?, dragHandleColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, dragHandleSize: identical(args[5], darticAbsent) ? null : args[5] as Size?, onDragStart: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onDragEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, {required bool isClosing}) => (args[7] as Function?)!(a, isClosing: isClosing), backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, shadowColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, elevation: identical(args[10], darticAbsent) ? null : args[10] as double?, shape: identical(args[11], darticAbsent) ? null : args[11] as ShapeBorder?, clipBehavior: identical(args[12], darticAbsent) ? null : args[12] as Clip?, constraints: identical(args[13], darticAbsent) ? null : args[13] as BoxConstraints?, onClosing: () => (args[14] as Function)(), builder: (a) => (args[15] as Function)(a) as Widget),
         '_#fromFields#16': (args) => BottomSheet(key: args[9] as Key?, animationController: args[0] as AnimationController?, enableDrag: args[8] as bool, showDragHandle: args[15] as bool?, dragHandleColor: args[5] as Color?, dragHandleSize: args[6] as Size?, onDragStart: args[12] as BottomSheetDragStartHandler?, onDragEnd: args[11] as BottomSheetDragEndHandler?, backgroundColor: args[1] as Color?, shadowColor: args[13] as Color?, elevation: args[7] as double?, shape: args[14] as ShapeBorder?, clipBehavior: args[3] as Clip?, constraints: args[4] as BoxConstraints?, onClosing: args[10] as VoidCallback, builder: args[2] as WidgetBuilder),
       };

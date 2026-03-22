@@ -33,6 +33,7 @@ abstract final class FocusScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FocusScope).createState(),
+        'toString#0': (args) => (args[0] as FocusScope).toString(),
         'debugFillProperties#1': (args) { (args[0] as FocusScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as FocusScope).createElement(),
         'toStringShort#0': (args) => (args[0] as FocusScope).toStringShort(),
@@ -40,6 +41,7 @@ abstract final class FocusScopeBindings {
         'toStringDeep#4': (args) => (args[0] as FocusScope).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as FocusScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as FocusScope).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as FocusScope).hashCode,
         'parentNode#0': (args) => (args[0] as FocusScope).parentNode,
         'child#0': (args) => (args[0] as FocusScope).child,
         'focusNode#0': (args) => (args[0] as FocusScope).focusNode,
@@ -54,6 +56,7 @@ abstract final class FocusScopeBindings {
         'includeSemantics#0': (args) => (args[0] as FocusScope).includeSemantics,
         'debugLabel#0': (args) => (args[0] as FocusScope).debugLabel,
         'key#0': (args) => (args[0] as FocusScope).key,
+        '==#1': (args) => (args[0] as FocusScope) == (args[1] as Object),
         '#14': (args) => FocusScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, node: identical(args[1], darticAbsent) ? null : args[1] as FocusScopeNode?, parentNode: identical(args[2], darticAbsent) ? null : args[2] as FocusNode?, child: args[3] as Widget, autofocus: identical(args[4], darticAbsent) ? false : args[4] as bool, onFocusChange: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), canRequestFocus: identical(args[6], darticAbsent) ? null : args[6] as bool?, skipTraversal: identical(args[7], darticAbsent) ? null : args[7] as bool?, onKeyEvent: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a, b) => (args[8] as Function?)!(a, b), onKey: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a, b) => (args[9] as Function?)!(a, b), debugLabel: identical(args[10], darticAbsent) ? null : args[10] as String?, includeSemantics: identical(args[11], darticAbsent) ? true : args[11] as bool, descendantsAreFocusable: identical(args[12], darticAbsent) ? null : args[12] as bool?, descendantsAreTraversable: identical(args[13], darticAbsent) ? null : args[13] as bool?),
         'withExternalFocusNode#7': (args) {
           if (identical(args[4], darticAbsent)) {

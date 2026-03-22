@@ -35,6 +35,9 @@ abstract final class HeroFlightDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HeroFlightDirection).toString(),
+        'hashCode#0': (args) => (args[0] as HeroFlightDirection).hashCode,
         'index#0': (args) => (args[0] as HeroFlightDirection).index,
+        '==#1': (args) => (args[0] as HeroFlightDirection) == (args[1] as Object),
       };
 }

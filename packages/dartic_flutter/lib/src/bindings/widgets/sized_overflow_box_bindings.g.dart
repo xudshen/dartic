@@ -42,6 +42,7 @@ abstract final class SizedOverflowBoxBindings {
         'createRenderObject#1': (args) => (args[0] as SizedOverflowBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SizedOverflowBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderSizedOverflowBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as SizedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SizedOverflowBox).toString(),
         'createElement#0': (args) => (args[0] as SizedOverflowBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SizedOverflowBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SizedOverflowBox).toStringShort(),
@@ -51,8 +52,10 @@ abstract final class SizedOverflowBoxBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SizedOverflowBox).debugDescribeChildren(),
         'alignment#0': (args) => (args[0] as SizedOverflowBox).alignment,
         'size#0': (args) => (args[0] as SizedOverflowBox).size,
+        'hashCode#0': (args) => (args[0] as SizedOverflowBox).hashCode,
         'child#0': (args) => (args[0] as SizedOverflowBox).child,
         'key#0': (args) => (args[0] as SizedOverflowBox).key,
+        '==#1': (args) => (args[0] as SizedOverflowBox) == (args[1] as Object),
         '#4': (args) => SizedOverflowBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, size: args[1] as ui.Size, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SizedOverflowBox(key: args[2] as Key?, size: args[3] as ui.Size, alignment: args[0] as AlignmentGeometry, child: args[1] as Widget?),
       };

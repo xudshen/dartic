@@ -27,11 +27,14 @@ abstract final class TextEditingDeltaNonTextUpdateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaNonTextUpdate).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaNonTextUpdate).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).toString(),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaNonTextUpdate).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).hashCode,
         'oldText#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).oldText,
         'selection#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).selection,
         'composing#0': (args) => (args[0] as TextEditingDeltaNonTextUpdate).composing,
+        '==#1': (args) => (args[0] as TextEditingDeltaNonTextUpdate) == (args[1] as Object),
         '#3': (args) => TextEditingDeltaNonTextUpdate(oldText: args[0] as String, selection: args[1] as TextSelection, composing: args[2] as TextRange),
         '_#fromFields#3': (args) => TextEditingDeltaNonTextUpdate(oldText: args[1] as String, selection: args[2] as TextSelection, composing: args[0] as TextRange),
       };

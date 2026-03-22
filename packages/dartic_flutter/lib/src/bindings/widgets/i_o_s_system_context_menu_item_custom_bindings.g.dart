@@ -34,11 +34,13 @@ abstract final class IOSSystemContextMenuItemCustomBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemCustom).getData(args[1] as WidgetsLocalizations),
         'debugFillProperties#1': (args) { (args[0] as IOSSystemContextMenuItemCustom).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemCustom).toString(),
         'toStringShort#0': (args) => (args[0] as IOSSystemContextMenuItemCustom).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IOSSystemContextMenuItemCustom).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemCustom).title,
         'onPressed#0': (args) => (args[0] as IOSSystemContextMenuItemCustom).onPressed,
         'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemCustom).hashCode,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemCustom) == (args[1] as Object),
         '#2': (args) => IOSSystemContextMenuItemCustom(title: args[0] as String, onPressed: () => (args[1] as Function)()),
         '_#fromFields#2': (args) => IOSSystemContextMenuItemCustom(title: args[1] as String, onPressed: args[0] as VoidCallback),
       };

@@ -44,6 +44,7 @@ abstract final class RenderSliverPinnedPersistentHeaderBindings {
         'performLayout#0': (args) { (args[0] as RenderSliverPinnedPersistentHeader).performLayout(); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverPinnedPersistentHeader).childMainAxisPosition(args[1] as RenderBox),
         'showOnScreen#4': (args) { (args[0] as RenderSliverPinnedPersistentHeader).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).toString(),
         'updateChild#2': (args) { (args[0] as RenderSliverPinnedPersistentHeader).updateChild(args[1] as double, args[2] as bool); return null; },
         'markNeedsLayout#0': (args) { (args[0] as RenderSliverPinnedPersistentHeader).markNeedsLayout(); return null; },
         'layoutChild#3': (args) { (args[0] as RenderSliverPinnedPersistentHeader).layoutChild(args[1] as double, args[2] as double, overlapsContent: identical(args[3], darticAbsent) ? false : args[3] as bool); return null; },
@@ -107,6 +108,7 @@ abstract final class RenderSliverPinnedPersistentHeaderBindings {
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverPinnedPersistentHeader).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverPinnedPersistentHeader).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'showOnScreenConfiguration#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).showOnScreenConfiguration,
+        'hashCode#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).hashCode,
         'maxExtent#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).maxExtent,
         'minExtent#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).minExtent,
         'childExtent#0': (args) => (args[0] as RenderSliverPinnedPersistentHeader).childExtent,
@@ -152,5 +154,6 @@ abstract final class RenderSliverPinnedPersistentHeaderBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverPinnedPersistentHeader).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverPinnedPersistentHeader).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverPinnedPersistentHeader).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverPinnedPersistentHeader) == (args[1] as Object),
       };
 }

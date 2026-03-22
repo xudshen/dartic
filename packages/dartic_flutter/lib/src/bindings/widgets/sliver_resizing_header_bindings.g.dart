@@ -30,6 +30,7 @@ abstract final class SliverResizingHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverResizingHeader).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverResizingHeader).toString(),
         'createElement#0': (args) => (args[0] as SliverResizingHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverResizingHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverResizingHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class SliverResizingHeaderBindings {
         'minExtentPrototype#0': (args) => (args[0] as SliverResizingHeader).minExtentPrototype,
         'maxExtentPrototype#0': (args) => (args[0] as SliverResizingHeader).maxExtentPrototype,
         'child#0': (args) => (args[0] as SliverResizingHeader).child,
+        'hashCode#0': (args) => (args[0] as SliverResizingHeader).hashCode,
         'key#0': (args) => (args[0] as SliverResizingHeader).key,
+        '==#1': (args) => (args[0] as SliverResizingHeader) == (args[1] as Object),
         '#4': (args) => SliverResizingHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, minExtentPrototype: identical(args[1], darticAbsent) ? null : args[1] as Widget?, maxExtentPrototype: identical(args[2], darticAbsent) ? null : args[2] as Widget?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SliverResizingHeader(key: args[1] as Key?, minExtentPrototype: args[3] as Widget?, maxExtentPrototype: args[2] as Widget?, child: args[0] as Widget?),
       };

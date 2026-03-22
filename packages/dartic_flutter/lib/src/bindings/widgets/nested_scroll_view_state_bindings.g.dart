@@ -45,6 +45,7 @@ abstract final class NestedScrollViewStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as NestedScrollViewState).didUpdateWidget(args[1] as NestedScrollView); return null; },
         'dispose#0': (args) { (args[0] as NestedScrollViewState).dispose(); return null; },
         'build#1': (args) => (args[0] as NestedScrollViewState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NestedScrollViewState).toString(),
         'reassemble#0': (args) { (args[0] as NestedScrollViewState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as NestedScrollViewState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as NestedScrollViewState).deactivate(); return null; },
@@ -54,9 +55,11 @@ abstract final class NestedScrollViewStateBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as NestedScrollViewState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'innerController#0': (args) => (args[0] as NestedScrollViewState).innerController,
         'outerController#0': (args) => (args[0] as NestedScrollViewState).outerController,
+        'hashCode#0': (args) => (args[0] as NestedScrollViewState).hashCode,
         'widget#0': (args) => (args[0] as NestedScrollViewState).widget,
         'context#0': (args) => (args[0] as NestedScrollViewState).context,
         'mounted#0': (args) => (args[0] as NestedScrollViewState).mounted,
+        '==#1': (args) => (args[0] as NestedScrollViewState) == (args[1] as Object),
         '#0': (args) => NestedScrollViewState(),
       };
 }

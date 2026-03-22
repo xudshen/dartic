@@ -25,5 +25,8 @@ abstract final class BinaryMessengerBindings {
         'handlePlatformMessage#3': (args) => (args[0] as BinaryMessenger).handlePlatformMessage(args[1] as String, args[2] as ByteData?, (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a)),
         'send#2': (args) => (args[0] as BinaryMessenger).send(args[1] as String, args[2] as ByteData?),
         'setMessageHandler#2': (args) { (args[0] as BinaryMessenger).setMessageHandler(args[1] as String, (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)); return null; },
+        'toString#0': (args) => (args[0] as BinaryMessenger).toString(),
+        'hashCode#0': (args) => (args[0] as BinaryMessenger).hashCode,
+        '==#1': (args) => (args[0] as BinaryMessenger) == (args[1] as Object),
       };
 }

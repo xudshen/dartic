@@ -25,9 +25,12 @@ abstract final class ThresholdBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transformInternal#1': (args) => (args[0] as Threshold).transformInternal(args[1] as double),
+        'toString#0': (args) => (args[0] as Threshold).toString(),
         'transform#1': (args) => (args[0] as Threshold).transform(args[1] as double),
         'threshold#0': (args) => (args[0] as Threshold).threshold,
+        'hashCode#0': (args) => (args[0] as Threshold).hashCode,
         'flipped#0': (args) => (args[0] as Threshold).flipped,
+        '==#1': (args) => (args[0] as Threshold) == (args[1] as Object),
         '#1': (args) => Threshold(args[0] as double),
         '_#fromFields#1': (args) => Threshold(args[0] as double),
       };

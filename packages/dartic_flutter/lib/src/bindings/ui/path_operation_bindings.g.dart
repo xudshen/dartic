@@ -36,6 +36,9 @@ abstract final class PathOperationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PathOperation).toString(),
+        'hashCode#0': (args) => (args[0] as PathOperation).hashCode,
         'index#0': (args) => (args[0] as PathOperation).index,
+        '==#1': (args) => (args[0] as PathOperation) == (args[1] as Object),
       };
 }

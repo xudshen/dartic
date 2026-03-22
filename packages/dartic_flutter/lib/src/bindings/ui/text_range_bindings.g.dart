@@ -40,6 +40,7 @@ abstract final class TextRangeBindings {
         'isCollapsed#0': (args) => (args[0] as TextRange).isCollapsed,
         'isNormalized#0': (args) => (args[0] as TextRange).isNormalized,
         'hashCode#0': (args) => (args[0] as TextRange).hashCode,
+        '==#1': (args) => (args[0] as TextRange) == (args[1] as Object),
         '#2': (args) => TextRange(start: args[0] as int, end: args[1] as int),
         'collapsed#1': (args) => TextRange.collapsed(args[0] as int),
         '_#fromFields#2': (args) => TextRange(start: args[1] as int, end: args[0] as int),

@@ -29,11 +29,14 @@ abstract final class SliverPersistentHeaderDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#3': (args) => (args[0] as SliverPersistentHeaderDelegate).build(args[1] as BuildContext, args[2] as double, args[3] as bool),
         'shouldRebuild#1': (args) => (args[0] as SliverPersistentHeaderDelegate).shouldRebuild(args[1] as SliverPersistentHeaderDelegate),
+        'toString#0': (args) => (args[0] as SliverPersistentHeaderDelegate).toString(),
         'minExtent#0': (args) => (args[0] as SliverPersistentHeaderDelegate).minExtent,
         'maxExtent#0': (args) => (args[0] as SliverPersistentHeaderDelegate).maxExtent,
         'vsync#0': (args) => (args[0] as SliverPersistentHeaderDelegate).vsync,
         'snapConfiguration#0': (args) => (args[0] as SliverPersistentHeaderDelegate).snapConfiguration,
         'stretchConfiguration#0': (args) => (args[0] as SliverPersistentHeaderDelegate).stretchConfiguration,
         'showOnScreenConfiguration#0': (args) => (args[0] as SliverPersistentHeaderDelegate).showOnScreenConfiguration,
+        'hashCode#0': (args) => (args[0] as SliverPersistentHeaderDelegate).hashCode,
+        '==#1': (args) => (args[0] as SliverPersistentHeaderDelegate) == (args[1] as Object),
       };
 }

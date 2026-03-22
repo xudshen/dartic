@@ -32,6 +32,9 @@ abstract final class NavigationModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NavigationMode).toString(),
+        'hashCode#0': (args) => (args[0] as NavigationMode).hashCode,
         'index#0': (args) => (args[0] as NavigationMode).index,
+        '==#1': (args) => (args[0] as NavigationMode) == (args[1] as Object),
       };
 }

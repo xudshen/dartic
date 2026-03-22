@@ -39,6 +39,7 @@ abstract final class PlatformRouteInformationProviderBindings {
         'removeListener#1': (args) { (args[0] as PlatformRouteInformationProvider).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as PlatformRouteInformationProvider).dispose(); return null; },
         'didPushRouteInformation#1': (args) => (args[0] as PlatformRouteInformationProvider).didPushRouteInformation(args[1] as RouteInformation),
+        'toString#0': (args) => (args[0] as PlatformRouteInformationProvider).toString(),
         'didPopRoute#0': (args) => (args[0] as PlatformRouteInformationProvider).didPopRoute(),
         'handleStartBackGesture#1': (args) => (args[0] as PlatformRouteInformationProvider).handleStartBackGesture(args[1] as PredictiveBackEvent),
         'handleUpdateBackGestureProgress#1': (args) { (args[0] as PlatformRouteInformationProvider).handleUpdateBackGestureProgress(args[1] as PredictiveBackEvent); return null; },
@@ -56,7 +57,9 @@ abstract final class PlatformRouteInformationProviderBindings {
         'didChangeAccessibilityFeatures#0': (args) { (args[0] as PlatformRouteInformationProvider).didChangeAccessibilityFeatures(); return null; },
         'notifyListeners#0': (args) { (args[0] as PlatformRouteInformationProvider).notifyListeners(); return null; },
         'value#0': (args) => (args[0] as PlatformRouteInformationProvider).value,
+        'hashCode#0': (args) => (args[0] as PlatformRouteInformationProvider).hashCode,
         'hasListeners#0': (args) => (args[0] as PlatformRouteInformationProvider).hasListeners,
+        '==#1': (args) => (args[0] as PlatformRouteInformationProvider) == (args[1] as Object),
         '#1': (args) => PlatformRouteInformationProvider(initialRouteInformation: args[0] as RouteInformation),
       };
 }

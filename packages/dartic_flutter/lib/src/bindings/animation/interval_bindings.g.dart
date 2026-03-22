@@ -30,7 +30,9 @@ abstract final class IntervalBindings {
         'begin#0': (args) => (args[0] as Interval).begin,
         'end#0': (args) => (args[0] as Interval).end,
         'curve#0': (args) => (args[0] as Interval).curve,
+        'hashCode#0': (args) => (args[0] as Interval).hashCode,
         'flipped#0': (args) => (args[0] as Interval).flipped,
+        '==#1': (args) => (args[0] as Interval) == (args[1] as Object),
         '#3': (args) => Interval(args[0] as double, args[1] as double, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve),
         '_#fromFields#3': (args) => Interval(args[0] as double, args[2] as double, curve: args[1] as Curve),
       };

@@ -42,6 +42,7 @@ abstract final class ListenerBindings {
         'createRenderObject#1': (args) => (args[0] as Listener).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Listener).updateRenderObject(args[1] as BuildContext, args[2] as RenderPointerListener); return null; },
         'debugFillProperties#1': (args) { (args[0] as Listener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Listener).toString(),
         'createElement#0': (args) => (args[0] as Listener).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Listener).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Listener).toStringShort(),
@@ -59,8 +60,10 @@ abstract final class ListenerBindings {
         'onPointerPanZoomEnd#0': (args) => (args[0] as Listener).onPointerPanZoomEnd,
         'onPointerSignal#0': (args) => (args[0] as Listener).onPointerSignal,
         'behavior#0': (args) => (args[0] as Listener).behavior,
+        'hashCode#0': (args) => (args[0] as Listener).hashCode,
         'child#0': (args) => (args[0] as Listener).child,
         'key#0': (args) => (args[0] as Listener).key,
+        '==#1': (args) => (args[0] as Listener) == (args[1] as Object),
         '#12': (args) => Listener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPointerDown: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onPointerMove: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onPointerUp: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onPointerHover: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onPointerCancel: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onPointerPanZoomStart: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onPointerPanZoomUpdate: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), onPointerPanZoomEnd: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), onPointerSignal: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a) => (args[9] as Function?)!(a), behavior: identical(args[10], darticAbsent) ? HitTestBehavior.deferToChild : args[10] as HitTestBehavior, child: identical(args[11], darticAbsent) ? null : args[11] as Widget?),
         '_#fromFields#12': (args) => Listener(key: args[2] as Key?, onPointerDown: args[4] as PointerDownEventListener?, onPointerMove: args[6] as PointerMoveEventListener?, onPointerUp: args[11] as PointerUpEventListener?, onPointerHover: args[5] as PointerHoverEventListener?, onPointerCancel: args[3] as PointerCancelEventListener?, onPointerPanZoomStart: args[8] as PointerPanZoomStartEventListener?, onPointerPanZoomUpdate: args[9] as PointerPanZoomUpdateEventListener?, onPointerPanZoomEnd: args[7] as PointerPanZoomEndEventListener?, onPointerSignal: args[10] as PointerSignalEventListener?, behavior: args[0] as HitTestBehavior, child: args[1] as Widget?),
       };

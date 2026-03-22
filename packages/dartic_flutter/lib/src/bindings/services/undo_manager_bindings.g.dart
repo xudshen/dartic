@@ -24,5 +24,8 @@ abstract final class UndoManagerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UndoManager).toString(),
+        'hashCode#0': (args) => (args[0] as UndoManager).hashCode,
+        '==#1': (args) => (args[0] as UndoManager) == (args[1] as Object),
       };
 }

@@ -38,6 +38,9 @@ abstract final class FloatingCursorDragStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FloatingCursorDragState).toString(),
+        'hashCode#0': (args) => (args[0] as FloatingCursorDragState).hashCode,
         'index#0': (args) => (args[0] as FloatingCursorDragState).index,
+        '==#1': (args) => (args[0] as FloatingCursorDragState) == (args[1] as Object),
       };
 }

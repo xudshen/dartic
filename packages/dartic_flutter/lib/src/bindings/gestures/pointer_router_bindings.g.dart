@@ -27,7 +27,10 @@ abstract final class PointerRouterBindings {
         'addGlobalRoute#2': (args) { (args[0] as PointerRouter).addGlobalRoute((a) => (args[1] as Function)(a), identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
         'removeGlobalRoute#1': (args) { (args[0] as PointerRouter).removeGlobalRoute((a) => (args[1] as Function)(a)); return null; },
         'route#1': (args) { (args[0] as PointerRouter).route(args[1] as PointerEvent); return null; },
+        'toString#0': (args) => (args[0] as PointerRouter).toString(),
         'debugGlobalRouteCount#0': (args) => (args[0] as PointerRouter).debugGlobalRouteCount,
+        'hashCode#0': (args) => (args[0] as PointerRouter).hashCode,
+        '==#1': (args) => (args[0] as PointerRouter) == (args[1] as Object),
         '#0': (args) => PointerRouter(),
       };
 }

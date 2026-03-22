@@ -34,6 +34,7 @@ abstract final class HSLColorBindings {
         'saturation#0': (args) => (args[0] as HSLColor).saturation,
         'lightness#0': (args) => (args[0] as HSLColor).lightness,
         'hashCode#0': (args) => (args[0] as HSLColor).hashCode,
+        '==#1': (args) => (args[0] as HSLColor) == (args[1] as Object),
         'fromAHSL#4': (args) => HSLColor.fromAHSL(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromColor#1': (args) => HSLColor.fromColor(args[0] as Color),
         '_#fromFields#4': (args) => HSLColor.fromAHSL(args[0] as double, args[1] as double, args[3] as double, args[2] as double),

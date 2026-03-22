@@ -43,8 +43,11 @@ abstract final class ScaffoldFeatureControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScaffoldFeatureController).toString(),
         'closed#0': (args) => (args[0] as ScaffoldFeatureController).closed,
         'close#0': (args) => (args[0] as ScaffoldFeatureController).close,
         'setState#0': (args) => (args[0] as ScaffoldFeatureController).setState,
+        'hashCode#0': (args) => (args[0] as ScaffoldFeatureController).hashCode,
+        '==#1': (args) => (args[0] as ScaffoldFeatureController) == (args[1] as Object),
       };
 }

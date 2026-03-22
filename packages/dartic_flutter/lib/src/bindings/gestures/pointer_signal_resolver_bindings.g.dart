@@ -23,6 +23,9 @@ abstract final class PointerSignalResolverBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'register#2': (args) { (args[0] as PointerSignalResolver).register(args[1] as PointerSignalEvent, (a) => (args[2] as Function)(a)); return null; },
         'resolve#1': (args) { (args[0] as PointerSignalResolver).resolve(args[1] as PointerSignalEvent); return null; },
+        'toString#0': (args) => (args[0] as PointerSignalResolver).toString(),
+        'hashCode#0': (args) => (args[0] as PointerSignalResolver).hashCode,
+        '==#1': (args) => (args[0] as PointerSignalResolver) == (args[1] as Object),
         '#0': (args) => PointerSignalResolver(),
       };
 }

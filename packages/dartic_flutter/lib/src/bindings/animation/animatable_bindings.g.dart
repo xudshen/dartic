@@ -28,5 +28,9 @@ abstract final class AnimatableBindings {
         'evaluate#1': (args) => (args[0] as Animatable).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as Animatable).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as Animatable).chain(args[1] as Animatable<double>),
+        'toString#0': (args) => (args[0] as Animatable).toString(),
+        'hashCode#0': (args) => (args[0] as Animatable).hashCode,
+        '==#1': (args) => (args[0] as Animatable) == (args[1] as Object),
+        'fromCallback#1': (args) => Animatable<dynamic>.fromCallback((a) => (args[0] as Function)(a)),
       };
 }

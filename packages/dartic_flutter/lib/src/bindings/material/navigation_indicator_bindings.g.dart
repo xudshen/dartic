@@ -44,6 +44,7 @@ abstract final class NavigationIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationIndicator).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationIndicator).toString(),
         'createElement#0': (args) => (args[0] as NavigationIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class NavigationIndicatorBindings {
         'height#0': (args) => (args[0] as NavigationIndicator).height,
         'borderRadius#0': (args) => (args[0] as NavigationIndicator).borderRadius,
         'shape#0': (args) => (args[0] as NavigationIndicator).shape,
+        'hashCode#0': (args) => (args[0] as NavigationIndicator).hashCode,
         'key#0': (args) => (args[0] as NavigationIndicator).key,
+        '==#1': (args) => (args[0] as NavigationIndicator) == (args[1] as Object),
         '#7': (args) {
           if (identical(args[3], darticAbsent)) {
             if (identical(args[4], darticAbsent)) {

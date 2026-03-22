@@ -37,6 +37,7 @@ abstract final class RawKeyEventDataWebBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataWeb).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataWeb).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataWeb).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataWeb).toString(),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataWeb).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataWeb).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataWeb).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -54,6 +55,7 @@ abstract final class RawKeyEventDataWebBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataWeb).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataWeb).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataWeb).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataWeb) == (args[1] as Object),
         '#5': (args) => RawKeyEventDataWeb(code: args[0] as String, key: args[1] as String, location: identical(args[2], darticAbsent) ? 0 : args[2] as int, metaState: identical(args[3], darticAbsent) ? RawKeyEventDataWeb.modifierNone : args[3] as int, keyCode: identical(args[4], darticAbsent) ? 0 : args[4] as int),
         '_#fromFields#5': (args) => RawKeyEventDataWeb(code: args[0] as String, key: args[1] as String, location: args[3] as int, metaState: args[4] as int, keyCode: args[2] as int),
       };

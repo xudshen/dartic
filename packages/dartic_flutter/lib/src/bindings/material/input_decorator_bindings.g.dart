@@ -46,6 +46,7 @@ abstract final class InputDecoratorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as InputDecorator).createState(),
         'debugFillProperties#1': (args) { (args[0] as InputDecorator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as InputDecorator).toString(),
         'createElement#0': (args) => (args[0] as InputDecorator).createElement(),
         'toStringShort#0': (args) => (args[0] as InputDecorator).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as InputDecorator).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -61,7 +62,9 @@ abstract final class InputDecoratorBindings {
         'expands#0': (args) => (args[0] as InputDecorator).expands,
         'isEmpty#0': (args) => (args[0] as InputDecorator).isEmpty,
         'child#0': (args) => (args[0] as InputDecorator).child,
+        'hashCode#0': (args) => (args[0] as InputDecorator).hashCode,
         'key#0': (args) => (args[0] as InputDecorator).key,
+        '==#1': (args) => (args[0] as InputDecorator) == (args[1] as Object),
         '#10': (args) => InputDecorator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: args[1] as InputDecoration, baseStyle: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, textAlign: identical(args[3], darticAbsent) ? null : args[3] as TextAlign?, textAlignVertical: identical(args[4], darticAbsent) ? null : args[4] as TextAlignVertical?, isFocused: identical(args[5], darticAbsent) ? false : args[5] as bool, isHovering: identical(args[6], darticAbsent) ? false : args[6] as bool, expands: identical(args[7], darticAbsent) ? false : args[7] as bool, isEmpty: identical(args[8], darticAbsent) ? false : args[8] as bool, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?),
         '_#fromFields#10': (args) => InputDecorator(key: args[7] as Key?, decoration: args[2] as InputDecoration, baseStyle: args[0] as TextStyle?, textAlign: args[8] as TextAlign?, textAlignVertical: args[9] as TextAlignVertical?, isFocused: args[5] as bool, isHovering: args[6] as bool, expands: args[3] as bool, isEmpty: args[4] as bool, child: args[1] as Widget?),
       };

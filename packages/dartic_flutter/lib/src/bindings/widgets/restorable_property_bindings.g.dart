@@ -31,12 +31,15 @@ abstract final class RestorablePropertyBindings {
         'initWithValue#1': (args) { (args[0] as RestorableProperty).initWithValue(args[1]); return null; },
         'toPrimitives#0': (args) => (args[0] as RestorableProperty).toPrimitives(),
         'dispose#0': (args) { (args[0] as RestorableProperty).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorableProperty).toString(),
         'addListener#1': (args) { (args[0] as RestorableProperty).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableProperty).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableProperty).notifyListeners(); return null; },
         'enabled#0': (args) => (args[0] as RestorableProperty).enabled,
         'state#0': (args) => (args[0] as RestorableProperty).state,
         'isRegistered#0': (args) => (args[0] as RestorableProperty).isRegistered,
+        'hashCode#0': (args) => (args[0] as RestorableProperty).hashCode,
         'hasListeners#0': (args) => (args[0] as RestorableProperty).hasListeners,
+        '==#1': (args) => (args[0] as RestorableProperty) == (args[1] as Object),
       };
 }

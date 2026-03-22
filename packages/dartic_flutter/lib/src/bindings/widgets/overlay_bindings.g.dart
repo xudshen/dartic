@@ -36,6 +36,7 @@ abstract final class OverlayBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Overlay).createState(),
+        'toString#0': (args) => (args[0] as Overlay).toString(),
         'createElement#0': (args) => (args[0] as Overlay).createElement(),
         'toStringShort#0': (args) => (args[0] as Overlay).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Overlay).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class OverlayBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Overlay).debugDescribeChildren(),
         'initialEntries#0': (args) => (args[0] as Overlay).initialEntries,
         'clipBehavior#0': (args) => (args[0] as Overlay).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Overlay).hashCode,
         'key#0': (args) => (args[0] as Overlay).key,
+        '==#1': (args) => (args[0] as Overlay) == (args[1] as Object),
         '#3': (args) => Overlay(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialEntries: identical(args[1], darticAbsent) ? const <OverlayEntry>[] : (args[1] as List).cast<OverlayEntry>(), clipBehavior: identical(args[2], darticAbsent) ? Clip.hardEdge : args[2] as Clip),
         '_#fromFields#3': (args) => Overlay(key: args[2] as Key?, initialEntries: (args[1] as List).cast<OverlayEntry>(), clipBehavior: args[0] as Clip),
       };

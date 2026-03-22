@@ -39,6 +39,7 @@ abstract final class SimpleDialogOptionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SimpleDialogOption).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SimpleDialogOption).toString(),
         'createElement#0': (args) => (args[0] as SimpleDialogOption).createElement(),
         'toStringShort#0': (args) => (args[0] as SimpleDialogOption).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SimpleDialogOption).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,7 +50,9 @@ abstract final class SimpleDialogOptionBindings {
         'onPressed#0': (args) => (args[0] as SimpleDialogOption).onPressed,
         'child#0': (args) => (args[0] as SimpleDialogOption).child,
         'padding#0': (args) => (args[0] as SimpleDialogOption).padding,
+        'hashCode#0': (args) => (args[0] as SimpleDialogOption).hashCode,
         'key#0': (args) => (args[0] as SimpleDialogOption).key,
+        '==#1': (args) => (args[0] as SimpleDialogOption) == (args[1] as Object),
         '#4': (args) => SimpleDialogOption(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsets?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SimpleDialogOption(key: args[1] as Key?, onPressed: args[2] as VoidCallback?, padding: args[3] as EdgeInsets?, child: args[0] as Widget?),
       };

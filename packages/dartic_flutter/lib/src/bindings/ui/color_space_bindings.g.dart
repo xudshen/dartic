@@ -34,6 +34,9 @@ abstract final class ColorSpaceBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ColorSpace).toString(),
+        'hashCode#0': (args) => (args[0] as ColorSpace).hashCode,
         'index#0': (args) => (args[0] as ColorSpace).index,
+        '==#1': (args) => (args[0] as ColorSpace) == (args[1] as Object),
       };
 }

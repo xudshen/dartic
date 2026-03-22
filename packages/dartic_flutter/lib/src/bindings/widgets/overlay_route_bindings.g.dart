@@ -48,6 +48,7 @@ abstract final class OverlayRouteBindings {
         'install#0': (args) { (args[0] as OverlayRoute).install(); return null; },
         'didPop#1': (args) => (args[0] as OverlayRoute).didPop(args[1]),
         'dispose#0': (args) { (args[0] as OverlayRoute).dispose(); return null; },
+        'toString#0': (args) => (args[0] as OverlayRoute).toString(),
         'didPush#0': (args) => (args[0] as OverlayRoute).didPush(),
         'didAdd#0': (args) { (args[0] as OverlayRoute).didAdd(); return null; },
         'didReplace#1': (args) { (args[0] as OverlayRoute).didReplace(args[1] as Route<dynamic>?); return null; },
@@ -62,6 +63,7 @@ abstract final class OverlayRouteBindings {
         'changedExternalState#0': (args) { (args[0] as OverlayRoute).changedExternalState(); return null; },
         'overlayEntries#0': (args) => (args[0] as OverlayRoute).overlayEntries,
         'finishedWhenPopped#0': (args) => (args[0] as OverlayRoute).finishedWhenPopped,
+        'hashCode#0': (args) => (args[0] as OverlayRoute).hashCode,
         'requestFocus#0': (args) => (args[0] as OverlayRoute).requestFocus,
         'navigator#0': (args) => (args[0] as OverlayRoute).navigator,
         'settings#0': (args) => (args[0] as OverlayRoute).settings,
@@ -74,5 +76,6 @@ abstract final class OverlayRouteBindings {
         'isFirst#0': (args) => (args[0] as OverlayRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as OverlayRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as OverlayRoute).isActive,
+        '==#1': (args) => (args[0] as OverlayRoute) == (args[1] as Object),
       };
 }

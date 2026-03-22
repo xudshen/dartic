@@ -51,6 +51,7 @@ abstract final class StarBorderBindings {
         'dimensions#0': (args) => (args[0] as StarBorder).dimensions,
         'side#0': (args) => (args[0] as StarBorder).side,
         'preferPaintInterior#0': (args) => (args[0] as StarBorder).preferPaintInterior,
+        '==#1': (args) => (args[0] as StarBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as StarBorder) + (args[1] as ShapeBorder),
         '#7': (args) => StarBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, points: identical(args[1], darticAbsent) ? 5 : args[1] as double, innerRadiusRatio: identical(args[2], darticAbsent) ? 0.4 : args[2] as double, pointRounding: identical(args[3], darticAbsent) ? 0 : args[3] as double, valleyRounding: identical(args[4], darticAbsent) ? 0 : args[4] as double, rotation: identical(args[5], darticAbsent) ? 0 : args[5] as double, squash: identical(args[6], darticAbsent) ? 0 : args[6] as double),
         'polygon#5': (args) => StarBorder.polygon(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, sides: identical(args[1], darticAbsent) ? 5 : args[1] as double, pointRounding: identical(args[2], darticAbsent) ? 0 : args[2] as double, rotation: identical(args[3], darticAbsent) ? 0 : args[3] as double, squash: identical(args[4], darticAbsent) ? 0 : args[4] as double),

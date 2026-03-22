@@ -60,5 +60,8 @@ abstract final class TextSelectionControlsBindings {
         'handleCopy#1': (args) { (args[0] as TextSelectionControls).handleCopy(args[1] as TextSelectionDelegate); return null; },
         'handlePaste#1': (args) => (args[0] as TextSelectionControls).handlePaste(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as TextSelectionControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'toString#0': (args) => (args[0] as TextSelectionControls).toString(),
+        'hashCode#0': (args) => (args[0] as TextSelectionControls).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionControls) == (args[1] as Object),
       };
 }

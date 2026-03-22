@@ -675,5 +675,8 @@ abstract final class RangeSliderValueIndicatorShapeBindings {
                     }
                   }
                 },
+        'toString#0': (args) => (args[0] as RangeSliderValueIndicatorShape).toString(),
+        'hashCode#0': (args) => (args[0] as RangeSliderValueIndicatorShape).hashCode,
+        '==#1': (args) => (args[0] as RangeSliderValueIndicatorShape) == (args[1] as Object),
       };
 }

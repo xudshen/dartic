@@ -33,5 +33,7 @@ abstract final class LocalizationsDelegateBindings {
         'shouldReload#1': (args) => (args[0] as LocalizationsDelegate).shouldReload(args[1] as LocalizationsDelegate),
         'toString#0': (args) => (args[0] as LocalizationsDelegate).toString(),
         'type#0': (args) => (args[0] as LocalizationsDelegate).type,
+        'hashCode#0': (args) => (args[0] as LocalizationsDelegate).hashCode,
+        '==#1': (args) => (args[0] as LocalizationsDelegate) == (args[1] as Object),
       };
 }

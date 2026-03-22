@@ -29,9 +29,12 @@ abstract final class PreviousFocusIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PreviousFocusIntent).toString(),
         'toStringShort#0': (args) => (args[0] as PreviousFocusIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PreviousFocusIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as PreviousFocusIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as PreviousFocusIntent).hashCode,
+        '==#1': (args) => (args[0] as PreviousFocusIntent) == (args[1] as Object),
         '#0': (args) => PreviousFocusIntent(),
         '_#fromFields#0': (args) => PreviousFocusIntent(),
       };

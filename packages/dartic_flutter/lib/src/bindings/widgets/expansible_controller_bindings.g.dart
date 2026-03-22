@@ -30,12 +30,15 @@ abstract final class ExpansibleControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'expand#0': (args) { (args[0] as ExpansibleController).expand(); return null; },
         'collapse#0': (args) { (args[0] as ExpansibleController).collapse(); return null; },
+        'toString#0': (args) => (args[0] as ExpansibleController).toString(),
         'addListener#1': (args) { (args[0] as ExpansibleController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as ExpansibleController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as ExpansibleController).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as ExpansibleController).notifyListeners(); return null; },
         'isExpanded#0': (args) => (args[0] as ExpansibleController).isExpanded,
+        'hashCode#0': (args) => (args[0] as ExpansibleController).hashCode,
         'hasListeners#0': (args) => (args[0] as ExpansibleController).hasListeners,
+        '==#1': (args) => (args[0] as ExpansibleController) == (args[1] as Object),
         '#0': (args) => ExpansibleController(),
       };
 }

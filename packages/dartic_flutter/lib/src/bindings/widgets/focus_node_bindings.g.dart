@@ -46,6 +46,7 @@ abstract final class FocusNodeBindings {
         'debugFillProperties#1': (args) { (args[0] as FocusNode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as FocusNode).debugDescribeChildren(),
         'toStringShort#0': (args) => (args[0] as FocusNode).toStringShort(),
+        'toString#0': (args) => (args[0] as FocusNode).toString(),
         'toStringShallow#2': (args) => (args[0] as FocusNode).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as FocusNode).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as FocusNode).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -74,6 +75,7 @@ abstract final class FocusNodeBindings {
         'size#0': (args) => (args[0] as FocusNode).size,
         'offset#0': (args) => (args[0] as FocusNode).offset,
         'rect#0': (args) => (args[0] as FocusNode).rect,
+        'hashCode#0': (args) => (args[0] as FocusNode).hashCode,
         'hasListeners#0': (args) => (args[0] as FocusNode).hasListeners,
         'skipTraversal=#1': (args) { (args[0] as FocusNode).skipTraversal = args[1] as bool; return args[1]; },
         'canRequestFocus=#1': (args) { (args[0] as FocusNode).canRequestFocus = args[1] as bool; return args[1]; },
@@ -82,6 +84,7 @@ abstract final class FocusNodeBindings {
         'onKey=#1': (args) { (args[0] as FocusNode).onKey = args[1] as FocusOnKeyCallback?; return args[1]; },
         'onKeyEvent=#1': (args) { (args[0] as FocusNode).onKeyEvent = args[1] as FocusOnKeyEventCallback?; return args[1]; },
         'debugLabel=#1': (args) { (args[0] as FocusNode).debugLabel = args[1] as String?; return args[1]; },
+        '==#1': (args) => (args[0] as FocusNode) == (args[1] as Object),
         '#7': (args) => FocusNode(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, onKey: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), onKeyEvent: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), skipTraversal: identical(args[3], darticAbsent) ? false : args[3] as bool, canRequestFocus: identical(args[4], darticAbsent) ? true : args[4] as bool, descendantsAreFocusable: identical(args[5], darticAbsent) ? true : args[5] as bool, descendantsAreTraversable: identical(args[6], darticAbsent) ? true : args[6] as bool),
       };
 }

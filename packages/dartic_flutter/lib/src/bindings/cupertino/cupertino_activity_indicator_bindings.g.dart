@@ -29,6 +29,7 @@ abstract final class CupertinoActivityIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoActivityIndicator).createState(),
+        'toString#0': (args) => (args[0] as CupertinoActivityIndicator).toString(),
         'createElement#0': (args) => (args[0] as CupertinoActivityIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoActivityIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoActivityIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class CupertinoActivityIndicatorBindings {
         'animating#0': (args) => (args[0] as CupertinoActivityIndicator).animating,
         'radius#0': (args) => (args[0] as CupertinoActivityIndicator).radius,
         'progress#0': (args) => (args[0] as CupertinoActivityIndicator).progress,
+        'hashCode#0': (args) => (args[0] as CupertinoActivityIndicator).hashCode,
         'key#0': (args) => (args[0] as CupertinoActivityIndicator).key,
+        '==#1': (args) => (args[0] as CupertinoActivityIndicator) == (args[1] as Object),
         '#4': (args) {
           if (identical(args[3], darticAbsent)) {
             return CupertinoActivityIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, animating: identical(args[2], darticAbsent) ? true : args[2] as bool);

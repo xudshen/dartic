@@ -36,6 +36,8 @@ abstract final class ShapeBorderBindings {
         'toString#0': (args) => (args[0] as ShapeBorder).toString(),
         'dimensions#0': (args) => (args[0] as ShapeBorder).dimensions,
         'preferPaintInterior#0': (args) => (args[0] as ShapeBorder).preferPaintInterior,
+        'hashCode#0': (args) => (args[0] as ShapeBorder).hashCode,
         '+#1': (args) => (args[0] as ShapeBorder) + (args[1] as ShapeBorder),
+        '==#1': (args) => (args[0] as ShapeBorder) == (args[1] as Object),
       };
 }

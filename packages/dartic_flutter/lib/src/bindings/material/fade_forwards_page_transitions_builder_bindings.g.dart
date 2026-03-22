@@ -37,10 +37,13 @@ abstract final class FadeForwardsPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).buildTransitions(args[1] as PageRoute?, args[2] as BuildContext?, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).toString(),
         'backgroundColor#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).backgroundColor,
         'transitionDuration#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).transitionDuration,
         'delegatedTransition#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).delegatedTransition,
+        'hashCode#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).hashCode,
         'reverseTransitionDuration#0': (args) => (args[0] as FadeForwardsPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as FadeForwardsPageTransitionsBuilder) == (args[1] as Object),
         '#1': (args) => FadeForwardsPageTransitionsBuilder(backgroundColor: identical(args[0], darticAbsent) ? null : args[0] as ui.Color?),
         '_#fromFields#1': (args) => FadeForwardsPageTransitionsBuilder(backgroundColor: args[0] as ui.Color?),
       };

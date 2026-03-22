@@ -32,6 +32,7 @@ abstract final class ImageInfoBindings {
         'scale#0': (args) => (args[0] as ImageInfo).scale,
         'debugLabel#0': (args) => (args[0] as ImageInfo).debugLabel,
         'hashCode#0': (args) => (args[0] as ImageInfo).hashCode,
+        '==#1': (args) => (args[0] as ImageInfo) == (args[1] as Object),
         '#3': (args) => ImageInfo(image: args[0] as ui.Image, scale: identical(args[1], darticAbsent) ? 1.0 : args[1] as double, debugLabel: identical(args[2], darticAbsent) ? null : args[2] as String?),
       };
 }

@@ -35,6 +35,7 @@ abstract final class CardBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Card).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Card).toString(),
         'createElement#0': (args) => (args[0] as Card).createElement(),
         'toStringShort#0': (args) => (args[0] as Card).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Card).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class CardBindings {
         'margin#0': (args) => (args[0] as Card).margin,
         'semanticContainer#0': (args) => (args[0] as Card).semanticContainer,
         'child#0': (args) => (args[0] as Card).child,
+        'hashCode#0': (args) => (args[0] as Card).hashCode,
         'key#0': (args) => (args[0] as Card).key,
+        '==#1': (args) => (args[0] as Card) == (args[1] as Object),
         '#11': (args) => Card(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),
         'filled#11': (args) => Card.filled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),
         'outlined#11': (args) => Card.outlined(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, shadowColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, surfaceTintColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, borderOnForeground: identical(args[6], darticAbsent) ? true : args[6] as bool, margin: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?, semanticContainer: identical(args[10], darticAbsent) ? true : args[10] as bool),

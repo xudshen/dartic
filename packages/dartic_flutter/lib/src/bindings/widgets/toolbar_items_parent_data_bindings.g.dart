@@ -49,6 +49,7 @@ abstract final class ToolbarItemsParentDataBindings {
         'toString#0': (args) => (args[0] as ToolbarItemsParentData).toString(),
         'detach#0': (args) { (args[0] as ToolbarItemsParentData).detach(); return null; },
         'shouldPaint#0': (args) => (args[0] as ToolbarItemsParentData).shouldPaint,
+        'hashCode#0': (args) => (args[0] as ToolbarItemsParentData).hashCode,
         'offset#0': (args) => (args[0] as ToolbarItemsParentData).offset,
         'previousSibling#0': (args) => (args[0] as ToolbarItemsParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as ToolbarItemsParentData).nextSibling,
@@ -56,6 +57,7 @@ abstract final class ToolbarItemsParentDataBindings {
         'offset=#1': (args) { (args[0] as ToolbarItemsParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as ToolbarItemsParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as ToolbarItemsParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as ToolbarItemsParentData) == (args[1] as Object),
         '#0': (args) => ToolbarItemsParentData(),
       };
 }

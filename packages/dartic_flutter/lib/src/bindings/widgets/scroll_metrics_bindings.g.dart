@@ -25,6 +25,7 @@ abstract final class ScrollMetricsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#6': (args) => (args[0] as ScrollMetrics).copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, devicePixelRatio: identical(args[6], darticAbsent) ? null : args[6] as double?),
+        'toString#0': (args) => (args[0] as ScrollMetrics).toString(),
         'minScrollExtent#0': (args) => (args[0] as ScrollMetrics).minScrollExtent,
         'maxScrollExtent#0': (args) => (args[0] as ScrollMetrics).maxScrollExtent,
         'hasContentDimensions#0': (args) => (args[0] as ScrollMetrics).hasContentDimensions,
@@ -41,5 +42,7 @@ abstract final class ScrollMetricsBindings {
         'extentAfter#0': (args) => (args[0] as ScrollMetrics).extentAfter,
         'extentTotal#0': (args) => (args[0] as ScrollMetrics).extentTotal,
         'devicePixelRatio#0': (args) => (args[0] as ScrollMetrics).devicePixelRatio,
+        'hashCode#0': (args) => (args[0] as ScrollMetrics).hashCode,
+        '==#1': (args) => (args[0] as ScrollMetrics) == (args[1] as Object),
       };
 }

@@ -45,5 +45,7 @@ abstract final class FloatingActionButtonLocationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOffset#1': (args) => (args[0] as FloatingActionButtonLocation).getOffset(args[1] as ScaffoldPrelayoutGeometry),
         'toString#0': (args) => (args[0] as FloatingActionButtonLocation).toString(),
+        'hashCode#0': (args) => (args[0] as FloatingActionButtonLocation).hashCode,
+        '==#1': (args) => (args[0] as FloatingActionButtonLocation) == (args[1] as Object),
       };
 }

@@ -27,14 +27,17 @@ abstract final class TextEditingDeltaReplacementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaReplacement).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaReplacement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TextEditingDeltaReplacement).toString(),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaReplacement).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaReplacement).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'replacementText#0': (args) => (args[0] as TextEditingDeltaReplacement).replacementText,
         'replacedRange#0': (args) => (args[0] as TextEditingDeltaReplacement).replacedRange,
         'textReplaced#0': (args) => (args[0] as TextEditingDeltaReplacement).textReplaced,
+        'hashCode#0': (args) => (args[0] as TextEditingDeltaReplacement).hashCode,
         'oldText#0': (args) => (args[0] as TextEditingDeltaReplacement).oldText,
         'selection#0': (args) => (args[0] as TextEditingDeltaReplacement).selection,
         'composing#0': (args) => (args[0] as TextEditingDeltaReplacement).composing,
+        '==#1': (args) => (args[0] as TextEditingDeltaReplacement) == (args[1] as Object),
         '#5': (args) => TextEditingDeltaReplacement(oldText: args[0] as String, replacementText: args[1] as String, replacedRange: args[2] as TextRange, selection: args[3] as TextSelection, composing: args[4] as TextRange),
         '_#fromFields#5': (args) => TextEditingDeltaReplacement(oldText: args[1] as String, replacementText: args[3] as String, replacedRange: args[2] as TextRange, selection: args[4] as TextSelection, composing: args[0] as TextRange),
       };

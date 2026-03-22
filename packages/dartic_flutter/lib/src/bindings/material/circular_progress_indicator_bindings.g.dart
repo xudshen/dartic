@@ -44,6 +44,7 @@ abstract final class CircularProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CircularProgressIndicator).createState(),
+        'toString#0': (args) => (args[0] as CircularProgressIndicator).toString(),
         'debugFillProperties#1': (args) { (args[0] as CircularProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as CircularProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as CircularProgressIndicator).toStringShort(),
@@ -60,12 +61,14 @@ abstract final class CircularProgressIndicatorBindings {
         'year2023#0': (args) => (args[0] as CircularProgressIndicator).year2023,
         'padding#0': (args) => (args[0] as CircularProgressIndicator).padding,
         'controller#0': (args) => (args[0] as CircularProgressIndicator).controller,
+        'hashCode#0': (args) => (args[0] as CircularProgressIndicator).hashCode,
         'value#0': (args) => (args[0] as CircularProgressIndicator).value,
         'color#0': (args) => (args[0] as CircularProgressIndicator).color,
         'valueColor#0': (args) => (args[0] as CircularProgressIndicator).valueColor,
         'semanticsLabel#0': (args) => (args[0] as CircularProgressIndicator).semanticsLabel,
         'semanticsValue#0': (args) => (args[0] as CircularProgressIndicator).semanticsValue,
         'key#0': (args) => (args[0] as CircularProgressIndicator).key,
+        '==#1': (args) => (args[0] as CircularProgressIndicator) == (args[1] as Object),
         '#15': (args) => CircularProgressIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1] as double?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, valueColor: identical(args[4], darticAbsent) ? null : args[4] as Animation<Color?>?, strokeWidth: identical(args[5], darticAbsent) ? null : args[5] as double?, strokeAlign: identical(args[6], darticAbsent) ? null : args[6] as double?, semanticsLabel: identical(args[7], darticAbsent) ? null : args[7] as String?, semanticsValue: identical(args[8], darticAbsent) ? null : args[8] as String?, strokeCap: identical(args[9], darticAbsent) ? null : args[9] as StrokeCap?, constraints: identical(args[10], darticAbsent) ? null : args[10] as BoxConstraints?, trackGap: identical(args[11], darticAbsent) ? null : args[11] as double?, year2023: identical(args[12], darticAbsent) ? null : args[12] as bool?, padding: identical(args[13], darticAbsent) ? null : args[13] as EdgeInsetsGeometry?, controller: identical(args[14], darticAbsent) ? null : args[14] as AnimationController?),
         'adaptive#14': (args) => CircularProgressIndicator.adaptive(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1] as double?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, valueColor: identical(args[3], darticAbsent) ? null : args[3] as Animation<Color?>?, strokeWidth: identical(args[4], darticAbsent) ? null : args[4] as double?, semanticsLabel: identical(args[5], darticAbsent) ? null : args[5] as String?, semanticsValue: identical(args[6], darticAbsent) ? null : args[6] as String?, strokeCap: identical(args[7], darticAbsent) ? null : args[7] as StrokeCap?, strokeAlign: identical(args[8], darticAbsent) ? null : args[8] as double?, constraints: identical(args[9], darticAbsent) ? null : args[9] as BoxConstraints?, trackGap: identical(args[10], darticAbsent) ? null : args[10] as double?, year2023: identical(args[11], darticAbsent) ? null : args[11] as bool?, padding: identical(args[12], darticAbsent) ? null : args[12] as EdgeInsetsGeometry?, controller: identical(args[13], darticAbsent) ? null : args[13] as AnimationController?),
         '_#fromFields#16': (args) => (args[0] as Enum).index == 0

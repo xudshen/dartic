@@ -48,6 +48,7 @@ abstract final class WindowScopeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as WindowScope).updateShouldNotify(args[1] as WindowScope),
         'updateShouldNotifyDependent#2': (args) => (args[0] as WindowScope).updateShouldNotifyDependent(args[1] as WindowScope, (args[2] as Set).cast<Object>()),
+        'toString#0': (args) => (args[0] as WindowScope).toString(),
         'createElement#0': (args) => (args[0] as WindowScope).createElement(),
         'isSupportedAspect#1': (args) => (args[0] as WindowScope).isSupportedAspect(args[1] as Object),
         'toStringShort#0': (args) => (args[0] as WindowScope).toStringShort(),
@@ -57,8 +58,10 @@ abstract final class WindowScopeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as WindowScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as WindowScope).debugDescribeChildren(),
         'controller#0': (args) => (args[0] as WindowScope).controller,
+        'hashCode#0': (args) => (args[0] as WindowScope).hashCode,
         'child#0': (args) => (args[0] as WindowScope).child,
         'key#0': (args) => (args[0] as WindowScope).key,
+        '==#1': (args) => (args[0] as WindowScope) == (args[1] as Object),
         '#3': (args) => WindowScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as BaseWindowController, child: args[2] as Widget),
       };
 }

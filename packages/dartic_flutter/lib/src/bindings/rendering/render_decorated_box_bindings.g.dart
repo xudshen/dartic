@@ -46,6 +46,7 @@ abstract final class RenderDecoratedBoxBindings {
         'hitTestSelf#1': (args) => (args[0] as RenderDecoratedBox).hitTestSelf(args[1] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderDecoratedBox).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderDecoratedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderDecoratedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderDecoratedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderDecoratedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderDecoratedBox).computeMinIntrinsicWidth(args[1] as double),
@@ -122,6 +123,7 @@ abstract final class RenderDecoratedBoxBindings {
         'decoration#0': (args) => (args[0] as RenderDecoratedBox).decoration,
         'position#0': (args) => (args[0] as RenderDecoratedBox).position,
         'configuration#0': (args) => (args[0] as RenderDecoratedBox).configuration,
+        'hashCode#0': (args) => (args[0] as RenderDecoratedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderDecoratedBox).hasSize,
         'size#0': (args) => (args[0] as RenderDecoratedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderDecoratedBox).semanticBounds,
@@ -161,6 +163,7 @@ abstract final class RenderDecoratedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderDecoratedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderDecoratedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderDecoratedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderDecoratedBox) == (args[1] as Object),
         '#4': (args) => RenderDecoratedBox(decoration: args[0] as Decoration, position: identical(args[1], darticAbsent) ? DecorationPosition.background : args[1] as DecorationPosition, configuration: identical(args[2], darticAbsent) ? ImageConfiguration.empty : args[2] as ImageConfiguration, child: identical(args[3], darticAbsent) ? null : args[3] as RenderBox?),
       };
 }

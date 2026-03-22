@@ -43,6 +43,7 @@ abstract final class TextEditingValueBindings {
         'composing#0': (args) => (args[0] as TextEditingValue).composing,
         'isComposingRangeValid#0': (args) => (args[0] as TextEditingValue).isComposingRangeValid,
         'hashCode#0': (args) => (args[0] as TextEditingValue).hashCode,
+        '==#1': (args) => (args[0] as TextEditingValue) == (args[1] as Object),
         '#3': (args) => TextEditingValue(text: identical(args[0], darticAbsent) ? '' : args[0] as String, selection: identical(args[1], darticAbsent) ? const TextSelection.collapsed(offset: -1) : args[1] as TextSelection, composing: identical(args[2], darticAbsent) ? TextRange.empty : args[2] as TextRange),
         'fromJSON#1': (args) => TextEditingValue.fromJSON((args[0] as Map).cast<String, dynamic>()),
         '_#fromFields#3': (args) => TextEditingValue(text: args[2] as String, selection: args[1] as TextSelection, composing: args[0] as TextRange),

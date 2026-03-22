@@ -34,6 +34,7 @@ abstract final class AnimatedThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedTheme).createState(),
+        'toString#0': (args) => (args[0] as AnimatedTheme).toString(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as AnimatedTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedTheme).toStringShort(),
@@ -43,11 +44,19 @@ abstract final class AnimatedThemeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as AnimatedTheme).data,
         'child#0': (args) => (args[0] as AnimatedTheme).child,
+        'hashCode#0': (args) => (args[0] as AnimatedTheme).hashCode,
         'curve#0': (args) => (args[0] as AnimatedTheme).curve,
         'duration#0': (args) => (args[0] as AnimatedTheme).duration,
         'onEnd#0': (args) => (args[0] as AnimatedTheme).onEnd,
         'key#0': (args) => (args[0] as AnimatedTheme).key,
-        '#6': (args) => AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, duration: identical(args[3], darticAbsent) ? kThemeAnimationDuration : args[3] as Duration, onEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), child: args[5] as Widget),
+        '==#1': (args) => (args[0] as AnimatedTheme) == (args[1] as Object),
+        '#6': (args) {
+          if (identical(args[3], darticAbsent)) {
+            return AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, onEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), child: args[5] as Widget);
+          } else {
+            return AnimatedTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, curve: identical(args[2], darticAbsent) ? Curves.linear : args[2] as Curve, duration: args[3] as Duration, onEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), child: args[5] as Widget);
+          }
+        },
         '_#fromFields#6': (args) => AnimatedTheme(key: args[4] as Key?, data: args[2] as ThemeData, curve: args[1] as Curve, duration: args[3] as Duration, onEnd: args[5] as VoidCallback?, child: args[0] as Widget),
       };
 }

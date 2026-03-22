@@ -66,6 +66,7 @@ abstract final class RawScrollbarStateBindings {
         'handleHoverExit#1': (args) { (args[0] as RawScrollbarState).handleHoverExit(args[1] as PointerExitEvent); return null; },
         'dispose#0': (args) { (args[0] as RawScrollbarState).dispose(); return null; },
         'build#1': (args) => (args[0] as RawScrollbarState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RawScrollbarState).toString(),
         'reassemble#0': (args) { (args[0] as RawScrollbarState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RawScrollbarState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as RawScrollbarState).deactivate(); return null; },
@@ -77,10 +78,12 @@ abstract final class RawScrollbarStateBindings {
         'scrollbarPainter#0': (args) => (args[0] as RawScrollbarState).scrollbarPainter,
         'showScrollbar#0': (args) => (args[0] as RawScrollbarState).showScrollbar,
         'enableGestures#0': (args) => (args[0] as RawScrollbarState).enableGestures,
+        'hashCode#0': (args) => (args[0] as RawScrollbarState).hashCode,
         'widget#0': (args) => (args[0] as RawScrollbarState).widget,
         'context#0': (args) => (args[0] as RawScrollbarState).context,
         'mounted#0': (args) => (args[0] as RawScrollbarState).mounted,
         'scrollbarPainter=#1': (args) { (args[0] as RawScrollbarState).scrollbarPainter = args[1] as ScrollbarPainter; return args[1]; },
+        '==#1': (args) => (args[0] as RawScrollbarState) == (args[1] as Object),
         '#0': (args) => RawScrollbarState<RawScrollbar>(),
       };
 }

@@ -43,6 +43,7 @@ abstract final class RenderFractionalTranslationBindings {
         'paint#2': (args) { (args[0] as RenderFractionalTranslation).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderFractionalTranslation).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFractionalTranslation).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderFractionalTranslation).toString(),
         'setupParentData#1': (args) { (args[0] as RenderFractionalTranslation).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFractionalTranslation).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderFractionalTranslation).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderFractionalTranslationBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderFractionalTranslation).computeSizeForNoChild(args[1] as BoxConstraints),
         'translation#0': (args) => (args[0] as RenderFractionalTranslation).translation,
         'transformHitTests#0': (args) => (args[0] as RenderFractionalTranslation).transformHitTests,
+        'hashCode#0': (args) => (args[0] as RenderFractionalTranslation).hashCode,
         'hasSize#0': (args) => (args[0] as RenderFractionalTranslation).hasSize,
         'size#0': (args) => (args[0] as RenderFractionalTranslation).size,
         'semanticBounds#0': (args) => (args[0] as RenderFractionalTranslation).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderFractionalTranslationBindings {
         'debugCreator=#1': (args) { (args[0] as RenderFractionalTranslation).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderFractionalTranslation).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderFractionalTranslation).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderFractionalTranslation) == (args[1] as Object),
         '#3': (args) => RenderFractionalTranslation(translation: args[0] as ui.Offset, transformHitTests: identical(args[1], darticAbsent) ? true : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

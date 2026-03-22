@@ -27,6 +27,9 @@ abstract final class GestureArenaManagerBindings {
         'sweep#1': (args) { (args[0] as GestureArenaManager).sweep(args[1] as int); return null; },
         'hold#1': (args) { (args[0] as GestureArenaManager).hold(args[1] as int); return null; },
         'release#1': (args) { (args[0] as GestureArenaManager).release(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as GestureArenaManager).toString(),
+        'hashCode#0': (args) => (args[0] as GestureArenaManager).hashCode,
+        '==#1': (args) => (args[0] as GestureArenaManager) == (args[1] as Object),
         '#0': (args) => GestureArenaManager(),
       };
 }

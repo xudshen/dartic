@@ -36,6 +36,7 @@ abstract final class CupertinoSpellCheckSuggestionsToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSpellCheckSuggestionsToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class CupertinoSpellCheckSuggestionsToolbarBindings {
         'debugDescribeChildren#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).debugDescribeChildren(),
         'anchors#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).anchors,
         'buttonItems#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).buttonItems,
+        'hashCode#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).hashCode,
         'key#0': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar).key,
+        '==#1': (args) => (args[0] as CupertinoSpellCheckSuggestionsToolbar) == (args[1] as Object),
         '#3': (args) => CupertinoSpellCheckSuggestionsToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchors: args[1] as TextSelectionToolbarAnchors, buttonItems: (args[2] as List).cast<ContextMenuButtonItem>()),
         'editableText#2': (args) => CupertinoSpellCheckSuggestionsToolbar.editableText(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, editableTextState: args[1] as EditableTextState),
         '_#fromFields#3': (args) => CupertinoSpellCheckSuggestionsToolbar(key: args[2] as Key?, anchors: args[0] as TextSelectionToolbarAnchors, buttonItems: (args[1] as List).cast<ContextMenuButtonItem>()),

@@ -43,6 +43,7 @@ abstract final class BeveledRectangleBorderBindings {
         'dimensions#0': (args) => (args[0] as BeveledRectangleBorder).dimensions,
         'side#0': (args) => (args[0] as BeveledRectangleBorder).side,
         'preferPaintInterior#0': (args) => (args[0] as BeveledRectangleBorder).preferPaintInterior,
+        '==#1': (args) => (args[0] as BeveledRectangleBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as BeveledRectangleBorder) + (args[1] as ShapeBorder),
         '#2': (args) => BeveledRectangleBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry),
         '_#fromFields#2': (args) => BeveledRectangleBorder(side: args[1] as BorderSide, borderRadius: args[0] as BorderRadiusGeometry),

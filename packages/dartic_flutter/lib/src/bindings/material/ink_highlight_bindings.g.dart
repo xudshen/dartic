@@ -35,10 +35,12 @@ abstract final class InkHighlightBindings {
         'deactivate#0': (args) { (args[0] as InkHighlight).deactivate(); return null; },
         'dispose#0': (args) { (args[0] as InkHighlight).dispose(); return null; },
         'paintFeature#2': (args) { (args[0] as InkHighlight).paintFeature(args[1] as Canvas, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as InkHighlight).toString(),
         'confirm#0': (args) { (args[0] as InkHighlight).confirm(); return null; },
         'cancel#0': (args) { (args[0] as InkHighlight).cancel(); return null; },
         'paintInkCircle#9': (args) { (args[0] as InkHighlight).paintInkCircle(canvas: args[1] as Canvas, transform: args[2] as Matrix4, paint: args[3] as Paint, center: args[4] as Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; },
         'active#0': (args) => (args[0] as InkHighlight).active,
+        'hashCode#0': (args) => (args[0] as InkHighlight).hashCode,
         'color#0': (args) => (args[0] as InkHighlight).color,
         'customBorder#0': (args) => (args[0] as InkHighlight).customBorder,
         'controller#0': (args) => (args[0] as InkHighlight).controller,
@@ -46,6 +48,7 @@ abstract final class InkHighlightBindings {
         'onRemoved#0': (args) => (args[0] as InkHighlight).onRemoved,
         'color=#1': (args) { (args[0] as InkHighlight).color = args[1] as Color; return args[1]; },
         'customBorder=#1': (args) { (args[0] as InkHighlight).customBorder = args[1] as ShapeBorder?; return args[1]; },
+        '==#1': (args) => (args[0] as InkHighlight) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[10], darticAbsent)) {
             return InkHighlight(controller: args[0] as MaterialInkController, referenceBox: args[1] as RenderBox, color: args[2] as Color, textDirection: args[3] as TextDirection, shape: identical(args[4], darticAbsent) ? BoxShape.rectangle : args[4] as BoxShape, radius: identical(args[5], darticAbsent) ? null : args[5] as double?, borderRadius: identical(args[6], darticAbsent) ? null : args[6] as BorderRadius?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, rectCallback: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : () => (args[8] as Function?)!(), onRemoved: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!());

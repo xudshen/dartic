@@ -34,6 +34,9 @@ abstract final class NavigationRailLabelTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NavigationRailLabelType).toString(),
+        'hashCode#0': (args) => (args[0] as NavigationRailLabelType).hashCode,
         'index#0': (args) => (args[0] as NavigationRailLabelType).index,
+        '==#1': (args) => (args[0] as NavigationRailLabelType) == (args[1] as Object),
       };
 }

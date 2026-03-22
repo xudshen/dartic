@@ -35,5 +35,7 @@ abstract final class SliverChildDelegateBindings {
         'toString#0': (args) => (args[0] as SliverChildDelegate).toString(),
         'debugFillDescription#1': (args) { (args[0] as SliverChildDelegate).debugFillDescription((args[1] as List).cast<String>()); return null; },
         'estimatedChildCount#0': (args) => (args[0] as SliverChildDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as SliverChildDelegate).hashCode,
+        '==#1': (args) => (args[0] as SliverChildDelegate) == (args[1] as Object),
       };
 }

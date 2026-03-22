@@ -29,5 +29,8 @@ abstract final class TapRegionRegistryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'registerTapRegion#1': (args) { (args[0] as TapRegionRegistry).registerTapRegion(args[1] as RenderTapRegion); return null; },
         'unregisterTapRegion#1': (args) { (args[0] as TapRegionRegistry).unregisterTapRegion(args[1] as RenderTapRegion); return null; },
+        'toString#0': (args) => (args[0] as TapRegionRegistry).toString(),
+        'hashCode#0': (args) => (args[0] as TapRegionRegistry).hashCode,
+        '==#1': (args) => (args[0] as TapRegionRegistry) == (args[1] as Object),
       };
 }

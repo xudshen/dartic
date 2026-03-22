@@ -27,8 +27,11 @@ abstract final class LengthLimitingTextInputFormatterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'formatEditUpdate#2': (args) => (args[0] as LengthLimitingTextInputFormatter).formatEditUpdate(args[1] as TextEditingValue, args[2] as TextEditingValue),
+        'toString#0': (args) => (args[0] as LengthLimitingTextInputFormatter).toString(),
         'maxLength#0': (args) => (args[0] as LengthLimitingTextInputFormatter).maxLength,
         'maxLengthEnforcement#0': (args) => (args[0] as LengthLimitingTextInputFormatter).maxLengthEnforcement,
+        'hashCode#0': (args) => (args[0] as LengthLimitingTextInputFormatter).hashCode,
+        '==#1': (args) => (args[0] as LengthLimitingTextInputFormatter) == (args[1] as Object),
         '#2': (args) => LengthLimitingTextInputFormatter(args[0] as int?, maxLengthEnforcement: identical(args[1], darticAbsent) ? null : args[1] as MaxLengthEnforcement?),
       };
 }

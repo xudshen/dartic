@@ -30,6 +30,9 @@ abstract final class ExpansionTileTransitionModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExpansionTileTransitionMode).toString(),
+        'hashCode#0': (args) => (args[0] as ExpansionTileTransitionMode).hashCode,
         'index#0': (args) => (args[0] as ExpansionTileTransitionMode).index,
+        '==#1': (args) => (args[0] as ExpansionTileTransitionMode) == (args[1] as Object),
       };
 }

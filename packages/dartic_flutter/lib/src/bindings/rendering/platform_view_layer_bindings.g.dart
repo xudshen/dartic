@@ -30,6 +30,7 @@ abstract final class PlatformViewLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'supportsRasterization#0': (args) => (args[0] as PlatformViewLayer).supportsRasterization(),
         'addToScene#1': (args) { (args[0] as PlatformViewLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
+        'toString#0': (args) => (args[0] as PlatformViewLayer).toString(),
         'describeClipBounds#0': (args) => (args[0] as PlatformViewLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PlatformViewLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
         'dispose#0': (args) { (args[0] as PlatformViewLayer).dispose(); return null; },
@@ -51,6 +52,7 @@ abstract final class PlatformViewLayerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as PlatformViewLayer).debugDescribeChildren(),
         'rect#0': (args) => (args[0] as PlatformViewLayer).rect,
         'viewId#0': (args) => (args[0] as PlatformViewLayer).viewId,
+        'hashCode#0': (args) => (args[0] as PlatformViewLayer).hashCode,
         'subtreeHasCompositionCallbacks#0': (args) => (args[0] as PlatformViewLayer).subtreeHasCompositionCallbacks,
         'debugDisposed#0': (args) => (args[0] as PlatformViewLayer).debugDisposed,
         'debugHandleCount#0': (args) => (args[0] as PlatformViewLayer).debugHandleCount,
@@ -66,6 +68,7 @@ abstract final class PlatformViewLayerBindings {
         'debugCreator#0': (args) => (args[0] as PlatformViewLayer).debugCreator,
         'engineLayer=#1': (args) { (args[0] as PlatformViewLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as PlatformViewLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as PlatformViewLayer) == (args[1] as Object),
         '#2': (args) => PlatformViewLayer(rect: args[0] as ui.Rect, viewId: args[1] as int),
       };
 }

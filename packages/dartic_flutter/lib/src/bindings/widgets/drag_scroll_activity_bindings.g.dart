@@ -41,7 +41,9 @@ abstract final class DragScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as DragScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as DragScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as DragScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as DragScrollActivity).hashCode,
         'delegate#0': (args) => (args[0] as DragScrollActivity).delegate,
+        '==#1': (args) => (args[0] as DragScrollActivity) == (args[1] as Object),
         '#2': (args) => DragScrollActivity(args[0] as ScrollActivityDelegate, args[1] as ScrollDragController),
       };
 }

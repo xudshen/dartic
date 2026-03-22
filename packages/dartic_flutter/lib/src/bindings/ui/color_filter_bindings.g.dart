@@ -32,6 +32,7 @@ abstract final class ColorFilterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as ColorFilter).toString(),
         'hashCode#0': (args) => (args[0] as ColorFilter).hashCode,
+        '==#1': (args) => (args[0] as ColorFilter) == (args[1] as Object),
         'mode#2': (args) => ColorFilter.mode(args[0] as Color, args[1] as BlendMode),
         'matrix#1': (args) => ColorFilter.matrix((args[0] as List).cast<double>()),
         'linearToSrgbGamma#0': (args) => ColorFilter.linearToSrgbGamma(),

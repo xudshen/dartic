@@ -33,6 +33,7 @@ abstract final class ShortcutsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Shortcuts).createState(),
         'debugFillProperties#1': (args) { (args[0] as Shortcuts).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Shortcuts).toString(),
         'createElement#0': (args) => (args[0] as Shortcuts).createElement(),
         'toStringShort#0': (args) => (args[0] as Shortcuts).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Shortcuts).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -44,7 +45,9 @@ abstract final class ShortcutsBindings {
         'child#0': (args) => (args[0] as Shortcuts).child,
         'debugLabel#0': (args) => (args[0] as Shortcuts).debugLabel,
         'includeSemantics#0': (args) => (args[0] as Shortcuts).includeSemantics,
+        'hashCode#0': (args) => (args[0] as Shortcuts).hashCode,
         'key#0': (args) => (args[0] as Shortcuts).key,
+        '==#1': (args) => (args[0] as Shortcuts) == (args[1] as Object),
         '#5': (args) => Shortcuts(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shortcuts: (args[1] as Map).cast<ShortcutActivator, Intent>(), child: args[2] as Widget, debugLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, includeSemantics: identical(args[4], darticAbsent) ? true : args[4] as bool),
         'manager#5': (args) => Shortcuts.manager(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, manager: args[1] as ShortcutManager, child: args[2] as Widget, debugLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, includeSemantics: identical(args[4], darticAbsent) ? true : args[4] as bool),
         '_#fromFields#6': (args) {

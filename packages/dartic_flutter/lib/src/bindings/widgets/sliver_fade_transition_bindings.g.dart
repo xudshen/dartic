@@ -36,6 +36,7 @@ abstract final class SliverFadeTransitionBindings {
         'createRenderObject#1': (args) => (args[0] as SliverFadeTransition).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverFadeTransition).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverAnimatedOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverFadeTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverFadeTransition).toString(),
         'createElement#0': (args) => (args[0] as SliverFadeTransition).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverFadeTransition).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverFadeTransition).toStringShort(),
@@ -45,8 +46,10 @@ abstract final class SliverFadeTransitionBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SliverFadeTransition).debugDescribeChildren(),
         'opacity#0': (args) => (args[0] as SliverFadeTransition).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as SliverFadeTransition).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as SliverFadeTransition).hashCode,
         'child#0': (args) => (args[0] as SliverFadeTransition).child,
         'key#0': (args) => (args[0] as SliverFadeTransition).key,
+        '==#1': (args) => (args[0] as SliverFadeTransition) == (args[1] as Object),
         '#4': (args) => SliverFadeTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, opacity: args[1] as Animation<double>, alwaysIncludeSemantics: identical(args[2], darticAbsent) ? false : args[2] as bool, sliver: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SliverFadeTransition(key: args[2] as Key?, opacity: args[3] as Animation<double>, alwaysIncludeSemantics: args[0] as bool, sliver: args[1] as Widget?),
       };

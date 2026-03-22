@@ -30,6 +30,7 @@ abstract final class ScrollbarThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ScrollbarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ScrollbarTheme).updateShouldNotify(args[1] as ScrollbarTheme),
+        'toString#0': (args) => (args[0] as ScrollbarTheme).toString(),
         'createElement#0': (args) => (args[0] as ScrollbarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ScrollbarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ScrollbarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class ScrollbarThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ScrollbarTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ScrollbarTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as ScrollbarTheme).data,
+        'hashCode#0': (args) => (args[0] as ScrollbarTheme).hashCode,
         'child#0': (args) => (args[0] as ScrollbarTheme).child,
         'key#0': (args) => (args[0] as ScrollbarTheme).key,
+        '==#1': (args) => (args[0] as ScrollbarTheme) == (args[1] as Object),
         '#3': (args) => ScrollbarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ScrollbarThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => ScrollbarTheme(key: args[2] as Key?, data: args[1] as ScrollbarThemeData, child: args[0] as Widget),
       };

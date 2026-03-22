@@ -35,6 +35,7 @@ abstract final class DecoratedSliverBindings {
         'createRenderObject#1': (args) => (args[0] as DecoratedSliver).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as DecoratedSliver).updateRenderObject(args[1] as BuildContext, args[2] as RenderDecoratedSliver); return null; },
         'debugFillProperties#1': (args) { (args[0] as DecoratedSliver).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as DecoratedSliver).toString(),
         'createElement#0': (args) => (args[0] as DecoratedSliver).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as DecoratedSliver).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as DecoratedSliver).toStringShort(),
@@ -44,8 +45,10 @@ abstract final class DecoratedSliverBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DecoratedSliver).debugDescribeChildren(),
         'decoration#0': (args) => (args[0] as DecoratedSliver).decoration,
         'position#0': (args) => (args[0] as DecoratedSliver).position,
+        'hashCode#0': (args) => (args[0] as DecoratedSliver).hashCode,
         'child#0': (args) => (args[0] as DecoratedSliver).child,
         'key#0': (args) => (args[0] as DecoratedSliver).key,
+        '==#1': (args) => (args[0] as DecoratedSliver) == (args[1] as Object),
         '#4': (args) => DecoratedSliver(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: args[1] as Decoration, position: identical(args[2], darticAbsent) ? DecorationPosition.background : args[2] as DecorationPosition, sliver: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => DecoratedSliver(key: args[2] as Key?, decoration: args[1] as Decoration, position: args[3] as DecorationPosition, sliver: args[0] as Widget?),
       };

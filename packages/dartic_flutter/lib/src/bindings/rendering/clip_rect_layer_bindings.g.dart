@@ -32,6 +32,7 @@ abstract final class ClipRectLayerBindings {
         'findAnnotations#3': (args) => (args[0] as ClipRectLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'addToScene#1': (args) { (args[0] as ClipRectLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipRectLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ClipRectLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as ClipRectLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ClipRectLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ClipRectLayer).dispose(); return null; },
@@ -58,6 +59,7 @@ abstract final class ClipRectLayerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ClipRectLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'clipRect#0': (args) => (args[0] as ClipRectLayer).clipRect,
         'clipBehavior#0': (args) => (args[0] as ClipRectLayer).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ClipRectLayer).hashCode,
         'firstChild#0': (args) => (args[0] as ClipRectLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ClipRectLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as ClipRectLayer).hasChildren,
@@ -78,6 +80,7 @@ abstract final class ClipRectLayerBindings {
         'clipBehavior=#1': (args) { (args[0] as ClipRectLayer).clipBehavior = args[1] as ui.Clip; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as ClipRectLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ClipRectLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ClipRectLayer) == (args[1] as Object),
         '#2': (args) => ClipRectLayer(clipRect: identical(args[0], darticAbsent) ? null : args[0] as ui.Rect?, clipBehavior: identical(args[1], darticAbsent) ? Clip.hardEdge : args[1] as ui.Clip),
       };
 }

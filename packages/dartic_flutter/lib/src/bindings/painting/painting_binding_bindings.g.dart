@@ -46,6 +46,7 @@ abstract final class PaintingBindingBindings {
         'evict#1': (args) { (args[0] as PaintingBinding).evict(args[1] as String); return null; },
         'handleMemoryPressure#0': (args) { (args[0] as PaintingBinding).handleMemoryPressure(); return null; },
         'handleSystemMessage#1': (args) => (args[0] as PaintingBinding).handleSystemMessage(args[1] as Object),
+        'toString#0': (args) => (args[0] as PaintingBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as PaintingBinding).debugCheckZone(args[1] as String),
         'initServiceExtensions#0': (args) { (args[0] as PaintingBinding).initServiceExtensions(); return null; },
         'lockEvents#1': (args) => (args[0] as PaintingBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
@@ -92,6 +93,7 @@ abstract final class PaintingBindingBindings {
         'handleDrawFrame#0': (args) { (args[0] as PaintingBinding).handleDrawFrame(); return null; },
         'imageCache#0': (args) => (args[0] as PaintingBinding).imageCache,
         'systemFonts#0': (args) => (args[0] as PaintingBinding).systemFonts,
+        'hashCode#0': (args) => (args[0] as PaintingBinding).hashCode,
         'window#0': (args) => (args[0] as PaintingBinding).window,
         'platformDispatcher#0': (args) => (args[0] as PaintingBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as PaintingBinding).locked,
@@ -111,5 +113,6 @@ abstract final class PaintingBindingBindings {
         'currentFrameTimeStamp#0': (args) => (args[0] as PaintingBinding).currentFrameTimeStamp,
         'currentSystemFrameTimeStamp#0': (args) => (args[0] as PaintingBinding).currentSystemFrameTimeStamp,
         'schedulingStrategy=#1': (args) { (args[0] as PaintingBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
+        '==#1': (args) => (args[0] as PaintingBinding) == (args[1] as Object),
       };
 }

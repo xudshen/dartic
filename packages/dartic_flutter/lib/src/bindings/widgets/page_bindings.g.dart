@@ -50,7 +50,9 @@ abstract final class PageBindings {
         'restorationId#0': (args) => (args[0] as Page).restorationId,
         'onPopInvoked#0': (args) => (args[0] as Page).onPopInvoked,
         'canPop#0': (args) => (args[0] as Page).canPop,
+        'hashCode#0': (args) => (args[0] as Page).hashCode,
         'name#0': (args) => (args[0] as Page).name,
         'arguments#0': (args) => (args[0] as Page).arguments,
+        '==#1': (args) => (args[0] as Page) == (args[1] as Object),
       };
 }

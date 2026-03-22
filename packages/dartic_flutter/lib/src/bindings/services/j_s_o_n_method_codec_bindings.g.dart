@@ -29,6 +29,9 @@ abstract final class JSONMethodCodecBindings {
         'decodeEnvelope#1': (args) => (args[0] as JSONMethodCodec).decodeEnvelope(args[1] as ByteData),
         'encodeSuccessEnvelope#1': (args) => (args[0] as JSONMethodCodec).encodeSuccessEnvelope(args[1]),
         'encodeErrorEnvelope#3': (args) => (args[0] as JSONMethodCodec).encodeErrorEnvelope(code: args[1] as String, message: identical(args[2], darticAbsent) ? null : args[2] as String?, details: identical(args[3], darticAbsent) ? null : args[3]),
+        'toString#0': (args) => (args[0] as JSONMethodCodec).toString(),
+        'hashCode#0': (args) => (args[0] as JSONMethodCodec).hashCode,
+        '==#1': (args) => (args[0] as JSONMethodCodec) == (args[1] as Object),
         '#0': (args) => JSONMethodCodec(),
         '_#fromFields#0': (args) => JSONMethodCodec(),
       };

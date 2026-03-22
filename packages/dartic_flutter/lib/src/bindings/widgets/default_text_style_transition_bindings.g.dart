@@ -37,6 +37,7 @@ abstract final class DefaultTextStyleTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DefaultTextStyleTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DefaultTextStyleTransition).toString(),
         'createState#0': (args) => (args[0] as DefaultTextStyleTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as DefaultTextStyleTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as DefaultTextStyleTransition).createElement(),
@@ -51,8 +52,10 @@ abstract final class DefaultTextStyleTransitionBindings {
         'overflow#0': (args) => (args[0] as DefaultTextStyleTransition).overflow,
         'maxLines#0': (args) => (args[0] as DefaultTextStyleTransition).maxLines,
         'child#0': (args) => (args[0] as DefaultTextStyleTransition).child,
+        'hashCode#0': (args) => (args[0] as DefaultTextStyleTransition).hashCode,
         'listenable#0': (args) => (args[0] as DefaultTextStyleTransition).listenable,
         'key#0': (args) => (args[0] as DefaultTextStyleTransition).key,
+        '==#1': (args) => (args[0] as DefaultTextStyleTransition) == (args[1] as Object),
         '#7': (args) => DefaultTextStyleTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, style: args[1] as Animation<TextStyle>, child: args[2] as Widget, textAlign: identical(args[3], darticAbsent) ? null : args[3] as TextAlign?, softWrap: identical(args[4], darticAbsent) ? true : args[4] as bool, overflow: identical(args[5], darticAbsent) ? TextOverflow.clip : args[5] as TextOverflow, maxLines: identical(args[6], darticAbsent) ? null : args[6] as int?),
         '_#fromFields#7': (args) => DefaultTextStyleTransition(key: args[1] as Key?, style: args[2] as Animation<TextStyle>, child: args[0] as Widget, textAlign: args[6] as TextAlign?, softWrap: args[5] as bool, overflow: args[4] as TextOverflow, maxLines: args[3] as int?),
       };

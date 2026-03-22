@@ -37,6 +37,7 @@ abstract final class CupertinoActionSheetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoActionSheet).createState(),
+        'toString#0': (args) => (args[0] as CupertinoActionSheet).toString(),
         'createElement#0': (args) => (args[0] as CupertinoActionSheet).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoActionSheet).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoActionSheet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class CupertinoActionSheetBindings {
         'messageScrollController#0': (args) => (args[0] as CupertinoActionSheet).messageScrollController,
         'actionScrollController#0': (args) => (args[0] as CupertinoActionSheet).actionScrollController,
         'cancelButton#0': (args) => (args[0] as CupertinoActionSheet).cancelButton,
+        'hashCode#0': (args) => (args[0] as CupertinoActionSheet).hashCode,
         'key#0': (args) => (args[0] as CupertinoActionSheet).key,
+        '==#1': (args) => (args[0] as CupertinoActionSheet) == (args[1] as Object),
         '#7': (args) => CupertinoActionSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? null : args[1] as Widget?, message: identical(args[2], darticAbsent) ? null : args[2] as Widget?, actions: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<Widget>(), messageScrollController: identical(args[4], darticAbsent) ? null : args[4] as ScrollController?, actionScrollController: identical(args[5], darticAbsent) ? null : args[5] as ScrollController?, cancelButton: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         '_#fromFields#7': (args) => CupertinoActionSheet(key: args[3] as Key?, title: args[6] as Widget?, message: args[4] as Widget?, actions: args[1] == null ? null : (args[1] as List).cast<Widget>(), messageScrollController: args[5] as ScrollController?, actionScrollController: args[0] as ScrollController?, cancelButton: args[2] as Widget?),
       };

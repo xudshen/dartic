@@ -35,5 +35,7 @@ abstract final class ViewPaddingBindings {
         'top#0': (args) => (args[0] as ViewPadding).top,
         'right#0': (args) => (args[0] as ViewPadding).right,
         'bottom#0': (args) => (args[0] as ViewPadding).bottom,
+        'hashCode#0': (args) => (args[0] as ViewPadding).hashCode,
+        '==#1': (args) => (args[0] as ViewPadding) == (args[1] as Object),
       };
 }

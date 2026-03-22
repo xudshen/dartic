@@ -28,7 +28,11 @@ abstract final class KeyHelperBindings {
         'isModifierPressed#5': (args) => (args[0] as KeyHelper).isModifierPressed(args[1] as ModifierKey, args[2] as int, side: identical(args[3], darticAbsent) ? KeyboardSide.any : args[3] as KeyboardSide, keyCode: args[4] as int, isDown: args[5] as bool),
         'numpadKey#1': (args) => (args[0] as KeyHelper).numpadKey(args[1] as int),
         'logicalKey#1': (args) => (args[0] as KeyHelper).logicalKey(args[1] as int),
+        'toString#0': (args) => (args[0] as KeyHelper).toString(),
         'debugToolkit#0': (args) => (args[0] as KeyHelper).debugToolkit,
         'platformPlane#0': (args) => (args[0] as KeyHelper).platformPlane,
+        'hashCode#0': (args) => (args[0] as KeyHelper).hashCode,
+        '==#1': (args) => (args[0] as KeyHelper) == (args[1] as Object),
+        '#1': (args) => KeyHelper(args[0] as String),
       };
 }

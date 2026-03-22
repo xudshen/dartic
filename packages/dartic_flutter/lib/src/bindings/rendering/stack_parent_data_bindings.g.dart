@@ -38,6 +38,7 @@ abstract final class StackParentDataBindings {
         'height#0': (args) => (args[0] as StackParentData).height,
         'rect#0': (args) => (args[0] as StackParentData).rect,
         'isPositioned#0': (args) => (args[0] as StackParentData).isPositioned,
+        'hashCode#0': (args) => (args[0] as StackParentData).hashCode,
         'offset#0': (args) => (args[0] as StackParentData).offset,
         'previousSibling#0': (args) => (args[0] as StackParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as StackParentData).nextSibling,
@@ -51,6 +52,7 @@ abstract final class StackParentDataBindings {
         'offset=#1': (args) { (args[0] as StackParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as StackParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as StackParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as StackParentData) == (args[1] as Object),
         '#0': (args) => StackParentData(),
       };
 }

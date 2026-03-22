@@ -26,8 +26,11 @@ abstract final class CupertinoThumbPainterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as CupertinoThumbPainter).paint(args[1] as Canvas, args[2] as Rect); return null; },
+        'toString#0': (args) => (args[0] as CupertinoThumbPainter).toString(),
         'color#0': (args) => (args[0] as CupertinoThumbPainter).color,
         'shadows#0': (args) => (args[0] as CupertinoThumbPainter).shadows,
+        'hashCode#0': (args) => (args[0] as CupertinoThumbPainter).hashCode,
+        '==#1': (args) => (args[0] as CupertinoThumbPainter) == (args[1] as Object),
         '#2': (args) {
           if (identical(args[1], darticAbsent)) {
             return CupertinoThumbPainter(color: identical(args[0], darticAbsent) ? CupertinoColors.white : args[0] as Color);

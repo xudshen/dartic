@@ -36,6 +36,7 @@ abstract final class BuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Builder).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Builder).toString(),
         'createElement#0': (args) => (args[0] as Builder).createElement(),
         'toStringShort#0': (args) => (args[0] as Builder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Builder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class BuilderBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as Builder).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Builder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as Builder).builder,
+        'hashCode#0': (args) => (args[0] as Builder).hashCode,
         'key#0': (args) => (args[0] as Builder).key,
+        '==#1': (args) => (args[0] as Builder) == (args[1] as Object),
         '#2': (args) => Builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a) => (args[1] as Function)(a) as Widget),
         '_#fromFields#2': (args) => Builder(key: args[1] as Key?, builder: args[0] as WidgetBuilder),
       };

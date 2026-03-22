@@ -31,7 +31,9 @@ abstract final class SliverLogicalParentDataBindings {
         'toString#0': (args) => (args[0] as SliverLogicalParentData).toString(),
         'detach#0': (args) { (args[0] as SliverLogicalParentData).detach(); return null; },
         'layoutOffset#0': (args) => (args[0] as SliverLogicalParentData).layoutOffset,
+        'hashCode#0': (args) => (args[0] as SliverLogicalParentData).hashCode,
         'layoutOffset=#1': (args) { (args[0] as SliverLogicalParentData).layoutOffset = args[1] as double?; return args[1]; },
+        '==#1': (args) => (args[0] as SliverLogicalParentData) == (args[1] as Object),
         '#0': (args) => SliverLogicalParentData(),
       };
 }

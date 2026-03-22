@@ -26,14 +26,17 @@ abstract final class ColorTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as ColorTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as ColorTween).toString(),
         'transform#1': (args) => (args[0] as ColorTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as ColorTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as ColorTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as ColorTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as ColorTween).hashCode,
         'begin#0': (args) => (args[0] as ColorTween).begin,
         'end#0': (args) => (args[0] as ColorTween).end,
         'begin=#1': (args) { (args[0] as ColorTween).begin = args[1] as Color?; return args[1]; },
         'end=#1': (args) { (args[0] as ColorTween).end = args[1] as Color?; return args[1]; },
+        '==#1': (args) => (args[0] as ColorTween) == (args[1] as Object),
         '#2': (args) => ColorTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Color?, end: identical(args[1], darticAbsent) ? null : args[1] as Color?),
       };
 }

@@ -31,6 +31,7 @@ abstract final class ListenableBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ListenableBuilder).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ListenableBuilder).toString(),
         'createState#0': (args) => (args[0] as ListenableBuilder).createState(),
         'debugFillProperties#1': (args) { (args[0] as ListenableBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as ListenableBuilder).createElement(),
@@ -42,7 +43,9 @@ abstract final class ListenableBuilderBindings {
         'listenable#0': (args) => (args[0] as ListenableBuilder).listenable,
         'builder#0': (args) => (args[0] as ListenableBuilder).builder,
         'child#0': (args) => (args[0] as ListenableBuilder).child,
+        'hashCode#0': (args) => (args[0] as ListenableBuilder).hashCode,
         'key#0': (args) => (args[0] as ListenableBuilder).key,
+        '==#1': (args) => (args[0] as ListenableBuilder) == (args[1] as Object),
         '#4': (args) => ListenableBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, listenable: args[1] as Listenable, builder: (a, b) => (args[2] as Function)(a, b) as Widget, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => ListenableBuilder(key: args[2] as Key?, listenable: args[3] as Listenable, builder: args[0] as TransitionBuilder, child: args[1] as Widget?),
       };

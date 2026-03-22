@@ -26,13 +26,16 @@ abstract final class ExtendSelectionToLineBreakIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionToLineBreakIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionToLineBreakIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionToLineBreakIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionToLineBreakIntent) == (args[1] as Object),
         '#4': (args) => ExtendSelectionToLineBreakIntent(forward: args[0] as bool, collapseSelection: args[1] as bool, collapseAtReversal: identical(args[2], darticAbsent) ? false : args[2] as bool, continuesAtWrap: identical(args[3], darticAbsent) ? false : args[3] as bool),
         '_#fromFields#4': (args) => ExtendSelectionToLineBreakIntent(forward: args[3] as bool, collapseSelection: args[1] as bool, collapseAtReversal: args[0] as bool, continuesAtWrap: args[2] as bool),
       };

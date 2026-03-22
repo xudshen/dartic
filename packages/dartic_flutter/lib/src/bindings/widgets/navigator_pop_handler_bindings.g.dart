@@ -29,6 +29,7 @@ abstract final class NavigatorPopHandlerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as NavigatorPopHandler).createState(),
+        'toString#0': (args) => (args[0] as NavigatorPopHandler).toString(),
         'createElement#0': (args) => (args[0] as NavigatorPopHandler).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigatorPopHandler).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigatorPopHandler).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class NavigatorPopHandlerBindings {
         'enabled#0': (args) => (args[0] as NavigatorPopHandler).enabled,
         'onPop#0': (args) => (args[0] as NavigatorPopHandler).onPop,
         'onPopWithResult#0': (args) => (args[0] as NavigatorPopHandler).onPopWithResult,
+        'hashCode#0': (args) => (args[0] as NavigatorPopHandler).hashCode,
         'key#0': (args) => (args[0] as NavigatorPopHandler).key,
+        '==#1': (args) => (args[0] as NavigatorPopHandler) == (args[1] as Object),
         '#5': (args) => NavigatorPopHandler<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPop: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onPopWithResult: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, child: args[4] as Widget),
         '_#fromFields#5': (args) => NavigatorPopHandler<dynamic>(key: args[2] as Key?, onPop: args[3] as VoidCallback?, onPopWithResult: args[4] as void Function(Object?)?, enabled: args[1] as bool, child: args[0] as Widget),
       };

@@ -28,6 +28,7 @@ abstract final class AnimationMinBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimationMin).toString(),
         'didStartListening#0': (args) { (args[0] as AnimationMin).didStartListening(); return null; },
         'didStopListening#0': (args) { (args[0] as AnimationMin).didStopListening(); return null; },
         'addListener#1': (args) { (args[0] as AnimationMin).addListener(() => (args[1] as Function)()); return null; },
@@ -43,6 +44,7 @@ abstract final class AnimationMinBindings {
         'clearStatusListeners#0': (args) { (args[0] as AnimationMin).clearStatusListeners(); return null; },
         'notifyStatusListeners#1': (args) { (args[0] as AnimationMin).notifyStatusListeners(args[1] as AnimationStatus); return null; },
         'value#0': (args) => (args[0] as AnimationMin).value,
+        'hashCode#0': (args) => (args[0] as AnimationMin).hashCode,
         'first#0': (args) => (args[0] as AnimationMin).first,
         'next#0': (args) => (args[0] as AnimationMin).next,
         'status#0': (args) => (args[0] as AnimationMin).status,
@@ -51,6 +53,7 @@ abstract final class AnimationMinBindings {
         'isAnimating#0': (args) => (args[0] as AnimationMin).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as AnimationMin).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as AnimationMin).isListening,
+        '==#1': (args) => (args[0] as AnimationMin) == (args[1] as Object),
         '#2': (args) => AnimationMin<num>(args[0] as Animation<num>, args[1] as Animation<num>),
       };
 }

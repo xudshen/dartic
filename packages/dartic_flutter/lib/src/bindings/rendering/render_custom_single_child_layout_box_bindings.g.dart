@@ -50,6 +50,7 @@ abstract final class RenderCustomSingleChildLayoutBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDryLayout(args[1] as BoxConstraints),
         'computeDryBaseline#2': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderCustomSingleChildLayoutBox).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).toString(),
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderCustomSingleChildLayoutBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderCustomSingleChildLayoutBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
@@ -119,6 +120,7 @@ abstract final class RenderCustomSingleChildLayoutBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderCustomSingleChildLayoutBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox).debugValidateChild(args[1] as RenderObject),
         'delegate#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).delegate,
+        'hashCode#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).hasSize,
         'size#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderCustomSingleChildLayoutBox).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderCustomSingleChildLayoutBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderCustomSingleChildLayoutBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderCustomSingleChildLayoutBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderCustomSingleChildLayoutBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderCustomSingleChildLayoutBox) == (args[1] as Object),
         '#2': (args) => RenderCustomSingleChildLayoutBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, delegate: args[1] as SingleChildLayoutDelegate),
       };
 }

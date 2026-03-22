@@ -38,6 +38,7 @@ abstract final class RenderSliverConstrainedCrossAxisBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverConstrainedCrossAxis).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverConstrainedCrossAxis).setupParentData(args[1] as RenderObject); return null; },
         'paint#2': (args) { (args[0] as RenderSliverConstrainedCrossAxis).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverConstrainedCrossAxis).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
@@ -99,6 +100,7 @@ abstract final class RenderSliverConstrainedCrossAxisBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverConstrainedCrossAxis).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSliverConstrainedCrossAxis).debugValidateChild(args[1] as RenderObject),
         'maxExtent#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).maxExtent,
+        'hashCode#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverConstrainedCrossAxis).constraints,
@@ -137,6 +139,7 @@ abstract final class RenderSliverConstrainedCrossAxisBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverConstrainedCrossAxis).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverConstrainedCrossAxis).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverConstrainedCrossAxis).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverConstrainedCrossAxis) == (args[1] as Object),
         '#1': (args) => RenderSliverConstrainedCrossAxis(maxExtent: args[0] as double),
       };
 }

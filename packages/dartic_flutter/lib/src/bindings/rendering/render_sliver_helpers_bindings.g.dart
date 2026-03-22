@@ -41,6 +41,7 @@ abstract final class RenderSliverHelpersBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverHelpers).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverHelpers).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverHelpers).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverHelpers).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverHelpers).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverHelpers).performResize(); return null; },
@@ -101,6 +102,7 @@ abstract final class RenderSliverHelpersBindings {
         'showOnScreen#4': (args) { (args[0] as RenderSliverHelpers).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderSliverHelpers).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverHelpers).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderSliverHelpers).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverHelpers).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverHelpers).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverHelpers).geometry,
@@ -136,5 +138,6 @@ abstract final class RenderSliverHelpersBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverHelpers).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverHelpers).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverHelpers).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverHelpers) == (args[1] as Object),
       };
 }

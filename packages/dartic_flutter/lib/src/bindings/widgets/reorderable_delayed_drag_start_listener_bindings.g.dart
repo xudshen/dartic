@@ -46,6 +46,7 @@ abstract final class ReorderableDelayedDragStartListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRecognizer#0': (args) => (args[0] as ReorderableDelayedDragStartListener).createRecognizer(),
+        'toString#0': (args) => (args[0] as ReorderableDelayedDragStartListener).toString(),
         'build#1': (args) => (args[0] as ReorderableDelayedDragStartListener).build(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as ReorderableDelayedDragStartListener).createElement(),
         'toStringShort#0': (args) => (args[0] as ReorderableDelayedDragStartListener).toStringShort(),
@@ -54,10 +55,12 @@ abstract final class ReorderableDelayedDragStartListenerBindings {
         'toStringDeep#4': (args) => (args[0] as ReorderableDelayedDragStartListener).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as ReorderableDelayedDragStartListener).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ReorderableDelayedDragStartListener).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as ReorderableDelayedDragStartListener).hashCode,
         'child#0': (args) => (args[0] as ReorderableDelayedDragStartListener).child,
         'index#0': (args) => (args[0] as ReorderableDelayedDragStartListener).index,
         'enabled#0': (args) => (args[0] as ReorderableDelayedDragStartListener).enabled,
         'key#0': (args) => (args[0] as ReorderableDelayedDragStartListener).key,
+        '==#1': (args) => (args[0] as ReorderableDelayedDragStartListener) == (args[1] as Object),
         '#4': (args) => ReorderableDelayedDragStartListener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, index: args[2] as int, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => ReorderableDelayedDragStartListener(key: args[3] as Key?, child: args[0] as Widget, index: args[2] as int, enabled: args[1] as bool),
       };

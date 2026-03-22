@@ -24,5 +24,8 @@ abstract final class WidgetStatesConstraintBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isSatisfiedBy#1': (args) => (args[0] as WidgetStatesConstraint).isSatisfiedBy((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as WidgetStatesConstraint).toString(),
+        'hashCode#0': (args) => (args[0] as WidgetStatesConstraint).hashCode,
+        '==#1': (args) => (args[0] as WidgetStatesConstraint) == (args[1] as Object),
       };
 }

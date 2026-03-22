@@ -34,6 +34,7 @@ abstract final class SingleChildRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as SingleChildRenderObjectWidget).createElement(),
+        'toString#0': (args) => (args[0] as SingleChildRenderObjectWidget).toString(),
         'createRenderObject#1': (args) => (args[0] as SingleChildRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SingleChildRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SingleChildRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
@@ -44,6 +45,8 @@ abstract final class SingleChildRenderObjectWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SingleChildRenderObjectWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SingleChildRenderObjectWidget).debugDescribeChildren(),
         'child#0': (args) => (args[0] as SingleChildRenderObjectWidget).child,
+        'hashCode#0': (args) => (args[0] as SingleChildRenderObjectWidget).hashCode,
         'key#0': (args) => (args[0] as SingleChildRenderObjectWidget).key,
+        '==#1': (args) => (args[0] as SingleChildRenderObjectWidget) == (args[1] as Object),
       };
 }

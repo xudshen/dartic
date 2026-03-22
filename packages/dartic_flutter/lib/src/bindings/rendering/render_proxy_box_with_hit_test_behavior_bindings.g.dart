@@ -41,6 +41,7 @@ abstract final class RenderProxyBoxWithHitTestBehaviorBindings {
         'hitTest#2': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hitTestSelf(args[1] as ui.Offset),
         'debugFillProperties#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).toString(),
         'setupParentData#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).computeMinIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderProxyBoxWithHitTestBehaviorBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).computeSizeForNoChild(args[1] as BoxConstraints),
         'behavior#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).behavior,
+        'hashCode#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hashCode,
         'hasSize#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).hasSize,
         'size#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).size,
         'semanticBounds#0': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior).semanticBounds,
@@ -154,5 +156,6 @@ abstract final class RenderProxyBoxWithHitTestBehaviorBindings {
         'debugCreator=#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderProxyBoxWithHitTestBehavior).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderProxyBoxWithHitTestBehavior) == (args[1] as Object),
       };
 }

@@ -27,13 +27,16 @@ abstract final class WrapParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WrapParentData).toString(),
         'detach#0': (args) { (args[0] as WrapParentData).detach(); return null; },
+        'hashCode#0': (args) => (args[0] as WrapParentData).hashCode,
         'offset#0': (args) => (args[0] as WrapParentData).offset,
         'previousSibling#0': (args) => (args[0] as WrapParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as WrapParentData).nextSibling,
         'offset=#1': (args) { (args[0] as WrapParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as WrapParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as WrapParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as WrapParentData) == (args[1] as Object),
         '#0': (args) => WrapParentData(),
       };
 }

@@ -29,8 +29,10 @@ abstract final class BoxHitTestEntryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as BoxHitTestEntry).toString(),
         'localPosition#0': (args) => (args[0] as BoxHitTestEntry).localPosition,
+        'hashCode#0': (args) => (args[0] as BoxHitTestEntry).hashCode,
         'target#0': (args) => (args[0] as BoxHitTestEntry).target,
         'transform#0': (args) => (args[0] as BoxHitTestEntry).transform,
+        '==#1': (args) => (args[0] as BoxHitTestEntry) == (args[1] as Object),
         '#2': (args) => BoxHitTestEntry(args[0] as RenderBox, args[1] as ui.Offset),
       };
 }

@@ -39,6 +39,7 @@ abstract final class ViewportBindings {
         'updateRenderObject#2': (args) { (args[0] as Viewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderViewport); return null; },
         'createElement#0': (args) => (args[0] as Viewport).createElement(),
         'debugFillProperties#1': (args) { (args[0] as Viewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Viewport).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as Viewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Viewport).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Viewport).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -54,8 +55,10 @@ abstract final class ViewportBindings {
         'cacheExtentStyle#0': (args) => (args[0] as Viewport).cacheExtentStyle,
         'paintOrder#0': (args) => (args[0] as Viewport).paintOrder,
         'clipBehavior#0': (args) => (args[0] as Viewport).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Viewport).hashCode,
         'children#0': (args) => (args[0] as Viewport).children,
         'key#0': (args) => (args[0] as Viewport).key,
+        '==#1': (args) => (args[0] as Viewport) == (args[1] as Object),
         '#11': (args) => Viewport(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: identical(args[1], darticAbsent) ? AxisDirection.down : args[1] as AxisDirection, crossAxisDirection: identical(args[2], darticAbsent) ? null : args[2] as AxisDirection?, anchor: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, offset: args[4] as ViewportOffset, center: identical(args[5], darticAbsent) ? null : args[5] as Key?, cacheExtent: identical(args[6], darticAbsent) ? null : args[6] as double?, cacheExtentStyle: identical(args[7], darticAbsent) ? CacheExtentStyle.pixel : args[7] as CacheExtentStyle, paintOrder: identical(args[8], darticAbsent) ? SliverPaintOrder.firstIsTop : args[8] as SliverPaintOrder, clipBehavior: identical(args[9], darticAbsent) ? Clip.hardEdge : args[9] as Clip, slivers: identical(args[10], darticAbsent) ? const <Widget>[] : (args[10] as List).cast<Widget>()),
       };
 }

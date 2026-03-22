@@ -22,7 +22,10 @@ abstract final class DisposableBuildContextBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as DisposableBuildContext).dispose(); return null; },
+        'toString#0': (args) => (args[0] as DisposableBuildContext).toString(),
         'context#0': (args) => (args[0] as DisposableBuildContext).context,
+        'hashCode#0': (args) => (args[0] as DisposableBuildContext).hashCode,
+        '==#1': (args) => (args[0] as DisposableBuildContext) == (args[1] as Object),
         '#1': (args) => DisposableBuildContext<State<StatefulWidget>>(args[0] as State<StatefulWidget>),
       };
 }

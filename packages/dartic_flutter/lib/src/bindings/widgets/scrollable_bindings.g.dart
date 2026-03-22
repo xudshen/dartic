@@ -60,6 +60,7 @@ abstract final class ScrollableBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Scrollable).createState(),
         'debugFillProperties#1': (args) { (args[0] as Scrollable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Scrollable).toString(),
         'createElement#0': (args) => (args[0] as Scrollable).createElement(),
         'toStringShort#0': (args) => (args[0] as Scrollable).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Scrollable).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -79,7 +80,9 @@ abstract final class ScrollableBindings {
         'scrollBehavior#0': (args) => (args[0] as Scrollable).scrollBehavior,
         'clipBehavior#0': (args) => (args[0] as Scrollable).clipBehavior,
         'axis#0': (args) => (args[0] as Scrollable).axis,
+        'hashCode#0': (args) => (args[0] as Scrollable).hashCode,
         'key#0': (args) => (args[0] as Scrollable).key,
+        '==#1': (args) => (args[0] as Scrollable) == (args[1] as Object),
         '#13': (args) => Scrollable(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: identical(args[1], darticAbsent) ? AxisDirection.down : args[1] as AxisDirection, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, physics: identical(args[3], darticAbsent) ? null : args[3] as ScrollPhysics?, viewportBuilder: (a, b) => (args[4] as Function)(a, b) as Widget, incrementCalculator: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), excludeFromSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool, semanticChildCount: identical(args[7], darticAbsent) ? null : args[7] as int?, dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, restorationId: identical(args[9], darticAbsent) ? null : args[9] as String?, scrollBehavior: identical(args[10], darticAbsent) ? null : args[10] as ScrollBehavior?, clipBehavior: identical(args[11], darticAbsent) ? Clip.hardEdge : args[11] as Clip, hitTestBehavior: identical(args[12], darticAbsent) ? HitTestBehavior.opaque : args[12] as HitTestBehavior),
         '_#fromFields#13': (args) => Scrollable(key: args[7] as Key?, axisDirection: args[0] as AxisDirection, controller: args[2] as ScrollController?, physics: args[8] as ScrollPhysics?, viewportBuilder: args[12] as ViewportBuilder, incrementCalculator: args[6] as ScrollIncrementCalculator?, excludeFromSemantics: args[4] as bool, semanticChildCount: args[11] as int?, dragStartBehavior: args[3] as DragStartBehavior, restorationId: args[9] as String?, scrollBehavior: args[10] as ScrollBehavior?, clipBehavior: args[1] as Clip, hitTestBehavior: args[5] as HitTestBehavior),
       };

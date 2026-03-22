@@ -28,6 +28,9 @@ abstract final class SelectionStatusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectionStatus).toString(),
+        'hashCode#0': (args) => (args[0] as SelectionStatus).hashCode,
         'index#0': (args) => (args[0] as SelectionStatus).index,
+        '==#1': (args) => (args[0] as SelectionStatus) == (args[1] as Object),
       };
 }

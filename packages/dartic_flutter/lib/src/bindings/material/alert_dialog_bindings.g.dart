@@ -50,6 +50,7 @@ abstract final class AlertDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AlertDialog).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AlertDialog).toString(),
         'createElement#0': (args) => (args[0] as AlertDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as AlertDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AlertDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -84,7 +85,9 @@ abstract final class AlertDialogBindings {
         'alignment#0': (args) => (args[0] as AlertDialog).alignment,
         'constraints#0': (args) => (args[0] as AlertDialog).constraints,
         'scrollable#0': (args) => (args[0] as AlertDialog).scrollable,
+        'hashCode#0': (args) => (args[0] as AlertDialog).hashCode,
         'key#0': (args) => (args[0] as AlertDialog).key,
+        '==#1': (args) => (args[0] as AlertDialog) == (args[1] as Object),
         '#28': (args) => AlertDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, icon: identical(args[1], darticAbsent) ? null : args[1] as Widget?, iconPadding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, iconColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, title: identical(args[4], darticAbsent) ? null : args[4] as Widget?, titlePadding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsetsGeometry?, titleTextStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, content: identical(args[7], darticAbsent) ? null : args[7] as Widget?, contentPadding: identical(args[8], darticAbsent) ? null : args[8] as EdgeInsetsGeometry?, contentTextStyle: identical(args[9], darticAbsent) ? null : args[9] as TextStyle?, actions: identical(args[10], darticAbsent) ? null : args[10] == null ? null : (args[10] as List).cast<Widget>(), actionsPadding: identical(args[11], darticAbsent) ? null : args[11] as EdgeInsetsGeometry?, actionsAlignment: identical(args[12], darticAbsent) ? null : args[12] as MainAxisAlignment?, actionsOverflowAlignment: identical(args[13], darticAbsent) ? null : args[13] as OverflowBarAlignment?, actionsOverflowDirection: identical(args[14], darticAbsent) ? null : args[14] as VerticalDirection?, actionsOverflowButtonSpacing: identical(args[15], darticAbsent) ? null : args[15] as double?, buttonPadding: identical(args[16], darticAbsent) ? null : args[16] as EdgeInsetsGeometry?, backgroundColor: identical(args[17], darticAbsent) ? null : args[17] as Color?, elevation: identical(args[18], darticAbsent) ? null : args[18] as double?, shadowColor: identical(args[19], darticAbsent) ? null : args[19] as Color?, surfaceTintColor: identical(args[20], darticAbsent) ? null : args[20] as Color?, semanticLabel: identical(args[21], darticAbsent) ? null : args[21] as String?, insetPadding: identical(args[22], darticAbsent) ? null : args[22] as EdgeInsets?, clipBehavior: identical(args[23], darticAbsent) ? null : args[23] as Clip?, shape: identical(args[24], darticAbsent) ? null : args[24] as ShapeBorder?, alignment: identical(args[25], darticAbsent) ? null : args[25] as AlignmentGeometry?, constraints: identical(args[26], darticAbsent) ? null : args[26] as BoxConstraints?, scrollable: identical(args[27], darticAbsent) ? false : args[27] as bool),
         'adaptive#32': (args) {
           if (identical(args[22], darticAbsent)) {

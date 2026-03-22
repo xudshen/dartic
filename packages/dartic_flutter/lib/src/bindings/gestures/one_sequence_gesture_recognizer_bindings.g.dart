@@ -47,6 +47,7 @@ abstract final class OneSequenceGestureRecognizerBindings {
         'startTrackingPointer#2': (args) { (args[0] as OneSequenceGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
         'stopTrackingPointer#1': (args) { (args[0] as OneSequenceGestureRecognizer).stopTrackingPointer(args[1] as int); return null; },
         'stopTrackingIfPointerNoLongerDown#1': (args) { (args[0] as OneSequenceGestureRecognizer).stopTrackingIfPointerNoLongerDown(args[1] as PointerEvent); return null; },
+        'toString#0': (args) => (args[0] as OneSequenceGestureRecognizer).toString(),
         'addPointerPanZoom#1': (args) { (args[0] as OneSequenceGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as OneSequenceGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as OneSequenceGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },
@@ -62,6 +63,7 @@ abstract final class OneSequenceGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as OneSequenceGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as OneSequenceGestureRecognizer).debugDescribeChildren(),
         'team#0': (args) => (args[0] as OneSequenceGestureRecognizer).team,
+        'hashCode#0': (args) => (args[0] as OneSequenceGestureRecognizer).hashCode,
         'debugOwner#0': (args) => (args[0] as OneSequenceGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as OneSequenceGestureRecognizer).gestureSettings,
         'supportedDevices#0': (args) => (args[0] as OneSequenceGestureRecognizer).supportedDevices,
@@ -70,5 +72,6 @@ abstract final class OneSequenceGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as OneSequenceGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as OneSequenceGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as OneSequenceGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as OneSequenceGestureRecognizer) == (args[1] as Object),
       };
 }

@@ -35,6 +35,7 @@ abstract final class LocaleBindings {
         'scriptCode#0': (args) => (args[0] as Locale).scriptCode,
         'countryCode#0': (args) => (args[0] as Locale).countryCode,
         'hashCode#0': (args) => (args[0] as Locale).hashCode,
+        '==#1': (args) => (args[0] as Locale) == (args[1] as Object),
         '#2': (args) => Locale(args[0] as String, identical(args[1], darticAbsent) ? null : args[1] as String?),
         'fromSubtags#3': (args) => Locale.fromSubtags(languageCode: identical(args[0], darticAbsent) ? 'und' : args[0] as String, scriptCode: identical(args[1], darticAbsent) ? null : args[1] as String?, countryCode: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#3': (args) => Locale.fromSubtags(languageCode: args[1] as String, scriptCode: args[2] as String?, countryCode: args[0] as String?),

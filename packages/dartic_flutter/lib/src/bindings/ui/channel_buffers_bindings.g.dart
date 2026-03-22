@@ -39,6 +39,9 @@ abstract final class ChannelBuffersBindings {
         'handleMessage#1': (args) { (args[0] as ChannelBuffers).handleMessage(args[1] as ByteData); return null; },
         'resize#2': (args) { (args[0] as ChannelBuffers).resize(args[1] as String, args[2] as int); return null; },
         'allowOverflow#2': (args) { (args[0] as ChannelBuffers).allowOverflow(args[1] as String, args[2] as bool); return null; },
+        'toString#0': (args) => (args[0] as ChannelBuffers).toString(),
+        'hashCode#0': (args) => (args[0] as ChannelBuffers).hashCode,
+        '==#1': (args) => (args[0] as ChannelBuffers) == (args[1] as Object),
         '#0': (args) => ChannelBuffers(),
       };
 }

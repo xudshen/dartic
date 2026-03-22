@@ -32,6 +32,7 @@ abstract final class ClipPathLayerBindings {
         'findAnnotations#3': (args) => (args[0] as ClipPathLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'addToScene#1': (args) { (args[0] as ClipPathLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipPathLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ClipPathLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as ClipPathLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ClipPathLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ClipPathLayer).dispose(); return null; },
@@ -58,6 +59,7 @@ abstract final class ClipPathLayerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ClipPathLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'clipPath#0': (args) => (args[0] as ClipPathLayer).clipPath,
         'clipBehavior#0': (args) => (args[0] as ClipPathLayer).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ClipPathLayer).hashCode,
         'firstChild#0': (args) => (args[0] as ClipPathLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ClipPathLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as ClipPathLayer).hasChildren,
@@ -78,6 +80,7 @@ abstract final class ClipPathLayerBindings {
         'clipBehavior=#1': (args) { (args[0] as ClipPathLayer).clipBehavior = args[1] as ui.Clip; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as ClipPathLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ClipPathLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ClipPathLayer) == (args[1] as Object),
         '#2': (args) => ClipPathLayer(clipPath: identical(args[0], darticAbsent) ? null : args[0] as ui.Path?, clipBehavior: identical(args[1], darticAbsent) ? Clip.antiAlias : args[1] as ui.Clip),
       };
 }

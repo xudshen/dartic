@@ -35,6 +35,9 @@ abstract final class UnfocusDispositionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UnfocusDisposition).toString(),
+        'hashCode#0': (args) => (args[0] as UnfocusDisposition).hashCode,
         'index#0': (args) => (args[0] as UnfocusDisposition).index,
+        '==#1': (args) => (args[0] as UnfocusDisposition) == (args[1] as Object),
       };
 }

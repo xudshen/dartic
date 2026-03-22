@@ -33,9 +33,12 @@ abstract final class IOSSystemContextMenuItemLookUpBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemLookUp).getData(args[1] as WidgetsLocalizations),
         'debugFillProperties#1': (args) { (args[0] as IOSSystemContextMenuItemLookUp).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemLookUp).toString(),
         'toStringShort#0': (args) => (args[0] as IOSSystemContextMenuItemLookUp).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IOSSystemContextMenuItemLookUp).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemLookUp).title,
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemLookUp).hashCode,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemLookUp) == (args[1] as Object),
         '#1': (args) => IOSSystemContextMenuItemLookUp(title: identical(args[0], darticAbsent) ? null : args[0] as String?),
         '_#fromFields#1': (args) => IOSSystemContextMenuItemLookUp(title: args[0] as String?),
       };

@@ -43,6 +43,9 @@ abstract final class TextInputBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextInput).toString(),
         'scribbleInProgress#0': (args) => (args[0] as TextInput).scribbleInProgress,
+        'hashCode#0': (args) => (args[0] as TextInput).hashCode,
+        '==#1': (args) => (args[0] as TextInput) == (args[1] as Object),
       };
 }

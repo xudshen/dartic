@@ -28,6 +28,7 @@ abstract final class ExcludeFocusBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ExcludeFocus).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ExcludeFocus).toString(),
         'createElement#0': (args) => (args[0] as ExcludeFocus).createElement(),
         'toStringShort#0': (args) => (args[0] as ExcludeFocus).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ExcludeFocus).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class ExcludeFocusBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ExcludeFocus).debugDescribeChildren(),
         'excluding#0': (args) => (args[0] as ExcludeFocus).excluding,
         'child#0': (args) => (args[0] as ExcludeFocus).child,
+        'hashCode#0': (args) => (args[0] as ExcludeFocus).hashCode,
         'key#0': (args) => (args[0] as ExcludeFocus).key,
+        '==#1': (args) => (args[0] as ExcludeFocus) == (args[1] as Object),
         '#3': (args) => ExcludeFocus(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, excluding: identical(args[1], darticAbsent) ? true : args[1] as bool, child: args[2] as Widget),
         '_#fromFields#3': (args) => ExcludeFocus(key: args[2] as Key?, excluding: args[1] as bool, child: args[0] as Widget),
       };

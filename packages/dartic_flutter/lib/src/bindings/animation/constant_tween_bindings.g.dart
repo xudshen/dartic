@@ -31,10 +31,12 @@ abstract final class ConstantTweenBindings {
         'evaluate#1': (args) => (args[0] as ConstantTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as ConstantTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as ConstantTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as ConstantTween).hashCode,
         'begin#0': (args) => (args[0] as ConstantTween).begin,
         'end#0': (args) => (args[0] as ConstantTween).end,
         'begin=#1': (args) { (args[0] as ConstantTween).begin = args[1]; return args[1]; },
         'end=#1': (args) { (args[0] as ConstantTween).end = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ConstantTween) == (args[1] as Object),
         '#1': (args) => ConstantTween<dynamic>(args[0]),
       };
 }

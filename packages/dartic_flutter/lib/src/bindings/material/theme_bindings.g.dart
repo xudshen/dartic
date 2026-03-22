@@ -34,6 +34,7 @@ abstract final class ThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Theme).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Theme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Theme).toString(),
         'createElement#0': (args) => (args[0] as Theme).createElement(),
         'toStringShort#0': (args) => (args[0] as Theme).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Theme).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -42,7 +43,9 @@ abstract final class ThemeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Theme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as Theme).data,
         'child#0': (args) => (args[0] as Theme).child,
+        'hashCode#0': (args) => (args[0] as Theme).hashCode,
         'key#0': (args) => (args[0] as Theme).key,
+        '==#1': (args) => (args[0] as Theme) == (args[1] as Object),
         '#3': (args) => Theme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => Theme(key: args[2] as Key?, data: args[1] as ThemeData, child: args[0] as Widget),
       };

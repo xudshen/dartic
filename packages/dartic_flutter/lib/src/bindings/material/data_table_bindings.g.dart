@@ -46,6 +46,7 @@ abstract final class DataTableBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DataTable).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DataTable).toString(),
         'createElement#0': (args) => (args[0] as DataTable).createElement(),
         'toStringShort#0': (args) => (args[0] as DataTable).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DataTable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -75,7 +76,9 @@ abstract final class DataTableBindings {
         'checkboxHorizontalMargin#0': (args) => (args[0] as DataTable).checkboxHorizontalMargin,
         'border#0': (args) => (args[0] as DataTable).border,
         'clipBehavior#0': (args) => (args[0] as DataTable).clipBehavior,
+        'hashCode#0': (args) => (args[0] as DataTable).hashCode,
         'key#0': (args) => (args[0] as DataTable).key,
+        '==#1': (args) => (args[0] as DataTable) == (args[1] as Object),
         '#23': (args) => DataTable(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, columns: (args[1] as List).cast<DataColumn>(), sortColumnIndex: identical(args[2], darticAbsent) ? null : args[2] as int?, sortAscending: identical(args[3], darticAbsent) ? true : args[3] as bool, onSelectAll: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), decoration: identical(args[5], darticAbsent) ? null : args[5] as Decoration?, dataRowColor: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<Color?>?, dataRowHeight: identical(args[7], darticAbsent) ? null : args[7] as double?, dataRowMinHeight: identical(args[8], darticAbsent) ? null : args[8] as double?, dataRowMaxHeight: identical(args[9], darticAbsent) ? null : args[9] as double?, dataTextStyle: identical(args[10], darticAbsent) ? null : args[10] as TextStyle?, headingRowColor: identical(args[11], darticAbsent) ? null : args[11] as WidgetStateProperty<Color?>?, headingRowHeight: identical(args[12], darticAbsent) ? null : args[12] as double?, headingTextStyle: identical(args[13], darticAbsent) ? null : args[13] as TextStyle?, horizontalMargin: identical(args[14], darticAbsent) ? null : args[14] as double?, columnSpacing: identical(args[15], darticAbsent) ? null : args[15] as double?, showCheckboxColumn: identical(args[16], darticAbsent) ? true : args[16] as bool, showBottomBorder: identical(args[17], darticAbsent) ? false : args[17] as bool, dividerThickness: identical(args[18], darticAbsent) ? null : args[18] as double?, rows: (args[19] as List).cast<DataRow>(), checkboxHorizontalMargin: identical(args[20], darticAbsent) ? null : args[20] as double?, border: identical(args[21], darticAbsent) ? null : args[21] as TableBorder?, clipBehavior: identical(args[22], darticAbsent) ? Clip.none : args[22] as Clip),
       };
 }

@@ -33,6 +33,7 @@ abstract final class PlatformMenuBarBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as PlatformMenuBar).createState(),
         'debugDescribeChildren#0': (args) => (args[0] as PlatformMenuBar).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as PlatformMenuBar).toString(),
         'createElement#0': (args) => (args[0] as PlatformMenuBar).createElement(),
         'toStringShort#0': (args) => (args[0] as PlatformMenuBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PlatformMenuBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class PlatformMenuBarBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformMenuBar).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'child#0': (args) => (args[0] as PlatformMenuBar).child,
         'menus#0': (args) => (args[0] as PlatformMenuBar).menus,
+        'hashCode#0': (args) => (args[0] as PlatformMenuBar).hashCode,
         'key#0': (args) => (args[0] as PlatformMenuBar).key,
+        '==#1': (args) => (args[0] as PlatformMenuBar) == (args[1] as Object),
         '#3': (args) => PlatformMenuBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, menus: (args[1] as List).cast<PlatformMenuItem>(), child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => PlatformMenuBar(key: args[1] as Key?, menus: (args[2] as List).cast<PlatformMenuItem>(), child: args[0] as Widget?),
       };

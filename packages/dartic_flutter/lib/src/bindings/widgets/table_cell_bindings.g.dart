@@ -31,6 +31,7 @@ abstract final class TableCellBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TableCell).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TableCell).toString(),
         'createElement#0': (args) => (args[0] as TableCell).createElement(),
         'toStringShort#0': (args) => (args[0] as TableCell).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TableCell).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class TableCellBindings {
         'debugDescribeChildren#0': (args) => (args[0] as TableCell).debugDescribeChildren(),
         'verticalAlignment#0': (args) => (args[0] as TableCell).verticalAlignment,
         'child#0': (args) => (args[0] as TableCell).child,
+        'hashCode#0': (args) => (args[0] as TableCell).hashCode,
         'key#0': (args) => (args[0] as TableCell).key,
+        '==#1': (args) => (args[0] as TableCell) == (args[1] as Object),
         '#3': (args) => TableCell(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, verticalAlignment: identical(args[1], darticAbsent) ? null : args[1] as TableCellVerticalAlignment?, child: args[2] as Widget),
         '_#fromFields#3': (args) => TableCell(key: args[1] as Key?, verticalAlignment: args[2] as TableCellVerticalAlignment?, child: args[0] as Widget),
       };

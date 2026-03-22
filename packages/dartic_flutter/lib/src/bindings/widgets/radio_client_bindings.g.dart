@@ -29,10 +29,13 @@ abstract final class RadioClientBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RadioClient).toString(),
         'tristate#0': (args) => (args[0] as RadioClient).tristate,
         'radioValue#0': (args) => (args[0] as RadioClient).radioValue,
         'focusNode#0': (args) => (args[0] as RadioClient).focusNode,
         'registry#0': (args) => (args[0] as RadioClient).registry,
+        'hashCode#0': (args) => (args[0] as RadioClient).hashCode,
         'registry=#1': (args) { (args[0] as RadioClient).registry = args[1] as RadioGroupRegistry?; return args[1]; },
+        '==#1': (args) => (args[0] as RadioClient) == (args[1] as Object),
       };
 }

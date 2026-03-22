@@ -32,9 +32,12 @@ abstract final class MethodChannelBindings {
         'invokeListMethod#2': (args) => (args[0] as MethodChannel).invokeListMethod(args[1] as String, identical(args[2], darticAbsent) ? null : args[2]),
         'invokeMapMethod#2': (args) => (args[0] as MethodChannel).invokeMapMethod(args[1] as String, identical(args[2], darticAbsent) ? null : args[2]),
         'setMethodCallHandler#1': (args) { (args[0] as MethodChannel).setMethodCallHandler((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; },
+        'toString#0': (args) => (args[0] as MethodChannel).toString(),
         'name#0': (args) => (args[0] as MethodChannel).name,
         'codec#0': (args) => (args[0] as MethodChannel).codec,
         'binaryMessenger#0': (args) => (args[0] as MethodChannel).binaryMessenger,
+        'hashCode#0': (args) => (args[0] as MethodChannel).hashCode,
+        '==#1': (args) => (args[0] as MethodChannel) == (args[1] as Object),
         '#3': (args) => MethodChannel(args[0] as String, identical(args[1], darticAbsent) ? const StandardMethodCodec() : args[1] as MethodCodec, identical(args[2], darticAbsent) ? null : args[2] as BinaryMessenger?),
         '_#fromFields#3': (args) => MethodChannel(args[2] as String, args[1] as MethodCodec, args[0] as BinaryMessenger?),
       };

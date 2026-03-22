@@ -35,6 +35,7 @@ abstract final class MergeableMaterialBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as MergeableMaterial).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createState#0': (args) => (args[0] as MergeableMaterial).createState(),
+        'toString#0': (args) => (args[0] as MergeableMaterial).toString(),
         'createElement#0': (args) => (args[0] as MergeableMaterial).createElement(),
         'toStringShort#0': (args) => (args[0] as MergeableMaterial).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as MergeableMaterial).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -46,7 +47,9 @@ abstract final class MergeableMaterialBindings {
         'elevation#0': (args) => (args[0] as MergeableMaterial).elevation,
         'hasDividers#0': (args) => (args[0] as MergeableMaterial).hasDividers,
         'dividerColor#0': (args) => (args[0] as MergeableMaterial).dividerColor,
+        'hashCode#0': (args) => (args[0] as MergeableMaterial).hashCode,
         'key#0': (args) => (args[0] as MergeableMaterial).key,
+        '==#1': (args) => (args[0] as MergeableMaterial) == (args[1] as Object),
         '#6': (args) => MergeableMaterial(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxis: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, elevation: identical(args[2], darticAbsent) ? 2 : args[2] as double, hasDividers: identical(args[3], darticAbsent) ? false : args[3] as bool, children: identical(args[4], darticAbsent) ? const <MergeableMaterialItem>[] : (args[4] as List).cast<MergeableMaterialItem>(), dividerColor: identical(args[5], darticAbsent) ? null : args[5] as Color?),
         '_#fromFields#6': (args) => MergeableMaterial(key: args[4] as Key?, mainAxis: args[5] as Axis, elevation: args[2] as double, hasDividers: args[3] as bool, children: (args[0] as List).cast<MergeableMaterialItem>(), dividerColor: args[1] as Color?),
       };

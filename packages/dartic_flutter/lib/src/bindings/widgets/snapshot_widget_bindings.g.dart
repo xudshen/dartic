@@ -32,6 +32,7 @@ abstract final class SnapshotWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SnapshotWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SnapshotWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
+        'toString#0': (args) => (args[0] as SnapshotWidget).toString(),
         'createElement#0': (args) => (args[0] as SnapshotWidget).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SnapshotWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SnapshotWidget).toStringShort(),
@@ -44,8 +45,10 @@ abstract final class SnapshotWidgetBindings {
         'mode#0': (args) => (args[0] as SnapshotWidget).mode,
         'autoresize#0': (args) => (args[0] as SnapshotWidget).autoresize,
         'painter#0': (args) => (args[0] as SnapshotWidget).painter,
+        'hashCode#0': (args) => (args[0] as SnapshotWidget).hashCode,
         'child#0': (args) => (args[0] as SnapshotWidget).child,
         'key#0': (args) => (args[0] as SnapshotWidget).key,
+        '==#1': (args) => (args[0] as SnapshotWidget) == (args[1] as Object),
         '#6': (args) {
           if (identical(args[2], darticAbsent)) {
             return SnapshotWidget(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mode: identical(args[1], darticAbsent) ? SnapshotMode.normal : args[1] as SnapshotMode, autoresize: identical(args[3], darticAbsent) ? false : args[3] as bool, controller: args[4] as SnapshotController, child: args[5] as Widget?);

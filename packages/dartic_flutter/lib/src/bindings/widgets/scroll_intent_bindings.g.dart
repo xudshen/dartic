@@ -36,11 +36,14 @@ abstract final class ScrollIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScrollIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ScrollIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScrollIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ScrollIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'direction#0': (args) => (args[0] as ScrollIntent).direction,
         'type#0': (args) => (args[0] as ScrollIntent).type,
+        'hashCode#0': (args) => (args[0] as ScrollIntent).hashCode,
+        '==#1': (args) => (args[0] as ScrollIntent) == (args[1] as Object),
         '#2': (args) => ScrollIntent(direction: args[0] as AxisDirection, type: identical(args[1], darticAbsent) ? ScrollIncrementType.line : args[1] as ScrollIncrementType),
         '_#fromFields#2': (args) => ScrollIntent(direction: args[0] as AxisDirection, type: args[1] as ScrollIncrementType),
       };

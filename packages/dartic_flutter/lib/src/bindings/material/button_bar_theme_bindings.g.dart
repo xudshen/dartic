@@ -30,6 +30,7 @@ abstract final class ButtonBarThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as ButtonBarTheme).updateShouldNotify(args[1] as ButtonBarTheme),
+        'toString#0': (args) => (args[0] as ButtonBarTheme).toString(),
         'createElement#0': (args) => (args[0] as ButtonBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ButtonBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ButtonBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class ButtonBarThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ButtonBarTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ButtonBarTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as ButtonBarTheme).data,
+        'hashCode#0': (args) => (args[0] as ButtonBarTheme).hashCode,
         'child#0': (args) => (args[0] as ButtonBarTheme).child,
         'key#0': (args) => (args[0] as ButtonBarTheme).key,
+        '==#1': (args) => (args[0] as ButtonBarTheme) == (args[1] as Object),
         '#3': (args) => ButtonBarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ButtonBarThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => ButtonBarTheme(key: args[2] as Key?, data: args[1] as ButtonBarThemeData, child: args[0] as Widget),
       };

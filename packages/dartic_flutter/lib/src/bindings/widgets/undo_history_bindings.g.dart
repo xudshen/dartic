@@ -31,6 +31,7 @@ abstract final class UndoHistoryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as UndoHistory).createState(),
+        'toString#0': (args) => (args[0] as UndoHistory).toString(),
         'createElement#0': (args) => (args[0] as UndoHistory).createElement(),
         'toStringShort#0': (args) => (args[0] as UndoHistory).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as UndoHistory).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class UndoHistoryBindings {
         'focusNode#0': (args) => (args[0] as UndoHistory).focusNode,
         'controller#0': (args) => (args[0] as UndoHistory).controller,
         'child#0': (args) => (args[0] as UndoHistory).child,
+        'hashCode#0': (args) => (args[0] as UndoHistory).hashCode,
         'key#0': (args) => (args[0] as UndoHistory).key,
+        '==#1': (args) => (args[0] as UndoHistory) == (args[1] as Object),
         '#8': (args) => UndoHistory<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shouldChangeUndoStack: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), value: args[2] as ValueNotifier, onTriggered: (a) => (args[3] as Function)(a), focusNode: args[4] as FocusNode, undoStackModifier: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), controller: identical(args[6], darticAbsent) ? null : args[6] as UndoHistoryController?, child: args[7] as Widget),
         '_#fromFields#8': (args) => UndoHistory<dynamic>(key: args[3] as Key?, shouldChangeUndoStack: args[5] as bool Function(Object?, dynamic)?, value: args[7] as ValueNotifier, onTriggered: args[4] as void Function(dynamic), focusNode: args[2] as FocusNode, undoStackModifier: args[6] as dynamic Function(dynamic)?, controller: args[1] as UndoHistoryController?, child: args[0] as Widget),
       };

@@ -46,6 +46,7 @@ abstract final class RenderIntrinsicWidthBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderIntrinsicWidth).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderIntrinsicWidth).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIntrinsicWidth).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderIntrinsicWidth).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIntrinsicWidth).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicWidth).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicWidth).getMaxIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderIntrinsicWidthBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderIntrinsicWidth).computeSizeForNoChild(args[1] as BoxConstraints),
         'stepWidth#0': (args) => (args[0] as RenderIntrinsicWidth).stepWidth,
         'stepHeight#0': (args) => (args[0] as RenderIntrinsicWidth).stepHeight,
+        'hashCode#0': (args) => (args[0] as RenderIntrinsicWidth).hashCode,
         'hasSize#0': (args) => (args[0] as RenderIntrinsicWidth).hasSize,
         'size#0': (args) => (args[0] as RenderIntrinsicWidth).size,
         'semanticBounds#0': (args) => (args[0] as RenderIntrinsicWidth).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderIntrinsicWidthBindings {
         'debugCreator=#1': (args) { (args[0] as RenderIntrinsicWidth).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIntrinsicWidth).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderIntrinsicWidth).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIntrinsicWidth) == (args[1] as Object),
         '#3': (args) => RenderIntrinsicWidth(stepWidth: identical(args[0], darticAbsent) ? null : args[0] as double?, stepHeight: identical(args[1], darticAbsent) ? null : args[1] as double?, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

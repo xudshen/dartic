@@ -46,5 +46,8 @@ abstract final class TextInputControlBindings {
         'setStyle#5': (args) { (args[0] as TextInputControl).setStyle(fontFamily: args[1] as String?, fontSize: args[2] as double?, fontWeight: args[3] as FontWeight?, textDirection: args[4] as TextDirection, textAlign: args[5] as TextAlign); return null; },
         'requestAutofill#0': (args) { (args[0] as TextInputControl).requestAutofill(); return null; },
         'finishAutofillContext#1': (args) { (args[0] as TextInputControl).finishAutofillContext(shouldSave: identical(args[1], darticAbsent) ? true : args[1] as bool); return null; },
+        'toString#0': (args) => (args[0] as TextInputControl).toString(),
+        'hashCode#0': (args) => (args[0] as TextInputControl).hashCode,
+        '==#1': (args) => (args[0] as TextInputControl) == (args[1] as Object),
       };
 }

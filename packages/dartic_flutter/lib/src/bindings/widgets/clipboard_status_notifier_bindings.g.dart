@@ -53,6 +53,7 @@ abstract final class ClipboardStatusNotifierBindings {
         'removeListener#1': (args) { (args[0] as ClipboardStatusNotifier).removeListener(() => (args[1] as Function)()); return null; },
         'didChangeAppLifecycleState#1': (args) { (args[0] as ClipboardStatusNotifier).didChangeAppLifecycleState(args[1] as AppLifecycleState); return null; },
         'dispose#0': (args) { (args[0] as ClipboardStatusNotifier).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ClipboardStatusNotifier).toString(),
         'notifyListeners#0': (args) { (args[0] as ClipboardStatusNotifier).notifyListeners(); return null; },
         'didPopRoute#0': (args) => (args[0] as ClipboardStatusNotifier).didPopRoute(),
         'handleStartBackGesture#1': (args) => (args[0] as ClipboardStatusNotifier).handleStartBackGesture(args[1] as PredictiveBackEvent),
@@ -69,9 +70,11 @@ abstract final class ClipboardStatusNotifierBindings {
         'didRequestAppExit#0': (args) => (args[0] as ClipboardStatusNotifier).didRequestAppExit(),
         'didHaveMemoryPressure#0': (args) { (args[0] as ClipboardStatusNotifier).didHaveMemoryPressure(); return null; },
         'didChangeAccessibilityFeatures#0': (args) { (args[0] as ClipboardStatusNotifier).didChangeAccessibilityFeatures(); return null; },
+        'hashCode#0': (args) => (args[0] as ClipboardStatusNotifier).hashCode,
         'value#0': (args) => (args[0] as ClipboardStatusNotifier).value,
         'hasListeners#0': (args) => (args[0] as ClipboardStatusNotifier).hasListeners,
         'value=#1': (args) { (args[0] as ClipboardStatusNotifier).value = args[1] as ClipboardStatus; return args[1]; },
+        '==#1': (args) => (args[0] as ClipboardStatusNotifier) == (args[1] as Object),
         '#1': (args) => ClipboardStatusNotifier(value: identical(args[0], darticAbsent) ? ClipboardStatus.unknown : args[0] as ClipboardStatus),
       };
 }

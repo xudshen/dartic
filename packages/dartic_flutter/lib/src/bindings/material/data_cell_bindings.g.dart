@@ -38,6 +38,7 @@ abstract final class DataCellBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DataCell).toString(),
         'child#0': (args) => (args[0] as DataCell).child,
         'placeholder#0': (args) => (args[0] as DataCell).placeholder,
         'showEditIcon#0': (args) => (args[0] as DataCell).showEditIcon,
@@ -46,6 +47,8 @@ abstract final class DataCellBindings {
         'onLongPress#0': (args) => (args[0] as DataCell).onLongPress,
         'onTapDown#0': (args) => (args[0] as DataCell).onTapDown,
         'onTapCancel#0': (args) => (args[0] as DataCell).onTapCancel,
+        'hashCode#0': (args) => (args[0] as DataCell).hashCode,
+        '==#1': (args) => (args[0] as DataCell) == (args[1] as Object),
         '#8': (args) => DataCell(args[0] as Widget, placeholder: identical(args[1], darticAbsent) ? false : args[1] as bool, showEditIcon: identical(args[2], darticAbsent) ? false : args[2] as bool, onTap: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onLongPress: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), onTapDown: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onDoubleTap: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), onTapCancel: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
         '_#fromFields#8': (args) => DataCell(args[0] as Widget, placeholder: args[6] as bool, showEditIcon: args[7] as bool, onTap: args[3] as GestureTapCallback?, onLongPress: args[2] as GestureLongPressCallback?, onTapDown: args[5] as GestureTapDownCallback?, onDoubleTap: args[1] as GestureTapCallback?, onTapCancel: args[4] as GestureTapCancelCallback?),
       };

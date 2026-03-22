@@ -48,7 +48,10 @@ abstract final class NavigatorObserverBindings {
         'didChangeTop#2': (args) { (args[0] as NavigatorObserver).didChangeTop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didStartUserGesture#2': (args) { (args[0] as NavigatorObserver).didStartUserGesture(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didStopUserGesture#0': (args) { (args[0] as NavigatorObserver).didStopUserGesture(); return null; },
+        'toString#0': (args) => (args[0] as NavigatorObserver).toString(),
         'navigator#0': (args) => (args[0] as NavigatorObserver).navigator,
+        'hashCode#0': (args) => (args[0] as NavigatorObserver).hashCode,
+        '==#1': (args) => (args[0] as NavigatorObserver) == (args[1] as Object),
         '#0': (args) => NavigatorObserver(),
       };
 }

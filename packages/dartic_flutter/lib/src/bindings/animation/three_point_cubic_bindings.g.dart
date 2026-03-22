@@ -32,7 +32,9 @@ abstract final class ThreePointCubicBindings {
         'midpoint#0': (args) => (args[0] as ThreePointCubic).midpoint,
         'a2#0': (args) => (args[0] as ThreePointCubic).a2,
         'b2#0': (args) => (args[0] as ThreePointCubic).b2,
+        'hashCode#0': (args) => (args[0] as ThreePointCubic).hashCode,
         'flipped#0': (args) => (args[0] as ThreePointCubic).flipped,
+        '==#1': (args) => (args[0] as ThreePointCubic) == (args[1] as Object),
         '#5': (args) => ThreePointCubic(args[0] as Offset, args[1] as Offset, args[2] as Offset, args[3] as Offset, args[4] as Offset),
         '_#fromFields#5': (args) => ThreePointCubic(args[0] as Offset, args[2] as Offset, args[4] as Offset, args[1] as Offset, args[3] as Offset),
       };

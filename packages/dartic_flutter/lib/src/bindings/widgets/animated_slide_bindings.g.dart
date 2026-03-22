@@ -37,6 +37,7 @@ abstract final class AnimatedSlideBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedSlide).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedSlide).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedSlide).toString(),
         'createElement#0': (args) => (args[0] as AnimatedSlide).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedSlide).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedSlide).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -45,10 +46,12 @@ abstract final class AnimatedSlideBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedSlide).debugDescribeChildren(),
         'child#0': (args) => (args[0] as AnimatedSlide).child,
         'offset#0': (args) => (args[0] as AnimatedSlide).offset,
+        'hashCode#0': (args) => (args[0] as AnimatedSlide).hashCode,
         'curve#0': (args) => (args[0] as AnimatedSlide).curve,
         'duration#0': (args) => (args[0] as AnimatedSlide).duration,
         'onEnd#0': (args) => (args[0] as AnimatedSlide).onEnd,
         'key#0': (args) => (args[0] as AnimatedSlide).key,
+        '==#1': (args) => (args[0] as AnimatedSlide) == (args[1] as Object),
         '#6': (args) => AnimatedSlide(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, offset: args[2] as ui.Offset, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
         '_#fromFields#6': (args) => AnimatedSlide(key: args[3] as Key?, child: args[0] as Widget?, offset: args[4] as ui.Offset, curve: args[1] as Curve, duration: args[2] as Duration, onEnd: args[5] as ui.VoidCallback?),
       };

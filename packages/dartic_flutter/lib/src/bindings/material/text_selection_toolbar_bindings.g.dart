@@ -40,6 +40,7 @@ abstract final class TextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TextSelectionToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TextSelectionToolbar).toString(),
         'createElement#0': (args) => (args[0] as TextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as TextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class TextSelectionToolbarBindings {
         'anchorBelow#0': (args) => (args[0] as TextSelectionToolbar).anchorBelow,
         'children#0': (args) => (args[0] as TextSelectionToolbar).children,
         'toolbarBuilder#0': (args) => (args[0] as TextSelectionToolbar).toolbarBuilder,
+        'hashCode#0': (args) => (args[0] as TextSelectionToolbar).hashCode,
         'key#0': (args) => (args[0] as TextSelectionToolbar).key,
+        '==#1': (args) => (args[0] as TextSelectionToolbar) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[3], darticAbsent)) {
             return TextSelectionToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchorAbove: args[1] as Offset, anchorBelow: args[2] as Offset, children: (args[4] as List).cast<Widget>());

@@ -34,6 +34,7 @@ abstract final class CupertinoPickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoPicker).createState(),
+        'toString#0': (args) => (args[0] as CupertinoPicker).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPicker).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -53,7 +54,9 @@ abstract final class CupertinoPickerBindings {
         'onSelectedItemChanged#0': (args) => (args[0] as CupertinoPicker).onSelectedItemChanged,
         'childDelegate#0': (args) => (args[0] as CupertinoPicker).childDelegate,
         'selectionOverlay#0': (args) => (args[0] as CupertinoPicker).selectionOverlay,
+        'hashCode#0': (args) => (args[0] as CupertinoPicker).hashCode,
         'key#0': (args) => (args[0] as CupertinoPicker).key,
+        '==#1': (args) => (args[0] as CupertinoPicker) == (args[1] as Object),
         '#14': (args) {
           if (identical(args[1], darticAbsent)) {
             if (identical(args[7], darticAbsent)) {

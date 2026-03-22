@@ -43,6 +43,7 @@ abstract final class OutlinedButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'defaultStyleOf#1': (args) => (args[0] as OutlinedButton).defaultStyleOf(args[1] as BuildContext),
         'themeStyleOf#1': (args) => (args[0] as OutlinedButton).themeStyleOf(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as OutlinedButton).toString(),
         'createState#0': (args) => (args[0] as OutlinedButton).createState(),
         'debugFillProperties#1': (args) { (args[0] as OutlinedButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as OutlinedButton).createElement(),
@@ -51,6 +52,7 @@ abstract final class OutlinedButtonBindings {
         'toStringDeep#4': (args) => (args[0] as OutlinedButton).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as OutlinedButton).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as OutlinedButton).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as OutlinedButton).hashCode,
         'onPressed#0': (args) => (args[0] as OutlinedButton).onPressed,
         'onLongPress#0': (args) => (args[0] as OutlinedButton).onLongPress,
         'onHover#0': (args) => (args[0] as OutlinedButton).onHover,
@@ -66,6 +68,7 @@ abstract final class OutlinedButtonBindings {
         'child#0': (args) => (args[0] as OutlinedButton).child,
         'enabled#0': (args) => (args[0] as OutlinedButton).enabled,
         'key#0': (args) => (args[0] as OutlinedButton).key,
+        '==#1': (args) => (args[0] as OutlinedButton) == (args[1] as Object),
         '#11': (args) => OutlinedButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onLongPress: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onHover: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onFocusChange: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), style: identical(args[5], darticAbsent) ? null : args[5] as ButtonStyle?, focusNode: identical(args[6], darticAbsent) ? null : args[6] as FocusNode?, autofocus: identical(args[7], darticAbsent) ? false : args[7] as bool, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, statesController: identical(args[9], darticAbsent) ? null : args[9] as WidgetStatesController?, child: args[10] as Widget?),
         'icon#13': (args) => OutlinedButton.icon(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onLongPress: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onHover: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onFocusChange: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), style: identical(args[5], darticAbsent) ? null : args[5] as ButtonStyle?, focusNode: identical(args[6], darticAbsent) ? null : args[6] as FocusNode?, autofocus: identical(args[7], darticAbsent) ? false : args[7] as bool, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, statesController: identical(args[9], darticAbsent) ? null : args[9] as WidgetStatesController?, icon: identical(args[10], darticAbsent) ? null : args[10] as Widget?, label: args[11] as Widget, iconAlignment: identical(args[12], darticAbsent) ? null : args[12] as IconAlignment?),
         '_#fromFields#15': (args) => OutlinedButton(key: args[7] as Key?, onPressed: args[11] as VoidCallback?, onLongPress: args[10] as VoidCallback?, onHover: args[9] as ValueChanged<bool>?, onFocusChange: args[8] as ValueChanged<bool>?, style: args[13] as ButtonStyle?, focusNode: args[4] as FocusNode?, autofocus: args[1] as bool, clipBehavior: args[3] as Clip?, statesController: args[12] as WidgetStatesController?, child: args[2] as Widget?),

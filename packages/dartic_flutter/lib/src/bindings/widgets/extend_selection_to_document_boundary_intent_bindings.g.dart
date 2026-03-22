@@ -26,13 +26,16 @@ abstract final class ExtendSelectionToDocumentBoundaryIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionToDocumentBoundaryIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionToDocumentBoundaryIntent) == (args[1] as Object),
         '#2': (args) => ExtendSelectionToDocumentBoundaryIntent(forward: args[0] as bool, collapseSelection: args[1] as bool),
         '_#fromFields#4': (args) => ExtendSelectionToDocumentBoundaryIntent(forward: args[3] as bool, collapseSelection: args[1] as bool),
       };

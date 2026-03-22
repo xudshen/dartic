@@ -42,12 +42,15 @@ abstract final class DesktopTextSelectionControlsBindings {
         'getHandleAnchor#2': (args) => (args[0] as DesktopTextSelectionControls).getHandleAnchor(args[1] as TextSelectionHandleType, args[2] as double),
         'canSelectAll#1': (args) => (args[0] as DesktopTextSelectionControls).canSelectAll(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as DesktopTextSelectionControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'toString#0': (args) => (args[0] as DesktopTextSelectionControls).toString(),
         'canCut#1': (args) => (args[0] as DesktopTextSelectionControls).canCut(args[1] as TextSelectionDelegate),
         'canCopy#1': (args) => (args[0] as DesktopTextSelectionControls).canCopy(args[1] as TextSelectionDelegate),
         'canPaste#1': (args) => (args[0] as DesktopTextSelectionControls).canPaste(args[1] as TextSelectionDelegate),
         'handleCut#1': (args) { (args[0] as DesktopTextSelectionControls).handleCut(args[1] as TextSelectionDelegate); return null; },
         'handleCopy#1': (args) { (args[0] as DesktopTextSelectionControls).handleCopy(args[1] as TextSelectionDelegate); return null; },
         'handlePaste#1': (args) => (args[0] as DesktopTextSelectionControls).handlePaste(args[1] as TextSelectionDelegate),
+        'hashCode#0': (args) => (args[0] as DesktopTextSelectionControls).hashCode,
+        '==#1': (args) => (args[0] as DesktopTextSelectionControls) == (args[1] as Object),
         '#0': (args) => DesktopTextSelectionControls(),
       };
 }

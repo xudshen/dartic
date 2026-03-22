@@ -30,6 +30,7 @@ abstract final class MaterialBannerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MaterialBannerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MaterialBannerTheme).updateShouldNotify(args[1] as MaterialBannerTheme),
+        'toString#0': (args) => (args[0] as MaterialBannerTheme).toString(),
         'createElement#0': (args) => (args[0] as MaterialBannerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MaterialBannerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MaterialBannerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class MaterialBannerThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MaterialBannerTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MaterialBannerTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as MaterialBannerTheme).data,
+        'hashCode#0': (args) => (args[0] as MaterialBannerTheme).hashCode,
         'child#0': (args) => (args[0] as MaterialBannerTheme).child,
         'key#0': (args) => (args[0] as MaterialBannerTheme).key,
+        '==#1': (args) => (args[0] as MaterialBannerTheme) == (args[1] as Object),
         '#3': (args) => MaterialBannerTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: identical(args[1], darticAbsent) ? null : args[1] as MaterialBannerThemeData?, child: args[2] as Widget),
         '_#fromFields#3': (args) => MaterialBannerTheme(key: args[2] as Key?, data: args[1] as MaterialBannerThemeData?, child: args[0] as Widget),
       };

@@ -43,6 +43,7 @@ abstract final class InlineSpanBindings {
         'debugAssertIsValid#0': (args) => (args[0] as InlineSpan).debugAssertIsValid(),
         'compareTo#1': (args) => (args[0] as InlineSpan).compareTo(args[1] as InlineSpan),
         'debugFillProperties#1': (args) { (args[0] as InlineSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as InlineSpan).toString(),
         'toStringShallow#2': (args) => (args[0] as InlineSpan).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as InlineSpan).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toStringShort#0': (args) => (args[0] as InlineSpan).toStringShort(),
@@ -50,5 +51,6 @@ abstract final class InlineSpanBindings {
         'debugDescribeChildren#0': (args) => (args[0] as InlineSpan).debugDescribeChildren(),
         'style#0': (args) => (args[0] as InlineSpan).style,
         'hashCode#0': (args) => (args[0] as InlineSpan).hashCode,
+        '==#1': (args) => (args[0] as InlineSpan) == (args[1] as Object),
       };
 }

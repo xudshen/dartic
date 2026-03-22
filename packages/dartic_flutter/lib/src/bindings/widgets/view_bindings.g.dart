@@ -39,6 +39,7 @@ abstract final class ViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as View).createState(),
+        'toString#0': (args) => (args[0] as View).toString(),
         'createElement#0': (args) => (args[0] as View).createElement(),
         'toStringShort#0': (args) => (args[0] as View).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as View).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class ViewBindings {
         'debugDescribeChildren#0': (args) => (args[0] as View).debugDescribeChildren(),
         'view#0': (args) => (args[0] as View).view,
         'child#0': (args) => (args[0] as View).child,
+        'hashCode#0': (args) => (args[0] as View).hashCode,
         'key#0': (args) => (args[0] as View).key,
+        '==#1': (args) => (args[0] as View) == (args[1] as Object),
         '#5': (args) => View(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, view: args[1] as FlutterView, deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner: identical(args[2], darticAbsent) ? null : args[2] as PipelineOwner?, deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView: identical(args[3], darticAbsent) ? null : args[3] as RenderView?, child: args[4] as Widget),
       };
 }

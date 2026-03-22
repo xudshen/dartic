@@ -29,11 +29,14 @@ abstract final class LongPressDownDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as LongPressDownDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LongPressDownDetails).toString(),
         'toStringShort#0': (args) => (args[0] as LongPressDownDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LongPressDownDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as LongPressDownDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as LongPressDownDetails).localPosition,
         'kind#0': (args) => (args[0] as LongPressDownDetails).kind,
+        'hashCode#0': (args) => (args[0] as LongPressDownDetails).hashCode,
+        '==#1': (args) => (args[0] as LongPressDownDetails) == (args[1] as Object),
         '#3': (args) => LongPressDownDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, kind: identical(args[2], darticAbsent) ? null : args[2] as PointerDeviceKind?),
         '_#fromFields#3': (args) => LongPressDownDetails(globalPosition: args[0] as Offset, localPosition: args[2] as Offset?, kind: args[1] as PointerDeviceKind?),
       };

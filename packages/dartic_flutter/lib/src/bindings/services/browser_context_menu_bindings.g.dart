@@ -24,5 +24,8 @@ abstract final class BrowserContextMenuBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BrowserContextMenu).toString(),
+        'hashCode#0': (args) => (args[0] as BrowserContextMenu).hashCode,
+        '==#1': (args) => (args[0] as BrowserContextMenu) == (args[1] as Object),
       };
 }

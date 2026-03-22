@@ -51,6 +51,7 @@ abstract final class RenderFlowBindings {
         'dispose#0': (args) { (args[0] as RenderFlow).dispose(); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderFlow).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'applyPaintTransform#2': (args) { (args[0] as RenderFlow).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as RenderFlow).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFlow).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderFlow).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderFlow).getMinIntrinsicHeight(args[1] as double),
@@ -131,6 +132,7 @@ abstract final class RenderFlowBindings {
         'delegate#0': (args) => (args[0] as RenderFlow).delegate,
         'clipBehavior#0': (args) => (args[0] as RenderFlow).clipBehavior,
         'isRepaintBoundary#0': (args) => (args[0] as RenderFlow).isRepaintBoundary,
+        'hashCode#0': (args) => (args[0] as RenderFlow).hashCode,
         'hasSize#0': (args) => (args[0] as RenderFlow).hasSize,
         'size#0': (args) => (args[0] as RenderFlow).size,
         'semanticBounds#0': (args) => (args[0] as RenderFlow).semanticBounds,
@@ -169,6 +171,7 @@ abstract final class RenderFlowBindings {
         'parentData=#1': (args) { (args[0] as RenderFlow).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderFlow).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderFlow).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderFlow) == (args[1] as Object),
         '#3': (args) => RenderFlow(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), delegate: args[1] as FlowDelegate, clipBehavior: identical(args[2], darticAbsent) ? Clip.hardEdge : args[2] as ui.Clip),
       };
 }

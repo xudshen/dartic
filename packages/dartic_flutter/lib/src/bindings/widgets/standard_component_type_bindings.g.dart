@@ -27,7 +27,10 @@ abstract final class StandardComponentTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as StandardComponentType).toString(),
         'key#0': (args) => (args[0] as StandardComponentType).key,
+        'hashCode#0': (args) => (args[0] as StandardComponentType).hashCode,
         'index#0': (args) => (args[0] as StandardComponentType).index,
+        '==#1': (args) => (args[0] as StandardComponentType) == (args[1] as Object),
       };
 }

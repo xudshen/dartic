@@ -42,6 +42,9 @@ abstract final class TreeSliverControllerBindings {
         'collapseAll#0': (args) { (args[0] as TreeSliverController).collapseAll(); return null; },
         'collapseNode#1': (args) { (args[0] as TreeSliverController).collapseNode(args[1] as TreeSliverNode<Object?>); return null; },
         'getActiveIndexFor#1': (args) => (args[0] as TreeSliverController).getActiveIndexFor(args[1] as TreeSliverNode<Object?>),
+        'toString#0': (args) => (args[0] as TreeSliverController).toString(),
+        'hashCode#0': (args) => (args[0] as TreeSliverController).hashCode,
+        '==#1': (args) => (args[0] as TreeSliverController) == (args[1] as Object),
         '#0': (args) => TreeSliverController(),
       };
 }

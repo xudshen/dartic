@@ -34,6 +34,7 @@ abstract final class LeaderLayerBindings {
         'addToScene#1': (args) { (args[0] as LeaderLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'applyTransform#2': (args) { (args[0] as LeaderLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as LeaderLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LeaderLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as LeaderLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as LeaderLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as LeaderLayer).dispose(); return null; },
@@ -58,6 +59,7 @@ abstract final class LeaderLayerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as LeaderLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'link#0': (args) => (args[0] as LeaderLayer).link,
         'offset#0': (args) => (args[0] as LeaderLayer).offset,
+        'hashCode#0': (args) => (args[0] as LeaderLayer).hashCode,
         'firstChild#0': (args) => (args[0] as LeaderLayer).firstChild,
         'lastChild#0': (args) => (args[0] as LeaderLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as LeaderLayer).hasChildren,
@@ -78,6 +80,7 @@ abstract final class LeaderLayerBindings {
         'offset=#1': (args) { (args[0] as LeaderLayer).offset = args[1] as ui.Offset; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as LeaderLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as LeaderLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as LeaderLayer) == (args[1] as Object),
         '#2': (args) => LeaderLayer(link: args[0] as LayerLink, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset),
       };
 }

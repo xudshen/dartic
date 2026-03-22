@@ -28,6 +28,7 @@ abstract final class RestorableDoubleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RestorableDouble).toString(),
         'fromPrimitives#1': (args) => (args[0] as RestorableDouble).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableDouble).toPrimitives(),
         'createDefaultValue#0': (args) => (args[0] as RestorableDouble).createDefaultValue(),
@@ -37,12 +38,14 @@ abstract final class RestorableDoubleBindings {
         'addListener#1': (args) { (args[0] as RestorableDouble).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableDouble).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableDouble).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableDouble).hashCode,
         'value#0': (args) => (args[0] as RestorableDouble).value,
         'enabled#0': (args) => (args[0] as RestorableDouble).enabled,
         'state#0': (args) => (args[0] as RestorableDouble).state,
         'isRegistered#0': (args) => (args[0] as RestorableDouble).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableDouble).hasListeners,
         'value=#1': (args) { (args[0] as RestorableDouble).value = args[1] as double; return args[1]; },
+        '==#1': (args) => (args[0] as RestorableDouble) == (args[1] as Object),
         '#1': (args) => RestorableDouble(args[0] as double),
       };
 }

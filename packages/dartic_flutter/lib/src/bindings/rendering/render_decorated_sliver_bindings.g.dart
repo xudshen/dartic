@@ -45,6 +45,7 @@ abstract final class RenderDecoratedSliverBindings {
         'detach#0': (args) { (args[0] as RenderDecoratedSliver).detach(); return null; },
         'dispose#0': (args) { (args[0] as RenderDecoratedSliver).dispose(); return null; },
         'paint#2': (args) { (args[0] as RenderDecoratedSliver).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderDecoratedSliver).toString(),
         'setupParentData#1': (args) { (args[0] as RenderDecoratedSliver).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderDecoratedSliver).performLayout(); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderDecoratedSliver).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
@@ -105,6 +106,7 @@ abstract final class RenderDecoratedSliverBindings {
         'decoration#0': (args) => (args[0] as RenderDecoratedSliver).decoration,
         'position#0': (args) => (args[0] as RenderDecoratedSliver).position,
         'configuration#0': (args) => (args[0] as RenderDecoratedSliver).configuration,
+        'hashCode#0': (args) => (args[0] as RenderDecoratedSliver).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderDecoratedSliver).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderDecoratedSliver).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderDecoratedSliver).constraints,
@@ -145,6 +147,7 @@ abstract final class RenderDecoratedSliverBindings {
         'debugCreator=#1': (args) { (args[0] as RenderDecoratedSliver).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderDecoratedSliver).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderDecoratedSliver).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderDecoratedSliver) == (args[1] as Object),
         '#3': (args) => RenderDecoratedSliver(decoration: args[0] as Decoration, position: identical(args[1], darticAbsent) ? DecorationPosition.background : args[1] as DecorationPosition, configuration: identical(args[2], darticAbsent) ? ImageConfiguration.empty : args[2] as ImageConfiguration),
       };
 }

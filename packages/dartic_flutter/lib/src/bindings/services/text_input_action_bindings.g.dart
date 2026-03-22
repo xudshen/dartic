@@ -48,6 +48,9 @@ abstract final class TextInputActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextInputAction).toString(),
+        'hashCode#0': (args) => (args[0] as TextInputAction).hashCode,
         'index#0': (args) => (args[0] as TextInputAction).index,
+        '==#1': (args) => (args[0] as TextInputAction) == (args[1] as Object),
       };
 }

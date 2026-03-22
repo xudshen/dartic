@@ -66,6 +66,7 @@ abstract final class RenderSliverMultiBoxAdaptorBindings {
         'debugFillProperties#1': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugAssertChildListIsNonEmptyAndContiguous#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).debugAssertChildListIsNonEmptyAndContiguous(),
         'debugDescribeChildren#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverMultiBoxAdaptor).performResize(); return null; },
@@ -121,6 +122,7 @@ abstract final class RenderSliverMultiBoxAdaptorBindings {
         'childManager#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).debugChildIntegrityEnabled,
         'semanticBounds#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).semanticBounds,
+        'hashCode#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverMultiBoxAdaptor).geometry,
@@ -159,5 +161,6 @@ abstract final class RenderSliverMultiBoxAdaptorBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverMultiBoxAdaptor).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverMultiBoxAdaptor).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverMultiBoxAdaptor).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverMultiBoxAdaptor) == (args[1] as Object),
       };
 }

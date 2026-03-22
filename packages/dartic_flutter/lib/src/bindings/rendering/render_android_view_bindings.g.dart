@@ -48,6 +48,7 @@ abstract final class RenderAndroidViewBindings {
         'paint#2': (args) { (args[0] as RenderAndroidView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAndroidView).dispose(); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderAndroidView).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
+        'toString#0': (args) => (args[0] as RenderAndroidView).toString(),
         'updateGestureRecognizers#1': (args) { (args[0] as RenderAndroidView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
         'setupParentData#1': (args) { (args[0] as RenderAndroidView).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAndroidView).getMinIntrinsicWidth(args[1] as double),
@@ -125,6 +126,7 @@ abstract final class RenderAndroidViewBindings {
         'sizedByParent#0': (args) => (args[0] as RenderAndroidView).sizedByParent,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderAndroidView).alwaysNeedsCompositing,
         'isRepaintBoundary#0': (args) => (args[0] as RenderAndroidView).isRepaintBoundary,
+        'hashCode#0': (args) => (args[0] as RenderAndroidView).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAndroidView).hasSize,
         'size#0': (args) => (args[0] as RenderAndroidView).size,
         'semanticBounds#0': (args) => (args[0] as RenderAndroidView).semanticBounds,
@@ -163,6 +165,7 @@ abstract final class RenderAndroidViewBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAndroidView).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAndroidView).layer = args[1] as ContainerLayer?; return args[1]; },
         'hitTestBehavior=#1': (args) { (args[0] as RenderAndroidView).hitTestBehavior = args[1] as PlatformViewHitTestBehavior; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAndroidView) == (args[1] as Object),
         '#4': (args) => RenderAndroidView(viewController: args[0] as AndroidViewController, hitTestBehavior: args[1] as PlatformViewHitTestBehavior, gestureRecognizers: (args[2] as Set).cast<Factory<OneSequenceGestureRecognizer>>(), clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as Clip),
       };
 }

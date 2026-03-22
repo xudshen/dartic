@@ -23,6 +23,9 @@ abstract final class PageStorageBucketBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'writeState#3': (args) { (args[0] as PageStorageBucket).writeState(args[1] as BuildContext, args[2], identifier: identical(args[3], darticAbsent) ? null : args[3]); return null; },
         'readState#2': (args) => (args[0] as PageStorageBucket).readState(args[1] as BuildContext, identifier: identical(args[2], darticAbsent) ? null : args[2]),
+        'toString#0': (args) => (args[0] as PageStorageBucket).toString(),
+        'hashCode#0': (args) => (args[0] as PageStorageBucket).hashCode,
+        '==#1': (args) => (args[0] as PageStorageBucket) == (args[1] as Object),
         '#0': (args) => PageStorageBucket(),
       };
 }

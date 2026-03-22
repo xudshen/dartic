@@ -53,6 +53,7 @@ abstract final class ActionsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Actions).createState(),
         'debugFillProperties#1': (args) { (args[0] as Actions).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Actions).toString(),
         'createElement#0': (args) => (args[0] as Actions).createElement(),
         'toStringShort#0': (args) => (args[0] as Actions).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Actions).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -62,7 +63,9 @@ abstract final class ActionsBindings {
         'dispatcher#0': (args) => (args[0] as Actions).dispatcher,
         'actions#0': (args) => (args[0] as Actions).actions,
         'child#0': (args) => (args[0] as Actions).child,
+        'hashCode#0': (args) => (args[0] as Actions).hashCode,
         'key#0': (args) => (args[0] as Actions).key,
+        '==#1': (args) => (args[0] as Actions) == (args[1] as Object),
         '#4': (args) => Actions(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, dispatcher: identical(args[1], darticAbsent) ? null : args[1] as ActionDispatcher?, actions: (args[2] as Map).cast<Type, Action<Intent>>(), child: args[3] as Widget),
         '_#fromFields#4': (args) => Actions(key: args[3] as Key?, dispatcher: args[2] as ActionDispatcher?, actions: (args[0] as Map).cast<Type, Action<Intent>>(), child: args[1] as Widget),
       };

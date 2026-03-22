@@ -40,6 +40,7 @@ abstract final class ClipOvalBindings {
         'updateRenderObject#2': (args) { (args[0] as ClipOval).updateRenderObject(args[1] as BuildContext, args[2] as RenderClipOval); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as ClipOval).didUnmountRenderObject(args[1] as RenderClipOval); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipOval).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ClipOval).toString(),
         'createElement#0': (args) => (args[0] as ClipOval).createElement(),
         'toStringShort#0': (args) => (args[0] as ClipOval).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as ClipOval).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -48,8 +49,10 @@ abstract final class ClipOvalBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ClipOval).debugDescribeChildren(),
         'clipper#0': (args) => (args[0] as ClipOval).clipper,
         'clipBehavior#0': (args) => (args[0] as ClipOval).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ClipOval).hashCode,
         'child#0': (args) => (args[0] as ClipOval).child,
         'key#0': (args) => (args[0] as ClipOval).key,
+        '==#1': (args) => (args[0] as ClipOval) == (args[1] as Object),
         '#4': (args) => ClipOval(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<ui.Rect>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => ClipOval(key: args[3] as Key?, clipper: args[2] as CustomClipper<ui.Rect>?, clipBehavior: args[1] as ui.Clip, child: args[0] as Widget?),
       };

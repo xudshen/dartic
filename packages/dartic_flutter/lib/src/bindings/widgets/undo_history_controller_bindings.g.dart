@@ -32,14 +32,17 @@ abstract final class UndoHistoryControllerBindings {
         'undo#0': (args) { (args[0] as UndoHistoryController).undo(); return null; },
         'redo#0': (args) { (args[0] as UndoHistoryController).redo(); return null; },
         'dispose#0': (args) { (args[0] as UndoHistoryController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as UndoHistoryController).toString(),
         'addListener#1': (args) { (args[0] as UndoHistoryController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as UndoHistoryController).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as UndoHistoryController).notifyListeners(); return null; },
         'onUndo#0': (args) => (args[0] as UndoHistoryController).onUndo,
         'onRedo#0': (args) => (args[0] as UndoHistoryController).onRedo,
+        'hashCode#0': (args) => (args[0] as UndoHistoryController).hashCode,
         'value#0': (args) => (args[0] as UndoHistoryController).value,
         'hasListeners#0': (args) => (args[0] as UndoHistoryController).hasListeners,
         'value=#1': (args) { (args[0] as UndoHistoryController).value = args[1] as UndoHistoryValue; return args[1]; },
+        '==#1': (args) => (args[0] as UndoHistoryController) == (args[1] as Object),
         '#1': (args) => UndoHistoryController(value: identical(args[0], darticAbsent) ? null : args[0] as UndoHistoryValue?),
       };
 }

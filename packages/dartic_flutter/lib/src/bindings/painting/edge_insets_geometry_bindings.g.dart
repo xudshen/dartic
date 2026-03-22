@@ -45,5 +45,151 @@ abstract final class EdgeInsetsGeometryBindings {
         '/#1': (args) => (args[0] as EdgeInsetsGeometry) / (args[1] as double),
         '~/#1': (args) => (args[0] as EdgeInsetsGeometry) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as EdgeInsetsGeometry) % (args[1] as double),
+        '==#1': (args) => (args[0] as EdgeInsetsGeometry) == (args[1] as Object),
+        'all#1': (args) => EdgeInsetsGeometry.all(args[0] as double),
+        'only#4': (args) {
+          if (identical(args[0], darticAbsent)) {
+            if (identical(args[1], darticAbsent)) {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only();
+                } else {
+                  return EdgeInsetsGeometry.only(bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            } else {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(right: args[1] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(right: args[1] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(right: args[1] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(right: args[1] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            }
+          } else {
+            if (identical(args[1], darticAbsent)) {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(left: args[0] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            } else {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, right: args[1] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, right: args[1] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, right: args[1] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.only(left: args[0] as double, right: args[1] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            }
+          }
+        },
+        'directional#4': (args) {
+          if (identical(args[0], darticAbsent)) {
+            if (identical(args[1], darticAbsent)) {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional();
+                } else {
+                  return EdgeInsetsGeometry.directional(bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            } else {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(end: args[1] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(end: args[1] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(end: args[1] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(end: args[1] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            }
+          } else {
+            if (identical(args[1], darticAbsent)) {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            } else {
+              if (identical(args[2], darticAbsent)) {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, end: args[1] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, end: args[1] as double, bottom: args[3] as double);
+                }
+              } else {
+                if (identical(args[3], darticAbsent)) {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, end: args[1] as double, top: args[2] as double);
+                } else {
+                  return EdgeInsetsGeometry.directional(start: args[0] as double, end: args[1] as double, top: args[2] as double, bottom: args[3] as double);
+                }
+              }
+            }
+          }
+        },
+        'symmetric#2': (args) {
+          if (identical(args[0], darticAbsent)) {
+            if (identical(args[1], darticAbsent)) {
+              return EdgeInsetsGeometry.symmetric();
+            } else {
+              return EdgeInsetsGeometry.symmetric(horizontal: args[1] as double);
+            }
+          } else {
+            if (identical(args[1], darticAbsent)) {
+              return EdgeInsetsGeometry.symmetric(vertical: args[0] as double);
+            } else {
+              return EdgeInsetsGeometry.symmetric(vertical: args[0] as double, horizontal: args[1] as double);
+            }
+          }
+        },
+        'fromLTRB#4': (args) => EdgeInsetsGeometry.fromLTRB(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
+        'fromViewPadding#2': (args) => EdgeInsetsGeometry.fromViewPadding(args[0] as ui.ViewPadding, args[1] as double),
+        'fromSTEB#4': (args) => EdgeInsetsGeometry.fromSTEB(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
       };
 }

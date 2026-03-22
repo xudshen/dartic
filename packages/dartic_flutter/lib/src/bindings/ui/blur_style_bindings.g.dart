@@ -35,6 +35,9 @@ abstract final class BlurStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BlurStyle).toString(),
+        'hashCode#0': (args) => (args[0] as BlurStyle).hashCode,
         'index#0': (args) => (args[0] as BlurStyle).index,
+        '==#1': (args) => (args[0] as BlurStyle) == (args[1] as Object),
       };
 }

@@ -42,6 +42,8 @@ abstract final class MenuControllerBindings {
         'closeChildren#0': (args) { (args[0] as MenuController).closeChildren(); return null; },
         'toString#0': (args) => (args[0] as MenuController).toString(),
         'isOpen#0': (args) => (args[0] as MenuController).isOpen,
+        'hashCode#0': (args) => (args[0] as MenuController).hashCode,
+        '==#1': (args) => (args[0] as MenuController) == (args[1] as Object),
         '#0': (args) => MenuController(),
       };
 }

@@ -29,6 +29,7 @@ abstract final class SliverGridParentDataBindings {
         'toString#0': (args) => (args[0] as SliverGridParentData).toString(),
         'detach#0': (args) { (args[0] as SliverGridParentData).detach(); return null; },
         'crossAxisOffset#0': (args) => (args[0] as SliverGridParentData).crossAxisOffset,
+        'hashCode#0': (args) => (args[0] as SliverGridParentData).hashCode,
         'index#0': (args) => (args[0] as SliverGridParentData).index,
         'keptAlive#0': (args) => (args[0] as SliverGridParentData).keptAlive,
         'layoutOffset#0': (args) => (args[0] as SliverGridParentData).layoutOffset,
@@ -41,6 +42,7 @@ abstract final class SliverGridParentDataBindings {
         'previousSibling=#1': (args) { (args[0] as SliverGridParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as SliverGridParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
         'keepAlive=#1': (args) { (args[0] as SliverGridParentData).keepAlive = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as SliverGridParentData) == (args[1] as Object),
         '#0': (args) => SliverGridParentData(),
       };
 }

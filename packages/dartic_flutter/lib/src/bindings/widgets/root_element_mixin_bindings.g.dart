@@ -35,6 +35,7 @@ abstract final class RootElementMixinBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'assignOwner#1': (args) { (args[0] as RootElementMixin).assignOwner(args[1] as BuildOwner); return null; },
         'mount#2': (args) { (args[0] as RootElementMixin).mount(args[1] as Element?, args[2]); return null; },
+        'toString#0': (args) => (args[0] as RootElementMixin).toString(),
         'reassemble#0': (args) { (args[0] as RootElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RootElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RootElementMixin).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
@@ -83,6 +84,7 @@ abstract final class RootElementMixinBindings {
         'performRebuild#0': (args) { (args[0] as RootElementMixin).performRebuild(); return null; },
         'toStringShallow#2': (args) => (args[0] as RootElementMixin).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as RootElementMixin).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as RootElementMixin).hashCode,
         'slot#0': (args) => (args[0] as RootElementMixin).slot,
         'depth#0': (args) => (args[0] as RootElementMixin).depth,
         'widget#0': (args) => (args[0] as RootElementMixin).widget,
@@ -96,5 +98,6 @@ abstract final class RootElementMixinBindings {
         'size#0': (args) => (args[0] as RootElementMixin).size,
         'dirty#0': (args) => (args[0] as RootElementMixin).dirty,
         'debugDoingBuild#0': (args) => (args[0] as RootElementMixin).debugDoingBuild,
+        '==#1': (args) => (args[0] as RootElementMixin) == (args[1] as Object),
       };
 }

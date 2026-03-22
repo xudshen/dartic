@@ -30,6 +30,9 @@ abstract final class BaseSliderTrackShapeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredRect#5': (args) => (args[0] as BaseSliderTrackShape).getPreferredRect(parentBox: args[1] as RenderBox, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, sliderTheme: args[3] as SliderThemeData, isEnabled: identical(args[4], darticAbsent) ? false : args[4] as bool, isDiscrete: identical(args[5], darticAbsent) ? false : args[5] as bool),
+        'toString#0': (args) => (args[0] as BaseSliderTrackShape).toString(),
         'isRounded#0': (args) => (args[0] as BaseSliderTrackShape).isRounded,
+        'hashCode#0': (args) => (args[0] as BaseSliderTrackShape).hashCode,
+        '==#1': (args) => (args[0] as BaseSliderTrackShape) == (args[1] as Object),
       };
 }

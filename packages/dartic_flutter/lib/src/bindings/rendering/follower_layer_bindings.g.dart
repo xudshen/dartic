@@ -33,6 +33,7 @@ abstract final class FollowerLayerBindings {
         'addToScene#1': (args) { (args[0] as FollowerLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'applyTransform#2': (args) { (args[0] as FollowerLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as FollowerLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FollowerLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as FollowerLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as FollowerLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as FollowerLayer).dispose(); return null; },
@@ -62,6 +63,7 @@ abstract final class FollowerLayerBindings {
         'unlinkedOffset#0': (args) => (args[0] as FollowerLayer).unlinkedOffset,
         'linkedOffset#0': (args) => (args[0] as FollowerLayer).linkedOffset,
         'alwaysNeedsAddToScene#0': (args) => (args[0] as FollowerLayer).alwaysNeedsAddToScene,
+        'hashCode#0': (args) => (args[0] as FollowerLayer).hashCode,
         'firstChild#0': (args) => (args[0] as FollowerLayer).firstChild,
         'lastChild#0': (args) => (args[0] as FollowerLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as FollowerLayer).hasChildren,
@@ -83,6 +85,7 @@ abstract final class FollowerLayerBindings {
         'linkedOffset=#1': (args) { (args[0] as FollowerLayer).linkedOffset = args[1] as ui.Offset?; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as FollowerLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as FollowerLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as FollowerLayer) == (args[1] as Object),
         '#4': (args) => FollowerLayer(link: args[0] as LayerLink, showWhenUnlinked: identical(args[1], darticAbsent) ? null : args[1] as bool?, unlinkedOffset: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, linkedOffset: identical(args[3], darticAbsent) ? null : args[3] as ui.Offset?),
       };
 }

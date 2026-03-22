@@ -35,6 +35,9 @@ abstract final class WidgetStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isSatisfiedBy#1': (args) => (args[0] as WidgetState).isSatisfiedBy((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as WidgetState).toString(),
+        'hashCode#0': (args) => (args[0] as WidgetState).hashCode,
         'index#0': (args) => (args[0] as WidgetState).index,
+        '==#1': (args) => (args[0] as WidgetState) == (args[1] as Object),
       };
 }

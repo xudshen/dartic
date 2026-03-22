@@ -26,12 +26,15 @@ abstract final class MouseTrackerAnnotationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as MouseTrackerAnnotation).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MouseTrackerAnnotation).toString(),
         'toStringShort#0': (args) => (args[0] as MouseTrackerAnnotation).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as MouseTrackerAnnotation).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'onEnter#0': (args) => (args[0] as MouseTrackerAnnotation).onEnter,
         'onExit#0': (args) => (args[0] as MouseTrackerAnnotation).onExit,
         'cursor#0': (args) => (args[0] as MouseTrackerAnnotation).cursor,
         'validForMouseTracker#0': (args) => (args[0] as MouseTrackerAnnotation).validForMouseTracker,
+        'hashCode#0': (args) => (args[0] as MouseTrackerAnnotation).hashCode,
+        '==#1': (args) => (args[0] as MouseTrackerAnnotation) == (args[1] as Object),
         '#4': (args) => MouseTrackerAnnotation(onEnter: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a) => (args[0] as Function?)!(a), onExit: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), cursor: identical(args[2], darticAbsent) ? MouseCursor.defer : args[2] as MouseCursor, validForMouseTracker: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => MouseTrackerAnnotation(onEnter: args[1] as PointerEnterEventListener?, onExit: args[2] as PointerExitEventListener?, cursor: args[0] as MouseCursor, validForMouseTracker: args[3] as bool),
       };

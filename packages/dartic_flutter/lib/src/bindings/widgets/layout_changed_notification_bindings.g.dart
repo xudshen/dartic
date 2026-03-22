@@ -22,8 +22,11 @@ abstract final class LayoutChangedNotificationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as LayoutChangedNotification).toString(),
         'dispatch#1': (args) { (args[0] as LayoutChangedNotification).dispatch(args[1] as BuildContext?); return null; },
         'debugFillDescription#1': (args) { (args[0] as LayoutChangedNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'hashCode#0': (args) => (args[0] as LayoutChangedNotification).hashCode,
+        '==#1': (args) => (args[0] as LayoutChangedNotification) == (args[1] as Object),
         '#0': (args) => LayoutChangedNotification(),
         '_#fromFields#0': (args) => LayoutChangedNotification(),
       };

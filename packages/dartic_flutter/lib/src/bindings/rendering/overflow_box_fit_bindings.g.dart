@@ -32,6 +32,9 @@ abstract final class OverflowBoxFitBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OverflowBoxFit).toString(),
+        'hashCode#0': (args) => (args[0] as OverflowBoxFit).hashCode,
         'index#0': (args) => (args[0] as OverflowBoxFit).index,
+        '==#1': (args) => (args[0] as OverflowBoxFit) == (args[1] as Object),
       };
 }

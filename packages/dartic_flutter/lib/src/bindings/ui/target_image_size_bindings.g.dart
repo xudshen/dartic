@@ -32,6 +32,8 @@ abstract final class TargetImageSizeBindings {
         'toString#0': (args) => (args[0] as TargetImageSize).toString(),
         'width#0': (args) => (args[0] as TargetImageSize).width,
         'height#0': (args) => (args[0] as TargetImageSize).height,
+        'hashCode#0': (args) => (args[0] as TargetImageSize).hashCode,
+        '==#1': (args) => (args[0] as TargetImageSize) == (args[1] as Object),
         '#2': (args) => TargetImageSize(width: identical(args[0], darticAbsent) ? null : args[0] as int?, height: identical(args[1], darticAbsent) ? null : args[1] as int?),
         '_#fromFields#2': (args) => TargetImageSize(width: args[1] as int?, height: args[0] as int?),
       };

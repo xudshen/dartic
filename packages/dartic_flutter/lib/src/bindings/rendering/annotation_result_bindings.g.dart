@@ -27,8 +27,11 @@ abstract final class AnnotationResultBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#1': (args) { (args[0] as AnnotationResult).add(args[1] as AnnotationEntry); return null; },
+        'toString#0': (args) => (args[0] as AnnotationResult).toString(),
         'entries#0': (args) => (args[0] as AnnotationResult).entries,
         'annotations#0': (args) => (args[0] as AnnotationResult).annotations,
+        'hashCode#0': (args) => (args[0] as AnnotationResult).hashCode,
+        '==#1': (args) => (args[0] as AnnotationResult) == (args[1] as Object),
         '#0': (args) => AnnotationResult<dynamic>(),
       };
 }

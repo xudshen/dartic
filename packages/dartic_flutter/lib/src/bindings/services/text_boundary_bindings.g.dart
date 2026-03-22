@@ -26,5 +26,8 @@ abstract final class TextBoundaryBindings {
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as TextBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as TextBoundary).getTrailingTextBoundaryAt(args[1] as int),
         'getTextBoundaryAt#1': (args) => (args[0] as TextBoundary).getTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as TextBoundary).toString(),
+        'hashCode#0': (args) => (args[0] as TextBoundary).hashCode,
+        '==#1': (args) => (args[0] as TextBoundary) == (args[1] as Object),
       };
 }

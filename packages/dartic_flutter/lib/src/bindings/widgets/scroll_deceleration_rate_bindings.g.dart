@@ -34,6 +34,9 @@ abstract final class ScrollDecelerationRateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScrollDecelerationRate).toString(),
+        'hashCode#0': (args) => (args[0] as ScrollDecelerationRate).hashCode,
         'index#0': (args) => (args[0] as ScrollDecelerationRate).index,
+        '==#1': (args) => (args[0] as ScrollDecelerationRate) == (args[1] as Object),
       };
 }

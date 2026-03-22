@@ -38,6 +38,7 @@ abstract final class RenderSliverWithKeepAliveMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'setupParentData#1': (args) { (args[0] as RenderSliverWithKeepAliveMixin).setupParentData(args[1] as RenderObject); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverWithKeepAliveMixin).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverWithKeepAliveMixin).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverWithKeepAliveMixin).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverWithKeepAliveMixin).performResize(); return null; },
@@ -97,6 +98,7 @@ abstract final class RenderSliverWithKeepAliveMixinBindings {
         'showOnScreen#4': (args) { (args[0] as RenderSliverWithKeepAliveMixin).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderSliverWithKeepAliveMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverWithKeepAliveMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderSliverWithKeepAliveMixin).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverWithKeepAliveMixin).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverWithKeepAliveMixin).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverWithKeepAliveMixin).geometry,
@@ -132,5 +134,6 @@ abstract final class RenderSliverWithKeepAliveMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverWithKeepAliveMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverWithKeepAliveMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverWithKeepAliveMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverWithKeepAliveMixin) == (args[1] as Object),
       };
 }

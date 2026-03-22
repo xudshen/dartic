@@ -37,6 +37,7 @@ abstract final class ExpandIconBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ExpandIcon).createState(),
+        'toString#0': (args) => (args[0] as ExpandIcon).toString(),
         'createElement#0': (args) => (args[0] as ExpandIcon).createElement(),
         'toStringShort#0': (args) => (args[0] as ExpandIcon).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ExpandIcon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -53,7 +54,9 @@ abstract final class ExpandIconBindings {
         'expandedColor#0': (args) => (args[0] as ExpandIcon).expandedColor,
         'splashColor#0': (args) => (args[0] as ExpandIcon).splashColor,
         'highlightColor#0': (args) => (args[0] as ExpandIcon).highlightColor,
+        'hashCode#0': (args) => (args[0] as ExpandIcon).hashCode,
         'key#0': (args) => (args[0] as ExpandIcon).key,
+        '==#1': (args) => (args[0] as ExpandIcon) == (args[1] as Object),
         '#10': (args) => ExpandIcon(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, isExpanded: identical(args[1], darticAbsent) ? false : args[1] as bool, size: identical(args[2], darticAbsent) ? 24.0 : args[2] as double, onPressed: (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), padding: identical(args[4], darticAbsent) ? const EdgeInsets.all(8.0) : args[4] as EdgeInsetsGeometry, color: identical(args[5], darticAbsent) ? null : args[5] as Color?, disabledColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, expandedColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, splashColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, highlightColor: identical(args[9], darticAbsent) ? null : args[9] as Color?),
         '_#fromFields#10': (args) => ExpandIcon(key: args[5] as Key?, isExpanded: args[4] as bool, size: args[8] as double, onPressed: args[6] as ValueChanged<bool>?, padding: args[7] as EdgeInsetsGeometry, color: args[0] as Color?, disabledColor: args[1] as Color?, expandedColor: args[2] as Color?, splashColor: args[9] as Color?, highlightColor: args[3] as Color?),
       };

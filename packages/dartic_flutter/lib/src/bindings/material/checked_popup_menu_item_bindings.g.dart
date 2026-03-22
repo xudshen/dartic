@@ -52,6 +52,7 @@ abstract final class CheckedPopupMenuItemBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CheckedPopupMenuItem).createState(),
+        'toString#0': (args) => (args[0] as CheckedPopupMenuItem).toString(),
         'represents#1': (args) => (args[0] as CheckedPopupMenuItem).represents(args[1]),
         'createElement#0': (args) => (args[0] as CheckedPopupMenuItem).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckedPopupMenuItem).toStringShort(),
@@ -62,6 +63,7 @@ abstract final class CheckedPopupMenuItemBindings {
         'debugDescribeChildren#0': (args) => (args[0] as CheckedPopupMenuItem).debugDescribeChildren(),
         'checked#0': (args) => (args[0] as CheckedPopupMenuItem).checked,
         'child#0': (args) => (args[0] as CheckedPopupMenuItem).child,
+        'hashCode#0': (args) => (args[0] as CheckedPopupMenuItem).hashCode,
         'value#0': (args) => (args[0] as CheckedPopupMenuItem).value,
         'onTap#0': (args) => (args[0] as CheckedPopupMenuItem).onTap,
         'enabled#0': (args) => (args[0] as CheckedPopupMenuItem).enabled,
@@ -71,7 +73,14 @@ abstract final class CheckedPopupMenuItemBindings {
         'labelTextStyle#0': (args) => (args[0] as CheckedPopupMenuItem).labelTextStyle,
         'mouseCursor#0': (args) => (args[0] as CheckedPopupMenuItem).mouseCursor,
         'key#0': (args) => (args[0] as CheckedPopupMenuItem).key,
-        '#10': (args) => CheckedPopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], checked: identical(args[2], darticAbsent) ? false : args[2] as bool, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, padding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsets?, height: identical(args[5], darticAbsent) ? kMinInteractiveDimension : args[5] as double, labelTextStyle: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[7], darticAbsent) ? null : args[7] as MouseCursor?, child: identical(args[8], darticAbsent) ? null : args[8] as Widget?, onTap: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()),
+        '==#1': (args) => (args[0] as CheckedPopupMenuItem) == (args[1] as Object),
+        '#10': (args) {
+          if (identical(args[5], darticAbsent)) {
+            return CheckedPopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], checked: identical(args[2], darticAbsent) ? false : args[2] as bool, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, padding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsets?, labelTextStyle: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[7], darticAbsent) ? null : args[7] as MouseCursor?, child: identical(args[8], darticAbsent) ? null : args[8] as Widget?, onTap: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!());
+          } else {
+            return CheckedPopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], checked: identical(args[2], darticAbsent) ? false : args[2] as bool, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, padding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsets?, height: args[5] as double, labelTextStyle: identical(args[6], darticAbsent) ? null : args[6] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[7], darticAbsent) ? null : args[7] as MouseCursor?, child: identical(args[8], darticAbsent) ? null : args[8] as Widget?, onTap: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!());
+          }
+        },
         '_#fromFields#11': (args) => CheckedPopupMenuItem<dynamic>(key: args[4] as Key?, value: args[10], checked: args[0] as bool, enabled: args[2] as bool, padding: args[8] as EdgeInsets?, height: args[3] as double, labelTextStyle: args[5] as WidgetStateProperty<TextStyle?>?, mouseCursor: args[6] as MouseCursor?, child: args[1] as Widget?, onTap: args[7] as VoidCallback?),
       };
 }

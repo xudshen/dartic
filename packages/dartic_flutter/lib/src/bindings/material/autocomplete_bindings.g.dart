@@ -38,6 +38,7 @@ abstract final class AutocompleteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Autocomplete).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Autocomplete).toString(),
         'createElement#0': (args) => (args[0] as Autocomplete).createElement(),
         'toStringShort#0': (args) => (args[0] as Autocomplete).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Autocomplete).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -55,7 +56,9 @@ abstract final class AutocompleteBindings {
         'optionsMaxHeight#0': (args) => (args[0] as Autocomplete).optionsMaxHeight,
         'textEditingController#0': (args) => (args[0] as Autocomplete).textEditingController,
         'initialValue#0': (args) => (args[0] as Autocomplete).initialValue,
+        'hashCode#0': (args) => (args[0] as Autocomplete).hashCode,
         'key#0': (args) => (args[0] as Autocomplete).key,
+        '==#1': (args) => (args[0] as Autocomplete) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[3], darticAbsent)) {
             return Autocomplete<Object>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, optionsBuilder: (a) => (args[1] as Function)(a) as FutureOr<Iterable<Object>>, displayStringForOption: identical(args[2], darticAbsent) ? RawAutocomplete.defaultStringForOption : (a) => (args[2] as Function)(a) as String, focusNode: identical(args[4], darticAbsent) ? null : args[4] as FocusNode?, onSelected: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), optionsMaxHeight: identical(args[6], darticAbsent) ? 200.0 : args[6] as double, optionsViewBuilder: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, b, c) => (args[7] as Function?)!(a, b, c), optionsViewOpenDirection: identical(args[8], darticAbsent) ? OptionsViewOpenDirection.down : args[8] as OptionsViewOpenDirection, textEditingController: identical(args[9], darticAbsent) ? null : args[9] as TextEditingController?, initialValue: identical(args[10], darticAbsent) ? null : args[10] as TextEditingValue?);

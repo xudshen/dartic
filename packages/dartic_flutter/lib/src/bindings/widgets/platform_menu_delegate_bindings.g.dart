@@ -32,5 +32,8 @@ abstract final class PlatformMenuDelegateBindings {
         'clearMenus#0': (args) { (args[0] as PlatformMenuDelegate).clearMenus(); return null; },
         'debugLockDelegate#1': (args) => (args[0] as PlatformMenuDelegate).debugLockDelegate(args[1] as BuildContext),
         'debugUnlockDelegate#1': (args) => (args[0] as PlatformMenuDelegate).debugUnlockDelegate(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PlatformMenuDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as PlatformMenuDelegate).hashCode,
+        '==#1': (args) => (args[0] as PlatformMenuDelegate) == (args[1] as Object),
       };
 }

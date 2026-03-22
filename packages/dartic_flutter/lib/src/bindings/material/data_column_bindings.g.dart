@@ -39,6 +39,7 @@ abstract final class DataColumnBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DataColumn).toString(),
         'label#0': (args) => (args[0] as DataColumn).label,
         'columnWidth#0': (args) => (args[0] as DataColumn).columnWidth,
         'tooltip#0': (args) => (args[0] as DataColumn).tooltip,
@@ -46,6 +47,8 @@ abstract final class DataColumnBindings {
         'onSort#0': (args) => (args[0] as DataColumn).onSort,
         'mouseCursor#0': (args) => (args[0] as DataColumn).mouseCursor,
         'headingRowAlignment#0': (args) => (args[0] as DataColumn).headingRowAlignment,
+        'hashCode#0': (args) => (args[0] as DataColumn).hashCode,
+        '==#1': (args) => (args[0] as DataColumn) == (args[1] as Object),
         '#7': (args) => DataColumn(label: args[0] as Widget, columnWidth: identical(args[1], darticAbsent) ? null : args[1] as TableColumnWidth?, tooltip: identical(args[2], darticAbsent) ? null : args[2] as String?, numeric: identical(args[3], darticAbsent) ? false : args[3] as bool, onSort: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b) => (args[4] as Function?)!(a, b), mouseCursor: identical(args[5], darticAbsent) ? null : args[5] as WidgetStateProperty<MouseCursor?>?, headingRowAlignment: identical(args[6], darticAbsent) ? null : args[6] as MainAxisAlignment?),
         '_#fromFields#7': (args) => DataColumn(label: args[2] as Widget, columnWidth: args[0] as TableColumnWidth?, tooltip: args[6] as String?, numeric: args[4] as bool, onSort: args[5] as DataColumnSortCallback?, mouseCursor: args[3] as WidgetStateProperty<MouseCursor?>?, headingRowAlignment: args[1] as MainAxisAlignment?),
       };

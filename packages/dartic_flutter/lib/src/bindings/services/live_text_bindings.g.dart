@@ -22,5 +22,8 @@ abstract final class LiveTextBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as LiveText).toString(),
+        'hashCode#0': (args) => (args[0] as LiveText).hashCode,
+        '==#1': (args) => (args[0] as LiveText) == (args[1] as Object),
       };
 }

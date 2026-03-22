@@ -36,6 +36,9 @@ abstract final class TextDecorationStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextDecorationStyle).toString(),
+        'hashCode#0': (args) => (args[0] as TextDecorationStyle).hashCode,
         'index#0': (args) => (args[0] as TextDecorationStyle).index,
+        '==#1': (args) => (args[0] as TextDecorationStyle) == (args[1] as Object),
       };
 }

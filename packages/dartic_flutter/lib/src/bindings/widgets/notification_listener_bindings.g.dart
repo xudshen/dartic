@@ -25,6 +25,7 @@ abstract final class NotificationListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as NotificationListener).createElement(),
+        'toString#0': (args) => (args[0] as NotificationListener).toString(),
         'toStringShort#0': (args) => (args[0] as NotificationListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NotificationListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as NotificationListener).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -32,8 +33,10 @@ abstract final class NotificationListenerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as NotificationListener).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as NotificationListener).debugDescribeChildren(),
         'onNotification#0': (args) => (args[0] as NotificationListener).onNotification,
+        'hashCode#0': (args) => (args[0] as NotificationListener).hashCode,
         'child#0': (args) => (args[0] as NotificationListener).child,
         'key#0': (args) => (args[0] as NotificationListener).key,
+        '==#1': (args) => (args[0] as NotificationListener) == (args[1] as Object),
         '#3': (args) => NotificationListener<Notification>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, onNotification: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
         '_#fromFields#3': (args) => NotificationListener<Notification>(key: args[1] as Key?, child: args[0] as Widget, onNotification: args[2] as bool Function(Notification)?),
       };

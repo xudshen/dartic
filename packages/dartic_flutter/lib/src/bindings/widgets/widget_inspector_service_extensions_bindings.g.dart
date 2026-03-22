@@ -53,6 +53,9 @@ abstract final class WidgetInspectorServiceExtensionsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WidgetInspectorServiceExtensions).toString(),
+        'hashCode#0': (args) => (args[0] as WidgetInspectorServiceExtensions).hashCode,
         'index#0': (args) => (args[0] as WidgetInspectorServiceExtensions).index,
+        '==#1': (args) => (args[0] as WidgetInspectorServiceExtensions) == (args[1] as Object),
       };
 }

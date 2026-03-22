@@ -35,8 +35,11 @@ abstract final class GtkKeyHelperBindings {
         'getModifierSide#1': (args) => (args[0] as GtkKeyHelper).getModifierSide(args[1] as ModifierKey),
         'numpadKey#1': (args) => (args[0] as GtkKeyHelper).numpadKey(args[1] as int),
         'logicalKey#1': (args) => (args[0] as GtkKeyHelper).logicalKey(args[1] as int),
+        'toString#0': (args) => (args[0] as GtkKeyHelper).toString(),
         'debugToolkit#0': (args) => (args[0] as GtkKeyHelper).debugToolkit,
         'platformPlane#0': (args) => (args[0] as GtkKeyHelper).platformPlane,
+        'hashCode#0': (args) => (args[0] as GtkKeyHelper).hashCode,
+        '==#1': (args) => (args[0] as GtkKeyHelper) == (args[1] as Object),
         '#0': (args) => GtkKeyHelper(),
       };
 }

@@ -29,6 +29,7 @@ abstract final class CupertinoTabViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoTabView).createState(),
+        'toString#0': (args) => (args[0] as CupertinoTabView).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTabView).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTabView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTabView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class CupertinoTabViewBindings {
         'onUnknownRoute#0': (args) => (args[0] as CupertinoTabView).onUnknownRoute,
         'navigatorObservers#0': (args) => (args[0] as CupertinoTabView).navigatorObservers,
         'restorationScopeId#0': (args) => (args[0] as CupertinoTabView).restorationScopeId,
+        'hashCode#0': (args) => (args[0] as CupertinoTabView).hashCode,
         'key#0': (args) => (args[0] as CupertinoTabView).key,
+        '==#1': (args) => (args[0] as CupertinoTabView) == (args[1] as Object),
         '#9': (args) => CupertinoTabView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), navigatorKey: identical(args[2], darticAbsent) ? null : args[2] as GlobalKey<NavigatorState>?, defaultTitle: identical(args[3], darticAbsent) ? null : args[3] as String?, routes: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as Map).cast<String, WidgetBuilder>(), onGenerateRoute: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onUnknownRoute: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), navigatorObservers: identical(args[7], darticAbsent) ? const <NavigatorObserver>[] : (args[7] as List).cast<NavigatorObserver>(), restorationScopeId: identical(args[8], darticAbsent) ? null : args[8] as String?),
         '_#fromFields#9': (args) => CupertinoTabView(key: args[2] as Key?, builder: args[0] as WidgetBuilder?, navigatorKey: args[3] as GlobalKey<NavigatorState>?, defaultTitle: args[1] as String?, routes: args[8] == null ? null : (args[8] as Map).cast<String, WidgetBuilder>(), onGenerateRoute: args[5] as RouteFactory?, onUnknownRoute: args[6] as RouteFactory?, navigatorObservers: (args[4] as List).cast<NavigatorObserver>(), restorationScopeId: args[7] as String?),
       };

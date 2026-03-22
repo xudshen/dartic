@@ -25,6 +25,8 @@ abstract final class TickerCanceledBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as TickerCanceled).toString(),
         'ticker#0': (args) => (args[0] as TickerCanceled).ticker,
+        'hashCode#0': (args) => (args[0] as TickerCanceled).hashCode,
+        '==#1': (args) => (args[0] as TickerCanceled) == (args[1] as Object),
         '#1': (args) => TickerCanceled(identical(args[0], darticAbsent) ? null : args[0] as Ticker?),
         '_#fromFields#1': (args) => TickerCanceled(args[0] as Ticker?),
       };

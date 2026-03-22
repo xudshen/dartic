@@ -47,6 +47,7 @@ abstract final class ListWheelViewportBindings {
         'createElement#0': (args) => (args[0] as ListWheelViewport).createElement(),
         'createRenderObject#1': (args) => (args[0] as ListWheelViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ListWheelViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderListWheelViewport); return null; },
+        'toString#0': (args) => (args[0] as ListWheelViewport).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as ListWheelViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ListWheelViewport).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ListWheelViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -66,7 +67,9 @@ abstract final class ListWheelViewportBindings {
         'offset#0': (args) => (args[0] as ListWheelViewport).offset,
         'childDelegate#0': (args) => (args[0] as ListWheelViewport).childDelegate,
         'clipBehavior#0': (args) => (args[0] as ListWheelViewport).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ListWheelViewport).hashCode,
         'key#0': (args) => (args[0] as ListWheelViewport).key,
+        '==#1': (args) => (args[0] as ListWheelViewport) == (args[1] as Object),
         '#13': (args) => ListWheelViewport(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, diameterRatio: identical(args[1], darticAbsent) ? RenderListWheelViewport.defaultDiameterRatio : args[1] as double, perspective: identical(args[2], darticAbsent) ? RenderListWheelViewport.defaultPerspective : args[2] as double, offAxisFraction: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, useMagnifier: identical(args[4], darticAbsent) ? false : args[4] as bool, magnification: identical(args[5], darticAbsent) ? 1.0 : args[5] as double, overAndUnderCenterOpacity: identical(args[6], darticAbsent) ? 1.0 : args[6] as double, itemExtent: args[7] as double, squeeze: identical(args[8], darticAbsent) ? 1.0 : args[8] as double, renderChildrenOutsideViewport: identical(args[9], darticAbsent) ? false : args[9] as bool, offset: args[10] as ViewportOffset, childDelegate: args[11] as ListWheelChildDelegate, clipBehavior: identical(args[12], darticAbsent) ? Clip.hardEdge : args[12] as Clip),
         '_#fromFields#13': (args) => ListWheelViewport(key: args[4] as Key?, diameterRatio: args[2] as double, perspective: args[9] as double, offAxisFraction: args[6] as double, useMagnifier: args[12] as bool, magnification: args[5] as double, overAndUnderCenterOpacity: args[8] as double, itemExtent: args[3] as double, squeeze: args[11] as double, renderChildrenOutsideViewport: args[10] as bool, offset: args[7] as ViewportOffset, childDelegate: args[0] as ListWheelChildDelegate, clipBehavior: args[1] as Clip),
       };

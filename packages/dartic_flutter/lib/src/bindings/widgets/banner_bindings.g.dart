@@ -32,6 +32,7 @@ abstract final class BannerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Banner).createState(),
+        'toString#0': (args) => (args[0] as Banner).toString(),
         'createElement#0': (args) => (args[0] as Banner).createElement(),
         'toStringShort#0': (args) => (args[0] as Banner).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Banner).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class BannerBindings {
         'color#0': (args) => (args[0] as Banner).color,
         'textStyle#0': (args) => (args[0] as Banner).textStyle,
         'shadow#0': (args) => (args[0] as Banner).shadow,
+        'hashCode#0': (args) => (args[0] as Banner).hashCode,
         'key#0': (args) => (args[0] as Banner).key,
+        '==#1': (args) => (args[0] as Banner) == (args[1] as Object),
         '#9': (args) {
           if (identical(args[6], darticAbsent)) {
             if (identical(args[7], darticAbsent)) {

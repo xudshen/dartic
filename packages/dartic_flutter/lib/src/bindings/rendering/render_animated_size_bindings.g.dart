@@ -49,6 +49,7 @@ abstract final class RenderAnimatedSizeBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderAnimatedSize).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderAnimatedSize).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAnimatedSize).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RenderAnimatedSize).toString(),
         'alignChild#0': (args) { (args[0] as RenderAnimatedSize).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAnimatedSize).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedSize).computeMinIntrinsicWidth(args[1] as double),
@@ -131,6 +132,7 @@ abstract final class RenderAnimatedSizeBindings {
         'isAnimating#0': (args) => (args[0] as RenderAnimatedSize).isAnimating,
         'vsync#0': (args) => (args[0] as RenderAnimatedSize).vsync,
         'onEnd#0': (args) => (args[0] as RenderAnimatedSize).onEnd,
+        'hashCode#0': (args) => (args[0] as RenderAnimatedSize).hashCode,
         'resolvedAlignment#0': (args) => (args[0] as RenderAnimatedSize).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderAnimatedSize).alignment,
         'textDirection#0': (args) => (args[0] as RenderAnimatedSize).textDirection,
@@ -178,6 +180,7 @@ abstract final class RenderAnimatedSizeBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAnimatedSize).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAnimatedSize).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderAnimatedSize).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAnimatedSize) == (args[1] as Object),
         '#9': (args) => RenderAnimatedSize(vsync: args[0] as TickerProvider, duration: args[1] as Duration, reverseDuration: identical(args[2], darticAbsent) ? null : args[2] as Duration?, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, alignment: identical(args[4], darticAbsent) ? Alignment.center : args[4] as AlignmentGeometry, textDirection: identical(args[5], darticAbsent) ? null : args[5] as TextDirection?, child: identical(args[6], darticAbsent) ? null : args[6] as RenderBox?, clipBehavior: identical(args[7], darticAbsent) ? Clip.hardEdge : args[7] as Clip, onEnd: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : () => (args[8] as Function?)!()),
       };
 }

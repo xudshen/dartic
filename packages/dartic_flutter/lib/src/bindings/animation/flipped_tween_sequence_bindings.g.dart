@@ -24,9 +24,12 @@ abstract final class FlippedTweenSequenceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transform#1': (args) => (args[0] as FlippedTweenSequence).transform(args[1] as double),
+        'toString#0': (args) => (args[0] as FlippedTweenSequence).toString(),
         'evaluate#1': (args) => (args[0] as FlippedTweenSequence).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as FlippedTweenSequence).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as FlippedTweenSequence).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as FlippedTweenSequence).hashCode,
+        '==#1': (args) => (args[0] as FlippedTweenSequence) == (args[1] as Object),
         '#1': (args) => FlippedTweenSequence((args[0] as List).cast<TweenSequenceItem<double>>()),
       };
 }

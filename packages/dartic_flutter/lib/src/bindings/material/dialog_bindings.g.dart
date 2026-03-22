@@ -45,6 +45,7 @@ abstract final class DialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Dialog).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Dialog).toString(),
         'createElement#0': (args) => (args[0] as Dialog).createElement(),
         'toStringShort#0': (args) => (args[0] as Dialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Dialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -65,7 +66,9 @@ abstract final class DialogBindings {
         'child#0': (args) => (args[0] as Dialog).child,
         'semanticsRole#0': (args) => (args[0] as Dialog).semanticsRole,
         'constraints#0': (args) => (args[0] as Dialog).constraints,
+        'hashCode#0': (args) => (args[0] as Dialog).hashCode,
         'key#0': (args) => (args[0] as Dialog).key,
+        '==#1': (args) => (args[0] as Dialog) == (args[1] as Object),
         '#14': (args) => Dialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, insetAnimationDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 100) : args[5] as Duration, insetAnimationCurve: identical(args[6], darticAbsent) ? Curves.decelerate : args[6] as Curve, insetPadding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsets?, clipBehavior: identical(args[8], darticAbsent) ? null : args[8] as Clip?, shape: identical(args[9], darticAbsent) ? null : args[9] as ShapeBorder?, alignment: identical(args[10], darticAbsent) ? null : args[10] as AlignmentGeometry?, child: identical(args[11], darticAbsent) ? null : args[11] as Widget?, semanticsRole: identical(args[12], darticAbsent) ? SemanticsRole.dialog : args[12] as SemanticsRole, constraints: identical(args[13], darticAbsent) ? null : args[13] as BoxConstraints?),
         'fullscreen#6': (args) => Dialog.fullscreen(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, insetAnimationDuration: identical(args[2], darticAbsent) ? Duration.zero : args[2] as Duration, insetAnimationCurve: identical(args[3], darticAbsent) ? Curves.decelerate : args[3] as Curve, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?, semanticsRole: identical(args[5], darticAbsent) ? SemanticsRole.dialog : args[5] as SemanticsRole),
         '_#fromFields#15': (args) => (args[0] as Enum).index == 0

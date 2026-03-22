@@ -30,6 +30,9 @@ abstract final class ButtonBarLayoutBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ButtonBarLayoutBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as ButtonBarLayoutBehavior).hashCode,
         'index#0': (args) => (args[0] as ButtonBarLayoutBehavior).index,
+        '==#1': (args) => (args[0] as ButtonBarLayoutBehavior) == (args[1] as Object),
       };
 }

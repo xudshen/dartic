@@ -41,6 +41,9 @@ abstract final class OverlayVisibilityModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OverlayVisibilityMode).toString(),
+        'hashCode#0': (args) => (args[0] as OverlayVisibilityMode).hashCode,
         'index#0': (args) => (args[0] as OverlayVisibilityMode).index,
+        '==#1': (args) => (args[0] as OverlayVisibilityMode) == (args[1] as Object),
       };
 }

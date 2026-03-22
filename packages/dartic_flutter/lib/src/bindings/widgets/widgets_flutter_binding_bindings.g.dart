@@ -62,6 +62,7 @@ abstract final class WidgetsFlutterBindingBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WidgetsFlutterBinding).toString(),
         'initInstances#0': (args) { (args[0] as WidgetsFlutterBinding).initInstances(); return null; },
         'debugCheckZone#1': (args) => (args[0] as WidgetsFlutterBinding).debugCheckZone(args[1] as String),
         'initServiceExtensions#0': (args) { (args[0] as WidgetsFlutterBinding).initServiceExtensions(); return null; },
@@ -155,6 +156,7 @@ abstract final class WidgetsFlutterBindingBindings {
         'attachRootWidget#1': (args) { (args[0] as WidgetsFlutterBinding).attachRootWidget(args[1] as Widget); return null; },
         'attachToBuildOwner#1': (args) { (args[0] as WidgetsFlutterBinding).attachToBuildOwner(args[1] as RootWidget); return null; },
         'computePlatformResolvedLocale#1': (args) => (args[0] as WidgetsFlutterBinding).computePlatformResolvedLocale((args[1] as List).cast<Locale>()),
+        'hashCode#0': (args) => (args[0] as WidgetsFlutterBinding).hashCode,
         'window#0': (args) => (args[0] as WidgetsFlutterBinding).window,
         'platformDispatcher#0': (args) => (args[0] as WidgetsFlutterBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as WidgetsFlutterBinding).locked,
@@ -215,6 +217,7 @@ abstract final class WidgetsFlutterBindingBindings {
         'platformMenuDelegate=#1': (args) { (args[0] as WidgetsFlutterBinding).platformMenuDelegate = args[1] as PlatformMenuDelegate; return args[1]; },
         'debugBuildingDirtyElements=#1': (args) { (args[0] as WidgetsFlutterBinding).debugBuildingDirtyElements = args[1] as bool; return args[1]; },
         'windowingOwner=#1': (args) { (args[0] as WidgetsFlutterBinding).windowingOwner = args[1] as WindowingOwner; return args[1]; },
+        '==#1': (args) => (args[0] as WidgetsFlutterBinding) == (args[1] as Object),
         '#0': (args) => WidgetsFlutterBinding(),
       };
 }

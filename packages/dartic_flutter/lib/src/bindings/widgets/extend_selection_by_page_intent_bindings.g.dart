@@ -26,10 +26,13 @@ abstract final class ExtendSelectionByPageIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionByPageIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionByPageIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionByPageIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionByPageIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionByPageIntent).hashCode,
         'forward#0': (args) => (args[0] as ExtendSelectionByPageIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionByPageIntent) == (args[1] as Object),
         '#1': (args) => ExtendSelectionByPageIntent(forward: args[0] as bool),
         '_#fromFields#1': (args) => ExtendSelectionByPageIntent(forward: args[0] as bool),
       };

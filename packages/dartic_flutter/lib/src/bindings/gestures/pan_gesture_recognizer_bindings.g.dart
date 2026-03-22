@@ -38,6 +38,7 @@ abstract final class PanGestureRecognizerBindings {
         'isFlingGesture#2': (args) => (args[0] as PanGestureRecognizer).isFlingGesture(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'considerFling#2': (args) => (args[0] as PanGestureRecognizer).considerFling(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'hasSufficientGlobalDistanceToAccept#2': (args) => (args[0] as PanGestureRecognizer).hasSufficientGlobalDistanceToAccept(args[1] as PointerDeviceKind, args[2] as double?),
+        'toString#0': (args) => (args[0] as PanGestureRecognizer).toString(),
         'isPointerAllowed#1': (args) => (args[0] as PanGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as PanGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as PanGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
@@ -65,6 +66,7 @@ abstract final class PanGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as PanGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as PanGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as PanGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as PanGestureRecognizer).hashCode,
         'dragStartBehavior#0': (args) => (args[0] as PanGestureRecognizer).dragStartBehavior,
         'multitouchDragStrategy#0': (args) => (args[0] as PanGestureRecognizer).multitouchDragStrategy,
         'onDown#0': (args) => (args[0] as PanGestureRecognizer).onDown,
@@ -100,6 +102,7 @@ abstract final class PanGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as PanGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as PanGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as PanGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as PanGestureRecognizer) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[2], darticAbsent)) {
             return PanGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>());

@@ -37,6 +37,7 @@ abstract final class AnimatedOpacityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedOpacity).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedOpacity).toString(),
         'createElement#0': (args) => (args[0] as AnimatedOpacity).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedOpacity).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedOpacity).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -46,10 +47,12 @@ abstract final class AnimatedOpacityBindings {
         'child#0': (args) => (args[0] as AnimatedOpacity).child,
         'opacity#0': (args) => (args[0] as AnimatedOpacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as AnimatedOpacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as AnimatedOpacity).hashCode,
         'curve#0': (args) => (args[0] as AnimatedOpacity).curve,
         'duration#0': (args) => (args[0] as AnimatedOpacity).duration,
         'onEnd#0': (args) => (args[0] as AnimatedOpacity).onEnd,
         'key#0': (args) => (args[0] as AnimatedOpacity).key,
+        '==#1': (args) => (args[0] as AnimatedOpacity) == (args[1] as Object),
         '#7': (args) => AnimatedOpacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, opacity: args[2] as double, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), alwaysIncludeSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool),
         '_#fromFields#7': (args) => AnimatedOpacity(key: args[4] as Key?, child: args[1] as Widget?, opacity: args[6] as double, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[5] as ui.VoidCallback?, alwaysIncludeSemantics: args[0] as bool),
       };

@@ -25,9 +25,12 @@ abstract final class SelectionEdgeUpdateEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectionEdgeUpdateEvent).toString(),
         'globalPosition#0': (args) => (args[0] as SelectionEdgeUpdateEvent).globalPosition,
         'granularity#0': (args) => (args[0] as SelectionEdgeUpdateEvent).granularity,
+        'hashCode#0': (args) => (args[0] as SelectionEdgeUpdateEvent).hashCode,
         'type#0': (args) => (args[0] as SelectionEdgeUpdateEvent).type,
+        '==#1': (args) => (args[0] as SelectionEdgeUpdateEvent) == (args[1] as Object),
         'forStart#2': (args) => SelectionEdgeUpdateEvent.forStart(globalPosition: args[0] as Offset, granularity: identical(args[1], darticAbsent) ? null : args[1] as TextGranularity?),
         'forEnd#2': (args) => SelectionEdgeUpdateEvent.forEnd(globalPosition: args[0] as Offset, granularity: identical(args[1], darticAbsent) ? null : args[1] as TextGranularity?),
         '_#fromFields#3': (args) {

@@ -45,6 +45,7 @@ abstract final class CupertinoNavigationBarBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'shouldFullyObstruct#1': (args) => (args[0] as CupertinoNavigationBar).shouldFullyObstruct(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as CupertinoNavigationBar).createState(),
+        'toString#0': (args) => (args[0] as CupertinoNavigationBar).toString(),
         'createElement#0': (args) => (args[0] as CupertinoNavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoNavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoNavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -69,7 +70,9 @@ abstract final class CupertinoNavigationBarBindings {
         'heroTag#0': (args) => (args[0] as CupertinoNavigationBar).heroTag,
         'bottom#0': (args) => (args[0] as CupertinoNavigationBar).bottom,
         'preferredSize#0': (args) => (args[0] as CupertinoNavigationBar).preferredSize,
+        'hashCode#0': (args) => (args[0] as CupertinoNavigationBar).hashCode,
         'key#0': (args) => (args[0] as CupertinoNavigationBar).key,
+        '==#1': (args) => (args[0] as CupertinoNavigationBar) == (args[1] as Object),
         '#16': (args) {
           if (identical(args[14], darticAbsent)) {
             return CupertinoNavigationBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, leading: identical(args[1], darticAbsent) ? null : args[1] as Widget?, automaticallyImplyLeading: identical(args[2], darticAbsent) ? true : args[2] as bool, automaticallyImplyMiddle: identical(args[3], darticAbsent) ? true : args[3] as bool, previousPageTitle: identical(args[4], darticAbsent) ? null : args[4] as String?, middle: identical(args[5], darticAbsent) ? null : args[5] as Widget?, trailing: identical(args[6], darticAbsent) ? null : args[6] as Widget?, border: identical(args[7], darticAbsent) ? null : args[7] as Border?, backgroundColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, automaticBackgroundVisibility: identical(args[9], darticAbsent) ? true : args[9] as bool, enableBackgroundFilterBlur: identical(args[10], darticAbsent) ? true : args[10] as bool, brightness: identical(args[11], darticAbsent) ? null : args[11] as Brightness?, padding: identical(args[12], darticAbsent) ? null : args[12] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[13], darticAbsent) ? true : args[13] as bool, bottom: identical(args[15], darticAbsent) ? null : args[15] as PreferredSizeWidget?);

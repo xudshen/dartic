@@ -29,6 +29,7 @@ abstract final class CheckedModeBannerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CheckedModeBanner).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as CheckedModeBanner).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CheckedModeBanner).toString(),
         'createElement#0': (args) => (args[0] as CheckedModeBanner).createElement(),
         'toStringShort#0': (args) => (args[0] as CheckedModeBanner).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CheckedModeBanner).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -36,7 +37,9 @@ abstract final class CheckedModeBannerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CheckedModeBanner).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CheckedModeBanner).debugDescribeChildren(),
         'child#0': (args) => (args[0] as CheckedModeBanner).child,
+        'hashCode#0': (args) => (args[0] as CheckedModeBanner).hashCode,
         'key#0': (args) => (args[0] as CheckedModeBanner).key,
+        '==#1': (args) => (args[0] as CheckedModeBanner) == (args[1] as Object),
         '#2': (args) => CheckedModeBanner(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => CheckedModeBanner(key: args[1] as Key?, child: args[0] as Widget),
       };

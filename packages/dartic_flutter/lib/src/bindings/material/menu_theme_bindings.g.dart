@@ -31,6 +31,7 @@ abstract final class MenuThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MenuTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MenuTheme).updateShouldNotify(args[1] as MenuTheme),
+        'toString#0': (args) => (args[0] as MenuTheme).toString(),
         'createElement#0': (args) => (args[0] as MenuTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class MenuThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MenuTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MenuTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as MenuTheme).data,
+        'hashCode#0': (args) => (args[0] as MenuTheme).hashCode,
         'child#0': (args) => (args[0] as MenuTheme).child,
         'key#0': (args) => (args[0] as MenuTheme).key,
+        '==#1': (args) => (args[0] as MenuTheme) == (args[1] as Object),
         '#3': (args) => MenuTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as MenuThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => MenuTheme(key: args[2] as Key?, data: args[1] as MenuThemeData, child: args[0] as Widget),
       };

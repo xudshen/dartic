@@ -38,6 +38,7 @@ abstract final class LeafRenderObjectElementBindings {
         'moveRenderObjectChild#3': (args) { (args[0] as LeafRenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as LeafRenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as LeafRenderObjectElement).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as LeafRenderObjectElement).toString(),
         'mount#2': (args) { (args[0] as LeafRenderObjectElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as LeafRenderObjectElement).update(args[1] as RenderObjectWidget); return null; },
         'performRebuild#0': (args) { (args[0] as LeafRenderObjectElement).performRebuild(); return null; },
@@ -85,6 +86,7 @@ abstract final class LeafRenderObjectElementBindings {
         'rebuild#1': (args) { (args[0] as LeafRenderObjectElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as LeafRenderObjectElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as LeafRenderObjectElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as LeafRenderObjectElement).hashCode,
         'renderObject#0': (args) => (args[0] as LeafRenderObjectElement).renderObject,
         'renderObjectAttachingChild#0': (args) => (args[0] as LeafRenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as LeafRenderObjectElement).debugDoingBuild,
@@ -98,6 +100,7 @@ abstract final class LeafRenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as LeafRenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as LeafRenderObjectElement).size,
         'dirty#0': (args) => (args[0] as LeafRenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as LeafRenderObjectElement) == (args[1] as Object),
         '#1': (args) => LeafRenderObjectElement(args[0] as LeafRenderObjectWidget),
       };
 }

@@ -24,8 +24,11 @@ abstract final class ApplicationSwitcherDescriptionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ApplicationSwitcherDescription).toString(),
         'label#0': (args) => (args[0] as ApplicationSwitcherDescription).label,
         'primaryColor#0': (args) => (args[0] as ApplicationSwitcherDescription).primaryColor,
+        'hashCode#0': (args) => (args[0] as ApplicationSwitcherDescription).hashCode,
+        '==#1': (args) => (args[0] as ApplicationSwitcherDescription) == (args[1] as Object),
         '#2': (args) => ApplicationSwitcherDescription(label: identical(args[0], darticAbsent) ? null : args[0] as String?, primaryColor: identical(args[1], darticAbsent) ? null : args[1] as int?),
         '_#fromFields#2': (args) => ApplicationSwitcherDescription(label: args[0] as String?, primaryColor: args[1] as int?),
       };

@@ -32,6 +32,7 @@ abstract final class DismissActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DismissAction).toString(),
         'isEnabled#1': (args) => (args[0] as DismissAction).isEnabled(args[1] as DismissIntent),
         'consumesKey#1': (args) => (args[0] as DismissAction).consumesKey(args[1] as DismissIntent),
         'toKeyEventResult#2': (args) => (args[0] as DismissAction).toKeyEventResult(args[1] as DismissIntent, args[2]),
@@ -42,8 +43,10 @@ abstract final class DismissActionBindings {
         'toStringShort#0': (args) => (args[0] as DismissAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DismissAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DismissAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DismissAction).hashCode,
         'callingAction#0': (args) => (args[0] as DismissAction).callingAction,
         'intentType#0': (args) => (args[0] as DismissAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as DismissAction).isActionEnabled,
+        '==#1': (args) => (args[0] as DismissAction) == (args[1] as Object),
       };
 }

@@ -37,6 +37,7 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverSemanticsAnnotations).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverSemanticsAnnotations).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderSliverSemanticsAnnotations).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
@@ -99,6 +100,7 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverSemanticsAnnotations).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSliverSemanticsAnnotations).debugValidateChild(args[1] as RenderObject),
         'initSemanticsAnnotations#7': (args) { (args[0] as RenderSliverSemanticsAnnotations).initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverSemanticsAnnotations).constraints,
@@ -150,6 +152,7 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
         'blockUserActions=#1': (args) { (args[0] as RenderSliverSemanticsAnnotations).blockUserActions = args[1] as bool; return args[1]; },
         'localeForSubtree=#1': (args) { (args[0] as RenderSliverSemanticsAnnotations).localeForSubtree = args[1] as ui.Locale?; return args[1]; },
         'textDirection=#1': (args) { (args[0] as RenderSliverSemanticsAnnotations).textDirection = args[1] as ui.TextDirection?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverSemanticsAnnotations) == (args[1] as Object),
         '#8': (args) => RenderSliverSemanticsAnnotations(child: identical(args[0], darticAbsent) ? null : args[0] as RenderSliver?, properties: args[1] as SemanticsProperties, container: identical(args[2], darticAbsent) ? false : args[2] as bool, explicitChildNodes: identical(args[3], darticAbsent) ? false : args[3] as bool, excludeSemantics: identical(args[4], darticAbsent) ? false : args[4] as bool, blockUserActions: identical(args[5], darticAbsent) ? false : args[5] as bool, localeForSubtree: identical(args[6], darticAbsent) ? null : args[6] as ui.Locale?, textDirection: identical(args[7], darticAbsent) ? null : args[7] as ui.TextDirection?),
       };
 }

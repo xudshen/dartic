@@ -31,6 +31,9 @@ abstract final class DialogWindowControllerDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onWindowCloseRequested#1': (args) { (args[0] as DialogWindowControllerDelegate).onWindowCloseRequested(args[1] as DialogWindowController); return null; },
         'onWindowDestroyed#0': (args) { (args[0] as DialogWindowControllerDelegate).onWindowDestroyed(); return null; },
+        'toString#0': (args) => (args[0] as DialogWindowControllerDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as DialogWindowControllerDelegate).hashCode,
+        '==#1': (args) => (args[0] as DialogWindowControllerDelegate) == (args[1] as Object),
         '#0': (args) => DialogWindowControllerDelegate(),
       };
 }

@@ -35,6 +35,7 @@ abstract final class SliverListBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as SliverList).createElement(),
         'createRenderObject#1': (args) => (args[0] as SliverList).createRenderObject(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverList).toString(),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverList).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'updateRenderObject#2': (args) { (args[0] as SliverList).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
@@ -44,8 +45,10 @@ abstract final class SliverListBindings {
         'toStringDeep#4': (args) => (args[0] as SliverList).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as SliverList).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverList).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as SliverList).hashCode,
         'delegate#0': (args) => (args[0] as SliverList).delegate,
         'key#0': (args) => (args[0] as SliverList).key,
+        '==#1': (args) => (args[0] as SliverList) == (args[1] as Object),
         '#2': (args) => SliverList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as SliverChildDelegate),
         'builder#8': (args) => SliverList.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b) => (args[1] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), itemCount: identical(args[3], darticAbsent) ? null : args[3] as int?, addAutomaticKeepAlives: identical(args[4], darticAbsent) ? true : args[4] as bool, addRepaintBoundaries: identical(args[5], darticAbsent) ? true : args[5] as bool, addSemanticIndexes: identical(args[6], darticAbsent) ? true : args[6] as bool, semanticIndexOffset: identical(args[7], darticAbsent) ? 0 : args[7] as int),
         'separated#8': (args) => SliverList.separated(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b) => (args[1] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), separatorBuilder: (a, b) => (args[3] as Function)(a, b) as Widget?, itemCount: identical(args[4], darticAbsent) ? null : args[4] as int?, addAutomaticKeepAlives: identical(args[5], darticAbsent) ? true : args[5] as bool, addRepaintBoundaries: identical(args[6], darticAbsent) ? true : args[6] as bool, addSemanticIndexes: identical(args[7], darticAbsent) ? true : args[7] as bool),

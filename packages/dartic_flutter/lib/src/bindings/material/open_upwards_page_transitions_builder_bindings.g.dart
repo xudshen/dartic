@@ -36,9 +36,12 @@ abstract final class OpenUpwardsPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).buildTransitions(args[1] as PageRoute?, args[2] as BuildContext?, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).toString(),
+        'hashCode#0': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).hashCode,
         'delegatedTransition#0': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).delegatedTransition,
         'transitionDuration#0': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as OpenUpwardsPageTransitionsBuilder) == (args[1] as Object),
         '#0': (args) => OpenUpwardsPageTransitionsBuilder(),
         '_#fromFields#0': (args) => OpenUpwardsPageTransitionsBuilder(),
       };

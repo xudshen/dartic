@@ -40,6 +40,7 @@ abstract final class SelectionAreaBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SelectionArea).createState(),
+        'toString#0': (args) => (args[0] as SelectionArea).toString(),
         'createElement#0': (args) => (args[0] as SelectionArea).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectionArea).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectionArea).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -53,7 +54,9 @@ abstract final class SelectionAreaBindings {
         'contextMenuBuilder#0': (args) => (args[0] as SelectionArea).contextMenuBuilder,
         'onSelectionChanged#0': (args) => (args[0] as SelectionArea).onSelectionChanged,
         'child#0': (args) => (args[0] as SelectionArea).child,
+        'hashCode#0': (args) => (args[0] as SelectionArea).hashCode,
         'key#0': (args) => (args[0] as SelectionArea).key,
+        '==#1': (args) => (args[0] as SelectionArea) == (args[1] as Object),
         '#7': (args) => SelectionArea(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, focusNode: identical(args[1], darticAbsent) ? null : args[1] as FocusNode?, selectionControls: identical(args[2], darticAbsent) ? null : args[2] as TextSelectionControls?, contextMenuBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), magnifierConfiguration: identical(args[4], darticAbsent) ? null : args[4] as TextMagnifierConfiguration?, onSelectionChanged: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), child: args[6] as Widget),
         '_#fromFields#7': (args) => SelectionArea(key: args[3] as Key?, focusNode: args[2] as FocusNode?, selectionControls: args[6] as TextSelectionControls?, contextMenuBuilder: args[1] as SelectableRegionContextMenuBuilder?, magnifierConfiguration: args[4] as TextMagnifierConfiguration?, onSelectionChanged: args[5] as ValueChanged<SelectedContent?>?, child: args[0] as Widget),
       };

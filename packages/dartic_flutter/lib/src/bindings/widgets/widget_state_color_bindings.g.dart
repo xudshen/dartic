@@ -27,6 +27,7 @@ abstract final class WidgetStateColorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) => (args[0] as WidgetStateColor).resolve((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as WidgetStateColor).toString(),
         'toARGB32#0': (args) => (args[0] as WidgetStateColor).toARGB32(),
         'withValues#5': (args) => (args[0] as WidgetStateColor).withValues(alpha: identical(args[1], darticAbsent) ? null : args[1] as double?, red: identical(args[2], darticAbsent) ? null : args[2] as double?, green: identical(args[3], darticAbsent) ? null : args[3] as double?, blue: identical(args[4], darticAbsent) ? null : args[4] as double?, colorSpace: identical(args[5], darticAbsent) ? null : args[5] as ColorSpace?),
         'withAlpha#1': (args) => (args[0] as WidgetStateColor).withAlpha(args[1] as int),
@@ -35,6 +36,7 @@ abstract final class WidgetStateColorBindings {
         'withGreen#1': (args) => (args[0] as WidgetStateColor).withGreen(args[1] as int),
         'withBlue#1': (args) => (args[0] as WidgetStateColor).withBlue(args[1] as int),
         'computeLuminance#0': (args) => (args[0] as WidgetStateColor).computeLuminance(),
+        'hashCode#0': (args) => (args[0] as WidgetStateColor).hashCode,
         'a#0': (args) => (args[0] as WidgetStateColor).a,
         'r#0': (args) => (args[0] as WidgetStateColor).r,
         'g#0': (args) => (args[0] as WidgetStateColor).g,
@@ -46,5 +48,8 @@ abstract final class WidgetStateColorBindings {
         'red#0': (args) => (args[0] as WidgetStateColor).red,
         'green#0': (args) => (args[0] as WidgetStateColor).green,
         'blue#0': (args) => (args[0] as WidgetStateColor).blue,
+        '==#1': (args) => (args[0] as WidgetStateColor) == (args[1] as Object),
+        'resolveWith#1': (args) => WidgetStateColor.resolveWith((a) => (args[0] as Function)(a) as Color),
+        'fromMap#1': (args) => WidgetStateColor.fromMap((args[0] as Map).cast<WidgetStatesConstraint, Color>()),
       };
 }

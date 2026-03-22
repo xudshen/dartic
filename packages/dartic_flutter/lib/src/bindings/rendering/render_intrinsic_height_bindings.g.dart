@@ -44,6 +44,7 @@ abstract final class RenderIntrinsicHeightBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderIntrinsicHeight).computeDryLayout(args[1] as BoxConstraints),
         'computeDryBaseline#2': (args) => (args[0] as RenderIntrinsicHeight).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderIntrinsicHeight).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderIntrinsicHeight).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIntrinsicHeight).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicHeight).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderIntrinsicHeight).getMaxIntrinsicWidth(args[1] as double),
@@ -116,6 +117,7 @@ abstract final class RenderIntrinsicHeightBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderIntrinsicHeight).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderIntrinsicHeight).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderIntrinsicHeight).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderIntrinsicHeight).hashCode,
         'hasSize#0': (args) => (args[0] as RenderIntrinsicHeight).hasSize,
         'size#0': (args) => (args[0] as RenderIntrinsicHeight).size,
         'semanticBounds#0': (args) => (args[0] as RenderIntrinsicHeight).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class RenderIntrinsicHeightBindings {
         'debugCreator=#1': (args) { (args[0] as RenderIntrinsicHeight).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIntrinsicHeight).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderIntrinsicHeight).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIntrinsicHeight) == (args[1] as Object),
         '#1': (args) => RenderIntrinsicHeight(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

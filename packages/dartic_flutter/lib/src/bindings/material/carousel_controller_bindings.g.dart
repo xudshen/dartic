@@ -42,6 +42,7 @@ abstract final class CarouselControllerBindings {
         'animateToItem#3': (args) => (args[0] as CarouselController).animateToItem(args[1] as int, duration: identical(args[2], darticAbsent) ? const Duration(milliseconds: 300) : args[2] as Duration, curve: identical(args[3], darticAbsent) ? Curves.ease : args[3] as Curve),
         'createScrollPosition#3': (args) => (args[0] as CarouselController).createScrollPosition(args[1] as ScrollPhysics, args[2] as ScrollContext, args[3] as ScrollPosition?),
         'attach#1': (args) { (args[0] as CarouselController).attach(args[1] as ScrollPosition); return null; },
+        'toString#0': (args) => (args[0] as CarouselController).toString(),
         'animateTo#3': (args) => (args[0] as CarouselController).animateTo(args[1] as double, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpTo#1': (args) { (args[0] as CarouselController).jumpTo(args[1] as double); return null; },
         'detach#1': (args) { (args[0] as CarouselController).detach(args[1] as ScrollPosition); return null; },
@@ -51,6 +52,7 @@ abstract final class CarouselControllerBindings {
         'removeListener#1': (args) { (args[0] as CarouselController).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as CarouselController).notifyListeners(); return null; },
         'initialItem#0': (args) => (args[0] as CarouselController).initialItem,
+        'hashCode#0': (args) => (args[0] as CarouselController).hashCode,
         'initialScrollOffset#0': (args) => (args[0] as CarouselController).initialScrollOffset,
         'keepScrollOffset#0': (args) => (args[0] as CarouselController).keepScrollOffset,
         'onAttach#0': (args) => (args[0] as CarouselController).onAttach,
@@ -61,6 +63,7 @@ abstract final class CarouselControllerBindings {
         'position#0': (args) => (args[0] as CarouselController).position,
         'offset#0': (args) => (args[0] as CarouselController).offset,
         'hasListeners#0': (args) => (args[0] as CarouselController).hasListeners,
+        '==#1': (args) => (args[0] as CarouselController) == (args[1] as Object),
         '#1': (args) => CarouselController(initialItem: identical(args[0], darticAbsent) ? 0 : args[0] as int),
       };
 }

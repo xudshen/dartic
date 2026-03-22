@@ -39,6 +39,7 @@ abstract final class RenderMergeSemanticsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderMergeSemantics).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
+        'toString#0': (args) => (args[0] as RenderMergeSemantics).toString(),
         'setupParentData#1': (args) { (args[0] as RenderMergeSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderMergeSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderMergeSemantics).computeMinIntrinsicWidth(args[1] as double),
@@ -116,6 +117,7 @@ abstract final class RenderMergeSemanticsBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderMergeSemantics).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderMergeSemantics).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderMergeSemantics).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderMergeSemantics).hashCode,
         'hasSize#0': (args) => (args[0] as RenderMergeSemantics).hasSize,
         'size#0': (args) => (args[0] as RenderMergeSemantics).size,
         'semanticBounds#0': (args) => (args[0] as RenderMergeSemantics).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class RenderMergeSemanticsBindings {
         'debugCreator=#1': (args) { (args[0] as RenderMergeSemantics).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderMergeSemantics).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderMergeSemantics).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderMergeSemantics) == (args[1] as Object),
         '#1': (args) => RenderMergeSemantics(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

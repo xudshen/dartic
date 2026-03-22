@@ -27,5 +27,8 @@ abstract final class TextLayoutMetricsBindings {
         'getWordBoundary#1': (args) => (args[0] as TextLayoutMetrics).getWordBoundary(args[1] as TextPosition),
         'getTextPositionAbove#1': (args) => (args[0] as TextLayoutMetrics).getTextPositionAbove(args[1] as TextPosition),
         'getTextPositionBelow#1': (args) => (args[0] as TextLayoutMetrics).getTextPositionBelow(args[1] as TextPosition),
+        'toString#0': (args) => (args[0] as TextLayoutMetrics).toString(),
+        'hashCode#0': (args) => (args[0] as TextLayoutMetrics).hashCode,
+        '==#1': (args) => (args[0] as TextLayoutMetrics) == (args[1] as Object),
       };
 }

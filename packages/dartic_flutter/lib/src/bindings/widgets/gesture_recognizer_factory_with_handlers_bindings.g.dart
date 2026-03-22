@@ -30,6 +30,9 @@ abstract final class GestureRecognizerFactoryWithHandlersBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'constructor#0': (args) => (args[0] as GestureRecognizerFactoryWithHandlers).constructor(),
         'initializer#1': (args) { (args[0] as GestureRecognizerFactoryWithHandlers).initializer(args[1] as GestureRecognizer); return null; },
+        'toString#0': (args) => (args[0] as GestureRecognizerFactoryWithHandlers).toString(),
+        'hashCode#0': (args) => (args[0] as GestureRecognizerFactoryWithHandlers).hashCode,
+        '==#1': (args) => (args[0] as GestureRecognizerFactoryWithHandlers) == (args[1] as Object),
         '#2': (args) => GestureRecognizerFactoryWithHandlers<GestureRecognizer>(() => (args[0] as Function)() as GestureRecognizer, (a) => (args[1] as Function)(a)),
         '_#fromFields#2': (args) => GestureRecognizerFactoryWithHandlers<GestureRecognizer>(args[0] as GestureRecognizer Function(), args[1] as void Function(GestureRecognizer)),
       };

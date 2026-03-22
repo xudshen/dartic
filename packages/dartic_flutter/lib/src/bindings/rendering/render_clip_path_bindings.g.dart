@@ -41,6 +41,7 @@ abstract final class RenderClipPathBindings {
         'hitTest#2': (args) => (args[0] as RenderClipPath).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipPath).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipPath).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderClipPath).toString(),
         'attach#1': (args) { (args[0] as RenderClipPath).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipPath).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipPath).performLayout(); return null; },
@@ -116,6 +117,7 @@ abstract final class RenderClipPathBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderClipPath).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderClipPath).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderClipPath).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderClipPath).hashCode,
         'clipper#0': (args) => (args[0] as RenderClipPath).clipper,
         'clipBehavior#0': (args) => (args[0] as RenderClipPath).clipBehavior,
         'hasSize#0': (args) => (args[0] as RenderClipPath).hasSize,
@@ -156,6 +158,7 @@ abstract final class RenderClipPathBindings {
         'debugCreator=#1': (args) { (args[0] as RenderClipPath).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderClipPath).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderClipPath).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderClipPath) == (args[1] as Object),
         '#3': (args) => RenderClipPath(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<ui.Path>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip),
       };
 }

@@ -32,6 +32,7 @@ abstract final class FlexibleSpaceBarSettingsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as FlexibleSpaceBarSettings).updateShouldNotify(args[1] as FlexibleSpaceBarSettings),
+        'toString#0': (args) => (args[0] as FlexibleSpaceBarSettings).toString(),
         'createElement#0': (args) => (args[0] as FlexibleSpaceBarSettings).createElement(),
         'toStringShort#0': (args) => (args[0] as FlexibleSpaceBarSettings).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FlexibleSpaceBarSettings).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,8 +46,10 @@ abstract final class FlexibleSpaceBarSettingsBindings {
         'currentExtent#0': (args) => (args[0] as FlexibleSpaceBarSettings).currentExtent,
         'isScrolledUnder#0': (args) => (args[0] as FlexibleSpaceBarSettings).isScrolledUnder,
         'hasLeading#0': (args) => (args[0] as FlexibleSpaceBarSettings).hasLeading,
+        'hashCode#0': (args) => (args[0] as FlexibleSpaceBarSettings).hashCode,
         'child#0': (args) => (args[0] as FlexibleSpaceBarSettings).child,
         'key#0': (args) => (args[0] as FlexibleSpaceBarSettings).key,
+        '==#1': (args) => (args[0] as FlexibleSpaceBarSettings) == (args[1] as Object),
         '#8': (args) => FlexibleSpaceBarSettings(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, toolbarOpacity: args[1] as double, minExtent: args[2] as double, maxExtent: args[3] as double, currentExtent: args[4] as double, child: args[5] as Widget, isScrolledUnder: identical(args[6], darticAbsent) ? null : args[6] as bool?, hasLeading: identical(args[7], darticAbsent) ? null : args[7] as bool?),
         '_#fromFields#8': (args) => FlexibleSpaceBarSettings(key: args[4] as Key?, toolbarOpacity: args[7] as double, minExtent: args[6] as double, maxExtent: args[5] as double, currentExtent: args[1] as double, child: args[0] as Widget, isScrolledUnder: args[3] as bool?, hasLeading: args[2] as bool?),
       };

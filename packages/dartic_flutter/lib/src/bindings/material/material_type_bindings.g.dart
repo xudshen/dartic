@@ -32,6 +32,9 @@ abstract final class MaterialTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MaterialType).toString(),
+        'hashCode#0': (args) => (args[0] as MaterialType).hashCode,
         'index#0': (args) => (args[0] as MaterialType).index,
+        '==#1': (args) => (args[0] as MaterialType) == (args[1] as Object),
       };
 }

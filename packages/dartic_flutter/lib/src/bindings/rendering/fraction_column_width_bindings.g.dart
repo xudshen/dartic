@@ -32,6 +32,8 @@ abstract final class FractionColumnWidthBindings {
         'toString#0': (args) => (args[0] as FractionColumnWidth).toString(),
         'flex#1': (args) => (args[0] as FractionColumnWidth).flex((args[1] as Iterable).cast<RenderBox>()),
         'value#0': (args) => (args[0] as FractionColumnWidth).value,
+        'hashCode#0': (args) => (args[0] as FractionColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as FractionColumnWidth) == (args[1] as Object),
         '#1': (args) => FractionColumnWidth(args[0] as double),
         '_#fromFields#1': (args) => FractionColumnWidth(args[0] as double),
       };

@@ -39,6 +39,7 @@ abstract final class BaselineBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as Baseline).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Baseline).updateRenderObject(args[1] as BuildContext, args[2] as RenderBaseline); return null; },
+        'toString#0': (args) => (args[0] as Baseline).toString(),
         'createElement#0': (args) => (args[0] as Baseline).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Baseline).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Baseline).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class BaselineBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Baseline).debugDescribeChildren(),
         'baseline#0': (args) => (args[0] as Baseline).baseline,
         'baselineType#0': (args) => (args[0] as Baseline).baselineType,
+        'hashCode#0': (args) => (args[0] as Baseline).hashCode,
         'child#0': (args) => (args[0] as Baseline).child,
         'key#0': (args) => (args[0] as Baseline).key,
+        '==#1': (args) => (args[0] as Baseline) == (args[1] as Object),
         '#4': (args) => Baseline(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, baseline: args[1] as double, baselineType: args[2] as ui.TextBaseline, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => Baseline(key: args[3] as Key?, baseline: args[0] as double, baselineType: args[1] as ui.TextBaseline, child: args[2] as Widget?),
       };

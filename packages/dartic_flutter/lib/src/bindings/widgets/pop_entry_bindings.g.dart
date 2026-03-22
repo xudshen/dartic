@@ -46,5 +46,7 @@ abstract final class PopEntryBindings {
         'onPopInvokedWithResult#2': (args) { (args[0] as PopEntry).onPopInvokedWithResult(args[1] as bool, args[2]); return null; },
         'toString#0': (args) => (args[0] as PopEntry).toString(),
         'canPopNotifier#0': (args) => (args[0] as PopEntry).canPopNotifier,
+        'hashCode#0': (args) => (args[0] as PopEntry).hashCode,
+        '==#1': (args) => (args[0] as PopEntry) == (args[1] as Object),
       };
 }

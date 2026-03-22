@@ -32,6 +32,7 @@ abstract final class VelocityBindings {
         'unary-#0': (args) => -(args[0] as Velocity),
         '-#1': (args) => (args[0] as Velocity) - (args[1] as Velocity),
         '+#1': (args) => (args[0] as Velocity) + (args[1] as Velocity),
+        '==#1': (args) => (args[0] as Velocity) == (args[1] as Object),
         '#1': (args) => Velocity(pixelsPerSecond: args[0] as Offset),
         '_#fromFields#1': (args) => Velocity(pixelsPerSecond: args[0] as Offset),
       };

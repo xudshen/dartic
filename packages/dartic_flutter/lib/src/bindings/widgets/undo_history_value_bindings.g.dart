@@ -31,6 +31,7 @@ abstract final class UndoHistoryValueBindings {
         'canUndo#0': (args) => (args[0] as UndoHistoryValue).canUndo,
         'canRedo#0': (args) => (args[0] as UndoHistoryValue).canRedo,
         'hashCode#0': (args) => (args[0] as UndoHistoryValue).hashCode,
+        '==#1': (args) => (args[0] as UndoHistoryValue) == (args[1] as Object),
         '#2': (args) => UndoHistoryValue(canUndo: identical(args[0], darticAbsent) ? false : args[0] as bool, canRedo: identical(args[1], darticAbsent) ? false : args[1] as bool),
         '_#fromFields#2': (args) => UndoHistoryValue(canUndo: args[1] as bool, canRedo: args[0] as bool),
       };

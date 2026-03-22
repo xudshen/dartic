@@ -34,6 +34,7 @@ abstract final class DisplayFeatureBindings {
         'type#0': (args) => (args[0] as DisplayFeature).type,
         'state#0': (args) => (args[0] as DisplayFeature).state,
         'hashCode#0': (args) => (args[0] as DisplayFeature).hashCode,
+        '==#1': (args) => (args[0] as DisplayFeature) == (args[1] as Object),
         '#3': (args) => DisplayFeature(bounds: args[0] as Rect, type: args[1] as DisplayFeatureType, state: args[2] as DisplayFeatureState),
         '_#fromFields#3': (args) => DisplayFeature(bounds: args[0] as Rect, type: args[2] as DisplayFeatureType, state: args[1] as DisplayFeatureState),
       };

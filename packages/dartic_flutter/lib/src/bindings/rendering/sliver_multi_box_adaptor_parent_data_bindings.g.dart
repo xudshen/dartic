@@ -30,6 +30,7 @@ abstract final class SliverMultiBoxAdaptorParentDataBindings {
         'detach#0': (args) { (args[0] as SliverMultiBoxAdaptorParentData).detach(); return null; },
         'index#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).index,
         'keptAlive#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).keptAlive,
+        'hashCode#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).hashCode,
         'layoutOffset#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).layoutOffset,
         'previousSibling#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as SliverMultiBoxAdaptorParentData).nextSibling,
@@ -39,6 +40,7 @@ abstract final class SliverMultiBoxAdaptorParentDataBindings {
         'previousSibling=#1': (args) { (args[0] as SliverMultiBoxAdaptorParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as SliverMultiBoxAdaptorParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
         'keepAlive=#1': (args) { (args[0] as SliverMultiBoxAdaptorParentData).keepAlive = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as SliverMultiBoxAdaptorParentData) == (args[1] as Object),
         '#0': (args) => SliverMultiBoxAdaptorParentData(),
       };
 }

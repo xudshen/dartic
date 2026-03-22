@@ -23,5 +23,8 @@ abstract final class HitTestTargetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'handleEvent#2': (args) { (args[0] as HitTestTarget).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
+        'toString#0': (args) => (args[0] as HitTestTarget).toString(),
+        'hashCode#0': (args) => (args[0] as HitTestTarget).hashCode,
+        '==#1': (args) => (args[0] as HitTestTarget) == (args[1] as Object),
       };
 }

@@ -38,8 +38,11 @@ abstract final class BackButtonDispatcherBindings {
         'takePriority#0': (args) { (args[0] as BackButtonDispatcher).takePriority(); return null; },
         'deferTo#1': (args) { (args[0] as BackButtonDispatcher).deferTo(args[1] as ChildBackButtonDispatcher); return null; },
         'forget#1': (args) { (args[0] as BackButtonDispatcher).forget(args[1] as ChildBackButtonDispatcher); return null; },
+        'toString#0': (args) => (args[0] as BackButtonDispatcher).toString(),
         'addCallback#1': (args) { (args[0] as BackButtonDispatcher).addCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'removeCallback#1': (args) { (args[0] as BackButtonDispatcher).removeCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'hasCallbacks#0': (args) => (args[0] as BackButtonDispatcher).hasCallbacks,
+        'hashCode#0': (args) => (args[0] as BackButtonDispatcher).hashCode,
+        '==#1': (args) => (args[0] as BackButtonDispatcher) == (args[1] as Object),
       };
 }

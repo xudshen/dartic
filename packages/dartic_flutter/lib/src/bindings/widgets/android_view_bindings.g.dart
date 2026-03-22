@@ -40,6 +40,7 @@ abstract final class AndroidViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AndroidView).createState(),
+        'toString#0': (args) => (args[0] as AndroidView).toString(),
         'createElement#0': (args) => (args[0] as AndroidView).createElement(),
         'toStringShort#0': (args) => (args[0] as AndroidView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AndroidView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -55,7 +56,9 @@ abstract final class AndroidViewBindings {
         'creationParams#0': (args) => (args[0] as AndroidView).creationParams,
         'creationParamsCodec#0': (args) => (args[0] as AndroidView).creationParamsCodec,
         'clipBehavior#0': (args) => (args[0] as AndroidView).clipBehavior,
+        'hashCode#0': (args) => (args[0] as AndroidView).hashCode,
         'key#0': (args) => (args[0] as AndroidView).key,
+        '==#1': (args) => (args[0] as AndroidView) == (args[1] as Object),
         '#9': (args) => AndroidView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, viewType: args[1] as String, onPlatformViewCreated: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), hitTestBehavior: identical(args[3], darticAbsent) ? PlatformViewHitTestBehavior.opaque : args[3] as PlatformViewHitTestBehavior, layoutDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?, gestureRecognizers: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as Set).cast<Factory<OneSequenceGestureRecognizer>>(), creationParams: identical(args[6], darticAbsent) ? null : args[6], creationParamsCodec: identical(args[7], darticAbsent) ? null : args[7] as MessageCodec<dynamic>?, clipBehavior: identical(args[8], darticAbsent) ? Clip.hardEdge : args[8] as Clip),
         '_#fromFields#9': (args) => AndroidView(key: args[5] as Key?, viewType: args[8] as String, onPlatformViewCreated: args[7] as PlatformViewCreatedCallback?, hitTestBehavior: args[4] as PlatformViewHitTestBehavior, layoutDirection: args[6] as TextDirection?, gestureRecognizers: args[3] == null ? null : (args[3] as Set).cast<Factory<OneSequenceGestureRecognizer>>(), creationParams: args[1], creationParamsCodec: args[2] as MessageCodec<dynamic>?, clipBehavior: args[0] as Clip),
       };

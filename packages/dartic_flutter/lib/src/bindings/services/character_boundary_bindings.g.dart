@@ -27,6 +27,9 @@ abstract final class CharacterBoundaryBindings {
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as CharacterBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as CharacterBoundary).getTrailingTextBoundaryAt(args[1] as int),
         'getTextBoundaryAt#1': (args) => (args[0] as CharacterBoundary).getTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as CharacterBoundary).toString(),
+        'hashCode#0': (args) => (args[0] as CharacterBoundary).hashCode,
+        '==#1': (args) => (args[0] as CharacterBoundary) == (args[1] as Object),
         '#1': (args) => CharacterBoundary(args[0] as String),
         '_#fromFields#1': (args) => CharacterBoundary(args[0] as String),
       };

@@ -41,6 +41,7 @@ abstract final class AnimatedListBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedList).createState(),
+        'toString#0': (args) => (args[0] as AnimatedList).toString(),
         'createElement#0': (args) => (args[0] as AnimatedList).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedList).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,6 +49,7 @@ abstract final class AnimatedListBindings {
         'toStringDeep#4': (args) => (args[0] as AnimatedList).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedList).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedList).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as AnimatedList).hashCode,
         'itemBuilder#0': (args) => (args[0] as AnimatedList).itemBuilder,
         'removedSeparatorBuilder#0': (args) => (args[0] as AnimatedList).removedSeparatorBuilder,
         'initialItemCount#0': (args) => (args[0] as AnimatedList).initialItemCount,
@@ -60,6 +62,7 @@ abstract final class AnimatedListBindings {
         'padding#0': (args) => (args[0] as AnimatedList).padding,
         'clipBehavior#0': (args) => (args[0] as AnimatedList).clipBehavior,
         'key#0': (args) => (args[0] as AnimatedList).key,
+        '==#1': (args) => (args[0] as AnimatedList) == (args[1] as Object),
         '#11': (args) => AnimatedList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, initialItemCount: identical(args[2], darticAbsent) ? 0 : args[2] as int, scrollDirection: identical(args[3], darticAbsent) ? Axis.vertical : args[3] as Axis, reverse: identical(args[4], darticAbsent) ? false : args[4] as bool, controller: identical(args[5], darticAbsent) ? null : args[5] as ScrollController?, primary: identical(args[6], darticAbsent) ? null : args[6] as bool?, physics: identical(args[7], darticAbsent) ? null : args[7] as ScrollPhysics?, shrinkWrap: identical(args[8], darticAbsent) ? false : args[8] as bool, padding: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, clipBehavior: identical(args[10], darticAbsent) ? Clip.hardEdge : args[10] as Clip),
         'separated#13': (args) => AnimatedList.separated(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, separatorBuilder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, removedSeparatorBuilder: (a, b, c) => (args[3] as Function)(a, b, c) as Widget, initialItemCount: identical(args[4], darticAbsent) ? 0 : args[4] as int, scrollDirection: identical(args[5], darticAbsent) ? Axis.vertical : args[5] as Axis, reverse: identical(args[6], darticAbsent) ? false : args[6] as bool, controller: identical(args[7], darticAbsent) ? null : args[7] as ScrollController?, primary: identical(args[8], darticAbsent) ? null : args[8] as bool?, physics: identical(args[9], darticAbsent) ? null : args[9] as ScrollPhysics?, shrinkWrap: identical(args[10], darticAbsent) ? false : args[10] as bool, padding: identical(args[11], darticAbsent) ? null : args[11] as EdgeInsetsGeometry?, clipBehavior: identical(args[12], darticAbsent) ? Clip.hardEdge : args[12] as Clip),
         '_#fromFields#12': (args) => AnimatedList(key: args[4] as Key?, itemBuilder: args[3] as AnimatedItemBuilder, initialItemCount: args[2] as int, scrollDirection: args[10] as Axis, reverse: args[9] as bool, controller: args[1] as ScrollController?, primary: args[7] as bool?, physics: args[6] as ScrollPhysics?, shrinkWrap: args[11] as bool, padding: args[5] as EdgeInsetsGeometry?, clipBehavior: args[0] as Clip),

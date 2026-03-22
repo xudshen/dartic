@@ -38,6 +38,7 @@ abstract final class VerticalDragGestureRecognizerBindings {
         'isFlingGesture#2': (args) => (args[0] as VerticalDragGestureRecognizer).isFlingGesture(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'considerFling#2': (args) => (args[0] as VerticalDragGestureRecognizer).considerFling(args[1] as VelocityEstimate, args[2] as PointerDeviceKind),
         'hasSufficientGlobalDistanceToAccept#2': (args) => (args[0] as VerticalDragGestureRecognizer).hasSufficientGlobalDistanceToAccept(args[1] as PointerDeviceKind, args[2] as double?),
+        'toString#0': (args) => (args[0] as VerticalDragGestureRecognizer).toString(),
         'isPointerAllowed#1': (args) => (args[0] as VerticalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as VerticalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as VerticalDragGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
@@ -65,6 +66,7 @@ abstract final class VerticalDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as VerticalDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as VerticalDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as VerticalDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as VerticalDragGestureRecognizer).hashCode,
         'dragStartBehavior#0': (args) => (args[0] as VerticalDragGestureRecognizer).dragStartBehavior,
         'multitouchDragStrategy#0': (args) => (args[0] as VerticalDragGestureRecognizer).multitouchDragStrategy,
         'onDown#0': (args) => (args[0] as VerticalDragGestureRecognizer).onDown,
@@ -100,6 +102,7 @@ abstract final class VerticalDragGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as VerticalDragGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as VerticalDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as VerticalDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as VerticalDragGestureRecognizer) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[2], darticAbsent)) {
             return VerticalDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>());

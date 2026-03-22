@@ -64,6 +64,7 @@ abstract final class SelectionOverlayBindings {
         'hideToolbar#0': (args) { (args[0] as SelectionOverlay).hideToolbar(); return null; },
         'dispose#0': (args) { (args[0] as SelectionOverlay).dispose(); return null; },
         'updateMagnifier#1': (args) { (args[0] as SelectionOverlay).updateMagnifier(args[1] as MagnifierInfo); return null; },
+        'toString#0': (args) => (args[0] as SelectionOverlay).toString(),
         'context#0': (args) => (args[0] as SelectionOverlay).context,
         'magnifierConfiguration#0': (args) => (args[0] as SelectionOverlay).magnifierConfiguration,
         'toolbarIsVisible#0': (args) => (args[0] as SelectionOverlay).toolbarIsVisible,
@@ -95,12 +96,14 @@ abstract final class SelectionOverlayBindings {
         'onSelectionHandleTapped#0': (args) => (args[0] as SelectionOverlay).onSelectionHandleTapped,
         'clipboardStatus#0': (args) => (args[0] as SelectionOverlay).clipboardStatus,
         'toolbarLocation#0': (args) => (args[0] as SelectionOverlay).toolbarLocation,
+        'hashCode#0': (args) => (args[0] as SelectionOverlay).hashCode,
         'startHandleType=#1': (args) { (args[0] as SelectionOverlay).startHandleType = args[1] as TextSelectionHandleType; return args[1]; },
         'lineHeightAtStart=#1': (args) { (args[0] as SelectionOverlay).lineHeightAtStart = args[1] as double; return args[1]; },
         'endHandleType=#1': (args) { (args[0] as SelectionOverlay).endHandleType = args[1] as TextSelectionHandleType; return args[1]; },
         'lineHeightAtEnd=#1': (args) { (args[0] as SelectionOverlay).lineHeightAtEnd = args[1] as double; return args[1]; },
         'selectionEndpoints=#1': (args) { (args[0] as SelectionOverlay).selectionEndpoints = (args[1] as List).cast<TextSelectionPoint>(); return args[1]; },
         'toolbarLocation=#1': (args) { (args[0] as SelectionOverlay).toolbarLocation = args[1] as Offset?; return args[1]; },
+        '==#1': (args) => (args[0] as SelectionOverlay) == (args[1] as Object),
         '#26': (args) => SelectionOverlay(context: args[0] as BuildContext, debugRequiredFor: identical(args[1], darticAbsent) ? null : args[1] as Widget?, startHandleType: args[2] as TextSelectionHandleType, lineHeightAtStart: args[3] as double, startHandlesVisible: identical(args[4], darticAbsent) ? null : args[4] as ValueListenable<bool>?, onStartHandleDragStart: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onStartHandleDragUpdate: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onStartHandleDragEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), endHandleType: args[8] as TextSelectionHandleType, lineHeightAtEnd: args[9] as double, endHandlesVisible: identical(args[10], darticAbsent) ? null : args[10] as ValueListenable<bool>?, onEndHandleDragStart: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : (a) => (args[11] as Function?)!(a), onEndHandleDragUpdate: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : (a) => (args[12] as Function?)!(a), onEndHandleDragEnd: identical(args[13], darticAbsent) ? null : (args[13] as Function?) == null ? null : (a) => (args[13] as Function?)!(a), toolbarVisible: identical(args[14], darticAbsent) ? null : args[14] as ValueListenable<bool>?, selectionEndpoints: (args[15] as List).cast<TextSelectionPoint>(), selectionControls: args[16] as TextSelectionControls?, selectionDelegate: args[17] as TextSelectionDelegate?, clipboardStatus: args[18] as ClipboardStatusNotifier?, startHandleLayerLink: args[19] as LayerLink, endHandleLayerLink: args[20] as LayerLink, toolbarLayerLink: args[21] as LayerLink, dragStartBehavior: identical(args[22], darticAbsent) ? DragStartBehavior.start : args[22] as DragStartBehavior, onSelectionHandleTapped: identical(args[23], darticAbsent) ? null : (args[23] as Function?) == null ? null : () => (args[23] as Function?)!(), toolbarLocation: identical(args[24], darticAbsent) ? null : args[24] as Offset?, magnifierConfiguration: identical(args[25], darticAbsent) ? TextMagnifierConfiguration.disabled : args[25] as TextMagnifierConfiguration),
       };
 }

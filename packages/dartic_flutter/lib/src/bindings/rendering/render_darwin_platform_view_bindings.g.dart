@@ -49,6 +49,7 @@ abstract final class RenderDarwinPlatformViewBindings {
         'attach#1': (args) { (args[0] as RenderDarwinPlatformView).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderDarwinPlatformView).detach(); return null; },
         'updateGestureRecognizers#1': (args) { (args[0] as RenderDarwinPlatformView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
+        'toString#0': (args) => (args[0] as RenderDarwinPlatformView).toString(),
         'setupParentData#1': (args) { (args[0] as RenderDarwinPlatformView).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderDarwinPlatformView).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderDarwinPlatformView).computeMinIntrinsicWidth(args[1] as double),
@@ -123,6 +124,7 @@ abstract final class RenderDarwinPlatformViewBindings {
         'sizedByParent#0': (args) => (args[0] as RenderDarwinPlatformView).sizedByParent,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderDarwinPlatformView).alwaysNeedsCompositing,
         'isRepaintBoundary#0': (args) => (args[0] as RenderDarwinPlatformView).isRepaintBoundary,
+        'hashCode#0': (args) => (args[0] as RenderDarwinPlatformView).hashCode,
         'hasSize#0': (args) => (args[0] as RenderDarwinPlatformView).hasSize,
         'size#0': (args) => (args[0] as RenderDarwinPlatformView).size,
         'semanticBounds#0': (args) => (args[0] as RenderDarwinPlatformView).semanticBounds,
@@ -156,5 +158,6 @@ abstract final class RenderDarwinPlatformViewBindings {
         'parentData=#1': (args) { (args[0] as RenderDarwinPlatformView).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderDarwinPlatformView).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderDarwinPlatformView).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderDarwinPlatformView) == (args[1] as Object),
       };
 }

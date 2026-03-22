@@ -44,6 +44,7 @@ abstract final class RootWidgetBindings {
         'createElement#0': (args) => (args[0] as RootWidget).createElement(),
         'attach#2': (args) => (args[0] as RootWidget).attach(args[1] as BuildOwner, identical(args[2], darticAbsent) ? null : args[2] as RootElement?),
         'toStringShort#0': (args) => (args[0] as RootWidget).toStringShort(),
+        'toString#0': (args) => (args[0] as RootWidget).toString(),
         'debugFillProperties#1': (args) { (args[0] as RootWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as RootWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as RootWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
@@ -51,7 +52,9 @@ abstract final class RootWidgetBindings {
         'debugDescribeChildren#0': (args) => (args[0] as RootWidget).debugDescribeChildren(),
         'child#0': (args) => (args[0] as RootWidget).child,
         'debugShortDescription#0': (args) => (args[0] as RootWidget).debugShortDescription,
+        'hashCode#0': (args) => (args[0] as RootWidget).hashCode,
         'key#0': (args) => (args[0] as RootWidget).key,
+        '==#1': (args) => (args[0] as RootWidget) == (args[1] as Object),
         '#3': (args) => RootWidget(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, debugShortDescription: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#3': (args) => RootWidget(key: args[2] as Key?, child: args[0] as Widget?, debugShortDescription: args[1] as String?),
       };

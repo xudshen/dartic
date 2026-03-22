@@ -40,6 +40,7 @@ abstract final class PlatformViewSurfaceBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as PlatformViewSurface).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as PlatformViewSurface).updateRenderObject(args[1] as BuildContext, args[2] as PlatformViewRenderBox); return null; },
+        'toString#0': (args) => (args[0] as PlatformViewSurface).toString(),
         'createElement#0': (args) => (args[0] as PlatformViewSurface).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as PlatformViewSurface).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as PlatformViewSurface).toStringShort(),
@@ -51,7 +52,9 @@ abstract final class PlatformViewSurfaceBindings {
         'controller#0': (args) => (args[0] as PlatformViewSurface).controller,
         'gestureRecognizers#0': (args) => (args[0] as PlatformViewSurface).gestureRecognizers,
         'hitTestBehavior#0': (args) => (args[0] as PlatformViewSurface).hitTestBehavior,
+        'hashCode#0': (args) => (args[0] as PlatformViewSurface).hashCode,
         'key#0': (args) => (args[0] as PlatformViewSurface).key,
+        '==#1': (args) => (args[0] as PlatformViewSurface) == (args[1] as Object),
         '#4': (args) => PlatformViewSurface(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as PlatformViewController, hitTestBehavior: args[2] as PlatformViewHitTestBehavior, gestureRecognizers: (args[3] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
         '_#fromFields#4': (args) => PlatformViewSurface(key: args[3] as Key?, controller: args[0] as PlatformViewController, hitTestBehavior: args[2] as PlatformViewHitTestBehavior, gestureRecognizers: (args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
       };

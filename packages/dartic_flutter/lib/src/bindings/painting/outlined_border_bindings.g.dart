@@ -30,6 +30,7 @@ abstract final class OutlinedBorderBindings {
         'scale#1': (args) => (args[0] as OutlinedBorder).scale(args[1] as double),
         'lerpFrom#2': (args) => (args[0] as OutlinedBorder).lerpFrom(args[1] as ShapeBorder?, args[2] as double),
         'lerpTo#2': (args) => (args[0] as OutlinedBorder).lerpTo(args[1] as ShapeBorder?, args[2] as double),
+        'toString#0': (args) => (args[0] as OutlinedBorder).toString(),
         'add#2': (args) => (args[0] as OutlinedBorder).add(args[1] as ShapeBorder, reversed: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'getOuterPath#2': (args) => (args[0] as OutlinedBorder).getOuterPath(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
         'getInnerPath#2': (args) => (args[0] as OutlinedBorder).getInnerPath(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
@@ -37,7 +38,9 @@ abstract final class OutlinedBorderBindings {
         'paint#3': (args) { (args[0] as OutlinedBorder).paint(args[1] as ui.Canvas, args[2] as ui.Rect, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?); return null; },
         'dimensions#0': (args) => (args[0] as OutlinedBorder).dimensions,
         'side#0': (args) => (args[0] as OutlinedBorder).side,
+        'hashCode#0': (args) => (args[0] as OutlinedBorder).hashCode,
         'preferPaintInterior#0': (args) => (args[0] as OutlinedBorder).preferPaintInterior,
+        '==#1': (args) => (args[0] as OutlinedBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as OutlinedBorder) + (args[1] as ShapeBorder),
       };
 }

@@ -33,6 +33,8 @@ abstract final class OverlayPortalControllerBindings {
         'toggle#0': (args) { (args[0] as OverlayPortalController).toggle(); return null; },
         'toString#0': (args) => (args[0] as OverlayPortalController).toString(),
         'isShowing#0': (args) => (args[0] as OverlayPortalController).isShowing,
+        'hashCode#0': (args) => (args[0] as OverlayPortalController).hashCode,
+        '==#1': (args) => (args[0] as OverlayPortalController) == (args[1] as Object),
         '#1': (args) => OverlayPortalController(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?),
       };
 }

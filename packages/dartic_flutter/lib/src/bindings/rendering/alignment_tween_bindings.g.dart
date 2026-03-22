@@ -26,14 +26,17 @@ abstract final class AlignmentTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as AlignmentTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as AlignmentTween).toString(),
         'transform#1': (args) => (args[0] as AlignmentTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as AlignmentTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as AlignmentTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as AlignmentTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as AlignmentTween).hashCode,
         'begin#0': (args) => (args[0] as AlignmentTween).begin,
         'end#0': (args) => (args[0] as AlignmentTween).end,
         'begin=#1': (args) { (args[0] as AlignmentTween).begin = args[1] as Alignment?; return args[1]; },
         'end=#1': (args) { (args[0] as AlignmentTween).end = args[1] as Alignment?; return args[1]; },
+        '==#1': (args) => (args[0] as AlignmentTween) == (args[1] as Object),
         '#2': (args) => AlignmentTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Alignment?, end: identical(args[1], darticAbsent) ? null : args[1] as Alignment?),
       };
 }

@@ -22,5 +22,8 @@ abstract final class PointerEventConverterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PointerEventConverter).toString(),
+        'hashCode#0': (args) => (args[0] as PointerEventConverter).hashCode,
+        '==#1': (args) => (args[0] as PointerEventConverter) == (args[1] as Object),
       };
 }

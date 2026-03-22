@@ -36,6 +36,9 @@ abstract final class ScrollIncrementTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScrollIncrementType).toString(),
+        'hashCode#0': (args) => (args[0] as ScrollIncrementType).hashCode,
         'index#0': (args) => (args[0] as ScrollIncrementType).index,
+        '==#1': (args) => (args[0] as ScrollIncrementType) == (args[1] as Object),
       };
 }

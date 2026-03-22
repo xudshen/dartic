@@ -42,10 +42,13 @@ abstract final class SystemContextMenuControllerBindings {
         'hide#0': (args) => (args[0] as SystemContextMenuController).hide(),
         'debugFillProperties#1': (args) { (args[0] as SystemContextMenuController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'dispose#0': (args) { (args[0] as SystemContextMenuController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SystemContextMenuController).toString(),
         'toStringShort#0': (args) => (args[0] as SystemContextMenuController).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SystemContextMenuController).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'onSystemHide#0': (args) => (args[0] as SystemContextMenuController).onSystemHide,
         'isVisible#0': (args) => (args[0] as SystemContextMenuController).isVisible,
+        'hashCode#0': (args) => (args[0] as SystemContextMenuController).hashCode,
+        '==#1': (args) => (args[0] as SystemContextMenuController) == (args[1] as Object),
         '#1': (args) => SystemContextMenuController(onSystemHide: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!()),
       };
 }

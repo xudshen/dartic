@@ -47,12 +47,15 @@ abstract final class RouteObserverBindings {
         'unsubscribe#1': (args) { (args[0] as RouteObserver).unsubscribe(args[1] as RouteAware); return null; },
         'didPop#2': (args) { (args[0] as RouteObserver).didPop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didPush#2': (args) { (args[0] as RouteObserver).didPush(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
+        'toString#0': (args) => (args[0] as RouteObserver).toString(),
         'didRemove#2': (args) { (args[0] as RouteObserver).didRemove(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didReplace#2': (args) { (args[0] as RouteObserver).didReplace(newRoute: identical(args[1], darticAbsent) ? null : args[1] as Route<dynamic>?, oldRoute: identical(args[2], darticAbsent) ? null : args[2] as Route<dynamic>?); return null; },
         'didChangeTop#2': (args) { (args[0] as RouteObserver).didChangeTop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didStartUserGesture#2': (args) { (args[0] as RouteObserver).didStartUserGesture(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didStopUserGesture#0': (args) { (args[0] as RouteObserver).didStopUserGesture(); return null; },
+        'hashCode#0': (args) => (args[0] as RouteObserver).hashCode,
         'navigator#0': (args) => (args[0] as RouteObserver).navigator,
+        '==#1': (args) => (args[0] as RouteObserver) == (args[1] as Object),
         '#0': (args) => RouteObserver<Route<dynamic>>(),
       };
 }

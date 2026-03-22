@@ -30,7 +30,10 @@ abstract final class VerticesBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as Vertices).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Vertices).toString(),
         'debugDisposed#0': (args) => (args[0] as Vertices).debugDisposed,
+        'hashCode#0': (args) => (args[0] as Vertices).hashCode,
+        '==#1': (args) => (args[0] as Vertices) == (args[1] as Object),
         '#5': (args) => Vertices(args[0] as VertexMode, (args[1] as List).cast<Offset>(), colors: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as List).cast<Color>(), textureCoordinates: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<Offset>(), indices: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<int>()),
         'raw#5': (args) => Vertices.raw(args[0] as VertexMode, args[1] as Float32List, colors: identical(args[2], darticAbsent) ? null : args[2] as Int32List?, textureCoordinates: identical(args[3], darticAbsent) ? null : args[3] as Float32List?, indices: identical(args[4], darticAbsent) ? null : args[4] as Uint16List?),
       };

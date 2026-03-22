@@ -32,6 +32,7 @@ abstract final class NavigationDrawerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as NavigationDrawerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as NavigationDrawerTheme).updateShouldNotify(args[1] as NavigationDrawerTheme),
+        'toString#0': (args) => (args[0] as NavigationDrawerTheme).toString(),
         'createElement#0': (args) => (args[0] as NavigationDrawerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationDrawerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationDrawerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,8 +41,10 @@ abstract final class NavigationDrawerThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as NavigationDrawerTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as NavigationDrawerTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as NavigationDrawerTheme).data,
+        'hashCode#0': (args) => (args[0] as NavigationDrawerTheme).hashCode,
         'child#0': (args) => (args[0] as NavigationDrawerTheme).child,
         'key#0': (args) => (args[0] as NavigationDrawerTheme).key,
+        '==#1': (args) => (args[0] as NavigationDrawerTheme) == (args[1] as Object),
         '#3': (args) => NavigationDrawerTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as NavigationDrawerThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => NavigationDrawerTheme(key: args[2] as Key?, data: args[1] as NavigationDrawerThemeData, child: args[0] as Widget),
       };

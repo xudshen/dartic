@@ -29,6 +29,7 @@ abstract final class CupertinoLinearActivityIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoLinearActivityIndicator).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoLinearActivityIndicator).toString(),
         'createElement#0': (args) => (args[0] as CupertinoLinearActivityIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoLinearActivityIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoLinearActivityIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,7 +40,9 @@ abstract final class CupertinoLinearActivityIndicatorBindings {
         'progress#0': (args) => (args[0] as CupertinoLinearActivityIndicator).progress,
         'height#0': (args) => (args[0] as CupertinoLinearActivityIndicator).height,
         'color#0': (args) => (args[0] as CupertinoLinearActivityIndicator).color,
+        'hashCode#0': (args) => (args[0] as CupertinoLinearActivityIndicator).hashCode,
         'key#0': (args) => (args[0] as CupertinoLinearActivityIndicator).key,
+        '==#1': (args) => (args[0] as CupertinoLinearActivityIndicator) == (args[1] as Object),
         '#4': (args) => CupertinoLinearActivityIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, progress: args[1] as double, height: identical(args[2], darticAbsent) ? 4.5 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?),
         '_#fromFields#4': (args) => CupertinoLinearActivityIndicator(key: args[2] as Key?, progress: args[3] as double, height: args[1] as double, color: args[0] as Color?),
       };

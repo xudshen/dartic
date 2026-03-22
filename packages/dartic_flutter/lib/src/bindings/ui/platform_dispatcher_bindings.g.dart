@@ -45,6 +45,7 @@ abstract final class PlatformDispatcherBindings {
         'setApplicationLocale#1': (args) { (args[0] as PlatformDispatcher).setApplicationLocale(args[1] as Locale); return null; },
         'computePlatformResolvedLocale#1': (args) => (args[0] as PlatformDispatcher).computePlatformResolvedLocale((args[1] as List).cast<Locale>()),
         'scaleFontSize#1': (args) => (args[0] as PlatformDispatcher).scaleFontSize(args[1] as double),
+        'toString#0': (args) => (args[0] as PlatformDispatcher).toString(),
         'onPlatformConfigurationChanged#0': (args) => (args[0] as PlatformDispatcher).onPlatformConfigurationChanged,
         'displays#0': (args) => (args[0] as PlatformDispatcher).displays,
         'views#0': (args) => (args[0] as PlatformDispatcher).views,
@@ -81,6 +82,7 @@ abstract final class PlatformDispatcherBindings {
         'onFrameDataChanged#0': (args) => (args[0] as PlatformDispatcher).onFrameDataChanged,
         'onError#0': (args) => (args[0] as PlatformDispatcher).onError,
         'defaultRouteName#0': (args) => (args[0] as PlatformDispatcher).defaultRouteName,
+        'hashCode#0': (args) => (args[0] as PlatformDispatcher).hashCode,
         'onPlatformConfigurationChanged=#1': (args) { (args[0] as PlatformDispatcher).onPlatformConfigurationChanged = args[1] as VoidCallback?; return args[1]; },
         'onMetricsChanged=#1': (args) { (args[0] as PlatformDispatcher).onMetricsChanged = args[1] as VoidCallback?; return args[1]; },
         'onViewFocusChange=#1': (args) { (args[0] as PlatformDispatcher).onViewFocusChange = args[1] as ViewFocusChangeCallback?; return args[1]; },
@@ -99,5 +101,6 @@ abstract final class PlatformDispatcherBindings {
         'onSemanticsActionEvent=#1': (args) { (args[0] as PlatformDispatcher).onSemanticsActionEvent = args[1] as SemanticsActionEventCallback?; return args[1]; },
         'onFrameDataChanged=#1': (args) { (args[0] as PlatformDispatcher).onFrameDataChanged = args[1] as VoidCallback?; return args[1]; },
         'onError=#1': (args) { (args[0] as PlatformDispatcher).onError = args[1] as ErrorCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as PlatformDispatcher) == (args[1] as Object),
       };
 }

@@ -33,7 +33,10 @@ abstract final class RadioGroupRegistryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'registerClient#1': (args) { (args[0] as RadioGroupRegistry).registerClient(args[1] as RadioClient); return null; },
         'unregisterClient#1': (args) { (args[0] as RadioGroupRegistry).unregisterClient(args[1] as RadioClient); return null; },
+        'toString#0': (args) => (args[0] as RadioGroupRegistry).toString(),
         'groupValue#0': (args) => (args[0] as RadioGroupRegistry).groupValue,
         'onChanged#0': (args) => (args[0] as RadioGroupRegistry).onChanged,
+        'hashCode#0': (args) => (args[0] as RadioGroupRegistry).hashCode,
+        '==#1': (args) => (args[0] as RadioGroupRegistry) == (args[1] as Object),
       };
 }

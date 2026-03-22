@@ -35,6 +35,7 @@ abstract final class HorizontalMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
+        'toString#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
@@ -55,6 +56,7 @@ abstract final class HorizontalMultiDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).hashCode,
         'onStart#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).onStart,
         'debugOwner#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as HorizontalMultiDragGestureRecognizer).gestureSettings,
@@ -63,6 +65,7 @@ abstract final class HorizontalMultiDragGestureRecognizerBindings {
         'onStart=#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as HorizontalMultiDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as HorizontalMultiDragGestureRecognizer) == (args[1] as Object),
         '#3': (args) => HorizontalMultiDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
       };
 }

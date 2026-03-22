@@ -28,6 +28,7 @@ abstract final class SharedAppDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SharedAppData).createState(),
+        'toString#0': (args) => (args[0] as SharedAppData).toString(),
         'createElement#0': (args) => (args[0] as SharedAppData).createElement(),
         'toStringShort#0': (args) => (args[0] as SharedAppData).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SharedAppData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class SharedAppDataBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SharedAppData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SharedAppData).debugDescribeChildren(),
         'child#0': (args) => (args[0] as SharedAppData).child,
+        'hashCode#0': (args) => (args[0] as SharedAppData).hashCode,
         'key#0': (args) => (args[0] as SharedAppData).key,
+        '==#1': (args) => (args[0] as SharedAppData) == (args[1] as Object),
         '#2': (args) => SharedAppData(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => SharedAppData(key: args[1] as Key?, child: args[0] as Widget),
       };

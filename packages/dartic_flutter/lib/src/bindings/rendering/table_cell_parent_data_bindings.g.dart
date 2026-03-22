@@ -33,11 +33,13 @@ abstract final class TableCellParentDataBindings {
         'verticalAlignment#0': (args) => (args[0] as TableCellParentData).verticalAlignment,
         'x#0': (args) => (args[0] as TableCellParentData).x,
         'y#0': (args) => (args[0] as TableCellParentData).y,
+        'hashCode#0': (args) => (args[0] as TableCellParentData).hashCode,
         'offset#0': (args) => (args[0] as TableCellParentData).offset,
         'verticalAlignment=#1': (args) { (args[0] as TableCellParentData).verticalAlignment = args[1] as TableCellVerticalAlignment?; return args[1]; },
         'x=#1': (args) { (args[0] as TableCellParentData).x = args[1] as int?; return args[1]; },
         'y=#1': (args) { (args[0] as TableCellParentData).y = args[1] as int?; return args[1]; },
         'offset=#1': (args) { (args[0] as TableCellParentData).offset = args[1] as Offset; return args[1]; },
+        '==#1': (args) => (args[0] as TableCellParentData) == (args[1] as Object),
         '#0': (args) => TableCellParentData(),
       };
 }

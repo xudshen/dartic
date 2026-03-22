@@ -20,7 +20,10 @@ abstract final class PositionedGestureDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PositionedGestureDetails).toString(),
         'globalPosition#0': (args) => (args[0] as PositionedGestureDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as PositionedGestureDetails).localPosition,
+        'hashCode#0': (args) => (args[0] as PositionedGestureDetails).hashCode,
+        '==#1': (args) => (args[0] as PositionedGestureDetails) == (args[1] as Object),
       };
 }

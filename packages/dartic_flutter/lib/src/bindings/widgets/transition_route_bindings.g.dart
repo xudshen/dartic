@@ -87,6 +87,7 @@ abstract final class TransitionRouteBindings {
         'secondaryAnimation#0': (args) => (args[0] as TransitionRoute).secondaryAnimation,
         'willDisposeAnimationController#0': (args) => (args[0] as TransitionRoute).willDisposeAnimationController,
         'debugLabel#0': (args) => (args[0] as TransitionRoute).debugLabel,
+        'hashCode#0': (args) => (args[0] as TransitionRoute).hashCode,
         'overlayEntries#0': (args) => (args[0] as TransitionRoute).overlayEntries,
         'requestFocus#0': (args) => (args[0] as TransitionRoute).requestFocus,
         'navigator#0': (args) => (args[0] as TransitionRoute).navigator,
@@ -102,5 +103,6 @@ abstract final class TransitionRouteBindings {
         'isActive#0': (args) => (args[0] as TransitionRoute).isActive,
         'popGestureEnabled#0': (args) => (args[0] as TransitionRoute).popGestureEnabled,
         'willDisposeAnimationController=#1': (args) { (args[0] as TransitionRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as TransitionRoute) == (args[1] as Object),
       };
 }

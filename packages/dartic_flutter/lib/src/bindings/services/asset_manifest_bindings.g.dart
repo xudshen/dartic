@@ -26,5 +26,8 @@ abstract final class AssetManifestBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'listAssets#0': (args) => (args[0] as AssetManifest).listAssets(),
         'getAssetVariants#1': (args) => (args[0] as AssetManifest).getAssetVariants(args[1] as String),
+        'toString#0': (args) => (args[0] as AssetManifest).toString(),
+        'hashCode#0': (args) => (args[0] as AssetManifest).hashCode,
+        '==#1': (args) => (args[0] as AssetManifest) == (args[1] as Object),
       };
 }

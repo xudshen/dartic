@@ -26,6 +26,7 @@ abstract final class SpacerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Spacer).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Spacer).toString(),
         'createElement#0': (args) => (args[0] as Spacer).createElement(),
         'toStringShort#0': (args) => (args[0] as Spacer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Spacer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -34,7 +35,9 @@ abstract final class SpacerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as Spacer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Spacer).debugDescribeChildren(),
         'flex#0': (args) => (args[0] as Spacer).flex,
+        'hashCode#0': (args) => (args[0] as Spacer).hashCode,
         'key#0': (args) => (args[0] as Spacer).key,
+        '==#1': (args) => (args[0] as Spacer) == (args[1] as Object),
         '#2': (args) => Spacer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int),
         '_#fromFields#2': (args) => Spacer(key: args[1] as Key?, flex: args[0] as int),
       };

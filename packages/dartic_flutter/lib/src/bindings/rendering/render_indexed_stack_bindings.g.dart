@@ -47,6 +47,7 @@ abstract final class RenderIndexedStackBindings {
         'paintStack#2': (args) { (args[0] as RenderIndexedStack).paintStack(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIndexedStack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderIndexedStack).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderIndexedStack).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIndexedStack).setupParentData(args[1] as RenderBox); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedStack).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderIndexedStack).computeMaxIntrinsicWidth(args[1] as double),
@@ -132,6 +133,7 @@ abstract final class RenderIndexedStackBindings {
         'defaultPaint#2': (args) { (args[0] as RenderIndexedStack).defaultPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'getChildrenAsList#0': (args) => (args[0] as RenderIndexedStack).getChildrenAsList(),
         'index#0': (args) => (args[0] as RenderIndexedStack).index,
+        'hashCode#0': (args) => (args[0] as RenderIndexedStack).hashCode,
         'alignment#0': (args) => (args[0] as RenderIndexedStack).alignment,
         'textDirection#0': (args) => (args[0] as RenderIndexedStack).textDirection,
         'fit#0': (args) => (args[0] as RenderIndexedStack).fit,
@@ -178,6 +180,7 @@ abstract final class RenderIndexedStackBindings {
         'parentData=#1': (args) { (args[0] as RenderIndexedStack).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderIndexedStack).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIndexedStack).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIndexedStack) == (args[1] as Object),
         '#6': (args) => RenderIndexedStack(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?, fit: identical(args[3], darticAbsent) ? StackFit.loose : args[3] as StackFit, clipBehavior: identical(args[4], darticAbsent) ? Clip.hardEdge : args[4] as Clip, index: identical(args[5], darticAbsent) ? null : args[5] as int?),
       };
 }

@@ -37,6 +37,7 @@ abstract final class UndoHistoryStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as UndoHistoryState).didUpdateWidget(args[1] as UndoHistory); return null; },
         'dispose#0': (args) { (args[0] as UndoHistoryState).dispose(); return null; },
         'build#1': (args) => (args[0] as UndoHistoryState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as UndoHistoryState).toString(),
         'reassemble#0': (args) { (args[0] as UndoHistoryState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as UndoHistoryState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as UndoHistoryState).deactivate(); return null; },
@@ -47,9 +48,11 @@ abstract final class UndoHistoryStateBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as UndoHistoryState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'canUndo#0': (args) => (args[0] as UndoHistoryState).canUndo,
         'canRedo#0': (args) => (args[0] as UndoHistoryState).canRedo,
+        'hashCode#0': (args) => (args[0] as UndoHistoryState).hashCode,
         'widget#0': (args) => (args[0] as UndoHistoryState).widget,
         'context#0': (args) => (args[0] as UndoHistoryState).context,
         'mounted#0': (args) => (args[0] as UndoHistoryState).mounted,
+        '==#1': (args) => (args[0] as UndoHistoryState) == (args[1] as Object),
         '#0': (args) => UndoHistoryState<dynamic>(),
       };
 }

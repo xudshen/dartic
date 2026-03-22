@@ -42,6 +42,7 @@ abstract final class RenderBoxContainerDefaultsMixinBindings {
         'defaultHitTestChildren#2': (args) => (args[0] as RenderBoxContainerDefaultsMixin).defaultHitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'defaultPaint#2': (args) { (args[0] as RenderBoxContainerDefaultsMixin).defaultPaint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'getChildrenAsList#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).getChildrenAsList(),
+        'toString#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).toString(),
         'debugValidateChild#1': (args) => (args[0] as RenderBoxContainerDefaultsMixin).debugValidateChild(args[1] as RenderObject),
         'insert#2': (args) {
                   if (identical(args[2], darticAbsent)) {
@@ -117,6 +118,7 @@ abstract final class RenderBoxContainerDefaultsMixinBindings {
         'showOnScreen#4': (args) { (args[0] as RenderBoxContainerDefaultsMixin).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as ui.Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderBoxContainerDefaultsMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderBoxContainerDefaultsMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).hashCode,
         'childCount#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).childCount,
         'firstChild#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).firstChild,
         'lastChild#0': (args) => (args[0] as RenderBoxContainerDefaultsMixin).lastChild,
@@ -151,5 +153,6 @@ abstract final class RenderBoxContainerDefaultsMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderBoxContainerDefaultsMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderBoxContainerDefaultsMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderBoxContainerDefaultsMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderBoxContainerDefaultsMixin) == (args[1] as Object),
       };
 }

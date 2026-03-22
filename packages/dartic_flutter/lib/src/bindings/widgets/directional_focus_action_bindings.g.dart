@@ -30,6 +30,7 @@ abstract final class DirectionalFocusActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) { (args[0] as DirectionalFocusAction).invoke(args[1] as DirectionalFocusIntent); return null; },
+        'toString#0': (args) => (args[0] as DirectionalFocusAction).toString(),
         'isEnabled#1': (args) => (args[0] as DirectionalFocusAction).isEnabled(args[1] as DirectionalFocusIntent),
         'consumesKey#1': (args) => (args[0] as DirectionalFocusAction).consumesKey(args[1] as DirectionalFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as DirectionalFocusAction).toKeyEventResult(args[1] as DirectionalFocusIntent, args[2]),
@@ -39,9 +40,11 @@ abstract final class DirectionalFocusActionBindings {
         'toStringShort#0': (args) => (args[0] as DirectionalFocusAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DirectionalFocusAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DirectionalFocusAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DirectionalFocusAction).hashCode,
         'callingAction#0': (args) => (args[0] as DirectionalFocusAction).callingAction,
         'intentType#0': (args) => (args[0] as DirectionalFocusAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as DirectionalFocusAction).isActionEnabled,
+        '==#1': (args) => (args[0] as DirectionalFocusAction) == (args[1] as Object),
         '#0': (args) => DirectionalFocusAction(),
         'forTextField#0': (args) => DirectionalFocusAction.forTextField(),
       };

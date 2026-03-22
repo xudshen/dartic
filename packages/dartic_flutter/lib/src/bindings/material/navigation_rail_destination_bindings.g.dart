@@ -33,6 +33,7 @@ abstract final class NavigationRailDestinationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NavigationRailDestination).toString(),
         'icon#0': (args) => (args[0] as NavigationRailDestination).icon,
         'selectedIcon#0': (args) => (args[0] as NavigationRailDestination).selectedIcon,
         'indicatorColor#0': (args) => (args[0] as NavigationRailDestination).indicatorColor,
@@ -40,6 +41,8 @@ abstract final class NavigationRailDestinationBindings {
         'label#0': (args) => (args[0] as NavigationRailDestination).label,
         'padding#0': (args) => (args[0] as NavigationRailDestination).padding,
         'disabled#0': (args) => (args[0] as NavigationRailDestination).disabled,
+        'hashCode#0': (args) => (args[0] as NavigationRailDestination).hashCode,
+        '==#1': (args) => (args[0] as NavigationRailDestination) == (args[1] as Object),
         '#7': (args) => NavigationRailDestination(icon: args[0] as Widget, selectedIcon: identical(args[1], darticAbsent) ? null : args[1] as Widget?, indicatorColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, indicatorShape: identical(args[3], darticAbsent) ? null : args[3] as ShapeBorder?, label: args[4] as Widget, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsetsGeometry?, disabled: identical(args[6], darticAbsent) ? false : args[6] as bool),
         '_#fromFields#7': (args) => NavigationRailDestination(icon: args[1] as Widget, selectedIcon: args[6] as Widget?, indicatorColor: args[2] as Color?, indicatorShape: args[3] as ShapeBorder?, label: args[4] as Widget, padding: args[5] as EdgeInsetsGeometry?, disabled: args[0] as bool),
       };

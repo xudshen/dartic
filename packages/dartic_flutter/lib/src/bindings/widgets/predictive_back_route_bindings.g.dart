@@ -45,7 +45,10 @@ abstract final class PredictiveBackRouteBindings {
         'handleUpdateBackGestureProgress#1': (args) { (args[0] as PredictiveBackRoute).handleUpdateBackGestureProgress(progress: args[1] as double); return null; },
         'handleCommitBackGesture#0': (args) { (args[0] as PredictiveBackRoute).handleCommitBackGesture(); return null; },
         'handleCancelBackGesture#0': (args) { (args[0] as PredictiveBackRoute).handleCancelBackGesture(); return null; },
+        'toString#0': (args) => (args[0] as PredictiveBackRoute).toString(),
         'isCurrent#0': (args) => (args[0] as PredictiveBackRoute).isCurrent,
         'popGestureEnabled#0': (args) => (args[0] as PredictiveBackRoute).popGestureEnabled,
+        'hashCode#0': (args) => (args[0] as PredictiveBackRoute).hashCode,
+        '==#1': (args) => (args[0] as PredictiveBackRoute) == (args[1] as Object),
       };
 }

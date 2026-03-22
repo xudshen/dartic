@@ -39,6 +39,7 @@ abstract final class DismissMenuActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) { (args[0] as DismissMenuAction).invoke(args[1] as DismissIntent); return null; },
         'isEnabled#1': (args) => (args[0] as DismissMenuAction).isEnabled(args[1] as DismissIntent),
+        'toString#0': (args) => (args[0] as DismissMenuAction).toString(),
         'consumesKey#1': (args) => (args[0] as DismissMenuAction).consumesKey(args[1] as DismissIntent),
         'toKeyEventResult#2': (args) => (args[0] as DismissMenuAction).toKeyEventResult(args[1] as DismissIntent, args[2]),
         'addActionListener#1': (args) { (args[0] as DismissMenuAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -48,9 +49,11 @@ abstract final class DismissMenuActionBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DismissMenuAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DismissMenuAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'controller#0': (args) => (args[0] as DismissMenuAction).controller,
+        'hashCode#0': (args) => (args[0] as DismissMenuAction).hashCode,
         'callingAction#0': (args) => (args[0] as DismissMenuAction).callingAction,
         'intentType#0': (args) => (args[0] as DismissMenuAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as DismissMenuAction).isActionEnabled,
+        '==#1': (args) => (args[0] as DismissMenuAction) == (args[1] as Object),
         '#1': (args) => DismissMenuAction(controller: args[0] as MenuController),
       };
 }

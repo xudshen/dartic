@@ -29,14 +29,17 @@ abstract final class ImageCacheBindings {
         'statusForKey#1': (args) => (args[0] as ImageCache).statusForKey(args[1] as Object),
         'containsKey#1': (args) => (args[0] as ImageCache).containsKey(args[1] as Object),
         'clearLiveImages#0': (args) { (args[0] as ImageCache).clearLiveImages(); return null; },
+        'toString#0': (args) => (args[0] as ImageCache).toString(),
         'maximumSize#0': (args) => (args[0] as ImageCache).maximumSize,
         'currentSize#0': (args) => (args[0] as ImageCache).currentSize,
         'maximumSizeBytes#0': (args) => (args[0] as ImageCache).maximumSizeBytes,
         'currentSizeBytes#0': (args) => (args[0] as ImageCache).currentSizeBytes,
         'liveImageCount#0': (args) => (args[0] as ImageCache).liveImageCount,
         'pendingImageCount#0': (args) => (args[0] as ImageCache).pendingImageCount,
+        'hashCode#0': (args) => (args[0] as ImageCache).hashCode,
         'maximumSize=#1': (args) { (args[0] as ImageCache).maximumSize = args[1] as int; return args[1]; },
         'maximumSizeBytes=#1': (args) { (args[0] as ImageCache).maximumSizeBytes = args[1] as int; return args[1]; },
+        '==#1': (args) => (args[0] as ImageCache) == (args[1] as Object),
         '#0': (args) => ImageCache(),
       };
 }

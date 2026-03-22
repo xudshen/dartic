@@ -40,6 +40,7 @@ abstract final class CarouselScrollPhysicsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as CarouselScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'createBallisticSimulation#2': (args) => (args[0] as CarouselScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
+        'toString#0': (args) => (args[0] as CarouselScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as CarouselScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as CarouselScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as CarouselScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -49,6 +50,7 @@ abstract final class CarouselScrollPhysicsBindings {
         'toleranceFor#1': (args) => (args[0] as CarouselScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as CarouselScrollPhysics).carriedMomentum(args[1] as double),
         'allowImplicitScrolling#0': (args) => (args[0] as CarouselScrollPhysics).allowImplicitScrolling,
+        'hashCode#0': (args) => (args[0] as CarouselScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as CarouselScrollPhysics).parent,
         'spring#0': (args) => (args[0] as CarouselScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as CarouselScrollPhysics).tolerance,
@@ -57,6 +59,7 @@ abstract final class CarouselScrollPhysicsBindings {
         'maxFlingVelocity#0': (args) => (args[0] as CarouselScrollPhysics).maxFlingVelocity,
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as CarouselScrollPhysics).dragStartDistanceMotionThreshold,
         'allowUserScrolling#0': (args) => (args[0] as CarouselScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as CarouselScrollPhysics) == (args[1] as Object),
         '#1': (args) => CarouselScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => CarouselScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

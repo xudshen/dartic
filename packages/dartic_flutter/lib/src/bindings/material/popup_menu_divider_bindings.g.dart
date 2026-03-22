@@ -49,6 +49,7 @@ abstract final class PopupMenuDividerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'represents#1': (args) => (args[0] as PopupMenuDivider).represents(args[1]),
         'createState#0': (args) => (args[0] as PopupMenuDivider).createState(),
+        'toString#0': (args) => (args[0] as PopupMenuDivider).toString(),
         'createElement#0': (args) => (args[0] as PopupMenuDivider).createElement(),
         'toStringShort#0': (args) => (args[0] as PopupMenuDivider).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PopupMenuDivider).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -62,7 +63,9 @@ abstract final class PopupMenuDividerBindings {
         'endIndent#0': (args) => (args[0] as PopupMenuDivider).endIndent,
         'radius#0': (args) => (args[0] as PopupMenuDivider).radius,
         'color#0': (args) => (args[0] as PopupMenuDivider).color,
+        'hashCode#0': (args) => (args[0] as PopupMenuDivider).hashCode,
         'key#0': (args) => (args[0] as PopupMenuDivider).key,
+        '==#1': (args) => (args[0] as PopupMenuDivider) == (args[1] as Object),
         '#7': (args) {
           if (identical(args[1], darticAbsent)) {
             return PopupMenuDivider(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, thickness: identical(args[2], darticAbsent) ? null : args[2] as double?, indent: identical(args[3], darticAbsent) ? null : args[3] as double?, endIndent: identical(args[4], darticAbsent) ? null : args[4] as double?, radius: identical(args[5], darticAbsent) ? null : args[5] as BorderRadiusGeometry?, color: identical(args[6], darticAbsent) ? null : args[6] as Color?);

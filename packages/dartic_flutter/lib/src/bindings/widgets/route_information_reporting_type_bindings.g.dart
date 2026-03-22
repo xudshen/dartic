@@ -36,6 +36,9 @@ abstract final class RouteInformationReportingTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RouteInformationReportingType).toString(),
+        'hashCode#0': (args) => (args[0] as RouteInformationReportingType).hashCode,
         'index#0': (args) => (args[0] as RouteInformationReportingType).index,
+        '==#1': (args) => (args[0] as RouteInformationReportingType) == (args[1] as Object),
       };
 }

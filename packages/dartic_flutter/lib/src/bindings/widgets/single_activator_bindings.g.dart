@@ -36,6 +36,7 @@ abstract final class SingleActivatorBindings {
         'serializeForMenu#0': (args) => (args[0] as SingleActivator).serializeForMenu(),
         'debugDescribeKeys#0': (args) => (args[0] as SingleActivator).debugDescribeKeys(),
         'debugFillProperties#1': (args) { (args[0] as SingleActivator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SingleActivator).toString(),
         'toStringShort#0': (args) => (args[0] as SingleActivator).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SingleActivator).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'trigger#0': (args) => (args[0] as SingleActivator).trigger,
@@ -46,6 +47,8 @@ abstract final class SingleActivatorBindings {
         'numLock#0': (args) => (args[0] as SingleActivator).numLock,
         'includeRepeats#0': (args) => (args[0] as SingleActivator).includeRepeats,
         'triggers#0': (args) => (args[0] as SingleActivator).triggers,
+        'hashCode#0': (args) => (args[0] as SingleActivator).hashCode,
+        '==#1': (args) => (args[0] as SingleActivator) == (args[1] as Object),
         '#7': (args) => SingleActivator(args[0] as LogicalKeyboardKey, control: identical(args[1], darticAbsent) ? false : args[1] as bool, shift: identical(args[2], darticAbsent) ? false : args[2] as bool, alt: identical(args[3], darticAbsent) ? false : args[3] as bool, meta: identical(args[4], darticAbsent) ? false : args[4] as bool, numLock: identical(args[5], darticAbsent) ? LockState.ignored : args[5] as LockState, includeRepeats: identical(args[6], darticAbsent) ? true : args[6] as bool),
         '_#fromFields#7': (args) => SingleActivator(args[6] as LogicalKeyboardKey, control: args[1] as bool, shift: args[5] as bool, alt: args[0] as bool, meta: args[3] as bool, numLock: args[4] as LockState, includeRepeats: args[2] as bool),
       };

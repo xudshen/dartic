@@ -32,6 +32,7 @@ abstract final class DefaultTextEditingShortcutsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DefaultTextEditingShortcuts).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DefaultTextEditingShortcuts).toString(),
         'createElement#0': (args) => (args[0] as DefaultTextEditingShortcuts).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultTextEditingShortcuts).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultTextEditingShortcuts).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class DefaultTextEditingShortcutsBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DefaultTextEditingShortcuts).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DefaultTextEditingShortcuts).debugDescribeChildren(),
         'child#0': (args) => (args[0] as DefaultTextEditingShortcuts).child,
+        'hashCode#0': (args) => (args[0] as DefaultTextEditingShortcuts).hashCode,
         'key#0': (args) => (args[0] as DefaultTextEditingShortcuts).key,
+        '==#1': (args) => (args[0] as DefaultTextEditingShortcuts) == (args[1] as Object),
         '#2': (args) => DefaultTextEditingShortcuts(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => DefaultTextEditingShortcuts(key: args[1] as Key?, child: args[0] as Widget),
       };

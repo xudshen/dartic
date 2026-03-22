@@ -31,7 +31,10 @@ abstract final class CodecBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getNextFrame#0': (args) => (args[0] as Codec).getNextFrame(),
         'dispose#0': (args) { (args[0] as Codec).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Codec).toString(),
         'frameCount#0': (args) => (args[0] as Codec).frameCount,
         'repetitionCount#0': (args) => (args[0] as Codec).repetitionCount,
+        'hashCode#0': (args) => (args[0] as Codec).hashCode,
+        '==#1': (args) => (args[0] as Codec) == (args[1] as Object),
       };
 }

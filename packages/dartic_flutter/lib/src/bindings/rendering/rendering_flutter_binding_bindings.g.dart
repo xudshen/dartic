@@ -52,6 +52,7 @@ abstract final class RenderingFlutterBindingBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderingFlutterBinding).toString(),
         'initInstances#0': (args) { (args[0] as RenderingFlutterBinding).initInstances(); return null; },
         'debugCheckZone#1': (args) => (args[0] as RenderingFlutterBinding).debugCheckZone(args[1] as String),
         'initServiceExtensions#0': (args) { (args[0] as RenderingFlutterBinding).initServiceExtensions(); return null; },
@@ -133,6 +134,7 @@ abstract final class RenderingFlutterBindingBindings {
         'allowFirstFrame#0': (args) { (args[0] as RenderingFlutterBinding).allowFirstFrame(); return null; },
         'resetFirstFrameSent#0': (args) { (args[0] as RenderingFlutterBinding).resetFirstFrameSent(); return null; },
         'drawFrame#0': (args) { (args[0] as RenderingFlutterBinding).drawFrame(); return null; },
+        'hashCode#0': (args) => (args[0] as RenderingFlutterBinding).hashCode,
         'window#0': (args) => (args[0] as RenderingFlutterBinding).window,
         'platformDispatcher#0': (args) => (args[0] as RenderingFlutterBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as RenderingFlutterBinding).locked,
@@ -173,6 +175,7 @@ abstract final class RenderingFlutterBindingBindings {
         'resamplingEnabled=#1': (args) { (args[0] as RenderingFlutterBinding).resamplingEnabled = args[1] as bool; return args[1]; },
         'samplingOffset=#1': (args) { (args[0] as RenderingFlutterBinding).samplingOffset = args[1] as Duration; return args[1]; },
         'schedulingStrategy=#1': (args) { (args[0] as RenderingFlutterBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
+        '==#1': (args) => (args[0] as RenderingFlutterBinding) == (args[1] as Object),
         '#0': (args) => RenderingFlutterBinding(),
       };
 }

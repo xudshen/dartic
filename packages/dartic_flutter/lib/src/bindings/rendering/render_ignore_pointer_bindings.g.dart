@@ -42,6 +42,7 @@ abstract final class RenderIgnorePointerBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderIgnorePointer).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderIgnorePointer).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIgnorePointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderIgnorePointer).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIgnorePointer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnorePointer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnorePointer).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderIgnorePointerBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderIgnorePointer).computeSizeForNoChild(args[1] as BoxConstraints),
         'ignoring#0': (args) => (args[0] as RenderIgnorePointer).ignoring,
         'ignoringSemantics#0': (args) => (args[0] as RenderIgnorePointer).ignoringSemantics,
+        'hashCode#0': (args) => (args[0] as RenderIgnorePointer).hashCode,
         'hasSize#0': (args) => (args[0] as RenderIgnorePointer).hasSize,
         'size#0': (args) => (args[0] as RenderIgnorePointer).size,
         'semanticBounds#0': (args) => (args[0] as RenderIgnorePointer).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderIgnorePointerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderIgnorePointer).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIgnorePointer).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderIgnorePointer).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIgnorePointer) == (args[1] as Object),
         '#3': (args) => RenderIgnorePointer(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, ignoring: identical(args[1], darticAbsent) ? true : args[1] as bool, ignoringSemantics: identical(args[2], darticAbsent) ? null : args[2] as bool?),
       };
 }

@@ -25,8 +25,11 @@ abstract final class AutomaticNotchedShapeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOuterPath#2': (args) => (args[0] as AutomaticNotchedShape).getOuterPath(args[1] as Rect, args[2] as Rect?),
+        'toString#0': (args) => (args[0] as AutomaticNotchedShape).toString(),
         'host#0': (args) => (args[0] as AutomaticNotchedShape).host,
         'guest#0': (args) => (args[0] as AutomaticNotchedShape).guest,
+        'hashCode#0': (args) => (args[0] as AutomaticNotchedShape).hashCode,
+        '==#1': (args) => (args[0] as AutomaticNotchedShape) == (args[1] as Object),
         '#2': (args) => AutomaticNotchedShape(args[0] as ShapeBorder, identical(args[1], darticAbsent) ? null : args[1] as ShapeBorder?),
         '_#fromFields#2': (args) => AutomaticNotchedShape(args[1] as ShapeBorder, args[0] as ShapeBorder?),
       };

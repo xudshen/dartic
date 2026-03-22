@@ -35,6 +35,7 @@ abstract final class AlignTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AlignTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AlignTransition).toString(),
         'createState#0': (args) => (args[0] as AlignTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as AlignTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as AlignTransition).createElement(),
@@ -47,8 +48,10 @@ abstract final class AlignTransitionBindings {
         'widthFactor#0': (args) => (args[0] as AlignTransition).widthFactor,
         'heightFactor#0': (args) => (args[0] as AlignTransition).heightFactor,
         'child#0': (args) => (args[0] as AlignTransition).child,
+        'hashCode#0': (args) => (args[0] as AlignTransition).hashCode,
         'listenable#0': (args) => (args[0] as AlignTransition).listenable,
         'key#0': (args) => (args[0] as AlignTransition).key,
+        '==#1': (args) => (args[0] as AlignTransition) == (args[1] as Object),
         '#5': (args) => AlignTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: args[1] as Animation<AlignmentGeometry>, child: args[2] as Widget, widthFactor: identical(args[3], darticAbsent) ? null : args[3] as double?, heightFactor: identical(args[4], darticAbsent) ? null : args[4] as double?),
         '_#fromFields#5': (args) => AlignTransition(key: args[2] as Key?, alignment: args[3] as Animation<AlignmentGeometry>, child: args[0] as Widget, widthFactor: args[4] as double?, heightFactor: args[1] as double?),
       };

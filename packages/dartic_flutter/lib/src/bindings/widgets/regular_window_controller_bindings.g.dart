@@ -39,6 +39,7 @@ abstract final class RegularWindowControllerBindings {
         'setMaximized#1': (args) { (args[0] as RegularWindowController).setMaximized(args[1] as bool); return null; },
         'setMinimized#1': (args) { (args[0] as RegularWindowController).setMinimized(args[1] as bool); return null; },
         'setFullscreen#2': (args) { (args[0] as RegularWindowController).setFullscreen(args[1] as bool, display: identical(args[2], darticAbsent) ? null : args[2] as Display?); return null; },
+        'toString#0': (args) => (args[0] as RegularWindowController).toString(),
         'destroy#0': (args) { (args[0] as RegularWindowController).destroy(); return null; },
         'addListener#1': (args) { (args[0] as RegularWindowController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RegularWindowController).removeListener(() => (args[1] as Function)()); return null; },
@@ -49,9 +50,12 @@ abstract final class RegularWindowControllerBindings {
         'isMaximized#0': (args) => (args[0] as RegularWindowController).isMaximized,
         'isMinimized#0': (args) => (args[0] as RegularWindowController).isMinimized,
         'isFullscreen#0': (args) => (args[0] as RegularWindowController).isFullscreen,
+        'hashCode#0': (args) => (args[0] as RegularWindowController).hashCode,
         'contentSize#0': (args) => (args[0] as RegularWindowController).contentSize,
         'rootView#0': (args) => (args[0] as RegularWindowController).rootView,
         'hasListeners#0': (args) => (args[0] as RegularWindowController).hasListeners,
         'rootView=#1': (args) { (args[0] as RegularWindowController).rootView = args[1] as FlutterView; return args[1]; },
+        '==#1': (args) => (args[0] as RegularWindowController) == (args[1] as Object),
+        '#4': (args) => RegularWindowController(preferredSize: identical(args[0], darticAbsent) ? null : args[0] as Size?, preferredConstraints: identical(args[1], darticAbsent) ? null : args[1] as BoxConstraints?, title: identical(args[2], darticAbsent) ? null : args[2] as String?, delegate: identical(args[3], darticAbsent) ? null : args[3] as RegularWindowControllerDelegate?),
       };
 }

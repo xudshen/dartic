@@ -24,5 +24,8 @@ abstract final class ProcessTextServiceBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'queryTextActions#0': (args) => (args[0] as ProcessTextService).queryTextActions(),
         'processTextAction#3': (args) => (args[0] as ProcessTextService).processTextAction(args[1] as String, args[2] as String, args[3] as bool),
+        'toString#0': (args) => (args[0] as ProcessTextService).toString(),
+        'hashCode#0': (args) => (args[0] as ProcessTextService).hashCode,
+        '==#1': (args) => (args[0] as ProcessTextService) == (args[1] as Object),
       };
 }

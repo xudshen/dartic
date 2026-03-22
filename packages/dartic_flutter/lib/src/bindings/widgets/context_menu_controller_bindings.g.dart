@@ -28,8 +28,11 @@ abstract final class ContextMenuControllerBindings {
         'show#3': (args) { (args[0] as ContextMenuController).show(context: args[1] as BuildContext, contextMenuBuilder: (a) => (args[2] as Function)(a) as Widget, debugRequiredFor: identical(args[3], darticAbsent) ? null : args[3] as Widget?); return null; },
         'markNeedsBuild#0': (args) { (args[0] as ContextMenuController).markNeedsBuild(); return null; },
         'remove#0': (args) { (args[0] as ContextMenuController).remove(); return null; },
+        'toString#0': (args) => (args[0] as ContextMenuController).toString(),
         'onRemove#0': (args) => (args[0] as ContextMenuController).onRemove,
         'isShown#0': (args) => (args[0] as ContextMenuController).isShown,
+        'hashCode#0': (args) => (args[0] as ContextMenuController).hashCode,
+        '==#1': (args) => (args[0] as ContextMenuController) == (args[1] as Object),
         '#1': (args) => ContextMenuController(onRemove: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!()),
       };
 }

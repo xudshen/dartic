@@ -35,11 +35,13 @@ abstract final class RawMenuOverlayInfoBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RawMenuOverlayInfo).toString(),
         'anchorRect#0': (args) => (args[0] as RawMenuOverlayInfo).anchorRect,
         'overlaySize#0': (args) => (args[0] as RawMenuOverlayInfo).overlaySize,
         'position#0': (args) => (args[0] as RawMenuOverlayInfo).position,
         'tapRegionGroupId#0': (args) => (args[0] as RawMenuOverlayInfo).tapRegionGroupId,
         'hashCode#0': (args) => (args[0] as RawMenuOverlayInfo).hashCode,
+        '==#1': (args) => (args[0] as RawMenuOverlayInfo) == (args[1] as Object),
         '#4': (args) => RawMenuOverlayInfo(anchorRect: args[0] as ui.Rect, overlaySize: args[1] as ui.Size, tapRegionGroupId: args[2] as Object, position: identical(args[3], darticAbsent) ? null : args[3] as ui.Offset?),
         '_#fromFields#4': (args) => RawMenuOverlayInfo(anchorRect: args[0] as ui.Rect, overlaySize: args[1] as ui.Size, tapRegionGroupId: args[3] as Object, position: args[2] as ui.Offset?),
       };

@@ -22,7 +22,10 @@ abstract final class PageStorageKeyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PageStorageKey).toString(),
+        'hashCode#0': (args) => (args[0] as PageStorageKey).hashCode,
         'value#0': (args) => (args[0] as PageStorageKey).value,
+        '==#1': (args) => (args[0] as PageStorageKey) == (args[1] as Object),
         '#1': (args) => PageStorageKey<dynamic>(args[0]),
         '_#fromFields#1': (args) => PageStorageKey<dynamic>(args[0]),
       };

@@ -53,6 +53,7 @@ abstract final class DialogRouteBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#4': (args) => (args[0] as DialogRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
         'dispose#0': (args) { (args[0] as DialogRoute).dispose(); return null; },
+        'toString#0': (args) => (args[0] as DialogRoute).toString(),
         'buildPage#3': (args) => (args[0] as DialogRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'setState#1': (args) { (args[0] as DialogRoute).setState(() => (args[1] as Function)()); return null; },
         'install#0': (args) { (args[0] as DialogRoute).install(); return null; },
@@ -87,6 +88,7 @@ abstract final class DialogRouteBindings {
         'didComplete#1': (args) { (args[0] as DialogRoute).didComplete(args[1]); return null; },
         'addLocalHistoryEntry#1': (args) { (args[0] as DialogRoute).addLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; },
         'removeLocalHistoryEntry#1': (args) { (args[0] as DialogRoute).removeLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; },
+        'hashCode#0': (args) => (args[0] as DialogRoute).hashCode,
         'barrierDismissible#0': (args) => (args[0] as DialogRoute).barrierDismissible,
         'barrierLabel#0': (args) => (args[0] as DialogRoute).barrierLabel,
         'barrierColor#0': (args) => (args[0] as DialogRoute).barrierColor,
@@ -134,6 +136,7 @@ abstract final class DialogRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as DialogRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as DialogRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as DialogRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as DialogRoute) == (args[1] as Object),
         '#13': (args) => DialogRoute<dynamic>(context: args[0] as BuildContext, builder: (a) => (args[1] as Function)(a) as Widget, themes: identical(args[2], darticAbsent) ? null : args[2] as CapturedThemes?, barrierColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, barrierDismissible: identical(args[4], darticAbsent) ? true : args[4] as bool, barrierLabel: identical(args[5], darticAbsent) ? null : args[5] as String?, useSafeArea: identical(args[6], darticAbsent) ? true : args[6] as bool, settings: identical(args[7], darticAbsent) ? null : args[7] as RouteSettings?, requestFocus: identical(args[8], darticAbsent) ? null : args[8] as bool?, anchorPoint: identical(args[9], darticAbsent) ? null : args[9] as Offset?, traversalEdgeBehavior: identical(args[10], darticAbsent) ? null : args[10] as TraversalEdgeBehavior?, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool, animationStyle: identical(args[12], darticAbsent) ? null : args[12] as AnimationStyle?),
       };
 }

@@ -25,10 +25,13 @@ abstract final class CatmullRomSplineBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transformInternal#1': (args) => (args[0] as CatmullRomSpline).transformInternal(args[1] as double),
+        'toString#0': (args) => (args[0] as CatmullRomSpline).toString(),
         'generateSamples#3': (args) => (args[0] as CatmullRomSpline).generateSamples(start: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, end: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, tolerance: identical(args[3], darticAbsent) ? 1e-10 : args[3] as double),
         'findInverse#1': (args) => (args[0] as CatmullRomSpline).findInverse(args[1] as double),
         'transform#1': (args) => (args[0] as CatmullRomSpline).transform(args[1] as double),
         'samplingSeed#0': (args) => (args[0] as CatmullRomSpline).samplingSeed,
+        'hashCode#0': (args) => (args[0] as CatmullRomSpline).hashCode,
+        '==#1': (args) => (args[0] as CatmullRomSpline) == (args[1] as Object),
         '#4': (args) => CatmullRomSpline((args[0] as List).cast<Offset>(), tension: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, startHandle: identical(args[2], darticAbsent) ? null : args[2] as Offset?, endHandle: identical(args[3], darticAbsent) ? null : args[3] as Offset?),
         'precompute#4': (args) => CatmullRomSpline.precompute((args[0] as List).cast<Offset>(), tension: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, startHandle: identical(args[2], darticAbsent) ? null : args[2] as Offset?, endHandle: identical(args[3], darticAbsent) ? null : args[3] as Offset?),
       };

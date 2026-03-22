@@ -35,7 +35,10 @@ abstract final class RoundRangeSliderTickMarkShapeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredSize#2': (args) => (args[0] as RoundRangeSliderTickMarkShape).getPreferredSize(sliderTheme: args[1] as SliderThemeData, isEnabled: identical(args[2], darticAbsent) ? false : args[2] as bool),
         'paint#9': (args) { (args[0] as RoundRangeSliderTickMarkShape).paint(args[1] as PaintingContext, args[2] as Offset, parentBox: args[3] as RenderBox, sliderTheme: args[4] as SliderThemeData, enableAnimation: args[5] as Animation<double>, startThumbCenter: args[6] as Offset, endThumbCenter: args[7] as Offset, isEnabled: identical(args[8], darticAbsent) ? false : args[8] as bool, textDirection: args[9] as TextDirection); return null; },
+        'toString#0': (args) => (args[0] as RoundRangeSliderTickMarkShape).toString(),
         'tickMarkRadius#0': (args) => (args[0] as RoundRangeSliderTickMarkShape).tickMarkRadius,
+        'hashCode#0': (args) => (args[0] as RoundRangeSliderTickMarkShape).hashCode,
+        '==#1': (args) => (args[0] as RoundRangeSliderTickMarkShape) == (args[1] as Object),
         '#1': (args) => RoundRangeSliderTickMarkShape(tickMarkRadius: identical(args[0], darticAbsent) ? null : args[0] as double?),
         '_#fromFields#1': (args) => RoundRangeSliderTickMarkShape(tickMarkRadius: args[0] as double?),
       };

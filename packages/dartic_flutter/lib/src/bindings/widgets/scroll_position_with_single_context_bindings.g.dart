@@ -61,6 +61,7 @@ abstract final class ScrollPositionWithSingleContextBindings {
         'drag#2': (args) => (args[0] as ScrollPositionWithSingleContext).drag(args[1] as DragStartDetails, () => (args[2] as Function)()),
         'dispose#0': (args) { (args[0] as ScrollPositionWithSingleContext).dispose(); return null; },
         'debugFillDescription#1': (args) { (args[0] as ScrollPositionWithSingleContext).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollPositionWithSingleContext).toString(),
         'correctPixels#1': (args) { (args[0] as ScrollPositionWithSingleContext).correctPixels(args[1] as double); return null; },
         'correctBy#1': (args) { (args[0] as ScrollPositionWithSingleContext).correctBy(args[1] as double); return null; },
         'forcePixels#1': (args) { (args[0] as ScrollPositionWithSingleContext).forcePixels(args[1] as double); return null; },
@@ -87,6 +88,7 @@ abstract final class ScrollPositionWithSingleContextBindings {
         'copyWith#6': (args) => (args[0] as ScrollPositionWithSingleContext).copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, devicePixelRatio: identical(args[6], darticAbsent) ? null : args[6] as double?),
         'axisDirection#0': (args) => (args[0] as ScrollPositionWithSingleContext).axisDirection,
         'userScrollDirection#0': (args) => (args[0] as ScrollPositionWithSingleContext).userScrollDirection,
+        'hashCode#0': (args) => (args[0] as ScrollPositionWithSingleContext).hashCode,
         'physics#0': (args) => (args[0] as ScrollPositionWithSingleContext).physics,
         'context#0': (args) => (args[0] as ScrollPositionWithSingleContext).context,
         'keepScrollOffset#0': (args) => (args[0] as ScrollPositionWithSingleContext).keepScrollOffset,
@@ -112,6 +114,7 @@ abstract final class ScrollPositionWithSingleContextBindings {
         'extentInside#0': (args) => (args[0] as ScrollPositionWithSingleContext).extentInside,
         'extentAfter#0': (args) => (args[0] as ScrollPositionWithSingleContext).extentAfter,
         'extentTotal#0': (args) => (args[0] as ScrollPositionWithSingleContext).extentTotal,
+        '==#1': (args) => (args[0] as ScrollPositionWithSingleContext) == (args[1] as Object),
         '#6': (args) => ScrollPositionWithSingleContext(physics: args[0] as ScrollPhysics, context: args[1] as ScrollContext, initialPixels: identical(args[2], darticAbsent) ? null : args[2] as double?, keepScrollOffset: identical(args[3], darticAbsent) ? true : args[3] as bool, oldPosition: identical(args[4], darticAbsent) ? null : args[4] as ScrollPosition?, debugLabel: identical(args[5], darticAbsent) ? null : args[5] as String?),
       };
 }

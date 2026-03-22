@@ -42,6 +42,7 @@ abstract final class ContinuousRectangleBorderBindings {
         'hashCode#0': (args) => (args[0] as ContinuousRectangleBorder).hashCode,
         'side#0': (args) => (args[0] as ContinuousRectangleBorder).side,
         'preferPaintInterior#0': (args) => (args[0] as ContinuousRectangleBorder).preferPaintInterior,
+        '==#1': (args) => (args[0] as ContinuousRectangleBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as ContinuousRectangleBorder) + (args[1] as ShapeBorder),
         '#2': (args) => ContinuousRectangleBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry),
         '_#fromFields#2': (args) => ContinuousRectangleBorder(side: args[1] as BorderSide, borderRadius: args[0] as BorderRadiusGeometry),

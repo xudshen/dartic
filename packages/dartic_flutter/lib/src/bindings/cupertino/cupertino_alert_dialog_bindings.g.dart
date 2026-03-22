@@ -39,6 +39,7 @@ abstract final class CupertinoAlertDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoAlertDialog).createState(),
+        'toString#0': (args) => (args[0] as CupertinoAlertDialog).toString(),
         'createElement#0': (args) => (args[0] as CupertinoAlertDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoAlertDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoAlertDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -53,7 +54,9 @@ abstract final class CupertinoAlertDialogBindings {
         'actionScrollController#0': (args) => (args[0] as CupertinoAlertDialog).actionScrollController,
         'insetAnimationDuration#0': (args) => (args[0] as CupertinoAlertDialog).insetAnimationDuration,
         'insetAnimationCurve#0': (args) => (args[0] as CupertinoAlertDialog).insetAnimationCurve,
+        'hashCode#0': (args) => (args[0] as CupertinoAlertDialog).hashCode,
         'key#0': (args) => (args[0] as CupertinoAlertDialog).key,
+        '==#1': (args) => (args[0] as CupertinoAlertDialog) == (args[1] as Object),
         '#8': (args) => CupertinoAlertDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? null : args[1] as Widget?, content: identical(args[2], darticAbsent) ? null : args[2] as Widget?, actions: identical(args[3], darticAbsent) ? const <Widget>[] : (args[3] as List).cast<Widget>(), scrollController: identical(args[4], darticAbsent) ? null : args[4] as ScrollController?, actionScrollController: identical(args[5], darticAbsent) ? null : args[5] as ScrollController?, insetAnimationDuration: identical(args[6], darticAbsent) ? const Duration(milliseconds: 100) : args[6] as Duration, insetAnimationCurve: identical(args[7], darticAbsent) ? Curves.decelerate : args[7] as Curve),
         '_#fromFields#8': (args) => CupertinoAlertDialog(key: args[5] as Key?, title: args[7] as Widget?, content: args[2] as Widget?, actions: (args[1] as List).cast<Widget>(), scrollController: args[6] as ScrollController?, actionScrollController: args[0] as ScrollController?, insetAnimationDuration: args[4] as Duration, insetAnimationCurve: args[3] as Curve),
       };

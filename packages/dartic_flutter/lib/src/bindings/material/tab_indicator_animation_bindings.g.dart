@@ -42,6 +42,9 @@ abstract final class TabIndicatorAnimationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TabIndicatorAnimation).toString(),
+        'hashCode#0': (args) => (args[0] as TabIndicatorAnimation).hashCode,
         'index#0': (args) => (args[0] as TabIndicatorAnimation).index,
+        '==#1': (args) => (args[0] as TabIndicatorAnimation) == (args[1] as Object),
       };
 }

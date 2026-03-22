@@ -37,6 +37,7 @@ abstract final class CupertinoTimerPickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoTimerPicker).createState(),
+        'toString#0': (args) => (args[0] as CupertinoTimerPicker).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTimerPicker).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTimerPicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTimerPicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -54,7 +55,9 @@ abstract final class CupertinoTimerPickerBindings {
         'itemExtent#0': (args) => (args[0] as CupertinoTimerPicker).itemExtent,
         'selectionOverlayBuilder#0': (args) => (args[0] as CupertinoTimerPicker).selectionOverlayBuilder,
         'changeReportingBehavior#0': (args) => (args[0] as CupertinoTimerPicker).changeReportingBehavior,
+        'hashCode#0': (args) => (args[0] as CupertinoTimerPicker).hashCode,
         'key#0': (args) => (args[0] as CupertinoTimerPicker).key,
+        '==#1': (args) => (args[0] as CupertinoTimerPicker) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[7], darticAbsent)) {
             return CupertinoTimerPicker(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mode: identical(args[1], darticAbsent) ? CupertinoTimerPickerMode.hms : args[1] as CupertinoTimerPickerMode, initialTimerDuration: identical(args[2], darticAbsent) ? Duration.zero : args[2] as Duration, minuteInterval: identical(args[3], darticAbsent) ? 1 : args[3] as int, secondInterval: identical(args[4], darticAbsent) ? 1 : args[4] as int, alignment: identical(args[5], darticAbsent) ? Alignment.center : args[5] as AlignmentGeometry, backgroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, onTimerDurationChanged: (a) => (args[8] as Function)(a), changeReportingBehavior: identical(args[9], darticAbsent) ? ChangeReportingBehavior.onScrollUpdate : args[9] as ChangeReportingBehavior, selectionOverlayBuilder: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a, {required int columnCount, required int selectedIndex}) => (args[10] as Function?)!(a, columnCount: columnCount, selectedIndex: selectedIndex));

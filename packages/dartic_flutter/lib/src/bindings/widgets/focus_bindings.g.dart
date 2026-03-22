@@ -36,6 +36,7 @@ abstract final class FocusBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as Focus).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createState#0': (args) => (args[0] as Focus).createState(),
+        'toString#0': (args) => (args[0] as Focus).toString(),
         'createElement#0': (args) => (args[0] as Focus).createElement(),
         'toStringShort#0': (args) => (args[0] as Focus).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Focus).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -55,7 +56,9 @@ abstract final class FocusBindings {
         'descendantsAreTraversable#0': (args) => (args[0] as Focus).descendantsAreTraversable,
         'includeSemantics#0': (args) => (args[0] as Focus).includeSemantics,
         'debugLabel#0': (args) => (args[0] as Focus).debugLabel,
+        'hashCode#0': (args) => (args[0] as Focus).hashCode,
         'key#0': (args) => (args[0] as Focus).key,
+        '==#1': (args) => (args[0] as Focus) == (args[1] as Object),
         '#14': (args) => Focus(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, focusNode: identical(args[2], darticAbsent) ? null : args[2] as FocusNode?, parentNode: identical(args[3], darticAbsent) ? null : args[3] as FocusNode?, autofocus: identical(args[4], darticAbsent) ? false : args[4] as bool, onFocusChange: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onKeyEvent: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a, b) => (args[6] as Function?)!(a, b), onKey: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a, b) => (args[7] as Function?)!(a, b), canRequestFocus: identical(args[8], darticAbsent) ? null : args[8] as bool?, skipTraversal: identical(args[9], darticAbsent) ? null : args[9] as bool?, descendantsAreFocusable: identical(args[10], darticAbsent) ? null : args[10] as bool?, descendantsAreTraversable: identical(args[11], darticAbsent) ? null : args[11] as bool?, includeSemantics: identical(args[12], darticAbsent) ? true : args[12] as bool, debugLabel: identical(args[13], darticAbsent) ? null : args[13] as String?),
         'withExternalFocusNode#7': (args) {
           if (identical(args[4], darticAbsent)) {

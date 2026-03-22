@@ -30,6 +30,7 @@ abstract final class IdleScrollActivityBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyNewDimensions#0': (args) { (args[0] as IdleScrollActivity).applyNewDimensions(); return null; },
+        'toString#0': (args) => (args[0] as IdleScrollActivity).toString(),
         'updateDelegate#1': (args) { (args[0] as IdleScrollActivity).updateDelegate(args[1] as ScrollActivityDelegate); return null; },
         'resetActivity#0': (args) { (args[0] as IdleScrollActivity).resetActivity(); return null; },
         'dispatchScrollStartNotification#2': (args) { (args[0] as IdleScrollActivity).dispatchScrollStartNotification(args[1] as ScrollMetrics, args[2] as BuildContext?); return null; },
@@ -40,7 +41,9 @@ abstract final class IdleScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as IdleScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as IdleScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as IdleScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as IdleScrollActivity).hashCode,
         'delegate#0': (args) => (args[0] as IdleScrollActivity).delegate,
+        '==#1': (args) => (args[0] as IdleScrollActivity) == (args[1] as Object),
         '#1': (args) => IdleScrollActivity(args[0] as ScrollActivityDelegate),
       };
 }

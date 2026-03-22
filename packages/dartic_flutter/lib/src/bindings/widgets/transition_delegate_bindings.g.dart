@@ -42,5 +42,8 @@ abstract final class TransitionDelegateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#3': (args) => (args[0] as TransitionDelegate).resolve(newPageRouteHistory: (args[1] as List).cast<RouteTransitionRecord>(), locationToExitingPageRoute: (args[2] as Map).cast<RouteTransitionRecord?, RouteTransitionRecord>(), pageRouteToPagelessRoutes: (args[3] as Map).cast<RouteTransitionRecord?, List<RouteTransitionRecord>>()),
+        'toString#0': (args) => (args[0] as TransitionDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as TransitionDelegate).hashCode,
+        '==#1': (args) => (args[0] as TransitionDelegate) == (args[1] as Object),
       };
 }

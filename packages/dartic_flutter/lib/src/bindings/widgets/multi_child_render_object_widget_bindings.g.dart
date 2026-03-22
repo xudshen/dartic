@@ -34,6 +34,7 @@ abstract final class MultiChildRenderObjectWidgetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as MultiChildRenderObjectWidget).createElement(),
+        'toString#0': (args) => (args[0] as MultiChildRenderObjectWidget).toString(),
         'createRenderObject#1': (args) => (args[0] as MultiChildRenderObjectWidget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as MultiChildRenderObjectWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as MultiChildRenderObjectWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
@@ -44,6 +45,8 @@ abstract final class MultiChildRenderObjectWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MultiChildRenderObjectWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MultiChildRenderObjectWidget).debugDescribeChildren(),
         'children#0': (args) => (args[0] as MultiChildRenderObjectWidget).children,
+        'hashCode#0': (args) => (args[0] as MultiChildRenderObjectWidget).hashCode,
         'key#0': (args) => (args[0] as MultiChildRenderObjectWidget).key,
+        '==#1': (args) => (args[0] as MultiChildRenderObjectWidget) == (args[1] as Object),
       };
 }

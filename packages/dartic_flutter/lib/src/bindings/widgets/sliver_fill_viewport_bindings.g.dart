@@ -28,6 +28,7 @@ abstract final class SliverFillViewportBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverFillViewport).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverFillViewport).toString(),
         'createElement#0': (args) => (args[0] as SliverFillViewport).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverFillViewport).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverFillViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class SliverFillViewportBindings {
         'viewportFraction#0': (args) => (args[0] as SliverFillViewport).viewportFraction,
         'padEnds#0': (args) => (args[0] as SliverFillViewport).padEnds,
         'delegate#0': (args) => (args[0] as SliverFillViewport).delegate,
+        'hashCode#0': (args) => (args[0] as SliverFillViewport).hashCode,
         'key#0': (args) => (args[0] as SliverFillViewport).key,
+        '==#1': (args) => (args[0] as SliverFillViewport) == (args[1] as Object),
         '#4': (args) => SliverFillViewport(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as SliverChildDelegate, viewportFraction: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, padEnds: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => SliverFillViewport(key: args[1] as Key?, delegate: args[0] as SliverChildDelegate, viewportFraction: args[3] as double, padEnds: args[2] as bool),
       };

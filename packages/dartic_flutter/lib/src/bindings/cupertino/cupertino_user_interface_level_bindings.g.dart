@@ -28,14 +28,17 @@ abstract final class CupertinoUserInterfaceLevelBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as CupertinoUserInterfaceLevel).updateShouldNotify(args[1] as CupertinoUserInterfaceLevel),
         'debugFillProperties#1': (args) { (args[0] as CupertinoUserInterfaceLevel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CupertinoUserInterfaceLevel).toString(),
         'createElement#0': (args) => (args[0] as CupertinoUserInterfaceLevel).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoUserInterfaceLevel).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CupertinoUserInterfaceLevel).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as CupertinoUserInterfaceLevel).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as CupertinoUserInterfaceLevel).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CupertinoUserInterfaceLevel).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as CupertinoUserInterfaceLevel).hashCode,
         'child#0': (args) => (args[0] as CupertinoUserInterfaceLevel).child,
         'key#0': (args) => (args[0] as CupertinoUserInterfaceLevel).key,
+        '==#1': (args) => (args[0] as CupertinoUserInterfaceLevel) == (args[1] as Object),
         '#3': (args) => CupertinoUserInterfaceLevel(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as CupertinoUserInterfaceLevelData, child: args[2] as Widget),
         '_#fromFields#3': (args) => CupertinoUserInterfaceLevel(key: args[2] as Key?, data: args[0] as CupertinoUserInterfaceLevelData, child: args[1] as Widget),
       };

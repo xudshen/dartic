@@ -27,5 +27,8 @@ abstract final class GradientTransformBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transform#2': (args) => (args[0] as GradientTransform).transform(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?),
+        'toString#0': (args) => (args[0] as GradientTransform).toString(),
+        'hashCode#0': (args) => (args[0] as GradientTransform).hashCode,
+        '==#1': (args) => (args[0] as GradientTransform) == (args[1] as Object),
       };
 }

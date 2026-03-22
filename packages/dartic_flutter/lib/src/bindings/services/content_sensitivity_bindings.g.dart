@@ -26,6 +26,9 @@ abstract final class ContentSensitivityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ContentSensitivity).toString(),
+        'hashCode#0': (args) => (args[0] as ContentSensitivity).hashCode,
         'index#0': (args) => (args[0] as ContentSensitivity).index,
+        '==#1': (args) => (args[0] as ContentSensitivity) == (args[1] as Object),
       };
 }

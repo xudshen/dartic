@@ -34,6 +34,7 @@ abstract final class AppLifecycleListenerBindings {
         'didRequestAppExit#0': (args) => (args[0] as AppLifecycleListener).didRequestAppExit(),
         'didChangeAppLifecycleState#1': (args) { (args[0] as AppLifecycleListener).didChangeAppLifecycleState(args[1] as AppLifecycleState); return null; },
         'debugFillProperties#1': (args) { (args[0] as AppLifecycleListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AppLifecycleListener).toString(),
         'didPopRoute#0': (args) => (args[0] as AppLifecycleListener).didPopRoute(),
         'handleStartBackGesture#1': (args) => (args[0] as AppLifecycleListener).handleStartBackGesture(args[1] as PredictiveBackEvent),
         'handleUpdateBackGestureProgress#1': (args) { (args[0] as AppLifecycleListener).handleUpdateBackGestureProgress(args[1] as PredictiveBackEvent); return null; },
@@ -60,6 +61,8 @@ abstract final class AppLifecycleListenerBindings {
         'onRestart#0': (args) => (args[0] as AppLifecycleListener).onRestart,
         'onExitRequested#0': (args) => (args[0] as AppLifecycleListener).onExitRequested,
         'onDetach#0': (args) => (args[0] as AppLifecycleListener).onDetach,
+        'hashCode#0': (args) => (args[0] as AppLifecycleListener).hashCode,
+        '==#1': (args) => (args[0] as AppLifecycleListener) == (args[1] as Object),
         '#10': (args) => AppLifecycleListener(binding: identical(args[0], darticAbsent) ? null : args[0] as WidgetsBinding?, onResume: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onInactive: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onHide: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onShow: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), onPause: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onRestart: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), onDetach: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!(), onExitRequested: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : () => (args[8] as Function?)!(), onStateChange: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : (a) => (args[9] as Function?)!(a)),
       };
 }

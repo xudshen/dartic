@@ -35,6 +35,7 @@ abstract final class NeverScrollableScrollPhysicsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as NeverScrollableScrollPhysics).applyTo(args[1] as ScrollPhysics?),
+        'toString#0': (args) => (args[0] as NeverScrollableScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as NeverScrollableScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as NeverScrollableScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as NeverScrollableScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -46,6 +47,7 @@ abstract final class NeverScrollableScrollPhysicsBindings {
         'carriedMomentum#1': (args) => (args[0] as NeverScrollableScrollPhysics).carriedMomentum(args[1] as double),
         'allowUserScrolling#0': (args) => (args[0] as NeverScrollableScrollPhysics).allowUserScrolling,
         'allowImplicitScrolling#0': (args) => (args[0] as NeverScrollableScrollPhysics).allowImplicitScrolling,
+        'hashCode#0': (args) => (args[0] as NeverScrollableScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as NeverScrollableScrollPhysics).parent,
         'spring#0': (args) => (args[0] as NeverScrollableScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as NeverScrollableScrollPhysics).tolerance,
@@ -53,6 +55,7 @@ abstract final class NeverScrollableScrollPhysicsBindings {
         'minFlingVelocity#0': (args) => (args[0] as NeverScrollableScrollPhysics).minFlingVelocity,
         'maxFlingVelocity#0': (args) => (args[0] as NeverScrollableScrollPhysics).maxFlingVelocity,
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as NeverScrollableScrollPhysics).dragStartDistanceMotionThreshold,
+        '==#1': (args) => (args[0] as NeverScrollableScrollPhysics) == (args[1] as Object),
         '#1': (args) => NeverScrollableScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => NeverScrollableScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

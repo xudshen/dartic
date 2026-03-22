@@ -48,6 +48,7 @@ abstract final class CupertinoModalPopupRouteBindings {
         'createSimulation#1': (args) => (args[0] as CupertinoModalPopupRoute).createSimulation(forward: args[1] as bool),
         'buildPage#3': (args) => (args[0] as CupertinoModalPopupRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as CupertinoModalPopupRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
+        'toString#0': (args) => (args[0] as CupertinoModalPopupRoute).toString(),
         'setState#1': (args) { (args[0] as CupertinoModalPopupRoute).setState(() => (args[1] as Function)()); return null; },
         'install#0': (args) { (args[0] as CupertinoModalPopupRoute).install(); return null; },
         'didPush#0': (args) => (args[0] as CupertinoModalPopupRoute).didPush(),
@@ -88,6 +89,7 @@ abstract final class CupertinoModalPopupRouteBindings {
         'semanticsDismissible#0': (args) => (args[0] as CupertinoModalPopupRoute).semanticsDismissible,
         'transitionDuration#0': (args) => (args[0] as CupertinoModalPopupRoute).transitionDuration,
         'anchorPoint#0': (args) => (args[0] as CupertinoModalPopupRoute).anchorPoint,
+        'hashCode#0': (args) => (args[0] as CupertinoModalPopupRoute).hashCode,
         'opaque#0': (args) => (args[0] as CupertinoModalPopupRoute).opaque,
         'maintainState#0': (args) => (args[0] as CupertinoModalPopupRoute).maintainState,
         'allowSnapshotting#0': (args) => (args[0] as CupertinoModalPopupRoute).allowSnapshotting,
@@ -129,6 +131,7 @@ abstract final class CupertinoModalPopupRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as CupertinoModalPopupRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as CupertinoModalPopupRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as CupertinoModalPopupRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as CupertinoModalPopupRoute) == (args[1] as Object),
         '#9': (args) => CupertinoModalPopupRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, barrierLabel: identical(args[1], darticAbsent) ? 'Dismiss' : args[1] as String, barrierColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, barrierDismissible: identical(args[3], darticAbsent) ? true : args[3] as bool, semanticsDismissible: identical(args[4], darticAbsent) ? false : args[4] as bool, filter: identical(args[5], darticAbsent) ? null : args[5] as ImageFilter?, settings: identical(args[6], darticAbsent) ? null : args[6] as RouteSettings?, requestFocus: identical(args[7], darticAbsent) ? null : args[7] as bool?, anchorPoint: identical(args[8], darticAbsent) ? null : args[8] as Offset?),
       };
 }

@@ -48,6 +48,9 @@ abstract final class RangeSliderTrackShapeBindings {
                   }
                 },
         'paint#10': (args) { (args[0] as RangeSliderTrackShape).paint(args[1] as PaintingContext, args[2] as Offset, parentBox: args[3] as RenderBox, sliderTheme: args[4] as SliderThemeData, enableAnimation: args[5] as Animation<double>, startThumbCenter: args[6] as Offset, endThumbCenter: args[7] as Offset, isEnabled: identical(args[8], darticAbsent) ? false : args[8] as bool, isDiscrete: identical(args[9], darticAbsent) ? false : args[9] as bool, textDirection: args[10] as TextDirection); return null; },
+        'toString#0': (args) => (args[0] as RangeSliderTrackShape).toString(),
         'isRounded#0': (args) => (args[0] as RangeSliderTrackShape).isRounded,
+        'hashCode#0': (args) => (args[0] as RangeSliderTrackShape).hashCode,
+        '==#1': (args) => (args[0] as RangeSliderTrackShape) == (args[1] as Object),
       };
 }

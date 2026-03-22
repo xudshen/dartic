@@ -25,5 +25,8 @@ abstract final class HitTestableBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hitTest#2': (args) { (args[0] as HitTestable).hitTest(args[1] as HitTestResult, args[2] as Offset); return null; },
         'hitTestInView#3': (args) { (args[0] as HitTestable).hitTestInView(args[1] as HitTestResult, args[2] as Offset, args[3] as int); return null; },
+        'toString#0': (args) => (args[0] as HitTestable).toString(),
+        'hashCode#0': (args) => (args[0] as HitTestable).hashCode,
+        '==#1': (args) => (args[0] as HitTestable) == (args[1] as Object),
       };
 }

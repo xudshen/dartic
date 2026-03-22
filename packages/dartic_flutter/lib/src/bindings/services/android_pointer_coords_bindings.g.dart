@@ -35,6 +35,8 @@ abstract final class AndroidPointerCoordsBindings {
         'touchMinor#0': (args) => (args[0] as AndroidPointerCoords).touchMinor,
         'x#0': (args) => (args[0] as AndroidPointerCoords).x,
         'y#0': (args) => (args[0] as AndroidPointerCoords).y,
+        'hashCode#0': (args) => (args[0] as AndroidPointerCoords).hashCode,
+        '==#1': (args) => (args[0] as AndroidPointerCoords) == (args[1] as Object),
         '#9': (args) => AndroidPointerCoords(orientation: args[0] as double, pressure: args[1] as double, size: args[2] as double, toolMajor: args[3] as double, toolMinor: args[4] as double, touchMajor: args[5] as double, touchMinor: args[6] as double, x: args[7] as double, y: args[8] as double),
         '_#fromFields#9': (args) => AndroidPointerCoords(orientation: args[0] as double, pressure: args[1] as double, size: args[2] as double, toolMajor: args[3] as double, toolMinor: args[4] as double, touchMajor: args[5] as double, touchMinor: args[6] as double, x: args[7] as double, y: args[8] as double),
       };

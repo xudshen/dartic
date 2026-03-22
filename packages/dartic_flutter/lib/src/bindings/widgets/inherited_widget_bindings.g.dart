@@ -34,13 +34,16 @@ abstract final class InheritedWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as InheritedWidget).createElement(),
         'updateShouldNotify#1': (args) => (args[0] as InheritedWidget).updateShouldNotify(args[1] as InheritedWidget),
+        'toString#0': (args) => (args[0] as InheritedWidget).toString(),
         'toStringShort#0': (args) => (args[0] as InheritedWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as InheritedWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as InheritedWidget).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as InheritedWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as InheritedWidget).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as InheritedWidget).hashCode,
         'child#0': (args) => (args[0] as InheritedWidget).child,
         'key#0': (args) => (args[0] as InheritedWidget).key,
+        '==#1': (args) => (args[0] as InheritedWidget) == (args[1] as Object),
       };
 }

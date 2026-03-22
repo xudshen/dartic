@@ -24,6 +24,9 @@ abstract final class VerticalDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as VerticalDirection).toString(),
+        'hashCode#0': (args) => (args[0] as VerticalDirection).hashCode,
         'index#0': (args) => (args[0] as VerticalDirection).index,
+        '==#1': (args) => (args[0] as VerticalDirection) == (args[1] as Object),
       };
 }

@@ -33,6 +33,7 @@ abstract final class TimePickerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as TimePickerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as TimePickerTheme).updateShouldNotify(args[1] as TimePickerTheme),
+        'toString#0': (args) => (args[0] as TimePickerTheme).toString(),
         'createElement#0': (args) => (args[0] as TimePickerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as TimePickerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TimePickerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,8 +42,10 @@ abstract final class TimePickerThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as TimePickerTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as TimePickerTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as TimePickerTheme).data,
+        'hashCode#0': (args) => (args[0] as TimePickerTheme).hashCode,
         'child#0': (args) => (args[0] as TimePickerTheme).child,
         'key#0': (args) => (args[0] as TimePickerTheme).key,
+        '==#1': (args) => (args[0] as TimePickerTheme) == (args[1] as Object),
         '#3': (args) => TimePickerTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as TimePickerThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => TimePickerTheme(key: args[2] as Key?, data: args[1] as TimePickerThemeData, child: args[0] as Widget),
       };

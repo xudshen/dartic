@@ -32,6 +32,8 @@ abstract final class SliverGridGeometryBindings {
         'mainAxisExtent#0': (args) => (args[0] as SliverGridGeometry).mainAxisExtent,
         'crossAxisExtent#0': (args) => (args[0] as SliverGridGeometry).crossAxisExtent,
         'trailingScrollOffset#0': (args) => (args[0] as SliverGridGeometry).trailingScrollOffset,
+        'hashCode#0': (args) => (args[0] as SliverGridGeometry).hashCode,
+        '==#1': (args) => (args[0] as SliverGridGeometry) == (args[1] as Object),
         '#4': (args) => SliverGridGeometry(scrollOffset: args[0] as double, crossAxisOffset: args[1] as double, mainAxisExtent: args[2] as double, crossAxisExtent: args[3] as double),
         '_#fromFields#4': (args) => SliverGridGeometry(scrollOffset: args[3] as double, crossAxisOffset: args[1] as double, mainAxisExtent: args[2] as double, crossAxisExtent: args[0] as double),
       };

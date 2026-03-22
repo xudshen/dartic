@@ -32,6 +32,7 @@ abstract final class WidgetStateMapperBindings {
         'toStringShort#0': (args) => (args[0] as WidgetStateMapper).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as WidgetStateMapper).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'hashCode#0': (args) => (args[0] as WidgetStateMapper).hashCode,
+        '==#1': (args) => (args[0] as WidgetStateMapper) == (args[1] as Object),
         '#1': (args) => WidgetStateMapper<dynamic>((args[0] as Map).cast<WidgetStatesConstraint, dynamic>()),
         '_#fromFields#1': (args) => WidgetStateMapper<dynamic>((args[0] as Map).cast<WidgetStatesConstraint, dynamic>()),
       };

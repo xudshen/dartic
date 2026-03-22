@@ -44,6 +44,7 @@ abstract final class StatefulElementBindings {
         'didChangeDependencies#0': (args) { (args[0] as StatefulElement).didChangeDependencies(); return null; },
         'toDiagnosticsNode#2': (args) => (args[0] as StatefulElement).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as StatefulElement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as StatefulElement).toString(),
         'mount#2': (args) { (args[0] as StatefulElement).mount(args[1] as Element?, args[2]); return null; },
         'visitChildren#1': (args) { (args[0] as StatefulElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as StatefulElement).forgetChild(args[1] as Element); return null; },
@@ -84,6 +85,7 @@ abstract final class StatefulElementBindings {
         'toStringShallow#2': (args) => (args[0] as StatefulElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as StatefulElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'state#0': (args) => (args[0] as StatefulElement).state,
+        'hashCode#0': (args) => (args[0] as StatefulElement).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as StatefulElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as StatefulElement).renderObjectAttachingChild,
         'slot#0': (args) => (args[0] as StatefulElement).slot,
@@ -97,6 +99,7 @@ abstract final class StatefulElementBindings {
         'renderObject#0': (args) => (args[0] as StatefulElement).renderObject,
         'size#0': (args) => (args[0] as StatefulElement).size,
         'dirty#0': (args) => (args[0] as StatefulElement).dirty,
+        '==#1': (args) => (args[0] as StatefulElement) == (args[1] as Object),
         '#1': (args) => StatefulElement(args[0] as StatefulWidget),
       };
 }

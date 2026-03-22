@@ -53,6 +53,7 @@ abstract final class RenderShrinkWrappingViewportBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderShrinkWrappingViewport).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderShrinkWrappingViewport).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderShrinkWrappingViewport).labelForChild(args[1] as int),
+        'toString#0': (args) => (args[0] as RenderShrinkWrappingViewport).toString(),
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderShrinkWrappingViewport).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderShrinkWrappingViewport).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'attach#1': (args) { (args[0] as RenderShrinkWrappingViewport).attach(args[1] as PipelineOwner); return null; },
@@ -140,6 +141,7 @@ abstract final class RenderShrinkWrappingViewportBindings {
         'childAfter#1': (args) => (args[0] as RenderShrinkWrappingViewport).childAfter(args[1] as RenderSliver),
         'hasVisualOverflow#0': (args) => (args[0] as RenderShrinkWrappingViewport).hasVisualOverflow,
         'indexOfFirstChild#0': (args) => (args[0] as RenderShrinkWrappingViewport).indexOfFirstChild,
+        'hashCode#0': (args) => (args[0] as RenderShrinkWrappingViewport).hashCode,
         'axisDirection#0': (args) => (args[0] as RenderShrinkWrappingViewport).axisDirection,
         'crossAxisDirection#0': (args) => (args[0] as RenderShrinkWrappingViewport).crossAxisDirection,
         'axis#0': (args) => (args[0] as RenderShrinkWrappingViewport).axis,
@@ -194,6 +196,7 @@ abstract final class RenderShrinkWrappingViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderShrinkWrappingViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderShrinkWrappingViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderShrinkWrappingViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderShrinkWrappingViewport) == (args[1] as Object),
         '#6': (args) => RenderShrinkWrappingViewport(axisDirection: identical(args[0], darticAbsent) ? AxisDirection.down : args[0] as AxisDirection, crossAxisDirection: args[1] as AxisDirection, offset: args[2] as ViewportOffset, paintOrder: identical(args[3], darticAbsent) ? SliverPaintOrder.firstIsTop : args[3] as SliverPaintOrder, clipBehavior: identical(args[4], darticAbsent) ? Clip.hardEdge : args[4] as Clip, children: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<RenderSliver>()),
       };
 }

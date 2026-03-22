@@ -36,6 +36,7 @@ abstract final class CharacterActivatorBindings {
         'debugDescribeKeys#0': (args) => (args[0] as CharacterActivator).debugDescribeKeys(),
         'serializeForMenu#0': (args) => (args[0] as CharacterActivator).serializeForMenu(),
         'debugFillProperties#1': (args) { (args[0] as CharacterActivator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CharacterActivator).toString(),
         'toStringShort#0': (args) => (args[0] as CharacterActivator).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as CharacterActivator).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'alt#0': (args) => (args[0] as CharacterActivator).alt,
@@ -44,6 +45,8 @@ abstract final class CharacterActivatorBindings {
         'includeRepeats#0': (args) => (args[0] as CharacterActivator).includeRepeats,
         'character#0': (args) => (args[0] as CharacterActivator).character,
         'triggers#0': (args) => (args[0] as CharacterActivator).triggers,
+        'hashCode#0': (args) => (args[0] as CharacterActivator).hashCode,
+        '==#1': (args) => (args[0] as CharacterActivator) == (args[1] as Object),
         '#5': (args) => CharacterActivator(args[0] as String, alt: identical(args[1], darticAbsent) ? false : args[1] as bool, control: identical(args[2], darticAbsent) ? false : args[2] as bool, meta: identical(args[3], darticAbsent) ? false : args[3] as bool, includeRepeats: identical(args[4], darticAbsent) ? true : args[4] as bool),
         '_#fromFields#5': (args) => CharacterActivator(args[1] as String, alt: args[0] as bool, control: args[2] as bool, meta: args[4] as bool, includeRepeats: args[3] as bool),
       };

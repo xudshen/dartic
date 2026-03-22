@@ -34,7 +34,10 @@ abstract final class PictureBindings {
         'toImage#2': (args) => (args[0] as Picture).toImage(args[1] as int, args[2] as int),
         'toImageSync#2': (args) => (args[0] as Picture).toImageSync(args[1] as int, args[2] as int),
         'dispose#0': (args) { (args[0] as Picture).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Picture).toString(),
         'debugDisposed#0': (args) => (args[0] as Picture).debugDisposed,
         'approximateBytesUsed#0': (args) => (args[0] as Picture).approximateBytesUsed,
+        'hashCode#0': (args) => (args[0] as Picture).hashCode,
+        '==#1': (args) => (args[0] as Picture) == (args[1] as Object),
       };
 }

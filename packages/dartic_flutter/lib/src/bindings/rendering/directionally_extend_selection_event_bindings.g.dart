@@ -25,10 +25,13 @@ abstract final class DirectionallyExtendSelectionEventBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#3': (args) => (args[0] as DirectionallyExtendSelectionEvent).copyWith(dx: identical(args[1], darticAbsent) ? null : args[1] as double?, isEnd: identical(args[2], darticAbsent) ? null : args[2] as bool?, direction: identical(args[3], darticAbsent) ? null : args[3] as SelectionExtendDirection?),
+        'toString#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).toString(),
         'dx#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).dx,
         'isEnd#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).isEnd,
         'direction#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).direction,
+        'hashCode#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as DirectionallyExtendSelectionEvent).type,
+        '==#1': (args) => (args[0] as DirectionallyExtendSelectionEvent) == (args[1] as Object),
         '#3': (args) => DirectionallyExtendSelectionEvent(dx: args[0] as double, isEnd: args[1] as bool, direction: args[2] as SelectionExtendDirection),
         '_#fromFields#4': (args) => DirectionallyExtendSelectionEvent(dx: args[1] as double, isEnd: args[2] as bool, direction: args[0] as SelectionExtendDirection),
       };

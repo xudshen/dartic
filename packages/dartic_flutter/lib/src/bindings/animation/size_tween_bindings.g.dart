@@ -26,14 +26,17 @@ abstract final class SizeTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as SizeTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as SizeTween).toString(),
         'transform#1': (args) => (args[0] as SizeTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as SizeTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as SizeTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as SizeTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as SizeTween).hashCode,
         'begin#0': (args) => (args[0] as SizeTween).begin,
         'end#0': (args) => (args[0] as SizeTween).end,
         'begin=#1': (args) { (args[0] as SizeTween).begin = args[1] as Size?; return args[1]; },
         'end=#1': (args) { (args[0] as SizeTween).end = args[1] as Size?; return args[1]; },
+        '==#1': (args) => (args[0] as SizeTween) == (args[1] as Object),
         '#2': (args) => SizeTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Size?, end: identical(args[1], darticAbsent) ? null : args[1] as Size?),
       };
 }

@@ -37,6 +37,7 @@ abstract final class ExpandedBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Expanded).toString(),
         'applyParentData#1': (args) { (args[0] as Expanded).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as Expanded).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as Expanded).createElement(),
@@ -47,12 +48,14 @@ abstract final class ExpandedBindings {
         'toStringDeep#4': (args) => (args[0] as Expanded).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as Expanded).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Expanded).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as Expanded).hashCode,
         'flex#0': (args) => (args[0] as Expanded).flex,
         'fit#0': (args) => (args[0] as Expanded).fit,
         'debugTypicalAncestorWidgetClass#0': (args) => (args[0] as Expanded).debugTypicalAncestorWidgetClass,
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as Expanded).debugTypicalAncestorWidgetDescription,
         'child#0': (args) => (args[0] as Expanded).child,
         'key#0': (args) => (args[0] as Expanded).key,
+        '==#1': (args) => (args[0] as Expanded) == (args[1] as Object),
         '#3': (args) => Expanded(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: identical(args[1], darticAbsent) ? 1 : args[1] as int, child: args[2] as Widget),
         '_#fromFields#4': (args) => Expanded(key: args[3] as Key?, flex: args[2] as int, child: args[0] as Widget),
       };

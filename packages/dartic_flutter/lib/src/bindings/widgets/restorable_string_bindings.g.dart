@@ -28,6 +28,7 @@ abstract final class RestorableStringBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RestorableString).toString(),
         'fromPrimitives#1': (args) => (args[0] as RestorableString).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableString).toPrimitives(),
         'createDefaultValue#0': (args) => (args[0] as RestorableString).createDefaultValue(),
@@ -37,12 +38,14 @@ abstract final class RestorableStringBindings {
         'addListener#1': (args) { (args[0] as RestorableString).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableString).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableString).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableString).hashCode,
         'value#0': (args) => (args[0] as RestorableString).value,
         'enabled#0': (args) => (args[0] as RestorableString).enabled,
         'state#0': (args) => (args[0] as RestorableString).state,
         'isRegistered#0': (args) => (args[0] as RestorableString).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableString).hasListeners,
         'value=#1': (args) { (args[0] as RestorableString).value = args[1] as String; return args[1]; },
+        '==#1': (args) => (args[0] as RestorableString) == (args[1] as Object),
         '#1': (args) => RestorableString(args[0] as String),
       };
 }

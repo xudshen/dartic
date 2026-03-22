@@ -41,6 +41,7 @@ abstract final class StretchingOverscrollIndicatorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as StretchingOverscrollIndicator).createState(),
         'debugFillProperties#1': (args) { (args[0] as StretchingOverscrollIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as StretchingOverscrollIndicator).toString(),
         'createElement#0': (args) => (args[0] as StretchingOverscrollIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as StretchingOverscrollIndicator).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as StretchingOverscrollIndicator).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -52,8 +53,16 @@ abstract final class StretchingOverscrollIndicatorBindings {
         'notificationPredicate#0': (args) => (args[0] as StretchingOverscrollIndicator).notificationPredicate,
         'clipBehavior#0': (args) => (args[0] as StretchingOverscrollIndicator).clipBehavior,
         'child#0': (args) => (args[0] as StretchingOverscrollIndicator).child,
+        'hashCode#0': (args) => (args[0] as StretchingOverscrollIndicator).hashCode,
         'key#0': (args) => (args[0] as StretchingOverscrollIndicator).key,
-        '#5': (args) => StretchingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: args[1] as AxisDirection, notificationPredicate: identical(args[2], darticAbsent) ? defaultScrollNotificationPredicate : (a) => (args[2] as Function)(a) as bool, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
+        '==#1': (args) => (args[0] as StretchingOverscrollIndicator) == (args[1] as Object),
+        '#5': (args) {
+          if (identical(args[2], darticAbsent)) {
+            return StretchingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: args[1] as AxisDirection, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?);
+          } else {
+            return StretchingOverscrollIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axisDirection: args[1] as AxisDirection, notificationPredicate: (a) => (args[2] as Function)(a) as bool, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?);
+          }
+        },
         '_#fromFields#5': (args) => StretchingOverscrollIndicator(key: args[3] as Key?, axisDirection: args[0] as AxisDirection, notificationPredicate: args[4] as ScrollNotificationPredicate, clipBehavior: args[2] as Clip, child: args[1] as Widget?),
       };
 }

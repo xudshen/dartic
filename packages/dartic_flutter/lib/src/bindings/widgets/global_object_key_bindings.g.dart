@@ -36,6 +36,7 @@ abstract final class GlobalObjectKeyBindings {
         'currentContext#0': (args) => (args[0] as GlobalObjectKey).currentContext,
         'currentWidget#0': (args) => (args[0] as GlobalObjectKey).currentWidget,
         'currentState#0': (args) => (args[0] as GlobalObjectKey).currentState,
+        '==#1': (args) => (args[0] as GlobalObjectKey) == (args[1] as Object),
         '#1': (args) => GlobalObjectKey<State<StatefulWidget>>(args[0] as Object),
         '_#fromFields#1': (args) => GlobalObjectKey<State<StatefulWidget>>(args[0] as Object),
       };

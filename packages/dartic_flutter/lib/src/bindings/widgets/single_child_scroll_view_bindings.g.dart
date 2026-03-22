@@ -45,6 +45,7 @@ abstract final class SingleChildScrollViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SingleChildScrollView).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SingleChildScrollView).toString(),
         'createElement#0': (args) => (args[0] as SingleChildScrollView).createElement(),
         'toStringShort#0': (args) => (args[0] as SingleChildScrollView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SingleChildScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -64,7 +65,9 @@ abstract final class SingleChildScrollViewBindings {
         'hitTestBehavior#0': (args) => (args[0] as SingleChildScrollView).hitTestBehavior,
         'restorationId#0': (args) => (args[0] as SingleChildScrollView).restorationId,
         'keyboardDismissBehavior#0': (args) => (args[0] as SingleChildScrollView).keyboardDismissBehavior,
+        'hashCode#0': (args) => (args[0] as SingleChildScrollView).hashCode,
         'key#0': (args) => (args[0] as SingleChildScrollView).key,
+        '==#1': (args) => (args[0] as SingleChildScrollView) == (args[1] as Object),
         '#13': (args) => SingleChildScrollView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, controller: identical(args[6], darticAbsent) ? null : args[6] as ScrollController?, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?, dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, clipBehavior: identical(args[9], darticAbsent) ? Clip.hardEdge : args[9] as Clip, hitTestBehavior: identical(args[10], darticAbsent) ? HitTestBehavior.opaque : args[10] as HitTestBehavior, restorationId: identical(args[11], darticAbsent) ? null : args[11] as String?, keyboardDismissBehavior: identical(args[12], darticAbsent) ? null : args[12] as ScrollViewKeyboardDismissBehavior?),
         '_#fromFields#13': (args) => SingleChildScrollView(key: args[5] as Key?, scrollDirection: args[12] as Axis, reverse: args[11] as bool, padding: args[7] as EdgeInsetsGeometry?, primary: args[9] as bool?, physics: args[8] as ScrollPhysics?, controller: args[2] as ScrollController?, child: args[0] as Widget?, dragStartBehavior: args[3] as DragStartBehavior, clipBehavior: args[1] as Clip, hitTestBehavior: args[4] as HitTestBehavior, restorationId: args[10] as String?, keyboardDismissBehavior: args[6] as ScrollViewKeyboardDismissBehavior?),
       };

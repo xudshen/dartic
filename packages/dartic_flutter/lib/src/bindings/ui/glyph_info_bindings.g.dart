@@ -34,6 +34,7 @@ abstract final class GlyphInfoBindings {
         'graphemeClusterCodeUnitRange#0': (args) => (args[0] as GlyphInfo).graphemeClusterCodeUnitRange,
         'writingDirection#0': (args) => (args[0] as GlyphInfo).writingDirection,
         'hashCode#0': (args) => (args[0] as GlyphInfo).hashCode,
+        '==#1': (args) => (args[0] as GlyphInfo) == (args[1] as Object),
         '#3': (args) => GlyphInfo(args[0] as Rect, args[1] as TextRange, args[2] as TextDirection),
       };
 }

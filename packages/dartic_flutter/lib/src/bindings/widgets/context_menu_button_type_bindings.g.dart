@@ -32,6 +32,9 @@ abstract final class ContextMenuButtonTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ContextMenuButtonType).toString(),
+        'hashCode#0': (args) => (args[0] as ContextMenuButtonType).hashCode,
         'index#0': (args) => (args[0] as ContextMenuButtonType).index,
+        '==#1': (args) => (args[0] as ContextMenuButtonType) == (args[1] as Object),
       };
 }

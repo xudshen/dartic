@@ -46,12 +46,14 @@ abstract final class ProxyAnimationBindings {
         'parent#0': (args) => (args[0] as ProxyAnimation).parent,
         'status#0': (args) => (args[0] as ProxyAnimation).status,
         'value#0': (args) => (args[0] as ProxyAnimation).value,
+        'hashCode#0': (args) => (args[0] as ProxyAnimation).hashCode,
         'isDismissed#0': (args) => (args[0] as ProxyAnimation).isDismissed,
         'isCompleted#0': (args) => (args[0] as ProxyAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as ProxyAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as ProxyAnimation).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as ProxyAnimation).isListening,
         'parent=#1': (args) { (args[0] as ProxyAnimation).parent = args[1] as Animation<double>?; return args[1]; },
+        '==#1': (args) => (args[0] as ProxyAnimation) == (args[1] as Object),
         '#1': (args) => ProxyAnimation(identical(args[0], darticAbsent) ? null : args[0] as Animation<double>?),
       };
 }

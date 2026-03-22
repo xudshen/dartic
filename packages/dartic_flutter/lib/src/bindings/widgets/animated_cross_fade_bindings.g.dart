@@ -37,6 +37,7 @@ abstract final class AnimatedCrossFadeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedCrossFade).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedCrossFade).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedCrossFade).toString(),
         'createElement#0': (args) => (args[0] as AnimatedCrossFade).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedCrossFade).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedCrossFade).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -54,7 +55,9 @@ abstract final class AnimatedCrossFadeBindings {
         'alignment#0': (args) => (args[0] as AnimatedCrossFade).alignment,
         'layoutBuilder#0': (args) => (args[0] as AnimatedCrossFade).layoutBuilder,
         'excludeBottomFocus#0': (args) => (args[0] as AnimatedCrossFade).excludeBottomFocus,
+        'hashCode#0': (args) => (args[0] as AnimatedCrossFade).hashCode,
         'key#0': (args) => (args[0] as AnimatedCrossFade).key,
+        '==#1': (args) => (args[0] as AnimatedCrossFade) == (args[1] as Object),
         '#12': (args) => AnimatedCrossFade(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, firstChild: args[1] as Widget, secondChild: args[2] as Widget, firstCurve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, secondCurve: identical(args[4], darticAbsent) ? Curves.linear : args[4] as Curve, sizeCurve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, alignment: identical(args[6], darticAbsent) ? Alignment.topCenter : args[6] as AlignmentGeometry, crossFadeState: args[7] as CrossFadeState, duration: args[8] as Duration, reverseDuration: identical(args[9], darticAbsent) ? null : args[9] as Duration?, layoutBuilder: identical(args[10], darticAbsent) ? AnimatedCrossFade.defaultLayoutBuilder : (a, b, c, d) => (args[10] as Function)(a, b, c, d) as Widget, excludeBottomFocus: identical(args[11], darticAbsent) ? true : args[11] as bool),
         '_#fromFields#12': (args) => AnimatedCrossFade(key: args[6] as Key?, firstChild: args[4] as Widget, secondChild: args[9] as Widget, firstCurve: args[5] as Curve, secondCurve: args[10] as Curve, sizeCurve: args[11] as Curve, alignment: args[0] as AlignmentGeometry, crossFadeState: args[1] as CrossFadeState, duration: args[2] as Duration, reverseDuration: args[8] as Duration?, layoutBuilder: args[7] as AnimatedCrossFadeBuilder, excludeBottomFocus: args[3] as bool),
       };

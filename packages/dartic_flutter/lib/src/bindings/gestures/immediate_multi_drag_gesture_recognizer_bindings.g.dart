@@ -35,6 +35,7 @@ abstract final class ImmediateMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
+        'toString#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
@@ -55,6 +56,7 @@ abstract final class ImmediateMultiDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).hashCode,
         'onStart#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).onStart,
         'debugOwner#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as ImmediateMultiDragGestureRecognizer).gestureSettings,
@@ -63,6 +65,7 @@ abstract final class ImmediateMultiDragGestureRecognizerBindings {
         'onStart=#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as ImmediateMultiDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as ImmediateMultiDragGestureRecognizer) == (args[1] as Object),
         '#3': (args) => ImmediateMultiDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
       };
 }

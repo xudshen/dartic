@@ -39,6 +39,7 @@ abstract final class CustomMultiChildLayoutBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as CustomMultiChildLayout).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as CustomMultiChildLayout).updateRenderObject(args[1] as BuildContext, args[2] as RenderCustomMultiChildLayoutBox); return null; },
+        'toString#0': (args) => (args[0] as CustomMultiChildLayout).toString(),
         'createElement#0': (args) => (args[0] as CustomMultiChildLayout).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as CustomMultiChildLayout).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as CustomMultiChildLayout).toStringShort(),
@@ -48,8 +49,10 @@ abstract final class CustomMultiChildLayoutBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CustomMultiChildLayout).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CustomMultiChildLayout).debugDescribeChildren(),
         'delegate#0': (args) => (args[0] as CustomMultiChildLayout).delegate,
+        'hashCode#0': (args) => (args[0] as CustomMultiChildLayout).hashCode,
         'children#0': (args) => (args[0] as CustomMultiChildLayout).children,
         'key#0': (args) => (args[0] as CustomMultiChildLayout).key,
+        '==#1': (args) => (args[0] as CustomMultiChildLayout) == (args[1] as Object),
         '#3': (args) => CustomMultiChildLayout(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as MultiChildLayoutDelegate, children: identical(args[2], darticAbsent) ? const <Widget>[] : (args[2] as List).cast<Widget>()),
         '_#fromFields#3': (args) => CustomMultiChildLayout(key: args[2] as Key?, delegate: args[1] as MultiChildLayoutDelegate, children: (args[0] as List).cast<Widget>()),
       };

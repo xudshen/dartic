@@ -42,6 +42,7 @@ abstract final class SweepGradientBindings {
         'colors#0': (args) => (args[0] as SweepGradient).colors,
         'stops#0': (args) => (args[0] as SweepGradient).stops,
         'transform#0': (args) => (args[0] as SweepGradient).transform,
+        '==#1': (args) => (args[0] as SweepGradient) == (args[1] as Object),
         '#7': (args) => SweepGradient(center: identical(args[0], darticAbsent) ? Alignment.center : args[0] as AlignmentGeometry, startAngle: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, endAngle: identical(args[2], darticAbsent) ? math.pi * 2 : args[2] as double, colors: (args[3] as List).cast<ui.Color>(), stops: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<double>(), tileMode: identical(args[5], darticAbsent) ? TileMode.clamp : args[5] as ui.TileMode, transform: identical(args[6], darticAbsent) ? null : args[6] as GradientTransform?),
         '_#fromFields#7': (args) => SweepGradient(center: args[0] as AlignmentGeometry, startAngle: args[3] as double, endAngle: args[2] as double, colors: (args[1] as List).cast<ui.Color>(), stops: args[4] == null ? null : (args[4] as List).cast<double>(), tileMode: args[5] as ui.TileMode, transform: args[6] as GradientTransform?),
       };

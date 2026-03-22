@@ -35,6 +35,7 @@ abstract final class SliverFixedExtentListBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as SliverFixedExtentList).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverFixedExtentList).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverFixedExtentList); return null; },
+        'toString#0': (args) => (args[0] as SliverFixedExtentList).toString(),
         'createElement#0': (args) => (args[0] as SliverFixedExtentList).createElement(),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverFixedExtentList).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverFixedExtentList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,8 +46,10 @@ abstract final class SliverFixedExtentListBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverFixedExtentList).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverFixedExtentList).debugDescribeChildren(),
         'itemExtent#0': (args) => (args[0] as SliverFixedExtentList).itemExtent,
+        'hashCode#0': (args) => (args[0] as SliverFixedExtentList).hashCode,
         'delegate#0': (args) => (args[0] as SliverFixedExtentList).delegate,
         'key#0': (args) => (args[0] as SliverFixedExtentList).key,
+        '==#1': (args) => (args[0] as SliverFixedExtentList) == (args[1] as Object),
         '#3': (args) => SliverFixedExtentList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as SliverChildDelegate, itemExtent: args[2] as double),
         'builder#9': (args) => SliverFixedExtentList.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b) => (args[1] as Function)(a, b) as Widget?, itemExtent: args[2] as double, findChildIndexCallback: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), itemCount: identical(args[4], darticAbsent) ? null : args[4] as int?, addAutomaticKeepAlives: identical(args[5], darticAbsent) ? true : args[5] as bool, addRepaintBoundaries: identical(args[6], darticAbsent) ? true : args[6] as bool, addSemanticIndexes: identical(args[7], darticAbsent) ? true : args[7] as bool, semanticIndexOffset: identical(args[8], darticAbsent) ? 0 : args[8] as int),
         'list#6': (args) => SliverFixedExtentList.list(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), itemExtent: args[2] as double, addAutomaticKeepAlives: identical(args[3], darticAbsent) ? true : args[3] as bool, addRepaintBoundaries: identical(args[4], darticAbsent) ? true : args[4] as bool, addSemanticIndexes: identical(args[5], darticAbsent) ? true : args[5] as bool),

@@ -46,6 +46,7 @@ abstract final class RawKeyEventDataIosBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataIos).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataIos).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataIos).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataIos).toString(),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataIos).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataIos).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataIos).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -62,6 +63,7 @@ abstract final class RawKeyEventDataIosBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataIos).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataIos).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataIos).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataIos) == (args[1] as Object),
         '#4': (args) => RawKeyEventDataIos(characters: identical(args[0], darticAbsent) ? '' : args[0] as String, charactersIgnoringModifiers: identical(args[1], darticAbsent) ? '' : args[1] as String, keyCode: identical(args[2], darticAbsent) ? 0 : args[2] as int, modifiers: identical(args[3], darticAbsent) ? 0 : args[3] as int),
         '_#fromFields#4': (args) => RawKeyEventDataIos(characters: args[0] as String, charactersIgnoringModifiers: args[1] as String, keyCode: args[2] as int, modifiers: args[3] as int),
       };

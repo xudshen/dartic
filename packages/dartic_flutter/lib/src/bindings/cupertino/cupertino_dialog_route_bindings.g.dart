@@ -48,6 +48,7 @@ abstract final class CupertinoDialogRouteBindings {
         'createSimulation#1': (args) => (args[0] as CupertinoDialogRoute).createSimulation(forward: args[1] as bool),
         'buildTransitions#4': (args) => (args[0] as CupertinoDialogRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
         'dispose#0': (args) { (args[0] as CupertinoDialogRoute).dispose(); return null; },
+        'toString#0': (args) => (args[0] as CupertinoDialogRoute).toString(),
         'buildPage#3': (args) => (args[0] as CupertinoDialogRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'setState#1': (args) { (args[0] as CupertinoDialogRoute).setState(() => (args[1] as Function)()); return null; },
         'install#0': (args) { (args[0] as CupertinoDialogRoute).install(); return null; },
@@ -82,6 +83,7 @@ abstract final class CupertinoDialogRouteBindings {
         'addLocalHistoryEntry#1': (args) { (args[0] as CupertinoDialogRoute).addLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; },
         'removeLocalHistoryEntry#1': (args) { (args[0] as CupertinoDialogRoute).removeLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; },
         'transitionBuilder#0': (args) => (args[0] as CupertinoDialogRoute).transitionBuilder,
+        'hashCode#0': (args) => (args[0] as CupertinoDialogRoute).hashCode,
         'barrierDismissible#0': (args) => (args[0] as CupertinoDialogRoute).barrierDismissible,
         'barrierLabel#0': (args) => (args[0] as CupertinoDialogRoute).barrierLabel,
         'barrierColor#0': (args) => (args[0] as CupertinoDialogRoute).barrierColor,
@@ -130,6 +132,7 @@ abstract final class CupertinoDialogRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as CupertinoDialogRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as CupertinoDialogRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as CupertinoDialogRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as CupertinoDialogRoute) == (args[1] as Object),
         '#10': (args) => CupertinoDialogRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, context: args[1] as BuildContext, barrierDismissible: identical(args[2], darticAbsent) ? true : args[2] as bool, barrierColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, barrierLabel: identical(args[4], darticAbsent) ? null : args[4] as String?, transitionDuration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 250) : args[5] as Duration, transitionBuilder: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a, b, c, d) => (args[6] as Function?)!(a, b, c, d), settings: identical(args[7], darticAbsent) ? null : args[7] as RouteSettings?, requestFocus: identical(args[8], darticAbsent) ? null : args[8] as bool?, anchorPoint: identical(args[9], darticAbsent) ? null : args[9] as Offset?),
       };
 }

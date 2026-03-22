@@ -37,6 +37,7 @@ abstract final class RawKeyEventBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isKeyPressed#1': (args) => (args[0] as RawKeyEvent).isKeyPressed(args[1] as LogicalKeyboardKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEvent).toString(),
         'toStringShort#0': (args) => (args[0] as RawKeyEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'isControlPressed#0': (args) => (args[0] as RawKeyEvent).isControlPressed,
@@ -48,5 +49,8 @@ abstract final class RawKeyEventBindings {
         'character#0': (args) => (args[0] as RawKeyEvent).character,
         'repeat#0': (args) => (args[0] as RawKeyEvent).repeat,
         'data#0': (args) => (args[0] as RawKeyEvent).data,
+        'hashCode#0': (args) => (args[0] as RawKeyEvent).hashCode,
+        '==#1': (args) => (args[0] as RawKeyEvent) == (args[1] as Object),
+        'fromMessage#1': (args) => RawKeyEvent.fromMessage((args[0] as Map).cast<String, Object?>()),
       };
 }

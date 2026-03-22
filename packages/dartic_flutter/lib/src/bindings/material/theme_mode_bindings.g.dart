@@ -39,6 +39,9 @@ abstract final class ThemeModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ThemeMode).toString(),
+        'hashCode#0': (args) => (args[0] as ThemeMode).hashCode,
         'index#0': (args) => (args[0] as ThemeMode).index,
+        '==#1': (args) => (args[0] as ThemeMode) == (args[1] as Object),
       };
 }

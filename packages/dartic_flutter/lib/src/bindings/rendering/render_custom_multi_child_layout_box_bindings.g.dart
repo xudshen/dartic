@@ -48,6 +48,7 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
         'performLayout#0': (args) { (args[0] as RenderCustomMultiChildLayoutBox).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderCustomMultiChildLayoutBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderCustomMultiChildLayoutBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
+        'toString#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getMinIntrinsicHeight(args[1] as double),
@@ -128,6 +129,7 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
         'defaultPaint#2': (args) { (args[0] as RenderCustomMultiChildLayoutBox).defaultPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'getChildrenAsList#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).getChildrenAsList(),
         'delegate#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).delegate,
+        'hashCode#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).hasSize,
         'size#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderCustomMultiChildLayoutBox).semanticBounds,
@@ -166,6 +168,7 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
         'parentData=#1': (args) { (args[0] as RenderCustomMultiChildLayoutBox).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderCustomMultiChildLayoutBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderCustomMultiChildLayoutBox).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderCustomMultiChildLayoutBox) == (args[1] as Object),
         '#2': (args) => RenderCustomMultiChildLayoutBox(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), delegate: args[1] as MultiChildLayoutDelegate),
       };
 }

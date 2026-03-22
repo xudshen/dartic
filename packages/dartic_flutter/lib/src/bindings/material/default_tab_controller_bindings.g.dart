@@ -30,6 +30,7 @@ abstract final class DefaultTabControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DefaultTabController).createState(),
+        'toString#0': (args) => (args[0] as DefaultTabController).toString(),
         'createElement#0': (args) => (args[0] as DefaultTabController).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultTabController).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultTabController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class DefaultTabControllerBindings {
         'initialIndex#0': (args) => (args[0] as DefaultTabController).initialIndex,
         'animationDuration#0': (args) => (args[0] as DefaultTabController).animationDuration,
         'child#0': (args) => (args[0] as DefaultTabController).child,
+        'hashCode#0': (args) => (args[0] as DefaultTabController).hashCode,
         'key#0': (args) => (args[0] as DefaultTabController).key,
+        '==#1': (args) => (args[0] as DefaultTabController) == (args[1] as Object),
         '#5': (args) => DefaultTabController(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, length: args[1] as int, initialIndex: identical(args[2], darticAbsent) ? 0 : args[2] as int, child: args[3] as Widget, animationDuration: identical(args[4], darticAbsent) ? null : args[4] as Duration?),
         '_#fromFields#5': (args) => DefaultTabController(key: args[3] as Key?, length: args[4] as int, initialIndex: args[2] as int, child: args[1] as Widget, animationDuration: args[0] as Duration?),
       };

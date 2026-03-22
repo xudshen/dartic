@@ -26,13 +26,16 @@ abstract final class FlowParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FlowParentData).toString(),
         'detach#0': (args) { (args[0] as FlowParentData).detach(); return null; },
+        'hashCode#0': (args) => (args[0] as FlowParentData).hashCode,
         'offset#0': (args) => (args[0] as FlowParentData).offset,
         'previousSibling#0': (args) => (args[0] as FlowParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as FlowParentData).nextSibling,
         'offset=#1': (args) { (args[0] as FlowParentData).offset = args[1] as ui.Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as FlowParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as FlowParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as FlowParentData) == (args[1] as Object),
         '#0': (args) => FlowParentData(),
       };
 }

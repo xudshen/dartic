@@ -32,6 +32,7 @@ abstract final class SliverFloatingHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverFloatingHeader).createState(),
+        'toString#0': (args) => (args[0] as SliverFloatingHeader).toString(),
         'createElement#0': (args) => (args[0] as SliverFloatingHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverFloatingHeader).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverFloatingHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class SliverFloatingHeaderBindings {
         'animationStyle#0': (args) => (args[0] as SliverFloatingHeader).animationStyle,
         'snapMode#0': (args) => (args[0] as SliverFloatingHeader).snapMode,
         'child#0': (args) => (args[0] as SliverFloatingHeader).child,
+        'hashCode#0': (args) => (args[0] as SliverFloatingHeader).hashCode,
         'key#0': (args) => (args[0] as SliverFloatingHeader).key,
+        '==#1': (args) => (args[0] as SliverFloatingHeader) == (args[1] as Object),
         '#4': (args) => SliverFloatingHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationStyle: identical(args[1], darticAbsent) ? null : args[1] as AnimationStyle?, snapMode: identical(args[2], darticAbsent) ? null : args[2] as FloatingHeaderSnapMode?, child: args[3] as Widget),
         '_#fromFields#4': (args) => SliverFloatingHeader(key: args[2] as Key?, animationStyle: args[0] as AnimationStyle?, snapMode: args[3] as FloatingHeaderSnapMode?, child: args[1] as Widget),
       };

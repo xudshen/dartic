@@ -29,5 +29,8 @@ abstract final class PerformanceModeRequestHandleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as PerformanceModeRequestHandle).dispose(); return null; },
+        'toString#0': (args) => (args[0] as PerformanceModeRequestHandle).toString(),
+        'hashCode#0': (args) => (args[0] as PerformanceModeRequestHandle).hashCode,
+        '==#1': (args) => (args[0] as PerformanceModeRequestHandle) == (args[1] as Object),
       };
 }

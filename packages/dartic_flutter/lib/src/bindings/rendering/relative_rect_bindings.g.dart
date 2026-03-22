@@ -41,6 +41,7 @@ abstract final class RelativeRectBindings {
         'bottom#0': (args) => (args[0] as RelativeRect).bottom,
         'hasInsets#0': (args) => (args[0] as RelativeRect).hasInsets,
         'hashCode#0': (args) => (args[0] as RelativeRect).hashCode,
+        '==#1': (args) => (args[0] as RelativeRect) == (args[1] as Object),
         'fromLTRB#4': (args) => RelativeRect.fromLTRB(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromSize#2': (args) => RelativeRect.fromSize(args[0] as Rect, args[1] as Size),
         'fromRect#2': (args) => RelativeRect.fromRect(args[0] as Rect, args[1] as Rect),

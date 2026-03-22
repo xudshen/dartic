@@ -30,15 +30,18 @@ abstract final class KeyRepeatEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeyRepeatEvent).toString(),
         'debugFillProperties#1': (args) { (args[0] as KeyRepeatEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as KeyRepeatEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as KeyRepeatEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as KeyRepeatEvent).hashCode,
         'physicalKey#0': (args) => (args[0] as KeyRepeatEvent).physicalKey,
         'logicalKey#0': (args) => (args[0] as KeyRepeatEvent).logicalKey,
         'character#0': (args) => (args[0] as KeyRepeatEvent).character,
         'timeStamp#0': (args) => (args[0] as KeyRepeatEvent).timeStamp,
         'deviceType#0': (args) => (args[0] as KeyRepeatEvent).deviceType,
         'synthesized#0': (args) => (args[0] as KeyRepeatEvent).synthesized,
+        '==#1': (args) => (args[0] as KeyRepeatEvent) == (args[1] as Object),
         '#5': (args) => KeyRepeatEvent(physicalKey: args[0] as PhysicalKeyboardKey, logicalKey: args[1] as LogicalKeyboardKey, character: identical(args[2], darticAbsent) ? null : args[2] as String?, timeStamp: args[3] as Duration, deviceType: identical(args[4], darticAbsent) ? ui.KeyEventDeviceType.keyboard : args[4] as ui.KeyEventDeviceType),
         '_#fromFields#6': (args) => KeyRepeatEvent(physicalKey: args[3] as PhysicalKeyboardKey, logicalKey: args[2] as LogicalKeyboardKey, character: args[0] as String?, timeStamp: args[5] as Duration, deviceType: args[1] as ui.KeyEventDeviceType),
       };

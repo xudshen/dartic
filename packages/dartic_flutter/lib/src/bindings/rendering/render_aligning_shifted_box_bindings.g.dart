@@ -45,6 +45,7 @@ abstract final class RenderAligningShiftedBoxBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'alignChild#0': (args) { (args[0] as RenderAligningShiftedBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAligningShiftedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderAligningShiftedBox).toString(),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAligningShiftedBox).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderAligningShiftedBox).computeMaxIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicHeight#1': (args) => (args[0] as RenderAligningShiftedBox).computeMinIntrinsicHeight(args[1] as double),
@@ -124,6 +125,7 @@ abstract final class RenderAligningShiftedBoxBindings {
         'resolvedAlignment#0': (args) => (args[0] as RenderAligningShiftedBox).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderAligningShiftedBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderAligningShiftedBox).textDirection,
+        'hashCode#0': (args) => (args[0] as RenderAligningShiftedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAligningShiftedBox).hasSize,
         'size#0': (args) => (args[0] as RenderAligningShiftedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderAligningShiftedBox).semanticBounds,
@@ -162,5 +164,6 @@ abstract final class RenderAligningShiftedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAligningShiftedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAligningShiftedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderAligningShiftedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAligningShiftedBox) == (args[1] as Object),
       };
 }

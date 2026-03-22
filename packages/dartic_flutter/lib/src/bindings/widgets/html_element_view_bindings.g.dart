@@ -36,6 +36,7 @@ abstract final class HtmlElementViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as HtmlElementView).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as HtmlElementView).toString(),
         'createElement#0': (args) => (args[0] as HtmlElementView).createElement(),
         'toStringShort#0': (args) => (args[0] as HtmlElementView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as HtmlElementView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class HtmlElementViewBindings {
         'onPlatformViewCreated#0': (args) => (args[0] as HtmlElementView).onPlatformViewCreated,
         'creationParams#0': (args) => (args[0] as HtmlElementView).creationParams,
         'hitTestBehavior#0': (args) => (args[0] as HtmlElementView).hitTestBehavior,
+        'hashCode#0': (args) => (args[0] as HtmlElementView).hashCode,
         'key#0': (args) => (args[0] as HtmlElementView).key,
+        '==#1': (args) => (args[0] as HtmlElementView) == (args[1] as Object),
         '#5': (args) => HtmlElementView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, viewType: args[1] as String, onPlatformViewCreated: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), creationParams: identical(args[3], darticAbsent) ? null : args[3], hitTestBehavior: identical(args[4], darticAbsent) ? PlatformViewHitTestBehavior.opaque : args[4] as PlatformViewHitTestBehavior),
         'fromTagName#5': (args) => HtmlElementView.fromTagName(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tagName: args[1] as String, isVisible: identical(args[2], darticAbsent) ? true : args[2] as bool, onElementCreated: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), hitTestBehavior: identical(args[4], darticAbsent) ? PlatformViewHitTestBehavior.opaque : args[4] as PlatformViewHitTestBehavior),
         '_#fromFields#5': (args) => HtmlElementView(key: args[2] as Key?, viewType: args[4] as String, onPlatformViewCreated: args[3] as PlatformViewCreatedCallback?, creationParams: args[0], hitTestBehavior: args[1] as PlatformViewHitTestBehavior),

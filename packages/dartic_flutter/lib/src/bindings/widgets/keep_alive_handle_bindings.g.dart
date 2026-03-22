@@ -29,10 +29,13 @@ abstract final class KeepAliveHandleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as KeepAliveHandle).dispose(); return null; },
+        'toString#0': (args) => (args[0] as KeepAliveHandle).toString(),
         'addListener#1': (args) { (args[0] as KeepAliveHandle).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as KeepAliveHandle).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as KeepAliveHandle).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as KeepAliveHandle).hashCode,
         'hasListeners#0': (args) => (args[0] as KeepAliveHandle).hasListeners,
+        '==#1': (args) => (args[0] as KeepAliveHandle) == (args[1] as Object),
         '#0': (args) => KeepAliveHandle(),
       };
 }

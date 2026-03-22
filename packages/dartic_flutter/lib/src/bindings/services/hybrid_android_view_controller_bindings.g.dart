@@ -30,6 +30,7 @@ abstract final class HybridAndroidViewControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'setOffset#1': (args) => (args[0] as HybridAndroidViewController).setOffset(args[1] as Offset),
         'sendMotionEvent#1': (args) => (args[0] as HybridAndroidViewController).sendMotionEvent(args[1] as AndroidMotionEvent),
+        'toString#0': (args) => (args[0] as HybridAndroidViewController).toString(),
         'create#2': (args) => (args[0] as HybridAndroidViewController).create(size: identical(args[1], darticAbsent) ? null : args[1] as Size?, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),
         'setSize#1': (args) => (args[0] as HybridAndroidViewController).setSize(args[1] as Size),
         'addOnPlatformViewCreatedListener#1': (args) { (args[0] as HybridAndroidViewController).addOnPlatformViewCreatedListener((a) => (args[1] as Function)(a)); return null; },
@@ -40,11 +41,13 @@ abstract final class HybridAndroidViewControllerBindings {
         'dispose#0': (args) => (args[0] as HybridAndroidViewController).dispose(),
         'textureId#0': (args) => (args[0] as HybridAndroidViewController).textureId,
         'requiresViewComposition#0': (args) => (args[0] as HybridAndroidViewController).requiresViewComposition,
+        'hashCode#0': (args) => (args[0] as HybridAndroidViewController).hashCode,
         'viewId#0': (args) => (args[0] as HybridAndroidViewController).viewId,
         'awaitingCreation#0': (args) => (args[0] as HybridAndroidViewController).awaitingCreation,
         'pointTransformer#0': (args) => (args[0] as HybridAndroidViewController).pointTransformer,
         'isCreated#0': (args) => (args[0] as HybridAndroidViewController).isCreated,
         'createdCallbacks#0': (args) => (args[0] as HybridAndroidViewController).createdCallbacks,
         'pointTransformer=#1': (args) { (args[0] as HybridAndroidViewController).pointTransformer = args[1] as PointTransformer; return args[1]; },
+        '==#1': (args) => (args[0] as HybridAndroidViewController) == (args[1] as Object),
       };
 }

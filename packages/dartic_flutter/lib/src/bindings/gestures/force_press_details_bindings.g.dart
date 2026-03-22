@@ -27,11 +27,14 @@ abstract final class ForcePressDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ForcePressDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ForcePressDetails).toString(),
         'toStringShort#0': (args) => (args[0] as ForcePressDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ForcePressDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as ForcePressDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as ForcePressDetails).localPosition,
         'pressure#0': (args) => (args[0] as ForcePressDetails).pressure,
+        'hashCode#0': (args) => (args[0] as ForcePressDetails).hashCode,
+        '==#1': (args) => (args[0] as ForcePressDetails) == (args[1] as Object),
         '#3': (args) => ForcePressDetails(globalPosition: args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, pressure: args[2] as double),
       };
 }

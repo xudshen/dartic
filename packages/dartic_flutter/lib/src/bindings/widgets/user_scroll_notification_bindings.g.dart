@@ -27,11 +27,14 @@ abstract final class UserScrollNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as UserScrollNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as UserScrollNotification).toString(),
         'dispatch#1': (args) { (args[0] as UserScrollNotification).dispatch(args[1] as BuildContext?); return null; },
         'direction#0': (args) => (args[0] as UserScrollNotification).direction,
+        'hashCode#0': (args) => (args[0] as UserScrollNotification).hashCode,
         'metrics#0': (args) => (args[0] as UserScrollNotification).metrics,
         'context#0': (args) => (args[0] as UserScrollNotification).context,
         'depth#0': (args) => (args[0] as UserScrollNotification).depth,
+        '==#1': (args) => (args[0] as UserScrollNotification) == (args[1] as Object),
         '#3': (args) => UserScrollNotification(metrics: args[0] as ScrollMetrics, context: args[1] as BuildContext, direction: args[2] as ScrollDirection),
       };
 }

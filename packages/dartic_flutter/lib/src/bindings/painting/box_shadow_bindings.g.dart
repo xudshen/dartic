@@ -38,6 +38,7 @@ abstract final class BoxShadowBindings {
         'offset#0': (args) => (args[0] as BoxShadow).offset,
         'blurRadius#0': (args) => (args[0] as BoxShadow).blurRadius,
         'blurSigma#0': (args) => (args[0] as BoxShadow).blurSigma,
+        '==#1': (args) => (args[0] as BoxShadow) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[0], darticAbsent)) {
             return BoxShadow(offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, spreadRadius: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, blurStyle: identical(args[4], darticAbsent) ? BlurStyle.normal : args[4] as ui.BlurStyle);

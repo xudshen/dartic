@@ -46,6 +46,7 @@ abstract final class SegmentedButtonStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as SegmentedButtonState).didUpdateWidget(args[1] as SegmentedButton); return null; },
         'build#1': (args) => (args[0] as SegmentedButtonState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as SegmentedButtonState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SegmentedButtonState).toString(),
         'initState#0': (args) { (args[0] as SegmentedButtonState).initState(); return null; },
         'reassemble#0': (args) { (args[0] as SegmentedButtonState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SegmentedButtonState).setState(() => (args[1] as Function)()); return null; },
@@ -56,9 +57,11 @@ abstract final class SegmentedButtonStateBindings {
         'toStringShort#0': (args) => (args[0] as SegmentedButtonState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SegmentedButtonState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'statesControllers#0': (args) => (args[0] as SegmentedButtonState).statesControllers,
+        'hashCode#0': (args) => (args[0] as SegmentedButtonState).hashCode,
         'widget#0': (args) => (args[0] as SegmentedButtonState).widget,
         'context#0': (args) => (args[0] as SegmentedButtonState).context,
         'mounted#0': (args) => (args[0] as SegmentedButtonState).mounted,
+        '==#1': (args) => (args[0] as SegmentedButtonState) == (args[1] as Object),
         '#0': (args) => SegmentedButtonState<dynamic>(),
       };
 }

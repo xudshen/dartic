@@ -45,6 +45,7 @@ abstract final class TabBarViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TabBarView).createState(),
+        'toString#0': (args) => (args[0] as TabBarView).toString(),
         'createElement#0': (args) => (args[0] as TabBarView).createElement(),
         'toStringShort#0': (args) => (args[0] as TabBarView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TabBarView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -58,7 +59,9 @@ abstract final class TabBarViewBindings {
         'dragStartBehavior#0': (args) => (args[0] as TabBarView).dragStartBehavior,
         'viewportFraction#0': (args) => (args[0] as TabBarView).viewportFraction,
         'clipBehavior#0': (args) => (args[0] as TabBarView).clipBehavior,
+        'hashCode#0': (args) => (args[0] as TabBarView).hashCode,
         'key#0': (args) => (args[0] as TabBarView).key,
+        '==#1': (args) => (args[0] as TabBarView) == (args[1] as Object),
         '#7': (args) => TabBarView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), controller: identical(args[2], darticAbsent) ? null : args[2] as TabController?, physics: identical(args[3], darticAbsent) ? null : args[3] as ScrollPhysics?, dragStartBehavior: identical(args[4], darticAbsent) ? DragStartBehavior.start : args[4] as DragStartBehavior, viewportFraction: identical(args[5], darticAbsent) ? 1.0 : args[5] as double, clipBehavior: identical(args[6], darticAbsent) ? Clip.hardEdge : args[6] as Clip),
         '_#fromFields#7': (args) => TabBarView(key: args[4] as Key?, children: (args[0] as List).cast<Widget>(), controller: args[2] as TabController?, physics: args[5] as ScrollPhysics?, dragStartBehavior: args[3] as DragStartBehavior, viewportFraction: args[6] as double, clipBehavior: args[1] as Clip),
       };

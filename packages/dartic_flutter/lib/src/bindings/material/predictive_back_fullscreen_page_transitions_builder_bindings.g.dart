@@ -30,9 +30,12 @@ abstract final class PredictiveBackFullscreenPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).buildTransitions(args[1] as PageRoute, args[2] as BuildContext, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).toString(),
+        'hashCode#0': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).hashCode,
         'delegatedTransition#0': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).delegatedTransition,
         'transitionDuration#0': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as PredictiveBackFullscreenPageTransitionsBuilder) == (args[1] as Object),
         '#0': (args) => PredictiveBackFullscreenPageTransitionsBuilder(),
         '_#fromFields#0': (args) => PredictiveBackFullscreenPageTransitionsBuilder(),
       };

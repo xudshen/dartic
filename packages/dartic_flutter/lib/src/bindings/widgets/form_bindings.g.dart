@@ -42,6 +42,7 @@ abstract final class FormBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Form).createState(),
+        'toString#0': (args) => (args[0] as Form).toString(),
         'createElement#0': (args) => (args[0] as Form).createElement(),
         'toStringShort#0': (args) => (args[0] as Form).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Form).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -56,7 +57,9 @@ abstract final class FormBindings {
         'onPopInvokedWithResult#0': (args) => (args[0] as Form).onPopInvokedWithResult,
         'onChanged#0': (args) => (args[0] as Form).onChanged,
         'autovalidateMode#0': (args) => (args[0] as Form).autovalidateMode,
+        'hashCode#0': (args) => (args[0] as Form).hashCode,
         'key#0': (args) => (args[0] as Form).key,
+        '==#1': (args) => (args[0] as Form) == (args[1] as Object),
         '#8': (args) => Form(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, canPop: identical(args[2], darticAbsent) ? null : args[2] as bool?, onPopInvoked: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onPopInvokedWithResult: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b) => (args[4] as Function?)!(a, b), onWillPop: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), autovalidateMode: identical(args[7], darticAbsent) ? null : args[7] as AutovalidateMode?),
         '_#fromFields#8': (args) => Form(key: args[3] as Key?, child: args[2] as Widget, canPop: args[1] as bool?, onPopInvoked: args[5] as PopInvokedCallback?, onPopInvokedWithResult: args[6] as PopInvokedWithResultCallback<Object?>?, onWillPop: args[7] as WillPopCallback?, onChanged: args[4] as VoidCallback?, autovalidateMode: args[0] as AutovalidateMode?),
       };

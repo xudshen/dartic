@@ -63,6 +63,7 @@ abstract final class StaticSelectionContainerDelegateBindings {
         'dispatchSelectionEventToChild#2': (args) => (args[0] as StaticSelectionContainerDelegate).dispatchSelectionEventToChild(args[1] as Selectable, args[2] as SelectionEvent),
         'ensureChildUpdated#1': (args) { (args[0] as StaticSelectionContainerDelegate).ensureChildUpdated(args[1] as Selectable); return null; },
         'didChangeSelectables#0': (args) { (args[0] as StaticSelectionContainerDelegate).didChangeSelectables(); return null; },
+        'toString#0': (args) => (args[0] as StaticSelectionContainerDelegate).toString(),
         'add#1': (args) { (args[0] as StaticSelectionContainerDelegate).add(args[1] as Selectable); return null; },
         'layoutDidChange#0': (args) { (args[0] as StaticSelectionContainerDelegate).layoutDidChange(); return null; },
         'getSelectionGeometry#0': (args) => (args[0] as StaticSelectionContainerDelegate).getSelectionGeometry(),
@@ -77,6 +78,7 @@ abstract final class StaticSelectionContainerDelegateBindings {
         'addListener#1': (args) { (args[0] as StaticSelectionContainerDelegate).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as StaticSelectionContainerDelegate).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as StaticSelectionContainerDelegate).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as StaticSelectionContainerDelegate).hashCode,
         'selectables#0': (args) => (args[0] as StaticSelectionContainerDelegate).selectables,
         'currentSelectionEndIndex#0': (args) => (args[0] as StaticSelectionContainerDelegate).currentSelectionEndIndex,
         'currentSelectionStartIndex#0': (args) => (args[0] as StaticSelectionContainerDelegate).currentSelectionStartIndex,
@@ -89,6 +91,7 @@ abstract final class StaticSelectionContainerDelegateBindings {
         'selectables=#1': (args) { (args[0] as StaticSelectionContainerDelegate).selectables = (args[1] as List).cast<Selectable>(); return args[1]; },
         'currentSelectionEndIndex=#1': (args) { (args[0] as StaticSelectionContainerDelegate).currentSelectionEndIndex = args[1] as int; return args[1]; },
         'currentSelectionStartIndex=#1': (args) { (args[0] as StaticSelectionContainerDelegate).currentSelectionStartIndex = args[1] as int; return args[1]; },
+        '==#1': (args) => (args[0] as StaticSelectionContainerDelegate) == (args[1] as Object),
         '#0': (args) => StaticSelectionContainerDelegate(),
       };
 }

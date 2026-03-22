@@ -32,7 +32,10 @@ abstract final class ConstraintsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugAssertIsValid#2': (args) => (args[0] as Constraints).debugAssertIsValid(isAppliedConstraint: identical(args[1], darticAbsent) ? false : args[1] as bool, informationCollector: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
+        'toString#0': (args) => (args[0] as Constraints).toString(),
         'isTight#0': (args) => (args[0] as Constraints).isTight,
         'isNormalized#0': (args) => (args[0] as Constraints).isNormalized,
+        'hashCode#0': (args) => (args[0] as Constraints).hashCode,
+        '==#1': (args) => (args[0] as Constraints) == (args[1] as Object),
       };
 }

@@ -48,6 +48,7 @@ abstract final class SegmentedButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SegmentedButton).createState(),
+        'toString#0': (args) => (args[0] as SegmentedButton).toString(),
         'createElement#0': (args) => (args[0] as SegmentedButton).createElement(),
         'toStringShort#0': (args) => (args[0] as SegmentedButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SegmentedButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -65,7 +66,9 @@ abstract final class SegmentedButtonBindings {
         'style#0': (args) => (args[0] as SegmentedButton).style,
         'showSelectedIcon#0': (args) => (args[0] as SegmentedButton).showSelectedIcon,
         'selectedIcon#0': (args) => (args[0] as SegmentedButton).selectedIcon,
+        'hashCode#0': (args) => (args[0] as SegmentedButton).hashCode,
         'key#0': (args) => (args[0] as SegmentedButton).key,
+        '==#1': (args) => (args[0] as SegmentedButton) == (args[1] as Object),
         '#11': (args) => SegmentedButton<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, segments: (args[1] as List).cast<ButtonSegment>(), selected: args[2] as Set, onSelectionChanged: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), multiSelectionEnabled: identical(args[4], darticAbsent) ? false : args[4] as bool, emptySelectionAllowed: identical(args[5], darticAbsent) ? false : args[5] as bool, expandedInsets: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsets?, style: identical(args[7], darticAbsent) ? null : args[7] as ButtonStyle?, showSelectedIcon: identical(args[8], darticAbsent) ? true : args[8] as bool, selectedIcon: identical(args[9], darticAbsent) ? null : args[9] as Widget?, direction: identical(args[10], darticAbsent) ? Axis.horizontal : args[10] as Axis),
         '_#fromFields#11': (args) => SegmentedButton<dynamic>(key: args[3] as Key?, segments: (args[6] as List).cast<ButtonSegment>(), selected: args[7] as Set, onSelectionChanged: args[5] as void Function(Set)?, multiSelectionEnabled: args[4] as bool, emptySelectionAllowed: args[1] as bool, expandedInsets: args[2] as EdgeInsets?, style: args[10] as ButtonStyle?, showSelectedIcon: args[9] as bool, selectedIcon: args[8] as Widget?, direction: args[0] as Axis),
       };

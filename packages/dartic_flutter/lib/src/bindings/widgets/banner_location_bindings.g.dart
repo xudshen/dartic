@@ -30,6 +30,9 @@ abstract final class BannerLocationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BannerLocation).toString(),
+        'hashCode#0': (args) => (args[0] as BannerLocation).hashCode,
         'index#0': (args) => (args[0] as BannerLocation).index,
+        '==#1': (args) => (args[0] as BannerLocation) == (args[1] as Object),
       };
 }

@@ -33,6 +33,9 @@ abstract final class LockStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as LockState).toString(),
+        'hashCode#0': (args) => (args[0] as LockState).hashCode,
         'index#0': (args) => (args[0] as LockState).index,
+        '==#1': (args) => (args[0] as LockState) == (args[1] as Object),
       };
 }

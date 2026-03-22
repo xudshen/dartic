@@ -26,9 +26,12 @@ abstract final class ScrollNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as ScrollNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollNotification).toString(),
         'dispatch#1': (args) { (args[0] as ScrollNotification).dispatch(args[1] as BuildContext?); return null; },
         'metrics#0': (args) => (args[0] as ScrollNotification).metrics,
         'context#0': (args) => (args[0] as ScrollNotification).context,
+        'hashCode#0': (args) => (args[0] as ScrollNotification).hashCode,
         'depth#0': (args) => (args[0] as ScrollNotification).depth,
+        '==#1': (args) => (args[0] as ScrollNotification) == (args[1] as Object),
       };
 }

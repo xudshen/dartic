@@ -36,6 +36,7 @@ abstract final class CupertinoSliderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSlider).createState(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSlider).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CupertinoSlider).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSlider).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSlider).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CupertinoSlider).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -51,7 +52,9 @@ abstract final class CupertinoSliderBindings {
         'divisions#0': (args) => (args[0] as CupertinoSlider).divisions,
         'activeColor#0': (args) => (args[0] as CupertinoSlider).activeColor,
         'thumbColor#0': (args) => (args[0] as CupertinoSlider).thumbColor,
+        'hashCode#0': (args) => (args[0] as CupertinoSlider).hashCode,
         'key#0': (args) => (args[0] as CupertinoSlider).key,
+        '==#1': (args) => (args[0] as CupertinoSlider) == (args[1] as Object),
         '#10': (args) => CupertinoSlider(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as double, onChanged: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onChangeStart: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onChangeEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), min: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, max: identical(args[6], darticAbsent) ? 1.0 : args[6] as double, divisions: identical(args[7], darticAbsent) ? null : args[7] as int?, activeColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, thumbColor: identical(args[9], darticAbsent) ? CupertinoColors.white : args[9] as Color),
         '_#fromFields#10': (args) => CupertinoSlider(key: args[2] as Key?, value: args[9] as double, onChanged: args[7] as ValueChanged<double>?, onChangeStart: args[6] as ValueChanged<double>?, onChangeEnd: args[5] as ValueChanged<double>?, min: args[4] as double, max: args[3] as double, divisions: args[1] as int?, activeColor: args[0] as Color?, thumbColor: args[8] as Color),
       };

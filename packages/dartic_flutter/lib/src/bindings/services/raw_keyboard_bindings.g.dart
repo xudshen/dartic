@@ -40,9 +40,12 @@ abstract final class RawKeyboardBindings {
         'handleRawKeyEvent#1': (args) => (args[0] as RawKeyboard).handleRawKeyEvent(args[1] as RawKeyEvent),
         'lookUpLayout#1': (args) => (args[0] as RawKeyboard).lookUpLayout(args[1] as PhysicalKeyboardKey),
         'clearKeysPressed#0': (args) { (args[0] as RawKeyboard).clearKeysPressed(); return null; },
+        'toString#0': (args) => (args[0] as RawKeyboard).toString(),
         'keyEventHandler#0': (args) => (args[0] as RawKeyboard).keyEventHandler,
         'keysPressed#0': (args) => (args[0] as RawKeyboard).keysPressed,
         'physicalKeysPressed#0': (args) => (args[0] as RawKeyboard).physicalKeysPressed,
+        'hashCode#0': (args) => (args[0] as RawKeyboard).hashCode,
         'keyEventHandler=#1': (args) { (args[0] as RawKeyboard).keyEventHandler = args[1] as RawKeyEventHandler?; return args[1]; },
+        '==#1': (args) => (args[0] as RawKeyboard) == (args[1] as Object),
       };
 }

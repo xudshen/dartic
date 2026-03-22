@@ -53,6 +53,7 @@ abstract final class SliverConstraintsBindings {
         'isTight#0': (args) => (args[0] as SliverConstraints).isTight,
         'isNormalized#0': (args) => (args[0] as SliverConstraints).isNormalized,
         'hashCode#0': (args) => (args[0] as SliverConstraints).hashCode,
+        '==#1': (args) => (args[0] as SliverConstraints) == (args[1] as Object),
         '#12': (args) => SliverConstraints(axisDirection: args[0] as AxisDirection, growthDirection: args[1] as GrowthDirection, userScrollDirection: args[2] as ScrollDirection, scrollOffset: args[3] as double, precedingScrollExtent: args[4] as double, overlap: args[5] as double, remainingPaintExtent: args[6] as double, crossAxisExtent: args[7] as double, crossAxisDirection: args[8] as AxisDirection, viewportMainAxisExtent: args[9] as double, remainingCacheExtent: args[10] as double, cacheOrigin: args[11] as double),
         '_#fromFields#12': (args) => SliverConstraints(axisDirection: args[0] as AxisDirection, growthDirection: args[4] as GrowthDirection, userScrollDirection: args[10] as ScrollDirection, scrollOffset: args[9] as double, precedingScrollExtent: args[6] as double, overlap: args[5] as double, remainingPaintExtent: args[8] as double, crossAxisExtent: args[3] as double, crossAxisDirection: args[2] as AxisDirection, viewportMainAxisExtent: args[11] as double, remainingCacheExtent: args[7] as double, cacheOrigin: args[1] as double),
       };

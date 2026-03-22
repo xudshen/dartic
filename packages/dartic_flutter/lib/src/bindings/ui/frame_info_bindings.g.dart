@@ -29,7 +29,10 @@ abstract final class FrameInfoBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FrameInfo).toString(),
         'duration#0': (args) => (args[0] as FrameInfo).duration,
         'image#0': (args) => (args[0] as FrameInfo).image,
+        'hashCode#0': (args) => (args[0] as FrameInfo).hashCode,
+        '==#1': (args) => (args[0] as FrameInfo) == (args[1] as Object),
       };
 }

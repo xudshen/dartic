@@ -42,6 +42,7 @@ abstract final class WidgetSpanBindings {
         'getSpanForPosition#1': (args) => (args[0] as WidgetSpan).getSpanForPosition(args[1] as ui.TextPosition),
         'debugAssertIsValid#0': (args) => (args[0] as WidgetSpan).debugAssertIsValid(),
         'debugFillProperties#1': (args) { (args[0] as WidgetSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as WidgetSpan).toString(),
         'computeToPlainText#3': (args) { (args[0] as WidgetSpan).computeToPlainText(args[1] as StringBuffer, includeSemanticsLabels: identical(args[2], darticAbsent) ? true : args[2] as bool, includePlaceholders: identical(args[3], darticAbsent) ? true : args[3] as bool); return null; },
         'computeSemanticsInformation#1': (args) { (args[0] as WidgetSpan).computeSemanticsInformation((args[1] as List).cast<InlineSpanSemanticsInformation>()); return null; },
         'toPlainText#2': (args) => (args[0] as WidgetSpan).toPlainText(includeSemanticsLabels: identical(args[1], darticAbsent) ? true : args[1] as bool, includePlaceholders: identical(args[2], darticAbsent) ? true : args[2] as bool),
@@ -57,6 +58,7 @@ abstract final class WidgetSpanBindings {
         'alignment#0': (args) => (args[0] as WidgetSpan).alignment,
         'baseline#0': (args) => (args[0] as WidgetSpan).baseline,
         'style#0': (args) => (args[0] as WidgetSpan).style,
+        '==#1': (args) => (args[0] as WidgetSpan) == (args[1] as Object),
         '#4': (args) => WidgetSpan(child: args[0] as Widget, alignment: identical(args[1], darticAbsent) ? ui.PlaceholderAlignment.bottom : args[1] as ui.PlaceholderAlignment, baseline: identical(args[2], darticAbsent) ? null : args[2] as ui.TextBaseline?, style: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?),
         '_#fromFields#4': (args) => WidgetSpan(child: args[2] as Widget, alignment: args[0] as ui.PlaceholderAlignment, baseline: args[1] as ui.TextBaseline?, style: args[3] as TextStyle?),
       };

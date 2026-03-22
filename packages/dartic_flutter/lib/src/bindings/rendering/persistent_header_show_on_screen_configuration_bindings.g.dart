@@ -29,8 +29,11 @@ abstract final class PersistentHeaderShowOnScreenConfigurationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PersistentHeaderShowOnScreenConfiguration).toString(),
         'minShowOnScreenExtent#0': (args) => (args[0] as PersistentHeaderShowOnScreenConfiguration).minShowOnScreenExtent,
         'maxShowOnScreenExtent#0': (args) => (args[0] as PersistentHeaderShowOnScreenConfiguration).maxShowOnScreenExtent,
+        'hashCode#0': (args) => (args[0] as PersistentHeaderShowOnScreenConfiguration).hashCode,
+        '==#1': (args) => (args[0] as PersistentHeaderShowOnScreenConfiguration) == (args[1] as Object),
         '#2': (args) => PersistentHeaderShowOnScreenConfiguration(minShowOnScreenExtent: identical(args[0], darticAbsent) ? double.negativeInfinity : args[0] as double, maxShowOnScreenExtent: identical(args[1], darticAbsent) ? double.infinity : args[1] as double),
         '_#fromFields#2': (args) => PersistentHeaderShowOnScreenConfiguration(minShowOnScreenExtent: args[1] as double, maxShowOnScreenExtent: args[0] as double),
       };

@@ -41,6 +41,7 @@ abstract final class DefaultCupertinoLocalizationsBindings {
         'timerPickerHourLabel#1': (args) => (args[0] as DefaultCupertinoLocalizations).timerPickerHourLabel(args[1] as int),
         'timerPickerMinuteLabel#1': (args) => (args[0] as DefaultCupertinoLocalizations).timerPickerMinuteLabel(args[1] as int),
         'timerPickerSecondLabel#1': (args) => (args[0] as DefaultCupertinoLocalizations).timerPickerSecondLabel(args[1] as int),
+        'toString#0': (args) => (args[0] as DefaultCupertinoLocalizations).toString(),
         'datePickerDateOrder#0': (args) => (args[0] as DefaultCupertinoLocalizations).datePickerDateOrder,
         'datePickerDateTimeOrder#0': (args) => (args[0] as DefaultCupertinoLocalizations).datePickerDateTimeOrder,
         'anteMeridiemAbbreviation#0': (args) => (args[0] as DefaultCupertinoLocalizations).anteMeridiemAbbreviation,
@@ -70,6 +71,8 @@ abstract final class DefaultCupertinoLocalizationsBindings {
         'expansionTileCollapsedTapHint#0': (args) => (args[0] as DefaultCupertinoLocalizations).expansionTileCollapsedTapHint,
         'expandedHint#0': (args) => (args[0] as DefaultCupertinoLocalizations).expandedHint,
         'collapsedHint#0': (args) => (args[0] as DefaultCupertinoLocalizations).collapsedHint,
+        'hashCode#0': (args) => (args[0] as DefaultCupertinoLocalizations).hashCode,
+        '==#1': (args) => (args[0] as DefaultCupertinoLocalizations) == (args[1] as Object),
         '#0': (args) => DefaultCupertinoLocalizations(),
         '_#fromFields#0': (args) => DefaultCupertinoLocalizations(),
       };

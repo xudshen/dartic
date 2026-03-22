@@ -74,5 +74,8 @@ abstract final class ColorsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Colors).toString(),
+        'hashCode#0': (args) => (args[0] as Colors).hashCode,
+        '==#1': (args) => (args[0] as Colors) == (args[1] as Object),
       };
 }

@@ -39,6 +39,7 @@ abstract final class AnimatedScaleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedScale).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedScale).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedScale).toString(),
         'createElement#0': (args) => (args[0] as AnimatedScale).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedScale).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedScale).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -49,10 +50,12 @@ abstract final class AnimatedScaleBindings {
         'scale#0': (args) => (args[0] as AnimatedScale).scale,
         'alignment#0': (args) => (args[0] as AnimatedScale).alignment,
         'filterQuality#0': (args) => (args[0] as AnimatedScale).filterQuality,
+        'hashCode#0': (args) => (args[0] as AnimatedScale).hashCode,
         'curve#0': (args) => (args[0] as AnimatedScale).curve,
         'duration#0': (args) => (args[0] as AnimatedScale).duration,
         'onEnd#0': (args) => (args[0] as AnimatedScale).onEnd,
         'key#0': (args) => (args[0] as AnimatedScale).key,
+        '==#1': (args) => (args[0] as AnimatedScale) == (args[1] as Object),
         '#8': (args) => AnimatedScale(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, scale: args[2] as double, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as Alignment, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as ui.FilterQuality?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
         '_#fromFields#8': (args) => AnimatedScale(key: args[5] as Key?, child: args[1] as Widget?, scale: args[7] as double, alignment: args[0] as Alignment, filterQuality: args[4] as ui.FilterQuality?, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[6] as ui.VoidCallback?),
       };

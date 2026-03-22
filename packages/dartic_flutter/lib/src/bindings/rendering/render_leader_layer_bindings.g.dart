@@ -41,6 +41,7 @@ abstract final class RenderLeaderLayerBindings {
         'performLayout#0': (args) { (args[0] as RenderLeaderLayer).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderLeaderLayer).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderLeaderLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderLeaderLayer).toString(),
         'setupParentData#1': (args) { (args[0] as RenderLeaderLayer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderLeaderLayer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderLeaderLayer).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderLeaderLayerBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderLeaderLayer).computeSizeForNoChild(args[1] as BoxConstraints),
         'link#0': (args) => (args[0] as RenderLeaderLayer).link,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderLeaderLayer).alwaysNeedsCompositing,
+        'hashCode#0': (args) => (args[0] as RenderLeaderLayer).hashCode,
         'hasSize#0': (args) => (args[0] as RenderLeaderLayer).hasSize,
         'size#0': (args) => (args[0] as RenderLeaderLayer).size,
         'semanticBounds#0': (args) => (args[0] as RenderLeaderLayer).semanticBounds,
@@ -154,6 +156,7 @@ abstract final class RenderLeaderLayerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderLeaderLayer).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderLeaderLayer).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderLeaderLayer).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderLeaderLayer) == (args[1] as Object),
         '#2': (args) => RenderLeaderLayer(link: args[0] as LayerLink, child: identical(args[1], darticAbsent) ? null : args[1] as RenderBox?),
       };
 }

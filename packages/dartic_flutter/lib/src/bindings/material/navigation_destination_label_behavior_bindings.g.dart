@@ -39,6 +39,9 @@ abstract final class NavigationDestinationLabelBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NavigationDestinationLabelBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as NavigationDestinationLabelBehavior).hashCode,
         'index#0': (args) => (args[0] as NavigationDestinationLabelBehavior).index,
+        '==#1': (args) => (args[0] as NavigationDestinationLabelBehavior) == (args[1] as Object),
       };
 }

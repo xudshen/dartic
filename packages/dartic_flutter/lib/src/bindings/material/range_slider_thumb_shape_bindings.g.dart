@@ -351,5 +351,8 @@ abstract final class RangeSliderThumbShapeBindings {
                     }
                   }
                 },
+        'toString#0': (args) => (args[0] as RangeSliderThumbShape).toString(),
+        'hashCode#0': (args) => (args[0] as RangeSliderThumbShape).hashCode,
+        '==#1': (args) => (args[0] as RangeSliderThumbShape) == (args[1] as Object),
       };
 }

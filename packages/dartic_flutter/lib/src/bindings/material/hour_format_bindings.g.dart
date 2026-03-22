@@ -28,6 +28,9 @@ abstract final class HourFormatBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HourFormat).toString(),
+        'hashCode#0': (args) => (args[0] as HourFormat).hashCode,
         'index#0': (args) => (args[0] as HourFormat).index,
+        '==#1': (args) => (args[0] as HourFormat) == (args[1] as Object),
       };
 }

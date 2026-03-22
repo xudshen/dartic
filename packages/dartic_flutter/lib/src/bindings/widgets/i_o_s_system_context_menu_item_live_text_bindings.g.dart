@@ -31,7 +31,10 @@ abstract final class IOSSystemContextMenuItemLiveTextBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemLiveText).getData(args[1] as WidgetsLocalizations),
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemLiveText).toString(),
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemLiveText).hashCode,
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemLiveText).title,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemLiveText) == (args[1] as Object),
         '#0': (args) => IOSSystemContextMenuItemLiveText(),
         '_#fromFields#0': (args) => IOSSystemContextMenuItemLiveText(),
       };

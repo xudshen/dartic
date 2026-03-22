@@ -51,6 +51,7 @@ abstract final class TextPainterBindings {
         'getLineBoundary#1': (args) => (args[0] as TextPainter).getLineBoundary(args[1] as ui.TextPosition),
         'computeLineMetrics#0': (args) => (args[0] as TextPainter).computeLineMetrics(),
         'dispose#0': (args) { (args[0] as TextPainter).dispose(); return null; },
+        'toString#0': (args) => (args[0] as TextPainter).toString(),
         'text#0': (args) => (args[0] as TextPainter).text,
         'plainText#0': (args) => (args[0] as TextPainter).plainText,
         'textAlign#0': (args) => (args[0] as TextPainter).textAlign,
@@ -74,6 +75,7 @@ abstract final class TextPainterBindings {
         'debugPaintTextLayoutBoxes#0': (args) => (args[0] as TextPainter).debugPaintTextLayoutBoxes,
         'wordBoundaries#0': (args) => (args[0] as TextPainter).wordBoundaries,
         'debugDisposed#0': (args) => (args[0] as TextPainter).debugDisposed,
+        'hashCode#0': (args) => (args[0] as TextPainter).hashCode,
         'text=#1': (args) { (args[0] as TextPainter).text = args[1] as InlineSpan?; return args[1]; },
         'textAlign=#1': (args) { (args[0] as TextPainter).textAlign = args[1] as ui.TextAlign; return args[1]; },
         'textDirection=#1': (args) { (args[0] as TextPainter).textDirection = args[1] as ui.TextDirection?; return args[1]; },
@@ -86,6 +88,7 @@ abstract final class TextPainterBindings {
         'textWidthBasis=#1': (args) { (args[0] as TextPainter).textWidthBasis = args[1] as TextWidthBasis; return args[1]; },
         'textHeightBehavior=#1': (args) { (args[0] as TextPainter).textHeightBehavior = args[1] as ui.TextHeightBehavior?; return args[1]; },
         'debugPaintTextLayoutBoxes=#1': (args) { (args[0] as TextPainter).debugPaintTextLayoutBoxes = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as TextPainter) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[4], darticAbsent)) {
             return TextPainter(text: identical(args[0], darticAbsent) ? null : args[0] as InlineSpan?, textAlign: identical(args[1], darticAbsent) ? TextAlign.start : args[1] as ui.TextAlign, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, textScaleFactor: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, maxLines: identical(args[5], darticAbsent) ? null : args[5] as int?, ellipsis: identical(args[6], darticAbsent) ? null : args[6] as String?, locale: identical(args[7], darticAbsent) ? null : args[7] as ui.Locale?, strutStyle: identical(args[8], darticAbsent) ? null : args[8] as StrutStyle?, textWidthBasis: identical(args[9], darticAbsent) ? TextWidthBasis.parent : args[9] as TextWidthBasis, textHeightBehavior: identical(args[10], darticAbsent) ? null : args[10] as ui.TextHeightBehavior?);

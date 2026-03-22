@@ -40,6 +40,7 @@ abstract final class DraggableScrollableNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as DraggableScrollableNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as DraggableScrollableNotification).toString(),
         'dispatch#1': (args) { (args[0] as DraggableScrollableNotification).dispatch(args[1] as BuildContext?); return null; },
         'extent#0': (args) => (args[0] as DraggableScrollableNotification).extent,
         'minExtent#0': (args) => (args[0] as DraggableScrollableNotification).minExtent,
@@ -47,7 +48,9 @@ abstract final class DraggableScrollableNotificationBindings {
         'initialExtent#0': (args) => (args[0] as DraggableScrollableNotification).initialExtent,
         'context#0': (args) => (args[0] as DraggableScrollableNotification).context,
         'shouldCloseOnMinExtent#0': (args) => (args[0] as DraggableScrollableNotification).shouldCloseOnMinExtent,
+        'hashCode#0': (args) => (args[0] as DraggableScrollableNotification).hashCode,
         'depth#0': (args) => (args[0] as DraggableScrollableNotification).depth,
+        '==#1': (args) => (args[0] as DraggableScrollableNotification) == (args[1] as Object),
         '#6': (args) => DraggableScrollableNotification(extent: args[0] as double, minExtent: args[1] as double, maxExtent: args[2] as double, initialExtent: args[3] as double, context: args[4] as BuildContext, shouldCloseOnMinExtent: identical(args[5], darticAbsent) ? true : args[5] as bool),
       };
 }

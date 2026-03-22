@@ -31,8 +31,11 @@ abstract final class DragTargetDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DragTargetDetails).toString(),
         'data#0': (args) => (args[0] as DragTargetDetails).data,
         'offset#0': (args) => (args[0] as DragTargetDetails).offset,
+        'hashCode#0': (args) => (args[0] as DragTargetDetails).hashCode,
+        '==#1': (args) => (args[0] as DragTargetDetails) == (args[1] as Object),
         '#2': (args) => DragTargetDetails<dynamic>(data: args[0], offset: args[1] as Offset),
       };
 }

@@ -119,8 +119,10 @@ abstract final class RenderObjectBindings {
         'semanticBounds#0': (args) => (args[0] as RenderObject).semanticBounds,
         'debugNeedsSemanticsUpdate#0': (args) => (args[0] as RenderObject).debugNeedsSemanticsUpdate,
         'debugSemantics#0': (args) => (args[0] as RenderObject).debugSemantics,
+        'hashCode#0': (args) => (args[0] as RenderObject).hashCode,
         'parentData=#1': (args) { (args[0] as RenderObject).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderObject).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderObject).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderObject) == (args[1] as Object),
       };
 }

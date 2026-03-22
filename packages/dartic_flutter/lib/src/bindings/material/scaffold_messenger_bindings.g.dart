@@ -49,6 +49,7 @@ abstract final class ScaffoldMessengerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ScaffoldMessenger).createState(),
+        'toString#0': (args) => (args[0] as ScaffoldMessenger).toString(),
         'createElement#0': (args) => (args[0] as ScaffoldMessenger).createElement(),
         'toStringShort#0': (args) => (args[0] as ScaffoldMessenger).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ScaffoldMessenger).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class ScaffoldMessengerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ScaffoldMessenger).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ScaffoldMessenger).debugDescribeChildren(),
         'child#0': (args) => (args[0] as ScaffoldMessenger).child,
+        'hashCode#0': (args) => (args[0] as ScaffoldMessenger).hashCode,
         'key#0': (args) => (args[0] as ScaffoldMessenger).key,
+        '==#1': (args) => (args[0] as ScaffoldMessenger) == (args[1] as Object),
         '#2': (args) => ScaffoldMessenger(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => ScaffoldMessenger(key: args[1] as Key?, child: args[0] as Widget),
       };

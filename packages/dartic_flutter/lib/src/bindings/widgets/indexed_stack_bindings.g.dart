@@ -39,6 +39,7 @@ abstract final class IndexedStackBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as IndexedStack).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as IndexedStack).toString(),
         'createElement#0': (args) => (args[0] as IndexedStack).createElement(),
         'toStringShort#0': (args) => (args[0] as IndexedStack).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as IndexedStack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class IndexedStackBindings {
         'sizing#0': (args) => (args[0] as IndexedStack).sizing,
         'index#0': (args) => (args[0] as IndexedStack).index,
         'children#0': (args) => (args[0] as IndexedStack).children,
+        'hashCode#0': (args) => (args[0] as IndexedStack).hashCode,
         'key#0': (args) => (args[0] as IndexedStack).key,
+        '==#1': (args) => (args[0] as IndexedStack) == (args[1] as Object),
         '#7': (args) => IndexedStack(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, clipBehavior: identical(args[3], darticAbsent) ? Clip.hardEdge : args[3] as ui.Clip, sizing: identical(args[4], darticAbsent) ? StackFit.loose : args[4] as StackFit, index: identical(args[5], darticAbsent) ? null : args[5] as int?, children: identical(args[6], darticAbsent) ? const <Widget>[] : (args[6] as List).cast<Widget>()),
         '_#fromFields#7': (args) => IndexedStack(key: args[4] as Key?, alignment: args[0] as AlignmentGeometry, textDirection: args[6] as ui.TextDirection?, clipBehavior: args[2] as ui.Clip, sizing: args[5] as StackFit, index: args[3] as int?, children: (args[1] as List).cast<Widget>()),
       };

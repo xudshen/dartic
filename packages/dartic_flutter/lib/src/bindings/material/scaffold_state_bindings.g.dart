@@ -69,6 +69,7 @@ abstract final class ScaffoldStateBindings {
         'dispose#0': (args) { (args[0] as ScaffoldState).dispose(); return null; },
         'showBodyScrim#2': (args) { (args[0] as ScaffoldState).showBodyScrim(args[1] as bool, args[2] as double); return null; },
         'build#1': (args) => (args[0] as ScaffoldState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ScaffoldState).toString(),
         'reassemble#0': (args) { (args[0] as ScaffoldState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ScaffoldState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ScaffoldState).deactivate(); return null; },
@@ -90,11 +91,13 @@ abstract final class ScaffoldStateBindings {
         'isDrawerOpen#0': (args) => (args[0] as ScaffoldState).isDrawerOpen,
         'isDrawerBarrierDismissible#0': (args) => (args[0] as ScaffoldState).isDrawerBarrierDismissible,
         'isEndDrawerOpen#0': (args) => (args[0] as ScaffoldState).isEndDrawerOpen,
+        'hashCode#0': (args) => (args[0] as ScaffoldState).hashCode,
         'widget#0': (args) => (args[0] as ScaffoldState).widget,
         'context#0': (args) => (args[0] as ScaffoldState).context,
         'mounted#0': (args) => (args[0] as ScaffoldState).mounted,
         'bucket#0': (args) => (args[0] as ScaffoldState).bucket,
         'restorePending#0': (args) => (args[0] as ScaffoldState).restorePending,
+        '==#1': (args) => (args[0] as ScaffoldState) == (args[1] as Object),
         '#0': (args) => ScaffoldState(),
       };
 }

@@ -47,6 +47,7 @@ abstract final class DragGestureRecognizerBindings {
         'didStopTrackingLastPointer#1': (args) { (args[0] as DragGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as DragGestureRecognizer).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as DragGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as DragGestureRecognizer).toString(),
         'handleNonAllowedPointer#1': (args) { (args[0] as DragGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as DragGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as DragGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
@@ -79,6 +80,7 @@ abstract final class DragGestureRecognizerBindings {
         'lastPosition#0': (args) => (args[0] as DragGestureRecognizer).lastPosition,
         'debugLastPendingEventTimestamp#0': (args) => (args[0] as DragGestureRecognizer).debugLastPendingEventTimestamp,
         'globalDistanceMoved#0': (args) => (args[0] as DragGestureRecognizer).globalDistanceMoved,
+        'hashCode#0': (args) => (args[0] as DragGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as DragGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as DragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as DragGestureRecognizer).gestureSettings,
@@ -100,5 +102,6 @@ abstract final class DragGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as DragGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as DragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as DragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as DragGestureRecognizer) == (args[1] as Object),
       };
 }

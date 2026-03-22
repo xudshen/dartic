@@ -39,10 +39,13 @@ abstract final class ListWheelChildBuilderDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#2': (args) => (args[0] as ListWheelChildBuilderDelegate).build(args[1] as BuildContext, args[2] as int),
         'shouldRebuild#1': (args) => (args[0] as ListWheelChildBuilderDelegate).shouldRebuild(args[1] as ListWheelChildBuilderDelegate),
+        'toString#0': (args) => (args[0] as ListWheelChildBuilderDelegate).toString(),
         'trueIndexOf#1': (args) => (args[0] as ListWheelChildBuilderDelegate).trueIndexOf(args[1] as int),
         'builder#0': (args) => (args[0] as ListWheelChildBuilderDelegate).builder,
         'childCount#0': (args) => (args[0] as ListWheelChildBuilderDelegate).childCount,
         'estimatedChildCount#0': (args) => (args[0] as ListWheelChildBuilderDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as ListWheelChildBuilderDelegate).hashCode,
+        '==#1': (args) => (args[0] as ListWheelChildBuilderDelegate) == (args[1] as Object),
         '#2': (args) => ListWheelChildBuilderDelegate(builder: (a, b) => (args[0] as Function)(a, b) as Widget?, childCount: identical(args[1], darticAbsent) ? null : args[1] as int?),
       };
 }

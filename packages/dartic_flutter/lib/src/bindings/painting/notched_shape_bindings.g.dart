@@ -47,7 +47,7 @@ class _$NotchedShape extends NotchedShape implements DarticObjectHolder {
   bool operator ==(Object other) {
     final r = _dispatch.invoke(this, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
-    return r == true;
+    return r as bool;
   }
 
   // ── Super trampolines ──
@@ -70,6 +70,9 @@ abstract final class NotchedShapeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NotchedShape).toString(),
+        'hashCode#0': (args) => (args[0] as NotchedShape).hashCode,
+        '==#1': (args) => (args[0] as NotchedShape) == (args[1] as Object),
         'getOuterPath#2': (args) => throw UnsupportedError('getOuterPath() is abstract — must be overridden'),
       };
 }

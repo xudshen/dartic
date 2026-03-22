@@ -39,6 +39,7 @@ abstract final class LayoutIdBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as LayoutId).applyParentData(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as LayoutId).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LayoutId).toString(),
         'createElement#0': (args) => (args[0] as LayoutId).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as LayoutId).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as LayoutId).debugCanApplyOutOfTurn(),
@@ -49,9 +50,11 @@ abstract final class LayoutIdBindings {
         'debugDescribeChildren#0': (args) => (args[0] as LayoutId).debugDescribeChildren(),
         'id#0': (args) => (args[0] as LayoutId).id,
         'debugTypicalAncestorWidgetClass#0': (args) => (args[0] as LayoutId).debugTypicalAncestorWidgetClass,
+        'hashCode#0': (args) => (args[0] as LayoutId).hashCode,
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as LayoutId).debugTypicalAncestorWidgetDescription,
         'child#0': (args) => (args[0] as LayoutId).child,
         'key#0': (args) => (args[0] as LayoutId).key,
+        '==#1': (args) => (args[0] as LayoutId) == (args[1] as Object),
         '#3': (args) => LayoutId(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, id: args[1] as Object, child: args[2] as Widget),
       };
 }

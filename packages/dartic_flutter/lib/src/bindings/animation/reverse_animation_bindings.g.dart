@@ -44,11 +44,13 @@ abstract final class ReverseAnimationBindings {
         'parent#0': (args) => (args[0] as ReverseAnimation).parent,
         'status#0': (args) => (args[0] as ReverseAnimation).status,
         'value#0': (args) => (args[0] as ReverseAnimation).value,
+        'hashCode#0': (args) => (args[0] as ReverseAnimation).hashCode,
         'isDismissed#0': (args) => (args[0] as ReverseAnimation).isDismissed,
         'isCompleted#0': (args) => (args[0] as ReverseAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as ReverseAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as ReverseAnimation).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as ReverseAnimation).isListening,
+        '==#1': (args) => (args[0] as ReverseAnimation) == (args[1] as Object),
         '#1': (args) => ReverseAnimation(args[0] as Animation<double>),
       };
 }

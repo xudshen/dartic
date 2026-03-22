@@ -39,6 +39,7 @@ abstract final class CenterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Center).toString(),
         'createRenderObject#1': (args) => (args[0] as Center).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Center).updateRenderObject(args[1] as BuildContext, args[2] as RenderPositionedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as Center).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,11 +50,13 @@ abstract final class CenterBindings {
         'toStringDeep#4': (args) => (args[0] as Center).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as Center).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Center).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as Center).hashCode,
         'alignment#0': (args) => (args[0] as Center).alignment,
         'widthFactor#0': (args) => (args[0] as Center).widthFactor,
         'heightFactor#0': (args) => (args[0] as Center).heightFactor,
         'child#0': (args) => (args[0] as Center).child,
         'key#0': (args) => (args[0] as Center).key,
+        '==#1': (args) => (args[0] as Center) == (args[1] as Object),
         '#4': (args) => Center(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, widthFactor: identical(args[1], darticAbsent) ? null : args[1] as double?, heightFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#5': (args) => Center(key: args[3] as Key?, widthFactor: args[4] as double?, heightFactor: args[2] as double?, child: args[1] as Widget?),
       };

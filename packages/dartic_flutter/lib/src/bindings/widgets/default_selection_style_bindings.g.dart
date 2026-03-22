@@ -34,6 +34,7 @@ abstract final class DefaultSelectionStyleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as DefaultSelectionStyle).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as DefaultSelectionStyle).updateShouldNotify(args[1] as DefaultSelectionStyle),
+        'toString#0': (args) => (args[0] as DefaultSelectionStyle).toString(),
         'createElement#0': (args) => (args[0] as DefaultSelectionStyle).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultSelectionStyle).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultSelectionStyle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,8 +45,10 @@ abstract final class DefaultSelectionStyleBindings {
         'cursorColor#0': (args) => (args[0] as DefaultSelectionStyle).cursorColor,
         'selectionColor#0': (args) => (args[0] as DefaultSelectionStyle).selectionColor,
         'mouseCursor#0': (args) => (args[0] as DefaultSelectionStyle).mouseCursor,
+        'hashCode#0': (args) => (args[0] as DefaultSelectionStyle).hashCode,
         'child#0': (args) => (args[0] as DefaultSelectionStyle).child,
         'key#0': (args) => (args[0] as DefaultSelectionStyle).key,
+        '==#1': (args) => (args[0] as DefaultSelectionStyle) == (args[1] as Object),
         '#5': (args) => DefaultSelectionStyle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, cursorColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, selectionColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, mouseCursor: identical(args[3], darticAbsent) ? null : args[3] as MouseCursor?, child: args[4] as Widget),
         'fallback#1': (args) => DefaultSelectionStyle.fallback(key: identical(args[0], darticAbsent) ? null : args[0] as Key?),
         '_#fromFields#5': (args) => DefaultSelectionStyle(key: args[2] as Key?, cursorColor: args[1] as Color?, selectionColor: args[4] as Color?, mouseCursor: args[3] as MouseCursor?, child: args[0] as Widget),

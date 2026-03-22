@@ -25,8 +25,11 @@ abstract final class SelectWordSelectionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectWordSelectionEvent).toString(),
         'globalPosition#0': (args) => (args[0] as SelectWordSelectionEvent).globalPosition,
+        'hashCode#0': (args) => (args[0] as SelectWordSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as SelectWordSelectionEvent).type,
+        '==#1': (args) => (args[0] as SelectWordSelectionEvent) == (args[1] as Object),
         '#1': (args) => SelectWordSelectionEvent(globalPosition: args[0] as Offset),
         '_#fromFields#2': (args) => SelectWordSelectionEvent(globalPosition: args[0] as Offset),
       };

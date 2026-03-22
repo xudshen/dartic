@@ -39,6 +39,7 @@ abstract final class CupertinoScrollbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoScrollbar).createState(),
+        'toString#0': (args) => (args[0] as CupertinoScrollbar).toString(),
         'createElement#0': (args) => (args[0] as CupertinoScrollbar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoScrollbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoScrollbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,6 +49,7 @@ abstract final class CupertinoScrollbarBindings {
         'debugDescribeChildren#0': (args) => (args[0] as CupertinoScrollbar).debugDescribeChildren(),
         'thicknessWhileDragging#0': (args) => (args[0] as CupertinoScrollbar).thicknessWhileDragging,
         'radiusWhileDragging#0': (args) => (args[0] as CupertinoScrollbar).radiusWhileDragging,
+        'hashCode#0': (args) => (args[0] as CupertinoScrollbar).hashCode,
         'child#0': (args) => (args[0] as CupertinoScrollbar).child,
         'controller#0': (args) => (args[0] as CupertinoScrollbar).controller,
         'thumbVisibility#0': (args) => (args[0] as CupertinoScrollbar).thumbVisibility,
@@ -71,6 +73,7 @@ abstract final class CupertinoScrollbarBindings {
         'crossAxisMargin#0': (args) => (args[0] as CupertinoScrollbar).crossAxisMargin,
         'padding#0': (args) => (args[0] as CupertinoScrollbar).padding,
         'key#0': (args) => (args[0] as CupertinoScrollbar).key,
+        '==#1': (args) => (args[0] as CupertinoScrollbar) == (args[1] as Object),
         '#11': (args) {
           if (identical(args[10], darticAbsent)) {
             return CupertinoScrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, thickness: identical(args[4], darticAbsent) ? CupertinoScrollbar.defaultThickness : args[4] as double, thicknessWhileDragging: identical(args[5], darticAbsent) ? CupertinoScrollbar.defaultThicknessWhileDragging : args[5] as double, radius: identical(args[6], darticAbsent) ? CupertinoScrollbar.defaultRadius : args[6] as Radius, radiusWhileDragging: identical(args[7], darticAbsent) ? CupertinoScrollbar.defaultRadiusWhileDragging : args[7] as Radius, notificationPredicate: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), scrollbarOrientation: identical(args[9], darticAbsent) ? null : args[9] as ScrollbarOrientation?);

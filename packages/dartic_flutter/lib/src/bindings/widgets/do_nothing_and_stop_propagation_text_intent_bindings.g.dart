@@ -26,9 +26,12 @@ abstract final class DoNothingAndStopPropagationTextIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DoNothingAndStopPropagationTextIntent).toString(),
         'toStringShort#0': (args) => (args[0] as DoNothingAndStopPropagationTextIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DoNothingAndStopPropagationTextIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DoNothingAndStopPropagationTextIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DoNothingAndStopPropagationTextIntent).hashCode,
+        '==#1': (args) => (args[0] as DoNothingAndStopPropagationTextIntent) == (args[1] as Object),
         '#0': (args) => DoNothingAndStopPropagationTextIntent(),
         '_#fromFields#0': (args) => DoNothingAndStopPropagationTextIntent(),
       };

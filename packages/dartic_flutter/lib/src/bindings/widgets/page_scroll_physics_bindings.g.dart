@@ -48,6 +48,7 @@ abstract final class PageScrollPhysicsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as PageScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'createBallisticSimulation#2': (args) => (args[0] as PageScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
+        'toString#0': (args) => (args[0] as PageScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as PageScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as PageScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as PageScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -57,6 +58,7 @@ abstract final class PageScrollPhysicsBindings {
         'toleranceFor#1': (args) => (args[0] as PageScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as PageScrollPhysics).carriedMomentum(args[1] as double),
         'allowImplicitScrolling#0': (args) => (args[0] as PageScrollPhysics).allowImplicitScrolling,
+        'hashCode#0': (args) => (args[0] as PageScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as PageScrollPhysics).parent,
         'spring#0': (args) => (args[0] as PageScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as PageScrollPhysics).tolerance,
@@ -65,6 +67,7 @@ abstract final class PageScrollPhysicsBindings {
         'maxFlingVelocity#0': (args) => (args[0] as PageScrollPhysics).maxFlingVelocity,
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as PageScrollPhysics).dragStartDistanceMotionThreshold,
         'allowUserScrolling#0': (args) => (args[0] as PageScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as PageScrollPhysics) == (args[1] as Object),
         '#1': (args) => PageScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => PageScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

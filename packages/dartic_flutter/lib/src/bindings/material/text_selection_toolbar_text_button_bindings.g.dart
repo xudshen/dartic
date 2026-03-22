@@ -36,6 +36,7 @@ abstract final class TextSelectionToolbarTextButtonBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#4': (args) => (args[0] as TextSelectionToolbarTextButton).copyWith(child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, onPressed: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, alignment: identical(args[4], darticAbsent) ? null : args[4] as AlignmentGeometry?),
         'build#1': (args) => (args[0] as TextSelectionToolbarTextButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TextSelectionToolbarTextButton).toString(),
         'createElement#0': (args) => (args[0] as TextSelectionToolbarTextButton).createElement(),
         'toStringShort#0': (args) => (args[0] as TextSelectionToolbarTextButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSelectionToolbarTextButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class TextSelectionToolbarTextButtonBindings {
         'onPressed#0': (args) => (args[0] as TextSelectionToolbarTextButton).onPressed,
         'padding#0': (args) => (args[0] as TextSelectionToolbarTextButton).padding,
         'alignment#0': (args) => (args[0] as TextSelectionToolbarTextButton).alignment,
+        'hashCode#0': (args) => (args[0] as TextSelectionToolbarTextButton).hashCode,
         'key#0': (args) => (args[0] as TextSelectionToolbarTextButton).key,
+        '==#1': (args) => (args[0] as TextSelectionToolbarTextButton) == (args[1] as Object),
         '#5': (args) => TextSelectionToolbarTextButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, padding: args[2] as EdgeInsetsGeometry, onPressed: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), alignment: identical(args[4], darticAbsent) ? null : args[4] as AlignmentGeometry?),
         '_#fromFields#5': (args) => TextSelectionToolbarTextButton(key: args[2] as Key?, child: args[1] as Widget, padding: args[4] as EdgeInsetsGeometry, onPressed: args[3] as VoidCallback?, alignment: args[0] as AlignmentGeometry?),
       };

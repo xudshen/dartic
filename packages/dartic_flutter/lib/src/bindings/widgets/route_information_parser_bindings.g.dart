@@ -34,5 +34,8 @@ abstract final class RouteInformationParserBindings {
         'parseRouteInformation#1': (args) => (args[0] as RouteInformationParser).parseRouteInformation(args[1] as RouteInformation),
         'parseRouteInformationWithDependencies#2': (args) => (args[0] as RouteInformationParser).parseRouteInformationWithDependencies(args[1] as RouteInformation, args[2] as BuildContext),
         'restoreRouteInformation#1': (args) => (args[0] as RouteInformationParser).restoreRouteInformation(args[1]),
+        'toString#0': (args) => (args[0] as RouteInformationParser).toString(),
+        'hashCode#0': (args) => (args[0] as RouteInformationParser).hashCode,
+        '==#1': (args) => (args[0] as RouteInformationParser) == (args[1] as Object),
       };
 }

@@ -71,6 +71,7 @@ abstract final class RendererBindingBindings {
         'drawFrame#0': (args) { (args[0] as RendererBinding).drawFrame(); return null; },
         'performReassemble#0': (args) => (args[0] as RendererBinding).performReassemble(),
         'hitTestInView#3': (args) { (args[0] as RendererBinding).hitTestInView(args[1] as HitTestResult, args[2] as ui.Offset, args[3] as int); return null; },
+        'toString#0': (args) => (args[0] as RendererBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as RendererBinding).debugCheckZone(args[1] as String),
         'lockEvents#1': (args) => (args[0] as RendererBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
         'unlocked#0': (args) { (args[0] as RendererBinding).unlocked(); return null; },
@@ -134,6 +135,7 @@ abstract final class RendererBindingBindings {
         'rootPipelineOwner#0': (args) => (args[0] as RendererBinding).rootPipelineOwner,
         'renderViews#0': (args) => (args[0] as RendererBinding).renderViews,
         'sendFramesToEngine#0': (args) => (args[0] as RendererBinding).sendFramesToEngine,
+        'hashCode#0': (args) => (args[0] as RendererBinding).hashCode,
         'window#0': (args) => (args[0] as RendererBinding).window,
         'platformDispatcher#0': (args) => (args[0] as RendererBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as RendererBinding).locked,
@@ -166,5 +168,6 @@ abstract final class RendererBindingBindings {
         'schedulingStrategy=#1': (args) { (args[0] as RendererBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
         'resamplingEnabled=#1': (args) { (args[0] as RendererBinding).resamplingEnabled = args[1] as bool; return args[1]; },
         'samplingOffset=#1': (args) { (args[0] as RendererBinding).samplingOffset = args[1] as Duration; return args[1]; },
+        '==#1': (args) => (args[0] as RendererBinding) == (args[1] as Object),
       };
 }

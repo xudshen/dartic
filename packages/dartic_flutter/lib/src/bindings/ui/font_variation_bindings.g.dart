@@ -34,6 +34,7 @@ abstract final class FontVariationBindings {
         'axis#0': (args) => (args[0] as FontVariation).axis,
         'value#0': (args) => (args[0] as FontVariation).value,
         'hashCode#0': (args) => (args[0] as FontVariation).hashCode,
+        '==#1': (args) => (args[0] as FontVariation) == (args[1] as Object),
         '#2': (args) => FontVariation(args[0] as String, args[1] as double),
         'italic#1': (args) => FontVariation.italic(args[0] as double),
         'opticalSize#1': (args) => FontVariation.opticalSize(args[0] as double),

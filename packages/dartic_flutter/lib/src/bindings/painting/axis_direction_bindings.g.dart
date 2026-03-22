@@ -26,6 +26,9 @@ abstract final class AxisDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AxisDirection).toString(),
+        'hashCode#0': (args) => (args[0] as AxisDirection).hashCode,
         'index#0': (args) => (args[0] as AxisDirection).index,
+        '==#1': (args) => (args[0] as AxisDirection) == (args[1] as Object),
       };
 }

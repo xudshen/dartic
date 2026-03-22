@@ -26,10 +26,13 @@ abstract final class AppKitViewControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AppKitViewController).toString(),
         'setLayoutDirection#1': (args) => (args[0] as AppKitViewController).setLayoutDirection(args[1] as TextDirection),
         'acceptGesture#0': (args) => (args[0] as AppKitViewController).acceptGesture(),
         'rejectGesture#0': (args) => (args[0] as AppKitViewController).rejectGesture(),
         'dispose#0': (args) => (args[0] as AppKitViewController).dispose(),
+        'hashCode#0': (args) => (args[0] as AppKitViewController).hashCode,
         'id#0': (args) => (args[0] as AppKitViewController).id,
+        '==#1': (args) => (args[0] as AppKitViewController) == (args[1] as Object),
       };
 }

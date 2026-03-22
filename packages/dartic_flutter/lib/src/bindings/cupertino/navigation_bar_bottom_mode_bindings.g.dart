@@ -39,6 +39,9 @@ abstract final class NavigationBarBottomModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as NavigationBarBottomMode).toString(),
+        'hashCode#0': (args) => (args[0] as NavigationBarBottomMode).hashCode,
         'index#0': (args) => (args[0] as NavigationBarBottomMode).index,
+        '==#1': (args) => (args[0] as NavigationBarBottomMode) == (args[1] as Object),
       };
 }

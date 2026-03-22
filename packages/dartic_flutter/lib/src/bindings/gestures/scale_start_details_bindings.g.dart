@@ -29,6 +29,7 @@ abstract final class ScaleStartDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ScaleStartDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ScaleStartDetails).toString(),
         'toStringShort#0': (args) => (args[0] as ScaleStartDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScaleStartDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'focalPoint#0': (args) => (args[0] as ScaleStartDetails).focalPoint,
@@ -36,6 +37,8 @@ abstract final class ScaleStartDetailsBindings {
         'pointerCount#0': (args) => (args[0] as ScaleStartDetails).pointerCount,
         'sourceTimeStamp#0': (args) => (args[0] as ScaleStartDetails).sourceTimeStamp,
         'kind#0': (args) => (args[0] as ScaleStartDetails).kind,
+        'hashCode#0': (args) => (args[0] as ScaleStartDetails).hashCode,
+        '==#1': (args) => (args[0] as ScaleStartDetails) == (args[1] as Object),
         '#5': (args) => ScaleStartDetails(focalPoint: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localFocalPoint: identical(args[1], darticAbsent) ? null : args[1] as Offset?, pointerCount: identical(args[2], darticAbsent) ? 0 : args[2] as int, sourceTimeStamp: identical(args[3], darticAbsent) ? null : args[3] as Duration?, kind: identical(args[4], darticAbsent) ? null : args[4] as PointerDeviceKind?),
       };
 }

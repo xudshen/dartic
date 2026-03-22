@@ -23,6 +23,9 @@ abstract final class ServicesServiceExtensionsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ServicesServiceExtensions).toString(),
+        'hashCode#0': (args) => (args[0] as ServicesServiceExtensions).hashCode,
         'index#0': (args) => (args[0] as ServicesServiceExtensions).index,
+        '==#1': (args) => (args[0] as ServicesServiceExtensions) == (args[1] as Object),
       };
 }

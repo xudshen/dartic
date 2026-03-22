@@ -31,6 +31,9 @@ abstract final class PathMetricIteratorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'moveNext#0': (args) => (args[0] as PathMetricIterator).moveNext(),
+        'toString#0': (args) => (args[0] as PathMetricIterator).toString(),
         'current#0': (args) => (args[0] as PathMetricIterator).current,
+        'hashCode#0': (args) => (args[0] as PathMetricIterator).hashCode,
+        '==#1': (args) => (args[0] as PathMetricIterator) == (args[1] as Object),
       };
 }

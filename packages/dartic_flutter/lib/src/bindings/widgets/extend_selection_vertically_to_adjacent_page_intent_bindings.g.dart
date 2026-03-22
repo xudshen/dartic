@@ -26,13 +26,16 @@ abstract final class ExtendSelectionVerticallyToAdjacentPageIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentPageIntent) == (args[1] as Object),
         '#2': (args) => ExtendSelectionVerticallyToAdjacentPageIntent(forward: args[0] as bool, collapseSelection: args[1] as bool),
         '_#fromFields#4': (args) => ExtendSelectionVerticallyToAdjacentPageIntent(forward: args[3] as bool, collapseSelection: args[1] as bool),
       };

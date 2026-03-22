@@ -31,8 +31,11 @@ abstract final class PipelineManifoldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'requestVisualUpdate#0': (args) { (args[0] as PipelineManifold).requestVisualUpdate(); return null; },
+        'toString#0': (args) => (args[0] as PipelineManifold).toString(),
         'addListener#1': (args) { (args[0] as PipelineManifold).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as PipelineManifold).removeListener(() => (args[1] as Function)()); return null; },
         'semanticsEnabled#0': (args) => (args[0] as PipelineManifold).semanticsEnabled,
+        'hashCode#0': (args) => (args[0] as PipelineManifold).hashCode,
+        '==#1': (args) => (args[0] as PipelineManifold) == (args[1] as Object),
       };
 }

@@ -49,6 +49,7 @@ abstract final class ChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ChipAttributes).toString(),
         'label#0': (args) => (args[0] as ChipAttributes).label,
         'avatar#0': (args) => (args[0] as ChipAttributes).avatar,
         'labelStyle#0': (args) => (args[0] as ChipAttributes).labelStyle,
@@ -70,5 +71,7 @@ abstract final class ChipAttributesBindings {
         'avatarBoxConstraints#0': (args) => (args[0] as ChipAttributes).avatarBoxConstraints,
         'chipAnimationStyle#0': (args) => (args[0] as ChipAttributes).chipAnimationStyle,
         'mouseCursor#0': (args) => (args[0] as ChipAttributes).mouseCursor,
+        'hashCode#0': (args) => (args[0] as ChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as ChipAttributes) == (args[1] as Object),
       };
 }

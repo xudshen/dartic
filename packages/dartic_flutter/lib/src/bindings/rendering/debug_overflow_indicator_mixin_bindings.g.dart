@@ -40,6 +40,7 @@ abstract final class DebugOverflowIndicatorMixinBindings {
         'dispose#0': (args) { (args[0] as DebugOverflowIndicatorMixin).dispose(); return null; },
         'paintOverflowIndicator#5': (args) { (args[0] as DebugOverflowIndicatorMixin).paintOverflowIndicator(args[1] as PaintingContext, args[2] as ui.Offset, args[3] as ui.Rect, args[4] as ui.Rect, overflowHints: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<DiagnosticsNode>()); return null; },
         'reassemble#0': (args) { (args[0] as DebugOverflowIndicatorMixin).reassemble(); return null; },
+        'toString#0': (args) => (args[0] as DebugOverflowIndicatorMixin).toString(),
         'setupParentData#1': (args) { (args[0] as DebugOverflowIndicatorMixin).setupParentData(args[1] as RenderObject); return null; },
         'redepthChild#1': (args) { (args[0] as DebugOverflowIndicatorMixin).redepthChild(args[1] as RenderObject); return null; },
         'redepthChildren#0': (args) { (args[0] as DebugOverflowIndicatorMixin).redepthChildren(); return null; },
@@ -88,6 +89,7 @@ abstract final class DebugOverflowIndicatorMixinBindings {
         'showOnScreen#4': (args) { (args[0] as DebugOverflowIndicatorMixin).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as ui.Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as DebugOverflowIndicatorMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as DebugOverflowIndicatorMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as DebugOverflowIndicatorMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as DebugOverflowIndicatorMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as DebugOverflowIndicatorMixin).parentData,
         'depth#0': (args) => (args[0] as DebugOverflowIndicatorMixin).depth,
@@ -119,5 +121,6 @@ abstract final class DebugOverflowIndicatorMixinBindings {
         'parentData=#1': (args) { (args[0] as DebugOverflowIndicatorMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as DebugOverflowIndicatorMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as DebugOverflowIndicatorMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as DebugOverflowIndicatorMixin) == (args[1] as Object),
       };
 }

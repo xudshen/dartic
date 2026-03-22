@@ -47,6 +47,7 @@ abstract final class RenderErrorBoxBindings {
         'hitTestSelf#1': (args) => (args[0] as RenderErrorBox).hitTestSelf(args[1] as ui.Offset),
         'computeDryLayout#1': (args) => (args[0] as RenderErrorBox).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderErrorBox).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderErrorBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderErrorBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderErrorBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderErrorBox).computeMinIntrinsicWidth(args[1] as double),
@@ -120,6 +121,7 @@ abstract final class RenderErrorBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderErrorBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'message#0': (args) => (args[0] as RenderErrorBox).message,
         'sizedByParent#0': (args) => (args[0] as RenderErrorBox).sizedByParent,
+        'hashCode#0': (args) => (args[0] as RenderErrorBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderErrorBox).hasSize,
         'size#0': (args) => (args[0] as RenderErrorBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderErrorBox).semanticBounds,
@@ -153,6 +155,7 @@ abstract final class RenderErrorBoxBindings {
         'parentData=#1': (args) { (args[0] as RenderErrorBox).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderErrorBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderErrorBox).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderErrorBox) == (args[1] as Object),
         '#1': (args) => RenderErrorBox(identical(args[0], darticAbsent) ? '' : args[0] as String),
       };
 }

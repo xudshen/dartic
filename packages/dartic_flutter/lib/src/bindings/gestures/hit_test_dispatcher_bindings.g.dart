@@ -23,5 +23,8 @@ abstract final class HitTestDispatcherBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispatchEvent#2': (args) { (args[0] as HitTestDispatcher).dispatchEvent(args[1] as PointerEvent, args[2] as HitTestResult); return null; },
+        'toString#0': (args) => (args[0] as HitTestDispatcher).toString(),
+        'hashCode#0': (args) => (args[0] as HitTestDispatcher).hashCode,
+        '==#1': (args) => (args[0] as HitTestDispatcher) == (args[1] as Object),
       };
 }

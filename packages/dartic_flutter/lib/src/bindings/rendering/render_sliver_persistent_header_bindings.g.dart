@@ -50,6 +50,7 @@ abstract final class RenderSliverPersistentHeaderBindings {
         'paint#2': (args) { (args[0] as RenderSliverPersistentHeader).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderSliverPersistentHeader).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverPersistentHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverPersistentHeader).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverPersistentHeader).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverPersistentHeader).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverPersistentHeader).performResize(); return null; },
@@ -112,6 +113,7 @@ abstract final class RenderSliverPersistentHeaderBindings {
         'lastShrinkOffset#0': (args) => (args[0] as RenderSliverPersistentHeader).lastShrinkOffset,
         'lastOverlapsContent#0': (args) => (args[0] as RenderSliverPersistentHeader).lastOverlapsContent,
         'stretchConfiguration#0': (args) => (args[0] as RenderSliverPersistentHeader).stretchConfiguration,
+        'hashCode#0': (args) => (args[0] as RenderSliverPersistentHeader).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverPersistentHeader).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverPersistentHeader).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverPersistentHeader).geometry,
@@ -150,5 +152,6 @@ abstract final class RenderSliverPersistentHeaderBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverPersistentHeader).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverPersistentHeader).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverPersistentHeader).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverPersistentHeader) == (args[1] as Object),
       };
 }

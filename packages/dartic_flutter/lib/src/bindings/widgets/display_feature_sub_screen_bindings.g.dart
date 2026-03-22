@@ -32,6 +32,7 @@ abstract final class DisplayFeatureSubScreenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DisplayFeatureSubScreen).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DisplayFeatureSubScreen).toString(),
         'createElement#0': (args) => (args[0] as DisplayFeatureSubScreen).createElement(),
         'toStringShort#0': (args) => (args[0] as DisplayFeatureSubScreen).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DisplayFeatureSubScreen).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class DisplayFeatureSubScreenBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DisplayFeatureSubScreen).debugDescribeChildren(),
         'anchorPoint#0': (args) => (args[0] as DisplayFeatureSubScreen).anchorPoint,
         'child#0': (args) => (args[0] as DisplayFeatureSubScreen).child,
+        'hashCode#0': (args) => (args[0] as DisplayFeatureSubScreen).hashCode,
         'key#0': (args) => (args[0] as DisplayFeatureSubScreen).key,
+        '==#1': (args) => (args[0] as DisplayFeatureSubScreen) == (args[1] as Object),
         '#3': (args) => DisplayFeatureSubScreen(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchorPoint: identical(args[1], darticAbsent) ? null : args[1] as Offset?, child: args[2] as Widget),
         '_#fromFields#3': (args) => DisplayFeatureSubScreen(key: args[2] as Key?, anchorPoint: args[0] as Offset?, child: args[1] as Widget),
       };

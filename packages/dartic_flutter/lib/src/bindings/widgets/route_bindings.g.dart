@@ -59,6 +59,7 @@ abstract final class RouteBindings {
         'changedInternalState#0': (args) { (args[0] as Route).changedInternalState(); return null; },
         'changedExternalState#0': (args) { (args[0] as Route).changedExternalState(); return null; },
         'dispose#0': (args) { (args[0] as Route).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Route).toString(),
         'requestFocus#0': (args) => (args[0] as Route).requestFocus,
         'navigator#0': (args) => (args[0] as Route).navigator,
         'settings#0': (args) => (args[0] as Route).settings,
@@ -72,5 +73,7 @@ abstract final class RouteBindings {
         'isFirst#0': (args) => (args[0] as Route).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as Route).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as Route).isActive,
+        'hashCode#0': (args) => (args[0] as Route).hashCode,
+        '==#1': (args) => (args[0] as Route) == (args[1] as Object),
       };
 }

@@ -29,10 +29,13 @@ abstract final class LongPressStartDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as LongPressStartDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LongPressStartDetails).toString(),
         'toStringShort#0': (args) => (args[0] as LongPressStartDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as LongPressStartDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as LongPressStartDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as LongPressStartDetails).localPosition,
+        'hashCode#0': (args) => (args[0] as LongPressStartDetails).hashCode,
+        '==#1': (args) => (args[0] as LongPressStartDetails) == (args[1] as Object),
         '#2': (args) => LongPressStartDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?),
         '_#fromFields#2': (args) => LongPressStartDetails(globalPosition: args[0] as Offset, localPosition: args[1] as Offset?),
       };

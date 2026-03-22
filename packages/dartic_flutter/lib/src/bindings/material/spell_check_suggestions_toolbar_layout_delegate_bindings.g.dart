@@ -27,8 +27,11 @@ abstract final class SpellCheckSuggestionsToolbarLayoutDelegateBindings {
         'getConstraintsForChild#1': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).getConstraintsForChild(args[1] as BoxConstraints),
         'getPositionForChild#2': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).getPositionForChild(args[1] as Size, args[2] as Size),
         'shouldRelayout#1': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).shouldRelayout(args[1] as SpellCheckSuggestionsToolbarLayoutDelegate),
+        'toString#0': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).toString(),
         'getSize#1': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).getSize(args[1] as BoxConstraints),
         'anchor#0': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).anchor,
+        'hashCode#0': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate).hashCode,
+        '==#1': (args) => (args[0] as SpellCheckSuggestionsToolbarLayoutDelegate) == (args[1] as Object),
         '#1': (args) => SpellCheckSuggestionsToolbarLayoutDelegate(anchor: args[0] as Offset),
       };
 }

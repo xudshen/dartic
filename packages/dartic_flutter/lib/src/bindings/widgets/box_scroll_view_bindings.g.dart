@@ -55,6 +55,7 @@ abstract final class BoxScrollViewBindings {
         'buildSlivers#1': (args) => (args[0] as BoxScrollView).buildSlivers(args[1] as BuildContext),
         'buildChildLayout#1': (args) => (args[0] as BoxScrollView).buildChildLayout(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as BoxScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BoxScrollView).toString(),
         'getDirection#1': (args) => (args[0] as BoxScrollView).getDirection(args[1] as BuildContext),
         'buildViewport#4': (args) => (args[0] as BoxScrollView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as AxisDirection, (args[4] as List).cast<Widget>()),
         'build#1': (args) => (args[0] as BoxScrollView).build(args[1] as BuildContext),
@@ -65,6 +66,7 @@ abstract final class BoxScrollViewBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as BoxScrollView).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as BoxScrollView).debugDescribeChildren(),
         'padding#0': (args) => (args[0] as BoxScrollView).padding,
+        'hashCode#0': (args) => (args[0] as BoxScrollView).hashCode,
         'scrollDirection#0': (args) => (args[0] as BoxScrollView).scrollDirection,
         'reverse#0': (args) => (args[0] as BoxScrollView).reverse,
         'controller#0': (args) => (args[0] as BoxScrollView).controller,
@@ -83,5 +85,6 @@ abstract final class BoxScrollViewBindings {
         'clipBehavior#0': (args) => (args[0] as BoxScrollView).clipBehavior,
         'hitTestBehavior#0': (args) => (args[0] as BoxScrollView).hitTestBehavior,
         'key#0': (args) => (args[0] as BoxScrollView).key,
+        '==#1': (args) => (args[0] as BoxScrollView) == (args[1] as Object),
       };
 }

@@ -52,6 +52,7 @@ abstract final class RenderPaddingBindings {
         'performLayout#0': (args) { (args[0] as RenderPadding).performLayout(); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderPadding).debugPaintSize(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPadding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderPadding).toString(),
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderPadding).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderPadding).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderPadding).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
@@ -122,6 +123,7 @@ abstract final class RenderPaddingBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderPadding).debugValidateChild(args[1] as RenderObject),
         'padding#0': (args) => (args[0] as RenderPadding).padding,
         'textDirection#0': (args) => (args[0] as RenderPadding).textDirection,
+        'hashCode#0': (args) => (args[0] as RenderPadding).hashCode,
         'hasSize#0': (args) => (args[0] as RenderPadding).hasSize,
         'size#0': (args) => (args[0] as RenderPadding).size,
         'semanticBounds#0': (args) => (args[0] as RenderPadding).semanticBounds,
@@ -160,6 +162,7 @@ abstract final class RenderPaddingBindings {
         'debugCreator=#1': (args) { (args[0] as RenderPadding).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPadding).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderPadding).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPadding) == (args[1] as Object),
         '#3': (args) => RenderPadding(padding: args[0] as EdgeInsetsGeometry, textDirection: identical(args[1], darticAbsent) ? null : args[1] as TextDirection?, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

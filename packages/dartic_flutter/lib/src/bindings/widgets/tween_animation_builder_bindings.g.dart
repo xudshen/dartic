@@ -31,6 +31,7 @@ abstract final class TweenAnimationBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TweenAnimationBuilder).createState(),
+        'toString#0': (args) => (args[0] as TweenAnimationBuilder).toString(),
         'debugFillProperties#1': (args) { (args[0] as TweenAnimationBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as TweenAnimationBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as TweenAnimationBuilder).toStringShort(),
@@ -41,10 +42,12 @@ abstract final class TweenAnimationBuilderBindings {
         'tween#0': (args) => (args[0] as TweenAnimationBuilder).tween,
         'builder#0': (args) => (args[0] as TweenAnimationBuilder).builder,
         'child#0': (args) => (args[0] as TweenAnimationBuilder).child,
+        'hashCode#0': (args) => (args[0] as TweenAnimationBuilder).hashCode,
         'curve#0': (args) => (args[0] as TweenAnimationBuilder).curve,
         'duration#0': (args) => (args[0] as TweenAnimationBuilder).duration,
         'onEnd#0': (args) => (args[0] as TweenAnimationBuilder).onEnd,
         'key#0': (args) => (args[0] as TweenAnimationBuilder).key,
+        '==#1': (args) => (args[0] as TweenAnimationBuilder) == (args[1] as Object),
         '#7': (args) => TweenAnimationBuilder<Object?>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tween: args[1] as Tween<Object>, duration: args[2] as Duration, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, builder: (a, b, c) => (args[4] as Function)(a, b, c) as Widget, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         '_#fromFields#7': (args) => TweenAnimationBuilder<Object?>(key: args[4] as Key?, tween: args[6] as Tween<Object>, duration: args[3] as Duration, curve: args[2] as Curve, builder: args[0] as ValueWidgetBuilder<Object?>, onEnd: args[5] as VoidCallback?, child: args[1] as Widget?),
       };

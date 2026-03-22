@@ -56,6 +56,7 @@ abstract final class SearchControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'openView#0': (args) { (args[0] as SearchController).openView(); return null; },
         'closeView#1': (args) { (args[0] as SearchController).closeView(args[1] as String?); return null; },
+        'toString#0': (args) => (args[0] as SearchController).toString(),
         'buildTextSpan#3': (args) => (args[0] as SearchController).buildTextSpan(context: args[1] as BuildContext, style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, withComposing: args[3] as bool),
         'clear#0': (args) { (args[0] as SearchController).clear(); return null; },
         'clearComposing#0': (args) { (args[0] as SearchController).clearComposing(); return null; },
@@ -65,6 +66,7 @@ abstract final class SearchControllerBindings {
         'notifyListeners#0': (args) { (args[0] as SearchController).notifyListeners(); return null; },
         'isAttached#0': (args) => (args[0] as SearchController).isAttached,
         'isOpen#0': (args) => (args[0] as SearchController).isOpen,
+        'hashCode#0': (args) => (args[0] as SearchController).hashCode,
         'text#0': (args) => (args[0] as SearchController).text,
         'selection#0': (args) => (args[0] as SearchController).selection,
         'value#0': (args) => (args[0] as SearchController).value,
@@ -72,6 +74,7 @@ abstract final class SearchControllerBindings {
         'text=#1': (args) { (args[0] as SearchController).text = args[1] as String; return args[1]; },
         'value=#1': (args) { (args[0] as SearchController).value = args[1] as TextEditingValue; return args[1]; },
         'selection=#1': (args) { (args[0] as SearchController).selection = args[1] as TextSelection; return args[1]; },
+        '==#1': (args) => (args[0] as SearchController) == (args[1] as Object),
         '#0': (args) => SearchController(),
       };
 }

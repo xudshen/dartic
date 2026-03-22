@@ -43,6 +43,7 @@ abstract final class MouseRegionBindings {
         'createRenderObject#1': (args) => (args[0] as MouseRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as MouseRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderMouseRegion); return null; },
         'debugFillProperties#1': (args) { (args[0] as MouseRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MouseRegion).toString(),
         'createElement#0': (args) => (args[0] as MouseRegion).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as MouseRegion).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as MouseRegion).toStringShort(),
@@ -56,8 +57,10 @@ abstract final class MouseRegionBindings {
         'cursor#0': (args) => (args[0] as MouseRegion).cursor,
         'opaque#0': (args) => (args[0] as MouseRegion).opaque,
         'hitTestBehavior#0': (args) => (args[0] as MouseRegion).hitTestBehavior,
+        'hashCode#0': (args) => (args[0] as MouseRegion).hashCode,
         'child#0': (args) => (args[0] as MouseRegion).child,
         'key#0': (args) => (args[0] as MouseRegion).key,
+        '==#1': (args) => (args[0] as MouseRegion) == (args[1] as Object),
         '#8': (args) => MouseRegion(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onEnter: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onExit: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onHover: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), cursor: identical(args[4], darticAbsent) ? MouseCursor.defer : args[4] as MouseCursor, opaque: identical(args[5], darticAbsent) ? true : args[5] as bool, hitTestBehavior: identical(args[6], darticAbsent) ? null : args[6] as HitTestBehavior?, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?),
         '_#fromFields#8': (args) => MouseRegion(key: args[3] as Key?, onEnter: args[4] as PointerEnterEventListener?, onExit: args[5] as PointerExitEventListener?, onHover: args[6] as PointerHoverEventListener?, cursor: args[1] as MouseCursor, opaque: args[7] as bool, hitTestBehavior: args[2] as HitTestBehavior?, child: args[0] as Widget?),
       };

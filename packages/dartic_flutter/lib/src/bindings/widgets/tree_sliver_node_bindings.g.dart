@@ -37,6 +37,8 @@ abstract final class TreeSliverNodeBindings {
         'isExpanded#0': (args) => (args[0] as TreeSliverNode).isExpanded,
         'depth#0': (args) => (args[0] as TreeSliverNode).depth,
         'parent#0': (args) => (args[0] as TreeSliverNode).parent,
+        'hashCode#0': (args) => (args[0] as TreeSliverNode).hashCode,
+        '==#1': (args) => (args[0] as TreeSliverNode) == (args[1] as Object),
         '#3': (args) => TreeSliverNode<dynamic>(args[0], children: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as List).cast<TreeSliverNode>(), expanded: identical(args[2], darticAbsent) ? false : args[2] as bool),
       };
 }

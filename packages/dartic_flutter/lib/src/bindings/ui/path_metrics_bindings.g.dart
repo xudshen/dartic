@@ -30,6 +30,7 @@ abstract final class PathMetricsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PathMetrics).toString(),
         'cast#0': (args) => (args[0] as PathMetrics).cast(),
         'followedBy#1': (args) => (args[0] as PathMetrics).followedBy((args[1] as Iterable).cast<PathMetric>()),
         'map#1': (args) => (args[0] as PathMetrics).map((a) => (args[1] as Function)(a)),
@@ -54,11 +55,13 @@ abstract final class PathMetricsBindings {
         'singleWhere#2': (args) => (args[0] as PathMetrics).singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         'elementAt#1': (args) => (args[0] as PathMetrics).elementAt(args[1] as int),
         'iterator#0': (args) => (args[0] as PathMetrics).iterator,
+        'hashCode#0': (args) => (args[0] as PathMetrics).hashCode,
         'length#0': (args) => (args[0] as PathMetrics).length,
         'isEmpty#0': (args) => (args[0] as PathMetrics).isEmpty,
         'isNotEmpty#0': (args) => (args[0] as PathMetrics).isNotEmpty,
         'first#0': (args) => (args[0] as PathMetrics).first,
         'last#0': (args) => (args[0] as PathMetrics).last,
         'single#0': (args) => (args[0] as PathMetrics).single,
+        '==#1': (args) => (args[0] as PathMetrics) == (args[1] as Object),
       };
 }

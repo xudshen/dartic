@@ -36,6 +36,7 @@ abstract final class SystemContextMenuBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SystemContextMenu).createState(),
+        'toString#0': (args) => (args[0] as SystemContextMenu).toString(),
         'createElement#0': (args) => (args[0] as SystemContextMenu).createElement(),
         'toStringShort#0': (args) => (args[0] as SystemContextMenu).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SystemContextMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,7 +47,9 @@ abstract final class SystemContextMenuBindings {
         'anchor#0': (args) => (args[0] as SystemContextMenu).anchor,
         'items#0': (args) => (args[0] as SystemContextMenu).items,
         'onSystemHide#0': (args) => (args[0] as SystemContextMenu).onSystemHide,
+        'hashCode#0': (args) => (args[0] as SystemContextMenu).hashCode,
         'key#0': (args) => (args[0] as SystemContextMenu).key,
+        '==#1': (args) => (args[0] as SystemContextMenu) == (args[1] as Object),
         'editableText#3': (args) => SystemContextMenu.editableText(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, editableTextState: args[1] as EditableTextState, items: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as List).cast<IOSSystemContextMenuItem>()),
       };
 }

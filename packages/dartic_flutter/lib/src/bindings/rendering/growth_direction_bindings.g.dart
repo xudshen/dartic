@@ -31,6 +31,9 @@ abstract final class GrowthDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as GrowthDirection).toString(),
+        'hashCode#0': (args) => (args[0] as GrowthDirection).hashCode,
         'index#0': (args) => (args[0] as GrowthDirection).index,
+        '==#1': (args) => (args[0] as GrowthDirection) == (args[1] as Object),
       };
 }

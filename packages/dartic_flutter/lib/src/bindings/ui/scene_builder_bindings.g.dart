@@ -35,7 +35,6 @@ abstract final class SceneBuilderBindings {
         'pushClipRRect#3': (args) => (args[0] as SceneBuilder).pushClipRRect(args[1] as RRect, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as Clip, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as ClipRRectEngineLayer?),
         'pushClipRSuperellipse#3': (args) => (args[0] as SceneBuilder).pushClipRSuperellipse(args[1] as RSuperellipse, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as Clip, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as ClipRSuperellipseEngineLayer?),
         'pushClipPath#3': (args) => (args[0] as SceneBuilder).pushClipPath(args[1] as Path, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as Clip, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as ClipPathEngineLayer?),
-        'pushOpacity#3': (args) => (args[0] as SceneBuilder).pushOpacity(args[1] as int, offset: identical(args[2], darticAbsent) ? null : args[2] as Offset?, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as OpacityEngineLayer?),
         'pushColorFilter#2': (args) => (args[0] as SceneBuilder).pushColorFilter(args[1] as ColorFilter, oldLayer: identical(args[2], darticAbsent) ? null : args[2] as ColorFilterEngineLayer?),
         'pushImageFilter#3': (args) => (args[0] as SceneBuilder).pushImageFilter(args[1] as ImageFilter, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as ImageFilterEngineLayer?),
         'pushBackdropFilter#4': (args) => (args[0] as SceneBuilder).pushBackdropFilter(args[1] as ImageFilter, blendMode: identical(args[2], darticAbsent) ? BlendMode.srcOver : args[2] as BlendMode, oldLayer: identical(args[3], darticAbsent) ? null : args[3] as BackdropFilterEngineLayer?, backdropId: identical(args[4], darticAbsent) ? null : args[4] as int?),
@@ -47,5 +46,21 @@ abstract final class SceneBuilderBindings {
         'addTexture#6': (args) { (args[0] as SceneBuilder).addTexture(args[1] as int, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, width: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, height: identical(args[4], darticAbsent) ? 0.0 : args[4] as double, freeze: identical(args[5], darticAbsent) ? false : args[5] as bool, filterQuality: identical(args[6], darticAbsent) ? FilterQuality.low : args[6] as FilterQuality); return null; },
         'addPlatformView#4': (args) { (args[0] as SceneBuilder).addPlatformView(args[1] as int, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, width: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, height: identical(args[4], darticAbsent) ? 0.0 : args[4] as double); return null; },
         'build#0': (args) => (args[0] as SceneBuilder).build(),
+        'toString#0': (args) => (args[0] as SceneBuilder).toString(),
+        'hashCode#0': (args) => (args[0] as SceneBuilder).hashCode,
+        '==#1': (args) => (args[0] as SceneBuilder) == (args[1] as Object),
+        '#0': (args) => SceneBuilder(),
+        'pushOpacity#3': (args) {
+            final self = args[0] as SceneBuilder;
+            final alpha = args[1] as int;
+            final oldLayer = identical(args[3], darticAbsent)
+                ? null
+                : args[3] as OpacityEngineLayer?;
+            if (identical(args[2], darticAbsent)) {
+              return self.pushOpacity(alpha, oldLayer: oldLayer);
+            }
+            return self.pushOpacity(alpha,
+                offset: args[2] as Offset?, oldLayer: oldLayer);
+        },
       };
 }

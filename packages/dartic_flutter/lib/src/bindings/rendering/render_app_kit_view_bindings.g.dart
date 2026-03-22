@@ -42,6 +42,7 @@ abstract final class RenderAppKitViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateGestureRecognizers#1': (args) { (args[0] as RenderAppKitView).updateGestureRecognizers((args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()); return null; },
+        'toString#0': (args) => (args[0] as RenderAppKitView).toString(),
         'computeDryLayout#1': (args) => (args[0] as RenderAppKitView).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderAppKitView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTest#2': (args) => (args[0] as RenderAppKitView).hitTest(args[1] as BoxHitTestResult, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),
@@ -118,6 +119,7 @@ abstract final class RenderAppKitViewBindings {
         'showOnScreen#4': (args) { (args[0] as RenderAppKitView).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderAppKitView).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderAppKitView).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderAppKitView).hashCode,
         'viewController#0': (args) => (args[0] as RenderAppKitView).viewController,
         'hitTestBehavior#0': (args) => (args[0] as RenderAppKitView).hitTestBehavior,
         'sizedByParent#0': (args) => (args[0] as RenderAppKitView).sizedByParent,
@@ -156,6 +158,7 @@ abstract final class RenderAppKitViewBindings {
         'parentData=#1': (args) { (args[0] as RenderAppKitView).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderAppKitView).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAppKitView).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAppKitView) == (args[1] as Object),
         '#3': (args) => RenderAppKitView(viewController: args[0] as AppKitViewController, hitTestBehavior: args[1] as PlatformViewHitTestBehavior, gestureRecognizers: (args[2] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
       };
 }

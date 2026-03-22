@@ -34,6 +34,7 @@ abstract final class GestureSettingsBindings {
         'physicalTouchSlop#0': (args) => (args[0] as GestureSettings).physicalTouchSlop,
         'physicalDoubleTapSlop#0': (args) => (args[0] as GestureSettings).physicalDoubleTapSlop,
         'hashCode#0': (args) => (args[0] as GestureSettings).hashCode,
+        '==#1': (args) => (args[0] as GestureSettings) == (args[1] as Object),
         '#2': (args) => GestureSettings(physicalTouchSlop: identical(args[0], darticAbsent) ? null : args[0] as double?, physicalDoubleTapSlop: identical(args[1], darticAbsent) ? null : args[1] as double?),
         '_#fromFields#2': (args) => GestureSettings(physicalTouchSlop: args[1] as double?, physicalDoubleTapSlop: args[0] as double?),
       };

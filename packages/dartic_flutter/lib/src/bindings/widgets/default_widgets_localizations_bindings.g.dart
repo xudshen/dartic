@@ -30,6 +30,7 @@ abstract final class DefaultWidgetsLocalizationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DefaultWidgetsLocalizations).toString(),
         'reorderItemUp#0': (args) => (args[0] as DefaultWidgetsLocalizations).reorderItemUp,
         'reorderItemDown#0': (args) => (args[0] as DefaultWidgetsLocalizations).reorderItemDown,
         'reorderItemLeft#0': (args) => (args[0] as DefaultWidgetsLocalizations).reorderItemLeft,
@@ -46,6 +47,8 @@ abstract final class DefaultWidgetsLocalizationsBindings {
         'searchWebButtonLabel#0': (args) => (args[0] as DefaultWidgetsLocalizations).searchWebButtonLabel,
         'shareButtonLabel#0': (args) => (args[0] as DefaultWidgetsLocalizations).shareButtonLabel,
         'textDirection#0': (args) => (args[0] as DefaultWidgetsLocalizations).textDirection,
+        'hashCode#0': (args) => (args[0] as DefaultWidgetsLocalizations).hashCode,
+        '==#1': (args) => (args[0] as DefaultWidgetsLocalizations) == (args[1] as Object),
         '#0': (args) => DefaultWidgetsLocalizations(),
         '_#fromFields#0': (args) => DefaultWidgetsLocalizations(),
       };

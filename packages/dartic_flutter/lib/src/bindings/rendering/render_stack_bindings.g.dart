@@ -57,6 +57,7 @@ abstract final class RenderStackBindings {
         'dispose#0': (args) { (args[0] as RenderStack).dispose(); return null; },
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderStack).describeApproximatePaintClip(args[1] as RenderObject),
         'debugFillProperties#1': (args) { (args[0] as RenderStack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderStack).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderStack).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderStack).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderStack).getMinIntrinsicHeight(args[1] as double),
@@ -137,6 +138,7 @@ abstract final class RenderStackBindings {
         'textDirection#0': (args) => (args[0] as RenderStack).textDirection,
         'fit#0': (args) => (args[0] as RenderStack).fit,
         'clipBehavior#0': (args) => (args[0] as RenderStack).clipBehavior,
+        'hashCode#0': (args) => (args[0] as RenderStack).hashCode,
         'hasSize#0': (args) => (args[0] as RenderStack).hasSize,
         'size#0': (args) => (args[0] as RenderStack).size,
         'semanticBounds#0': (args) => (args[0] as RenderStack).semanticBounds,
@@ -178,6 +180,7 @@ abstract final class RenderStackBindings {
         'parentData=#1': (args) { (args[0] as RenderStack).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderStack).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderStack).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderStack) == (args[1] as Object),
         '#5': (args) => RenderStack(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as TextDirection?, fit: identical(args[3], darticAbsent) ? StackFit.loose : args[3] as StackFit, clipBehavior: identical(args[4], darticAbsent) ? Clip.hardEdge : args[4] as Clip),
       };
 }

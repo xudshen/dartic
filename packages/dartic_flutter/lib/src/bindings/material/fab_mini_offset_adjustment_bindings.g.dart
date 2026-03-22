@@ -26,8 +26,11 @@ abstract final class FabMiniOffsetAdjustmentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isMini#0': (args) => (args[0] as FabMiniOffsetAdjustment).isMini(),
+        'toString#0': (args) => (args[0] as FabMiniOffsetAdjustment).toString(),
         'getOffsetX#2': (args) => (args[0] as FabMiniOffsetAdjustment).getOffsetX(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
         'getOffsetY#2': (args) => (args[0] as FabMiniOffsetAdjustment).getOffsetY(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
         'getOffset#1': (args) => (args[0] as FabMiniOffsetAdjustment).getOffset(args[1] as ScaffoldPrelayoutGeometry),
+        'hashCode#0': (args) => (args[0] as FabMiniOffsetAdjustment).hashCode,
+        '==#1': (args) => (args[0] as FabMiniOffsetAdjustment) == (args[1] as Object),
       };
 }

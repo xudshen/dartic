@@ -40,6 +40,7 @@ abstract final class CompositedTransformTargetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as CompositedTransformTarget).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as CompositedTransformTarget).updateRenderObject(args[1] as BuildContext, args[2] as RenderLeaderLayer); return null; },
+        'toString#0': (args) => (args[0] as CompositedTransformTarget).toString(),
         'createElement#0': (args) => (args[0] as CompositedTransformTarget).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as CompositedTransformTarget).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as CompositedTransformTarget).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class CompositedTransformTargetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CompositedTransformTarget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CompositedTransformTarget).debugDescribeChildren(),
         'link#0': (args) => (args[0] as CompositedTransformTarget).link,
+        'hashCode#0': (args) => (args[0] as CompositedTransformTarget).hashCode,
         'child#0': (args) => (args[0] as CompositedTransformTarget).child,
         'key#0': (args) => (args[0] as CompositedTransformTarget).key,
+        '==#1': (args) => (args[0] as CompositedTransformTarget) == (args[1] as Object),
         '#3': (args) => CompositedTransformTarget(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, link: args[1] as LayerLink, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => CompositedTransformTarget(key: args[1] as Key?, link: args[2] as LayerLink, child: args[0] as Widget?),
       };

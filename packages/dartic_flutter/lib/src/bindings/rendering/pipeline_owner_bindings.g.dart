@@ -47,6 +47,7 @@ abstract final class PipelineOwnerBindings {
         'dropChild#1': (args) { (args[0] as PipelineOwner).dropChild(args[1] as PipelineOwner); return null; },
         'visitChildren#1': (args) { (args[0] as PipelineOwner).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'dispose#0': (args) { (args[0] as PipelineOwner).dispose(); return null; },
+        'toString#0': (args) => (args[0] as PipelineOwner).toString(),
         'toStringShallow#2': (args) => (args[0] as PipelineOwner).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as PipelineOwner).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toStringShort#0': (args) => (args[0] as PipelineOwner).toStringShort(),
@@ -62,7 +63,9 @@ abstract final class PipelineOwnerBindings {
         'debugDoingPaint#0': (args) => (args[0] as PipelineOwner).debugDoingPaint,
         'semanticsOwner#0': (args) => (args[0] as PipelineOwner).semanticsOwner,
         'debugOutstandingSemanticsHandles#0': (args) => (args[0] as PipelineOwner).debugOutstandingSemanticsHandles,
+        'hashCode#0': (args) => (args[0] as PipelineOwner).hashCode,
         'rootNode=#1': (args) { (args[0] as PipelineOwner).rootNode = args[1] as RenderObject?; return args[1]; },
+        '==#1': (args) => (args[0] as PipelineOwner) == (args[1] as Object),
         '#4': (args) => PipelineOwner(onNeedVisualUpdate: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!(), onSemanticsOwnerCreated: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onSemanticsUpdate: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onSemanticsOwnerDisposed: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
       };
 }

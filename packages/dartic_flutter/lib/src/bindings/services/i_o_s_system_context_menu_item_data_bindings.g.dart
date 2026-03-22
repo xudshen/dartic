@@ -33,7 +33,9 @@ abstract final class IOSSystemContextMenuItemDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemData).toString(),
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemData).title,
         'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemData).hashCode,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemData) == (args[1] as Object),
       };
 }

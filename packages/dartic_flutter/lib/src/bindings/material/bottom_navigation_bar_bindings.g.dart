@@ -45,6 +45,7 @@ abstract final class BottomNavigationBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BottomNavigationBar).createState(),
+        'toString#0': (args) => (args[0] as BottomNavigationBar).toString(),
         'createElement#0': (args) => (args[0] as BottomNavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomNavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomNavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -74,7 +75,9 @@ abstract final class BottomNavigationBarBindings {
         'enableFeedback#0': (args) => (args[0] as BottomNavigationBar).enableFeedback,
         'landscapeLayout#0': (args) => (args[0] as BottomNavigationBar).landscapeLayout,
         'useLegacyColorScheme#0': (args) => (args[0] as BottomNavigationBar).useLegacyColorScheme,
+        'hashCode#0': (args) => (args[0] as BottomNavigationBar).hashCode,
         'key#0': (args) => (args[0] as BottomNavigationBar).key,
+        '==#1': (args) => (args[0] as BottomNavigationBar) == (args[1] as Object),
         '#23': (args) => BottomNavigationBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, items: (args[1] as List).cast<BottomNavigationBarItem>(), onTap: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), currentIndex: identical(args[3], darticAbsent) ? 0 : args[3] as int, elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, type: identical(args[5], darticAbsent) ? null : args[5] as BottomNavigationBarType?, fixedColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, backgroundColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, iconSize: identical(args[8], darticAbsent) ? 24.0 : args[8] as double, selectedItemColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, unselectedItemColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, selectedIconTheme: identical(args[11], darticAbsent) ? null : args[11] as IconThemeData?, unselectedIconTheme: identical(args[12], darticAbsent) ? null : args[12] as IconThemeData?, selectedFontSize: identical(args[13], darticAbsent) ? 14.0 : args[13] as double, unselectedFontSize: identical(args[14], darticAbsent) ? 12.0 : args[14] as double, selectedLabelStyle: identical(args[15], darticAbsent) ? null : args[15] as TextStyle?, unselectedLabelStyle: identical(args[16], darticAbsent) ? null : args[16] as TextStyle?, showSelectedLabels: identical(args[17], darticAbsent) ? null : args[17] as bool?, showUnselectedLabels: identical(args[18], darticAbsent) ? null : args[18] as bool?, mouseCursor: identical(args[19], darticAbsent) ? null : args[19] as MouseCursor?, enableFeedback: identical(args[20], darticAbsent) ? null : args[20] as bool?, landscapeLayout: identical(args[21], darticAbsent) ? null : args[21] as BottomNavigationBarLandscapeLayout?, useLegacyColorScheme: identical(args[22], darticAbsent) ? true : args[22] as bool),
       };
 }

@@ -30,10 +30,13 @@ abstract final class TwoDimensionalChildDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#2': (args) => (args[0] as TwoDimensionalChildDelegate).build(args[1] as BuildContext, args[2] as ChildVicinity),
         'shouldRebuild#1': (args) => (args[0] as TwoDimensionalChildDelegate).shouldRebuild(args[1] as TwoDimensionalChildDelegate),
+        'toString#0': (args) => (args[0] as TwoDimensionalChildDelegate).toString(),
         'addListener#1': (args) { (args[0] as TwoDimensionalChildDelegate).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as TwoDimensionalChildDelegate).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as TwoDimensionalChildDelegate).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as TwoDimensionalChildDelegate).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as TwoDimensionalChildDelegate).hashCode,
         'hasListeners#0': (args) => (args[0] as TwoDimensionalChildDelegate).hasListeners,
+        '==#1': (args) => (args[0] as TwoDimensionalChildDelegate) == (args[1] as Object),
       };
 }

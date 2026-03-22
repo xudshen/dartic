@@ -37,6 +37,7 @@ abstract final class TapGestureRecognizerBindings {
         'handleTapUp#2': (args) { (args[0] as TapGestureRecognizer).handleTapUp(down: args[1] as PointerDownEvent, up: args[2] as PointerUpEvent); return null; },
         'handleTapMove#1': (args) { (args[0] as TapGestureRecognizer).handleTapMove(move: args[1] as PointerMoveEvent); return null; },
         'handleTapCancel#3': (args) { (args[0] as TapGestureRecognizer).handleTapCancel(down: args[1] as PointerDownEvent, cancel: identical(args[2], darticAbsent) ? null : args[2] as PointerCancelEvent?, reason: args[3] as String); return null; },
+        'toString#0': (args) => (args[0] as TapGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as TapGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'startTrackingPointer#2': (args) { (args[0] as TapGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
         'handlePrimaryPointer#1': (args) { (args[0] as TapGestureRecognizer).handlePrimaryPointer(args[1] as PointerEvent); return null; },
@@ -78,6 +79,7 @@ abstract final class TapGestureRecognizerBindings {
         'onTertiaryTapUp#0': (args) => (args[0] as TapGestureRecognizer).onTertiaryTapUp,
         'onTertiaryTapCancel#0': (args) => (args[0] as TapGestureRecognizer).onTertiaryTapCancel,
         'debugDescription#0': (args) => (args[0] as TapGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as TapGestureRecognizer).hashCode,
         'deadline#0': (args) => (args[0] as TapGestureRecognizer).deadline,
         'preAcceptSlopTolerance#0': (args) => (args[0] as TapGestureRecognizer).preAcceptSlopTolerance,
         'postAcceptSlopTolerance#0': (args) => (args[0] as TapGestureRecognizer).postAcceptSlopTolerance,
@@ -104,6 +106,7 @@ abstract final class TapGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as TapGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as TapGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as TapGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as TapGestureRecognizer) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[2], darticAbsent)) {
             return TapGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), preAcceptSlopTolerance: identical(args[3], darticAbsent) ? null : args[3] as double?, postAcceptSlopTolerance: identical(args[4], darticAbsent) ? null : args[4] as double?);

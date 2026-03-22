@@ -34,5 +34,7 @@ abstract final class AssetBundleBindings {
         'evict#1': (args) { (args[0] as AssetBundle).evict(args[1] as String); return null; },
         'clear#0': (args) { (args[0] as AssetBundle).clear(); return null; },
         'toString#0': (args) => (args[0] as AssetBundle).toString(),
+        'hashCode#0': (args) => (args[0] as AssetBundle).hashCode,
+        '==#1': (args) => (args[0] as AssetBundle) == (args[1] as Object),
       };
 }

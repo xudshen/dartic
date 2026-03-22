@@ -26,8 +26,11 @@ abstract final class DesktopTextSelectionToolbarLayoutDelegateBindings {
         'getConstraintsForChild#1': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).getConstraintsForChild(args[1] as BoxConstraints),
         'getPositionForChild#2': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).getPositionForChild(args[1] as Size, args[2] as Size),
         'shouldRelayout#1': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).shouldRelayout(args[1] as DesktopTextSelectionToolbarLayoutDelegate),
+        'toString#0': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).toString(),
         'getSize#1': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).getSize(args[1] as BoxConstraints),
         'anchor#0': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).anchor,
+        'hashCode#0': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate).hashCode,
+        '==#1': (args) => (args[0] as DesktopTextSelectionToolbarLayoutDelegate) == (args[1] as Object),
         '#1': (args) => DesktopTextSelectionToolbarLayoutDelegate(anchor: args[0] as Offset),
       };
 }

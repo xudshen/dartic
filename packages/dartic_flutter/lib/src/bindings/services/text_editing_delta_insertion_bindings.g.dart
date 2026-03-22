@@ -27,13 +27,16 @@ abstract final class TextEditingDeltaInsertionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaInsertion).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaInsertion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TextEditingDeltaInsertion).toString(),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaInsertion).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaInsertion).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'textInserted#0': (args) => (args[0] as TextEditingDeltaInsertion).textInserted,
         'insertionOffset#0': (args) => (args[0] as TextEditingDeltaInsertion).insertionOffset,
+        'hashCode#0': (args) => (args[0] as TextEditingDeltaInsertion).hashCode,
         'oldText#0': (args) => (args[0] as TextEditingDeltaInsertion).oldText,
         'selection#0': (args) => (args[0] as TextEditingDeltaInsertion).selection,
         'composing#0': (args) => (args[0] as TextEditingDeltaInsertion).composing,
+        '==#1': (args) => (args[0] as TextEditingDeltaInsertion) == (args[1] as Object),
         '#5': (args) => TextEditingDeltaInsertion(oldText: args[0] as String, textInserted: args[1] as String, insertionOffset: args[2] as int, selection: args[3] as TextSelection, composing: args[4] as TextRange),
         '_#fromFields#5': (args) => TextEditingDeltaInsertion(oldText: args[2] as String, textInserted: args[4] as String, insertionOffset: args[1] as int, selection: args[3] as TextSelection, composing: args[0] as TextRange),
       };

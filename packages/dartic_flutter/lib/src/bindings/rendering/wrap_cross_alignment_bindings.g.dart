@@ -30,6 +30,9 @@ abstract final class WrapCrossAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WrapCrossAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as WrapCrossAlignment).hashCode,
         'index#0': (args) => (args[0] as WrapCrossAlignment).index,
+        '==#1': (args) => (args[0] as WrapCrossAlignment) == (args[1] as Object),
       };
 }

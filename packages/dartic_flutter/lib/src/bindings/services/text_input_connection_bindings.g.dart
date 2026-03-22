@@ -45,7 +45,10 @@ abstract final class TextInputConnectionBindings {
         'setStyle#5': (args) { (args[0] as TextInputConnection).setStyle(fontFamily: args[1] as String?, fontSize: args[2] as double?, fontWeight: args[3] as FontWeight?, textDirection: args[4] as TextDirection, textAlign: args[5] as TextAlign); return null; },
         'close#0': (args) { (args[0] as TextInputConnection).close(); return null; },
         'connectionClosedReceived#0': (args) { (args[0] as TextInputConnection).connectionClosedReceived(); return null; },
+        'toString#0': (args) => (args[0] as TextInputConnection).toString(),
         'attached#0': (args) => (args[0] as TextInputConnection).attached,
         'scribbleInProgress#0': (args) => (args[0] as TextInputConnection).scribbleInProgress,
+        'hashCode#0': (args) => (args[0] as TextInputConnection).hashCode,
+        '==#1': (args) => (args[0] as TextInputConnection) == (args[1] as Object),
       };
 }

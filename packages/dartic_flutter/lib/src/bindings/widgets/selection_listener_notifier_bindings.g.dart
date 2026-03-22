@@ -47,11 +47,14 @@ abstract final class SelectionListenerNotifierBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as SelectionListenerNotifier).dispose(); return null; },
         'addListener#1': (args) { (args[0] as SelectionListenerNotifier).addListener(() => (args[1] as Function)()); return null; },
+        'toString#0': (args) => (args[0] as SelectionListenerNotifier).toString(),
         'removeListener#1': (args) { (args[0] as SelectionListenerNotifier).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as SelectionListenerNotifier).notifyListeners(); return null; },
         'selection#0': (args) => (args[0] as SelectionListenerNotifier).selection,
         'registered#0': (args) => (args[0] as SelectionListenerNotifier).registered,
+        'hashCode#0': (args) => (args[0] as SelectionListenerNotifier).hashCode,
         'hasListeners#0': (args) => (args[0] as SelectionListenerNotifier).hasListeners,
+        '==#1': (args) => (args[0] as SelectionListenerNotifier) == (args[1] as Object),
         '#0': (args) => SelectionListenerNotifier(),
       };
 }

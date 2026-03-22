@@ -30,6 +30,7 @@ abstract final class TwoDimensionalChildListDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#2': (args) => (args[0] as TwoDimensionalChildListDelegate).build(args[1] as BuildContext, args[2] as ChildVicinity),
         'shouldRebuild#1': (args) => (args[0] as TwoDimensionalChildListDelegate).shouldRebuild(args[1] as TwoDimensionalChildListDelegate),
+        'toString#0': (args) => (args[0] as TwoDimensionalChildListDelegate).toString(),
         'addListener#1': (args) { (args[0] as TwoDimensionalChildListDelegate).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as TwoDimensionalChildListDelegate).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as TwoDimensionalChildListDelegate).dispose(); return null; },
@@ -37,7 +38,9 @@ abstract final class TwoDimensionalChildListDelegateBindings {
         'children#0': (args) => (args[0] as TwoDimensionalChildListDelegate).children,
         'addRepaintBoundaries#0': (args) => (args[0] as TwoDimensionalChildListDelegate).addRepaintBoundaries,
         'addAutomaticKeepAlives#0': (args) => (args[0] as TwoDimensionalChildListDelegate).addAutomaticKeepAlives,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalChildListDelegate).hashCode,
         'hasListeners#0': (args) => (args[0] as TwoDimensionalChildListDelegate).hasListeners,
+        '==#1': (args) => (args[0] as TwoDimensionalChildListDelegate) == (args[1] as Object),
         '#3': (args) => TwoDimensionalChildListDelegate(addRepaintBoundaries: identical(args[0], darticAbsent) ? true : args[0] as bool, addAutomaticKeepAlives: identical(args[1], darticAbsent) ? true : args[1] as bool, children: (args[2] as List).cast<List<Widget>>()),
       };
 }

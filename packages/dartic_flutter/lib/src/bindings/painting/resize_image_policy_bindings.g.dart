@@ -33,6 +33,9 @@ abstract final class ResizeImagePolicyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ResizeImagePolicy).toString(),
+        'hashCode#0': (args) => (args[0] as ResizeImagePolicy).hashCode,
         'index#0': (args) => (args[0] as ResizeImagePolicy).index,
+        '==#1': (args) => (args[0] as ResizeImagePolicy) == (args[1] as Object),
       };
 }

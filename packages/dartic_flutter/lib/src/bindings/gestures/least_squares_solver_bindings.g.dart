@@ -22,9 +22,12 @@ abstract final class LeastSquaresSolverBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'solve#1': (args) => (args[0] as LeastSquaresSolver).solve(args[1] as int),
+        'toString#0': (args) => (args[0] as LeastSquaresSolver).toString(),
         'x#0': (args) => (args[0] as LeastSquaresSolver).x,
         'y#0': (args) => (args[0] as LeastSquaresSolver).y,
         'w#0': (args) => (args[0] as LeastSquaresSolver).w,
+        'hashCode#0': (args) => (args[0] as LeastSquaresSolver).hashCode,
+        '==#1': (args) => (args[0] as LeastSquaresSolver) == (args[1] as Object),
         '#3': (args) => LeastSquaresSolver((args[0] as List).cast<double>(), (args[1] as List).cast<double>(), (args[2] as List).cast<double>()),
       };
 }

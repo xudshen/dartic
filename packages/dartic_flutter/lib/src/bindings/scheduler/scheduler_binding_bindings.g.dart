@@ -59,6 +59,7 @@ abstract final class SchedulerBindingBindings {
         'requestPerformanceMode#1': (args) => (args[0] as SchedulerBinding).requestPerformanceMode(args[1] as DartPerformanceMode),
         'debugGetRequestedPerformanceMode#0': (args) => (args[0] as SchedulerBinding).debugGetRequestedPerformanceMode(),
         'handleDrawFrame#0': (args) { (args[0] as SchedulerBinding).handleDrawFrame(); return null; },
+        'toString#0': (args) => (args[0] as SchedulerBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as SchedulerBinding).debugCheckZone(args[1] as String),
         'lockEvents#1': (args) => (args[0] as SchedulerBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
         'reassembleApplication#0': (args) => (args[0] as SchedulerBinding).reassembleApplication(),
@@ -78,9 +79,11 @@ abstract final class SchedulerBindingBindings {
         'framesEnabled#0': (args) => (args[0] as SchedulerBinding).framesEnabled,
         'currentFrameTimeStamp#0': (args) => (args[0] as SchedulerBinding).currentFrameTimeStamp,
         'currentSystemFrameTimeStamp#0': (args) => (args[0] as SchedulerBinding).currentSystemFrameTimeStamp,
+        'hashCode#0': (args) => (args[0] as SchedulerBinding).hashCode,
         'window#0': (args) => (args[0] as SchedulerBinding).window,
         'platformDispatcher#0': (args) => (args[0] as SchedulerBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as SchedulerBinding).locked,
         'schedulingStrategy=#1': (args) { (args[0] as SchedulerBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
+        '==#1': (args) => (args[0] as SchedulerBinding) == (args[1] as Object),
       };
 }

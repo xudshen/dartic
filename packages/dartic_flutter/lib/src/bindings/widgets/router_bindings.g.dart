@@ -39,6 +39,7 @@ abstract final class RouterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Router).createState(),
+        'toString#0': (args) => (args[0] as Router).toString(),
         'createElement#0': (args) => (args[0] as Router).createElement(),
         'toStringShort#0': (args) => (args[0] as Router).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Router).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class RouterBindings {
         'routerDelegate#0': (args) => (args[0] as Router).routerDelegate,
         'backButtonDispatcher#0': (args) => (args[0] as Router).backButtonDispatcher,
         'restorationScopeId#0': (args) => (args[0] as Router).restorationScopeId,
+        'hashCode#0': (args) => (args[0] as Router).hashCode,
         'key#0': (args) => (args[0] as Router).key,
+        '==#1': (args) => (args[0] as Router) == (args[1] as Object),
         '#6': (args) => Router<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, routeInformationProvider: identical(args[1], darticAbsent) ? null : args[1] as RouteInformationProvider?, routeInformationParser: identical(args[2], darticAbsent) ? null : args[2] as RouteInformationParser?, routerDelegate: args[3] as RouterDelegate, backButtonDispatcher: identical(args[4], darticAbsent) ? null : args[4] as BackButtonDispatcher?, restorationScopeId: identical(args[5], darticAbsent) ? null : args[5] as String?),
         'withConfig#3': (args) => Router<dynamic>.withConfig(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, config: args[1] as RouterConfig, restorationScopeId: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#6': (args) => Router<dynamic>(key: args[1] as Key?, routeInformationProvider: args[4] as RouteInformationProvider?, routeInformationParser: args[3] as RouteInformationParser?, routerDelegate: args[5] as RouterDelegate, backButtonDispatcher: args[0] as BackButtonDispatcher?, restorationScopeId: args[2] as String?),

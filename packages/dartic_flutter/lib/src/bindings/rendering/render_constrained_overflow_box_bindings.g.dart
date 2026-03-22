@@ -47,6 +47,7 @@ abstract final class RenderConstrainedOverflowBoxBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderConstrainedOverflowBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderConstrainedOverflowBox).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstrainedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderConstrainedOverflowBox).toString(),
         'alignChild#0': (args) { (args[0] as RenderConstrainedOverflowBox).alignChild(); return null; },
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedOverflowBox).computeMinIntrinsicWidth(args[1] as double),
         'computeMaxIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedOverflowBox).computeMaxIntrinsicWidth(args[1] as double),
@@ -127,6 +128,7 @@ abstract final class RenderConstrainedOverflowBoxBindings {
         'maxHeight#0': (args) => (args[0] as RenderConstrainedOverflowBox).maxHeight,
         'fit#0': (args) => (args[0] as RenderConstrainedOverflowBox).fit,
         'sizedByParent#0': (args) => (args[0] as RenderConstrainedOverflowBox).sizedByParent,
+        'hashCode#0': (args) => (args[0] as RenderConstrainedOverflowBox).hashCode,
         'resolvedAlignment#0': (args) => (args[0] as RenderConstrainedOverflowBox).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderConstrainedOverflowBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderConstrainedOverflowBox).textDirection,
@@ -172,6 +174,7 @@ abstract final class RenderConstrainedOverflowBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderConstrainedOverflowBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderConstrainedOverflowBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderConstrainedOverflowBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderConstrainedOverflowBox) == (args[1] as Object),
         '#8': (args) => RenderConstrainedOverflowBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, minWidth: identical(args[1], darticAbsent) ? null : args[1] as double?, maxWidth: identical(args[2], darticAbsent) ? null : args[2] as double?, minHeight: identical(args[3], darticAbsent) ? null : args[3] as double?, maxHeight: identical(args[4], darticAbsent) ? null : args[4] as double?, fit: identical(args[5], darticAbsent) ? OverflowBoxFit.max : args[5] as OverflowBoxFit, alignment: identical(args[6], darticAbsent) ? Alignment.center : args[6] as AlignmentGeometry, textDirection: identical(args[7], darticAbsent) ? null : args[7] as TextDirection?),
       };
 }

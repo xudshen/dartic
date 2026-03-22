@@ -28,6 +28,7 @@ abstract final class ExpensiveAndroidViewControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'setOffset#1': (args) => (args[0] as ExpensiveAndroidViewController).setOffset(args[1] as Offset),
+        'toString#0': (args) => (args[0] as ExpensiveAndroidViewController).toString(),
         'create#2': (args) => (args[0] as ExpensiveAndroidViewController).create(size: identical(args[1], darticAbsent) ? null : args[1] as Size?, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),
         'setSize#1': (args) => (args[0] as ExpensiveAndroidViewController).setSize(args[1] as Size),
         'sendMotionEvent#1': (args) => (args[0] as ExpensiveAndroidViewController).sendMotionEvent(args[1] as AndroidMotionEvent),
@@ -39,11 +40,13 @@ abstract final class ExpensiveAndroidViewControllerBindings {
         'dispose#0': (args) => (args[0] as ExpensiveAndroidViewController).dispose(),
         'textureId#0': (args) => (args[0] as ExpensiveAndroidViewController).textureId,
         'requiresViewComposition#0': (args) => (args[0] as ExpensiveAndroidViewController).requiresViewComposition,
+        'hashCode#0': (args) => (args[0] as ExpensiveAndroidViewController).hashCode,
         'viewId#0': (args) => (args[0] as ExpensiveAndroidViewController).viewId,
         'awaitingCreation#0': (args) => (args[0] as ExpensiveAndroidViewController).awaitingCreation,
         'pointTransformer#0': (args) => (args[0] as ExpensiveAndroidViewController).pointTransformer,
         'isCreated#0': (args) => (args[0] as ExpensiveAndroidViewController).isCreated,
         'createdCallbacks#0': (args) => (args[0] as ExpensiveAndroidViewController).createdCallbacks,
         'pointTransformer=#1': (args) { (args[0] as ExpensiveAndroidViewController).pointTransformer = args[1] as PointTransformer; return args[1]; },
+        '==#1': (args) => (args[0] as ExpensiveAndroidViewController) == (args[1] as Object),
       };
 }

@@ -24,5 +24,8 @@ abstract final class AnimationEagerListenerMixinBindings {
         'didRegisterListener#0': (args) { (args[0] as AnimationEagerListenerMixin).didRegisterListener(); return null; },
         'didUnregisterListener#0': (args) { (args[0] as AnimationEagerListenerMixin).didUnregisterListener(); return null; },
         'dispose#0': (args) { (args[0] as AnimationEagerListenerMixin).dispose(); return null; },
+        'toString#0': (args) => (args[0] as AnimationEagerListenerMixin).toString(),
+        'hashCode#0': (args) => (args[0] as AnimationEagerListenerMixin).hashCode,
+        '==#1': (args) => (args[0] as AnimationEagerListenerMixin) == (args[1] as Object),
       };
 }

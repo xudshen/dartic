@@ -44,6 +44,7 @@ abstract final class RenderRepaintBoundaryBindings {
         'debugResetMetrics#0': (args) { (args[0] as RenderRepaintBoundary).debugResetMetrics(); return null; },
         'debugRegisterRepaintBoundaryPaint#2': (args) { (args[0] as RenderRepaintBoundary).debugRegisterRepaintBoundaryPaint(includedParent: identical(args[1], darticAbsent) ? true : args[1] as bool, includedChild: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderRepaintBoundary).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderRepaintBoundary).toString(),
         'setupParentData#1': (args) { (args[0] as RenderRepaintBoundary).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderRepaintBoundary).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderRepaintBoundary).computeMinIntrinsicWidth(args[1] as double),
@@ -123,6 +124,7 @@ abstract final class RenderRepaintBoundaryBindings {
         'isRepaintBoundary#0': (args) => (args[0] as RenderRepaintBoundary).isRepaintBoundary,
         'debugSymmetricPaintCount#0': (args) => (args[0] as RenderRepaintBoundary).debugSymmetricPaintCount,
         'debugAsymmetricPaintCount#0': (args) => (args[0] as RenderRepaintBoundary).debugAsymmetricPaintCount,
+        'hashCode#0': (args) => (args[0] as RenderRepaintBoundary).hashCode,
         'hasSize#0': (args) => (args[0] as RenderRepaintBoundary).hasSize,
         'size#0': (args) => (args[0] as RenderRepaintBoundary).size,
         'semanticBounds#0': (args) => (args[0] as RenderRepaintBoundary).semanticBounds,
@@ -158,6 +160,7 @@ abstract final class RenderRepaintBoundaryBindings {
         'debugCreator=#1': (args) { (args[0] as RenderRepaintBoundary).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderRepaintBoundary).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderRepaintBoundary).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderRepaintBoundary) == (args[1] as Object),
         '#1': (args) => RenderRepaintBoundary(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

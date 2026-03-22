@@ -26,9 +26,12 @@ abstract final class SelectedContentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as SelectedContent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SelectedContent).toString(),
         'toStringShort#0': (args) => (args[0] as SelectedContent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SelectedContent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'plainText#0': (args) => (args[0] as SelectedContent).plainText,
+        'hashCode#0': (args) => (args[0] as SelectedContent).hashCode,
+        '==#1': (args) => (args[0] as SelectedContent) == (args[1] as Object),
         '#1': (args) => SelectedContent(plainText: args[0] as String),
         '_#fromFields#1': (args) => SelectedContent(plainText: args[0] as String),
       };

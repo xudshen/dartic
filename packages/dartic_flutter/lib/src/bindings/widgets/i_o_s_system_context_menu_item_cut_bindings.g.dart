@@ -31,7 +31,10 @@ abstract final class IOSSystemContextMenuItemCutBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getData#1': (args) => (args[0] as IOSSystemContextMenuItemCut).getData(args[1] as WidgetsLocalizations),
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemCut).toString(),
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemCut).hashCode,
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemCut).title,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemCut) == (args[1] as Object),
         '#0': (args) => IOSSystemContextMenuItemCut(),
         '_#fromFields#0': (args) => IOSSystemContextMenuItemCut(),
       };

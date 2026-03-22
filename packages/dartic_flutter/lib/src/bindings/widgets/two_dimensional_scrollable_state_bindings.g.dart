@@ -52,6 +52,7 @@ abstract final class TwoDimensionalScrollableStateBindings {
         'didUpdateWidget#1': (args) { (args[0] as TwoDimensionalScrollableState).didUpdateWidget(args[1] as TwoDimensionalScrollable); return null; },
         'build#1': (args) => (args[0] as TwoDimensionalScrollableState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as TwoDimensionalScrollableState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as TwoDimensionalScrollableState).toString(),
         'reassemble#0': (args) { (args[0] as TwoDimensionalScrollableState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as TwoDimensionalScrollableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as TwoDimensionalScrollableState).deactivate(); return null; },
@@ -62,9 +63,11 @@ abstract final class TwoDimensionalScrollableStateBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as TwoDimensionalScrollableState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'verticalScrollable#0': (args) => (args[0] as TwoDimensionalScrollableState).verticalScrollable,
         'horizontalScrollable#0': (args) => (args[0] as TwoDimensionalScrollableState).horizontalScrollable,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalScrollableState).hashCode,
         'widget#0': (args) => (args[0] as TwoDimensionalScrollableState).widget,
         'context#0': (args) => (args[0] as TwoDimensionalScrollableState).context,
         'mounted#0': (args) => (args[0] as TwoDimensionalScrollableState).mounted,
+        '==#1': (args) => (args[0] as TwoDimensionalScrollableState) == (args[1] as Object),
         '#0': (args) => TwoDimensionalScrollableState(),
       };
 }

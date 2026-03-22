@@ -23,8 +23,11 @@ abstract final class FittedSizesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FittedSizes).toString(),
         'source#0': (args) => (args[0] as FittedSizes).source,
         'destination#0': (args) => (args[0] as FittedSizes).destination,
+        'hashCode#0': (args) => (args[0] as FittedSizes).hashCode,
+        '==#1': (args) => (args[0] as FittedSizes) == (args[1] as Object),
         '#2': (args) => FittedSizes(args[0] as Size, args[1] as Size),
         '_#fromFields#2': (args) => FittedSizes(args[1] as Size, args[0] as Size),
       };

@@ -30,6 +30,7 @@ abstract final class CupertinoFormRowBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoFormRow).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoFormRow).toString(),
         'createElement#0': (args) => (args[0] as CupertinoFormRow).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoFormRow).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoFormRow).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class CupertinoFormRowBindings {
         'helper#0': (args) => (args[0] as CupertinoFormRow).helper,
         'error#0': (args) => (args[0] as CupertinoFormRow).error,
         'child#0': (args) => (args[0] as CupertinoFormRow).child,
+        'hashCode#0': (args) => (args[0] as CupertinoFormRow).hashCode,
         'key#0': (args) => (args[0] as CupertinoFormRow).key,
+        '==#1': (args) => (args[0] as CupertinoFormRow) == (args[1] as Object),
         '#6': (args) => CupertinoFormRow(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, prefix: identical(args[2], darticAbsent) ? null : args[2] as Widget?, padding: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, helper: identical(args[4], darticAbsent) ? null : args[4] as Widget?, error: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => CupertinoFormRow(key: args[3] as Key?, child: args[0] as Widget, prefix: args[5] as Widget?, padding: args[4] as EdgeInsetsGeometry?, helper: args[2] as Widget?, error: args[1] as Widget?),
       };

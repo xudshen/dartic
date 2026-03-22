@@ -42,6 +42,7 @@ abstract final class WrapBindings {
         'createRenderObject#1': (args) => (args[0] as Wrap).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Wrap).updateRenderObject(args[1] as BuildContext, args[2] as RenderWrap); return null; },
         'debugFillProperties#1': (args) { (args[0] as Wrap).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Wrap).toString(),
         'createElement#0': (args) => (args[0] as Wrap).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Wrap).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Wrap).toStringShort(),
@@ -58,8 +59,10 @@ abstract final class WrapBindings {
         'textDirection#0': (args) => (args[0] as Wrap).textDirection,
         'verticalDirection#0': (args) => (args[0] as Wrap).verticalDirection,
         'clipBehavior#0': (args) => (args[0] as Wrap).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Wrap).hashCode,
         'children#0': (args) => (args[0] as Wrap).children,
         'key#0': (args) => (args[0] as Wrap).key,
+        '==#1': (args) => (args[0] as Wrap) == (args[1] as Object),
         '#11': (args) => Wrap(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, direction: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, alignment: identical(args[2], darticAbsent) ? WrapAlignment.start : args[2] as WrapAlignment, spacing: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, runAlignment: identical(args[4], darticAbsent) ? WrapAlignment.start : args[4] as WrapAlignment, runSpacing: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, crossAxisAlignment: identical(args[6], darticAbsent) ? WrapCrossAlignment.start : args[6] as WrapCrossAlignment, textDirection: identical(args[7], darticAbsent) ? null : args[7] as ui.TextDirection?, verticalDirection: identical(args[8], darticAbsent) ? VerticalDirection.down : args[8] as VerticalDirection, clipBehavior: identical(args[9], darticAbsent) ? Clip.none : args[9] as ui.Clip, children: identical(args[10], darticAbsent) ? const <Widget>[] : (args[10] as List).cast<Widget>()),
         '_#fromFields#11': (args) => Wrap(key: args[5] as Key?, direction: args[4] as Axis, alignment: args[0] as WrapAlignment, spacing: args[8] as double, runAlignment: args[6] as WrapAlignment, runSpacing: args[7] as double, crossAxisAlignment: args[3] as WrapCrossAlignment, textDirection: args[9] as ui.TextDirection?, verticalDirection: args[10] as VerticalDirection, clipBehavior: args[2] as ui.Clip, children: (args[1] as List).cast<Widget>()),
       };

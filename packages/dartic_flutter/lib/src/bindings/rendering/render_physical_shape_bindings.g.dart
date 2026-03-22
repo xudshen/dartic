@@ -41,6 +41,7 @@ abstract final class RenderPhysicalShapeBindings {
         'hitTest#2': (args) => (args[0] as RenderPhysicalShape).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderPhysicalShape).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPhysicalShape).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderPhysicalShape).toString(),
         'attach#1': (args) { (args[0] as RenderPhysicalShape).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderPhysicalShape).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderPhysicalShape).performLayout(); return null; },
@@ -116,6 +117,7 @@ abstract final class RenderPhysicalShapeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderPhysicalShape).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderPhysicalShape).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderPhysicalShape).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderPhysicalShape).hashCode,
         'elevation#0': (args) => (args[0] as RenderPhysicalShape).elevation,
         'shadowColor#0': (args) => (args[0] as RenderPhysicalShape).shadowColor,
         'color#0': (args) => (args[0] as RenderPhysicalShape).color,
@@ -162,6 +164,7 @@ abstract final class RenderPhysicalShapeBindings {
         'debugCreator=#1': (args) { (args[0] as RenderPhysicalShape).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPhysicalShape).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderPhysicalShape).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPhysicalShape) == (args[1] as Object),
         '#6': (args) => RenderPhysicalShape(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, clipper: args[1] as CustomClipper<ui.Path>, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as ui.Clip, elevation: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, color: args[4] as ui.Color, shadowColor: identical(args[5], darticAbsent) ? const Color(0xFF000000) : args[5] as ui.Color),
       };
 }

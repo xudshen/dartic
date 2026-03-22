@@ -32,6 +32,7 @@ abstract final class OverlayPortalBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as OverlayPortal).createState(),
+        'toString#0': (args) => (args[0] as OverlayPortal).toString(),
         'createElement#0': (args) => (args[0] as OverlayPortal).createElement(),
         'toStringShort#0': (args) => (args[0] as OverlayPortal).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as OverlayPortal).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class OverlayPortalBindings {
         'overlayChildBuilder#0': (args) => (args[0] as OverlayPortal).overlayChildBuilder,
         'child#0': (args) => (args[0] as OverlayPortal).child,
         'overlayLocation#0': (args) => (args[0] as OverlayPortal).overlayLocation,
+        'hashCode#0': (args) => (args[0] as OverlayPortal).hashCode,
         'key#0': (args) => (args[0] as OverlayPortal).key,
+        '==#1': (args) => (args[0] as OverlayPortal) == (args[1] as Object),
         '#5': (args) => OverlayPortal(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as OverlayPortalController, overlayChildBuilder: (a) => (args[2] as Function)(a) as Widget, overlayLocation: identical(args[3], darticAbsent) ? OverlayChildLocation.nearestOverlay : args[3] as OverlayChildLocation, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         'targetsRootOverlay#4': (args) => OverlayPortal.targetsRootOverlay(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as OverlayPortalController, overlayChildBuilder: (a) => (args[2] as Function)(a) as Widget, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         'overlayChildLayoutBuilder#5': (args) => OverlayPortal.overlayChildLayoutBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as OverlayPortalController, overlayChildBuilder: (a, b) => (args[2] as Function)(a, b) as Widget, overlayLocation: identical(args[3], darticAbsent) ? OverlayChildLocation.nearestOverlay : args[3] as OverlayChildLocation, child: args[4] as Widget?),

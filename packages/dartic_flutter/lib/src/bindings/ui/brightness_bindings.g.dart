@@ -33,6 +33,9 @@ abstract final class BrightnessBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Brightness).toString(),
+        'hashCode#0': (args) => (args[0] as Brightness).hashCode,
         'index#0': (args) => (args[0] as Brightness).index,
+        '==#1': (args) => (args[0] as Brightness) == (args[1] as Object),
       };
 }

@@ -47,6 +47,7 @@ abstract final class ColorSwatchBindings {
         'green#0': (args) => (args[0] as ColorSwatch).green,
         'blue#0': (args) => (args[0] as ColorSwatch).blue,
         '[]#1': (args) => (args[0] as ColorSwatch)[(args[1])],
+        '==#1': (args) => (args[0] as ColorSwatch) == (args[1] as Object),
         '#2': (args) => ColorSwatch<dynamic>(args[0] as int, (args[1] as Map).cast<dynamic, Color>()),
         '_#fromFields#6': (args) => ColorSwatch<dynamic>(args[5] as int, (args[0] as Map).cast<dynamic, Color>()),
       };

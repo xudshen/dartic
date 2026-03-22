@@ -30,6 +30,7 @@ abstract final class ColorFilterLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as ColorFilterLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ColorFilterLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ColorFilterLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as ColorFilterLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ColorFilterLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ColorFilterLayer).dispose(); return null; },
@@ -57,6 +58,7 @@ abstract final class ColorFilterLayerBindings {
         'toStringDeep#4': (args) => (args[0] as ColorFilterLayer).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as ColorFilterLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'colorFilter#0': (args) => (args[0] as ColorFilterLayer).colorFilter,
+        'hashCode#0': (args) => (args[0] as ColorFilterLayer).hashCode,
         'firstChild#0': (args) => (args[0] as ColorFilterLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ColorFilterLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as ColorFilterLayer).hasChildren,
@@ -76,6 +78,7 @@ abstract final class ColorFilterLayerBindings {
         'colorFilter=#1': (args) { (args[0] as ColorFilterLayer).colorFilter = args[1] as ui.ColorFilter?; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as ColorFilterLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ColorFilterLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ColorFilterLayer) == (args[1] as Object),
         '#1': (args) => ColorFilterLayer(colorFilter: identical(args[0], darticAbsent) ? null : args[0] as ui.ColorFilter?),
       };
 }

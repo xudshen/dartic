@@ -48,6 +48,7 @@ abstract final class LocalHistoryRouteBindings {
         'removeLocalHistoryEntry#1': (args) { (args[0] as LocalHistoryRoute).removeLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; },
         'willPop#0': (args) => (args[0] as LocalHistoryRoute).willPop(),
         'didPop#1': (args) => (args[0] as LocalHistoryRoute).didPop(args[1]),
+        'toString#0': (args) => (args[0] as LocalHistoryRoute).toString(),
         'install#0': (args) { (args[0] as LocalHistoryRoute).install(); return null; },
         'didPush#0': (args) => (args[0] as LocalHistoryRoute).didPush(),
         'didAdd#0': (args) { (args[0] as LocalHistoryRoute).didAdd(); return null; },
@@ -63,6 +64,7 @@ abstract final class LocalHistoryRouteBindings {
         'dispose#0': (args) { (args[0] as LocalHistoryRoute).dispose(); return null; },
         'popDisposition#0': (args) => (args[0] as LocalHistoryRoute).popDisposition,
         'willHandlePopInternally#0': (args) => (args[0] as LocalHistoryRoute).willHandlePopInternally,
+        'hashCode#0': (args) => (args[0] as LocalHistoryRoute).hashCode,
         'requestFocus#0': (args) => (args[0] as LocalHistoryRoute).requestFocus,
         'navigator#0': (args) => (args[0] as LocalHistoryRoute).navigator,
         'settings#0': (args) => (args[0] as LocalHistoryRoute).settings,
@@ -74,5 +76,6 @@ abstract final class LocalHistoryRouteBindings {
         'isFirst#0': (args) => (args[0] as LocalHistoryRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as LocalHistoryRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as LocalHistoryRoute).isActive,
+        '==#1': (args) => (args[0] as LocalHistoryRoute) == (args[1] as Object),
       };
 }

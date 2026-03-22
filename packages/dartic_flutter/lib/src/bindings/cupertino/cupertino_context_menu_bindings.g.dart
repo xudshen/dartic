@@ -40,6 +40,7 @@ abstract final class CupertinoContextMenuBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoContextMenu).createState(),
+        'toString#0': (args) => (args[0] as CupertinoContextMenu).toString(),
         'createElement#0': (args) => (args[0] as CupertinoContextMenu).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoContextMenu).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoContextMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class CupertinoContextMenuBindings {
         'child#0': (args) => (args[0] as CupertinoContextMenu).child,
         'actions#0': (args) => (args[0] as CupertinoContextMenu).actions,
         'enableHapticFeedback#0': (args) => (args[0] as CupertinoContextMenu).enableHapticFeedback,
+        'hashCode#0': (args) => (args[0] as CupertinoContextMenu).hashCode,
         'key#0': (args) => (args[0] as CupertinoContextMenu).key,
+        '==#1': (args) => (args[0] as CupertinoContextMenu) == (args[1] as Object),
         '#4': (args) => CupertinoContextMenu(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, actions: (args[1] as List).cast<Widget>(), child: args[2] as Widget, enableHapticFeedback: identical(args[3], darticAbsent) ? false : args[3] as bool),
         'builder#4': (args) => CupertinoContextMenu.builder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, actions: (args[1] as List).cast<Widget>(), builder: (a, b) => (args[2] as Function)(a, b) as Widget, enableHapticFeedback: identical(args[3], darticAbsent) ? false : args[3] as bool),
       };

@@ -28,6 +28,7 @@ abstract final class DualTransitionBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DualTransitionBuilder).createState(),
+        'toString#0': (args) => (args[0] as DualTransitionBuilder).toString(),
         'createElement#0': (args) => (args[0] as DualTransitionBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as DualTransitionBuilder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DualTransitionBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,7 +40,9 @@ abstract final class DualTransitionBuilderBindings {
         'forwardBuilder#0': (args) => (args[0] as DualTransitionBuilder).forwardBuilder,
         'reverseBuilder#0': (args) => (args[0] as DualTransitionBuilder).reverseBuilder,
         'child#0': (args) => (args[0] as DualTransitionBuilder).child,
+        'hashCode#0': (args) => (args[0] as DualTransitionBuilder).hashCode,
         'key#0': (args) => (args[0] as DualTransitionBuilder).key,
+        '==#1': (args) => (args[0] as DualTransitionBuilder) == (args[1] as Object),
         '#5': (args) => DualTransitionBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animation: args[1] as Animation<double>, forwardBuilder: (a, b, c) => (args[2] as Function)(a, b, c) as Widget, reverseBuilder: (a, b, c) => (args[3] as Function)(a, b, c) as Widget, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#5': (args) => DualTransitionBuilder(key: args[3] as Key?, animation: args[0] as Animation<double>, forwardBuilder: args[2] as AnimatedTransitionBuilder, reverseBuilder: args[4] as AnimatedTransitionBuilder, child: args[1] as Widget?),
       };

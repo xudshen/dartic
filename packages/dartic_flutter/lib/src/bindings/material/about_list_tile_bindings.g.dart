@@ -50,6 +50,7 @@ abstract final class AboutListTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AboutListTile).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AboutListTile).toString(),
         'createElement#0': (args) => (args[0] as AboutListTile).createElement(),
         'toStringShort#0': (args) => (args[0] as AboutListTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AboutListTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -65,7 +66,9 @@ abstract final class AboutListTileBindings {
         'applicationLegalese#0': (args) => (args[0] as AboutListTile).applicationLegalese,
         'aboutBoxChildren#0': (args) => (args[0] as AboutListTile).aboutBoxChildren,
         'dense#0': (args) => (args[0] as AboutListTile).dense,
+        'hashCode#0': (args) => (args[0] as AboutListTile).hashCode,
         'key#0': (args) => (args[0] as AboutListTile).key,
+        '==#1': (args) => (args[0] as AboutListTile) == (args[1] as Object),
         '#9': (args) => AboutListTile(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, icon: identical(args[1], darticAbsent) ? null : args[1] as Widget?, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, applicationName: identical(args[3], darticAbsent) ? null : args[3] as String?, applicationVersion: identical(args[4], darticAbsent) ? null : args[4] as String?, applicationIcon: identical(args[5], darticAbsent) ? null : args[5] as Widget?, applicationLegalese: identical(args[6], darticAbsent) ? null : args[6] as String?, aboutBoxChildren: identical(args[7], darticAbsent) ? null : args[7] == null ? null : (args[7] as List).cast<Widget>(), dense: identical(args[8], darticAbsent) ? null : args[8] as bool?),
         '_#fromFields#9': (args) => AboutListTile(key: args[8] as Key?, icon: args[7] as Widget?, child: args[5] as Widget?, applicationName: args[3] as String?, applicationVersion: args[4] as String?, applicationIcon: args[1] as Widget?, applicationLegalese: args[2] as String?, aboutBoxChildren: args[0] == null ? null : (args[0] as List).cast<Widget>(), dense: args[6] as bool?),
       };

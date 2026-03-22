@@ -26,13 +26,16 @@ abstract final class ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent) == (args[1] as Object),
         '#1': (args) => ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent(forward: args[0] as bool),
         '_#fromFields#4': (args) => ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent(forward: args[3] as bool),
       };

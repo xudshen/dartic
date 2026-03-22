@@ -26,13 +26,16 @@ abstract final class ExtendSelectionToNextWordBoundaryIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionToNextWordBoundaryIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionToNextWordBoundaryIntent) == (args[1] as Object),
         '#2': (args) => ExtendSelectionToNextWordBoundaryIntent(forward: args[0] as bool, collapseSelection: args[1] as bool),
         '_#fromFields#4': (args) => ExtendSelectionToNextWordBoundaryIntent(forward: args[3] as bool, collapseSelection: args[1] as bool),
       };

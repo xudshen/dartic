@@ -43,6 +43,7 @@ abstract final class AnimatedGridBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedGrid).createState(),
+        'toString#0': (args) => (args[0] as AnimatedGrid).toString(),
         'createElement#0': (args) => (args[0] as AnimatedGrid).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedGrid).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedGrid).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,6 +52,7 @@ abstract final class AnimatedGridBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedGrid).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedGrid).debugDescribeChildren(),
         'gridDelegate#0': (args) => (args[0] as AnimatedGrid).gridDelegate,
+        'hashCode#0': (args) => (args[0] as AnimatedGrid).hashCode,
         'itemBuilder#0': (args) => (args[0] as AnimatedGrid).itemBuilder,
         'removedSeparatorBuilder#0': (args) => (args[0] as AnimatedGrid).removedSeparatorBuilder,
         'initialItemCount#0': (args) => (args[0] as AnimatedGrid).initialItemCount,
@@ -63,6 +65,7 @@ abstract final class AnimatedGridBindings {
         'padding#0': (args) => (args[0] as AnimatedGrid).padding,
         'clipBehavior#0': (args) => (args[0] as AnimatedGrid).clipBehavior,
         'key#0': (args) => (args[0] as AnimatedGrid).key,
+        '==#1': (args) => (args[0] as AnimatedGrid) == (args[1] as Object),
         '#11': (args) => AnimatedGrid(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, gridDelegate: args[2] as SliverGridDelegate, initialItemCount: identical(args[3], darticAbsent) ? 0 : args[3] as int, scrollDirection: identical(args[4], darticAbsent) ? Axis.vertical : args[4] as Axis, reverse: identical(args[5], darticAbsent) ? false : args[5] as bool, controller: identical(args[6], darticAbsent) ? null : args[6] as ScrollController?, primary: identical(args[7], darticAbsent) ? null : args[7] as bool?, physics: identical(args[8], darticAbsent) ? null : args[8] as ScrollPhysics?, padding: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, clipBehavior: identical(args[10], darticAbsent) ? Clip.hardEdge : args[10] as Clip),
         '_#fromFields#13': (args) => AnimatedGrid(key: args[5] as Key?, itemBuilder: args[4] as AnimatedItemBuilder, gridDelegate: args[2] as SliverGridDelegate, initialItemCount: args[3] as int, scrollDirection: args[11] as Axis, reverse: args[10] as bool, controller: args[1] as ScrollController?, primary: args[8] as bool?, physics: args[7] as ScrollPhysics?, padding: args[6] as EdgeInsetsGeometry?, clipBehavior: args[0] as Clip),
       };

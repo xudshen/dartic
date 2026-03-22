@@ -30,8 +30,12 @@ abstract final class GlobalKeyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as GlobalKey).toString(),
         'currentContext#0': (args) => (args[0] as GlobalKey).currentContext,
         'currentWidget#0': (args) => (args[0] as GlobalKey).currentWidget,
         'currentState#0': (args) => (args[0] as GlobalKey).currentState,
+        'hashCode#0': (args) => (args[0] as GlobalKey).hashCode,
+        '==#1': (args) => (args[0] as GlobalKey) == (args[1] as Object),
+        '#1': (args) => GlobalKey<State<StatefulWidget>>(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?),
       };
 }

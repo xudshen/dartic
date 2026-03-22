@@ -31,10 +31,13 @@ abstract final class ScrollContextBindings {
         'setCanDrag#1': (args) { (args[0] as ScrollContext).setCanDrag(args[1] as bool); return null; },
         'setSemanticsActions#1': (args) { (args[0] as ScrollContext).setSemanticsActions((args[1] as Set).cast<SemanticsAction>()); return null; },
         'saveOffset#1': (args) { (args[0] as ScrollContext).saveOffset(args[1] as double); return null; },
+        'toString#0': (args) => (args[0] as ScrollContext).toString(),
         'notificationContext#0': (args) => (args[0] as ScrollContext).notificationContext,
         'storageContext#0': (args) => (args[0] as ScrollContext).storageContext,
         'vsync#0': (args) => (args[0] as ScrollContext).vsync,
         'axisDirection#0': (args) => (args[0] as ScrollContext).axisDirection,
         'devicePixelRatio#0': (args) => (args[0] as ScrollContext).devicePixelRatio,
+        'hashCode#0': (args) => (args[0] as ScrollContext).hashCode,
+        '==#1': (args) => (args[0] as ScrollContext) == (args[1] as Object),
       };
 }

@@ -44,8 +44,11 @@ abstract final class PersistentBottomSheetControllerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PersistentBottomSheetController).toString(),
+        'hashCode#0': (args) => (args[0] as PersistentBottomSheetController).hashCode,
         'closed#0': (args) => (args[0] as PersistentBottomSheetController).closed,
         'close#0': (args) => (args[0] as PersistentBottomSheetController).close,
         'setState#0': (args) => (args[0] as PersistentBottomSheetController).setState,
+        '==#1': (args) => (args[0] as PersistentBottomSheetController) == (args[1] as Object),
       };
 }

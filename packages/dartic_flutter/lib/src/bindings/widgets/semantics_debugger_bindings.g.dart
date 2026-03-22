@@ -35,6 +35,7 @@ abstract final class SemanticsDebuggerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SemanticsDebugger).createState(),
+        'toString#0': (args) => (args[0] as SemanticsDebugger).toString(),
         'createElement#0': (args) => (args[0] as SemanticsDebugger).createElement(),
         'toStringShort#0': (args) => (args[0] as SemanticsDebugger).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SemanticsDebugger).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class SemanticsDebuggerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SemanticsDebugger).debugDescribeChildren(),
         'child#0': (args) => (args[0] as SemanticsDebugger).child,
         'labelStyle#0': (args) => (args[0] as SemanticsDebugger).labelStyle,
+        'hashCode#0': (args) => (args[0] as SemanticsDebugger).hashCode,
         'key#0': (args) => (args[0] as SemanticsDebugger).key,
+        '==#1': (args) => (args[0] as SemanticsDebugger) == (args[1] as Object),
         '#3': (args) => SemanticsDebugger(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, labelStyle: identical(args[2], darticAbsent) ? const TextStyle(color: Color(0xFF000000), fontSize: 10.0, height: 0.8) : args[2] as TextStyle),
         '_#fromFields#3': (args) => SemanticsDebugger(key: args[1] as Key?, child: args[0] as Widget, labelStyle: args[2] as TextStyle),
       };

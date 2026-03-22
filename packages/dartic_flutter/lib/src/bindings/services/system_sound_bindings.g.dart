@@ -21,5 +21,8 @@ abstract final class SystemSoundBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemSound).toString(),
+        'hashCode#0': (args) => (args[0] as SystemSound).hashCode,
+        '==#1': (args) => (args[0] as SystemSound) == (args[1] as Object),
       };
 }

@@ -45,5 +45,8 @@ abstract final class SystemChannelsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemChannels).toString(),
+        'hashCode#0': (args) => (args[0] as SystemChannels).hashCode,
+        '==#1': (args) => (args[0] as SystemChannels) == (args[1] as Object),
       };
 }

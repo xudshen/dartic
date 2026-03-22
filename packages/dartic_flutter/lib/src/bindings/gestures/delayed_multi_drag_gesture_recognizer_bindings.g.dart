@@ -35,6 +35,7 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as DelayedMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
+        'toString#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
@@ -56,6 +57,7 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).debugDescribeChildren(),
         'delay#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).delay,
         'debugDescription#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).hashCode,
         'onStart#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).onStart,
         'debugOwner#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as DelayedMultiDragGestureRecognizer).gestureSettings,
@@ -64,6 +66,13 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
         'onStart=#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as DelayedMultiDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
-        '#4': (args) => DelayedMultiDragGestureRecognizer(delay: identical(args[0], darticAbsent) ? kLongPressTimeout : args[0] as Duration, debugOwner: identical(args[1], darticAbsent) ? null : args[1], supportedDevices: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a)),
+        '==#1': (args) => (args[0] as DelayedMultiDragGestureRecognizer) == (args[1] as Object),
+        '#4': (args) {
+          if (identical(args[0], darticAbsent)) {
+            return DelayedMultiDragGestureRecognizer(debugOwner: identical(args[1], darticAbsent) ? null : args[1], supportedDevices: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a));
+          } else {
+            return DelayedMultiDragGestureRecognizer(delay: args[0] as Duration, debugOwner: identical(args[1], darticAbsent) ? null : args[1], supportedDevices: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a));
+          }
+        },
       };
 }

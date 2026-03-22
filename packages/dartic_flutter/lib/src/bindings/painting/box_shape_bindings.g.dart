@@ -28,6 +28,9 @@ abstract final class BoxShapeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BoxShape).toString(),
+        'hashCode#0': (args) => (args[0] as BoxShape).hashCode,
         'index#0': (args) => (args[0] as BoxShape).index,
+        '==#1': (args) => (args[0] as BoxShape) == (args[1] as Object),
       };
 }

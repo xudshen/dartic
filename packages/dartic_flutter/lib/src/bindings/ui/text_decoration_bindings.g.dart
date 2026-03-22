@@ -36,6 +36,7 @@ abstract final class TextDecorationBindings {
         'contains#1': (args) => (args[0] as TextDecoration).contains(args[1] as TextDecoration),
         'toString#0': (args) => (args[0] as TextDecoration).toString(),
         'hashCode#0': (args) => (args[0] as TextDecoration).hashCode,
+        '==#1': (args) => (args[0] as TextDecoration) == (args[1] as Object),
         'combine#1': (args) => TextDecoration.combine((args[0] as List).cast<TextDecoration>()),
       };
 }

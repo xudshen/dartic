@@ -36,5 +36,7 @@ abstract final class CustomPainterBindings {
         'hitTest#1': (args) => (args[0] as CustomPainter).hitTest(args[1] as Offset),
         'toString#0': (args) => (args[0] as CustomPainter).toString(),
         'semanticsBuilder#0': (args) => (args[0] as CustomPainter).semanticsBuilder,
+        'hashCode#0': (args) => (args[0] as CustomPainter).hashCode,
+        '==#1': (args) => (args[0] as CustomPainter) == (args[1] as Object),
       };
 }

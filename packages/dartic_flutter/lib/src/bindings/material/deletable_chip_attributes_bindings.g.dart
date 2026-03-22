@@ -40,10 +40,13 @@ abstract final class DeletableChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DeletableChipAttributes).toString(),
         'deleteIcon#0': (args) => (args[0] as DeletableChipAttributes).deleteIcon,
         'onDeleted#0': (args) => (args[0] as DeletableChipAttributes).onDeleted,
         'deleteIconColor#0': (args) => (args[0] as DeletableChipAttributes).deleteIconColor,
         'deleteButtonTooltipMessage#0': (args) => (args[0] as DeletableChipAttributes).deleteButtonTooltipMessage,
         'deleteIconBoxConstraints#0': (args) => (args[0] as DeletableChipAttributes).deleteIconBoxConstraints,
+        'hashCode#0': (args) => (args[0] as DeletableChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as DeletableChipAttributes) == (args[1] as Object),
       };
 }

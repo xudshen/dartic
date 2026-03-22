@@ -36,6 +36,7 @@ abstract final class RangeMaintainingScrollPhysicsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as RangeMaintainingScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'adjustPositionForNewDimensions#4': (args) => (args[0] as RangeMaintainingScrollPhysics).adjustPositionForNewDimensions(oldPosition: args[1] as ScrollMetrics, newPosition: args[2] as ScrollMetrics, isScrolling: args[3] as bool, velocity: args[4] as double),
+        'toString#0': (args) => (args[0] as RangeMaintainingScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as RangeMaintainingScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as RangeMaintainingScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as RangeMaintainingScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -44,6 +45,7 @@ abstract final class RangeMaintainingScrollPhysicsBindings {
         'createBallisticSimulation#2': (args) => (args[0] as RangeMaintainingScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
         'toleranceFor#1': (args) => (args[0] as RangeMaintainingScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as RangeMaintainingScrollPhysics).carriedMomentum(args[1] as double),
+        'hashCode#0': (args) => (args[0] as RangeMaintainingScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as RangeMaintainingScrollPhysics).parent,
         'spring#0': (args) => (args[0] as RangeMaintainingScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as RangeMaintainingScrollPhysics).tolerance,
@@ -53,6 +55,7 @@ abstract final class RangeMaintainingScrollPhysicsBindings {
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as RangeMaintainingScrollPhysics).dragStartDistanceMotionThreshold,
         'allowImplicitScrolling#0': (args) => (args[0] as RangeMaintainingScrollPhysics).allowImplicitScrolling,
         'allowUserScrolling#0': (args) => (args[0] as RangeMaintainingScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as RangeMaintainingScrollPhysics) == (args[1] as Object),
         '#1': (args) => RangeMaintainingScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => RangeMaintainingScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

@@ -45,6 +45,7 @@ abstract final class BorderBindings {
         'isUniform#0': (args) => (args[0] as Border).isUniform,
         'hashCode#0': (args) => (args[0] as Border).hashCode,
         'preferPaintInterior#0': (args) => (args[0] as Border).preferPaintInterior,
+        '==#1': (args) => (args[0] as Border) == (args[1] as Object),
         '+#1': (args) => (args[0] as Border) + (args[1] as ShapeBorder),
         '#4': (args) => Border(top: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, right: identical(args[1], darticAbsent) ? BorderSide.none : args[1] as BorderSide, bottom: identical(args[2], darticAbsent) ? BorderSide.none : args[2] as BorderSide, left: identical(args[3], darticAbsent) ? BorderSide.none : args[3] as BorderSide),
         'fromBorderSide#1': (args) => Border.fromBorderSide(args[0] as BorderSide),

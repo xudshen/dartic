@@ -26,6 +26,7 @@ abstract final class SelectionRegistrantBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as SelectionRegistrant).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SelectionRegistrant).toString(),
         'getTransformTo#1': (args) => (args[0] as SelectionRegistrant).getTransformTo(args[1] as RenderObject?),
         'pushHandleLayers#2': (args) { (args[0] as SelectionRegistrant).pushHandleLayers(args[1] as LayerLink?, args[2] as LayerLink?); return null; },
         'getSelectedContent#0': (args) => (args[0] as SelectionRegistrant).getSelectedContent(),
@@ -34,10 +35,12 @@ abstract final class SelectionRegistrantBindings {
         'addListener#1': (args) { (args[0] as SelectionRegistrant).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as SelectionRegistrant).removeListener(() => (args[1] as Function)()); return null; },
         'registrar#0': (args) => (args[0] as SelectionRegistrant).registrar,
+        'hashCode#0': (args) => (args[0] as SelectionRegistrant).hashCode,
         'size#0': (args) => (args[0] as SelectionRegistrant).size,
         'boundingBoxes#0': (args) => (args[0] as SelectionRegistrant).boundingBoxes,
         'contentLength#0': (args) => (args[0] as SelectionRegistrant).contentLength,
         'value#0': (args) => (args[0] as SelectionRegistrant).value,
         'registrar=#1': (args) { (args[0] as SelectionRegistrant).registrar = args[1] as SelectionRegistrar?; return args[1]; },
+        '==#1': (args) => (args[0] as SelectionRegistrant) == (args[1] as Object),
       };
 }

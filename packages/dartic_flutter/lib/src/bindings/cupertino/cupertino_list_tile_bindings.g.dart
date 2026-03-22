@@ -33,6 +33,7 @@ abstract final class CupertinoListTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoListTile).createState(),
+        'toString#0': (args) => (args[0] as CupertinoListTile).toString(),
         'createElement#0': (args) => (args[0] as CupertinoListTile).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoListTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoListTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class CupertinoListTileBindings {
         'padding#0': (args) => (args[0] as CupertinoListTile).padding,
         'leadingSize#0': (args) => (args[0] as CupertinoListTile).leadingSize,
         'leadingToTitle#0': (args) => (args[0] as CupertinoListTile).leadingToTitle,
+        'hashCode#0': (args) => (args[0] as CupertinoListTile).hashCode,
         'key#0': (args) => (args[0] as CupertinoListTile).key,
+        '==#1': (args) => (args[0] as CupertinoListTile) == (args[1] as Object),
         '#12': (args) {
           if (identical(args[10], darticAbsent)) {
             if (identical(args[11], darticAbsent)) {

@@ -46,6 +46,9 @@ abstract final class RoutePopDispositionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RoutePopDisposition).toString(),
+        'hashCode#0': (args) => (args[0] as RoutePopDisposition).hashCode,
         'index#0': (args) => (args[0] as RoutePopDisposition).index,
+        '==#1': (args) => (args[0] as RoutePopDisposition) == (args[1] as Object),
       };
 }

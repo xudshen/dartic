@@ -28,6 +28,7 @@ abstract final class PlaceholderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Placeholder).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Placeholder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Placeholder).toString(),
         'createElement#0': (args) => (args[0] as Placeholder).createElement(),
         'toStringShort#0': (args) => (args[0] as Placeholder).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Placeholder).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -39,7 +40,9 @@ abstract final class PlaceholderBindings {
         'fallbackWidth#0': (args) => (args[0] as Placeholder).fallbackWidth,
         'fallbackHeight#0': (args) => (args[0] as Placeholder).fallbackHeight,
         'child#0': (args) => (args[0] as Placeholder).child,
+        'hashCode#0': (args) => (args[0] as Placeholder).hashCode,
         'key#0': (args) => (args[0] as Placeholder).key,
+        '==#1': (args) => (args[0] as Placeholder) == (args[1] as Object),
         '#6': (args) => Placeholder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? const Color(0xFF455A64) : args[1] as Color, strokeWidth: identical(args[2], darticAbsent) ? 2.0 : args[2] as double, fallbackWidth: identical(args[3], darticAbsent) ? 400.0 : args[3] as double, fallbackHeight: identical(args[4], darticAbsent) ? 400.0 : args[4] as double, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => Placeholder(key: args[4] as Key?, color: args[1] as Color, strokeWidth: args[5] as double, fallbackWidth: args[3] as double, fallbackHeight: args[2] as double, child: args[0] as Widget?),
       };

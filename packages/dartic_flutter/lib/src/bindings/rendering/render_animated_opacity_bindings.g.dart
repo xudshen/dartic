@@ -39,6 +39,7 @@ abstract final class RenderAnimatedOpacityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderAnimatedOpacity).toString(),
         'setupParentData#1': (args) { (args[0] as RenderAnimatedOpacity).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedOpacity).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnimatedOpacity).computeMinIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderAnimatedOpacityBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderAnimatedOpacity).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderAnimatedOpacity).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderAnimatedOpacity).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderAnimatedOpacity).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAnimatedOpacity).hasSize,
         'size#0': (args) => (args[0] as RenderAnimatedOpacity).size,
         'semanticBounds#0': (args) => (args[0] as RenderAnimatedOpacity).semanticBounds,
@@ -157,6 +159,7 @@ abstract final class RenderAnimatedOpacityBindings {
         'child=#1': (args) { (args[0] as RenderAnimatedOpacity).child = args[1] as RenderBox?; return args[1]; },
         'opacity=#1': (args) { (args[0] as RenderAnimatedOpacity).opacity = args[1] as Animation<double>; return args[1]; },
         'alwaysIncludeSemantics=#1': (args) { (args[0] as RenderAnimatedOpacity).alwaysIncludeSemantics = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAnimatedOpacity) == (args[1] as Object),
         '#3': (args) => RenderAnimatedOpacity(opacity: args[0] as Animation<double>, alwaysIncludeSemantics: identical(args[1], darticAbsent) ? false : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

@@ -40,8 +40,11 @@ abstract final class ListWheelChildLoopingListDelegateBindings {
         'trueIndexOf#1': (args) => (args[0] as ListWheelChildLoopingListDelegate).trueIndexOf(args[1] as int),
         'build#2': (args) => (args[0] as ListWheelChildLoopingListDelegate).build(args[1] as BuildContext, args[2] as int),
         'shouldRebuild#1': (args) => (args[0] as ListWheelChildLoopingListDelegate).shouldRebuild(args[1] as ListWheelChildLoopingListDelegate),
+        'toString#0': (args) => (args[0] as ListWheelChildLoopingListDelegate).toString(),
         'children#0': (args) => (args[0] as ListWheelChildLoopingListDelegate).children,
         'estimatedChildCount#0': (args) => (args[0] as ListWheelChildLoopingListDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as ListWheelChildLoopingListDelegate).hashCode,
+        '==#1': (args) => (args[0] as ListWheelChildLoopingListDelegate) == (args[1] as Object),
         '#1': (args) => ListWheelChildLoopingListDelegate(children: (args[0] as List).cast<Widget>()),
       };
 }

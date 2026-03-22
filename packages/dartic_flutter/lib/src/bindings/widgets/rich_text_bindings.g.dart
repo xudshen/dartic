@@ -46,6 +46,7 @@ abstract final class RichTextBindings {
         'createRenderObject#1': (args) => (args[0] as RichText).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as RichText).updateRenderObject(args[1] as BuildContext, args[2] as RenderParagraph); return null; },
         'debugFillProperties#1': (args) { (args[0] as RichText).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RichText).toString(),
         'createElement#0': (args) => (args[0] as RichText).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as RichText).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as RichText).toStringShort(),
@@ -67,8 +68,10 @@ abstract final class RichTextBindings {
         'textHeightBehavior#0': (args) => (args[0] as RichText).textHeightBehavior,
         'selectionRegistrar#0': (args) => (args[0] as RichText).selectionRegistrar,
         'selectionColor#0': (args) => (args[0] as RichText).selectionColor,
+        'hashCode#0': (args) => (args[0] as RichText).hashCode,
         'children#0': (args) => (args[0] as RichText).children,
         'key#0': (args) => (args[0] as RichText).key,
+        '==#1': (args) => (args[0] as RichText) == (args[1] as Object),
         '#15': (args) => RichText(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, text: args[1] as InlineSpan, textAlign: identical(args[2], darticAbsent) ? TextAlign.start : args[2] as ui.TextAlign, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?, softWrap: identical(args[4], darticAbsent) ? true : args[4] as bool, overflow: identical(args[5], darticAbsent) ? TextOverflow.clip : args[5] as TextOverflow, textScaleFactor: identical(args[6], darticAbsent) ? 1.0 : args[6] as double, textScaler: identical(args[7], darticAbsent) ? TextScaler.noScaling : args[7] as TextScaler, maxLines: identical(args[8], darticAbsent) ? null : args[8] as int?, locale: identical(args[9], darticAbsent) ? null : args[9] as ui.Locale?, strutStyle: identical(args[10], darticAbsent) ? null : args[10] as StrutStyle?, textWidthBasis: identical(args[11], darticAbsent) ? TextWidthBasis.parent : args[11] as TextWidthBasis, textHeightBehavior: identical(args[12], darticAbsent) ? null : args[12] as ui.TextHeightBehavior?, selectionRegistrar: identical(args[13], darticAbsent) ? null : args[13] as SelectionRegistrar?, selectionColor: identical(args[14], darticAbsent) ? null : args[14] as ui.Color?),
       };
 }

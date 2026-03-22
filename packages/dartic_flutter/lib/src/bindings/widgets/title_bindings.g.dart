@@ -29,6 +29,7 @@ abstract final class TitleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Title).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Title).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Title).toString(),
         'createElement#0': (args) => (args[0] as Title).createElement(),
         'toStringShort#0': (args) => (args[0] as Title).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Title).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -38,7 +39,9 @@ abstract final class TitleBindings {
         'title#0': (args) => (args[0] as Title).title,
         'color#0': (args) => (args[0] as Title).color,
         'child#0': (args) => (args[0] as Title).child,
+        'hashCode#0': (args) => (args[0] as Title).hashCode,
         'key#0': (args) => (args[0] as Title).key,
+        '==#1': (args) => (args[0] as Title) == (args[1] as Object),
         '#4': (args) => Title(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? '' : args[1] as String, color: args[2] as Color, child: args[3] as Widget),
       };
 }

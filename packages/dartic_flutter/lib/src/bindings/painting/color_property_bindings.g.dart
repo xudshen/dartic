@@ -25,6 +25,7 @@ abstract final class ColorPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toJsonMap#1': (args) => (args[0] as ColorProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
+        'toString#0': (args) => (args[0] as ColorProperty).toString(),
         'valueToString#1': (args) => (args[0] as ColorProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as ColorProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as ColorProperty).getProperties(),
@@ -33,6 +34,7 @@ abstract final class ColorPropertyBindings {
         'toTimelineArguments#0': (args) => (args[0] as ColorProperty).toTimelineArguments(),
         'toJsonMapIterative#1': (args) => (args[0] as ColorProperty).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as ColorProperty).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
+        'hashCode#0': (args) => (args[0] as ColorProperty).hashCode,
         'expandableValue#0': (args) => (args[0] as ColorProperty).expandableValue,
         'allowWrap#0': (args) => (args[0] as ColorProperty).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as ColorProperty).allowNameWrap,
@@ -54,6 +56,7 @@ abstract final class ColorPropertyBindings {
         'style#0': (args) => (args[0] as ColorProperty).style,
         'allowTruncate#0': (args) => (args[0] as ColorProperty).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as ColorProperty).textTreeConfiguration,
+        '==#1': (args) => (args[0] as ColorProperty) == (args[1] as Object),
         '#6': (args) => ColorProperty(args[0] as String, args[1] as Color?, showName: identical(args[2], darticAbsent) ? true : args[2] as bool, defaultValue: identical(args[3], darticAbsent) ? null : args[3], style: identical(args[4], darticAbsent) ? DiagnosticsTreeStyle.singleLine : args[4] as DiagnosticsTreeStyle, level: identical(args[5], darticAbsent) ? DiagnosticLevel.info : args[5] as DiagnosticLevel),
       };
 }

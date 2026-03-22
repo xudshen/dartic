@@ -58,6 +58,8 @@ abstract final class PaintingContextBindings {
         'estimatedBounds#0': (args) => (args[0] as PaintingContext).estimatedBounds,
         'recorder#0': (args) => (args[0] as PaintingContext).recorder,
         'canvas#0': (args) => (args[0] as PaintingContext).canvas,
+        'hashCode#0': (args) => (args[0] as PaintingContext).hashCode,
+        '==#1': (args) => (args[0] as PaintingContext) == (args[1] as Object),
         '#2': (args) => PaintingContext(args[0] as ContainerLayer, args[1] as ui.Rect),
       };
 }

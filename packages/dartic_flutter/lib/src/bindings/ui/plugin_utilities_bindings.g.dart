@@ -31,5 +31,8 @@ abstract final class PluginUtilitiesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PluginUtilities).toString(),
+        'hashCode#0': (args) => (args[0] as PluginUtilities).hashCode,
+        '==#1': (args) => (args[0] as PluginUtilities) == (args[1] as Object),
       };
 }

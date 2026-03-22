@@ -30,7 +30,9 @@ abstract final class BoxParentDataBindings {
         'toString#0': (args) => (args[0] as BoxParentData).toString(),
         'detach#0': (args) { (args[0] as BoxParentData).detach(); return null; },
         'offset#0': (args) => (args[0] as BoxParentData).offset,
+        'hashCode#0': (args) => (args[0] as BoxParentData).hashCode,
         'offset=#1': (args) { (args[0] as BoxParentData).offset = args[1] as ui.Offset; return args[1]; },
+        '==#1': (args) => (args[0] as BoxParentData) == (args[1] as Object),
         '#0': (args) => BoxParentData(),
       };
 }

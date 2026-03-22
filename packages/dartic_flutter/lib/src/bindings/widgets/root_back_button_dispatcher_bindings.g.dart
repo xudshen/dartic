@@ -38,6 +38,7 @@ abstract final class RootBackButtonDispatcherBindings {
         'addCallback#1': (args) { (args[0] as RootBackButtonDispatcher).addCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'removeCallback#1': (args) { (args[0] as RootBackButtonDispatcher).removeCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'didPopRoute#0': (args) => (args[0] as RootBackButtonDispatcher).didPopRoute(),
+        'toString#0': (args) => (args[0] as RootBackButtonDispatcher).toString(),
         'invokeCallback#1': (args) => (args[0] as RootBackButtonDispatcher).invokeCallback(args[1] as Future<bool>),
         'createChildBackButtonDispatcher#0': (args) => (args[0] as RootBackButtonDispatcher).createChildBackButtonDispatcher(),
         'takePriority#0': (args) { (args[0] as RootBackButtonDispatcher).takePriority(); return null; },
@@ -58,7 +59,9 @@ abstract final class RootBackButtonDispatcherBindings {
         'didRequestAppExit#0': (args) => (args[0] as RootBackButtonDispatcher).didRequestAppExit(),
         'didHaveMemoryPressure#0': (args) { (args[0] as RootBackButtonDispatcher).didHaveMemoryPressure(); return null; },
         'didChangeAccessibilityFeatures#0': (args) { (args[0] as RootBackButtonDispatcher).didChangeAccessibilityFeatures(); return null; },
+        'hashCode#0': (args) => (args[0] as RootBackButtonDispatcher).hashCode,
         'hasCallbacks#0': (args) => (args[0] as RootBackButtonDispatcher).hasCallbacks,
+        '==#1': (args) => (args[0] as RootBackButtonDispatcher) == (args[1] as Object),
         '#0': (args) => RootBackButtonDispatcher(),
       };
 }

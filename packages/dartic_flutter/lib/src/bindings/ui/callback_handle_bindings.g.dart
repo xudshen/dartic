@@ -30,7 +30,9 @@ abstract final class CallbackHandleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toRawHandle#0': (args) => (args[0] as CallbackHandle).toRawHandle(),
+        'toString#0': (args) => (args[0] as CallbackHandle).toString(),
         'hashCode#0': (args) => (args[0] as CallbackHandle).hashCode,
+        '==#1': (args) => (args[0] as CallbackHandle) == (args[1] as Object),
         'fromRawHandle#1': (args) => CallbackHandle.fromRawHandle(args[0] as int),
       };
 }

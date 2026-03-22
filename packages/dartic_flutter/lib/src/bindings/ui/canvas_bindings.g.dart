@@ -68,5 +68,9 @@ abstract final class CanvasBindings {
         'drawAtlas#7': (args) { (args[0] as Canvas).drawAtlas(args[1] as Image, (args[2] as List).cast<RSTransform>(), (args[3] as List).cast<Rect>(), args[4] == null ? null : (args[4] as List).cast<Color>(), args[5] as BlendMode?, args[6] as Rect?, args[7] as Paint); return null; },
         'drawRawAtlas#7': (args) { (args[0] as Canvas).drawRawAtlas(args[1] as Image, args[2] as Float32List, args[3] as Float32List, args[4] as Int32List?, args[5] as BlendMode?, args[6] as Rect?, args[7] as Paint); return null; },
         'drawShadow#4': (args) { (args[0] as Canvas).drawShadow(args[1] as Path, args[2] as Color, args[3] as double, args[4] as bool); return null; },
+        'toString#0': (args) => (args[0] as Canvas).toString(),
+        'hashCode#0': (args) => (args[0] as Canvas).hashCode,
+        '==#1': (args) => (args[0] as Canvas) == (args[1] as Object),
+        '#2': (args) => Canvas(args[0] as PictureRecorder, identical(args[1], darticAbsent) ? null : args[1] as Rect?),
       };
 }

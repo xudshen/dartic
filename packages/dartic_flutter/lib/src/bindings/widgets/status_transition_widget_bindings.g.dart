@@ -29,6 +29,7 @@ abstract final class StatusTransitionWidgetBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as StatusTransitionWidget).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as StatusTransitionWidget).createState(),
+        'toString#0': (args) => (args[0] as StatusTransitionWidget).toString(),
         'createElement#0': (args) => (args[0] as StatusTransitionWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as StatusTransitionWidget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StatusTransitionWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,6 +38,8 @@ abstract final class StatusTransitionWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as StatusTransitionWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as StatusTransitionWidget).debugDescribeChildren(),
         'animation#0': (args) => (args[0] as StatusTransitionWidget).animation,
+        'hashCode#0': (args) => (args[0] as StatusTransitionWidget).hashCode,
         'key#0': (args) => (args[0] as StatusTransitionWidget).key,
+        '==#1': (args) => (args[0] as StatusTransitionWidget) == (args[1] as Object),
       };
 }

@@ -38,6 +38,7 @@ abstract final class ComponentElementBindings {
         'build#0': (args) => (args[0] as ComponentElement).build(),
         'visitChildren#1': (args) { (args[0] as ComponentElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as ComponentElement).forgetChild(args[1] as Element); return null; },
+        'toString#0': (args) => (args[0] as ComponentElement).toString(),
         'reassemble#0': (args) { (args[0] as ComponentElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as ComponentElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as ComponentElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
@@ -85,6 +86,7 @@ abstract final class ComponentElementBindings {
         'toStringDeep#4': (args) => (args[0] as ComponentElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'debugDoingBuild#0': (args) => (args[0] as ComponentElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as ComponentElement).renderObjectAttachingChild,
+        'hashCode#0': (args) => (args[0] as ComponentElement).hashCode,
         'slot#0': (args) => (args[0] as ComponentElement).slot,
         'depth#0': (args) => (args[0] as ComponentElement).depth,
         'widget#0': (args) => (args[0] as ComponentElement).widget,
@@ -96,5 +98,6 @@ abstract final class ComponentElementBindings {
         'renderObject#0': (args) => (args[0] as ComponentElement).renderObject,
         'size#0': (args) => (args[0] as ComponentElement).size,
         'dirty#0': (args) => (args[0] as ComponentElement).dirty,
+        '==#1': (args) => (args[0] as ComponentElement) == (args[1] as Object),
       };
 }

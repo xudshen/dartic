@@ -35,6 +35,7 @@ abstract final class DragTargetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DragTarget).createState(),
+        'toString#0': (args) => (args[0] as DragTarget).toString(),
         'createElement#0': (args) => (args[0] as DragTarget).createElement(),
         'toStringShort#0': (args) => (args[0] as DragTarget).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DragTarget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class DragTargetBindings {
         'onLeave#0': (args) => (args[0] as DragTarget).onLeave,
         'onMove#0': (args) => (args[0] as DragTarget).onMove,
         'hitTestBehavior#0': (args) => (args[0] as DragTarget).hitTestBehavior,
+        'hashCode#0': (args) => (args[0] as DragTarget).hashCode,
         'key#0': (args) => (args[0] as DragTarget).key,
+        '==#1': (args) => (args[0] as DragTarget) == (args[1] as Object),
         '#9': (args) => DragTarget<Object>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, onWillAccept: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onWillAcceptWithDetails: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onAccept: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onAcceptWithDetails: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onLeave: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onMove: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), hitTestBehavior: identical(args[8], darticAbsent) ? HitTestBehavior.translucent : args[8] as HitTestBehavior),
         '_#fromFields#9': (args) => DragTarget<Object>(key: args[2] as Key?, builder: args[0] as Widget Function(BuildContext, List, List<dynamic>), onWillAccept: args[7] as bool Function(Object?)?, onWillAcceptWithDetails: args[8] as bool Function(DragTargetDetails<Object>)?, onAccept: args[3] as void Function(Object)?, onAcceptWithDetails: args[4] as void Function(DragTargetDetails<Object>)?, onLeave: args[5] as void Function(Object?)?, onMove: args[6] as void Function(DragTargetDetails<Object>)?, hitTestBehavior: args[1] as HitTestBehavior),
       };

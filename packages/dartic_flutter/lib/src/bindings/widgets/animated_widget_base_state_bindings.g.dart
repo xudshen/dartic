@@ -39,6 +39,7 @@ abstract final class AnimatedWidgetBaseStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'initState#0': (args) { (args[0] as AnimatedWidgetBaseState).initState(); return null; },
+        'toString#0': (args) => (args[0] as AnimatedWidgetBaseState).toString(),
         'didUpdateWidget#1': (args) { (args[0] as AnimatedWidgetBaseState).didUpdateWidget(args[1] as ImplicitlyAnimatedWidget); return null; },
         'dispose#0': (args) { (args[0] as AnimatedWidgetBaseState).dispose(); return null; },
         'forEachTween#1': (args) { (args[0] as AnimatedWidgetBaseState).forEachTween((a, b, c) => (args[1] as Function)(a, b, c) as Tween<dynamic>?); return null; },
@@ -53,10 +54,12 @@ abstract final class AnimatedWidgetBaseStateBindings {
         'toStringShort#0': (args) => (args[0] as AnimatedWidgetBaseState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedWidgetBaseState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as AnimatedWidgetBaseState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as AnimatedWidgetBaseState).hashCode,
         'controller#0': (args) => (args[0] as AnimatedWidgetBaseState).controller,
         'animation#0': (args) => (args[0] as AnimatedWidgetBaseState).animation,
         'widget#0': (args) => (args[0] as AnimatedWidgetBaseState).widget,
         'context#0': (args) => (args[0] as AnimatedWidgetBaseState).context,
         'mounted#0': (args) => (args[0] as AnimatedWidgetBaseState).mounted,
+        '==#1': (args) => (args[0] as AnimatedWidgetBaseState) == (args[1] as Object),
       };
 }

@@ -37,6 +37,7 @@ abstract final class ProxyElementBindings {
         'update#1': (args) { (args[0] as ProxyElement).update(args[1] as ProxyWidget); return null; },
         'updated#1': (args) { (args[0] as ProxyElement).updated(args[1] as ProxyWidget); return null; },
         'notifyClients#1': (args) { (args[0] as ProxyElement).notifyClients(args[1] as ProxyWidget); return null; },
+        'toString#0': (args) => (args[0] as ProxyElement).toString(),
         'mount#2': (args) { (args[0] as ProxyElement).mount(args[1] as Element?, args[2]); return null; },
         'performRebuild#0': (args) { (args[0] as ProxyElement).performRebuild(); return null; },
         'visitChildren#1': (args) { (args[0] as ProxyElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
@@ -85,6 +86,7 @@ abstract final class ProxyElementBindings {
         'rebuild#1': (args) { (args[0] as ProxyElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as ProxyElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as ProxyElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as ProxyElement).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as ProxyElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as ProxyElement).renderObjectAttachingChild,
         'slot#0': (args) => (args[0] as ProxyElement).slot,
@@ -98,5 +100,6 @@ abstract final class ProxyElementBindings {
         'renderObject#0': (args) => (args[0] as ProxyElement).renderObject,
         'size#0': (args) => (args[0] as ProxyElement).size,
         'dirty#0': (args) => (args[0] as ProxyElement).dirty,
+        '==#1': (args) => (args[0] as ProxyElement) == (args[1] as Object),
       };
 }

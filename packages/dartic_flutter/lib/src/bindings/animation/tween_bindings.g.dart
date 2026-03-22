@@ -33,8 +33,10 @@ abstract final class TweenBindings {
         'chain#1': (args) => (args[0] as Tween).chain(args[1] as Animatable<double>),
         'begin#0': (args) => (args[0] as Tween).begin,
         'end#0': (args) => (args[0] as Tween).end,
+        'hashCode#0': (args) => (args[0] as Tween).hashCode,
         'begin=#1': (args) { (args[0] as Tween).begin = args[1]; return args[1]; },
         'end=#1': (args) { (args[0] as Tween).end = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as Tween) == (args[1] as Object),
         '#2': (args) => Tween<Object?>(begin: identical(args[0], darticAbsent) ? null : args[0], end: identical(args[1], darticAbsent) ? null : args[1]),
       };
 }

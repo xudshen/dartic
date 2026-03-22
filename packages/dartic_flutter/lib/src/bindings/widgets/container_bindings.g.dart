@@ -36,6 +36,7 @@ abstract final class ContainerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Container).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Container).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Container).toString(),
         'createElement#0': (args) => (args[0] as Container).createElement(),
         'toStringShort#0': (args) => (args[0] as Container).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Container).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -53,7 +54,9 @@ abstract final class ContainerBindings {
         'transform#0': (args) => (args[0] as Container).transform,
         'transformAlignment#0': (args) => (args[0] as Container).transformAlignment,
         'clipBehavior#0': (args) => (args[0] as Container).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Container).hashCode,
         'key#0': (args) => (args[0] as Container).key,
+        '==#1': (args) => (args[0] as Container) == (args[1] as Object),
         '#14': (args) => Container(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? null : args[1] as AlignmentGeometry?, padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, decoration: identical(args[4], darticAbsent) ? null : args[4] as Decoration?, foregroundDecoration: identical(args[5], darticAbsent) ? null : args[5] as Decoration?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, constraints: identical(args[8], darticAbsent) ? null : args[8] as BoxConstraints?, margin: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, transform: identical(args[10], darticAbsent) ? null : args[10] as Matrix4?, transformAlignment: identical(args[11], darticAbsent) ? null : args[11] as AlignmentGeometry?, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, clipBehavior: identical(args[13], darticAbsent) ? Clip.none : args[13] as Clip),
       };
 }

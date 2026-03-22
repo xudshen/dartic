@@ -31,6 +31,7 @@ abstract final class RestorableListenableBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'initWithValue#1': (args) { (args[0] as RestorableListenable).initWithValue(args[1] as Listenable); return null; },
         'dispose#0': (args) { (args[0] as RestorableListenable).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorableListenable).toString(),
         'createDefaultValue#0': (args) => (args[0] as RestorableListenable).createDefaultValue(),
         'fromPrimitives#1': (args) => (args[0] as RestorableListenable).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableListenable).toPrimitives(),
@@ -38,9 +39,11 @@ abstract final class RestorableListenableBindings {
         'removeListener#1': (args) { (args[0] as RestorableListenable).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableListenable).notifyListeners(); return null; },
         'value#0': (args) => (args[0] as RestorableListenable).value,
+        'hashCode#0': (args) => (args[0] as RestorableListenable).hashCode,
         'enabled#0': (args) => (args[0] as RestorableListenable).enabled,
         'state#0': (args) => (args[0] as RestorableListenable).state,
         'isRegistered#0': (args) => (args[0] as RestorableListenable).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableListenable).hasListeners,
+        '==#1': (args) => (args[0] as RestorableListenable) == (args[1] as Object),
       };
 }

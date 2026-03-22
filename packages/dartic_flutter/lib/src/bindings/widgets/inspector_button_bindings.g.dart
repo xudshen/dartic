@@ -45,6 +45,7 @@ abstract final class InspectorButtonBindings {
         'foregroundColor#1': (args) => (args[0] as InspectorButton).foregroundColor(args[1] as BuildContext),
         'backgroundColor#1': (args) => (args[0] as InspectorButton).backgroundColor(args[1] as BuildContext),
         'build#1': (args) => (args[0] as InspectorButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as InspectorButton).toString(),
         'createElement#0': (args) => (args[0] as InspectorButton).createElement(),
         'toStringShort#0': (args) => (args[0] as InspectorButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InspectorButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -59,6 +60,8 @@ abstract final class InspectorButtonBindings {
         'variant#0': (args) => (args[0] as InspectorButton).variant,
         'toggledOn#0': (args) => (args[0] as InspectorButton).toggledOn,
         'iconSizeForVariant#0': (args) => (args[0] as InspectorButton).iconSizeForVariant,
+        'hashCode#0': (args) => (args[0] as InspectorButton).hashCode,
         'key#0': (args) => (args[0] as InspectorButton).key,
+        '==#1': (args) => (args[0] as InspectorButton) == (args[1] as Object),
       };
 }

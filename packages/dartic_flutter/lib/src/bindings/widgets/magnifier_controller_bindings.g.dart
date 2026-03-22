@@ -35,10 +35,13 @@ abstract final class MagnifierControllerBindings {
         'show#4': (args) => (args[0] as MagnifierController).show(context: args[1] as BuildContext, builder: (a) => (args[2] as Function)(a) as Widget, debugRequiredFor: identical(args[3], darticAbsent) ? null : args[3] as Widget?, below: identical(args[4], darticAbsent) ? null : args[4] as OverlayEntry?),
         'hide#1': (args) => (args[0] as MagnifierController).hide(removeFromOverlay: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'removeFromOverlay#0': (args) { (args[0] as MagnifierController).removeFromOverlay(); return null; },
+        'toString#0': (args) => (args[0] as MagnifierController).toString(),
         'animationController#0': (args) => (args[0] as MagnifierController).animationController,
         'overlayEntry#0': (args) => (args[0] as MagnifierController).overlayEntry,
         'shown#0': (args) => (args[0] as MagnifierController).shown,
+        'hashCode#0': (args) => (args[0] as MagnifierController).hashCode,
         'animationController=#1': (args) { (args[0] as MagnifierController).animationController = args[1] as AnimationController?; return args[1]; },
+        '==#1': (args) => (args[0] as MagnifierController) == (args[1] as Object),
         '#1': (args) => MagnifierController(animationController: identical(args[0], darticAbsent) ? null : args[0] as AnimationController?),
       };
 }

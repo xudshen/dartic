@@ -31,6 +31,7 @@ abstract final class DrawerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as DrawerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as DrawerTheme).updateShouldNotify(args[1] as DrawerTheme),
+        'toString#0': (args) => (args[0] as DrawerTheme).toString(),
         'createElement#0': (args) => (args[0] as DrawerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DrawerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DrawerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class DrawerThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DrawerTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DrawerTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as DrawerTheme).data,
+        'hashCode#0': (args) => (args[0] as DrawerTheme).hashCode,
         'child#0': (args) => (args[0] as DrawerTheme).child,
         'key#0': (args) => (args[0] as DrawerTheme).key,
+        '==#1': (args) => (args[0] as DrawerTheme) == (args[1] as Object),
         '#3': (args) => DrawerTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as DrawerThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => DrawerTheme(key: args[2] as Key?, data: args[1] as DrawerThemeData, child: args[0] as Widget),
       };

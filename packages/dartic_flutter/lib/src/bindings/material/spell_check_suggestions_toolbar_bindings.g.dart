@@ -39,6 +39,7 @@ abstract final class SpellCheckSuggestionsToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SpellCheckSuggestionsToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).toString(),
         'createElement#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SpellCheckSuggestionsToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class SpellCheckSuggestionsToolbarBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).debugDescribeChildren(),
         'anchor#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).anchor,
         'buttonItems#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).buttonItems,
+        'hashCode#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).hashCode,
         'key#0': (args) => (args[0] as SpellCheckSuggestionsToolbar).key,
+        '==#1': (args) => (args[0] as SpellCheckSuggestionsToolbar) == (args[1] as Object),
         '#3': (args) => SpellCheckSuggestionsToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchor: args[1] as Offset, buttonItems: (args[2] as List).cast<ContextMenuButtonItem>()),
         'editableText#2': (args) => SpellCheckSuggestionsToolbar.editableText(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, editableTextState: args[1] as EditableTextState),
         '_#fromFields#3': (args) => SpellCheckSuggestionsToolbar(key: args[2] as Key?, anchor: args[0] as Offset, buttonItems: (args[1] as List).cast<ContextMenuButtonItem>()),

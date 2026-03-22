@@ -294,11 +294,13 @@ abstract final class PhysicalKeyboardKeyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as PhysicalKeyboardKey).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PhysicalKeyboardKey).toString(),
         'toStringShort#0': (args) => (args[0] as PhysicalKeyboardKey).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PhysicalKeyboardKey).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'usbHidUsage#0': (args) => (args[0] as PhysicalKeyboardKey).usbHidUsage,
         'debugName#0': (args) => (args[0] as PhysicalKeyboardKey).debugName,
         'hashCode#0': (args) => (args[0] as PhysicalKeyboardKey).hashCode,
+        '==#1': (args) => (args[0] as PhysicalKeyboardKey) == (args[1] as Object),
         '#1': (args) => PhysicalKeyboardKey(args[0] as int),
         '_#fromFields#1': (args) => PhysicalKeyboardKey(args[0] as int),
       };

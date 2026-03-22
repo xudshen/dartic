@@ -34,6 +34,7 @@ abstract final class CupertinoSliverRefreshControlBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSliverRefreshControl).createState(),
+        'toString#0': (args) => (args[0] as CupertinoSliverRefreshControl).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSliverRefreshControl).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSliverRefreshControl).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSliverRefreshControl).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class CupertinoSliverRefreshControlBindings {
         'refreshIndicatorExtent#0': (args) => (args[0] as CupertinoSliverRefreshControl).refreshIndicatorExtent,
         'builder#0': (args) => (args[0] as CupertinoSliverRefreshControl).builder,
         'onRefresh#0': (args) => (args[0] as CupertinoSliverRefreshControl).onRefresh,
+        'hashCode#0': (args) => (args[0] as CupertinoSliverRefreshControl).hashCode,
         'key#0': (args) => (args[0] as CupertinoSliverRefreshControl).key,
+        '==#1': (args) => (args[0] as CupertinoSliverRefreshControl) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[1], darticAbsent)) {
             if (identical(args[2], darticAbsent)) {

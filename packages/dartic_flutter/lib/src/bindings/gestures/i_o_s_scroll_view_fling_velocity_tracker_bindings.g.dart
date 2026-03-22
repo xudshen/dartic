@@ -27,8 +27,11 @@ abstract final class IOSScrollViewFlingVelocityTrackerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addPosition#2': (args) { (args[0] as IOSScrollViewFlingVelocityTracker).addPosition(args[1] as Duration, args[2] as Offset); return null; },
         'getVelocityEstimate#0': (args) => (args[0] as IOSScrollViewFlingVelocityTracker).getVelocityEstimate(),
+        'toString#0': (args) => (args[0] as IOSScrollViewFlingVelocityTracker).toString(),
         'getVelocity#0': (args) => (args[0] as IOSScrollViewFlingVelocityTracker).getVelocity(),
+        'hashCode#0': (args) => (args[0] as IOSScrollViewFlingVelocityTracker).hashCode,
         'kind#0': (args) => (args[0] as IOSScrollViewFlingVelocityTracker).kind,
+        '==#1': (args) => (args[0] as IOSScrollViewFlingVelocityTracker) == (args[1] as Object),
         '#1': (args) => IOSScrollViewFlingVelocityTracker(args[0] as PointerDeviceKind),
       };
 }

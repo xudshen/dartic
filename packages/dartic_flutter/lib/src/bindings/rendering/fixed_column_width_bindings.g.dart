@@ -32,6 +32,8 @@ abstract final class FixedColumnWidthBindings {
         'toString#0': (args) => (args[0] as FixedColumnWidth).toString(),
         'flex#1': (args) => (args[0] as FixedColumnWidth).flex((args[1] as Iterable).cast<RenderBox>()),
         'value#0': (args) => (args[0] as FixedColumnWidth).value,
+        'hashCode#0': (args) => (args[0] as FixedColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as FixedColumnWidth) == (args[1] as Object),
         '#1': (args) => FixedColumnWidth(args[0] as double),
         '_#fromFields#1': (args) => FixedColumnWidth(args[0] as double),
       };

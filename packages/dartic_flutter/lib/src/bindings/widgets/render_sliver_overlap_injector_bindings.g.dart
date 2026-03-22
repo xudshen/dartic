@@ -55,6 +55,7 @@ abstract final class RenderSliverOverlapInjectorBindings {
         'performLayout#0': (args) { (args[0] as RenderSliverOverlapInjector).performLayout(); return null; },
         'debugPaint#2': (args) { (args[0] as RenderSliverOverlapInjector).debugPaint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOverlapInjector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverOverlapInjector).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverOverlapInjector).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverOverlapInjector).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverOverlapInjector).performResize(); return null; },
@@ -111,6 +112,7 @@ abstract final class RenderSliverOverlapInjectorBindings {
         'describeForError#2': (args) => (args[0] as RenderSliverOverlapInjector).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverOverlapInjector).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'handle#0': (args) => (args[0] as RenderSliverOverlapInjector).handle,
+        'hashCode#0': (args) => (args[0] as RenderSliverOverlapInjector).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverOverlapInjector).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverOverlapInjector).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverOverlapInjector).geometry,
@@ -147,6 +149,7 @@ abstract final class RenderSliverOverlapInjectorBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverOverlapInjector).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverOverlapInjector).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverOverlapInjector).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverOverlapInjector) == (args[1] as Object),
         '#1': (args) => RenderSliverOverlapInjector(handle: args[0] as SliverOverlapAbsorberHandle),
       };
 }

@@ -30,6 +30,7 @@ abstract final class BottomNavigationBarThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as BottomNavigationBarTheme).updateShouldNotify(args[1] as BottomNavigationBarTheme),
+        'toString#0': (args) => (args[0] as BottomNavigationBarTheme).toString(),
         'createElement#0': (args) => (args[0] as BottomNavigationBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomNavigationBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomNavigationBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class BottomNavigationBarThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as BottomNavigationBarTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as BottomNavigationBarTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as BottomNavigationBarTheme).data,
+        'hashCode#0': (args) => (args[0] as BottomNavigationBarTheme).hashCode,
         'child#0': (args) => (args[0] as BottomNavigationBarTheme).child,
         'key#0': (args) => (args[0] as BottomNavigationBarTheme).key,
+        '==#1': (args) => (args[0] as BottomNavigationBarTheme) == (args[1] as Object),
         '#3': (args) => BottomNavigationBarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as BottomNavigationBarThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => BottomNavigationBarTheme(key: args[2] as Key?, data: args[1] as BottomNavigationBarThemeData, child: args[0] as Widget),
       };

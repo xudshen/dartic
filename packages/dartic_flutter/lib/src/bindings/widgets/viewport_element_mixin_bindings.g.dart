@@ -30,6 +30,7 @@ abstract final class ViewportElementMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onNotification#1': (args) => (args[0] as ViewportElementMixin).onNotification(args[1] as Notification),
+        'toString#0': (args) => (args[0] as ViewportElementMixin).toString(),
         'attachNotificationTree#0': (args) { (args[0] as ViewportElementMixin).attachNotificationTree(); return null; },
         'reassemble#0': (args) { (args[0] as ViewportElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as ViewportElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),
@@ -79,6 +80,7 @@ abstract final class ViewportElementMixinBindings {
         'performRebuild#0': (args) { (args[0] as ViewportElementMixin).performRebuild(); return null; },
         'toStringShallow#2': (args) => (args[0] as ViewportElementMixin).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as ViewportElementMixin).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as ViewportElementMixin).hashCode,
         'slot#0': (args) => (args[0] as ViewportElementMixin).slot,
         'depth#0': (args) => (args[0] as ViewportElementMixin).depth,
         'widget#0': (args) => (args[0] as ViewportElementMixin).widget,
@@ -92,5 +94,6 @@ abstract final class ViewportElementMixinBindings {
         'size#0': (args) => (args[0] as ViewportElementMixin).size,
         'dirty#0': (args) => (args[0] as ViewportElementMixin).dirty,
         'debugDoingBuild#0': (args) => (args[0] as ViewportElementMixin).debugDoingBuild,
+        '==#1': (args) => (args[0] as ViewportElementMixin) == (args[1] as Object),
       };
 }

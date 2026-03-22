@@ -48,6 +48,7 @@ abstract final class DraggableScrollableControllerBindings {
         'animateTo#3': (args) => (args[0] as DraggableScrollableController).animateTo(args[1] as double, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpTo#1': (args) { (args[0] as DraggableScrollableController).jumpTo(args[1] as double); return null; },
         'reset#0': (args) { (args[0] as DraggableScrollableController).reset(); return null; },
+        'toString#0': (args) => (args[0] as DraggableScrollableController).toString(),
         'addListener#1': (args) { (args[0] as DraggableScrollableController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as DraggableScrollableController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as DraggableScrollableController).dispose(); return null; },
@@ -55,7 +56,9 @@ abstract final class DraggableScrollableControllerBindings {
         'size#0': (args) => (args[0] as DraggableScrollableController).size,
         'pixels#0': (args) => (args[0] as DraggableScrollableController).pixels,
         'isAttached#0': (args) => (args[0] as DraggableScrollableController).isAttached,
+        'hashCode#0': (args) => (args[0] as DraggableScrollableController).hashCode,
         'hasListeners#0': (args) => (args[0] as DraggableScrollableController).hasListeners,
+        '==#1': (args) => (args[0] as DraggableScrollableController) == (args[1] as Object),
         '#0': (args) => DraggableScrollableController(),
       };
 }

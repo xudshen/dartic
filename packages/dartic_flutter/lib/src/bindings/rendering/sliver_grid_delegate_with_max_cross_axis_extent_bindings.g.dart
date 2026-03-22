@@ -28,11 +28,14 @@ abstract final class SliverGridDelegateWithMaxCrossAxisExtentBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getLayout#1': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).getLayout(args[1] as SliverConstraints),
         'shouldRelayout#1': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).shouldRelayout(args[1] as SliverGridDelegateWithMaxCrossAxisExtent),
+        'toString#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).toString(),
         'maxCrossAxisExtent#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).maxCrossAxisExtent,
         'mainAxisSpacing#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).mainAxisSpacing,
         'crossAxisSpacing#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).crossAxisSpacing,
         'childAspectRatio#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).childAspectRatio,
         'mainAxisExtent#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).mainAxisExtent,
+        'hashCode#0': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent).hashCode,
+        '==#1': (args) => (args[0] as SliverGridDelegateWithMaxCrossAxisExtent) == (args[1] as Object),
         '#5': (args) => SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: args[0] as double, mainAxisSpacing: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, crossAxisSpacing: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, childAspectRatio: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, mainAxisExtent: identical(args[4], darticAbsent) ? null : args[4] as double?),
         '_#fromFields#5': (args) => SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: args[4] as double, mainAxisSpacing: args[3] as double, crossAxisSpacing: args[1] as double, childAspectRatio: args[0] as double, mainAxisExtent: args[2] as double?),
       };

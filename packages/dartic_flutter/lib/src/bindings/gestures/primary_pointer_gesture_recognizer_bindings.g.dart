@@ -46,6 +46,7 @@ abstract final class PrimaryPointerGestureRecognizerBindings {
         'didStopTrackingLastPointer#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as PrimaryPointerGestureRecognizer).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).toString(),
         'resolve#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as PrimaryPointerGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
         'startTrackingPointer#2': (args) { (args[0] as PrimaryPointerGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
@@ -70,6 +71,7 @@ abstract final class PrimaryPointerGestureRecognizerBindings {
         'state#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).state,
         'primaryPointer#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).primaryPointer,
         'initialPosition#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).initialPosition,
+        'hashCode#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as PrimaryPointerGestureRecognizer).gestureSettings,
@@ -79,5 +81,6 @@ abstract final class PrimaryPointerGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as PrimaryPointerGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as PrimaryPointerGestureRecognizer) == (args[1] as Object),
       };
 }

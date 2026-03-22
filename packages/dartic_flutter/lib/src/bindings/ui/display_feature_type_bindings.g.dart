@@ -35,6 +35,9 @@ abstract final class DisplayFeatureTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DisplayFeatureType).toString(),
+        'hashCode#0': (args) => (args[0] as DisplayFeatureType).hashCode,
         'index#0': (args) => (args[0] as DisplayFeatureType).index,
+        '==#1': (args) => (args[0] as DisplayFeatureType) == (args[1] as Object),
       };
 }

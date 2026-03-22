@@ -34,6 +34,7 @@ abstract final class PrimaryScrollControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as PrimaryScrollController).updateShouldNotify(args[1] as PrimaryScrollController),
         'debugFillProperties#1': (args) { (args[0] as PrimaryScrollController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PrimaryScrollController).toString(),
         'createElement#0': (args) => (args[0] as PrimaryScrollController).createElement(),
         'toStringShort#0': (args) => (args[0] as PrimaryScrollController).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as PrimaryScrollController).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -43,8 +44,10 @@ abstract final class PrimaryScrollControllerBindings {
         'controller#0': (args) => (args[0] as PrimaryScrollController).controller,
         'scrollDirection#0': (args) => (args[0] as PrimaryScrollController).scrollDirection,
         'automaticallyInheritForPlatforms#0': (args) => (args[0] as PrimaryScrollController).automaticallyInheritForPlatforms,
+        'hashCode#0': (args) => (args[0] as PrimaryScrollController).hashCode,
         'child#0': (args) => (args[0] as PrimaryScrollController).child,
         'key#0': (args) => (args[0] as PrimaryScrollController).key,
+        '==#1': (args) => (args[0] as PrimaryScrollController) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[2], darticAbsent)) {
             return PrimaryScrollController(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as ScrollController, scrollDirection: identical(args[3], darticAbsent) ? null : args[3] as Axis?, child: args[4] as Widget);

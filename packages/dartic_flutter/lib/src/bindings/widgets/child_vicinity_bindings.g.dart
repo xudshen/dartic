@@ -33,6 +33,7 @@ abstract final class ChildVicinityBindings {
         'xIndex#0': (args) => (args[0] as ChildVicinity).xIndex,
         'yIndex#0': (args) => (args[0] as ChildVicinity).yIndex,
         'hashCode#0': (args) => (args[0] as ChildVicinity).hashCode,
+        '==#1': (args) => (args[0] as ChildVicinity) == (args[1] as Object),
         '#2': (args) => ChildVicinity(xIndex: args[0] as int, yIndex: args[1] as int),
         '_#fromFields#2': (args) => ChildVicinity(xIndex: args[0] as int, yIndex: args[1] as int),
       };

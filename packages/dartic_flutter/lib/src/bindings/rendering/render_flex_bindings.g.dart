@@ -56,6 +56,7 @@ abstract final class RenderFlexBindings {
         'describeApproximatePaintClip#1': (args) => (args[0] as RenderFlex).describeApproximatePaintClip(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as RenderFlex).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RenderFlex).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderFlex).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFlex).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderFlex).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderFlex).getMinIntrinsicHeight(args[1] as double),
@@ -141,6 +142,7 @@ abstract final class RenderFlexBindings {
         'textBaseline#0': (args) => (args[0] as RenderFlex).textBaseline,
         'clipBehavior#0': (args) => (args[0] as RenderFlex).clipBehavior,
         'spacing#0': (args) => (args[0] as RenderFlex).spacing,
+        'hashCode#0': (args) => (args[0] as RenderFlex).hashCode,
         'hasSize#0': (args) => (args[0] as RenderFlex).hasSize,
         'size#0': (args) => (args[0] as RenderFlex).size,
         'semanticBounds#0': (args) => (args[0] as RenderFlex).semanticBounds,
@@ -187,6 +189,7 @@ abstract final class RenderFlexBindings {
         'parentData=#1': (args) { (args[0] as RenderFlex).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderFlex).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderFlex).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderFlex) == (args[1] as Object),
         '#10': (args) => RenderFlex(children: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as List).cast<RenderBox>(), direction: identical(args[1], darticAbsent) ? Axis.horizontal : args[1] as Axis, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, mainAxisAlignment: identical(args[3], darticAbsent) ? MainAxisAlignment.start : args[3] as MainAxisAlignment, crossAxisAlignment: identical(args[4], darticAbsent) ? CrossAxisAlignment.center : args[4] as CrossAxisAlignment, textDirection: identical(args[5], darticAbsent) ? null : args[5] as TextDirection?, verticalDirection: identical(args[6], darticAbsent) ? VerticalDirection.down : args[6] as VerticalDirection, textBaseline: identical(args[7], darticAbsent) ? null : args[7] as TextBaseline?, clipBehavior: identical(args[8], darticAbsent) ? Clip.none : args[8] as Clip, spacing: identical(args[9], darticAbsent) ? 0.0 : args[9] as double),
       };
 }

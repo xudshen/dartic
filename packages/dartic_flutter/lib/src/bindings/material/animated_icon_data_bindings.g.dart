@@ -23,6 +23,9 @@ abstract final class AnimatedIconDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimatedIconData).toString(),
         'matchTextDirection#0': (args) => (args[0] as AnimatedIconData).matchTextDirection,
+        'hashCode#0': (args) => (args[0] as AnimatedIconData).hashCode,
+        '==#1': (args) => (args[0] as AnimatedIconData) == (args[1] as Object),
       };
 }

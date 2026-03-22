@@ -29,5 +29,7 @@ abstract final class SemanticsGestureDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'assignSemantics#1': (args) { (args[0] as SemanticsGestureDelegate).assignSemantics(args[1] as RenderSemanticsGestureHandler); return null; },
         'toString#0': (args) => (args[0] as SemanticsGestureDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as SemanticsGestureDelegate).hashCode,
+        '==#1': (args) => (args[0] as SemanticsGestureDelegate) == (args[1] as Object),
       };
 }

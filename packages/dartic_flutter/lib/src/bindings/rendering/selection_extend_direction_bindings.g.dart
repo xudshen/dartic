@@ -29,6 +29,9 @@ abstract final class SelectionExtendDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectionExtendDirection).toString(),
+        'hashCode#0': (args) => (args[0] as SelectionExtendDirection).hashCode,
         'index#0': (args) => (args[0] as SelectionExtendDirection).index,
+        '==#1': (args) => (args[0] as SelectionExtendDirection) == (args[1] as Object),
       };
 }

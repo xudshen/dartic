@@ -33,7 +33,9 @@ abstract final class MaterialSliceBindings {
         'toString#0': (args) => (args[0] as MaterialSlice).toString(),
         'child#0': (args) => (args[0] as MaterialSlice).child,
         'color#0': (args) => (args[0] as MaterialSlice).color,
+        'hashCode#0': (args) => (args[0] as MaterialSlice).hashCode,
         'key#0': (args) => (args[0] as MaterialSlice).key,
+        '==#1': (args) => (args[0] as MaterialSlice) == (args[1] as Object),
         '#3': (args) => MaterialSlice(key: args[0] as LocalKey, child: args[1] as Widget, color: identical(args[2], darticAbsent) ? null : args[2] as Color?),
         '_#fromFields#3': (args) => MaterialSlice(key: args[2] as LocalKey, child: args[0] as Widget, color: args[1] as Color?),
       };

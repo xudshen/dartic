@@ -25,9 +25,12 @@ abstract final class SelectParagraphSelectionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectParagraphSelectionEvent).toString(),
         'globalPosition#0': (args) => (args[0] as SelectParagraphSelectionEvent).globalPosition,
         'absorb#0': (args) => (args[0] as SelectParagraphSelectionEvent).absorb,
+        'hashCode#0': (args) => (args[0] as SelectParagraphSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as SelectParagraphSelectionEvent).type,
+        '==#1': (args) => (args[0] as SelectParagraphSelectionEvent) == (args[1] as Object),
         '#2': (args) => SelectParagraphSelectionEvent(globalPosition: args[0] as Offset, absorb: identical(args[1], darticAbsent) ? false : args[1] as bool),
         '_#fromFields#3': (args) => SelectParagraphSelectionEvent(globalPosition: args[1] as Offset, absorb: args[0] as bool),
       };

@@ -87,5 +87,8 @@ abstract final class AutofillHintsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AutofillHints).toString(),
+        'hashCode#0': (args) => (args[0] as AutofillHints).hashCode,
+        '==#1': (args) => (args[0] as AutofillHints) == (args[1] as Object),
       };
 }

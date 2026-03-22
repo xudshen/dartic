@@ -33,6 +33,9 @@ abstract final class CrossAxisAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CrossAxisAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as CrossAxisAlignment).hashCode,
         'index#0': (args) => (args[0] as CrossAxisAlignment).index,
+        '==#1': (args) => (args[0] as CrossAxisAlignment) == (args[1] as Object),
       };
 }

@@ -36,5 +36,8 @@ abstract final class InteractiveInkFeatureFactoryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'create#11': (args) => (args[0] as InteractiveInkFeatureFactory).create(controller: args[1] as MaterialInkController, referenceBox: args[2] as RenderBox, position: args[3] as Offset, color: args[4] as Color, textDirection: args[5] as TextDirection, containedInkWell: identical(args[6], darticAbsent) ? false : args[6] as bool, rectCallback: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!(), borderRadius: identical(args[8], darticAbsent) ? null : args[8] as BorderRadius?, customBorder: identical(args[9], darticAbsent) ? null : args[9] as ShapeBorder?, radius: identical(args[10], darticAbsent) ? null : args[10] as double?, onRemoved: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : () => (args[11] as Function?)!()),
+        'toString#0': (args) => (args[0] as InteractiveInkFeatureFactory).toString(),
+        'hashCode#0': (args) => (args[0] as InteractiveInkFeatureFactory).hashCode,
+        '==#1': (args) => (args[0] as InteractiveInkFeatureFactory) == (args[1] as Object),
       };
 }

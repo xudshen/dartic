@@ -31,6 +31,7 @@ abstract final class MenuButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as MenuButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as MenuButtonTheme).updateShouldNotify(args[1] as MenuButtonTheme),
+        'toString#0': (args) => (args[0] as MenuButtonTheme).toString(),
         'createElement#0': (args) => (args[0] as MenuButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class MenuButtonThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MenuButtonTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MenuButtonTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as MenuButtonTheme).data,
+        'hashCode#0': (args) => (args[0] as MenuButtonTheme).hashCode,
         'child#0': (args) => (args[0] as MenuButtonTheme).child,
         'key#0': (args) => (args[0] as MenuButtonTheme).key,
+        '==#1': (args) => (args[0] as MenuButtonTheme) == (args[1] as Object),
         '#3': (args) => MenuButtonTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as MenuButtonThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => MenuButtonTheme(key: args[2] as Key?, data: args[1] as MenuButtonThemeData, child: args[0] as Widget),
       };

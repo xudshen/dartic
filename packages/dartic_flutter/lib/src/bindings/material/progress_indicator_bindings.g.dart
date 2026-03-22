@@ -35,6 +35,7 @@ abstract final class ProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ProgressIndicator).toString(),
         'createElement#0': (args) => (args[0] as ProgressIndicator).createElement(),
         'createState#0': (args) => (args[0] as ProgressIndicator).createState(),
         'toStringShort#0': (args) => (args[0] as ProgressIndicator).toStringShort(),
@@ -48,6 +49,8 @@ abstract final class ProgressIndicatorBindings {
         'valueColor#0': (args) => (args[0] as ProgressIndicator).valueColor,
         'semanticsLabel#0': (args) => (args[0] as ProgressIndicator).semanticsLabel,
         'semanticsValue#0': (args) => (args[0] as ProgressIndicator).semanticsValue,
+        'hashCode#0': (args) => (args[0] as ProgressIndicator).hashCode,
         'key#0': (args) => (args[0] as ProgressIndicator).key,
+        '==#1': (args) => (args[0] as ProgressIndicator) == (args[1] as Object),
       };
 }

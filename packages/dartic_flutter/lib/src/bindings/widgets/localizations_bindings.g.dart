@@ -35,6 +35,7 @@ abstract final class LocalizationsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Localizations).createState(),
         'debugFillProperties#1': (args) { (args[0] as Localizations).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Localizations).toString(),
         'createElement#0': (args) => (args[0] as Localizations).createElement(),
         'toStringShort#0': (args) => (args[0] as Localizations).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Localizations).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -45,7 +46,9 @@ abstract final class LocalizationsBindings {
         'delegates#0': (args) => (args[0] as Localizations).delegates,
         'child#0': (args) => (args[0] as Localizations).child,
         'isApplicationLevel#0': (args) => (args[0] as Localizations).isApplicationLevel,
+        'hashCode#0': (args) => (args[0] as Localizations).hashCode,
         'key#0': (args) => (args[0] as Localizations).key,
+        '==#1': (args) => (args[0] as Localizations) == (args[1] as Object),
         '#5': (args) => Localizations(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, locale: args[1] as Locale, delegates: (args[2] as List).cast<LocalizationsDelegate<dynamic>>(), child: identical(args[3], darticAbsent) ? null : args[3] as Widget?, isApplicationLevel: identical(args[4], darticAbsent) ? false : args[4] as bool),
         'override#5': (args) => Localizations.override(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, context: args[1] as BuildContext, locale: identical(args[2], darticAbsent) ? null : args[2] as Locale?, delegates: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<LocalizationsDelegate<dynamic>>(), child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
       };

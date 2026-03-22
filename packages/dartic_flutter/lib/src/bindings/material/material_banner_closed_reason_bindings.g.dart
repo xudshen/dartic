@@ -34,6 +34,9 @@ abstract final class MaterialBannerClosedReasonBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MaterialBannerClosedReason).toString(),
+        'hashCode#0': (args) => (args[0] as MaterialBannerClosedReason).hashCode,
         'index#0': (args) => (args[0] as MaterialBannerClosedReason).index,
+        '==#1': (args) => (args[0] as MaterialBannerClosedReason) == (args[1] as Object),
       };
 }

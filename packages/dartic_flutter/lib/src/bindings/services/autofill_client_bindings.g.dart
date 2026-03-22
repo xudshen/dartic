@@ -22,7 +22,10 @@ abstract final class AutofillClientBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'autofill#1': (args) { (args[0] as AutofillClient).autofill(args[1] as TextEditingValue); return null; },
+        'toString#0': (args) => (args[0] as AutofillClient).toString(),
         'autofillId#0': (args) => (args[0] as AutofillClient).autofillId,
         'textInputConfiguration#0': (args) => (args[0] as AutofillClient).textInputConfiguration,
+        'hashCode#0': (args) => (args[0] as AutofillClient).hashCode,
+        '==#1': (args) => (args[0] as AutofillClient) == (args[1] as Object),
       };
 }

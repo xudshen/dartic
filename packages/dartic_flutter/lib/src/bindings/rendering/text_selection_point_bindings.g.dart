@@ -37,6 +37,7 @@ abstract final class TextSelectionPointBindings {
         'point#0': (args) => (args[0] as TextSelectionPoint).point,
         'direction#0': (args) => (args[0] as TextSelectionPoint).direction,
         'hashCode#0': (args) => (args[0] as TextSelectionPoint).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionPoint) == (args[1] as Object),
         '#2': (args) => TextSelectionPoint(args[0] as ui.Offset, args[1] as ui.TextDirection?),
         '_#fromFields#2': (args) => TextSelectionPoint(args[1] as ui.Offset, args[0] as ui.TextDirection?),
       };

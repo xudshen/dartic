@@ -30,6 +30,9 @@ abstract final class TransformEngineLayerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TransformEngineLayer).toString(),
         'dispose#0': (args) { (args[0] as TransformEngineLayer).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as TransformEngineLayer).hashCode,
+        '==#1': (args) => (args[0] as TransformEngineLayer) == (args[1] as Object),
       };
 }

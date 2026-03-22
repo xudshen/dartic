@@ -27,13 +27,16 @@ abstract final class TextEditingDeltaDeletionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDeltaDeletion).apply(args[1] as TextEditingValue),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDeltaDeletion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TextEditingDeltaDeletion).toString(),
         'toStringShort#0': (args) => (args[0] as TextEditingDeltaDeletion).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDeltaDeletion).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'deletedRange#0': (args) => (args[0] as TextEditingDeltaDeletion).deletedRange,
         'textDeleted#0': (args) => (args[0] as TextEditingDeltaDeletion).textDeleted,
+        'hashCode#0': (args) => (args[0] as TextEditingDeltaDeletion).hashCode,
         'oldText#0': (args) => (args[0] as TextEditingDeltaDeletion).oldText,
         'selection#0': (args) => (args[0] as TextEditingDeltaDeletion).selection,
         'composing#0': (args) => (args[0] as TextEditingDeltaDeletion).composing,
+        '==#1': (args) => (args[0] as TextEditingDeltaDeletion) == (args[1] as Object),
         '#4': (args) => TextEditingDeltaDeletion(oldText: args[0] as String, deletedRange: args[1] as TextRange, selection: args[2] as TextSelection, composing: args[3] as TextRange),
         '_#fromFields#4': (args) => TextEditingDeltaDeletion(oldText: args[2] as String, deletedRange: args[1] as TextRange, selection: args[3] as TextSelection, composing: args[0] as TextRange),
       };

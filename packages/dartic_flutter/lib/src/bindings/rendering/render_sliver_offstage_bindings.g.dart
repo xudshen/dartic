@@ -44,6 +44,7 @@ abstract final class RenderSliverOffstageBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverOffstage).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOffstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderSliverOffstage).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderSliverOffstage).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverOffstage).setupParentData(args[1] as RenderObject); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverOffstage).childMainAxisPosition(args[1] as RenderSliver),
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverOffstage).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
@@ -99,6 +100,7 @@ abstract final class RenderSliverOffstageBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverOffstage).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSliverOffstage).debugValidateChild(args[1] as RenderObject),
         'offstage#0': (args) => (args[0] as RenderSliverOffstage).offstage,
+        'hashCode#0': (args) => (args[0] as RenderSliverOffstage).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderSliverOffstage).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverOffstage).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverOffstage).constraints,
@@ -137,6 +139,7 @@ abstract final class RenderSliverOffstageBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverOffstage).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverOffstage).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverOffstage).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverOffstage) == (args[1] as Object),
         '#2': (args) => RenderSliverOffstage(offstage: identical(args[0], darticAbsent) ? true : args[0] as bool, sliver: identical(args[1], darticAbsent) ? null : args[1] as RenderSliver?),
       };
 }

@@ -38,6 +38,7 @@ abstract final class CupertinoCheckboxBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoCheckbox).createState(),
+        'toString#0': (args) => (args[0] as CupertinoCheckbox).toString(),
         'createElement#0': (args) => (args[0] as CupertinoCheckbox).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoCheckbox).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoCheckbox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -60,7 +61,9 @@ abstract final class CupertinoCheckboxBindings {
         'shape#0': (args) => (args[0] as CupertinoCheckbox).shape,
         'tapTargetSize#0': (args) => (args[0] as CupertinoCheckbox).tapTargetSize,
         'semanticLabel#0': (args) => (args[0] as CupertinoCheckbox).semanticLabel,
+        'hashCode#0': (args) => (args[0] as CupertinoCheckbox).hashCode,
         'key#0': (args) => (args[0] as CupertinoCheckbox).key,
+        '==#1': (args) => (args[0] as CupertinoCheckbox) == (args[1] as Object),
         '#16': (args) => CupertinoCheckbox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1] as bool?, tristate: identical(args[2], darticAbsent) ? false : args[2] as bool, onChanged: (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, activeColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, inactiveColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, fillColor: identical(args[7], darticAbsent) ? null : args[7] as WidgetStateProperty<Color?>?, checkColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, focusColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, focusNode: identical(args[10], darticAbsent) ? null : args[10] as FocusNode?, autofocus: identical(args[11], darticAbsent) ? false : args[11] as bool, side: identical(args[12], darticAbsent) ? null : args[12] as BorderSide?, shape: identical(args[13], darticAbsent) ? null : args[13] as OutlinedBorder?, tapTargetSize: identical(args[14], darticAbsent) ? null : args[14] as Size?, semanticLabel: identical(args[15], darticAbsent) ? null : args[15] as String?),
         '_#fromFields#16': (args) => CupertinoCheckbox(key: args[7] as Key?, value: args[15] as bool?, tristate: args[14] as bool, onChanged: args[9] as ValueChanged<bool?>?, mouseCursor: args[8] as MouseCursor?, activeColor: args[0] as Color?, inactiveColor: args[6] as Color?, fillColor: args[3] as WidgetStateProperty<Color?>?, checkColor: args[2] as Color?, focusColor: args[4] as Color?, focusNode: args[5] as FocusNode?, autofocus: args[1] as bool, side: args[12] as BorderSide?, shape: args[11] as OutlinedBorder?, tapTargetSize: args[13] as Size?, semanticLabel: args[10] as String?),
       };

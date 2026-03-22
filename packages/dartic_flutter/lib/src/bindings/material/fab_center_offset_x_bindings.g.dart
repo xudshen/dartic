@@ -26,8 +26,11 @@ abstract final class FabCenterOffsetXBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOffsetX#2': (args) => (args[0] as FabCenterOffsetX).getOffsetX(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
+        'toString#0': (args) => (args[0] as FabCenterOffsetX).toString(),
         'getOffsetY#2': (args) => (args[0] as FabCenterOffsetX).getOffsetY(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
         'isMini#0': (args) => (args[0] as FabCenterOffsetX).isMini(),
         'getOffset#1': (args) => (args[0] as FabCenterOffsetX).getOffset(args[1] as ScaffoldPrelayoutGeometry),
+        'hashCode#0': (args) => (args[0] as FabCenterOffsetX).hashCode,
+        '==#1': (args) => (args[0] as FabCenterOffsetX) == (args[1] as Object),
       };
 }

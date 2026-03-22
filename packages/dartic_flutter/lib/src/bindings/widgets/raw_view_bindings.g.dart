@@ -36,6 +36,7 @@ abstract final class RawViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RawView).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RawView).toString(),
         'createElement#0': (args) => (args[0] as RawView).createElement(),
         'toStringShort#0': (args) => (args[0] as RawView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class RawViewBindings {
         'debugDescribeChildren#0': (args) => (args[0] as RawView).debugDescribeChildren(),
         'view#0': (args) => (args[0] as RawView).view,
         'child#0': (args) => (args[0] as RawView).child,
+        'hashCode#0': (args) => (args[0] as RawView).hashCode,
         'key#0': (args) => (args[0] as RawView).key,
+        '==#1': (args) => (args[0] as RawView) == (args[1] as Object),
         '#5': (args) => RawView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, view: args[1] as FlutterView, deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner: identical(args[2], darticAbsent) ? null : args[2] as PipelineOwner?, deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView: identical(args[3], darticAbsent) ? null : args[3] as RenderView?, child: args[4] as Widget),
       };
 }

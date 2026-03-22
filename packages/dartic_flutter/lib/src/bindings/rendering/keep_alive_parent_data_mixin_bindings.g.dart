@@ -26,9 +26,12 @@ abstract final class KeepAliveParentDataMixinBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeepAliveParentDataMixin).toString(),
         'detach#0': (args) { (args[0] as KeepAliveParentDataMixin).detach(); return null; },
         'keepAlive#0': (args) => (args[0] as KeepAliveParentDataMixin).keepAlive,
         'keptAlive#0': (args) => (args[0] as KeepAliveParentDataMixin).keptAlive,
+        'hashCode#0': (args) => (args[0] as KeepAliveParentDataMixin).hashCode,
         'keepAlive=#1': (args) { (args[0] as KeepAliveParentDataMixin).keepAlive = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as KeepAliveParentDataMixin) == (args[1] as Object),
       };
 }

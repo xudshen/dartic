@@ -38,6 +38,7 @@ abstract final class ViewConstraintsBindings {
         'isTight#0': (args) => (args[0] as ViewConstraints).isTight,
         'hashCode#0': (args) => (args[0] as ViewConstraints).hashCode,
         '/#1': (args) => (args[0] as ViewConstraints) / (args[1] as double),
+        '==#1': (args) => (args[0] as ViewConstraints) == (args[1] as Object),
         '#4': (args) => ViewConstraints(minWidth: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, maxWidth: identical(args[1], darticAbsent) ? double.infinity : args[1] as double, minHeight: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, maxHeight: identical(args[3], darticAbsent) ? double.infinity : args[3] as double),
         'tight#1': (args) => ViewConstraints.tight(args[0] as Size),
         '_#fromFields#4': (args) => ViewConstraints(minWidth: args[3] as double, maxWidth: args[1] as double, minHeight: args[2] as double, maxHeight: args[0] as double),

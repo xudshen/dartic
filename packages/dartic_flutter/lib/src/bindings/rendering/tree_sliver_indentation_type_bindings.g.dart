@@ -30,6 +30,9 @@ abstract final class TreeSliverIndentationTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TreeSliverIndentationType).toString(),
         'value#0': (args) => (args[0] as TreeSliverIndentationType).value,
+        'hashCode#0': (args) => (args[0] as TreeSliverIndentationType).hashCode,
+        '==#1': (args) => (args[0] as TreeSliverIndentationType) == (args[1] as Object),
       };
 }

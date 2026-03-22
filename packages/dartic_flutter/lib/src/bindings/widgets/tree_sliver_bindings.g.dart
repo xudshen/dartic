@@ -45,6 +45,7 @@ abstract final class TreeSliverBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TreeSliver).createState(),
+        'toString#0': (args) => (args[0] as TreeSliver).toString(),
         'createElement#0': (args) => (args[0] as TreeSliver).createElement(),
         'toStringShort#0': (args) => (args[0] as TreeSliver).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TreeSliver).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -65,7 +66,9 @@ abstract final class TreeSliverBindings {
         'semanticIndexCallback#0': (args) => (args[0] as TreeSliver).semanticIndexCallback,
         'semanticIndexOffset#0': (args) => (args[0] as TreeSliver).semanticIndexOffset,
         'findChildIndexCallback#0': (args) => (args[0] as TreeSliver).findChildIndexCallback,
+        'hashCode#0': (args) => (args[0] as TreeSliver).hashCode,
         'key#0': (args) => (args[0] as TreeSliver).key,
+        '==#1': (args) => (args[0] as TreeSliver) == (args[1] as Object),
         '#14': (args) {
           if (identical(args[11], darticAbsent)) {
             return TreeSliver<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tree: (args[1] as List).cast<TreeSliverNode>(), treeNodeBuilder: identical(args[2], darticAbsent) ? TreeSliver.defaultTreeNodeBuilder : (a, b, c) => (args[2] as Function)(a, b, c) as Widget, treeRowExtentBuilder: identical(args[3], darticAbsent) ? TreeSliver.defaultTreeRowExtentBuilder : (a, b) => (args[3] as Function)(a, b) as double, controller: identical(args[4], darticAbsent) ? null : args[4] as TreeSliverController?, onNodeToggle: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), toggleAnimationStyle: identical(args[6], darticAbsent) ? null : args[6] as AnimationStyle?, indentation: identical(args[7], darticAbsent) ? TreeSliverIndentationType.standard : args[7] as TreeSliverIndentationType, addAutomaticKeepAlives: identical(args[8], darticAbsent) ? true : args[8] as bool, addRepaintBoundaries: identical(args[9], darticAbsent) ? true : args[9] as bool, addSemanticIndexes: identical(args[10], darticAbsent) ? true : args[10] as bool, semanticIndexOffset: identical(args[12], darticAbsent) ? 0 : args[12] as int, findChildIndexCallback: identical(args[13], darticAbsent) ? null : (args[13] as Function?) == null ? null : (a) => (args[13] as Function?)!(a));

@@ -40,11 +40,14 @@ abstract final class ButtonSegmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ButtonSegment).toString(),
         'value#0': (args) => (args[0] as ButtonSegment).value,
         'icon#0': (args) => (args[0] as ButtonSegment).icon,
         'label#0': (args) => (args[0] as ButtonSegment).label,
         'tooltip#0': (args) => (args[0] as ButtonSegment).tooltip,
         'enabled#0': (args) => (args[0] as ButtonSegment).enabled,
+        'hashCode#0': (args) => (args[0] as ButtonSegment).hashCode,
+        '==#1': (args) => (args[0] as ButtonSegment) == (args[1] as Object),
         '#5': (args) => ButtonSegment<dynamic>(value: args[0], icon: identical(args[1], darticAbsent) ? null : args[1] as Widget?, label: identical(args[2], darticAbsent) ? null : args[2] as Widget?, tooltip: identical(args[3], darticAbsent) ? null : args[3] as String?, enabled: identical(args[4], darticAbsent) ? true : args[4] as bool),
         '_#fromFields#5': (args) => ButtonSegment<dynamic>(value: args[4], icon: args[1] as Widget?, label: args[2] as Widget?, tooltip: args[3] as String?, enabled: args[0] as bool),
       };

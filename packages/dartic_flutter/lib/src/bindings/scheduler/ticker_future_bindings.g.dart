@@ -32,6 +32,8 @@ abstract final class TickerFutureBindings {
         'whenComplete#1': (args) => (args[0] as TickerFuture).whenComplete(() => (args[1] as Function)()),
         'toString#0': (args) => (args[0] as TickerFuture).toString(),
         'orCancel#0': (args) => (args[0] as TickerFuture).orCancel,
+        'hashCode#0': (args) => (args[0] as TickerFuture).hashCode,
+        '==#1': (args) => (args[0] as TickerFuture) == (args[1] as Object),
         'complete#0': (args) => TickerFuture.complete(),
       };
 }

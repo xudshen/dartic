@@ -43,6 +43,7 @@ abstract final class RenderClipRRectBindings {
         'hitTest#2': (args) => (args[0] as RenderClipRRect).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipRRect).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipRRect).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderClipRRect).toString(),
         'attach#1': (args) { (args[0] as RenderClipRRect).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipRRect).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipRRect).performLayout(); return null; },
@@ -120,6 +121,7 @@ abstract final class RenderClipRRectBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderClipRRect).computeSizeForNoChild(args[1] as BoxConstraints),
         'borderRadius#0': (args) => (args[0] as RenderClipRRect).borderRadius,
         'textDirection#0': (args) => (args[0] as RenderClipRRect).textDirection,
+        'hashCode#0': (args) => (args[0] as RenderClipRRect).hashCode,
         'clipper#0': (args) => (args[0] as RenderClipRRect).clipper,
         'clipBehavior#0': (args) => (args[0] as RenderClipRRect).clipBehavior,
         'hasSize#0': (args) => (args[0] as RenderClipRRect).hasSize,
@@ -162,6 +164,7 @@ abstract final class RenderClipRRectBindings {
         'debugCreator=#1': (args) { (args[0] as RenderClipRRect).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderClipRRect).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderClipRRect).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderClipRRect) == (args[1] as Object),
         '#5': (args) => RenderClipRRect(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry, clipper: identical(args[2], darticAbsent) ? null : args[2] as CustomClipper<ui.RRect>?, clipBehavior: identical(args[3], darticAbsent) ? Clip.antiAlias : args[3] as ui.Clip, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?),
       };
 }

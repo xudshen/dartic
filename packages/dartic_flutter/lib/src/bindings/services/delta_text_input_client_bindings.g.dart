@@ -35,6 +35,7 @@ abstract final class DeltaTextInputClientBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateEditingValueWithDeltas#1': (args) { (args[0] as DeltaTextInputClient).updateEditingValueWithDeltas((args[1] as List).cast<TextEditingDelta>()); return null; },
+        'toString#0': (args) => (args[0] as DeltaTextInputClient).toString(),
         'updateEditingValue#1': (args) { (args[0] as DeltaTextInputClient).updateEditingValue(args[1] as TextEditingValue); return null; },
         'performAction#1': (args) { (args[0] as DeltaTextInputClient).performAction(args[1] as TextInputAction); return null; },
         'insertContent#1': (args) { (args[0] as DeltaTextInputClient).insertContent(args[1] as KeyboardInsertedContent); return null; },
@@ -47,7 +48,9 @@ abstract final class DeltaTextInputClientBindings {
         'insertTextPlaceholder#1': (args) { (args[0] as DeltaTextInputClient).insertTextPlaceholder(args[1] as Size); return null; },
         'removeTextPlaceholder#0': (args) { (args[0] as DeltaTextInputClient).removeTextPlaceholder(); return null; },
         'performSelector#1': (args) { (args[0] as DeltaTextInputClient).performSelector(args[1] as String); return null; },
+        'hashCode#0': (args) => (args[0] as DeltaTextInputClient).hashCode,
         'currentTextEditingValue#0': (args) => (args[0] as DeltaTextInputClient).currentTextEditingValue,
         'currentAutofillScope#0': (args) => (args[0] as DeltaTextInputClient).currentAutofillScope,
+        '==#1': (args) => (args[0] as DeltaTextInputClient) == (args[1] as Object),
       };
 }

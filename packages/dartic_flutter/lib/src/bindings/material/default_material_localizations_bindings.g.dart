@@ -49,6 +49,7 @@ abstract final class DefaultMaterialLocalizationsBindings {
         'selectedRowCountTitle#1': (args) => (args[0] as DefaultMaterialLocalizations).selectedRowCountTitle(args[1] as int),
         'timeOfDayFormat#1': (args) => (args[0] as DefaultMaterialLocalizations).timeOfDayFormat(alwaysUse24HourFormat: identical(args[1], darticAbsent) ? false : args[1] as bool),
         'remainingTextFieldCharacterCount#1': (args) => (args[0] as DefaultMaterialLocalizations).remainingTextFieldCharacterCount(args[1] as int),
+        'toString#0': (args) => (args[0] as DefaultMaterialLocalizations).toString(),
         'narrowWeekdays#0': (args) => (args[0] as DefaultMaterialLocalizations).narrowWeekdays,
         'firstDayOfWeekIndex#0': (args) => (args[0] as DefaultMaterialLocalizations).firstDayOfWeekIndex,
         'dateSeparator#0': (args) => (args[0] as DefaultMaterialLocalizations).dateSeparator,
@@ -184,6 +185,8 @@ abstract final class DefaultMaterialLocalizationsBindings {
         'keyboardKeySelect#0': (args) => (args[0] as DefaultMaterialLocalizations).keyboardKeySelect,
         'keyboardKeyShift#0': (args) => (args[0] as DefaultMaterialLocalizations).keyboardKeyShift,
         'keyboardKeySpace#0': (args) => (args[0] as DefaultMaterialLocalizations).keyboardKeySpace,
+        'hashCode#0': (args) => (args[0] as DefaultMaterialLocalizations).hashCode,
+        '==#1': (args) => (args[0] as DefaultMaterialLocalizations) == (args[1] as Object),
         '#0': (args) => DefaultMaterialLocalizations(),
         '_#fromFields#0': (args) => DefaultMaterialLocalizations(),
       };

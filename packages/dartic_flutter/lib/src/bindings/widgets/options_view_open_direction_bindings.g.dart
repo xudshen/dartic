@@ -40,6 +40,9 @@ abstract final class OptionsViewOpenDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OptionsViewOpenDirection).toString(),
+        'hashCode#0': (args) => (args[0] as OptionsViewOpenDirection).hashCode,
         'index#0': (args) => (args[0] as OptionsViewOpenDirection).index,
+        '==#1': (args) => (args[0] as OptionsViewOpenDirection) == (args[1] as Object),
       };
 }

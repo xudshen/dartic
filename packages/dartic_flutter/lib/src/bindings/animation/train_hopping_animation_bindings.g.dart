@@ -46,11 +46,13 @@ abstract final class TrainHoppingAnimationBindings {
         'onSwitchedTrain#0': (args) => (args[0] as TrainHoppingAnimation).onSwitchedTrain,
         'status#0': (args) => (args[0] as TrainHoppingAnimation).status,
         'value#0': (args) => (args[0] as TrainHoppingAnimation).value,
+        'hashCode#0': (args) => (args[0] as TrainHoppingAnimation).hashCode,
         'isDismissed#0': (args) => (args[0] as TrainHoppingAnimation).isDismissed,
         'isCompleted#0': (args) => (args[0] as TrainHoppingAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as TrainHoppingAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as TrainHoppingAnimation).isForwardOrCompleted,
         'onSwitchedTrain=#1': (args) { (args[0] as TrainHoppingAnimation).onSwitchedTrain = args[1] as VoidCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as TrainHoppingAnimation) == (args[1] as Object),
         '#3': (args) => TrainHoppingAnimation(args[0] as Animation<double>, args[1] as Animation<double>?, onSwitchedTrain: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
       };
 }

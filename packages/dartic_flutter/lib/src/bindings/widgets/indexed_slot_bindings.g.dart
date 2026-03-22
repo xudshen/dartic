@@ -29,9 +29,11 @@ abstract final class IndexedSlotBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as IndexedSlot).toString(),
         'value#0': (args) => (args[0] as IndexedSlot).value,
         'index#0': (args) => (args[0] as IndexedSlot).index,
         'hashCode#0': (args) => (args[0] as IndexedSlot).hashCode,
+        '==#1': (args) => (args[0] as IndexedSlot) == (args[1] as Object),
         '#2': (args) => IndexedSlot<Element?>(args[0] as int, args[1] as Element?),
         '_#fromFields#2': (args) => IndexedSlot<Element?>(args[0] as int, args[1] as Element?),
       };

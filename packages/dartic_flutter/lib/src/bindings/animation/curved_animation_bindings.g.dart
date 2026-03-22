@@ -41,6 +41,7 @@ abstract final class CurvedAnimationBindings {
         'reverseCurve#0': (args) => (args[0] as CurvedAnimation).reverseCurve,
         'isDisposed#0': (args) => (args[0] as CurvedAnimation).isDisposed,
         'value#0': (args) => (args[0] as CurvedAnimation).value,
+        'hashCode#0': (args) => (args[0] as CurvedAnimation).hashCode,
         'status#0': (args) => (args[0] as CurvedAnimation).status,
         'isDismissed#0': (args) => (args[0] as CurvedAnimation).isDismissed,
         'isCompleted#0': (args) => (args[0] as CurvedAnimation).isCompleted,
@@ -49,6 +50,7 @@ abstract final class CurvedAnimationBindings {
         'curve=#1': (args) { (args[0] as CurvedAnimation).curve = args[1] as Curve; return args[1]; },
         'reverseCurve=#1': (args) { (args[0] as CurvedAnimation).reverseCurve = args[1] as Curve?; return args[1]; },
         'isDisposed=#1': (args) { (args[0] as CurvedAnimation).isDisposed = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as CurvedAnimation) == (args[1] as Object),
         '#3': (args) => CurvedAnimation(parent: args[0] as Animation<double>, curve: args[1] as Curve, reverseCurve: identical(args[2], darticAbsent) ? null : args[2] as Curve?),
       };
 }

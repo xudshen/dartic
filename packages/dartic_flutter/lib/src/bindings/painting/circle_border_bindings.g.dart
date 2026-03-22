@@ -41,6 +41,7 @@ abstract final class CircleBorderBindings {
         'hashCode#0': (args) => (args[0] as CircleBorder).hashCode,
         'dimensions#0': (args) => (args[0] as CircleBorder).dimensions,
         'side#0': (args) => (args[0] as CircleBorder).side,
+        '==#1': (args) => (args[0] as CircleBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as CircleBorder) + (args[1] as ShapeBorder),
         '#2': (args) => CircleBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, eccentricity: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
         '_#fromFields#2': (args) => CircleBorder(side: args[1] as BorderSide, eccentricity: args[0] as double),

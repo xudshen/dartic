@@ -40,6 +40,7 @@ abstract final class LimitedBoxBindings {
         'createRenderObject#1': (args) => (args[0] as LimitedBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as LimitedBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderLimitedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as LimitedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as LimitedBox).toString(),
         'createElement#0': (args) => (args[0] as LimitedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as LimitedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as LimitedBox).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class LimitedBoxBindings {
         'debugDescribeChildren#0': (args) => (args[0] as LimitedBox).debugDescribeChildren(),
         'maxWidth#0': (args) => (args[0] as LimitedBox).maxWidth,
         'maxHeight#0': (args) => (args[0] as LimitedBox).maxHeight,
+        'hashCode#0': (args) => (args[0] as LimitedBox).hashCode,
         'child#0': (args) => (args[0] as LimitedBox).child,
         'key#0': (args) => (args[0] as LimitedBox).key,
+        '==#1': (args) => (args[0] as LimitedBox) == (args[1] as Object),
         '#4': (args) => LimitedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, maxWidth: identical(args[1], darticAbsent) ? double.infinity : args[1] as double, maxHeight: identical(args[2], darticAbsent) ? double.infinity : args[2] as double, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => LimitedBox(key: args[1] as Key?, maxWidth: args[3] as double, maxHeight: args[2] as double, child: args[0] as Widget?),
       };

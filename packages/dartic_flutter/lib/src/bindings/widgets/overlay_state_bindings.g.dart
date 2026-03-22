@@ -39,6 +39,7 @@ abstract final class OverlayStateBindings {
         'debugIsVisible#1': (args) => (args[0] as OverlayState).debugIsVisible(args[1] as OverlayEntry),
         'build#1': (args) => (args[0] as OverlayState).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as OverlayState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as OverlayState).toString(),
         'didUpdateWidget#1': (args) { (args[0] as OverlayState).didUpdateWidget(args[1] as Overlay); return null; },
         'reassemble#0': (args) { (args[0] as OverlayState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as OverlayState).setState(() => (args[1] as Function)()); return null; },
@@ -49,9 +50,11 @@ abstract final class OverlayStateBindings {
         'toStringShort#0': (args) => (args[0] as OverlayState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as OverlayState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as OverlayState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as OverlayState).hashCode,
         'widget#0': (args) => (args[0] as OverlayState).widget,
         'context#0': (args) => (args[0] as OverlayState).context,
         'mounted#0': (args) => (args[0] as OverlayState).mounted,
+        '==#1': (args) => (args[0] as OverlayState) == (args[1] as Object),
         '#0': (args) => OverlayState(),
       };
 }

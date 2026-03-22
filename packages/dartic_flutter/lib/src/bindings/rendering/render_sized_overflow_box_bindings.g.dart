@@ -51,6 +51,7 @@ abstract final class RenderSizedOverflowBoxBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderSizedOverflowBox).computeDryBaseline(args[1] as BoxConstraints, args[2] as TextBaseline),
         'computeDryLayout#1': (args) => (args[0] as RenderSizedOverflowBox).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderSizedOverflowBox).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderSizedOverflowBox).toString(),
         'alignChild#0': (args) { (args[0] as RenderSizedOverflowBox).alignChild(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSizedOverflowBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'paint#2': (args) { (args[0] as RenderSizedOverflowBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
@@ -122,6 +123,7 @@ abstract final class RenderSizedOverflowBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSizedOverflowBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSizedOverflowBox).debugValidateChild(args[1] as RenderObject),
         'requestedSize#0': (args) => (args[0] as RenderSizedOverflowBox).requestedSize,
+        'hashCode#0': (args) => (args[0] as RenderSizedOverflowBox).hashCode,
         'resolvedAlignment#0': (args) => (args[0] as RenderSizedOverflowBox).resolvedAlignment,
         'alignment#0': (args) => (args[0] as RenderSizedOverflowBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderSizedOverflowBox).textDirection,
@@ -164,6 +166,7 @@ abstract final class RenderSizedOverflowBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSizedOverflowBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSizedOverflowBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSizedOverflowBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSizedOverflowBox) == (args[1] as Object),
         '#4': (args) => RenderSizedOverflowBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, requestedSize: args[1] as Size, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),
       };
 }

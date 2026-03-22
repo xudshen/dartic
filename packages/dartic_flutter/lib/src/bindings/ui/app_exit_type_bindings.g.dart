@@ -33,6 +33,9 @@ abstract final class AppExitTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AppExitType).toString(),
+        'hashCode#0': (args) => (args[0] as AppExitType).hashCode,
         'index#0': (args) => (args[0] as AppExitType).index,
+        '==#1': (args) => (args[0] as AppExitType) == (args[1] as Object),
       };
 }

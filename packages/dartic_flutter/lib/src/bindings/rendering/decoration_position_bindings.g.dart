@@ -33,6 +33,9 @@ abstract final class DecorationPositionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DecorationPosition).toString(),
+        'hashCode#0': (args) => (args[0] as DecorationPosition).hashCode,
         'index#0': (args) => (args[0] as DecorationPosition).index,
+        '==#1': (args) => (args[0] as DecorationPosition) == (args[1] as Object),
       };
 }

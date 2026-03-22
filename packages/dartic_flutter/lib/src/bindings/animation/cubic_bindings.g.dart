@@ -31,7 +31,9 @@ abstract final class CubicBindings {
         'b#0': (args) => (args[0] as Cubic).b,
         'c#0': (args) => (args[0] as Cubic).c,
         'd#0': (args) => (args[0] as Cubic).d,
+        'hashCode#0': (args) => (args[0] as Cubic).hashCode,
         'flipped#0': (args) => (args[0] as Cubic).flipped,
+        '==#1': (args) => (args[0] as Cubic) == (args[1] as Object),
         '#4': (args) => Cubic(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         '_#fromFields#4': (args) => Cubic(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
       };

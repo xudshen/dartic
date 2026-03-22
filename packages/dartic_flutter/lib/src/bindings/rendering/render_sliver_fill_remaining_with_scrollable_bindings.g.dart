@@ -40,6 +40,7 @@ abstract final class RenderSliverFillRemainingWithScrollableBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).setupParentData(args[1] as RenderObject); return null; },
         'setChildParentData#3': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).setChildParentData(args[1] as RenderObject, args[2] as SliverConstraints, args[3] as SliverGeometry); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
@@ -103,6 +104,7 @@ abstract final class RenderSliverFillRemainingWithScrollableBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).debugValidateChild(args[1] as RenderObject),
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverFillRemainingWithScrollable).geometry,
@@ -140,6 +142,7 @@ abstract final class RenderSliverFillRemainingWithScrollableBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverFillRemainingWithScrollable).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverFillRemainingWithScrollable) == (args[1] as Object),
         '#1': (args) => RenderSliverFillRemainingWithScrollable(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

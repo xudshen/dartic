@@ -30,6 +30,7 @@ abstract final class SliverPersistentHeaderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverPersistentHeader).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as SliverPersistentHeader).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverPersistentHeader).toString(),
         'createElement#0': (args) => (args[0] as SliverPersistentHeader).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverPersistentHeader).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverPersistentHeader).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -39,7 +40,9 @@ abstract final class SliverPersistentHeaderBindings {
         'delegate#0': (args) => (args[0] as SliverPersistentHeader).delegate,
         'pinned#0': (args) => (args[0] as SliverPersistentHeader).pinned,
         'floating#0': (args) => (args[0] as SliverPersistentHeader).floating,
+        'hashCode#0': (args) => (args[0] as SliverPersistentHeader).hashCode,
         'key#0': (args) => (args[0] as SliverPersistentHeader).key,
+        '==#1': (args) => (args[0] as SliverPersistentHeader) == (args[1] as Object),
         '#4': (args) => SliverPersistentHeader(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, delegate: args[1] as SliverPersistentHeaderDelegate, pinned: identical(args[2], darticAbsent) ? false : args[2] as bool, floating: identical(args[3], darticAbsent) ? false : args[3] as bool),
         '_#fromFields#4': (args) => SliverPersistentHeader(key: args[2] as Key?, delegate: args[0] as SliverPersistentHeaderDelegate, pinned: args[3] as bool, floating: args[1] as bool),
       };

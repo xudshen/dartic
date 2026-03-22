@@ -47,6 +47,7 @@ abstract final class RangeSliderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RangeSlider).createState(),
         'debugFillProperties#1': (args) { (args[0] as RangeSlider).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RangeSlider).toString(),
         'createElement#0': (args) => (args[0] as RangeSlider).createElement(),
         'toStringShort#0': (args) => (args[0] as RangeSlider).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as RangeSlider).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -68,7 +69,9 @@ abstract final class RangeSliderBindings {
         'semanticFormatterCallback#0': (args) => (args[0] as RangeSlider).semanticFormatterCallback,
         'padding#0': (args) => (args[0] as RangeSlider).padding,
         'year2023#0': (args) => (args[0] as RangeSlider).year2023,
+        'hashCode#0': (args) => (args[0] as RangeSlider).hashCode,
         'key#0': (args) => (args[0] as RangeSlider).key,
+        '==#1': (args) => (args[0] as RangeSlider) == (args[1] as Object),
         '#16': (args) => RangeSlider(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, values: args[1] as RangeValues, onChanged: (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onChangeStart: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onChangeEnd: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), min: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, max: identical(args[6], darticAbsent) ? 1.0 : args[6] as double, divisions: identical(args[7], darticAbsent) ? null : args[7] as int?, labels: identical(args[8], darticAbsent) ? null : args[8] as RangeLabels?, activeColor: identical(args[9], darticAbsent) ? null : args[9] as ui.Color?, inactiveColor: identical(args[10], darticAbsent) ? null : args[10] as ui.Color?, overlayColor: identical(args[11], darticAbsent) ? null : args[11] as WidgetStateProperty<ui.Color?>?, mouseCursor: identical(args[12], darticAbsent) ? null : args[12] as WidgetStateProperty<MouseCursor?>?, semanticFormatterCallback: identical(args[13], darticAbsent) ? null : (args[13] as Function?) == null ? null : (a) => (args[13] as Function?)!(a), padding: identical(args[14], darticAbsent) ? null : args[14] as EdgeInsetsGeometry?, year2023: identical(args[15], darticAbsent) ? null : args[15] as bool?),
       };
 }

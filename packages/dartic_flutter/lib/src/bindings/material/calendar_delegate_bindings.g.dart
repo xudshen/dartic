@@ -43,5 +43,8 @@ abstract final class CalendarDelegateBindings {
         'formatCompactDate#2': (args) => (args[0] as CalendarDelegate).formatCompactDate(args[1] as DateTime, args[2] as MaterialLocalizations),
         'parseCompactDate#2': (args) => (args[0] as CalendarDelegate).parseCompactDate(args[1] as String?, args[2] as MaterialLocalizations),
         'dateHelpText#1': (args) => (args[0] as CalendarDelegate).dateHelpText(args[1] as MaterialLocalizations),
+        'toString#0': (args) => (args[0] as CalendarDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as CalendarDelegate).hashCode,
+        '==#1': (args) => (args[0] as CalendarDelegate) == (args[1] as Object),
       };
 }

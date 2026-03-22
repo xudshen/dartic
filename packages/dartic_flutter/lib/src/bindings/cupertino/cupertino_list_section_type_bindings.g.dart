@@ -26,6 +26,9 @@ abstract final class CupertinoListSectionTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CupertinoListSectionType).toString(),
+        'hashCode#0': (args) => (args[0] as CupertinoListSectionType).hashCode,
         'index#0': (args) => (args[0] as CupertinoListSectionType).index,
+        '==#1': (args) => (args[0] as CupertinoListSectionType) == (args[1] as Object),
       };
 }

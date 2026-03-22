@@ -39,6 +39,7 @@ abstract final class FocusScopeNodeBindings {
         'autofocus#1': (args) { (args[0] as FocusScopeNode).autofocus(args[1] as FocusNode); return null; },
         'requestScopeFocus#0': (args) { (args[0] as FocusScopeNode).requestScopeFocus(); return null; },
         'debugFillProperties#1': (args) { (args[0] as FocusScopeNode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FocusScopeNode).toString(),
         'unfocus#1': (args) { (args[0] as FocusScopeNode).unfocus(disposition: identical(args[1], darticAbsent) ? UnfocusDisposition.scope : args[1] as UnfocusDisposition); return null; },
         'consumeKeyboardToken#0': (args) => (args[0] as FocusScopeNode).consumeKeyboardToken(),
         'attach#3': (args) => (args[0] as FocusScopeNode).attach(args[1] as BuildContext?, onKeyEvent: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), onKey: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b)),
@@ -63,6 +64,7 @@ abstract final class FocusScopeNodeBindings {
         'focusedChild#0': (args) => (args[0] as FocusScopeNode).focusedChild,
         'traversalChildren#0': (args) => (args[0] as FocusScopeNode).traversalChildren,
         'traversalDescendants#0': (args) => (args[0] as FocusScopeNode).traversalDescendants,
+        'hashCode#0': (args) => (args[0] as FocusScopeNode).hashCode,
         'skipTraversal#0': (args) => (args[0] as FocusScopeNode).skipTraversal,
         'canRequestFocus#0': (args) => (args[0] as FocusScopeNode).canRequestFocus,
         'descendantsAreTraversable#0': (args) => (args[0] as FocusScopeNode).descendantsAreTraversable,
@@ -91,6 +93,7 @@ abstract final class FocusScopeNodeBindings {
         'onKey=#1': (args) { (args[0] as FocusScopeNode).onKey = args[1] as FocusOnKeyCallback?; return args[1]; },
         'onKeyEvent=#1': (args) { (args[0] as FocusScopeNode).onKeyEvent = args[1] as FocusOnKeyEventCallback?; return args[1]; },
         'debugLabel=#1': (args) { (args[0] as FocusScopeNode).debugLabel = args[1] as String?; return args[1]; },
+        '==#1': (args) => (args[0] as FocusScopeNode) == (args[1] as Object),
         '#7': (args) => FocusScopeNode(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, onKeyEvent: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, b) => (args[1] as Function?)!(a, b), onKey: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), skipTraversal: identical(args[3], darticAbsent) ? false : args[3] as bool, canRequestFocus: identical(args[4], darticAbsent) ? true : args[4] as bool, traversalEdgeBehavior: identical(args[5], darticAbsent) ? TraversalEdgeBehavior.closedLoop : args[5] as TraversalEdgeBehavior, directionalTraversalEdgeBehavior: identical(args[6], darticAbsent) ? TraversalEdgeBehavior.stop : args[6] as TraversalEdgeBehavior),
       };
 }

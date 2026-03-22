@@ -40,6 +40,7 @@ abstract final class AbsorbPointerBindings {
         'createRenderObject#1': (args) => (args[0] as AbsorbPointer).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as AbsorbPointer).updateRenderObject(args[1] as BuildContext, args[2] as RenderAbsorbPointer); return null; },
         'debugFillProperties#1': (args) { (args[0] as AbsorbPointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AbsorbPointer).toString(),
         'createElement#0': (args) => (args[0] as AbsorbPointer).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as AbsorbPointer).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AbsorbPointer).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class AbsorbPointerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AbsorbPointer).debugDescribeChildren(),
         'absorbing#0': (args) => (args[0] as AbsorbPointer).absorbing,
         'ignoringSemantics#0': (args) => (args[0] as AbsorbPointer).ignoringSemantics,
+        'hashCode#0': (args) => (args[0] as AbsorbPointer).hashCode,
         'child#0': (args) => (args[0] as AbsorbPointer).child,
         'key#0': (args) => (args[0] as AbsorbPointer).key,
+        '==#1': (args) => (args[0] as AbsorbPointer) == (args[1] as Object),
         '#4': (args) => AbsorbPointer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, absorbing: identical(args[1], darticAbsent) ? true : args[1] as bool, ignoringSemantics: identical(args[2], darticAbsent) ? null : args[2] as bool?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => AbsorbPointer(key: args[3] as Key?, absorbing: args[0] as bool, ignoringSemantics: args[2] as bool?, child: args[1] as Widget?),
       };

@@ -38,5 +38,7 @@ abstract final class ImageProviderBindings {
         'loadBuffer#2': (args) => (args[0] as ImageProvider).loadBuffer(args[1] as Object, (a, {bool? allowUpscaling, int? cacheHeight, int? cacheWidth}) => (args[2] as Function)(a, allowUpscaling: allowUpscaling, cacheHeight: cacheHeight, cacheWidth: cacheWidth) as Future<ui.Codec>),
         'loadImage#2': (args) => (args[0] as ImageProvider).loadImage(args[1] as Object, (a, {ui.TargetImageSizeCallback? getTargetSize}) => (args[2] as Function)(a, getTargetSize: getTargetSize) as Future<ui.Codec>),
         'toString#0': (args) => (args[0] as ImageProvider).toString(),
+        'hashCode#0': (args) => (args[0] as ImageProvider).hashCode,
+        '==#1': (args) => (args[0] as ImageProvider) == (args[1] as Object),
       };
 }

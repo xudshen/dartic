@@ -38,6 +38,7 @@ abstract final class TwoDimensionalViewportBindings {
         'createElement#0': (args) => (args[0] as TwoDimensionalViewport).createElement(),
         'createRenderObject#1': (args) => (args[0] as TwoDimensionalViewport).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as TwoDimensionalViewport).updateRenderObject(args[1] as BuildContext, args[2] as RenderTwoDimensionalViewport); return null; },
+        'toString#0': (args) => (args[0] as TwoDimensionalViewport).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as TwoDimensionalViewport).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as TwoDimensionalViewport).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TwoDimensionalViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -53,6 +54,8 @@ abstract final class TwoDimensionalViewportBindings {
         'cacheExtent#0': (args) => (args[0] as TwoDimensionalViewport).cacheExtent,
         'clipBehavior#0': (args) => (args[0] as TwoDimensionalViewport).clipBehavior,
         'delegate#0': (args) => (args[0] as TwoDimensionalViewport).delegate,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalViewport).hashCode,
         'key#0': (args) => (args[0] as TwoDimensionalViewport).key,
+        '==#1': (args) => (args[0] as TwoDimensionalViewport) == (args[1] as Object),
       };
 }

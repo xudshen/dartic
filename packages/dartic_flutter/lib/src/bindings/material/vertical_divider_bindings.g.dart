@@ -31,6 +31,7 @@ abstract final class VerticalDividerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as VerticalDivider).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as VerticalDivider).toString(),
         'createElement#0': (args) => (args[0] as VerticalDivider).createElement(),
         'toStringShort#0': (args) => (args[0] as VerticalDivider).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as VerticalDivider).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class VerticalDividerBindings {
         'endIndent#0': (args) => (args[0] as VerticalDivider).endIndent,
         'color#0': (args) => (args[0] as VerticalDivider).color,
         'radius#0': (args) => (args[0] as VerticalDivider).radius,
+        'hashCode#0': (args) => (args[0] as VerticalDivider).hashCode,
         'key#0': (args) => (args[0] as VerticalDivider).key,
+        '==#1': (args) => (args[0] as VerticalDivider) == (args[1] as Object),
         '#7': (args) => VerticalDivider(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, width: identical(args[1], darticAbsent) ? null : args[1] as double?, thickness: identical(args[2], darticAbsent) ? null : args[2] as double?, indent: identical(args[3], darticAbsent) ? null : args[3] as double?, endIndent: identical(args[4], darticAbsent) ? null : args[4] as double?, color: identical(args[5], darticAbsent) ? null : args[5] as Color?, radius: identical(args[6], darticAbsent) ? null : args[6] as BorderRadiusGeometry?),
         '_#fromFields#7': (args) => VerticalDivider(key: args[3] as Key?, width: args[6] as double?, thickness: args[5] as double?, indent: args[2] as double?, endIndent: args[1] as double?, color: args[0] as Color?, radius: args[4] as BorderRadiusGeometry?),
       };

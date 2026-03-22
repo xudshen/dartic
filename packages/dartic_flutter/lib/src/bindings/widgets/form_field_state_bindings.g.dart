@@ -52,6 +52,7 @@ abstract final class FormFieldStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as FormFieldState).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as FormFieldState).dispose(); return null; },
         'build#1': (args) => (args[0] as FormFieldState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as FormFieldState).toString(),
         'reassemble#0': (args) { (args[0] as FormFieldState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as FormFieldState).setState(() => (args[1] as Function)()); return null; },
         'activate#0': (args) { (args[0] as FormFieldState).activate(); return null; },
@@ -68,11 +69,13 @@ abstract final class FormFieldStateBindings {
         'hasInteractedByUser#0': (args) => (args[0] as FormFieldState).hasInteractedByUser,
         'isValid#0': (args) => (args[0] as FormFieldState).isValid,
         'restorationId#0': (args) => (args[0] as FormFieldState).restorationId,
+        'hashCode#0': (args) => (args[0] as FormFieldState).hashCode,
         'widget#0': (args) => (args[0] as FormFieldState).widget,
         'context#0': (args) => (args[0] as FormFieldState).context,
         'mounted#0': (args) => (args[0] as FormFieldState).mounted,
         'bucket#0': (args) => (args[0] as FormFieldState).bucket,
         'restorePending#0': (args) => (args[0] as FormFieldState).restorePending,
+        '==#1': (args) => (args[0] as FormFieldState) == (args[1] as Object),
         '#0': (args) => FormFieldState<dynamic>(),
       };
 }

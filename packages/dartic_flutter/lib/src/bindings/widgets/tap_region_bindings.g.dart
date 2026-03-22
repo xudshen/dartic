@@ -34,6 +34,7 @@ abstract final class TapRegionBindings {
         'createRenderObject#1': (args) => (args[0] as TapRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as TapRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderTapRegion); return null; },
         'debugFillProperties#1': (args) { (args[0] as TapRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TapRegion).toString(),
         'createElement#0': (args) => (args[0] as TapRegion).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as TapRegion).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as TapRegion).toStringShort(),
@@ -50,8 +51,10 @@ abstract final class TapRegionBindings {
         'groupId#0': (args) => (args[0] as TapRegion).groupId,
         'consumeOutsideTaps#0': (args) => (args[0] as TapRegion).consumeOutsideTaps,
         'debugLabel#0': (args) => (args[0] as TapRegion).debugLabel,
+        'hashCode#0': (args) => (args[0] as TapRegion).hashCode,
         'child#0': (args) => (args[0] as TapRegion).child,
         'key#0': (args) => (args[0] as TapRegion).key,
+        '==#1': (args) => (args[0] as TapRegion) == (args[1] as Object),
         '#11': (args) => TapRegion(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget?, enabled: identical(args[2], darticAbsent) ? true : args[2] as bool, behavior: identical(args[3], darticAbsent) ? HitTestBehavior.deferToChild : args[3] as HitTestBehavior, onTapOutside: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onTapInside: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onTapUpOutside: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onTapUpInside: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), groupId: identical(args[8], darticAbsent) ? null : args[8], consumeOutsideTaps: identical(args[9], darticAbsent) ? false : args[9] as bool, debugLabel: identical(args[10], darticAbsent) ? null : args[10] as String?),
         '_#fromFields#11': (args) => TapRegion(key: args[6] as Key?, child: args[1] as Widget?, enabled: args[4] as bool, behavior: args[0] as HitTestBehavior, onTapOutside: args[8] == null ? null : (a) => (args[8] as Function)(a), onTapInside: args[7] == null ? null : (a) => (args[7] as Function)(a), onTapUpOutside: args[10] == null ? null : (a) => (args[10] as Function)(a), onTapUpInside: args[9] == null ? null : (a) => (args[9] as Function)(a), groupId: args[5], consumeOutsideTaps: args[2] as bool, debugLabel: args[3] as String?),
       };

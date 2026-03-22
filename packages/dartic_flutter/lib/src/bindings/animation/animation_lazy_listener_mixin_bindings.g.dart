@@ -25,6 +25,9 @@ abstract final class AnimationLazyListenerMixinBindings {
         'didUnregisterListener#0': (args) { (args[0] as AnimationLazyListenerMixin).didUnregisterListener(); return null; },
         'didStartListening#0': (args) { (args[0] as AnimationLazyListenerMixin).didStartListening(); return null; },
         'didStopListening#0': (args) { (args[0] as AnimationLazyListenerMixin).didStopListening(); return null; },
+        'toString#0': (args) => (args[0] as AnimationLazyListenerMixin).toString(),
         'isListening#0': (args) => (args[0] as AnimationLazyListenerMixin).isListening,
+        'hashCode#0': (args) => (args[0] as AnimationLazyListenerMixin).hashCode,
+        '==#1': (args) => (args[0] as AnimationLazyListenerMixin) == (args[1] as Object),
       };
 }

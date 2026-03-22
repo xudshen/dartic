@@ -32,6 +32,7 @@ abstract final class StreamBuilderBindings {
         'afterDone#1': (args) => (args[0] as StreamBuilder).afterDone(args[1] as AsyncSnapshot),
         'afterDisconnected#1': (args) => (args[0] as StreamBuilder).afterDisconnected(args[1] as AsyncSnapshot),
         'build#2': (args) => (args[0] as StreamBuilder).build(args[1] as BuildContext, args[2] as AsyncSnapshot),
+        'toString#0': (args) => (args[0] as StreamBuilder).toString(),
         'createState#0': (args) => (args[0] as StreamBuilder).createState(),
         'createElement#0': (args) => (args[0] as StreamBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as StreamBuilder).toStringShort(),
@@ -42,8 +43,10 @@ abstract final class StreamBuilderBindings {
         'debugDescribeChildren#0': (args) => (args[0] as StreamBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as StreamBuilder).builder,
         'initialData#0': (args) => (args[0] as StreamBuilder).initialData,
+        'hashCode#0': (args) => (args[0] as StreamBuilder).hashCode,
         'stream#0': (args) => (args[0] as StreamBuilder).stream,
         'key#0': (args) => (args[0] as StreamBuilder).key,
+        '==#1': (args) => (args[0] as StreamBuilder) == (args[1] as Object),
         '#4': (args) => StreamBuilder<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialData: identical(args[1], darticAbsent) ? null : args[1], stream: args[2] as Stream?, builder: (a, b) => (args[3] as Function)(a, b) as Widget),
         '_#fromFields#4': (args) => StreamBuilder<dynamic>(key: args[2] as Key?, initialData: args[1], stream: args[3] as Stream?, builder: args[0] as Widget Function(BuildContext, AsyncSnapshot)),
       };

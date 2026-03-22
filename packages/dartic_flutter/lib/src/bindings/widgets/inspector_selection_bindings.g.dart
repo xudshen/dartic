@@ -40,6 +40,7 @@ abstract final class InspectorSelectionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'clear#0': (args) { (args[0] as InspectorSelection).clear(); return null; },
+        'toString#0': (args) => (args[0] as InspectorSelection).toString(),
         'addListener#1': (args) { (args[0] as InspectorSelection).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as InspectorSelection).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as InspectorSelection).dispose(); return null; },
@@ -49,11 +50,13 @@ abstract final class InspectorSelectionBindings {
         'current#0': (args) => (args[0] as InspectorSelection).current,
         'currentElement#0': (args) => (args[0] as InspectorSelection).currentElement,
         'active#0': (args) => (args[0] as InspectorSelection).active,
+        'hashCode#0': (args) => (args[0] as InspectorSelection).hashCode,
         'hasListeners#0': (args) => (args[0] as InspectorSelection).hasListeners,
         'candidates=#1': (args) { (args[0] as InspectorSelection).candidates = (args[1] as List).cast<RenderObject>(); return args[1]; },
         'index=#1': (args) { (args[0] as InspectorSelection).index = args[1] as int; return args[1]; },
         'current=#1': (args) { (args[0] as InspectorSelection).current = args[1] as RenderObject?; return args[1]; },
         'currentElement=#1': (args) { (args[0] as InspectorSelection).currentElement = args[1] as Element?; return args[1]; },
+        '==#1': (args) => (args[0] as InspectorSelection) == (args[1] as Object),
         '#0': (args) => InspectorSelection(),
       };
 }

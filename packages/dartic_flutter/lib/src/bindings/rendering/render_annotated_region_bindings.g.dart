@@ -40,6 +40,7 @@ abstract final class RenderAnnotatedRegionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as RenderAnnotatedRegion).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderAnnotatedRegion).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RenderAnnotatedRegion).toString(),
         'setupParentData#1': (args) { (args[0] as RenderAnnotatedRegion).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAnnotatedRegion).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAnnotatedRegion).computeMinIntrinsicWidth(args[1] as double),
@@ -119,6 +120,7 @@ abstract final class RenderAnnotatedRegionBindings {
         'value#0': (args) => (args[0] as RenderAnnotatedRegion).value,
         'sized#0': (args) => (args[0] as RenderAnnotatedRegion).sized,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderAnnotatedRegion).alwaysNeedsCompositing,
+        'hashCode#0': (args) => (args[0] as RenderAnnotatedRegion).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAnnotatedRegion).hasSize,
         'size#0': (args) => (args[0] as RenderAnnotatedRegion).size,
         'semanticBounds#0': (args) => (args[0] as RenderAnnotatedRegion).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderAnnotatedRegionBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAnnotatedRegion).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAnnotatedRegion).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderAnnotatedRegion).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAnnotatedRegion) == (args[1] as Object),
         '#3': (args) => RenderAnnotatedRegion<Object>(value: args[0] as Object, sized: args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

@@ -29,5 +29,8 @@ abstract final class FeedbackBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Feedback).toString(),
+        'hashCode#0': (args) => (args[0] as Feedback).hashCode,
+        '==#1': (args) => (args[0] as Feedback) == (args[1] as Object),
       };
 }

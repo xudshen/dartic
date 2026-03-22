@@ -36,6 +36,7 @@ abstract final class CupertinoFullscreenDialogTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).createState(),
+        'toString#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).toString(),
         'createElement#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoFullscreenDialogTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class CupertinoFullscreenDialogTransitionBindings {
         'secondaryRouteAnimation#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).secondaryRouteAnimation,
         'linearTransition#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).linearTransition,
         'child#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).child,
+        'hashCode#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).hashCode,
         'key#0': (args) => (args[0] as CupertinoFullscreenDialogTransition).key,
+        '==#1': (args) => (args[0] as CupertinoFullscreenDialogTransition) == (args[1] as Object),
         '#5': (args) => CupertinoFullscreenDialogTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, primaryRouteAnimation: args[1] as Animation<double>, secondaryRouteAnimation: args[2] as Animation<double>, child: args[3] as Widget, linearTransition: args[4] as bool),
         '_#fromFields#5': (args) => CupertinoFullscreenDialogTransition(key: args[1] as Key?, primaryRouteAnimation: args[3] as Animation<double>, secondaryRouteAnimation: args[4] as Animation<double>, child: args[0] as Widget, linearTransition: args[2] as bool),
       };

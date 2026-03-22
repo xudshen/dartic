@@ -26,8 +26,11 @@ abstract final class FabDockedOffsetYBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getOffsetY#2': (args) => (args[0] as FabDockedOffsetY).getOffsetY(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
+        'toString#0': (args) => (args[0] as FabDockedOffsetY).toString(),
         'getOffsetX#2': (args) => (args[0] as FabDockedOffsetY).getOffsetX(args[1] as ScaffoldPrelayoutGeometry, args[2] as double),
         'isMini#0': (args) => (args[0] as FabDockedOffsetY).isMini(),
         'getOffset#1': (args) => (args[0] as FabDockedOffsetY).getOffset(args[1] as ScaffoldPrelayoutGeometry),
+        'hashCode#0': (args) => (args[0] as FabDockedOffsetY).hashCode,
+        '==#1': (args) => (args[0] as FabDockedOffsetY) == (args[1] as Object),
       };
 }

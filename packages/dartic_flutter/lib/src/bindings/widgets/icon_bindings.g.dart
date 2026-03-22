@@ -34,6 +34,7 @@ abstract final class IconBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Icon).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Icon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Icon).toString(),
         'createElement#0': (args) => (args[0] as Icon).createElement(),
         'toStringShort#0': (args) => (args[0] as Icon).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Icon).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -53,7 +54,9 @@ abstract final class IconBindings {
         'applyTextScaling#0': (args) => (args[0] as Icon).applyTextScaling,
         'blendMode#0': (args) => (args[0] as Icon).blendMode,
         'fontWeight#0': (args) => (args[0] as Icon).fontWeight,
+        'hashCode#0': (args) => (args[0] as Icon).hashCode,
         'key#0': (args) => (args[0] as Icon).key,
+        '==#1': (args) => (args[0] as Icon) == (args[1] as Object),
         '#14': (args) => Icon(args[0] as IconData?, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, size: identical(args[2], darticAbsent) ? null : args[2] as double?, fill: identical(args[3], darticAbsent) ? null : args[3] as double?, weight: identical(args[4], darticAbsent) ? null : args[4] as double?, grade: identical(args[5], darticAbsent) ? null : args[5] as double?, opticalSize: identical(args[6], darticAbsent) ? null : args[6] as double?, color: identical(args[7], darticAbsent) ? null : args[7] as Color?, shadows: identical(args[8], darticAbsent) ? null : args[8] == null ? null : (args[8] as List).cast<Shadow>(), semanticLabel: identical(args[9], darticAbsent) ? null : args[9] as String?, textDirection: identical(args[10], darticAbsent) ? null : args[10] as TextDirection?, applyTextScaling: identical(args[11], darticAbsent) ? null : args[11] as bool?, blendMode: identical(args[12], darticAbsent) ? null : args[12] as BlendMode?, fontWeight: identical(args[13], darticAbsent) ? null : args[13] as FontWeight?),
         '_#fromFields#14': (args) => Icon(args[6] as IconData?, key: args[7] as Key?, size: args[11] as double?, fill: args[3] as double?, weight: args[13] as double?, grade: args[5] as double?, opticalSize: args[8] as double?, color: args[2] as Color?, shadows: args[10] == null ? null : (args[10] as List).cast<Shadow>(), semanticLabel: args[9] as String?, textDirection: args[12] as TextDirection?, applyTextScaling: args[0] as bool?, blendMode: args[1] as BlendMode?, fontWeight: args[4] as FontWeight?),
       };

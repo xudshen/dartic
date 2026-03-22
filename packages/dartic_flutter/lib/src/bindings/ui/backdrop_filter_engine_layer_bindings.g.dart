@@ -30,6 +30,9 @@ abstract final class BackdropFilterEngineLayerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BackdropFilterEngineLayer).toString(),
         'dispose#0': (args) { (args[0] as BackdropFilterEngineLayer).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as BackdropFilterEngineLayer).hashCode,
+        '==#1': (args) => (args[0] as BackdropFilterEngineLayer) == (args[1] as Object),
       };
 }

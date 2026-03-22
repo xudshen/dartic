@@ -29,9 +29,12 @@ abstract final class TangentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Tangent).toString(),
         'position#0': (args) => (args[0] as Tangent).position,
         'vector#0': (args) => (args[0] as Tangent).vector,
         'angle#0': (args) => (args[0] as Tangent).angle,
+        'hashCode#0': (args) => (args[0] as Tangent).hashCode,
+        '==#1': (args) => (args[0] as Tangent) == (args[1] as Object),
         '#2': (args) => Tangent(args[0] as Offset, args[1] as Offset),
         'fromAngle#2': (args) => Tangent.fromAngle(args[0] as Offset, args[1] as double),
         '_#fromFields#2': (args) => Tangent(args[0] as Offset, args[1] as Offset),

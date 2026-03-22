@@ -37,6 +37,8 @@ abstract final class RestorationBucketBindings {
         'debugOwner#0': (args) => (args[0] as RestorationBucket).debugOwner,
         'isReplacing#0': (args) => (args[0] as RestorationBucket).isReplacing,
         'restorationId#0': (args) => (args[0] as RestorationBucket).restorationId,
+        'hashCode#0': (args) => (args[0] as RestorationBucket).hashCode,
+        '==#1': (args) => (args[0] as RestorationBucket) == (args[1] as Object),
         'empty#2': (args) => RestorationBucket.empty(restorationId: args[0] as String, debugOwner: args[1]),
         'root#2': (args) => RestorationBucket.root(manager: args[0] as RestorationManager, rawData: args[1] as Map<Object?, Object?>?),
         'child#3': (args) => RestorationBucket.child(restorationId: args[0] as String, parent: args[1] as RestorationBucket, debugOwner: args[2]),

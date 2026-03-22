@@ -41,14 +41,17 @@ abstract final class EnableWidgetInspectorScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createElement#0': (args) => (args[0] as EnableWidgetInspectorScope).createElement(),
+        'toString#0': (args) => (args[0] as EnableWidgetInspectorScope).toString(),
         'toStringShort#0': (args) => (args[0] as EnableWidgetInspectorScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as EnableWidgetInspectorScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as EnableWidgetInspectorScope).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as EnableWidgetInspectorScope).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as EnableWidgetInspectorScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as EnableWidgetInspectorScope).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as EnableWidgetInspectorScope).hashCode,
         'child#0': (args) => (args[0] as EnableWidgetInspectorScope).child,
         'key#0': (args) => (args[0] as EnableWidgetInspectorScope).key,
+        '==#1': (args) => (args[0] as EnableWidgetInspectorScope) == (args[1] as Object),
         '#2': (args) => EnableWidgetInspectorScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => EnableWidgetInspectorScope(key: args[1] as Key?, child: args[0] as Widget),
       };

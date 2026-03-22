@@ -43,8 +43,11 @@ abstract final class ScaffoldGeometryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#2': (args) => (args[0] as ScaffoldGeometry).copyWith(bottomNavigationBarTop: identical(args[1], darticAbsent) ? null : args[1] as double?, floatingActionButtonArea: identical(args[2], darticAbsent) ? null : args[2] as Rect?),
+        'toString#0': (args) => (args[0] as ScaffoldGeometry).toString(),
         'bottomNavigationBarTop#0': (args) => (args[0] as ScaffoldGeometry).bottomNavigationBarTop,
         'floatingActionButtonArea#0': (args) => (args[0] as ScaffoldGeometry).floatingActionButtonArea,
+        'hashCode#0': (args) => (args[0] as ScaffoldGeometry).hashCode,
+        '==#1': (args) => (args[0] as ScaffoldGeometry) == (args[1] as Object),
         '#2': (args) => ScaffoldGeometry(bottomNavigationBarTop: identical(args[0], darticAbsent) ? null : args[0] as double?, floatingActionButtonArea: identical(args[1], darticAbsent) ? null : args[1] as Rect?),
         '_#fromFields#2': (args) => ScaffoldGeometry(bottomNavigationBarTop: args[0] as double?, floatingActionButtonArea: args[1] as Rect?),
       };

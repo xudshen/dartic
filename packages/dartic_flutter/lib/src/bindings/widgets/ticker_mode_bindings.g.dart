@@ -28,6 +28,7 @@ abstract final class TickerModeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TickerMode).createState(),
+        'toString#0': (args) => (args[0] as TickerMode).toString(),
         'createElement#0': (args) => (args[0] as TickerMode).createElement(),
         'toStringShort#0': (args) => (args[0] as TickerMode).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TickerMode).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class TickerModeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as TickerMode).debugDescribeChildren(),
         'enabled#0': (args) => (args[0] as TickerMode).enabled,
         'child#0': (args) => (args[0] as TickerMode).child,
+        'hashCode#0': (args) => (args[0] as TickerMode).hashCode,
         'key#0': (args) => (args[0] as TickerMode).key,
+        '==#1': (args) => (args[0] as TickerMode) == (args[1] as Object),
         '#3': (args) => TickerMode(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, enabled: args[1] as bool, child: args[2] as Widget),
         '_#fromFields#3': (args) => TickerMode(key: args[2] as Key?, enabled: args[1] as bool, child: args[0] as Widget),
       };

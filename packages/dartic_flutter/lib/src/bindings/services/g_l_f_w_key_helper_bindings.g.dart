@@ -35,8 +35,11 @@ abstract final class GLFWKeyHelperBindings {
         'getModifierSide#1': (args) => (args[0] as GLFWKeyHelper).getModifierSide(args[1] as ModifierKey),
         'numpadKey#1': (args) => (args[0] as GLFWKeyHelper).numpadKey(args[1] as int),
         'logicalKey#1': (args) => (args[0] as GLFWKeyHelper).logicalKey(args[1] as int),
+        'toString#0': (args) => (args[0] as GLFWKeyHelper).toString(),
         'debugToolkit#0': (args) => (args[0] as GLFWKeyHelper).debugToolkit,
         'platformPlane#0': (args) => (args[0] as GLFWKeyHelper).platformPlane,
+        'hashCode#0': (args) => (args[0] as GLFWKeyHelper).hashCode,
+        '==#1': (args) => (args[0] as GLFWKeyHelper) == (args[1] as Object),
         '#0': (args) => GLFWKeyHelper(),
       };
 }

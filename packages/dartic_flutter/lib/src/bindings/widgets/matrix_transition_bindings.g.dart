@@ -37,6 +37,7 @@ abstract final class MatrixTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as MatrixTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as MatrixTransition).toString(),
         'createState#0': (args) => (args[0] as MatrixTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as MatrixTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as MatrixTransition).createElement(),
@@ -50,8 +51,10 @@ abstract final class MatrixTransitionBindings {
         'alignment#0': (args) => (args[0] as MatrixTransition).alignment,
         'filterQuality#0': (args) => (args[0] as MatrixTransition).filterQuality,
         'child#0': (args) => (args[0] as MatrixTransition).child,
+        'hashCode#0': (args) => (args[0] as MatrixTransition).hashCode,
         'listenable#0': (args) => (args[0] as MatrixTransition).listenable,
         'key#0': (args) => (args[0] as MatrixTransition).key,
+        '==#1': (args) => (args[0] as MatrixTransition) == (args[1] as Object),
         '#6': (args) => MatrixTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animation: args[1] as Animation<double>, onTransform: (a) => (args[2] as Function)(a) as Matrix4, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as Alignment, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as FilterQuality?, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => MatrixTransition(key: args[3] as Key?, animation: args[4] as Animation<double>, onTransform: args[5] as TransformCallback, alignment: args[0] as Alignment, filterQuality: args[2] as FilterQuality?, child: args[1] as Widget?),
       };

@@ -25,6 +25,9 @@ abstract final class AutofillContextActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AutofillContextAction).toString(),
+        'hashCode#0': (args) => (args[0] as AutofillContextAction).hashCode,
         'index#0': (args) => (args[0] as AutofillContextAction).index,
+        '==#1': (args) => (args[0] as AutofillContextAction) == (args[1] as Object),
       };
 }

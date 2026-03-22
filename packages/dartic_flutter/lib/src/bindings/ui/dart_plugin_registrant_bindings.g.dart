@@ -30,5 +30,8 @@ abstract final class DartPluginRegistrantBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DartPluginRegistrant).toString(),
+        'hashCode#0': (args) => (args[0] as DartPluginRegistrant).hashCode,
+        '==#1': (args) => (args[0] as DartPluginRegistrant) == (args[1] as Object),
       };
 }

@@ -44,6 +44,7 @@ abstract final class DropdownButtonHideUnderlineBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DropdownButtonHideUnderline).updateShouldNotify(args[1] as DropdownButtonHideUnderline),
+        'toString#0': (args) => (args[0] as DropdownButtonHideUnderline).toString(),
         'createElement#0': (args) => (args[0] as DropdownButtonHideUnderline).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownButtonHideUnderline).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DropdownButtonHideUnderline).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,8 +52,10 @@ abstract final class DropdownButtonHideUnderlineBindings {
         'toStringDeep#4': (args) => (args[0] as DropdownButtonHideUnderline).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as DropdownButtonHideUnderline).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DropdownButtonHideUnderline).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as DropdownButtonHideUnderline).hashCode,
         'child#0': (args) => (args[0] as DropdownButtonHideUnderline).child,
         'key#0': (args) => (args[0] as DropdownButtonHideUnderline).key,
+        '==#1': (args) => (args[0] as DropdownButtonHideUnderline) == (args[1] as Object),
         '#2': (args) => DropdownButtonHideUnderline(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => DropdownButtonHideUnderline(key: args[1] as Key?, child: args[0] as Widget),
       };

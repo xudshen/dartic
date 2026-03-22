@@ -41,6 +41,7 @@ abstract final class LinearGradientBindings {
         'colors#0': (args) => (args[0] as LinearGradient).colors,
         'stops#0': (args) => (args[0] as LinearGradient).stops,
         'transform#0': (args) => (args[0] as LinearGradient).transform,
+        '==#1': (args) => (args[0] as LinearGradient) == (args[1] as Object),
         '#6': (args) => LinearGradient(begin: identical(args[0], darticAbsent) ? Alignment.centerLeft : args[0] as AlignmentGeometry, end: identical(args[1], darticAbsent) ? Alignment.centerRight : args[1] as AlignmentGeometry, colors: (args[2] as List).cast<ui.Color>(), stops: identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<double>(), tileMode: identical(args[4], darticAbsent) ? TileMode.clamp : args[4] as ui.TileMode, transform: identical(args[5], darticAbsent) ? null : args[5] as GradientTransform?),
         '_#fromFields#6': (args) => LinearGradient(begin: args[0] as AlignmentGeometry, end: args[2] as AlignmentGeometry, colors: (args[1] as List).cast<ui.Color>(), stops: args[3] == null ? null : (args[3] as List).cast<double>(), tileMode: args[4] as ui.TileMode, transform: args[5] as GradientTransform?),
       };

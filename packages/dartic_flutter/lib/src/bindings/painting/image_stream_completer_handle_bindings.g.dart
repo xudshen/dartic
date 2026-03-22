@@ -24,5 +24,8 @@ abstract final class ImageStreamCompleterHandleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as ImageStreamCompleterHandle).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ImageStreamCompleterHandle).toString(),
+        'hashCode#0': (args) => (args[0] as ImageStreamCompleterHandle).hashCode,
+        '==#1': (args) => (args[0] as ImageStreamCompleterHandle) == (args[1] as Object),
       };
 }

@@ -31,5 +31,7 @@ abstract final class MultiChildLayoutDelegateBindings {
         'performLayout#1': (args) { (args[0] as MultiChildLayoutDelegate).performLayout(args[1] as Size); return null; },
         'shouldRelayout#1': (args) => (args[0] as MultiChildLayoutDelegate).shouldRelayout(args[1] as MultiChildLayoutDelegate),
         'toString#0': (args) => (args[0] as MultiChildLayoutDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as MultiChildLayoutDelegate).hashCode,
+        '==#1': (args) => (args[0] as MultiChildLayoutDelegate) == (args[1] as Object),
       };
 }

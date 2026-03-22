@@ -39,5 +39,8 @@ abstract final class SystemContextMenuClientBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'handleSystemHide#0': (args) { (args[0] as SystemContextMenuClient).handleSystemHide(); return null; },
         'handleCustomContextMenuAction#1': (args) { (args[0] as SystemContextMenuClient).handleCustomContextMenuAction(args[1] as String); return null; },
+        'toString#0': (args) => (args[0] as SystemContextMenuClient).toString(),
+        'hashCode#0': (args) => (args[0] as SystemContextMenuClient).hashCode,
+        '==#1': (args) => (args[0] as SystemContextMenuClient) == (args[1] as Object),
       };
 }

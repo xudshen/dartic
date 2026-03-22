@@ -36,10 +36,13 @@ abstract final class RenderEditablePainterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'shouldRepaint#1': (args) => (args[0] as RenderEditablePainter).shouldRepaint(args[1] as RenderEditablePainter?),
         'paint#3': (args) { (args[0] as RenderEditablePainter).paint(args[1] as ui.Canvas, args[2] as ui.Size, args[3] as RenderEditable); return null; },
+        'toString#0': (args) => (args[0] as RenderEditablePainter).toString(),
         'addListener#1': (args) { (args[0] as RenderEditablePainter).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RenderEditablePainter).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as RenderEditablePainter).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as RenderEditablePainter).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RenderEditablePainter).hashCode,
         'hasListeners#0': (args) => (args[0] as RenderEditablePainter).hasListeners,
+        '==#1': (args) => (args[0] as RenderEditablePainter) == (args[1] as Object),
       };
 }

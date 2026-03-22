@@ -34,6 +34,9 @@ abstract final class TableCellVerticalAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TableCellVerticalAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as TableCellVerticalAlignment).hashCode,
         'index#0': (args) => (args[0] as TableCellVerticalAlignment).index,
+        '==#1': (args) => (args[0] as TableCellVerticalAlignment) == (args[1] as Object),
       };
 }

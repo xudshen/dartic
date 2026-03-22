@@ -39,6 +39,7 @@ abstract final class LinearProgressIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as LinearProgressIndicator).createState(),
+        'toString#0': (args) => (args[0] as LinearProgressIndicator).toString(),
         'debugFillProperties#1': (args) { (args[0] as LinearProgressIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as LinearProgressIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as LinearProgressIndicator).toStringShort(),
@@ -54,12 +55,14 @@ abstract final class LinearProgressIndicatorBindings {
         'trackGap#0': (args) => (args[0] as LinearProgressIndicator).trackGap,
         'year2023#0': (args) => (args[0] as LinearProgressIndicator).year2023,
         'controller#0': (args) => (args[0] as LinearProgressIndicator).controller,
+        'hashCode#0': (args) => (args[0] as LinearProgressIndicator).hashCode,
         'value#0': (args) => (args[0] as LinearProgressIndicator).value,
         'color#0': (args) => (args[0] as LinearProgressIndicator).color,
         'valueColor#0': (args) => (args[0] as LinearProgressIndicator).valueColor,
         'semanticsLabel#0': (args) => (args[0] as LinearProgressIndicator).semanticsLabel,
         'semanticsValue#0': (args) => (args[0] as LinearProgressIndicator).semanticsValue,
         'key#0': (args) => (args[0] as LinearProgressIndicator).key,
+        '==#1': (args) => (args[0] as LinearProgressIndicator) == (args[1] as Object),
         '#14': (args) => LinearProgressIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1] as double?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, valueColor: identical(args[4], darticAbsent) ? null : args[4] as Animation<Color?>?, minHeight: identical(args[5], darticAbsent) ? null : args[5] as double?, semanticsLabel: identical(args[6], darticAbsent) ? null : args[6] as String?, semanticsValue: identical(args[7], darticAbsent) ? null : args[7] as String?, borderRadius: identical(args[8], darticAbsent) ? null : args[8] as BorderRadiusGeometry?, stopIndicatorColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, stopIndicatorRadius: identical(args[10], darticAbsent) ? null : args[10] as double?, trackGap: identical(args[11], darticAbsent) ? null : args[11] as double?, year2023: identical(args[12], darticAbsent) ? null : args[12] as bool?, controller: identical(args[13], darticAbsent) ? null : args[13] as AnimationController?),
         '_#fromFields#14': (args) => LinearProgressIndicator(key: args[4] as Key?, value: args[11] as double?, backgroundColor: args[0] as Color?, color: args[2] as Color?, valueColor: args[12] as Animation<Color?>?, minHeight: args[5] as double?, semanticsLabel: args[6] as String?, semanticsValue: args[7] as String?, borderRadius: args[1] as BorderRadiusGeometry?, stopIndicatorColor: args[8] as Color?, stopIndicatorRadius: args[9] as double?, trackGap: args[10] as double?, year2023: args[13] as bool?, controller: args[3] as AnimationController?),
       };

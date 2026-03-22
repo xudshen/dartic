@@ -45,6 +45,7 @@ abstract final class RenderAnimatedOpacityMixinBindings {
         'paint#2': (args) { (args[0] as RenderAnimatedOpacityMixin).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderAnimatedOpacityMixin).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAnimatedOpacityMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderAnimatedOpacityMixin).toString(),
         'debugValidateChild#1': (args) => (args[0] as RenderAnimatedOpacityMixin).debugValidateChild(args[1] as RenderObject),
         'redepthChildren#0': (args) { (args[0] as RenderAnimatedOpacityMixin).redepthChildren(); return null; },
         'visitChildren#1': (args) { (args[0] as RenderAnimatedOpacityMixin).visitChildren((a) => (args[1] as Function)(a)); return null; },
@@ -92,6 +93,7 @@ abstract final class RenderAnimatedOpacityMixinBindings {
         'isRepaintBoundary#0': (args) => (args[0] as RenderAnimatedOpacityMixin).isRepaintBoundary,
         'opacity#0': (args) => (args[0] as RenderAnimatedOpacityMixin).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as RenderAnimatedOpacityMixin).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as RenderAnimatedOpacityMixin).hashCode,
         'child#0': (args) => (args[0] as RenderAnimatedOpacityMixin).child,
         'debugDisposed#0': (args) => (args[0] as RenderAnimatedOpacityMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderAnimatedOpacityMixin).parentData,
@@ -126,5 +128,6 @@ abstract final class RenderAnimatedOpacityMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderAnimatedOpacityMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderAnimatedOpacityMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAnimatedOpacityMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAnimatedOpacityMixin) == (args[1] as Object),
       };
 }

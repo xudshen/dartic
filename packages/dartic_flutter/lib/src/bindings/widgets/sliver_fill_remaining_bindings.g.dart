@@ -29,6 +29,7 @@ abstract final class SliverFillRemainingBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverFillRemaining).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as SliverFillRemaining).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverFillRemaining).toString(),
         'createElement#0': (args) => (args[0] as SliverFillRemaining).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverFillRemaining).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverFillRemaining).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -38,7 +39,9 @@ abstract final class SliverFillRemainingBindings {
         'child#0': (args) => (args[0] as SliverFillRemaining).child,
         'hasScrollBody#0': (args) => (args[0] as SliverFillRemaining).hasScrollBody,
         'fillOverscroll#0': (args) => (args[0] as SliverFillRemaining).fillOverscroll,
+        'hashCode#0': (args) => (args[0] as SliverFillRemaining).hashCode,
         'key#0': (args) => (args[0] as SliverFillRemaining).key,
+        '==#1': (args) => (args[0] as SliverFillRemaining) == (args[1] as Object),
         '#4': (args) => SliverFillRemaining(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, hasScrollBody: identical(args[2], darticAbsent) ? true : args[2] as bool, fillOverscroll: identical(args[3], darticAbsent) ? false : args[3] as bool),
         '_#fromFields#4': (args) => SliverFillRemaining(key: args[3] as Key?, child: args[0] as Widget?, hasScrollBody: args[2] as bool, fillOverscroll: args[1] as bool),
       };

@@ -39,6 +39,7 @@ abstract final class MaterialBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Material).createState(),
         'debugFillProperties#1': (args) { (args[0] as Material).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Material).toString(),
         'createElement#0': (args) => (args[0] as Material).createElement(),
         'toStringShort#0': (args) => (args[0] as Material).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Material).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -58,8 +59,16 @@ abstract final class MaterialBindings {
         'clipBehavior#0': (args) => (args[0] as Material).clipBehavior,
         'animationDuration#0': (args) => (args[0] as Material).animationDuration,
         'borderRadius#0': (args) => (args[0] as Material).borderRadius,
+        'hashCode#0': (args) => (args[0] as Material).hashCode,
         'key#0': (args) => (args[0] as Material).key,
-        '#14': (args) => Material(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, type: identical(args[1], darticAbsent) ? MaterialType.canvas : args[1] as MaterialType, elevation: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, shadowColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, borderRadius: identical(args[7], darticAbsent) ? null : args[7] as BorderRadiusGeometry?, shape: identical(args[8], darticAbsent) ? null : args[8] as ShapeBorder?, borderOnForeground: identical(args[9], darticAbsent) ? true : args[9] as bool, clipBehavior: identical(args[10], darticAbsent) ? Clip.none : args[10] as Clip, animationDuration: identical(args[11], darticAbsent) ? kThemeChangeDuration : args[11] as Duration, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, animateColor: identical(args[13], darticAbsent) ? false : args[13] as bool),
+        '==#1': (args) => (args[0] as Material) == (args[1] as Object),
+        '#14': (args) {
+          if (identical(args[11], darticAbsent)) {
+            return Material(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, type: identical(args[1], darticAbsent) ? MaterialType.canvas : args[1] as MaterialType, elevation: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, shadowColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, borderRadius: identical(args[7], darticAbsent) ? null : args[7] as BorderRadiusGeometry?, shape: identical(args[8], darticAbsent) ? null : args[8] as ShapeBorder?, borderOnForeground: identical(args[9], darticAbsent) ? true : args[9] as bool, clipBehavior: identical(args[10], darticAbsent) ? Clip.none : args[10] as Clip, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, animateColor: identical(args[13], darticAbsent) ? false : args[13] as bool);
+          } else {
+            return Material(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, type: identical(args[1], darticAbsent) ? MaterialType.canvas : args[1] as MaterialType, elevation: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, shadowColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, borderRadius: identical(args[7], darticAbsent) ? null : args[7] as BorderRadiusGeometry?, shape: identical(args[8], darticAbsent) ? null : args[8] as ShapeBorder?, borderOnForeground: identical(args[9], darticAbsent) ? true : args[9] as bool, clipBehavior: identical(args[10], darticAbsent) ? Clip.none : args[10] as Clip, animationDuration: args[11] as Duration, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, animateColor: identical(args[13], darticAbsent) ? false : args[13] as bool);
+          }
+        },
         '_#fromFields#14': (args) => Material(key: args[8] as Key?, type: args[13] as MaterialType, elevation: args[7] as double, color: args[6] as Color?, shadowColor: args[9] as Color?, surfaceTintColor: args[11] as Color?, textStyle: args[12] as TextStyle?, borderRadius: args[3] as BorderRadiusGeometry?, shape: args[10] as ShapeBorder?, borderOnForeground: args[2] as bool, clipBehavior: args[5] as Clip, animationDuration: args[1] as Duration, child: args[4] as Widget?, animateColor: args[0] as bool),
       };
 }

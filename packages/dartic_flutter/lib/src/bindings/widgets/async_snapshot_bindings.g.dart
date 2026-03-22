@@ -32,6 +32,7 @@ abstract final class AsyncSnapshotBindings {
         'hasData#0': (args) => (args[0] as AsyncSnapshot).hasData,
         'hasError#0': (args) => (args[0] as AsyncSnapshot).hasError,
         'hashCode#0': (args) => (args[0] as AsyncSnapshot).hashCode,
+        '==#1': (args) => (args[0] as AsyncSnapshot) == (args[1] as Object),
         'nothing#0': (args) => AsyncSnapshot<dynamic>.nothing(),
         'waiting#0': (args) => AsyncSnapshot<dynamic>.waiting(),
         'withData#2': (args) => AsyncSnapshot<dynamic>.withData(args[0] as ConnectionState, args[1]),

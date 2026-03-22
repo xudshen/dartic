@@ -26,6 +26,7 @@ abstract final class SuggestionSpanBindings {
         'range#0': (args) => (args[0] as SuggestionSpan).range,
         'suggestions#0': (args) => (args[0] as SuggestionSpan).suggestions,
         'hashCode#0': (args) => (args[0] as SuggestionSpan).hashCode,
+        '==#1': (args) => (args[0] as SuggestionSpan) == (args[1] as Object),
         '#2': (args) => SuggestionSpan(args[0] as TextRange, (args[1] as List).cast<String>()),
         '_#fromFields#2': (args) => SuggestionSpan(args[0] as TextRange, (args[1] as List).cast<String>()),
       };

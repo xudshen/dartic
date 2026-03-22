@@ -78,6 +78,7 @@ abstract final class RenderTwoDimensionalViewportBindings {
         'computeMaxIntrinsicHeight#1': (args) => (args[0] as RenderTwoDimensionalViewport).computeMaxIntrinsicHeight(args[1] as double),
         'applyPaintTransform#2': (args) { (args[0] as RenderTwoDimensionalViewport).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'dispose#0': (args) { (args[0] as RenderTwoDimensionalViewport).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RenderTwoDimensionalViewport).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderTwoDimensionalViewport).getMinIntrinsicHeight(args[1] as double),
@@ -149,6 +150,7 @@ abstract final class RenderTwoDimensionalViewportBindings {
         'viewportDimension#0': (args) => (args[0] as RenderTwoDimensionalViewport).viewportDimension,
         'didResize#0': (args) => (args[0] as RenderTwoDimensionalViewport).didResize,
         'needsDelegateRebuild#0': (args) => (args[0] as RenderTwoDimensionalViewport).needsDelegateRebuild,
+        'hashCode#0': (args) => (args[0] as RenderTwoDimensionalViewport).hashCode,
         'hasSize#0': (args) => (args[0] as RenderTwoDimensionalViewport).hasSize,
         'size#0': (args) => (args[0] as RenderTwoDimensionalViewport).size,
         'semanticBounds#0': (args) => (args[0] as RenderTwoDimensionalViewport).semanticBounds,
@@ -189,5 +191,6 @@ abstract final class RenderTwoDimensionalViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderTwoDimensionalViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderTwoDimensionalViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTwoDimensionalViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTwoDimensionalViewport) == (args[1] as Object),
       };
 }

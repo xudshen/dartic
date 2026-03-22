@@ -29,6 +29,7 @@ abstract final class AnnotatedRegionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as AnnotatedRegion).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as AnnotatedRegion).updateRenderObject(args[1] as BuildContext, args[2] as RenderAnnotatedRegion<Object>); return null; },
+        'toString#0': (args) => (args[0] as AnnotatedRegion).toString(),
         'createElement#0': (args) => (args[0] as AnnotatedRegion).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as AnnotatedRegion).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as AnnotatedRegion).toStringShort(),
@@ -39,8 +40,10 @@ abstract final class AnnotatedRegionBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AnnotatedRegion).debugDescribeChildren(),
         'value#0': (args) => (args[0] as AnnotatedRegion).value,
         'sized#0': (args) => (args[0] as AnnotatedRegion).sized,
+        'hashCode#0': (args) => (args[0] as AnnotatedRegion).hashCode,
         'child#0': (args) => (args[0] as AnnotatedRegion).child,
         'key#0': (args) => (args[0] as AnnotatedRegion).key,
+        '==#1': (args) => (args[0] as AnnotatedRegion) == (args[1] as Object),
         '#4': (args) => AnnotatedRegion<Object>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, value: args[2] as Object, sized: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => AnnotatedRegion<Object>(key: args[1] as Key?, child: args[0] as Widget, value: args[3] as Object, sized: args[2] as bool),
       };

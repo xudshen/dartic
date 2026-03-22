@@ -30,6 +30,7 @@ abstract final class AnimatedIconBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AnimatedIcon).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AnimatedIcon).toString(),
         'createElement#0': (args) => (args[0] as AnimatedIcon).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedIcon).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedIcon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class AnimatedIconBindings {
         'icon#0': (args) => (args[0] as AnimatedIcon).icon,
         'semanticLabel#0': (args) => (args[0] as AnimatedIcon).semanticLabel,
         'textDirection#0': (args) => (args[0] as AnimatedIcon).textDirection,
+        'hashCode#0': (args) => (args[0] as AnimatedIcon).hashCode,
         'key#0': (args) => (args[0] as AnimatedIcon).key,
+        '==#1': (args) => (args[0] as AnimatedIcon) == (args[1] as Object),
         '#7': (args) => AnimatedIcon(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, icon: args[1] as AnimatedIconData, progress: args[2] as Animation<double>, color: identical(args[3], darticAbsent) ? null : args[3] as ui.Color?, size: identical(args[4], darticAbsent) ? null : args[4] as double?, semanticLabel: identical(args[5], darticAbsent) ? null : args[5] as String?, textDirection: identical(args[6], darticAbsent) ? null : args[6] as ui.TextDirection?),
         '_#fromFields#7': (args) => AnimatedIcon(key: args[2] as Key?, icon: args[1] as AnimatedIconData, progress: args[3] as Animation<double>, color: args[0] as ui.Color?, size: args[5] as double?, semanticLabel: args[4] as String?, textDirection: args[6] as ui.TextDirection?),
       };

@@ -30,6 +30,7 @@ abstract final class AutomaticKeepAliveBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AutomaticKeepAlive).createState(),
+        'toString#0': (args) => (args[0] as AutomaticKeepAlive).toString(),
         'createElement#0': (args) => (args[0] as AutomaticKeepAlive).createElement(),
         'toStringShort#0': (args) => (args[0] as AutomaticKeepAlive).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AutomaticKeepAlive).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class AutomaticKeepAliveBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as AutomaticKeepAlive).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as AutomaticKeepAlive).debugDescribeChildren(),
         'child#0': (args) => (args[0] as AutomaticKeepAlive).child,
+        'hashCode#0': (args) => (args[0] as AutomaticKeepAlive).hashCode,
         'key#0': (args) => (args[0] as AutomaticKeepAlive).key,
+        '==#1': (args) => (args[0] as AutomaticKeepAlive) == (args[1] as Object),
         '#2': (args) => AutomaticKeepAlive(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => AutomaticKeepAlive(key: args[1] as Key?, child: args[0] as Widget),
       };

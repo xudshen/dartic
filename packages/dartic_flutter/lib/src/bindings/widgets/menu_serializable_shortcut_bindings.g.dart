@@ -32,8 +32,11 @@ abstract final class MenuSerializableShortcutBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'serializeForMenu#0': (args) => (args[0] as MenuSerializableShortcut).serializeForMenu(),
+        'toString#0': (args) => (args[0] as MenuSerializableShortcut).toString(),
         'accepts#2': (args) => (args[0] as MenuSerializableShortcut).accepts(args[1] as KeyEvent, args[2] as HardwareKeyboard),
         'debugDescribeKeys#0': (args) => (args[0] as MenuSerializableShortcut).debugDescribeKeys(),
+        'hashCode#0': (args) => (args[0] as MenuSerializableShortcut).hashCode,
         'triggers#0': (args) => (args[0] as MenuSerializableShortcut).triggers,
+        '==#1': (args) => (args[0] as MenuSerializableShortcut) == (args[1] as Object),
       };
 }

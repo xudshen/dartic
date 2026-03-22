@@ -32,6 +32,7 @@ abstract final class CupertinoExpansionTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoExpansionTile).createState(),
+        'toString#0': (args) => (args[0] as CupertinoExpansionTile).toString(),
         'createElement#0': (args) => (args[0] as CupertinoExpansionTile).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoExpansionTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoExpansionTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class CupertinoExpansionTileBindings {
         'controller#0': (args) => (args[0] as CupertinoExpansionTile).controller,
         'child#0': (args) => (args[0] as CupertinoExpansionTile).child,
         'transitionMode#0': (args) => (args[0] as CupertinoExpansionTile).transitionMode,
+        'hashCode#0': (args) => (args[0] as CupertinoExpansionTile).hashCode,
         'key#0': (args) => (args[0] as CupertinoExpansionTile).key,
+        '==#1': (args) => (args[0] as CupertinoExpansionTile) == (args[1] as Object),
         '#5': (args) => CupertinoExpansionTile(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: args[1] as Widget, child: args[2] as Widget, controller: identical(args[3], darticAbsent) ? null : args[3] as ExpansibleController?, transitionMode: identical(args[4], darticAbsent) ? ExpansionTileTransitionMode.fade : args[4] as ExpansionTileTransitionMode),
         '_#fromFields#5': (args) => CupertinoExpansionTile(key: args[2] as Key?, title: args[3] as Widget, child: args[0] as Widget, controller: args[1] as ExpansibleController?, transitionMode: args[4] as ExpansionTileTransitionMode),
       };

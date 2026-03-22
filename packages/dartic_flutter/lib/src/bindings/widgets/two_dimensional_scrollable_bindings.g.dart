@@ -54,6 +54,7 @@ abstract final class TwoDimensionalScrollableBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TwoDimensionalScrollable).createState(),
+        'toString#0': (args) => (args[0] as TwoDimensionalScrollable).toString(),
         'createElement#0': (args) => (args[0] as TwoDimensionalScrollable).createElement(),
         'toStringShort#0': (args) => (args[0] as TwoDimensionalScrollable).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TwoDimensionalScrollable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -70,7 +71,9 @@ abstract final class TwoDimensionalScrollableBindings {
         'excludeFromSemantics#0': (args) => (args[0] as TwoDimensionalScrollable).excludeFromSemantics,
         'hitTestBehavior#0': (args) => (args[0] as TwoDimensionalScrollable).hitTestBehavior,
         'dragStartBehavior#0': (args) => (args[0] as TwoDimensionalScrollable).dragStartBehavior,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalScrollable).hashCode,
         'key#0': (args) => (args[0] as TwoDimensionalScrollable).key,
+        '==#1': (args) => (args[0] as TwoDimensionalScrollable) == (args[1] as Object),
         '#10': (args) => TwoDimensionalScrollable(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, horizontalDetails: args[1] as ScrollableDetails, verticalDetails: args[2] as ScrollableDetails, viewportBuilder: (a, b, c) => (args[3] as Function)(a, b, c) as Widget, incrementCalculator: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), restorationId: identical(args[5], darticAbsent) ? null : args[5] as String?, excludeFromSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool, diagonalDragBehavior: identical(args[7], darticAbsent) ? DiagonalDragBehavior.none : args[7] as DiagonalDragBehavior, dragStartBehavior: identical(args[8], darticAbsent) ? DragStartBehavior.start : args[8] as DragStartBehavior, hitTestBehavior: identical(args[9], darticAbsent) ? HitTestBehavior.opaque : args[9] as HitTestBehavior),
         '_#fromFields#10': (args) => TwoDimensionalScrollable(key: args[6] as Key?, horizontalDetails: args[4] as ScrollableDetails, verticalDetails: args[8] as ScrollableDetails, viewportBuilder: args[9] as TwoDimensionalViewportBuilder, incrementCalculator: args[5] as ScrollIncrementCalculator?, restorationId: args[7] as String?, excludeFromSemantics: args[2] as bool, diagonalDragBehavior: args[0] as DiagonalDragBehavior, dragStartBehavior: args[1] as DragStartBehavior, hitTestBehavior: args[3] as HitTestBehavior),
       };

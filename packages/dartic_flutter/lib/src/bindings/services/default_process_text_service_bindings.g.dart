@@ -28,6 +28,9 @@ abstract final class DefaultProcessTextServiceBindings {
         'setChannel#1': (args) { (args[0] as DefaultProcessTextService).setChannel(args[1] as MethodChannel); return null; },
         'queryTextActions#0': (args) => (args[0] as DefaultProcessTextService).queryTextActions(),
         'processTextAction#3': (args) => (args[0] as DefaultProcessTextService).processTextAction(args[1] as String, args[2] as String, args[3] as bool),
+        'toString#0': (args) => (args[0] as DefaultProcessTextService).toString(),
+        'hashCode#0': (args) => (args[0] as DefaultProcessTextService).hashCode,
+        '==#1': (args) => (args[0] as DefaultProcessTextService) == (args[1] as Object),
         '#0': (args) => DefaultProcessTextService(),
       };
 }

@@ -31,6 +31,7 @@ abstract final class SliverChildBuilderDelegateBindings {
         'findIndexByKey#1': (args) => (args[0] as SliverChildBuilderDelegate).findIndexByKey(args[1] as Key),
         'build#2': (args) => (args[0] as SliverChildBuilderDelegate).build(args[1] as BuildContext, args[2] as int),
         'shouldRebuild#1': (args) => (args[0] as SliverChildBuilderDelegate).shouldRebuild(args[1] as SliverChildBuilderDelegate),
+        'toString#0': (args) => (args[0] as SliverChildBuilderDelegate).toString(),
         'estimateMaxScrollOffset#4': (args) => (args[0] as SliverChildBuilderDelegate).estimateMaxScrollOffset(args[1] as int, args[2] as int, args[3] as double, args[4] as double),
         'didFinishLayout#2': (args) { (args[0] as SliverChildBuilderDelegate).didFinishLayout(args[1] as int, args[2] as int); return null; },
         'debugFillDescription#1': (args) { (args[0] as SliverChildBuilderDelegate).debugFillDescription((args[1] as List).cast<String>()); return null; },
@@ -43,6 +44,8 @@ abstract final class SliverChildBuilderDelegateBindings {
         'semanticIndexCallback#0': (args) => (args[0] as SliverChildBuilderDelegate).semanticIndexCallback,
         'findChildIndexCallback#0': (args) => (args[0] as SliverChildBuilderDelegate).findChildIndexCallback,
         'estimatedChildCount#0': (args) => (args[0] as SliverChildBuilderDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as SliverChildBuilderDelegate).hashCode,
+        '==#1': (args) => (args[0] as SliverChildBuilderDelegate) == (args[1] as Object),
         '#8': (args) {
           if (identical(args[6], darticAbsent)) {
             return SliverChildBuilderDelegate((a, b) => (args[0] as Function)(a, b) as Widget?, findChildIndexCallback: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), childCount: identical(args[2], darticAbsent) ? null : args[2] as int?, addAutomaticKeepAlives: identical(args[3], darticAbsent) ? true : args[3] as bool, addRepaintBoundaries: identical(args[4], darticAbsent) ? true : args[4] as bool, addSemanticIndexes: identical(args[5], darticAbsent) ? true : args[5] as bool, semanticIndexOffset: identical(args[7], darticAbsent) ? 0 : args[7] as int);

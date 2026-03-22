@@ -39,6 +39,7 @@ abstract final class CupertinoDialogActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoDialogAction).createState(),
+        'toString#0': (args) => (args[0] as CupertinoDialogAction).toString(),
         'createElement#0': (args) => (args[0] as CupertinoDialogAction).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoDialogAction).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoDialogAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class CupertinoDialogActionBindings {
         'textStyle#0': (args) => (args[0] as CupertinoDialogAction).textStyle,
         'mouseCursor#0': (args) => (args[0] as CupertinoDialogAction).mouseCursor,
         'child#0': (args) => (args[0] as CupertinoDialogAction).child,
+        'hashCode#0': (args) => (args[0] as CupertinoDialogAction).hashCode,
         'key#0': (args) => (args[0] as CupertinoDialogAction).key,
+        '==#1': (args) => (args[0] as CupertinoDialogAction) == (args[1] as Object),
         '#7': (args) => CupertinoDialogAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, textStyle: identical(args[4], darticAbsent) ? null : args[4] as TextStyle?, mouseCursor: identical(args[5], darticAbsent) ? null : args[5] as MouseCursor?, child: args[6] as Widget),
         '_#fromFields#7': (args) => CupertinoDialogAction(key: args[3] as Key?, onPressed: args[5] as VoidCallback?, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, textStyle: args[6] as TextStyle?, mouseCursor: args[4] as MouseCursor?, child: args[0] as Widget),
       };

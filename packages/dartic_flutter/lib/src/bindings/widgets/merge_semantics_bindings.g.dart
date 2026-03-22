@@ -38,6 +38,7 @@ abstract final class MergeSemanticsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as MergeSemantics).createRenderObject(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as MergeSemantics).toString(),
         'createElement#0': (args) => (args[0] as MergeSemantics).createElement(),
         'updateRenderObject#2': (args) { (args[0] as MergeSemantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as MergeSemantics).didUnmountRenderObject(args[1] as RenderObject); return null; },
@@ -47,8 +48,10 @@ abstract final class MergeSemanticsBindings {
         'toStringDeep#4': (args) => (args[0] as MergeSemantics).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as MergeSemantics).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MergeSemantics).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as MergeSemantics).hashCode,
         'child#0': (args) => (args[0] as MergeSemantics).child,
         'key#0': (args) => (args[0] as MergeSemantics).key,
+        '==#1': (args) => (args[0] as MergeSemantics) == (args[1] as Object),
         '#2': (args) => MergeSemantics(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?),
         '_#fromFields#2': (args) => MergeSemantics(key: args[1] as Key?, child: args[0] as Widget?),
       };

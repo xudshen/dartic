@@ -24,8 +24,11 @@ abstract final class PriorityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Priority).toString(),
         'value#0': (args) => (args[0] as Priority).value,
+        'hashCode#0': (args) => (args[0] as Priority).hashCode,
         '+#1': (args) => (args[0] as Priority) + (args[1] as int),
         '-#1': (args) => (args[0] as Priority) - (args[1] as int),
+        '==#1': (args) => (args[0] as Priority) == (args[1] as Object),
       };
 }

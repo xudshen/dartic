@@ -39,6 +39,7 @@ abstract final class RenderSliverListBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'performLayout#0': (args) { (args[0] as RenderSliverList).performLayout(); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverList).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverList).setupParentData(args[1] as RenderObject); return null; },
         'adoptChild#1': (args) { (args[0] as RenderSliverList).adoptChild(args[1] as RenderObject); return null; },
         'insert#2': (args) { (args[0] as RenderSliverList).insert(args[1] as RenderBox, after: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?); return null; },
@@ -118,6 +119,7 @@ abstract final class RenderSliverListBindings {
         'childAfter#1': (args) => (args[0] as RenderSliverList).childAfter(args[1] as RenderBox),
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverList).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverList).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverList).hashCode,
         'childManager#0': (args) => (args[0] as RenderSliverList).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverList).debugChildIntegrityEnabled,
         'semanticBounds#0': (args) => (args[0] as RenderSliverList).semanticBounds,
@@ -159,6 +161,7 @@ abstract final class RenderSliverListBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverList).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverList).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverList).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverList) == (args[1] as Object),
         '#1': (args) => RenderSliverList(childManager: args[0] as RenderSliverBoxChildManager),
       };
 }

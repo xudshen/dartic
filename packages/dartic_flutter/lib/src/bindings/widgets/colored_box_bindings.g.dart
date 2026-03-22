@@ -39,6 +39,7 @@ abstract final class ColoredBoxBindings {
         'createRenderObject#1': (args) => (args[0] as ColoredBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ColoredBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as ColoredBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ColoredBox).toString(),
         'createElement#0': (args) => (args[0] as ColoredBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ColoredBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ColoredBox).toStringShort(),
@@ -47,8 +48,10 @@ abstract final class ColoredBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ColoredBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ColoredBox).debugDescribeChildren(),
         'color#0': (args) => (args[0] as ColoredBox).color,
+        'hashCode#0': (args) => (args[0] as ColoredBox).hashCode,
         'child#0': (args) => (args[0] as ColoredBox).child,
         'key#0': (args) => (args[0] as ColoredBox).key,
+        '==#1': (args) => (args[0] as ColoredBox) == (args[1] as Object),
         '#3': (args) => ColoredBox(color: args[0] as ui.Color, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, key: identical(args[2], darticAbsent) ? null : args[2] as Key?),
         '_#fromFields#3': (args) => ColoredBox(color: args[1] as ui.Color, child: args[0] as Widget?, key: args[2] as Key?),
       };

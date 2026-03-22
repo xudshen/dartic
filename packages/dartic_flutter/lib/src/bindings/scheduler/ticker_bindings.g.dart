@@ -37,7 +37,9 @@ abstract final class TickerBindings {
         'scheduled#0': (args) => (args[0] as Ticker).scheduled,
         'shouldScheduleTick#0': (args) => (args[0] as Ticker).shouldScheduleTick,
         'debugLabel#0': (args) => (args[0] as Ticker).debugLabel,
+        'hashCode#0': (args) => (args[0] as Ticker).hashCode,
         'muted=#1': (args) { (args[0] as Ticker).muted = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as Ticker) == (args[1] as Object),
         '#2': (args) => Ticker((a) => (args[0] as Function)(a), debugLabel: identical(args[1], darticAbsent) ? null : args[1] as String?),
       };
 }

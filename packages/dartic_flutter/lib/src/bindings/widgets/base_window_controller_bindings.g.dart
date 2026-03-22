@@ -31,13 +31,16 @@ abstract final class BaseWindowControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'destroy#0': (args) { (args[0] as BaseWindowController).destroy(); return null; },
+        'toString#0': (args) => (args[0] as BaseWindowController).toString(),
         'addListener#1': (args) { (args[0] as BaseWindowController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as BaseWindowController).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as BaseWindowController).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as BaseWindowController).notifyListeners(); return null; },
         'contentSize#0': (args) => (args[0] as BaseWindowController).contentSize,
         'rootView#0': (args) => (args[0] as BaseWindowController).rootView,
+        'hashCode#0': (args) => (args[0] as BaseWindowController).hashCode,
         'hasListeners#0': (args) => (args[0] as BaseWindowController).hasListeners,
         'rootView=#1': (args) { (args[0] as BaseWindowController).rootView = args[1] as FlutterView; return args[1]; },
+        '==#1': (args) => (args[0] as BaseWindowController) == (args[1] as Object),
       };
 }

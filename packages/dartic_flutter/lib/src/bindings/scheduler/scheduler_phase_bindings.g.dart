@@ -35,6 +35,9 @@ abstract final class SchedulerPhaseBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SchedulerPhase).toString(),
+        'hashCode#0': (args) => (args[0] as SchedulerPhase).hashCode,
         'index#0': (args) => (args[0] as SchedulerPhase).index,
+        '==#1': (args) => (args[0] as SchedulerPhase) == (args[1] as Object),
       };
 }

@@ -47,6 +47,7 @@ abstract final class NestedScrollViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as NestedScrollView).createState(),
+        'toString#0': (args) => (args[0] as NestedScrollView).toString(),
         'createElement#0': (args) => (args[0] as NestedScrollView).createElement(),
         'toStringShort#0': (args) => (args[0] as NestedScrollView).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NestedScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -66,7 +67,9 @@ abstract final class NestedScrollViewBindings {
         'hitTestBehavior#0': (args) => (args[0] as NestedScrollView).hitTestBehavior,
         'restorationId#0': (args) => (args[0] as NestedScrollView).restorationId,
         'scrollBehavior#0': (args) => (args[0] as NestedScrollView).scrollBehavior,
+        'hashCode#0': (args) => (args[0] as NestedScrollView).hashCode,
         'key#0': (args) => (args[0] as NestedScrollView).key,
+        '==#1': (args) => (args[0] as NestedScrollView) == (args[1] as Object),
         '#13': (args) => NestedScrollView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: identical(args[1], darticAbsent) ? null : args[1] as ScrollController?, scrollDirection: identical(args[2], darticAbsent) ? Axis.vertical : args[2] as Axis, reverse: identical(args[3], darticAbsent) ? false : args[3] as bool, physics: identical(args[4], darticAbsent) ? null : args[4] as ScrollPhysics?, headerSliverBuilder: (a, b) => (args[5] as Function)(a, b) as List<Widget>, body: args[6] as Widget, dragStartBehavior: identical(args[7], darticAbsent) ? DragStartBehavior.start : args[7] as DragStartBehavior, floatHeaderSlivers: identical(args[8], darticAbsent) ? false : args[8] as bool, clipBehavior: identical(args[9], darticAbsent) ? Clip.hardEdge : args[9] as Clip, hitTestBehavior: identical(args[10], darticAbsent) ? HitTestBehavior.opaque : args[10] as HitTestBehavior, restorationId: identical(args[11], darticAbsent) ? null : args[11] as String?, scrollBehavior: identical(args[12], darticAbsent) ? null : args[12] as ScrollBehavior?),
         '_#fromFields#13': (args) => NestedScrollView(key: args[7] as Key?, controller: args[2] as ScrollController?, scrollDirection: args[12] as Axis, reverse: args[10] as bool, physics: args[8] as ScrollPhysics?, headerSliverBuilder: args[5] as NestedScrollViewHeaderSliversBuilder, body: args[0] as Widget, dragStartBehavior: args[3] as DragStartBehavior, floatHeaderSlivers: args[4] as bool, clipBehavior: args[1] as Clip, hitTestBehavior: args[6] as HitTestBehavior, restorationId: args[9] as String?, scrollBehavior: args[11] as ScrollBehavior?),
       };

@@ -42,6 +42,9 @@ abstract final class InspectorButtonVariantBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as InspectorButtonVariant).toString(),
+        'hashCode#0': (args) => (args[0] as InspectorButtonVariant).hashCode,
         'index#0': (args) => (args[0] as InspectorButtonVariant).index,
+        '==#1': (args) => (args[0] as InspectorButtonVariant) == (args[1] as Object),
       };
 }

@@ -63,6 +63,7 @@ abstract final class CupertinoDynamicColorBindings {
         'g#0': (args) => (args[0] as CupertinoDynamicColor).g,
         'b#0': (args) => (args[0] as CupertinoDynamicColor).b,
         'colorSpace#0': (args) => (args[0] as CupertinoDynamicColor).colorSpace,
+        '==#1': (args) => (args[0] as CupertinoDynamicColor) == (args[1] as Object),
         '#9': (args) => CupertinoDynamicColor(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color, highContrastColor: args[3] as Color, darkHighContrastColor: args[4] as Color, elevatedColor: args[5] as Color, darkElevatedColor: args[6] as Color, highContrastElevatedColor: args[7] as Color, darkHighContrastElevatedColor: args[8] as Color),
         'withBrightnessAndContrast#5': (args) => CupertinoDynamicColor.withBrightnessAndContrast(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color, highContrastColor: args[3] as Color, darkHighContrastColor: args[4] as Color),
         'withBrightness#3': (args) => CupertinoDynamicColor.withBrightness(debugLabel: identical(args[0], darticAbsent) ? null : args[0] as String?, color: args[1] as Color, darkColor: args[2] as Color),

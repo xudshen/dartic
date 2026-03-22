@@ -33,8 +33,10 @@ abstract final class BouncingScrollSimulationBindings {
         'leadingExtent#0': (args) => (args[0] as BouncingScrollSimulation).leadingExtent,
         'trailingExtent#0': (args) => (args[0] as BouncingScrollSimulation).trailingExtent,
         'spring#0': (args) => (args[0] as BouncingScrollSimulation).spring,
+        'hashCode#0': (args) => (args[0] as BouncingScrollSimulation).hashCode,
         'tolerance#0': (args) => (args[0] as BouncingScrollSimulation).tolerance,
         'tolerance=#1': (args) { (args[0] as BouncingScrollSimulation).tolerance = args[1] as Tolerance; return args[1]; },
+        '==#1': (args) => (args[0] as BouncingScrollSimulation) == (args[1] as Object),
         '#7': (args) => BouncingScrollSimulation(position: args[0] as double, velocity: args[1] as double, leadingExtent: args[2] as double, trailingExtent: args[3] as double, spring: args[4] as SpringDescription, constantDeceleration: identical(args[5], darticAbsent) ? 0 : args[5] as double, tolerance: identical(args[6], darticAbsent) ? Tolerance.defaultTolerance : args[6] as Tolerance),
       };
 }

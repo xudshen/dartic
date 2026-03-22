@@ -53,6 +53,7 @@ abstract final class SliverReorderableListStateBindings {
         'startItemDragReorder#3': (args) { (args[0] as SliverReorderableListState).startItemDragReorder(index: args[1] as int, event: args[2] as PointerDownEvent, recognizer: args[3] as MultiDragGestureRecognizer); return null; },
         'cancelReorder#0': (args) { (args[0] as SliverReorderableListState).cancelReorder(); return null; },
         'build#1': (args) => (args[0] as SliverReorderableListState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverReorderableListState).toString(),
         'initState#0': (args) { (args[0] as SliverReorderableListState).initState(); return null; },
         'reassemble#0': (args) { (args[0] as SliverReorderableListState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as SliverReorderableListState).setState(() => (args[1] as Function)()); return null; },
@@ -62,9 +63,11 @@ abstract final class SliverReorderableListStateBindings {
         'toStringShort#0': (args) => (args[0] as SliverReorderableListState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SliverReorderableListState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as SliverReorderableListState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as SliverReorderableListState).hashCode,
         'widget#0': (args) => (args[0] as SliverReorderableListState).widget,
         'context#0': (args) => (args[0] as SliverReorderableListState).context,
         'mounted#0': (args) => (args[0] as SliverReorderableListState).mounted,
+        '==#1': (args) => (args[0] as SliverReorderableListState) == (args[1] as Object),
         '#0': (args) => SliverReorderableListState(),
       };
 }

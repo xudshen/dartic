@@ -34,8 +34,10 @@ abstract final class NoSplashBindings {
         'paintFeature#2': (args) { (args[0] as NoSplash).paintFeature(args[1] as Canvas, args[2] as Matrix4); return null; },
         'confirm#0': (args) { (args[0] as NoSplash).confirm(); return null; },
         'cancel#0': (args) { (args[0] as NoSplash).cancel(); return null; },
+        'toString#0': (args) => (args[0] as NoSplash).toString(),
         'paintInkCircle#9': (args) { (args[0] as NoSplash).paintInkCircle(canvas: args[1] as Canvas, transform: args[2] as Matrix4, paint: args[3] as Paint, center: args[4] as Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; },
         'dispose#0': (args) { (args[0] as NoSplash).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as NoSplash).hashCode,
         'color#0': (args) => (args[0] as NoSplash).color,
         'customBorder#0': (args) => (args[0] as NoSplash).customBorder,
         'controller#0': (args) => (args[0] as NoSplash).controller,
@@ -43,6 +45,7 @@ abstract final class NoSplashBindings {
         'onRemoved#0': (args) => (args[0] as NoSplash).onRemoved,
         'color=#1': (args) { (args[0] as NoSplash).color = args[1] as Color; return args[1]; },
         'customBorder=#1': (args) { (args[0] as NoSplash).customBorder = args[1] as ShapeBorder?; return args[1]; },
+        '==#1': (args) => (args[0] as NoSplash) == (args[1] as Object),
         '#4': (args) => NoSplash(controller: args[0] as MaterialInkController, referenceBox: args[1] as RenderBox, color: args[2] as Color, onRemoved: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
       };
 }

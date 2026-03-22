@@ -36,6 +36,7 @@ abstract final class RestorationMixinBindings {
         'didUpdateWidget#1': (args) { (args[0] as RestorationMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'didChangeDependencies#0': (args) { (args[0] as RestorationMixin).didChangeDependencies(); return null; },
         'dispose#0': (args) { (args[0] as RestorationMixin).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorationMixin).toString(),
         'initState#0': (args) { (args[0] as RestorationMixin).initState(); return null; },
         'reassemble#0': (args) { (args[0] as RestorationMixin).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RestorationMixin).setState(() => (args[1] as Function)()); return null; },
@@ -48,8 +49,10 @@ abstract final class RestorationMixinBindings {
         'restorationId#0': (args) => (args[0] as RestorationMixin).restorationId,
         'bucket#0': (args) => (args[0] as RestorationMixin).bucket,
         'restorePending#0': (args) => (args[0] as RestorationMixin).restorePending,
+        'hashCode#0': (args) => (args[0] as RestorationMixin).hashCode,
         'widget#0': (args) => (args[0] as RestorationMixin).widget,
         'context#0': (args) => (args[0] as RestorationMixin).context,
         'mounted#0': (args) => (args[0] as RestorationMixin).mounted,
+        '==#1': (args) => (args[0] as RestorationMixin) == (args[1] as Object),
       };
 }

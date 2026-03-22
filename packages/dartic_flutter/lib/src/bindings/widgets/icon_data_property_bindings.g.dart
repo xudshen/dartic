@@ -23,6 +23,7 @@ abstract final class IconDataPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toJsonMap#1': (args) => (args[0] as IconDataProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
+        'toString#0': (args) => (args[0] as IconDataProperty).toString(),
         'valueToString#1': (args) => (args[0] as IconDataProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as IconDataProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as IconDataProperty).getProperties(),
@@ -31,6 +32,7 @@ abstract final class IconDataPropertyBindings {
         'toTimelineArguments#0': (args) => (args[0] as IconDataProperty).toTimelineArguments(),
         'toJsonMapIterative#1': (args) => (args[0] as IconDataProperty).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as IconDataProperty).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
+        'hashCode#0': (args) => (args[0] as IconDataProperty).hashCode,
         'expandableValue#0': (args) => (args[0] as IconDataProperty).expandableValue,
         'allowWrap#0': (args) => (args[0] as IconDataProperty).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as IconDataProperty).allowNameWrap,
@@ -52,6 +54,7 @@ abstract final class IconDataPropertyBindings {
         'style#0': (args) => (args[0] as IconDataProperty).style,
         'allowTruncate#0': (args) => (args[0] as IconDataProperty).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as IconDataProperty).textTreeConfiguration,
+        '==#1': (args) => (args[0] as IconDataProperty) == (args[1] as Object),
         '#6': (args) => IconDataProperty(args[0] as String, args[1] as IconData?, ifNull: identical(args[2], darticAbsent) ? null : args[2] as String?, showName: identical(args[3], darticAbsent) ? true : args[3] as bool, style: identical(args[4], darticAbsent) ? DiagnosticsTreeStyle.singleLine : args[4] as DiagnosticsTreeStyle, level: identical(args[5], darticAbsent) ? DiagnosticLevel.info : args[5] as DiagnosticLevel),
       };
 }

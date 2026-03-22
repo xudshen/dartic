@@ -41,6 +41,7 @@ abstract final class InheritedElementBindings {
         'removeDependent#1': (args) { (args[0] as InheritedElement).removeDependent(args[1] as Element); return null; },
         'updated#1': (args) { (args[0] as InheritedElement).updated(args[1] as InheritedWidget); return null; },
         'notifyClients#1': (args) { (args[0] as InheritedElement).notifyClients(args[1] as InheritedWidget); return null; },
+        'toString#0': (args) => (args[0] as InheritedElement).toString(),
         'build#0': (args) => (args[0] as InheritedElement).build(),
         'update#1': (args) { (args[0] as InheritedElement).update(args[1] as ProxyWidget); return null; },
         'mount#2': (args) { (args[0] as InheritedElement).mount(args[1] as Element?, args[2]); return null; },
@@ -90,6 +91,7 @@ abstract final class InheritedElementBindings {
         'rebuild#1': (args) { (args[0] as InheritedElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as InheritedElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as InheritedElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as InheritedElement).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as InheritedElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as InheritedElement).renderObjectAttachingChild,
         'slot#0': (args) => (args[0] as InheritedElement).slot,
@@ -103,6 +105,7 @@ abstract final class InheritedElementBindings {
         'renderObject#0': (args) => (args[0] as InheritedElement).renderObject,
         'size#0': (args) => (args[0] as InheritedElement).size,
         'dirty#0': (args) => (args[0] as InheritedElement).dirty,
+        '==#1': (args) => (args[0] as InheritedElement) == (args[1] as Object),
         '#1': (args) => InheritedElement(args[0] as InheritedWidget),
       };
 }

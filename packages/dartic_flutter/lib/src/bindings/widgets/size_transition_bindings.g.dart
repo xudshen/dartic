@@ -35,6 +35,7 @@ abstract final class SizeTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SizeTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SizeTransition).toString(),
         'createState#0': (args) => (args[0] as SizeTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as SizeTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as SizeTransition).createElement(),
@@ -48,8 +49,10 @@ abstract final class SizeTransitionBindings {
         'axisAlignment#0': (args) => (args[0] as SizeTransition).axisAlignment,
         'fixedCrossAxisSizeFactor#0': (args) => (args[0] as SizeTransition).fixedCrossAxisSizeFactor,
         'child#0': (args) => (args[0] as SizeTransition).child,
+        'hashCode#0': (args) => (args[0] as SizeTransition).hashCode,
         'listenable#0': (args) => (args[0] as SizeTransition).listenable,
         'key#0': (args) => (args[0] as SizeTransition).key,
+        '==#1': (args) => (args[0] as SizeTransition) == (args[1] as Object),
         '#6': (args) => SizeTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, axis: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, sizeFactor: args[2] as Animation<double>, axisAlignment: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, fixedCrossAxisSizeFactor: identical(args[4], darticAbsent) ? null : args[4] as double?, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => SizeTransition(key: args[4] as Key?, axis: args[0] as Axis, sizeFactor: args[5] as Animation<double>, axisAlignment: args[1] as double, fixedCrossAxisSizeFactor: args[3] as double?, child: args[2] as Widget?),
       };

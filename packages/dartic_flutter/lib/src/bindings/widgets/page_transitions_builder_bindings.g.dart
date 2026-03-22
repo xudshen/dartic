@@ -26,8 +26,11 @@ abstract final class PageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as PageTransitionsBuilder).buildTransitions(args[1] as PageRoute, args[2] as BuildContext, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as PageTransitionsBuilder).toString(),
         'delegatedTransition#0': (args) => (args[0] as PageTransitionsBuilder).delegatedTransition,
         'transitionDuration#0': (args) => (args[0] as PageTransitionsBuilder).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as PageTransitionsBuilder).reverseTransitionDuration,
+        'hashCode#0': (args) => (args[0] as PageTransitionsBuilder).hashCode,
+        '==#1': (args) => (args[0] as PageTransitionsBuilder) == (args[1] as Object),
       };
 }

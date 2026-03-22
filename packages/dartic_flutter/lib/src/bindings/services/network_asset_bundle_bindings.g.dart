@@ -35,6 +35,8 @@ abstract final class NetworkAssetBundleBindings {
         'loadStructuredBinaryData#2': (args) => (args[0] as NetworkAssetBundle).loadStructuredBinaryData(args[1] as String, (a) => (args[2] as Function)(a) as FutureOr),
         'evict#1': (args) { (args[0] as NetworkAssetBundle).evict(args[1] as String); return null; },
         'clear#0': (args) { (args[0] as NetworkAssetBundle).clear(); return null; },
+        'hashCode#0': (args) => (args[0] as NetworkAssetBundle).hashCode,
+        '==#1': (args) => (args[0] as NetworkAssetBundle) == (args[1] as Object),
         '#1': (args) => NetworkAssetBundle(args[0] as Uri),
       };
 }

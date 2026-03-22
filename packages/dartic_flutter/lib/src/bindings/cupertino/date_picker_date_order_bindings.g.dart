@@ -28,6 +28,9 @@ abstract final class DatePickerDateOrderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DatePickerDateOrder).toString(),
+        'hashCode#0': (args) => (args[0] as DatePickerDateOrder).hashCode,
         'index#0': (args) => (args[0] as DatePickerDateOrder).index,
+        '==#1': (args) => (args[0] as DatePickerDateOrder) == (args[1] as Object),
       };
 }

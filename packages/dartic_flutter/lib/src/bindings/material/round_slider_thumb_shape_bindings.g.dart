@@ -37,10 +37,13 @@ abstract final class RoundSliderThumbShapeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredSize#2': (args) => (args[0] as RoundSliderThumbShape).getPreferredSize(args[1] as bool, args[2] as bool),
         'paint#12': (args) { (args[0] as RoundSliderThumbShape).paint(args[1] as PaintingContext, args[2] as Offset, activationAnimation: args[3] as Animation<double>, enableAnimation: args[4] as Animation<double>, isDiscrete: args[5] as bool, labelPainter: args[6] as TextPainter, parentBox: args[7] as RenderBox, sliderTheme: args[8] as SliderThemeData, textDirection: args[9] as TextDirection, value: args[10] as double, textScaleFactor: args[11] as double, sizeWithOverflow: args[12] as Size); return null; },
+        'toString#0': (args) => (args[0] as RoundSliderThumbShape).toString(),
         'enabledThumbRadius#0': (args) => (args[0] as RoundSliderThumbShape).enabledThumbRadius,
         'disabledThumbRadius#0': (args) => (args[0] as RoundSliderThumbShape).disabledThumbRadius,
         'elevation#0': (args) => (args[0] as RoundSliderThumbShape).elevation,
         'pressedElevation#0': (args) => (args[0] as RoundSliderThumbShape).pressedElevation,
+        'hashCode#0': (args) => (args[0] as RoundSliderThumbShape).hashCode,
+        '==#1': (args) => (args[0] as RoundSliderThumbShape) == (args[1] as Object),
         '#4': (args) => RoundSliderThumbShape(enabledThumbRadius: identical(args[0], darticAbsent) ? 10.0 : args[0] as double, disabledThumbRadius: identical(args[1], darticAbsent) ? null : args[1] as double?, elevation: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, pressedElevation: identical(args[3], darticAbsent) ? 6.0 : args[3] as double),
         '_#fromFields#4': (args) => RoundSliderThumbShape(enabledThumbRadius: args[2] as double, disabledThumbRadius: args[0] as double?, elevation: args[1] as double, pressedElevation: args[3] as double),
       };

@@ -30,6 +30,9 @@ abstract final class ShortcutRegistryEntryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'replaceAll#1': (args) { (args[0] as ShortcutRegistryEntry).replaceAll((args[1] as Map).cast<ShortcutActivator, Intent>()); return null; },
         'dispose#0': (args) { (args[0] as ShortcutRegistryEntry).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ShortcutRegistryEntry).toString(),
         'registry#0': (args) => (args[0] as ShortcutRegistryEntry).registry,
+        'hashCode#0': (args) => (args[0] as ShortcutRegistryEntry).hashCode,
+        '==#1': (args) => (args[0] as ShortcutRegistryEntry) == (args[1] as Object),
       };
 }

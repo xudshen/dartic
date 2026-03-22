@@ -48,6 +48,7 @@ abstract final class RenderFittedBoxBindings {
         'paintsChild#1': (args) => (args[0] as RenderFittedBox).paintsChild(args[1] as RenderBox),
         'applyPaintTransform#2': (args) { (args[0] as RenderFittedBox).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderFittedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderFittedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderFittedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderFittedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderFittedBox).computeMinIntrinsicWidth(args[1] as double),
@@ -123,6 +124,7 @@ abstract final class RenderFittedBoxBindings {
         'alignment#0': (args) => (args[0] as RenderFittedBox).alignment,
         'textDirection#0': (args) => (args[0] as RenderFittedBox).textDirection,
         'clipBehavior#0': (args) => (args[0] as RenderFittedBox).clipBehavior,
+        'hashCode#0': (args) => (args[0] as RenderFittedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderFittedBox).hasSize,
         'size#0': (args) => (args[0] as RenderFittedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderFittedBox).semanticBounds,
@@ -163,6 +165,7 @@ abstract final class RenderFittedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderFittedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderFittedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderFittedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderFittedBox) == (args[1] as Object),
         '#5': (args) => RenderFittedBox(fit: identical(args[0], darticAbsent) ? BoxFit.contain : args[0] as BoxFit, alignment: identical(args[1], darticAbsent) ? Alignment.center : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, child: identical(args[3], darticAbsent) ? null : args[3] as RenderBox?, clipBehavior: identical(args[4], darticAbsent) ? Clip.none : args[4] as ui.Clip),
       };
 }

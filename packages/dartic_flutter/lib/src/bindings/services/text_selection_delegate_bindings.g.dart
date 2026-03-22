@@ -40,6 +40,7 @@ abstract final class TextSelectionDelegateBindings {
         'pasteText#1': (args) => (args[0] as TextSelectionDelegate).pasteText(args[1] as SelectionChangedCause),
         'selectAll#1': (args) { (args[0] as TextSelectionDelegate).selectAll(args[1] as SelectionChangedCause); return null; },
         'copySelection#1': (args) { (args[0] as TextSelectionDelegate).copySelection(args[1] as SelectionChangedCause); return null; },
+        'toString#0': (args) => (args[0] as TextSelectionDelegate).toString(),
         'textEditingValue#0': (args) => (args[0] as TextSelectionDelegate).textEditingValue,
         'cutEnabled#0': (args) => (args[0] as TextSelectionDelegate).cutEnabled,
         'copyEnabled#0': (args) => (args[0] as TextSelectionDelegate).copyEnabled,
@@ -49,5 +50,7 @@ abstract final class TextSelectionDelegateBindings {
         'searchWebEnabled#0': (args) => (args[0] as TextSelectionDelegate).searchWebEnabled,
         'shareEnabled#0': (args) => (args[0] as TextSelectionDelegate).shareEnabled,
         'liveTextInputEnabled#0': (args) => (args[0] as TextSelectionDelegate).liveTextInputEnabled,
+        'hashCode#0': (args) => (args[0] as TextSelectionDelegate).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionDelegate) == (args[1] as Object),
       };
 }

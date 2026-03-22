@@ -38,6 +38,7 @@ abstract final class AndroidViewSurfaceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AndroidViewSurface).createState(),
+        'toString#0': (args) => (args[0] as AndroidViewSurface).toString(),
         'createElement#0': (args) => (args[0] as AndroidViewSurface).createElement(),
         'toStringShort#0': (args) => (args[0] as AndroidViewSurface).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AndroidViewSurface).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class AndroidViewSurfaceBindings {
         'controller#0': (args) => (args[0] as AndroidViewSurface).controller,
         'gestureRecognizers#0': (args) => (args[0] as AndroidViewSurface).gestureRecognizers,
         'hitTestBehavior#0': (args) => (args[0] as AndroidViewSurface).hitTestBehavior,
+        'hashCode#0': (args) => (args[0] as AndroidViewSurface).hashCode,
         'key#0': (args) => (args[0] as AndroidViewSurface).key,
+        '==#1': (args) => (args[0] as AndroidViewSurface) == (args[1] as Object),
         '#4': (args) => AndroidViewSurface(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as AndroidViewController, hitTestBehavior: args[2] as PlatformViewHitTestBehavior, gestureRecognizers: (args[3] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
         '_#fromFields#4': (args) => AndroidViewSurface(key: args[3] as Key?, controller: args[0] as AndroidViewController, hitTestBehavior: args[2] as PlatformViewHitTestBehavior, gestureRecognizers: (args[1] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
       };

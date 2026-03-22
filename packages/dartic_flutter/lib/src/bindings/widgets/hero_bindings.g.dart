@@ -40,6 +40,7 @@ abstract final class HeroBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Hero).createState(),
         'debugFillProperties#1': (args) { (args[0] as Hero).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Hero).toString(),
         'createElement#0': (args) => (args[0] as Hero).createElement(),
         'toStringShort#0': (args) => (args[0] as Hero).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Hero).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -52,7 +53,9 @@ abstract final class HeroBindings {
         'flightShuttleBuilder#0': (args) => (args[0] as Hero).flightShuttleBuilder,
         'placeholderBuilder#0': (args) => (args[0] as Hero).placeholderBuilder,
         'transitionOnUserGestures#0': (args) => (args[0] as Hero).transitionOnUserGestures,
+        'hashCode#0': (args) => (args[0] as Hero).hashCode,
         'key#0': (args) => (args[0] as Hero).key,
+        '==#1': (args) => (args[0] as Hero) == (args[1] as Object),
         '#7': (args) => Hero(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tag: args[1] as Object, createRectTween: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b), flightShuttleBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b, c, d, e) => (args[3] as Function?)!(a, b, c, d, e), placeholderBuilder: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b, c) => (args[4] as Function?)!(a, b, c), transitionOnUserGestures: identical(args[5], darticAbsent) ? false : args[5] as bool, child: args[6] as Widget),
         '_#fromFields#7': (args) => Hero(key: args[3] as Key?, tag: args[5] as Object, createRectTween: args[1] as CreateRectTween?, flightShuttleBuilder: args[2] as HeroFlightShuttleBuilder?, placeholderBuilder: args[4] as HeroPlaceholderBuilder?, transitionOnUserGestures: args[6] as bool, child: args[0] as Widget),
       };

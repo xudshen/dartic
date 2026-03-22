@@ -34,6 +34,7 @@ abstract final class ButtonBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ButtonBar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ButtonBar).toString(),
         'createElement#0': (args) => (args[0] as ButtonBar).createElement(),
         'toStringShort#0': (args) => (args[0] as ButtonBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ButtonBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class ButtonBarBindings {
         'overflowDirection#0': (args) => (args[0] as ButtonBar).overflowDirection,
         'overflowButtonSpacing#0': (args) => (args[0] as ButtonBar).overflowButtonSpacing,
         'children#0': (args) => (args[0] as ButtonBar).children,
+        'hashCode#0': (args) => (args[0] as ButtonBar).hashCode,
         'key#0': (args) => (args[0] as ButtonBar).key,
+        '==#1': (args) => (args[0] as ButtonBar) == (args[1] as Object),
         '#12': (args) => ButtonBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? null : args[1] as MainAxisAlignment?, mainAxisSize: identical(args[2], darticAbsent) ? null : args[2] as MainAxisSize?, buttonTextTheme: identical(args[3], darticAbsent) ? null : args[3] as ButtonTextTheme?, buttonMinWidth: identical(args[4], darticAbsent) ? null : args[4] as double?, buttonHeight: identical(args[5], darticAbsent) ? null : args[5] as double?, buttonPadding: identical(args[6], darticAbsent) ? null : args[6] as EdgeInsetsGeometry?, buttonAlignedDropdown: identical(args[7], darticAbsent) ? null : args[7] as bool?, layoutBehavior: identical(args[8], darticAbsent) ? null : args[8] as ButtonBarLayoutBehavior?, overflowDirection: identical(args[9], darticAbsent) ? null : args[9] as VerticalDirection?, overflowButtonSpacing: identical(args[10], darticAbsent) ? null : args[10] as double?, children: identical(args[11], darticAbsent) ? const <Widget>[] : (args[11] as List).cast<Widget>()),
         '_#fromFields#12': (args) => ButtonBar(key: args[7] as Key?, alignment: args[0] as MainAxisAlignment?, mainAxisSize: args[9] as MainAxisSize?, buttonTextTheme: args[5] as ButtonTextTheme?, buttonMinWidth: args[3] as double?, buttonHeight: args[2] as double?, buttonPadding: args[4] as EdgeInsetsGeometry?, buttonAlignedDropdown: args[1] as bool?, layoutBehavior: args[8] as ButtonBarLayoutBehavior?, overflowDirection: args[11] as VerticalDirection?, overflowButtonSpacing: args[10] as double?, children: (args[6] as List).cast<Widget>()),
       };

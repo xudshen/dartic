@@ -37,6 +37,7 @@ abstract final class CupertinoActionSheetActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoActionSheetAction).createState(),
+        'toString#0': (args) => (args[0] as CupertinoActionSheetAction).toString(),
         'createElement#0': (args) => (args[0] as CupertinoActionSheetAction).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoActionSheetAction).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoActionSheetAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,7 +50,9 @@ abstract final class CupertinoActionSheetActionBindings {
         'isDestructiveAction#0': (args) => (args[0] as CupertinoActionSheetAction).isDestructiveAction,
         'mouseCursor#0': (args) => (args[0] as CupertinoActionSheetAction).mouseCursor,
         'child#0': (args) => (args[0] as CupertinoActionSheetAction).child,
+        'hashCode#0': (args) => (args[0] as CupertinoActionSheetAction).hashCode,
         'key#0': (args) => (args[0] as CupertinoActionSheetAction).key,
+        '==#1': (args) => (args[0] as CupertinoActionSheetAction) == (args[1] as Object),
         '#6': (args) => CupertinoActionSheetAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: () => (args[1] as Function)(), isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, child: args[5] as Widget),
         '_#fromFields#6': (args) => CupertinoActionSheetAction(key: args[3] as Key?, onPressed: args[5] as VoidCallback, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, mouseCursor: args[4] as MouseCursor?, child: args[0] as Widget),
       };

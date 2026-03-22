@@ -25,5 +25,8 @@ abstract final class SelectionUtilsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectionUtils).toString(),
+        'hashCode#0': (args) => (args[0] as SelectionUtils).hashCode,
+        '==#1': (args) => (args[0] as SelectionUtils) == (args[1] as Object),
       };
 }

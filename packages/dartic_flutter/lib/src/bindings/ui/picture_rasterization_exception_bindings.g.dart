@@ -33,5 +33,7 @@ abstract final class PictureRasterizationExceptionBindings {
         'toString#0': (args) => (args[0] as PictureRasterizationException).toString(),
         'message#0': (args) => (args[0] as PictureRasterizationException).message,
         'stack#0': (args) => (args[0] as PictureRasterizationException).stack,
+        'hashCode#0': (args) => (args[0] as PictureRasterizationException).hashCode,
+        '==#1': (args) => (args[0] as PictureRasterizationException) == (args[1] as Object),
       };
 }

@@ -28,9 +28,12 @@ abstract final class KeepAliveNotificationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeepAliveNotification).toString(),
         'dispatch#1': (args) { (args[0] as KeepAliveNotification).dispatch(args[1] as BuildContext?); return null; },
         'debugFillDescription#1': (args) { (args[0] as KeepAliveNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
         'handle#0': (args) => (args[0] as KeepAliveNotification).handle,
+        'hashCode#0': (args) => (args[0] as KeepAliveNotification).hashCode,
+        '==#1': (args) => (args[0] as KeepAliveNotification) == (args[1] as Object),
         '#1': (args) => KeepAliveNotification(args[0] as Listenable),
         '_#fromFields#1': (args) => KeepAliveNotification(args[0] as Listenable),
       };

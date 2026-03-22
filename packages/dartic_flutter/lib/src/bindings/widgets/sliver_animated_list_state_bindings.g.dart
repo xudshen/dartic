@@ -37,6 +37,7 @@ abstract final class SliverAnimatedListStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SliverAnimatedListState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SliverAnimatedListState).toString(),
         'initState#0': (args) { (args[0] as SliverAnimatedListState).initState(); return null; },
         'dispose#0': (args) { (args[0] as SliverAnimatedListState).dispose(); return null; },
         'insertItem#2': (args) {
@@ -85,9 +86,11 @@ abstract final class SliverAnimatedListStateBindings {
         'toStringShort#0': (args) => (args[0] as SliverAnimatedListState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SliverAnimatedListState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as SliverAnimatedListState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as SliverAnimatedListState).hashCode,
         'widget#0': (args) => (args[0] as SliverAnimatedListState).widget,
         'context#0': (args) => (args[0] as SliverAnimatedListState).context,
         'mounted#0': (args) => (args[0] as SliverAnimatedListState).mounted,
+        '==#1': (args) => (args[0] as SliverAnimatedListState) == (args[1] as Object),
         '#0': (args) => SliverAnimatedListState(),
       };
 }

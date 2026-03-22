@@ -34,6 +34,7 @@ abstract final class FlutterLogoBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as FlutterLogo).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as FlutterLogo).toString(),
         'createElement#0': (args) => (args[0] as FlutterLogo).createElement(),
         'toStringShort#0': (args) => (args[0] as FlutterLogo).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FlutterLogo).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,7 +47,9 @@ abstract final class FlutterLogoBindings {
         'style#0': (args) => (args[0] as FlutterLogo).style,
         'duration#0': (args) => (args[0] as FlutterLogo).duration,
         'curve#0': (args) => (args[0] as FlutterLogo).curve,
+        'hashCode#0': (args) => (args[0] as FlutterLogo).hashCode,
         'key#0': (args) => (args[0] as FlutterLogo).key,
+        '==#1': (args) => (args[0] as FlutterLogo) == (args[1] as Object),
         '#6': (args) => FlutterLogo(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, size: identical(args[1], darticAbsent) ? null : args[1] as double?, textColor: identical(args[2], darticAbsent) ? const Color(0xFF757575) : args[2] as Color, style: identical(args[3], darticAbsent) ? FlutterLogoStyle.markOnly : args[3] as FlutterLogoStyle, duration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 750) : args[4] as Duration, curve: identical(args[5], darticAbsent) ? Curves.fastOutSlowIn : args[5] as Curve),
         '_#fromFields#6': (args) => FlutterLogo(key: args[2] as Key?, size: args[3] as double?, textColor: args[5] as Color, style: args[4] as FlutterLogoStyle, duration: args[1] as Duration, curve: args[0] as Curve),
       };

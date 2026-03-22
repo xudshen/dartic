@@ -26,9 +26,12 @@ abstract final class MacOSScrollViewFlingVelocityTrackerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getVelocityEstimate#0': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker).getVelocityEstimate(),
+        'toString#0': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker).toString(),
         'addPosition#2': (args) { (args[0] as MacOSScrollViewFlingVelocityTracker).addPosition(args[1] as Duration, args[2] as Offset); return null; },
         'getVelocity#0': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker).getVelocity(),
+        'hashCode#0': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker).hashCode,
         'kind#0': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker).kind,
+        '==#1': (args) => (args[0] as MacOSScrollViewFlingVelocityTracker) == (args[1] as Object),
         '#1': (args) => MacOSScrollViewFlingVelocityTracker(args[0] as PointerDeviceKind),
       };
 }

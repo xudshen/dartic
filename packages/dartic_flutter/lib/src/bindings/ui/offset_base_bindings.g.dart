@@ -37,5 +37,6 @@ abstract final class OffsetBaseBindings {
         '<=#1': (args) => (args[0] as OffsetBase) <= (args[1] as OffsetBase),
         '>#1': (args) => (args[0] as OffsetBase) > (args[1] as OffsetBase),
         '>=#1': (args) => (args[0] as OffsetBase) >= (args[1] as OffsetBase),
+        '==#1': (args) => (args[0] as OffsetBase) == (args[1] as Object),
       };
 }

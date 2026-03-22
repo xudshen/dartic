@@ -44,6 +44,7 @@ abstract final class ContainerLayerBindings {
         'applyTransform#2': (args) { (args[0] as ContainerLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'depthFirstIterateChildren#0': (args) => (args[0] as ContainerLayer).depthFirstIterateChildren(),
         'debugDescribeChildren#0': (args) => (args[0] as ContainerLayer).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as ContainerLayer).toString(),
         'describeClipBounds#0': (args) => (args[0] as ContainerLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as ContainerLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
         'markNeedsAddToScene#0': (args) { (args[0] as ContainerLayer).markNeedsAddToScene(); return null; },
@@ -59,6 +60,7 @@ abstract final class ContainerLayerBindings {
         'firstChild#0': (args) => (args[0] as ContainerLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ContainerLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as ContainerLayer).hasChildren,
+        'hashCode#0': (args) => (args[0] as ContainerLayer).hashCode,
         'subtreeHasCompositionCallbacks#0': (args) => (args[0] as ContainerLayer).subtreeHasCompositionCallbacks,
         'debugDisposed#0': (args) => (args[0] as ContainerLayer).debugDisposed,
         'debugHandleCount#0': (args) => (args[0] as ContainerLayer).debugHandleCount,
@@ -74,6 +76,7 @@ abstract final class ContainerLayerBindings {
         'debugCreator#0': (args) => (args[0] as ContainerLayer).debugCreator,
         'engineLayer=#1': (args) { (args[0] as ContainerLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ContainerLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ContainerLayer) == (args[1] as Object),
         '#0': (args) => ContainerLayer(),
       };
 }

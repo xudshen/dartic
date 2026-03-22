@@ -33,6 +33,7 @@ abstract final class SliverLayoutDimensionsBindings {
         'viewportMainAxisExtent#0': (args) => (args[0] as SliverLayoutDimensions).viewportMainAxisExtent,
         'crossAxisExtent#0': (args) => (args[0] as SliverLayoutDimensions).crossAxisExtent,
         'hashCode#0': (args) => (args[0] as SliverLayoutDimensions).hashCode,
+        '==#1': (args) => (args[0] as SliverLayoutDimensions) == (args[1] as Object),
         '#4': (args) => SliverLayoutDimensions(scrollOffset: args[0] as double, precedingScrollExtent: args[1] as double, viewportMainAxisExtent: args[2] as double, crossAxisExtent: args[3] as double),
         '_#fromFields#4': (args) => SliverLayoutDimensions(scrollOffset: args[2] as double, precedingScrollExtent: args[1] as double, viewportMainAxisExtent: args[3] as double, crossAxisExtent: args[0] as double),
       };

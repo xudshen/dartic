@@ -35,6 +35,9 @@ abstract final class ClipBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Clip).toString(),
+        'hashCode#0': (args) => (args[0] as Clip).hashCode,
         'index#0': (args) => (args[0] as Clip).index,
+        '==#1': (args) => (args[0] as Clip) == (args[1] as Object),
       };
 }

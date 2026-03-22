@@ -36,6 +36,7 @@ abstract final class TableBindings {
         'createElement#0': (args) => (args[0] as Table).createElement(),
         'createRenderObject#1': (args) => (args[0] as Table).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Table).updateRenderObject(args[1] as BuildContext, args[2] as RenderTable); return null; },
+        'toString#0': (args) => (args[0] as Table).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as Table).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Table).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Table).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class TableBindings {
         'border#0': (args) => (args[0] as Table).border,
         'defaultVerticalAlignment#0': (args) => (args[0] as Table).defaultVerticalAlignment,
         'textBaseline#0': (args) => (args[0] as Table).textBaseline,
+        'hashCode#0': (args) => (args[0] as Table).hashCode,
         'key#0': (args) => (args[0] as Table).key,
+        '==#1': (args) => (args[0] as Table) == (args[1] as Object),
         '#8': (args) => Table(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: identical(args[1], darticAbsent) ? const <TableRow>[] : (args[1] as List).cast<TableRow>(), columnWidths: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Map).cast<int, TableColumnWidth>(), defaultColumnWidth: identical(args[3], darticAbsent) ? const FlexColumnWidth() : args[3] as TableColumnWidth, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?, border: identical(args[5], darticAbsent) ? null : args[5] as TableBorder?, defaultVerticalAlignment: identical(args[6], darticAbsent) ? TableCellVerticalAlignment.top : args[6] as TableCellVerticalAlignment, textBaseline: identical(args[7], darticAbsent) ? null : args[7] as TextBaseline?),
       };
 }

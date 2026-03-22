@@ -40,6 +40,7 @@ abstract final class RenderSliverOpacityBindings {
         'paint#2': (args) { (args[0] as RenderSliverOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderSliverOpacity).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverOpacity).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverOpacity).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverOpacity).performLayout(); return null; },
         'hitTestChildren#3': (args) => (args[0] as RenderSliverOpacity).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
@@ -101,6 +102,7 @@ abstract final class RenderSliverOpacityBindings {
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderSliverOpacity).alwaysNeedsCompositing,
         'opacity#0': (args) => (args[0] as RenderSliverOpacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as RenderSliverOpacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as RenderSliverOpacity).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderSliverOpacity).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverOpacity).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverOpacity).constraints,
@@ -139,6 +141,7 @@ abstract final class RenderSliverOpacityBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverOpacity).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverOpacity).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverOpacity).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverOpacity) == (args[1] as Object),
         '#3': (args) => RenderSliverOpacity(opacity: identical(args[0], darticAbsent) ? 1.0 : args[0] as double, alwaysIncludeSemantics: identical(args[1], darticAbsent) ? false : args[1] as bool, sliver: identical(args[2], darticAbsent) ? null : args[2] as RenderSliver?),
       };
 }

@@ -32,6 +32,9 @@ abstract final class ListWheelChildManagerBindings {
         'childExistsAt#1': (args) => (args[0] as ListWheelChildManager).childExistsAt(args[1] as int),
         'createChild#2': (args) { (args[0] as ListWheelChildManager).createChild(args[1] as int, after: args[2] as RenderBox?); return null; },
         'removeChild#1': (args) { (args[0] as ListWheelChildManager).removeChild(args[1] as RenderBox); return null; },
+        'toString#0': (args) => (args[0] as ListWheelChildManager).toString(),
         'childCount#0': (args) => (args[0] as ListWheelChildManager).childCount,
+        'hashCode#0': (args) => (args[0] as ListWheelChildManager).hashCode,
+        '==#1': (args) => (args[0] as ListWheelChildManager) == (args[1] as Object),
       };
 }

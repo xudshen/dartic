@@ -30,6 +30,7 @@ abstract final class OutlinedButtonThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as OutlinedButtonTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as OutlinedButtonTheme).updateShouldNotify(args[1] as OutlinedButtonTheme),
+        'toString#0': (args) => (args[0] as OutlinedButtonTheme).toString(),
         'createElement#0': (args) => (args[0] as OutlinedButtonTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as OutlinedButtonTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as OutlinedButtonTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class OutlinedButtonThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as OutlinedButtonTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as OutlinedButtonTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as OutlinedButtonTheme).data,
+        'hashCode#0': (args) => (args[0] as OutlinedButtonTheme).hashCode,
         'child#0': (args) => (args[0] as OutlinedButtonTheme).child,
         'key#0': (args) => (args[0] as OutlinedButtonTheme).key,
+        '==#1': (args) => (args[0] as OutlinedButtonTheme) == (args[1] as Object),
         '#3': (args) => OutlinedButtonTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as OutlinedButtonThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => OutlinedButtonTheme(key: args[2] as Key?, data: args[1] as OutlinedButtonThemeData, child: args[0] as Widget),
       };

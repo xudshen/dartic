@@ -35,9 +35,11 @@ abstract final class InkSparkleBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as InkSparkle).dispose(); return null; },
         'paintFeature#2': (args) { (args[0] as InkSparkle).paintFeature(args[1] as ui.Canvas, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as InkSparkle).toString(),
         'confirm#0': (args) { (args[0] as InkSparkle).confirm(); return null; },
         'cancel#0': (args) { (args[0] as InkSparkle).cancel(); return null; },
         'paintInkCircle#9': (args) { (args[0] as InkSparkle).paintInkCircle(canvas: args[1] as ui.Canvas, transform: args[2] as Matrix4, paint: args[3] as ui.Paint, center: args[4] as ui.Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as ui.TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; },
+        'hashCode#0': (args) => (args[0] as InkSparkle).hashCode,
         'color#0': (args) => (args[0] as InkSparkle).color,
         'customBorder#0': (args) => (args[0] as InkSparkle).customBorder,
         'controller#0': (args) => (args[0] as InkSparkle).controller,
@@ -45,6 +47,7 @@ abstract final class InkSparkleBindings {
         'onRemoved#0': (args) => (args[0] as InkSparkle).onRemoved,
         'color=#1': (args) { (args[0] as InkSparkle).color = args[1] as ui.Color; return args[1]; },
         'customBorder=#1': (args) { (args[0] as InkSparkle).customBorder = args[1] as ShapeBorder?; return args[1]; },
+        '==#1': (args) => (args[0] as InkSparkle) == (args[1] as Object),
         '#12': (args) => InkSparkle(controller: args[0] as MaterialInkController, referenceBox: args[1] as RenderBox, color: args[2] as ui.Color, position: args[3] as ui.Offset, textDirection: args[4] as ui.TextDirection, containedInkWell: identical(args[5], darticAbsent) ? true : args[5] as bool, rectCallback: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), borderRadius: identical(args[7], darticAbsent) ? null : args[7] as BorderRadius?, customBorder: identical(args[8], darticAbsent) ? null : args[8] as ShapeBorder?, radius: identical(args[9], darticAbsent) ? null : args[9] as double?, onRemoved: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : () => (args[10] as Function?)!(), turbulenceSeed: identical(args[11], darticAbsent) ? null : args[11] as double?),
       };
 }

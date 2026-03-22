@@ -27,6 +27,7 @@ abstract final class ContextMenuButtonItemBindings {
         'type#0': (args) => (args[0] as ContextMenuButtonItem).type,
         'label#0': (args) => (args[0] as ContextMenuButtonItem).label,
         'hashCode#0': (args) => (args[0] as ContextMenuButtonItem).hashCode,
+        '==#1': (args) => (args[0] as ContextMenuButtonItem) == (args[1] as Object),
         '#3': (args) => ContextMenuButtonItem(onPressed: (args[0] as Function?) == null ? null : () => (args[0] as Function?)!(), type: identical(args[1], darticAbsent) ? ContextMenuButtonType.custom : args[1] as ContextMenuButtonType, label: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#3': (args) => ContextMenuButtonItem(onPressed: args[1] as VoidCallback?, type: args[2] as ContextMenuButtonType, label: args[0] as String?),
       };

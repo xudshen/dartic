@@ -34,9 +34,11 @@ abstract final class PlatformMenuItemGroupBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toChannelRepresentation#2': (args) => (args[0] as PlatformMenuItemGroup).toChannelRepresentation(args[1] as PlatformMenuDelegate, getId: (a) => (args[2] as Function)(a) as int),
         'debugFillProperties#1': (args) { (args[0] as PlatformMenuItemGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PlatformMenuItemGroup).toString(),
         'toStringShort#0': (args) => (args[0] as PlatformMenuItemGroup).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformMenuItemGroup).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'members#0': (args) => (args[0] as PlatformMenuItemGroup).members,
+        'hashCode#0': (args) => (args[0] as PlatformMenuItemGroup).hashCode,
         'label#0': (args) => (args[0] as PlatformMenuItemGroup).label,
         'shortcut#0': (args) => (args[0] as PlatformMenuItemGroup).shortcut,
         'onSelected#0': (args) => (args[0] as PlatformMenuItemGroup).onSelected,
@@ -44,6 +46,7 @@ abstract final class PlatformMenuItemGroupBindings {
         'onClose#0': (args) => (args[0] as PlatformMenuItemGroup).onClose,
         'onSelectedIntent#0': (args) => (args[0] as PlatformMenuItemGroup).onSelectedIntent,
         'descendants#0': (args) => (args[0] as PlatformMenuItemGroup).descendants,
+        '==#1': (args) => (args[0] as PlatformMenuItemGroup) == (args[1] as Object),
         '#1': (args) => PlatformMenuItemGroup(members: (args[0] as List).cast<PlatformMenuItem>()),
         '_#fromFields#5': (args) => PlatformMenuItemGroup(members: (args[1] as List).cast<PlatformMenuItem>()),
       };

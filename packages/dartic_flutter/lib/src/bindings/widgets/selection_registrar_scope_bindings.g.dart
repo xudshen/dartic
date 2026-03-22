@@ -27,6 +27,7 @@ abstract final class SelectionRegistrarScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SelectionRegistrarScope).updateShouldNotify(args[1] as SelectionRegistrarScope),
+        'toString#0': (args) => (args[0] as SelectionRegistrarScope).toString(),
         'createElement#0': (args) => (args[0] as SelectionRegistrarScope).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectionRegistrarScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectionRegistrarScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -35,8 +36,10 @@ abstract final class SelectionRegistrarScopeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SelectionRegistrarScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SelectionRegistrarScope).debugDescribeChildren(),
         'registrar#0': (args) => (args[0] as SelectionRegistrarScope).registrar,
+        'hashCode#0': (args) => (args[0] as SelectionRegistrarScope).hashCode,
         'child#0': (args) => (args[0] as SelectionRegistrarScope).child,
         'key#0': (args) => (args[0] as SelectionRegistrarScope).key,
+        '==#1': (args) => (args[0] as SelectionRegistrarScope) == (args[1] as Object),
         '#3': (args) => SelectionRegistrarScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, registrar: args[1] as SelectionRegistrar, child: args[2] as Widget),
         '_#fromFields#3': (args) => SelectionRegistrarScope(key: args[1] as Key?, registrar: args[2] as SelectionRegistrar, child: args[0] as Widget),
       };

@@ -46,6 +46,7 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverSingleBoxAdapter).childMainAxisPosition(args[1] as RenderBox),
         'applyPaintTransform#2': (args) { (args[0] as RenderSliverSingleBoxAdapter).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'paint#2': (args) { (args[0] as RenderSliverSingleBoxAdapter).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderSliverSingleBoxAdapter).performResize(); return null; },
@@ -104,6 +105,7 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderSliverSingleBoxAdapter).debugValidateChild(args[1] as RenderObject),
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverSingleBoxAdapter).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverSingleBoxAdapter).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).constraints,
         'geometry#0': (args) => (args[0] as RenderSliverSingleBoxAdapter).geometry,
@@ -141,5 +143,6 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverSingleBoxAdapter).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverSingleBoxAdapter).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverSingleBoxAdapter).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverSingleBoxAdapter) == (args[1] as Object),
       };
 }

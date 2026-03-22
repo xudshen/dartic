@@ -35,6 +35,7 @@ abstract final class ScrollbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Scrollbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Scrollbar).toString(),
         'createElement#0': (args) => (args[0] as Scrollbar).createElement(),
         'toStringShort#0': (args) => (args[0] as Scrollbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Scrollbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class ScrollbarBindings {
         'interactive#0': (args) => (args[0] as Scrollbar).interactive,
         'notificationPredicate#0': (args) => (args[0] as Scrollbar).notificationPredicate,
         'scrollbarOrientation#0': (args) => (args[0] as Scrollbar).scrollbarOrientation,
+        'hashCode#0': (args) => (args[0] as Scrollbar).hashCode,
         'key#0': (args) => (args[0] as Scrollbar).key,
+        '==#1': (args) => (args[0] as Scrollbar) == (args[1] as Object),
         '#10': (args) => Scrollbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, thumbVisibility: identical(args[3], darticAbsent) ? null : args[3] as bool?, trackVisibility: identical(args[4], darticAbsent) ? null : args[4] as bool?, thickness: identical(args[5], darticAbsent) ? null : args[5] as double?, radius: identical(args[6], darticAbsent) ? null : args[6] as Radius?, notificationPredicate: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), interactive: identical(args[8], darticAbsent) ? null : args[8] as bool?, scrollbarOrientation: identical(args[9], darticAbsent) ? null : args[9] as ScrollbarOrientation?),
         '_#fromFields#10': (args) => Scrollbar(key: args[3] as Key?, child: args[0] as Widget, controller: args[1] as ScrollController?, thumbVisibility: args[8] as bool?, trackVisibility: args[9] as bool?, thickness: args[7] as double?, radius: args[5] as Radius?, notificationPredicate: args[4] as ScrollNotificationPredicate?, interactive: args[2] as bool?, scrollbarOrientation: args[6] as ScrollbarOrientation?),
       };

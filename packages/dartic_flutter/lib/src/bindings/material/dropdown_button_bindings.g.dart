@@ -50,6 +50,7 @@ abstract final class DropdownButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DropdownButton).createState(),
+        'toString#0': (args) => (args[0] as DropdownButton).toString(),
         'createElement#0': (args) => (args[0] as DropdownButton).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DropdownButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -85,7 +86,9 @@ abstract final class DropdownButtonBindings {
         'alignment#0': (args) => (args[0] as DropdownButton).alignment,
         'borderRadius#0': (args) => (args[0] as DropdownButton).borderRadius,
         'barrierDismissible#0': (args) => (args[0] as DropdownButton).barrierDismissible,
+        'hashCode#0': (args) => (args[0] as DropdownButton).hashCode,
         'key#0': (args) => (args[0] as DropdownButton).key,
+        '==#1': (args) => (args[0] as DropdownButton) == (args[1] as Object),
         '#29': (args) => DropdownButton<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, items: args[1] == null ? null : (args[1] as List).cast<DropdownMenuItem>(), selectedItemBuilder: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), value: identical(args[3], darticAbsent) ? null : args[3], hint: identical(args[4], darticAbsent) ? null : args[4] as Widget?, disabledHint: identical(args[5], darticAbsent) ? null : args[5] as Widget?, onChanged: (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onTap: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!(), elevation: identical(args[8], darticAbsent) ? 8 : args[8] as int, style: identical(args[9], darticAbsent) ? null : args[9] as TextStyle?, underline: identical(args[10], darticAbsent) ? null : args[10] as Widget?, icon: identical(args[11], darticAbsent) ? null : args[11] as Widget?, iconDisabledColor: identical(args[12], darticAbsent) ? null : args[12] as Color?, iconEnabledColor: identical(args[13], darticAbsent) ? null : args[13] as Color?, iconSize: identical(args[14], darticAbsent) ? 24.0 : args[14] as double, isDense: identical(args[15], darticAbsent) ? false : args[15] as bool, isExpanded: identical(args[16], darticAbsent) ? false : args[16] as bool, itemHeight: identical(args[17], darticAbsent) ? null : args[17] as double?, menuWidth: identical(args[18], darticAbsent) ? null : args[18] as double?, focusColor: identical(args[19], darticAbsent) ? null : args[19] as Color?, focusNode: identical(args[20], darticAbsent) ? null : args[20] as FocusNode?, autofocus: identical(args[21], darticAbsent) ? false : args[21] as bool, dropdownColor: identical(args[22], darticAbsent) ? null : args[22] as Color?, menuMaxHeight: identical(args[23], darticAbsent) ? null : args[23] as double?, enableFeedback: identical(args[24], darticAbsent) ? null : args[24] as bool?, alignment: identical(args[25], darticAbsent) ? AlignmentDirectional.centerStart : args[25] as AlignmentGeometry, borderRadius: identical(args[26], darticAbsent) ? null : args[26] as BorderRadius?, padding: identical(args[27], darticAbsent) ? null : args[27] as EdgeInsetsGeometry?, barrierDismissible: identical(args[28], darticAbsent) ? true : args[28] as bool),
       };
 }

@@ -48,6 +48,7 @@ abstract final class RenderShiftedBoxBindings {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderShiftedBox).computeDistanceToActualBaseline(args[1] as TextBaseline),
         'paint#2': (args) { (args[0] as RenderShiftedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTestChildren#2': (args) => (args[0] as RenderShiftedBox).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
+        'toString#0': (args) => (args[0] as RenderShiftedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderShiftedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderShiftedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderShiftedBox).getMaxIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderShiftedBoxBindings {
         'describeForError#2': (args) => (args[0] as RenderShiftedBox).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderShiftedBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderShiftedBox).debugValidateChild(args[1] as RenderObject),
+        'hashCode#0': (args) => (args[0] as RenderShiftedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderShiftedBox).hasSize,
         'size#0': (args) => (args[0] as RenderShiftedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderShiftedBox).semanticBounds,
@@ -154,5 +156,6 @@ abstract final class RenderShiftedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderShiftedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderShiftedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderShiftedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderShiftedBox) == (args[1] as Object),
       };
 }

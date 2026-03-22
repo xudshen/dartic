@@ -35,6 +35,7 @@ abstract final class SliverIgnorePointerBindings {
         'createRenderObject#1': (args) => (args[0] as SliverIgnorePointer).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverIgnorePointer).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverIgnorePointer); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverIgnorePointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverIgnorePointer).toString(),
         'createElement#0': (args) => (args[0] as SliverIgnorePointer).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverIgnorePointer).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverIgnorePointer).toStringShort(),
@@ -44,8 +45,10 @@ abstract final class SliverIgnorePointerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SliverIgnorePointer).debugDescribeChildren(),
         'ignoring#0': (args) => (args[0] as SliverIgnorePointer).ignoring,
         'ignoringSemantics#0': (args) => (args[0] as SliverIgnorePointer).ignoringSemantics,
+        'hashCode#0': (args) => (args[0] as SliverIgnorePointer).hashCode,
         'child#0': (args) => (args[0] as SliverIgnorePointer).child,
         'key#0': (args) => (args[0] as SliverIgnorePointer).key,
+        '==#1': (args) => (args[0] as SliverIgnorePointer) == (args[1] as Object),
         '#4': (args) => SliverIgnorePointer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, ignoring: identical(args[1], darticAbsent) ? true : args[1] as bool, ignoringSemantics: identical(args[2], darticAbsent) ? null : args[2] as bool?, sliver: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => SliverIgnorePointer(key: args[3] as Key?, ignoring: args[1] as bool, ignoringSemantics: args[2] as bool?, sliver: args[0] as Widget?),
       };

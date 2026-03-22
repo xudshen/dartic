@@ -29,6 +29,7 @@ abstract final class PerformanceOverlayBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as PerformanceOverlay).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as PerformanceOverlay).updateRenderObject(args[1] as BuildContext, args[2] as RenderPerformanceOverlay); return null; },
+        'toString#0': (args) => (args[0] as PerformanceOverlay).toString(),
         'createElement#0': (args) => (args[0] as PerformanceOverlay).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as PerformanceOverlay).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as PerformanceOverlay).toStringShort(),
@@ -38,7 +39,9 @@ abstract final class PerformanceOverlayBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as PerformanceOverlay).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as PerformanceOverlay).debugDescribeChildren(),
         'optionsMask#0': (args) => (args[0] as PerformanceOverlay).optionsMask,
+        'hashCode#0': (args) => (args[0] as PerformanceOverlay).hashCode,
         'key#0': (args) => (args[0] as PerformanceOverlay).key,
+        '==#1': (args) => (args[0] as PerformanceOverlay) == (args[1] as Object),
         '#2': (args) => PerformanceOverlay(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, optionsMask: identical(args[1], darticAbsent) ? 0 : args[1] as int),
         'allEnabled#1': (args) => PerformanceOverlay.allEnabled(key: identical(args[0], darticAbsent) ? null : args[0] as Key?),
         '_#fromFields#2': (args) => PerformanceOverlay(key: args[0] as Key?, optionsMask: args[1] as int),

@@ -46,6 +46,7 @@ abstract final class GestureRecognizerBindings {
         'dispose#0': (args) { (args[0] as GestureRecognizer).dispose(); return null; },
         'invokeCallback#3': (args) => (args[0] as GestureRecognizer).invokeCallback(args[1] as String, () => (args[2] as Function)(), debugReport: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         'debugFillProperties#1': (args) { (args[0] as GestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as GestureRecognizer).toString(),
         'acceptGesture#1': (args) { (args[0] as GestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as GestureRecognizer).rejectGesture(args[1] as int); return null; },
         'toStringShallow#2': (args) => (args[0] as GestureRecognizer).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -58,7 +59,9 @@ abstract final class GestureRecognizerBindings {
         'supportedDevices#0': (args) => (args[0] as GestureRecognizer).supportedDevices,
         'allowedButtonsFilter#0': (args) => (args[0] as GestureRecognizer).allowedButtonsFilter,
         'debugDescription#0': (args) => (args[0] as GestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as GestureRecognizer).hashCode,
         'gestureSettings=#1': (args) { (args[0] as GestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as GestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as GestureRecognizer) == (args[1] as Object),
       };
 }

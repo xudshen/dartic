@@ -39,6 +39,7 @@ abstract final class DevToolsDeepLinkPropertyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DevToolsDeepLinkProperty).toString(),
         'toJsonMap#1': (args) => (args[0] as DevToolsDeepLinkProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'valueToString#1': (args) => (args[0] as DevToolsDeepLinkProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'toDescription#1': (args) => (args[0] as DevToolsDeepLinkProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
@@ -48,6 +49,7 @@ abstract final class DevToolsDeepLinkPropertyBindings {
         'toTimelineArguments#0': (args) => (args[0] as DevToolsDeepLinkProperty).toTimelineArguments(),
         'toJsonMapIterative#1': (args) => (args[0] as DevToolsDeepLinkProperty).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as DevToolsDeepLinkProperty).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
+        'hashCode#0': (args) => (args[0] as DevToolsDeepLinkProperty).hashCode,
         'expandableValue#0': (args) => (args[0] as DevToolsDeepLinkProperty).expandableValue,
         'allowWrap#0': (args) => (args[0] as DevToolsDeepLinkProperty).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as DevToolsDeepLinkProperty).allowNameWrap,
@@ -69,6 +71,7 @@ abstract final class DevToolsDeepLinkPropertyBindings {
         'style#0': (args) => (args[0] as DevToolsDeepLinkProperty).style,
         'allowTruncate#0': (args) => (args[0] as DevToolsDeepLinkProperty).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as DevToolsDeepLinkProperty).textTreeConfiguration,
+        '==#1': (args) => (args[0] as DevToolsDeepLinkProperty) == (args[1] as Object),
         '#2': (args) => DevToolsDeepLinkProperty(args[0] as String, args[1] as String),
       };
 }

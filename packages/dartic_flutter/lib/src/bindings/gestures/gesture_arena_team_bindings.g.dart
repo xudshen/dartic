@@ -22,8 +22,11 @@ abstract final class GestureArenaTeamBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#2': (args) => (args[0] as GestureArenaTeam).add(args[1] as int, args[2] as GestureArenaMember),
+        'toString#0': (args) => (args[0] as GestureArenaTeam).toString(),
         'captain#0': (args) => (args[0] as GestureArenaTeam).captain,
+        'hashCode#0': (args) => (args[0] as GestureArenaTeam).hashCode,
         'captain=#1': (args) { (args[0] as GestureArenaTeam).captain = args[1] as GestureArenaMember?; return args[1]; },
+        '==#1': (args) => (args[0] as GestureArenaTeam) == (args[1] as Object),
         '#0': (args) => GestureArenaTeam(),
       };
 }

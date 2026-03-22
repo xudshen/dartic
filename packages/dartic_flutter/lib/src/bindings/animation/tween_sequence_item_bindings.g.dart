@@ -20,8 +20,11 @@ abstract final class TweenSequenceItemBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TweenSequenceItem).toString(),
         'tween#0': (args) => (args[0] as TweenSequenceItem).tween,
         'weight#0': (args) => (args[0] as TweenSequenceItem).weight,
+        'hashCode#0': (args) => (args[0] as TweenSequenceItem).hashCode,
+        '==#1': (args) => (args[0] as TweenSequenceItem) == (args[1] as Object),
         '#2': (args) => TweenSequenceItem<dynamic>(tween: args[0] as Animatable, weight: args[1] as double),
         '_#fromFields#2': (args) => TweenSequenceItem<dynamic>(tween: args[0] as Animatable, weight: args[1] as double),
       };

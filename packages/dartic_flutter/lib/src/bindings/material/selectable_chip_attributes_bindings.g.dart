@@ -41,6 +41,7 @@ abstract final class SelectableChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectableChipAttributes).toString(),
         'selected#0': (args) => (args[0] as SelectableChipAttributes).selected,
         'onSelected#0': (args) => (args[0] as SelectableChipAttributes).onSelected,
         'pressElevation#0': (args) => (args[0] as SelectableChipAttributes).pressElevation,
@@ -48,5 +49,7 @@ abstract final class SelectableChipAttributesBindings {
         'selectedShadowColor#0': (args) => (args[0] as SelectableChipAttributes).selectedShadowColor,
         'tooltip#0': (args) => (args[0] as SelectableChipAttributes).tooltip,
         'avatarBorder#0': (args) => (args[0] as SelectableChipAttributes).avatarBorder,
+        'hashCode#0': (args) => (args[0] as SelectableChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as SelectableChipAttributes) == (args[1] as Object),
       };
 }

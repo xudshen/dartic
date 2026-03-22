@@ -30,7 +30,10 @@ abstract final class BuildScopeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BuildScope).toString(),
         'scheduleRebuild#0': (args) => (args[0] as BuildScope).scheduleRebuild,
+        'hashCode#0': (args) => (args[0] as BuildScope).hashCode,
+        '==#1': (args) => (args[0] as BuildScope) == (args[1] as Object),
         '#1': (args) => BuildScope(scheduleRebuild: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!()),
       };
 }

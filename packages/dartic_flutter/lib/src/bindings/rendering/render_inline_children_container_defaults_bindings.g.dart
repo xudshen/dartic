@@ -49,6 +49,7 @@ abstract final class RenderInlineChildrenContainerDefaultsBindings {
         'defaultApplyPaintTransform#2': (args) { (args[0] as RenderInlineChildrenContainerDefaults).defaultApplyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'paintInlineChildren#2': (args) { (args[0] as RenderInlineChildrenContainerDefaults).paintInlineChildren(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'hitTestInlineChildren#2': (args) => (args[0] as RenderInlineChildrenContainerDefaults).hitTestInlineChildren(args[1] as BoxHitTestResult, args[2] as ui.Offset),
+        'toString#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).computeMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).getMaxIntrinsicWidth(args[1] as double),
@@ -133,6 +134,7 @@ abstract final class RenderInlineChildrenContainerDefaultsBindings {
         'move#2': (args) { (args[0] as RenderInlineChildrenContainerDefaults).move(args[1] as RenderBox, after: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?); return null; },
         'childBefore#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).childBefore(args[1] as RenderBox),
         'childAfter#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults).childAfter(args[1] as RenderBox),
+        'hashCode#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).hashCode,
         'hasSize#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).hasSize,
         'size#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).size,
         'semanticBounds#0': (args) => (args[0] as RenderInlineChildrenContainerDefaults).semanticBounds,
@@ -170,5 +172,6 @@ abstract final class RenderInlineChildrenContainerDefaultsBindings {
         'parentData=#1': (args) { (args[0] as RenderInlineChildrenContainerDefaults).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderInlineChildrenContainerDefaults).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderInlineChildrenContainerDefaults).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderInlineChildrenContainerDefaults) == (args[1] as Object),
       };
 }

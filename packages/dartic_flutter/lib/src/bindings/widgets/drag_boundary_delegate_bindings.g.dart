@@ -23,5 +23,8 @@ abstract final class DragBoundaryDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isWithinBoundary#1': (args) => (args[0] as DragBoundaryDelegate).isWithinBoundary(args[1]),
         'nearestPositionWithinBoundary#1': (args) => (args[0] as DragBoundaryDelegate).nearestPositionWithinBoundary(args[1]),
+        'toString#0': (args) => (args[0] as DragBoundaryDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as DragBoundaryDelegate).hashCode,
+        '==#1': (args) => (args[0] as DragBoundaryDelegate) == (args[1] as Object),
       };
 }

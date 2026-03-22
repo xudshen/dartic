@@ -40,6 +40,7 @@ abstract final class RenderIndexedSemanticsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderIndexedSemantics).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderIndexedSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderIndexedSemantics).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIndexedSemantics).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedSemantics).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIndexedSemantics).computeMinIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderIndexedSemanticsBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderIndexedSemantics).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderIndexedSemantics).computeSizeForNoChild(args[1] as BoxConstraints),
         'index#0': (args) => (args[0] as RenderIndexedSemantics).index,
+        'hashCode#0': (args) => (args[0] as RenderIndexedSemantics).hashCode,
         'hasSize#0': (args) => (args[0] as RenderIndexedSemantics).hasSize,
         'size#0': (args) => (args[0] as RenderIndexedSemantics).size,
         'semanticBounds#0': (args) => (args[0] as RenderIndexedSemantics).semanticBounds,
@@ -154,6 +156,7 @@ abstract final class RenderIndexedSemanticsBindings {
         'debugCreator=#1': (args) { (args[0] as RenderIndexedSemantics).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIndexedSemantics).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderIndexedSemantics).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIndexedSemantics) == (args[1] as Object),
         '#2': (args) => RenderIndexedSemantics(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, index: args[1] as int),
       };
 }

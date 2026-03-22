@@ -31,12 +31,15 @@ abstract final class MouseTrackerBindings {
         'updateWithEvent#2': (args) { (args[0] as MouseTracker).updateWithEvent(args[1] as PointerEvent, args[2] as HitTestResult?); return null; },
         'updateAllDevices#0': (args) { (args[0] as MouseTracker).updateAllDevices(); return null; },
         'debugDeviceActiveCursor#1': (args) => (args[0] as MouseTracker).debugDeviceActiveCursor(args[1] as int),
+        'toString#0': (args) => (args[0] as MouseTracker).toString(),
         'addListener#1': (args) { (args[0] as MouseTracker).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as MouseTracker).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as MouseTracker).dispose(); return null; },
         'notifyListeners#0': (args) { (args[0] as MouseTracker).notifyListeners(); return null; },
         'mouseIsConnected#0': (args) => (args[0] as MouseTracker).mouseIsConnected,
+        'hashCode#0': (args) => (args[0] as MouseTracker).hashCode,
         'hasListeners#0': (args) => (args[0] as MouseTracker).hasListeners,
+        '==#1': (args) => (args[0] as MouseTracker) == (args[1] as Object),
         '#1': (args) => MouseTracker((a, b) => (args[0] as Function)(a, b) as HitTestResult),
       };
 }

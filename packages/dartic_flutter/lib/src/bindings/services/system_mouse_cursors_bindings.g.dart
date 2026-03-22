@@ -58,5 +58,8 @@ abstract final class SystemMouseCursorsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemMouseCursors).toString(),
+        'hashCode#0': (args) => (args[0] as SystemMouseCursors).hashCode,
+        '==#1': (args) => (args[0] as SystemMouseCursors) == (args[1] as Object),
       };
 }

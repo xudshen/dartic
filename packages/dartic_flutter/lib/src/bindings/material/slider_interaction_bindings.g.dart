@@ -42,6 +42,9 @@ abstract final class SliderInteractionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SliderInteraction).toString(),
+        'hashCode#0': (args) => (args[0] as SliderInteraction).hashCode,
         'index#0': (args) => (args[0] as SliderInteraction).index,
+        '==#1': (args) => (args[0] as SliderInteraction) == (args[1] as Object),
       };
 }

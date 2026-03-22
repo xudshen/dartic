@@ -38,6 +38,7 @@ abstract final class InlineSpanSemanticsInformationBindings {
         'requiresOwnNode#0': (args) => (args[0] as InlineSpanSemanticsInformation).requiresOwnNode,
         'stringAttributes#0': (args) => (args[0] as InlineSpanSemanticsInformation).stringAttributes,
         'hashCode#0': (args) => (args[0] as InlineSpanSemanticsInformation).hashCode,
+        '==#1': (args) => (args[0] as InlineSpanSemanticsInformation) == (args[1] as Object),
         '#6': (args) => InlineSpanSemanticsInformation(args[0] as String, isPlaceholder: identical(args[1], darticAbsent) ? false : args[1] as bool, semanticsLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, semanticsIdentifier: identical(args[3], darticAbsent) ? null : args[3] as String?, stringAttributes: identical(args[4], darticAbsent) ? const <ui.StringAttribute>[] : (args[4] as List).cast<ui.StringAttribute>(), recognizer: identical(args[5], darticAbsent) ? null : args[5] as GestureRecognizer?),
         '_#fromFields#7': (args) => InlineSpanSemanticsInformation(args[6] as String, isPlaceholder: args[0] as bool, semanticsLabel: args[4] as String?, semanticsIdentifier: args[3] as String?, stringAttributes: (args[5] as List).cast<ui.StringAttribute>(), recognizer: args[1] as GestureRecognizer?),
       };

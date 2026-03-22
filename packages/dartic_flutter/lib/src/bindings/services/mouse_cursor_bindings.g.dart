@@ -32,5 +32,7 @@ abstract final class MouseCursorBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MouseCursor).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as MouseCursor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescription#0': (args) => (args[0] as MouseCursor).debugDescription,
+        'hashCode#0': (args) => (args[0] as MouseCursor).hashCode,
+        '==#1': (args) => (args[0] as MouseCursor) == (args[1] as Object),
       };
 }

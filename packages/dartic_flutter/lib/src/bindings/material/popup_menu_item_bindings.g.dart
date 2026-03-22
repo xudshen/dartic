@@ -53,6 +53,7 @@ abstract final class PopupMenuItemBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'represents#1': (args) => (args[0] as PopupMenuItem).represents(args[1]),
         'createState#0': (args) => (args[0] as PopupMenuItem).createState(),
+        'toString#0': (args) => (args[0] as PopupMenuItem).toString(),
         'createElement#0': (args) => (args[0] as PopupMenuItem).createElement(),
         'toStringShort#0': (args) => (args[0] as PopupMenuItem).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PopupMenuItem).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -69,8 +70,16 @@ abstract final class PopupMenuItemBindings {
         'labelTextStyle#0': (args) => (args[0] as PopupMenuItem).labelTextStyle,
         'mouseCursor#0': (args) => (args[0] as PopupMenuItem).mouseCursor,
         'child#0': (args) => (args[0] as PopupMenuItem).child,
+        'hashCode#0': (args) => (args[0] as PopupMenuItem).hashCode,
         'key#0': (args) => (args[0] as PopupMenuItem).key,
-        '#10': (args) => PopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], onTap: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, height: identical(args[4], darticAbsent) ? kMinInteractiveDimension : args[4] as double, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsets?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, labelTextStyle: identical(args[7], darticAbsent) ? null : args[7] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[8], darticAbsent) ? null : args[8] as MouseCursor?, child: args[9] as Widget?),
+        '==#1': (args) => (args[0] as PopupMenuItem) == (args[1] as Object),
+        '#10': (args) {
+          if (identical(args[4], darticAbsent)) {
+            return PopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], onTap: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsets?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, labelTextStyle: identical(args[7], darticAbsent) ? null : args[7] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[8], darticAbsent) ? null : args[8] as MouseCursor?, child: args[9] as Widget?);
+          } else {
+            return PopupMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: identical(args[1], darticAbsent) ? null : args[1], onTap: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, height: args[4] as double, padding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsets?, textStyle: identical(args[6], darticAbsent) ? null : args[6] as TextStyle?, labelTextStyle: identical(args[7], darticAbsent) ? null : args[7] as WidgetStateProperty<TextStyle?>?, mouseCursor: identical(args[8], darticAbsent) ? null : args[8] as MouseCursor?, child: args[9] as Widget?);
+          }
+        },
         '_#fromFields#10': (args) => PopupMenuItem<dynamic>(key: args[3] as Key?, value: args[9], onTap: args[6] as VoidCallback?, enabled: args[1] as bool, height: args[2] as double, padding: args[7] as EdgeInsets?, textStyle: args[8] as TextStyle?, labelTextStyle: args[4] as WidgetStateProperty<TextStyle?>?, mouseCursor: args[5] as MouseCursor?, child: args[0] as Widget?),
       };
 }

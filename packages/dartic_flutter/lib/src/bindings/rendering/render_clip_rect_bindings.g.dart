@@ -41,6 +41,7 @@ abstract final class RenderClipRectBindings {
         'hitTest#2': (args) => (args[0] as RenderClipRect).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderClipRect).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderClipRect).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderClipRect).toString(),
         'attach#1': (args) { (args[0] as RenderClipRect).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderClipRect).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderClipRect).performLayout(); return null; },
@@ -116,6 +117,7 @@ abstract final class RenderClipRectBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderClipRect).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderClipRect).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderClipRect).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderClipRect).hashCode,
         'clipper#0': (args) => (args[0] as RenderClipRect).clipper,
         'clipBehavior#0': (args) => (args[0] as RenderClipRect).clipBehavior,
         'hasSize#0': (args) => (args[0] as RenderClipRect).hasSize,
@@ -156,6 +158,7 @@ abstract final class RenderClipRectBindings {
         'debugCreator=#1': (args) { (args[0] as RenderClipRect).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderClipRect).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderClipRect).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderClipRect) == (args[1] as Object),
         '#3': (args) => RenderClipRect(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<ui.Rect>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip),
       };
 }

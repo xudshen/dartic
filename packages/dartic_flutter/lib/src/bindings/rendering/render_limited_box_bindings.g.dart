@@ -41,6 +41,7 @@ abstract final class RenderLimitedBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderLimitedBox).computeDryLayout(args[1] as BoxConstraints),
         'performLayout#0': (args) { (args[0] as RenderLimitedBox).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderLimitedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderLimitedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderLimitedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderLimitedBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderLimitedBox).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderLimitedBoxBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderLimitedBox).computeSizeForNoChild(args[1] as BoxConstraints),
         'maxWidth#0': (args) => (args[0] as RenderLimitedBox).maxWidth,
         'maxHeight#0': (args) => (args[0] as RenderLimitedBox).maxHeight,
+        'hashCode#0': (args) => (args[0] as RenderLimitedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderLimitedBox).hasSize,
         'size#0': (args) => (args[0] as RenderLimitedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderLimitedBox).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderLimitedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderLimitedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderLimitedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderLimitedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderLimitedBox) == (args[1] as Object),
         '#3': (args) => RenderLimitedBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, maxWidth: identical(args[1], darticAbsent) ? double.infinity : args[1] as double, maxHeight: identical(args[2], darticAbsent) ? double.infinity : args[2] as double),
       };
 }

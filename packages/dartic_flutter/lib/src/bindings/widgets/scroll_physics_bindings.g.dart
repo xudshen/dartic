@@ -53,6 +53,8 @@ abstract final class ScrollPhysicsBindings {
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as ScrollPhysics).dragStartDistanceMotionThreshold,
         'allowImplicitScrolling#0': (args) => (args[0] as ScrollPhysics).allowImplicitScrolling,
         'allowUserScrolling#0': (args) => (args[0] as ScrollPhysics).allowUserScrolling,
+        'hashCode#0': (args) => (args[0] as ScrollPhysics).hashCode,
+        '==#1': (args) => (args[0] as ScrollPhysics) == (args[1] as Object),
         '#1': (args) => ScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => ScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

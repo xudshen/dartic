@@ -39,6 +39,7 @@ abstract final class CupertinoLocalizationsBindings {
         'timerPickerHourLabel#1': (args) => (args[0] as CupertinoLocalizations).timerPickerHourLabel(args[1] as int),
         'timerPickerMinuteLabel#1': (args) => (args[0] as CupertinoLocalizations).timerPickerMinuteLabel(args[1] as int),
         'timerPickerSecondLabel#1': (args) => (args[0] as CupertinoLocalizations).timerPickerSecondLabel(args[1] as int),
+        'toString#0': (args) => (args[0] as CupertinoLocalizations).toString(),
         'datePickerDateOrder#0': (args) => (args[0] as CupertinoLocalizations).datePickerDateOrder,
         'datePickerDateTimeOrder#0': (args) => (args[0] as CupertinoLocalizations).datePickerDateTimeOrder,
         'anteMeridiemAbbreviation#0': (args) => (args[0] as CupertinoLocalizations).anteMeridiemAbbreviation,
@@ -68,5 +69,7 @@ abstract final class CupertinoLocalizationsBindings {
         'expansionTileCollapsedTapHint#0': (args) => (args[0] as CupertinoLocalizations).expansionTileCollapsedTapHint,
         'expandedHint#0': (args) => (args[0] as CupertinoLocalizations).expandedHint,
         'collapsedHint#0': (args) => (args[0] as CupertinoLocalizations).collapsedHint,
+        'hashCode#0': (args) => (args[0] as CupertinoLocalizations).hashCode,
+        '==#1': (args) => (args[0] as CupertinoLocalizations) == (args[1] as Object),
       };
 }

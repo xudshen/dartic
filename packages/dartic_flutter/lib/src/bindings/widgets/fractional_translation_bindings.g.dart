@@ -39,6 +39,7 @@ abstract final class FractionalTranslationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as FractionalTranslation).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as FractionalTranslation).updateRenderObject(args[1] as BuildContext, args[2] as RenderFractionalTranslation); return null; },
+        'toString#0': (args) => (args[0] as FractionalTranslation).toString(),
         'createElement#0': (args) => (args[0] as FractionalTranslation).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as FractionalTranslation).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as FractionalTranslation).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class FractionalTranslationBindings {
         'debugDescribeChildren#0': (args) => (args[0] as FractionalTranslation).debugDescribeChildren(),
         'translation#0': (args) => (args[0] as FractionalTranslation).translation,
         'transformHitTests#0': (args) => (args[0] as FractionalTranslation).transformHitTests,
+        'hashCode#0': (args) => (args[0] as FractionalTranslation).hashCode,
         'child#0': (args) => (args[0] as FractionalTranslation).child,
         'key#0': (args) => (args[0] as FractionalTranslation).key,
+        '==#1': (args) => (args[0] as FractionalTranslation) == (args[1] as Object),
         '#4': (args) => FractionalTranslation(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, translation: args[1] as ui.Offset, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => FractionalTranslation(key: args[1] as Key?, translation: args[3] as ui.Offset, transformHitTests: args[2] as bool, child: args[0] as Widget?),
       };

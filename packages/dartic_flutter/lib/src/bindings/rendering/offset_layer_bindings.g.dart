@@ -35,6 +35,7 @@ abstract final class OffsetLayerBindings {
         'debugFillProperties#1': (args) { (args[0] as OffsetLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toImage#2': (args) => (args[0] as OffsetLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'toImageSync#2': (args) => (args[0] as OffsetLayer).toImageSync(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
+        'toString#0': (args) => (args[0] as OffsetLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as OffsetLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as OffsetLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as OffsetLayer).dispose(); return null; },
@@ -60,6 +61,7 @@ abstract final class OffsetLayerBindings {
         'toStringDeep#4': (args) => (args[0] as OffsetLayer).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as OffsetLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'offset#0': (args) => (args[0] as OffsetLayer).offset,
+        'hashCode#0': (args) => (args[0] as OffsetLayer).hashCode,
         'firstChild#0': (args) => (args[0] as OffsetLayer).firstChild,
         'lastChild#0': (args) => (args[0] as OffsetLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as OffsetLayer).hasChildren,
@@ -79,6 +81,7 @@ abstract final class OffsetLayerBindings {
         'offset=#1': (args) { (args[0] as OffsetLayer).offset = args[1] as ui.Offset; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as OffsetLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as OffsetLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as OffsetLayer) == (args[1] as Object),
         '#1': (args) => OffsetLayer(offset: identical(args[0], darticAbsent) ? Offset.zero : args[0] as ui.Offset),
       };
 }

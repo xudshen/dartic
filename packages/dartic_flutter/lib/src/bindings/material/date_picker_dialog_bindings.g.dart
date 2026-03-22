@@ -59,6 +59,7 @@ abstract final class DatePickerDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DatePickerDialog).createState(),
+        'toString#0': (args) => (args[0] as DatePickerDialog).toString(),
         'createElement#0': (args) => (args[0] as DatePickerDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as DatePickerDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DatePickerDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -87,7 +88,9 @@ abstract final class DatePickerDialogBindings {
         'switchToCalendarEntryModeIcon#0': (args) => (args[0] as DatePickerDialog).switchToCalendarEntryModeIcon,
         'insetPadding#0': (args) => (args[0] as DatePickerDialog).insetPadding,
         'calendarDelegate#0': (args) => (args[0] as DatePickerDialog).calendarDelegate,
+        'hashCode#0': (args) => (args[0] as DatePickerDialog).hashCode,
         'key#0': (args) => (args[0] as DatePickerDialog).key,
+        '==#1': (args) => (args[0] as DatePickerDialog) == (args[1] as Object),
         '#22': (args) => DatePickerDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialDate: identical(args[1], darticAbsent) ? null : args[1] as DateTime?, firstDate: args[2] as DateTime, lastDate: args[3] as DateTime, currentDate: identical(args[4], darticAbsent) ? null : args[4] as DateTime?, initialEntryMode: identical(args[5], darticAbsent) ? DatePickerEntryMode.calendar : args[5] as DatePickerEntryMode, selectableDayPredicate: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), cancelText: identical(args[7], darticAbsent) ? null : args[7] as String?, confirmText: identical(args[8], darticAbsent) ? null : args[8] as String?, helpText: identical(args[9], darticAbsent) ? null : args[9] as String?, initialCalendarMode: identical(args[10], darticAbsent) ? DatePickerMode.day : args[10] as DatePickerMode, errorFormatText: identical(args[11], darticAbsent) ? null : args[11] as String?, errorInvalidText: identical(args[12], darticAbsent) ? null : args[12] as String?, fieldHintText: identical(args[13], darticAbsent) ? null : args[13] as String?, fieldLabelText: identical(args[14], darticAbsent) ? null : args[14] as String?, keyboardType: identical(args[15], darticAbsent) ? null : args[15] as TextInputType?, restorationId: identical(args[16], darticAbsent) ? null : args[16] as String?, onDatePickerModeChange: identical(args[17], darticAbsent) ? null : (args[17] as Function?) == null ? null : (a) => (args[17] as Function?)!(a), switchToInputEntryModeIcon: identical(args[18], darticAbsent) ? null : args[18] as Icon?, switchToCalendarEntryModeIcon: identical(args[19], darticAbsent) ? null : args[19] as Icon?, insetPadding: identical(args[20], darticAbsent) ? const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0) : args[20] as EdgeInsets, calendarDelegate: identical(args[21], darticAbsent) ? const GregorianCalendarDelegate() : args[21] as CalendarDelegate<DateTime>),
       };
 }

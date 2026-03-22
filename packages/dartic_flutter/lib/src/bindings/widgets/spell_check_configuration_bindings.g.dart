@@ -37,6 +37,7 @@ abstract final class SpellCheckConfigurationBindings {
         'spellCheckSuggestionsToolbarBuilder#0': (args) => (args[0] as SpellCheckConfiguration).spellCheckSuggestionsToolbarBuilder,
         'spellCheckEnabled#0': (args) => (args[0] as SpellCheckConfiguration).spellCheckEnabled,
         'hashCode#0': (args) => (args[0] as SpellCheckConfiguration).hashCode,
+        '==#1': (args) => (args[0] as SpellCheckConfiguration) == (args[1] as Object),
         '#4': (args) => SpellCheckConfiguration(spellCheckService: identical(args[0], darticAbsent) ? null : args[0] as SpellCheckService?, misspelledSelectionColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, misspelledTextStyle: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, spellCheckSuggestionsToolbarBuilder: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b)),
         'disabled#0': (args) => SpellCheckConfiguration.disabled(),
         '_#fromFields#5': (args) {

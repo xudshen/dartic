@@ -31,6 +31,7 @@ abstract final class KeyEventBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as KeyEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as KeyEvent).toString(),
         'toStringShort#0': (args) => (args[0] as KeyEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as KeyEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'physicalKey#0': (args) => (args[0] as KeyEvent).physicalKey,
@@ -39,5 +40,7 @@ abstract final class KeyEventBindings {
         'timeStamp#0': (args) => (args[0] as KeyEvent).timeStamp,
         'deviceType#0': (args) => (args[0] as KeyEvent).deviceType,
         'synthesized#0': (args) => (args[0] as KeyEvent).synthesized,
+        'hashCode#0': (args) => (args[0] as KeyEvent).hashCode,
+        '==#1': (args) => (args[0] as KeyEvent) == (args[1] as Object),
       };
 }

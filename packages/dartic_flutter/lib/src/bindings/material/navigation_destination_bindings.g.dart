@@ -39,6 +39,7 @@ abstract final class NavigationDestinationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationDestination).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationDestination).toString(),
         'createElement#0': (args) => (args[0] as NavigationDestination).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationDestination).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationDestination).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class NavigationDestinationBindings {
         'label#0': (args) => (args[0] as NavigationDestination).label,
         'tooltip#0': (args) => (args[0] as NavigationDestination).tooltip,
         'enabled#0': (args) => (args[0] as NavigationDestination).enabled,
+        'hashCode#0': (args) => (args[0] as NavigationDestination).hashCode,
         'key#0': (args) => (args[0] as NavigationDestination).key,
+        '==#1': (args) => (args[0] as NavigationDestination) == (args[1] as Object),
         '#6': (args) => NavigationDestination(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, icon: args[1] as Widget, selectedIcon: identical(args[2], darticAbsent) ? null : args[2] as Widget?, label: args[3] as String, tooltip: identical(args[4], darticAbsent) ? null : args[4] as String?, enabled: identical(args[5], darticAbsent) ? true : args[5] as bool),
         '_#fromFields#6': (args) => NavigationDestination(key: args[2] as Key?, icon: args[1] as Widget, selectedIcon: args[4] as Widget?, label: args[3] as String, tooltip: args[5] as String?, enabled: args[0] as bool),
       };

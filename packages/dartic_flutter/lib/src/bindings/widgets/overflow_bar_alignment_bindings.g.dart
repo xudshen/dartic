@@ -28,6 +28,9 @@ abstract final class OverflowBarAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OverflowBarAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as OverflowBarAlignment).hashCode,
         'index#0': (args) => (args[0] as OverflowBarAlignment).index,
+        '==#1': (args) => (args[0] as OverflowBarAlignment) == (args[1] as Object),
       };
 }

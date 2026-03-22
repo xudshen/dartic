@@ -39,6 +39,7 @@ abstract final class DirectionalityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as Directionality).updateShouldNotify(args[1] as Directionality),
         'debugFillProperties#1': (args) { (args[0] as Directionality).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Directionality).toString(),
         'createElement#0': (args) => (args[0] as Directionality).createElement(),
         'toStringShort#0': (args) => (args[0] as Directionality).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Directionality).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -46,8 +47,10 @@ abstract final class DirectionalityBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as Directionality).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Directionality).debugDescribeChildren(),
         'textDirection#0': (args) => (args[0] as Directionality).textDirection,
+        'hashCode#0': (args) => (args[0] as Directionality).hashCode,
         'child#0': (args) => (args[0] as Directionality).child,
         'key#0': (args) => (args[0] as Directionality).key,
+        '==#1': (args) => (args[0] as Directionality) == (args[1] as Object),
         '#3': (args) => Directionality(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textDirection: args[1] as ui.TextDirection, child: args[2] as Widget),
         '_#fromFields#3': (args) => Directionality(key: args[1] as Key?, textDirection: args[2] as ui.TextDirection, child: args[0] as Widget),
       };

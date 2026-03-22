@@ -31,6 +31,8 @@ abstract final class DebugCreatorBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as DebugCreator).toString(),
         'element#0': (args) => (args[0] as DebugCreator).element,
+        'hashCode#0': (args) => (args[0] as DebugCreator).hashCode,
+        '==#1': (args) => (args[0] as DebugCreator) == (args[1] as Object),
         '#1': (args) => DebugCreator(args[0] as Element),
       };
 }

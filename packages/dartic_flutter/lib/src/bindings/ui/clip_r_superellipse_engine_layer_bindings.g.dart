@@ -30,6 +30,9 @@ abstract final class ClipRSuperellipseEngineLayerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ClipRSuperellipseEngineLayer).toString(),
         'dispose#0': (args) { (args[0] as ClipRSuperellipseEngineLayer).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as ClipRSuperellipseEngineLayer).hashCode,
+        '==#1': (args) => (args[0] as ClipRSuperellipseEngineLayer) == (args[1] as Object),
       };
 }

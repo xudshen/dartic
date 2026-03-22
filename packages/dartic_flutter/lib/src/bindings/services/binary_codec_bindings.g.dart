@@ -26,6 +26,9 @@ abstract final class BinaryCodecBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'decodeMessage#1': (args) => (args[0] as BinaryCodec).decodeMessage(args[1] as ByteData?),
         'encodeMessage#1': (args) => (args[0] as BinaryCodec).encodeMessage(args[1] as ByteData?),
+        'toString#0': (args) => (args[0] as BinaryCodec).toString(),
+        'hashCode#0': (args) => (args[0] as BinaryCodec).hashCode,
+        '==#1': (args) => (args[0] as BinaryCodec) == (args[1] as Object),
         '#0': (args) => BinaryCodec(),
         '_#fromFields#0': (args) => BinaryCodec(),
       };

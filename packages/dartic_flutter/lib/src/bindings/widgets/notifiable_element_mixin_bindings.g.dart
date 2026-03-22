@@ -35,6 +35,7 @@ abstract final class NotifiableElementMixinBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onNotification#1': (args) => (args[0] as NotifiableElementMixin).onNotification(args[1] as Notification),
         'attachNotificationTree#0': (args) { (args[0] as NotifiableElementMixin).attachNotificationTree(); return null; },
+        'toString#0': (args) => (args[0] as NotifiableElementMixin).toString(),
         'reassemble#0': (args) { (args[0] as NotifiableElementMixin).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as NotifiableElementMixin).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as NotifiableElementMixin).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
@@ -83,6 +84,7 @@ abstract final class NotifiableElementMixinBindings {
         'performRebuild#0': (args) { (args[0] as NotifiableElementMixin).performRebuild(); return null; },
         'toStringShallow#2': (args) => (args[0] as NotifiableElementMixin).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as NotifiableElementMixin).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as NotifiableElementMixin).hashCode,
         'slot#0': (args) => (args[0] as NotifiableElementMixin).slot,
         'depth#0': (args) => (args[0] as NotifiableElementMixin).depth,
         'widget#0': (args) => (args[0] as NotifiableElementMixin).widget,
@@ -96,5 +98,6 @@ abstract final class NotifiableElementMixinBindings {
         'size#0': (args) => (args[0] as NotifiableElementMixin).size,
         'dirty#0': (args) => (args[0] as NotifiableElementMixin).dirty,
         'debugDoingBuild#0': (args) => (args[0] as NotifiableElementMixin).debugDoingBuild,
+        '==#1': (args) => (args[0] as NotifiableElementMixin) == (args[1] as Object),
       };
 }

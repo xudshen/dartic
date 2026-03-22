@@ -55,5 +55,8 @@ abstract final class WidgetsBindingObserverBindings {
         'didRequestAppExit#0': (args) => (args[0] as WidgetsBindingObserver).didRequestAppExit(),
         'didHaveMemoryPressure#0': (args) { (args[0] as WidgetsBindingObserver).didHaveMemoryPressure(); return null; },
         'didChangeAccessibilityFeatures#0': (args) { (args[0] as WidgetsBindingObserver).didChangeAccessibilityFeatures(); return null; },
+        'toString#0': (args) => (args[0] as WidgetsBindingObserver).toString(),
+        'hashCode#0': (args) => (args[0] as WidgetsBindingObserver).hashCode,
+        '==#1': (args) => (args[0] as WidgetsBindingObserver) == (args[1] as Object),
       };
 }

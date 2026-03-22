@@ -46,6 +46,7 @@ abstract final class RenderMouseRegionBindings {
         'detach#0': (args) { (args[0] as RenderMouseRegion).detach(); return null; },
         'computeSizeForNoChild#1': (args) => (args[0] as RenderMouseRegion).computeSizeForNoChild(args[1] as BoxConstraints),
         'debugFillProperties#1': (args) { (args[0] as RenderMouseRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderMouseRegion).toString(),
         'hitTestSelf#1': (args) => (args[0] as RenderMouseRegion).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderMouseRegion).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderMouseRegion).getMinIntrinsicWidth(args[1] as double),
@@ -125,6 +126,7 @@ abstract final class RenderMouseRegionBindings {
         'onExit#0': (args) => (args[0] as RenderMouseRegion).onExit,
         'cursor#0': (args) => (args[0] as RenderMouseRegion).cursor,
         'validForMouseTracker#0': (args) => (args[0] as RenderMouseRegion).validForMouseTracker,
+        'hashCode#0': (args) => (args[0] as RenderMouseRegion).hashCode,
         'behavior#0': (args) => (args[0] as RenderMouseRegion).behavior,
         'hasSize#0': (args) => (args[0] as RenderMouseRegion).hasSize,
         'size#0': (args) => (args[0] as RenderMouseRegion).size,
@@ -169,6 +171,7 @@ abstract final class RenderMouseRegionBindings {
         'debugCreator=#1': (args) { (args[0] as RenderMouseRegion).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderMouseRegion).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderMouseRegion).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderMouseRegion) == (args[1] as Object),
         '#8': (args) => RenderMouseRegion(onEnter: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a) => (args[0] as Function?)!(a), onHover: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onExit: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), cursor: identical(args[3], darticAbsent) ? MouseCursor.defer : args[3] as MouseCursor, validForMouseTracker: identical(args[4], darticAbsent) ? true : args[4] as bool, opaque: identical(args[5], darticAbsent) ? true : args[5] as bool, child: identical(args[6], darticAbsent) ? null : args[6] as RenderBox?, hitTestBehavior: identical(args[7], darticAbsent) ? null : args[7] as HitTestBehavior?),
       };
 }

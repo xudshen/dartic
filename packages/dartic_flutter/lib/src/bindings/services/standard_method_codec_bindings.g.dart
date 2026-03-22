@@ -29,7 +29,10 @@ abstract final class StandardMethodCodecBindings {
         'encodeSuccessEnvelope#1': (args) => (args[0] as StandardMethodCodec).encodeSuccessEnvelope(args[1]),
         'encodeErrorEnvelope#3': (args) => (args[0] as StandardMethodCodec).encodeErrorEnvelope(code: args[1] as String, message: identical(args[2], darticAbsent) ? null : args[2] as String?, details: identical(args[3], darticAbsent) ? null : args[3]),
         'decodeEnvelope#1': (args) => (args[0] as StandardMethodCodec).decodeEnvelope(args[1] as ByteData),
+        'toString#0': (args) => (args[0] as StandardMethodCodec).toString(),
         'messageCodec#0': (args) => (args[0] as StandardMethodCodec).messageCodec,
+        'hashCode#0': (args) => (args[0] as StandardMethodCodec).hashCode,
+        '==#1': (args) => (args[0] as StandardMethodCodec) == (args[1] as Object),
         '#1': (args) => StandardMethodCodec(identical(args[0], darticAbsent) ? const StandardMessageCodec() : args[0] as StandardMessageCodec),
         '_#fromFields#1': (args) => StandardMethodCodec(args[0] as StandardMessageCodec),
       };

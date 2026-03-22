@@ -37,12 +37,15 @@ abstract final class ChildBackButtonDispatcherBindings {
         'takePriority#0': (args) { (args[0] as ChildBackButtonDispatcher).takePriority(); return null; },
         'deferTo#1': (args) { (args[0] as ChildBackButtonDispatcher).deferTo(args[1] as ChildBackButtonDispatcher); return null; },
         'removeCallback#1': (args) { (args[0] as ChildBackButtonDispatcher).removeCallback(() => (args[1] as Function)() as Future<bool>); return null; },
+        'toString#0': (args) => (args[0] as ChildBackButtonDispatcher).toString(),
         'invokeCallback#1': (args) => (args[0] as ChildBackButtonDispatcher).invokeCallback(args[1] as Future<bool>),
         'createChildBackButtonDispatcher#0': (args) => (args[0] as ChildBackButtonDispatcher).createChildBackButtonDispatcher(),
         'forget#1': (args) { (args[0] as ChildBackButtonDispatcher).forget(args[1] as ChildBackButtonDispatcher); return null; },
         'addCallback#1': (args) { (args[0] as ChildBackButtonDispatcher).addCallback(() => (args[1] as Function)() as Future<bool>); return null; },
         'parent#0': (args) => (args[0] as ChildBackButtonDispatcher).parent,
+        'hashCode#0': (args) => (args[0] as ChildBackButtonDispatcher).hashCode,
         'hasCallbacks#0': (args) => (args[0] as ChildBackButtonDispatcher).hasCallbacks,
+        '==#1': (args) => (args[0] as ChildBackButtonDispatcher) == (args[1] as Object),
         '#1': (args) => ChildBackButtonDispatcher(args[0] as BackButtonDispatcher),
       };
 }

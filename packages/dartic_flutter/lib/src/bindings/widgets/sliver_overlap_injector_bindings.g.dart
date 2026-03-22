@@ -44,6 +44,7 @@ abstract final class SliverOverlapInjectorBindings {
         'createRenderObject#1': (args) => (args[0] as SliverOverlapInjector).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverOverlapInjector).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverOverlapInjector); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverOverlapInjector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverOverlapInjector).toString(),
         'createElement#0': (args) => (args[0] as SliverOverlapInjector).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverOverlapInjector).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverOverlapInjector).toStringShort(),
@@ -52,8 +53,10 @@ abstract final class SliverOverlapInjectorBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverOverlapInjector).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverOverlapInjector).debugDescribeChildren(),
         'handle#0': (args) => (args[0] as SliverOverlapInjector).handle,
+        'hashCode#0': (args) => (args[0] as SliverOverlapInjector).hashCode,
         'child#0': (args) => (args[0] as SliverOverlapInjector).child,
         'key#0': (args) => (args[0] as SliverOverlapInjector).key,
+        '==#1': (args) => (args[0] as SliverOverlapInjector) == (args[1] as Object),
         '#3': (args) => SliverOverlapInjector(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, handle: args[1] as SliverOverlapAbsorberHandle, sliver: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => SliverOverlapInjector(key: args[2] as Key?, handle: args[1] as SliverOverlapAbsorberHandle, sliver: args[0] as Widget?),
       };

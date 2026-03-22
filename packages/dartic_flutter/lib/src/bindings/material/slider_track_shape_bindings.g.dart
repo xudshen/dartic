@@ -66,6 +66,9 @@ abstract final class SliderTrackShapeBindings {
                     }
                   }
                 },
+        'toString#0': (args) => (args[0] as SliderTrackShape).toString(),
         'isRounded#0': (args) => (args[0] as SliderTrackShape).isRounded,
+        'hashCode#0': (args) => (args[0] as SliderTrackShape).hashCode,
+        '==#1': (args) => (args[0] as SliderTrackShape) == (args[1] as Object),
       };
 }

@@ -32,6 +32,7 @@ abstract final class ScrollNotificationObserverStateBindings {
         'removeListener#1': (args) { (args[0] as ScrollNotificationObserverState).removeListener((a) => (args[1] as Function)(a)); return null; },
         'build#1': (args) => (args[0] as ScrollNotificationObserverState).build(args[1] as BuildContext),
         'dispose#0': (args) { (args[0] as ScrollNotificationObserverState).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ScrollNotificationObserverState).toString(),
         'initState#0': (args) { (args[0] as ScrollNotificationObserverState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ScrollNotificationObserverState).didUpdateWidget(args[1] as ScrollNotificationObserver); return null; },
         'reassemble#0': (args) { (args[0] as ScrollNotificationObserverState).reassemble(); return null; },
@@ -42,9 +43,11 @@ abstract final class ScrollNotificationObserverStateBindings {
         'debugFillProperties#1': (args) { (args[0] as ScrollNotificationObserverState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as ScrollNotificationObserverState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScrollNotificationObserverState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as ScrollNotificationObserverState).hashCode,
         'widget#0': (args) => (args[0] as ScrollNotificationObserverState).widget,
         'context#0': (args) => (args[0] as ScrollNotificationObserverState).context,
         'mounted#0': (args) => (args[0] as ScrollNotificationObserverState).mounted,
+        '==#1': (args) => (args[0] as ScrollNotificationObserverState) == (args[1] as Object),
         '#0': (args) => ScrollNotificationObserverState(),
       };
 }

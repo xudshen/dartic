@@ -54,6 +54,7 @@ abstract final class TimePickerDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TimePickerDialog).createState(),
+        'toString#0': (args) => (args[0] as TimePickerDialog).toString(),
         'createElement#0': (args) => (args[0] as TimePickerDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as TimePickerDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TimePickerDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -75,7 +76,9 @@ abstract final class TimePickerDialogBindings {
         'switchToInputEntryModeIcon#0': (args) => (args[0] as TimePickerDialog).switchToInputEntryModeIcon,
         'switchToTimerEntryModeIcon#0': (args) => (args[0] as TimePickerDialog).switchToTimerEntryModeIcon,
         'emptyInitialInput#0': (args) => (args[0] as TimePickerDialog).emptyInitialInput,
+        'hashCode#0': (args) => (args[0] as TimePickerDialog).hashCode,
         'key#0': (args) => (args[0] as TimePickerDialog).key,
+        '==#1': (args) => (args[0] as TimePickerDialog) == (args[1] as Object),
         '#15': (args) => TimePickerDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialTime: args[1] as TimeOfDay, cancelText: identical(args[2], darticAbsent) ? null : args[2] as String?, confirmText: identical(args[3], darticAbsent) ? null : args[3] as String?, helpText: identical(args[4], darticAbsent) ? null : args[4] as String?, errorInvalidText: identical(args[5], darticAbsent) ? null : args[5] as String?, hourLabelText: identical(args[6], darticAbsent) ? null : args[6] as String?, minuteLabelText: identical(args[7], darticAbsent) ? null : args[7] as String?, restorationId: identical(args[8], darticAbsent) ? null : args[8] as String?, initialEntryMode: identical(args[9], darticAbsent) ? TimePickerEntryMode.dial : args[9] as TimePickerEntryMode, orientation: identical(args[10], darticAbsent) ? null : args[10] as Orientation?, onEntryModeChanged: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : (a) => (args[11] as Function?)!(a), switchToInputEntryModeIcon: identical(args[12], darticAbsent) ? null : args[12] as Icon?, switchToTimerEntryModeIcon: identical(args[13], darticAbsent) ? null : args[13] as Icon?, emptyInitialInput: identical(args[14], darticAbsent) ? false : args[14] as bool),
         '_#fromFields#15': (args) => TimePickerDialog(key: args[8] as Key?, initialTime: args[7] as TimeOfDay, cancelText: args[0] as String?, confirmText: args[1] as String?, helpText: args[4] as String?, errorInvalidText: args[3] as String?, hourLabelText: args[5] as String?, minuteLabelText: args[9] as String?, restorationId: args[12] as String?, initialEntryMode: args[6] as TimePickerEntryMode, orientation: args[11] as Orientation?, onEntryModeChanged: args[10] as EntryModeChangeCallback?, switchToInputEntryModeIcon: args[13] as Icon?, switchToTimerEntryModeIcon: args[14] as Icon?, emptyInitialInput: args[2] as bool),
       };

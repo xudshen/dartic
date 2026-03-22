@@ -41,6 +41,7 @@ abstract final class TimeOfDayBindings {
         'hourOfPeriod#0': (args) => (args[0] as TimeOfDay).hourOfPeriod,
         'periodOffset#0': (args) => (args[0] as TimeOfDay).periodOffset,
         'hashCode#0': (args) => (args[0] as TimeOfDay).hashCode,
+        '==#1': (args) => (args[0] as TimeOfDay) == (args[1] as Object),
         '#2': (args) => TimeOfDay(hour: args[0] as int, minute: args[1] as int),
         'fromDateTime#1': (args) => TimeOfDay.fromDateTime(args[0] as DateTime),
         'now#0': (args) => TimeOfDay.now(),

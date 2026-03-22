@@ -31,16 +31,19 @@ abstract final class RestorableChangeNotifierBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'initWithValue#1': (args) { (args[0] as RestorableChangeNotifier).initWithValue(args[1] as ChangeNotifier); return null; },
         'dispose#0': (args) { (args[0] as RestorableChangeNotifier).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorableChangeNotifier).toString(),
         'createDefaultValue#0': (args) => (args[0] as RestorableChangeNotifier).createDefaultValue(),
         'fromPrimitives#1': (args) => (args[0] as RestorableChangeNotifier).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableChangeNotifier).toPrimitives(),
         'addListener#1': (args) { (args[0] as RestorableChangeNotifier).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableChangeNotifier).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableChangeNotifier).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableChangeNotifier).hashCode,
         'value#0': (args) => (args[0] as RestorableChangeNotifier).value,
         'enabled#0': (args) => (args[0] as RestorableChangeNotifier).enabled,
         'state#0': (args) => (args[0] as RestorableChangeNotifier).state,
         'isRegistered#0': (args) => (args[0] as RestorableChangeNotifier).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableChangeNotifier).hasListeners,
+        '==#1': (args) => (args[0] as RestorableChangeNotifier) == (args[1] as Object),
       };
 }

@@ -71,6 +71,7 @@ abstract final class RenderViewportBaseBindings {
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderViewportBase).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderViewportBase).labelForChild(args[1] as int),
         'showOnScreen#4': (args) { (args[0] as RenderViewportBase).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
+        'toString#0': (args) => (args[0] as RenderViewportBase).toString(),
         'setupParentData#1': (args) { (args[0] as RenderViewportBase).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderViewportBase).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderViewportBase).getMaxIntrinsicWidth(args[1] as double),
@@ -152,6 +153,7 @@ abstract final class RenderViewportBaseBindings {
         'indexOfFirstChild#0': (args) => (args[0] as RenderViewportBase).indexOfFirstChild,
         'childrenInPaintOrder#0': (args) => (args[0] as RenderViewportBase).childrenInPaintOrder,
         'childrenInHitTestOrder#0': (args) => (args[0] as RenderViewportBase).childrenInHitTestOrder,
+        'hashCode#0': (args) => (args[0] as RenderViewportBase).hashCode,
         'hasSize#0': (args) => (args[0] as RenderViewportBase).hasSize,
         'size#0': (args) => (args[0] as RenderViewportBase).size,
         'semanticBounds#0': (args) => (args[0] as RenderViewportBase).semanticBounds,
@@ -195,5 +197,6 @@ abstract final class RenderViewportBaseBindings {
         'parentData=#1': (args) { (args[0] as RenderViewportBase).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderViewportBase).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderViewportBase).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderViewportBase) == (args[1] as Object),
       };
 }

@@ -32,6 +32,9 @@ abstract final class StandardMessageCodecBindings {
         'readValueOfType#2': (args) => (args[0] as StandardMessageCodec).readValueOfType(args[1] as int, args[2] as ReadBuffer),
         'writeSize#2': (args) { (args[0] as StandardMessageCodec).writeSize(args[1] as WriteBuffer, args[2] as int); return null; },
         'readSize#1': (args) => (args[0] as StandardMessageCodec).readSize(args[1] as ReadBuffer),
+        'toString#0': (args) => (args[0] as StandardMessageCodec).toString(),
+        'hashCode#0': (args) => (args[0] as StandardMessageCodec).hashCode,
+        '==#1': (args) => (args[0] as StandardMessageCodec) == (args[1] as Object),
         '#0': (args) => StandardMessageCodec(),
         '_#fromFields#0': (args) => StandardMessageCodec(),
       };

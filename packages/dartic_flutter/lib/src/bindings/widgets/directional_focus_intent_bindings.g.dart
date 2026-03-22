@@ -30,10 +30,13 @@ abstract final class DirectionalFocusIntentBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as DirectionalFocusIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as DirectionalFocusIntent).toString(),
         'toStringShort#0': (args) => (args[0] as DirectionalFocusIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DirectionalFocusIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'direction#0': (args) => (args[0] as DirectionalFocusIntent).direction,
         'ignoreTextFields#0': (args) => (args[0] as DirectionalFocusIntent).ignoreTextFields,
+        'hashCode#0': (args) => (args[0] as DirectionalFocusIntent).hashCode,
+        '==#1': (args) => (args[0] as DirectionalFocusIntent) == (args[1] as Object),
         '#2': (args) => DirectionalFocusIntent(args[0] as TraversalDirection, ignoreTextFields: identical(args[1], darticAbsent) ? true : args[1] as bool),
         '_#fromFields#2': (args) => DirectionalFocusIntent(args[0] as TraversalDirection, ignoreTextFields: args[1] as bool),
       };

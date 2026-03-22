@@ -40,10 +40,13 @@ abstract final class GregorianCalendarDelegateBindings {
         'formatCompactDate#2': (args) => (args[0] as GregorianCalendarDelegate).formatCompactDate(args[1] as DateTime, args[2] as MaterialLocalizations),
         'parseCompactDate#2': (args) => (args[0] as GregorianCalendarDelegate).parseCompactDate(args[1] as String?, args[2] as MaterialLocalizations),
         'dateHelpText#1': (args) => (args[0] as GregorianCalendarDelegate).dateHelpText(args[1] as MaterialLocalizations),
+        'toString#0': (args) => (args[0] as GregorianCalendarDelegate).toString(),
         'datesOnly#1': (args) => (args[0] as GregorianCalendarDelegate).datesOnly(args[1] as DateTimeRange<DateTime>),
         'isSameDay#2': (args) => (args[0] as GregorianCalendarDelegate).isSameDay(args[1] as DateTime?, args[2] as DateTime?),
         'isSameMonth#2': (args) => (args[0] as GregorianCalendarDelegate).isSameMonth(args[1] as DateTime?, args[2] as DateTime?),
         'formatYear#2': (args) => (args[0] as GregorianCalendarDelegate).formatYear(args[1] as int, args[2] as MaterialLocalizations),
+        'hashCode#0': (args) => (args[0] as GregorianCalendarDelegate).hashCode,
+        '==#1': (args) => (args[0] as GregorianCalendarDelegate) == (args[1] as Object),
         '#0': (args) => GregorianCalendarDelegate(),
         '_#fromFields#0': (args) => GregorianCalendarDelegate(),
       };

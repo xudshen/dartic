@@ -39,6 +39,7 @@ abstract final class MaterialTextSelectionHandleControlsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MaterialTextSelectionHandleControls).toString(),
         'getHandleSize#1': (args) => (args[0] as MaterialTextSelectionHandleControls).getHandleSize(args[1] as double),
         'buildToolbar#8': (args) => (args[0] as MaterialTextSelectionHandleControls).buildToolbar(args[1] as BuildContext, args[2] as Rect, args[3] as double, args[4] as Offset, (args[5] as List).cast<TextSelectionPoint>(), args[6] as TextSelectionDelegate, args[7] as ValueListenable<ClipboardStatus>?, args[8] as Offset?),
         'buildHandle#4': (args) => (args[0] as MaterialTextSelectionHandleControls).buildHandle(args[1] as BuildContext, args[2] as TextSelectionHandleType, args[3] as double, identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
@@ -51,6 +52,8 @@ abstract final class MaterialTextSelectionHandleControlsBindings {
         'handleCopy#2': (args) { (args[0] as MaterialTextSelectionHandleControls).handleCopy(args[1] as TextSelectionDelegate, identical(args[2], darticAbsent) ? null : args[2] as ClipboardStatusNotifier?); return null; },
         'handlePaste#1': (args) => (args[0] as MaterialTextSelectionHandleControls).handlePaste(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as MaterialTextSelectionHandleControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'hashCode#0': (args) => (args[0] as MaterialTextSelectionHandleControls).hashCode,
+        '==#1': (args) => (args[0] as MaterialTextSelectionHandleControls) == (args[1] as Object),
         '#0': (args) => MaterialTextSelectionHandleControls(),
       };
 }

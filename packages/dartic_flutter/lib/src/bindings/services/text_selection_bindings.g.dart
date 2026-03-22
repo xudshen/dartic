@@ -41,6 +41,7 @@ abstract final class TextSelectionBindings {
         'isValid#0': (args) => (args[0] as TextSelection).isValid,
         'isCollapsed#0': (args) => (args[0] as TextSelection).isCollapsed,
         'isNormalized#0': (args) => (args[0] as TextSelection).isNormalized,
+        '==#1': (args) => (args[0] as TextSelection) == (args[1] as Object),
         '#4': (args) => TextSelection(baseOffset: args[0] as int, extentOffset: args[1] as int, affinity: identical(args[2], darticAbsent) ? TextAffinity.downstream : args[2] as TextAffinity, isDirectional: identical(args[3], darticAbsent) ? false : args[3] as bool),
         'collapsed#2': (args) => TextSelection.collapsed(offset: args[0] as int, affinity: identical(args[1], darticAbsent) ? TextAffinity.downstream : args[1] as TextAffinity),
         'fromPosition#1': (args) => TextSelection.fromPosition(args[0] as TextPosition),

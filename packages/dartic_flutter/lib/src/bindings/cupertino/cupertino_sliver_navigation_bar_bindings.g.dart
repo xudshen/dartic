@@ -45,6 +45,7 @@ abstract final class CupertinoSliverNavigationBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSliverNavigationBar).createState(),
+        'toString#0': (args) => (args[0] as CupertinoSliverNavigationBar).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSliverNavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSliverNavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSliverNavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -74,7 +75,9 @@ abstract final class CupertinoSliverNavigationBarBindings {
         'opaque#0': (args) => (args[0] as CupertinoSliverNavigationBar).opaque,
         'stretch#0': (args) => (args[0] as CupertinoSliverNavigationBar).stretch,
         'searchField#0': (args) => (args[0] as CupertinoSliverNavigationBar).searchField,
+        'hashCode#0': (args) => (args[0] as CupertinoSliverNavigationBar).hashCode,
         'key#0': (args) => (args[0] as CupertinoSliverNavigationBar).key,
+        '==#1': (args) => (args[0] as CupertinoSliverNavigationBar) == (args[1] as Object),
         '#20': (args) {
           if (identical(args[16], darticAbsent)) {
             return CupertinoSliverNavigationBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, largeTitle: identical(args[1], darticAbsent) ? null : args[1] as Widget?, leading: identical(args[2], darticAbsent) ? null : args[2] as Widget?, automaticallyImplyLeading: identical(args[3], darticAbsent) ? true : args[3] as bool, automaticallyImplyTitle: identical(args[4], darticAbsent) ? true : args[4] as bool, alwaysShowMiddle: identical(args[5], darticAbsent) ? true : args[5] as bool, previousPageTitle: identical(args[6], darticAbsent) ? null : args[6] as String?, middle: identical(args[7], darticAbsent) ? null : args[7] as Widget?, trailing: identical(args[8], darticAbsent) ? null : args[8] as Widget?, border: identical(args[9], darticAbsent) ? null : args[9] as Border?, backgroundColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, automaticBackgroundVisibility: identical(args[11], darticAbsent) ? true : args[11] as bool, enableBackgroundFilterBlur: identical(args[12], darticAbsent) ? true : args[12] as bool, brightness: identical(args[13], darticAbsent) ? null : args[13] as Brightness?, padding: identical(args[14], darticAbsent) ? null : args[14] as EdgeInsetsDirectional?, transitionBetweenRoutes: identical(args[15], darticAbsent) ? true : args[15] as bool, stretch: identical(args[17], darticAbsent) ? false : args[17] as bool, bottom: identical(args[18], darticAbsent) ? null : args[18] as PreferredSizeWidget?, bottomMode: identical(args[19], darticAbsent) ? null : args[19] as NavigationBarBottomMode?);

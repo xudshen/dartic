@@ -30,6 +30,7 @@ abstract final class CupertinoTabScaffoldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoTabScaffold).createState(),
+        'toString#0': (args) => (args[0] as CupertinoTabScaffold).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTabScaffold).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTabScaffold).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTabScaffold).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class CupertinoTabScaffoldBindings {
         'backgroundColor#0': (args) => (args[0] as CupertinoTabScaffold).backgroundColor,
         'resizeToAvoidBottomInset#0': (args) => (args[0] as CupertinoTabScaffold).resizeToAvoidBottomInset,
         'restorationId#0': (args) => (args[0] as CupertinoTabScaffold).restorationId,
+        'hashCode#0': (args) => (args[0] as CupertinoTabScaffold).hashCode,
         'key#0': (args) => (args[0] as CupertinoTabScaffold).key,
+        '==#1': (args) => (args[0] as CupertinoTabScaffold) == (args[1] as Object),
         '#7': (args) => CupertinoTabScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, tabBar: args[1] as CupertinoTabBar, tabBuilder: (a, b) => (args[2] as Function)(a, b) as Widget, controller: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTabController?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, resizeToAvoidBottomInset: identical(args[5], darticAbsent) ? true : args[5] as bool, restorationId: identical(args[6], darticAbsent) ? null : args[6] as String?),
       };
 }

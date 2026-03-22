@@ -20,6 +20,9 @@ abstract final class WebBrowserDetectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WebBrowserDetection).toString(),
+        'hashCode#0': (args) => (args[0] as WebBrowserDetection).hashCode,
+        '==#1': (args) => (args[0] as WebBrowserDetection) == (args[1] as Object),
         '#0': (args) => WebBrowserDetection(),
       };
 }

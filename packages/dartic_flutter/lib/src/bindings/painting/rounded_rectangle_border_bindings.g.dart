@@ -43,6 +43,7 @@ abstract final class RoundedRectangleBorderBindings {
         'hashCode#0': (args) => (args[0] as RoundedRectangleBorder).hashCode,
         'dimensions#0': (args) => (args[0] as RoundedRectangleBorder).dimensions,
         'side#0': (args) => (args[0] as RoundedRectangleBorder).side,
+        '==#1': (args) => (args[0] as RoundedRectangleBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as RoundedRectangleBorder) + (args[1] as ShapeBorder),
         '#2': (args) => RoundedRectangleBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, borderRadius: identical(args[1], darticAbsent) ? BorderRadius.zero : args[1] as BorderRadiusGeometry),
         '_#fromFields#2': (args) => RoundedRectangleBorder(side: args[1] as BorderSide, borderRadius: args[0] as BorderRadiusGeometry),

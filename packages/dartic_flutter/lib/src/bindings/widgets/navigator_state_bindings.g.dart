@@ -82,6 +82,7 @@ abstract final class NavigatorStateBindings {
         'didStartUserGesture#0': (args) { (args[0] as NavigatorState).didStartUserGesture(); return null; },
         'didStopUserGesture#0': (args) { (args[0] as NavigatorState).didStopUserGesture(); return null; },
         'build#1': (args) => (args[0] as NavigatorState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigatorState).toString(),
         'reassemble#0': (args) { (args[0] as NavigatorState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as NavigatorState).setState(() => (args[1] as Function)()); return null; },
         'debugFillProperties#1': (args) { (args[0] as NavigatorState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -96,11 +97,13 @@ abstract final class NavigatorStateBindings {
         'overlay#0': (args) => (args[0] as NavigatorState).overlay,
         'userGestureInProgress#0': (args) => (args[0] as NavigatorState).userGestureInProgress,
         'userGestureInProgressNotifier#0': (args) => (args[0] as NavigatorState).userGestureInProgressNotifier,
+        'hashCode#0': (args) => (args[0] as NavigatorState).hashCode,
         'widget#0': (args) => (args[0] as NavigatorState).widget,
         'context#0': (args) => (args[0] as NavigatorState).context,
         'mounted#0': (args) => (args[0] as NavigatorState).mounted,
         'bucket#0': (args) => (args[0] as NavigatorState).bucket,
         'restorePending#0': (args) => (args[0] as NavigatorState).restorePending,
+        '==#1': (args) => (args[0] as NavigatorState) == (args[1] as Object),
         '#0': (args) => NavigatorState(),
       };
 }

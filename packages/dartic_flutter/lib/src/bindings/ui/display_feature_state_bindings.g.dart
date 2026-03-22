@@ -34,6 +34,9 @@ abstract final class DisplayFeatureStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DisplayFeatureState).toString(),
+        'hashCode#0': (args) => (args[0] as DisplayFeatureState).hashCode,
         'index#0': (args) => (args[0] as DisplayFeatureState).index,
+        '==#1': (args) => (args[0] as DisplayFeatureState) == (args[1] as Object),
       };
 }

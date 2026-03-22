@@ -33,6 +33,7 @@ abstract final class AnimatedWidgetBindings {
         'build#1': (args) => (args[0] as AnimatedWidget).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as AnimatedWidget).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedWidget).toString(),
         'createElement#0': (args) => (args[0] as AnimatedWidget).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedWidget).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedWidget).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -40,6 +41,8 @@ abstract final class AnimatedWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedWidget).debugDescribeChildren(),
         'listenable#0': (args) => (args[0] as AnimatedWidget).listenable,
+        'hashCode#0': (args) => (args[0] as AnimatedWidget).hashCode,
         'key#0': (args) => (args[0] as AnimatedWidget).key,
+        '==#1': (args) => (args[0] as AnimatedWidget) == (args[1] as Object),
       };
 }

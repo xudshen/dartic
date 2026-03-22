@@ -33,6 +33,7 @@ abstract final class CupertinoThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoTheme).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CupertinoTheme).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTheme).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as CupertinoTheme).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -41,7 +42,9 @@ abstract final class CupertinoThemeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as CupertinoTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as CupertinoTheme).data,
         'child#0': (args) => (args[0] as CupertinoTheme).child,
+        'hashCode#0': (args) => (args[0] as CupertinoTheme).hashCode,
         'key#0': (args) => (args[0] as CupertinoTheme).key,
+        '==#1': (args) => (args[0] as CupertinoTheme) == (args[1] as Object),
         '#3': (args) => CupertinoTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as CupertinoThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => CupertinoTheme(key: args[2] as Key?, data: args[1] as CupertinoThemeData, child: args[0] as Widget),
       };

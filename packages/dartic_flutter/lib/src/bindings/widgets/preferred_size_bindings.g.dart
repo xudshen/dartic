@@ -28,6 +28,7 @@ abstract final class PreferredSizeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PreferredSize).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PreferredSize).toString(),
         'createElement#0': (args) => (args[0] as PreferredSize).createElement(),
         'toStringShort#0': (args) => (args[0] as PreferredSize).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PreferredSize).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class PreferredSizeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as PreferredSize).debugDescribeChildren(),
         'child#0': (args) => (args[0] as PreferredSize).child,
         'preferredSize#0': (args) => (args[0] as PreferredSize).preferredSize,
+        'hashCode#0': (args) => (args[0] as PreferredSize).hashCode,
         'key#0': (args) => (args[0] as PreferredSize).key,
+        '==#1': (args) => (args[0] as PreferredSize) == (args[1] as Object),
         '#3': (args) => PreferredSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, preferredSize: args[1] as Size, child: args[2] as Widget),
         '_#fromFields#3': (args) => PreferredSize(key: args[1] as Key?, preferredSize: args[2] as Size, child: args[0] as Widget),
       };

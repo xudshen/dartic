@@ -30,6 +30,7 @@ abstract final class ColorFilteredBindings {
         'createRenderObject#1': (args) => (args[0] as ColorFiltered).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ColorFiltered).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as ColorFiltered).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ColorFiltered).toString(),
         'createElement#0': (args) => (args[0] as ColorFiltered).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ColorFiltered).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ColorFiltered).toStringShort(),
@@ -38,8 +39,10 @@ abstract final class ColorFilteredBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ColorFiltered).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ColorFiltered).debugDescribeChildren(),
         'colorFilter#0': (args) => (args[0] as ColorFiltered).colorFilter,
+        'hashCode#0': (args) => (args[0] as ColorFiltered).hashCode,
         'child#0': (args) => (args[0] as ColorFiltered).child,
         'key#0': (args) => (args[0] as ColorFiltered).key,
+        '==#1': (args) => (args[0] as ColorFiltered) == (args[1] as Object),
         '#3': (args) => ColorFiltered(colorFilter: args[0] as ColorFilter, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, key: identical(args[2], darticAbsent) ? null : args[2] as Key?),
         '_#fromFields#3': (args) => ColorFiltered(colorFilter: args[1] as ColorFilter, child: args[0] as Widget?, key: args[2] as Key?),
       };

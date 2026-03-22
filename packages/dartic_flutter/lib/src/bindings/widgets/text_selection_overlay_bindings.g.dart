@@ -60,6 +60,7 @@ abstract final class TextSelectionOverlayBindings {
         'hide#0': (args) { (args[0] as TextSelectionOverlay).hide(); return null; },
         'hideToolbar#0': (args) { (args[0] as TextSelectionOverlay).hideToolbar(); return null; },
         'dispose#0': (args) { (args[0] as TextSelectionOverlay).dispose(); return null; },
+        'toString#0': (args) => (args[0] as TextSelectionOverlay).toString(),
         'context#0': (args) => (args[0] as TextSelectionOverlay).context,
         'renderObject#0': (args) => (args[0] as TextSelectionOverlay).renderObject,
         'selectionControls#0': (args) => (args[0] as TextSelectionOverlay).selectionControls,
@@ -72,7 +73,9 @@ abstract final class TextSelectionOverlayBindings {
         'magnifierIsVisible#0': (args) => (args[0] as TextSelectionOverlay).magnifierIsVisible,
         'magnifierExists#0': (args) => (args[0] as TextSelectionOverlay).magnifierExists,
         'spellCheckToolbarIsVisible#0': (args) => (args[0] as TextSelectionOverlay).spellCheckToolbarIsVisible,
+        'hashCode#0': (args) => (args[0] as TextSelectionOverlay).hashCode,
         'handlesVisible=#1': (args) { (args[0] as TextSelectionOverlay).handlesVisible = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as TextSelectionOverlay) == (args[1] as Object),
         '#15': (args) => TextSelectionOverlay(value: args[0] as TextEditingValue, context: args[1] as BuildContext, debugRequiredFor: identical(args[2], darticAbsent) ? null : args[2] as Widget?, toolbarLayerLink: args[3] as LayerLink, startHandleLayerLink: args[4] as LayerLink, endHandleLayerLink: args[5] as LayerLink, renderObject: args[6] as RenderEditable, selectionControls: identical(args[7], darticAbsent) ? null : args[7] as TextSelectionControls?, handlesVisible: identical(args[8], darticAbsent) ? false : args[8] as bool, selectionDelegate: args[9] as TextSelectionDelegate, dragStartBehavior: identical(args[10], darticAbsent) ? DragStartBehavior.start : args[10] as DragStartBehavior, onSelectionHandleTapped: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : () => (args[11] as Function?)!(), clipboardStatus: identical(args[12], darticAbsent) ? null : args[12] as ClipboardStatusNotifier?, contextMenuBuilder: identical(args[13], darticAbsent) ? null : (args[13] as Function?) == null ? null : (a) => (args[13] as Function?)!(a), magnifierConfiguration: args[14] as TextMagnifierConfiguration),
       };
 }

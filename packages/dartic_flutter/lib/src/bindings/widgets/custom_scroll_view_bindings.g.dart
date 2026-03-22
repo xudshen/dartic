@@ -52,6 +52,7 @@ abstract final class CustomScrollViewBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildSlivers#1': (args) => (args[0] as CustomScrollView).buildSlivers(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CustomScrollView).toString(),
         'getDirection#1': (args) => (args[0] as CustomScrollView).getDirection(args[1] as BuildContext),
         'buildViewport#4': (args) => (args[0] as CustomScrollView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as AxisDirection, (args[4] as List).cast<Widget>()),
         'build#1': (args) => (args[0] as CustomScrollView).build(args[1] as BuildContext),
@@ -63,6 +64,7 @@ abstract final class CustomScrollViewBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CustomScrollView).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CustomScrollView).debugDescribeChildren(),
         'slivers#0': (args) => (args[0] as CustomScrollView).slivers,
+        'hashCode#0': (args) => (args[0] as CustomScrollView).hashCode,
         'scrollDirection#0': (args) => (args[0] as CustomScrollView).scrollDirection,
         'reverse#0': (args) => (args[0] as CustomScrollView).reverse,
         'controller#0': (args) => (args[0] as CustomScrollView).controller,
@@ -81,6 +83,7 @@ abstract final class CustomScrollViewBindings {
         'clipBehavior#0': (args) => (args[0] as CustomScrollView).clipBehavior,
         'hitTestBehavior#0': (args) => (args[0] as CustomScrollView).hitTestBehavior,
         'key#0': (args) => (args[0] as CustomScrollView).key,
+        '==#1': (args) => (args[0] as CustomScrollView) == (args[1] as Object),
         '#19': (args) => CustomScrollView(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scrollDirection: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, controller: identical(args[3], darticAbsent) ? null : args[3] as ScrollController?, primary: identical(args[4], darticAbsent) ? null : args[4] as bool?, physics: identical(args[5], darticAbsent) ? null : args[5] as ScrollPhysics?, scrollBehavior: identical(args[6], darticAbsent) ? null : args[6] as ScrollBehavior?, shrinkWrap: identical(args[7], darticAbsent) ? false : args[7] as bool, center: identical(args[8], darticAbsent) ? null : args[8] as Key?, anchor: identical(args[9], darticAbsent) ? 0.0 : args[9] as double, cacheExtent: identical(args[10], darticAbsent) ? null : args[10] as double?, paintOrder: identical(args[11], darticAbsent) ? SliverPaintOrder.firstIsTop : args[11] as SliverPaintOrder, slivers: identical(args[12], darticAbsent) ? const <Widget>[] : (args[12] as List).cast<Widget>(), semanticChildCount: identical(args[13], darticAbsent) ? null : args[13] as int?, dragStartBehavior: identical(args[14], darticAbsent) ? DragStartBehavior.start : args[14] as DragStartBehavior, keyboardDismissBehavior: identical(args[15], darticAbsent) ? null : args[15] as ScrollViewKeyboardDismissBehavior?, restorationId: identical(args[16], darticAbsent) ? null : args[16] as String?, clipBehavior: identical(args[17], darticAbsent) ? Clip.hardEdge : args[17] as Clip, hitTestBehavior: identical(args[18], darticAbsent) ? HitTestBehavior.opaque : args[18] as HitTestBehavior),
         '_#fromFields#19': (args) => CustomScrollView(key: args[7] as Key?, scrollDirection: args[15] as Axis, reverse: args[13] as bool, controller: args[4] as ScrollController?, primary: args[11] as bool?, physics: args[10] as ScrollPhysics?, scrollBehavior: args[14] as ScrollBehavior?, shrinkWrap: args[17] as bool, center: args[2] as Key?, anchor: args[0] as double, cacheExtent: args[1] as double?, paintOrder: args[9] as SliverPaintOrder, slivers: (args[18] as List).cast<Widget>(), semanticChildCount: args[16] as int?, dragStartBehavior: args[5] as DragStartBehavior, keyboardDismissBehavior: args[8] as ScrollViewKeyboardDismissBehavior?, restorationId: args[12] as String?, clipBehavior: args[3] as Clip, hitTestBehavior: args[6] as HitTestBehavior),
       };

@@ -36,7 +36,10 @@ abstract final class RoundSliderOverlayShapeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getPreferredSize#2': (args) => (args[0] as RoundSliderOverlayShape).getPreferredSize(args[1] as bool, args[2] as bool),
         'paint#12': (args) { (args[0] as RoundSliderOverlayShape).paint(args[1] as PaintingContext, args[2] as Offset, activationAnimation: args[3] as Animation<double>, enableAnimation: args[4] as Animation<double>, isDiscrete: args[5] as bool, labelPainter: args[6] as TextPainter, parentBox: args[7] as RenderBox, sliderTheme: args[8] as SliderThemeData, textDirection: args[9] as TextDirection, value: args[10] as double, textScaleFactor: args[11] as double, sizeWithOverflow: args[12] as Size); return null; },
+        'toString#0': (args) => (args[0] as RoundSliderOverlayShape).toString(),
         'overlayRadius#0': (args) => (args[0] as RoundSliderOverlayShape).overlayRadius,
+        'hashCode#0': (args) => (args[0] as RoundSliderOverlayShape).hashCode,
+        '==#1': (args) => (args[0] as RoundSliderOverlayShape) == (args[1] as Object),
         '#1': (args) => RoundSliderOverlayShape(overlayRadius: identical(args[0], darticAbsent) ? 24.0 : args[0] as double),
         '_#fromFields#1': (args) => RoundSliderOverlayShape(overlayRadius: args[0] as double),
       };

@@ -45,6 +45,7 @@ abstract final class GestureBindingBindings {
         'dispatchEvent#2': (args) { (args[0] as GestureBinding).dispatchEvent(args[1] as PointerEvent, args[2] as HitTestResult?); return null; },
         'handleEvent#2': (args) { (args[0] as GestureBinding).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
         'resetGestureBinding#0': (args) { (args[0] as GestureBinding).resetGestureBinding(); return null; },
+        'toString#0': (args) => (args[0] as GestureBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as GestureBinding).debugCheckZone(args[1] as String),
         'initServiceExtensions#0': (args) { (args[0] as GestureBinding).initServiceExtensions(); return null; },
         'lockEvents#1': (args) => (args[0] as GestureBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
@@ -63,10 +64,12 @@ abstract final class GestureBindingBindings {
         'samplingClock#0': (args) => (args[0] as GestureBinding).samplingClock,
         'resamplingEnabled#0': (args) => (args[0] as GestureBinding).resamplingEnabled,
         'samplingOffset#0': (args) => (args[0] as GestureBinding).samplingOffset,
+        'hashCode#0': (args) => (args[0] as GestureBinding).hashCode,
         'window#0': (args) => (args[0] as GestureBinding).window,
         'platformDispatcher#0': (args) => (args[0] as GestureBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as GestureBinding).locked,
         'resamplingEnabled=#1': (args) { (args[0] as GestureBinding).resamplingEnabled = args[1] as bool; return args[1]; },
         'samplingOffset=#1': (args) { (args[0] as GestureBinding).samplingOffset = args[1] as Duration; return args[1]; },
+        '==#1': (args) => (args[0] as GestureBinding) == (args[1] as Object),
       };
 }

@@ -27,11 +27,14 @@ abstract final class ScrollEndNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as ScrollEndNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollEndNotification).toString(),
         'dispatch#1': (args) { (args[0] as ScrollEndNotification).dispatch(args[1] as BuildContext?); return null; },
         'dragDetails#0': (args) => (args[0] as ScrollEndNotification).dragDetails,
+        'hashCode#0': (args) => (args[0] as ScrollEndNotification).hashCode,
         'metrics#0': (args) => (args[0] as ScrollEndNotification).metrics,
         'context#0': (args) => (args[0] as ScrollEndNotification).context,
         'depth#0': (args) => (args[0] as ScrollEndNotification).depth,
+        '==#1': (args) => (args[0] as ScrollEndNotification) == (args[1] as Object),
         '#3': (args) => ScrollEndNotification(metrics: args[0] as ScrollMetrics, context: args[1] as BuildContext, dragDetails: identical(args[2], darticAbsent) ? null : args[2] as DragEndDetails?),
       };
 }

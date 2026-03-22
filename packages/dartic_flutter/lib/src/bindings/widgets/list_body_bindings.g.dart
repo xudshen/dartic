@@ -41,6 +41,7 @@ abstract final class ListBodyBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as ListBody).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ListBody).updateRenderObject(args[1] as BuildContext, args[2] as RenderListBody); return null; },
+        'toString#0': (args) => (args[0] as ListBody).toString(),
         'createElement#0': (args) => (args[0] as ListBody).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ListBody).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ListBody).toStringShort(),
@@ -51,8 +52,10 @@ abstract final class ListBodyBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ListBody).debugDescribeChildren(),
         'mainAxis#0': (args) => (args[0] as ListBody).mainAxis,
         'reverse#0': (args) => (args[0] as ListBody).reverse,
+        'hashCode#0': (args) => (args[0] as ListBody).hashCode,
         'children#0': (args) => (args[0] as ListBody).children,
         'key#0': (args) => (args[0] as ListBody).key,
+        '==#1': (args) => (args[0] as ListBody) == (args[1] as Object),
         '#4': (args) => ListBody(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxis: identical(args[1], darticAbsent) ? Axis.vertical : args[1] as Axis, reverse: identical(args[2], darticAbsent) ? false : args[2] as bool, children: identical(args[3], darticAbsent) ? const <Widget>[] : (args[3] as List).cast<Widget>()),
         '_#fromFields#4': (args) => ListBody(key: args[1] as Key?, mainAxis: args[2] as Axis, reverse: args[3] as bool, children: (args[0] as List).cast<Widget>()),
       };

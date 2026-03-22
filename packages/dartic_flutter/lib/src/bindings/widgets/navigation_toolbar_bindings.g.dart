@@ -29,6 +29,7 @@ abstract final class NavigationToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationToolbar).toString(),
         'createElement#0': (args) => (args[0] as NavigationToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -41,7 +42,9 @@ abstract final class NavigationToolbarBindings {
         'trailing#0': (args) => (args[0] as NavigationToolbar).trailing,
         'centerMiddle#0': (args) => (args[0] as NavigationToolbar).centerMiddle,
         'middleSpacing#0': (args) => (args[0] as NavigationToolbar).middleSpacing,
+        'hashCode#0': (args) => (args[0] as NavigationToolbar).hashCode,
         'key#0': (args) => (args[0] as NavigationToolbar).key,
+        '==#1': (args) => (args[0] as NavigationToolbar) == (args[1] as Object),
         '#6': (args) => NavigationToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, leading: identical(args[1], darticAbsent) ? null : args[1] as Widget?, middle: identical(args[2], darticAbsent) ? null : args[2] as Widget?, trailing: identical(args[3], darticAbsent) ? null : args[3] as Widget?, centerMiddle: identical(args[4], darticAbsent) ? true : args[4] as bool, middleSpacing: identical(args[5], darticAbsent) ? NavigationToolbar.kMiddleSpacing : args[5] as double),
         '_#fromFields#6': (args) => NavigationToolbar(key: args[1] as Key?, leading: args[2] as Widget?, middle: args[3] as Widget?, trailing: args[5] as Widget?, centerMiddle: args[0] as bool, middleSpacing: args[4] as double),
       };

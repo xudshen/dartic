@@ -30,6 +30,7 @@ abstract final class TextureBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as Texture).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Texture).updateRenderObject(args[1] as BuildContext, args[2] as TextureBox); return null; },
+        'toString#0': (args) => (args[0] as Texture).toString(),
         'createElement#0': (args) => (args[0] as Texture).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Texture).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Texture).toStringShort(),
@@ -41,7 +42,9 @@ abstract final class TextureBindings {
         'textureId#0': (args) => (args[0] as Texture).textureId,
         'freeze#0': (args) => (args[0] as Texture).freeze,
         'filterQuality#0': (args) => (args[0] as Texture).filterQuality,
+        'hashCode#0': (args) => (args[0] as Texture).hashCode,
         'key#0': (args) => (args[0] as Texture).key,
+        '==#1': (args) => (args[0] as Texture) == (args[1] as Object),
         '#4': (args) => Texture(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textureId: args[1] as int, freeze: identical(args[2], darticAbsent) ? false : args[2] as bool, filterQuality: identical(args[3], darticAbsent) ? FilterQuality.low : args[3] as FilterQuality),
         '_#fromFields#4': (args) => Texture(key: args[2] as Key?, textureId: args[3] as int, freeze: args[1] as bool, filterQuality: args[0] as FilterQuality),
       };

@@ -122,6 +122,7 @@ abstract final class EditableTextStateBindings {
         'showAutocorrectionPromptRect#2': (args) { (args[0] as EditableTextState).showAutocorrectionPromptRect(args[1] as int, args[2] as int); return null; },
         'build#1': (args) => (args[0] as EditableTextState).build(args[1] as BuildContext),
         'buildTextSpan#0': (args) => (args[0] as EditableTextState).buildTextSpan(),
+        'toString#0': (args) => (args[0] as EditableTextState).toString(),
         'reassemble#0': (args) { (args[0] as EditableTextState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as EditableTextState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as EditableTextState).deactivate(); return null; },
@@ -170,10 +171,12 @@ abstract final class EditableTextStateBindings {
         'textEditingValue#0': (args) => (args[0] as EditableTextState).textEditingValue,
         'autofillId#0': (args) => (args[0] as EditableTextState).autofillId,
         'textInputConfiguration#0': (args) => (args[0] as EditableTextState).textInputConfiguration,
+        'hashCode#0': (args) => (args[0] as EditableTextState).hashCode,
         'widget#0': (args) => (args[0] as EditableTextState).widget,
         'context#0': (args) => (args[0] as EditableTextState).context,
         'mounted#0': (args) => (args[0] as EditableTextState).mounted,
         'spellCheckResults=#1': (args) { (args[0] as EditableTextState).spellCheckResults = args[1] as SpellCheckResults?; return args[1]; },
+        '==#1': (args) => (args[0] as EditableTextState) == (args[1] as Object),
         '#0': (args) => EditableTextState(),
       };
 }

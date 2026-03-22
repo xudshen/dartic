@@ -43,6 +43,7 @@ abstract final class ScrollableDetailsBindings {
         'decorationClipBehavior#0': (args) => (args[0] as ScrollableDetails).decorationClipBehavior,
         'clipBehavior#0': (args) => (args[0] as ScrollableDetails).clipBehavior,
         'hashCode#0': (args) => (args[0] as ScrollableDetails).hashCode,
+        '==#1': (args) => (args[0] as ScrollableDetails) == (args[1] as Object),
         '#5': (args) => ScrollableDetails(direction: args[0] as AxisDirection, controller: identical(args[1], darticAbsent) ? null : args[1] as ScrollController?, physics: identical(args[2], darticAbsent) ? null : args[2] as ScrollPhysics?, clipBehavior: identical(args[3], darticAbsent) ? null : args[3] as Clip?, decorationClipBehavior: identical(args[4], darticAbsent) ? null : args[4] as Clip?),
         'vertical#4': (args) => ScrollableDetails.vertical(reverse: identical(args[0], darticAbsent) ? false : args[0] as bool, controller: identical(args[1], darticAbsent) ? null : args[1] as ScrollController?, physics: identical(args[2], darticAbsent) ? null : args[2] as ScrollPhysics?, decorationClipBehavior: identical(args[3], darticAbsent) ? null : args[3] as Clip?),
         'horizontal#4': (args) => ScrollableDetails.horizontal(reverse: identical(args[0], darticAbsent) ? false : args[0] as bool, controller: identical(args[1], darticAbsent) ? null : args[1] as ScrollController?, physics: identical(args[2], darticAbsent) ? null : args[2] as ScrollPhysics?, decorationClipBehavior: identical(args[3], darticAbsent) ? null : args[3] as Clip?),

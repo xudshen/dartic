@@ -32,7 +32,9 @@ abstract final class CurveTweenBindings {
         'animate#1': (args) => (args[0] as CurveTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as CurveTween).chain(args[1] as Animatable<double>),
         'curve#0': (args) => (args[0] as CurveTween).curve,
+        'hashCode#0': (args) => (args[0] as CurveTween).hashCode,
         'curve=#1': (args) { (args[0] as CurveTween).curve = args[1] as Curve; return args[1]; },
+        '==#1': (args) => (args[0] as CurveTween) == (args[1] as Object),
         '#1': (args) => CurveTween(curve: args[0] as Curve),
       };
 }

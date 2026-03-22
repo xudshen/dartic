@@ -35,12 +35,15 @@ abstract final class BuildOwnerBindings {
         'buildScope#2': (args) { (args[0] as BuildOwner).buildScope(args[1] as Element, identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()); return null; },
         'finalizeTree#0': (args) { (args[0] as BuildOwner).finalizeTree(); return null; },
         'reassemble#1': (args) { (args[0] as BuildOwner).reassemble(args[1] as Element); return null; },
+        'toString#0': (args) => (args[0] as BuildOwner).toString(),
         'onBuildScheduled#0': (args) => (args[0] as BuildOwner).onBuildScheduled,
         'focusManager#0': (args) => (args[0] as BuildOwner).focusManager,
         'debugBuilding#0': (args) => (args[0] as BuildOwner).debugBuilding,
         'globalKeyCount#0': (args) => (args[0] as BuildOwner).globalKeyCount,
+        'hashCode#0': (args) => (args[0] as BuildOwner).hashCode,
         'onBuildScheduled=#1': (args) { (args[0] as BuildOwner).onBuildScheduled = args[1] as VoidCallback?; return args[1]; },
         'focusManager=#1': (args) { (args[0] as BuildOwner).focusManager = args[1] as FocusManager; return args[1]; },
+        '==#1': (args) => (args[0] as BuildOwner) == (args[1] as Object),
         '#2': (args) => BuildOwner(onBuildScheduled: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!(), focusManager: identical(args[1], darticAbsent) ? null : args[1] as FocusManager?),
       };
 }

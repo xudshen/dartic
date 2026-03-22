@@ -53,6 +53,7 @@ abstract final class LiveTextInputStatusNotifierBindings {
         'removeListener#1': (args) { (args[0] as LiveTextInputStatusNotifier).removeListener(() => (args[1] as Function)()); return null; },
         'didChangeAppLifecycleState#1': (args) { (args[0] as LiveTextInputStatusNotifier).didChangeAppLifecycleState(args[1] as AppLifecycleState); return null; },
         'dispose#0': (args) { (args[0] as LiveTextInputStatusNotifier).dispose(); return null; },
+        'toString#0': (args) => (args[0] as LiveTextInputStatusNotifier).toString(),
         'notifyListeners#0': (args) { (args[0] as LiveTextInputStatusNotifier).notifyListeners(); return null; },
         'didPopRoute#0': (args) => (args[0] as LiveTextInputStatusNotifier).didPopRoute(),
         'handleStartBackGesture#1': (args) => (args[0] as LiveTextInputStatusNotifier).handleStartBackGesture(args[1] as PredictiveBackEvent),
@@ -69,9 +70,11 @@ abstract final class LiveTextInputStatusNotifierBindings {
         'didRequestAppExit#0': (args) => (args[0] as LiveTextInputStatusNotifier).didRequestAppExit(),
         'didHaveMemoryPressure#0': (args) { (args[0] as LiveTextInputStatusNotifier).didHaveMemoryPressure(); return null; },
         'didChangeAccessibilityFeatures#0': (args) { (args[0] as LiveTextInputStatusNotifier).didChangeAccessibilityFeatures(); return null; },
+        'hashCode#0': (args) => (args[0] as LiveTextInputStatusNotifier).hashCode,
         'value#0': (args) => (args[0] as LiveTextInputStatusNotifier).value,
         'hasListeners#0': (args) => (args[0] as LiveTextInputStatusNotifier).hasListeners,
         'value=#1': (args) { (args[0] as LiveTextInputStatusNotifier).value = args[1] as LiveTextInputStatus; return args[1]; },
+        '==#1': (args) => (args[0] as LiveTextInputStatusNotifier) == (args[1] as Object),
         '#1': (args) => LiveTextInputStatusNotifier(value: identical(args[0], darticAbsent) ? LiveTextInputStatus.unknown : args[0] as LiveTextInputStatus),
       };
 }

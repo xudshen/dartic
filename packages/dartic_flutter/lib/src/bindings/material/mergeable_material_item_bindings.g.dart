@@ -28,6 +28,9 @@ abstract final class MergeableMaterialItemBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MergeableMaterialItem).toString(),
         'key#0': (args) => (args[0] as MergeableMaterialItem).key,
+        'hashCode#0': (args) => (args[0] as MergeableMaterialItem).hashCode,
+        '==#1': (args) => (args[0] as MergeableMaterialItem) == (args[1] as Object),
       };
 }

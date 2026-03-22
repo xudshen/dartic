@@ -63,6 +63,7 @@ abstract final class ScrollableStateBindings {
         'setIgnorePointer#1': (args) { (args[0] as ScrollableState).setIgnorePointer(args[1] as bool); return null; },
         'build#1': (args) => (args[0] as ScrollableState).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as ScrollableState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ScrollableState).toString(),
         'reassemble#0': (args) { (args[0] as ScrollableState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ScrollableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ScrollableState).deactivate(); return null; },
@@ -83,11 +84,13 @@ abstract final class ScrollableStateBindings {
         'notificationContext#0': (args) => (args[0] as ScrollableState).notificationContext,
         'storageContext#0': (args) => (args[0] as ScrollableState).storageContext,
         'restorationId#0': (args) => (args[0] as ScrollableState).restorationId,
+        'hashCode#0': (args) => (args[0] as ScrollableState).hashCode,
         'widget#0': (args) => (args[0] as ScrollableState).widget,
         'context#0': (args) => (args[0] as ScrollableState).context,
         'mounted#0': (args) => (args[0] as ScrollableState).mounted,
         'bucket#0': (args) => (args[0] as ScrollableState).bucket,
         'restorePending#0': (args) => (args[0] as ScrollableState).restorePending,
+        '==#1': (args) => (args[0] as ScrollableState) == (args[1] as Object),
         '#0': (args) => ScrollableState(),
       };
 }

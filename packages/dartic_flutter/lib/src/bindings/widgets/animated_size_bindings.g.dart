@@ -33,6 +33,7 @@ abstract final class AnimatedSizeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedSize).createState(),
+        'toString#0': (args) => (args[0] as AnimatedSize).toString(),
         'createElement#0': (args) => (args[0] as AnimatedSize).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedSize).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedSize).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class AnimatedSizeBindings {
         'reverseDuration#0': (args) => (args[0] as AnimatedSize).reverseDuration,
         'clipBehavior#0': (args) => (args[0] as AnimatedSize).clipBehavior,
         'onEnd#0': (args) => (args[0] as AnimatedSize).onEnd,
+        'hashCode#0': (args) => (args[0] as AnimatedSize).hashCode,
         'key#0': (args) => (args[0] as AnimatedSize).key,
+        '==#1': (args) => (args[0] as AnimatedSize) == (args[1] as Object),
         '#8': (args) => AnimatedSize(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, reverseDuration: identical(args[5], darticAbsent) ? null : args[5] as Duration?, clipBehavior: identical(args[6], darticAbsent) ? Clip.hardEdge : args[6] as Clip, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
         '_#fromFields#8': (args) => AnimatedSize(key: args[5] as Key?, child: args[1] as Widget?, alignment: args[0] as AlignmentGeometry, curve: args[3] as Curve, duration: args[4] as Duration, reverseDuration: args[7] as Duration?, clipBehavior: args[2] as Clip, onEnd: args[6] as VoidCallback?),
       };

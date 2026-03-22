@@ -36,6 +36,7 @@ abstract final class ScrollConfigurationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as ScrollConfiguration).updateShouldNotify(args[1] as ScrollConfiguration),
         'debugFillProperties#1': (args) { (args[0] as ScrollConfiguration).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ScrollConfiguration).toString(),
         'createElement#0': (args) => (args[0] as ScrollConfiguration).createElement(),
         'toStringShort#0': (args) => (args[0] as ScrollConfiguration).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as ScrollConfiguration).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -43,8 +44,10 @@ abstract final class ScrollConfigurationBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ScrollConfiguration).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ScrollConfiguration).debugDescribeChildren(),
         'behavior#0': (args) => (args[0] as ScrollConfiguration).behavior,
+        'hashCode#0': (args) => (args[0] as ScrollConfiguration).hashCode,
         'child#0': (args) => (args[0] as ScrollConfiguration).child,
         'key#0': (args) => (args[0] as ScrollConfiguration).key,
+        '==#1': (args) => (args[0] as ScrollConfiguration) == (args[1] as Object),
         '#3': (args) => ScrollConfiguration(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, behavior: args[1] as ScrollBehavior, child: args[2] as Widget),
         '_#fromFields#3': (args) => ScrollConfiguration(key: args[2] as Key?, behavior: args[0] as ScrollBehavior, child: args[1] as Widget),
       };

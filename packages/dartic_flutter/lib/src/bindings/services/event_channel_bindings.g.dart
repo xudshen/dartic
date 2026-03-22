@@ -29,9 +29,12 @@ abstract final class EventChannelBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'receiveBroadcastStream#1': (args) => (args[0] as EventChannel).receiveBroadcastStream(identical(args[1], darticAbsent) ? null : args[1]),
+        'toString#0': (args) => (args[0] as EventChannel).toString(),
         'name#0': (args) => (args[0] as EventChannel).name,
         'codec#0': (args) => (args[0] as EventChannel).codec,
         'binaryMessenger#0': (args) => (args[0] as EventChannel).binaryMessenger,
+        'hashCode#0': (args) => (args[0] as EventChannel).hashCode,
+        '==#1': (args) => (args[0] as EventChannel) == (args[1] as Object),
         '#3': (args) => EventChannel(args[0] as String, identical(args[1], darticAbsent) ? const StandardMethodCodec() : args[1] as MethodCodec, identical(args[2], darticAbsent) ? null : args[2] as BinaryMessenger?),
         '_#fromFields#3': (args) => EventChannel(args[2] as String, args[1] as MethodCodec, args[0] as BinaryMessenger?),
       };

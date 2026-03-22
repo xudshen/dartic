@@ -30,6 +30,7 @@ abstract final class ProgressIndicatorThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ProgressIndicatorTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ProgressIndicatorTheme).updateShouldNotify(args[1] as ProgressIndicatorTheme),
+        'toString#0': (args) => (args[0] as ProgressIndicatorTheme).toString(),
         'createElement#0': (args) => (args[0] as ProgressIndicatorTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ProgressIndicatorTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ProgressIndicatorTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class ProgressIndicatorThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ProgressIndicatorTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ProgressIndicatorTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as ProgressIndicatorTheme).data,
+        'hashCode#0': (args) => (args[0] as ProgressIndicatorTheme).hashCode,
         'child#0': (args) => (args[0] as ProgressIndicatorTheme).child,
         'key#0': (args) => (args[0] as ProgressIndicatorTheme).key,
+        '==#1': (args) => (args[0] as ProgressIndicatorTheme) == (args[1] as Object),
         '#3': (args) => ProgressIndicatorTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ProgressIndicatorThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => ProgressIndicatorTheme(key: args[2] as Key?, data: args[1] as ProgressIndicatorThemeData, child: args[0] as Widget),
       };

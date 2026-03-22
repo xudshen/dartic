@@ -25,13 +25,16 @@ abstract final class ListBodyParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ListBodyParentData).toString(),
         'detach#0': (args) { (args[0] as ListBodyParentData).detach(); return null; },
+        'hashCode#0': (args) => (args[0] as ListBodyParentData).hashCode,
         'offset#0': (args) => (args[0] as ListBodyParentData).offset,
         'previousSibling#0': (args) => (args[0] as ListBodyParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as ListBodyParentData).nextSibling,
         'offset=#1': (args) { (args[0] as ListBodyParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as ListBodyParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as ListBodyParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as ListBodyParentData) == (args[1] as Object),
         '#0': (args) => ListBodyParentData(),
       };
 }

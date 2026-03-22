@@ -27,10 +27,12 @@ abstract final class IconButtonThemeDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as IconButtonThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as IconButtonThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as IconButtonThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as IconButtonThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'style#0': (args) => (args[0] as IconButtonThemeData).style,
         'hashCode#0': (args) => (args[0] as IconButtonThemeData).hashCode,
+        '==#1': (args) => (args[0] as IconButtonThemeData) == (args[1] as Object),
         '#1': (args) => IconButtonThemeData(style: identical(args[0], darticAbsent) ? null : args[0] as ButtonStyle?),
         '_#fromFields#1': (args) => IconButtonThemeData(style: args[0] as ButtonStyle?),
       };

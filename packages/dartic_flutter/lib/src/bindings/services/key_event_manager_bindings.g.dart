@@ -30,8 +30,11 @@ abstract final class KeyEventManagerBindings {
         'handleKeyData#1': (args) => (args[0] as KeyEventManager).handleKeyData(args[1] as ui.KeyData),
         'handleRawKeyMessage#1': (args) => (args[0] as KeyEventManager).handleRawKeyMessage(args[1]),
         'clearState#0': (args) { (args[0] as KeyEventManager).clearState(); return null; },
+        'toString#0': (args) => (args[0] as KeyEventManager).toString(),
         'keyMessageHandler#0': (args) => (args[0] as KeyEventManager).keyMessageHandler,
+        'hashCode#0': (args) => (args[0] as KeyEventManager).hashCode,
         'keyMessageHandler=#1': (args) { (args[0] as KeyEventManager).keyMessageHandler = args[1] as KeyMessageHandler?; return args[1]; },
+        '==#1': (args) => (args[0] as KeyEventManager) == (args[1] as Object),
         '#2': (args) => KeyEventManager(args[0] as HardwareKeyboard, args[1] as RawKeyboard),
       };
 }

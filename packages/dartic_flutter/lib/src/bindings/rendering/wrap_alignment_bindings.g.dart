@@ -33,6 +33,9 @@ abstract final class WrapAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WrapAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as WrapAlignment).hashCode,
         'index#0': (args) => (args[0] as WrapAlignment).index,
+        '==#1': (args) => (args[0] as WrapAlignment) == (args[1] as Object),
       };
 }

@@ -34,7 +34,10 @@ abstract final class IOSSystemContextMenuItemDataCopyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemDataCopy).toString(),
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemDataCopy).hashCode,
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemDataCopy).title,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemDataCopy) == (args[1] as Object),
         '#0': (args) => IOSSystemContextMenuItemDataCopy(),
         '_#fromFields#0': (args) => IOSSystemContextMenuItemDataCopy(),
       };

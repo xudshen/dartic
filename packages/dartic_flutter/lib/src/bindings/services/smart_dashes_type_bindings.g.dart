@@ -37,6 +37,9 @@ abstract final class SmartDashesTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SmartDashesType).toString(),
+        'hashCode#0': (args) => (args[0] as SmartDashesType).hashCode,
         'index#0': (args) => (args[0] as SmartDashesType).index,
+        '==#1': (args) => (args[0] as SmartDashesType) == (args[1] as Object),
       };
 }

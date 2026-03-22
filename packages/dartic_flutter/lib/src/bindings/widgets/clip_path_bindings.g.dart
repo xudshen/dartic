@@ -41,6 +41,7 @@ abstract final class ClipPathBindings {
         'updateRenderObject#2': (args) { (args[0] as ClipPath).updateRenderObject(args[1] as BuildContext, args[2] as RenderClipPath); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as ClipPath).didUnmountRenderObject(args[1] as RenderClipPath); return null; },
         'debugFillProperties#1': (args) { (args[0] as ClipPath).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ClipPath).toString(),
         'createElement#0': (args) => (args[0] as ClipPath).createElement(),
         'toStringShort#0': (args) => (args[0] as ClipPath).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as ClipPath).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -49,8 +50,10 @@ abstract final class ClipPathBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ClipPath).debugDescribeChildren(),
         'clipper#0': (args) => (args[0] as ClipPath).clipper,
         'clipBehavior#0': (args) => (args[0] as ClipPath).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ClipPath).hashCode,
         'child#0': (args) => (args[0] as ClipPath).child,
         'key#0': (args) => (args[0] as ClipPath).key,
+        '==#1': (args) => (args[0] as ClipPath) == (args[1] as Object),
         '#4': (args) => ClipPath(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: identical(args[1], darticAbsent) ? null : args[1] as CustomClipper<ui.Path>?, clipBehavior: identical(args[2], darticAbsent) ? Clip.antiAlias : args[2] as ui.Clip, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => ClipPath(key: args[3] as Key?, clipper: args[2] as CustomClipper<ui.Path>?, clipBehavior: args[1] as ui.Clip, child: args[0] as Widget?),
       };

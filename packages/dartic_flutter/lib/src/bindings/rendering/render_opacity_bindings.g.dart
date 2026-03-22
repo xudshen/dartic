@@ -43,6 +43,7 @@ abstract final class RenderOpacityBindings {
         'paint#2': (args) { (args[0] as RenderOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderOpacity).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderOpacity).toString(),
         'setupParentData#1': (args) { (args[0] as RenderOpacity).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderOpacity).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderOpacity).computeMinIntrinsicWidth(args[1] as double),
@@ -120,6 +121,7 @@ abstract final class RenderOpacityBindings {
         'isRepaintBoundary#0': (args) => (args[0] as RenderOpacity).isRepaintBoundary,
         'opacity#0': (args) => (args[0] as RenderOpacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as RenderOpacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as RenderOpacity).hashCode,
         'hasSize#0': (args) => (args[0] as RenderOpacity).hasSize,
         'size#0': (args) => (args[0] as RenderOpacity).size,
         'semanticBounds#0': (args) => (args[0] as RenderOpacity).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderOpacityBindings {
         'debugCreator=#1': (args) { (args[0] as RenderOpacity).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderOpacity).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderOpacity).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderOpacity) == (args[1] as Object),
         '#3': (args) => RenderOpacity(opacity: identical(args[0], darticAbsent) ? 1.0 : args[0] as double, alwaysIncludeSemantics: identical(args[1], darticAbsent) ? false : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as RenderBox?),
       };
 }

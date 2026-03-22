@@ -39,6 +39,7 @@ abstract final class DrawerControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DrawerController).createState(),
+        'toString#0': (args) => (args[0] as DrawerController).toString(),
         'createElement#0': (args) => (args[0] as DrawerController).createElement(),
         'toStringShort#0': (args) => (args[0] as DrawerController).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DrawerController).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -55,7 +56,9 @@ abstract final class DrawerControllerBindings {
         'enableOpenDragGesture#0': (args) => (args[0] as DrawerController).enableOpenDragGesture,
         'edgeDragWidth#0': (args) => (args[0] as DrawerController).edgeDragWidth,
         'isDrawerOpen#0': (args) => (args[0] as DrawerController).isDrawerOpen,
+        'hashCode#0': (args) => (args[0] as DrawerController).hashCode,
         'key#0': (args) => (args[0] as DrawerController).key,
+        '==#1': (args) => (args[0] as DrawerController) == (args[1] as Object),
         '#10': (args) => DrawerController(key: identical(args[0], darticAbsent) ? null : args[0] as GlobalKey<State<StatefulWidget>>?, child: args[1] as Widget, alignment: args[2] as DrawerAlignment, isDrawerOpen: identical(args[3], darticAbsent) ? false : args[3] as bool, drawerCallback: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), dragStartBehavior: identical(args[5], darticAbsent) ? DragStartBehavior.start : args[5] as DragStartBehavior, scrimColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, edgeDragWidth: identical(args[7], darticAbsent) ? null : args[7] as double?, enableOpenDragGesture: identical(args[8], darticAbsent) ? true : args[8] as bool, drawerBarrierDismissible: identical(args[9], darticAbsent) ? true : args[9] as bool),
         '_#fromFields#10': (args) => DrawerController(key: args[8] as GlobalKey<State<StatefulWidget>>?, child: args[1] as Widget, alignment: args[0] as DrawerAlignment, isDrawerOpen: args[7] as bool, drawerCallback: args[4] as DrawerCallback?, dragStartBehavior: args[2] as DragStartBehavior, scrimColor: args[9] as Color?, edgeDragWidth: args[5] as double?, enableOpenDragGesture: args[6] as bool, drawerBarrierDismissible: args[3] as bool),
       };

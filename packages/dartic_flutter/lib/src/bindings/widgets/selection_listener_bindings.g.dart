@@ -47,6 +47,7 @@ abstract final class SelectionListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SelectionListener).createState(),
+        'toString#0': (args) => (args[0] as SelectionListener).toString(),
         'createElement#0': (args) => (args[0] as SelectionListener).createElement(),
         'toStringShort#0': (args) => (args[0] as SelectionListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SelectionListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -56,7 +57,9 @@ abstract final class SelectionListenerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SelectionListener).debugDescribeChildren(),
         'selectionNotifier#0': (args) => (args[0] as SelectionListener).selectionNotifier,
         'child#0': (args) => (args[0] as SelectionListener).child,
+        'hashCode#0': (args) => (args[0] as SelectionListener).hashCode,
         'key#0': (args) => (args[0] as SelectionListener).key,
+        '==#1': (args) => (args[0] as SelectionListener) == (args[1] as Object),
         '#3': (args) => SelectionListener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, selectionNotifier: args[1] as SelectionListenerNotifier, child: args[2] as Widget),
         '_#fromFields#3': (args) => SelectionListener(key: args[1] as Key?, selectionNotifier: args[2] as SelectionListenerNotifier, child: args[0] as Widget),
       };

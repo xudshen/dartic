@@ -43,6 +43,7 @@ abstract final class FormStateBindings {
         'reset#0': (args) { (args[0] as FormState).reset(); return null; },
         'validate#0': (args) => (args[0] as FormState).validate(),
         'validateGranularly#0': (args) => (args[0] as FormState).validateGranularly(),
+        'toString#0': (args) => (args[0] as FormState).toString(),
         'initState#0': (args) { (args[0] as FormState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as FormState).didUpdateWidget(args[1] as Form); return null; },
         'reassemble#0': (args) { (args[0] as FormState).reassemble(); return null; },
@@ -54,9 +55,11 @@ abstract final class FormStateBindings {
         'debugFillProperties#1': (args) { (args[0] as FormState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as FormState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as FormState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as FormState).hashCode,
         'widget#0': (args) => (args[0] as FormState).widget,
         'context#0': (args) => (args[0] as FormState).context,
         'mounted#0': (args) => (args[0] as FormState).mounted,
+        '==#1': (args) => (args[0] as FormState) == (args[1] as Object),
         '#0': (args) => FormState(),
       };
 }

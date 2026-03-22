@@ -27,11 +27,14 @@ abstract final class ScrollStartNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as ScrollStartNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollStartNotification).toString(),
         'dispatch#1': (args) { (args[0] as ScrollStartNotification).dispatch(args[1] as BuildContext?); return null; },
         'dragDetails#0': (args) => (args[0] as ScrollStartNotification).dragDetails,
+        'hashCode#0': (args) => (args[0] as ScrollStartNotification).hashCode,
         'metrics#0': (args) => (args[0] as ScrollStartNotification).metrics,
         'context#0': (args) => (args[0] as ScrollStartNotification).context,
         'depth#0': (args) => (args[0] as ScrollStartNotification).depth,
+        '==#1': (args) => (args[0] as ScrollStartNotification) == (args[1] as Object),
         '#3': (args) => ScrollStartNotification(metrics: args[0] as ScrollMetrics, context: args[1] as BuildContext?, dragDetails: identical(args[2], darticAbsent) ? null : args[2] as DragStartDetails?),
       };
 }

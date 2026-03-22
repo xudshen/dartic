@@ -28,10 +28,13 @@ abstract final class TextSelectionToolbarLayoutDelegateBindings {
         'getConstraintsForChild#1': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).getConstraintsForChild(args[1] as BoxConstraints),
         'getPositionForChild#2': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).getPositionForChild(args[1] as Size, args[2] as Size),
         'shouldRelayout#1': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).shouldRelayout(args[1] as TextSelectionToolbarLayoutDelegate),
+        'toString#0': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).toString(),
         'getSize#1': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).getSize(args[1] as BoxConstraints),
         'anchorAbove#0': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).anchorAbove,
         'anchorBelow#0': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).anchorBelow,
         'fitsAbove#0': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).fitsAbove,
+        'hashCode#0': (args) => (args[0] as TextSelectionToolbarLayoutDelegate).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionToolbarLayoutDelegate) == (args[1] as Object),
         '#3': (args) => TextSelectionToolbarLayoutDelegate(anchorAbove: args[0] as Offset, anchorBelow: args[1] as Offset, fitsAbove: identical(args[2], darticAbsent) ? null : args[2] as bool?),
       };
 }

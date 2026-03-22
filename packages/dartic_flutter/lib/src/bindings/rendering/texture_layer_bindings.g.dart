@@ -30,6 +30,7 @@ abstract final class TextureLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as TextureLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'findAnnotations#3': (args) => (args[0] as TextureLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
+        'toString#0': (args) => (args[0] as TextureLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as TextureLayer).supportsRasterization(),
         'describeClipBounds#0': (args) => (args[0] as TextureLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as TextureLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
@@ -53,6 +54,7 @@ abstract final class TextureLayerBindings {
         'textureId#0': (args) => (args[0] as TextureLayer).textureId,
         'freeze#0': (args) => (args[0] as TextureLayer).freeze,
         'filterQuality#0': (args) => (args[0] as TextureLayer).filterQuality,
+        'hashCode#0': (args) => (args[0] as TextureLayer).hashCode,
         'subtreeHasCompositionCallbacks#0': (args) => (args[0] as TextureLayer).subtreeHasCompositionCallbacks,
         'debugDisposed#0': (args) => (args[0] as TextureLayer).debugDisposed,
         'debugHandleCount#0': (args) => (args[0] as TextureLayer).debugHandleCount,
@@ -68,6 +70,7 @@ abstract final class TextureLayerBindings {
         'debugCreator#0': (args) => (args[0] as TextureLayer).debugCreator,
         'engineLayer=#1': (args) { (args[0] as TextureLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as TextureLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as TextureLayer) == (args[1] as Object),
         '#4': (args) => TextureLayer(rect: args[0] as ui.Rect, textureId: args[1] as int, freeze: identical(args[2], darticAbsent) ? false : args[2] as bool, filterQuality: identical(args[3], darticAbsent) ? ui.FilterQuality.low : args[3] as ui.FilterQuality),
       };
 }

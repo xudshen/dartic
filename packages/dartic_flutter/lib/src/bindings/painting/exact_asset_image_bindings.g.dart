@@ -46,6 +46,7 @@ abstract final class ExactAssetImageBindings {
         'bundle#0': (args) => (args[0] as ExactAssetImage).bundle,
         'package#0': (args) => (args[0] as ExactAssetImage).package,
         'hashCode#0': (args) => (args[0] as ExactAssetImage).hashCode,
+        '==#1': (args) => (args[0] as ExactAssetImage) == (args[1] as Object),
         '#4': (args) => ExactAssetImage(args[0] as String, scale: identical(args[1], darticAbsent) ? 1.0 : args[1] as double, bundle: identical(args[2], darticAbsent) ? null : args[2] as AssetBundle?, package: identical(args[3], darticAbsent) ? null : args[3] as String?),
         '_#fromFields#4': (args) => ExactAssetImage(args[0] as String, scale: args[3] as double, bundle: args[1] as AssetBundle?, package: args[2] as String?),
       };

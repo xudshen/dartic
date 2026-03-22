@@ -26,9 +26,12 @@ abstract final class TransposeCharactersIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TransposeCharactersIntent).toString(),
         'toStringShort#0': (args) => (args[0] as TransposeCharactersIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TransposeCharactersIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as TransposeCharactersIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as TransposeCharactersIntent).hashCode,
+        '==#1': (args) => (args[0] as TransposeCharactersIntent) == (args[1] as Object),
         '#0': (args) => TransposeCharactersIntent(),
         '_#fromFields#0': (args) => TransposeCharactersIntent(),
       };

@@ -33,6 +33,7 @@ abstract final class FontFeatureBindings {
         'feature#0': (args) => (args[0] as FontFeature).feature,
         'value#0': (args) => (args[0] as FontFeature).value,
         'hashCode#0': (args) => (args[0] as FontFeature).hashCode,
+        '==#1': (args) => (args[0] as FontFeature) == (args[1] as Object),
         '#2': (args) => FontFeature(args[0] as String, identical(args[1], darticAbsent) ? 1 : args[1] as int),
         'enable#1': (args) => FontFeature.enable(args[0] as String),
         'disable#1': (args) => FontFeature.disable(args[0] as String),

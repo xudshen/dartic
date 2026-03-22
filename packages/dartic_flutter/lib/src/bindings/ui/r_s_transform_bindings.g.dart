@@ -29,10 +29,13 @@ abstract final class RSTransformBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RSTransform).toString(),
         'scos#0': (args) => (args[0] as RSTransform).scos,
         'ssin#0': (args) => (args[0] as RSTransform).ssin,
         'tx#0': (args) => (args[0] as RSTransform).tx,
         'ty#0': (args) => (args[0] as RSTransform).ty,
+        'hashCode#0': (args) => (args[0] as RSTransform).hashCode,
+        '==#1': (args) => (args[0] as RSTransform) == (args[1] as Object),
         '#4': (args) => RSTransform(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromComponents#6': (args) => RSTransform.fromComponents(rotation: args[0] as double, scale: args[1] as double, anchorX: args[2] as double, anchorY: args[3] as double, translateX: args[4] as double, translateY: args[5] as double),
       };

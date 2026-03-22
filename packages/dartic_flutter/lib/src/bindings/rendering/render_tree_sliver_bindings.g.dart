@@ -48,6 +48,7 @@ abstract final class RenderTreeSliverBindings {
         'childCrossAxisPosition#1': (args) => (args[0] as RenderTreeSliver).childCrossAxisPosition(args[1] as RenderObject),
         'indexToLayoutOffset#2': (args) => (args[0] as RenderTreeSliver).indexToLayoutOffset(args[1] as double, args[2] as int),
         'paint#2': (args) { (args[0] as RenderTreeSliver).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderTreeSliver).toString(),
         'estimateMaxScrollOffset#5': (args) => (args[0] as RenderTreeSliver).estimateMaxScrollOffset(args[1] as SliverConstraints, firstIndex: identical(args[2], darticAbsent) ? null : args[2] as int?, lastIndex: identical(args[3], darticAbsent) ? null : args[3] as int?, leadingScrollOffset: identical(args[4], darticAbsent) ? null : args[4] as double?, trailingScrollOffset: identical(args[5], darticAbsent) ? null : args[5] as double?),
         'computeMaxScrollOffset#2': (args) => (args[0] as RenderTreeSliver).computeMaxScrollOffset(args[1] as SliverConstraints, args[2] as double),
         'adoptChild#1': (args) { (args[0] as RenderTreeSliver).adoptChild(args[1] as RenderObject); return null; },
@@ -127,6 +128,7 @@ abstract final class RenderTreeSliverBindings {
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderTreeSliver).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'activeAnimations#0': (args) => (args[0] as RenderTreeSliver).activeAnimations,
         'indentation#0': (args) => (args[0] as RenderTreeSliver).indentation,
+        'hashCode#0': (args) => (args[0] as RenderTreeSliver).hashCode,
         'itemExtentBuilder#0': (args) => (args[0] as RenderTreeSliver).itemExtentBuilder,
         'itemExtent#0': (args) => (args[0] as RenderTreeSliver).itemExtent,
         'childManager#0': (args) => (args[0] as RenderTreeSliver).childManager,
@@ -173,6 +175,7 @@ abstract final class RenderTreeSliverBindings {
         'parentData=#1': (args) { (args[0] as RenderTreeSliver).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderTreeSliver).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTreeSliver).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTreeSliver) == (args[1] as Object),
         '#4': (args) => RenderTreeSliver(childManager: args[0] as RenderSliverBoxChildManager, itemExtentBuilder: (a, b) => (args[1] as Function)(a, b) as double?, activeAnimations: (args[2] as Map).cast<UniqueKey, ({int fromIndex, int toIndex, double value})>(), indentation: args[3] as double),
       };
 }

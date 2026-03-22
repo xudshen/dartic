@@ -30,6 +30,7 @@ abstract final class SwitchThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as SwitchTheme).updateShouldNotify(args[1] as SwitchTheme),
+        'toString#0': (args) => (args[0] as SwitchTheme).toString(),
         'createElement#0': (args) => (args[0] as SwitchTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as SwitchTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SwitchTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class SwitchThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SwitchTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SwitchTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as SwitchTheme).data,
+        'hashCode#0': (args) => (args[0] as SwitchTheme).hashCode,
         'child#0': (args) => (args[0] as SwitchTheme).child,
         'key#0': (args) => (args[0] as SwitchTheme).key,
+        '==#1': (args) => (args[0] as SwitchTheme) == (args[1] as Object),
         '#3': (args) => SwitchTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as SwitchThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => SwitchTheme(key: args[2] as Key?, data: args[1] as SwitchThemeData, child: args[0] as Widget),
       };

@@ -29,6 +29,7 @@ abstract final class SystemColorPaletteBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemColorPalette).toString(),
         'brightness#0': (args) => (args[0] as SystemColorPalette).brightness,
         'accentColor#0': (args) => (args[0] as SystemColorPalette).accentColor,
         'accentColorText#0': (args) => (args[0] as SystemColorPalette).accentColorText,
@@ -49,5 +50,7 @@ abstract final class SystemColorPaletteBindings {
         'selectedItem#0': (args) => (args[0] as SystemColorPalette).selectedItem,
         'selectedItemText#0': (args) => (args[0] as SystemColorPalette).selectedItemText,
         'visitedText#0': (args) => (args[0] as SystemColorPalette).visitedText,
+        'hashCode#0': (args) => (args[0] as SystemColorPalette).hashCode,
+        '==#1': (args) => (args[0] as SystemColorPalette) == (args[1] as Object),
       };
 }

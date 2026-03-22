@@ -32,6 +32,9 @@ abstract final class StretchModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as StretchMode).toString(),
+        'hashCode#0': (args) => (args[0] as StretchMode).hashCode,
         'index#0': (args) => (args[0] as StretchMode).index,
+        '==#1': (args) => (args[0] as StretchMode) == (args[1] as Object),
       };
 }

@@ -33,6 +33,7 @@ abstract final class DialogWindowBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DialogWindow).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DialogWindow).toString(),
         'createElement#0': (args) => (args[0] as DialogWindow).createElement(),
         'toStringShort#0': (args) => (args[0] as DialogWindow).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DialogWindow).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class DialogWindowBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DialogWindow).debugDescribeChildren(),
         'controller#0': (args) => (args[0] as DialogWindow).controller,
         'child#0': (args) => (args[0] as DialogWindow).child,
+        'hashCode#0': (args) => (args[0] as DialogWindow).hashCode,
         'key#0': (args) => (args[0] as DialogWindow).key,
+        '==#1': (args) => (args[0] as DialogWindow) == (args[1] as Object),
         '#3': (args) => DialogWindow(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as DialogWindowController, child: args[2] as Widget),
       };
 }

@@ -33,6 +33,7 @@ abstract final class CallbackShortcutsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CallbackShortcuts).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CallbackShortcuts).toString(),
         'createElement#0': (args) => (args[0] as CallbackShortcuts).createElement(),
         'toStringShort#0': (args) => (args[0] as CallbackShortcuts).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CallbackShortcuts).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class CallbackShortcutsBindings {
         'debugDescribeChildren#0': (args) => (args[0] as CallbackShortcuts).debugDescribeChildren(),
         'bindings#0': (args) => (args[0] as CallbackShortcuts).bindings,
         'child#0': (args) => (args[0] as CallbackShortcuts).child,
+        'hashCode#0': (args) => (args[0] as CallbackShortcuts).hashCode,
         'key#0': (args) => (args[0] as CallbackShortcuts).key,
+        '==#1': (args) => (args[0] as CallbackShortcuts) == (args[1] as Object),
         '#3': (args) => CallbackShortcuts(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, bindings: (args[1] as Map).cast<ShortcutActivator, VoidCallback>(), child: args[2] as Widget),
         '_#fromFields#3': (args) => CallbackShortcuts(key: args[2] as Key?, bindings: (args[0] as Map).cast<ShortcutActivator, VoidCallback>(), child: args[1] as Widget),
       };

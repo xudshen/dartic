@@ -25,5 +25,8 @@ abstract final class SelectionRegistrarBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'add#1': (args) { (args[0] as SelectionRegistrar).add(args[1] as Selectable); return null; },
         'remove#1': (args) { (args[0] as SelectionRegistrar).remove(args[1] as Selectable); return null; },
+        'toString#0': (args) => (args[0] as SelectionRegistrar).toString(),
+        'hashCode#0': (args) => (args[0] as SelectionRegistrar).hashCode,
+        '==#1': (args) => (args[0] as SelectionRegistrar) == (args[1] as Object),
       };
 }

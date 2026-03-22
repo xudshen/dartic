@@ -47,6 +47,7 @@ abstract final class CloseButtonBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CloseButton).toString(),
         'build#1': (args) => (args[0] as CloseButton).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as CloseButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as CloseButton).createElement(),
@@ -55,6 +56,7 @@ abstract final class CloseButtonBindings {
         'toStringDeep#4': (args) => (args[0] as CloseButton).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as CloseButton).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as CloseButton).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as CloseButton).hashCode,
         'standardComponent#0': (args) => (args[0] as CloseButton).standardComponent,
         'iconSize#0': (args) => (args[0] as CloseButton).iconSize,
         'visualDensity#0': (args) => (args[0] as CloseButton).visualDensity,
@@ -82,6 +84,7 @@ abstract final class CloseButtonBindings {
         'selectedIcon#0': (args) => (args[0] as CloseButton).selectedIcon,
         'statesController#0': (args) => (args[0] as CloseButton).statesController,
         'key#0': (args) => (args[0] as CloseButton).key,
+        '==#1': (args) => (args[0] as CloseButton) == (args[1] as Object),
         '#4': (args) => CloseButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, onPressed: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), style: identical(args[3], darticAbsent) ? null : args[3] as ButtonStyle?),
         '_#fromFields#28': (args) => CloseButton(key: args[14] as Key?, color: args[3] as Color?, onPressed: args[18] as VoidCallback?, style: args[25] as ButtonStyle?),
       };

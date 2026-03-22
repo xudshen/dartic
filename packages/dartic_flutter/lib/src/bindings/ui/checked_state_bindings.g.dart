@@ -37,7 +37,10 @@ abstract final class CheckedStateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'hasConflict#1': (args) => (args[0] as CheckedState).hasConflict(args[1] as CheckedState),
         'merge#1': (args) => (args[0] as CheckedState).merge(args[1] as CheckedState),
+        'toString#0': (args) => (args[0] as CheckedState).toString(),
         'value#0': (args) => (args[0] as CheckedState).value,
+        'hashCode#0': (args) => (args[0] as CheckedState).hashCode,
         'index#0': (args) => (args[0] as CheckedState).index,
+        '==#1': (args) => (args[0] as CheckedState) == (args[1] as Object),
       };
 }

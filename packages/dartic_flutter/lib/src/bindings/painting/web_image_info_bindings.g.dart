@@ -25,10 +25,13 @@ abstract final class WebImageInfoBindings {
         'clone#0': (args) => (args[0] as WebImageInfo).clone(),
         'dispose#0': (args) { (args[0] as WebImageInfo).dispose(); return null; },
         'isCloneOf#1': (args) => (args[0] as WebImageInfo).isCloneOf(args[1] as ImageInfo),
+        'toString#0': (args) => (args[0] as WebImageInfo).toString(),
         'debugLabel#0': (args) => (args[0] as WebImageInfo).debugLabel,
         'image#0': (args) => (args[0] as WebImageInfo).image,
         'scale#0': (args) => (args[0] as WebImageInfo).scale,
         'sizeBytes#0': (args) => (args[0] as WebImageInfo).sizeBytes,
+        'hashCode#0': (args) => (args[0] as WebImageInfo).hashCode,
+        '==#1': (args) => (args[0] as WebImageInfo) == (args[1] as Object),
         '#0': (args) => WebImageInfo(),
       };
 }

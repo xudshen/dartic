@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import '../generator/audit/audit_reporter.dart';
-import '../generator/audit/audit_result.dart';
 import '../generator/discover/discover_runner.dart';
 import '../generator/kernel/kernel_introspector.dart';
 import '../generator/kernel/stub_dill_compiler.dart';
@@ -207,7 +206,7 @@ class GenCommand extends Command<int> {
 
     // Collect results across all runners.
     final allWrittenFiles = <String, String>{};
-    final allAuditResults = <AuditResult>[];
+    bool hasStrictFailure = false;
 
     for (final (dirPath, rootOverride) in configsDirs) {
       final dir = Directory(dirPath);
@@ -226,24 +225,25 @@ class GenCommand extends Command<int> {
         strict: strict,
       );
       await runner.runConfigDirectory(dirPath);
-      allAuditResults.addAll(runner.auditResults);
+
+      // Per-directory audit summary.
+      if (runner.auditResults.isNotEmpty) {
+        AuditReporter.printSummary(runner.auditResults, label: dirPath);
+      }
+      if (strict) {
+        final hasErrors = runner.auditResults.any(
+            (r) => r.missing.isNotEmpty || r.stale.isNotEmpty);
+        if (hasErrors) hasStrictFailure = true;
+      }
 
       if (check) {
         allWrittenFiles.addAll(runner.writtenFiles);
       }
     }
 
-    // Print audit summary across all runners.
-    if (allAuditResults.isNotEmpty) {
-      AuditReporter.printSummary(allAuditResults);
-      if (strict) {
-        final hasErrors = allAuditResults.any(
-            (r) => r.missing.isNotEmpty || r.stale.isNotEmpty);
-        if (hasErrors) {
-          _logger.err('STRICT: audit failures detected.');
-          return 2;
-        }
-      }
+    if (hasStrictFailure) {
+      _logger.err('STRICT: audit failures detected.');
+      return 2;
     }
 
     if (check) {

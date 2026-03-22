@@ -35,6 +35,9 @@ abstract final class RefreshIndicatorStatusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RefreshIndicatorStatus).toString(),
+        'hashCode#0': (args) => (args[0] as RefreshIndicatorStatus).hashCode,
         'index#0': (args) => (args[0] as RefreshIndicatorStatus).index,
+        '==#1': (args) => (args[0] as RefreshIndicatorStatus) == (args[1] as Object),
       };
 }

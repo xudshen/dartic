@@ -68,6 +68,7 @@ abstract final class BoxConstraintsBindings {
         '/#1': (args) => (args[0] as BoxConstraints) / (args[1] as double),
         '~/#1': (args) => (args[0] as BoxConstraints) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as BoxConstraints) % (args[1] as double),
+        '==#1': (args) => (args[0] as BoxConstraints) == (args[1] as Object),
         '#4': (args) => BoxConstraints(minWidth: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, maxWidth: identical(args[1], darticAbsent) ? double.infinity : args[1] as double, minHeight: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, maxHeight: identical(args[3], darticAbsent) ? double.infinity : args[3] as double),
         'tight#1': (args) => BoxConstraints.tight(args[0] as ui.Size),
         'tightFor#2': (args) => BoxConstraints.tightFor(width: identical(args[0], darticAbsent) ? null : args[0] as double?, height: identical(args[1], darticAbsent) ? null : args[1] as double?),

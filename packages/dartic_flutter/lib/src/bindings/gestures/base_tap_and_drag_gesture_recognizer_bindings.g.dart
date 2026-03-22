@@ -44,6 +44,7 @@ abstract final class BaseTapAndDragGestureRecognizerBindings {
         'handleEvent#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
         'rejectGesture#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as BaseTapAndDragGestureRecognizer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).toString(),
         'resolve#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as BaseTapAndDragGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
         'startTrackingPointer#2': (args) { (args[0] as BaseTapAndDragGestureRecognizer).startTrackingPointer(args[1] as int, identical(args[2], darticAbsent) ? null : args[2] as Matrix4?); return null; },
@@ -73,6 +74,7 @@ abstract final class BaseTapAndDragGestureRecognizerBindings {
         'onDragEnd#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).onDragEnd,
         'onCancel#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).onCancel,
         'debugDescription#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as BaseTapAndDragGestureRecognizer).gestureSettings,
@@ -98,5 +100,6 @@ abstract final class BaseTapAndDragGestureRecognizerBindings {
         'supportedDevices=#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
         'onTapTrackStart=#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).onTapTrackStart = args[1] as VoidCallback?; return args[1]; },
         'onTapTrackReset=#1': (args) { (args[0] as BaseTapAndDragGestureRecognizer).onTapTrackReset = args[1] as VoidCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as BaseTapAndDragGestureRecognizer) == (args[1] as Object),
       };
 }

@@ -22,6 +22,7 @@ abstract final class MaterialAccentColorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MaterialAccentColor).toString(),
         'toARGB32#0': (args) => (args[0] as MaterialAccentColor).toARGB32(),
         'withValues#5': (args) => (args[0] as MaterialAccentColor).withValues(alpha: identical(args[1], darticAbsent) ? null : args[1] as double?, red: identical(args[2], darticAbsent) ? null : args[2] as double?, green: identical(args[3], darticAbsent) ? null : args[3] as double?, blue: identical(args[4], darticAbsent) ? null : args[4] as double?, colorSpace: identical(args[5], darticAbsent) ? null : args[5] as ColorSpace?),
         'withAlpha#1': (args) => (args[0] as MaterialAccentColor).withAlpha(args[1] as int),
@@ -34,6 +35,7 @@ abstract final class MaterialAccentColorBindings {
         'shade200#0': (args) => (args[0] as MaterialAccentColor).shade200,
         'shade400#0': (args) => (args[0] as MaterialAccentColor).shade400,
         'shade700#0': (args) => (args[0] as MaterialAccentColor).shade700,
+        'hashCode#0': (args) => (args[0] as MaterialAccentColor).hashCode,
         'keys#0': (args) => (args[0] as MaterialAccentColor).keys,
         'a#0': (args) => (args[0] as MaterialAccentColor).a,
         'r#0': (args) => (args[0] as MaterialAccentColor).r,
@@ -46,6 +48,7 @@ abstract final class MaterialAccentColorBindings {
         'red#0': (args) => (args[0] as MaterialAccentColor).red,
         'green#0': (args) => (args[0] as MaterialAccentColor).green,
         'blue#0': (args) => (args[0] as MaterialAccentColor).blue,
+        '==#1': (args) => (args[0] as MaterialAccentColor) == (args[1] as Object),
         '[]#1': (args) => (args[0] as MaterialAccentColor)[(args[1] as int)],
         '#2': (args) => MaterialAccentColor(args[0] as int, (args[1] as Map).cast<int, Color>()),
         '_#fromFields#6': (args) => MaterialAccentColor(Color.from(alpha: args[1] as double, blue: args[2] as double, colorSpace: args[3] as ColorSpace, green: args[4] as double, red: args[5] as double).value, (args[0] as Map).cast<int, Color>()),

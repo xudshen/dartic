@@ -50,6 +50,7 @@ abstract final class LicensePageBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as LicensePage).createState(),
+        'toString#0': (args) => (args[0] as LicensePage).toString(),
         'createElement#0': (args) => (args[0] as LicensePage).createElement(),
         'toStringShort#0': (args) => (args[0] as LicensePage).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as LicensePage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -61,7 +62,9 @@ abstract final class LicensePageBindings {
         'applicationVersion#0': (args) => (args[0] as LicensePage).applicationVersion,
         'applicationIcon#0': (args) => (args[0] as LicensePage).applicationIcon,
         'applicationLegalese#0': (args) => (args[0] as LicensePage).applicationLegalese,
+        'hashCode#0': (args) => (args[0] as LicensePage).hashCode,
         'key#0': (args) => (args[0] as LicensePage).key,
+        '==#1': (args) => (args[0] as LicensePage) == (args[1] as Object),
         '#5': (args) => LicensePage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, applicationName: identical(args[1], darticAbsent) ? null : args[1] as String?, applicationVersion: identical(args[2], darticAbsent) ? null : args[2] as String?, applicationIcon: identical(args[3], darticAbsent) ? null : args[3] as Widget?, applicationLegalese: identical(args[4], darticAbsent) ? null : args[4] as String?),
         '_#fromFields#5': (args) => LicensePage(key: args[4] as Key?, applicationName: args[2] as String?, applicationVersion: args[3] as String?, applicationIcon: args[0] as Widget?, applicationLegalese: args[1] as String?),
       };

@@ -27,6 +27,7 @@ abstract final class KeyboardInsertedContentBindings {
         'data#0': (args) => (args[0] as KeyboardInsertedContent).data,
         'hasData#0': (args) => (args[0] as KeyboardInsertedContent).hasData,
         'hashCode#0': (args) => (args[0] as KeyboardInsertedContent).hashCode,
+        '==#1': (args) => (args[0] as KeyboardInsertedContent) == (args[1] as Object),
         '#3': (args) => KeyboardInsertedContent(mimeType: args[0] as String, uri: args[1] as String, data: identical(args[2], darticAbsent) ? null : args[2] as Uint8List?),
         'fromJson#1': (args) => KeyboardInsertedContent.fromJson((args[0] as Map).cast<String, dynamic>()),
         '_#fromFields#3': (args) => KeyboardInsertedContent(mimeType: args[1] as String, uri: args[2] as String, data: args[0] as Uint8List?),

@@ -33,10 +33,12 @@ abstract final class MaterialRectCenterArcTweenBindings {
         'animate#1': (args) => (args[0] as MaterialRectCenterArcTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as MaterialRectCenterArcTween).chain(args[1] as Animatable<double>),
         'centerArc#0': (args) => (args[0] as MaterialRectCenterArcTween).centerArc,
+        'hashCode#0': (args) => (args[0] as MaterialRectCenterArcTween).hashCode,
         'begin#0': (args) => (args[0] as MaterialRectCenterArcTween).begin,
         'end#0': (args) => (args[0] as MaterialRectCenterArcTween).end,
         'begin=#1': (args) { (args[0] as MaterialRectCenterArcTween).begin = args[1] as Rect?; return args[1]; },
         'end=#1': (args) { (args[0] as MaterialRectCenterArcTween).end = args[1] as Rect?; return args[1]; },
+        '==#1': (args) => (args[0] as MaterialRectCenterArcTween) == (args[1] as Object),
         '#2': (args) => MaterialRectCenterArcTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Rect?, end: identical(args[1], darticAbsent) ? null : args[1] as Rect?),
       };
 }

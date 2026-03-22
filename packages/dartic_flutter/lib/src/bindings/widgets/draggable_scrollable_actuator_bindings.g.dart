@@ -43,6 +43,7 @@ abstract final class DraggableScrollableActuatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DraggableScrollableActuator).createState(),
+        'toString#0': (args) => (args[0] as DraggableScrollableActuator).toString(),
         'createElement#0': (args) => (args[0] as DraggableScrollableActuator).createElement(),
         'toStringShort#0': (args) => (args[0] as DraggableScrollableActuator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DraggableScrollableActuator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class DraggableScrollableActuatorBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DraggableScrollableActuator).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DraggableScrollableActuator).debugDescribeChildren(),
         'child#0': (args) => (args[0] as DraggableScrollableActuator).child,
+        'hashCode#0': (args) => (args[0] as DraggableScrollableActuator).hashCode,
         'key#0': (args) => (args[0] as DraggableScrollableActuator).key,
+        '==#1': (args) => (args[0] as DraggableScrollableActuator) == (args[1] as Object),
         '#2': (args) => DraggableScrollableActuator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#2': (args) => DraggableScrollableActuator(key: args[1] as Key?, child: args[0] as Widget),
       };

@@ -46,6 +46,7 @@ abstract final class RenderAspectRatioBindings {
         'computeDryBaseline#2': (args) => (args[0] as RenderAspectRatio).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
         'performLayout#0': (args) { (args[0] as RenderAspectRatio).performLayout(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAspectRatio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderAspectRatio).toString(),
         'setupParentData#1': (args) { (args[0] as RenderAspectRatio).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAspectRatio).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderAspectRatio).getMaxIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderAspectRatioBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderAspectRatio).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderAspectRatio).computeSizeForNoChild(args[1] as BoxConstraints),
         'aspectRatio#0': (args) => (args[0] as RenderAspectRatio).aspectRatio,
+        'hashCode#0': (args) => (args[0] as RenderAspectRatio).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAspectRatio).hasSize,
         'size#0': (args) => (args[0] as RenderAspectRatio).size,
         'semanticBounds#0': (args) => (args[0] as RenderAspectRatio).semanticBounds,
@@ -154,6 +156,7 @@ abstract final class RenderAspectRatioBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAspectRatio).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAspectRatio).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderAspectRatio).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAspectRatio) == (args[1] as Object),
         '#2': (args) => RenderAspectRatio(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, aspectRatio: args[1] as double),
       };
 }

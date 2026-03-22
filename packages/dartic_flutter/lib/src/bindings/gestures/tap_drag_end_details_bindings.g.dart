@@ -34,6 +34,7 @@ abstract final class TapDragEndDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as TapDragEndDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TapDragEndDetails).toString(),
         'toStringShort#0': (args) => (args[0] as TapDragEndDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TapDragEndDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as TapDragEndDetails).globalPosition,
@@ -41,6 +42,8 @@ abstract final class TapDragEndDetailsBindings {
         'velocity#0': (args) => (args[0] as TapDragEndDetails).velocity,
         'primaryVelocity#0': (args) => (args[0] as TapDragEndDetails).primaryVelocity,
         'consecutiveTapCount#0': (args) => (args[0] as TapDragEndDetails).consecutiveTapCount,
+        'hashCode#0': (args) => (args[0] as TapDragEndDetails).hashCode,
+        '==#1': (args) => (args[0] as TapDragEndDetails) == (args[1] as Object),
         '#5': (args) => TapDragEndDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, velocity: identical(args[2], darticAbsent) ? Velocity.zero : args[2] as Velocity, primaryVelocity: identical(args[3], darticAbsent) ? null : args[3] as double?, consecutiveTapCount: args[4] as int),
       };
 }

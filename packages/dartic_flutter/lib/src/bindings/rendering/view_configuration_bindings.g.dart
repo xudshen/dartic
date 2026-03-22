@@ -37,6 +37,7 @@ abstract final class ViewConfigurationBindings {
         'physicalConstraints#0': (args) => (args[0] as ViewConfiguration).physicalConstraints,
         'devicePixelRatio#0': (args) => (args[0] as ViewConfiguration).devicePixelRatio,
         'hashCode#0': (args) => (args[0] as ViewConfiguration).hashCode,
+        '==#1': (args) => (args[0] as ViewConfiguration) == (args[1] as Object),
         '#3': (args) => ViewConfiguration(physicalConstraints: identical(args[0], darticAbsent) ? const BoxConstraints(maxWidth: 0, maxHeight: 0) : args[0] as BoxConstraints, logicalConstraints: identical(args[1], darticAbsent) ? const BoxConstraints(maxWidth: 0, maxHeight: 0) : args[1] as BoxConstraints, devicePixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
         'fromView#1': (args) => ViewConfiguration.fromView(args[0] as ui.FlutterView),
         '_#fromFields#3': (args) => ViewConfiguration(physicalConstraints: args[2] as BoxConstraints, logicalConstraints: args[1] as BoxConstraints, devicePixelRatio: args[0] as double),

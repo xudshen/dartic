@@ -28,6 +28,7 @@ abstract final class RestorableNumNBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RestorableNumN).toString(),
         'createDefaultValue#0': (args) => (args[0] as RestorableNumN).createDefaultValue(),
         'didUpdateValue#1': (args) { (args[0] as RestorableNumN).didUpdateValue(args[1] as num?); return null; },
         'fromPrimitives#1': (args) => (args[0] as RestorableNumN).fromPrimitives(args[1]),
@@ -37,12 +38,14 @@ abstract final class RestorableNumNBindings {
         'addListener#1': (args) { (args[0] as RestorableNumN).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableNumN).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableNumN).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableNumN).hashCode,
         'value#0': (args) => (args[0] as RestorableNumN).value,
         'enabled#0': (args) => (args[0] as RestorableNumN).enabled,
         'state#0': (args) => (args[0] as RestorableNumN).state,
         'isRegistered#0': (args) => (args[0] as RestorableNumN).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableNumN).hasListeners,
         'value=#1': (args) { (args[0] as RestorableNumN).value = args[1] as num?; return args[1]; },
+        '==#1': (args) => (args[0] as RestorableNumN) == (args[1] as Object),
         '#1': (args) => RestorableNumN<num?>(args[0] as num?),
       };
 }

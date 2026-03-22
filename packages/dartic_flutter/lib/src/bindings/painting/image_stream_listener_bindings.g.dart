@@ -23,10 +23,12 @@ abstract final class ImageStreamListenerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ImageStreamListener).toString(),
         'onImage#0': (args) => (args[0] as ImageStreamListener).onImage,
         'onChunk#0': (args) => (args[0] as ImageStreamListener).onChunk,
         'onError#0': (args) => (args[0] as ImageStreamListener).onError,
         'hashCode#0': (args) => (args[0] as ImageStreamListener).hashCode,
+        '==#1': (args) => (args[0] as ImageStreamListener) == (args[1] as Object),
         '#3': (args) => ImageStreamListener((a, b) => (args[0] as Function)(a, b), onChunk: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onError: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a, b) => (args[2] as Function?)!(a, b)),
         '_#fromFields#3': (args) => ImageStreamListener(args[2] as ImageListener, onChunk: args[0] as ImageChunkListener?, onError: args[1] as ImageErrorListener?),
       };

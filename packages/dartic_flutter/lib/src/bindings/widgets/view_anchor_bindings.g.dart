@@ -34,6 +34,7 @@ abstract final class ViewAnchorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ViewAnchor).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ViewAnchor).toString(),
         'createElement#0': (args) => (args[0] as ViewAnchor).createElement(),
         'toStringShort#0': (args) => (args[0] as ViewAnchor).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ViewAnchor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,7 +44,9 @@ abstract final class ViewAnchorBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ViewAnchor).debugDescribeChildren(),
         'view#0': (args) => (args[0] as ViewAnchor).view,
         'child#0': (args) => (args[0] as ViewAnchor).child,
+        'hashCode#0': (args) => (args[0] as ViewAnchor).hashCode,
         'key#0': (args) => (args[0] as ViewAnchor).key,
+        '==#1': (args) => (args[0] as ViewAnchor) == (args[1] as Object),
         '#3': (args) => ViewAnchor(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, view: identical(args[1], darticAbsent) ? null : args[1] as Widget?, child: args[2] as Widget),
         '_#fromFields#3': (args) => ViewAnchor(key: args[1] as Key?, view: args[2] as Widget?, child: args[0] as Widget),
       };

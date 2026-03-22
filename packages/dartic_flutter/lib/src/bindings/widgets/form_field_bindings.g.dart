@@ -40,6 +40,7 @@ abstract final class FormFieldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FormField).createState(),
+        'toString#0': (args) => (args[0] as FormField).toString(),
         'createElement#0': (args) => (args[0] as FormField).createElement(),
         'toStringShort#0': (args) => (args[0] as FormField).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FormField).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class FormFieldBindings {
         'enabled#0': (args) => (args[0] as FormField).enabled,
         'autovalidateMode#0': (args) => (args[0] as FormField).autovalidateMode,
         'restorationId#0': (args) => (args[0] as FormField).restorationId,
+        'hashCode#0': (args) => (args[0] as FormField).hashCode,
         'key#0': (args) => (args[0] as FormField).key,
+        '==#1': (args) => (args[0] as FormField) == (args[1] as Object),
         '#11': (args) => FormField<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a) => (args[1] as Function)(a) as Widget, onSaved: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onReset: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), forceErrorText: identical(args[4], darticAbsent) ? null : args[4] as String?, validator: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), errorBuilder: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a, b) => (args[6] as Function?)!(a, b), initialValue: identical(args[7], darticAbsent) ? null : args[7], enabled: identical(args[8], darticAbsent) ? true : args[8] as bool, autovalidateMode: identical(args[9], darticAbsent) ? null : args[9] as AutovalidateMode?, restorationId: identical(args[10], darticAbsent) ? null : args[10] as String?),
         '_#fromFields#11': (args) => FormField<dynamic>(key: args[6] as Key?, builder: args[1] as Widget Function(FormFieldState), onSaved: args[8] as void Function(Object?)?, onReset: args[7] as VoidCallback?, forceErrorText: args[4] as String?, validator: args[10] as String? Function(Object?)?, errorBuilder: args[3] as FormFieldErrorBuilder?, initialValue: args[5], enabled: args[2] as bool, autovalidateMode: args[0] as AutovalidateMode?, restorationId: args[9] as String?),
       };

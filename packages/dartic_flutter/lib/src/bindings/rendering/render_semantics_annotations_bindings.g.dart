@@ -38,6 +38,7 @@ abstract final class RenderSemanticsAnnotationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSemanticsAnnotations).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSemanticsAnnotations).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsAnnotations).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderSemanticsAnnotations).computeMinIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderSemanticsAnnotationsBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderSemanticsAnnotations).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderSemanticsAnnotations).computeSizeForNoChild(args[1] as BoxConstraints),
         'initSemanticsAnnotations#7': (args) { (args[0] as RenderSemanticsAnnotations).initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSemanticsAnnotations).hashCode,
         'hasSize#0': (args) => (args[0] as RenderSemanticsAnnotations).hasSize,
         'size#0': (args) => (args[0] as RenderSemanticsAnnotations).size,
         'semanticBounds#0': (args) => (args[0] as RenderSemanticsAnnotations).semanticBounds,
@@ -167,6 +169,7 @@ abstract final class RenderSemanticsAnnotationsBindings {
         'blockUserActions=#1': (args) { (args[0] as RenderSemanticsAnnotations).blockUserActions = args[1] as bool; return args[1]; },
         'localeForSubtree=#1': (args) { (args[0] as RenderSemanticsAnnotations).localeForSubtree = args[1] as ui.Locale?; return args[1]; },
         'textDirection=#1': (args) { (args[0] as RenderSemanticsAnnotations).textDirection = args[1] as ui.TextDirection?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSemanticsAnnotations) == (args[1] as Object),
         '#8': (args) => RenderSemanticsAnnotations(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, properties: args[1] as SemanticsProperties, container: identical(args[2], darticAbsent) ? false : args[2] as bool, explicitChildNodes: identical(args[3], darticAbsent) ? false : args[3] as bool, excludeSemantics: identical(args[4], darticAbsent) ? false : args[4] as bool, blockUserActions: identical(args[5], darticAbsent) ? false : args[5] as bool, localeForSubtree: identical(args[6], darticAbsent) ? null : args[6] as ui.Locale?, textDirection: identical(args[7], darticAbsent) ? null : args[7] as ui.TextDirection?),
       };
 }

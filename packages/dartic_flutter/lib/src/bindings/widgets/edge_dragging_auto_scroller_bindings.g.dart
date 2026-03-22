@@ -35,10 +35,13 @@ abstract final class EdgeDraggingAutoScrollerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'startAutoScrollIfNecessary#1': (args) { (args[0] as EdgeDraggingAutoScroller).startAutoScrollIfNecessary(args[1] as Rect); return null; },
         'stopAutoScroll#0': (args) { (args[0] as EdgeDraggingAutoScroller).stopAutoScroll(); return null; },
+        'toString#0': (args) => (args[0] as EdgeDraggingAutoScroller).toString(),
         'scrollable#0': (args) => (args[0] as EdgeDraggingAutoScroller).scrollable,
         'onScrollViewScrolled#0': (args) => (args[0] as EdgeDraggingAutoScroller).onScrollViewScrolled,
         'velocityScalar#0': (args) => (args[0] as EdgeDraggingAutoScroller).velocityScalar,
         'scrolling#0': (args) => (args[0] as EdgeDraggingAutoScroller).scrolling,
+        'hashCode#0': (args) => (args[0] as EdgeDraggingAutoScroller).hashCode,
+        '==#1': (args) => (args[0] as EdgeDraggingAutoScroller) == (args[1] as Object),
         '#3': (args) => EdgeDraggingAutoScroller(args[0] as ScrollableState, onScrollViewScrolled: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), velocityScalar: args[2] as double),
       };
 }

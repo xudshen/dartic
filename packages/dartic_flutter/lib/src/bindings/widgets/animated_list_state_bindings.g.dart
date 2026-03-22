@@ -37,6 +37,7 @@ abstract final class AnimatedListStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AnimatedListState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AnimatedListState).toString(),
         'insertItem#2': (args) {
                   if (identical(args[2], darticAbsent)) {
                     (args[0] as AnimatedListState).insertItem(args[1] as int);
@@ -85,9 +86,11 @@ abstract final class AnimatedListStateBindings {
         'toStringShort#0': (args) => (args[0] as AnimatedListState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedListState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as AnimatedListState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as AnimatedListState).hashCode,
         'widget#0': (args) => (args[0] as AnimatedListState).widget,
         'context#0': (args) => (args[0] as AnimatedListState).context,
         'mounted#0': (args) => (args[0] as AnimatedListState).mounted,
+        '==#1': (args) => (args[0] as AnimatedListState) == (args[1] as Object),
         '#0': (args) => AnimatedListState(),
       };
 }

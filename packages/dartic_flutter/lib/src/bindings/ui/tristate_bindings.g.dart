@@ -37,7 +37,10 @@ abstract final class TristateBindings {
         'hasConflict#1': (args) => (args[0] as Tristate).hasConflict(args[1] as Tristate),
         'merge#1': (args) => (args[0] as Tristate).merge(args[1] as Tristate),
         'toBoolOrNull#0': (args) => (args[0] as Tristate).toBoolOrNull(),
+        'toString#0': (args) => (args[0] as Tristate).toString(),
         'value#0': (args) => (args[0] as Tristate).value,
+        'hashCode#0': (args) => (args[0] as Tristate).hashCode,
         'index#0': (args) => (args[0] as Tristate).index,
+        '==#1': (args) => (args[0] as Tristate) == (args[1] as Object),
       };
 }

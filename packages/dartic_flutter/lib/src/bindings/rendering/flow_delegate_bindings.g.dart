@@ -32,5 +32,7 @@ abstract final class FlowDelegateBindings {
         'shouldRelayout#1': (args) => (args[0] as FlowDelegate).shouldRelayout(args[1] as FlowDelegate),
         'shouldRepaint#1': (args) => (args[0] as FlowDelegate).shouldRepaint(args[1] as FlowDelegate),
         'toString#0': (args) => (args[0] as FlowDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as FlowDelegate).hashCode,
+        '==#1': (args) => (args[0] as FlowDelegate) == (args[1] as Object),
       };
 }

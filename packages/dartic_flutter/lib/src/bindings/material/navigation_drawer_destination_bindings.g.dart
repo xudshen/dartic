@@ -38,6 +38,7 @@ abstract final class NavigationDrawerDestinationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationDrawerDestination).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationDrawerDestination).toString(),
         'createElement#0': (args) => (args[0] as NavigationDrawerDestination).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationDrawerDestination).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationDrawerDestination).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class NavigationDrawerDestinationBindings {
         'selectedIcon#0': (args) => (args[0] as NavigationDrawerDestination).selectedIcon,
         'label#0': (args) => (args[0] as NavigationDrawerDestination).label,
         'enabled#0': (args) => (args[0] as NavigationDrawerDestination).enabled,
+        'hashCode#0': (args) => (args[0] as NavigationDrawerDestination).hashCode,
         'key#0': (args) => (args[0] as NavigationDrawerDestination).key,
+        '==#1': (args) => (args[0] as NavigationDrawerDestination) == (args[1] as Object),
         '#6': (args) => NavigationDrawerDestination(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, icon: args[2] as Widget, selectedIcon: identical(args[3], darticAbsent) ? null : args[3] as Widget?, label: args[4] as Widget, enabled: identical(args[5], darticAbsent) ? true : args[5] as bool),
         '_#fromFields#6': (args) => NavigationDrawerDestination(key: args[3] as Key?, backgroundColor: args[0] as Color?, icon: args[2] as Widget, selectedIcon: args[5] as Widget?, label: args[4] as Widget, enabled: args[1] as bool),
       };

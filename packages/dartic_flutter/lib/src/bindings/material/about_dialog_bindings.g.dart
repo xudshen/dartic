@@ -50,6 +50,7 @@ abstract final class AboutDialogBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AboutDialog).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AboutDialog).toString(),
         'createElement#0': (args) => (args[0] as AboutDialog).createElement(),
         'toStringShort#0': (args) => (args[0] as AboutDialog).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AboutDialog).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -62,7 +63,9 @@ abstract final class AboutDialogBindings {
         'applicationIcon#0': (args) => (args[0] as AboutDialog).applicationIcon,
         'applicationLegalese#0': (args) => (args[0] as AboutDialog).applicationLegalese,
         'children#0': (args) => (args[0] as AboutDialog).children,
+        'hashCode#0': (args) => (args[0] as AboutDialog).hashCode,
         'key#0': (args) => (args[0] as AboutDialog).key,
+        '==#1': (args) => (args[0] as AboutDialog) == (args[1] as Object),
         '#6': (args) => AboutDialog(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, applicationName: identical(args[1], darticAbsent) ? null : args[1] as String?, applicationVersion: identical(args[2], darticAbsent) ? null : args[2] as String?, applicationIcon: identical(args[3], darticAbsent) ? null : args[3] as Widget?, applicationLegalese: identical(args[4], darticAbsent) ? null : args[4] as String?, children: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<Widget>()),
         'adaptive#6': (args) => AboutDialog.adaptive(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, applicationName: identical(args[1], darticAbsent) ? null : args[1] as String?, applicationVersion: identical(args[2], darticAbsent) ? null : args[2] as String?, applicationIcon: identical(args[3], darticAbsent) ? null : args[3] as Widget?, applicationLegalese: identical(args[4], darticAbsent) ? null : args[4] as String?, children: identical(args[5], darticAbsent) ? null : args[5] == null ? null : (args[5] as List).cast<Widget>()),
         '_#fromFields#6': (args) => AboutDialog(key: args[5] as Key?, applicationName: args[2] as String?, applicationVersion: args[3] as String?, applicationIcon: args[0] as Widget?, applicationLegalese: args[1] as String?, children: args[4] == null ? null : (args[4] as List).cast<Widget>()),

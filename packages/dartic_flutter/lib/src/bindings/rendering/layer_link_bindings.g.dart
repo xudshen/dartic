@@ -30,7 +30,9 @@ abstract final class LayerLinkBindings {
         'toString#1': (args) => (args[0] as LayerLink).toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel),
         'leader#0': (args) => (args[0] as LayerLink).leader,
         'leaderSize#0': (args) => (args[0] as LayerLink).leaderSize,
+        'hashCode#0': (args) => (args[0] as LayerLink).hashCode,
         'leaderSize=#1': (args) { (args[0] as LayerLink).leaderSize = args[1] as ui.Size?; return args[1]; },
+        '==#1': (args) => (args[0] as LayerLink) == (args[1] as Object),
         '#0': (args) => LayerLink(),
       };
 }

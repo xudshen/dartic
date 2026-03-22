@@ -28,6 +28,7 @@ abstract final class RestorableBoolNBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RestorableBoolN).toString(),
         'createDefaultValue#0': (args) => (args[0] as RestorableBoolN).createDefaultValue(),
         'didUpdateValue#1': (args) { (args[0] as RestorableBoolN).didUpdateValue(args[1] as bool?); return null; },
         'fromPrimitives#1': (args) => (args[0] as RestorableBoolN).fromPrimitives(args[1]),
@@ -37,12 +38,14 @@ abstract final class RestorableBoolNBindings {
         'addListener#1': (args) { (args[0] as RestorableBoolN).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableBoolN).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableBoolN).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableBoolN).hashCode,
         'value#0': (args) => (args[0] as RestorableBoolN).value,
         'enabled#0': (args) => (args[0] as RestorableBoolN).enabled,
         'state#0': (args) => (args[0] as RestorableBoolN).state,
         'isRegistered#0': (args) => (args[0] as RestorableBoolN).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableBoolN).hasListeners,
         'value=#1': (args) { (args[0] as RestorableBoolN).value = args[1] as bool?; return args[1]; },
+        '==#1': (args) => (args[0] as RestorableBoolN) == (args[1] as Object),
         '#1': (args) => RestorableBoolN(args[0] as bool?),
       };
 }

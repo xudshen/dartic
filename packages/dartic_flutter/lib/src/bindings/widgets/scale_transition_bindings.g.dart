@@ -36,6 +36,7 @@ abstract final class ScaleTransitionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScaleTransition).toString(),
         'build#1': (args) => (args[0] as ScaleTransition).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as ScaleTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as ScaleTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,6 +47,7 @@ abstract final class ScaleTransitionBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ScaleTransition).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ScaleTransition).debugDescribeChildren(),
         'scale#0': (args) => (args[0] as ScaleTransition).scale,
+        'hashCode#0': (args) => (args[0] as ScaleTransition).hashCode,
         'onTransform#0': (args) => (args[0] as ScaleTransition).onTransform,
         'animation#0': (args) => (args[0] as ScaleTransition).animation,
         'alignment#0': (args) => (args[0] as ScaleTransition).alignment,
@@ -53,6 +55,7 @@ abstract final class ScaleTransitionBindings {
         'child#0': (args) => (args[0] as ScaleTransition).child,
         'listenable#0': (args) => (args[0] as ScaleTransition).listenable,
         'key#0': (args) => (args[0] as ScaleTransition).key,
+        '==#1': (args) => (args[0] as ScaleTransition) == (args[1] as Object),
         '#5': (args) => ScaleTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, scale: args[1] as Animation<double>, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as Alignment, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#6': (args) => ScaleTransition(key: args[3] as Key?, scale: args[4] as Animation<double>, alignment: args[0] as Alignment, filterQuality: args[2] as FilterQuality?, child: args[1] as Widget?),
       };

@@ -26,11 +26,15 @@ abstract final class TextEditingDeltaBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'apply#1': (args) => (args[0] as TextEditingDelta).apply(args[1] as TextEditingValue),
+        'toString#0': (args) => (args[0] as TextEditingDelta).toString(),
         'toStringShort#0': (args) => (args[0] as TextEditingDelta).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextEditingDelta).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as TextEditingDelta).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'oldText#0': (args) => (args[0] as TextEditingDelta).oldText,
         'selection#0': (args) => (args[0] as TextEditingDelta).selection,
         'composing#0': (args) => (args[0] as TextEditingDelta).composing,
+        'hashCode#0': (args) => (args[0] as TextEditingDelta).hashCode,
+        '==#1': (args) => (args[0] as TextEditingDelta) == (args[1] as Object),
+        'fromJSON#1': (args) => TextEditingDelta.fromJSON((args[0] as Map).cast<String, dynamic>()),
       };
 }

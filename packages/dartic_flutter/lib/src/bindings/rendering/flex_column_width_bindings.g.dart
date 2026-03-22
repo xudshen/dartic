@@ -32,6 +32,8 @@ abstract final class FlexColumnWidthBindings {
         'flex#1': (args) => (args[0] as FlexColumnWidth).flex((args[1] as Iterable).cast<RenderBox>()),
         'toString#0': (args) => (args[0] as FlexColumnWidth).toString(),
         'value#0': (args) => (args[0] as FlexColumnWidth).value,
+        'hashCode#0': (args) => (args[0] as FlexColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as FlexColumnWidth) == (args[1] as Object),
         '#1': (args) => FlexColumnWidth(identical(args[0], darticAbsent) ? 1.0 : args[0] as double),
         '_#fromFields#1': (args) => FlexColumnWidth(args[0] as double),
       };

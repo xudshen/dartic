@@ -26,14 +26,17 @@ abstract final class RectTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as RectTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as RectTween).toString(),
         'transform#1': (args) => (args[0] as RectTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as RectTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as RectTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as RectTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as RectTween).hashCode,
         'begin#0': (args) => (args[0] as RectTween).begin,
         'end#0': (args) => (args[0] as RectTween).end,
         'begin=#1': (args) { (args[0] as RectTween).begin = args[1] as Rect?; return args[1]; },
         'end=#1': (args) { (args[0] as RectTween).end = args[1] as Rect?; return args[1]; },
+        '==#1': (args) => (args[0] as RectTween) == (args[1] as Object),
         '#2': (args) => RectTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Rect?, end: identical(args[1], darticAbsent) ? null : args[1] as Rect?),
       };
 }

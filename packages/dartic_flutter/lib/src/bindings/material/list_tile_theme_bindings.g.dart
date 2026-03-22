@@ -40,6 +40,7 @@ abstract final class ListTileThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ListTileTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ListTileTheme).updateShouldNotify(args[1] as ListTileTheme),
+        'toString#0': (args) => (args[0] as ListTileTheme).toString(),
         'createElement#0': (args) => (args[0] as ListTileTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ListTileTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ListTileTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -62,8 +63,10 @@ abstract final class ListTileThemeBindings {
         'minLeadingWidth#0': (args) => (args[0] as ListTileTheme).minLeadingWidth,
         'enableFeedback#0': (args) => (args[0] as ListTileTheme).enableFeedback,
         'controlAffinity#0': (args) => (args[0] as ListTileTheme).controlAffinity,
+        'hashCode#0': (args) => (args[0] as ListTileTheme).hashCode,
         'child#0': (args) => (args[0] as ListTileTheme).child,
         'key#0': (args) => (args[0] as ListTileTheme).key,
+        '==#1': (args) => (args[0] as ListTileTheme) == (args[1] as Object),
         '#18': (args) => ListTileTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: identical(args[1], darticAbsent) ? null : args[1] as ListTileThemeData?, dense: identical(args[2], darticAbsent) ? null : args[2] as bool?, shape: identical(args[3], darticAbsent) ? null : args[3] as ShapeBorder?, style: identical(args[4], darticAbsent) ? null : args[4] as ListTileStyle?, selectedColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, iconColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, textColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, contentPadding: identical(args[8], darticAbsent) ? null : args[8] as EdgeInsetsGeometry?, tileColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, selectedTileColor: identical(args[10], darticAbsent) ? null : args[10] as Color?, enableFeedback: identical(args[11], darticAbsent) ? null : args[11] as bool?, mouseCursor: identical(args[12], darticAbsent) ? null : args[12] as WidgetStateProperty<MouseCursor?>?, horizontalTitleGap: identical(args[13], darticAbsent) ? null : args[13] as double?, minVerticalPadding: identical(args[14], darticAbsent) ? null : args[14] as double?, minLeadingWidth: identical(args[15], darticAbsent) ? null : args[15] as double?, controlAffinity: identical(args[16], darticAbsent) ? null : args[16] as ListTileControlAffinity?, child: args[17] as Widget),
         '_#fromFields#18': (args) => ListTileTheme(key: args[17] as Key?, data: args[2] as ListTileThemeData?, dense: args[3] as bool?, shape: args[12] as ShapeBorder?, style: args[13] as ListTileStyle?, selectedColor: args[10] as Color?, iconColor: args[6] as Color?, textColor: args[14] as Color?, contentPadding: args[0] as EdgeInsetsGeometry?, tileColor: args[15] as Color?, selectedTileColor: args[11] as Color?, enableFeedback: args[4] as bool?, mouseCursor: args[9] as WidgetStateProperty<MouseCursor?>?, horizontalTitleGap: args[5] as double?, minVerticalPadding: args[8] as double?, minLeadingWidth: args[7] as double?, controlAffinity: args[1] as ListTileControlAffinity?, child: args[16] as Widget),
       };

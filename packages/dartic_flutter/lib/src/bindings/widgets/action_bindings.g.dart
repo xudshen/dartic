@@ -39,11 +39,15 @@ abstract final class ActionBindings {
         'addActionListener#1': (args) { (args[0] as Action).addActionListener((a) => (args[1] as Function)(a)); return null; },
         'removeActionListener#1': (args) { (args[0] as Action).removeActionListener((a) => (args[1] as Function)(a)); return null; },
         'notifyActionListeners#0': (args) { (args[0] as Action).notifyActionListeners(); return null; },
+        'toString#0': (args) => (args[0] as Action).toString(),
         'toStringShort#0': (args) => (args[0] as Action).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as Action).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as Action).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'callingAction#0': (args) => (args[0] as Action).callingAction,
         'intentType#0': (args) => (args[0] as Action).intentType,
         'isActionEnabled#0': (args) => (args[0] as Action).isActionEnabled,
+        'hashCode#0': (args) => (args[0] as Action).hashCode,
+        '==#1': (args) => (args[0] as Action) == (args[1] as Object),
+        'overridable#2': (args) => Action<Intent>.overridable(defaultAction: args[0] as Action<Intent>, context: args[1] as BuildContext),
       };
 }

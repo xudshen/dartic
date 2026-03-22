@@ -45,6 +45,7 @@ abstract final class RenderUiKitViewBindings {
         'handleEvent#2': (args) { (args[0] as RenderUiKitView).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
         'detach#0': (args) { (args[0] as RenderUiKitView).detach(); return null; },
         'dispose#0': (args) { (args[0] as RenderUiKitView).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RenderUiKitView).toString(),
         'computeDryLayout#1': (args) => (args[0] as RenderUiKitView).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderUiKitView).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'hitTest#2': (args) => (args[0] as RenderUiKitView).hitTest(args[1] as BoxHitTestResult, position: identical(args[2], darticAbsent) ? null : args[2] as Offset?),
@@ -118,6 +119,7 @@ abstract final class RenderUiKitViewBindings {
         'showOnScreen#4': (args) { (args[0] as RenderUiKitView).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RenderUiKitView).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderUiKitView).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RenderUiKitView).hashCode,
         'viewController#0': (args) => (args[0] as RenderUiKitView).viewController,
         'hitTestBehavior#0': (args) => (args[0] as RenderUiKitView).hitTestBehavior,
         'sizedByParent#0': (args) => (args[0] as RenderUiKitView).sizedByParent,
@@ -156,6 +158,7 @@ abstract final class RenderUiKitViewBindings {
         'parentData=#1': (args) { (args[0] as RenderUiKitView).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderUiKitView).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderUiKitView).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderUiKitView) == (args[1] as Object),
         '#3': (args) => RenderUiKitView(viewController: args[0] as UiKitViewController, hitTestBehavior: args[1] as PlatformViewHitTestBehavior, gestureRecognizers: (args[2] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
       };
 }

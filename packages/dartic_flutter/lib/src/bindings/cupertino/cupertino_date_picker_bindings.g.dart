@@ -37,6 +37,7 @@ abstract final class CupertinoDatePickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoDatePicker).createState(),
+        'toString#0': (args) => (args[0] as CupertinoDatePicker).toString(),
         'createElement#0': (args) => (args[0] as CupertinoDatePicker).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoDatePicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoDatePicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -61,7 +62,9 @@ abstract final class CupertinoDatePickerBindings {
         'itemExtent#0': (args) => (args[0] as CupertinoDatePicker).itemExtent,
         'selectionOverlayBuilder#0': (args) => (args[0] as CupertinoDatePicker).selectionOverlayBuilder,
         'changeReportingBehavior#0': (args) => (args[0] as CupertinoDatePicker).changeReportingBehavior,
+        'hashCode#0': (args) => (args[0] as CupertinoDatePicker).hashCode,
         'key#0': (args) => (args[0] as CupertinoDatePicker).key,
+        '==#1': (args) => (args[0] as CupertinoDatePicker) == (args[1] as Object),
         '#18': (args) {
           if (identical(args[14], darticAbsent)) {
             return CupertinoDatePicker(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mode: identical(args[1], darticAbsent) ? CupertinoDatePickerMode.dateAndTime : args[1] as CupertinoDatePickerMode, onDateTimeChanged: (a) => (args[2] as Function)(a), initialDateTime: identical(args[3], darticAbsent) ? null : args[3] as DateTime?, minimumDate: identical(args[4], darticAbsent) ? null : args[4] as DateTime?, maximumDate: identical(args[5], darticAbsent) ? null : args[5] as DateTime?, minimumYear: identical(args[6], darticAbsent) ? 1 : args[6] as int, maximumYear: identical(args[7], darticAbsent) ? null : args[7] as int?, minuteInterval: identical(args[8], darticAbsent) ? 1 : args[8] as int, use24hFormat: identical(args[9], darticAbsent) ? false : args[9] as bool, dateOrder: identical(args[10], darticAbsent) ? null : args[10] as DatePickerDateOrder?, backgroundColor: identical(args[11], darticAbsent) ? null : args[11] as Color?, showDayOfWeek: identical(args[12], darticAbsent) ? false : args[12] as bool, showTimeSeparator: identical(args[13], darticAbsent) ? false : args[13] as bool, selectionOverlayBuilder: identical(args[15], darticAbsent) ? null : (args[15] as Function?) == null ? null : (a, {required int columnCount, required int selectedIndex}) => (args[15] as Function?)!(a, columnCount: columnCount, selectedIndex: selectedIndex), selectableDayPredicate: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : (a) => (args[16] as Function?)!(a), changeReportingBehavior: identical(args[17], darticAbsent) ? ChangeReportingBehavior.onScrollUpdate : args[17] as ChangeReportingBehavior);

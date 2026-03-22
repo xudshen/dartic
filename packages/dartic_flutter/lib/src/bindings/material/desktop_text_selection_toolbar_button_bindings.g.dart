@@ -31,6 +31,7 @@ abstract final class DesktopTextSelectionToolbarButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DesktopTextSelectionToolbarButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).toString(),
         'createElement#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).createElement(),
         'toStringShort#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DesktopTextSelectionToolbarButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class DesktopTextSelectionToolbarButtonBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).debugDescribeChildren(),
         'onPressed#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).onPressed,
         'child#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).child,
+        'hashCode#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).hashCode,
         'key#0': (args) => (args[0] as DesktopTextSelectionToolbarButton).key,
+        '==#1': (args) => (args[0] as DesktopTextSelectionToolbarButton) == (args[1] as Object),
         '#3': (args) => DesktopTextSelectionToolbarButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), child: args[2] as Widget),
         'text#4': (args) => DesktopTextSelectionToolbarButton.text(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, context: args[1] as BuildContext, onPressed: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), text: args[3] as String),
         '_#fromFields#3': (args) => DesktopTextSelectionToolbarButton(key: args[1] as Key?, onPressed: args[2] as VoidCallback?, child: args[0] as Widget),

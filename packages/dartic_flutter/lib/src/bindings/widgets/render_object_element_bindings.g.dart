@@ -45,6 +45,7 @@ abstract final class RenderObjectElementBindings {
         'moveRenderObjectChild#3': (args) { (args[0] as RenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as RenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderObjectElement).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderObjectElement).toString(),
         'reassemble#0': (args) { (args[0] as RenderObjectElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RenderObjectElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RenderObjectElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
@@ -88,6 +89,7 @@ abstract final class RenderObjectElementBindings {
         'renderObject#0': (args) => (args[0] as RenderObjectElement).renderObject,
         'renderObjectAttachingChild#0': (args) => (args[0] as RenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as RenderObjectElement).debugDoingBuild,
+        'hashCode#0': (args) => (args[0] as RenderObjectElement).hashCode,
         'slot#0': (args) => (args[0] as RenderObjectElement).slot,
         'depth#0': (args) => (args[0] as RenderObjectElement).depth,
         'widget#0': (args) => (args[0] as RenderObjectElement).widget,
@@ -98,5 +100,6 @@ abstract final class RenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as RenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as RenderObjectElement).size,
         'dirty#0': (args) => (args[0] as RenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as RenderObjectElement) == (args[1] as Object),
       };
 }

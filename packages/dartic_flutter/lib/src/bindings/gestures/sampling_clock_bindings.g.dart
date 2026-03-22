@@ -34,6 +34,9 @@ abstract final class SamplingClockBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'now#0': (args) => (args[0] as SamplingClock).now(),
         'stopwatch#0': (args) => (args[0] as SamplingClock).stopwatch(),
+        'toString#0': (args) => (args[0] as SamplingClock).toString(),
+        'hashCode#0': (args) => (args[0] as SamplingClock).hashCode,
+        '==#1': (args) => (args[0] as SamplingClock) == (args[1] as Object),
         '#0': (args) => SamplingClock(),
       };
 }

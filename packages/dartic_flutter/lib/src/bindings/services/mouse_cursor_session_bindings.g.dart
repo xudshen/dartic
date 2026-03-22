@@ -25,7 +25,10 @@ abstract final class MouseCursorSessionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'activate#0': (args) => (args[0] as MouseCursorSession).activate(),
         'dispose#0': (args) { (args[0] as MouseCursorSession).dispose(); return null; },
+        'toString#0': (args) => (args[0] as MouseCursorSession).toString(),
         'cursor#0': (args) => (args[0] as MouseCursorSession).cursor,
         'device#0': (args) => (args[0] as MouseCursorSession).device,
+        'hashCode#0': (args) => (args[0] as MouseCursorSession).hashCode,
+        '==#1': (args) => (args[0] as MouseCursorSession) == (args[1] as Object),
       };
 }

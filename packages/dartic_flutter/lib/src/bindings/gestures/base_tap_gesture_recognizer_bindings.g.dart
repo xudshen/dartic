@@ -44,6 +44,7 @@ abstract final class BaseTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as BaseTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as BaseTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'debugFillProperties#1': (args) { (args[0] as BaseTapGestureRecognizer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BaseTapGestureRecognizer).toString(),
         'handleNonAllowedPointer#1': (args) { (args[0] as BaseTapGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleEvent#1': (args) { (args[0] as BaseTapGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
         'didExceedDeadlineWithEvent#1': (args) { (args[0] as BaseTapGestureRecognizer).didExceedDeadlineWithEvent(args[1] as PointerDownEvent); return null; },
@@ -66,6 +67,7 @@ abstract final class BaseTapGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as BaseTapGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as BaseTapGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as BaseTapGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as BaseTapGestureRecognizer).hashCode,
         'deadline#0': (args) => (args[0] as BaseTapGestureRecognizer).deadline,
         'preAcceptSlopTolerance#0': (args) => (args[0] as BaseTapGestureRecognizer).preAcceptSlopTolerance,
         'postAcceptSlopTolerance#0': (args) => (args[0] as BaseTapGestureRecognizer).postAcceptSlopTolerance,
@@ -80,5 +82,6 @@ abstract final class BaseTapGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as BaseTapGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as BaseTapGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as BaseTapGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as BaseTapGestureRecognizer) == (args[1] as Object),
       };
 }

@@ -34,6 +34,7 @@ abstract final class ContextActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isEnabled#2': (args) => (args[0] as ContextAction).isEnabled(args[1] as Intent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
         'invoke#2': (args) => (args[0] as ContextAction).invoke(args[1] as Intent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
+        'toString#0': (args) => (args[0] as ContextAction).toString(),
         'consumesKey#1': (args) => (args[0] as ContextAction).consumesKey(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as ContextAction).toKeyEventResult(args[1] as Intent, args[2]),
         'addActionListener#1': (args) { (args[0] as ContextAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -42,8 +43,10 @@ abstract final class ContextActionBindings {
         'toStringShort#0': (args) => (args[0] as ContextAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ContextAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ContextAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ContextAction).hashCode,
         'callingAction#0': (args) => (args[0] as ContextAction).callingAction,
         'intentType#0': (args) => (args[0] as ContextAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as ContextAction).isActionEnabled,
+        '==#1': (args) => (args[0] as ContextAction) == (args[1] as Object),
       };
 }

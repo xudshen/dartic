@@ -30,8 +30,11 @@ abstract final class GradientBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Gradient).toString(),
         'dispose#0': (args) { (args[0] as Gradient).dispose(); return null; },
+        'hashCode#0': (args) => (args[0] as Gradient).hashCode,
         'debugDisposed#0': (args) => (args[0] as Gradient).debugDisposed,
+        '==#1': (args) => (args[0] as Gradient) == (args[1] as Object),
         'linear#6': (args) => Gradient.linear(args[0] as Offset, args[1] as Offset, (args[2] as List).cast<Color>(), identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<double>(), identical(args[4], darticAbsent) ? TileMode.clamp : args[4] as TileMode, identical(args[5], darticAbsent) ? null : args[5] as Float64List?),
         'radial#8': (args) => Gradient.radial(args[0] as Offset, args[1] as double, (args[2] as List).cast<Color>(), identical(args[3], darticAbsent) ? null : args[3] == null ? null : (args[3] as List).cast<double>(), identical(args[4], darticAbsent) ? TileMode.clamp : args[4] as TileMode, identical(args[5], darticAbsent) ? null : args[5] as Float64List?, identical(args[6], darticAbsent) ? null : args[6] as Offset?, identical(args[7], darticAbsent) ? 0.0 : args[7] as double),
         'sweep#7': (args) => Gradient.sweep(args[0] as Offset, (args[1] as List).cast<Color>(), identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as List).cast<double>(), identical(args[3], darticAbsent) ? TileMode.clamp : args[3] as TileMode, identical(args[4], darticAbsent) ? 0.0 : args[4] as double, identical(args[5], darticAbsent) ? math.pi * 2 : args[5] as double, identical(args[6], darticAbsent) ? null : args[6] as Float64List?),

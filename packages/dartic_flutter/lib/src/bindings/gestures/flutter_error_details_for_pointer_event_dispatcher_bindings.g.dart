@@ -36,6 +36,7 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).toString(),
         'copyWith#7': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).copyWith(context: identical(args[1], darticAbsent) ? null : args[1] as DiagnosticsNode?, exception: identical(args[2], darticAbsent) ? null : args[2], informationCollector: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), library: identical(args[4], darticAbsent) ? null : args[4] as String?, silent: identical(args[5], darticAbsent) ? null : args[5] as bool?, stack: identical(args[6], darticAbsent) ? null : args[6] as StackTrace?, stackFilter: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a)),
         'exceptionAsString#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).exceptionAsString(),
         'debugFillProperties#1': (args) { (args[0] as FlutterErrorDetailsForPointerEventDispatcher).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -43,6 +44,7 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'event#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).event,
         'hitTestEntry#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).hitTestEntry,
+        'hashCode#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).hashCode,
         'exception#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).exception,
         'stack#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).stack,
         'library#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).library,
@@ -51,6 +53,7 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
         'informationCollector#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).informationCollector,
         'silent#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).silent,
         'summary#0': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher).summary,
+        '==#1': (args) => (args[0] as FlutterErrorDetailsForPointerEventDispatcher) == (args[1] as Object),
         '#8': (args) => FlutterErrorDetailsForPointerEventDispatcher(exception: args[0] as Object, stack: identical(args[1], darticAbsent) ? null : args[1] as StackTrace?, library: identical(args[2], darticAbsent) ? null : args[2] as String?, context: identical(args[3], darticAbsent) ? null : args[3] as DiagnosticsNode?, event: identical(args[4], darticAbsent) ? null : args[4] as PointerEvent?, hitTestEntry: identical(args[5], darticAbsent) ? null : args[5] as HitTestEntry<HitTestTarget>?, informationCollector: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), silent: identical(args[7], darticAbsent) ? false : args[7] as bool),
         '_#fromFields#9': (args) => FlutterErrorDetailsForPointerEventDispatcher(exception: args[2] as Object, stack: args[7] as StackTrace?, library: args[5] as String?, context: args[0] as DiagnosticsNode?, event: args[1] as PointerEvent?, hitTestEntry: args[3] as HitTestEntry<HitTestTarget>?, informationCollector: args[4] as InformationCollector?, silent: args[6] as bool),
       };

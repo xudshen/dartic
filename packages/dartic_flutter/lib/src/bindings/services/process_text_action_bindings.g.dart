@@ -21,9 +21,11 @@ abstract final class ProcessTextActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ProcessTextAction).toString(),
         'id#0': (args) => (args[0] as ProcessTextAction).id,
         'label#0': (args) => (args[0] as ProcessTextAction).label,
         'hashCode#0': (args) => (args[0] as ProcessTextAction).hashCode,
+        '==#1': (args) => (args[0] as ProcessTextAction) == (args[1] as Object),
         '#2': (args) => ProcessTextAction(args[0] as String, args[1] as String),
         '_#fromFields#2': (args) => ProcessTextAction(args[0] as String, args[1] as String),
       };

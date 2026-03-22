@@ -32,6 +32,7 @@ abstract final class TrackingScrollControllerBindings {
         'attach#1': (args) { (args[0] as TrackingScrollController).attach(args[1] as ScrollPosition); return null; },
         'detach#1': (args) { (args[0] as TrackingScrollController).detach(args[1] as ScrollPosition); return null; },
         'dispose#0': (args) { (args[0] as TrackingScrollController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as TrackingScrollController).toString(),
         'animateTo#3': (args) => (args[0] as TrackingScrollController).animateTo(args[1] as double, duration: args[2] as Duration, curve: args[3] as Curve),
         'jumpTo#1': (args) { (args[0] as TrackingScrollController).jumpTo(args[1] as double); return null; },
         'createScrollPosition#3': (args) => (args[0] as TrackingScrollController).createScrollPosition(args[1] as ScrollPhysics, args[2] as ScrollContext, args[3] as ScrollPosition?),
@@ -41,6 +42,7 @@ abstract final class TrackingScrollControllerBindings {
         'notifyListeners#0': (args) { (args[0] as TrackingScrollController).notifyListeners(); return null; },
         'mostRecentlyUpdatedPosition#0': (args) => (args[0] as TrackingScrollController).mostRecentlyUpdatedPosition,
         'initialScrollOffset#0': (args) => (args[0] as TrackingScrollController).initialScrollOffset,
+        'hashCode#0': (args) => (args[0] as TrackingScrollController).hashCode,
         'keepScrollOffset#0': (args) => (args[0] as TrackingScrollController).keepScrollOffset,
         'onAttach#0': (args) => (args[0] as TrackingScrollController).onAttach,
         'onDetach#0': (args) => (args[0] as TrackingScrollController).onDetach,
@@ -50,6 +52,7 @@ abstract final class TrackingScrollControllerBindings {
         'position#0': (args) => (args[0] as TrackingScrollController).position,
         'offset#0': (args) => (args[0] as TrackingScrollController).offset,
         'hasListeners#0': (args) => (args[0] as TrackingScrollController).hasListeners,
+        '==#1': (args) => (args[0] as TrackingScrollController) == (args[1] as Object),
         '#5': (args) => TrackingScrollController(initialScrollOffset: identical(args[0], darticAbsent) ? 0.0 : args[0] as double, keepScrollOffset: identical(args[1], darticAbsent) ? true : args[1] as bool, debugLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, onAttach: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onDetach: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
       };
 }

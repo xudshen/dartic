@@ -28,6 +28,9 @@ abstract final class BorderStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BorderStyle).toString(),
+        'hashCode#0': (args) => (args[0] as BorderStyle).hashCode,
         'index#0': (args) => (args[0] as BorderStyle).index,
+        '==#1': (args) => (args[0] as BorderStyle) == (args[1] as Object),
       };
 }

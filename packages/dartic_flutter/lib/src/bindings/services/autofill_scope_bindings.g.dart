@@ -23,6 +23,9 @@ abstract final class AutofillScopeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getAutofillClient#1': (args) => (args[0] as AutofillScope).getAutofillClient(args[1] as String),
         'attach#2': (args) => (args[0] as AutofillScope).attach(args[1] as TextInputClient, args[2] as TextInputConfiguration),
+        'toString#0': (args) => (args[0] as AutofillScope).toString(),
         'autofillClients#0': (args) => (args[0] as AutofillScope).autofillClients,
+        'hashCode#0': (args) => (args[0] as AutofillScope).hashCode,
+        '==#1': (args) => (args[0] as AutofillScope) == (args[1] as Object),
       };
 }

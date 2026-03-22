@@ -58,7 +58,12 @@ abstract final class PathBindings {
         'transform#1': (args) => (args[0] as Path).transform(args[1] as Float64List),
         'getBounds#0': (args) => (args[0] as Path).getBounds(),
         'computeMetrics#1': (args) => (args[0] as Path).computeMetrics(forceClosed: identical(args[1], darticAbsent) ? false : args[1] as bool),
+        'toString#0': (args) => (args[0] as Path).toString(),
         'fillType#0': (args) => (args[0] as Path).fillType,
+        'hashCode#0': (args) => (args[0] as Path).hashCode,
         'fillType=#1': (args) { (args[0] as Path).fillType = args[1] as PathFillType; return args[1]; },
+        '==#1': (args) => (args[0] as Path) == (args[1] as Object),
+        '#0': (args) => Path(),
+        'from#1': (args) => Path.from(args[0] as Path),
       };
 }

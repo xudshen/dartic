@@ -31,6 +31,7 @@ abstract final class InheritedModelElementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateDependencies#2': (args) { (args[0] as InheritedModelElement).updateDependencies(args[1] as Element, args[2]); return null; },
         'notifyDependent#2': (args) { (args[0] as InheritedModelElement).notifyDependent(args[1] as InheritedModel, args[2] as Element); return null; },
+        'toString#0': (args) => (args[0] as InheritedModelElement).toString(),
         'debugDeactivated#0': (args) { (args[0] as InheritedModelElement).debugDeactivated(); return null; },
         'getDependencies#1': (args) => (args[0] as InheritedModelElement).getDependencies(args[1] as Element),
         'setDependencies#2': (args) { (args[0] as InheritedModelElement).setDependencies(args[1] as Element, args[2]); return null; },
@@ -86,6 +87,7 @@ abstract final class InheritedModelElementBindings {
         'rebuild#1': (args) { (args[0] as InheritedModelElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as InheritedModelElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as InheritedModelElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as InheritedModelElement).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as InheritedModelElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as InheritedModelElement).renderObjectAttachingChild,
         'slot#0': (args) => (args[0] as InheritedModelElement).slot,
@@ -99,6 +101,7 @@ abstract final class InheritedModelElementBindings {
         'renderObject#0': (args) => (args[0] as InheritedModelElement).renderObject,
         'size#0': (args) => (args[0] as InheritedModelElement).size,
         'dirty#0': (args) => (args[0] as InheritedModelElement).dirty,
+        '==#1': (args) => (args[0] as InheritedModelElement) == (args[1] as Object),
         '#1': (args) => InheritedModelElement<dynamic>(args[0] as InheritedModel),
       };
 }

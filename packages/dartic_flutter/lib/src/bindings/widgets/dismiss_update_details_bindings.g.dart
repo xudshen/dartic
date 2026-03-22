@@ -27,10 +27,13 @@ abstract final class DismissUpdateDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DismissUpdateDetails).toString(),
         'direction#0': (args) => (args[0] as DismissUpdateDetails).direction,
         'reached#0': (args) => (args[0] as DismissUpdateDetails).reached,
         'previousReached#0': (args) => (args[0] as DismissUpdateDetails).previousReached,
         'progress#0': (args) => (args[0] as DismissUpdateDetails).progress,
+        'hashCode#0': (args) => (args[0] as DismissUpdateDetails).hashCode,
+        '==#1': (args) => (args[0] as DismissUpdateDetails) == (args[1] as Object),
         '#4': (args) => DismissUpdateDetails(direction: identical(args[0], darticAbsent) ? DismissDirection.horizontal : args[0] as DismissDirection, reached: identical(args[1], darticAbsent) ? false : args[1] as bool, previousReached: identical(args[2], darticAbsent) ? false : args[2] as bool, progress: identical(args[3], darticAbsent) ? 0.0 : args[3] as double),
       };
 }

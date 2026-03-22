@@ -49,6 +49,7 @@ abstract final class RootElementBindings {
         'update#1': (args) { (args[0] as RootElement).update(args[1] as RootWidget); return null; },
         'performRebuild#0': (args) { (args[0] as RootElement).performRebuild(); return null; },
         'debugExpectsRenderObjectForSlot#1': (args) => (args[0] as RootElement).debugExpectsRenderObjectForSlot(args[1]),
+        'toString#0': (args) => (args[0] as RootElement).toString(),
         'reassemble#0': (args) { (args[0] as RootElement).reassemble(); return null; },
         'describeMissingAncestor#1': (args) => (args[0] as RootElement).describeMissingAncestor(expectedAncestorType: args[1] as Type),
         'describeElement#2': (args) => (args[0] as RootElement).describeElement(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.errorProperty : args[2] as DiagnosticsTreeStyle),
@@ -94,6 +95,7 @@ abstract final class RootElementBindings {
         'toStringDeep#4': (args) => (args[0] as RootElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'assignOwner#1': (args) { (args[0] as RootElement).assignOwner(args[1] as BuildOwner); return null; },
         'debugDoingBuild#0': (args) => (args[0] as RootElement).debugDoingBuild,
+        'hashCode#0': (args) => (args[0] as RootElement).hashCode,
         'slot#0': (args) => (args[0] as RootElement).slot,
         'depth#0': (args) => (args[0] as RootElement).depth,
         'widget#0': (args) => (args[0] as RootElement).widget,
@@ -106,6 +108,7 @@ abstract final class RootElementBindings {
         'renderObjectAttachingChild#0': (args) => (args[0] as RootElement).renderObjectAttachingChild,
         'size#0': (args) => (args[0] as RootElement).size,
         'dirty#0': (args) => (args[0] as RootElement).dirty,
+        '==#1': (args) => (args[0] as RootElement) == (args[1] as Object),
         '#1': (args) => RootElement(args[0] as RootWidget),
       };
 }

@@ -30,3 +30,46 @@ libraries:
               if (type == 4) return ColorFilter.srgbToLinearGamma();
               return ColorFilter.mode(args[1] as Color, args[0] as BlendMode);
             }
+
+      # ── SceneBuilder: pushOpacity offset default is Offset.zero ──
+      SceneBuilder:
+        extra_methods:
+          "pushOpacity#3": |
+            (args) {
+              final self = args[0] as SceneBuilder;
+              final alpha = args[1] as int;
+              final oldLayer = identical(args[3], darticAbsent)
+                  ? null
+                  : args[3] as OpacityEngineLayer?;
+              if (identical(args[2], darticAbsent)) {
+                return self.pushOpacity(alpha, oldLayer: oldLayer);
+              }
+              return self.pushOpacity(alpha,
+                  offset: args[2] as Offset?, oldLayer: oldLayer);
+            }
+
+      # ── SemanticsActionEvent: copyWith arguments default is private sentinel ──
+      SemanticsActionEvent:
+        extra_methods:
+          "copyWith#4": |
+            (args) {
+              final self = args[0] as SemanticsActionEvent;
+              final type = identical(args[1], darticAbsent)
+                  ? null
+                  : args[1] as SemanticsAction?;
+              final viewId = identical(args[2], darticAbsent)
+                  ? null
+                  : args[2] as int?;
+              final nodeId = identical(args[3], darticAbsent)
+                  ? null
+                  : args[3] as int?;
+              if (identical(args[4], darticAbsent)) {
+                return self.copyWith(
+                    type: type, viewId: viewId, nodeId: nodeId);
+              }
+              return self.copyWith(
+                  type: type,
+                  viewId: viewId,
+                  nodeId: nodeId,
+                  arguments: args[4]);
+            }

@@ -34,7 +34,10 @@ abstract final class KeyboardLockModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeyboardLockMode).toString(),
         'logicalKey#0': (args) => (args[0] as KeyboardLockMode).logicalKey,
+        'hashCode#0': (args) => (args[0] as KeyboardLockMode).hashCode,
         'index#0': (args) => (args[0] as KeyboardLockMode).index,
+        '==#1': (args) => (args[0] as KeyboardLockMode) == (args[1] as Object),
       };
 }

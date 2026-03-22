@@ -29,11 +29,14 @@ abstract final class CustomPainterSemanticsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CustomPainterSemantics).toString(),
         'key#0': (args) => (args[0] as CustomPainterSemantics).key,
         'rect#0': (args) => (args[0] as CustomPainterSemantics).rect,
         'transform#0': (args) => (args[0] as CustomPainterSemantics).transform,
         'properties#0': (args) => (args[0] as CustomPainterSemantics).properties,
         'tags#0': (args) => (args[0] as CustomPainterSemantics).tags,
+        'hashCode#0': (args) => (args[0] as CustomPainterSemantics).hashCode,
+        '==#1': (args) => (args[0] as CustomPainterSemantics) == (args[1] as Object),
         '#5': (args) => CustomPainterSemantics(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as Rect, properties: args[2] as SemanticsProperties, transform: identical(args[3], darticAbsent) ? null : args[3] as Matrix4?, tags: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as Set).cast<SemanticsTag>()),
         '_#fromFields#5': (args) => CustomPainterSemantics(key: args[0] as Key?, rect: args[2] as Rect, properties: args[1] as SemanticsProperties, transform: args[4] as Matrix4?, tags: args[3] == null ? null : (args[3] as Set).cast<SemanticsTag>()),
       };

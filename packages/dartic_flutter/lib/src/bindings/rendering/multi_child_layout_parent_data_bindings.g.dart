@@ -27,6 +27,7 @@ abstract final class MultiChildLayoutParentDataBindings {
         'toString#0': (args) => (args[0] as MultiChildLayoutParentData).toString(),
         'detach#0': (args) { (args[0] as MultiChildLayoutParentData).detach(); return null; },
         'id#0': (args) => (args[0] as MultiChildLayoutParentData).id,
+        'hashCode#0': (args) => (args[0] as MultiChildLayoutParentData).hashCode,
         'offset#0': (args) => (args[0] as MultiChildLayoutParentData).offset,
         'previousSibling#0': (args) => (args[0] as MultiChildLayoutParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as MultiChildLayoutParentData).nextSibling,
@@ -34,6 +35,7 @@ abstract final class MultiChildLayoutParentDataBindings {
         'offset=#1': (args) { (args[0] as MultiChildLayoutParentData).offset = args[1] as Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as MultiChildLayoutParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as MultiChildLayoutParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as MultiChildLayoutParentData) == (args[1] as Object),
         '#0': (args) => MultiChildLayoutParentData(),
       };
 }

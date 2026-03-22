@@ -36,6 +36,7 @@ abstract final class RenderTreeRootElementBindings {
         'attachRenderObject#1': (args) { (args[0] as RenderTreeRootElement).attachRenderObject(args[1]); return null; },
         'detachRenderObject#0': (args) { (args[0] as RenderTreeRootElement).detachRenderObject(); return null; },
         'updateSlot#1': (args) { (args[0] as RenderTreeRootElement).updateSlot(args[1]); return null; },
+        'toString#0': (args) => (args[0] as RenderTreeRootElement).toString(),
         'mount#2': (args) { (args[0] as RenderTreeRootElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as RenderTreeRootElement).update(args[1] as RenderObjectWidget); return null; },
         'performRebuild#0': (args) { (args[0] as RenderTreeRootElement).performRebuild(); return null; },
@@ -85,6 +86,7 @@ abstract final class RenderTreeRootElementBindings {
         'rebuild#1': (args) { (args[0] as RenderTreeRootElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as RenderTreeRootElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as RenderTreeRootElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as RenderTreeRootElement).hashCode,
         'renderObject#0': (args) => (args[0] as RenderTreeRootElement).renderObject,
         'renderObjectAttachingChild#0': (args) => (args[0] as RenderTreeRootElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as RenderTreeRootElement).debugDoingBuild,
@@ -98,5 +100,6 @@ abstract final class RenderTreeRootElementBindings {
         'buildScope#0': (args) => (args[0] as RenderTreeRootElement).buildScope,
         'size#0': (args) => (args[0] as RenderTreeRootElement).size,
         'dirty#0': (args) => (args[0] as RenderTreeRootElement).dirty,
+        '==#1': (args) => (args[0] as RenderTreeRootElement) == (args[1] as Object),
       };
 }

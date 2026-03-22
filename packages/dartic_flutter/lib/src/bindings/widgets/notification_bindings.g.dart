@@ -24,5 +24,7 @@ abstract final class NotificationBindings {
         'dispatch#1': (args) { (args[0] as Notification).dispatch(args[1] as BuildContext?); return null; },
         'toString#0': (args) => (args[0] as Notification).toString(),
         'debugFillDescription#1': (args) { (args[0] as Notification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'hashCode#0': (args) => (args[0] as Notification).hashCode,
+        '==#1': (args) => (args[0] as Notification) == (args[1] as Object),
       };
 }

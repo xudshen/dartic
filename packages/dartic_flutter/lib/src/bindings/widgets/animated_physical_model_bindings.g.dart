@@ -40,6 +40,7 @@ abstract final class AnimatedPhysicalModelBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedPhysicalModel).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedPhysicalModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedPhysicalModel).toString(),
         'createElement#0': (args) => (args[0] as AnimatedPhysicalModel).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedPhysicalModel).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedPhysicalModel).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -55,10 +56,12 @@ abstract final class AnimatedPhysicalModelBindings {
         'animateColor#0': (args) => (args[0] as AnimatedPhysicalModel).animateColor,
         'shadowColor#0': (args) => (args[0] as AnimatedPhysicalModel).shadowColor,
         'animateShadowColor#0': (args) => (args[0] as AnimatedPhysicalModel).animateShadowColor,
+        'hashCode#0': (args) => (args[0] as AnimatedPhysicalModel).hashCode,
         'curve#0': (args) => (args[0] as AnimatedPhysicalModel).curve,
         'duration#0': (args) => (args[0] as AnimatedPhysicalModel).duration,
         'onEnd#0': (args) => (args[0] as AnimatedPhysicalModel).onEnd,
         'key#0': (args) => (args[0] as AnimatedPhysicalModel).key,
+        '==#1': (args) => (args[0] as AnimatedPhysicalModel) == (args[1] as Object),
         '#13': (args) => AnimatedPhysicalModel(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, shape: identical(args[2], darticAbsent) ? BoxShape.rectangle : args[2] as BoxShape, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as ui.Clip, borderRadius: identical(args[4], darticAbsent) ? null : args[4] as BorderRadius?, elevation: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, color: args[6] as ui.Color, animateColor: identical(args[7], darticAbsent) ? true : args[7] as bool, shadowColor: args[8] as ui.Color, animateShadowColor: identical(args[9], darticAbsent) ? true : args[9] as bool, curve: identical(args[10], darticAbsent) ? Curves.linear : args[10] as Curve, duration: args[11] as Duration, onEnd: identical(args[12], darticAbsent) ? null : (args[12] as Function?) == null ? null : () => (args[12] as Function?)!()),
         '_#fromFields#13': (args) => AnimatedPhysicalModel(key: args[9] as Key?, child: args[3] as Widget, shape: args[12] as BoxShape, clipBehavior: args[4] as ui.Clip, borderRadius: args[2] as BorderRadius?, elevation: args[8] as double, color: args[5] as ui.Color, animateColor: args[0] as bool, shadowColor: args[11] as ui.Color, animateShadowColor: args[1] as bool, curve: args[6] as Curve, duration: args[7] as Duration, onEnd: args[10] as ui.VoidCallback?),
       };

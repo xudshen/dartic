@@ -42,6 +42,9 @@ abstract final class ModifierKeyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ModifierKey).toString(),
+        'hashCode#0': (args) => (args[0] as ModifierKey).hashCode,
         'index#0': (args) => (args[0] as ModifierKey).index,
+        '==#1': (args) => (args[0] as ModifierKey) == (args[1] as Object),
       };
 }

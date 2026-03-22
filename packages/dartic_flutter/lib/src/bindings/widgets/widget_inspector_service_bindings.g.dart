@@ -75,9 +75,12 @@ abstract final class WidgetInspectorServiceBindings {
         'postEvent#3': (args) { (args[0] as WidgetInspectorService).postEvent(args[1] as String, (args[2] as Map).cast<Object, Object?>(), stream: identical(args[3], darticAbsent) ? 'Extension' : args[3] as String); return null; },
         'inspect#1': (args) { (args[0] as WidgetInspectorService).inspect(args[1]); return null; },
         'performReassemble#0': (args) { (args[0] as WidgetInspectorService).performReassemble(); return null; },
+        'toString#0': (args) => (args[0] as WidgetInspectorService).toString(),
         'selection#0': (args) => (args[0] as WidgetInspectorService).selection,
         'selectionChangedCallback#0': (args) => (args[0] as WidgetInspectorService).selectionChangedCallback,
+        'hashCode#0': (args) => (args[0] as WidgetInspectorService).hashCode,
         'isSelectMode=#1': (args) { (args[0] as WidgetInspectorService).isSelectMode = args[1] as bool; return args[1]; },
         'selectionChangedCallback=#1': (args) { (args[0] as WidgetInspectorService).selectionChangedCallback = args[1] as InspectorSelectionChangedCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as WidgetInspectorService) == (args[1] as Object),
       };
 }

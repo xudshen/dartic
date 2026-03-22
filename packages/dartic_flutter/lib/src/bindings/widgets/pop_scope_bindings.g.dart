@@ -27,6 +27,7 @@ abstract final class PopScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as PopScope).createState(),
+        'toString#0': (args) => (args[0] as PopScope).toString(),
         'createElement#0': (args) => (args[0] as PopScope).createElement(),
         'toStringShort#0': (args) => (args[0] as PopScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PopScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class PopScopeBindings {
         'onPopInvokedWithResult#0': (args) => (args[0] as PopScope).onPopInvokedWithResult,
         'onPopInvoked#0': (args) => (args[0] as PopScope).onPopInvoked,
         'canPop#0': (args) => (args[0] as PopScope).canPop,
+        'hashCode#0': (args) => (args[0] as PopScope).hashCode,
         'key#0': (args) => (args[0] as PopScope).key,
+        '==#1': (args) => (args[0] as PopScope) == (args[1] as Object),
         '#5': (args) => PopScope<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, canPop: identical(args[2], darticAbsent) ? true : args[2] as bool, onPopInvokedWithResult: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a, b) => (args[3] as Function?)!(a, b), onPopInvoked: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
         '_#fromFields#5': (args) => PopScope<dynamic>(key: args[2] as Key?, child: args[1] as Widget, canPop: args[0] as bool, onPopInvokedWithResult: args[4] as void Function(bool, Object?)?, onPopInvoked: args[3] as PopInvokedCallback?),
       };

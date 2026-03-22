@@ -28,11 +28,14 @@ abstract final class ScaleEndDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ScaleEndDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ScaleEndDetails).toString(),
         'toStringShort#0': (args) => (args[0] as ScaleEndDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScaleEndDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'velocity#0': (args) => (args[0] as ScaleEndDetails).velocity,
         'scaleVelocity#0': (args) => (args[0] as ScaleEndDetails).scaleVelocity,
         'pointerCount#0': (args) => (args[0] as ScaleEndDetails).pointerCount,
+        'hashCode#0': (args) => (args[0] as ScaleEndDetails).hashCode,
+        '==#1': (args) => (args[0] as ScaleEndDetails) == (args[1] as Object),
         '#3': (args) => ScaleEndDetails(velocity: identical(args[0], darticAbsent) ? Velocity.zero : args[0] as Velocity, scaleVelocity: identical(args[1], darticAbsent) ? 0 : args[1] as double, pointerCount: identical(args[2], darticAbsent) ? 0 : args[2] as int),
       };
 }

@@ -24,10 +24,13 @@ abstract final class GranularlyExtendSelectionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as GranularlyExtendSelectionEvent).toString(),
         'forward#0': (args) => (args[0] as GranularlyExtendSelectionEvent).forward,
         'isEnd#0': (args) => (args[0] as GranularlyExtendSelectionEvent).isEnd,
         'granularity#0': (args) => (args[0] as GranularlyExtendSelectionEvent).granularity,
+        'hashCode#0': (args) => (args[0] as GranularlyExtendSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as GranularlyExtendSelectionEvent).type,
+        '==#1': (args) => (args[0] as GranularlyExtendSelectionEvent) == (args[1] as Object),
         '#3': (args) => GranularlyExtendSelectionEvent(forward: args[0] as bool, isEnd: args[1] as bool, granularity: args[2] as TextGranularity),
         '_#fromFields#4': (args) => GranularlyExtendSelectionEvent(forward: args[0] as bool, isEnd: args[2] as bool, granularity: args[1] as TextGranularity),
       };

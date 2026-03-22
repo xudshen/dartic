@@ -26,10 +26,13 @@ abstract final class DeleteToNextWordBoundaryIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DeleteToNextWordBoundaryIntent).toString(),
         'toStringShort#0': (args) => (args[0] as DeleteToNextWordBoundaryIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DeleteToNextWordBoundaryIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DeleteToNextWordBoundaryIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DeleteToNextWordBoundaryIntent).hashCode,
         'forward#0': (args) => (args[0] as DeleteToNextWordBoundaryIntent).forward,
+        '==#1': (args) => (args[0] as DeleteToNextWordBoundaryIntent) == (args[1] as Object),
         '#1': (args) => DeleteToNextWordBoundaryIntent(forward: args[0] as bool),
         '_#fromFields#1': (args) => DeleteToNextWordBoundaryIntent(forward: args[0] as bool),
       };

@@ -37,6 +37,7 @@ abstract final class SliverAnimatedListBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverAnimatedList).createState(),
+        'toString#0': (args) => (args[0] as SliverAnimatedList).toString(),
         'createElement#0': (args) => (args[0] as SliverAnimatedList).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverAnimatedList).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverAnimatedList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,10 +45,12 @@ abstract final class SliverAnimatedListBindings {
         'toStringDeep#4': (args) => (args[0] as SliverAnimatedList).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as SliverAnimatedList).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverAnimatedList).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as SliverAnimatedList).hashCode,
         'itemBuilder#0': (args) => (args[0] as SliverAnimatedList).itemBuilder,
         'findChildIndexCallback#0': (args) => (args[0] as SliverAnimatedList).findChildIndexCallback,
         'initialItemCount#0': (args) => (args[0] as SliverAnimatedList).initialItemCount,
         'key#0': (args) => (args[0] as SliverAnimatedList).key,
+        '==#1': (args) => (args[0] as SliverAnimatedList) == (args[1] as Object),
         '#4': (args) => SliverAnimatedList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, findChildIndexCallback: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), initialItemCount: identical(args[3], darticAbsent) ? 0 : args[3] as int),
         '_#fromFields#4': (args) => SliverAnimatedList(key: args[3] as Key?, itemBuilder: args[2] as AnimatedItemBuilder, findChildIndexCallback: args[0] as ChildIndexGetter?, initialItemCount: args[1] as int),
       };

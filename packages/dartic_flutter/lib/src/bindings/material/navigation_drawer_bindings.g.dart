@@ -42,6 +42,7 @@ abstract final class NavigationDrawerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationDrawer).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationDrawer).toString(),
         'createElement#0': (args) => (args[0] as NavigationDrawer).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationDrawer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationDrawer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -61,7 +62,9 @@ abstract final class NavigationDrawerBindings {
         'selectedIndex#0': (args) => (args[0] as NavigationDrawer).selectedIndex,
         'onDestinationSelected#0': (args) => (args[0] as NavigationDrawer).onDestinationSelected,
         'tilePadding#0': (args) => (args[0] as NavigationDrawer).tilePadding,
+        'hashCode#0': (args) => (args[0] as NavigationDrawer).hashCode,
         'key#0': (args) => (args[0] as NavigationDrawer).key,
+        '==#1': (args) => (args[0] as NavigationDrawer) == (args[1] as Object),
         '#13': (args) => NavigationDrawer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), header: identical(args[2], darticAbsent) ? null : args[2] as Widget?, footer: identical(args[3], darticAbsent) ? null : args[3] as Widget?, backgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, shadowColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, surfaceTintColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, elevation: identical(args[7], darticAbsent) ? null : args[7] as double?, indicatorColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, indicatorShape: identical(args[9], darticAbsent) ? null : args[9] as ShapeBorder?, onDestinationSelected: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a) => (args[10] as Function?)!(a), selectedIndex: identical(args[11], darticAbsent) ? null : args[11] as int?, tilePadding: identical(args[12], darticAbsent) ? const EdgeInsets.symmetric(horizontal: 12.0) : args[12] as EdgeInsetsGeometry),
         '_#fromFields#13': (args) => NavigationDrawer(key: args[7] as Key?, children: (args[1] as List).cast<Widget>(), header: args[4] as Widget?, footer: args[3] as Widget?, backgroundColor: args[0] as Color?, shadowColor: args[10] as Color?, surfaceTintColor: args[11] as Color?, elevation: args[2] as double?, indicatorColor: args[5] as Color?, indicatorShape: args[6] as ShapeBorder?, onDestinationSelected: args[8] as ValueChanged<int>?, selectedIndex: args[9] as int?, tilePadding: args[12] as EdgeInsetsGeometry),
       };

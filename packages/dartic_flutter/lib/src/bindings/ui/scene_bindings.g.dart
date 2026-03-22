@@ -32,5 +32,8 @@ abstract final class SceneBindings {
         'toImageSync#2': (args) => (args[0] as Scene).toImageSync(args[1] as int, args[2] as int),
         'toImage#2': (args) => (args[0] as Scene).toImage(args[1] as int, args[2] as int),
         'dispose#0': (args) { (args[0] as Scene).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Scene).toString(),
+        'hashCode#0': (args) => (args[0] as Scene).hashCode,
+        '==#1': (args) => (args[0] as Scene) == (args[1] as Object),
       };
 }

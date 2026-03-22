@@ -34,6 +34,8 @@ abstract final class RevealedOffsetBindings {
         'toString#0': (args) => (args[0] as RevealedOffset).toString(),
         'offset#0': (args) => (args[0] as RevealedOffset).offset,
         'rect#0': (args) => (args[0] as RevealedOffset).rect,
+        'hashCode#0': (args) => (args[0] as RevealedOffset).hashCode,
+        '==#1': (args) => (args[0] as RevealedOffset) == (args[1] as Object),
         '#2': (args) => RevealedOffset(offset: args[0] as double, rect: args[1] as Rect),
         '_#fromFields#2': (args) => RevealedOffset(offset: args[0] as double, rect: args[1] as Rect),
       };

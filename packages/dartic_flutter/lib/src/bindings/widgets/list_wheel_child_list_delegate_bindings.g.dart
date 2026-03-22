@@ -39,9 +39,12 @@ abstract final class ListWheelChildListDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#2': (args) => (args[0] as ListWheelChildListDelegate).build(args[1] as BuildContext, args[2] as int),
         'shouldRebuild#1': (args) => (args[0] as ListWheelChildListDelegate).shouldRebuild(args[1] as ListWheelChildListDelegate),
+        'toString#0': (args) => (args[0] as ListWheelChildListDelegate).toString(),
         'trueIndexOf#1': (args) => (args[0] as ListWheelChildListDelegate).trueIndexOf(args[1] as int),
         'children#0': (args) => (args[0] as ListWheelChildListDelegate).children,
         'estimatedChildCount#0': (args) => (args[0] as ListWheelChildListDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as ListWheelChildListDelegate).hashCode,
+        '==#1': (args) => (args[0] as ListWheelChildListDelegate) == (args[1] as Object),
         '#1': (args) => ListWheelChildListDelegate(children: (args[0] as List).cast<Widget>()),
       };
 }

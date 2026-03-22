@@ -35,6 +35,7 @@ abstract final class BannerPainterBindings {
         'paint#2': (args) { (args[0] as BannerPainter).paint(args[1] as Canvas, args[2] as Size); return null; },
         'shouldRepaint#1': (args) => (args[0] as BannerPainter).shouldRepaint(args[1] as BannerPainter),
         'hitTest#1': (args) => (args[0] as BannerPainter).hitTest(args[1] as Offset),
+        'toString#0': (args) => (args[0] as BannerPainter).toString(),
         'addListener#1': (args) { (args[0] as BannerPainter).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as BannerPainter).removeListener(() => (args[1] as Function)()); return null; },
         'shouldRebuildSemantics#1': (args) => (args[0] as BannerPainter).shouldRebuildSemantics(args[1] as CustomPainter),
@@ -45,7 +46,9 @@ abstract final class BannerPainterBindings {
         'color#0': (args) => (args[0] as BannerPainter).color,
         'textStyle#0': (args) => (args[0] as BannerPainter).textStyle,
         'shadow#0': (args) => (args[0] as BannerPainter).shadow,
+        'hashCode#0': (args) => (args[0] as BannerPainter).hashCode,
         'semanticsBuilder#0': (args) => (args[0] as BannerPainter).semanticsBuilder,
+        '==#1': (args) => (args[0] as BannerPainter) == (args[1] as Object),
         '#7': (args) {
           if (identical(args[4], darticAbsent)) {
             if (identical(args[5], darticAbsent)) {

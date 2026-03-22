@@ -30,7 +30,10 @@ abstract final class MaterialInkControllerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addInkFeature#1': (args) { (args[0] as MaterialInkController).addInkFeature(args[1] as InkFeature); return null; },
         'markNeedsPaint#0': (args) { (args[0] as MaterialInkController).markNeedsPaint(); return null; },
+        'toString#0': (args) => (args[0] as MaterialInkController).toString(),
         'color#0': (args) => (args[0] as MaterialInkController).color,
         'vsync#0': (args) => (args[0] as MaterialInkController).vsync,
+        'hashCode#0': (args) => (args[0] as MaterialInkController).hashCode,
+        '==#1': (args) => (args[0] as MaterialInkController) == (args[1] as Object),
       };
 }

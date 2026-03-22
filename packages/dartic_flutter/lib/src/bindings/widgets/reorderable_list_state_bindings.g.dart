@@ -49,6 +49,7 @@ abstract final class ReorderableListStateBindings {
         'startItemDragReorder#3': (args) { (args[0] as ReorderableListState).startItemDragReorder(index: args[1] as int, event: args[2] as PointerDownEvent, recognizer: args[3] as MultiDragGestureRecognizer); return null; },
         'cancelReorder#0': (args) { (args[0] as ReorderableListState).cancelReorder(); return null; },
         'build#1': (args) => (args[0] as ReorderableListState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ReorderableListState).toString(),
         'initState#0': (args) { (args[0] as ReorderableListState).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as ReorderableListState).didUpdateWidget(args[1] as ReorderableList); return null; },
         'reassemble#0': (args) { (args[0] as ReorderableListState).reassemble(); return null; },
@@ -60,9 +61,11 @@ abstract final class ReorderableListStateBindings {
         'debugFillProperties#1': (args) { (args[0] as ReorderableListState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as ReorderableListState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ReorderableListState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as ReorderableListState).hashCode,
         'widget#0': (args) => (args[0] as ReorderableListState).widget,
         'context#0': (args) => (args[0] as ReorderableListState).context,
         'mounted#0': (args) => (args[0] as ReorderableListState).mounted,
+        '==#1': (args) => (args[0] as ReorderableListState) == (args[1] as Object),
         '#0': (args) => ReorderableListState(),
       };
 }

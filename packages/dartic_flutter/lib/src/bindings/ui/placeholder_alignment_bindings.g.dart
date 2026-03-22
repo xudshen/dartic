@@ -37,6 +37,9 @@ abstract final class PlaceholderAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PlaceholderAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as PlaceholderAlignment).hashCode,
         'index#0': (args) => (args[0] as PlaceholderAlignment).index,
+        '==#1': (args) => (args[0] as PlaceholderAlignment) == (args[1] as Object),
       };
 }

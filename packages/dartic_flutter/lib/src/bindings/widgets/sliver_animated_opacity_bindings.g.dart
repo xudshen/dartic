@@ -37,6 +37,7 @@ abstract final class SliverAnimatedOpacityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverAnimatedOpacity).createState(),
         'debugFillProperties#1': (args) { (args[0] as SliverAnimatedOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverAnimatedOpacity).toString(),
         'createElement#0': (args) => (args[0] as SliverAnimatedOpacity).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverAnimatedOpacity).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverAnimatedOpacity).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -46,10 +47,12 @@ abstract final class SliverAnimatedOpacityBindings {
         'sliver#0': (args) => (args[0] as SliverAnimatedOpacity).sliver,
         'opacity#0': (args) => (args[0] as SliverAnimatedOpacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as SliverAnimatedOpacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as SliverAnimatedOpacity).hashCode,
         'curve#0': (args) => (args[0] as SliverAnimatedOpacity).curve,
         'duration#0': (args) => (args[0] as SliverAnimatedOpacity).duration,
         'onEnd#0': (args) => (args[0] as SliverAnimatedOpacity).onEnd,
         'key#0': (args) => (args[0] as SliverAnimatedOpacity).key,
+        '==#1': (args) => (args[0] as SliverAnimatedOpacity) == (args[1] as Object),
         '#7': (args) => SliverAnimatedOpacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, sliver: identical(args[1], darticAbsent) ? null : args[1] as Widget?, opacity: args[2] as double, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), alwaysIncludeSemantics: identical(args[6], darticAbsent) ? false : args[6] as bool),
         '_#fromFields#7': (args) => SliverAnimatedOpacity(key: args[3] as Key?, sliver: args[6] as Widget?, opacity: args[5] as double, curve: args[1] as Curve, duration: args[2] as Duration, onEnd: args[4] as ui.VoidCallback?, alwaysIncludeSemantics: args[0] as bool),
       };

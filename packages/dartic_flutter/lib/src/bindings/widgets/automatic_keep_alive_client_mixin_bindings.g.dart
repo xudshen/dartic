@@ -33,6 +33,7 @@ abstract final class AutomaticKeepAliveClientMixinBindings {
         'initState#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).initState(); return null; },
         'deactivate#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).deactivate(); return null; },
         'build#1': (args) => (args[0] as AutomaticKeepAliveClientMixin).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).toString(),
         'didUpdateWidget#1': (args) { (args[0] as AutomaticKeepAliveClientMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as AutomaticKeepAliveClientMixin).reassemble(); return null; },
         'setState#1': (args) { (args[0] as AutomaticKeepAliveClientMixin).setState(() => (args[1] as Function)()); return null; },
@@ -43,8 +44,10 @@ abstract final class AutomaticKeepAliveClientMixinBindings {
         'toStringShort#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AutomaticKeepAliveClientMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'wantKeepAlive#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).wantKeepAlive,
+        'hashCode#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).hashCode,
         'widget#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).widget,
         'context#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).context,
         'mounted#0': (args) => (args[0] as AutomaticKeepAliveClientMixin).mounted,
+        '==#1': (args) => (args[0] as AutomaticKeepAliveClientMixin) == (args[1] as Object),
       };
 }

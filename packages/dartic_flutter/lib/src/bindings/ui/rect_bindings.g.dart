@@ -64,6 +64,7 @@ abstract final class RectBindings {
         'bottomCenter#0': (args) => (args[0] as Rect).bottomCenter,
         'bottomRight#0': (args) => (args[0] as Rect).bottomRight,
         'hashCode#0': (args) => (args[0] as Rect).hashCode,
+        '==#1': (args) => (args[0] as Rect) == (args[1] as Object),
         'fromLTRB#4': (args) => Rect.fromLTRB(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromLTWH#4': (args) => Rect.fromLTWH(args[0] as double, args[1] as double, args[2] as double, args[3] as double),
         'fromCircle#2': (args) => Rect.fromCircle(center: args[0] as Offset, radius: args[1] as double),

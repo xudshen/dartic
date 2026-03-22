@@ -30,6 +30,7 @@ abstract final class PlatformSelectableRegionContextMenuBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as PlatformSelectableRegionContextMenu).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).toString(),
         'createElement#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).createElement(),
         'toStringShort#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PlatformSelectableRegionContextMenu).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class PlatformSelectableRegionContextMenuBindings {
         'toStringDeep#4': (args) => (args[0] as PlatformSelectableRegionContextMenu).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformSelectableRegionContextMenu).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).hashCode,
         'key#0': (args) => (args[0] as PlatformSelectableRegionContextMenu).key,
+        '==#1': (args) => (args[0] as PlatformSelectableRegionContextMenu) == (args[1] as Object),
         '#2': (args) => PlatformSelectableRegionContextMenu(child: args[0] as Widget, key: identical(args[1], darticAbsent) ? null : args[1] as Key?),
       };
 }

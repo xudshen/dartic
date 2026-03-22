@@ -31,5 +31,8 @@ abstract final class DateUtilsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DateUtils).toString(),
+        'hashCode#0': (args) => (args[0] as DateUtils).hashCode,
+        '==#1': (args) => (args[0] as DateUtils) == (args[1] as Object),
       };
 }

@@ -67,6 +67,7 @@ abstract final class MultiSelectableSelectionContainerDelegateBindings {
         'dispose#0': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).dispose(); return null; },
         'ensureChildUpdated#1': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).ensureChildUpdated(args[1] as Selectable); return null; },
         'dispatchSelectionEventToChild#2': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).dispatchSelectionEventToChild(args[1] as Selectable, args[2] as SelectionEvent),
+        'toString#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).toString(),
         'getTransformFrom#1': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).getTransformFrom(args[1] as Selectable),
         'getTransformTo#1': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).getTransformTo(args[1] as RenderObject?),
         'addListener#1': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).addListener(() => (args[1] as Function)()); return null; },
@@ -78,11 +79,13 @@ abstract final class MultiSelectableSelectionContainerDelegateBindings {
         'value#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).value,
         'compareOrder#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).compareOrder,
         'contentLength#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).contentLength,
+        'hashCode#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).hashCode,
         'hasSize#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).hasSize,
         'containerSize#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).containerSize,
         'hasListeners#0': (args) => (args[0] as MultiSelectableSelectionContainerDelegate).hasListeners,
         'selectables=#1': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).selectables = (args[1] as List).cast<Selectable>(); return args[1]; },
         'currentSelectionEndIndex=#1': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).currentSelectionEndIndex = args[1] as int; return args[1]; },
         'currentSelectionStartIndex=#1': (args) { (args[0] as MultiSelectableSelectionContainerDelegate).currentSelectionStartIndex = args[1] as int; return args[1]; },
+        '==#1': (args) => (args[0] as MultiSelectableSelectionContainerDelegate) == (args[1] as Object),
       };
 }

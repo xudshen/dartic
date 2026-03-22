@@ -8847,5 +8847,8 @@ abstract final class IconsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Icons).toString(),
+        'hashCode#0': (args) => (args[0] as Icons).hashCode,
+        '==#1': (args) => (args[0] as Icons) == (args[1] as Object),
       };
 }

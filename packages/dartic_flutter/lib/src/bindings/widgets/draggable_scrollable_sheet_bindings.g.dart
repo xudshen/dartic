@@ -42,6 +42,7 @@ abstract final class DraggableScrollableSheetBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as DraggableScrollableSheet).createState(),
+        'toString#0': (args) => (args[0] as DraggableScrollableSheet).toString(),
         'createElement#0': (args) => (args[0] as DraggableScrollableSheet).createElement(),
         'toStringShort#0': (args) => (args[0] as DraggableScrollableSheet).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DraggableScrollableSheet).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -59,7 +60,9 @@ abstract final class DraggableScrollableSheetBindings {
         'controller#0': (args) => (args[0] as DraggableScrollableSheet).controller,
         'shouldCloseOnMinExtent#0': (args) => (args[0] as DraggableScrollableSheet).shouldCloseOnMinExtent,
         'builder#0': (args) => (args[0] as DraggableScrollableSheet).builder,
+        'hashCode#0': (args) => (args[0] as DraggableScrollableSheet).hashCode,
         'key#0': (args) => (args[0] as DraggableScrollableSheet).key,
+        '==#1': (args) => (args[0] as DraggableScrollableSheet) == (args[1] as Object),
         '#11': (args) => DraggableScrollableSheet(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialChildSize: identical(args[1], darticAbsent) ? 0.5 : args[1] as double, minChildSize: identical(args[2], darticAbsent) ? 0.25 : args[2] as double, maxChildSize: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, expand: identical(args[4], darticAbsent) ? true : args[4] as bool, snap: identical(args[5], darticAbsent) ? false : args[5] as bool, snapSizes: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<double>(), snapAnimationDuration: identical(args[7], darticAbsent) ? null : args[7] as Duration?, controller: identical(args[8], darticAbsent) ? null : args[8] as DraggableScrollableController?, shouldCloseOnMinExtent: identical(args[9], darticAbsent) ? true : args[9] as bool, builder: (a, b) => (args[10] as Function)(a, b) as Widget),
         '_#fromFields#11': (args) => DraggableScrollableSheet(key: args[4] as Key?, initialChildSize: args[3] as double, minChildSize: args[6] as double, maxChildSize: args[5] as double, expand: args[2] as bool, snap: args[8] as bool, snapSizes: args[10] == null ? null : (args[10] as List).cast<double>(), snapAnimationDuration: args[9] as Duration?, controller: args[1] as DraggableScrollableController?, shouldCloseOnMinExtent: args[7] as bool, builder: args[0] as ScrollableWidgetBuilder),
       };

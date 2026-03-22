@@ -27,6 +27,7 @@ abstract final class TooltipVisibilityBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TooltipVisibility).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TooltipVisibility).toString(),
         'createElement#0': (args) => (args[0] as TooltipVisibility).createElement(),
         'toStringShort#0': (args) => (args[0] as TooltipVisibility).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TooltipVisibility).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class TooltipVisibilityBindings {
         'debugDescribeChildren#0': (args) => (args[0] as TooltipVisibility).debugDescribeChildren(),
         'child#0': (args) => (args[0] as TooltipVisibility).child,
         'visible#0': (args) => (args[0] as TooltipVisibility).visible,
+        'hashCode#0': (args) => (args[0] as TooltipVisibility).hashCode,
         'key#0': (args) => (args[0] as TooltipVisibility).key,
+        '==#1': (args) => (args[0] as TooltipVisibility) == (args[1] as Object),
         '#3': (args) => TooltipVisibility(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, visible: args[1] as bool, child: args[2] as Widget),
         '_#fromFields#3': (args) => TooltipVisibility(key: args[1] as Key?, visible: args[2] as bool, child: args[0] as Widget),
       };

@@ -83,15 +83,15 @@ abstract final class StatelessWidgetBindings {
           _$StatelessWidget(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$createElement#0', (args) => (args[0] as _$StatelessWidget)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toString#0', (args) => (args[0] as _$StatelessWidget)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringShort#0', (args) => (args[0] as _$StatelessWidget)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$debugFillProperties#1', (args) { (args[0] as _$StatelessWidget)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringShallow#2', (args) => (args[0] as _$StatelessWidget)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toStringDeep#4', (args) => (args[0] as _$StatelessWidget)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StatelessWidget)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$StatelessWidget)._super$debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$key#0', (args) => (args[0] as _$StatelessWidget)._super$key);
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$toString#0', (args) => (args[0] as _$StatelessWidget)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$hashCode#0', (args) => (args[0] as _$StatelessWidget)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::StatelessWidget::\$super\$key#0', (args) => (args[0] as _$StatelessWidget)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

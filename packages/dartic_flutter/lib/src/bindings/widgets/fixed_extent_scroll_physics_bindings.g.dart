@@ -42,6 +42,7 @@ abstract final class FixedExtentScrollPhysicsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as FixedExtentScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'createBallisticSimulation#2': (args) => (args[0] as FixedExtentScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
+        'toString#0': (args) => (args[0] as FixedExtentScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as FixedExtentScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as FixedExtentScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'shouldAcceptUserOffset#1': (args) => (args[0] as FixedExtentScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
@@ -50,6 +51,7 @@ abstract final class FixedExtentScrollPhysicsBindings {
         'adjustPositionForNewDimensions#4': (args) => (args[0] as FixedExtentScrollPhysics).adjustPositionForNewDimensions(oldPosition: args[1] as ScrollMetrics, newPosition: args[2] as ScrollMetrics, isScrolling: args[3] as bool, velocity: args[4] as double),
         'toleranceFor#1': (args) => (args[0] as FixedExtentScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as FixedExtentScrollPhysics).carriedMomentum(args[1] as double),
+        'hashCode#0': (args) => (args[0] as FixedExtentScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as FixedExtentScrollPhysics).parent,
         'spring#0': (args) => (args[0] as FixedExtentScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as FixedExtentScrollPhysics).tolerance,
@@ -59,6 +61,7 @@ abstract final class FixedExtentScrollPhysicsBindings {
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as FixedExtentScrollPhysics).dragStartDistanceMotionThreshold,
         'allowImplicitScrolling#0': (args) => (args[0] as FixedExtentScrollPhysics).allowImplicitScrolling,
         'allowUserScrolling#0': (args) => (args[0] as FixedExtentScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as FixedExtentScrollPhysics) == (args[1] as Object),
         '#1': (args) => FixedExtentScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => FixedExtentScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

@@ -26,7 +26,10 @@ abstract final class ParagraphBoundaryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as ParagraphBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as ParagraphBoundary).getTrailingTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as ParagraphBoundary).toString(),
         'getTextBoundaryAt#1': (args) => (args[0] as ParagraphBoundary).getTextBoundaryAt(args[1] as int),
+        'hashCode#0': (args) => (args[0] as ParagraphBoundary).hashCode,
+        '==#1': (args) => (args[0] as ParagraphBoundary) == (args[1] as Object),
         '#1': (args) => ParagraphBoundary(args[0] as String),
         '_#fromFields#1': (args) => ParagraphBoundary(args[0] as String),
       };

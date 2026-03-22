@@ -32,9 +32,11 @@ abstract final class PlaceholderSpanIndexSemanticsTagBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PlaceholderSpanIndexSemanticsTag).toString(),
         'index#0': (args) => (args[0] as PlaceholderSpanIndexSemanticsTag).index,
         'hashCode#0': (args) => (args[0] as PlaceholderSpanIndexSemanticsTag).hashCode,
         'name#0': (args) => (args[0] as PlaceholderSpanIndexSemanticsTag).name,
+        '==#1': (args) => (args[0] as PlaceholderSpanIndexSemanticsTag) == (args[1] as Object),
         '#1': (args) => PlaceholderSpanIndexSemanticsTag(args[0] as int),
         '_#fromFields#2': (args) => PlaceholderSpanIndexSemanticsTag(args[0] as int),
       };

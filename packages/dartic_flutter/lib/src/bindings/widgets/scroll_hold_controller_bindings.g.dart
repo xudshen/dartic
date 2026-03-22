@@ -29,5 +29,8 @@ abstract final class ScrollHoldControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cancel#0': (args) { (args[0] as ScrollHoldController).cancel(); return null; },
+        'toString#0': (args) => (args[0] as ScrollHoldController).toString(),
+        'hashCode#0': (args) => (args[0] as ScrollHoldController).hashCode,
+        '==#1': (args) => (args[0] as ScrollHoldController) == (args[1] as Object),
       };
 }

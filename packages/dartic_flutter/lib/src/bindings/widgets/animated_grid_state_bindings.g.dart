@@ -37,6 +37,7 @@ abstract final class AnimatedGridStateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AnimatedGridState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AnimatedGridState).toString(),
         'insertItem#2': (args) {
                   if (identical(args[2], darticAbsent)) {
                     (args[0] as AnimatedGridState).insertItem(args[1] as int);
@@ -85,9 +86,11 @@ abstract final class AnimatedGridStateBindings {
         'toStringShort#0': (args) => (args[0] as AnimatedGridState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as AnimatedGridState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as AnimatedGridState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as AnimatedGridState).hashCode,
         'widget#0': (args) => (args[0] as AnimatedGridState).widget,
         'context#0': (args) => (args[0] as AnimatedGridState).context,
         'mounted#0': (args) => (args[0] as AnimatedGridState).mounted,
+        '==#1': (args) => (args[0] as AnimatedGridState) == (args[1] as Object),
         '#0': (args) => AnimatedGridState(),
       };
 }

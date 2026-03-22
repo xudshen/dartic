@@ -52,6 +52,7 @@ abstract final class RawDialogRouteBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildPage#3': (args) => (args[0] as RawDialogRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as RawDialogRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
+        'toString#0': (args) => (args[0] as RawDialogRoute).toString(),
         'setState#1': (args) { (args[0] as RawDialogRoute).setState(() => (args[1] as Function)()); return null; },
         'install#0': (args) { (args[0] as RawDialogRoute).install(); return null; },
         'didPush#0': (args) => (args[0] as RawDialogRoute).didPush(),
@@ -92,6 +93,7 @@ abstract final class RawDialogRouteBindings {
         'transitionDuration#0': (args) => (args[0] as RawDialogRoute).transitionDuration,
         'anchorPoint#0': (args) => (args[0] as RawDialogRoute).anchorPoint,
         'fullscreenDialog#0': (args) => (args[0] as RawDialogRoute).fullscreenDialog,
+        'hashCode#0': (args) => (args[0] as RawDialogRoute).hashCode,
         'opaque#0': (args) => (args[0] as RawDialogRoute).opaque,
         'maintainState#0': (args) => (args[0] as RawDialogRoute).maintainState,
         'allowSnapshotting#0': (args) => (args[0] as RawDialogRoute).allowSnapshotting,
@@ -133,6 +135,7 @@ abstract final class RawDialogRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as RawDialogRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as RawDialogRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as RawDialogRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as RawDialogRoute) == (args[1] as Object),
         '#12': (args) => RawDialogRoute<dynamic>(pageBuilder: (a, b, c) => (args[0] as Function)(a, b, c) as Widget, barrierDismissible: identical(args[1], darticAbsent) ? true : args[1] as bool, barrierColor: identical(args[2], darticAbsent) ? null : args[2] as ui.Color?, barrierLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, transitionDuration: identical(args[4], darticAbsent) ? const Duration(milliseconds: 200) : args[4] as Duration, transitionBuilder: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a, b, c, d) => (args[5] as Function?)!(a, b, c, d), settings: identical(args[6], darticAbsent) ? null : args[6] as RouteSettings?, requestFocus: identical(args[7], darticAbsent) ? null : args[7] as bool?, anchorPoint: identical(args[8], darticAbsent) ? null : args[8] as ui.Offset?, traversalEdgeBehavior: identical(args[9], darticAbsent) ? null : args[9] as TraversalEdgeBehavior?, directionalTraversalEdgeBehavior: identical(args[10], darticAbsent) ? null : args[10] as TraversalEdgeBehavior?, fullscreenDialog: identical(args[11], darticAbsent) ? false : args[11] as bool),
       };
 }

@@ -55,6 +55,7 @@ abstract final class ListWheelElementBindings {
         'removeRenderObjectChild#2': (args) { (args[0] as ListWheelElement).removeRenderObjectChild(args[1] as RenderObject, args[2] as int); return null; },
         'visitChildren#1': (args) { (args[0] as ListWheelElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'forgetChild#1': (args) { (args[0] as ListWheelElement).forgetChild(args[1] as Element); return null; },
+        'toString#0': (args) => (args[0] as ListWheelElement).toString(),
         'mount#2': (args) { (args[0] as ListWheelElement).mount(args[1] as Element?, args[2]); return null; },
         'deactivate#0': (args) { (args[0] as ListWheelElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as ListWheelElement).unmount(); return null; },
@@ -101,6 +102,7 @@ abstract final class ListWheelElementBindings {
         'toStringDeep#4': (args) => (args[0] as ListWheelElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'renderObject#0': (args) => (args[0] as ListWheelElement).renderObject,
         'childCount#0': (args) => (args[0] as ListWheelElement).childCount,
+        'hashCode#0': (args) => (args[0] as ListWheelElement).hashCode,
         'renderObjectAttachingChild#0': (args) => (args[0] as ListWheelElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as ListWheelElement).debugDoingBuild,
         'slot#0': (args) => (args[0] as ListWheelElement).slot,
@@ -113,6 +115,7 @@ abstract final class ListWheelElementBindings {
         'buildScope#0': (args) => (args[0] as ListWheelElement).buildScope,
         'size#0': (args) => (args[0] as ListWheelElement).size,
         'dirty#0': (args) => (args[0] as ListWheelElement).dirty,
+        '==#1': (args) => (args[0] as ListWheelElement) == (args[1] as Object),
         '#1': (args) => ListWheelElement(args[0] as ListWheelViewport),
       };
 }

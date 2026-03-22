@@ -34,5 +34,8 @@ abstract final class WindowingOwnerBindings {
         'createRegularWindowController#4': (args) => (args[0] as WindowingOwner).createRegularWindowController(delegate: args[1] as RegularWindowControllerDelegate, preferredSize: identical(args[2], darticAbsent) ? null : args[2] as Size?, preferredConstraints: identical(args[3], darticAbsent) ? null : args[3] as BoxConstraints?, title: identical(args[4], darticAbsent) ? null : args[4] as String?),
         'createDialogWindowController#5': (args) => (args[0] as WindowingOwner).createDialogWindowController(delegate: args[1] as DialogWindowControllerDelegate, preferredSize: identical(args[2], darticAbsent) ? null : args[2] as Size?, preferredConstraints: identical(args[3], darticAbsent) ? null : args[3] as BoxConstraints?, parent: identical(args[4], darticAbsent) ? null : args[4] as BaseWindowController?, title: identical(args[5], darticAbsent) ? null : args[5] as String?),
         'hasTopLevelWindows#0': (args) => (args[0] as WindowingOwner).hasTopLevelWindows(),
+        'toString#0': (args) => (args[0] as WindowingOwner).toString(),
+        'hashCode#0': (args) => (args[0] as WindowingOwner).hashCode,
+        '==#1': (args) => (args[0] as WindowingOwner) == (args[1] as Object),
       };
 }

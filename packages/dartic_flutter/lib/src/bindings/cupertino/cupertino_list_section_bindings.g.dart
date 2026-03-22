@@ -32,6 +32,7 @@ abstract final class CupertinoListSectionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoListSection).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoListSection).toString(),
         'createElement#0': (args) => (args[0] as CupertinoListSection).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoListSection).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoListSection).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class CupertinoListSectionBindings {
         'additionalDividerMargin#0': (args) => (args[0] as CupertinoListSection).additionalDividerMargin,
         'topMargin#0': (args) => (args[0] as CupertinoListSection).topMargin,
         'separatorColor#0': (args) => (args[0] as CupertinoListSection).separatorColor,
+        'hashCode#0': (args) => (args[0] as CupertinoListSection).hashCode,
         'key#0': (args) => (args[0] as CupertinoListSection).key,
+        '==#1': (args) => (args[0] as CupertinoListSection) == (args[1] as Object),
         '#13': (args) {
           if (identical(args[4], darticAbsent)) {
             if (identical(args[8], darticAbsent)) {

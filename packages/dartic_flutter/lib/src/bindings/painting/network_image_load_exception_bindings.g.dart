@@ -33,6 +33,8 @@ abstract final class NetworkImageLoadExceptionBindings {
         'toString#0': (args) => (args[0] as NetworkImageLoadException).toString(),
         'statusCode#0': (args) => (args[0] as NetworkImageLoadException).statusCode,
         'uri#0': (args) => (args[0] as NetworkImageLoadException).uri,
+        'hashCode#0': (args) => (args[0] as NetworkImageLoadException).hashCode,
+        '==#1': (args) => (args[0] as NetworkImageLoadException) == (args[1] as Object),
         '#2': (args) => NetworkImageLoadException(statusCode: args[0] as int, uri: args[1] as Uri),
       };
 }

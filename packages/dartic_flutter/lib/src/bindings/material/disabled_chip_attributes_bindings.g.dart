@@ -38,7 +38,10 @@ abstract final class DisabledChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DisabledChipAttributes).toString(),
         'isEnabled#0': (args) => (args[0] as DisabledChipAttributes).isEnabled,
         'disabledColor#0': (args) => (args[0] as DisabledChipAttributes).disabledColor,
+        'hashCode#0': (args) => (args[0] as DisabledChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as DisabledChipAttributes) == (args[1] as Object),
       };
 }

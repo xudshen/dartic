@@ -40,6 +40,7 @@ abstract final class RelayoutWhenSystemFontsChangeMixinBindings {
         'systemFontsDidChange#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).systemFontsDidChange(); return null; },
         'attach#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).detach(); return null; },
+        'toString#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).toString(),
         'reassemble#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -88,6 +89,7 @@ abstract final class RelayoutWhenSystemFontsChangeMixinBindings {
         'showOnScreen#4': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as ui.Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
         'describeForError#2': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).parentData,
         'depth#0': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin).depth,
@@ -119,5 +121,6 @@ abstract final class RelayoutWhenSystemFontsChangeMixinBindings {
         'parentData=#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RelayoutWhenSystemFontsChangeMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RelayoutWhenSystemFontsChangeMixin) == (args[1] as Object),
       };
 }

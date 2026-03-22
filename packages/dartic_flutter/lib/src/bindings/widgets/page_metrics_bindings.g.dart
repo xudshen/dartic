@@ -45,8 +45,10 @@ abstract final class PageMetricsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#7': (args) => (args[0] as PageMetrics).copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, viewportFraction: identical(args[6], darticAbsent) ? null : args[6] as double?, devicePixelRatio: identical(args[7], darticAbsent) ? null : args[7] as double?),
+        'toString#0': (args) => (args[0] as PageMetrics).toString(),
         'page#0': (args) => (args[0] as PageMetrics).page,
         'viewportFraction#0': (args) => (args[0] as PageMetrics).viewportFraction,
+        'hashCode#0': (args) => (args[0] as PageMetrics).hashCode,
         'minScrollExtent#0': (args) => (args[0] as PageMetrics).minScrollExtent,
         'maxScrollExtent#0': (args) => (args[0] as PageMetrics).maxScrollExtent,
         'hasContentDimensions#0': (args) => (args[0] as PageMetrics).hasContentDimensions,
@@ -63,6 +65,7 @@ abstract final class PageMetricsBindings {
         'extentInside#0': (args) => (args[0] as PageMetrics).extentInside,
         'extentAfter#0': (args) => (args[0] as PageMetrics).extentAfter,
         'extentTotal#0': (args) => (args[0] as PageMetrics).extentTotal,
+        '==#1': (args) => (args[0] as PageMetrics) == (args[1] as Object),
         '#7': (args) => PageMetrics(minScrollExtent: args[0] as double?, maxScrollExtent: args[1] as double?, pixels: args[2] as double?, viewportDimension: args[3] as double?, axisDirection: args[4] as AxisDirection, viewportFraction: args[5] as double, devicePixelRatio: args[6] as double),
       };
 }

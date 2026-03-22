@@ -34,6 +34,7 @@ abstract final class PopNavigatorRouterDelegateMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'popRoute#0': (args) => (args[0] as PopNavigatorRouterDelegateMixin).popRoute(),
+        'toString#0': (args) => (args[0] as PopNavigatorRouterDelegateMixin).toString(),
         'setInitialRoutePath#1': (args) => (args[0] as PopNavigatorRouterDelegateMixin).setInitialRoutePath(args[1]),
         'setRestoredRoutePath#1': (args) => (args[0] as PopNavigatorRouterDelegateMixin).setRestoredRoutePath(args[1]),
         'setNewRoutePath#1': (args) => (args[0] as PopNavigatorRouterDelegateMixin).setNewRoutePath(args[1]),
@@ -41,6 +42,8 @@ abstract final class PopNavigatorRouterDelegateMixinBindings {
         'addListener#1': (args) { (args[0] as PopNavigatorRouterDelegateMixin).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as PopNavigatorRouterDelegateMixin).removeListener(() => (args[1] as Function)()); return null; },
         'navigatorKey#0': (args) => (args[0] as PopNavigatorRouterDelegateMixin).navigatorKey,
+        'hashCode#0': (args) => (args[0] as PopNavigatorRouterDelegateMixin).hashCode,
         'currentConfiguration#0': (args) => (args[0] as PopNavigatorRouterDelegateMixin).currentConfiguration,
+        '==#1': (args) => (args[0] as PopNavigatorRouterDelegateMixin) == (args[1] as Object),
       };
 }

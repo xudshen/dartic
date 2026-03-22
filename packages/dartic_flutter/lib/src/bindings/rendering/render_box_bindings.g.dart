@@ -74,6 +74,7 @@ abstract final class RenderBoxBindings {
         'debugPaintBaselines#2': (args) { (args[0] as RenderBox).debugPaintBaselines(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintPointers#2': (args) { (args[0] as RenderBox).debugPaintPointers(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderBox).toString(),
         'reassemble#0': (args) { (args[0] as RenderBox).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderBox).dispose(); return null; },
         'redepthChild#1': (args) { (args[0] as RenderBox).redepthChild(args[1] as RenderObject); return null; },
@@ -119,6 +120,7 @@ abstract final class RenderBoxBindings {
         'semanticBounds#0': (args) => (args[0] as RenderBox).semanticBounds,
         'constraints#0': (args) => (args[0] as RenderBox).constraints,
         'paintBounds#0': (args) => (args[0] as RenderBox).paintBounds,
+        'hashCode#0': (args) => (args[0] as RenderBox).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderBox).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderBox).parentData,
         'depth#0': (args) => (args[0] as RenderBox).depth,
@@ -148,5 +150,6 @@ abstract final class RenderBoxBindings {
         'parentData=#1': (args) { (args[0] as RenderBox).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderBox).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderBox) == (args[1] as Object),
       };
 }

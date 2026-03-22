@@ -28,6 +28,9 @@ abstract final class DatePickerEntryModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DatePickerEntryMode).toString(),
+        'hashCode#0': (args) => (args[0] as DatePickerEntryMode).hashCode,
         'index#0': (args) => (args[0] as DatePickerEntryMode).index,
+        '==#1': (args) => (args[0] as DatePickerEntryMode) == (args[1] as Object),
       };
 }

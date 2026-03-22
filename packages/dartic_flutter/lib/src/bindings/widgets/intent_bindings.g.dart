@@ -33,8 +33,11 @@ abstract final class IntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Intent).toString(),
         'toStringShort#0': (args) => (args[0] as Intent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as Intent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as Intent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as Intent).hashCode,
+        '==#1': (args) => (args[0] as Intent) == (args[1] as Object),
       };
 }

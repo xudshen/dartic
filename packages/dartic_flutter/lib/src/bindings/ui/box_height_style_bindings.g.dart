@@ -37,6 +37,9 @@ abstract final class BoxHeightStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BoxHeightStyle).toString(),
+        'hashCode#0': (args) => (args[0] as BoxHeightStyle).hashCode,
         'index#0': (args) => (args[0] as BoxHeightStyle).index,
+        '==#1': (args) => (args[0] as BoxHeightStyle) == (args[1] as Object),
       };
 }

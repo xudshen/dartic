@@ -36,5 +36,6 @@ abstract final class SystemTextScalerBindings {
         'clamp#2': (args) => (args[0] as SystemTextScaler).clamp(minScaleFactor: identical(args[1], darticAbsent) ? 0 : args[1] as double, maxScaleFactor: identical(args[2], darticAbsent) ? double.infinity : args[2] as double),
         'textScaleFactor#0': (args) => (args[0] as SystemTextScaler).textScaleFactor,
         'hashCode#0': (args) => (args[0] as SystemTextScaler).hashCode,
+        '==#1': (args) => (args[0] as SystemTextScaler) == (args[1] as Object),
       };
 }

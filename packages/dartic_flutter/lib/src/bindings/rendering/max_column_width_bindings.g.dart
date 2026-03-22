@@ -33,6 +33,8 @@ abstract final class MaxColumnWidthBindings {
         'toString#0': (args) => (args[0] as MaxColumnWidth).toString(),
         'a#0': (args) => (args[0] as MaxColumnWidth).a,
         'b#0': (args) => (args[0] as MaxColumnWidth).b,
+        'hashCode#0': (args) => (args[0] as MaxColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as MaxColumnWidth) == (args[1] as Object),
         '#2': (args) => MaxColumnWidth(args[0] as TableColumnWidth, args[1] as TableColumnWidth),
         '_#fromFields#2': (args) => MaxColumnWidth(args[0] as TableColumnWidth, args[1] as TableColumnWidth),
       };

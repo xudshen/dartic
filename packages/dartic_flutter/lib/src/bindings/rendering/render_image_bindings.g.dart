@@ -54,6 +54,7 @@ abstract final class RenderImageBindings {
         'paint#2': (args) { (args[0] as RenderImage).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderImage).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderImage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderImage).toString(),
         'setupParentData#1': (args) { (args[0] as RenderImage).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderImage).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderImage).getMaxIntrinsicWidth(args[1] as double),
@@ -135,6 +136,7 @@ abstract final class RenderImageBindings {
         'matchTextDirection#0': (args) => (args[0] as RenderImage).matchTextDirection,
         'textDirection#0': (args) => (args[0] as RenderImage).textDirection,
         'isAntiAlias#0': (args) => (args[0] as RenderImage).isAntiAlias,
+        'hashCode#0': (args) => (args[0] as RenderImage).hashCode,
         'hasSize#0': (args) => (args[0] as RenderImage).hasSize,
         'size#0': (args) => (args[0] as RenderImage).size,
         'semanticBounds#0': (args) => (args[0] as RenderImage).semanticBounds,
@@ -186,6 +188,7 @@ abstract final class RenderImageBindings {
         'parentData=#1': (args) { (args[0] as RenderImage).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderImage).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderImage).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderImage) == (args[1] as Object),
         '#17': (args) => RenderImage(image: identical(args[0], darticAbsent) ? null : args[0] as ui.Image?, debugImageLabel: identical(args[1], darticAbsent) ? null : args[1] as String?, width: identical(args[2], darticAbsent) ? null : args[2] as double?, height: identical(args[3], darticAbsent) ? null : args[3] as double?, scale: identical(args[4], darticAbsent) ? 1.0 : args[4] as double, color: identical(args[5], darticAbsent) ? null : args[5] as ui.Color?, opacity: identical(args[6], darticAbsent) ? null : args[6] as Animation<double>?, colorBlendMode: identical(args[7], darticAbsent) ? null : args[7] as ui.BlendMode?, fit: identical(args[8], darticAbsent) ? null : args[8] as BoxFit?, alignment: identical(args[9], darticAbsent) ? Alignment.center : args[9] as AlignmentGeometry, repeat: identical(args[10], darticAbsent) ? ImageRepeat.noRepeat : args[10] as ImageRepeat, centerSlice: identical(args[11], darticAbsent) ? null : args[11] as ui.Rect?, matchTextDirection: identical(args[12], darticAbsent) ? false : args[12] as bool, textDirection: identical(args[13], darticAbsent) ? null : args[13] as ui.TextDirection?, invertColors: identical(args[14], darticAbsent) ? false : args[14] as bool, isAntiAlias: identical(args[15], darticAbsent) ? false : args[15] as bool, filterQuality: identical(args[16], darticAbsent) ? FilterQuality.medium : args[16] as ui.FilterQuality),
       };
 }

@@ -49,6 +49,7 @@ abstract final class TextSpanBindings {
         'toStringShort#0': (args) => (args[0] as TextSpan).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSpan).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as TextSpan).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as TextSpan).toString(),
         'getSpanForPosition#1': (args) => (args[0] as TextSpan).getSpanForPosition(args[1] as ui.TextPosition),
         'toPlainText#2': (args) => (args[0] as TextSpan).toPlainText(includeSemanticsLabels: identical(args[1], darticAbsent) ? true : args[1] as bool, includePlaceholders: identical(args[2], darticAbsent) ? true : args[2] as bool),
         'getSemanticsInformation#0': (args) => (args[0] as TextSpan).getSemanticsInformation(),
@@ -70,6 +71,7 @@ abstract final class TextSpanBindings {
         'validForMouseTracker#0': (args) => (args[0] as TextSpan).validForMouseTracker,
         'hashCode#0': (args) => (args[0] as TextSpan).hashCode,
         'style#0': (args) => (args[0] as TextSpan).style,
+        '==#1': (args) => (args[0] as TextSpan) == (args[1] as Object),
         '#11': (args) => TextSpan(text: identical(args[0], darticAbsent) ? null : args[0] as String?, children: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as List).cast<InlineSpan>(), style: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, recognizer: identical(args[3], darticAbsent) ? null : args[3] as GestureRecognizer?, mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, onEnter: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onExit: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), semanticsLabel: identical(args[7], darticAbsent) ? null : args[7] as String?, semanticsIdentifier: identical(args[8], darticAbsent) ? null : args[8] as String?, locale: identical(args[9], darticAbsent) ? null : args[9] as ui.Locale?, spellOut: identical(args[10], darticAbsent) ? null : args[10] as bool?),
         '_#fromFields#11': (args) => TextSpan(text: args[10] as String?, children: args[0] == null ? null : (args[0] as List).cast<InlineSpan>(), style: args[9] as TextStyle?, recognizer: args[5] as GestureRecognizer?, mouseCursor: args[2] as MouseCursor?, onEnter: args[3] as PointerEnterEventListener?, onExit: args[4] as PointerExitEventListener?, semanticsLabel: args[7] as String?, semanticsIdentifier: args[6] as String?, locale: args[1] as ui.Locale?, spellOut: args[8] as bool?),
       };

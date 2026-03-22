@@ -34,11 +34,14 @@ abstract final class ControlsDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ControlsDetails).toString(),
         'currentStep#0': (args) => (args[0] as ControlsDetails).currentStep,
         'stepIndex#0': (args) => (args[0] as ControlsDetails).stepIndex,
         'onStepContinue#0': (args) => (args[0] as ControlsDetails).onStepContinue,
         'onStepCancel#0': (args) => (args[0] as ControlsDetails).onStepCancel,
         'isActive#0': (args) => (args[0] as ControlsDetails).isActive,
+        'hashCode#0': (args) => (args[0] as ControlsDetails).hashCode,
+        '==#1': (args) => (args[0] as ControlsDetails) == (args[1] as Object),
         '#4': (args) => ControlsDetails(currentStep: args[0] as int, stepIndex: args[1] as int, onStepCancel: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onStepContinue: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()),
         '_#fromFields#4': (args) => ControlsDetails(currentStep: args[0] as int, stepIndex: args[3] as int, onStepCancel: args[1] as VoidCallback?, onStepContinue: args[2] as VoidCallback?),
       };

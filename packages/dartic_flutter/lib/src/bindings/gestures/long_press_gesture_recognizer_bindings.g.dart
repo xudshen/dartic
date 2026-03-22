@@ -38,6 +38,7 @@ abstract final class LongPressGestureRecognizerBindings {
         'handlePrimaryPointer#1': (args) { (args[0] as LongPressGestureRecognizer).handlePrimaryPointer(args[1] as PointerEvent); return null; },
         'resolve#1': (args) { (args[0] as LongPressGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'acceptGesture#1': (args) { (args[0] as LongPressGestureRecognizer).acceptGesture(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as LongPressGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as LongPressGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as LongPressGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleEvent#1': (args) { (args[0] as LongPressGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
@@ -84,6 +85,7 @@ abstract final class LongPressGestureRecognizerBindings {
         'onTertiaryLongPressUp#0': (args) => (args[0] as LongPressGestureRecognizer).onTertiaryLongPressUp,
         'onTertiaryLongPressEnd#0': (args) => (args[0] as LongPressGestureRecognizer).onTertiaryLongPressEnd,
         'debugDescription#0': (args) => (args[0] as LongPressGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as LongPressGestureRecognizer).hashCode,
         'deadline#0': (args) => (args[0] as LongPressGestureRecognizer).deadline,
         'preAcceptSlopTolerance#0': (args) => (args[0] as LongPressGestureRecognizer).preAcceptSlopTolerance,
         'postAcceptSlopTolerance#0': (args) => (args[0] as LongPressGestureRecognizer).postAcceptSlopTolerance,
@@ -119,6 +121,7 @@ abstract final class LongPressGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as LongPressGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as LongPressGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as LongPressGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as LongPressGestureRecognizer) == (args[1] as Object),
         '#5': (args) => LongPressGestureRecognizer(duration: identical(args[0], darticAbsent) ? null : args[0] as Duration?, postAcceptSlopTolerance: identical(args[1], darticAbsent) ? null : args[1] as double?, supportedDevices: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Set).cast<PointerDeviceKind>(), debugOwner: identical(args[3], darticAbsent) ? null : args[3], allowedButtonsFilter: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a)),
       };
 }

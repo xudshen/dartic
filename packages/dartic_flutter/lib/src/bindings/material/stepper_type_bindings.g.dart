@@ -37,6 +37,9 @@ abstract final class StepperTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as StepperType).toString(),
+        'hashCode#0': (args) => (args[0] as StepperType).hashCode,
         'index#0': (args) => (args[0] as StepperType).index,
+        '==#1': (args) => (args[0] as StepperType) == (args[1] as Object),
       };
 }

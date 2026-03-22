@@ -39,6 +39,7 @@ abstract final class ScrollActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'isEnabled#2': (args) => (args[0] as ScrollAction).isEnabled(args[1] as ScrollIntent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?),
         'invoke#2': (args) { (args[0] as ScrollAction).invoke(args[1] as ScrollIntent, identical(args[2], darticAbsent) ? null : args[2] as BuildContext?); return null; },
+        'toString#0': (args) => (args[0] as ScrollAction).toString(),
         'consumesKey#1': (args) => (args[0] as ScrollAction).consumesKey(args[1] as ScrollIntent),
         'toKeyEventResult#2': (args) => (args[0] as ScrollAction).toKeyEventResult(args[1] as ScrollIntent, args[2]),
         'addActionListener#1': (args) { (args[0] as ScrollAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -47,9 +48,11 @@ abstract final class ScrollActionBindings {
         'toStringShort#0': (args) => (args[0] as ScrollAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScrollAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ScrollAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ScrollAction).hashCode,
         'callingAction#0': (args) => (args[0] as ScrollAction).callingAction,
         'intentType#0': (args) => (args[0] as ScrollAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as ScrollAction).isActionEnabled,
+        '==#1': (args) => (args[0] as ScrollAction) == (args[1] as Object),
         '#0': (args) => ScrollAction(),
       };
 }

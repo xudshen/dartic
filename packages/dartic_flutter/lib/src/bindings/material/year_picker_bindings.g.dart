@@ -44,6 +44,7 @@ abstract final class YearPickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as YearPicker).createState(),
+        'toString#0': (args) => (args[0] as YearPicker).toString(),
         'createElement#0': (args) => (args[0] as YearPicker).createElement(),
         'toStringShort#0': (args) => (args[0] as YearPicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as YearPicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -58,7 +59,9 @@ abstract final class YearPickerBindings {
         'onChanged#0': (args) => (args[0] as YearPicker).onChanged,
         'dragStartBehavior#0': (args) => (args[0] as YearPicker).dragStartBehavior,
         'calendarDelegate#0': (args) => (args[0] as YearPicker).calendarDelegate,
+        'hashCode#0': (args) => (args[0] as YearPicker).hashCode,
         'key#0': (args) => (args[0] as YearPicker).key,
+        '==#1': (args) => (args[0] as YearPicker) == (args[1] as Object),
         '#9': (args) => YearPicker(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, currentDate: identical(args[1], darticAbsent) ? null : args[1] as DateTime?, firstDate: args[2] as DateTime, lastDate: args[3] as DateTime, initialDate: identical(args[4], darticAbsent) ? null : args[4] as DateTime?, selectedDate: args[5] as DateTime?, onChanged: (a) => (args[6] as Function)(a), dragStartBehavior: identical(args[7], darticAbsent) ? DragStartBehavior.start : args[7] as DragStartBehavior, calendarDelegate: identical(args[8], darticAbsent) ? const GregorianCalendarDelegate() : args[8] as CalendarDelegate<DateTime>),
       };
 }

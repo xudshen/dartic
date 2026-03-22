@@ -31,11 +31,14 @@ abstract final class RequestFocusIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RequestFocusIntent).toString(),
         'toStringShort#0': (args) => (args[0] as RequestFocusIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RequestFocusIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as RequestFocusIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'requestFocusCallback#0': (args) => (args[0] as RequestFocusIntent).requestFocusCallback,
         'focusNode#0': (args) => (args[0] as RequestFocusIntent).focusNode,
+        'hashCode#0': (args) => (args[0] as RequestFocusIntent).hashCode,
+        '==#1': (args) => (args[0] as RequestFocusIntent) == (args[1] as Object),
         '#2': (args) => RequestFocusIntent(args[0] as FocusNode, requestFocusCallback: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a, {double? alignment, ScrollPositionAlignmentPolicy? alignmentPolicy, Curve? curve, Duration? duration}) => (args[1] as Function?)!(a, alignment: alignment, alignmentPolicy: alignmentPolicy, curve: curve, duration: duration)),
         '_#fromFields#2': (args) => RequestFocusIntent(args[0] as FocusNode, requestFocusCallback: args[1] as TraversalRequestFocusCallback?),
       };

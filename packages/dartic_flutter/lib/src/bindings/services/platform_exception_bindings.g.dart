@@ -27,6 +27,8 @@ abstract final class PlatformExceptionBindings {
         'message#0': (args) => (args[0] as PlatformException).message,
         'details#0': (args) => (args[0] as PlatformException).details,
         'stacktrace#0': (args) => (args[0] as PlatformException).stacktrace,
+        'hashCode#0': (args) => (args[0] as PlatformException).hashCode,
+        '==#1': (args) => (args[0] as PlatformException) == (args[1] as Object),
         '#4': (args) => PlatformException(code: args[0] as String, message: identical(args[1], darticAbsent) ? null : args[1] as String?, details: identical(args[2], darticAbsent) ? null : args[2], stacktrace: identical(args[3], darticAbsent) ? null : args[3] as String?),
       };
 }

@@ -70,6 +70,7 @@ abstract final class RenderTableBindings {
         'paint#2': (args) { (args[0] as RenderTable).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTable).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderTable).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderTable).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTable).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderTable).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderTable).getMinIntrinsicHeight(args[1] as double),
@@ -137,6 +138,7 @@ abstract final class RenderTableBindings {
         'configuration#0': (args) => (args[0] as RenderTable).configuration,
         'defaultVerticalAlignment#0': (args) => (args[0] as RenderTable).defaultVerticalAlignment,
         'textBaseline#0': (args) => (args[0] as RenderTable).textBaseline,
+        'hashCode#0': (args) => (args[0] as RenderTable).hashCode,
         'hasSize#0': (args) => (args[0] as RenderTable).hasSize,
         'size#0': (args) => (args[0] as RenderTable).size,
         'semanticBounds#0': (args) => (args[0] as RenderTable).semanticBounds,
@@ -181,6 +183,7 @@ abstract final class RenderTableBindings {
         'parentData=#1': (args) { (args[0] as RenderTable).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderTable).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTable).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTable) == (args[1] as Object),
         '#11': (args) => RenderTable(columns: identical(args[0], darticAbsent) ? null : args[0] as int?, rows: identical(args[1], darticAbsent) ? null : args[1] as int?, columnWidths: identical(args[2], darticAbsent) ? null : args[2] == null ? null : (args[2] as Map).cast<int, TableColumnWidth>(), defaultColumnWidth: identical(args[3], darticAbsent) ? const FlexColumnWidth() : args[3] as TableColumnWidth, textDirection: args[4] as TextDirection, border: identical(args[5], darticAbsent) ? null : args[5] as TableBorder?, rowDecorations: identical(args[6], darticAbsent) ? null : args[6] == null ? null : (args[6] as List).cast<Decoration?>(), configuration: identical(args[7], darticAbsent) ? ImageConfiguration.empty : args[7] as ImageConfiguration, defaultVerticalAlignment: identical(args[8], darticAbsent) ? TableCellVerticalAlignment.top : args[8] as TableCellVerticalAlignment, textBaseline: identical(args[9], darticAbsent) ? null : args[9] as TextBaseline?, children: identical(args[10], darticAbsent) ? null : args[10] == null ? null : (args[10] as List).cast<List<RenderBox>>()),
       };
 }

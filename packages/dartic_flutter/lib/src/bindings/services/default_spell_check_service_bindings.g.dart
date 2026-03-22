@@ -28,10 +28,13 @@ abstract final class DefaultSpellCheckServiceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fetchSpellCheckSuggestions#2': (args) => (args[0] as DefaultSpellCheckService).fetchSpellCheckSuggestions(args[1] as Locale, args[2] as String),
+        'toString#0': (args) => (args[0] as DefaultSpellCheckService).toString(),
         'lastSavedResults#0': (args) => (args[0] as DefaultSpellCheckService).lastSavedResults,
         'spellCheckChannel#0': (args) => (args[0] as DefaultSpellCheckService).spellCheckChannel,
+        'hashCode#0': (args) => (args[0] as DefaultSpellCheckService).hashCode,
         'lastSavedResults=#1': (args) { (args[0] as DefaultSpellCheckService).lastSavedResults = args[1] as SpellCheckResults?; return args[1]; },
         'spellCheckChannel=#1': (args) { (args[0] as DefaultSpellCheckService).spellCheckChannel = args[1] as MethodChannel; return args[1]; },
+        '==#1': (args) => (args[0] as DefaultSpellCheckService) == (args[1] as Object),
         '#0': (args) => DefaultSpellCheckService(),
       };
 }

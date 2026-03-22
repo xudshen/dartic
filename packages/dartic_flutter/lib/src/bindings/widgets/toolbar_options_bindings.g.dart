@@ -69,10 +69,13 @@ abstract final class ToolbarOptionsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ToolbarOptions).toString(),
         'copy#0': (args) => (args[0] as ToolbarOptions).copy,
         'cut#0': (args) => (args[0] as ToolbarOptions).cut,
         'paste#0': (args) => (args[0] as ToolbarOptions).paste,
         'selectAll#0': (args) => (args[0] as ToolbarOptions).selectAll,
+        'hashCode#0': (args) => (args[0] as ToolbarOptions).hashCode,
+        '==#1': (args) => (args[0] as ToolbarOptions) == (args[1] as Object),
         '#4': (args) => ToolbarOptions(copy: identical(args[0], darticAbsent) ? false : args[0] as bool, cut: identical(args[1], darticAbsent) ? false : args[1] as bool, paste: identical(args[2], darticAbsent) ? false : args[2] as bool, selectAll: identical(args[3], darticAbsent) ? false : args[3] as bool),
         '_#fromFields#4': (args) => ToolbarOptions(copy: args[0] as bool, cut: args[1] as bool, paste: args[2] as bool, selectAll: args[3] as bool),
       };

@@ -34,7 +34,11 @@ abstract final class ParagraphBuilderBindings {
         'addText#1': (args) { (args[0] as ParagraphBuilder).addText(args[1] as String); return null; },
         'addPlaceholder#6': (args) { (args[0] as ParagraphBuilder).addPlaceholder(args[1] as double, args[2] as double, args[3] as PlaceholderAlignment, scale: identical(args[4], darticAbsent) ? 1.0 : args[4] as double, baselineOffset: identical(args[5], darticAbsent) ? null : args[5] as double?, baseline: identical(args[6], darticAbsent) ? null : args[6] as TextBaseline?); return null; },
         'build#0': (args) => (args[0] as ParagraphBuilder).build(),
+        'toString#0': (args) => (args[0] as ParagraphBuilder).toString(),
         'placeholderCount#0': (args) => (args[0] as ParagraphBuilder).placeholderCount,
         'placeholderScales#0': (args) => (args[0] as ParagraphBuilder).placeholderScales,
+        'hashCode#0': (args) => (args[0] as ParagraphBuilder).hashCode,
+        '==#1': (args) => (args[0] as ParagraphBuilder) == (args[1] as Object),
+        '#1': (args) => ParagraphBuilder(args[0] as ParagraphStyle),
       };
 }

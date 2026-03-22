@@ -34,6 +34,9 @@ abstract final class RenderingServiceExtensionsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderingServiceExtensions).toString(),
+        'hashCode#0': (args) => (args[0] as RenderingServiceExtensions).hashCode,
         'index#0': (args) => (args[0] as RenderingServiceExtensions).index,
+        '==#1': (args) => (args[0] as RenderingServiceExtensions) == (args[1] as Object),
       };
 }

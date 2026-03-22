@@ -31,6 +31,7 @@ abstract final class SliverChildListDelegateBindings {
         'findIndexByKey#1': (args) => (args[0] as SliverChildListDelegate).findIndexByKey(args[1] as Key),
         'build#2': (args) => (args[0] as SliverChildListDelegate).build(args[1] as BuildContext, args[2] as int),
         'shouldRebuild#1': (args) => (args[0] as SliverChildListDelegate).shouldRebuild(args[1] as SliverChildListDelegate),
+        'toString#0': (args) => (args[0] as SliverChildListDelegate).toString(),
         'estimateMaxScrollOffset#4': (args) => (args[0] as SliverChildListDelegate).estimateMaxScrollOffset(args[1] as int, args[2] as int, args[3] as double, args[4] as double),
         'didFinishLayout#2': (args) { (args[0] as SliverChildListDelegate).didFinishLayout(args[1] as int, args[2] as int); return null; },
         'debugFillDescription#1': (args) { (args[0] as SliverChildListDelegate).debugFillDescription((args[1] as List).cast<String>()); return null; },
@@ -41,6 +42,8 @@ abstract final class SliverChildListDelegateBindings {
         'semanticIndexCallback#0': (args) => (args[0] as SliverChildListDelegate).semanticIndexCallback,
         'children#0': (args) => (args[0] as SliverChildListDelegate).children,
         'estimatedChildCount#0': (args) => (args[0] as SliverChildListDelegate).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as SliverChildListDelegate).hashCode,
+        '==#1': (args) => (args[0] as SliverChildListDelegate) == (args[1] as Object),
         '#6': (args) {
           if (identical(args[4], darticAbsent)) {
             return SliverChildListDelegate((args[0] as List).cast<Widget>(), addAutomaticKeepAlives: identical(args[1], darticAbsent) ? true : args[1] as bool, addRepaintBoundaries: identical(args[2], darticAbsent) ? true : args[2] as bool, addSemanticIndexes: identical(args[3], darticAbsent) ? true : args[3] as bool, semanticIndexOffset: identical(args[5], darticAbsent) ? 0 : args[5] as int);

@@ -53,6 +53,7 @@ abstract final class RenderOffstageBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderOffstage).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderOffstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderOffstage).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderOffstage).toString(),
         'setupParentData#1': (args) { (args[0] as RenderOffstage).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderOffstage).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderOffstage).getMaxIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderOffstageBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderOffstage).computeSizeForNoChild(args[1] as BoxConstraints),
         'offstage#0': (args) => (args[0] as RenderOffstage).offstage,
         'sizedByParent#0': (args) => (args[0] as RenderOffstage).sizedByParent,
+        'hashCode#0': (args) => (args[0] as RenderOffstage).hashCode,
         'hasSize#0': (args) => (args[0] as RenderOffstage).hasSize,
         'size#0': (args) => (args[0] as RenderOffstage).size,
         'semanticBounds#0': (args) => (args[0] as RenderOffstage).semanticBounds,
@@ -154,6 +156,7 @@ abstract final class RenderOffstageBindings {
         'debugCreator=#1': (args) { (args[0] as RenderOffstage).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderOffstage).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderOffstage).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderOffstage) == (args[1] as Object),
         '#2': (args) => RenderOffstage(offstage: identical(args[0], darticAbsent) ? true : args[0] as bool, child: identical(args[1], darticAbsent) ? null : args[1] as RenderBox?),
       };
 }

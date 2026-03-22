@@ -29,6 +29,8 @@ abstract final class AnnotationEntryBindings {
         'toString#0': (args) => (args[0] as AnnotationEntry).toString(),
         'annotation#0': (args) => (args[0] as AnnotationEntry).annotation,
         'localPosition#0': (args) => (args[0] as AnnotationEntry).localPosition,
+        'hashCode#0': (args) => (args[0] as AnnotationEntry).hashCode,
+        '==#1': (args) => (args[0] as AnnotationEntry) == (args[1] as Object),
         '#2': (args) => AnnotationEntry<dynamic>(annotation: args[0], localPosition: args[1] as ui.Offset),
         '_#fromFields#2': (args) => AnnotationEntry<dynamic>(annotation: args[0], localPosition: args[1] as ui.Offset),
       };

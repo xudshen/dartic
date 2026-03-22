@@ -28,6 +28,9 @@ abstract final class TooltipTriggerModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TooltipTriggerMode).toString(),
+        'hashCode#0': (args) => (args[0] as TooltipTriggerMode).hashCode,
         'index#0': (args) => (args[0] as TooltipTriggerMode).index,
+        '==#1': (args) => (args[0] as TooltipTriggerMode) == (args[1] as Object),
       };
 }

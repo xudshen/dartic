@@ -28,8 +28,10 @@ abstract final class TreeSliverNodeParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TreeSliverNodeParentData).toString(),
         'detach#0': (args) { (args[0] as TreeSliverNodeParentData).detach(); return null; },
         'depth#0': (args) => (args[0] as TreeSliverNodeParentData).depth,
+        'hashCode#0': (args) => (args[0] as TreeSliverNodeParentData).hashCode,
         'index#0': (args) => (args[0] as TreeSliverNodeParentData).index,
         'keptAlive#0': (args) => (args[0] as TreeSliverNodeParentData).keptAlive,
         'layoutOffset#0': (args) => (args[0] as TreeSliverNodeParentData).layoutOffset,
@@ -42,6 +44,7 @@ abstract final class TreeSliverNodeParentDataBindings {
         'previousSibling=#1': (args) { (args[0] as TreeSliverNodeParentData).previousSibling = args[1] as RenderBox?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as TreeSliverNodeParentData).nextSibling = args[1] as RenderBox?; return args[1]; },
         'keepAlive=#1': (args) { (args[0] as TreeSliverNodeParentData).keepAlive = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as TreeSliverNodeParentData) == (args[1] as Object),
         '#0': (args) => TreeSliverNodeParentData(),
       };
 }

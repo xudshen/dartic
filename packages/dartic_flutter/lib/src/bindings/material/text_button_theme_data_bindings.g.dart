@@ -27,10 +27,12 @@ abstract final class TextButtonThemeDataBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as TextButtonThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TextButtonThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as TextButtonThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TextButtonThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'style#0': (args) => (args[0] as TextButtonThemeData).style,
         'hashCode#0': (args) => (args[0] as TextButtonThemeData).hashCode,
+        '==#1': (args) => (args[0] as TextButtonThemeData) == (args[1] as Object),
         '#1': (args) => TextButtonThemeData(style: identical(args[0], darticAbsent) ? null : args[0] as ButtonStyle?),
         '_#fromFields#1': (args) => TextButtonThemeData(style: args[0] as ButtonStyle?),
       };

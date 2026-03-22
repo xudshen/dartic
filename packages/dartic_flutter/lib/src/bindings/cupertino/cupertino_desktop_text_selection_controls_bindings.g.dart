@@ -40,6 +40,7 @@ abstract final class CupertinoDesktopTextSelectionControlsBindings {
         'buildHandle#4': (args) => (args[0] as CupertinoDesktopTextSelectionControls).buildHandle(args[1] as BuildContext, args[2] as TextSelectionHandleType, args[3] as double, identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
         'getHandleAnchor#2': (args) => (args[0] as CupertinoDesktopTextSelectionControls).getHandleAnchor(args[1] as TextSelectionHandleType, args[2] as double),
         'handleSelectAll#1': (args) { (args[0] as CupertinoDesktopTextSelectionControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'toString#0': (args) => (args[0] as CupertinoDesktopTextSelectionControls).toString(),
         'canCut#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls).canCut(args[1] as TextSelectionDelegate),
         'canCopy#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls).canCopy(args[1] as TextSelectionDelegate),
         'canPaste#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls).canPaste(args[1] as TextSelectionDelegate),
@@ -47,10 +48,10 @@ abstract final class CupertinoDesktopTextSelectionControlsBindings {
         'handleCut#1': (args) { (args[0] as CupertinoDesktopTextSelectionControls).handleCut(args[1] as TextSelectionDelegate); return null; },
         'handleCopy#1': (args) { (args[0] as CupertinoDesktopTextSelectionControls).handleCopy(args[1] as TextSelectionDelegate); return null; },
         'handlePaste#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls).handlePaste(args[1] as TextSelectionDelegate),
-        'toString#0': (args) => (args[0] as CupertinoDesktopTextSelectionControls).toString(),
         'noSuchMethod#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls).noSuchMethod(args[1] as Invocation),
         'hashCode#0': (args) => (args[0] as CupertinoDesktopTextSelectionControls).hashCode,
         'runtimeType#0': (args) => (args[0] as CupertinoDesktopTextSelectionControls).runtimeType,
+        '==#1': (args) => (args[0] as CupertinoDesktopTextSelectionControls) == (args[1] as Object),
         '#0': (args) => CupertinoDesktopTextSelectionControls(),
       };
 }

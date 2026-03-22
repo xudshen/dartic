@@ -36,6 +36,7 @@ abstract final class AlwaysScrollableScrollPhysicsBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyTo#1': (args) => (args[0] as AlwaysScrollableScrollPhysics).applyTo(args[1] as ScrollPhysics?),
         'shouldAcceptUserOffset#1': (args) => (args[0] as AlwaysScrollableScrollPhysics).shouldAcceptUserOffset(args[1] as ScrollMetrics),
+        'toString#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).toString(),
         'buildParent#1': (args) => (args[0] as AlwaysScrollableScrollPhysics).buildParent(args[1] as ScrollPhysics?),
         'applyPhysicsToUserOffset#2': (args) => (args[0] as AlwaysScrollableScrollPhysics).applyPhysicsToUserOffset(args[1] as ScrollMetrics, args[2] as double),
         'recommendDeferredLoading#3': (args) => (args[0] as AlwaysScrollableScrollPhysics).recommendDeferredLoading(args[1] as double, args[2] as ScrollMetrics, args[3] as BuildContext),
@@ -44,6 +45,7 @@ abstract final class AlwaysScrollableScrollPhysicsBindings {
         'createBallisticSimulation#2': (args) => (args[0] as AlwaysScrollableScrollPhysics).createBallisticSimulation(args[1] as ScrollMetrics, args[2] as double),
         'toleranceFor#1': (args) => (args[0] as AlwaysScrollableScrollPhysics).toleranceFor(args[1] as ScrollMetrics),
         'carriedMomentum#1': (args) => (args[0] as AlwaysScrollableScrollPhysics).carriedMomentum(args[1] as double),
+        'hashCode#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).hashCode,
         'parent#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).parent,
         'spring#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).spring,
         'tolerance#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).tolerance,
@@ -53,6 +55,7 @@ abstract final class AlwaysScrollableScrollPhysicsBindings {
         'dragStartDistanceMotionThreshold#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).dragStartDistanceMotionThreshold,
         'allowImplicitScrolling#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).allowImplicitScrolling,
         'allowUserScrolling#0': (args) => (args[0] as AlwaysScrollableScrollPhysics).allowUserScrolling,
+        '==#1': (args) => (args[0] as AlwaysScrollableScrollPhysics) == (args[1] as Object),
         '#1': (args) => AlwaysScrollableScrollPhysics(parent: identical(args[0], darticAbsent) ? null : args[0] as ScrollPhysics?),
         '_#fromFields#1': (args) => AlwaysScrollableScrollPhysics(parent: args[0] as ScrollPhysics?),
       };

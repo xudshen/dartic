@@ -26,13 +26,16 @@ abstract final class ExtendSelectionVerticallyToAdjacentLineIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).toString(),
         'toStringShort#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).hashCode,
         'collapseSelection#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).continuesAtWrap,
         'forward#0': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent).forward,
+        '==#1': (args) => (args[0] as ExtendSelectionVerticallyToAdjacentLineIntent) == (args[1] as Object),
         '#2': (args) => ExtendSelectionVerticallyToAdjacentLineIntent(forward: args[0] as bool, collapseSelection: args[1] as bool),
         '_#fromFields#4': (args) => ExtendSelectionVerticallyToAdjacentLineIntent(forward: args[3] as bool, collapseSelection: args[1] as bool),
       };

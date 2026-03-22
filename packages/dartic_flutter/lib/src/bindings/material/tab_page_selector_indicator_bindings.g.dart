@@ -45,6 +45,7 @@ abstract final class TabPageSelectorIndicatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as TabPageSelectorIndicator).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TabPageSelectorIndicator).toString(),
         'createElement#0': (args) => (args[0] as TabPageSelectorIndicator).createElement(),
         'toStringShort#0': (args) => (args[0] as TabPageSelectorIndicator).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TabPageSelectorIndicator).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -56,7 +57,9 @@ abstract final class TabPageSelectorIndicatorBindings {
         'borderColor#0': (args) => (args[0] as TabPageSelectorIndicator).borderColor,
         'size#0': (args) => (args[0] as TabPageSelectorIndicator).size,
         'borderStyle#0': (args) => (args[0] as TabPageSelectorIndicator).borderStyle,
+        'hashCode#0': (args) => (args[0] as TabPageSelectorIndicator).hashCode,
         'key#0': (args) => (args[0] as TabPageSelectorIndicator).key,
+        '==#1': (args) => (args[0] as TabPageSelectorIndicator) == (args[1] as Object),
         '#5': (args) => TabPageSelectorIndicator(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: args[1] as Color, borderColor: args[2] as Color, size: args[3] as double, borderStyle: identical(args[4], darticAbsent) ? BorderStyle.solid : args[4] as BorderStyle),
         '_#fromFields#5': (args) => TabPageSelectorIndicator(key: args[3] as Key?, backgroundColor: args[0] as Color, borderColor: args[1] as Color, size: args[4] as double, borderStyle: args[2] as BorderStyle),
       };

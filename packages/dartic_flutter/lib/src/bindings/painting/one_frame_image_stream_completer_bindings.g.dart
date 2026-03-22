@@ -26,6 +26,7 @@ abstract final class OneFrameImageStreamCompleterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OneFrameImageStreamCompleter).toString(),
         'addListener#1': (args) { (args[0] as OneFrameImageStreamCompleter).addListener(args[1] as ImageStreamListener); return null; },
         'addEphemeralErrorListener#1': (args) { (args[0] as OneFrameImageStreamCompleter).addEphemeralErrorListener((a, b) => (args[1] as Function)(a, b)); return null; },
         'keepAlive#0': (args) => (args[0] as OneFrameImageStreamCompleter).keepAlive(),
@@ -40,9 +41,11 @@ abstract final class OneFrameImageStreamCompleterBindings {
         'debugFillProperties#1': (args) { (args[0] as OneFrameImageStreamCompleter).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as OneFrameImageStreamCompleter).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as OneFrameImageStreamCompleter).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as OneFrameImageStreamCompleter).hashCode,
         'debugLabel#0': (args) => (args[0] as OneFrameImageStreamCompleter).debugLabel,
         'hasListeners#0': (args) => (args[0] as OneFrameImageStreamCompleter).hasListeners,
         'debugLabel=#1': (args) { (args[0] as OneFrameImageStreamCompleter).debugLabel = args[1] as String?; return args[1]; },
+        '==#1': (args) => (args[0] as OneFrameImageStreamCompleter) == (args[1] as Object),
         '#2': (args) => OneFrameImageStreamCompleter(args[0] as Future<ImageInfo>, informationCollector: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
       };
 }

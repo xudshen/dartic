@@ -28,7 +28,9 @@ abstract final class ElasticInOutCurveBindings {
         'toString#0': (args) => (args[0] as ElasticInOutCurve).toString(),
         'transform#1': (args) => (args[0] as ElasticInOutCurve).transform(args[1] as double),
         'period#0': (args) => (args[0] as ElasticInOutCurve).period,
+        'hashCode#0': (args) => (args[0] as ElasticInOutCurve).hashCode,
         'flipped#0': (args) => (args[0] as ElasticInOutCurve).flipped,
+        '==#1': (args) => (args[0] as ElasticInOutCurve) == (args[1] as Object),
         '#1': (args) => ElasticInOutCurve(identical(args[0], darticAbsent) ? 0.4 : args[0] as double),
         '_#fromFields#1': (args) => ElasticInOutCurve(args[0] as double),
       };

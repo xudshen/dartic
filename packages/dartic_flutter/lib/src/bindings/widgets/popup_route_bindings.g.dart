@@ -50,6 +50,7 @@ abstract final class PopupRouteBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PopupRoute).toString(),
         'setState#1': (args) { (args[0] as PopupRoute).setState(() => (args[1] as Function)()); return null; },
         'buildPage#3': (args) => (args[0] as PopupRoute).buildPage(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>),
         'buildTransitions#4': (args) => (args[0] as PopupRoute).buildTransitions(args[1] as BuildContext, args[2] as Animation<double>, args[3] as Animation<double>, args[4] as Widget),
@@ -89,6 +90,7 @@ abstract final class PopupRouteBindings {
         'opaque#0': (args) => (args[0] as PopupRoute).opaque,
         'maintainState#0': (args) => (args[0] as PopupRoute).maintainState,
         'allowSnapshotting#0': (args) => (args[0] as PopupRoute).allowSnapshotting,
+        'hashCode#0': (args) => (args[0] as PopupRoute).hashCode,
         'filter#0': (args) => (args[0] as PopupRoute).filter,
         'traversalEdgeBehavior#0': (args) => (args[0] as PopupRoute).traversalEdgeBehavior,
         'directionalTraversalEdgeBehavior#0': (args) => (args[0] as PopupRoute).directionalTraversalEdgeBehavior,
@@ -132,5 +134,6 @@ abstract final class PopupRouteBindings {
         'receivedTransition=#1': (args) { (args[0] as PopupRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as PopupRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as PopupRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as PopupRoute) == (args[1] as Object),
       };
 }

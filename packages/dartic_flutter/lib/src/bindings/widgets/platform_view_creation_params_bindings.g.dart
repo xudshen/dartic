@@ -32,9 +32,12 @@ abstract final class PlatformViewCreationParamsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PlatformViewCreationParams).toString(),
         'id#0': (args) => (args[0] as PlatformViewCreationParams).id,
         'viewType#0': (args) => (args[0] as PlatformViewCreationParams).viewType,
         'onPlatformViewCreated#0': (args) => (args[0] as PlatformViewCreationParams).onPlatformViewCreated,
         'onFocusChanged#0': (args) => (args[0] as PlatformViewCreationParams).onFocusChanged,
+        'hashCode#0': (args) => (args[0] as PlatformViewCreationParams).hashCode,
+        '==#1': (args) => (args[0] as PlatformViewCreationParams) == (args[1] as Object),
       };
 }

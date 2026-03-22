@@ -46,6 +46,7 @@ abstract final class TabBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Tab).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as Tab).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Tab).toString(),
         'createElement#0': (args) => (args[0] as Tab).createElement(),
         'toStringShort#0': (args) => (args[0] as Tab).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Tab).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -58,7 +59,9 @@ abstract final class TabBindings {
         'iconMargin#0': (args) => (args[0] as Tab).iconMargin,
         'height#0': (args) => (args[0] as Tab).height,
         'preferredSize#0': (args) => (args[0] as Tab).preferredSize,
+        'hashCode#0': (args) => (args[0] as Tab).hashCode,
         'key#0': (args) => (args[0] as Tab).key,
+        '==#1': (args) => (args[0] as Tab) == (args[1] as Object),
         '#6': (args) => Tab(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, text: identical(args[1], darticAbsent) ? null : args[1] as String?, icon: identical(args[2], darticAbsent) ? null : args[2] as Widget?, iconMargin: identical(args[3], darticAbsent) ? null : args[3] as EdgeInsetsGeometry?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, child: identical(args[5], darticAbsent) ? null : args[5] as Widget?),
         '_#fromFields#6': (args) => Tab(key: args[4] as Key?, text: args[5] as String?, icon: args[2] as Widget?, iconMargin: args[3] as EdgeInsetsGeometry?, height: args[1] as double?, child: args[0] as Widget?),
       };

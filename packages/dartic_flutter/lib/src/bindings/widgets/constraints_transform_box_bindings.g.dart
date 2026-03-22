@@ -50,6 +50,7 @@ abstract final class ConstraintsTransformBoxBindings {
         'createRenderObject#1': (args) => (args[0] as ConstraintsTransformBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ConstraintsTransformBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderConstraintsTransformBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as ConstraintsTransformBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ConstraintsTransformBox).toString(),
         'createElement#0': (args) => (args[0] as ConstraintsTransformBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ConstraintsTransformBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ConstraintsTransformBox).toStringShort(),
@@ -61,8 +62,10 @@ abstract final class ConstraintsTransformBoxBindings {
         'alignment#0': (args) => (args[0] as ConstraintsTransformBox).alignment,
         'constraintsTransform#0': (args) => (args[0] as ConstraintsTransformBox).constraintsTransform,
         'clipBehavior#0': (args) => (args[0] as ConstraintsTransformBox).clipBehavior,
+        'hashCode#0': (args) => (args[0] as ConstraintsTransformBox).hashCode,
         'child#0': (args) => (args[0] as ConstraintsTransformBox).child,
         'key#0': (args) => (args[0] as ConstraintsTransformBox).key,
+        '==#1': (args) => (args[0] as ConstraintsTransformBox) == (args[1] as Object),
         '#7': (args) => ConstraintsTransformBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, alignment: identical(args[3], darticAbsent) ? Alignment.center : args[3] as AlignmentGeometry, constraintsTransform: (a) => (args[4] as Function)(a) as BoxConstraints, clipBehavior: identical(args[5], darticAbsent) ? Clip.none : args[5] as ui.Clip, debugTransformType: identical(args[6], darticAbsent) ? '' : args[6] as String),
         '_#fromFields#7': (args) => ConstraintsTransformBox(key: args[5] as Key?, child: args[2] as Widget?, textDirection: args[6] as ui.TextDirection?, alignment: args[1] as AlignmentGeometry, constraintsTransform: args[4] as BoxConstraintsTransform, clipBehavior: args[3] as ui.Clip, debugTransformType: args[0] as String),
       };

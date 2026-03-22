@@ -32,6 +32,9 @@ abstract final class CupertinoButtonSizeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CupertinoButtonSize).toString(),
+        'hashCode#0': (args) => (args[0] as CupertinoButtonSize).hashCode,
         'index#0': (args) => (args[0] as CupertinoButtonSize).index,
+        '==#1': (args) => (args[0] as CupertinoButtonSize) == (args[1] as Object),
       };
 }

@@ -30,6 +30,7 @@ abstract final class DividerThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as DividerTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as DividerTheme).updateShouldNotify(args[1] as DividerTheme),
+        'toString#0': (args) => (args[0] as DividerTheme).toString(),
         'createElement#0': (args) => (args[0] as DividerTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DividerTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DividerTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class DividerThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DividerTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DividerTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as DividerTheme).data,
+        'hashCode#0': (args) => (args[0] as DividerTheme).hashCode,
         'child#0': (args) => (args[0] as DividerTheme).child,
         'key#0': (args) => (args[0] as DividerTheme).key,
+        '==#1': (args) => (args[0] as DividerTheme) == (args[1] as Object),
         '#3': (args) => DividerTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as DividerThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => DividerTheme(key: args[2] as Key?, data: args[1] as DividerThemeData, child: args[0] as Widget),
       };

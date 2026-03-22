@@ -44,6 +44,7 @@ abstract final class CalendarDatePickerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CalendarDatePicker).createState(),
+        'toString#0': (args) => (args[0] as CalendarDatePicker).toString(),
         'createElement#0': (args) => (args[0] as CalendarDatePicker).createElement(),
         'toStringShort#0': (args) => (args[0] as CalendarDatePicker).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CalendarDatePicker).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -60,7 +61,9 @@ abstract final class CalendarDatePickerBindings {
         'initialCalendarMode#0': (args) => (args[0] as CalendarDatePicker).initialCalendarMode,
         'selectableDayPredicate#0': (args) => (args[0] as CalendarDatePicker).selectableDayPredicate,
         'calendarDelegate#0': (args) => (args[0] as CalendarDatePicker).calendarDelegate,
+        'hashCode#0': (args) => (args[0] as CalendarDatePicker).hashCode,
         'key#0': (args) => (args[0] as CalendarDatePicker).key,
+        '==#1': (args) => (args[0] as CalendarDatePicker) == (args[1] as Object),
         '#10': (args) => CalendarDatePicker(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, initialDate: args[1] as DateTime?, firstDate: args[2] as DateTime, lastDate: args[3] as DateTime, currentDate: identical(args[4], darticAbsent) ? null : args[4] as DateTime?, onDateChanged: (a) => (args[5] as Function)(a), onDisplayedMonthChanged: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), initialCalendarMode: identical(args[7], darticAbsent) ? DatePickerMode.day : args[7] as DatePickerMode, selectableDayPredicate: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), calendarDelegate: identical(args[9], darticAbsent) ? const GregorianCalendarDelegate() : args[9] as CalendarDelegate<DateTime>),
       };
 }

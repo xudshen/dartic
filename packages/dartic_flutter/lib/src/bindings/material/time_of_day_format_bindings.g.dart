@@ -31,6 +31,9 @@ abstract final class TimeOfDayFormatBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TimeOfDayFormat).toString(),
+        'hashCode#0': (args) => (args[0] as TimeOfDayFormat).hashCode,
         'index#0': (args) => (args[0] as TimeOfDayFormat).index,
+        '==#1': (args) => (args[0] as TimeOfDayFormat) == (args[1] as Object),
       };
 }

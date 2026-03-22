@@ -39,5 +39,6 @@ abstract final class AccessibilityFeaturesBindings {
         'onOffSwitchLabels#0': (args) => (args[0] as AccessibilityFeatures).onOffSwitchLabels,
         'supportsAnnounce#0': (args) => (args[0] as AccessibilityFeatures).supportsAnnounce,
         'hashCode#0': (args) => (args[0] as AccessibilityFeatures).hashCode,
+        '==#1': (args) => (args[0] as AccessibilityFeatures) == (args[1] as Object),
       };
 }

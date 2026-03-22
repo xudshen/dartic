@@ -32,6 +32,7 @@ abstract final class CupertinoThemeDataBindings {
         'resolveFrom#1': (args) => (args[0] as CupertinoThemeData).resolveFrom(args[1] as BuildContext),
         'copyWith#8': (args) => (args[0] as CupertinoThemeData).copyWith(brightness: identical(args[1], darticAbsent) ? null : args[1] as Brightness?, primaryColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, primaryContrastingColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, textTheme: identical(args[4], darticAbsent) ? null : args[4] as CupertinoTextThemeData?, barBackgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, scaffoldBackgroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, selectionHandleColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, applyThemeToAll: identical(args[8], darticAbsent) ? null : args[8] as bool?),
         'debugFillProperties#1': (args) { (args[0] as CupertinoThemeData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as CupertinoThemeData).toString(),
         'toStringShort#0': (args) => (args[0] as CupertinoThemeData).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as CupertinoThemeData).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'primaryColor#0': (args) => (args[0] as CupertinoThemeData).primaryColor,
@@ -43,6 +44,7 @@ abstract final class CupertinoThemeDataBindings {
         'applyThemeToAll#0': (args) => (args[0] as CupertinoThemeData).applyThemeToAll,
         'hashCode#0': (args) => (args[0] as CupertinoThemeData).hashCode,
         'brightness#0': (args) => (args[0] as CupertinoThemeData).brightness,
+        '==#1': (args) => (args[0] as CupertinoThemeData) == (args[1] as Object),
         '#8': (args) => CupertinoThemeData(brightness: identical(args[0], darticAbsent) ? null : args[0] as Brightness?, primaryColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, primaryContrastingColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, textTheme: identical(args[3], darticAbsent) ? null : args[3] as CupertinoTextThemeData?, barBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, scaffoldBackgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, selectionHandleColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, applyThemeToAll: identical(args[7], darticAbsent) ? null : args[7] as bool?),
         'raw#8': (args) => CupertinoThemeData.raw(args[0] as Brightness?, args[1] as Color?, args[2] as Color?, args[3] as CupertinoTextThemeData?, args[4] as Color?, args[5] as Color?, args[6] as Color?, args[7] as bool?),
         '_#fromFields#9': (args) {

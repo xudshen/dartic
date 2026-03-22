@@ -36,9 +36,12 @@ abstract final class CupertinoPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as CupertinoPageTransitionsBuilder).buildTransitions(args[1] as PageRoute, args[2] as BuildContext, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as CupertinoPageTransitionsBuilder).toString(),
         'transitionDuration#0': (args) => (args[0] as CupertinoPageTransitionsBuilder).transitionDuration,
         'delegatedTransition#0': (args) => (args[0] as CupertinoPageTransitionsBuilder).delegatedTransition,
+        'hashCode#0': (args) => (args[0] as CupertinoPageTransitionsBuilder).hashCode,
         'reverseTransitionDuration#0': (args) => (args[0] as CupertinoPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as CupertinoPageTransitionsBuilder) == (args[1] as Object),
         '#0': (args) => CupertinoPageTransitionsBuilder(),
         '_#fromFields#0': (args) => CupertinoPageTransitionsBuilder(),
       };

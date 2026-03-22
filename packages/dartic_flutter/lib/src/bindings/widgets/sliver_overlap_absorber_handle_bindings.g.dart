@@ -46,7 +46,9 @@ abstract final class SliverOverlapAbsorberHandleBindings {
         'notifyListeners#0': (args) { (args[0] as SliverOverlapAbsorberHandle).notifyListeners(); return null; },
         'layoutExtent#0': (args) => (args[0] as SliverOverlapAbsorberHandle).layoutExtent,
         'scrollExtent#0': (args) => (args[0] as SliverOverlapAbsorberHandle).scrollExtent,
+        'hashCode#0': (args) => (args[0] as SliverOverlapAbsorberHandle).hashCode,
         'hasListeners#0': (args) => (args[0] as SliverOverlapAbsorberHandle).hasListeners,
+        '==#1': (args) => (args[0] as SliverOverlapAbsorberHandle) == (args[1] as Object),
         '#0': (args) => SliverOverlapAbsorberHandle(),
       };
 }

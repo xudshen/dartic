@@ -24,6 +24,8 @@ abstract final class MethodCallBindings {
         'toString#0': (args) => (args[0] as MethodCall).toString(),
         'method#0': (args) => (args[0] as MethodCall).method,
         'arguments#0': (args) => (args[0] as MethodCall).arguments,
+        'hashCode#0': (args) => (args[0] as MethodCall).hashCode,
+        '==#1': (args) => (args[0] as MethodCall) == (args[1] as Object),
         '#2': (args) => MethodCall(args[0] as String, identical(args[1], darticAbsent) ? null : args[1]),
         '_#fromFields#2': (args) => MethodCall(args[1] as String, args[0]),
       };

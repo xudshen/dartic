@@ -32,6 +32,7 @@ abstract final class PictureLayerBindings {
         'addToScene#1': (args) { (args[0] as PictureLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as PictureLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'findAnnotations#3': (args) => (args[0] as PictureLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
+        'toString#0': (args) => (args[0] as PictureLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as PictureLayer).supportsRasterization(),
         'describeClipBounds#0': (args) => (args[0] as PictureLayer).describeClipBounds(),
         'addCompositionCallback#1': (args) => (args[0] as PictureLayer).addCompositionCallback((a) => (args[1] as Function)(a)),
@@ -53,6 +54,7 @@ abstract final class PictureLayerBindings {
         'picture#0': (args) => (args[0] as PictureLayer).picture,
         'isComplexHint#0': (args) => (args[0] as PictureLayer).isComplexHint,
         'willChangeHint#0': (args) => (args[0] as PictureLayer).willChangeHint,
+        'hashCode#0': (args) => (args[0] as PictureLayer).hashCode,
         'subtreeHasCompositionCallbacks#0': (args) => (args[0] as PictureLayer).subtreeHasCompositionCallbacks,
         'debugDisposed#0': (args) => (args[0] as PictureLayer).debugDisposed,
         'debugHandleCount#0': (args) => (args[0] as PictureLayer).debugHandleCount,
@@ -71,6 +73,7 @@ abstract final class PictureLayerBindings {
         'willChangeHint=#1': (args) { (args[0] as PictureLayer).willChangeHint = args[1] as bool; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as PictureLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as PictureLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as PictureLayer) == (args[1] as Object),
         '#1': (args) => PictureLayer(args[0] as ui.Rect),
       };
 }

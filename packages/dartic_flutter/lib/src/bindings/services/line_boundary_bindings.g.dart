@@ -25,8 +25,11 @@ abstract final class LineBoundaryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getTextBoundaryAt#1': (args) => (args[0] as LineBoundary).getTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as LineBoundary).toString(),
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as LineBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as LineBoundary).getTrailingTextBoundaryAt(args[1] as int),
+        'hashCode#0': (args) => (args[0] as LineBoundary).hashCode,
+        '==#1': (args) => (args[0] as LineBoundary) == (args[1] as Object),
         '#1': (args) => LineBoundary(args[0] as TextLayoutMetrics),
         '_#fromFields#1': (args) => LineBoundary(args[0] as TextLayoutMetrics),
       };

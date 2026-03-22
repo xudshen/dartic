@@ -21,7 +21,10 @@ abstract final class ClipboardDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ClipboardData).toString(),
         'text#0': (args) => (args[0] as ClipboardData).text,
+        'hashCode#0': (args) => (args[0] as ClipboardData).hashCode,
+        '==#1': (args) => (args[0] as ClipboardData) == (args[1] as Object),
         '#1': (args) => ClipboardData(text: args[0] as String),
         '_#fromFields#1': (args) => ClipboardData(text: args[0] as String),
       };

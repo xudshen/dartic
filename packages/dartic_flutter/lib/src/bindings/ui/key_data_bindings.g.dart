@@ -38,6 +38,8 @@ abstract final class KeyDataBindings {
         'logical#0': (args) => (args[0] as KeyData).logical,
         'character#0': (args) => (args[0] as KeyData).character,
         'synthesized#0': (args) => (args[0] as KeyData).synthesized,
+        'hashCode#0': (args) => (args[0] as KeyData).hashCode,
+        '==#1': (args) => (args[0] as KeyData) == (args[1] as Object),
         '#7': (args) => KeyData(timeStamp: args[0] as Duration, type: args[1] as KeyEventType, physical: args[2] as int, logical: args[3] as int, character: args[4] as String?, synthesized: args[5] as bool, deviceType: identical(args[6], darticAbsent) ? KeyEventDeviceType.keyboard : args[6] as KeyEventDeviceType),
         '_#fromFields#7': (args) => KeyData(timeStamp: args[5] as Duration, type: args[6] as KeyEventType, physical: args[3] as int, logical: args[2] as int, character: args[0] as String?, synthesized: args[4] as bool, deviceType: args[1] as KeyEventDeviceType),
       };

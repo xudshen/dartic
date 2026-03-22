@@ -45,6 +45,7 @@ abstract final class BorderDirectionalBindings {
         'isUniform#0': (args) => (args[0] as BorderDirectional).isUniform,
         'hashCode#0': (args) => (args[0] as BorderDirectional).hashCode,
         'preferPaintInterior#0': (args) => (args[0] as BorderDirectional).preferPaintInterior,
+        '==#1': (args) => (args[0] as BorderDirectional) == (args[1] as Object),
         '+#1': (args) => (args[0] as BorderDirectional) + (args[1] as ShapeBorder),
         '#4': (args) => BorderDirectional(top: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide, start: identical(args[1], darticAbsent) ? BorderSide.none : args[1] as BorderSide, end: identical(args[2], darticAbsent) ? BorderSide.none : args[2] as BorderSide, bottom: identical(args[3], darticAbsent) ? BorderSide.none : args[3] as BorderSide),
         '_#fromFields#4': (args) => BorderDirectional(top: args[3] as BorderSide, start: args[2] as BorderSide, end: args[1] as BorderSide, bottom: args[0] as BorderSide),

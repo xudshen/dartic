@@ -44,6 +44,8 @@ abstract final class RouteSettingsBindings {
         'toString#0': (args) => (args[0] as RouteSettings).toString(),
         'name#0': (args) => (args[0] as RouteSettings).name,
         'arguments#0': (args) => (args[0] as RouteSettings).arguments,
+        'hashCode#0': (args) => (args[0] as RouteSettings).hashCode,
+        '==#1': (args) => (args[0] as RouteSettings) == (args[1] as Object),
         '#2': (args) => RouteSettings(name: identical(args[0], darticAbsent) ? null : args[0] as String?, arguments: identical(args[1], darticAbsent) ? null : args[1]),
         '_#fromFields#2': (args) => RouteSettings(name: args[1] as String?, arguments: args[0]),
       };

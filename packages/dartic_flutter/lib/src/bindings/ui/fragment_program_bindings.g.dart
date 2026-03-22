@@ -31,5 +31,8 @@ abstract final class FragmentProgramBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fragmentShader#0': (args) => (args[0] as FragmentProgram).fragmentShader(),
+        'toString#0': (args) => (args[0] as FragmentProgram).toString(),
+        'hashCode#0': (args) => (args[0] as FragmentProgram).hashCode,
+        '==#1': (args) => (args[0] as FragmentProgram) == (args[1] as Object),
       };
 }

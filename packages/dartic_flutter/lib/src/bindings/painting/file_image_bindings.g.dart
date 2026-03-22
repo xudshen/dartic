@@ -42,6 +42,7 @@ abstract final class FileImageBindings {
         'file#0': (args) => (args[0] as FileImage).file,
         'scale#0': (args) => (args[0] as FileImage).scale,
         'hashCode#0': (args) => (args[0] as FileImage).hashCode,
+        '==#1': (args) => (args[0] as FileImage) == (args[1] as Object),
         '#2': (args) => FileImage(args[0] as File, scale: identical(args[1], darticAbsent) ? 1.0 : args[1] as double),
         '_#fromFields#2': (args) => FileImage(args[0] as File, scale: args[1] as double),
       };

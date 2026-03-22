@@ -36,6 +36,7 @@ abstract final class TapAndHorizontalDragGestureRecognizerBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).toString(),
         'isPointerAllowed#1': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).isPointerAllowed(args[1] as PointerEvent),
         'addAllowedPointer#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'handleNonAllowedPointer#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
@@ -63,6 +64,7 @@ abstract final class TapAndHorizontalDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).hashCode,
         'dragStartBehavior#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).dragStartBehavior,
         'dragUpdateThrottleFrequency#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).dragUpdateThrottleFrequency,
         'maxConsecutiveTap#0': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer).maxConsecutiveTap,
@@ -98,6 +100,7 @@ abstract final class TapAndHorizontalDragGestureRecognizerBindings {
         'supportedDevices=#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
         'onTapTrackStart=#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).onTapTrackStart = args[1] as VoidCallback?; return args[1]; },
         'onTapTrackReset=#1': (args) { (args[0] as TapAndHorizontalDragGestureRecognizer).onTapTrackReset = args[1] as VoidCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as TapAndHorizontalDragGestureRecognizer) == (args[1] as Object),
         '#2': (args) => TapAndHorizontalDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>()),
       };
 }

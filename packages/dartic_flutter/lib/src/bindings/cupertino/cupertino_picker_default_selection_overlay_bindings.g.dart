@@ -32,6 +32,7 @@ abstract final class CupertinoPickerDefaultSelectionOverlayBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPickerDefaultSelectionOverlay).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class CupertinoPickerDefaultSelectionOverlayBindings {
         'capStartEdge#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).capStartEdge,
         'capEndEdge#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).capEndEdge,
         'background#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).background,
+        'hashCode#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).hashCode,
         'key#0': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay).key,
+        '==#1': (args) => (args[0] as CupertinoPickerDefaultSelectionOverlay) == (args[1] as Object),
         '#4': (args) => CupertinoPickerDefaultSelectionOverlay(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, background: identical(args[1], darticAbsent) ? CupertinoColors.tertiarySystemFill : args[1] as Color, capStartEdge: identical(args[2], darticAbsent) ? true : args[2] as bool, capEndEdge: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => CupertinoPickerDefaultSelectionOverlay(key: args[3] as Key?, background: args[0] as Color, capStartEdge: args[2] as bool, capEndEdge: args[1] as bool),
       };

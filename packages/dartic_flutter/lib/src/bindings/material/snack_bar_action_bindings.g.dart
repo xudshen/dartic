@@ -39,6 +39,7 @@ abstract final class SnackBarActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SnackBarAction).createState(),
+        'toString#0': (args) => (args[0] as SnackBarAction).toString(),
         'createElement#0': (args) => (args[0] as SnackBarAction).createElement(),
         'toStringShort#0': (args) => (args[0] as SnackBarAction).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SnackBarAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class SnackBarActionBindings {
         'disabledBackgroundColor#0': (args) => (args[0] as SnackBarAction).disabledBackgroundColor,
         'label#0': (args) => (args[0] as SnackBarAction).label,
         'onPressed#0': (args) => (args[0] as SnackBarAction).onPressed,
+        'hashCode#0': (args) => (args[0] as SnackBarAction).hashCode,
         'key#0': (args) => (args[0] as SnackBarAction).key,
+        '==#1': (args) => (args[0] as SnackBarAction) == (args[1] as Object),
         '#7': (args) => SnackBarAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, textColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, disabledTextColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, disabledBackgroundColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, label: args[5] as String, onPressed: () => (args[6] as Function)()),
         '_#fromFields#7': (args) => SnackBarAction(key: args[3] as Key?, textColor: args[6] as Color?, disabledTextColor: args[2] as Color?, backgroundColor: args[0] as Color?, disabledBackgroundColor: args[1] as Color?, label: args[4] as String, onPressed: args[5] as VoidCallback),
       };

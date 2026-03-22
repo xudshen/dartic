@@ -25,6 +25,7 @@ abstract final class DeviceGestureSettingsBindings {
         'touchSlop#0': (args) => (args[0] as DeviceGestureSettings).touchSlop,
         'panSlop#0': (args) => (args[0] as DeviceGestureSettings).panSlop,
         'hashCode#0': (args) => (args[0] as DeviceGestureSettings).hashCode,
+        '==#1': (args) => (args[0] as DeviceGestureSettings) == (args[1] as Object),
         '#1': (args) => DeviceGestureSettings(touchSlop: identical(args[0], darticAbsent) ? null : args[0] as double?),
         'fromView#1': (args) => DeviceGestureSettings.fromView(args[0] as ui.FlutterView),
         '_#fromFields#1': (args) => DeviceGestureSettings(touchSlop: args[0] as double?),

@@ -25,5 +25,8 @@ abstract final class HapticFeedbackBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HapticFeedback).toString(),
+        'hashCode#0': (args) => (args[0] as HapticFeedback).hashCode,
+        '==#1': (args) => (args[0] as HapticFeedback) == (args[1] as Object),
       };
 }

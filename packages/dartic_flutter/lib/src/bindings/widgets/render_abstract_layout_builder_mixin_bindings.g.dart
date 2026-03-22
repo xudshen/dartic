@@ -39,6 +39,7 @@ abstract final class RenderAbstractLayoutBuilderMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'layoutCallback#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).layoutCallback(); return null; },
+        'toString#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).toString(),
         'debugValidateChild#1': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).debugValidateChild(args[1] as RenderObject),
         'attach#1': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).detach(); return null; },
@@ -93,6 +94,7 @@ abstract final class RenderAbstractLayoutBuilderMixinBindings {
         'runLayoutCallback#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).runLayoutCallback(); return null; },
         'scheduleLayoutCallback#0': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).scheduleLayoutCallback(); return null; },
         'layoutInfo#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).layoutInfo,
+        'hashCode#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).hashCode,
         'child#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).child,
         'debugDisposed#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderAbstractLayoutBuilderMixin).parentData,
@@ -126,5 +128,6 @@ abstract final class RenderAbstractLayoutBuilderMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAbstractLayoutBuilderMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAbstractLayoutBuilderMixin) == (args[1] as Object),
       };
 }

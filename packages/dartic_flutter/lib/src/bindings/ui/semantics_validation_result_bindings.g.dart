@@ -34,6 +34,9 @@ abstract final class SemanticsValidationResultBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SemanticsValidationResult).toString(),
+        'hashCode#0': (args) => (args[0] as SemanticsValidationResult).hashCode,
         'index#0': (args) => (args[0] as SemanticsValidationResult).index,
+        '==#1': (args) => (args[0] as SemanticsValidationResult) == (args[1] as Object),
       };
 }

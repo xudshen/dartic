@@ -60,6 +60,9 @@ abstract final class BlendModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as BlendMode).toString(),
+        'hashCode#0': (args) => (args[0] as BlendMode).hashCode,
         'index#0': (args) => (args[0] as BlendMode).index,
+        '==#1': (args) => (args[0] as BlendMode) == (args[1] as Object),
       };
 }

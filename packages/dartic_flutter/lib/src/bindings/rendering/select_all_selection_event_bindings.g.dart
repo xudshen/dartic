@@ -24,7 +24,10 @@ abstract final class SelectAllSelectionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectAllSelectionEvent).toString(),
+        'hashCode#0': (args) => (args[0] as SelectAllSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as SelectAllSelectionEvent).type,
+        '==#1': (args) => (args[0] as SelectAllSelectionEvent) == (args[1] as Object),
         '#0': (args) => SelectAllSelectionEvent(),
         '_#fromFields#1': (args) => SelectAllSelectionEvent(),
       };

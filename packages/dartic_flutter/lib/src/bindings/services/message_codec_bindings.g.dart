@@ -24,5 +24,8 @@ abstract final class MessageCodecBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'encodeMessage#1': (args) => (args[0] as MessageCodec).encodeMessage(args[1]),
         'decodeMessage#1': (args) => (args[0] as MessageCodec).decodeMessage(args[1] as ByteData?),
+        'toString#0': (args) => (args[0] as MessageCodec).toString(),
+        'hashCode#0': (args) => (args[0] as MessageCodec).hashCode,
+        '==#1': (args) => (args[0] as MessageCodec) == (args[1] as Object),
       };
 }

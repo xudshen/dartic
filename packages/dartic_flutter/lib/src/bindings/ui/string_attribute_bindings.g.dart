@@ -30,6 +30,9 @@ abstract final class StringAttributeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copy#1': (args) => (args[0] as StringAttribute).copy(range: args[1] as TextRange),
+        'toString#0': (args) => (args[0] as StringAttribute).toString(),
         'range#0': (args) => (args[0] as StringAttribute).range,
+        'hashCode#0': (args) => (args[0] as StringAttribute).hashCode,
+        '==#1': (args) => (args[0] as StringAttribute) == (args[1] as Object),
       };
 }

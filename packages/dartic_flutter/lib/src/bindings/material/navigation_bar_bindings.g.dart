@@ -45,6 +45,7 @@ abstract final class NavigationBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as NavigationBar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as NavigationBar).toString(),
         'createElement#0': (args) => (args[0] as NavigationBar).createElement(),
         'toStringShort#0': (args) => (args[0] as NavigationBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as NavigationBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -68,7 +69,9 @@ abstract final class NavigationBarBindings {
         'labelTextStyle#0': (args) => (args[0] as NavigationBar).labelTextStyle,
         'labelPadding#0': (args) => (args[0] as NavigationBar).labelPadding,
         'maintainBottomViewPadding#0': (args) => (args[0] as NavigationBar).maintainBottomViewPadding,
+        'hashCode#0': (args) => (args[0] as NavigationBar).hashCode,
         'key#0': (args) => (args[0] as NavigationBar).key,
+        '==#1': (args) => (args[0] as NavigationBar) == (args[1] as Object),
         '#17': (args) => NavigationBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animationDuration: identical(args[1], darticAbsent) ? null : args[1] as Duration?, selectedIndex: identical(args[2], darticAbsent) ? 0 : args[2] as int, destinations: (args[3] as List).cast<Widget>(), onDestinationSelected: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), backgroundColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, elevation: identical(args[6], darticAbsent) ? null : args[6] as double?, shadowColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, surfaceTintColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, indicatorColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, indicatorShape: identical(args[10], darticAbsent) ? null : args[10] as ShapeBorder?, height: identical(args[11], darticAbsent) ? null : args[11] as double?, labelBehavior: identical(args[12], darticAbsent) ? null : args[12] as NavigationDestinationLabelBehavior?, overlayColor: identical(args[13], darticAbsent) ? null : args[13] as WidgetStateProperty<Color?>?, labelTextStyle: identical(args[14], darticAbsent) ? null : args[14] as WidgetStateProperty<TextStyle?>?, labelPadding: identical(args[15], darticAbsent) ? null : args[15] as EdgeInsetsGeometry?, maintainBottomViewPadding: identical(args[16], darticAbsent) ? false : args[16] as bool),
       };
 }

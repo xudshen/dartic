@@ -35,7 +35,10 @@ abstract final class ScribbleClientBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onScribbleFocus#1': (args) { (args[0] as ScribbleClient).onScribbleFocus(args[1] as Offset); return null; },
         'isInScribbleRect#1': (args) => (args[0] as ScribbleClient).isInScribbleRect(args[1] as Rect),
+        'toString#0': (args) => (args[0] as ScribbleClient).toString(),
         'elementIdentifier#0': (args) => (args[0] as ScribbleClient).elementIdentifier,
         'bounds#0': (args) => (args[0] as ScribbleClient).bounds,
+        'hashCode#0': (args) => (args[0] as ScribbleClient).hashCode,
+        '==#1': (args) => (args[0] as ScribbleClient) == (args[1] as Object),
       };
 }

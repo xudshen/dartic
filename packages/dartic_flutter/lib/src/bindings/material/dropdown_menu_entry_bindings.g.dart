@@ -37,6 +37,7 @@ abstract final class DropdownMenuEntryBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DropdownMenuEntry).toString(),
         'value#0': (args) => (args[0] as DropdownMenuEntry).value,
         'label#0': (args) => (args[0] as DropdownMenuEntry).label,
         'labelWidget#0': (args) => (args[0] as DropdownMenuEntry).labelWidget,
@@ -44,6 +45,8 @@ abstract final class DropdownMenuEntryBindings {
         'trailingIcon#0': (args) => (args[0] as DropdownMenuEntry).trailingIcon,
         'enabled#0': (args) => (args[0] as DropdownMenuEntry).enabled,
         'style#0': (args) => (args[0] as DropdownMenuEntry).style,
+        'hashCode#0': (args) => (args[0] as DropdownMenuEntry).hashCode,
+        '==#1': (args) => (args[0] as DropdownMenuEntry) == (args[1] as Object),
         '#7': (args) => DropdownMenuEntry<dynamic>(value: args[0], label: args[1] as String, labelWidget: identical(args[2], darticAbsent) ? null : args[2] as Widget?, leadingIcon: identical(args[3], darticAbsent) ? null : args[3] as Widget?, trailingIcon: identical(args[4], darticAbsent) ? null : args[4] as Widget?, enabled: identical(args[5], darticAbsent) ? true : args[5] as bool, style: identical(args[6], darticAbsent) ? null : args[6] as ButtonStyle?),
         '_#fromFields#7': (args) => DropdownMenuEntry<dynamic>(value: args[6], label: args[1] as String, labelWidget: args[2] as Widget?, leadingIcon: args[3] as Widget?, trailingIcon: args[5] as Widget?, enabled: args[0] as bool, style: args[4] as ButtonStyle?),
       };

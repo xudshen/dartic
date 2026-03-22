@@ -29,6 +29,7 @@ abstract final class TextSelectionThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as TextSelectionTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as TextSelectionTheme).updateShouldNotify(args[1] as TextSelectionTheme),
+        'toString#0': (args) => (args[0] as TextSelectionTheme).toString(),
         'createElement#0': (args) => (args[0] as TextSelectionTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as TextSelectionTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TextSelectionTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class TextSelectionThemeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as TextSelectionTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as TextSelectionTheme).data,
         'child#0': (args) => (args[0] as TextSelectionTheme).child,
+        'hashCode#0': (args) => (args[0] as TextSelectionTheme).hashCode,
         'key#0': (args) => (args[0] as TextSelectionTheme).key,
+        '==#1': (args) => (args[0] as TextSelectionTheme) == (args[1] as Object),
         '#3': (args) => TextSelectionTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as TextSelectionThemeData, child: args[2] as Widget),
         '_#fromFields#4': (args) => TextSelectionTheme(key: args[3] as Key?, data: args[2] as TextSelectionThemeData, child: args[0] as Widget),
       };

@@ -37,6 +37,9 @@ abstract final class PointerDeviceKindBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PointerDeviceKind).toString(),
+        'hashCode#0': (args) => (args[0] as PointerDeviceKind).hashCode,
         'index#0': (args) => (args[0] as PointerDeviceKind).index,
+        '==#1': (args) => (args[0] as PointerDeviceKind) == (args[1] as Object),
       };
 }

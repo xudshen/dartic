@@ -32,7 +32,9 @@ abstract final class SpellOutStringAttributeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copy#1': (args) => (args[0] as SpellOutStringAttribute).copy(range: args[1] as TextRange),
         'toString#0': (args) => (args[0] as SpellOutStringAttribute).toString(),
+        'hashCode#0': (args) => (args[0] as SpellOutStringAttribute).hashCode,
         'range#0': (args) => (args[0] as SpellOutStringAttribute).range,
+        '==#1': (args) => (args[0] as SpellOutStringAttribute) == (args[1] as Object),
         '#1': (args) => SpellOutStringAttribute(range: args[0] as TextRange),
       };
 }

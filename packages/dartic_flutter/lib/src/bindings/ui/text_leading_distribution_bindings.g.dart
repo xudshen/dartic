@@ -33,6 +33,9 @@ abstract final class TextLeadingDistributionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextLeadingDistribution).toString(),
+        'hashCode#0': (args) => (args[0] as TextLeadingDistribution).hashCode,
         'index#0': (args) => (args[0] as TextLeadingDistribution).index,
+        '==#1': (args) => (args[0] as TextLeadingDistribution) == (args[1] as Object),
       };
 }

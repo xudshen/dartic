@@ -40,14 +40,17 @@ abstract final class InteractiveInkFeatureBindings {
         'confirm#0': (args) { (args[0] as InteractiveInkFeature).confirm(); return null; },
         'cancel#0': (args) { (args[0] as InteractiveInkFeature).cancel(); return null; },
         'paintInkCircle#9': (args) { (args[0] as InteractiveInkFeature).paintInkCircle(canvas: args[1] as Canvas, transform: args[2] as Matrix4, paint: args[3] as Paint, center: args[4] as Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; },
+        'toString#0': (args) => (args[0] as InteractiveInkFeature).toString(),
         'dispose#0': (args) { (args[0] as InteractiveInkFeature).dispose(); return null; },
         'paintFeature#2': (args) { (args[0] as InteractiveInkFeature).paintFeature(args[1] as Canvas, args[2] as Matrix4); return null; },
         'color#0': (args) => (args[0] as InteractiveInkFeature).color,
         'customBorder#0': (args) => (args[0] as InteractiveInkFeature).customBorder,
+        'hashCode#0': (args) => (args[0] as InteractiveInkFeature).hashCode,
         'controller#0': (args) => (args[0] as InteractiveInkFeature).controller,
         'referenceBox#0': (args) => (args[0] as InteractiveInkFeature).referenceBox,
         'onRemoved#0': (args) => (args[0] as InteractiveInkFeature).onRemoved,
         'color=#1': (args) { (args[0] as InteractiveInkFeature).color = args[1] as Color; return args[1]; },
         'customBorder=#1': (args) { (args[0] as InteractiveInkFeature).customBorder = args[1] as ShapeBorder?; return args[1]; },
+        '==#1': (args) => (args[0] as InteractiveInkFeature) == (args[1] as Object),
       };
 }

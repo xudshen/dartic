@@ -30,5 +30,8 @@ abstract final class SemanticsUpdateBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as SemanticsUpdate).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SemanticsUpdate).toString(),
+        'hashCode#0': (args) => (args[0] as SemanticsUpdate).hashCode,
+        '==#1': (args) => (args[0] as SemanticsUpdate) == (args[1] as Object),
       };
 }

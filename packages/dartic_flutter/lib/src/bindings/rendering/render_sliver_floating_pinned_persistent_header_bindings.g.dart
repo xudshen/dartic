@@ -43,6 +43,7 @@ abstract final class RenderSliverFloatingPinnedPersistentHeaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateGeometry#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).updateGeometry(),
+        'toString#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).toString(),
         'detach#0': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).detach(); return null; },
         'updateScrollStartDirection#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).updateScrollStartDirection(args[1] as ScrollDirection); return null; },
         'maybeStartSnapAnimation#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).maybeStartSnapAnimation(args[1] as ScrollDirection); return null; },
@@ -111,6 +112,7 @@ abstract final class RenderSliverFloatingPinnedPersistentHeaderBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).debugValidateChild(args[1] as RenderObject),
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).hashCode,
         'vsync#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).vsync,
         'snapConfiguration#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).snapConfiguration,
         'showOnScreenConfiguration#0': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader).showOnScreenConfiguration,
@@ -161,5 +163,6 @@ abstract final class RenderSliverFloatingPinnedPersistentHeaderBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverFloatingPinnedPersistentHeader).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverFloatingPinnedPersistentHeader) == (args[1] as Object),
       };
 }

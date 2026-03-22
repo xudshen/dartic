@@ -32,6 +32,7 @@ abstract final class SelectActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectAction).toString(),
         'isEnabled#1': (args) => (args[0] as SelectAction).isEnabled(args[1] as SelectIntent),
         'consumesKey#1': (args) => (args[0] as SelectAction).consumesKey(args[1] as SelectIntent),
         'toKeyEventResult#2': (args) => (args[0] as SelectAction).toKeyEventResult(args[1] as SelectIntent, args[2]),
@@ -42,8 +43,10 @@ abstract final class SelectActionBindings {
         'toStringShort#0': (args) => (args[0] as SelectAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SelectAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as SelectAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as SelectAction).hashCode,
         'callingAction#0': (args) => (args[0] as SelectAction).callingAction,
         'intentType#0': (args) => (args[0] as SelectAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as SelectAction).isActionEnabled,
+        '==#1': (args) => (args[0] as SelectAction) == (args[1] as Object),
       };
 }

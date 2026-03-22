@@ -43,6 +43,7 @@ abstract final class RenderObjectWithChildMixinBindings {
         'redepthChildren#0': (args) { (args[0] as RenderObjectWithChildMixin).redepthChildren(); return null; },
         'visitChildren#1': (args) { (args[0] as RenderObjectWithChildMixin).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as RenderObjectWithChildMixin).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as RenderObjectWithChildMixin).toString(),
         'reassemble#0': (args) { (args[0] as RenderObjectWithChildMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderObjectWithChildMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as RenderObjectWithChildMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -89,6 +90,7 @@ abstract final class RenderObjectWithChildMixinBindings {
         'describeForError#2': (args) => (args[0] as RenderObjectWithChildMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderObjectWithChildMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'child#0': (args) => (args[0] as RenderObjectWithChildMixin).child,
+        'hashCode#0': (args) => (args[0] as RenderObjectWithChildMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as RenderObjectWithChildMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as RenderObjectWithChildMixin).parentData,
         'depth#0': (args) => (args[0] as RenderObjectWithChildMixin).depth,
@@ -121,5 +123,6 @@ abstract final class RenderObjectWithChildMixinBindings {
         'parentData=#1': (args) { (args[0] as RenderObjectWithChildMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderObjectWithChildMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderObjectWithChildMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderObjectWithChildMixin) == (args[1] as Object),
       };
 }

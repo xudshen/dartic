@@ -26,10 +26,13 @@ abstract final class ImageChunkEventBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ImageChunkEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ImageChunkEvent).toString(),
         'toStringShort#0': (args) => (args[0] as ImageChunkEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ImageChunkEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'cumulativeBytesLoaded#0': (args) => (args[0] as ImageChunkEvent).cumulativeBytesLoaded,
         'expectedTotalBytes#0': (args) => (args[0] as ImageChunkEvent).expectedTotalBytes,
+        'hashCode#0': (args) => (args[0] as ImageChunkEvent).hashCode,
+        '==#1': (args) => (args[0] as ImageChunkEvent) == (args[1] as Object),
         '#2': (args) => ImageChunkEvent(cumulativeBytesLoaded: args[0] as int, expectedTotalBytes: args[1] as int?),
         '_#fromFields#2': (args) => ImageChunkEvent(cumulativeBytesLoaded: args[0] as int, expectedTotalBytes: args[1] as int?),
       };

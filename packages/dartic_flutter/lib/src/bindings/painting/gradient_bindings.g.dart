@@ -32,8 +32,11 @@ abstract final class GradientBindings {
         'withOpacity#1': (args) => (args[0] as Gradient).withOpacity(args[1] as double),
         'lerpFrom#2': (args) => (args[0] as Gradient).lerpFrom(args[1] as Gradient?, args[2] as double),
         'lerpTo#2': (args) => (args[0] as Gradient).lerpTo(args[1] as Gradient?, args[2] as double),
+        'toString#0': (args) => (args[0] as Gradient).toString(),
         'colors#0': (args) => (args[0] as Gradient).colors,
         'stops#0': (args) => (args[0] as Gradient).stops,
         'transform#0': (args) => (args[0] as Gradient).transform,
+        'hashCode#0': (args) => (args[0] as Gradient).hashCode,
+        '==#1': (args) => (args[0] as Gradient) == (args[1] as Object),
       };
 }

@@ -45,7 +45,10 @@ abstract final class TextInputClientBindings {
         'insertTextPlaceholder#1': (args) { (args[0] as TextInputClient).insertTextPlaceholder(args[1] as Size); return null; },
         'removeTextPlaceholder#0': (args) { (args[0] as TextInputClient).removeTextPlaceholder(); return null; },
         'performSelector#1': (args) { (args[0] as TextInputClient).performSelector(args[1] as String); return null; },
+        'toString#0': (args) => (args[0] as TextInputClient).toString(),
         'currentTextEditingValue#0': (args) => (args[0] as TextInputClient).currentTextEditingValue,
         'currentAutofillScope#0': (args) => (args[0] as TextInputClient).currentAutofillScope,
+        'hashCode#0': (args) => (args[0] as TextInputClient).hashCode,
+        '==#1': (args) => (args[0] as TextInputClient) == (args[1] as Object),
       };
 }

@@ -34,10 +34,12 @@ abstract final class MaterialRectArcTweenBindings {
         'chain#1': (args) => (args[0] as MaterialRectArcTween).chain(args[1] as Animatable<double>),
         'beginArc#0': (args) => (args[0] as MaterialRectArcTween).beginArc,
         'endArc#0': (args) => (args[0] as MaterialRectArcTween).endArc,
+        'hashCode#0': (args) => (args[0] as MaterialRectArcTween).hashCode,
         'begin#0': (args) => (args[0] as MaterialRectArcTween).begin,
         'end#0': (args) => (args[0] as MaterialRectArcTween).end,
         'begin=#1': (args) { (args[0] as MaterialRectArcTween).begin = args[1] as Rect?; return args[1]; },
         'end=#1': (args) { (args[0] as MaterialRectArcTween).end = args[1] as Rect?; return args[1]; },
+        '==#1': (args) => (args[0] as MaterialRectArcTween) == (args[1] as Object),
         '#2': (args) => MaterialRectArcTween(begin: identical(args[0], darticAbsent) ? null : args[0] as Rect?, end: identical(args[1], darticAbsent) ? null : args[1] as Rect?),
       };
 }

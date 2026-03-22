@@ -39,6 +39,7 @@ abstract final class ShaderMaskBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as ShaderMask).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ShaderMask).updateRenderObject(args[1] as BuildContext, args[2] as RenderShaderMask); return null; },
+        'toString#0': (args) => (args[0] as ShaderMask).toString(),
         'createElement#0': (args) => (args[0] as ShaderMask).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ShaderMask).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ShaderMask).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class ShaderMaskBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ShaderMask).debugDescribeChildren(),
         'shaderCallback#0': (args) => (args[0] as ShaderMask).shaderCallback,
         'blendMode#0': (args) => (args[0] as ShaderMask).blendMode,
+        'hashCode#0': (args) => (args[0] as ShaderMask).hashCode,
         'child#0': (args) => (args[0] as ShaderMask).child,
         'key#0': (args) => (args[0] as ShaderMask).key,
+        '==#1': (args) => (args[0] as ShaderMask) == (args[1] as Object),
         '#4': (args) => ShaderMask(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shaderCallback: (a) => (args[1] as Function)(a) as ui.Shader, blendMode: identical(args[2], darticAbsent) ? BlendMode.modulate : args[2] as ui.BlendMode, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => ShaderMask(key: args[2] as Key?, shaderCallback: args[3] as ShaderCallback, blendMode: args[0] as ui.BlendMode, child: args[1] as Widget?),
       };

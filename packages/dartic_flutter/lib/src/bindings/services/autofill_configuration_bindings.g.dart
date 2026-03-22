@@ -30,6 +30,7 @@ abstract final class AutofillConfigurationBindings {
         'currentEditingValue#0': (args) => (args[0] as AutofillConfiguration).currentEditingValue,
         'hintText#0': (args) => (args[0] as AutofillConfiguration).hintText,
         'hashCode#0': (args) => (args[0] as AutofillConfiguration).hashCode,
+        '==#1': (args) => (args[0] as AutofillConfiguration) == (args[1] as Object),
         '#4': (args) => AutofillConfiguration(uniqueIdentifier: args[0] as String, autofillHints: (args[1] as List).cast<String>(), currentEditingValue: args[2] as TextEditingValue, hintText: identical(args[3], darticAbsent) ? null : args[3] as String?),
         '_#fromFields#5': (args) => AutofillConfiguration(uniqueIdentifier: args[4] as String, autofillHints: (args[0] as List).cast<String>(), currentEditingValue: args[1] as TextEditingValue, hintText: args[3] as String?),
       };

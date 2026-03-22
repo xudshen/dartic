@@ -31,8 +31,11 @@ abstract final class TextMagnifierConfigurationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextMagnifierConfiguration).toString(),
         'magnifierBuilder#0': (args) => (args[0] as TextMagnifierConfiguration).magnifierBuilder,
         'shouldDisplayHandlesInMagnifier#0': (args) => (args[0] as TextMagnifierConfiguration).shouldDisplayHandlesInMagnifier,
+        'hashCode#0': (args) => (args[0] as TextMagnifierConfiguration).hashCode,
+        '==#1': (args) => (args[0] as TextMagnifierConfiguration) == (args[1] as Object),
         '#2': (args) => TextMagnifierConfiguration(magnifierBuilder: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a, b, c) => (args[0] as Function?)!(a, b, c), shouldDisplayHandlesInMagnifier: identical(args[1], darticAbsent) ? true : args[1] as bool),
         '_#fromFields#2': (args) => TextMagnifierConfiguration(magnifierBuilder: args[0] as MagnifierBuilder?, shouldDisplayHandlesInMagnifier: args[1] as bool),
       };

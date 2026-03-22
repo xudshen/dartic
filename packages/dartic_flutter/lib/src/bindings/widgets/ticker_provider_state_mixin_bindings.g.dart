@@ -30,6 +30,7 @@ abstract final class TickerProviderStateMixinBindings {
         'activate#0': (args) { (args[0] as TickerProviderStateMixin).activate(); return null; },
         'dispose#0': (args) { (args[0] as TickerProviderStateMixin).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as TickerProviderStateMixin).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TickerProviderStateMixin).toString(),
         'initState#0': (args) { (args[0] as TickerProviderStateMixin).initState(); return null; },
         'didUpdateWidget#1': (args) { (args[0] as TickerProviderStateMixin).didUpdateWidget(args[1] as StatefulWidget); return null; },
         'reassemble#0': (args) { (args[0] as TickerProviderStateMixin).reassemble(); return null; },
@@ -39,8 +40,10 @@ abstract final class TickerProviderStateMixinBindings {
         'didChangeDependencies#0': (args) { (args[0] as TickerProviderStateMixin).didChangeDependencies(); return null; },
         'toStringShort#0': (args) => (args[0] as TickerProviderStateMixin).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TickerProviderStateMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as TickerProviderStateMixin).hashCode,
         'widget#0': (args) => (args[0] as TickerProviderStateMixin).widget,
         'context#0': (args) => (args[0] as TickerProviderStateMixin).context,
         'mounted#0': (args) => (args[0] as TickerProviderStateMixin).mounted,
+        '==#1': (args) => (args[0] as TickerProviderStateMixin) == (args[1] as Object),
       };
 }

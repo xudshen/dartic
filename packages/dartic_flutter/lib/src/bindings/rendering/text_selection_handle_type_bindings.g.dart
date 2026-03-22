@@ -28,6 +28,9 @@ abstract final class TextSelectionHandleTypeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextSelectionHandleType).toString(),
+        'hashCode#0': (args) => (args[0] as TextSelectionHandleType).hashCode,
         'index#0': (args) => (args[0] as TextSelectionHandleType).index,
+        '==#1': (args) => (args[0] as TextSelectionHandleType) == (args[1] as Object),
       };
 }

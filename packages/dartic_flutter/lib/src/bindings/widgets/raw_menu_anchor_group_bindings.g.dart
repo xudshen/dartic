@@ -40,6 +40,7 @@ abstract final class RawMenuAnchorGroupBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as RawMenuAnchorGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createState#0': (args) => (args[0] as RawMenuAnchorGroup).createState(),
+        'toString#0': (args) => (args[0] as RawMenuAnchorGroup).toString(),
         'createElement#0': (args) => (args[0] as RawMenuAnchorGroup).createElement(),
         'toStringShort#0': (args) => (args[0] as RawMenuAnchorGroup).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as RawMenuAnchorGroup).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -48,7 +49,9 @@ abstract final class RawMenuAnchorGroupBindings {
         'debugDescribeChildren#0': (args) => (args[0] as RawMenuAnchorGroup).debugDescribeChildren(),
         'child#0': (args) => (args[0] as RawMenuAnchorGroup).child,
         'controller#0': (args) => (args[0] as RawMenuAnchorGroup).controller,
+        'hashCode#0': (args) => (args[0] as RawMenuAnchorGroup).hashCode,
         'key#0': (args) => (args[0] as RawMenuAnchorGroup).key,
+        '==#1': (args) => (args[0] as RawMenuAnchorGroup) == (args[1] as Object),
         '#3': (args) => RawMenuAnchorGroup(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, controller: args[2] as MenuController),
         '_#fromFields#3': (args) => RawMenuAnchorGroup(key: args[2] as Key?, child: args[0] as Widget, controller: args[1] as MenuController),
       };

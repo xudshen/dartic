@@ -32,11 +32,14 @@ abstract final class SliverHitTestResultBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addWithAxisOffset#6': (args) => (args[0] as SliverHitTestResult).addWithAxisOffset(paintOffset: args[1] as Offset?, mainAxisOffset: args[2] as double, crossAxisOffset: args[3] as double, mainAxisPosition: args[4] as double, crossAxisPosition: args[5] as double, hitTest: (a, {required double crossAxisPosition, required double mainAxisPosition}) => (args[6] as Function)(a, crossAxisPosition: crossAxisPosition, mainAxisPosition: mainAxisPosition) as bool),
+        'toString#0': (args) => (args[0] as SliverHitTestResult).toString(),
         'add#1': (args) { (args[0] as SliverHitTestResult).add(args[1] as HitTestEntry<HitTestTarget>); return null; },
         'pushTransform#1': (args) { (args[0] as SliverHitTestResult).pushTransform(args[1] as Matrix4); return null; },
         'pushOffset#1': (args) { (args[0] as SliverHitTestResult).pushOffset(args[1] as Offset); return null; },
         'popTransform#0': (args) { (args[0] as SliverHitTestResult).popTransform(); return null; },
+        'hashCode#0': (args) => (args[0] as SliverHitTestResult).hashCode,
         'path#0': (args) => (args[0] as SliverHitTestResult).path,
+        '==#1': (args) => (args[0] as SliverHitTestResult) == (args[1] as Object),
         '#0': (args) => SliverHitTestResult(),
         'wrap#1': (args) => SliverHitTestResult.wrap(args[0] as HitTestResult),
       };

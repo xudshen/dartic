@@ -40,6 +40,7 @@ abstract final class WidgetToRenderBoxAdapterBindings {
         'createRenderObject#1': (args) => (args[0] as WidgetToRenderBoxAdapter).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as WidgetToRenderBoxAdapter).updateRenderObject(args[1] as BuildContext, args[2] as RenderBox); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as WidgetToRenderBoxAdapter).didUnmountRenderObject(args[1] as RenderObject); return null; },
+        'toString#0': (args) => (args[0] as WidgetToRenderBoxAdapter).toString(),
         'createElement#0': (args) => (args[0] as WidgetToRenderBoxAdapter).createElement(),
         'toStringShort#0': (args) => (args[0] as WidgetToRenderBoxAdapter).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WidgetToRenderBoxAdapter).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,7 +51,9 @@ abstract final class WidgetToRenderBoxAdapterBindings {
         'renderBox#0': (args) => (args[0] as WidgetToRenderBoxAdapter).renderBox,
         'onBuild#0': (args) => (args[0] as WidgetToRenderBoxAdapter).onBuild,
         'onUnmount#0': (args) => (args[0] as WidgetToRenderBoxAdapter).onUnmount,
+        'hashCode#0': (args) => (args[0] as WidgetToRenderBoxAdapter).hashCode,
         'key#0': (args) => (args[0] as WidgetToRenderBoxAdapter).key,
+        '==#1': (args) => (args[0] as WidgetToRenderBoxAdapter) == (args[1] as Object),
         '#3': (args) => WidgetToRenderBoxAdapter(renderBox: args[0] as RenderBox, onBuild: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), onUnmount: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
       };
 }

@@ -31,6 +31,8 @@ abstract final class IntrinsicColumnWidthBindings {
         'maxIntrinsicWidth#2': (args) => (args[0] as IntrinsicColumnWidth).maxIntrinsicWidth((args[1] as Iterable).cast<RenderBox>(), args[2] as double),
         'flex#1': (args) => (args[0] as IntrinsicColumnWidth).flex((args[1] as Iterable).cast<RenderBox>()),
         'toString#0': (args) => (args[0] as IntrinsicColumnWidth).toString(),
+        'hashCode#0': (args) => (args[0] as IntrinsicColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as IntrinsicColumnWidth) == (args[1] as Object),
         '#1': (args) => IntrinsicColumnWidth(flex: identical(args[0], darticAbsent) ? null : args[0] as double?),
         '_#fromFields#1': (args) => IntrinsicColumnWidth(flex: args[0] as double?),
       };

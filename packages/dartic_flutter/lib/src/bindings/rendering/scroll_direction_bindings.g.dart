@@ -26,6 +26,9 @@ abstract final class ScrollDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScrollDirection).toString(),
+        'hashCode#0': (args) => (args[0] as ScrollDirection).hashCode,
         'index#0': (args) => (args[0] as ScrollDirection).index,
+        '==#1': (args) => (args[0] as ScrollDirection) == (args[1] as Object),
       };
 }

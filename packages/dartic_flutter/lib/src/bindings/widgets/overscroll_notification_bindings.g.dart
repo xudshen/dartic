@@ -27,13 +27,16 @@ abstract final class OverscrollNotificationBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillDescription#1': (args) { (args[0] as OverscrollNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as OverscrollNotification).toString(),
         'dispatch#1': (args) { (args[0] as OverscrollNotification).dispatch(args[1] as BuildContext?); return null; },
         'dragDetails#0': (args) => (args[0] as OverscrollNotification).dragDetails,
         'overscroll#0': (args) => (args[0] as OverscrollNotification).overscroll,
         'velocity#0': (args) => (args[0] as OverscrollNotification).velocity,
+        'hashCode#0': (args) => (args[0] as OverscrollNotification).hashCode,
         'metrics#0': (args) => (args[0] as OverscrollNotification).metrics,
         'context#0': (args) => (args[0] as OverscrollNotification).context,
         'depth#0': (args) => (args[0] as OverscrollNotification).depth,
+        '==#1': (args) => (args[0] as OverscrollNotification) == (args[1] as Object),
         '#5': (args) => OverscrollNotification(metrics: args[0] as ScrollMetrics, context: args[1] as BuildContext, dragDetails: identical(args[2], darticAbsent) ? null : args[2] as DragUpdateDetails?, overscroll: args[3] as double, velocity: identical(args[4], darticAbsent) ? 0.0 : args[4] as double),
       };
 }

@@ -51,6 +51,7 @@ abstract final class SliverReorderableListBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as SliverReorderableList).createState(),
+        'toString#0': (args) => (args[0] as SliverReorderableList).toString(),
         'createElement#0': (args) => (args[0] as SliverReorderableList).createElement(),
         'toStringShort#0': (args) => (args[0] as SliverReorderableList).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as SliverReorderableList).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -70,7 +71,9 @@ abstract final class SliverReorderableListBindings {
         'prototypeItem#0': (args) => (args[0] as SliverReorderableList).prototypeItem,
         'autoScrollerVelocityScalar#0': (args) => (args[0] as SliverReorderableList).autoScrollerVelocityScalar,
         'dragBoundaryProvider#0': (args) => (args[0] as SliverReorderableList).dragBoundaryProvider,
+        'hashCode#0': (args) => (args[0] as SliverReorderableList).hashCode,
         'key#0': (args) => (args[0] as SliverReorderableList).key,
+        '==#1': (args) => (args[0] as SliverReorderableList) == (args[1] as Object),
         '#13': (args) => SliverReorderableList(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, itemBuilder: (a, b) => (args[1] as Function)(a, b) as Widget, findChildIndexCallback: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), itemCount: args[3] as int, onReorder: (a, b) => (args[4] as Function)(a, b), onReorderStart: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onReorderEnd: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), itemExtent: identical(args[7], darticAbsent) ? null : args[7] as double?, itemExtentBuilder: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a, b) => (args[8] as Function?)!(a, b), prototypeItem: identical(args[9], darticAbsent) ? null : args[9] as Widget?, proxyDecorator: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : (a, b, c) => (args[10] as Function?)!(a, b, c), dragBoundaryProvider: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : (a) => (args[11] as Function?)!(a), autoScrollerVelocityScalar: identical(args[12], darticAbsent) ? null : args[12] as double?),
         '_#fromFields#13': (args) => SliverReorderableList(key: args[7] as Key?, itemBuilder: args[3] as IndexedWidgetBuilder, findChildIndexCallback: args[2] as ChildIndexGetter?, itemCount: args[4] as int, onReorder: args[8] as ReorderCallback, onReorderStart: args[10] as void Function(int)?, onReorderEnd: args[9] as void Function(int)?, itemExtent: args[5] as double?, itemExtentBuilder: args[6] as ItemExtentBuilder?, prototypeItem: args[11] as Widget?, proxyDecorator: args[12] as ReorderItemProxyDecorator?, dragBoundaryProvider: args[1] as ReorderDragBoundaryProvider?, autoScrollerVelocityScalar: args[0] as double?),
       };

@@ -33,9 +33,12 @@ abstract final class RawFloatingCursorPointBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RawFloatingCursorPoint).toString(),
         'offset#0': (args) => (args[0] as RawFloatingCursorPoint).offset,
         'startLocation#0': (args) => (args[0] as RawFloatingCursorPoint).startLocation,
         'state#0': (args) => (args[0] as RawFloatingCursorPoint).state,
+        'hashCode#0': (args) => (args[0] as RawFloatingCursorPoint).hashCode,
+        '==#1': (args) => (args[0] as RawFloatingCursorPoint) == (args[1] as Object),
         '#3': (args) => RawFloatingCursorPoint(offset: identical(args[0], darticAbsent) ? null : args[0] as Offset?, startLocation: identical(args[1], darticAbsent) ? null : args[1] as (Offset, TextPosition)?, state: args[2] as FloatingCursorDragState),
       };
 }

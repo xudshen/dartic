@@ -28,7 +28,9 @@ abstract final class SawToothBindings {
         'toString#0': (args) => (args[0] as SawTooth).toString(),
         'transform#1': (args) => (args[0] as SawTooth).transform(args[1] as double),
         'count#0': (args) => (args[0] as SawTooth).count,
+        'hashCode#0': (args) => (args[0] as SawTooth).hashCode,
         'flipped#0': (args) => (args[0] as SawTooth).flipped,
+        '==#1': (args) => (args[0] as SawTooth) == (args[1] as Object),
         '#1': (args) => SawTooth(args[0] as int),
         '_#fromFields#1': (args) => SawTooth(args[0] as int),
       };

@@ -41,5 +41,7 @@ abstract final class ImageBindings {
         'height#0': (args) => (args[0] as Image).height,
         'debugDisposed#0': (args) => (args[0] as Image).debugDisposed,
         'colorSpace#0': (args) => (args[0] as Image).colorSpace,
+        'hashCode#0': (args) => (args[0] as Image).hashCode,
+        '==#1': (args) => (args[0] as Image) == (args[1] as Object),
       };
 }

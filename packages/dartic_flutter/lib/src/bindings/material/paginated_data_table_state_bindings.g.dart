@@ -45,6 +45,7 @@ abstract final class PaginatedDataTableStateBindings {
         'dispose#0': (args) { (args[0] as PaginatedDataTableState).dispose(); return null; },
         'pageTo#1': (args) { (args[0] as PaginatedDataTableState).pageTo(args[1] as int); return null; },
         'build#1': (args) => (args[0] as PaginatedDataTableState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as PaginatedDataTableState).toString(),
         'setState#1': (args) { (args[0] as PaginatedDataTableState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as PaginatedDataTableState).deactivate(); return null; },
         'activate#0': (args) { (args[0] as PaginatedDataTableState).activate(); return null; },
@@ -52,9 +53,11 @@ abstract final class PaginatedDataTableStateBindings {
         'debugFillProperties#1': (args) { (args[0] as PaginatedDataTableState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as PaginatedDataTableState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as PaginatedDataTableState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as PaginatedDataTableState).hashCode,
         'widget#0': (args) => (args[0] as PaginatedDataTableState).widget,
         'context#0': (args) => (args[0] as PaginatedDataTableState).context,
         'mounted#0': (args) => (args[0] as PaginatedDataTableState).mounted,
+        '==#1': (args) => (args[0] as PaginatedDataTableState) == (args[1] as Object),
         '#0': (args) => PaginatedDataTableState(),
       };
 }

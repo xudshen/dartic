@@ -44,7 +44,10 @@ abstract final class SelectionDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectionDetails).toString(),
         'range#0': (args) => (args[0] as SelectionDetails).range,
         'status#0': (args) => (args[0] as SelectionDetails).status,
+        'hashCode#0': (args) => (args[0] as SelectionDetails).hashCode,
+        '==#1': (args) => (args[0] as SelectionDetails) == (args[1] as Object),
       };
 }

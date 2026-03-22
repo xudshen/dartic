@@ -41,6 +41,7 @@ abstract final class OffstageBindings {
         'updateRenderObject#2': (args) { (args[0] as Offstage).updateRenderObject(args[1] as BuildContext, args[2] as RenderOffstage); return null; },
         'debugFillProperties#1': (args) { (args[0] as Offstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as Offstage).createElement(),
+        'toString#0': (args) => (args[0] as Offstage).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as Offstage).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Offstage).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as Offstage).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -48,8 +49,10 @@ abstract final class OffstageBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as Offstage).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Offstage).debugDescribeChildren(),
         'offstage#0': (args) => (args[0] as Offstage).offstage,
+        'hashCode#0': (args) => (args[0] as Offstage).hashCode,
         'child#0': (args) => (args[0] as Offstage).child,
         'key#0': (args) => (args[0] as Offstage).key,
+        '==#1': (args) => (args[0] as Offstage) == (args[1] as Object),
         '#3': (args) => Offstage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, offstage: identical(args[1], darticAbsent) ? true : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => Offstage(key: args[1] as Key?, offstage: args[2] as bool, child: args[0] as Widget?),
       };

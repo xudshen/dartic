@@ -30,8 +30,10 @@ abstract final class SliverPhysicalContainerParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SliverPhysicalContainerParentData).toString(),
         'applyPaintTransform#1': (args) { (args[0] as SliverPhysicalContainerParentData).applyPaintTransform(args[1] as Matrix4); return null; },
         'detach#0': (args) { (args[0] as SliverPhysicalContainerParentData).detach(); return null; },
+        'hashCode#0': (args) => (args[0] as SliverPhysicalContainerParentData).hashCode,
         'paintOffset#0': (args) => (args[0] as SliverPhysicalContainerParentData).paintOffset,
         'crossAxisFlex#0': (args) => (args[0] as SliverPhysicalContainerParentData).crossAxisFlex,
         'previousSibling#0': (args) => (args[0] as SliverPhysicalContainerParentData).previousSibling,
@@ -40,6 +42,7 @@ abstract final class SliverPhysicalContainerParentDataBindings {
         'crossAxisFlex=#1': (args) { (args[0] as SliverPhysicalContainerParentData).crossAxisFlex = args[1] as int?; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as SliverPhysicalContainerParentData).previousSibling = args[1] as RenderSliver?; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as SliverPhysicalContainerParentData).nextSibling = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as SliverPhysicalContainerParentData) == (args[1] as Object),
         '#0': (args) => SliverPhysicalContainerParentData(),
       };
 }

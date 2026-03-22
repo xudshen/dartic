@@ -48,6 +48,7 @@ abstract final class CupertinoSheetRouteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildContent#1': (args) => (args[0] as CupertinoSheetRoute).buildContent(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoSheetRoute).toString(),
         'canTransitionTo#1': (args) => (args[0] as CupertinoSheetRoute).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as CupertinoSheetRoute).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
         'setState#1': (args) { (args[0] as CupertinoSheetRoute).setState(() => (args[1] as Function)()); return null; },
@@ -69,7 +70,6 @@ abstract final class CupertinoSheetRouteBindings {
         'changedExternalState#0': (args) { (args[0] as CupertinoSheetRoute).changedExternalState(); return null; },
         'buildModalBarrier#0': (args) => (args[0] as CupertinoSheetRoute).buildModalBarrier(),
         'createOverlayEntries#0': (args) => (args[0] as CupertinoSheetRoute).createOverlayEntries(),
-        'toString#0': (args) => (args[0] as CupertinoSheetRoute).toString(),
         'debugTransitionCompleted#0': (args) => (args[0] as CupertinoSheetRoute).debugTransitionCompleted(),
         'createAnimationController#0': (args) => (args[0] as CupertinoSheetRoute).createAnimationController(),
         'createAnimation#0': (args) => (args[0] as CupertinoSheetRoute).createAnimation(),
@@ -93,6 +93,7 @@ abstract final class CupertinoSheetRouteBindings {
         'barrierLabel#0': (args) => (args[0] as CupertinoSheetRoute).barrierLabel,
         'maintainState#0': (args) => (args[0] as CupertinoSheetRoute).maintainState,
         'opaque#0': (args) => (args[0] as CupertinoSheetRoute).opaque,
+        'hashCode#0': (args) => (args[0] as CupertinoSheetRoute).hashCode,
         'fullscreenDialog#0': (args) => (args[0] as CupertinoSheetRoute).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as CupertinoSheetRoute).allowSnapshotting,
         'popGestureEnabled#0': (args) => (args[0] as CupertinoSheetRoute).popGestureEnabled,
@@ -131,11 +132,11 @@ abstract final class CupertinoSheetRouteBindings {
         'isFirst#0': (args) => (args[0] as CupertinoSheetRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as CupertinoSheetRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as CupertinoSheetRoute).isActive,
-        'hashCode#0': (args) => (args[0] as CupertinoSheetRoute).hashCode,
         'runtimeType#0': (args) => (args[0] as CupertinoSheetRoute).runtimeType,
         'receivedTransition=#1': (args) { (args[0] as CupertinoSheetRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as CupertinoSheetRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as CupertinoSheetRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as CupertinoSheetRoute) == (args[1] as Object),
         '#3': (args) => CupertinoSheetRoute<dynamic>(settings: identical(args[0], darticAbsent) ? null : args[0] as RouteSettings?, builder: (a) => (args[1] as Function)(a) as Widget, enableDrag: identical(args[2], darticAbsent) ? true : args[2] as bool),
       };
 }

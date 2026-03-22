@@ -38,6 +38,7 @@ abstract final class CupertinoPopupSurfaceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoPopupSurface).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoPopupSurface).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPopupSurface).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPopupSurface).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPopupSurface).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class CupertinoPopupSurfaceBindings {
         'blurSigma#0': (args) => (args[0] as CupertinoPopupSurface).blurSigma,
         'isSurfacePainted#0': (args) => (args[0] as CupertinoPopupSurface).isSurfacePainted,
         'child#0': (args) => (args[0] as CupertinoPopupSurface).child,
+        'hashCode#0': (args) => (args[0] as CupertinoPopupSurface).hashCode,
         'key#0': (args) => (args[0] as CupertinoPopupSurface).key,
+        '==#1': (args) => (args[0] as CupertinoPopupSurface) == (args[1] as Object),
         '#4': (args) => CupertinoPopupSurface(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, blurSigma: identical(args[1], darticAbsent) ? CupertinoPopupSurface.defaultBlurSigma : args[1] as double, isSurfacePainted: identical(args[2], darticAbsent) ? true : args[2] as bool, child: args[3] as Widget),
         '_#fromFields#4': (args) => CupertinoPopupSurface(key: args[3] as Key?, blurSigma: args[0] as double, isSurfacePainted: args[2] as bool, child: args[1] as Widget),
       };

@@ -31,6 +31,7 @@ abstract final class ImageFilterLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as ImageFilterLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ImageFilterLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ImageFilterLayer).toString(),
         'findAnnotations#3': (args) => (args[0] as ImageFilterLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'applyTransform#2': (args) { (args[0] as ImageFilterLayer).applyTransform(args[1] as Layer?, args[2] as Matrix4); return null; },
         'toImage#2': (args) => (args[0] as ImageFilterLayer).toImage(args[1] as ui.Rect, pixelRatio: identical(args[2], darticAbsent) ? 1.0 : args[2] as double),
@@ -60,6 +61,7 @@ abstract final class ImageFilterLayerBindings {
         'toStringDeep#4': (args) => (args[0] as ImageFilterLayer).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as ImageFilterLayer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'imageFilter#0': (args) => (args[0] as ImageFilterLayer).imageFilter,
+        'hashCode#0': (args) => (args[0] as ImageFilterLayer).hashCode,
         'offset#0': (args) => (args[0] as ImageFilterLayer).offset,
         'firstChild#0': (args) => (args[0] as ImageFilterLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ImageFilterLayer).lastChild,
@@ -81,6 +83,7 @@ abstract final class ImageFilterLayerBindings {
         'offset=#1': (args) { (args[0] as ImageFilterLayer).offset = args[1] as ui.Offset; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as ImageFilterLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ImageFilterLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ImageFilterLayer) == (args[1] as Object),
         '#2': (args) => ImageFilterLayer(imageFilter: identical(args[0], darticAbsent) ? null : args[0] as ui.ImageFilter?, offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as ui.Offset),
       };
 }

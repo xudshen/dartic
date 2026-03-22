@@ -89,6 +89,9 @@ abstract final class ThemeExtensionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#0': (args) => (args[0] as ThemeExtension).copyWith(),
         'lerp#2': (args) => (args[0] as ThemeExtension).lerp(args[1] as ThemeExtension<ThemeExtension>?, args[2] as double),
+        'toString#0': (args) => (args[0] as ThemeExtension).toString(),
         'type#0': (args) => (args[0] as ThemeExtension).type,
+        'hashCode#0': (args) => (args[0] as ThemeExtension).hashCode,
+        '==#1': (args) => (args[0] as ThemeExtension) == (args[1] as Object),
       };
 }

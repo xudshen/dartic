@@ -37,6 +37,9 @@ abstract final class DynamicSchemeVariantBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DynamicSchemeVariant).toString(),
+        'hashCode#0': (args) => (args[0] as DynamicSchemeVariant).hashCode,
         'index#0': (args) => (args[0] as DynamicSchemeVariant).index,
+        '==#1': (args) => (args[0] as DynamicSchemeVariant) == (args[1] as Object),
       };
 }

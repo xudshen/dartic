@@ -34,6 +34,7 @@ abstract final class UnderlineTabIndicatorBindings {
         'lerpTo#2': (args) => (args[0] as UnderlineTabIndicator).lerpTo(args[1] as Decoration?, args[2] as double),
         'createBoxPainter#1': (args) => (args[0] as UnderlineTabIndicator).createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
         'getClipPath#2': (args) => (args[0] as UnderlineTabIndicator).getClipPath(args[1] as Rect, args[2] as TextDirection),
+        'toString#0': (args) => (args[0] as UnderlineTabIndicator).toString(),
         'toStringShort#0': (args) => (args[0] as UnderlineTabIndicator).toStringShort(),
         'debugAssertIsValid#0': (args) => (args[0] as UnderlineTabIndicator).debugAssertIsValid(),
         'hitTest#3': (args) => (args[0] as UnderlineTabIndicator).hitTest(args[1] as Size, args[2] as Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?),
@@ -42,8 +43,10 @@ abstract final class UnderlineTabIndicatorBindings {
         'borderRadius#0': (args) => (args[0] as UnderlineTabIndicator).borderRadius,
         'borderSide#0': (args) => (args[0] as UnderlineTabIndicator).borderSide,
         'insets#0': (args) => (args[0] as UnderlineTabIndicator).insets,
+        'hashCode#0': (args) => (args[0] as UnderlineTabIndicator).hashCode,
         'padding#0': (args) => (args[0] as UnderlineTabIndicator).padding,
         'isComplex#0': (args) => (args[0] as UnderlineTabIndicator).isComplex,
+        '==#1': (args) => (args[0] as UnderlineTabIndicator) == (args[1] as Object),
         '#3': (args) => UnderlineTabIndicator(borderRadius: identical(args[0], darticAbsent) ? null : args[0] as BorderRadius?, borderSide: identical(args[1], darticAbsent) ? const BorderSide(width: 2.0, color: Colors.white) : args[1] as BorderSide, insets: identical(args[2], darticAbsent) ? EdgeInsets.zero : args[2] as EdgeInsetsGeometry),
         '_#fromFields#3': (args) => UnderlineTabIndicator(borderRadius: args[0] as BorderRadius?, borderSide: args[1] as BorderSide, insets: args[2] as EdgeInsetsGeometry),
       };

@@ -31,8 +31,11 @@ abstract final class OverScrollHeaderStretchConfigurationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as OverScrollHeaderStretchConfiguration).toString(),
         'stretchTriggerOffset#0': (args) => (args[0] as OverScrollHeaderStretchConfiguration).stretchTriggerOffset,
         'onStretchTrigger#0': (args) => (args[0] as OverScrollHeaderStretchConfiguration).onStretchTrigger,
+        'hashCode#0': (args) => (args[0] as OverScrollHeaderStretchConfiguration).hashCode,
+        '==#1': (args) => (args[0] as OverScrollHeaderStretchConfiguration) == (args[1] as Object),
         '#2': (args) => OverScrollHeaderStretchConfiguration(stretchTriggerOffset: identical(args[0], darticAbsent) ? 100.0 : args[0] as double, onStretchTrigger: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
       };
 }

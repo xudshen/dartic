@@ -30,5 +30,7 @@ abstract final class TableColumnWidthBindings {
         'maxIntrinsicWidth#2': (args) => (args[0] as TableColumnWidth).maxIntrinsicWidth((args[1] as Iterable).cast<RenderBox>(), args[2] as double),
         'flex#1': (args) => (args[0] as TableColumnWidth).flex((args[1] as Iterable).cast<RenderBox>()),
         'toString#0': (args) => (args[0] as TableColumnWidth).toString(),
+        'hashCode#0': (args) => (args[0] as TableColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as TableColumnWidth) == (args[1] as Object),
       };
 }

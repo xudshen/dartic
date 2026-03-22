@@ -30,6 +30,7 @@ abstract final class ShaderMaskLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as ShaderMaskLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as ShaderMaskLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ShaderMaskLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as ShaderMaskLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as ShaderMaskLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as ShaderMaskLayer).dispose(); return null; },
@@ -59,6 +60,7 @@ abstract final class ShaderMaskLayerBindings {
         'shader#0': (args) => (args[0] as ShaderMaskLayer).shader,
         'maskRect#0': (args) => (args[0] as ShaderMaskLayer).maskRect,
         'blendMode#0': (args) => (args[0] as ShaderMaskLayer).blendMode,
+        'hashCode#0': (args) => (args[0] as ShaderMaskLayer).hashCode,
         'firstChild#0': (args) => (args[0] as ShaderMaskLayer).firstChild,
         'lastChild#0': (args) => (args[0] as ShaderMaskLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as ShaderMaskLayer).hasChildren,
@@ -80,6 +82,7 @@ abstract final class ShaderMaskLayerBindings {
         'blendMode=#1': (args) { (args[0] as ShaderMaskLayer).blendMode = args[1] as ui.BlendMode?; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as ShaderMaskLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as ShaderMaskLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ShaderMaskLayer) == (args[1] as Object),
         '#3': (args) => ShaderMaskLayer(shader: identical(args[0], darticAbsent) ? null : args[0] as ui.Shader?, maskRect: identical(args[1], darticAbsent) ? null : args[1] as ui.Rect?, blendMode: identical(args[2], darticAbsent) ? null : args[2] as ui.BlendMode?),
       };
 }

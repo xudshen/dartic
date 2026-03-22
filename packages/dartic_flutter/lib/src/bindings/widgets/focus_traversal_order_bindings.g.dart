@@ -34,6 +34,7 @@ abstract final class FocusTraversalOrderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as FocusTraversalOrder).updateShouldNotify(args[1] as InheritedWidget),
         'debugFillProperties#1': (args) { (args[0] as FocusTraversalOrder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FocusTraversalOrder).toString(),
         'createElement#0': (args) => (args[0] as FocusTraversalOrder).createElement(),
         'toStringShort#0': (args) => (args[0] as FocusTraversalOrder).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as FocusTraversalOrder).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -41,8 +42,10 @@ abstract final class FocusTraversalOrderBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as FocusTraversalOrder).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as FocusTraversalOrder).debugDescribeChildren(),
         'order#0': (args) => (args[0] as FocusTraversalOrder).order,
+        'hashCode#0': (args) => (args[0] as FocusTraversalOrder).hashCode,
         'child#0': (args) => (args[0] as FocusTraversalOrder).child,
         'key#0': (args) => (args[0] as FocusTraversalOrder).key,
+        '==#1': (args) => (args[0] as FocusTraversalOrder) == (args[1] as Object),
         '#3': (args) => FocusTraversalOrder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, order: args[1] as FocusOrder, child: args[2] as Widget),
         '_#fromFields#3': (args) => FocusTraversalOrder(key: args[1] as Key?, order: args[2] as FocusOrder, child: args[0] as Widget),
       };

@@ -46,8 +46,11 @@ abstract final class RouteTransitionRecordBindings {
         'markForPop#1': (args) { (args[0] as RouteTransitionRecord).markForPop(identical(args[1], darticAbsent) ? null : args[1]); return null; },
         'markForComplete#1': (args) { (args[0] as RouteTransitionRecord).markForComplete(identical(args[1], darticAbsent) ? null : args[1]); return null; },
         'markForRemove#0': (args) { (args[0] as RouteTransitionRecord).markForRemove(); return null; },
+        'toString#0': (args) => (args[0] as RouteTransitionRecord).toString(),
         'route#0': (args) => (args[0] as RouteTransitionRecord).route,
         'isWaitingForEnteringDecision#0': (args) => (args[0] as RouteTransitionRecord).isWaitingForEnteringDecision,
         'isWaitingForExitingDecision#0': (args) => (args[0] as RouteTransitionRecord).isWaitingForExitingDecision,
+        'hashCode#0': (args) => (args[0] as RouteTransitionRecord).hashCode,
+        '==#1': (args) => (args[0] as RouteTransitionRecord) == (args[1] as Object),
       };
 }

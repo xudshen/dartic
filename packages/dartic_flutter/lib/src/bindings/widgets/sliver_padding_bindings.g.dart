@@ -42,6 +42,7 @@ abstract final class SliverPaddingBindings {
         'createRenderObject#1': (args) => (args[0] as SliverPadding).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as SliverPadding).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverPadding); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverPadding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverPadding).toString(),
         'createElement#0': (args) => (args[0] as SliverPadding).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverPadding).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverPadding).toStringShort(),
@@ -50,8 +51,10 @@ abstract final class SliverPaddingBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverPadding).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverPadding).debugDescribeChildren(),
         'padding#0': (args) => (args[0] as SliverPadding).padding,
+        'hashCode#0': (args) => (args[0] as SliverPadding).hashCode,
         'child#0': (args) => (args[0] as SliverPadding).child,
         'key#0': (args) => (args[0] as SliverPadding).key,
+        '==#1': (args) => (args[0] as SliverPadding) == (args[1] as Object),
         '#3': (args) => SliverPadding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: args[1] as EdgeInsetsGeometry, sliver: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => SliverPadding(key: args[1] as Key?, padding: args[2] as EdgeInsetsGeometry, sliver: args[0] as Widget?),
       };

@@ -29,14 +29,17 @@ abstract final class ThemeDataTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as ThemeDataTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as ThemeDataTween).toString(),
         'transform#1': (args) => (args[0] as ThemeDataTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as ThemeDataTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as ThemeDataTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as ThemeDataTween).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as ThemeDataTween).hashCode,
         'begin#0': (args) => (args[0] as ThemeDataTween).begin,
         'end#0': (args) => (args[0] as ThemeDataTween).end,
         'begin=#1': (args) { (args[0] as ThemeDataTween).begin = args[1] as ThemeData?; return args[1]; },
         'end=#1': (args) { (args[0] as ThemeDataTween).end = args[1] as ThemeData?; return args[1]; },
+        '==#1': (args) => (args[0] as ThemeDataTween) == (args[1] as Object),
         '#2': (args) => ThemeDataTween(begin: identical(args[0], darticAbsent) ? null : args[0] as ThemeData?, end: identical(args[1], darticAbsent) ? null : args[1] as ThemeData?),
       };
 }

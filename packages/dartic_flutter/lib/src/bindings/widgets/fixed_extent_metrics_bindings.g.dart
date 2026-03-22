@@ -40,7 +40,9 @@ abstract final class FixedExtentMetricsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'copyWith#7': (args) => (args[0] as FixedExtentMetrics).copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, itemIndex: identical(args[6], darticAbsent) ? null : args[6] as int?, devicePixelRatio: identical(args[7], darticAbsent) ? null : args[7] as double?),
+        'toString#0': (args) => (args[0] as FixedExtentMetrics).toString(),
         'itemIndex#0': (args) => (args[0] as FixedExtentMetrics).itemIndex,
+        'hashCode#0': (args) => (args[0] as FixedExtentMetrics).hashCode,
         'minScrollExtent#0': (args) => (args[0] as FixedExtentMetrics).minScrollExtent,
         'maxScrollExtent#0': (args) => (args[0] as FixedExtentMetrics).maxScrollExtent,
         'hasContentDimensions#0': (args) => (args[0] as FixedExtentMetrics).hasContentDimensions,
@@ -57,6 +59,7 @@ abstract final class FixedExtentMetricsBindings {
         'extentInside#0': (args) => (args[0] as FixedExtentMetrics).extentInside,
         'extentAfter#0': (args) => (args[0] as FixedExtentMetrics).extentAfter,
         'extentTotal#0': (args) => (args[0] as FixedExtentMetrics).extentTotal,
+        '==#1': (args) => (args[0] as FixedExtentMetrics) == (args[1] as Object),
         '#7': (args) => FixedExtentMetrics(minScrollExtent: args[0] as double?, maxScrollExtent: args[1] as double?, pixels: args[2] as double?, viewportDimension: args[3] as double?, axisDirection: args[4] as AxisDirection, itemIndex: args[5] as int, devicePixelRatio: args[6] as double),
       };
 }

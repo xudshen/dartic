@@ -28,6 +28,9 @@ abstract final class SystemUiOverlayBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemUiOverlay).toString(),
+        'hashCode#0': (args) => (args[0] as SystemUiOverlay).hashCode,
         'index#0': (args) => (args[0] as SystemUiOverlay).index,
+        '==#1': (args) => (args[0] as SystemUiOverlay) == (args[1] as Object),
       };
 }

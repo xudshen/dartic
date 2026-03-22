@@ -33,6 +33,7 @@ abstract final class TextPositionBindings {
         'offset#0': (args) => (args[0] as TextPosition).offset,
         'affinity#0': (args) => (args[0] as TextPosition).affinity,
         'hashCode#0': (args) => (args[0] as TextPosition).hashCode,
+        '==#1': (args) => (args[0] as TextPosition) == (args[1] as Object),
         '#2': (args) => TextPosition(offset: args[0] as int, affinity: identical(args[1], darticAbsent) ? TextAffinity.downstream : args[1] as TextAffinity),
         '_#fromFields#2': (args) => TextPosition(offset: args[1] as int, affinity: args[0] as TextAffinity),
       };

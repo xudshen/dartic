@@ -46,6 +46,8 @@ abstract final class NavigationNotificationBindings {
         'dispatch#1': (args) { (args[0] as NavigationNotification).dispatch(args[1] as BuildContext?); return null; },
         'debugFillDescription#1': (args) { (args[0] as NavigationNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
         'canHandlePop#0': (args) => (args[0] as NavigationNotification).canHandlePop,
+        'hashCode#0': (args) => (args[0] as NavigationNotification).hashCode,
+        '==#1': (args) => (args[0] as NavigationNotification) == (args[1] as Object),
         '#1': (args) => NavigationNotification(canHandlePop: args[0] as bool),
         '_#fromFields#1': (args) => NavigationNotification(canHandlePop: args[0] as bool),
       };

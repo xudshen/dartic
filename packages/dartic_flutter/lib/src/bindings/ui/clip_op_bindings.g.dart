@@ -33,6 +33,9 @@ abstract final class ClipOpBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ClipOp).toString(),
+        'hashCode#0': (args) => (args[0] as ClipOp).hashCode,
         'index#0': (args) => (args[0] as ClipOp).index,
+        '==#1': (args) => (args[0] as ClipOp) == (args[1] as Object),
       };
 }

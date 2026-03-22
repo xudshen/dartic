@@ -27,7 +27,10 @@ abstract final class VelocityTrackerBindings {
         'addPosition#2': (args) { (args[0] as VelocityTracker).addPosition(args[1] as Duration, args[2] as Offset); return null; },
         'getVelocityEstimate#0': (args) => (args[0] as VelocityTracker).getVelocityEstimate(),
         'getVelocity#0': (args) => (args[0] as VelocityTracker).getVelocity(),
+        'toString#0': (args) => (args[0] as VelocityTracker).toString(),
         'kind#0': (args) => (args[0] as VelocityTracker).kind,
+        'hashCode#0': (args) => (args[0] as VelocityTracker).hashCode,
+        '==#1': (args) => (args[0] as VelocityTracker) == (args[1] as Object),
         'withKind#1': (args) => VelocityTracker.withKind(args[0] as PointerDeviceKind),
       };
 }

@@ -23,5 +23,8 @@ abstract final class GestureArenaEntryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) { (args[0] as GestureArenaEntry).resolve(args[1] as GestureDisposition); return null; },
+        'toString#0': (args) => (args[0] as GestureArenaEntry).toString(),
+        'hashCode#0': (args) => (args[0] as GestureArenaEntry).hashCode,
+        '==#1': (args) => (args[0] as GestureArenaEntry) == (args[1] as Object),
       };
 }

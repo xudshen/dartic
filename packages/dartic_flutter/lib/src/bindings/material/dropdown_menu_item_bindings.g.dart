@@ -44,6 +44,7 @@ abstract final class DropdownMenuItemBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DropdownMenuItem).toString(),
         'build#1': (args) => (args[0] as DropdownMenuItem).build(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as DropdownMenuItem).createElement(),
         'toStringShort#0': (args) => (args[0] as DropdownMenuItem).toStringShort(),
@@ -55,9 +56,11 @@ abstract final class DropdownMenuItemBindings {
         'onTap#0': (args) => (args[0] as DropdownMenuItem).onTap,
         'value#0': (args) => (args[0] as DropdownMenuItem).value,
         'enabled#0': (args) => (args[0] as DropdownMenuItem).enabled,
+        'hashCode#0': (args) => (args[0] as DropdownMenuItem).hashCode,
         'child#0': (args) => (args[0] as DropdownMenuItem).child,
         'alignment#0': (args) => (args[0] as DropdownMenuItem).alignment,
         'key#0': (args) => (args[0] as DropdownMenuItem).key,
+        '==#1': (args) => (args[0] as DropdownMenuItem) == (args[1] as Object),
         '#6': (args) => DropdownMenuItem<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onTap: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), value: identical(args[2], darticAbsent) ? null : args[2], enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, alignment: identical(args[4], darticAbsent) ? AlignmentDirectional.centerStart : args[4] as AlignmentGeometry, child: args[5] as Widget),
         '_#fromFields#6': (args) => DropdownMenuItem<dynamic>(key: args[3] as Key?, onTap: args[4] as VoidCallback?, value: args[5], enabled: args[2] as bool, alignment: args[0] as AlignmentGeometry, child: args[1] as Widget),
       };

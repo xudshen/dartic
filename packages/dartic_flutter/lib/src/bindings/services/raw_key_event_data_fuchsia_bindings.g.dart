@@ -43,6 +43,7 @@ abstract final class RawKeyEventDataFuchsiaBindings {
         'isModifierPressed#2': (args) => (args[0] as RawKeyEventDataFuchsia).isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide),
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataFuchsia).getModifierSide(args[1] as ModifierKey),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataFuchsia).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataFuchsia).toString(),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataFuchsia).shouldDispatchEvent(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataFuchsia).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataFuchsia).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
@@ -58,6 +59,7 @@ abstract final class RawKeyEventDataFuchsiaBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataFuchsia).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataFuchsia).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataFuchsia).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataFuchsia) == (args[1] as Object),
         '#3': (args) => RawKeyEventDataFuchsia(hidUsage: identical(args[0], darticAbsent) ? 0 : args[0] as int, codePoint: identical(args[1], darticAbsent) ? 0 : args[1] as int, modifiers: identical(args[2], darticAbsent) ? 0 : args[2] as int),
         '_#fromFields#3': (args) => RawKeyEventDataFuchsia(hidUsage: args[1] as int, codePoint: args[0] as int, modifiers: args[2] as int),
       };

@@ -39,12 +39,15 @@ abstract final class HeroControllerBindings {
         'didStartUserGesture#2': (args) { (args[0] as HeroController).didStartUserGesture(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didStopUserGesture#0': (args) { (args[0] as HeroController).didStopUserGesture(); return null; },
         'dispose#0': (args) { (args[0] as HeroController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as HeroController).toString(),
         'didPush#2': (args) { (args[0] as HeroController).didPush(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didPop#2': (args) { (args[0] as HeroController).didPop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didRemove#2': (args) { (args[0] as HeroController).didRemove(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; },
         'didReplace#2': (args) { (args[0] as HeroController).didReplace(newRoute: identical(args[1], darticAbsent) ? null : args[1] as Route<dynamic>?, oldRoute: identical(args[2], darticAbsent) ? null : args[2] as Route<dynamic>?); return null; },
         'createRectTween#0': (args) => (args[0] as HeroController).createRectTween,
+        'hashCode#0': (args) => (args[0] as HeroController).hashCode,
         'navigator#0': (args) => (args[0] as HeroController).navigator,
+        '==#1': (args) => (args[0] as HeroController) == (args[1] as Object),
         '#1': (args) => HeroController(createRectTween: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a, b) => (args[0] as Function?)!(a, b)),
       };
 }

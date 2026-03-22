@@ -30,6 +30,7 @@ abstract final class CupertinoContextMenuActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoContextMenuAction).createState(),
+        'toString#0': (args) => (args[0] as CupertinoContextMenuAction).toString(),
         'createElement#0': (args) => (args[0] as CupertinoContextMenuAction).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoContextMenuAction).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoContextMenuAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,7 +43,9 @@ abstract final class CupertinoContextMenuActionBindings {
         'isDestructiveAction#0': (args) => (args[0] as CupertinoContextMenuAction).isDestructiveAction,
         'onPressed#0': (args) => (args[0] as CupertinoContextMenuAction).onPressed,
         'trailingIcon#0': (args) => (args[0] as CupertinoContextMenuAction).trailingIcon,
+        'hashCode#0': (args) => (args[0] as CupertinoContextMenuAction).hashCode,
         'key#0': (args) => (args[0] as CupertinoContextMenuAction).key,
+        '==#1': (args) => (args[0] as CupertinoContextMenuAction) == (args[1] as Object),
         '#6': (args) => CupertinoContextMenuAction(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, isDefaultAction: identical(args[2], darticAbsent) ? false : args[2] as bool, isDestructiveAction: identical(args[3], darticAbsent) ? false : args[3] as bool, onPressed: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), trailingIcon: identical(args[5], darticAbsent) ? null : args[5] as IconData?),
         '_#fromFields#6': (args) => CupertinoContextMenuAction(key: args[3] as Key?, child: args[0] as Widget, isDefaultAction: args[1] as bool, isDestructiveAction: args[2] as bool, onPressed: args[4] as VoidCallback?, trailingIcon: args[5] as IconData?),
       };

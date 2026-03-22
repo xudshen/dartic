@@ -29,6 +29,9 @@ abstract final class FrameDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FrameData).toString(),
         'frameNumber#0': (args) => (args[0] as FrameData).frameNumber,
+        'hashCode#0': (args) => (args[0] as FrameData).hashCode,
+        '==#1': (args) => (args[0] as FrameData) == (args[1] as Object),
       };
 }

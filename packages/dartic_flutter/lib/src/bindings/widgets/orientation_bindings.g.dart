@@ -32,6 +32,9 @@ abstract final class OrientationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Orientation).toString(),
+        'hashCode#0': (args) => (args[0] as Orientation).hashCode,
         'index#0': (args) => (args[0] as Orientation).index,
+        '==#1': (args) => (args[0] as Orientation) == (args[1] as Object),
       };
 }

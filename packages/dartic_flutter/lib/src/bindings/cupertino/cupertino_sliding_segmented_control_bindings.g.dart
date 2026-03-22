@@ -36,6 +36,7 @@ abstract final class CupertinoSlidingSegmentedControlBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).createState(),
+        'toString#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).toString(),
         'createElement#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoSlidingSegmentedControl).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class CupertinoSlidingSegmentedControlBindings {
         'thumbColor#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).thumbColor,
         'padding#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).padding,
         'isMomentary#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).isMomentary,
+        'hashCode#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).hashCode,
         'key#0': (args) => (args[0] as CupertinoSlidingSegmentedControl).key,
+        '==#1': (args) => (args[0] as CupertinoSlidingSegmentedControl) == (args[1] as Object),
         '#10': (args) {
           if (identical(args[5], darticAbsent)) {
             if (identical(args[6], darticAbsent)) {

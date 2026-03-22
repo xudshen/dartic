@@ -32,6 +32,7 @@ abstract final class ActivateActionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ActivateAction).toString(),
         'isEnabled#1': (args) => (args[0] as ActivateAction).isEnabled(args[1] as ActivateIntent),
         'consumesKey#1': (args) => (args[0] as ActivateAction).consumesKey(args[1] as ActivateIntent),
         'toKeyEventResult#2': (args) => (args[0] as ActivateAction).toKeyEventResult(args[1] as ActivateIntent, args[2]),
@@ -42,8 +43,10 @@ abstract final class ActivateActionBindings {
         'toStringShort#0': (args) => (args[0] as ActivateAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ActivateAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as ActivateAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as ActivateAction).hashCode,
         'callingAction#0': (args) => (args[0] as ActivateAction).callingAction,
         'intentType#0': (args) => (args[0] as ActivateAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as ActivateAction).isActionEnabled,
+        '==#1': (args) => (args[0] as ActivateAction) == (args[1] as Object),
       };
 }

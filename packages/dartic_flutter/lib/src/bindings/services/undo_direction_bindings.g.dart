@@ -25,6 +25,9 @@ abstract final class UndoDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UndoDirection).toString(),
+        'hashCode#0': (args) => (args[0] as UndoDirection).hashCode,
         'index#0': (args) => (args[0] as UndoDirection).index,
+        '==#1': (args) => (args[0] as UndoDirection) == (args[1] as Object),
       };
 }

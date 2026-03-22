@@ -38,7 +38,10 @@ abstract final class CheckmarkableChipAttributesBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CheckmarkableChipAttributes).toString(),
         'showCheckmark#0': (args) => (args[0] as CheckmarkableChipAttributes).showCheckmark,
         'checkmarkColor#0': (args) => (args[0] as CheckmarkableChipAttributes).checkmarkColor,
+        'hashCode#0': (args) => (args[0] as CheckmarkableChipAttributes).hashCode,
+        '==#1': (args) => (args[0] as CheckmarkableChipAttributes) == (args[1] as Object),
       };
 }

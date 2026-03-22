@@ -30,6 +30,7 @@ abstract final class BackdropFilterLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addToScene#1': (args) { (args[0] as BackdropFilterLayer).addToScene(args[1] as ui.SceneBuilder); return null; },
         'debugFillProperties#1': (args) { (args[0] as BackdropFilterLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BackdropFilterLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as BackdropFilterLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as BackdropFilterLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as BackdropFilterLayer).dispose(); return null; },
@@ -59,6 +60,7 @@ abstract final class BackdropFilterLayerBindings {
         'filter#0': (args) => (args[0] as BackdropFilterLayer).filter,
         'blendMode#0': (args) => (args[0] as BackdropFilterLayer).blendMode,
         'backdropKey#0': (args) => (args[0] as BackdropFilterLayer).backdropKey,
+        'hashCode#0': (args) => (args[0] as BackdropFilterLayer).hashCode,
         'firstChild#0': (args) => (args[0] as BackdropFilterLayer).firstChild,
         'lastChild#0': (args) => (args[0] as BackdropFilterLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as BackdropFilterLayer).hasChildren,
@@ -80,6 +82,7 @@ abstract final class BackdropFilterLayerBindings {
         'backdropKey=#1': (args) { (args[0] as BackdropFilterLayer).backdropKey = args[1] as BackdropKey?; return args[1]; },
         'engineLayer=#1': (args) { (args[0] as BackdropFilterLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as BackdropFilterLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as BackdropFilterLayer) == (args[1] as Object),
         '#2': (args) => BackdropFilterLayer(filter: identical(args[0], darticAbsent) ? null : args[0] as ui.ImageFilter?, blendMode: identical(args[1], darticAbsent) ? BlendMode.srcOver : args[1] as ui.BlendMode),
       };
 }

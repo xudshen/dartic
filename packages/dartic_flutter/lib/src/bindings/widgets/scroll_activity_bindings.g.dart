@@ -41,5 +41,7 @@ abstract final class ScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as ScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as ScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as ScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as ScrollActivity).hashCode,
+        '==#1': (args) => (args[0] as ScrollActivity) == (args[1] as Object),
       };
 }

@@ -24,6 +24,7 @@ abstract final class DataTableSourceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getRow#1': (args) => (args[0] as DataTableSource).getRow(args[1] as int),
+        'toString#0': (args) => (args[0] as DataTableSource).toString(),
         'addListener#1': (args) { (args[0] as DataTableSource).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as DataTableSource).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as DataTableSource).dispose(); return null; },
@@ -31,6 +32,8 @@ abstract final class DataTableSourceBindings {
         'rowCount#0': (args) => (args[0] as DataTableSource).rowCount,
         'isRowCountApproximate#0': (args) => (args[0] as DataTableSource).isRowCountApproximate,
         'selectedRowCount#0': (args) => (args[0] as DataTableSource).selectedRowCount,
+        'hashCode#0': (args) => (args[0] as DataTableSource).hashCode,
         'hasListeners#0': (args) => (args[0] as DataTableSource).hasListeners,
+        '==#1': (args) => (args[0] as DataTableSource) == (args[1] as Object),
       };
 }

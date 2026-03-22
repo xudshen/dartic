@@ -23,9 +23,12 @@ abstract final class AssetMetadataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AssetMetadata).toString(),
         'targetDevicePixelRatio#0': (args) => (args[0] as AssetMetadata).targetDevicePixelRatio,
         'key#0': (args) => (args[0] as AssetMetadata).key,
         'main#0': (args) => (args[0] as AssetMetadata).main,
+        'hashCode#0': (args) => (args[0] as AssetMetadata).hashCode,
+        '==#1': (args) => (args[0] as AssetMetadata) == (args[1] as Object),
         '#3': (args) => AssetMetadata(key: args[0] as String, targetDevicePixelRatio: args[1] as double?, main: args[2] as bool),
         '_#fromFields#3': (args) => AssetMetadata(key: args[0] as String, targetDevicePixelRatio: args[2] as double?, main: args[1] as bool),
       };

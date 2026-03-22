@@ -30,6 +30,9 @@ abstract final class TextGranularityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextGranularity).toString(),
+        'hashCode#0': (args) => (args[0] as TextGranularity).hashCode,
         'index#0': (args) => (args[0] as TextGranularity).index,
+        '==#1': (args) => (args[0] as TextGranularity) == (args[1] as Object),
       };
 }

@@ -48,6 +48,7 @@ abstract final class TwoDimensionalScrollViewBindings {
         'buildViewport#3': (args) => (args[0] as TwoDimensionalScrollView).buildViewport(args[1] as BuildContext, args[2] as ViewportOffset, args[3] as ViewportOffset),
         'build#1': (args) => (args[0] as TwoDimensionalScrollView).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as TwoDimensionalScrollView).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TwoDimensionalScrollView).toString(),
         'createElement#0': (args) => (args[0] as TwoDimensionalScrollView).createElement(),
         'toStringShort#0': (args) => (args[0] as TwoDimensionalScrollView).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as TwoDimensionalScrollView).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -65,6 +66,8 @@ abstract final class TwoDimensionalScrollViewBindings {
         'keyboardDismissBehavior#0': (args) => (args[0] as TwoDimensionalScrollView).keyboardDismissBehavior,
         'hitTestBehavior#0': (args) => (args[0] as TwoDimensionalScrollView).hitTestBehavior,
         'clipBehavior#0': (args) => (args[0] as TwoDimensionalScrollView).clipBehavior,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalScrollView).hashCode,
         'key#0': (args) => (args[0] as TwoDimensionalScrollView).key,
+        '==#1': (args) => (args[0] as TwoDimensionalScrollView) == (args[1] as Object),
       };
 }

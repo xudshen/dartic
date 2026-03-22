@@ -34,6 +34,7 @@ abstract final class DoNothingActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'consumesKey#1': (args) => (args[0] as DoNothingAction).consumesKey(args[1] as Intent),
         'invoke#1': (args) { (args[0] as DoNothingAction).invoke(args[1] as Intent); return null; },
+        'toString#0': (args) => (args[0] as DoNothingAction).toString(),
         'isEnabled#1': (args) => (args[0] as DoNothingAction).isEnabled(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as DoNothingAction).toKeyEventResult(args[1] as Intent, args[2]),
         'addActionListener#1': (args) { (args[0] as DoNothingAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -42,9 +43,11 @@ abstract final class DoNothingActionBindings {
         'toStringShort#0': (args) => (args[0] as DoNothingAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DoNothingAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DoNothingAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as DoNothingAction).hashCode,
         'callingAction#0': (args) => (args[0] as DoNothingAction).callingAction,
         'intentType#0': (args) => (args[0] as DoNothingAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as DoNothingAction).isActionEnabled,
+        '==#1': (args) => (args[0] as DoNothingAction) == (args[1] as Object),
         '#1': (args) => DoNothingAction(consumesKey: identical(args[0], darticAbsent) ? true : args[0] as bool),
       };
 }

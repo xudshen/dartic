@@ -34,6 +34,9 @@ abstract final class HitTestBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as HitTestBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as HitTestBehavior).hashCode,
         'index#0': (args) => (args[0] as HitTestBehavior).index,
+        '==#1': (args) => (args[0] as HitTestBehavior) == (args[1] as Object),
       };
 }

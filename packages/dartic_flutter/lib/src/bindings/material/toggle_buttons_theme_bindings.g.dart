@@ -31,6 +31,7 @@ abstract final class ToggleButtonsThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as ToggleButtonsTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as ToggleButtonsTheme).updateShouldNotify(args[1] as ToggleButtonsTheme),
+        'toString#0': (args) => (args[0] as ToggleButtonsTheme).toString(),
         'createElement#0': (args) => (args[0] as ToggleButtonsTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as ToggleButtonsTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ToggleButtonsTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -39,8 +40,10 @@ abstract final class ToggleButtonsThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ToggleButtonsTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ToggleButtonsTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as ToggleButtonsTheme).data,
+        'hashCode#0': (args) => (args[0] as ToggleButtonsTheme).hashCode,
         'child#0': (args) => (args[0] as ToggleButtonsTheme).child,
         'key#0': (args) => (args[0] as ToggleButtonsTheme).key,
+        '==#1': (args) => (args[0] as ToggleButtonsTheme) == (args[1] as Object),
         '#3': (args) => ToggleButtonsTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as ToggleButtonsThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => ToggleButtonsTheme(key: args[2] as Key?, data: args[1] as ToggleButtonsThemeData, child: args[0] as Widget),
       };

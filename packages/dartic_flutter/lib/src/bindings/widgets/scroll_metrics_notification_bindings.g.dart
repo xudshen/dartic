@@ -37,10 +37,13 @@ abstract final class ScrollMetricsNotificationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'asScrollUpdate#0': (args) => (args[0] as ScrollMetricsNotification).asScrollUpdate(),
         'debugFillDescription#1': (args) { (args[0] as ScrollMetricsNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'toString#0': (args) => (args[0] as ScrollMetricsNotification).toString(),
         'dispatch#1': (args) { (args[0] as ScrollMetricsNotification).dispatch(args[1] as BuildContext?); return null; },
         'metrics#0': (args) => (args[0] as ScrollMetricsNotification).metrics,
         'context#0': (args) => (args[0] as ScrollMetricsNotification).context,
+        'hashCode#0': (args) => (args[0] as ScrollMetricsNotification).hashCode,
         'depth#0': (args) => (args[0] as ScrollMetricsNotification).depth,
+        '==#1': (args) => (args[0] as ScrollMetricsNotification) == (args[1] as Object),
         '#2': (args) => ScrollMetricsNotification(metrics: args[0] as ScrollMetrics, context: args[1] as BuildContext),
       };
 }

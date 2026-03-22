@@ -28,11 +28,14 @@ abstract final class EditableTextTapOutsideIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as EditableTextTapOutsideIntent).toString(),
         'toStringShort#0': (args) => (args[0] as EditableTextTapOutsideIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as EditableTextTapOutsideIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as EditableTextTapOutsideIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'focusNode#0': (args) => (args[0] as EditableTextTapOutsideIntent).focusNode,
         'pointerDownEvent#0': (args) => (args[0] as EditableTextTapOutsideIntent).pointerDownEvent,
+        'hashCode#0': (args) => (args[0] as EditableTextTapOutsideIntent).hashCode,
+        '==#1': (args) => (args[0] as EditableTextTapOutsideIntent) == (args[1] as Object),
         '#2': (args) => EditableTextTapOutsideIntent(focusNode: args[0] as FocusNode, pointerDownEvent: args[1] as PointerDownEvent),
         '_#fromFields#2': (args) => EditableTextTapOutsideIntent(focusNode: args[0] as FocusNode, pointerDownEvent: args[1] as PointerDownEvent),
       };

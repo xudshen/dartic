@@ -27,6 +27,7 @@ abstract final class InheritedNotifierBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as InheritedNotifier).updateShouldNotify(args[1] as InheritedNotifier<Listenable>),
         'createElement#0': (args) => (args[0] as InheritedNotifier).createElement(),
+        'toString#0': (args) => (args[0] as InheritedNotifier).toString(),
         'toStringShort#0': (args) => (args[0] as InheritedNotifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedNotifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as InheritedNotifier).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -34,7 +35,9 @@ abstract final class InheritedNotifierBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as InheritedNotifier).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as InheritedNotifier).debugDescribeChildren(),
         'notifier#0': (args) => (args[0] as InheritedNotifier).notifier,
+        'hashCode#0': (args) => (args[0] as InheritedNotifier).hashCode,
         'child#0': (args) => (args[0] as InheritedNotifier).child,
         'key#0': (args) => (args[0] as InheritedNotifier).key,
+        '==#1': (args) => (args[0] as InheritedNotifier) == (args[1] as Object),
       };
 }

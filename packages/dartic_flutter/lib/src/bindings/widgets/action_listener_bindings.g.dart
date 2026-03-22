@@ -34,6 +34,7 @@ abstract final class ActionListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as ActionListener).createState(),
+        'toString#0': (args) => (args[0] as ActionListener).toString(),
         'createElement#0': (args) => (args[0] as ActionListener).createElement(),
         'toStringShort#0': (args) => (args[0] as ActionListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ActionListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class ActionListenerBindings {
         'listener#0': (args) => (args[0] as ActionListener).listener,
         'action#0': (args) => (args[0] as ActionListener).action,
         'child#0': (args) => (args[0] as ActionListener).child,
+        'hashCode#0': (args) => (args[0] as ActionListener).hashCode,
         'key#0': (args) => (args[0] as ActionListener).key,
+        '==#1': (args) => (args[0] as ActionListener) == (args[1] as Object),
         '#4': (args) => ActionListener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, listener: (a) => (args[1] as Function)(a), action: args[2] as Action<Intent>, child: args[3] as Widget),
         '_#fromFields#4': (args) => ActionListener(key: args[2] as Key?, listener: args[3] as ActionListenerCallback, action: args[0] as Action<Intent>, child: args[1] as Widget),
       };

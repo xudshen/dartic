@@ -24,9 +24,12 @@ abstract final class PointerEventResamplerBindings {
         'addEvent#1': (args) { (args[0] as PointerEventResampler).addEvent(args[1] as PointerEvent); return null; },
         'sample#3': (args) { (args[0] as PointerEventResampler).sample(args[1] as Duration, args[2] as Duration, (a) => (args[3] as Function)(a)); return null; },
         'stop#1': (args) { (args[0] as PointerEventResampler).stop((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as PointerEventResampler).toString(),
         'hasPendingEvents#0': (args) => (args[0] as PointerEventResampler).hasPendingEvents,
         'isTracked#0': (args) => (args[0] as PointerEventResampler).isTracked,
         'isDown#0': (args) => (args[0] as PointerEventResampler).isDown,
+        'hashCode#0': (args) => (args[0] as PointerEventResampler).hashCode,
+        '==#1': (args) => (args[0] as PointerEventResampler) == (args[1] as Object),
         '#0': (args) => PointerEventResampler(),
       };
 }

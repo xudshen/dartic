@@ -44,6 +44,7 @@ abstract final class AdaptiveTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AdaptiveTextSelectionToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).toString(),
         'createElement#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as AdaptiveTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -54,7 +55,9 @@ abstract final class AdaptiveTextSelectionToolbarBindings {
         'buttonItems#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).buttonItems,
         'children#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).children,
         'anchors#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).anchors,
+        'hashCode#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).hashCode,
         'key#0': (args) => (args[0] as AdaptiveTextSelectionToolbar).key,
+        '==#1': (args) => (args[0] as AdaptiveTextSelectionToolbar) == (args[1] as Object),
         '#3': (args) => AdaptiveTextSelectionToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: args[1] == null ? null : (args[1] as List).cast<Widget>(), anchors: args[2] as TextSelectionToolbarAnchors),
         'buttonItems#3': (args) => AdaptiveTextSelectionToolbar.buttonItems(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, buttonItems: args[1] == null ? null : (args[1] as List).cast<ContextMenuButtonItem>(), anchors: args[2] as TextSelectionToolbarAnchors),
         'editable#11': (args) => AdaptiveTextSelectionToolbar.editable(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipboardStatus: args[1] as ClipboardStatus, onCopy: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onCut: (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onPaste: (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), onSelectAll: (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), onLookUp: (args[6] as Function?) == null ? null : () => (args[6] as Function?)!(), onSearchWeb: (args[7] as Function?) == null ? null : () => (args[7] as Function?)!(), onShare: (args[8] as Function?) == null ? null : () => (args[8] as Function?)!(), onLiveTextInput: (args[9] as Function?) == null ? null : () => (args[9] as Function?)!(), anchors: args[10] as TextSelectionToolbarAnchors),

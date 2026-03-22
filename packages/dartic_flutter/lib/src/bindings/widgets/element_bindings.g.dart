@@ -81,6 +81,7 @@ abstract final class ElementBindings {
         'markNeedsBuild#0': (args) { (args[0] as Element).markNeedsBuild(); return null; },
         'rebuild#1': (args) { (args[0] as Element).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'performRebuild#0': (args) { (args[0] as Element).performRebuild(); return null; },
+        'toString#0': (args) => (args[0] as Element).toString(),
         'toStringShallow#2': (args) => (args[0] as Element).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as Element).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'slot#0': (args) => (args[0] as Element).slot,
@@ -95,6 +96,8 @@ abstract final class ElementBindings {
         'renderObjectAttachingChild#0': (args) => (args[0] as Element).renderObjectAttachingChild,
         'size#0': (args) => (args[0] as Element).size,
         'dirty#0': (args) => (args[0] as Element).dirty,
+        'hashCode#0': (args) => (args[0] as Element).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as Element).debugDoingBuild,
+        '==#1': (args) => (args[0] as Element) == (args[1] as Object),
       };
 }

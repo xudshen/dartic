@@ -34,6 +34,7 @@ abstract final class RelativePositionedTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RelativePositionedTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RelativePositionedTransition).toString(),
         'createState#0': (args) => (args[0] as RelativePositionedTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as RelativePositionedTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as RelativePositionedTransition).createElement(),
@@ -45,8 +46,10 @@ abstract final class RelativePositionedTransitionBindings {
         'rect#0': (args) => (args[0] as RelativePositionedTransition).rect,
         'size#0': (args) => (args[0] as RelativePositionedTransition).size,
         'child#0': (args) => (args[0] as RelativePositionedTransition).child,
+        'hashCode#0': (args) => (args[0] as RelativePositionedTransition).hashCode,
         'listenable#0': (args) => (args[0] as RelativePositionedTransition).listenable,
         'key#0': (args) => (args[0] as RelativePositionedTransition).key,
+        '==#1': (args) => (args[0] as RelativePositionedTransition) == (args[1] as Object),
         '#4': (args) => RelativePositionedTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, rect: args[1] as Animation<Rect?>, size: args[2] as Size, child: args[3] as Widget),
         '_#fromFields#4': (args) => RelativePositionedTransition(key: args[1] as Key?, rect: args[2] as Animation<Rect?>, size: args[3] as Size, child: args[0] as Widget),
       };

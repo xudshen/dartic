@@ -33,6 +33,7 @@ abstract final class ObjectKeyBindings {
         'toString#0': (args) => (args[0] as ObjectKey).toString(),
         'value#0': (args) => (args[0] as ObjectKey).value,
         'hashCode#0': (args) => (args[0] as ObjectKey).hashCode,
+        '==#1': (args) => (args[0] as ObjectKey) == (args[1] as Object),
         '#1': (args) => ObjectKey(args[0]),
         '_#fromFields#1': (args) => ObjectKey(args[0]),
       };

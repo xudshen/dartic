@@ -46,6 +46,7 @@ abstract final class CupertinoPageRouteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildContent#1': (args) => (args[0] as CupertinoPageRoute).buildContent(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoPageRoute).toString(),
         'canTransitionTo#1': (args) => (args[0] as CupertinoPageRoute).canTransitionTo(args[1] as TransitionRoute<dynamic>),
         'canTransitionFrom#1': (args) => (args[0] as CupertinoPageRoute).canTransitionFrom(args[1] as TransitionRoute<dynamic>),
         'setState#1': (args) { (args[0] as CupertinoPageRoute).setState(() => (args[1] as Function)()); return null; },
@@ -67,7 +68,6 @@ abstract final class CupertinoPageRouteBindings {
         'changedExternalState#0': (args) { (args[0] as CupertinoPageRoute).changedExternalState(); return null; },
         'buildModalBarrier#0': (args) => (args[0] as CupertinoPageRoute).buildModalBarrier(),
         'createOverlayEntries#0': (args) => (args[0] as CupertinoPageRoute).createOverlayEntries(),
-        'toString#0': (args) => (args[0] as CupertinoPageRoute).toString(),
         'debugTransitionCompleted#0': (args) => (args[0] as CupertinoPageRoute).debugTransitionCompleted(),
         'createAnimationController#0': (args) => (args[0] as CupertinoPageRoute).createAnimationController(),
         'createAnimation#0': (args) => (args[0] as CupertinoPageRoute).createAnimation(),
@@ -89,6 +89,7 @@ abstract final class CupertinoPageRouteBindings {
         'title#0': (args) => (args[0] as CupertinoPageRoute).title,
         'maintainState#0': (args) => (args[0] as CupertinoPageRoute).maintainState,
         'debugLabel#0': (args) => (args[0] as CupertinoPageRoute).debugLabel,
+        'hashCode#0': (args) => (args[0] as CupertinoPageRoute).hashCode,
         'fullscreenDialog#0': (args) => (args[0] as CupertinoPageRoute).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as CupertinoPageRoute).allowSnapshotting,
         'opaque#0': (args) => (args[0] as CupertinoPageRoute).opaque,
@@ -129,12 +130,12 @@ abstract final class CupertinoPageRouteBindings {
         'isFirst#0': (args) => (args[0] as CupertinoPageRoute).isFirst,
         'hasActiveRouteBelow#0': (args) => (args[0] as CupertinoPageRoute).hasActiveRouteBelow,
         'isActive#0': (args) => (args[0] as CupertinoPageRoute).isActive,
-        'hashCode#0': (args) => (args[0] as CupertinoPageRoute).hashCode,
         'runtimeType#0': (args) => (args[0] as CupertinoPageRoute).runtimeType,
         'previousTitle#0': (args) => (args[0] as CupertinoPageRoute).previousTitle,
         'receivedTransition=#1': (args) { (args[0] as CupertinoPageRoute).receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; },
         'offstage=#1': (args) { (args[0] as CupertinoPageRoute).offstage = args[1] as bool; return args[1]; },
         'willDisposeAnimationController=#1': (args) { (args[0] as CupertinoPageRoute).willDisposeAnimationController = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as CupertinoPageRoute) == (args[1] as Object),
         '#8': (args) => CupertinoPageRoute<dynamic>(builder: (a) => (args[0] as Function)(a) as Widget, title: identical(args[1], darticAbsent) ? null : args[1] as String?, settings: identical(args[2], darticAbsent) ? null : args[2] as RouteSettings?, requestFocus: identical(args[3], darticAbsent) ? null : args[3] as bool?, maintainState: identical(args[4], darticAbsent) ? true : args[4] as bool, fullscreenDialog: identical(args[5], darticAbsent) ? false : args[5] as bool, allowSnapshotting: identical(args[6], darticAbsent) ? true : args[6] as bool, barrierDismissible: identical(args[7], darticAbsent) ? false : args[7] as bool),
       };
 }

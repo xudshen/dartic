@@ -38,8 +38,11 @@ abstract final class RouterDelegateBindings {
         'setNewRoutePath#1': (args) => (args[0] as RouterDelegate).setNewRoutePath(args[1]),
         'popRoute#0': (args) => (args[0] as RouterDelegate).popRoute(),
         'build#1': (args) => (args[0] as RouterDelegate).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RouterDelegate).toString(),
         'addListener#1': (args) { (args[0] as RouterDelegate).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RouterDelegate).removeListener(() => (args[1] as Function)()); return null; },
         'currentConfiguration#0': (args) => (args[0] as RouterDelegate).currentConfiguration,
+        'hashCode#0': (args) => (args[0] as RouterDelegate).hashCode,
+        '==#1': (args) => (args[0] as RouterDelegate) == (args[1] as Object),
       };
 }

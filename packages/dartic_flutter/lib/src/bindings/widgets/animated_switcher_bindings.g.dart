@@ -34,6 +34,7 @@ abstract final class AnimatedSwitcherBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedSwitcher).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedSwitcher).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedSwitcher).toString(),
         'createElement#0': (args) => (args[0] as AnimatedSwitcher).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedSwitcher).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedSwitcher).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -47,7 +48,9 @@ abstract final class AnimatedSwitcherBindings {
         'switchOutCurve#0': (args) => (args[0] as AnimatedSwitcher).switchOutCurve,
         'transitionBuilder#0': (args) => (args[0] as AnimatedSwitcher).transitionBuilder,
         'layoutBuilder#0': (args) => (args[0] as AnimatedSwitcher).layoutBuilder,
+        'hashCode#0': (args) => (args[0] as AnimatedSwitcher).hashCode,
         'key#0': (args) => (args[0] as AnimatedSwitcher).key,
+        '==#1': (args) => (args[0] as AnimatedSwitcher) == (args[1] as Object),
         '#8': (args) => AnimatedSwitcher(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, duration: args[2] as Duration, reverseDuration: identical(args[3], darticAbsent) ? null : args[3] as Duration?, switchInCurve: identical(args[4], darticAbsent) ? Curves.linear : args[4] as Curve, switchOutCurve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, transitionBuilder: identical(args[6], darticAbsent) ? AnimatedSwitcher.defaultTransitionBuilder : (a, b) => (args[6] as Function)(a, b) as Widget, layoutBuilder: identical(args[7], darticAbsent) ? AnimatedSwitcher.defaultLayoutBuilder : (a, b) => (args[7] as Function)(a, b) as Widget),
         '_#fromFields#8': (args) => AnimatedSwitcher(key: args[2] as Key?, child: args[0] as Widget?, duration: args[1] as Duration, reverseDuration: args[4] as Duration?, switchInCurve: args[5] as Curve, switchOutCurve: args[6] as Curve, transitionBuilder: args[7] as AnimatedSwitcherTransitionBuilder, layoutBuilder: args[3] as AnimatedSwitcherLayoutBuilder),
       };

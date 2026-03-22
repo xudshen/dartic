@@ -56,6 +56,7 @@ abstract final class RenderViewportBindings {
         'computeChildMainAxisPosition#2': (args) => (args[0] as RenderViewport).computeChildMainAxisPosition(args[1] as RenderSliver, args[2] as double),
         'labelForChild#1': (args) => (args[0] as RenderViewport).labelForChild(args[1] as int),
         'debugFillProperties#1': (args) { (args[0] as RenderViewport).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderViewport).toString(),
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderViewport).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderViewport).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'attach#1': (args) { (args[0] as RenderViewport).attach(args[1] as PipelineOwner); return null; },
@@ -145,6 +146,7 @@ abstract final class RenderViewportBindings {
         'sizedByParent#0': (args) => (args[0] as RenderViewport).sizedByParent,
         'hasVisualOverflow#0': (args) => (args[0] as RenderViewport).hasVisualOverflow,
         'indexOfFirstChild#0': (args) => (args[0] as RenderViewport).indexOfFirstChild,
+        'hashCode#0': (args) => (args[0] as RenderViewport).hashCode,
         'axisDirection#0': (args) => (args[0] as RenderViewport).axisDirection,
         'crossAxisDirection#0': (args) => (args[0] as RenderViewport).crossAxisDirection,
         'axis#0': (args) => (args[0] as RenderViewport).axis,
@@ -200,6 +202,7 @@ abstract final class RenderViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderViewport) == (args[1] as Object),
         '#10': (args) => RenderViewport(axisDirection: identical(args[0], darticAbsent) ? AxisDirection.down : args[0] as AxisDirection, crossAxisDirection: args[1] as AxisDirection, offset: args[2] as ViewportOffset, anchor: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, children: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<RenderSliver>(), center: identical(args[5], darticAbsent) ? null : args[5] as RenderSliver?, cacheExtent: identical(args[6], darticAbsent) ? null : args[6] as double?, cacheExtentStyle: identical(args[7], darticAbsent) ? CacheExtentStyle.pixel : args[7] as CacheExtentStyle, paintOrder: identical(args[8], darticAbsent) ? SliverPaintOrder.firstIsTop : args[8] as SliverPaintOrder, clipBehavior: identical(args[9], darticAbsent) ? Clip.hardEdge : args[9] as Clip),
       };
 }

@@ -42,6 +42,7 @@ abstract final class AlignBindings {
         'createRenderObject#1': (args) => (args[0] as Align).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Align).updateRenderObject(args[1] as BuildContext, args[2] as RenderPositionedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as Align).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Align).toString(),
         'createElement#0': (args) => (args[0] as Align).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Align).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Align).toStringShort(),
@@ -52,8 +53,10 @@ abstract final class AlignBindings {
         'alignment#0': (args) => (args[0] as Align).alignment,
         'widthFactor#0': (args) => (args[0] as Align).widthFactor,
         'heightFactor#0': (args) => (args[0] as Align).heightFactor,
+        'hashCode#0': (args) => (args[0] as Align).hashCode,
         'child#0': (args) => (args[0] as Align).child,
         'key#0': (args) => (args[0] as Align).key,
+        '==#1': (args) => (args[0] as Align) == (args[1] as Object),
         '#5': (args) => Align(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? Alignment.center : args[1] as AlignmentGeometry, widthFactor: identical(args[2], darticAbsent) ? null : args[2] as double?, heightFactor: identical(args[3], darticAbsent) ? null : args[3] as double?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#5': (args) => Align(key: args[3] as Key?, alignment: args[0] as AlignmentGeometry, widthFactor: args[4] as double?, heightFactor: args[2] as double?, child: args[1] as Widget?),
       };

@@ -33,6 +33,9 @@ abstract final class TextDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextDirection).toString(),
+        'hashCode#0': (args) => (args[0] as TextDirection).hashCode,
         'index#0': (args) => (args[0] as TextDirection).index,
+        '==#1': (args) => (args[0] as TextDirection) == (args[1] as Object),
       };
 }

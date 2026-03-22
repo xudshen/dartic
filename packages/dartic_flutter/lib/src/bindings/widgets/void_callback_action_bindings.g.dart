@@ -33,6 +33,7 @@ abstract final class VoidCallbackActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as VoidCallbackAction).invoke(args[1] as VoidCallbackIntent),
+        'toString#0': (args) => (args[0] as VoidCallbackAction).toString(),
         'isEnabled#1': (args) => (args[0] as VoidCallbackAction).isEnabled(args[1] as VoidCallbackIntent),
         'consumesKey#1': (args) => (args[0] as VoidCallbackAction).consumesKey(args[1] as VoidCallbackIntent),
         'toKeyEventResult#2': (args) => (args[0] as VoidCallbackAction).toKeyEventResult(args[1] as VoidCallbackIntent, args[2]),
@@ -42,9 +43,11 @@ abstract final class VoidCallbackActionBindings {
         'toStringShort#0': (args) => (args[0] as VoidCallbackAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as VoidCallbackAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as VoidCallbackAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as VoidCallbackAction).hashCode,
         'callingAction#0': (args) => (args[0] as VoidCallbackAction).callingAction,
         'intentType#0': (args) => (args[0] as VoidCallbackAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as VoidCallbackAction).isActionEnabled,
+        '==#1': (args) => (args[0] as VoidCallbackAction) == (args[1] as Object),
         '#0': (args) => VoidCallbackAction(),
       };
 }

@@ -27,6 +27,7 @@ abstract final class FutureBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FutureBuilder).createState(),
+        'toString#0': (args) => (args[0] as FutureBuilder).toString(),
         'createElement#0': (args) => (args[0] as FutureBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as FutureBuilder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FutureBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class FutureBuilderBindings {
         'future#0': (args) => (args[0] as FutureBuilder).future,
         'builder#0': (args) => (args[0] as FutureBuilder).builder,
         'initialData#0': (args) => (args[0] as FutureBuilder).initialData,
+        'hashCode#0': (args) => (args[0] as FutureBuilder).hashCode,
         'key#0': (args) => (args[0] as FutureBuilder).key,
+        '==#1': (args) => (args[0] as FutureBuilder) == (args[1] as Object),
         '#4': (args) => FutureBuilder<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, future: args[1] as Future?, initialData: identical(args[2], darticAbsent) ? null : args[2], builder: (a, b) => (args[3] as Function)(a, b) as Widget),
         '_#fromFields#4': (args) => FutureBuilder<dynamic>(key: args[3] as Key?, future: args[1] as Future?, initialData: args[2], builder: args[0] as Widget Function(BuildContext, AsyncSnapshot)),
       };

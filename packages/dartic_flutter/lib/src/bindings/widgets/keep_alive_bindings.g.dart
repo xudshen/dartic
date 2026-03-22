@@ -35,6 +35,7 @@ abstract final class KeepAliveBindings {
         'applyParentData#1': (args) { (args[0] as KeepAlive).applyParentData(args[1] as RenderObject); return null; },
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as KeepAlive).debugCanApplyOutOfTurn(),
         'debugFillProperties#1': (args) { (args[0] as KeepAlive).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as KeepAlive).toString(),
         'createElement#0': (args) => (args[0] as KeepAlive).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as KeepAlive).debugIsValidRenderObject(args[1] as RenderObject),
         'toStringShort#0': (args) => (args[0] as KeepAlive).toStringShort(),
@@ -45,8 +46,10 @@ abstract final class KeepAliveBindings {
         'keepAlive#0': (args) => (args[0] as KeepAlive).keepAlive,
         'debugTypicalAncestorWidgetClass#0': (args) => (args[0] as KeepAlive).debugTypicalAncestorWidgetClass,
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as KeepAlive).debugTypicalAncestorWidgetDescription,
+        'hashCode#0': (args) => (args[0] as KeepAlive).hashCode,
         'child#0': (args) => (args[0] as KeepAlive).child,
         'key#0': (args) => (args[0] as KeepAlive).key,
+        '==#1': (args) => (args[0] as KeepAlive) == (args[1] as Object),
         '#3': (args) => KeepAlive(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, keepAlive: args[1] as bool, child: args[2] as Widget),
         '_#fromFields#3': (args) => KeepAlive(key: args[2] as Key?, keepAlive: args[1] as bool, child: args[0] as Widget),
       };

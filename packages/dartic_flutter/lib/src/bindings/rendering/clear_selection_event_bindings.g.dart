@@ -24,7 +24,10 @@ abstract final class ClearSelectionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ClearSelectionEvent).toString(),
+        'hashCode#0': (args) => (args[0] as ClearSelectionEvent).hashCode,
         'type#0': (args) => (args[0] as ClearSelectionEvent).type,
+        '==#1': (args) => (args[0] as ClearSelectionEvent) == (args[1] as Object),
         '#0': (args) => ClearSelectionEvent(),
         '_#fromFields#1': (args) => ClearSelectionEvent(),
       };

@@ -42,6 +42,7 @@ abstract final class RenderPointerListenerBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderPointerListener).computeSizeForNoChild(args[1] as BoxConstraints),
         'handleEvent#2': (args) { (args[0] as RenderPointerListener).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPointerListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderPointerListener).toString(),
         'hitTest#2': (args) => (args[0] as RenderPointerListener).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderPointerListener).hitTestSelf(args[1] as ui.Offset),
         'setupParentData#1': (args) { (args[0] as RenderPointerListener).setupParentData(args[1] as RenderObject); return null; },
@@ -126,6 +127,7 @@ abstract final class RenderPointerListenerBindings {
         'onPointerPanZoomUpdate#0': (args) => (args[0] as RenderPointerListener).onPointerPanZoomUpdate,
         'onPointerPanZoomEnd#0': (args) => (args[0] as RenderPointerListener).onPointerPanZoomEnd,
         'onPointerSignal#0': (args) => (args[0] as RenderPointerListener).onPointerSignal,
+        'hashCode#0': (args) => (args[0] as RenderPointerListener).hashCode,
         'behavior#0': (args) => (args[0] as RenderPointerListener).behavior,
         'hasSize#0': (args) => (args[0] as RenderPointerListener).hasSize,
         'size#0': (args) => (args[0] as RenderPointerListener).size,
@@ -173,6 +175,7 @@ abstract final class RenderPointerListenerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderPointerListener).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPointerListener).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderPointerListener).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPointerListener) == (args[1] as Object),
         '#11': (args) => RenderPointerListener(onPointerDown: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : (a) => (args[0] as Function?)!(a), onPointerMove: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a), onPointerUp: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a), onPointerHover: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onPointerCancel: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onPointerPanZoomStart: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onPointerPanZoomUpdate: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onPointerPanZoomEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), onPointerSignal: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), behavior: identical(args[9], darticAbsent) ? HitTestBehavior.deferToChild : args[9] as HitTestBehavior, child: identical(args[10], darticAbsent) ? null : args[10] as RenderBox?),
       };
 }

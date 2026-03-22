@@ -29,6 +29,7 @@ abstract final class InheritedModelBindings {
         'createElement#0': (args) => (args[0] as InheritedModel).createElement(),
         'updateShouldNotifyDependent#2': (args) => (args[0] as InheritedModel).updateShouldNotifyDependent(args[1] as InheritedModel, args[2] as Set),
         'isSupportedAspect#1': (args) => (args[0] as InheritedModel).isSupportedAspect(args[1] as Object),
+        'toString#0': (args) => (args[0] as InheritedModel).toString(),
         'updateShouldNotify#1': (args) => (args[0] as InheritedModel).updateShouldNotify(args[1] as InheritedWidget),
         'toStringShort#0': (args) => (args[0] as InheritedModel).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class InheritedModelBindings {
         'toStringDeep#4': (args) => (args[0] as InheritedModel).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as InheritedModel).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as InheritedModel).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as InheritedModel).hashCode,
         'child#0': (args) => (args[0] as InheritedModel).child,
         'key#0': (args) => (args[0] as InheritedModel).key,
+        '==#1': (args) => (args[0] as InheritedModel) == (args[1] as Object),
       };
 }

@@ -40,6 +40,7 @@ abstract final class OpacityBindings {
         'createRenderObject#1': (args) => (args[0] as Opacity).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Opacity).updateRenderObject(args[1] as BuildContext, args[2] as RenderOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as Opacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Opacity).toString(),
         'createElement#0': (args) => (args[0] as Opacity).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Opacity).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Opacity).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class OpacityBindings {
         'debugDescribeChildren#0': (args) => (args[0] as Opacity).debugDescribeChildren(),
         'opacity#0': (args) => (args[0] as Opacity).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as Opacity).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as Opacity).hashCode,
         'child#0': (args) => (args[0] as Opacity).child,
         'key#0': (args) => (args[0] as Opacity).key,
+        '==#1': (args) => (args[0] as Opacity) == (args[1] as Object),
         '#4': (args) => Opacity(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, opacity: args[1] as double, alwaysIncludeSemantics: identical(args[2], darticAbsent) ? false : args[2] as bool, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => Opacity(key: args[2] as Key?, opacity: args[3] as double, alwaysIncludeSemantics: args[0] as bool, child: args[1] as Widget?),
       };

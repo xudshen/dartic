@@ -34,11 +34,14 @@ abstract final class ShortcutRegistryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as ShortcutRegistry).dispose(); return null; },
         'addAll#1': (args) => (args[0] as ShortcutRegistry).addAll((args[1] as Map).cast<ShortcutActivator, Intent>()),
+        'toString#0': (args) => (args[0] as ShortcutRegistry).toString(),
         'addListener#1': (args) { (args[0] as ShortcutRegistry).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as ShortcutRegistry).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as ShortcutRegistry).notifyListeners(); return null; },
         'shortcuts#0': (args) => (args[0] as ShortcutRegistry).shortcuts,
+        'hashCode#0': (args) => (args[0] as ShortcutRegistry).hashCode,
         'hasListeners#0': (args) => (args[0] as ShortcutRegistry).hasListeners,
+        '==#1': (args) => (args[0] as ShortcutRegistry) == (args[1] as Object),
         '#0': (args) => ShortcutRegistry(),
       };
 }

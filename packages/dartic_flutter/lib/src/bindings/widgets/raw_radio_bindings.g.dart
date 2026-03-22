@@ -33,6 +33,7 @@ abstract final class RawRadioBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RawRadio).createState(),
+        'toString#0': (args) => (args[0] as RawRadio).toString(),
         'createElement#0': (args) => (args[0] as RawRadio).createElement(),
         'toStringShort#0': (args) => (args[0] as RawRadio).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawRadio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -48,7 +49,9 @@ abstract final class RawRadioBindings {
         'builder#0': (args) => (args[0] as RawRadio).builder,
         'enabled#0': (args) => (args[0] as RawRadio).enabled,
         'groupRegistry#0': (args) => (args[0] as RawRadio).groupRegistry,
+        'hashCode#0': (args) => (args[0] as RawRadio).hashCode,
         'key#0': (args) => (args[0] as RawRadio).key,
+        '==#1': (args) => (args[0] as RawRadio) == (args[1] as Object),
         '#9': (args) => RawRadio<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1], mouseCursor: args[2] as WidgetStateProperty<MouseCursor>, toggleable: args[3] as bool, focusNode: args[4] as FocusNode, autofocus: args[5] as bool, groupRegistry: args[6] as RadioGroupRegistry?, enabled: args[7] as bool, builder: (a, b) => (args[8] as Function)(a, b) as Widget),
         '_#fromFields#9': (args) => RawRadio<dynamic>(key: args[5] as Key?, value: args[8], mouseCursor: args[6] as WidgetStateProperty<MouseCursor>, toggleable: args[7] as bool, focusNode: args[3] as FocusNode, autofocus: args[0] as bool, groupRegistry: args[4] as RadioGroupRegistry?, enabled: args[2] as bool, builder: args[1] as RadioBuilder),
       };

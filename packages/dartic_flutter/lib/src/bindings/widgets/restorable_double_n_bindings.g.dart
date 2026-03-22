@@ -28,6 +28,7 @@ abstract final class RestorableDoubleNBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RestorableDoubleN).toString(),
         'createDefaultValue#0': (args) => (args[0] as RestorableDoubleN).createDefaultValue(),
         'didUpdateValue#1': (args) { (args[0] as RestorableDoubleN).didUpdateValue(args[1] as double?); return null; },
         'fromPrimitives#1': (args) => (args[0] as RestorableDoubleN).fromPrimitives(args[1]),
@@ -37,12 +38,14 @@ abstract final class RestorableDoubleNBindings {
         'addListener#1': (args) { (args[0] as RestorableDoubleN).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableDoubleN).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableDoubleN).notifyListeners(); return null; },
+        'hashCode#0': (args) => (args[0] as RestorableDoubleN).hashCode,
         'value#0': (args) => (args[0] as RestorableDoubleN).value,
         'enabled#0': (args) => (args[0] as RestorableDoubleN).enabled,
         'state#0': (args) => (args[0] as RestorableDoubleN).state,
         'isRegistered#0': (args) => (args[0] as RestorableDoubleN).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableDoubleN).hasListeners,
         'value=#1': (args) { (args[0] as RestorableDoubleN).value = args[1] as double?; return args[1]; },
+        '==#1': (args) => (args[0] as RestorableDoubleN) == (args[1] as Object),
         '#1': (args) => RestorableDoubleN(args[0] as double?),
       };
 }

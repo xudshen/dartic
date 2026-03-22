@@ -38,6 +38,7 @@ abstract final class RenderProxyBoxBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderProxyBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderProxyBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBox).computeMinIntrinsicWidth(args[1] as double),
@@ -116,6 +117,7 @@ abstract final class RenderProxyBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderProxyBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderProxyBox).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderProxyBox).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderProxyBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderProxyBox).hasSize,
         'size#0': (args) => (args[0] as RenderProxyBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderProxyBox).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class RenderProxyBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderProxyBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderProxyBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderProxyBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderProxyBox) == (args[1] as Object),
         '#1': (args) => RenderProxyBox(identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

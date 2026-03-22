@@ -40,6 +40,7 @@ abstract final class ShadowBindings {
         'blurRadius#0': (args) => (args[0] as Shadow).blurRadius,
         'blurSigma#0': (args) => (args[0] as Shadow).blurSigma,
         'hashCode#0': (args) => (args[0] as Shadow).hashCode,
+        '==#1': (args) => (args[0] as Shadow) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[0], darticAbsent)) {
             return Shadow(offset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, blurRadius: identical(args[2], darticAbsent) ? 0.0 : args[2] as double);

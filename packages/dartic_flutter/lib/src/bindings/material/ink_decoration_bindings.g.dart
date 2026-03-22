@@ -32,15 +32,18 @@ abstract final class InkDecorationBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as InkDecoration).dispose(); return null; },
         'paintFeature#2': (args) { (args[0] as InkDecoration).paintFeature(args[1] as Canvas, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as InkDecoration).toString(),
         'decoration#0': (args) => (args[0] as InkDecoration).decoration,
         'isVisible#0': (args) => (args[0] as InkDecoration).isVisible,
         'configuration#0': (args) => (args[0] as InkDecoration).configuration,
+        'hashCode#0': (args) => (args[0] as InkDecoration).hashCode,
         'controller#0': (args) => (args[0] as InkDecoration).controller,
         'referenceBox#0': (args) => (args[0] as InkDecoration).referenceBox,
         'onRemoved#0': (args) => (args[0] as InkDecoration).onRemoved,
         'decoration=#1': (args) { (args[0] as InkDecoration).decoration = args[1] as Decoration?; return args[1]; },
         'isVisible=#1': (args) { (args[0] as InkDecoration).isVisible = args[1] as bool; return args[1]; },
         'configuration=#1': (args) { (args[0] as InkDecoration).configuration = args[1] as ImageConfiguration; return args[1]; },
+        '==#1': (args) => (args[0] as InkDecoration) == (args[1] as Object),
         '#6': (args) => InkDecoration(decoration: args[0] as Decoration?, isVisible: identical(args[1], darticAbsent) ? true : args[1] as bool, configuration: args[2] as ImageConfiguration, controller: args[3] as MaterialInkController, referenceBox: args[4] as RenderBox, onRemoved: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
       };
 }

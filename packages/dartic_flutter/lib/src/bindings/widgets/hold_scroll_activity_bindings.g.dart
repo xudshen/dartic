@@ -32,6 +32,7 @@ abstract final class HoldScrollActivityBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'cancel#0': (args) { (args[0] as HoldScrollActivity).cancel(); return null; },
         'dispose#0': (args) { (args[0] as HoldScrollActivity).dispose(); return null; },
+        'toString#0': (args) => (args[0] as HoldScrollActivity).toString(),
         'updateDelegate#1': (args) { (args[0] as HoldScrollActivity).updateDelegate(args[1] as ScrollActivityDelegate); return null; },
         'resetActivity#0': (args) { (args[0] as HoldScrollActivity).resetActivity(); return null; },
         'dispatchScrollStartNotification#2': (args) { (args[0] as HoldScrollActivity).dispatchScrollStartNotification(args[1] as ScrollMetrics, args[2] as BuildContext?); return null; },
@@ -43,7 +44,9 @@ abstract final class HoldScrollActivityBindings {
         'shouldIgnorePointer#0': (args) => (args[0] as HoldScrollActivity).shouldIgnorePointer,
         'isScrolling#0': (args) => (args[0] as HoldScrollActivity).isScrolling,
         'velocity#0': (args) => (args[0] as HoldScrollActivity).velocity,
+        'hashCode#0': (args) => (args[0] as HoldScrollActivity).hashCode,
         'delegate#0': (args) => (args[0] as HoldScrollActivity).delegate,
+        '==#1': (args) => (args[0] as HoldScrollActivity) == (args[1] as Object),
         '#2': (args) => HoldScrollActivity(delegate: args[0] as ScrollActivityDelegate, onHoldCanceled: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()),
       };
 }

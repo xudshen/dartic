@@ -47,6 +47,7 @@ abstract final class RenderConstrainedBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as RenderConstrainedBox).computeDryLayout(args[1] as BoxConstraints),
         'debugPaintSize#2': (args) { (args[0] as RenderConstrainedBox).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderConstrainedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderConstrainedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderConstrainedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderConstrainedBox).getMaxIntrinsicWidth(args[1] as double),
@@ -117,6 +118,7 @@ abstract final class RenderConstrainedBoxBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderConstrainedBox).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderConstrainedBox).computeSizeForNoChild(args[1] as BoxConstraints),
         'additionalConstraints#0': (args) => (args[0] as RenderConstrainedBox).additionalConstraints,
+        'hashCode#0': (args) => (args[0] as RenderConstrainedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderConstrainedBox).hasSize,
         'size#0': (args) => (args[0] as RenderConstrainedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderConstrainedBox).semanticBounds,
@@ -154,6 +156,7 @@ abstract final class RenderConstrainedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderConstrainedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderConstrainedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderConstrainedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderConstrainedBox) == (args[1] as Object),
         '#2': (args) => RenderConstrainedBox(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, additionalConstraints: args[1] as BoxConstraints),
       };
 }

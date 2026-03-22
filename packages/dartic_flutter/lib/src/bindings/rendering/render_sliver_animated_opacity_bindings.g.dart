@@ -38,6 +38,7 @@ abstract final class RenderSliverAnimatedOpacityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSliverAnimatedOpacity).toString(),
         'setupParentData#1': (args) { (args[0] as RenderSliverAnimatedOpacity).setupParentData(args[1] as RenderObject); return null; },
         'performLayout#0': (args) { (args[0] as RenderSliverAnimatedOpacity).performLayout(); return null; },
         'paint#2': (args) { (args[0] as RenderSliverAnimatedOpacity).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
@@ -99,6 +100,7 @@ abstract final class RenderSliverAnimatedOpacityBindings {
         'describeForError#2': (args) => (args[0] as RenderSliverAnimatedOpacity).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderSliverAnimatedOpacity).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderSliverAnimatedOpacity).debugValidateChild(args[1] as RenderObject),
+        'hashCode#0': (args) => (args[0] as RenderSliverAnimatedOpacity).hashCode,
         'semanticBounds#0': (args) => (args[0] as RenderSliverAnimatedOpacity).semanticBounds,
         'ensureSemantics#0': (args) => (args[0] as RenderSliverAnimatedOpacity).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderSliverAnimatedOpacity).constraints,
@@ -140,6 +142,7 @@ abstract final class RenderSliverAnimatedOpacityBindings {
         'child=#1': (args) { (args[0] as RenderSliverAnimatedOpacity).child = args[1] as RenderSliver?; return args[1]; },
         'opacity=#1': (args) { (args[0] as RenderSliverAnimatedOpacity).opacity = args[1] as Animation<double>; return args[1]; },
         'alwaysIncludeSemantics=#1': (args) { (args[0] as RenderSliverAnimatedOpacity).alwaysIncludeSemantics = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverAnimatedOpacity) == (args[1] as Object),
         '#3': (args) => RenderSliverAnimatedOpacity(opacity: args[0] as Animation<double>, alwaysIncludeSemantics: identical(args[1], darticAbsent) ? false : args[1] as bool, sliver: identical(args[2], darticAbsent) ? null : args[2] as RenderSliver?),
       };
 }

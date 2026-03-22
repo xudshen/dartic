@@ -34,6 +34,7 @@ abstract final class TextHeightBehaviorBindings {
         'applyHeightToLastDescent#0': (args) => (args[0] as TextHeightBehavior).applyHeightToLastDescent,
         'leadingDistribution#0': (args) => (args[0] as TextHeightBehavior).leadingDistribution,
         'hashCode#0': (args) => (args[0] as TextHeightBehavior).hashCode,
+        '==#1': (args) => (args[0] as TextHeightBehavior) == (args[1] as Object),
         '#3': (args) => TextHeightBehavior(applyHeightToFirstAscent: identical(args[0], darticAbsent) ? true : args[0] as bool, applyHeightToLastDescent: identical(args[1], darticAbsent) ? true : args[1] as bool, leadingDistribution: identical(args[2], darticAbsent) ? TextLeadingDistribution.proportional : args[2] as TextLeadingDistribution),
         '_#fromFields#3': (args) => TextHeightBehavior(applyHeightToFirstAscent: args[0] as bool, applyHeightToLastDescent: args[1] as bool, leadingDistribution: args[2] as TextLeadingDistribution),
       };

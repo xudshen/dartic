@@ -38,6 +38,7 @@ abstract final class RegularWindowControllerWin32Bindings {
         'setFullscreen#2': (args) { (args[0] as RegularWindowControllerWin32).setFullscreen(args[1] as bool, display: identical(args[2], darticAbsent) ? null : args[2] as Display?); return null; },
         'getWindowHandle#0': (args) => (args[0] as RegularWindowControllerWin32).getWindowHandle(),
         'destroy#0': (args) { (args[0] as RegularWindowControllerWin32).destroy(); return null; },
+        'toString#0': (args) => (args[0] as RegularWindowControllerWin32).toString(),
         'addListener#1': (args) { (args[0] as RegularWindowControllerWin32).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RegularWindowControllerWin32).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as RegularWindowControllerWin32).dispose(); return null; },
@@ -48,9 +49,11 @@ abstract final class RegularWindowControllerWin32Bindings {
         'isMaximized#0': (args) => (args[0] as RegularWindowControllerWin32).isMaximized,
         'isMinimized#0': (args) => (args[0] as RegularWindowControllerWin32).isMinimized,
         'isFullscreen#0': (args) => (args[0] as RegularWindowControllerWin32).isFullscreen,
+        'hashCode#0': (args) => (args[0] as RegularWindowControllerWin32).hashCode,
         'rootView#0': (args) => (args[0] as RegularWindowControllerWin32).rootView,
         'hasListeners#0': (args) => (args[0] as RegularWindowControllerWin32).hasListeners,
         'rootView=#1': (args) { (args[0] as RegularWindowControllerWin32).rootView = args[1] as FlutterView; return args[1]; },
+        '==#1': (args) => (args[0] as RegularWindowControllerWin32) == (args[1] as Object),
         '#5': (args) => RegularWindowControllerWin32(owner: args[0] as WindowingOwnerWin32, delegate: args[1] as RegularWindowControllerDelegate, preferredSize: identical(args[2], darticAbsent) ? null : args[2] as Size?, preferredConstraints: identical(args[3], darticAbsent) ? null : args[3] as BoxConstraints?, title: identical(args[4], darticAbsent) ? null : args[4] as String?),
       };
 }

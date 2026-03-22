@@ -33,6 +33,7 @@ abstract final class EagerGestureRecognizerBindings {
         'addAllowedPointer#1': (args) { (args[0] as EagerGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as EagerGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'handleEvent#1': (args) { (args[0] as EagerGestureRecognizer).handleEvent(args[1] as PointerEvent); return null; },
+        'toString#0': (args) => (args[0] as EagerGestureRecognizer).toString(),
         'handleNonAllowedPointer#1': (args) { (args[0] as EagerGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as EagerGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as EagerGestureRecognizer).rejectGesture(args[1] as int); return null; },
@@ -57,6 +58,7 @@ abstract final class EagerGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as EagerGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as EagerGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as EagerGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as EagerGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as EagerGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as EagerGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as EagerGestureRecognizer).gestureSettings,
@@ -65,6 +67,7 @@ abstract final class EagerGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as EagerGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as EagerGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as EagerGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as EagerGestureRecognizer) == (args[1] as Object),
         '#2': (args) {
           if (identical(args[1], darticAbsent)) {
             return EagerGestureRecognizer(supportedDevices: identical(args[0], darticAbsent) ? null : args[0] == null ? null : (args[0] as Set).cast<PointerDeviceKind>());

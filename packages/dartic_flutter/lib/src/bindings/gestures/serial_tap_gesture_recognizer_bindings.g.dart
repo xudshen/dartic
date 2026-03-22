@@ -39,6 +39,7 @@ abstract final class SerialTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as SerialTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as SerialTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as SerialTapGestureRecognizer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SerialTapGestureRecognizer).toString(),
         'addPointerPanZoom#1': (args) { (args[0] as SerialTapGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as SerialTapGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as SerialTapGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },
@@ -58,6 +59,7 @@ abstract final class SerialTapGestureRecognizerBindings {
         'onSerialTapUp#0': (args) => (args[0] as SerialTapGestureRecognizer).onSerialTapUp,
         'isTrackingPointer#0': (args) => (args[0] as SerialTapGestureRecognizer).isTrackingPointer,
         'debugDescription#0': (args) => (args[0] as SerialTapGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as SerialTapGestureRecognizer).hashCode,
         'debugOwner#0': (args) => (args[0] as SerialTapGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as SerialTapGestureRecognizer).gestureSettings,
         'supportedDevices#0': (args) => (args[0] as SerialTapGestureRecognizer).supportedDevices,
@@ -67,6 +69,7 @@ abstract final class SerialTapGestureRecognizerBindings {
         'onSerialTapUp=#1': (args) { (args[0] as SerialTapGestureRecognizer).onSerialTapUp = args[1] as GestureSerialTapUpCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as SerialTapGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as SerialTapGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as SerialTapGestureRecognizer) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[2], darticAbsent)) {
             return SerialTapGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>());

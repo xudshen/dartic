@@ -36,6 +36,7 @@ abstract final class ForcePressGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as ForcePressGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'didStopTrackingLastPointer#1': (args) { (args[0] as ForcePressGestureRecognizer).didStopTrackingLastPointer(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as ForcePressGestureRecognizer).rejectGesture(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as ForcePressGestureRecognizer).toString(),
         'handleNonAllowedPointer#1': (args) { (args[0] as ForcePressGestureRecognizer).handleNonAllowedPointer(args[1] as PointerDownEvent); return null; },
         'resolve#1': (args) { (args[0] as ForcePressGestureRecognizer).resolve(args[1] as GestureDisposition); return null; },
         'resolvePointer#2': (args) { (args[0] as ForcePressGestureRecognizer).resolvePointer(args[1] as int, args[2] as GestureDisposition); return null; },
@@ -65,6 +66,7 @@ abstract final class ForcePressGestureRecognizerBindings {
         'peakPressure#0': (args) => (args[0] as ForcePressGestureRecognizer).peakPressure,
         'interpolation#0': (args) => (args[0] as ForcePressGestureRecognizer).interpolation,
         'debugDescription#0': (args) => (args[0] as ForcePressGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as ForcePressGestureRecognizer).hashCode,
         'team#0': (args) => (args[0] as ForcePressGestureRecognizer).team,
         'debugOwner#0': (args) => (args[0] as ForcePressGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as ForcePressGestureRecognizer).gestureSettings,
@@ -77,6 +79,7 @@ abstract final class ForcePressGestureRecognizerBindings {
         'team=#1': (args) { (args[0] as ForcePressGestureRecognizer).team = args[1] as GestureArenaTeam?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as ForcePressGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as ForcePressGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as ForcePressGestureRecognizer) == (args[1] as Object),
         '#6': (args) {
           if (identical(args[2], darticAbsent)) {
             if (identical(args[5], darticAbsent)) {

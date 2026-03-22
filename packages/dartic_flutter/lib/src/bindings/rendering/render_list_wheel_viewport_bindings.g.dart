@@ -66,6 +66,7 @@ abstract final class RenderListWheelViewportBindings {
         'hitTestChildren#2': (args) => (args[0] as RenderListWheelViewport).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'getOffsetToReveal#4': (args) => (args[0] as RenderListWheelViewport).getOffsetToReveal(args[1] as RenderObject, args[2] as double, rect: identical(args[3], darticAbsent) ? null : args[3] as Rect?, axis: identical(args[4], darticAbsent) ? null : args[4] as Axis?),
         'showOnScreen#4': (args) { (args[0] as RenderListWheelViewport).showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; },
+        'toString#0': (args) => (args[0] as RenderListWheelViewport).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderListWheelViewport).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderListWheelViewport).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderListWheelViewport).getMinIntrinsicHeight(args[1] as double),
@@ -150,6 +151,7 @@ abstract final class RenderListWheelViewportBindings {
         'clipBehavior#0': (args) => (args[0] as RenderListWheelViewport).clipBehavior,
         'isRepaintBoundary#0': (args) => (args[0] as RenderListWheelViewport).isRepaintBoundary,
         'sizedByParent#0': (args) => (args[0] as RenderListWheelViewport).sizedByParent,
+        'hashCode#0': (args) => (args[0] as RenderListWheelViewport).hashCode,
         'hasSize#0': (args) => (args[0] as RenderListWheelViewport).hasSize,
         'size#0': (args) => (args[0] as RenderListWheelViewport).size,
         'semanticBounds#0': (args) => (args[0] as RenderListWheelViewport).semanticBounds,
@@ -196,6 +198,7 @@ abstract final class RenderListWheelViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderListWheelViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderListWheelViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderListWheelViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderListWheelViewport) == (args[1] as Object),
         '#13': (args) => RenderListWheelViewport(childManager: args[0] as ListWheelChildManager, offset: args[1] as ViewportOffset, diameterRatio: identical(args[2], darticAbsent) ? RenderListWheelViewport.defaultDiameterRatio : args[2] as double, perspective: identical(args[3], darticAbsent) ? RenderListWheelViewport.defaultPerspective : args[3] as double, offAxisFraction: identical(args[4], darticAbsent) ? 0 : args[4] as double, useMagnifier: identical(args[5], darticAbsent) ? false : args[5] as bool, magnification: identical(args[6], darticAbsent) ? 1 : args[6] as double, overAndUnderCenterOpacity: identical(args[7], darticAbsent) ? 1 : args[7] as double, itemExtent: args[8] as double, squeeze: identical(args[9], darticAbsent) ? 1 : args[9] as double, renderChildrenOutsideViewport: identical(args[10], darticAbsent) ? false : args[10] as bool, clipBehavior: identical(args[11], darticAbsent) ? Clip.none : args[11] as Clip, children: identical(args[12], darticAbsent) ? null : args[12] == null ? null : (args[12] as List).cast<RenderBox>()),
       };
 }

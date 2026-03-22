@@ -34,6 +34,9 @@ abstract final class MainAxisAlignmentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MainAxisAlignment).toString(),
+        'hashCode#0': (args) => (args[0] as MainAxisAlignment).hashCode,
         'index#0': (args) => (args[0] as MainAxisAlignment).index,
+        '==#1': (args) => (args[0] as MainAxisAlignment) == (args[1] as Object),
       };
 }

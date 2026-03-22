@@ -36,6 +36,7 @@ abstract final class StatefulBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as StatefulBuilder).createState(),
+        'toString#0': (args) => (args[0] as StatefulBuilder).toString(),
         'createElement#0': (args) => (args[0] as StatefulBuilder).createElement(),
         'toStringShort#0': (args) => (args[0] as StatefulBuilder).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as StatefulBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class StatefulBuilderBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as StatefulBuilder).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as StatefulBuilder).debugDescribeChildren(),
         'builder#0': (args) => (args[0] as StatefulBuilder).builder,
+        'hashCode#0': (args) => (args[0] as StatefulBuilder).hashCode,
         'key#0': (args) => (args[0] as StatefulBuilder).key,
+        '==#1': (args) => (args[0] as StatefulBuilder) == (args[1] as Object),
         '#2': (args) => StatefulBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, builder: (a, b) => (args[1] as Function)(a, b) as Widget),
         '_#fromFields#2': (args) => StatefulBuilder(key: args[1] as Key?, builder: args[0] as StatefulWidgetBuilder),
       };

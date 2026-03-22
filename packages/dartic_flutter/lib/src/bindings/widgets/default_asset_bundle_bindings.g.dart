@@ -38,6 +38,7 @@ abstract final class DefaultAssetBundleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DefaultAssetBundle).updateShouldNotify(args[1] as DefaultAssetBundle),
+        'toString#0': (args) => (args[0] as DefaultAssetBundle).toString(),
         'createElement#0': (args) => (args[0] as DefaultAssetBundle).createElement(),
         'toStringShort#0': (args) => (args[0] as DefaultAssetBundle).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DefaultAssetBundle).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,8 +47,10 @@ abstract final class DefaultAssetBundleBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DefaultAssetBundle).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DefaultAssetBundle).debugDescribeChildren(),
         'bundle#0': (args) => (args[0] as DefaultAssetBundle).bundle,
+        'hashCode#0': (args) => (args[0] as DefaultAssetBundle).hashCode,
         'child#0': (args) => (args[0] as DefaultAssetBundle).child,
         'key#0': (args) => (args[0] as DefaultAssetBundle).key,
+        '==#1': (args) => (args[0] as DefaultAssetBundle) == (args[1] as Object),
         '#3': (args) => DefaultAssetBundle(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, bundle: args[1] as AssetBundle, child: args[2] as Widget),
         '_#fromFields#3': (args) => DefaultAssetBundle(key: args[2] as Key?, bundle: args[0] as AssetBundle, child: args[1] as Widget),
       };

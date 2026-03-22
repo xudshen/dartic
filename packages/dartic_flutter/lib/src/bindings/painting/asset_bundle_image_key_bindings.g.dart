@@ -35,6 +35,7 @@ abstract final class AssetBundleImageKeyBindings {
         'name#0': (args) => (args[0] as AssetBundleImageKey).name,
         'scale#0': (args) => (args[0] as AssetBundleImageKey).scale,
         'hashCode#0': (args) => (args[0] as AssetBundleImageKey).hashCode,
+        '==#1': (args) => (args[0] as AssetBundleImageKey) == (args[1] as Object),
         '#3': (args) => AssetBundleImageKey(bundle: args[0] as AssetBundle, name: args[1] as String, scale: args[2] as double),
         '_#fromFields#3': (args) => AssetBundleImageKey(bundle: args[0] as AssetBundle, name: args[1] as String, scale: args[2] as double),
       };

@@ -34,8 +34,11 @@ abstract final class RouteInformationProviderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'routerReportsNewRouteInformation#2': (args) { (args[0] as RouteInformationProvider).routerReportsNewRouteInformation(args[1] as RouteInformation, type: identical(args[2], darticAbsent) ? RouteInformationReportingType.none : args[2] as RouteInformationReportingType); return null; },
+        'toString#0': (args) => (args[0] as RouteInformationProvider).toString(),
         'addListener#1': (args) { (args[0] as RouteInformationProvider).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RouteInformationProvider).removeListener(() => (args[1] as Function)()); return null; },
+        'hashCode#0': (args) => (args[0] as RouteInformationProvider).hashCode,
         'value#0': (args) => (args[0] as RouteInformationProvider).value,
+        '==#1': (args) => (args[0] as RouteInformationProvider) == (args[1] as Object),
       };
 }

@@ -43,6 +43,7 @@ abstract final class ImplicitlyAnimatedWidgetStateBindings {
         'dispose#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).dispose(); return null; },
         'forEachTween#1': (args) { (args[0] as ImplicitlyAnimatedWidgetState).forEachTween((a, b, c) => (args[1] as Function)(a, b, c) as Tween<dynamic>?); return null; },
         'didUpdateTweens#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).didUpdateTweens(); return null; },
+        'toString#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).toString(),
         'reassemble#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as ImplicitlyAnimatedWidgetState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as ImplicitlyAnimatedWidgetState).deactivate(); return null; },
@@ -55,8 +56,10 @@ abstract final class ImplicitlyAnimatedWidgetStateBindings {
         'createTicker#1': (args) => (args[0] as ImplicitlyAnimatedWidgetState).createTicker((a) => (args[1] as Function)(a)),
         'controller#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).controller,
         'animation#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).animation,
+        'hashCode#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).hashCode,
         'widget#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).widget,
         'context#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).context,
         'mounted#0': (args) => (args[0] as ImplicitlyAnimatedWidgetState).mounted,
+        '==#1': (args) => (args[0] as ImplicitlyAnimatedWidgetState) == (args[1] as Object),
       };
 }

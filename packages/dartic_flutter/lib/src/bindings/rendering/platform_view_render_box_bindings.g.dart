@@ -47,6 +47,7 @@ abstract final class PlatformViewRenderBoxBindings {
         'computeDryLayout#1': (args) => (args[0] as PlatformViewRenderBox).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as PlatformViewRenderBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as PlatformViewRenderBox).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
+        'toString#0': (args) => (args[0] as PlatformViewRenderBox).toString(),
         'setupParentData#1': (args) { (args[0] as PlatformViewRenderBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as PlatformViewRenderBox).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as PlatformViewRenderBox).computeMinIntrinsicWidth(args[1] as double),
@@ -124,6 +125,7 @@ abstract final class PlatformViewRenderBoxBindings {
         'sizedByParent#0': (args) => (args[0] as PlatformViewRenderBox).sizedByParent,
         'alwaysNeedsCompositing#0': (args) => (args[0] as PlatformViewRenderBox).alwaysNeedsCompositing,
         'isRepaintBoundary#0': (args) => (args[0] as PlatformViewRenderBox).isRepaintBoundary,
+        'hashCode#0': (args) => (args[0] as PlatformViewRenderBox).hashCode,
         'hasSize#0': (args) => (args[0] as PlatformViewRenderBox).hasSize,
         'size#0': (args) => (args[0] as PlatformViewRenderBox).size,
         'semanticBounds#0': (args) => (args[0] as PlatformViewRenderBox).semanticBounds,
@@ -161,6 +163,7 @@ abstract final class PlatformViewRenderBoxBindings {
         'debugCreator=#1': (args) { (args[0] as PlatformViewRenderBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as PlatformViewRenderBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'hitTestBehavior=#1': (args) { (args[0] as PlatformViewRenderBox).hitTestBehavior = args[1] as PlatformViewHitTestBehavior; return args[1]; },
+        '==#1': (args) => (args[0] as PlatformViewRenderBox) == (args[1] as Object),
         '#3': (args) => PlatformViewRenderBox(controller: args[0] as PlatformViewController, hitTestBehavior: args[1] as PlatformViewHitTestBehavior, gestureRecognizers: (args[2] as Set).cast<Factory<OneSequenceGestureRecognizer>>()),
       };
 }

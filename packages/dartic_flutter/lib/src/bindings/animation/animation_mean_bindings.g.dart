@@ -28,6 +28,7 @@ abstract final class AnimationMeanBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimationMean).toString(),
         'didStartListening#0': (args) { (args[0] as AnimationMean).didStartListening(); return null; },
         'didStopListening#0': (args) { (args[0] as AnimationMean).didStopListening(); return null; },
         'addListener#1': (args) { (args[0] as AnimationMean).addListener(() => (args[1] as Function)()); return null; },
@@ -43,6 +44,7 @@ abstract final class AnimationMeanBindings {
         'clearStatusListeners#0': (args) { (args[0] as AnimationMean).clearStatusListeners(); return null; },
         'notifyStatusListeners#1': (args) { (args[0] as AnimationMean).notifyStatusListeners(args[1] as AnimationStatus); return null; },
         'value#0': (args) => (args[0] as AnimationMean).value,
+        'hashCode#0': (args) => (args[0] as AnimationMean).hashCode,
         'first#0': (args) => (args[0] as AnimationMean).first,
         'next#0': (args) => (args[0] as AnimationMean).next,
         'status#0': (args) => (args[0] as AnimationMean).status,
@@ -51,6 +53,7 @@ abstract final class AnimationMeanBindings {
         'isAnimating#0': (args) => (args[0] as AnimationMean).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as AnimationMean).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as AnimationMean).isListening,
+        '==#1': (args) => (args[0] as AnimationMean) == (args[1] as Object),
         '#2': (args) => AnimationMean(left: args[0] as Animation<double>, right: args[1] as Animation<double>),
       };
 }

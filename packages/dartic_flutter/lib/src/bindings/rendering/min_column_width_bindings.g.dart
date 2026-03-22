@@ -33,6 +33,8 @@ abstract final class MinColumnWidthBindings {
         'toString#0': (args) => (args[0] as MinColumnWidth).toString(),
         'a#0': (args) => (args[0] as MinColumnWidth).a,
         'b#0': (args) => (args[0] as MinColumnWidth).b,
+        'hashCode#0': (args) => (args[0] as MinColumnWidth).hashCode,
+        '==#1': (args) => (args[0] as MinColumnWidth) == (args[1] as Object),
         '#2': (args) => MinColumnWidth(args[0] as TableColumnWidth, args[1] as TableColumnWidth),
         '_#fromFields#2': (args) => MinColumnWidth(args[0] as TableColumnWidth, args[1] as TableColumnWidth),
       };

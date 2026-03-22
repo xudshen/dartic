@@ -41,6 +41,9 @@ abstract final class FloatingLabelBehaviorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FloatingLabelBehavior).toString(),
+        'hashCode#0': (args) => (args[0] as FloatingLabelBehavior).hashCode,
         'index#0': (args) => (args[0] as FloatingLabelBehavior).index,
+        '==#1': (args) => (args[0] as FloatingLabelBehavior) == (args[1] as Object),
       };
 }

@@ -26,5 +26,8 @@ abstract final class PlatformViewsRegistryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getNextPlatformViewId#0': (args) => (args[0] as PlatformViewsRegistry).getNextPlatformViewId(),
+        'toString#0': (args) => (args[0] as PlatformViewsRegistry).toString(),
+        'hashCode#0': (args) => (args[0] as PlatformViewsRegistry).hashCode,
+        '==#1': (args) => (args[0] as PlatformViewsRegistry) == (args[1] as Object),
       };
 }

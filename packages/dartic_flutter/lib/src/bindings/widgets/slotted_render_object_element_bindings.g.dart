@@ -35,6 +35,7 @@ abstract final class SlottedRenderObjectElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as SlottedRenderObjectElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as SlottedRenderObjectElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as SlottedRenderObjectElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
+        'toString#0': (args) => (args[0] as SlottedRenderObjectElement).toString(),
         'performRebuild#0': (args) { (args[0] as SlottedRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as SlottedRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SlottedRenderObjectElement).unmount(); return null; },
@@ -81,6 +82,7 @@ abstract final class SlottedRenderObjectElementBindings {
         'toStringShallow#2': (args) => (args[0] as SlottedRenderObjectElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as SlottedRenderObjectElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'renderObject#0': (args) => (args[0] as SlottedRenderObjectElement).renderObject,
+        'hashCode#0': (args) => (args[0] as SlottedRenderObjectElement).hashCode,
         'renderObjectAttachingChild#0': (args) => (args[0] as SlottedRenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as SlottedRenderObjectElement).debugDoingBuild,
         'slot#0': (args) => (args[0] as SlottedRenderObjectElement).slot,
@@ -93,6 +95,7 @@ abstract final class SlottedRenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as SlottedRenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as SlottedRenderObjectElement).size,
         'dirty#0': (args) => (args[0] as SlottedRenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as SlottedRenderObjectElement) == (args[1] as Object),
         '#1': (args) => SlottedRenderObjectElement<dynamic, RenderObject>(args[0] as SlottedMultiChildRenderObjectWidgetMixin<dynamic, RenderObject>),
       };
 }

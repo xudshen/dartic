@@ -33,6 +33,7 @@ abstract final class RootRenderObjectElementBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RootRenderObjectElement).toString(),
         'mount#2': (args) { (args[0] as RootRenderObjectElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as RootRenderObjectElement).update(args[1] as Widget); return null; },
         'performRebuild#0': (args) { (args[0] as RootRenderObjectElement).performRebuild(); return null; },
@@ -86,6 +87,7 @@ abstract final class RootRenderObjectElementBindings {
         'toStringShallow#2': (args) => (args[0] as RootRenderObjectElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as RootRenderObjectElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'assignOwner#1': (args) { (args[0] as RootRenderObjectElement).assignOwner(args[1] as BuildOwner); return null; },
+        'hashCode#0': (args) => (args[0] as RootRenderObjectElement).hashCode,
         'renderObject#0': (args) => (args[0] as RootRenderObjectElement).renderObject,
         'renderObjectAttachingChild#0': (args) => (args[0] as RootRenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as RootRenderObjectElement).debugDoingBuild,
@@ -99,5 +101,6 @@ abstract final class RootRenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as RootRenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as RootRenderObjectElement).size,
         'dirty#0': (args) => (args[0] as RootRenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as RootRenderObjectElement) == (args[1] as Object),
       };
 }

@@ -32,10 +32,12 @@ abstract final class MagnifierDecorationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as MagnifierDecoration).toString(),
         'opacity#0': (args) => (args[0] as MagnifierDecoration).opacity,
         'shadows#0': (args) => (args[0] as MagnifierDecoration).shadows,
         'shape#0': (args) => (args[0] as MagnifierDecoration).shape,
         'hashCode#0': (args) => (args[0] as MagnifierDecoration).hashCode,
+        '==#1': (args) => (args[0] as MagnifierDecoration) == (args[1] as Object),
         '#3': (args) => MagnifierDecoration(opacity: identical(args[0], darticAbsent) ? 1.0 : args[0] as double, shadows: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as List).cast<BoxShadow>(), shape: identical(args[2], darticAbsent) ? const RoundedRectangleBorder() : args[2] as ShapeBorder),
         '_#fromFields#3': (args) => MagnifierDecoration(opacity: args[0] as double, shadows: args[1] == null ? null : (args[1] as List).cast<BoxShadow>(), shape: args[2] as ShapeBorder),
       };

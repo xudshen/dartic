@@ -29,6 +29,9 @@ abstract final class DarwinPlatformViewControllerBindings {
         'acceptGesture#0': (args) => (args[0] as DarwinPlatformViewController).acceptGesture(),
         'rejectGesture#0': (args) => (args[0] as DarwinPlatformViewController).rejectGesture(),
         'dispose#0': (args) => (args[0] as DarwinPlatformViewController).dispose(),
+        'toString#0': (args) => (args[0] as DarwinPlatformViewController).toString(),
         'id#0': (args) => (args[0] as DarwinPlatformViewController).id,
+        'hashCode#0': (args) => (args[0] as DarwinPlatformViewController).hashCode,
+        '==#1': (args) => (args[0] as DarwinPlatformViewController) == (args[1] as Object),
       };
 }

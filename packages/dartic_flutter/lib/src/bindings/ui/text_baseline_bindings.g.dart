@@ -33,6 +33,9 @@ abstract final class TextBaselineBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextBaseline).toString(),
+        'hashCode#0': (args) => (args[0] as TextBaseline).hashCode,
         'index#0': (args) => (args[0] as TextBaseline).index,
+        '==#1': (args) => (args[0] as TextBaseline) == (args[1] as Object),
       };
 }

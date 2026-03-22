@@ -26,6 +26,7 @@ abstract final class SpellCheckResultsBindings {
         'spellCheckedText#0': (args) => (args[0] as SpellCheckResults).spellCheckedText,
         'suggestionSpans#0': (args) => (args[0] as SpellCheckResults).suggestionSpans,
         'hashCode#0': (args) => (args[0] as SpellCheckResults).hashCode,
+        '==#1': (args) => (args[0] as SpellCheckResults) == (args[1] as Object),
         '#2': (args) => SpellCheckResults(args[0] as String, (args[1] as List).cast<SuggestionSpan>()),
         '_#fromFields#2': (args) => SpellCheckResults(args[0] as String, (args[1] as List).cast<SuggestionSpan>()),
       };

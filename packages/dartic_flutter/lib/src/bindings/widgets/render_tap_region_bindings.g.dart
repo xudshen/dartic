@@ -44,6 +44,7 @@ abstract final class RenderTapRegionBindings {
         'layout#2': (args) { (args[0] as RenderTapRegion).layout(args[1] as Constraints, parentUsesSize: identical(args[2], darticAbsent) ? false : args[2] as bool); return null; },
         'dispose#0': (args) { (args[0] as RenderTapRegion).dispose(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTapRegion).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderTapRegion).toString(),
         'hitTest#2': (args) => (args[0] as RenderTapRegion).hitTest(args[1] as BoxHitTestResult, position: args[2] as Offset),
         'hitTestSelf#1': (args) => (args[0] as RenderTapRegion).hitTestSelf(args[1] as Offset),
         'setupParentData#1': (args) { (args[0] as RenderTapRegion).setupParentData(args[1] as RenderObject); return null; },
@@ -128,6 +129,7 @@ abstract final class RenderTapRegionBindings {
         'consumeOutsideTaps#0': (args) => (args[0] as RenderTapRegion).consumeOutsideTaps,
         'groupId#0': (args) => (args[0] as RenderTapRegion).groupId,
         'registry#0': (args) => (args[0] as RenderTapRegion).registry,
+        'hashCode#0': (args) => (args[0] as RenderTapRegion).hashCode,
         'behavior#0': (args) => (args[0] as RenderTapRegion).behavior,
         'hasSize#0': (args) => (args[0] as RenderTapRegion).hasSize,
         'size#0': (args) => (args[0] as RenderTapRegion).size,
@@ -175,6 +177,7 @@ abstract final class RenderTapRegionBindings {
         'debugCreator=#1': (args) { (args[0] as RenderTapRegion).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTapRegion).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderTapRegion).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTapRegion) == (args[1] as Object),
         '#10': (args) => RenderTapRegion(registry: identical(args[0], darticAbsent) ? null : args[0] as TapRegionRegistry?, enabled: identical(args[1], darticAbsent) ? true : args[1] as bool, consumeOutsideTaps: identical(args[2], darticAbsent) ? false : args[2] as bool, onTapOutside: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), onTapInside: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), onTapUpOutside: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onTapUpInside: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), behavior: identical(args[7], darticAbsent) ? HitTestBehavior.deferToChild : args[7] as HitTestBehavior, groupId: identical(args[8], darticAbsent) ? null : args[8], debugLabel: identical(args[9], darticAbsent) ? null : args[9] as String?),
       };
 }

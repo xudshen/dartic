@@ -32,12 +32,14 @@ abstract final class RestorableEnumBindings {
         'didUpdateValue#1': (args) { (args[0] as RestorableEnum).didUpdateValue(args[1] as Enum); return null; },
         'fromPrimitives#1': (args) => (args[0] as RestorableEnum).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableEnum).toPrimitives(),
+        'toString#0': (args) => (args[0] as RestorableEnum).toString(),
         'initWithValue#1': (args) { (args[0] as RestorableEnum).initWithValue(args[1] as Enum); return null; },
         'dispose#0': (args) { (args[0] as RestorableEnum).dispose(); return null; },
         'addListener#1': (args) { (args[0] as RestorableEnum).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableEnum).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableEnum).notifyListeners(); return null; },
         'values#0': (args) => (args[0] as RestorableEnum).values,
+        'hashCode#0': (args) => (args[0] as RestorableEnum).hashCode,
         'value#0': (args) => (args[0] as RestorableEnum).value,
         'enabled#0': (args) => (args[0] as RestorableEnum).enabled,
         'state#0': (args) => (args[0] as RestorableEnum).state,
@@ -45,6 +47,7 @@ abstract final class RestorableEnumBindings {
         'hasListeners#0': (args) => (args[0] as RestorableEnum).hasListeners,
         'value=#1': (args) { (args[0] as RestorableEnum).value = args[1] as Enum; return args[1]; },
         'values=#1': (args) { (args[0] as RestorableEnum).values = (args[1] as Set).cast<Enum>(); return args[1]; },
+        '==#1': (args) => (args[0] as RestorableEnum) == (args[1] as Object),
         '#2': (args) => RestorableEnum<Enum>(args[0] as Enum, values: (args[1] as Iterable).cast<Enum>()),
       };
 }

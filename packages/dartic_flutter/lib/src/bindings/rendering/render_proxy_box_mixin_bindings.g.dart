@@ -51,6 +51,7 @@ abstract final class RenderProxyBoxMixinBindings {
         'hitTestChildren#2': (args) => (args[0] as RenderProxyBoxMixin).hitTestChildren(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'applyPaintTransform#2': (args) { (args[0] as RenderProxyBoxMixin).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'paint#2': (args) { (args[0] as RenderProxyBoxMixin).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderProxyBoxMixin).toString(),
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxMixin).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderProxyBoxMixin).getMaxIntrinsicWidth(args[1] as double),
         'getMinIntrinsicHeight#1': (args) => (args[0] as RenderProxyBoxMixin).getMinIntrinsicHeight(args[1] as double),
@@ -116,6 +117,7 @@ abstract final class RenderProxyBoxMixinBindings {
         'describeForError#2': (args) => (args[0] as RenderProxyBoxMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as RenderProxyBoxMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderProxyBoxMixin).debugValidateChild(args[1] as RenderObject),
+        'hashCode#0': (args) => (args[0] as RenderProxyBoxMixin).hashCode,
         'hasSize#0': (args) => (args[0] as RenderProxyBoxMixin).hasSize,
         'size#0': (args) => (args[0] as RenderProxyBoxMixin).size,
         'semanticBounds#0': (args) => (args[0] as RenderProxyBoxMixin).semanticBounds,
@@ -152,5 +154,6 @@ abstract final class RenderProxyBoxMixinBindings {
         'debugCreator=#1': (args) { (args[0] as RenderProxyBoxMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderProxyBoxMixin).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderProxyBoxMixin).child = args[1] as RenderBox; return args[1]; },
+        '==#1': (args) => (args[0] as RenderProxyBoxMixin) == (args[1] as Object),
       };
 }

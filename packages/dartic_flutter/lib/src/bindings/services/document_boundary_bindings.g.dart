@@ -26,7 +26,10 @@ abstract final class DocumentBoundaryBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as DocumentBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as DocumentBoundary).getTrailingTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as DocumentBoundary).toString(),
         'getTextBoundaryAt#1': (args) => (args[0] as DocumentBoundary).getTextBoundaryAt(args[1] as int),
+        'hashCode#0': (args) => (args[0] as DocumentBoundary).hashCode,
+        '==#1': (args) => (args[0] as DocumentBoundary) == (args[1] as Object),
         '#1': (args) => DocumentBoundary(args[0] as String),
         '_#fromFields#1': (args) => DocumentBoundary(args[0] as String),
       };

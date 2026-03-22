@@ -40,6 +40,7 @@ abstract final class RenderIgnoreBaselineBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'computeDistanceToActualBaseline#1': (args) => (args[0] as RenderIgnoreBaseline).computeDistanceToActualBaseline(args[1] as ui.TextBaseline),
         'computeDryBaseline#2': (args) => (args[0] as RenderIgnoreBaseline).computeDryBaseline(args[1] as BoxConstraints, args[2] as ui.TextBaseline),
+        'toString#0': (args) => (args[0] as RenderIgnoreBaseline).toString(),
         'setupParentData#1': (args) { (args[0] as RenderIgnoreBaseline).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnoreBaseline).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderIgnoreBaseline).computeMinIntrinsicWidth(args[1] as double),
@@ -116,6 +117,7 @@ abstract final class RenderIgnoreBaselineBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderIgnoreBaseline).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderIgnoreBaseline).debugValidateChild(args[1] as RenderObject),
         'computeSizeForNoChild#1': (args) => (args[0] as RenderIgnoreBaseline).computeSizeForNoChild(args[1] as BoxConstraints),
+        'hashCode#0': (args) => (args[0] as RenderIgnoreBaseline).hashCode,
         'hasSize#0': (args) => (args[0] as RenderIgnoreBaseline).hasSize,
         'size#0': (args) => (args[0] as RenderIgnoreBaseline).size,
         'semanticBounds#0': (args) => (args[0] as RenderIgnoreBaseline).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class RenderIgnoreBaselineBindings {
         'debugCreator=#1': (args) { (args[0] as RenderIgnoreBaseline).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderIgnoreBaseline).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderIgnoreBaseline).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderIgnoreBaseline) == (args[1] as Object),
         '#1': (args) => RenderIgnoreBaseline(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?),
       };
 }

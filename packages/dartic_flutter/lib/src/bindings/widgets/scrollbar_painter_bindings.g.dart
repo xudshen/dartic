@@ -80,6 +80,7 @@ abstract final class ScrollbarPainterBindings {
         'scrollbarOrientation#0': (args) => (args[0] as ScrollbarPainter).scrollbarOrientation,
         'ignorePointer#0': (args) => (args[0] as ScrollbarPainter).ignorePointer,
         'semanticsBuilder#0': (args) => (args[0] as ScrollbarPainter).semanticsBuilder,
+        'hashCode#0': (args) => (args[0] as ScrollbarPainter).hashCode,
         'hasListeners#0': (args) => (args[0] as ScrollbarPainter).hasListeners,
         'color=#1': (args) { (args[0] as ScrollbarPainter).color = args[1] as Color; return args[1]; },
         'trackColor=#1': (args) { (args[0] as ScrollbarPainter).trackColor = args[1] as Color; return args[1]; },
@@ -96,6 +97,7 @@ abstract final class ScrollbarPainterBindings {
         'minOverscrollLength=#1': (args) { (args[0] as ScrollbarPainter).minOverscrollLength = args[1] as double; return args[1]; },
         'scrollbarOrientation=#1': (args) { (args[0] as ScrollbarPainter).scrollbarOrientation = args[1] as ScrollbarOrientation?; return args[1]; },
         'ignorePointer=#1': (args) { (args[0] as ScrollbarPainter).ignorePointer = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as ScrollbarPainter) == (args[1] as Object),
         '#16': (args) {
           if (identical(args[5], darticAbsent)) {
             if (identical(args[12], darticAbsent)) {

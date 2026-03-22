@@ -30,6 +30,9 @@ abstract final class ShaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as Shader).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Shader).toString(),
         'debugDisposed#0': (args) => (args[0] as Shader).debugDisposed,
+        'hashCode#0': (args) => (args[0] as Shader).hashCode,
+        '==#1': (args) => (args[0] as Shader) == (args[1] as Object),
       };
 }

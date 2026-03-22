@@ -26,6 +26,7 @@ abstract final class GridTileBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as GridTile).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as GridTile).toString(),
         'createElement#0': (args) => (args[0] as GridTile).createElement(),
         'toStringShort#0': (args) => (args[0] as GridTile).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as GridTile).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -36,7 +37,9 @@ abstract final class GridTileBindings {
         'header#0': (args) => (args[0] as GridTile).header,
         'footer#0': (args) => (args[0] as GridTile).footer,
         'child#0': (args) => (args[0] as GridTile).child,
+        'hashCode#0': (args) => (args[0] as GridTile).hashCode,
         'key#0': (args) => (args[0] as GridTile).key,
+        '==#1': (args) => (args[0] as GridTile) == (args[1] as Object),
         '#4': (args) => GridTile(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, header: identical(args[1], darticAbsent) ? null : args[1] as Widget?, footer: identical(args[2], darticAbsent) ? null : args[2] as Widget?, child: args[3] as Widget),
         '_#fromFields#4': (args) => GridTile(key: args[3] as Key?, header: args[2] as Widget?, footer: args[1] as Widget?, child: args[0] as Widget),
       };

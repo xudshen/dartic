@@ -42,6 +42,9 @@ abstract final class TabBarIndicatorSizeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TabBarIndicatorSize).toString(),
+        'hashCode#0': (args) => (args[0] as TabBarIndicatorSize).hashCode,
         'index#0': (args) => (args[0] as TabBarIndicatorSize).index,
+        '==#1': (args) => (args[0] as TabBarIndicatorSize) == (args[1] as Object),
       };
 }

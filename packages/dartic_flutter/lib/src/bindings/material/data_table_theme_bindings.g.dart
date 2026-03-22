@@ -29,6 +29,7 @@ abstract final class DataTableThemeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as DataTableTheme).updateShouldNotify(args[1] as DataTableTheme),
+        'toString#0': (args) => (args[0] as DataTableTheme).toString(),
         'createElement#0': (args) => (args[0] as DataTableTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as DataTableTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DataTableTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,8 +38,10 @@ abstract final class DataTableThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as DataTableTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as DataTableTheme).debugDescribeChildren(),
         'data#0': (args) => (args[0] as DataTableTheme).data,
+        'hashCode#0': (args) => (args[0] as DataTableTheme).hashCode,
         'child#0': (args) => (args[0] as DataTableTheme).child,
         'key#0': (args) => (args[0] as DataTableTheme).key,
+        '==#1': (args) => (args[0] as DataTableTheme) == (args[1] as Object),
         '#3': (args) => DataTableTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, data: args[1] as DataTableThemeData, child: args[2] as Widget),
         '_#fromFields#3': (args) => DataTableTheme(key: args[2] as Key?, data: args[1] as DataTableThemeData, child: args[0] as Widget),
       };

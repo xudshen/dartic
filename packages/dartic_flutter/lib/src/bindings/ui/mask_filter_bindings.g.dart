@@ -31,6 +31,7 @@ abstract final class MaskFilterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as MaskFilter).toString(),
         'hashCode#0': (args) => (args[0] as MaskFilter).hashCode,
+        '==#1': (args) => (args[0] as MaskFilter) == (args[1] as Object),
         'blur#2': (args) => MaskFilter.blur(args[0] as BlurStyle, args[1] as double),
         '_#fromFields#2': (args) => MaskFilter.blur(args[1] as BlurStyle, args[0] as double),
       };

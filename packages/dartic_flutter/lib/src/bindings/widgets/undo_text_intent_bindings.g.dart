@@ -27,10 +27,13 @@ abstract final class UndoTextIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UndoTextIntent).toString(),
         'toStringShort#0': (args) => (args[0] as UndoTextIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as UndoTextIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as UndoTextIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'cause#0': (args) => (args[0] as UndoTextIntent).cause,
+        'hashCode#0': (args) => (args[0] as UndoTextIntent).hashCode,
+        '==#1': (args) => (args[0] as UndoTextIntent) == (args[1] as Object),
         '#1': (args) => UndoTextIntent(args[0] as SelectionChangedCause),
         '_#fromFields#1': (args) => UndoTextIntent(args[0] as SelectionChangedCause),
       };

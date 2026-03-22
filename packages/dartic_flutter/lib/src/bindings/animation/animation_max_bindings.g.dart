@@ -28,6 +28,7 @@ abstract final class AnimationMaxBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimationMax).toString(),
         'didStartListening#0': (args) { (args[0] as AnimationMax).didStartListening(); return null; },
         'didStopListening#0': (args) { (args[0] as AnimationMax).didStopListening(); return null; },
         'addListener#1': (args) { (args[0] as AnimationMax).addListener(() => (args[1] as Function)()); return null; },
@@ -43,6 +44,7 @@ abstract final class AnimationMaxBindings {
         'clearStatusListeners#0': (args) { (args[0] as AnimationMax).clearStatusListeners(); return null; },
         'notifyStatusListeners#1': (args) { (args[0] as AnimationMax).notifyStatusListeners(args[1] as AnimationStatus); return null; },
         'value#0': (args) => (args[0] as AnimationMax).value,
+        'hashCode#0': (args) => (args[0] as AnimationMax).hashCode,
         'first#0': (args) => (args[0] as AnimationMax).first,
         'next#0': (args) => (args[0] as AnimationMax).next,
         'status#0': (args) => (args[0] as AnimationMax).status,
@@ -51,6 +53,7 @@ abstract final class AnimationMaxBindings {
         'isAnimating#0': (args) => (args[0] as AnimationMax).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as AnimationMax).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as AnimationMax).isListening,
+        '==#1': (args) => (args[0] as AnimationMax) == (args[1] as Object),
         '#2': (args) => AnimationMax<num>(args[0] as Animation<num>, args[1] as Animation<num>),
       };
 }

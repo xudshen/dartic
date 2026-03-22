@@ -54,6 +54,7 @@ abstract final class MenuAcceleratorCallbackBindingBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as MenuAcceleratorCallbackBinding).updateShouldNotify(args[1] as MenuAcceleratorCallbackBinding),
+        'toString#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).toString(),
         'createElement#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MenuAcceleratorCallbackBinding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -63,8 +64,10 @@ abstract final class MenuAcceleratorCallbackBindingBindings {
         'debugDescribeChildren#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).debugDescribeChildren(),
         'onInvoke#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).onInvoke,
         'hasSubmenu#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).hasSubmenu,
+        'hashCode#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).hashCode,
         'child#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).child,
         'key#0': (args) => (args[0] as MenuAcceleratorCallbackBinding).key,
+        '==#1': (args) => (args[0] as MenuAcceleratorCallbackBinding) == (args[1] as Object),
         '#4': (args) => MenuAcceleratorCallbackBinding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onInvoke: identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), hasSubmenu: identical(args[2], darticAbsent) ? false : args[2] as bool, child: args[3] as Widget),
         '_#fromFields#4': (args) => MenuAcceleratorCallbackBinding(key: args[2] as Key?, onInvoke: args[3] as VoidCallback?, hasSubmenu: args[1] as bool, child: args[0] as Widget),
       };

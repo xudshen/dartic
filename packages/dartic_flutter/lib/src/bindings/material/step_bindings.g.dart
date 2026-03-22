@@ -34,6 +34,7 @@ abstract final class StepBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Step).toString(),
         'title#0': (args) => (args[0] as Step).title,
         'subtitle#0': (args) => (args[0] as Step).subtitle,
         'content#0': (args) => (args[0] as Step).content,
@@ -41,6 +42,8 @@ abstract final class StepBindings {
         'isActive#0': (args) => (args[0] as Step).isActive,
         'label#0': (args) => (args[0] as Step).label,
         'stepStyle#0': (args) => (args[0] as Step).stepStyle,
+        'hashCode#0': (args) => (args[0] as Step).hashCode,
+        '==#1': (args) => (args[0] as Step) == (args[1] as Object),
         '#7': (args) => Step(title: args[0] as Widget, subtitle: identical(args[1], darticAbsent) ? null : args[1] as Widget?, content: args[2] as Widget, state: identical(args[3], darticAbsent) ? StepState.indexed : args[3] as StepState, isActive: identical(args[4], darticAbsent) ? false : args[4] as bool, label: identical(args[5], darticAbsent) ? null : args[5] as Widget?, stepStyle: identical(args[6], darticAbsent) ? null : args[6] as StepStyle?),
         '_#fromFields#7': (args) => Step(title: args[6] as Widget, subtitle: args[5] as Widget?, content: args[0] as Widget, state: args[3] as StepState, isActive: args[1] as bool, label: args[2] as Widget?, stepStyle: args[4] as StepStyle?),
       };

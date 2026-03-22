@@ -33,6 +33,9 @@ abstract final class TextAffinityBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextAffinity).toString(),
+        'hashCode#0': (args) => (args[0] as TextAffinity).hashCode,
         'index#0': (args) => (args[0] as TextAffinity).index,
+        '==#1': (args) => (args[0] as TextAffinity) == (args[1] as Object),
       };
 }

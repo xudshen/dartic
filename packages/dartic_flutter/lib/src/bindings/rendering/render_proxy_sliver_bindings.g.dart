@@ -43,6 +43,7 @@ abstract final class RenderProxySliverBindings {
         'hitTestChildren#3': (args) => (args[0] as RenderProxySliver).hitTestChildren(args[1] as SliverHitTestResult, mainAxisPosition: args[2] as double, crossAxisPosition: args[3] as double),
         'childMainAxisPosition#1': (args) => (args[0] as RenderProxySliver).childMainAxisPosition(args[1] as RenderSliver),
         'applyPaintTransform#2': (args) { (args[0] as RenderProxySliver).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as RenderProxySliver).toString(),
         'debugResetSize#0': (args) { (args[0] as RenderProxySliver).debugResetSize(); return null; },
         'debugAssertDoesMeetConstraints#0': (args) { (args[0] as RenderProxySliver).debugAssertDoesMeetConstraints(); return null; },
         'performResize#0': (args) { (args[0] as RenderProxySliver).performResize(); return null; },
@@ -99,6 +100,7 @@ abstract final class RenderProxySliverBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderProxySliver).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderProxySliver).debugValidateChild(args[1] as RenderObject),
         'semanticBounds#0': (args) => (args[0] as RenderProxySliver).semanticBounds,
+        'hashCode#0': (args) => (args[0] as RenderProxySliver).hashCode,
         'ensureSemantics#0': (args) => (args[0] as RenderProxySliver).ensureSemantics,
         'constraints#0': (args) => (args[0] as RenderProxySliver).constraints,
         'geometry#0': (args) => (args[0] as RenderProxySliver).geometry,
@@ -135,5 +137,6 @@ abstract final class RenderProxySliverBindings {
         'debugCreator=#1': (args) { (args[0] as RenderProxySliver).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderProxySliver).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderProxySliver).child = args[1] as RenderSliver?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderProxySliver) == (args[1] as Object),
       };
 }

@@ -39,6 +39,7 @@ abstract final class AnimatedModalBarrierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as AnimatedModalBarrier).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as AnimatedModalBarrier).toString(),
         'createState#0': (args) => (args[0] as AnimatedModalBarrier).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedModalBarrier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as AnimatedModalBarrier).createElement(),
@@ -54,8 +55,10 @@ abstract final class AnimatedModalBarrierBindings {
         'onDismiss#0': (args) => (args[0] as AnimatedModalBarrier).onDismiss,
         'clipDetailsNotifier#0': (args) => (args[0] as AnimatedModalBarrier).clipDetailsNotifier,
         'semanticsOnTapHint#0': (args) => (args[0] as AnimatedModalBarrier).semanticsOnTapHint,
+        'hashCode#0': (args) => (args[0] as AnimatedModalBarrier).hashCode,
         'listenable#0': (args) => (args[0] as AnimatedModalBarrier).listenable,
         'key#0': (args) => (args[0] as AnimatedModalBarrier).key,
+        '==#1': (args) => (args[0] as AnimatedModalBarrier) == (args[1] as Object),
         '#8': (args) => AnimatedModalBarrier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: args[1] as Animation<Color?>, dismissible: identical(args[2], darticAbsent) ? true : args[2] as bool, semanticsLabel: identical(args[3], darticAbsent) ? null : args[3] as String?, barrierSemanticsDismissible: identical(args[4], darticAbsent) ? null : args[4] as bool?, onDismiss: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!(), clipDetailsNotifier: identical(args[6], darticAbsent) ? null : args[6] as ValueNotifier<EdgeInsets>?, semanticsOnTapHint: identical(args[7], darticAbsent) ? null : args[7] as String?),
         '_#fromFields#8': (args) => AnimatedModalBarrier(key: args[3] as Key?, color: args[4] as Animation<Color?>, dismissible: args[2] as bool, semanticsLabel: args[6] as String?, barrierSemanticsDismissible: args[0] as bool?, onDismiss: args[5] as VoidCallback?, clipDetailsNotifier: args[1] as ValueNotifier<EdgeInsets>?, semanticsOnTapHint: args[7] as String?),
       };

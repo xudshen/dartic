@@ -31,6 +31,8 @@ abstract final class ParentDataBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'detach#0': (args) { (args[0] as ParentData).detach(); return null; },
         'toString#0': (args) => (args[0] as ParentData).toString(),
+        'hashCode#0': (args) => (args[0] as ParentData).hashCode,
+        '==#1': (args) => (args[0] as ParentData) == (args[1] as Object),
         '#0': (args) => ParentData(),
       };
 }

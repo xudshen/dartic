@@ -26,6 +26,9 @@ abstract final class ShaderWarmUpBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'warmUpOnCanvas#1': (args) => (args[0] as ShaderWarmUp).warmUpOnCanvas(args[1] as ui.Canvas),
         'execute#0': (args) => (args[0] as ShaderWarmUp).execute(),
+        'toString#0': (args) => (args[0] as ShaderWarmUp).toString(),
         'size#0': (args) => (args[0] as ShaderWarmUp).size,
+        'hashCode#0': (args) => (args[0] as ShaderWarmUp).hashCode,
+        '==#1': (args) => (args[0] as ShaderWarmUp) == (args[1] as Object),
       };
 }

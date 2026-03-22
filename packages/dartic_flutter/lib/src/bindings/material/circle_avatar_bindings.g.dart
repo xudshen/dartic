@@ -32,6 +32,7 @@ abstract final class CircleAvatarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CircleAvatar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CircleAvatar).toString(),
         'createElement#0': (args) => (args[0] as CircleAvatar).createElement(),
         'toStringShort#0': (args) => (args[0] as CircleAvatar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CircleAvatar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,7 +50,9 @@ abstract final class CircleAvatarBindings {
         'radius#0': (args) => (args[0] as CircleAvatar).radius,
         'minRadius#0': (args) => (args[0] as CircleAvatar).minRadius,
         'maxRadius#0': (args) => (args[0] as CircleAvatar).maxRadius,
+        'hashCode#0': (args) => (args[0] as CircleAvatar).hashCode,
         'key#0': (args) => (args[0] as CircleAvatar).key,
+        '==#1': (args) => (args[0] as CircleAvatar) == (args[1] as Object),
         '#11': (args) => CircleAvatar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, backgroundImage: identical(args[3], darticAbsent) ? null : args[3] as ImageProvider<Object>?, foregroundImage: identical(args[4], darticAbsent) ? null : args[4] as ImageProvider<Object>?, onBackgroundImageError: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a, b) => (args[5] as Function?)!(a, b), onForegroundImageError: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a, b) => (args[6] as Function?)!(a, b), foregroundColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, radius: identical(args[8], darticAbsent) ? null : args[8] as double?, minRadius: identical(args[9], darticAbsent) ? null : args[9] as double?, maxRadius: identical(args[10], darticAbsent) ? null : args[10] as double?),
         '_#fromFields#11': (args) => CircleAvatar(key: args[5] as Key?, child: args[2] as Widget?, backgroundColor: args[0] as Color?, backgroundImage: args[1] as ImageProvider<Object>?, foregroundImage: args[4] as ImageProvider<Object>?, onBackgroundImageError: args[8] as ImageErrorListener?, onForegroundImageError: args[9] as ImageErrorListener?, foregroundColor: args[3] as Color?, radius: args[10] as double?, minRadius: args[7] as double?, maxRadius: args[6] as double?),
       };

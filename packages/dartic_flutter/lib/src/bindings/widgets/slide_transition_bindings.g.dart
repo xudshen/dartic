@@ -34,6 +34,7 @@ abstract final class SlideTransitionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SlideTransition).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as SlideTransition).toString(),
         'createState#0': (args) => (args[0] as SlideTransition).createState(),
         'debugFillProperties#1': (args) { (args[0] as SlideTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as SlideTransition).createElement(),
@@ -46,8 +47,10 @@ abstract final class SlideTransitionBindings {
         'textDirection#0': (args) => (args[0] as SlideTransition).textDirection,
         'transformHitTests#0': (args) => (args[0] as SlideTransition).transformHitTests,
         'child#0': (args) => (args[0] as SlideTransition).child,
+        'hashCode#0': (args) => (args[0] as SlideTransition).hashCode,
         'listenable#0': (args) => (args[0] as SlideTransition).listenable,
         'key#0': (args) => (args[0] as SlideTransition).key,
+        '==#1': (args) => (args[0] as SlideTransition) == (args[1] as Object),
         '#5': (args) => SlideTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, position: args[1] as Animation<Offset>, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, textDirection: identical(args[3], darticAbsent) ? null : args[3] as TextDirection?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#5': (args) => SlideTransition(key: args[1] as Key?, position: args[2] as Animation<Offset>, transformHitTests: args[4] as bool, textDirection: args[3] as TextDirection?, child: args[0] as Widget?),
       };

@@ -31,6 +31,7 @@ abstract final class RenderObjectToWidgetAdapterBindings {
         'updateRenderObject#2': (args) { (args[0] as RenderObjectToWidgetAdapter).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'attachToRenderTree#2': (args) => (args[0] as RenderObjectToWidgetAdapter).attachToRenderTree(args[1] as BuildOwner, identical(args[2], darticAbsent) ? null : args[2] as RenderObjectToWidgetElement<RenderObject>?),
         'toStringShort#0': (args) => (args[0] as RenderObjectToWidgetAdapter).toStringShort(),
+        'toString#0': (args) => (args[0] as RenderObjectToWidgetAdapter).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as RenderObjectToWidgetAdapter).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderObjectToWidgetAdapter).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShallow#2': (args) => (args[0] as RenderObjectToWidgetAdapter).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -40,7 +41,9 @@ abstract final class RenderObjectToWidgetAdapterBindings {
         'child#0': (args) => (args[0] as RenderObjectToWidgetAdapter).child,
         'container#0': (args) => (args[0] as RenderObjectToWidgetAdapter).container,
         'debugShortDescription#0': (args) => (args[0] as RenderObjectToWidgetAdapter).debugShortDescription,
+        'hashCode#0': (args) => (args[0] as RenderObjectToWidgetAdapter).hashCode,
         'key#0': (args) => (args[0] as RenderObjectToWidgetAdapter).key,
+        '==#1': (args) => (args[0] as RenderObjectToWidgetAdapter) == (args[1] as Object),
         '#3': (args) => RenderObjectToWidgetAdapter<RenderObject>(child: identical(args[0], darticAbsent) ? null : args[0] as Widget?, container: args[1] as RenderObjectWithChildMixin<RenderObject>, debugShortDescription: identical(args[2], darticAbsent) ? null : args[2] as String?),
       };
 }

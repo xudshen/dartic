@@ -28,12 +28,15 @@ abstract final class UpdateSelectionIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as UpdateSelectionIntent).toString(),
         'toStringShort#0': (args) => (args[0] as UpdateSelectionIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as UpdateSelectionIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as UpdateSelectionIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'currentTextEditingValue#0': (args) => (args[0] as UpdateSelectionIntent).currentTextEditingValue,
         'newSelection#0': (args) => (args[0] as UpdateSelectionIntent).newSelection,
         'cause#0': (args) => (args[0] as UpdateSelectionIntent).cause,
+        'hashCode#0': (args) => (args[0] as UpdateSelectionIntent).hashCode,
+        '==#1': (args) => (args[0] as UpdateSelectionIntent) == (args[1] as Object),
         '#3': (args) => UpdateSelectionIntent(args[0] as TextEditingValue, args[1] as TextSelection, args[2] as SelectionChangedCause),
         '_#fromFields#3': (args) => UpdateSelectionIntent(args[1] as TextEditingValue, args[2] as TextSelection, args[0] as SelectionChangedCause),
       };

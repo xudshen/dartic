@@ -42,6 +42,7 @@ abstract final class RenderAbsorbPointerBindings {
         'visitChildrenForSemantics#1': (args) { (args[0] as RenderAbsorbPointer).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as RenderAbsorbPointer).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderAbsorbPointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderAbsorbPointer).toString(),
         'setupParentData#1': (args) { (args[0] as RenderAbsorbPointer).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderAbsorbPointer).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderAbsorbPointer).computeMinIntrinsicWidth(args[1] as double),
@@ -118,6 +119,7 @@ abstract final class RenderAbsorbPointerBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderAbsorbPointer).computeSizeForNoChild(args[1] as BoxConstraints),
         'absorbing#0': (args) => (args[0] as RenderAbsorbPointer).absorbing,
         'ignoringSemantics#0': (args) => (args[0] as RenderAbsorbPointer).ignoringSemantics,
+        'hashCode#0': (args) => (args[0] as RenderAbsorbPointer).hashCode,
         'hasSize#0': (args) => (args[0] as RenderAbsorbPointer).hasSize,
         'size#0': (args) => (args[0] as RenderAbsorbPointer).size,
         'semanticBounds#0': (args) => (args[0] as RenderAbsorbPointer).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderAbsorbPointerBindings {
         'debugCreator=#1': (args) { (args[0] as RenderAbsorbPointer).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderAbsorbPointer).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderAbsorbPointer).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderAbsorbPointer) == (args[1] as Object),
         '#3': (args) => RenderAbsorbPointer(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, absorbing: identical(args[1], darticAbsent) ? true : args[1] as bool, ignoringSemantics: identical(args[2], darticAbsent) ? null : args[2] as bool?),
       };
 }

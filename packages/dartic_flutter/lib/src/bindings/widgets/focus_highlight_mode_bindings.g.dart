@@ -35,6 +35,9 @@ abstract final class FocusHighlightModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FocusHighlightMode).toString(),
+        'hashCode#0': (args) => (args[0] as FocusHighlightMode).hashCode,
         'index#0': (args) => (args[0] as FocusHighlightMode).index,
+        '==#1': (args) => (args[0] as FocusHighlightMode) == (args[1] as Object),
       };
 }

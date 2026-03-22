@@ -41,6 +41,7 @@ abstract final class MultiChildRenderObjectElementBindings {
         'inflateWidget#2': (args) => (args[0] as MultiChildRenderObjectElement).inflateWidget(args[1] as Widget, args[2]),
         'mount#2': (args) { (args[0] as MultiChildRenderObjectElement).mount(args[1] as Element?, args[2]); return null; },
         'update#1': (args) { (args[0] as MultiChildRenderObjectElement).update(args[1] as MultiChildRenderObjectWidget); return null; },
+        'toString#0': (args) => (args[0] as MultiChildRenderObjectElement).toString(),
         'performRebuild#0': (args) { (args[0] as MultiChildRenderObjectElement).performRebuild(); return null; },
         'deactivate#0': (args) { (args[0] as MultiChildRenderObjectElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as MultiChildRenderObjectElement).unmount(); return null; },
@@ -87,6 +88,7 @@ abstract final class MultiChildRenderObjectElementBindings {
         'toStringDeep#4': (args) => (args[0] as MultiChildRenderObjectElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'renderObject#0': (args) => (args[0] as MultiChildRenderObjectElement).renderObject,
         'children#0': (args) => (args[0] as MultiChildRenderObjectElement).children,
+        'hashCode#0': (args) => (args[0] as MultiChildRenderObjectElement).hashCode,
         'renderObjectAttachingChild#0': (args) => (args[0] as MultiChildRenderObjectElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as MultiChildRenderObjectElement).debugDoingBuild,
         'slot#0': (args) => (args[0] as MultiChildRenderObjectElement).slot,
@@ -99,6 +101,7 @@ abstract final class MultiChildRenderObjectElementBindings {
         'buildScope#0': (args) => (args[0] as MultiChildRenderObjectElement).buildScope,
         'size#0': (args) => (args[0] as MultiChildRenderObjectElement).size,
         'dirty#0': (args) => (args[0] as MultiChildRenderObjectElement).dirty,
+        '==#1': (args) => (args[0] as MultiChildRenderObjectElement) == (args[1] as Object),
         '#1': (args) => MultiChildRenderObjectElement(args[0] as MultiChildRenderObjectWidget),
       };
 }

@@ -32,6 +32,7 @@ abstract final class SafeAreaBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as SafeArea).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as SafeArea).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SafeArea).toString(),
         'createElement#0': (args) => (args[0] as SafeArea).createElement(),
         'toStringShort#0': (args) => (args[0] as SafeArea).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SafeArea).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -45,7 +46,9 @@ abstract final class SafeAreaBindings {
         'minimum#0': (args) => (args[0] as SafeArea).minimum,
         'maintainBottomViewPadding#0': (args) => (args[0] as SafeArea).maintainBottomViewPadding,
         'child#0': (args) => (args[0] as SafeArea).child,
+        'hashCode#0': (args) => (args[0] as SafeArea).hashCode,
         'key#0': (args) => (args[0] as SafeArea).key,
+        '==#1': (args) => (args[0] as SafeArea) == (args[1] as Object),
         '#8': (args) => SafeArea(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, left: identical(args[1], darticAbsent) ? true : args[1] as bool, top: identical(args[2], darticAbsent) ? true : args[2] as bool, right: identical(args[3], darticAbsent) ? true : args[3] as bool, bottom: identical(args[4], darticAbsent) ? true : args[4] as bool, minimum: identical(args[5], darticAbsent) ? EdgeInsets.zero : args[5] as EdgeInsets, maintainBottomViewPadding: identical(args[6], darticAbsent) ? false : args[6] as bool, child: args[7] as Widget),
         '_#fromFields#8': (args) => SafeArea(key: args[2] as Key?, left: args[3] as bool, top: args[7] as bool, right: args[6] as bool, bottom: args[0] as bool, minimum: args[5] as EdgeInsets, maintainBottomViewPadding: args[4] as bool, child: args[1] as Widget),
       };

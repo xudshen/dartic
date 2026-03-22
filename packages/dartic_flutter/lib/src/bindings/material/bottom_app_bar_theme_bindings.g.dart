@@ -35,6 +35,7 @@ abstract final class BottomAppBarThemeBindings {
         'copyWith#7': (args) => (args[0] as BottomAppBarTheme).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shape: identical(args[3], darticAbsent) ? null : args[3] as NotchedShape?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, shadowColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?),
         'updateShouldNotify#1': (args) => (args[0] as BottomAppBarTheme).updateShouldNotify(args[1] as BottomAppBarTheme),
         'wrap#2': (args) => (args[0] as BottomAppBarTheme).wrap(args[1] as BuildContext, args[2] as Widget),
+        'toString#0': (args) => (args[0] as BottomAppBarTheme).toString(),
         'createElement#0': (args) => (args[0] as BottomAppBarTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as BottomAppBarTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BottomAppBarTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -50,8 +51,10 @@ abstract final class BottomAppBarThemeBindings {
         'shadowColor#0': (args) => (args[0] as BottomAppBarTheme).shadowColor,
         'padding#0': (args) => (args[0] as BottomAppBarTheme).padding,
         'data#0': (args) => (args[0] as BottomAppBarTheme).data,
+        'hashCode#0': (args) => (args[0] as BottomAppBarTheme).hashCode,
         'child#0': (args) => (args[0] as BottomAppBarTheme).child,
         'key#0': (args) => (args[0] as BottomAppBarTheme).key,
+        '==#1': (args) => (args[0] as BottomAppBarTheme) == (args[1] as Object),
         '#10': (args) => BottomAppBarTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shape: identical(args[3], darticAbsent) ? null : args[3] as NotchedShape?, height: identical(args[4], darticAbsent) ? null : args[4] as double?, surfaceTintColor: identical(args[5], darticAbsent) ? null : args[5] as Color?, shadowColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, padding: identical(args[7], darticAbsent) ? null : args[7] as EdgeInsetsGeometry?, data: identical(args[8], darticAbsent) ? null : args[8] as BottomAppBarThemeData?, child: identical(args[9], darticAbsent) ? null : args[9] as Widget?),
         '_#fromFields#10': (args) => BottomAppBarTheme(key: args[9] as Key?, color: args[0] as Color?, elevation: args[2] as double?, shape: args[6] as NotchedShape?, height: args[3] as double?, surfaceTintColor: args[7] as Color?, shadowColor: args[5] as Color?, padding: args[4] as EdgeInsetsGeometry?, data: args[1] as BottomAppBarThemeData?, child: args[8] as Widget?),
       };

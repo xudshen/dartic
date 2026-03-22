@@ -47,6 +47,7 @@ abstract final class ReorderableDragStartListenerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ReorderableDragStartListener).build(args[1] as BuildContext),
         'createRecognizer#0': (args) => (args[0] as ReorderableDragStartListener).createRecognizer(),
+        'toString#0': (args) => (args[0] as ReorderableDragStartListener).toString(),
         'createElement#0': (args) => (args[0] as ReorderableDragStartListener).createElement(),
         'toStringShort#0': (args) => (args[0] as ReorderableDragStartListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ReorderableDragStartListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class ReorderableDragStartListenerBindings {
         'child#0': (args) => (args[0] as ReorderableDragStartListener).child,
         'index#0': (args) => (args[0] as ReorderableDragStartListener).index,
         'enabled#0': (args) => (args[0] as ReorderableDragStartListener).enabled,
+        'hashCode#0': (args) => (args[0] as ReorderableDragStartListener).hashCode,
         'key#0': (args) => (args[0] as ReorderableDragStartListener).key,
+        '==#1': (args) => (args[0] as ReorderableDragStartListener) == (args[1] as Object),
         '#4': (args) => ReorderableDragStartListener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, index: args[2] as int, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool),
         '_#fromFields#4': (args) => ReorderableDragStartListener(key: args[3] as Key?, child: args[0] as Widget, index: args[2] as int, enabled: args[1] as bool),
       };

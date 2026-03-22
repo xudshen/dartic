@@ -36,6 +36,7 @@ abstract final class FadeTransitionBindings {
         'createRenderObject#1': (args) => (args[0] as FadeTransition).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as FadeTransition).updateRenderObject(args[1] as BuildContext, args[2] as RenderAnimatedOpacity); return null; },
         'debugFillProperties#1': (args) { (args[0] as FadeTransition).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FadeTransition).toString(),
         'createElement#0': (args) => (args[0] as FadeTransition).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as FadeTransition).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as FadeTransition).toStringShort(),
@@ -45,8 +46,10 @@ abstract final class FadeTransitionBindings {
         'debugDescribeChildren#0': (args) => (args[0] as FadeTransition).debugDescribeChildren(),
         'opacity#0': (args) => (args[0] as FadeTransition).opacity,
         'alwaysIncludeSemantics#0': (args) => (args[0] as FadeTransition).alwaysIncludeSemantics,
+        'hashCode#0': (args) => (args[0] as FadeTransition).hashCode,
         'child#0': (args) => (args[0] as FadeTransition).child,
         'key#0': (args) => (args[0] as FadeTransition).key,
+        '==#1': (args) => (args[0] as FadeTransition) == (args[1] as Object),
         '#4': (args) => FadeTransition(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, opacity: args[1] as Animation<double>, alwaysIncludeSemantics: identical(args[2], darticAbsent) ? false : args[2] as bool, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => FadeTransition(key: args[2] as Key?, opacity: args[3] as Animation<double>, alwaysIncludeSemantics: args[0] as bool, child: args[1] as Widget?),
       };

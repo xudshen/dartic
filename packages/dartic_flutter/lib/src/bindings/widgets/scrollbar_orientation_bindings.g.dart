@@ -45,6 +45,9 @@ abstract final class ScrollbarOrientationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ScrollbarOrientation).toString(),
+        'hashCode#0': (args) => (args[0] as ScrollbarOrientation).hashCode,
         'index#0': (args) => (args[0] as ScrollbarOrientation).index,
+        '==#1': (args) => (args[0] as ScrollbarOrientation) == (args[1] as Object),
       };
 }

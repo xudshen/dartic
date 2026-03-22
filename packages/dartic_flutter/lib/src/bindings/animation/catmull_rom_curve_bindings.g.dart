@@ -26,10 +26,13 @@ abstract final class CatmullRomCurveBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'transformInternal#1': (args) => (args[0] as CatmullRomCurve).transformInternal(args[1] as double),
+        'toString#0': (args) => (args[0] as CatmullRomCurve).toString(),
         'transform#1': (args) => (args[0] as CatmullRomCurve).transform(args[1] as double),
         'controlPoints#0': (args) => (args[0] as CatmullRomCurve).controlPoints,
         'tension#0': (args) => (args[0] as CatmullRomCurve).tension,
+        'hashCode#0': (args) => (args[0] as CatmullRomCurve).hashCode,
         'flipped#0': (args) => (args[0] as CatmullRomCurve).flipped,
+        '==#1': (args) => (args[0] as CatmullRomCurve) == (args[1] as Object),
         '#2': (args) => CatmullRomCurve((args[0] as List).cast<Offset>(), tension: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
         'precompute#2': (args) => CatmullRomCurve.precompute((args[0] as List).cast<Offset>(), tension: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
       };

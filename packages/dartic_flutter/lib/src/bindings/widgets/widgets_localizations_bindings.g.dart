@@ -28,6 +28,7 @@ abstract final class WidgetsLocalizationsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as WidgetsLocalizations).toString(),
         'textDirection#0': (args) => (args[0] as WidgetsLocalizations).textDirection,
         'reorderItemToStart#0': (args) => (args[0] as WidgetsLocalizations).reorderItemToStart,
         'reorderItemToEnd#0': (args) => (args[0] as WidgetsLocalizations).reorderItemToEnd,
@@ -44,5 +45,7 @@ abstract final class WidgetsLocalizationsBindings {
         'lookUpButtonLabel#0': (args) => (args[0] as WidgetsLocalizations).lookUpButtonLabel,
         'searchWebButtonLabel#0': (args) => (args[0] as WidgetsLocalizations).searchWebButtonLabel,
         'shareButtonLabel#0': (args) => (args[0] as WidgetsLocalizations).shareButtonLabel,
+        'hashCode#0': (args) => (args[0] as WidgetsLocalizations).hashCode,
+        '==#1': (args) => (args[0] as WidgetsLocalizations) == (args[1] as Object),
       };
 }

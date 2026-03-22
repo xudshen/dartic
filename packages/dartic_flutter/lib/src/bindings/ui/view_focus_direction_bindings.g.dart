@@ -34,6 +34,9 @@ abstract final class ViewFocusDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ViewFocusDirection).toString(),
+        'hashCode#0': (args) => (args[0] as ViewFocusDirection).hashCode,
         'index#0': (args) => (args[0] as ViewFocusDirection).index,
+        '==#1': (args) => (args[0] as ViewFocusDirection) == (args[1] as Object),
       };
 }

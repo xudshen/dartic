@@ -38,6 +38,7 @@ abstract final class DrawerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Drawer).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Drawer).toString(),
         'createElement#0': (args) => (args[0] as Drawer).createElement(),
         'toStringShort#0': (args) => (args[0] as Drawer).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Drawer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -54,7 +55,9 @@ abstract final class DrawerBindings {
         'child#0': (args) => (args[0] as Drawer).child,
         'semanticLabel#0': (args) => (args[0] as Drawer).semanticLabel,
         'clipBehavior#0': (args) => (args[0] as Drawer).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Drawer).hashCode,
         'key#0': (args) => (args[0] as Drawer).key,
+        '==#1': (args) => (args[0] as Drawer) == (args[1] as Object),
         '#10': (args) => Drawer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, backgroundColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, elevation: identical(args[2], darticAbsent) ? null : args[2] as double?, shadowColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, surfaceTintColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, shape: identical(args[5], darticAbsent) ? null : args[5] as ShapeBorder?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?, semanticLabel: identical(args[8], darticAbsent) ? null : args[8] as String?, clipBehavior: identical(args[9], darticAbsent) ? null : args[9] as Clip?),
         '_#fromFields#10': (args) => Drawer(key: args[4] as Key?, backgroundColor: args[0] as Color?, elevation: args[3] as double?, shadowColor: args[6] as Color?, surfaceTintColor: args[8] as Color?, shape: args[7] as ShapeBorder?, width: args[9] as double?, child: args[1] as Widget?, semanticLabel: args[5] as String?, clipBehavior: args[2] as Clip?),
       };

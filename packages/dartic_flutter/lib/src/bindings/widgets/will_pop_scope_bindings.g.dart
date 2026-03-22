@@ -28,6 +28,7 @@ abstract final class WillPopScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as WillPopScope).createState(),
+        'toString#0': (args) => (args[0] as WillPopScope).toString(),
         'createElement#0': (args) => (args[0] as WillPopScope).createElement(),
         'toStringShort#0': (args) => (args[0] as WillPopScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WillPopScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -37,7 +38,9 @@ abstract final class WillPopScopeBindings {
         'debugDescribeChildren#0': (args) => (args[0] as WillPopScope).debugDescribeChildren(),
         'child#0': (args) => (args[0] as WillPopScope).child,
         'onWillPop#0': (args) => (args[0] as WillPopScope).onWillPop,
+        'hashCode#0': (args) => (args[0] as WillPopScope).hashCode,
         'key#0': (args) => (args[0] as WillPopScope).key,
+        '==#1': (args) => (args[0] as WillPopScope) == (args[1] as Object),
         '#3': (args) => WillPopScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, onWillPop: (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()),
         '_#fromFields#3': (args) => WillPopScope(key: args[1] as Key?, child: args[0] as Widget, onWillPop: args[2] as WillPopCallback?),
       };

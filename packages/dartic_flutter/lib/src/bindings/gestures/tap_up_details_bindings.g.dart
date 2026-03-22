@@ -29,11 +29,14 @@ abstract final class TapUpDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as TapUpDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TapUpDetails).toString(),
         'toStringShort#0': (args) => (args[0] as TapUpDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TapUpDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as TapUpDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as TapUpDetails).localPosition,
         'kind#0': (args) => (args[0] as TapUpDetails).kind,
+        'hashCode#0': (args) => (args[0] as TapUpDetails).hashCode,
+        '==#1': (args) => (args[0] as TapUpDetails) == (args[1] as Object),
         '#3': (args) => TapUpDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, kind: args[2] as PointerDeviceKind),
       };
 }

@@ -40,6 +40,7 @@ abstract final class PhysicalShapeBindings {
         'createRenderObject#1': (args) => (args[0] as PhysicalShape).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as PhysicalShape).updateRenderObject(args[1] as BuildContext, args[2] as RenderPhysicalShape); return null; },
         'debugFillProperties#1': (args) { (args[0] as PhysicalShape).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PhysicalShape).toString(),
         'createElement#0': (args) => (args[0] as PhysicalShape).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as PhysicalShape).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as PhysicalShape).toStringShort(),
@@ -52,8 +53,10 @@ abstract final class PhysicalShapeBindings {
         'elevation#0': (args) => (args[0] as PhysicalShape).elevation,
         'color#0': (args) => (args[0] as PhysicalShape).color,
         'shadowColor#0': (args) => (args[0] as PhysicalShape).shadowColor,
+        'hashCode#0': (args) => (args[0] as PhysicalShape).hashCode,
         'child#0': (args) => (args[0] as PhysicalShape).child,
         'key#0': (args) => (args[0] as PhysicalShape).key,
+        '==#1': (args) => (args[0] as PhysicalShape) == (args[1] as Object),
         '#7': (args) => PhysicalShape(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, clipper: args[1] as CustomClipper<ui.Path>, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as ui.Clip, elevation: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, color: args[4] as ui.Color, shadowColor: identical(args[5], darticAbsent) ? const Color(0xFF000000) : args[5] as ui.Color, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         '_#fromFields#7': (args) => PhysicalShape(key: args[5] as Key?, clipper: args[2] as CustomClipper<ui.Path>, clipBehavior: args[1] as ui.Clip, elevation: args[4] as double, color: args[3] as ui.Color, shadowColor: args[6] as ui.Color, child: args[0] as Widget?),
       };

@@ -26,12 +26,15 @@ abstract final class CupertinoTabControllerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as CupertinoTabController).dispose(); return null; },
+        'toString#0': (args) => (args[0] as CupertinoTabController).toString(),
         'addListener#1': (args) { (args[0] as CupertinoTabController).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as CupertinoTabController).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as CupertinoTabController).notifyListeners(); return null; },
         'index#0': (args) => (args[0] as CupertinoTabController).index,
+        'hashCode#0': (args) => (args[0] as CupertinoTabController).hashCode,
         'hasListeners#0': (args) => (args[0] as CupertinoTabController).hasListeners,
         'index=#1': (args) { (args[0] as CupertinoTabController).index = args[1] as int; return args[1]; },
+        '==#1': (args) => (args[0] as CupertinoTabController) == (args[1] as Object),
         '#1': (args) => CupertinoTabController(initialIndex: identical(args[0], darticAbsent) ? 0 : args[0] as int),
       };
 }

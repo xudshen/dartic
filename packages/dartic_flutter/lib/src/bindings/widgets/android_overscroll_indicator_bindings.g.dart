@@ -34,6 +34,9 @@ abstract final class AndroidOverscrollIndicatorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AndroidOverscrollIndicator).toString(),
+        'hashCode#0': (args) => (args[0] as AndroidOverscrollIndicator).hashCode,
         'index#0': (args) => (args[0] as AndroidOverscrollIndicator).index,
+        '==#1': (args) => (args[0] as AndroidOverscrollIndicator) == (args[1] as Object),
       };
 }

@@ -44,6 +44,7 @@ abstract final class RenderPhysicalModelBindings {
         'hitTest#2': (args) => (args[0] as RenderPhysicalModel).hitTest(args[1] as BoxHitTestResult, position: args[2] as ui.Offset),
         'paint#2': (args) { (args[0] as RenderPhysicalModel).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderPhysicalModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderPhysicalModel).toString(),
         'attach#1': (args) { (args[0] as RenderPhysicalModel).attach(args[1] as PipelineOwner); return null; },
         'detach#0': (args) { (args[0] as RenderPhysicalModel).detach(); return null; },
         'performLayout#0': (args) { (args[0] as RenderPhysicalModel).performLayout(); return null; },
@@ -121,6 +122,7 @@ abstract final class RenderPhysicalModelBindings {
         'computeSizeForNoChild#1': (args) => (args[0] as RenderPhysicalModel).computeSizeForNoChild(args[1] as BoxConstraints),
         'shape#0': (args) => (args[0] as RenderPhysicalModel).shape,
         'borderRadius#0': (args) => (args[0] as RenderPhysicalModel).borderRadius,
+        'hashCode#0': (args) => (args[0] as RenderPhysicalModel).hashCode,
         'elevation#0': (args) => (args[0] as RenderPhysicalModel).elevation,
         'shadowColor#0': (args) => (args[0] as RenderPhysicalModel).shadowColor,
         'color#0': (args) => (args[0] as RenderPhysicalModel).color,
@@ -169,6 +171,7 @@ abstract final class RenderPhysicalModelBindings {
         'debugCreator=#1': (args) { (args[0] as RenderPhysicalModel).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPhysicalModel).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderPhysicalModel).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPhysicalModel) == (args[1] as Object),
         '#7': (args) => RenderPhysicalModel(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, shape: identical(args[1], darticAbsent) ? BoxShape.rectangle : args[1] as BoxShape, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as ui.Clip, borderRadius: identical(args[3], darticAbsent) ? null : args[3] as BorderRadius?, elevation: identical(args[4], darticAbsent) ? 0.0 : args[4] as double, color: args[5] as ui.Color, shadowColor: identical(args[6], darticAbsent) ? const Color(0xFF000000) : args[6] as ui.Color),
       };
 }

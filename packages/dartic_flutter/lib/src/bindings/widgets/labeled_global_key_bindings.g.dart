@@ -31,9 +31,11 @@ abstract final class LabeledGlobalKeyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as LabeledGlobalKey).toString(),
+        'hashCode#0': (args) => (args[0] as LabeledGlobalKey).hashCode,
         'currentContext#0': (args) => (args[0] as LabeledGlobalKey).currentContext,
         'currentWidget#0': (args) => (args[0] as LabeledGlobalKey).currentWidget,
         'currentState#0': (args) => (args[0] as LabeledGlobalKey).currentState,
+        '==#1': (args) => (args[0] as LabeledGlobalKey) == (args[1] as Object),
         '#1': (args) => LabeledGlobalKey<State<StatefulWidget>>(args[0] as String?),
       };
 }

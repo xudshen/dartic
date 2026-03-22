@@ -37,6 +37,7 @@ abstract final class AnimatedPositionedDirectionalBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedPositionedDirectional).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedPositionedDirectional).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedPositionedDirectional).toString(),
         'createElement#0': (args) => (args[0] as AnimatedPositionedDirectional).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedPositionedDirectional).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedPositionedDirectional).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -50,10 +51,12 @@ abstract final class AnimatedPositionedDirectionalBindings {
         'bottom#0': (args) => (args[0] as AnimatedPositionedDirectional).bottom,
         'width#0': (args) => (args[0] as AnimatedPositionedDirectional).width,
         'height#0': (args) => (args[0] as AnimatedPositionedDirectional).height,
+        'hashCode#0': (args) => (args[0] as AnimatedPositionedDirectional).hashCode,
         'curve#0': (args) => (args[0] as AnimatedPositionedDirectional).curve,
         'duration#0': (args) => (args[0] as AnimatedPositionedDirectional).duration,
         'onEnd#0': (args) => (args[0] as AnimatedPositionedDirectional).onEnd,
         'key#0': (args) => (args[0] as AnimatedPositionedDirectional).key,
+        '==#1': (args) => (args[0] as AnimatedPositionedDirectional) == (args[1] as Object),
         '#11': (args) => AnimatedPositionedDirectional(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, start: identical(args[2], darticAbsent) ? null : args[2] as double?, top: identical(args[3], darticAbsent) ? null : args[3] as double?, end: identical(args[4], darticAbsent) ? null : args[4] as double?, bottom: identical(args[5], darticAbsent) ? null : args[5] as double?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, curve: identical(args[8], darticAbsent) ? Curves.linear : args[8] as Curve, duration: args[9] as Duration, onEnd: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : () => (args[10] as Function?)!()),
         '_#fromFields#11': (args) => AnimatedPositionedDirectional(key: args[6] as Key?, child: args[1] as Widget, start: args[8] as double?, top: args[9] as double?, end: args[4] as double?, bottom: args[0] as double?, width: args[10] as double?, height: args[5] as double?, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[7] as ui.VoidCallback?),
       };

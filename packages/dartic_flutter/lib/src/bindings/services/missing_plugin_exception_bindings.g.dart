@@ -24,6 +24,8 @@ abstract final class MissingPluginExceptionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as MissingPluginException).toString(),
         'message#0': (args) => (args[0] as MissingPluginException).message,
+        'hashCode#0': (args) => (args[0] as MissingPluginException).hashCode,
+        '==#1': (args) => (args[0] as MissingPluginException) == (args[1] as Object),
         '#1': (args) => MissingPluginException(identical(args[0], darticAbsent) ? null : args[0] as String?),
       };
 }

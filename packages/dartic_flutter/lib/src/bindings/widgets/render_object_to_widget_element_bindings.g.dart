@@ -36,6 +36,7 @@ abstract final class RenderObjectToWidgetElementBindings {
         'insertRenderObjectChild#2': (args) { (args[0] as RenderObjectToWidgetElement).insertRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
         'moveRenderObjectChild#3': (args) { (args[0] as RenderObjectToWidgetElement).moveRenderObjectChild(args[1] as RenderObject, args[2], args[3]); return null; },
         'removeRenderObjectChild#2': (args) { (args[0] as RenderObjectToWidgetElement).removeRenderObjectChild(args[1] as RenderObject, args[2]); return null; },
+        'toString#0': (args) => (args[0] as RenderObjectToWidgetElement).toString(),
         'attachRenderObject#1': (args) { (args[0] as RenderObjectToWidgetElement).attachRenderObject(args[1]); return null; },
         'detachRenderObject#0': (args) { (args[0] as RenderObjectToWidgetElement).detachRenderObject(); return null; },
         'updateSlot#1': (args) { (args[0] as RenderObjectToWidgetElement).updateSlot(args[1]); return null; },
@@ -82,6 +83,7 @@ abstract final class RenderObjectToWidgetElementBindings {
         'toStringDeep#4': (args) => (args[0] as RenderObjectToWidgetElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'assignOwner#1': (args) { (args[0] as RenderObjectToWidgetElement).assignOwner(args[1] as BuildOwner); return null; },
         'renderObject#0': (args) => (args[0] as RenderObjectToWidgetElement).renderObject,
+        'hashCode#0': (args) => (args[0] as RenderObjectToWidgetElement).hashCode,
         'renderObjectAttachingChild#0': (args) => (args[0] as RenderObjectToWidgetElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as RenderObjectToWidgetElement).debugDoingBuild,
         'slot#0': (args) => (args[0] as RenderObjectToWidgetElement).slot,
@@ -94,6 +96,7 @@ abstract final class RenderObjectToWidgetElementBindings {
         'buildScope#0': (args) => (args[0] as RenderObjectToWidgetElement).buildScope,
         'size#0': (args) => (args[0] as RenderObjectToWidgetElement).size,
         'dirty#0': (args) => (args[0] as RenderObjectToWidgetElement).dirty,
+        '==#1': (args) => (args[0] as RenderObjectToWidgetElement) == (args[1] as Object),
         '#1': (args) => RenderObjectToWidgetElement<RenderObject>(args[0] as RenderObjectToWidgetAdapter<RenderObject>),
       };
 }

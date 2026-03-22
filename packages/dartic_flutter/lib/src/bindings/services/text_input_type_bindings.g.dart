@@ -53,6 +53,7 @@ abstract final class TextInputTypeBindings {
         'signed#0': (args) => (args[0] as TextInputType).signed,
         'decimal#0': (args) => (args[0] as TextInputType).decimal,
         'hashCode#0': (args) => (args[0] as TextInputType).hashCode,
+        '==#1': (args) => (args[0] as TextInputType) == (args[1] as Object),
         'numberWithOptions#2': (args) => TextInputType.numberWithOptions(signed: identical(args[0], darticAbsent) ? null : args[0] as bool?, decimal: identical(args[1], darticAbsent) ? null : args[1] as bool?),
         '_#fromFields#3': (args) => TextInputType.numberWithOptions(signed: args[2] as bool?, decimal: args[0] as bool?),
       };

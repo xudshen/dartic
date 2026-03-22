@@ -34,6 +34,7 @@ abstract final class SingletonFlutterWindowBindings {
         'scheduleFrame#0': (args) { (args[0] as SingletonFlutterWindow).scheduleFrame(); return null; },
         'sendPlatformMessage#3': (args) { (args[0] as SingletonFlutterWindow).sendPlatformMessage(args[1] as String, args[2] as ByteData?, (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a)); return null; },
         'setIsolateDebugName#1': (args) { (args[0] as SingletonFlutterWindow).setIsolateDebugName(args[1] as String); return null; },
+        'toString#0': (args) => (args[0] as SingletonFlutterWindow).toString(),
         'render#2': (args) { (args[0] as SingletonFlutterWindow).render(args[1] as Scene, size: identical(args[2], darticAbsent) ? null : args[2] as Size?); return null; },
         'updateSemantics#1': (args) { (args[0] as SingletonFlutterWindow).updateSemantics(args[1] as SemanticsUpdate); return null; },
         'onMetricsChanged#0': (args) => (args[0] as SingletonFlutterWindow).onMetricsChanged,
@@ -64,6 +65,7 @@ abstract final class SingletonFlutterWindowBindings {
         'accessibilityFeatures#0': (args) => (args[0] as SingletonFlutterWindow).accessibilityFeatures,
         'onAccessibilityFeaturesChanged#0': (args) => (args[0] as SingletonFlutterWindow).onAccessibilityFeaturesChanged,
         'onPlatformMessage#0': (args) => (args[0] as SingletonFlutterWindow).onPlatformMessage,
+        'hashCode#0': (args) => (args[0] as SingletonFlutterWindow).hashCode,
         'viewId#0': (args) => (args[0] as SingletonFlutterWindow).viewId,
         'platformDispatcher#0': (args) => (args[0] as SingletonFlutterWindow).platformDispatcher,
         'display#0': (args) => (args[0] as SingletonFlutterWindow).display,
@@ -90,5 +92,6 @@ abstract final class SingletonFlutterWindowBindings {
         'onFrameDataChanged=#1': (args) { (args[0] as SingletonFlutterWindow).onFrameDataChanged = args[1] as VoidCallback?; return args[1]; },
         'onAccessibilityFeaturesChanged=#1': (args) { (args[0] as SingletonFlutterWindow).onAccessibilityFeaturesChanged = args[1] as VoidCallback?; return args[1]; },
         'onPlatformMessage=#1': (args) { (args[0] as SingletonFlutterWindow).onPlatformMessage = args[1] as PlatformMessageCallback?; return args[1]; },
+        '==#1': (args) => (args[0] as SingletonFlutterWindow) == (args[1] as Object),
       };
 }

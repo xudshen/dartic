@@ -30,6 +30,10 @@ abstract final class PictureRecorderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'endRecording#0': (args) => (args[0] as PictureRecorder).endRecording(),
+        'toString#0': (args) => (args[0] as PictureRecorder).toString(),
         'isRecording#0': (args) => (args[0] as PictureRecorder).isRecording,
+        'hashCode#0': (args) => (args[0] as PictureRecorder).hashCode,
+        '==#1': (args) => (args[0] as PictureRecorder) == (args[1] as Object),
+        '#0': (args) => PictureRecorder(),
       };
 }

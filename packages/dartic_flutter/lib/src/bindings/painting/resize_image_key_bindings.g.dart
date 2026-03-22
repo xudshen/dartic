@@ -29,6 +29,8 @@ abstract final class ResizeImageKeyBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ResizeImageKey).toString(),
         'hashCode#0': (args) => (args[0] as ResizeImageKey).hashCode,
+        '==#1': (args) => (args[0] as ResizeImageKey) == (args[1] as Object),
       };
 }

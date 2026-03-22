@@ -36,6 +36,7 @@ abstract final class RadioGroupBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RadioGroup).createState(),
+        'toString#0': (args) => (args[0] as RadioGroup).toString(),
         'createElement#0': (args) => (args[0] as RadioGroup).createElement(),
         'toStringShort#0': (args) => (args[0] as RadioGroup).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RadioGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,7 +47,9 @@ abstract final class RadioGroupBindings {
         'groupValue#0': (args) => (args[0] as RadioGroup).groupValue,
         'onChanged#0': (args) => (args[0] as RadioGroup).onChanged,
         'child#0': (args) => (args[0] as RadioGroup).child,
+        'hashCode#0': (args) => (args[0] as RadioGroup).hashCode,
         'key#0': (args) => (args[0] as RadioGroup).key,
+        '==#1': (args) => (args[0] as RadioGroup) == (args[1] as Object),
         '#4': (args) => RadioGroup<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, groupValue: identical(args[1], darticAbsent) ? null : args[1], onChanged: (a) => (args[2] as Function)(a), child: args[3] as Widget),
         '_#fromFields#4': (args) => RadioGroup<dynamic>(key: args[2] as Key?, groupValue: args[1], onChanged: args[3] as void Function(Object?), child: args[0] as Widget),
       };

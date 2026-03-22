@@ -28,6 +28,8 @@ abstract final class TextAlignVerticalBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as TextAlignVertical).toString(),
         'y#0': (args) => (args[0] as TextAlignVertical).y,
+        'hashCode#0': (args) => (args[0] as TextAlignVertical).hashCode,
+        '==#1': (args) => (args[0] as TextAlignVertical) == (args[1] as Object),
         '#1': (args) => TextAlignVertical(y: args[0] as double),
         '_#fromFields#1': (args) => TextAlignVertical(y: args[0] as double),
       };

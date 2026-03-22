@@ -39,10 +39,13 @@ abstract final class ChipAnimationStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ChipAnimationStyle).toString(),
         'enableAnimation#0': (args) => (args[0] as ChipAnimationStyle).enableAnimation,
         'selectAnimation#0': (args) => (args[0] as ChipAnimationStyle).selectAnimation,
         'avatarDrawerAnimation#0': (args) => (args[0] as ChipAnimationStyle).avatarDrawerAnimation,
         'deleteDrawerAnimation#0': (args) => (args[0] as ChipAnimationStyle).deleteDrawerAnimation,
+        'hashCode#0': (args) => (args[0] as ChipAnimationStyle).hashCode,
+        '==#1': (args) => (args[0] as ChipAnimationStyle) == (args[1] as Object),
         '#4': (args) => ChipAnimationStyle(enableAnimation: identical(args[0], darticAbsent) ? null : args[0] as AnimationStyle?, selectAnimation: identical(args[1], darticAbsent) ? null : args[1] as AnimationStyle?, avatarDrawerAnimation: identical(args[2], darticAbsent) ? null : args[2] as AnimationStyle?, deleteDrawerAnimation: identical(args[3], darticAbsent) ? null : args[3] as AnimationStyle?),
       };
 }

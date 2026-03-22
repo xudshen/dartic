@@ -30,9 +30,12 @@ abstract final class BasicMessageChannelBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'send#1': (args) => (args[0] as BasicMessageChannel).send(args[1]),
         'setMessageHandler#1': (args) { (args[0] as BasicMessageChannel).setMessageHandler((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; },
+        'toString#0': (args) => (args[0] as BasicMessageChannel).toString(),
         'name#0': (args) => (args[0] as BasicMessageChannel).name,
         'codec#0': (args) => (args[0] as BasicMessageChannel).codec,
         'binaryMessenger#0': (args) => (args[0] as BasicMessageChannel).binaryMessenger,
+        'hashCode#0': (args) => (args[0] as BasicMessageChannel).hashCode,
+        '==#1': (args) => (args[0] as BasicMessageChannel) == (args[1] as Object),
         '#3': (args) => BasicMessageChannel<dynamic>(args[0] as String, args[1] as MessageCodec, binaryMessenger: identical(args[2], darticAbsent) ? null : args[2] as BinaryMessenger?),
         '_#fromFields#3': (args) => BasicMessageChannel<dynamic>(args[2] as String, args[1] as MessageCodec, binaryMessenger: args[0] as BinaryMessenger?),
       };

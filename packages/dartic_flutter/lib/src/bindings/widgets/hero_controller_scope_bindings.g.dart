@@ -47,6 +47,7 @@ abstract final class HeroControllerScopeBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'updateShouldNotify#1': (args) => (args[0] as HeroControllerScope).updateShouldNotify(args[1] as HeroControllerScope),
+        'toString#0': (args) => (args[0] as HeroControllerScope).toString(),
         'createElement#0': (args) => (args[0] as HeroControllerScope).createElement(),
         'toStringShort#0': (args) => (args[0] as HeroControllerScope).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as HeroControllerScope).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -55,8 +56,10 @@ abstract final class HeroControllerScopeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as HeroControllerScope).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as HeroControllerScope).debugDescribeChildren(),
         'controller#0': (args) => (args[0] as HeroControllerScope).controller,
+        'hashCode#0': (args) => (args[0] as HeroControllerScope).hashCode,
         'child#0': (args) => (args[0] as HeroControllerScope).child,
         'key#0': (args) => (args[0] as HeroControllerScope).key,
+        '==#1': (args) => (args[0] as HeroControllerScope) == (args[1] as Object),
         '#3': (args) => HeroControllerScope(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: args[1] as HeroController, child: args[2] as Widget),
         'none#2': (args) => HeroControllerScope.none(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget),
         '_#fromFields#3': (args) => HeroControllerScope(key: args[2] as Key?, controller: args[1] as HeroController, child: args[0] as Widget),

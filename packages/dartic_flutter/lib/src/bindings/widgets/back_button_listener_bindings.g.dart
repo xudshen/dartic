@@ -36,6 +36,7 @@ abstract final class BackButtonListenerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as BackButtonListener).createState(),
+        'toString#0': (args) => (args[0] as BackButtonListener).toString(),
         'createElement#0': (args) => (args[0] as BackButtonListener).createElement(),
         'toStringShort#0': (args) => (args[0] as BackButtonListener).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BackButtonListener).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class BackButtonListenerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as BackButtonListener).debugDescribeChildren(),
         'child#0': (args) => (args[0] as BackButtonListener).child,
         'onBackButtonPressed#0': (args) => (args[0] as BackButtonListener).onBackButtonPressed,
+        'hashCode#0': (args) => (args[0] as BackButtonListener).hashCode,
         'key#0': (args) => (args[0] as BackButtonListener).key,
+        '==#1': (args) => (args[0] as BackButtonListener) == (args[1] as Object),
         '#3': (args) => BackButtonListener(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, onBackButtonPressed: () => (args[2] as Function)() as Future<bool>),
         '_#fromFields#3': (args) => BackButtonListener(key: args[1] as Key?, child: args[0] as Widget, onBackButtonPressed: args[2] as ValueGetter<Future<bool>>),
       };

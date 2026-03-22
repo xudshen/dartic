@@ -28,6 +28,8 @@ abstract final class TweenSequenceBindings {
         'evaluate#1': (args) => (args[0] as TweenSequence).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as TweenSequence).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as TweenSequence).chain(args[1] as Animatable<double>),
+        'hashCode#0': (args) => (args[0] as TweenSequence).hashCode,
+        '==#1': (args) => (args[0] as TweenSequence) == (args[1] as Object),
         '#1': (args) => TweenSequence<dynamic>((args[0] as List).cast<TweenSequenceItem>()),
       };
 }

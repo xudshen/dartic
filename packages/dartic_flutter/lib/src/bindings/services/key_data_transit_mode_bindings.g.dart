@@ -30,6 +30,9 @@ abstract final class KeyDataTransitModeBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeyDataTransitMode).toString(),
+        'hashCode#0': (args) => (args[0] as KeyDataTransitMode).hashCode,
         'index#0': (args) => (args[0] as KeyDataTransitMode).index,
+        '==#1': (args) => (args[0] as KeyDataTransitMode) == (args[1] as Object),
       };
 }

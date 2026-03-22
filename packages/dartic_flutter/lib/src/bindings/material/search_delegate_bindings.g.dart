@@ -53,6 +53,7 @@ abstract final class SearchDelegateBindings {
         'showSuggestions#1': (args) { (args[0] as SearchDelegate).showSuggestions(args[1] as BuildContext); return null; },
         'close#2': (args) { (args[0] as SearchDelegate).close(args[1] as BuildContext, args[2]); return null; },
         'dispose#0': (args) { (args[0] as SearchDelegate).dispose(); return null; },
+        'toString#0': (args) => (args[0] as SearchDelegate).toString(),
         'automaticallyImplyLeading#0': (args) => (args[0] as SearchDelegate).automaticallyImplyLeading,
         'leadingWidth#0': (args) => (args[0] as SearchDelegate).leadingWidth,
         'query#0': (args) => (args[0] as SearchDelegate).query,
@@ -64,8 +65,10 @@ abstract final class SearchDelegateBindings {
         'enableSuggestions#0': (args) => (args[0] as SearchDelegate).enableSuggestions,
         'textInputAction#0': (args) => (args[0] as SearchDelegate).textInputAction,
         'transitionAnimation#0': (args) => (args[0] as SearchDelegate).transitionAnimation,
+        'hashCode#0': (args) => (args[0] as SearchDelegate).hashCode,
         'automaticallyImplyLeading=#1': (args) { (args[0] as SearchDelegate).automaticallyImplyLeading = args[1] as bool?; return args[1]; },
         'leadingWidth=#1': (args) { (args[0] as SearchDelegate).leadingWidth = args[1] as double?; return args[1]; },
         'query=#1': (args) { (args[0] as SearchDelegate).query = args[1] as String; return args[1]; },
+        '==#1': (args) => (args[0] as SearchDelegate) == (args[1] as Object),
       };
 }

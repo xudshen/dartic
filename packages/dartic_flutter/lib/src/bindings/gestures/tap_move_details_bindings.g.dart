@@ -26,10 +26,13 @@ abstract final class TapMoveDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TapMoveDetails).toString(),
         'globalPosition#0': (args) => (args[0] as TapMoveDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as TapMoveDetails).localPosition,
         'kind#0': (args) => (args[0] as TapMoveDetails).kind,
         'delta#0': (args) => (args[0] as TapMoveDetails).delta,
+        'hashCode#0': (args) => (args[0] as TapMoveDetails).hashCode,
+        '==#1': (args) => (args[0] as TapMoveDetails) == (args[1] as Object),
         '#4': (args) => TapMoveDetails(kind: args[0] as PointerDeviceKind, globalPosition: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, delta: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, localPosition: identical(args[3], darticAbsent) ? null : args[3] as Offset?),
       };
 }

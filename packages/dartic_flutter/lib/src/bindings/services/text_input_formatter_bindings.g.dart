@@ -24,5 +24,9 @@ abstract final class TextInputFormatterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'formatEditUpdate#2': (args) => (args[0] as TextInputFormatter).formatEditUpdate(args[1] as TextEditingValue, args[2] as TextEditingValue),
+        'toString#0': (args) => (args[0] as TextInputFormatter).toString(),
+        'hashCode#0': (args) => (args[0] as TextInputFormatter).hashCode,
+        '==#1': (args) => (args[0] as TextInputFormatter) == (args[1] as Object),
+        'withFunction#1': (args) => TextInputFormatter.withFunction((a, b) => (args[0] as Function)(a, b) as TextEditingValue),
       };
 }

@@ -32,9 +32,12 @@ abstract final class SystemColorBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SystemColor).toString(),
         'name#0': (args) => (args[0] as SystemColor).name,
         'value#0': (args) => (args[0] as SystemColor).value,
         'isSupported#0': (args) => (args[0] as SystemColor).isSupported,
+        'hashCode#0': (args) => (args[0] as SystemColor).hashCode,
+        '==#1': (args) => (args[0] as SystemColor) == (args[1] as Object),
         '#2': (args) => SystemColor(name: args[0] as String, value: identical(args[1], darticAbsent) ? null : args[1] as Color?),
         '_#fromFields#2': (args) => SystemColor(name: args[0] as String, value: args[1] as Color?),
       };

@@ -44,6 +44,7 @@ abstract final class RadiusBindings {
         '/#1': (args) => (args[0] as Radius) / (args[1] as double),
         '~/#1': (args) => (args[0] as Radius) ~/ (args[1] as double),
         '%#1': (args) => (args[0] as Radius) % (args[1] as double),
+        '==#1': (args) => (args[0] as Radius) == (args[1] as Object),
         'circular#1': (args) => Radius.circular(args[0] as double),
         'elliptical#2': (args) => Radius.elliptical(args[0] as double, args[1] as double),
         '_#fromFields#2': (args) => Radius.circular(args[1] as double),

@@ -47,6 +47,9 @@ abstract final class SelectableRegionSelectionStatusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SelectableRegionSelectionStatus).toString(),
+        'hashCode#0': (args) => (args[0] as SelectableRegionSelectionStatus).hashCode,
         'index#0': (args) => (args[0] as SelectableRegionSelectionStatus).index,
+        '==#1': (args) => (args[0] as SelectableRegionSelectionStatus) == (args[1] as Object),
       };
 }

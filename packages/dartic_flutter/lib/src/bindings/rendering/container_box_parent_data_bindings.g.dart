@@ -27,12 +27,15 @@ abstract final class ContainerBoxParentDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ContainerBoxParentData).toString(),
         'detach#0': (args) { (args[0] as ContainerBoxParentData).detach(); return null; },
+        'hashCode#0': (args) => (args[0] as ContainerBoxParentData).hashCode,
         'offset#0': (args) => (args[0] as ContainerBoxParentData).offset,
         'previousSibling#0': (args) => (args[0] as ContainerBoxParentData).previousSibling,
         'nextSibling#0': (args) => (args[0] as ContainerBoxParentData).nextSibling,
         'offset=#1': (args) { (args[0] as ContainerBoxParentData).offset = args[1] as ui.Offset; return args[1]; },
         'previousSibling=#1': (args) { (args[0] as ContainerBoxParentData).previousSibling = args[1] as RenderObject; return args[1]; },
         'nextSibling=#1': (args) { (args[0] as ContainerBoxParentData).nextSibling = args[1] as RenderObject; return args[1]; },
+        '==#1': (args) => (args[0] as ContainerBoxParentData) == (args[1] as Object),
       };
 }

@@ -37,6 +37,7 @@ abstract final class ModalBarrierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ModalBarrier).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ModalBarrier).toString(),
         'createElement#0': (args) => (args[0] as ModalBarrier).createElement(),
         'toStringShort#0': (args) => (args[0] as ModalBarrier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ModalBarrier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -51,7 +52,9 @@ abstract final class ModalBarrierBindings {
         'semanticsLabel#0': (args) => (args[0] as ModalBarrier).semanticsLabel,
         'clipDetailsNotifier#0': (args) => (args[0] as ModalBarrier).clipDetailsNotifier,
         'semanticsOnTapHint#0': (args) => (args[0] as ModalBarrier).semanticsOnTapHint,
+        'hashCode#0': (args) => (args[0] as ModalBarrier).hashCode,
         'key#0': (args) => (args[0] as ModalBarrier).key,
+        '==#1': (args) => (args[0] as ModalBarrier) == (args[1] as Object),
         '#8': (args) => ModalBarrier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, color: identical(args[1], darticAbsent) ? null : args[1] as Color?, dismissible: identical(args[2], darticAbsent) ? true : args[2] as bool, onDismiss: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), semanticsLabel: identical(args[4], darticAbsent) ? null : args[4] as String?, barrierSemanticsDismissible: identical(args[5], darticAbsent) ? null : args[5] as bool?, clipDetailsNotifier: identical(args[6], darticAbsent) ? null : args[6] as ValueNotifier<EdgeInsets>?, semanticsOnTapHint: identical(args[7], darticAbsent) ? null : args[7] as String?),
         '_#fromFields#8': (args) => ModalBarrier(key: args[4] as Key?, color: args[2] as Color?, dismissible: args[3] as bool, onDismiss: args[5] as VoidCallback?, semanticsLabel: args[6] as String?, barrierSemanticsDismissible: args[0] as bool?, clipDetailsNotifier: args[1] as ValueNotifier<EdgeInsets>?, semanticsOnTapHint: args[7] as String?),
       };

@@ -22,6 +22,9 @@ abstract final class SchedulerServiceExtensionsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SchedulerServiceExtensions).toString(),
+        'hashCode#0': (args) => (args[0] as SchedulerServiceExtensions).hashCode,
         'index#0': (args) => (args[0] as SchedulerServiceExtensions).index,
+        '==#1': (args) => (args[0] as SchedulerServiceExtensions) == (args[1] as Object),
       };
 }

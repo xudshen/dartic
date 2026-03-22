@@ -26,6 +26,9 @@ abstract final class JSONMessageCodecBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'encodeMessage#1': (args) => (args[0] as JSONMessageCodec).encodeMessage(args[1]),
         'decodeMessage#1': (args) => (args[0] as JSONMessageCodec).decodeMessage(args[1] as ByteData?),
+        'toString#0': (args) => (args[0] as JSONMessageCodec).toString(),
+        'hashCode#0': (args) => (args[0] as JSONMessageCodec).hashCode,
+        '==#1': (args) => (args[0] as JSONMessageCodec) == (args[1] as Object),
         '#0': (args) => JSONMessageCodec(),
         '_#fromFields#0': (args) => JSONMessageCodec(),
       };

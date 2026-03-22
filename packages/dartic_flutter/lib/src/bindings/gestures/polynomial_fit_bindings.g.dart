@@ -24,7 +24,9 @@ abstract final class PolynomialFitBindings {
         'toString#0': (args) => (args[0] as PolynomialFit).toString(),
         'coefficients#0': (args) => (args[0] as PolynomialFit).coefficients,
         'confidence#0': (args) => (args[0] as PolynomialFit).confidence,
+        'hashCode#0': (args) => (args[0] as PolynomialFit).hashCode,
         'confidence=#1': (args) { (args[0] as PolynomialFit).confidence = args[1] as double; return args[1]; },
+        '==#1': (args) => (args[0] as PolynomialFit) == (args[1] as Object),
         '#1': (args) => PolynomialFit(args[0] as int),
       };
 }

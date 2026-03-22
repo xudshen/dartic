@@ -26,6 +26,9 @@ abstract final class BoxPainterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#3': (args) { (args[0] as BoxPainter).paint(args[1] as Canvas, args[2] as Offset, args[3] as ImageConfiguration); return null; },
         'dispose#0': (args) { (args[0] as BoxPainter).dispose(); return null; },
+        'toString#0': (args) => (args[0] as BoxPainter).toString(),
         'onChanged#0': (args) => (args[0] as BoxPainter).onChanged,
+        'hashCode#0': (args) => (args[0] as BoxPainter).hashCode,
+        '==#1': (args) => (args[0] as BoxPainter) == (args[1] as Object),
       };
 }

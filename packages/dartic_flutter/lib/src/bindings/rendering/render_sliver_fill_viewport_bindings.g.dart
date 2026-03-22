@@ -40,6 +40,7 @@ abstract final class RenderSliverFillViewportBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RenderSliverFillViewport).toString(),
         'indexToLayoutOffset#2': (args) => (args[0] as RenderSliverFillViewport).indexToLayoutOffset(args[1] as double, args[2] as int),
         'getMinChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFillViewport).getMinChildIndexForScrollOffset(args[1] as double, args[2] as double),
         'getMaxChildIndexForScrollOffset#2': (args) => (args[0] as RenderSliverFillViewport).getMaxChildIndexForScrollOffset(args[1] as double, args[2] as double),
@@ -127,6 +128,7 @@ abstract final class RenderSliverFillViewportBindings {
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverFillViewport).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'itemExtent#0': (args) => (args[0] as RenderSliverFillViewport).itemExtent,
         'viewportFraction#0': (args) => (args[0] as RenderSliverFillViewport).viewportFraction,
+        'hashCode#0': (args) => (args[0] as RenderSliverFillViewport).hashCode,
         'itemExtentBuilder#0': (args) => (args[0] as RenderSliverFillViewport).itemExtentBuilder,
         'childManager#0': (args) => (args[0] as RenderSliverFillViewport).childManager,
         'debugChildIntegrityEnabled#0': (args) => (args[0] as RenderSliverFillViewport).debugChildIntegrityEnabled,
@@ -170,6 +172,7 @@ abstract final class RenderSliverFillViewportBindings {
         'parentData=#1': (args) { (args[0] as RenderSliverFillViewport).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderSliverFillViewport).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverFillViewport).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverFillViewport) == (args[1] as Object),
         '#2': (args) => RenderSliverFillViewport(childManager: args[0] as RenderSliverBoxChildManager, viewportFraction: identical(args[1], darticAbsent) ? 1.0 : args[1] as double),
       };
 }

@@ -43,6 +43,7 @@ abstract final class MemoryImageBindings {
         'bytes#0': (args) => (args[0] as MemoryImage).bytes,
         'scale#0': (args) => (args[0] as MemoryImage).scale,
         'hashCode#0': (args) => (args[0] as MemoryImage).hashCode,
+        '==#1': (args) => (args[0] as MemoryImage) == (args[1] as Object),
         '#2': (args) => MemoryImage(args[0] as Uint8List, scale: identical(args[1], darticAbsent) ? 1.0 : args[1] as double),
         '_#fromFields#2': (args) => MemoryImage(args[0] as Uint8List, scale: args[1] as double),
       };

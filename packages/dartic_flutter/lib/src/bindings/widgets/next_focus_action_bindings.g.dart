@@ -31,6 +31,7 @@ abstract final class NextFocusActionBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as NextFocusAction).invoke(args[1] as NextFocusIntent),
         'toKeyEventResult#2': (args) => (args[0] as NextFocusAction).toKeyEventResult(args[1] as NextFocusIntent, args[2] as bool),
+        'toString#0': (args) => (args[0] as NextFocusAction).toString(),
         'isEnabled#1': (args) => (args[0] as NextFocusAction).isEnabled(args[1] as NextFocusIntent),
         'consumesKey#1': (args) => (args[0] as NextFocusAction).consumesKey(args[1] as NextFocusIntent),
         'addActionListener#1': (args) { (args[0] as NextFocusAction).addActionListener((a) => (args[1] as Function)(a)); return null; },
@@ -39,9 +40,11 @@ abstract final class NextFocusActionBindings {
         'toStringShort#0': (args) => (args[0] as NextFocusAction).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as NextFocusAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as NextFocusAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'hashCode#0': (args) => (args[0] as NextFocusAction).hashCode,
         'callingAction#0': (args) => (args[0] as NextFocusAction).callingAction,
         'intentType#0': (args) => (args[0] as NextFocusAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as NextFocusAction).isActionEnabled,
+        '==#1': (args) => (args[0] as NextFocusAction) == (args[1] as Object),
         '#0': (args) => NextFocusAction(),
       };
 }

@@ -40,6 +40,9 @@ abstract final class ListTileStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ListTileStyle).toString(),
+        'hashCode#0': (args) => (args[0] as ListTileStyle).hashCode,
         'index#0': (args) => (args[0] as ListTileStyle).index,
+        '==#1': (args) => (args[0] as ListTileStyle) == (args[1] as Object),
       };
 }

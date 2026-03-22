@@ -46,11 +46,13 @@ abstract final class CompoundAnimationBindings {
         'first#0': (args) => (args[0] as CompoundAnimation).first,
         'next#0': (args) => (args[0] as CompoundAnimation).next,
         'status#0': (args) => (args[0] as CompoundAnimation).status,
+        'hashCode#0': (args) => (args[0] as CompoundAnimation).hashCode,
         'value#0': (args) => (args[0] as CompoundAnimation).value,
         'isDismissed#0': (args) => (args[0] as CompoundAnimation).isDismissed,
         'isCompleted#0': (args) => (args[0] as CompoundAnimation).isCompleted,
         'isAnimating#0': (args) => (args[0] as CompoundAnimation).isAnimating,
         'isForwardOrCompleted#0': (args) => (args[0] as CompoundAnimation).isForwardOrCompleted,
         'isListening#0': (args) => (args[0] as CompoundAnimation).isListening,
+        '==#1': (args) => (args[0] as CompoundAnimation) == (args[1] as Object),
       };
 }

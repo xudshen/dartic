@@ -32,9 +32,12 @@ abstract final class DraggableDetailsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DraggableDetails).toString(),
         'wasAccepted#0': (args) => (args[0] as DraggableDetails).wasAccepted,
         'velocity#0': (args) => (args[0] as DraggableDetails).velocity,
         'offset#0': (args) => (args[0] as DraggableDetails).offset,
+        'hashCode#0': (args) => (args[0] as DraggableDetails).hashCode,
+        '==#1': (args) => (args[0] as DraggableDetails) == (args[1] as Object),
         '#3': (args) => DraggableDetails(wasAccepted: identical(args[0], darticAbsent) ? false : args[0] as bool, velocity: args[1] as Velocity, offset: args[2] as Offset),
       };
 }

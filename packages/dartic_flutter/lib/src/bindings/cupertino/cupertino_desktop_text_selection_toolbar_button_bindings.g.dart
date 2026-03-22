@@ -33,6 +33,7 @@ abstract final class CupertinoDesktopTextSelectionToolbarButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).createState(),
+        'toString#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).toString(),
         'createElement#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoDesktopTextSelectionToolbarButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class CupertinoDesktopTextSelectionToolbarButtonBindings {
         'child#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).child,
         'buttonItem#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).buttonItem,
         'text#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).text,
+        'hashCode#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).hashCode,
         'key#0': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton).key,
+        '==#1': (args) => (args[0] as CupertinoDesktopTextSelectionToolbarButton) == (args[1] as Object),
         '#3': (args) => CupertinoDesktopTextSelectionToolbarButton(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), child: args[2] as Widget),
         'text#3': (args) => CupertinoDesktopTextSelectionToolbarButton.text(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, onPressed: (args[1] as Function?) == null ? null : () => (args[1] as Function?)!(), text: args[2] as String?),
         'buttonItem#2': (args) => CupertinoDesktopTextSelectionToolbarButton.buttonItem(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, buttonItem: args[1] as ContextMenuButtonItem),

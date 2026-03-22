@@ -43,6 +43,7 @@ abstract final class SlottedContainerRenderObjectMixinBindings {
         'redepthChildren#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).redepthChildren(); return null; },
         'visitChildren#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugDescribeChildren#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).debugDescribeChildren(),
+        'toString#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).toString(),
         'reassemble#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as SlottedContainerRenderObjectMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -89,6 +90,7 @@ abstract final class SlottedContainerRenderObjectMixinBindings {
         'describeForError#2': (args) => (args[0] as SlottedContainerRenderObjectMixin).describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle),
         'toDiagnosticsNode#2': (args) => (args[0] as SlottedContainerRenderObjectMixin).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'children#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).children,
+        'hashCode#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).parentData,
         'depth#0': (args) => (args[0] as SlottedContainerRenderObjectMixin).depth,
@@ -120,5 +122,6 @@ abstract final class SlottedContainerRenderObjectMixinBindings {
         'parentData=#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as SlottedContainerRenderObjectMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as SlottedContainerRenderObjectMixin) == (args[1] as Object),
       };
 }

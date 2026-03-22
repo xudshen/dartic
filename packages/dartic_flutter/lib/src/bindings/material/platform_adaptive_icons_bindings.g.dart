@@ -23,6 +23,7 @@ abstract final class PlatformAdaptiveIconsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PlatformAdaptiveIcons).toString(),
         'arrow_back#0': (args) => (args[0] as PlatformAdaptiveIcons).arrow_back,
         'arrow_back_outlined#0': (args) => (args[0] as PlatformAdaptiveIcons).arrow_back_outlined,
         'arrow_back_rounded#0': (args) => (args[0] as PlatformAdaptiveIcons).arrow_back_rounded,
@@ -43,5 +44,7 @@ abstract final class PlatformAdaptiveIconsBindings {
         'share_outlined#0': (args) => (args[0] as PlatformAdaptiveIcons).share_outlined,
         'share_rounded#0': (args) => (args[0] as PlatformAdaptiveIcons).share_rounded,
         'share_sharp#0': (args) => (args[0] as PlatformAdaptiveIcons).share_sharp,
+        'hashCode#0': (args) => (args[0] as PlatformAdaptiveIcons).hashCode,
+        '==#1': (args) => (args[0] as PlatformAdaptiveIcons) == (args[1] as Object),
       };
 }

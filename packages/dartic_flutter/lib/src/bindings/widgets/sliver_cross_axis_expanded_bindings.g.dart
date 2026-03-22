@@ -33,6 +33,7 @@ abstract final class SliverCrossAxisExpandedBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'applyParentData#1': (args) { (args[0] as SliverCrossAxisExpanded).applyParentData(args[1] as RenderObject); return null; },
+        'toString#0': (args) => (args[0] as SliverCrossAxisExpanded).toString(),
         'createElement#0': (args) => (args[0] as SliverCrossAxisExpanded).createElement(),
         'debugIsValidRenderObject#1': (args) => (args[0] as SliverCrossAxisExpanded).debugIsValidRenderObject(args[1] as RenderObject),
         'debugCanApplyOutOfTurn#0': (args) => (args[0] as SliverCrossAxisExpanded).debugCanApplyOutOfTurn(),
@@ -44,9 +45,11 @@ abstract final class SliverCrossAxisExpandedBindings {
         'debugDescribeChildren#0': (args) => (args[0] as SliverCrossAxisExpanded).debugDescribeChildren(),
         'flex#0': (args) => (args[0] as SliverCrossAxisExpanded).flex,
         'debugTypicalAncestorWidgetClass#0': (args) => (args[0] as SliverCrossAxisExpanded).debugTypicalAncestorWidgetClass,
+        'hashCode#0': (args) => (args[0] as SliverCrossAxisExpanded).hashCode,
         'debugTypicalAncestorWidgetDescription#0': (args) => (args[0] as SliverCrossAxisExpanded).debugTypicalAncestorWidgetDescription,
         'child#0': (args) => (args[0] as SliverCrossAxisExpanded).child,
         'key#0': (args) => (args[0] as SliverCrossAxisExpanded).key,
+        '==#1': (args) => (args[0] as SliverCrossAxisExpanded) == (args[1] as Object),
         '#3': (args) => SliverCrossAxisExpanded(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, flex: args[1] as int, sliver: args[2] as Widget),
         '_#fromFields#3': (args) => SliverCrossAxisExpanded(key: args[2] as Key?, flex: args[1] as int, sliver: args[0] as Widget),
       };

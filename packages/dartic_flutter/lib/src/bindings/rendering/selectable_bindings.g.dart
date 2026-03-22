@@ -27,6 +27,7 @@ abstract final class SelectableBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getTransformTo#1': (args) => (args[0] as Selectable).getTransformTo(args[1] as RenderObject?),
         'dispose#0': (args) { (args[0] as Selectable).dispose(); return null; },
+        'toString#0': (args) => (args[0] as Selectable).toString(),
         'pushHandleLayers#2': (args) { (args[0] as Selectable).pushHandleLayers(args[1] as LayerLink?, args[2] as LayerLink?); return null; },
         'getSelectedContent#0': (args) => (args[0] as Selectable).getSelectedContent(),
         'getSelection#0': (args) => (args[0] as Selectable).getSelection(),
@@ -35,7 +36,9 @@ abstract final class SelectableBindings {
         'removeListener#1': (args) { (args[0] as Selectable).removeListener(() => (args[1] as Function)()); return null; },
         'size#0': (args) => (args[0] as Selectable).size,
         'boundingBoxes#0': (args) => (args[0] as Selectable).boundingBoxes,
+        'hashCode#0': (args) => (args[0] as Selectable).hashCode,
         'contentLength#0': (args) => (args[0] as Selectable).contentLength,
         'value#0': (args) => (args[0] as Selectable).value,
+        '==#1': (args) => (args[0] as Selectable) == (args[1] as Object),
       };
 }

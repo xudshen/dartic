@@ -29,6 +29,7 @@ abstract final class SelectionContainerDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getTransformFrom#1': (args) => (args[0] as SelectionContainerDelegate).getTransformFrom(args[1] as Selectable),
         'getTransformTo#1': (args) => (args[0] as SelectionContainerDelegate).getTransformTo(args[1] as RenderObject?),
+        'toString#0': (args) => (args[0] as SelectionContainerDelegate).toString(),
         'pushHandleLayers#2': (args) { (args[0] as SelectionContainerDelegate).pushHandleLayers(args[1] as LayerLink?, args[2] as LayerLink?); return null; },
         'getSelectedContent#0': (args) => (args[0] as SelectionContainerDelegate).getSelectedContent(),
         'getSelection#0': (args) => (args[0] as SelectionContainerDelegate).getSelection(),
@@ -39,7 +40,9 @@ abstract final class SelectionContainerDelegateBindings {
         'remove#1': (args) { (args[0] as SelectionContainerDelegate).remove(args[1] as Selectable); return null; },
         'hasSize#0': (args) => (args[0] as SelectionContainerDelegate).hasSize,
         'containerSize#0': (args) => (args[0] as SelectionContainerDelegate).containerSize,
+        'hashCode#0': (args) => (args[0] as SelectionContainerDelegate).hashCode,
         'contentLength#0': (args) => (args[0] as SelectionContainerDelegate).contentLength,
         'value#0': (args) => (args[0] as SelectionContainerDelegate).value,
+        '==#1': (args) => (args[0] as SelectionContainerDelegate) == (args[1] as Object),
       };
 }

@@ -33,6 +33,8 @@ abstract final class TableRowBindings {
         'key#0': (args) => (args[0] as TableRow).key,
         'decoration#0': (args) => (args[0] as TableRow).decoration,
         'children#0': (args) => (args[0] as TableRow).children,
+        'hashCode#0': (args) => (args[0] as TableRow).hashCode,
+        '==#1': (args) => (args[0] as TableRow) == (args[1] as Object),
         '#3': (args) => TableRow(key: identical(args[0], darticAbsent) ? null : args[0] as LocalKey?, decoration: identical(args[1], darticAbsent) ? null : args[1] as Decoration?, children: identical(args[2], darticAbsent) ? const <Widget>[] : (args[2] as List).cast<Widget>()),
         '_#fromFields#3': (args) => TableRow(key: args[2] as LocalKey?, decoration: args[1] as Decoration?, children: (args[0] as List).cast<Widget>()),
       };

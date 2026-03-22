@@ -36,6 +36,9 @@ abstract final class PanAxisBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as PanAxis).toString(),
+        'hashCode#0': (args) => (args[0] as PanAxis).hashCode,
         'index#0': (args) => (args[0] as PanAxis).index,
+        '==#1': (args) => (args[0] as PanAxis) == (args[1] as Object),
       };
 }

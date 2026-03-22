@@ -54,6 +54,7 @@ abstract final class RenderCustomPaintBindings {
         'assembleSemanticsNode#3': (args) { (args[0] as RenderCustomPaint).assembleSemanticsNode(args[1] as SemanticsNode, args[2] as SemanticsConfiguration, (args[3] as Iterable).cast<SemanticsNode>()); return null; },
         'clearSemantics#0': (args) { (args[0] as RenderCustomPaint).clearSemantics(); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderCustomPaint).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderCustomPaint).toString(),
         'setupParentData#1': (args) { (args[0] as RenderCustomPaint).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderCustomPaint).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderCustomPaint).getMaxIntrinsicWidth(args[1] as double),
@@ -122,6 +123,7 @@ abstract final class RenderCustomPaintBindings {
         'preferredSize#0': (args) => (args[0] as RenderCustomPaint).preferredSize,
         'isComplex#0': (args) => (args[0] as RenderCustomPaint).isComplex,
         'willChange#0': (args) => (args[0] as RenderCustomPaint).willChange,
+        'hashCode#0': (args) => (args[0] as RenderCustomPaint).hashCode,
         'hasSize#0': (args) => (args[0] as RenderCustomPaint).hasSize,
         'size#0': (args) => (args[0] as RenderCustomPaint).size,
         'semanticBounds#0': (args) => (args[0] as RenderCustomPaint).semanticBounds,
@@ -163,6 +165,7 @@ abstract final class RenderCustomPaintBindings {
         'debugCreator=#1': (args) { (args[0] as RenderCustomPaint).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderCustomPaint).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderCustomPaint).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderCustomPaint) == (args[1] as Object),
         '#6': (args) => RenderCustomPaint(painter: identical(args[0], darticAbsent) ? null : args[0] as CustomPainter?, foregroundPainter: identical(args[1], darticAbsent) ? null : args[1] as CustomPainter?, preferredSize: identical(args[2], darticAbsent) ? Size.zero : args[2] as Size, isComplex: identical(args[3], darticAbsent) ? false : args[3] as bool, willChange: identical(args[4], darticAbsent) ? false : args[4] as bool, child: identical(args[5], darticAbsent) ? null : args[5] as RenderBox?),
       };
 }

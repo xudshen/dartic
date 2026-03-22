@@ -39,6 +39,7 @@ abstract final class RenderBackdropFilterBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as RenderBackdropFilter).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderBackdropFilter).toString(),
         'setupParentData#1': (args) { (args[0] as RenderBackdropFilter).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderBackdropFilter).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderBackdropFilter).computeMinIntrinsicWidth(args[1] as double),
@@ -122,6 +123,7 @@ abstract final class RenderBackdropFilterBindings {
         'blendMode#0': (args) => (args[0] as RenderBackdropFilter).blendMode,
         'backdropKey#0': (args) => (args[0] as RenderBackdropFilter).backdropKey,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderBackdropFilter).alwaysNeedsCompositing,
+        'hashCode#0': (args) => (args[0] as RenderBackdropFilter).hashCode,
         'hasSize#0': (args) => (args[0] as RenderBackdropFilter).hasSize,
         'size#0': (args) => (args[0] as RenderBackdropFilter).size,
         'semanticBounds#0': (args) => (args[0] as RenderBackdropFilter).semanticBounds,
@@ -160,6 +162,7 @@ abstract final class RenderBackdropFilterBindings {
         'debugCreator=#1': (args) { (args[0] as RenderBackdropFilter).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderBackdropFilter).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderBackdropFilter).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderBackdropFilter) == (args[1] as Object),
         '#5': (args) => RenderBackdropFilter(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, filter: args[1] as ui.ImageFilter, blendMode: identical(args[2], darticAbsent) ? BlendMode.srcOver : args[2] as ui.BlendMode, enabled: identical(args[3], darticAbsent) ? true : args[3] as bool, backdropKey: identical(args[4], darticAbsent) ? null : args[4] as BackdropKey?),
       };
 }

@@ -26,12 +26,15 @@ abstract final class DirectionalCaretMovementIntentBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as DirectionalCaretMovementIntent).toString(),
         'toStringShort#0': (args) => (args[0] as DirectionalCaretMovementIntent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as DirectionalCaretMovementIntent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as DirectionalCaretMovementIntent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'collapseSelection#0': (args) => (args[0] as DirectionalCaretMovementIntent).collapseSelection,
         'collapseAtReversal#0': (args) => (args[0] as DirectionalCaretMovementIntent).collapseAtReversal,
         'continuesAtWrap#0': (args) => (args[0] as DirectionalCaretMovementIntent).continuesAtWrap,
+        'hashCode#0': (args) => (args[0] as DirectionalCaretMovementIntent).hashCode,
         'forward#0': (args) => (args[0] as DirectionalCaretMovementIntent).forward,
+        '==#1': (args) => (args[0] as DirectionalCaretMovementIntent) == (args[1] as Object),
       };
 }

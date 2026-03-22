@@ -44,6 +44,7 @@ abstract final class PaintBindings {
         'colorFilter#0': (args) => (args[0] as Paint).colorFilter,
         'imageFilter#0': (args) => (args[0] as Paint).imageFilter,
         'invertColors#0': (args) => (args[0] as Paint).invertColors,
+        'hashCode#0': (args) => (args[0] as Paint).hashCode,
         'isAntiAlias=#1': (args) { (args[0] as Paint).isAntiAlias = args[1] as bool; return args[1]; },
         'color=#1': (args) { (args[0] as Paint).color = args[1] as Color; return args[1]; },
         'blendMode=#1': (args) { (args[0] as Paint).blendMode = args[1] as BlendMode; return args[1]; },
@@ -58,6 +59,7 @@ abstract final class PaintBindings {
         'colorFilter=#1': (args) { (args[0] as Paint).colorFilter = args[1] as ColorFilter?; return args[1]; },
         'imageFilter=#1': (args) { (args[0] as Paint).imageFilter = args[1] as ImageFilter?; return args[1]; },
         'invertColors=#1': (args) { (args[0] as Paint).invertColors = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as Paint) == (args[1] as Object),
         '#0': (args) => Paint(),
         'from#1': (args) => Paint.from(args[0] as Paint),
       };

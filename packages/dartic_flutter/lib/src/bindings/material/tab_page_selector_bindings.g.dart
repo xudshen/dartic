@@ -45,6 +45,7 @@ abstract final class TabPageSelectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as TabPageSelector).createState(),
+        'toString#0': (args) => (args[0] as TabPageSelector).toString(),
         'createElement#0': (args) => (args[0] as TabPageSelector).createElement(),
         'toStringShort#0': (args) => (args[0] as TabPageSelector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as TabPageSelector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -57,7 +58,9 @@ abstract final class TabPageSelectorBindings {
         'color#0': (args) => (args[0] as TabPageSelector).color,
         'selectedColor#0': (args) => (args[0] as TabPageSelector).selectedColor,
         'borderStyle#0': (args) => (args[0] as TabPageSelector).borderStyle,
+        'hashCode#0': (args) => (args[0] as TabPageSelector).hashCode,
         'key#0': (args) => (args[0] as TabPageSelector).key,
+        '==#1': (args) => (args[0] as TabPageSelector) == (args[1] as Object),
         '#6': (args) => TabPageSelector(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: identical(args[1], darticAbsent) ? null : args[1] as TabController?, indicatorSize: identical(args[2], darticAbsent) ? 12.0 : args[2] as double, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, selectedColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, borderStyle: identical(args[5], darticAbsent) ? null : args[5] as BorderStyle?),
         '_#fromFields#6': (args) => TabPageSelector(key: args[4] as Key?, controller: args[2] as TabController?, indicatorSize: args[3] as double, color: args[1] as Color?, selectedColor: args[5] as Color?, borderStyle: args[0] as BorderStyle?),
       };

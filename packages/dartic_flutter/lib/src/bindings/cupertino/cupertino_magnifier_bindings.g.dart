@@ -37,6 +37,7 @@ abstract final class CupertinoMagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoMagnifier).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoMagnifier).toString(),
         'createElement#0': (args) => (args[0] as CupertinoMagnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoMagnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoMagnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class CupertinoMagnifierBindings {
         'inOutAnimation#0': (args) => (args[0] as CupertinoMagnifier).inOutAnimation,
         'additionalFocalPointOffset#0': (args) => (args[0] as CupertinoMagnifier).additionalFocalPointOffset,
         'magnificationScale#0': (args) => (args[0] as CupertinoMagnifier).magnificationScale,
+        'hashCode#0': (args) => (args[0] as CupertinoMagnifier).hashCode,
         'key#0': (args) => (args[0] as CupertinoMagnifier).key,
+        '==#1': (args) => (args[0] as CupertinoMagnifier) == (args[1] as Object),
         '#9': (args) => CupertinoMagnifier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, size: identical(args[1], darticAbsent) ? CupertinoMagnifier.kDefaultSize : args[1] as Size, borderRadius: identical(args[2], darticAbsent) ? const BorderRadius.all(Radius.elliptical(60, 50)) : args[2] as BorderRadius, additionalFocalPointOffset: identical(args[3], darticAbsent) ? Offset.zero : args[3] as Offset, shadows: identical(args[4], darticAbsent) ? const <BoxShadow>[BoxShadow(color: Color.fromARGB(25, 0, 0, 0), blurRadius: 11, spreadRadius: 0.2, blurStyle: BlurStyle.outer)] : (args[4] as List).cast<BoxShadow>(), clipBehavior: identical(args[5], darticAbsent) ? Clip.none : args[5] as Clip, borderSide: identical(args[6], darticAbsent) ? const BorderSide(color: Color.fromARGB(255, 0, 124, 255), width: 2.0) : args[6] as BorderSide, inOutAnimation: identical(args[7], darticAbsent) ? null : args[7] as Animation<double>?, magnificationScale: identical(args[8], darticAbsent) ? 1.0 : args[8] as double),
         '_#fromFields#9': (args) => CupertinoMagnifier(key: args[5] as Key?, size: args[8] as Size, borderRadius: args[1] as BorderRadius, additionalFocalPointOffset: args[0] as Offset, shadows: (args[7] as List).cast<BoxShadow>(), clipBehavior: args[3] as Clip, borderSide: args[2] as BorderSide, inOutAnimation: args[4] as Animation<double>?, magnificationScale: args[6] as double),
       };

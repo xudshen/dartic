@@ -30,17 +30,20 @@ abstract final class MaterialPageBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRoute#1': (args) => (args[0] as MaterialPage).createRoute(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as MaterialPage).toString(),
         'canUpdate#1': (args) => (args[0] as MaterialPage).canUpdate(args[1] as Page<dynamic>),
         'child#0': (args) => (args[0] as MaterialPage).child,
         'maintainState#0': (args) => (args[0] as MaterialPage).maintainState,
         'fullscreenDialog#0': (args) => (args[0] as MaterialPage).fullscreenDialog,
         'allowSnapshotting#0': (args) => (args[0] as MaterialPage).allowSnapshotting,
+        'hashCode#0': (args) => (args[0] as MaterialPage).hashCode,
         'key#0': (args) => (args[0] as MaterialPage).key,
         'restorationId#0': (args) => (args[0] as MaterialPage).restorationId,
         'onPopInvoked#0': (args) => (args[0] as MaterialPage).onPopInvoked,
         'canPop#0': (args) => (args[0] as MaterialPage).canPop,
         'name#0': (args) => (args[0] as MaterialPage).name,
         'arguments#0': (args) => (args[0] as MaterialPage).arguments,
+        '==#1': (args) => (args[0] as MaterialPage) == (args[1] as Object),
         '#10': (args) {
           if (identical(args[6], darticAbsent)) {
             return MaterialPage<dynamic>(child: args[0] as Widget, maintainState: identical(args[1], darticAbsent) ? true : args[1] as bool, fullscreenDialog: identical(args[2], darticAbsent) ? false : args[2] as bool, allowSnapshotting: identical(args[3], darticAbsent) ? true : args[3] as bool, key: identical(args[4], darticAbsent) ? null : args[4] as LocalKey?, canPop: identical(args[5], darticAbsent) ? true : args[5] as bool, name: identical(args[7], darticAbsent) ? null : args[7] as String?, arguments: identical(args[8], darticAbsent) ? null : args[8], restorationId: identical(args[9], darticAbsent) ? null : args[9] as String?);

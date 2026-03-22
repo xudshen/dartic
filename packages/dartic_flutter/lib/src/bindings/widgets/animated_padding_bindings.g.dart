@@ -39,6 +39,7 @@ abstract final class AnimatedPaddingBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedPadding).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedPadding).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedPadding).toString(),
         'createElement#0': (args) => (args[0] as AnimatedPadding).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedPadding).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedPadding).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -47,10 +48,12 @@ abstract final class AnimatedPaddingBindings {
         'debugDescribeChildren#0': (args) => (args[0] as AnimatedPadding).debugDescribeChildren(),
         'padding#0': (args) => (args[0] as AnimatedPadding).padding,
         'child#0': (args) => (args[0] as AnimatedPadding).child,
+        'hashCode#0': (args) => (args[0] as AnimatedPadding).hashCode,
         'curve#0': (args) => (args[0] as AnimatedPadding).curve,
         'duration#0': (args) => (args[0] as AnimatedPadding).duration,
         'onEnd#0': (args) => (args[0] as AnimatedPadding).onEnd,
         'key#0': (args) => (args[0] as AnimatedPadding).key,
+        '==#1': (args) => (args[0] as AnimatedPadding) == (args[1] as Object),
         '#6': (args) => AnimatedPadding(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, padding: args[1] as EdgeInsetsGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, curve: identical(args[3], darticAbsent) ? Curves.linear : args[3] as Curve, duration: args[4] as Duration, onEnd: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : () => (args[5] as Function?)!()),
       };
 }

@@ -31,10 +31,13 @@ abstract final class RouterConfigBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as RouterConfig).toString(),
         'routeInformationProvider#0': (args) => (args[0] as RouterConfig).routeInformationProvider,
         'routeInformationParser#0': (args) => (args[0] as RouterConfig).routeInformationParser,
         'routerDelegate#0': (args) => (args[0] as RouterConfig).routerDelegate,
         'backButtonDispatcher#0': (args) => (args[0] as RouterConfig).backButtonDispatcher,
+        'hashCode#0': (args) => (args[0] as RouterConfig).hashCode,
+        '==#1': (args) => (args[0] as RouterConfig) == (args[1] as Object),
         '#4': (args) => RouterConfig<dynamic>(routeInformationProvider: identical(args[0], darticAbsent) ? null : args[0] as RouteInformationProvider?, routeInformationParser: identical(args[1], darticAbsent) ? null : args[1] as RouteInformationParser?, routerDelegate: args[2] as RouterDelegate, backButtonDispatcher: identical(args[3], darticAbsent) ? null : args[3] as BackButtonDispatcher?),
         '_#fromFields#4': (args) => RouterConfig<dynamic>(routeInformationProvider: args[2] as RouteInformationProvider?, routeInformationParser: args[1] as RouteInformationParser?, routerDelegate: args[3] as RouterDelegate, backButtonDispatcher: args[0] as BackButtonDispatcher?),
       };

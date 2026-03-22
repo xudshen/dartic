@@ -35,6 +35,7 @@ abstract final class FlexibleSpaceBarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FlexibleSpaceBar).createState(),
+        'toString#0': (args) => (args[0] as FlexibleSpaceBar).toString(),
         'createElement#0': (args) => (args[0] as FlexibleSpaceBar).createElement(),
         'toStringShort#0': (args) => (args[0] as FlexibleSpaceBar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as FlexibleSpaceBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -49,7 +50,9 @@ abstract final class FlexibleSpaceBarBindings {
         'stretchModes#0': (args) => (args[0] as FlexibleSpaceBar).stretchModes,
         'titlePadding#0': (args) => (args[0] as FlexibleSpaceBar).titlePadding,
         'expandedTitleScale#0': (args) => (args[0] as FlexibleSpaceBar).expandedTitleScale,
+        'hashCode#0': (args) => (args[0] as FlexibleSpaceBar).hashCode,
         'key#0': (args) => (args[0] as FlexibleSpaceBar).key,
+        '==#1': (args) => (args[0] as FlexibleSpaceBar) == (args[1] as Object),
         '#8': (args) => FlexibleSpaceBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, title: identical(args[1], darticAbsent) ? null : args[1] as Widget?, background: identical(args[2], darticAbsent) ? null : args[2] as Widget?, centerTitle: identical(args[3], darticAbsent) ? null : args[3] as bool?, titlePadding: identical(args[4], darticAbsent) ? null : args[4] as EdgeInsetsGeometry?, collapseMode: identical(args[5], darticAbsent) ? CollapseMode.parallax : args[5] as CollapseMode, stretchModes: identical(args[6], darticAbsent) ? const <StretchMode>[StretchMode.zoomBackground] : (args[6] as List).cast<StretchMode>(), expandedTitleScale: identical(args[7], darticAbsent) ? 1.5 : args[7] as double),
         '_#fromFields#8': (args) => FlexibleSpaceBar(key: args[4] as Key?, title: args[6] as Widget?, background: args[0] as Widget?, centerTitle: args[1] as bool?, titlePadding: args[7] as EdgeInsetsGeometry?, collapseMode: args[2] as CollapseMode, stretchModes: (args[5] as List).cast<StretchMode>(), expandedTitleScale: args[3] as double),
       };

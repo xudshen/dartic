@@ -30,5 +30,8 @@ abstract final class EngineLayerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as EngineLayer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as EngineLayer).toString(),
+        'hashCode#0': (args) => (args[0] as EngineLayer).hashCode,
+        '==#1': (args) => (args[0] as EngineLayer) == (args[1] as Object),
       };
 }

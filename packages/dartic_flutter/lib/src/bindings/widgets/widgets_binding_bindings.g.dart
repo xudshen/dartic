@@ -85,6 +85,7 @@ abstract final class WidgetsBindingBindings {
         'attachToBuildOwner#1': (args) { (args[0] as WidgetsBinding).attachToBuildOwner(args[1] as RootWidget); return null; },
         'performReassemble#0': (args) => (args[0] as WidgetsBinding).performReassemble(),
         'computePlatformResolvedLocale#1': (args) => (args[0] as WidgetsBinding).computePlatformResolvedLocale((args[1] as List).cast<Locale>()),
+        'toString#0': (args) => (args[0] as WidgetsBinding).toString(),
         'debugCheckZone#1': (args) => (args[0] as WidgetsBinding).debugCheckZone(args[1] as String),
         'lockEvents#1': (args) => (args[0] as WidgetsBinding).lockEvents(() => (args[1] as Function)() as Future<void>),
         'unlocked#0': (args) { (args[0] as WidgetsBinding).unlocked(); return null; },
@@ -166,6 +167,7 @@ abstract final class WidgetsBindingBindings {
         'framesEnabled#0': (args) => (args[0] as WidgetsBinding).framesEnabled,
         'isRootWidgetAttached#0': (args) => (args[0] as WidgetsBinding).isRootWidgetAttached,
         'windowingOwner#0': (args) => (args[0] as WidgetsBinding).windowingOwner,
+        'hashCode#0': (args) => (args[0] as WidgetsBinding).hashCode,
         'window#0': (args) => (args[0] as WidgetsBinding).window,
         'platformDispatcher#0': (args) => (args[0] as WidgetsBinding).platformDispatcher,
         'locked#0': (args) => (args[0] as WidgetsBinding).locked,
@@ -208,5 +210,6 @@ abstract final class WidgetsBindingBindings {
         'schedulingStrategy=#1': (args) { (args[0] as WidgetsBinding).schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; },
         'resamplingEnabled=#1': (args) { (args[0] as WidgetsBinding).resamplingEnabled = args[1] as bool; return args[1]; },
         'samplingOffset=#1': (args) { (args[0] as WidgetsBinding).samplingOffset = args[1] as Duration; return args[1]; },
+        '==#1': (args) => (args[0] as WidgetsBinding) == (args[1] as Object),
       };
 }

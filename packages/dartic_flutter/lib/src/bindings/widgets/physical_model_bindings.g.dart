@@ -43,6 +43,7 @@ abstract final class PhysicalModelBindings {
         'createRenderObject#1': (args) => (args[0] as PhysicalModel).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as PhysicalModel).updateRenderObject(args[1] as BuildContext, args[2] as RenderPhysicalModel); return null; },
         'debugFillProperties#1': (args) { (args[0] as PhysicalModel).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PhysicalModel).toString(),
         'createElement#0': (args) => (args[0] as PhysicalModel).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as PhysicalModel).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as PhysicalModel).toStringShort(),
@@ -56,8 +57,10 @@ abstract final class PhysicalModelBindings {
         'elevation#0': (args) => (args[0] as PhysicalModel).elevation,
         'color#0': (args) => (args[0] as PhysicalModel).color,
         'shadowColor#0': (args) => (args[0] as PhysicalModel).shadowColor,
+        'hashCode#0': (args) => (args[0] as PhysicalModel).hashCode,
         'child#0': (args) => (args[0] as PhysicalModel).child,
         'key#0': (args) => (args[0] as PhysicalModel).key,
+        '==#1': (args) => (args[0] as PhysicalModel) == (args[1] as Object),
         '#8': (args) => PhysicalModel(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, shape: identical(args[1], darticAbsent) ? BoxShape.rectangle : args[1] as BoxShape, clipBehavior: identical(args[2], darticAbsent) ? Clip.none : args[2] as ui.Clip, borderRadius: identical(args[3], darticAbsent) ? null : args[3] as BorderRadius?, elevation: identical(args[4], darticAbsent) ? 0.0 : args[4] as double, color: args[5] as ui.Color, shadowColor: identical(args[6], darticAbsent) ? const Color(0xFF000000) : args[6] as ui.Color, child: identical(args[7], darticAbsent) ? null : args[7] as Widget?),
         '_#fromFields#8': (args) => PhysicalModel(key: args[5] as Key?, shape: args[7] as BoxShape, clipBehavior: args[2] as ui.Clip, borderRadius: args[0] as BorderRadius?, elevation: args[4] as double, color: args[3] as ui.Color, shadowColor: args[6] as ui.Color, child: args[1] as Widget?),
       };

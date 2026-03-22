@@ -33,6 +33,9 @@ abstract final class FontStyleBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as FontStyle).toString(),
+        'hashCode#0': (args) => (args[0] as FontStyle).hashCode,
         'index#0': (args) => (args[0] as FontStyle).index,
+        '==#1': (args) => (args[0] as FontStyle) == (args[1] as Object),
       };
 }

@@ -28,6 +28,7 @@ abstract final class WidgetStatePropertyAllBindings {
         'toString#0': (args) => (args[0] as WidgetStatePropertyAll).toString(),
         'value#0': (args) => (args[0] as WidgetStatePropertyAll).value,
         'hashCode#0': (args) => (args[0] as WidgetStatePropertyAll).hashCode,
+        '==#1': (args) => (args[0] as WidgetStatePropertyAll) == (args[1] as Object),
         '#1': (args) => WidgetStatePropertyAll<dynamic>(args[0]),
         '_#fromFields#1': (args) => WidgetStatePropertyAll<dynamic>(args[0]),
       };

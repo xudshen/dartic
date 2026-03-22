@@ -39,6 +39,7 @@ abstract final class RenderShaderMaskBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'paint#2': (args) { (args[0] as RenderShaderMask).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderShaderMask).toString(),
         'setupParentData#1': (args) { (args[0] as RenderShaderMask).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderShaderMask).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderShaderMask).computeMinIntrinsicWidth(args[1] as double),
@@ -120,6 +121,7 @@ abstract final class RenderShaderMaskBindings {
         'shaderCallback#0': (args) => (args[0] as RenderShaderMask).shaderCallback,
         'blendMode#0': (args) => (args[0] as RenderShaderMask).blendMode,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderShaderMask).alwaysNeedsCompositing,
+        'hashCode#0': (args) => (args[0] as RenderShaderMask).hashCode,
         'hasSize#0': (args) => (args[0] as RenderShaderMask).hasSize,
         'size#0': (args) => (args[0] as RenderShaderMask).size,
         'semanticBounds#0': (args) => (args[0] as RenderShaderMask).semanticBounds,
@@ -156,6 +158,7 @@ abstract final class RenderShaderMaskBindings {
         'debugCreator=#1': (args) { (args[0] as RenderShaderMask).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderShaderMask).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderShaderMask).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderShaderMask) == (args[1] as Object),
         '#3': (args) => RenderShaderMask(child: identical(args[0], darticAbsent) ? null : args[0] as RenderBox?, shaderCallback: (a) => (args[1] as Function)(a) as ui.Shader, blendMode: identical(args[2], darticAbsent) ? BlendMode.modulate : args[2] as ui.BlendMode),
       };
 }

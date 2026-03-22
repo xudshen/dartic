@@ -42,6 +42,7 @@ abstract final class TransformBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createRenderObject#1': (args) => (args[0] as Transform).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Transform).updateRenderObject(args[1] as BuildContext, args[2] as RenderTransform); return null; },
+        'toString#0': (args) => (args[0] as Transform).toString(),
         'createElement#0': (args) => (args[0] as Transform).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Transform).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Transform).toStringShort(),
@@ -55,8 +56,10 @@ abstract final class TransformBindings {
         'alignment#0': (args) => (args[0] as Transform).alignment,
         'transformHitTests#0': (args) => (args[0] as Transform).transformHitTests,
         'filterQuality#0': (args) => (args[0] as Transform).filterQuality,
+        'hashCode#0': (args) => (args[0] as Transform).hashCode,
         'child#0': (args) => (args[0] as Transform).child,
         'key#0': (args) => (args[0] as Transform).key,
+        '==#1': (args) => (args[0] as Transform) == (args[1] as Object),
         '#7': (args) => Transform(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, transform: args[1] as Matrix4, origin: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         'rotate#7': (args) => Transform.rotate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, angle: args[1] as double, origin: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, alignment: identical(args[3], darticAbsent) ? null : args[3] as AlignmentGeometry?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as Widget?),
         'translate#5': (args) => Transform.translate(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, offset: args[1] as ui.Offset, transformHitTests: identical(args[2], darticAbsent) ? true : args[2] as bool, filterQuality: identical(args[3], darticAbsent) ? null : args[3] as ui.FilterQuality?, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),

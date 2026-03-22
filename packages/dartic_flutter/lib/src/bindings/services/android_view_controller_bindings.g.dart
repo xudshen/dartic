@@ -51,6 +51,7 @@ abstract final class AndroidViewControllerBindings {
         'dispatchPointerEvent#1': (args) => (args[0] as AndroidViewController).dispatchPointerEvent(args[1] as PointerEvent),
         'clearFocus#0': (args) => (args[0] as AndroidViewController).clearFocus(),
         'dispose#0': (args) => (args[0] as AndroidViewController).dispose(),
+        'toString#0': (args) => (args[0] as AndroidViewController).toString(),
         'viewId#0': (args) => (args[0] as AndroidViewController).viewId,
         'awaitingCreation#0': (args) => (args[0] as AndroidViewController).awaitingCreation,
         'textureId#0': (args) => (args[0] as AndroidViewController).textureId,
@@ -58,6 +59,8 @@ abstract final class AndroidViewControllerBindings {
         'pointTransformer#0': (args) => (args[0] as AndroidViewController).pointTransformer,
         'isCreated#0': (args) => (args[0] as AndroidViewController).isCreated,
         'createdCallbacks#0': (args) => (args[0] as AndroidViewController).createdCallbacks,
+        'hashCode#0': (args) => (args[0] as AndroidViewController).hashCode,
         'pointTransformer=#1': (args) { (args[0] as AndroidViewController).pointTransformer = args[1] as PointTransformer; return args[1]; },
+        '==#1': (args) => (args[0] as AndroidViewController) == (args[1] as Object),
       };
 }

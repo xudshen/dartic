@@ -39,6 +39,7 @@ abstract final class RowBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as Row).toString(),
         'getEffectiveTextDirection#1': (args) => (args[0] as Row).getEffectiveTextDirection(args[1] as BuildContext),
         'createRenderObject#1': (args) => (args[0] as Row).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Row).updateRenderObject(args[1] as BuildContext, args[2] as RenderFlex); return null; },
@@ -50,6 +51,7 @@ abstract final class RowBindings {
         'toStringDeep#4': (args) => (args[0] as Row).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as Row).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as Row).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as Row).hashCode,
         'direction#0': (args) => (args[0] as Row).direction,
         'mainAxisAlignment#0': (args) => (args[0] as Row).mainAxisAlignment,
         'mainAxisSize#0': (args) => (args[0] as Row).mainAxisSize,
@@ -61,6 +63,7 @@ abstract final class RowBindings {
         'spacing#0': (args) => (args[0] as Row).spacing,
         'children#0': (args) => (args[0] as Row).children,
         'key#0': (args) => (args[0] as Row).key,
+        '==#1': (args) => (args[0] as Row) == (args[1] as Object),
         '#9': (args) => Row(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, mainAxisAlignment: identical(args[1], darticAbsent) ? MainAxisAlignment.start : args[1] as MainAxisAlignment, mainAxisSize: identical(args[2], darticAbsent) ? MainAxisSize.max : args[2] as MainAxisSize, crossAxisAlignment: identical(args[3], darticAbsent) ? CrossAxisAlignment.center : args[3] as CrossAxisAlignment, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?, verticalDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textBaseline: identical(args[6], darticAbsent) ? null : args[6] as ui.TextBaseline?, spacing: identical(args[7], darticAbsent) ? 0.0 : args[7] as double, children: identical(args[8], darticAbsent) ? const <Widget>[] : (args[8] as List).cast<Widget>()),
         '_#fromFields#11': (args) => Row(key: args[4] as Key?, mainAxisAlignment: args[5] as MainAxisAlignment, mainAxisSize: args[6] as MainAxisSize, crossAxisAlignment: args[2] as CrossAxisAlignment, textDirection: args[9] as ui.TextDirection?, verticalDirection: args[10] as VerticalDirection, textBaseline: args[8] as ui.TextBaseline?, spacing: args[7] as double, children: (args[0] as List).cast<Widget>()),
       };

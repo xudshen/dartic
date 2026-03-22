@@ -33,6 +33,7 @@ abstract final class CallbackActionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'invoke#1': (args) => (args[0] as CallbackAction).invoke(args[1] as Intent),
+        'toString#0': (args) => (args[0] as CallbackAction).toString(),
         'isEnabled#1': (args) => (args[0] as CallbackAction).isEnabled(args[1] as Intent),
         'consumesKey#1': (args) => (args[0] as CallbackAction).consumesKey(args[1] as Intent),
         'toKeyEventResult#2': (args) => (args[0] as CallbackAction).toKeyEventResult(args[1] as Intent, args[2]),
@@ -43,9 +44,11 @@ abstract final class CallbackActionBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as CallbackAction).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugFillProperties#1': (args) { (args[0] as CallbackAction).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'onInvoke#0': (args) => (args[0] as CallbackAction).onInvoke,
+        'hashCode#0': (args) => (args[0] as CallbackAction).hashCode,
         'callingAction#0': (args) => (args[0] as CallbackAction).callingAction,
         'intentType#0': (args) => (args[0] as CallbackAction).intentType,
         'isActionEnabled#0': (args) => (args[0] as CallbackAction).isActionEnabled,
+        '==#1': (args) => (args[0] as CallbackAction) == (args[1] as Object),
         '#1': (args) => CallbackAction<Intent>(onInvoke: (a) => (args[0] as Function)(a)),
       };
 }

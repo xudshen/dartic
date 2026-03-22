@@ -43,6 +43,7 @@ abstract final class MaterialBannerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'withAnimation#2': (args) => (args[0] as MaterialBanner).withAnimation(args[1] as Animation<double>, fallbackKey: identical(args[2], darticAbsent) ? null : args[2] as Key?),
         'createState#0': (args) => (args[0] as MaterialBanner).createState(),
+        'toString#0': (args) => (args[0] as MaterialBanner).toString(),
         'createElement#0': (args) => (args[0] as MaterialBanner).createElement(),
         'toStringShort#0': (args) => (args[0] as MaterialBanner).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as MaterialBanner).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -67,7 +68,9 @@ abstract final class MaterialBannerBindings {
         'overflowAlignment#0': (args) => (args[0] as MaterialBanner).overflowAlignment,
         'animation#0': (args) => (args[0] as MaterialBanner).animation,
         'onVisible#0': (args) => (args[0] as MaterialBanner).onVisible,
+        'hashCode#0': (args) => (args[0] as MaterialBanner).hashCode,
         'key#0': (args) => (args[0] as MaterialBanner).key,
+        '==#1': (args) => (args[0] as MaterialBanner) == (args[1] as Object),
         '#18': (args) => MaterialBanner(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, content: args[1] as Widget, contentTextStyle: identical(args[2], darticAbsent) ? null : args[2] as TextStyle?, actions: (args[3] as List).cast<Widget>(), elevation: identical(args[4], darticAbsent) ? null : args[4] as double?, leading: identical(args[5], darticAbsent) ? null : args[5] as Widget?, backgroundColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, surfaceTintColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, shadowColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, dividerColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, padding: identical(args[10], darticAbsent) ? null : args[10] as EdgeInsetsGeometry?, margin: identical(args[11], darticAbsent) ? null : args[11] as EdgeInsetsGeometry?, leadingPadding: identical(args[12], darticAbsent) ? null : args[12] as EdgeInsetsGeometry?, forceActionsBelow: identical(args[13], darticAbsent) ? false : args[13] as bool, overflowAlignment: identical(args[14], darticAbsent) ? OverflowBarAlignment.end : args[14] as OverflowBarAlignment, animation: identical(args[15], darticAbsent) ? null : args[15] as Animation<double>?, onVisible: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : () => (args[16] as Function?)!(), minActionBarHeight: identical(args[17], darticAbsent) ? 52.0 : args[17] as double),
         '_#fromFields#18': (args) => MaterialBanner(key: args[8] as Key?, content: args[3] as Widget, contentTextStyle: args[4] as TextStyle?, actions: (args[0] as List).cast<Widget>(), elevation: args[6] as double?, leading: args[9] as Widget?, backgroundColor: args[2] as Color?, surfaceTintColor: args[17] as Color?, shadowColor: args[16] as Color?, dividerColor: args[5] as Color?, padding: args[15] as EdgeInsetsGeometry?, margin: args[11] as EdgeInsetsGeometry?, leadingPadding: args[10] as EdgeInsetsGeometry?, forceActionsBelow: args[7] as bool, overflowAlignment: args[14] as OverflowBarAlignment, animation: args[1] as Animation<double>?, onVisible: args[13] as VoidCallback?, minActionBarHeight: args[12] as double),
       };

@@ -43,6 +43,7 @@ abstract final class StadiumBorderBindings {
         'hashCode#0': (args) => (args[0] as StadiumBorder).hashCode,
         'dimensions#0': (args) => (args[0] as StadiumBorder).dimensions,
         'side#0': (args) => (args[0] as StadiumBorder).side,
+        '==#1': (args) => (args[0] as StadiumBorder) == (args[1] as Object),
         '+#1': (args) => (args[0] as StadiumBorder) + (args[1] as ShapeBorder),
         '#1': (args) => StadiumBorder(side: identical(args[0], darticAbsent) ? BorderSide.none : args[0] as BorderSide),
         '_#fromFields#1': (args) => StadiumBorder(side: args[0] as BorderSide),

@@ -28,5 +28,9 @@ abstract final class WidgetStatePropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) => (args[0] as WidgetStateProperty).resolve((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as WidgetStateProperty).toString(),
+        'hashCode#0': (args) => (args[0] as WidgetStateProperty).hashCode,
+        '==#1': (args) => (args[0] as WidgetStateProperty) == (args[1] as Object),
+        'fromMap#1': (args) => WidgetStateProperty<dynamic>.fromMap((args[0] as Map).cast<WidgetStatesConstraint, dynamic>()),
       };
 }

@@ -88,7 +88,10 @@ abstract final class CupertinoBasedMaterialThemeDataBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as CupertinoBasedMaterialThemeData).toString(),
         'materialTheme#0': (args) => (args[0] as CupertinoBasedMaterialThemeData).materialTheme,
+        'hashCode#0': (args) => (args[0] as CupertinoBasedMaterialThemeData).hashCode,
+        '==#1': (args) => (args[0] as CupertinoBasedMaterialThemeData) == (args[1] as Object),
         '#1': (args) => CupertinoBasedMaterialThemeData(themeData: args[0] as CupertinoThemeData),
       };
 }

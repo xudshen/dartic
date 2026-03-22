@@ -47,6 +47,7 @@ abstract final class MaterialLocalizationsBindings {
         'dateRangeStartDateSemanticLabel#1': (args) => (args[0] as MaterialLocalizations).dateRangeStartDateSemanticLabel(args[1] as String),
         'dateRangeEndDateSemanticLabel#1': (args) => (args[0] as MaterialLocalizations).dateRangeEndDateSemanticLabel(args[1] as String),
         'remainingTextFieldCharacterCount#1': (args) => (args[0] as MaterialLocalizations).remainingTextFieldCharacterCount(args[1] as int),
+        'toString#0': (args) => (args[0] as MaterialLocalizations).toString(),
         'openAppDrawerTooltip#0': (args) => (args[0] as MaterialLocalizations).openAppDrawerTooltip,
         'backButtonTooltip#0': (args) => (args[0] as MaterialLocalizations).backButtonTooltip,
         'clearButtonTooltip#0': (args) => (args[0] as MaterialLocalizations).clearButtonTooltip,
@@ -182,5 +183,7 @@ abstract final class MaterialLocalizationsBindings {
         'keyboardKeySelect#0': (args) => (args[0] as MaterialLocalizations).keyboardKeySelect,
         'keyboardKeyShift#0': (args) => (args[0] as MaterialLocalizations).keyboardKeyShift,
         'keyboardKeySpace#0': (args) => (args[0] as MaterialLocalizations).keyboardKeySpace,
+        'hashCode#0': (args) => (args[0] as MaterialLocalizations).hashCode,
+        '==#1': (args) => (args[0] as MaterialLocalizations) == (args[1] as Object),
       };
 }

@@ -34,6 +34,7 @@ abstract final class CupertinoTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoTextSelectionToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoTextSelectionToolbar).toString(),
         'createElement#0': (args) => (args[0] as CupertinoTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -45,7 +46,9 @@ abstract final class CupertinoTextSelectionToolbarBindings {
         'anchorBelow#0': (args) => (args[0] as CupertinoTextSelectionToolbar).anchorBelow,
         'children#0': (args) => (args[0] as CupertinoTextSelectionToolbar).children,
         'toolbarBuilder#0': (args) => (args[0] as CupertinoTextSelectionToolbar).toolbarBuilder,
+        'hashCode#0': (args) => (args[0] as CupertinoTextSelectionToolbar).hashCode,
         'key#0': (args) => (args[0] as CupertinoTextSelectionToolbar).key,
+        '==#1': (args) => (args[0] as CupertinoTextSelectionToolbar) == (args[1] as Object),
         '#5': (args) {
           if (identical(args[4], darticAbsent)) {
             return CupertinoTextSelectionToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchorAbove: args[1] as ui.Offset, anchorBelow: args[2] as ui.Offset, children: (args[3] as List).cast<Widget>());

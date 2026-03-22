@@ -34,7 +34,10 @@ abstract final class DefaultPlatformMenuDelegateBindings {
         'setMenus#1': (args) { (args[0] as DefaultPlatformMenuDelegate).setMenus((args[1] as List).cast<PlatformMenuItem>()); return null; },
         'debugLockDelegate#1': (args) => (args[0] as DefaultPlatformMenuDelegate).debugLockDelegate(args[1] as BuildContext),
         'debugUnlockDelegate#1': (args) => (args[0] as DefaultPlatformMenuDelegate).debugUnlockDelegate(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DefaultPlatformMenuDelegate).toString(),
         'channel#0': (args) => (args[0] as DefaultPlatformMenuDelegate).channel,
+        'hashCode#0': (args) => (args[0] as DefaultPlatformMenuDelegate).hashCode,
+        '==#1': (args) => (args[0] as DefaultPlatformMenuDelegate) == (args[1] as Object),
         '#1': (args) => DefaultPlatformMenuDelegate(channel: identical(args[0], darticAbsent) ? null : args[0] as MethodChannel?),
       };
 }

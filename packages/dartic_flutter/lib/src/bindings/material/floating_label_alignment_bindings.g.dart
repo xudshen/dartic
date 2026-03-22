@@ -40,5 +40,6 @@ abstract final class FloatingLabelAlignmentBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as FloatingLabelAlignment).toString(),
         'hashCode#0': (args) => (args[0] as FloatingLabelAlignment).hashCode,
+        '==#1': (args) => (args[0] as FloatingLabelAlignment) == (args[1] as Object),
       };
 }

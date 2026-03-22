@@ -31,6 +31,7 @@ abstract final class ExcludeFocusTraversalBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ExcludeFocusTraversal).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as ExcludeFocusTraversal).toString(),
         'createElement#0': (args) => (args[0] as ExcludeFocusTraversal).createElement(),
         'toStringShort#0': (args) => (args[0] as ExcludeFocusTraversal).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as ExcludeFocusTraversal).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class ExcludeFocusTraversalBindings {
         'debugDescribeChildren#0': (args) => (args[0] as ExcludeFocusTraversal).debugDescribeChildren(),
         'excluding#0': (args) => (args[0] as ExcludeFocusTraversal).excluding,
         'child#0': (args) => (args[0] as ExcludeFocusTraversal).child,
+        'hashCode#0': (args) => (args[0] as ExcludeFocusTraversal).hashCode,
         'key#0': (args) => (args[0] as ExcludeFocusTraversal).key,
+        '==#1': (args) => (args[0] as ExcludeFocusTraversal) == (args[1] as Object),
         '#3': (args) => ExcludeFocusTraversal(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, excluding: identical(args[1], darticAbsent) ? true : args[1] as bool, child: args[2] as Widget),
         '_#fromFields#3': (args) => ExcludeFocusTraversal(key: args[2] as Key?, excluding: args[1] as bool, child: args[0] as Widget),
       };

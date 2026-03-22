@@ -47,6 +47,7 @@ abstract final class RenderRotatedBoxBindings {
         'paint#2': (args) { (args[0] as RenderRotatedBox).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
         'dispose#0': (args) { (args[0] as RenderRotatedBox).dispose(); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderRotatedBox).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'toString#0': (args) => (args[0] as RenderRotatedBox).toString(),
         'setupParentData#1': (args) { (args[0] as RenderRotatedBox).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderRotatedBox).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderRotatedBox).getMaxIntrinsicWidth(args[1] as double),
@@ -115,6 +116,7 @@ abstract final class RenderRotatedBoxBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as RenderRotatedBox).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugValidateChild#1': (args) => (args[0] as RenderRotatedBox).debugValidateChild(args[1] as RenderObject),
         'quarterTurns#0': (args) => (args[0] as RenderRotatedBox).quarterTurns,
+        'hashCode#0': (args) => (args[0] as RenderRotatedBox).hashCode,
         'hasSize#0': (args) => (args[0] as RenderRotatedBox).hasSize,
         'size#0': (args) => (args[0] as RenderRotatedBox).size,
         'semanticBounds#0': (args) => (args[0] as RenderRotatedBox).semanticBounds,
@@ -152,6 +154,7 @@ abstract final class RenderRotatedBoxBindings {
         'debugCreator=#1': (args) { (args[0] as RenderRotatedBox).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderRotatedBox).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderRotatedBox).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderRotatedBox) == (args[1] as Object),
         '#2': (args) => RenderRotatedBox(quarterTurns: args[0] as int, child: identical(args[1], darticAbsent) ? null : args[1] as RenderBox?),
       };
 }

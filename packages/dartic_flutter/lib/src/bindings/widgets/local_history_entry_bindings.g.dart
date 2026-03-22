@@ -42,8 +42,11 @@ abstract final class LocalHistoryEntryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'remove#0': (args) { (args[0] as LocalHistoryEntry).remove(); return null; },
+        'toString#0': (args) => (args[0] as LocalHistoryEntry).toString(),
         'onRemove#0': (args) => (args[0] as LocalHistoryEntry).onRemove,
         'impliesAppBarDismissal#0': (args) => (args[0] as LocalHistoryEntry).impliesAppBarDismissal,
+        'hashCode#0': (args) => (args[0] as LocalHistoryEntry).hashCode,
+        '==#1': (args) => (args[0] as LocalHistoryEntry) == (args[1] as Object),
         '#2': (args) => LocalHistoryEntry(onRemove: identical(args[0], darticAbsent) ? null : (args[0] as Function?) == null ? null : () => (args[0] as Function?)!(), impliesAppBarDismissal: identical(args[1], darticAbsent) ? true : args[1] as bool),
       };
 }

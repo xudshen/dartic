@@ -30,12 +30,14 @@ abstract final class WidgetStateBorderSideBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'resolve#1': (args) => (args[0] as WidgetStateBorderSide).resolve((args[1] as Set).cast<WidgetState>()),
+        'toString#0': (args) => (args[0] as WidgetStateBorderSide).toString(),
         'copyWith#4': (args) => (args[0] as WidgetStateBorderSide).copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, width: identical(args[2], darticAbsent) ? null : args[2] as double?, style: identical(args[3], darticAbsent) ? null : args[3] as BorderStyle?, strokeAlign: identical(args[4], darticAbsent) ? null : args[4] as double?),
         'scale#1': (args) => (args[0] as WidgetStateBorderSide).scale(args[1] as double),
         'toPaint#0': (args) => (args[0] as WidgetStateBorderSide).toPaint(),
         'toStringShort#0': (args) => (args[0] as WidgetStateBorderSide).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WidgetStateBorderSide).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toDiagnosticsNode#2': (args) => (args[0] as WidgetStateBorderSide).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as WidgetStateBorderSide).hashCode,
         'color#0': (args) => (args[0] as WidgetStateBorderSide).color,
         'width#0': (args) => (args[0] as WidgetStateBorderSide).width,
         'style#0': (args) => (args[0] as WidgetStateBorderSide).style,
@@ -43,5 +45,8 @@ abstract final class WidgetStateBorderSideBindings {
         'strokeInset#0': (args) => (args[0] as WidgetStateBorderSide).strokeInset,
         'strokeOutset#0': (args) => (args[0] as WidgetStateBorderSide).strokeOutset,
         'strokeOffset#0': (args) => (args[0] as WidgetStateBorderSide).strokeOffset,
+        '==#1': (args) => (args[0] as WidgetStateBorderSide) == (args[1] as Object),
+        'resolveWith#1': (args) => WidgetStateBorderSide.resolveWith((a) => (args[0] as Function)(a) as BorderSide?),
+        'fromMap#1': (args) => WidgetStateBorderSide.fromMap((args[0] as Map).cast<WidgetStatesConstraint, BorderSide?>()),
       };
 }

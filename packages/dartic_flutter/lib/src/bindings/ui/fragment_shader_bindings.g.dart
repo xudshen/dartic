@@ -33,6 +33,9 @@ abstract final class FragmentShaderBindings {
         'setFloat#2': (args) { (args[0] as FragmentShader).setFloat(args[1] as int, args[2] as double); return null; },
         'setImageSampler#2': (args) { (args[0] as FragmentShader).setImageSampler(args[1] as int, args[2] as Image); return null; },
         'dispose#0': (args) { (args[0] as FragmentShader).dispose(); return null; },
+        'toString#0': (args) => (args[0] as FragmentShader).toString(),
+        'hashCode#0': (args) => (args[0] as FragmentShader).hashCode,
         'debugDisposed#0': (args) => (args[0] as FragmentShader).debugDisposed,
+        '==#1': (args) => (args[0] as FragmentShader) == (args[1] as Object),
       };
 }

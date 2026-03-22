@@ -39,6 +39,7 @@ abstract final class AnimatedFractionallySizedBoxBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedFractionallySizedBox).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedFractionallySizedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedFractionallySizedBox).toString(),
         'createElement#0': (args) => (args[0] as AnimatedFractionallySizedBox).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedFractionallySizedBox).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedFractionallySizedBox).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -49,10 +50,12 @@ abstract final class AnimatedFractionallySizedBoxBindings {
         'heightFactor#0': (args) => (args[0] as AnimatedFractionallySizedBox).heightFactor,
         'widthFactor#0': (args) => (args[0] as AnimatedFractionallySizedBox).widthFactor,
         'alignment#0': (args) => (args[0] as AnimatedFractionallySizedBox).alignment,
+        'hashCode#0': (args) => (args[0] as AnimatedFractionallySizedBox).hashCode,
         'curve#0': (args) => (args[0] as AnimatedFractionallySizedBox).curve,
         'duration#0': (args) => (args[0] as AnimatedFractionallySizedBox).duration,
         'onEnd#0': (args) => (args[0] as AnimatedFractionallySizedBox).onEnd,
         'key#0': (args) => (args[0] as AnimatedFractionallySizedBox).key,
+        '==#1': (args) => (args[0] as AnimatedFractionallySizedBox) == (args[1] as Object),
         '#8': (args) => AnimatedFractionallySizedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? Alignment.center : args[1] as AlignmentGeometry, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?, heightFactor: identical(args[3], darticAbsent) ? null : args[3] as double?, widthFactor: identical(args[4], darticAbsent) ? null : args[4] as double?, curve: identical(args[5], darticAbsent) ? Curves.linear : args[5] as Curve, duration: args[6] as Duration, onEnd: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!()),
         '_#fromFields#8': (args) => AnimatedFractionallySizedBox(key: args[5] as Key?, alignment: args[0] as AlignmentGeometry, child: args[1] as Widget?, heightFactor: args[4] as double?, widthFactor: args[7] as double?, curve: args[2] as Curve, duration: args[3] as Duration, onEnd: args[6] as ui.VoidCallback?),
       };

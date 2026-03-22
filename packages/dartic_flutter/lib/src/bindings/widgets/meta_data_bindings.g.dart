@@ -40,6 +40,7 @@ abstract final class MetaDataBindings {
         'createRenderObject#1': (args) => (args[0] as MetaData).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as MetaData).updateRenderObject(args[1] as BuildContext, args[2] as RenderMetaData); return null; },
         'debugFillProperties#1': (args) { (args[0] as MetaData).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MetaData).toString(),
         'createElement#0': (args) => (args[0] as MetaData).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as MetaData).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as MetaData).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class MetaDataBindings {
         'debugDescribeChildren#0': (args) => (args[0] as MetaData).debugDescribeChildren(),
         'metaData#0': (args) => (args[0] as MetaData).metaData,
         'behavior#0': (args) => (args[0] as MetaData).behavior,
+        'hashCode#0': (args) => (args[0] as MetaData).hashCode,
         'child#0': (args) => (args[0] as MetaData).child,
         'key#0': (args) => (args[0] as MetaData).key,
+        '==#1': (args) => (args[0] as MetaData) == (args[1] as Object),
         '#4': (args) => MetaData(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, metaData: identical(args[1], darticAbsent) ? null : args[1], behavior: identical(args[2], darticAbsent) ? HitTestBehavior.deferToChild : args[2] as HitTestBehavior, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => MetaData(key: args[2] as Key?, metaData: args[3], behavior: args[0] as HitTestBehavior, child: args[1] as Widget?),
       };

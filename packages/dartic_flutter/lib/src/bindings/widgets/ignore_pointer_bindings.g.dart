@@ -40,6 +40,7 @@ abstract final class IgnorePointerBindings {
         'createRenderObject#1': (args) => (args[0] as IgnorePointer).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as IgnorePointer).updateRenderObject(args[1] as BuildContext, args[2] as RenderIgnorePointer); return null; },
         'debugFillProperties#1': (args) { (args[0] as IgnorePointer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as IgnorePointer).toString(),
         'createElement#0': (args) => (args[0] as IgnorePointer).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as IgnorePointer).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as IgnorePointer).toStringShort(),
@@ -49,8 +50,10 @@ abstract final class IgnorePointerBindings {
         'debugDescribeChildren#0': (args) => (args[0] as IgnorePointer).debugDescribeChildren(),
         'ignoring#0': (args) => (args[0] as IgnorePointer).ignoring,
         'ignoringSemantics#0': (args) => (args[0] as IgnorePointer).ignoringSemantics,
+        'hashCode#0': (args) => (args[0] as IgnorePointer).hashCode,
         'child#0': (args) => (args[0] as IgnorePointer).child,
         'key#0': (args) => (args[0] as IgnorePointer).key,
+        '==#1': (args) => (args[0] as IgnorePointer) == (args[1] as Object),
         '#4': (args) => IgnorePointer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, ignoring: identical(args[1], darticAbsent) ? true : args[1] as bool, ignoringSemantics: identical(args[2], darticAbsent) ? null : args[2] as bool?, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => IgnorePointer(key: args[3] as Key?, ignoring: args[1] as bool, ignoringSemantics: args[2] as bool?, child: args[0] as Widget?),
       };

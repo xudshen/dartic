@@ -49,6 +49,8 @@ abstract final class ScrollBehaviorBindings {
         'toString#0': (args) => (args[0] as ScrollBehavior).toString(),
         'dragDevices#0': (args) => (args[0] as ScrollBehavior).dragDevices,
         'pointerAxisModifiers#0': (args) => (args[0] as ScrollBehavior).pointerAxisModifiers,
+        'hashCode#0': (args) => (args[0] as ScrollBehavior).hashCode,
+        '==#1': (args) => (args[0] as ScrollBehavior) == (args[1] as Object),
         '#0': (args) => ScrollBehavior(),
         '_#fromFields#0': (args) => ScrollBehavior(),
       };

@@ -25,8 +25,11 @@ abstract final class TextSelectionToolbarAnchorsBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TextSelectionToolbarAnchors).toString(),
         'primaryAnchor#0': (args) => (args[0] as TextSelectionToolbarAnchors).primaryAnchor,
         'secondaryAnchor#0': (args) => (args[0] as TextSelectionToolbarAnchors).secondaryAnchor,
+        'hashCode#0': (args) => (args[0] as TextSelectionToolbarAnchors).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionToolbarAnchors) == (args[1] as Object),
         '#2': (args) => TextSelectionToolbarAnchors(primaryAnchor: args[0] as Offset, secondaryAnchor: identical(args[1], darticAbsent) ? null : args[1] as Offset?),
         'fromSelection#4': (args) => TextSelectionToolbarAnchors.fromSelection(renderBox: args[0] as RenderBox, startGlyphHeight: args[1] as double, endGlyphHeight: args[2] as double, selectionEndpoints: (args[3] as List).cast<TextSelectionPoint>()),
         '_#fromFields#2': (args) => TextSelectionToolbarAnchors(primaryAnchor: args[0] as Offset, secondaryAnchor: args[1] as Offset?),

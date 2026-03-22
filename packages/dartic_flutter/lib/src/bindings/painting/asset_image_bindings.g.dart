@@ -44,6 +44,7 @@ abstract final class AssetImageBindings {
         'bundle#0': (args) => (args[0] as AssetImage).bundle,
         'package#0': (args) => (args[0] as AssetImage).package,
         'hashCode#0': (args) => (args[0] as AssetImage).hashCode,
+        '==#1': (args) => (args[0] as AssetImage) == (args[1] as Object),
         '#3': (args) => AssetImage(args[0] as String, bundle: identical(args[1], darticAbsent) ? null : args[1] as AssetBundle?, package: identical(args[2], darticAbsent) ? null : args[2] as String?),
         '_#fromFields#3': (args) => AssetImage(args[0] as String, bundle: args[1] as AssetBundle?, package: args[2] as String?),
       };

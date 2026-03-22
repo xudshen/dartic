@@ -40,6 +40,7 @@ abstract final class RefreshIndicatorStateBindings {
         'dispose#0': (args) { (args[0] as RefreshIndicatorState).dispose(); return null; },
         'show#1': (args) => (args[0] as RefreshIndicatorState).show(atTop: identical(args[1], darticAbsent) ? true : args[1] as bool),
         'build#1': (args) => (args[0] as RefreshIndicatorState).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RefreshIndicatorState).toString(),
         'reassemble#0': (args) { (args[0] as RefreshIndicatorState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RefreshIndicatorState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as RefreshIndicatorState).deactivate(); return null; },
@@ -48,9 +49,11 @@ abstract final class RefreshIndicatorStateBindings {
         'toStringShort#0': (args) => (args[0] as RefreshIndicatorState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RefreshIndicatorState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'createTicker#1': (args) => (args[0] as RefreshIndicatorState).createTicker((a) => (args[1] as Function)(a)),
+        'hashCode#0': (args) => (args[0] as RefreshIndicatorState).hashCode,
         'widget#0': (args) => (args[0] as RefreshIndicatorState).widget,
         'context#0': (args) => (args[0] as RefreshIndicatorState).context,
         'mounted#0': (args) => (args[0] as RefreshIndicatorState).mounted,
+        '==#1': (args) => (args[0] as RefreshIndicatorState) == (args[1] as Object),
         '#0': (args) => RefreshIndicatorState(),
       };
 }

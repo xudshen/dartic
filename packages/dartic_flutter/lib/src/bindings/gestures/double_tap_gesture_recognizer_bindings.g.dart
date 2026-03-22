@@ -39,6 +39,7 @@ abstract final class DoubleTapGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as DoubleTapGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as DoubleTapGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as DoubleTapGestureRecognizer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as DoubleTapGestureRecognizer).toString(),
         'addPointerPanZoom#1': (args) { (args[0] as DoubleTapGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as DoubleTapGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as DoubleTapGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },
@@ -57,6 +58,7 @@ abstract final class DoubleTapGestureRecognizerBindings {
         'onDoubleTap#0': (args) => (args[0] as DoubleTapGestureRecognizer).onDoubleTap,
         'onDoubleTapCancel#0': (args) => (args[0] as DoubleTapGestureRecognizer).onDoubleTapCancel,
         'debugDescription#0': (args) => (args[0] as DoubleTapGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as DoubleTapGestureRecognizer).hashCode,
         'debugOwner#0': (args) => (args[0] as DoubleTapGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as DoubleTapGestureRecognizer).gestureSettings,
         'supportedDevices#0': (args) => (args[0] as DoubleTapGestureRecognizer).supportedDevices,
@@ -66,6 +68,7 @@ abstract final class DoubleTapGestureRecognizerBindings {
         'onDoubleTapCancel=#1': (args) { (args[0] as DoubleTapGestureRecognizer).onDoubleTapCancel = args[1] as GestureTapCancelCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as DoubleTapGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as DoubleTapGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as DoubleTapGestureRecognizer) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[2], darticAbsent)) {
             return DoubleTapGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>());

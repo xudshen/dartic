@@ -32,6 +32,7 @@ abstract final class RawGestureDetectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RawGestureDetector).createState(),
+        'toString#0': (args) => (args[0] as RawGestureDetector).toString(),
         'createElement#0': (args) => (args[0] as RawGestureDetector).createElement(),
         'toStringShort#0': (args) => (args[0] as RawGestureDetector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawGestureDetector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -44,7 +45,9 @@ abstract final class RawGestureDetectorBindings {
         'behavior#0': (args) => (args[0] as RawGestureDetector).behavior,
         'excludeFromSemantics#0': (args) => (args[0] as RawGestureDetector).excludeFromSemantics,
         'semantics#0': (args) => (args[0] as RawGestureDetector).semantics,
+        'hashCode#0': (args) => (args[0] as RawGestureDetector).hashCode,
         'key#0': (args) => (args[0] as RawGestureDetector).key,
+        '==#1': (args) => (args[0] as RawGestureDetector) == (args[1] as Object),
         '#6': (args) => RawGestureDetector(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, gestures: identical(args[2], darticAbsent) ? const <Type, GestureRecognizerFactory>{} : (args[2] as Map).cast<Type, GestureRecognizerFactory<GestureRecognizer>>(), behavior: identical(args[3], darticAbsent) ? null : args[3] as HitTestBehavior?, excludeFromSemantics: identical(args[4], darticAbsent) ? false : args[4] as bool, semantics: identical(args[5], darticAbsent) ? null : args[5] as SemanticsGestureDelegate?),
         '_#fromFields#6': (args) => RawGestureDetector(key: args[4] as Key?, child: args[1] as Widget?, gestures: (args[3] as Map).cast<Type, GestureRecognizerFactory<GestureRecognizer>>(), behavior: args[0] as HitTestBehavior?, excludeFromSemantics: args[2] as bool, semantics: args[5] as SemanticsGestureDelegate?),
       };

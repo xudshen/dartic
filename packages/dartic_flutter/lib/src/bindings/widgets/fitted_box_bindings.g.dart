@@ -43,6 +43,7 @@ abstract final class FittedBoxBindings {
         'createRenderObject#1': (args) => (args[0] as FittedBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as FittedBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderFittedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as FittedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FittedBox).toString(),
         'createElement#0': (args) => (args[0] as FittedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as FittedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as FittedBox).toStringShort(),
@@ -53,8 +54,10 @@ abstract final class FittedBoxBindings {
         'fit#0': (args) => (args[0] as FittedBox).fit,
         'alignment#0': (args) => (args[0] as FittedBox).alignment,
         'clipBehavior#0': (args) => (args[0] as FittedBox).clipBehavior,
+        'hashCode#0': (args) => (args[0] as FittedBox).hashCode,
         'child#0': (args) => (args[0] as FittedBox).child,
         'key#0': (args) => (args[0] as FittedBox).key,
+        '==#1': (args) => (args[0] as FittedBox) == (args[1] as Object),
         '#5': (args) => FittedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, fit: identical(args[1], darticAbsent) ? BoxFit.contain : args[1] as BoxFit, alignment: identical(args[2], darticAbsent) ? Alignment.center : args[2] as AlignmentGeometry, clipBehavior: identical(args[3], darticAbsent) ? Clip.none : args[3] as ui.Clip, child: identical(args[4], darticAbsent) ? null : args[4] as Widget?),
         '_#fromFields#5': (args) => FittedBox(key: args[4] as Key?, fit: args[3] as BoxFit, alignment: args[0] as AlignmentGeometry, clipBehavior: args[2] as ui.Clip, child: args[1] as Widget?),
       };

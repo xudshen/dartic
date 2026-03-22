@@ -58,8 +58,11 @@ abstract final class TextSelectionHandleControlsBindings {
         'handleCopy#2': (args) { (args[0] as TextSelectionHandleControls).handleCopy(args[1] as TextSelectionDelegate, identical(args[2], darticAbsent) ? null : args[2] as ClipboardStatusNotifier?); return null; },
         'handlePaste#1': (args) => (args[0] as TextSelectionHandleControls).handlePaste(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as TextSelectionHandleControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'toString#0': (args) => (args[0] as TextSelectionHandleControls).toString(),
         'buildHandle#4': (args) => (args[0] as TextSelectionHandleControls).buildHandle(args[1] as BuildContext, args[2] as TextSelectionHandleType, args[3] as double, identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
         'getHandleAnchor#2': (args) => (args[0] as TextSelectionHandleControls).getHandleAnchor(args[1] as TextSelectionHandleType, args[2] as double),
         'getHandleSize#1': (args) => (args[0] as TextSelectionHandleControls).getHandleSize(args[1] as double),
+        'hashCode#0': (args) => (args[0] as TextSelectionHandleControls).hashCode,
+        '==#1': (args) => (args[0] as TextSelectionHandleControls) == (args[1] as Object),
       };
 }

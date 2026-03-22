@@ -33,8 +33,11 @@ abstract final class WordBoundaryBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getTextBoundaryAt#1': (args) => (args[0] as WordBoundary).getTextBoundaryAt(args[1] as int),
+        'toString#0': (args) => (args[0] as WordBoundary).toString(),
         'getLeadingTextBoundaryAt#1': (args) => (args[0] as WordBoundary).getLeadingTextBoundaryAt(args[1] as int),
         'getTrailingTextBoundaryAt#1': (args) => (args[0] as WordBoundary).getTrailingTextBoundaryAt(args[1] as int),
         'moveByWordBoundary#0': (args) => (args[0] as WordBoundary).moveByWordBoundary,
+        'hashCode#0': (args) => (args[0] as WordBoundary).hashCode,
+        '==#1': (args) => (args[0] as WordBoundary) == (args[1] as Object),
       };
 }

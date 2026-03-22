@@ -34,6 +34,7 @@ abstract final class MagnifierBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as Magnifier).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as Magnifier).toString(),
         'createElement#0': (args) => (args[0] as Magnifier).createElement(),
         'toStringShort#0': (args) => (args[0] as Magnifier).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Magnifier).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class MagnifierBindings {
         'shadows#0': (args) => (args[0] as Magnifier).shadows,
         'clipBehavior#0': (args) => (args[0] as Magnifier).clipBehavior,
         'size#0': (args) => (args[0] as Magnifier).size,
+        'hashCode#0': (args) => (args[0] as Magnifier).hashCode,
         'key#0': (args) => (args[0] as Magnifier).key,
+        '==#1': (args) => (args[0] as Magnifier) == (args[1] as Object),
         '#7': (args) {
           if (identical(args[2], darticAbsent)) {
             return Magnifier(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, additionalFocalPointOffset: identical(args[1], darticAbsent) ? Offset.zero : args[1] as Offset, filmColor: identical(args[3], darticAbsent) ? const Color.fromARGB(8, 158, 158, 158) : args[3] as Color, shadows: identical(args[4], darticAbsent) ? const <BoxShadow>[BoxShadow(blurRadius: 1.5, offset: Offset(0.0, 2.0), spreadRadius: 0.75, color: Color.fromARGB(25, 0, 0, 0))] : (args[4] as List).cast<BoxShadow>(), clipBehavior: identical(args[5], darticAbsent) ? Clip.hardEdge : args[5] as Clip, size: identical(args[6], darticAbsent) ? Magnifier.kDefaultMagnifierSize : args[6] as Size);

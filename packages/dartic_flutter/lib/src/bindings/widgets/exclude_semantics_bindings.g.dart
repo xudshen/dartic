@@ -40,6 +40,7 @@ abstract final class ExcludeSemanticsBindings {
         'createRenderObject#1': (args) => (args[0] as ExcludeSemantics).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as ExcludeSemantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderExcludeSemantics); return null; },
         'debugFillProperties#1': (args) { (args[0] as ExcludeSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ExcludeSemantics).toString(),
         'createElement#0': (args) => (args[0] as ExcludeSemantics).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as ExcludeSemantics).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as ExcludeSemantics).toStringShort(),
@@ -48,8 +49,10 @@ abstract final class ExcludeSemanticsBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as ExcludeSemantics).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as ExcludeSemantics).debugDescribeChildren(),
         'excluding#0': (args) => (args[0] as ExcludeSemantics).excluding,
+        'hashCode#0': (args) => (args[0] as ExcludeSemantics).hashCode,
         'child#0': (args) => (args[0] as ExcludeSemantics).child,
         'key#0': (args) => (args[0] as ExcludeSemantics).key,
+        '==#1': (args) => (args[0] as ExcludeSemantics) == (args[1] as Object),
         '#3': (args) => ExcludeSemantics(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, excluding: identical(args[1], darticAbsent) ? true : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => ExcludeSemantics(key: args[2] as Key?, excluding: args[1] as bool, child: args[0] as Widget?),
       };

@@ -34,12 +34,15 @@ abstract final class RestorationManagerBindings {
         'unscheduleSerializationFor#1': (args) { (args[0] as RestorationManager).unscheduleSerializationFor(args[1] as RestorationBucket); return null; },
         'flushData#0': (args) { (args[0] as RestorationManager).flushData(); return null; },
         'dispose#0': (args) { (args[0] as RestorationManager).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorationManager).toString(),
         'addListener#1': (args) { (args[0] as RestorationManager).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorationManager).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorationManager).notifyListeners(); return null; },
         'rootBucket#0': (args) => (args[0] as RestorationManager).rootBucket,
         'isReplacing#0': (args) => (args[0] as RestorationManager).isReplacing,
+        'hashCode#0': (args) => (args[0] as RestorationManager).hashCode,
         'hasListeners#0': (args) => (args[0] as RestorationManager).hasListeners,
+        '==#1': (args) => (args[0] as RestorationManager) == (args[1] as Object),
         '#0': (args) => RestorationManager(),
       };
 }

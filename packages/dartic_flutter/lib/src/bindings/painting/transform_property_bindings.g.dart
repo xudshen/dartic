@@ -25,6 +25,7 @@ abstract final class TransformPropertyBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'valueToString#1': (args) => (args[0] as TransformProperty).valueToString(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
+        'toString#0': (args) => (args[0] as TransformProperty).toString(),
         'toJsonMap#1': (args) => (args[0] as TransformProperty).toJsonMap(args[1] as DiagnosticsSerializationDelegate),
         'toDescription#1': (args) => (args[0] as TransformProperty).toDescription(parentConfiguration: identical(args[1], darticAbsent) ? null : args[1] as TextTreeConfiguration?),
         'getProperties#0': (args) => (args[0] as TransformProperty).getProperties(),
@@ -33,6 +34,7 @@ abstract final class TransformPropertyBindings {
         'toTimelineArguments#0': (args) => (args[0] as TransformProperty).toTimelineArguments(),
         'toJsonMapIterative#1': (args) => (args[0] as TransformProperty).toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate),
         'toStringDeep#5': (args) => (args[0] as TransformProperty).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int),
+        'hashCode#0': (args) => (args[0] as TransformProperty).hashCode,
         'expandableValue#0': (args) => (args[0] as TransformProperty).expandableValue,
         'allowWrap#0': (args) => (args[0] as TransformProperty).allowWrap,
         'allowNameWrap#0': (args) => (args[0] as TransformProperty).allowNameWrap,
@@ -54,6 +56,7 @@ abstract final class TransformPropertyBindings {
         'style#0': (args) => (args[0] as TransformProperty).style,
         'allowTruncate#0': (args) => (args[0] as TransformProperty).allowTruncate,
         'textTreeConfiguration#0': (args) => (args[0] as TransformProperty).textTreeConfiguration,
+        '==#1': (args) => (args[0] as TransformProperty) == (args[1] as Object),
         '#5': (args) => TransformProperty(args[0] as String, args[1] as Matrix4?, showName: identical(args[2], darticAbsent) ? true : args[2] as bool, defaultValue: identical(args[3], darticAbsent) ? null : args[3], level: identical(args[4], darticAbsent) ? DiagnosticLevel.info : args[4] as DiagnosticLevel),
       };
 }

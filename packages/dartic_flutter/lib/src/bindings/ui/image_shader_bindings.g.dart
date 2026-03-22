@@ -31,7 +31,10 @@ abstract final class ImageShaderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'dispose#0': (args) { (args[0] as ImageShader).dispose(); return null; },
+        'toString#0': (args) => (args[0] as ImageShader).toString(),
+        'hashCode#0': (args) => (args[0] as ImageShader).hashCode,
         'debugDisposed#0': (args) => (args[0] as ImageShader).debugDisposed,
+        '==#1': (args) => (args[0] as ImageShader) == (args[1] as Object),
         '#5': (args) => ImageShader(args[0] as Image, args[1] as TileMode, args[2] as TileMode, args[3] as Float64List, filterQuality: identical(args[4], darticAbsent) ? null : args[4] as FilterQuality?),
       };
 }

@@ -24,5 +24,8 @@ abstract final class SpellCheckServiceBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'fetchSpellCheckSuggestions#2': (args) => (args[0] as SpellCheckService).fetchSpellCheckSuggestions(args[1] as Locale, args[2] as String),
+        'toString#0': (args) => (args[0] as SpellCheckService).toString(),
+        'hashCode#0': (args) => (args[0] as SpellCheckService).hashCode,
+        '==#1': (args) => (args[0] as SpellCheckService) == (args[1] as Object),
       };
 }

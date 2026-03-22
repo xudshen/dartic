@@ -35,6 +35,7 @@ abstract final class StatelessElementBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#0': (args) => (args[0] as StatelessElement).build(),
         'update#1': (args) { (args[0] as StatelessElement).update(args[1] as StatelessWidget); return null; },
+        'toString#0': (args) => (args[0] as StatelessElement).toString(),
         'mount#2': (args) { (args[0] as StatelessElement).mount(args[1] as Element?, args[2]); return null; },
         'performRebuild#0': (args) { (args[0] as StatelessElement).performRebuild(); return null; },
         'visitChildren#1': (args) { (args[0] as StatelessElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
@@ -83,6 +84,7 @@ abstract final class StatelessElementBindings {
         'rebuild#1': (args) { (args[0] as StatelessElement).rebuild(force: identical(args[1], darticAbsent) ? false : args[1] as bool); return null; },
         'toStringShallow#2': (args) => (args[0] as StatelessElement).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
         'toStringDeep#4': (args) => (args[0] as StatelessElement).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
+        'hashCode#0': (args) => (args[0] as StatelessElement).hashCode,
         'debugDoingBuild#0': (args) => (args[0] as StatelessElement).debugDoingBuild,
         'renderObjectAttachingChild#0': (args) => (args[0] as StatelessElement).renderObjectAttachingChild,
         'slot#0': (args) => (args[0] as StatelessElement).slot,
@@ -96,6 +98,7 @@ abstract final class StatelessElementBindings {
         'renderObject#0': (args) => (args[0] as StatelessElement).renderObject,
         'size#0': (args) => (args[0] as StatelessElement).size,
         'dirty#0': (args) => (args[0] as StatelessElement).dirty,
+        '==#1': (args) => (args[0] as StatelessElement) == (args[1] as Object),
         '#1': (args) => StatelessElement(args[0] as StatelessWidget),
       };
 }

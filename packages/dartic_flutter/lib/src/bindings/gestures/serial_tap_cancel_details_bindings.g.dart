@@ -32,9 +32,12 @@ abstract final class SerialTapCancelDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as SerialTapCancelDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SerialTapCancelDetails).toString(),
         'toStringShort#0': (args) => (args[0] as SerialTapCancelDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as SerialTapCancelDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'count#0': (args) => (args[0] as SerialTapCancelDetails).count,
+        'hashCode#0': (args) => (args[0] as SerialTapCancelDetails).hashCode,
+        '==#1': (args) => (args[0] as SerialTapCancelDetails) == (args[1] as Object),
         '#1': (args) => SerialTapCancelDetails(count: identical(args[0], darticAbsent) ? 1 : args[0] as int),
       };
 }

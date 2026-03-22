@@ -29,6 +29,7 @@ abstract final class ScaleUpdateDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as ScaleUpdateDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ScaleUpdateDetails).toString(),
         'toStringShort#0': (args) => (args[0] as ScaleUpdateDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as ScaleUpdateDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'focalPointDelta#0': (args) => (args[0] as ScaleUpdateDetails).focalPointDelta,
@@ -40,6 +41,8 @@ abstract final class ScaleUpdateDetailsBindings {
         'rotation#0': (args) => (args[0] as ScaleUpdateDetails).rotation,
         'pointerCount#0': (args) => (args[0] as ScaleUpdateDetails).pointerCount,
         'sourceTimeStamp#0': (args) => (args[0] as ScaleUpdateDetails).sourceTimeStamp,
+        'hashCode#0': (args) => (args[0] as ScaleUpdateDetails).hashCode,
+        '==#1': (args) => (args[0] as ScaleUpdateDetails) == (args[1] as Object),
         '#9': (args) => ScaleUpdateDetails(focalPoint: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localFocalPoint: identical(args[1], darticAbsent) ? null : args[1] as Offset?, scale: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, horizontalScale: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, verticalScale: identical(args[4], darticAbsent) ? 1.0 : args[4] as double, rotation: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, pointerCount: identical(args[6], darticAbsent) ? 0 : args[6] as int, focalPointDelta: identical(args[7], darticAbsent) ? Offset.zero : args[7] as Offset, sourceTimeStamp: identical(args[8], darticAbsent) ? null : args[8] as Duration?),
       };
 }

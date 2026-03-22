@@ -37,6 +37,7 @@ abstract final class RawGestureDetectorStateBindings {
         'dispose#0': (args) { (args[0] as RawGestureDetectorState).dispose(); return null; },
         'build#1': (args) => (args[0] as RawGestureDetectorState).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as RawGestureDetectorState).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawGestureDetectorState).toString(),
         'reassemble#0': (args) { (args[0] as RawGestureDetectorState).reassemble(); return null; },
         'setState#1': (args) { (args[0] as RawGestureDetectorState).setState(() => (args[1] as Function)()); return null; },
         'deactivate#0': (args) { (args[0] as RawGestureDetectorState).deactivate(); return null; },
@@ -44,9 +45,11 @@ abstract final class RawGestureDetectorStateBindings {
         'didChangeDependencies#0': (args) { (args[0] as RawGestureDetectorState).didChangeDependencies(); return null; },
         'toStringShort#0': (args) => (args[0] as RawGestureDetectorState).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawGestureDetectorState).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as RawGestureDetectorState).hashCode,
         'widget#0': (args) => (args[0] as RawGestureDetectorState).widget,
         'context#0': (args) => (args[0] as RawGestureDetectorState).context,
         'mounted#0': (args) => (args[0] as RawGestureDetectorState).mounted,
+        '==#1': (args) => (args[0] as RawGestureDetectorState) == (args[1] as Object),
         '#0': (args) => RawGestureDetectorState(),
       };
 }

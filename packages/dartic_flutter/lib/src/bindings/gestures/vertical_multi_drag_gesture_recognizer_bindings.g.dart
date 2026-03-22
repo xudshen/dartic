@@ -35,6 +35,7 @@ abstract final class VerticalMultiDragGestureRecognizerBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createNewPointerState#1': (args) => (args[0] as VerticalMultiDragGestureRecognizer).createNewPointerState(args[1] as PointerDownEvent),
+        'toString#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).toString(),
         'addAllowedPointer#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).addAllowedPointer(args[1] as PointerDownEvent); return null; },
         'acceptGesture#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
@@ -55,6 +56,7 @@ abstract final class VerticalMultiDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as VerticalMultiDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).debugDescribeChildren(),
         'debugDescription#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).debugDescription,
+        'hashCode#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).hashCode,
         'onStart#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).onStart,
         'debugOwner#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as VerticalMultiDragGestureRecognizer).gestureSettings,
@@ -63,6 +65,7 @@ abstract final class VerticalMultiDragGestureRecognizerBindings {
         'onStart=#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as VerticalMultiDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as VerticalMultiDragGestureRecognizer) == (args[1] as Object),
         '#3': (args) => VerticalMultiDragGestureRecognizer(debugOwner: identical(args[0], darticAbsent) ? null : args[0], supportedDevices: identical(args[1], darticAbsent) ? null : args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(), allowedButtonsFilter: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)),
       };
 }

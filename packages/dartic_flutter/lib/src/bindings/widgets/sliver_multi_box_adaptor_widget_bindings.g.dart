@@ -37,6 +37,7 @@ abstract final class SliverMultiBoxAdaptorWidgetBindings {
         'createRenderObject#1': (args) => (args[0] as SliverMultiBoxAdaptorWidget).createRenderObject(args[1] as BuildContext),
         'estimateMaxScrollOffset#5': (args) => (args[0] as SliverMultiBoxAdaptorWidget).estimateMaxScrollOffset(args[1] as SliverConstraints?, args[2] as int, args[3] as int, args[4] as double, args[5] as double),
         'debugFillProperties#1': (args) { (args[0] as SliverMultiBoxAdaptorWidget).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).toString(),
         'updateRenderObject#2': (args) { (args[0] as SliverMultiBoxAdaptorWidget).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'didUnmountRenderObject#1': (args) { (args[0] as SliverMultiBoxAdaptorWidget).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).toStringShort(),
@@ -45,6 +46,8 @@ abstract final class SliverMultiBoxAdaptorWidgetBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverMultiBoxAdaptorWidget).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).debugDescribeChildren(),
         'delegate#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).delegate,
+        'hashCode#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).hashCode,
         'key#0': (args) => (args[0] as SliverMultiBoxAdaptorWidget).key,
+        '==#1': (args) => (args[0] as SliverMultiBoxAdaptorWidget) == (args[1] as Object),
       };
 }

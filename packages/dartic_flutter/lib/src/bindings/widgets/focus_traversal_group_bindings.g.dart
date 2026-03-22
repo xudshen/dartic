@@ -35,6 +35,7 @@ abstract final class FocusTraversalGroupBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as FocusTraversalGroup).createState(),
         'debugFillProperties#1': (args) { (args[0] as FocusTraversalGroup).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as FocusTraversalGroup).toString(),
         'createElement#0': (args) => (args[0] as FocusTraversalGroup).createElement(),
         'toStringShort#0': (args) => (args[0] as FocusTraversalGroup).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as FocusTraversalGroup).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -46,7 +47,9 @@ abstract final class FocusTraversalGroupBindings {
         'descendantsAreTraversable#0': (args) => (args[0] as FocusTraversalGroup).descendantsAreTraversable,
         'child#0': (args) => (args[0] as FocusTraversalGroup).child,
         'onFocusNodeCreated#0': (args) => (args[0] as FocusTraversalGroup).onFocusNodeCreated,
+        'hashCode#0': (args) => (args[0] as FocusTraversalGroup).hashCode,
         'key#0': (args) => (args[0] as FocusTraversalGroup).key,
+        '==#1': (args) => (args[0] as FocusTraversalGroup) == (args[1] as Object),
         '#6': (args) => FocusTraversalGroup(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, policy: identical(args[1], darticAbsent) ? null : args[1] as FocusTraversalPolicy?, descendantsAreFocusable: identical(args[2], darticAbsent) ? true : args[2] as bool, descendantsAreTraversable: identical(args[3], darticAbsent) ? true : args[3] as bool, onFocusNodeCreated: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a) => (args[4] as Function?)!(a), child: args[5] as Widget),
       };
 }

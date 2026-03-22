@@ -35,6 +35,7 @@ abstract final class PlatformMenuItemBindings {
         'toChannelRepresentation#2': (args) => (args[0] as PlatformMenuItem).toChannelRepresentation(args[1] as PlatformMenuDelegate, getId: (a) => (args[2] as Function)(a) as int),
         'toStringShort#0': (args) => (args[0] as PlatformMenuItem).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as PlatformMenuItem).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as PlatformMenuItem).toString(),
         'toDiagnosticsNode#2': (args) => (args[0] as PlatformMenuItem).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'label#0': (args) => (args[0] as PlatformMenuItem).label,
         'shortcut#0': (args) => (args[0] as PlatformMenuItem).shortcut,
@@ -44,6 +45,8 @@ abstract final class PlatformMenuItemBindings {
         'onSelectedIntent#0': (args) => (args[0] as PlatformMenuItem).onSelectedIntent,
         'descendants#0': (args) => (args[0] as PlatformMenuItem).descendants,
         'members#0': (args) => (args[0] as PlatformMenuItem).members,
+        'hashCode#0': (args) => (args[0] as PlatformMenuItem).hashCode,
+        '==#1': (args) => (args[0] as PlatformMenuItem) == (args[1] as Object),
         '#4': (args) => PlatformMenuItem(label: args[0] as String, shortcut: identical(args[1], darticAbsent) ? null : args[1] as MenuSerializableShortcut?, onSelected: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onSelectedIntent: identical(args[3], darticAbsent) ? null : args[3] as Intent?),
         '_#fromFields#4': (args) => PlatformMenuItem(label: args[0] as String, shortcut: args[3] as MenuSerializableShortcut?, onSelected: args[1] as VoidCallback?, onSelectedIntent: args[2] as Intent?),
       };

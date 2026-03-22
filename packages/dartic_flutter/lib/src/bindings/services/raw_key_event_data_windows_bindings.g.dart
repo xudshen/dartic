@@ -44,6 +44,7 @@ abstract final class RawKeyEventDataWindowsBindings {
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataWindows).getModifierSide(args[1] as ModifierKey),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataWindows).shouldDispatchEvent(),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataWindows).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataWindows).toString(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataWindows).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataWindows).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'keyCode#0': (args) => (args[0] as RawKeyEventDataWindows).keyCode,
@@ -59,6 +60,7 @@ abstract final class RawKeyEventDataWindowsBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataWindows).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataWindows).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataWindows).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataWindows) == (args[1] as Object),
         '#4': (args) => RawKeyEventDataWindows(keyCode: identical(args[0], darticAbsent) ? 0 : args[0] as int, scanCode: identical(args[1], darticAbsent) ? 0 : args[1] as int, characterCodePoint: identical(args[2], darticAbsent) ? 0 : args[2] as int, modifiers: identical(args[3], darticAbsent) ? 0 : args[3] as int),
         '_#fromFields#4': (args) => RawKeyEventDataWindows(keyCode: args[1] as int, scanCode: args[3] as int, characterCodePoint: args[0] as int, modifiers: args[2] as int),
       };

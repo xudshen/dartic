@@ -28,7 +28,10 @@ abstract final class AccumulatorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'increment#1': (args) { (args[0] as Accumulator).increment(args[1] as int); return null; },
+        'toString#0': (args) => (args[0] as Accumulator).toString(),
         'value#0': (args) => (args[0] as Accumulator).value,
+        'hashCode#0': (args) => (args[0] as Accumulator).hashCode,
+        '==#1': (args) => (args[0] as Accumulator) == (args[1] as Object),
         '#1': (args) => Accumulator(identical(args[0], darticAbsent) ? 0 : args[0] as int),
       };
 }

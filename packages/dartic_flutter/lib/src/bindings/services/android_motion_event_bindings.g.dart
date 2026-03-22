@@ -41,6 +41,8 @@ abstract final class AndroidMotionEventBindings {
         'source#0': (args) => (args[0] as AndroidMotionEvent).source,
         'flags#0': (args) => (args[0] as AndroidMotionEvent).flags,
         'motionEventId#0': (args) => (args[0] as AndroidMotionEvent).motionEventId,
+        'hashCode#0': (args) => (args[0] as AndroidMotionEvent).hashCode,
+        '==#1': (args) => (args[0] as AndroidMotionEvent) == (args[1] as Object),
         '#15': (args) => AndroidMotionEvent(downTime: args[0] as int, eventTime: args[1] as int, action: args[2] as int, pointerCount: args[3] as int, pointerProperties: (args[4] as List).cast<AndroidPointerProperties>(), pointerCoords: (args[5] as List).cast<AndroidPointerCoords>(), metaState: args[6] as int, buttonState: args[7] as int, xPrecision: args[8] as double, yPrecision: args[9] as double, deviceId: args[10] as int, edgeFlags: args[11] as int, source: args[12] as int, flags: args[13] as int, motionEventId: args[14] as int),
       };
 }

@@ -33,6 +33,9 @@ abstract final class TraversalDirectionBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as TraversalDirection).toString(),
+        'hashCode#0': (args) => (args[0] as TraversalDirection).hashCode,
         'index#0': (args) => (args[0] as TraversalDirection).index,
+        '==#1': (args) => (args[0] as TraversalDirection) == (args[1] as Object),
       };
 }

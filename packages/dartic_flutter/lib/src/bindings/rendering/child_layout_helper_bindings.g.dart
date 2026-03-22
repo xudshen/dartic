@@ -25,5 +25,8 @@ abstract final class ChildLayoutHelperBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as ChildLayoutHelper).toString(),
+        'hashCode#0': (args) => (args[0] as ChildLayoutHelper).hashCode,
+        '==#1': (args) => (args[0] as ChildLayoutHelper) == (args[1] as Object),
       };
 }

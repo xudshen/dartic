@@ -29,12 +29,35 @@ abstract final class SemanticsActionEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'copyWith#4': (args) => (args[0] as SemanticsActionEvent).copyWith(type: identical(args[1], darticAbsent) ? null : args[1] as SemanticsAction?, viewId: identical(args[2], darticAbsent) ? null : args[2] as int?, nodeId: identical(args[3], darticAbsent) ? null : args[3] as int?, arguments: identical(args[4], darticAbsent) ? null : args[4]),
+        'toString#0': (args) => (args[0] as SemanticsActionEvent).toString(),
         'type#0': (args) => (args[0] as SemanticsActionEvent).type,
         'viewId#0': (args) => (args[0] as SemanticsActionEvent).viewId,
         'nodeId#0': (args) => (args[0] as SemanticsActionEvent).nodeId,
         'arguments#0': (args) => (args[0] as SemanticsActionEvent).arguments,
+        'hashCode#0': (args) => (args[0] as SemanticsActionEvent).hashCode,
+        '==#1': (args) => (args[0] as SemanticsActionEvent) == (args[1] as Object),
         '#4': (args) => SemanticsActionEvent(type: args[0] as SemanticsAction, viewId: args[1] as int, nodeId: args[2] as int, arguments: identical(args[3], darticAbsent) ? null : args[3]),
         '_#fromFields#4': (args) => SemanticsActionEvent(type: args[2] as SemanticsAction, viewId: args[3] as int, nodeId: args[1] as int, arguments: args[0]),
+        'copyWith#4': (args) {
+            final self = args[0] as SemanticsActionEvent;
+            final type = identical(args[1], darticAbsent)
+                ? null
+                : args[1] as SemanticsAction?;
+            final viewId = identical(args[2], darticAbsent)
+                ? null
+                : args[2] as int?;
+            final nodeId = identical(args[3], darticAbsent)
+                ? null
+                : args[3] as int?;
+            if (identical(args[4], darticAbsent)) {
+              return self.copyWith(
+                  type: type, viewId: viewId, nodeId: nodeId);
+            }
+            return self.copyWith(
+                type: type,
+                viewId: viewId,
+                nodeId: nodeId,
+                arguments: args[4]);
+        },
       };
 }

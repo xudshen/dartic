@@ -28,11 +28,14 @@ abstract final class SliverGridDelegateWithFixedCrossAxisCountBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getLayout#1': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).getLayout(args[1] as SliverConstraints),
         'shouldRelayout#1': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).shouldRelayout(args[1] as SliverGridDelegateWithFixedCrossAxisCount),
+        'toString#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).toString(),
         'crossAxisCount#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).crossAxisCount,
         'mainAxisSpacing#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).mainAxisSpacing,
         'crossAxisSpacing#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).crossAxisSpacing,
         'childAspectRatio#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).childAspectRatio,
         'mainAxisExtent#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).mainAxisExtent,
+        'hashCode#0': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount).hashCode,
+        '==#1': (args) => (args[0] as SliverGridDelegateWithFixedCrossAxisCount) == (args[1] as Object),
         '#5': (args) => SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: args[0] as int, mainAxisSpacing: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, crossAxisSpacing: identical(args[2], darticAbsent) ? 0.0 : args[2] as double, childAspectRatio: identical(args[3], darticAbsent) ? 1.0 : args[3] as double, mainAxisExtent: identical(args[4], darticAbsent) ? null : args[4] as double?),
         '_#fromFields#5': (args) => SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: args[1] as int, mainAxisSpacing: args[4] as double, crossAxisSpacing: args[2] as double, childAspectRatio: args[0] as double, mainAxisExtent: args[3] as double?),
       };

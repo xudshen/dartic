@@ -29,6 +29,7 @@ abstract final class DesktopTextSelectionToolbarBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as DesktopTextSelectionToolbar).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as DesktopTextSelectionToolbar).toString(),
         'createElement#0': (args) => (args[0] as DesktopTextSelectionToolbar).createElement(),
         'toStringShort#0': (args) => (args[0] as DesktopTextSelectionToolbar).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as DesktopTextSelectionToolbar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,7 +39,9 @@ abstract final class DesktopTextSelectionToolbarBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DesktopTextSelectionToolbar).debugDescribeChildren(),
         'anchor#0': (args) => (args[0] as DesktopTextSelectionToolbar).anchor,
         'children#0': (args) => (args[0] as DesktopTextSelectionToolbar).children,
+        'hashCode#0': (args) => (args[0] as DesktopTextSelectionToolbar).hashCode,
         'key#0': (args) => (args[0] as DesktopTextSelectionToolbar).key,
+        '==#1': (args) => (args[0] as DesktopTextSelectionToolbar) == (args[1] as Object),
         '#3': (args) => DesktopTextSelectionToolbar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, anchor: args[1] as Offset, children: (args[2] as List).cast<Widget>()),
         '_#fromFields#3': (args) => DesktopTextSelectionToolbar(key: args[2] as Key?, anchor: args[0] as Offset, children: (args[1] as List).cast<Widget>()),
       };

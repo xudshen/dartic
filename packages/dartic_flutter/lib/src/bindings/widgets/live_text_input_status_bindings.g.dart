@@ -48,6 +48,9 @@ abstract final class LiveTextInputStatusBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as LiveTextInputStatus).toString(),
+        'hashCode#0': (args) => (args[0] as LiveTextInputStatus).hashCode,
         'index#0': (args) => (args[0] as LiveTextInputStatus).index,
+        '==#1': (args) => (args[0] as LiveTextInputStatus) == (args[1] as Object),
       };
 }

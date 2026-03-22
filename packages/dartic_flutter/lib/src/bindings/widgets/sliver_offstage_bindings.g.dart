@@ -36,6 +36,7 @@ abstract final class SliverOffstageBindings {
         'updateRenderObject#2': (args) { (args[0] as SliverOffstage).updateRenderObject(args[1] as BuildContext, args[2] as RenderSliverOffstage); return null; },
         'debugFillProperties#1': (args) { (args[0] as SliverOffstage).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'createElement#0': (args) => (args[0] as SliverOffstage).createElement(),
+        'toString#0': (args) => (args[0] as SliverOffstage).toString(),
         'didUnmountRenderObject#1': (args) { (args[0] as SliverOffstage).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as SliverOffstage).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as SliverOffstage).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -43,8 +44,10 @@ abstract final class SliverOffstageBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as SliverOffstage).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as SliverOffstage).debugDescribeChildren(),
         'offstage#0': (args) => (args[0] as SliverOffstage).offstage,
+        'hashCode#0': (args) => (args[0] as SliverOffstage).hashCode,
         'child#0': (args) => (args[0] as SliverOffstage).child,
         'key#0': (args) => (args[0] as SliverOffstage).key,
+        '==#1': (args) => (args[0] as SliverOffstage) == (args[1] as Object),
         '#3': (args) => SliverOffstage(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, offstage: identical(args[1], darticAbsent) ? true : args[1] as bool, sliver: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => SliverOffstage(key: args[1] as Key?, offstage: args[2] as bool, sliver: args[0] as Widget?),
       };

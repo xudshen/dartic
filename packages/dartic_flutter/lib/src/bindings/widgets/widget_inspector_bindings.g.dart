@@ -41,6 +41,7 @@ abstract final class WidgetInspectorBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as WidgetInspector).createState(),
+        'toString#0': (args) => (args[0] as WidgetInspector).toString(),
         'createElement#0': (args) => (args[0] as WidgetInspector).createElement(),
         'toStringShort#0': (args) => (args[0] as WidgetInspector).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as WidgetInspector).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -52,7 +53,9 @@ abstract final class WidgetInspectorBindings {
         'exitWidgetSelectionButtonBuilder#0': (args) => (args[0] as WidgetInspector).exitWidgetSelectionButtonBuilder,
         'moveExitWidgetSelectionButtonBuilder#0': (args) => (args[0] as WidgetInspector).moveExitWidgetSelectionButtonBuilder,
         'tapBehaviorButtonBuilder#0': (args) => (args[0] as WidgetInspector).tapBehaviorButtonBuilder,
+        'hashCode#0': (args) => (args[0] as WidgetInspector).hashCode,
         'key#0': (args) => (args[0] as WidgetInspector).key,
+        '==#1': (args) => (args[0] as WidgetInspector) == (args[1] as Object),
         '#5': (args) => WidgetInspector(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: args[1] as Widget, tapBehaviorButtonBuilder: (args[2] as Function?) == null ? null : (a, {required ui.VoidCallback onPressed, required bool selectionOnTapEnabled, required String semanticsLabel}) => (args[2] as Function?)!(a, onPressed: onPressed, selectionOnTapEnabled: selectionOnTapEnabled, semanticsLabel: semanticsLabel), exitWidgetSelectionButtonBuilder: (args[3] as Function?) == null ? null : (a, {required GlobalKey<State<StatefulWidget>> key, required ui.VoidCallback onPressed, required String semanticsLabel}) => (args[3] as Function?)!(a, key: key, onPressed: onPressed, semanticsLabel: semanticsLabel), moveExitWidgetSelectionButtonBuilder: (args[4] as Function?) == null ? null : (a, {required ui.VoidCallback onPressed, required String semanticsLabel, bool? usesDefaultAlignment}) => (args[4] as Function?)!(a, onPressed: onPressed, semanticsLabel: semanticsLabel, usesDefaultAlignment: usesDefaultAlignment)),
         '_#fromFields#5': (args) => WidgetInspector(key: args[2] as Key?, child: args[0] as Widget, tapBehaviorButtonBuilder: args[4] as TapBehaviorButtonBuilder?, exitWidgetSelectionButtonBuilder: args[1] as ExitWidgetSelectionButtonBuilder?, moveExitWidgetSelectionButtonBuilder: args[3] as MoveExitWidgetSelectionButtonBuilder?),
       };

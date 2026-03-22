@@ -26,15 +26,18 @@ abstract final class ReverseTweenBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'lerp#1': (args) => (args[0] as ReverseTween).lerp(args[1] as double),
+        'toString#0': (args) => (args[0] as ReverseTween).toString(),
         'transform#1': (args) => (args[0] as ReverseTween).transform(args[1] as double),
         'evaluate#1': (args) => (args[0] as ReverseTween).evaluate(args[1] as Animation<double>),
         'animate#1': (args) => (args[0] as ReverseTween).animate(args[1] as Animation<double>),
         'chain#1': (args) => (args[0] as ReverseTween).chain(args[1] as Animatable<double>),
         'parent#0': (args) => (args[0] as ReverseTween).parent,
+        'hashCode#0': (args) => (args[0] as ReverseTween).hashCode,
         'begin#0': (args) => (args[0] as ReverseTween).begin,
         'end#0': (args) => (args[0] as ReverseTween).end,
         'begin=#1': (args) { (args[0] as ReverseTween).begin = args[1]; return args[1]; },
         'end=#1': (args) { (args[0] as ReverseTween).end = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as ReverseTween) == (args[1] as Object),
         '#1': (args) => ReverseTween<Object?>(args[0] as Tween<Object>),
       };
 }

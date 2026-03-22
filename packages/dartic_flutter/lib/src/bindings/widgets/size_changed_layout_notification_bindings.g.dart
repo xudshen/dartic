@@ -23,8 +23,11 @@ abstract final class SizeChangedLayoutNotificationBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as SizeChangedLayoutNotification).toString(),
         'dispatch#1': (args) { (args[0] as SizeChangedLayoutNotification).dispatch(args[1] as BuildContext?); return null; },
         'debugFillDescription#1': (args) { (args[0] as SizeChangedLayoutNotification).debugFillDescription((args[1] as List).cast<String>()); return null; },
+        'hashCode#0': (args) => (args[0] as SizeChangedLayoutNotification).hashCode,
+        '==#1': (args) => (args[0] as SizeChangedLayoutNotification) == (args[1] as Object),
         '#0': (args) => SizeChangedLayoutNotification(),
         '_#fromFields#0': (args) => SizeChangedLayoutNotification(),
       };

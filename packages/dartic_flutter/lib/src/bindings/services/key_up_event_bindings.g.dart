@@ -30,15 +30,18 @@ abstract final class KeyUpEventBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as KeyUpEvent).toString(),
         'debugFillProperties#1': (args) { (args[0] as KeyUpEvent).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as KeyUpEvent).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as KeyUpEvent).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as KeyUpEvent).hashCode,
         'physicalKey#0': (args) => (args[0] as KeyUpEvent).physicalKey,
         'logicalKey#0': (args) => (args[0] as KeyUpEvent).logicalKey,
         'character#0': (args) => (args[0] as KeyUpEvent).character,
         'timeStamp#0': (args) => (args[0] as KeyUpEvent).timeStamp,
         'deviceType#0': (args) => (args[0] as KeyUpEvent).deviceType,
         'synthesized#0': (args) => (args[0] as KeyUpEvent).synthesized,
+        '==#1': (args) => (args[0] as KeyUpEvent) == (args[1] as Object),
         '#5': (args) => KeyUpEvent(physicalKey: args[0] as PhysicalKeyboardKey, logicalKey: args[1] as LogicalKeyboardKey, timeStamp: args[2] as Duration, synthesized: identical(args[3], darticAbsent) ? false : args[3] as bool, deviceType: identical(args[4], darticAbsent) ? ui.KeyEventDeviceType.keyboard : args[4] as ui.KeyEventDeviceType),
         '_#fromFields#6': (args) => KeyUpEvent(physicalKey: args[3] as PhysicalKeyboardKey, logicalKey: args[2] as LogicalKeyboardKey, timeStamp: args[5] as Duration, synthesized: args[4] as bool, deviceType: args[1] as ui.KeyEventDeviceType),
       };

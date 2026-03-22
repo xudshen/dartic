@@ -38,6 +38,7 @@ abstract final class BorderSideBindings {
         'toPaint#0': (args) => (args[0] as BorderSide).toPaint(),
         'toStringShort#0': (args) => (args[0] as BorderSide).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as BorderSide).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BorderSide).toString(),
         'toDiagnosticsNode#2': (args) => (args[0] as BorderSide).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'color#0': (args) => (args[0] as BorderSide).color,
         'width#0': (args) => (args[0] as BorderSide).width,
@@ -47,6 +48,7 @@ abstract final class BorderSideBindings {
         'strokeOutset#0': (args) => (args[0] as BorderSide).strokeOutset,
         'strokeOffset#0': (args) => (args[0] as BorderSide).strokeOffset,
         'hashCode#0': (args) => (args[0] as BorderSide).hashCode,
+        '==#1': (args) => (args[0] as BorderSide) == (args[1] as Object),
         '#4': (args) => BorderSide(color: identical(args[0], darticAbsent) ? const Color(0xFF000000) : args[0] as ui.Color, width: identical(args[1], darticAbsent) ? 1.0 : args[1] as double, style: identical(args[2], darticAbsent) ? BorderStyle.solid : args[2] as BorderStyle, strokeAlign: identical(args[3], darticAbsent) ? BorderSide.strokeAlignInside : args[3] as double),
         '_#fromFields#4': (args) => BorderSide(color: args[0] as ui.Color, width: args[3] as double, style: args[2] as BorderStyle, strokeAlign: args[1] as double),
       };

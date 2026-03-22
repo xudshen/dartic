@@ -29,11 +29,14 @@ abstract final class TapDownDetailsBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugFillProperties#1': (args) { (args[0] as TapDownDetails).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as TapDownDetails).toString(),
         'toStringShort#0': (args) => (args[0] as TapDownDetails).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as TapDownDetails).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'globalPosition#0': (args) => (args[0] as TapDownDetails).globalPosition,
         'localPosition#0': (args) => (args[0] as TapDownDetails).localPosition,
         'kind#0': (args) => (args[0] as TapDownDetails).kind,
+        'hashCode#0': (args) => (args[0] as TapDownDetails).hashCode,
+        '==#1': (args) => (args[0] as TapDownDetails) == (args[1] as Object),
         '#3': (args) => TapDownDetails(globalPosition: identical(args[0], darticAbsent) ? Offset.zero : args[0] as Offset, localPosition: identical(args[1], darticAbsent) ? null : args[1] as Offset?, kind: identical(args[2], darticAbsent) ? null : args[2] as PointerDeviceKind?),
       };
 }

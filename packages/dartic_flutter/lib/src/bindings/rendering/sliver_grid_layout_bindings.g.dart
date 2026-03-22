@@ -29,5 +29,8 @@ abstract final class SliverGridLayoutBindings {
         'getMaxChildIndexForScrollOffset#1': (args) => (args[0] as SliverGridLayout).getMaxChildIndexForScrollOffset(args[1] as double),
         'getGeometryForChildIndex#1': (args) => (args[0] as SliverGridLayout).getGeometryForChildIndex(args[1] as int),
         'computeMaxScrollOffset#1': (args) => (args[0] as SliverGridLayout).computeMaxScrollOffset(args[1] as int),
+        'toString#0': (args) => (args[0] as SliverGridLayout).toString(),
+        'hashCode#0': (args) => (args[0] as SliverGridLayout).hashCode,
+        '==#1': (args) => (args[0] as SliverGridLayout) == (args[1] as Object),
       };
 }

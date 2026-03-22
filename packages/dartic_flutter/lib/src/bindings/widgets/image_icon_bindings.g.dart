@@ -35,6 +35,7 @@ abstract final class ImageIconBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as ImageIcon).build(args[1] as BuildContext),
         'debugFillProperties#1': (args) { (args[0] as ImageIcon).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as ImageIcon).toString(),
         'createElement#0': (args) => (args[0] as ImageIcon).createElement(),
         'toStringShort#0': (args) => (args[0] as ImageIcon).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as ImageIcon).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -45,7 +46,9 @@ abstract final class ImageIconBindings {
         'size#0': (args) => (args[0] as ImageIcon).size,
         'color#0': (args) => (args[0] as ImageIcon).color,
         'semanticLabel#0': (args) => (args[0] as ImageIcon).semanticLabel,
+        'hashCode#0': (args) => (args[0] as ImageIcon).hashCode,
         'key#0': (args) => (args[0] as ImageIcon).key,
+        '==#1': (args) => (args[0] as ImageIcon) == (args[1] as Object),
         '#5': (args) => ImageIcon(args[0] as ImageProvider<Object>?, key: identical(args[1], darticAbsent) ? null : args[1] as Key?, size: identical(args[2], darticAbsent) ? null : args[2] as double?, color: identical(args[3], darticAbsent) ? null : args[3] as Color?, semanticLabel: identical(args[4], darticAbsent) ? null : args[4] as String?),
         '_#fromFields#5': (args) => ImageIcon(args[1] as ImageProvider<Object>?, key: args[2] as Key?, size: args[4] as double?, color: args[0] as Color?, semanticLabel: args[3] as String?),
       };

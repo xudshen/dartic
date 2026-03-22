@@ -48,6 +48,7 @@ abstract final class RestorableRouteFutureBindings {
         'toPrimitives#0': (args) => (args[0] as RestorableRouteFuture).toPrimitives(),
         'fromPrimitives#1': (args) => (args[0] as RestorableRouteFuture).fromPrimitives(args[1]),
         'dispose#0': (args) { (args[0] as RestorableRouteFuture).dispose(); return null; },
+        'toString#0': (args) => (args[0] as RestorableRouteFuture).toString(),
         'addListener#1': (args) { (args[0] as RestorableRouteFuture).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as RestorableRouteFuture).removeListener(() => (args[1] as Function)()); return null; },
         'notifyListeners#0': (args) { (args[0] as RestorableRouteFuture).notifyListeners(); return null; },
@@ -57,9 +58,11 @@ abstract final class RestorableRouteFutureBindings {
         'isPresent#0': (args) => (args[0] as RestorableRouteFuture).isPresent,
         'route#0': (args) => (args[0] as RestorableRouteFuture).route,
         'enabled#0': (args) => (args[0] as RestorableRouteFuture).enabled,
+        'hashCode#0': (args) => (args[0] as RestorableRouteFuture).hashCode,
         'state#0': (args) => (args[0] as RestorableRouteFuture).state,
         'isRegistered#0': (args) => (args[0] as RestorableRouteFuture).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableRouteFuture).hasListeners,
+        '==#1': (args) => (args[0] as RestorableRouteFuture) == (args[1] as Object),
         '#3': (args) {
           if (identical(args[0], darticAbsent)) {
             return RestorableRouteFuture<dynamic>(onPresent: (a, b) => (args[1] as Function)(a, b) as String, onComplete: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a));

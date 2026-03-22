@@ -45,5 +45,7 @@ abstract final class FontWeightBindings {
         'toString#0': (args) => (args[0] as FontWeight).toString(),
         'index#0': (args) => (args[0] as FontWeight).index,
         'value#0': (args) => (args[0] as FontWeight).value,
+        'hashCode#0': (args) => (args[0] as FontWeight).hashCode,
+        '==#1': (args) => (args[0] as FontWeight) == (args[1] as Object),
       };
 }

@@ -39,6 +39,7 @@ abstract final class MultiDragGestureRecognizerBindings {
         'acceptGesture#1': (args) { (args[0] as MultiDragGestureRecognizer).acceptGesture(args[1] as int); return null; },
         'rejectGesture#1': (args) { (args[0] as MultiDragGestureRecognizer).rejectGesture(args[1] as int); return null; },
         'dispose#0': (args) { (args[0] as MultiDragGestureRecognizer).dispose(); return null; },
+        'toString#0': (args) => (args[0] as MultiDragGestureRecognizer).toString(),
         'addPointerPanZoom#1': (args) { (args[0] as MultiDragGestureRecognizer).addPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addAllowedPointerPanZoom#1': (args) { (args[0] as MultiDragGestureRecognizer).addAllowedPointerPanZoom(args[1] as PointerPanZoomStartEvent); return null; },
         'addPointer#1': (args) { (args[0] as MultiDragGestureRecognizer).addPointer(args[1] as PointerDownEvent); return null; },
@@ -55,6 +56,7 @@ abstract final class MultiDragGestureRecognizerBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as MultiDragGestureRecognizer).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as MultiDragGestureRecognizer).debugDescribeChildren(),
         'onStart#0': (args) => (args[0] as MultiDragGestureRecognizer).onStart,
+        'hashCode#0': (args) => (args[0] as MultiDragGestureRecognizer).hashCode,
         'debugOwner#0': (args) => (args[0] as MultiDragGestureRecognizer).debugOwner,
         'gestureSettings#0': (args) => (args[0] as MultiDragGestureRecognizer).gestureSettings,
         'supportedDevices#0': (args) => (args[0] as MultiDragGestureRecognizer).supportedDevices,
@@ -63,5 +65,6 @@ abstract final class MultiDragGestureRecognizerBindings {
         'onStart=#1': (args) { (args[0] as MultiDragGestureRecognizer).onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; },
         'gestureSettings=#1': (args) { (args[0] as MultiDragGestureRecognizer).gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; },
         'supportedDevices=#1': (args) { (args[0] as MultiDragGestureRecognizer).supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; },
+        '==#1': (args) => (args[0] as MultiDragGestureRecognizer) == (args[1] as Object),
       };
 }

@@ -36,6 +36,7 @@ abstract final class MagnifierInfoBindings {
         'caretRect#0': (args) => (args[0] as MagnifierInfo).caretRect,
         'fieldBounds#0': (args) => (args[0] as MagnifierInfo).fieldBounds,
         'hashCode#0': (args) => (args[0] as MagnifierInfo).hashCode,
+        '==#1': (args) => (args[0] as MagnifierInfo) == (args[1] as Object),
         '#4': (args) => MagnifierInfo(globalGesturePosition: args[0] as Offset, caretRect: args[1] as Rect, fieldBounds: args[2] as Rect, currentLineBoundaries: args[3] as Rect),
         '_#fromFields#4': (args) => MagnifierInfo(globalGesturePosition: args[3] as Offset, caretRect: args[0] as Rect, fieldBounds: args[2] as Rect, currentLineBoundaries: args[1] as Rect),
       };

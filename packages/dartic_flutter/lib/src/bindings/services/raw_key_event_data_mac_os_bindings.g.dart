@@ -47,6 +47,7 @@ abstract final class RawKeyEventDataMacOsBindings {
         'getModifierSide#1': (args) => (args[0] as RawKeyEventDataMacOs).getModifierSide(args[1] as ModifierKey),
         'shouldDispatchEvent#0': (args) => (args[0] as RawKeyEventDataMacOs).shouldDispatchEvent(),
         'debugFillProperties#1': (args) { (args[0] as RawKeyEventDataMacOs).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RawKeyEventDataMacOs).toString(),
         'toStringShort#0': (args) => (args[0] as RawKeyEventDataMacOs).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as RawKeyEventDataMacOs).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'characters#0': (args) => (args[0] as RawKeyEventDataMacOs).characters,
@@ -63,6 +64,7 @@ abstract final class RawKeyEventDataMacOsBindings {
         'isAltPressed#0': (args) => (args[0] as RawKeyEventDataMacOs).isAltPressed,
         'isMetaPressed#0': (args) => (args[0] as RawKeyEventDataMacOs).isMetaPressed,
         'modifiersPressed#0': (args) => (args[0] as RawKeyEventDataMacOs).modifiersPressed,
+        '==#1': (args) => (args[0] as RawKeyEventDataMacOs) == (args[1] as Object),
         '#5': (args) => RawKeyEventDataMacOs(characters: identical(args[0], darticAbsent) ? '' : args[0] as String, charactersIgnoringModifiers: identical(args[1], darticAbsent) ? '' : args[1] as String, keyCode: identical(args[2], darticAbsent) ? 0 : args[2] as int, modifiers: identical(args[3], darticAbsent) ? 0 : args[3] as int, specifiedLogicalKey: identical(args[4], darticAbsent) ? null : args[4] as int?),
         '_#fromFields#5': (args) => RawKeyEventDataMacOs(characters: args[0] as String, charactersIgnoringModifiers: args[1] as String, keyCode: args[2] as int, modifiers: args[3] as int, specifiedLogicalKey: args[4] as int?),
       };

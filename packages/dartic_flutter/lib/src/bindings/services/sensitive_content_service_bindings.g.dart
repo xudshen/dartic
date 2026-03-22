@@ -27,8 +27,11 @@ abstract final class SensitiveContentServiceBindings {
         'setContentSensitivity#1': (args) => (args[0] as SensitiveContentService).setContentSensitivity(args[1] as ContentSensitivity),
         'getContentSensitivity#0': (args) => (args[0] as SensitiveContentService).getContentSensitivity(),
         'isSupported#0': (args) => (args[0] as SensitiveContentService).isSupported(),
+        'toString#0': (args) => (args[0] as SensitiveContentService).toString(),
         'sensitiveContentChannel#0': (args) => (args[0] as SensitiveContentService).sensitiveContentChannel,
+        'hashCode#0': (args) => (args[0] as SensitiveContentService).hashCode,
         'sensitiveContentChannel=#1': (args) { (args[0] as SensitiveContentService).sensitiveContentChannel = args[1] as MethodChannel; return args[1]; },
+        '==#1': (args) => (args[0] as SensitiveContentService) == (args[1] as Object),
         '#0': (args) => SensitiveContentService(),
       };
 }

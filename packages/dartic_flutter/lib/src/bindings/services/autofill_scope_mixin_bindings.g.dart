@@ -23,7 +23,10 @@ abstract final class AutofillScopeMixinBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'attach#2': (args) => (args[0] as AutofillScopeMixin).attach(args[1] as TextInputClient, args[2] as TextInputConfiguration),
+        'toString#0': (args) => (args[0] as AutofillScopeMixin).toString(),
         'getAutofillClient#1': (args) => (args[0] as AutofillScopeMixin).getAutofillClient(args[1] as String),
+        'hashCode#0': (args) => (args[0] as AutofillScopeMixin).hashCode,
         'autofillClients#0': (args) => (args[0] as AutofillScopeMixin).autofillClients,
+        '==#1': (args) => (args[0] as AutofillScopeMixin) == (args[1] as Object),
       };
 }

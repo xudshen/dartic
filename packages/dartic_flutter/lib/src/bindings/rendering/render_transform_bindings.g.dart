@@ -51,6 +51,7 @@ abstract final class RenderTransformBindings {
         'paint#2': (args) { (args[0] as RenderTransform).paint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'applyPaintTransform#2': (args) { (args[0] as RenderTransform).applyPaintTransform(args[1] as RenderBox, args[2] as Matrix4); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderTransform).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as RenderTransform).toString(),
         'setupParentData#1': (args) { (args[0] as RenderTransform).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderTransform).getMinIntrinsicWidth(args[1] as double),
         'computeMinIntrinsicWidth#1': (args) => (args[0] as RenderTransform).computeMinIntrinsicWidth(args[1] as double),
@@ -130,6 +131,7 @@ abstract final class RenderTransformBindings {
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderTransform).alwaysNeedsCompositing,
         'transformHitTests#0': (args) => (args[0] as RenderTransform).transformHitTests,
         'filterQuality#0': (args) => (args[0] as RenderTransform).filterQuality,
+        'hashCode#0': (args) => (args[0] as RenderTransform).hashCode,
         'hasSize#0': (args) => (args[0] as RenderTransform).hasSize,
         'size#0': (args) => (args[0] as RenderTransform).size,
         'semanticBounds#0': (args) => (args[0] as RenderTransform).semanticBounds,
@@ -171,6 +173,7 @@ abstract final class RenderTransformBindings {
         'debugCreator=#1': (args) { (args[0] as RenderTransform).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderTransform).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderTransform).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderTransform) == (args[1] as Object),
         '#7': (args) => RenderTransform(transform: args[0] as Matrix4, origin: identical(args[1], darticAbsent) ? null : args[1] as ui.Offset?, alignment: identical(args[2], darticAbsent) ? null : args[2] as AlignmentGeometry?, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?, transformHitTests: identical(args[4], darticAbsent) ? true : args[4] as bool, filterQuality: identical(args[5], darticAbsent) ? null : args[5] as ui.FilterQuality?, child: identical(args[6], darticAbsent) ? null : args[6] as RenderBox?),
       };
 }

@@ -30,6 +30,7 @@ abstract final class AnnotatedRegionLayerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'findAnnotations#3': (args) => (args[0] as AnnotatedRegionLayer).findAnnotations(args[1] as AnnotationResult<Object>, args[2] as ui.Offset, onlyFirst: args[3] as bool),
         'debugFillProperties#1': (args) { (args[0] as AnnotatedRegionLayer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnnotatedRegionLayer).toString(),
         'supportsRasterization#0': (args) => (args[0] as AnnotatedRegionLayer).supportsRasterization(),
         'buildScene#1': (args) => (args[0] as AnnotatedRegionLayer).buildScene(args[1] as ui.SceneBuilder),
         'dispose#0': (args) { (args[0] as AnnotatedRegionLayer).dispose(); return null; },
@@ -60,6 +61,7 @@ abstract final class AnnotatedRegionLayerBindings {
         'size#0': (args) => (args[0] as AnnotatedRegionLayer).size,
         'offset#0': (args) => (args[0] as AnnotatedRegionLayer).offset,
         'opaque#0': (args) => (args[0] as AnnotatedRegionLayer).opaque,
+        'hashCode#0': (args) => (args[0] as AnnotatedRegionLayer).hashCode,
         'firstChild#0': (args) => (args[0] as AnnotatedRegionLayer).firstChild,
         'lastChild#0': (args) => (args[0] as AnnotatedRegionLayer).lastChild,
         'hasChildren#0': (args) => (args[0] as AnnotatedRegionLayer).hasChildren,
@@ -78,6 +80,7 @@ abstract final class AnnotatedRegionLayerBindings {
         'debugCreator#0': (args) => (args[0] as AnnotatedRegionLayer).debugCreator,
         'engineLayer=#1': (args) { (args[0] as AnnotatedRegionLayer).engineLayer = args[1] as ui.EngineLayer?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as AnnotatedRegionLayer).debugCreator = args[1]; return args[1]; },
+        '==#1': (args) => (args[0] as AnnotatedRegionLayer) == (args[1] as Object),
         '#4': (args) => AnnotatedRegionLayer<Object>(args[0] as Object, size: identical(args[1], darticAbsent) ? null : args[1] as ui.Size?, offset: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, opaque: identical(args[3], darticAbsent) ? false : args[3] as bool),
       };
 }

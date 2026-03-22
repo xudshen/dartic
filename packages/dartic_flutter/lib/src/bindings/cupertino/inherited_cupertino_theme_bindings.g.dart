@@ -30,6 +30,7 @@ abstract final class InheritedCupertinoThemeBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'wrap#2': (args) => (args[0] as InheritedCupertinoTheme).wrap(args[1] as BuildContext, args[2] as Widget),
         'updateShouldNotify#1': (args) => (args[0] as InheritedCupertinoTheme).updateShouldNotify(args[1] as InheritedCupertinoTheme),
+        'toString#0': (args) => (args[0] as InheritedCupertinoTheme).toString(),
         'createElement#0': (args) => (args[0] as InheritedCupertinoTheme).createElement(),
         'toStringShort#0': (args) => (args[0] as InheritedCupertinoTheme).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as InheritedCupertinoTheme).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -38,8 +39,10 @@ abstract final class InheritedCupertinoThemeBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as InheritedCupertinoTheme).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as InheritedCupertinoTheme).debugDescribeChildren(),
         'theme#0': (args) => (args[0] as InheritedCupertinoTheme).theme,
+        'hashCode#0': (args) => (args[0] as InheritedCupertinoTheme).hashCode,
         'child#0': (args) => (args[0] as InheritedCupertinoTheme).child,
         'key#0': (args) => (args[0] as InheritedCupertinoTheme).key,
+        '==#1': (args) => (args[0] as InheritedCupertinoTheme) == (args[1] as Object),
         '#3': (args) => InheritedCupertinoTheme(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, theme: args[1] as CupertinoTheme, child: args[2] as Widget),
         '_#fromFields#3': (args) => InheritedCupertinoTheme(key: args[1] as Key?, theme: args[2] as CupertinoTheme, child: args[0] as Widget),
       };

@@ -32,6 +32,7 @@ abstract final class ExpansibleBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as Expansible).createState(),
+        'toString#0': (args) => (args[0] as Expansible).toString(),
         'createElement#0': (args) => (args[0] as Expansible).createElement(),
         'toStringShort#0': (args) => (args[0] as Expansible).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as Expansible).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -47,7 +48,9 @@ abstract final class ExpansibleBindings {
         'reverseCurve#0': (args) => (args[0] as Expansible).reverseCurve,
         'maintainState#0': (args) => (args[0] as Expansible).maintainState,
         'expansibleBuilder#0': (args) => (args[0] as Expansible).expansibleBuilder,
+        'hashCode#0': (args) => (args[0] as Expansible).hashCode,
         'key#0': (args) => (args[0] as Expansible).key,
+        '==#1': (args) => (args[0] as Expansible) == (args[1] as Object),
         '#9': (args) {
           if (identical(args[4], darticAbsent)) {
             return Expansible(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, headerBuilder: (a, b) => (args[1] as Function)(a, b) as Widget, bodyBuilder: (a, b) => (args[2] as Function)(a, b) as Widget, controller: args[3] as ExpansibleController, duration: identical(args[5], darticAbsent) ? const Duration(milliseconds: 200) : args[5] as Duration, curve: identical(args[6], darticAbsent) ? Curves.ease : args[6] as Curve, reverseCurve: identical(args[7], darticAbsent) ? null : args[7] as Curve?, maintainState: identical(args[8], darticAbsent) ? true : args[8] as bool);

@@ -26,5 +26,7 @@ abstract final class ParametricCurveBindings {
         'transform#1': (args) => (args[0] as ParametricCurve).transform(args[1] as double),
         'transformInternal#1': (args) => (args[0] as ParametricCurve).transformInternal(args[1] as double),
         'toString#0': (args) => (args[0] as ParametricCurve).toString(),
+        'hashCode#0': (args) => (args[0] as ParametricCurve).hashCode,
+        '==#1': (args) => (args[0] as ParametricCurve) == (args[1] as Object),
       };
 }

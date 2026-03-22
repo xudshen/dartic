@@ -30,9 +30,12 @@ abstract final class PredictiveBackPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).buildTransitions(args[1] as PageRoute, args[2] as BuildContext, args[3] as Animation<double>, args[4] as Animation<double>, args[5] as Widget),
+        'toString#0': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).toString(),
         'transitionDuration#0': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).transitionDuration,
+        'hashCode#0': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).hashCode,
         'delegatedTransition#0': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).delegatedTransition,
         'reverseTransitionDuration#0': (args) => (args[0] as PredictiveBackPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as PredictiveBackPageTransitionsBuilder) == (args[1] as Object),
         '#0': (args) => PredictiveBackPageTransitionsBuilder(),
         '_#fromFields#0': (args) => PredictiveBackPageTransitionsBuilder(),
       };

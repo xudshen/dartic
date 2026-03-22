@@ -29,6 +29,7 @@ abstract final class LinearBorderEdgeBindings {
         'size#0': (args) => (args[0] as LinearBorderEdge).size,
         'alignment#0': (args) => (args[0] as LinearBorderEdge).alignment,
         'hashCode#0': (args) => (args[0] as LinearBorderEdge).hashCode,
+        '==#1': (args) => (args[0] as LinearBorderEdge) == (args[1] as Object),
         '#2': (args) => LinearBorderEdge(size: identical(args[0], darticAbsent) ? 1.0 : args[0] as double, alignment: identical(args[1], darticAbsent) ? 0.0 : args[1] as double),
         '_#fromFields#2': (args) => LinearBorderEdge(size: args[1] as double, alignment: args[0] as double),
       };

@@ -34,6 +34,7 @@ abstract final class DecoratedBoxBindings {
         'createRenderObject#1': (args) => (args[0] as DecoratedBox).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as DecoratedBox).updateRenderObject(args[1] as BuildContext, args[2] as RenderDecoratedBox); return null; },
         'debugFillProperties#1': (args) { (args[0] as DecoratedBox).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as DecoratedBox).toString(),
         'createElement#0': (args) => (args[0] as DecoratedBox).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as DecoratedBox).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as DecoratedBox).toStringShort(),
@@ -43,8 +44,10 @@ abstract final class DecoratedBoxBindings {
         'debugDescribeChildren#0': (args) => (args[0] as DecoratedBox).debugDescribeChildren(),
         'decoration#0': (args) => (args[0] as DecoratedBox).decoration,
         'position#0': (args) => (args[0] as DecoratedBox).position,
+        'hashCode#0': (args) => (args[0] as DecoratedBox).hashCode,
         'child#0': (args) => (args[0] as DecoratedBox).child,
         'key#0': (args) => (args[0] as DecoratedBox).key,
+        '==#1': (args) => (args[0] as DecoratedBox) == (args[1] as Object),
         '#4': (args) => DecoratedBox(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, decoration: args[1] as Decoration, position: identical(args[2], darticAbsent) ? DecorationPosition.background : args[2] as DecorationPosition, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => DecoratedBox(key: args[2] as Key?, decoration: args[1] as Decoration, position: args[3] as DecorationPosition, child: args[0] as Widget?),
       };

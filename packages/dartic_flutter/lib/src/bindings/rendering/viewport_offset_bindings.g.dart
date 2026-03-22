@@ -41,6 +41,10 @@ abstract final class ViewportOffsetBindings {
         'hasPixels#0': (args) => (args[0] as ViewportOffset).hasPixels,
         'userScrollDirection#0': (args) => (args[0] as ViewportOffset).userScrollDirection,
         'allowImplicitScrolling#0': (args) => (args[0] as ViewportOffset).allowImplicitScrolling,
+        'hashCode#0': (args) => (args[0] as ViewportOffset).hashCode,
         'hasListeners#0': (args) => (args[0] as ViewportOffset).hasListeners,
+        '==#1': (args) => (args[0] as ViewportOffset) == (args[1] as Object),
+        'fixed#1': (args) => ViewportOffset.fixed(args[0] as double),
+        'zero#0': (args) => ViewportOffset.zero(),
       };
 }

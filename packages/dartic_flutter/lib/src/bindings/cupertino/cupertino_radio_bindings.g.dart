@@ -35,6 +35,7 @@ abstract final class CupertinoRadioBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoRadio).createState(),
+        'toString#0': (args) => (args[0] as CupertinoRadio).toString(),
         'createElement#0': (args) => (args[0] as CupertinoRadio).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoRadio).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoRadio).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -56,7 +57,9 @@ abstract final class CupertinoRadioBindings {
         'autofocus#0': (args) => (args[0] as CupertinoRadio).autofocus,
         'groupRegistry#0': (args) => (args[0] as CupertinoRadio).groupRegistry,
         'enabled#0': (args) => (args[0] as CupertinoRadio).enabled,
+        'hashCode#0': (args) => (args[0] as CupertinoRadio).hashCode,
         'key#0': (args) => (args[0] as CupertinoRadio).key,
+        '==#1': (args) => (args[0] as CupertinoRadio) == (args[1] as Object),
         '#15': (args) => CupertinoRadio<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1], groupValue: identical(args[2], darticAbsent) ? null : args[2], onChanged: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), mouseCursor: identical(args[4], darticAbsent) ? null : args[4] as MouseCursor?, toggleable: identical(args[5], darticAbsent) ? false : args[5] as bool, activeColor: identical(args[6], darticAbsent) ? null : args[6] as Color?, inactiveColor: identical(args[7], darticAbsent) ? null : args[7] as Color?, fillColor: identical(args[8], darticAbsent) ? null : args[8] as Color?, focusColor: identical(args[9], darticAbsent) ? null : args[9] as Color?, focusNode: identical(args[10], darticAbsent) ? null : args[10] as FocusNode?, autofocus: identical(args[11], darticAbsent) ? false : args[11] as bool, useCheckmarkStyle: identical(args[12], darticAbsent) ? false : args[12] as bool, enabled: identical(args[13], darticAbsent) ? null : args[13] as bool?, groupRegistry: identical(args[14], darticAbsent) ? null : args[14] as RadioGroupRegistry?),
         '_#fromFields#15': (args) => CupertinoRadio<dynamic>(key: args[9] as Key?, value: args[14], groupValue: args[7], onChanged: args[11] as void Function(Object?)?, mouseCursor: args[10] as MouseCursor?, toggleable: args[12] as bool, activeColor: args[0] as Color?, inactiveColor: args[8] as Color?, fillColor: args[3] as Color?, focusColor: args[4] as Color?, focusNode: args[5] as FocusNode?, autofocus: args[1] as bool, useCheckmarkStyle: args[13] as bool, enabled: args[2] as bool?, groupRegistry: args[6] as RadioGroupRegistry?),
       };

@@ -40,6 +40,7 @@ abstract final class SemanticsAnnotationsMixinBindings {
         'initSemanticsAnnotations#7': (args) { (args[0] as SemanticsAnnotationsMixin).initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; },
         'visitChildrenForSemantics#1': (args) { (args[0] as SemanticsAnnotationsMixin).visitChildrenForSemantics((a) => (args[1] as Function)(a)); return null; },
         'describeSemanticsConfiguration#1': (args) { (args[0] as SemanticsAnnotationsMixin).describeSemanticsConfiguration(args[1] as SemanticsConfiguration); return null; },
+        'toString#0': (args) => (args[0] as SemanticsAnnotationsMixin).toString(),
         'reassemble#0': (args) { (args[0] as SemanticsAnnotationsMixin).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as SemanticsAnnotationsMixin).dispose(); return null; },
         'setupParentData#1': (args) { (args[0] as SemanticsAnnotationsMixin).setupParentData(args[1] as RenderObject); return null; },
@@ -95,6 +96,7 @@ abstract final class SemanticsAnnotationsMixinBindings {
         'blockUserActions#0': (args) => (args[0] as SemanticsAnnotationsMixin).blockUserActions,
         'localeForSubtree#0': (args) => (args[0] as SemanticsAnnotationsMixin).localeForSubtree,
         'textDirection#0': (args) => (args[0] as SemanticsAnnotationsMixin).textDirection,
+        'hashCode#0': (args) => (args[0] as SemanticsAnnotationsMixin).hashCode,
         'debugDisposed#0': (args) => (args[0] as SemanticsAnnotationsMixin).debugDisposed,
         'parentData#0': (args) => (args[0] as SemanticsAnnotationsMixin).parentData,
         'depth#0': (args) => (args[0] as SemanticsAnnotationsMixin).depth,
@@ -133,5 +135,6 @@ abstract final class SemanticsAnnotationsMixinBindings {
         'parentData=#1': (args) { (args[0] as SemanticsAnnotationsMixin).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as SemanticsAnnotationsMixin).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as SemanticsAnnotationsMixin).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as SemanticsAnnotationsMixin) == (args[1] as Object),
       };
 }

@@ -32,6 +32,7 @@ abstract final class CupertinoFormSectionBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as CupertinoFormSection).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as CupertinoFormSection).toString(),
         'createElement#0': (args) => (args[0] as CupertinoFormSection).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoFormSection).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoFormSection).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -46,7 +47,9 @@ abstract final class CupertinoFormSectionBindings {
         'decoration#0': (args) => (args[0] as CupertinoFormSection).decoration,
         'backgroundColor#0': (args) => (args[0] as CupertinoFormSection).backgroundColor,
         'clipBehavior#0': (args) => (args[0] as CupertinoFormSection).clipBehavior,
+        'hashCode#0': (args) => (args[0] as CupertinoFormSection).hashCode,
         'key#0': (args) => (args[0] as CupertinoFormSection).key,
+        '==#1': (args) => (args[0] as CupertinoFormSection) == (args[1] as Object),
         '#8': (args) => CupertinoFormSection(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, children: (args[1] as List).cast<Widget>(), header: identical(args[2], darticAbsent) ? null : args[2] as Widget?, footer: identical(args[3], darticAbsent) ? null : args[3] as Widget?, margin: identical(args[4], darticAbsent) ? EdgeInsets.zero : args[4] as EdgeInsetsGeometry, backgroundColor: identical(args[5], darticAbsent) ? CupertinoColors.systemGroupedBackground : args[5] as Color, decoration: identical(args[6], darticAbsent) ? null : args[6] as BoxDecoration?, clipBehavior: identical(args[7], darticAbsent) ? Clip.none : args[7] as Clip),
         'insetGrouped#8': (args) {
           if (identical(args[4], darticAbsent)) {

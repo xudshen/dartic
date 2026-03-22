@@ -35,6 +35,7 @@ abstract final class OverflowBarBindings {
         'createRenderObject#1': (args) => (args[0] as OverflowBar).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as OverflowBar).updateRenderObject(args[1] as BuildContext, args[2] as RenderObject); return null; },
         'debugFillProperties#1': (args) { (args[0] as OverflowBar).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as OverflowBar).toString(),
         'createElement#0': (args) => (args[0] as OverflowBar).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as OverflowBar).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as OverflowBar).toStringShort(),
@@ -48,8 +49,10 @@ abstract final class OverflowBarBindings {
         'overflowAlignment#0': (args) => (args[0] as OverflowBar).overflowAlignment,
         'overflowDirection#0': (args) => (args[0] as OverflowBar).overflowDirection,
         'textDirection#0': (args) => (args[0] as OverflowBar).textDirection,
+        'hashCode#0': (args) => (args[0] as OverflowBar).hashCode,
         'children#0': (args) => (args[0] as OverflowBar).children,
         'key#0': (args) => (args[0] as OverflowBar).key,
+        '==#1': (args) => (args[0] as OverflowBar) == (args[1] as Object),
         '#8': (args) => OverflowBar(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, spacing: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, alignment: identical(args[2], darticAbsent) ? null : args[2] as MainAxisAlignment?, overflowSpacing: identical(args[3], darticAbsent) ? 0.0 : args[3] as double, overflowAlignment: identical(args[4], darticAbsent) ? OverflowBarAlignment.start : args[4] as OverflowBarAlignment, overflowDirection: identical(args[5], darticAbsent) ? VerticalDirection.down : args[5] as VerticalDirection, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, children: identical(args[7], darticAbsent) ? const <Widget>[] : (args[7] as List).cast<Widget>()),
         '_#fromFields#8': (args) => OverflowBar(key: args[2] as Key?, spacing: args[6] as double, alignment: args[0] as MainAxisAlignment?, overflowSpacing: args[5] as double, overflowAlignment: args[3] as OverflowBarAlignment, overflowDirection: args[4] as VerticalDirection, textDirection: args[7] as TextDirection?, children: (args[1] as List).cast<Widget>()),
       };

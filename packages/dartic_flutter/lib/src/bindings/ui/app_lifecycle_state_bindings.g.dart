@@ -36,6 +36,9 @@ abstract final class AppLifecycleStateBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AppLifecycleState).toString(),
+        'hashCode#0': (args) => (args[0] as AppLifecycleState).hashCode,
         'index#0': (args) => (args[0] as AppLifecycleState).index,
+        '==#1': (args) => (args[0] as AppLifecycleState) == (args[1] as Object),
       };
 }

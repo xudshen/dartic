@@ -31,6 +31,9 @@ abstract final class RegularWindowControllerDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'onWindowCloseRequested#1': (args) { (args[0] as RegularWindowControllerDelegate).onWindowCloseRequested(args[1] as RegularWindowController); return null; },
         'onWindowDestroyed#0': (args) { (args[0] as RegularWindowControllerDelegate).onWindowDestroyed(); return null; },
+        'toString#0': (args) => (args[0] as RegularWindowControllerDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as RegularWindowControllerDelegate).hashCode,
+        '==#1': (args) => (args[0] as RegularWindowControllerDelegate) == (args[1] as Object),
         '#0': (args) => RegularWindowControllerDelegate(),
       };
 }

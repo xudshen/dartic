@@ -59,6 +59,7 @@ abstract final class MenuAnchorBindings {
         'createState#0': (args) => (args[0] as MenuAnchor).createState(),
         'debugDescribeChildren#0': (args) => (args[0] as MenuAnchor).debugDescribeChildren(),
         'debugFillProperties#1': (args) { (args[0] as MenuAnchor).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as MenuAnchor).toString(),
         'createElement#0': (args) => (args[0] as MenuAnchor).createElement(),
         'toStringShort#0': (args) => (args[0] as MenuAnchor).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as MenuAnchor).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -80,7 +81,9 @@ abstract final class MenuAnchorBindings {
         'builder#0': (args) => (args[0] as MenuAnchor).builder,
         'child#0': (args) => (args[0] as MenuAnchor).child,
         'reservedPadding#0': (args) => (args[0] as MenuAnchor).reservedPadding,
+        'hashCode#0': (args) => (args[0] as MenuAnchor).hashCode,
         'key#0': (args) => (args[0] as MenuAnchor).key,
+        '==#1': (args) => (args[0] as MenuAnchor) == (args[1] as Object),
         '#17': (args) => MenuAnchor(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, controller: identical(args[1], darticAbsent) ? null : args[1] as MenuController?, childFocusNode: identical(args[2], darticAbsent) ? null : args[2] as FocusNode?, style: identical(args[3], darticAbsent) ? null : args[3] as MenuStyle?, alignmentOffset: identical(args[4], darticAbsent) ? null : args[4] as Offset?, reservedPadding: identical(args[5], darticAbsent) ? null : args[5] as EdgeInsetsGeometry?, layerLink: identical(args[6], darticAbsent) ? null : args[6] as LayerLink?, clipBehavior: identical(args[7], darticAbsent) ? Clip.hardEdge : args[7] as Clip, anchorTapClosesMenu: identical(args[8], darticAbsent) ? false : args[8] as bool, consumeOutsideTap: identical(args[9], darticAbsent) ? false : args[9] as bool, onOpen: identical(args[10], darticAbsent) ? null : (args[10] as Function?) == null ? null : () => (args[10] as Function?)!(), onClose: identical(args[11], darticAbsent) ? null : (args[11] as Function?) == null ? null : () => (args[11] as Function?)!(), crossAxisUnconstrained: identical(args[12], darticAbsent) ? true : args[12] as bool, useRootOverlay: identical(args[13], darticAbsent) ? false : args[13] as bool, menuChildren: (args[14] as List).cast<Widget>(), builder: identical(args[15], darticAbsent) ? null : (args[15] as Function?) == null ? null : (a, b, c) => (args[15] as Function?)!(a, b, c), child: identical(args[16], darticAbsent) ? null : args[16] as Widget?),
         '_#fromFields#17': (args) => MenuAnchor(key: args[9] as Key?, controller: args[7] as MenuController?, childFocusNode: args[4] as FocusNode?, style: args[15] as MenuStyle?, alignmentOffset: args[0] as Offset?, reservedPadding: args[14] as EdgeInsetsGeometry?, layerLink: args[10] as LayerLink?, clipBehavior: args[5] as Clip, anchorTapClosesMenu: args[1] as bool, consumeOutsideTap: args[6] as bool, onOpen: args[13] as VoidCallback?, onClose: args[12] as VoidCallback?, crossAxisUnconstrained: args[8] as bool, useRootOverlay: args[16] as bool, menuChildren: (args[11] as List).cast<Widget>(), builder: args[2] as MenuAnchorChildBuilder?, child: args[3] as Widget?),
       };

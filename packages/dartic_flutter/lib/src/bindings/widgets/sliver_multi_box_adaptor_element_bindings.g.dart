@@ -53,6 +53,7 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
         'removeRenderObjectChild#2': (args) { (args[0] as SliverMultiBoxAdaptorElement).removeRenderObjectChild(args[1] as RenderObject, args[2] as int); return null; },
         'visitChildren#1': (args) { (args[0] as SliverMultiBoxAdaptorElement).visitChildren((a) => (args[1] as Function)(a)); return null; },
         'debugVisitOnstageChildren#1': (args) { (args[0] as SliverMultiBoxAdaptorElement).debugVisitOnstageChildren((a) => (args[1] as Function)(a)); return null; },
+        'toString#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).toString(),
         'mount#2': (args) { (args[0] as SliverMultiBoxAdaptorElement).mount(args[1] as Element?, args[2]); return null; },
         'deactivate#0': (args) { (args[0] as SliverMultiBoxAdaptorElement).deactivate(); return null; },
         'unmount#0': (args) { (args[0] as SliverMultiBoxAdaptorElement).unmount(); return null; },
@@ -99,6 +100,7 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
         'renderObject#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).renderObject,
         'estimatedChildCount#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).estimatedChildCount,
         'childCount#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).childCount,
+        'hashCode#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).hashCode,
         'renderObjectAttachingChild#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).renderObjectAttachingChild,
         'debugDoingBuild#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).debugDoingBuild,
         'slot#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).slot,
@@ -111,6 +113,7 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
         'buildScope#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).buildScope,
         'size#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).size,
         'dirty#0': (args) => (args[0] as SliverMultiBoxAdaptorElement).dirty,
+        '==#1': (args) => (args[0] as SliverMultiBoxAdaptorElement) == (args[1] as Object),
         '#2': (args) => SliverMultiBoxAdaptorElement(args[0] as SliverMultiBoxAdaptorWidget, replaceMovedChildren: identical(args[1], darticAbsent) ? false : args[1] as bool),
       };
 }

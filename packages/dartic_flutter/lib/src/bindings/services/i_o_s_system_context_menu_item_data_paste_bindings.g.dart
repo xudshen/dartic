@@ -34,7 +34,10 @@ abstract final class IOSSystemContextMenuItemDataPasteBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as IOSSystemContextMenuItemDataPaste).toString(),
+        'hashCode#0': (args) => (args[0] as IOSSystemContextMenuItemDataPaste).hashCode,
         'title#0': (args) => (args[0] as IOSSystemContextMenuItemDataPaste).title,
+        '==#1': (args) => (args[0] as IOSSystemContextMenuItemDataPaste) == (args[1] as Object),
         '#0': (args) => IOSSystemContextMenuItemDataPaste(),
         '_#fromFields#0': (args) => IOSSystemContextMenuItemDataPaste(),
       };

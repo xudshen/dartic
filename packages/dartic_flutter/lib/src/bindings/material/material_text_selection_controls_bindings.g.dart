@@ -44,6 +44,7 @@ abstract final class MaterialTextSelectionControlsBindings {
         'buildHandle#4': (args) => (args[0] as MaterialTextSelectionControls).buildHandle(args[1] as BuildContext, args[2] as TextSelectionHandleType, args[3] as double, identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
         'getHandleAnchor#2': (args) => (args[0] as MaterialTextSelectionControls).getHandleAnchor(args[1] as TextSelectionHandleType, args[2] as double),
         'canSelectAll#1': (args) => (args[0] as MaterialTextSelectionControls).canSelectAll(args[1] as TextSelectionDelegate),
+        'toString#0': (args) => (args[0] as MaterialTextSelectionControls).toString(),
         'canCut#1': (args) => (args[0] as MaterialTextSelectionControls).canCut(args[1] as TextSelectionDelegate),
         'canCopy#1': (args) => (args[0] as MaterialTextSelectionControls).canCopy(args[1] as TextSelectionDelegate),
         'canPaste#1': (args) => (args[0] as MaterialTextSelectionControls).canPaste(args[1] as TextSelectionDelegate),
@@ -51,6 +52,8 @@ abstract final class MaterialTextSelectionControlsBindings {
         'handleCopy#1': (args) { (args[0] as MaterialTextSelectionControls).handleCopy(args[1] as TextSelectionDelegate); return null; },
         'handlePaste#1': (args) => (args[0] as MaterialTextSelectionControls).handlePaste(args[1] as TextSelectionDelegate),
         'handleSelectAll#1': (args) { (args[0] as MaterialTextSelectionControls).handleSelectAll(args[1] as TextSelectionDelegate); return null; },
+        'hashCode#0': (args) => (args[0] as MaterialTextSelectionControls).hashCode,
+        '==#1': (args) => (args[0] as MaterialTextSelectionControls) == (args[1] as Object),
         '#0': (args) => MaterialTextSelectionControls(),
       };
 }

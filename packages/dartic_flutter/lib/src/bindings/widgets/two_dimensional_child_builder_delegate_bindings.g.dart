@@ -30,6 +30,7 @@ abstract final class TwoDimensionalChildBuilderDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#2': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).build(args[1] as BuildContext, args[2] as ChildVicinity),
         'shouldRebuild#1': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).shouldRebuild(args[1] as TwoDimensionalChildDelegate),
+        'toString#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).toString(),
         'addListener#1': (args) { (args[0] as TwoDimensionalChildBuilderDelegate).addListener(() => (args[1] as Function)()); return null; },
         'removeListener#1': (args) { (args[0] as TwoDimensionalChildBuilderDelegate).removeListener(() => (args[1] as Function)()); return null; },
         'dispose#0': (args) { (args[0] as TwoDimensionalChildBuilderDelegate).dispose(); return null; },
@@ -39,9 +40,11 @@ abstract final class TwoDimensionalChildBuilderDelegateBindings {
         'maxYIndex#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).maxYIndex,
         'addRepaintBoundaries#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).addRepaintBoundaries,
         'addAutomaticKeepAlives#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).addAutomaticKeepAlives,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).hashCode,
         'hasListeners#0': (args) => (args[0] as TwoDimensionalChildBuilderDelegate).hasListeners,
         'maxXIndex=#1': (args) { (args[0] as TwoDimensionalChildBuilderDelegate).maxXIndex = args[1] as int?; return args[1]; },
         'maxYIndex=#1': (args) { (args[0] as TwoDimensionalChildBuilderDelegate).maxYIndex = args[1] as int?; return args[1]; },
+        '==#1': (args) => (args[0] as TwoDimensionalChildBuilderDelegate) == (args[1] as Object),
         '#5': (args) => TwoDimensionalChildBuilderDelegate(builder: (a, b) => (args[0] as Function)(a, b) as Widget?, maxXIndex: identical(args[1], darticAbsent) ? null : args[1] as int?, maxYIndex: identical(args[2], darticAbsent) ? null : args[2] as int?, addRepaintBoundaries: identical(args[3], darticAbsent) ? true : args[3] as bool, addAutomaticKeepAlives: identical(args[4], darticAbsent) ? true : args[4] as bool),
       };
 }

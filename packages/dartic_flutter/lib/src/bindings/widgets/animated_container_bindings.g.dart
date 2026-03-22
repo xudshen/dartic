@@ -42,6 +42,7 @@ abstract final class AnimatedContainerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as AnimatedContainer).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedContainer).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as AnimatedContainer).toString(),
         'createElement#0': (args) => (args[0] as AnimatedContainer).createElement(),
         'toStringShort#0': (args) => (args[0] as AnimatedContainer).toStringShort(),
         'toStringShallow#2': (args) => (args[0] as AnimatedContainer).toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel),
@@ -58,10 +59,12 @@ abstract final class AnimatedContainerBindings {
         'transform#0': (args) => (args[0] as AnimatedContainer).transform,
         'transformAlignment#0': (args) => (args[0] as AnimatedContainer).transformAlignment,
         'clipBehavior#0': (args) => (args[0] as AnimatedContainer).clipBehavior,
+        'hashCode#0': (args) => (args[0] as AnimatedContainer).hashCode,
         'curve#0': (args) => (args[0] as AnimatedContainer).curve,
         'duration#0': (args) => (args[0] as AnimatedContainer).duration,
         'onEnd#0': (args) => (args[0] as AnimatedContainer).onEnd,
         'key#0': (args) => (args[0] as AnimatedContainer).key,
+        '==#1': (args) => (args[0] as AnimatedContainer) == (args[1] as Object),
         '#17': (args) => AnimatedContainer(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? null : args[1] as AlignmentGeometry?, padding: identical(args[2], darticAbsent) ? null : args[2] as EdgeInsetsGeometry?, color: identical(args[3], darticAbsent) ? null : args[3] as ui.Color?, decoration: identical(args[4], darticAbsent) ? null : args[4] as Decoration?, foregroundDecoration: identical(args[5], darticAbsent) ? null : args[5] as Decoration?, width: identical(args[6], darticAbsent) ? null : args[6] as double?, height: identical(args[7], darticAbsent) ? null : args[7] as double?, constraints: identical(args[8], darticAbsent) ? null : args[8] as BoxConstraints?, margin: identical(args[9], darticAbsent) ? null : args[9] as EdgeInsetsGeometry?, transform: identical(args[10], darticAbsent) ? null : args[10] as Matrix4?, transformAlignment: identical(args[11], darticAbsent) ? null : args[11] as AlignmentGeometry?, child: identical(args[12], darticAbsent) ? null : args[12] as Widget?, clipBehavior: identical(args[13], darticAbsent) ? Clip.none : args[13] as ui.Clip, curve: identical(args[14], darticAbsent) ? Curves.linear : args[14] as Curve, duration: args[15] as Duration, onEnd: identical(args[16], darticAbsent) ? null : (args[16] as Function?) == null ? null : () => (args[16] as Function?)!()),
       };
 }

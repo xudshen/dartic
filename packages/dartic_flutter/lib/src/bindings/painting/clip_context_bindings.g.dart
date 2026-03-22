@@ -24,6 +24,9 @@ abstract final class ClipContextBindings {
         'clipRRectAndPaint#4': (args) { (args[0] as ClipContext).clipRRectAndPaint(args[1] as RRect, args[2] as Clip, args[3] as Rect, () => (args[4] as Function)()); return null; },
         'clipRSuperellipseAndPaint#4': (args) { (args[0] as ClipContext).clipRSuperellipseAndPaint(args[1] as RSuperellipse, args[2] as Clip, args[3] as Rect, () => (args[4] as Function)()); return null; },
         'clipRectAndPaint#4': (args) { (args[0] as ClipContext).clipRectAndPaint(args[1] as Rect, args[2] as Clip, args[3] as Rect, () => (args[4] as Function)()); return null; },
+        'toString#0': (args) => (args[0] as ClipContext).toString(),
         'canvas#0': (args) => (args[0] as ClipContext).canvas,
+        'hashCode#0': (args) => (args[0] as ClipContext).hashCode,
+        '==#1': (args) => (args[0] as ClipContext) == (args[1] as Object),
       };
 }

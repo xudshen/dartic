@@ -36,9 +36,12 @@ abstract final class FadeUpwardsPageTransitionsBuilderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'buildTransitions#5': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).buildTransitions(args[1] as PageRoute?, args[2] as BuildContext?, args[3] as Animation<double>, args[4] as Animation<double>?, args[5] as Widget),
+        'toString#0': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).toString(),
+        'hashCode#0': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).hashCode,
         'delegatedTransition#0': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).delegatedTransition,
         'transitionDuration#0': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).transitionDuration,
         'reverseTransitionDuration#0': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder).reverseTransitionDuration,
+        '==#1': (args) => (args[0] as FadeUpwardsPageTransitionsBuilder) == (args[1] as Object),
         '#0': (args) => FadeUpwardsPageTransitionsBuilder(),
         '_#fromFields#0': (args) => FadeUpwardsPageTransitionsBuilder(),
       };

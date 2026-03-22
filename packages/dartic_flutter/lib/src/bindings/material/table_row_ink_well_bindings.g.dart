@@ -54,6 +54,7 @@ abstract final class TableRowInkWellBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getRectCallback#1': (args) => (args[0] as TableRowInkWell).getRectCallback(args[1] as RenderBox),
         'debugCheckContext#1': (args) => (args[0] as TableRowInkWell).debugCheckContext(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as TableRowInkWell).toString(),
         'build#1': (args) => (args[0] as TableRowInkWell).build(args[1] as BuildContext),
         'createElement#0': (args) => (args[0] as TableRowInkWell).createElement(),
         'toStringShort#0': (args) => (args[0] as TableRowInkWell).toStringShort(),
@@ -62,6 +63,7 @@ abstract final class TableRowInkWellBindings {
         'toStringDeep#4': (args) => (args[0] as TableRowInkWell).toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int),
         'toDiagnosticsNode#2': (args) => (args[0] as TableRowInkWell).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as TableRowInkWell).debugDescribeChildren(),
+        'hashCode#0': (args) => (args[0] as TableRowInkWell).hashCode,
         'child#0': (args) => (args[0] as TableRowInkWell).child,
         'onTap#0': (args) => (args[0] as TableRowInkWell).onTap,
         'onTapDown#0': (args) => (args[0] as TableRowInkWell).onTapDown,
@@ -97,6 +99,7 @@ abstract final class TableRowInkWellBindings {
         'statesController#0': (args) => (args[0] as TableRowInkWell).statesController,
         'hoverDuration#0': (args) => (args[0] as TableRowInkWell).hoverDuration,
         'key#0': (args) => (args[0] as TableRowInkWell).key,
+        '==#1': (args) => (args[0] as TableRowInkWell) == (args[1] as Object),
         '#11': (args) => TableRowInkWell(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, child: identical(args[1], darticAbsent) ? null : args[1] as Widget?, onTap: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!(), onDoubleTap: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!(), onLongPress: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!(), onHighlightChanged: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onHover: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), onSecondaryTap: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : () => (args[7] as Function?)!(), onSecondaryTapDown: identical(args[8], darticAbsent) ? null : (args[8] as Function?) == null ? null : (a) => (args[8] as Function?)!(a), overlayColor: identical(args[9], darticAbsent) ? null : args[9] as WidgetStateProperty<Color?>?, mouseCursor: identical(args[10], darticAbsent) ? null : args[10] as MouseCursor?),
         '_#fromFields#35': (args) => TableRowInkWell(key: args[14] as Key?, child: args[3] as Widget?, onTap: args[26] as GestureTapCallback?, onDoubleTap: args[16] as GestureTapCallback?, onLongPress: args[20] as GestureLongPressCallback?, onHighlightChanged: args[18] as ValueChanged<bool>?, onHover: args[19] as ValueChanged<bool>?, onSecondaryTap: args[22] as GestureTapCallback?, onSecondaryTapDown: args[24] as GestureTapDownCallback?, overlayColor: args[30] as WidgetStateProperty<Color?>?, mouseCursor: args[15] as MouseCursor?),
       };

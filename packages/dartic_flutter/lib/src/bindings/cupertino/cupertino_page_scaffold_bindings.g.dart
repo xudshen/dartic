@@ -29,6 +29,7 @@ abstract final class CupertinoPageScaffoldBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as CupertinoPageScaffold).createState(),
+        'toString#0': (args) => (args[0] as CupertinoPageScaffold).toString(),
         'createElement#0': (args) => (args[0] as CupertinoPageScaffold).createElement(),
         'toStringShort#0': (args) => (args[0] as CupertinoPageScaffold).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as CupertinoPageScaffold).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -40,7 +41,9 @@ abstract final class CupertinoPageScaffoldBindings {
         'child#0': (args) => (args[0] as CupertinoPageScaffold).child,
         'backgroundColor#0': (args) => (args[0] as CupertinoPageScaffold).backgroundColor,
         'resizeToAvoidBottomInset#0': (args) => (args[0] as CupertinoPageScaffold).resizeToAvoidBottomInset,
+        'hashCode#0': (args) => (args[0] as CupertinoPageScaffold).hashCode,
         'key#0': (args) => (args[0] as CupertinoPageScaffold).key,
+        '==#1': (args) => (args[0] as CupertinoPageScaffold) == (args[1] as Object),
         '#5': (args) => CupertinoPageScaffold(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, navigationBar: identical(args[1], darticAbsent) ? null : args[1] as ObstructingPreferredSizeWidget?, backgroundColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, resizeToAvoidBottomInset: identical(args[3], darticAbsent) ? true : args[3] as bool, child: args[4] as Widget),
         '_#fromFields#5': (args) => CupertinoPageScaffold(key: args[2] as Key?, navigationBar: args[3] as ObstructingPreferredSizeWidget?, backgroundColor: args[0] as Color?, resizeToAvoidBottomInset: args[4] as bool, child: args[1] as Widget),
       };

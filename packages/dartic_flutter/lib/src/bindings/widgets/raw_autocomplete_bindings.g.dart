@@ -44,6 +44,7 @@ abstract final class RawAutocompleteBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createState#0': (args) => (args[0] as RawAutocomplete).createState(),
+        'toString#0': (args) => (args[0] as RawAutocomplete).toString(),
         'createElement#0': (args) => (args[0] as RawAutocomplete).createElement(),
         'toStringShort#0': (args) => (args[0] as RawAutocomplete).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RawAutocomplete).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -60,7 +61,9 @@ abstract final class RawAutocompleteBindings {
         'optionsBuilder#0': (args) => (args[0] as RawAutocomplete).optionsBuilder,
         'textEditingController#0': (args) => (args[0] as RawAutocomplete).textEditingController,
         'initialValue#0': (args) => (args[0] as RawAutocomplete).initialValue,
+        'hashCode#0': (args) => (args[0] as RawAutocomplete).hashCode,
         'key#0': (args) => (args[0] as RawAutocomplete).key,
+        '==#1': (args) => (args[0] as RawAutocomplete) == (args[1] as Object),
         '#10': (args) => RawAutocomplete<Object>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, optionsViewBuilder: (a, b, c) => (args[1] as Function)(a, b, c) as Widget, optionsBuilder: (a) => (args[2] as Function)(a) as FutureOr<Iterable<Object>>, optionsViewOpenDirection: identical(args[3], darticAbsent) ? OptionsViewOpenDirection.down : args[3] as OptionsViewOpenDirection, displayStringForOption: identical(args[4], darticAbsent) ? RawAutocomplete.defaultStringForOption : (a) => (args[4] as Function)(a) as String, fieldViewBuilder: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a, b, c, d) => (args[5] as Function?)!(a, b, c, d), focusNode: identical(args[6], darticAbsent) ? null : args[6] as FocusNode?, onSelected: identical(args[7], darticAbsent) ? null : (args[7] as Function?) == null ? null : (a) => (args[7] as Function?)!(a), textEditingController: identical(args[8], darticAbsent) ? null : args[8] as TextEditingController?, initialValue: identical(args[9], darticAbsent) ? null : args[9] as TextEditingValue?),
         '_#fromFields#10': (args) => RawAutocomplete<Object>(key: args[4] as Key?, optionsViewBuilder: args[7] as Widget Function(BuildContext, void Function(Object), Iterable<Object>), optionsBuilder: args[6] as FutureOr<Iterable<Object>> Function(TextEditingValue), optionsViewOpenDirection: args[8] as OptionsViewOpenDirection, displayStringForOption: args[0] as String Function(Object), fieldViewBuilder: args[1] as AutocompleteFieldViewBuilder?, focusNode: args[2] as FocusNode?, onSelected: args[5] as void Function(Object)?, textEditingController: args[9] as TextEditingController?, initialValue: args[3] as TextEditingValue?),
       };

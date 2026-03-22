@@ -40,6 +40,7 @@ abstract final class BlockSemanticsBindings {
         'createRenderObject#1': (args) => (args[0] as BlockSemantics).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as BlockSemantics).updateRenderObject(args[1] as BuildContext, args[2] as RenderBlockSemantics); return null; },
         'debugFillProperties#1': (args) { (args[0] as BlockSemantics).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as BlockSemantics).toString(),
         'createElement#0': (args) => (args[0] as BlockSemantics).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as BlockSemantics).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as BlockSemantics).toStringShort(),
@@ -48,8 +49,10 @@ abstract final class BlockSemanticsBindings {
         'toDiagnosticsNode#2': (args) => (args[0] as BlockSemantics).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
         'debugDescribeChildren#0': (args) => (args[0] as BlockSemantics).debugDescribeChildren(),
         'blocking#0': (args) => (args[0] as BlockSemantics).blocking,
+        'hashCode#0': (args) => (args[0] as BlockSemantics).hashCode,
         'child#0': (args) => (args[0] as BlockSemantics).child,
         'key#0': (args) => (args[0] as BlockSemantics).key,
+        '==#1': (args) => (args[0] as BlockSemantics) == (args[1] as Object),
         '#3': (args) => BlockSemantics(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, blocking: identical(args[1], darticAbsent) ? true : args[1] as bool, child: identical(args[2], darticAbsent) ? null : args[2] as Widget?),
         '_#fromFields#3': (args) => BlockSemantics(key: args[2] as Key?, blocking: args[0] as bool, child: args[1] as Widget?),
       };

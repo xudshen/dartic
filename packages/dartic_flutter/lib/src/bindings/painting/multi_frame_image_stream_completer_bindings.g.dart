@@ -28,6 +28,7 @@ abstract final class MultiFrameImageStreamCompleterBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'addListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).addListener(args[1] as ImageStreamListener); return null; },
         'removeListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).removeListener(args[1] as ImageStreamListener); return null; },
+        'toString#0': (args) => (args[0] as MultiFrameImageStreamCompleter).toString(),
         'addEphemeralErrorListener#1': (args) { (args[0] as MultiFrameImageStreamCompleter).addEphemeralErrorListener((a, b) => (args[1] as Function)(a, b)); return null; },
         'keepAlive#0': (args) => (args[0] as MultiFrameImageStreamCompleter).keepAlive(),
         'onDisposed#0': (args) { (args[0] as MultiFrameImageStreamCompleter).onDisposed(); return null; },
@@ -40,9 +41,11 @@ abstract final class MultiFrameImageStreamCompleterBindings {
         'debugFillProperties#1': (args) { (args[0] as MultiFrameImageStreamCompleter).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'toStringShort#0': (args) => (args[0] as MultiFrameImageStreamCompleter).toStringShort(),
         'toDiagnosticsNode#2': (args) => (args[0] as MultiFrameImageStreamCompleter).toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?),
+        'hashCode#0': (args) => (args[0] as MultiFrameImageStreamCompleter).hashCode,
         'debugLabel#0': (args) => (args[0] as MultiFrameImageStreamCompleter).debugLabel,
         'hasListeners#0': (args) => (args[0] as MultiFrameImageStreamCompleter).hasListeners,
         'debugLabel=#1': (args) { (args[0] as MultiFrameImageStreamCompleter).debugLabel = args[1] as String?; return args[1]; },
+        '==#1': (args) => (args[0] as MultiFrameImageStreamCompleter) == (args[1] as Object),
         '#5': (args) => MultiFrameImageStreamCompleter(codec: args[0] as Future<ui.Codec>, scale: args[1] as double, debugLabel: identical(args[2], darticAbsent) ? null : args[2] as String?, chunkEvents: identical(args[3], darticAbsent) ? null : args[3] as Stream<ImageChunkEvent>?, informationCollector: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : () => (args[4] as Function?)!()),
       };
 }

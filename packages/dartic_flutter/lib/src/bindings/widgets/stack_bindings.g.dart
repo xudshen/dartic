@@ -42,6 +42,7 @@ abstract final class StackBindings {
         'createRenderObject#1': (args) => (args[0] as Stack).createRenderObject(args[1] as BuildContext),
         'updateRenderObject#2': (args) { (args[0] as Stack).updateRenderObject(args[1] as BuildContext, args[2] as RenderStack); return null; },
         'debugFillProperties#1': (args) { (args[0] as Stack).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
+        'toString#0': (args) => (args[0] as Stack).toString(),
         'createElement#0': (args) => (args[0] as Stack).createElement(),
         'didUnmountRenderObject#1': (args) { (args[0] as Stack).didUnmountRenderObject(args[1] as RenderObject); return null; },
         'toStringShort#0': (args) => (args[0] as Stack).toStringShort(),
@@ -53,8 +54,10 @@ abstract final class StackBindings {
         'textDirection#0': (args) => (args[0] as Stack).textDirection,
         'fit#0': (args) => (args[0] as Stack).fit,
         'clipBehavior#0': (args) => (args[0] as Stack).clipBehavior,
+        'hashCode#0': (args) => (args[0] as Stack).hashCode,
         'children#0': (args) => (args[0] as Stack).children,
         'key#0': (args) => (args[0] as Stack).key,
+        '==#1': (args) => (args[0] as Stack) == (args[1] as Object),
         '#6': (args) => Stack(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, alignment: identical(args[1], darticAbsent) ? AlignmentDirectional.topStart : args[1] as AlignmentGeometry, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?, fit: identical(args[3], darticAbsent) ? StackFit.loose : args[3] as StackFit, clipBehavior: identical(args[4], darticAbsent) ? Clip.hardEdge : args[4] as ui.Clip, children: identical(args[5], darticAbsent) ? const <Widget>[] : (args[5] as List).cast<Widget>()),
         '_#fromFields#6': (args) => Stack(key: args[4] as Key?, alignment: args[0] as AlignmentGeometry, textDirection: args[5] as ui.TextDirection?, fit: args[3] as StackFit, clipBehavior: args[2] as ui.Clip, children: (args[1] as List).cast<Widget>()),
       };

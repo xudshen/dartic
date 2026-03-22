@@ -27,5 +27,8 @@ abstract final class SliverGridDelegateBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'getLayout#1': (args) => (args[0] as SliverGridDelegate).getLayout(args[1] as SliverConstraints),
         'shouldRelayout#1': (args) => (args[0] as SliverGridDelegate).shouldRelayout(args[1] as SliverGridDelegate),
+        'toString#0': (args) => (args[0] as SliverGridDelegate).toString(),
+        'hashCode#0': (args) => (args[0] as SliverGridDelegate).hashCode,
+        '==#1': (args) => (args[0] as SliverGridDelegate) == (args[1] as Object),
       };
 }

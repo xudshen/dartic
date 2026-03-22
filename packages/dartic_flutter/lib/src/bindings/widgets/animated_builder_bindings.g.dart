@@ -30,6 +30,7 @@ abstract final class AnimatedBuilderBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AnimatedBuilder).toString(),
         'build#1': (args) => (args[0] as AnimatedBuilder).build(args[1] as BuildContext),
         'createState#0': (args) => (args[0] as AnimatedBuilder).createState(),
         'debugFillProperties#1': (args) { (args[0] as AnimatedBuilder).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -42,8 +43,10 @@ abstract final class AnimatedBuilderBindings {
         'animation#0': (args) => (args[0] as AnimatedBuilder).animation,
         'listenable#0': (args) => (args[0] as AnimatedBuilder).listenable,
         'builder#0': (args) => (args[0] as AnimatedBuilder).builder,
+        'hashCode#0': (args) => (args[0] as AnimatedBuilder).hashCode,
         'child#0': (args) => (args[0] as AnimatedBuilder).child,
         'key#0': (args) => (args[0] as AnimatedBuilder).key,
+        '==#1': (args) => (args[0] as AnimatedBuilder) == (args[1] as Object),
         '#4': (args) => AnimatedBuilder(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, animation: args[1] as Listenable, builder: (a, b) => (args[2] as Function)(a, b) as Widget, child: identical(args[3], darticAbsent) ? null : args[3] as Widget?),
         '_#fromFields#4': (args) => AnimatedBuilder(key: args[2] as Key?, animation: args[3] as Listenable, builder: args[0] as TransitionBuilder, child: args[1] as Widget?),
       };

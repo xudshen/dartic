@@ -33,7 +33,10 @@ abstract final class RenderSliverBoxChildManagerBindings {
         'didStartLayout#0': (args) { (args[0] as RenderSliverBoxChildManager).didStartLayout(); return null; },
         'didFinishLayout#0': (args) { (args[0] as RenderSliverBoxChildManager).didFinishLayout(); return null; },
         'debugAssertChildListLocked#0': (args) => (args[0] as RenderSliverBoxChildManager).debugAssertChildListLocked(),
+        'toString#0': (args) => (args[0] as RenderSliverBoxChildManager).toString(),
         'childCount#0': (args) => (args[0] as RenderSliverBoxChildManager).childCount,
         'estimatedChildCount#0': (args) => (args[0] as RenderSliverBoxChildManager).estimatedChildCount,
+        'hashCode#0': (args) => (args[0] as RenderSliverBoxChildManager).hashCode,
+        '==#1': (args) => (args[0] as RenderSliverBoxChildManager) == (args[1] as Object),
       };
 }

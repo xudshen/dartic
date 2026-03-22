@@ -35,5 +35,7 @@ abstract final class PathMetricBindings {
         'length#0': (args) => (args[0] as PathMetric).length,
         'isClosed#0': (args) => (args[0] as PathMetric).isClosed,
         'contourIndex#0': (args) => (args[0] as PathMetric).contourIndex,
+        'hashCode#0': (args) => (args[0] as PathMetric).hashCode,
+        '==#1': (args) => (args[0] as PathMetric) == (args[1] as Object),
       };
 }

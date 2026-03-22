@@ -56,6 +56,7 @@ abstract final class RadioMenuButtonBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'build#1': (args) => (args[0] as RadioMenuButton).build(args[1] as BuildContext),
+        'toString#0': (args) => (args[0] as RadioMenuButton).toString(),
         'createElement#0': (args) => (args[0] as RadioMenuButton).createElement(),
         'toStringShort#0': (args) => (args[0] as RadioMenuButton).toStringShort(),
         'debugFillProperties#1': (args) { (args[0] as RadioMenuButton).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
@@ -78,7 +79,9 @@ abstract final class RadioMenuButtonBindings {
         'closeOnActivate#0': (args) => (args[0] as RadioMenuButton).closeOnActivate,
         'child#0': (args) => (args[0] as RadioMenuButton).child,
         'enabled#0': (args) => (args[0] as RadioMenuButton).enabled,
+        'hashCode#0': (args) => (args[0] as RadioMenuButton).hashCode,
         'key#0': (args) => (args[0] as RadioMenuButton).key,
+        '==#1': (args) => (args[0] as RadioMenuButton) == (args[1] as Object),
         '#15': (args) => RadioMenuButton<dynamic>(key: identical(args[0], darticAbsent) ? null : args[0] as Key?, value: args[1], groupValue: args[2], onChanged: (args[3] as Function?) == null ? null : (a) => (args[3] as Function?)!(a), toggleable: identical(args[4], darticAbsent) ? false : args[4] as bool, onHover: identical(args[5], darticAbsent) ? null : (args[5] as Function?) == null ? null : (a) => (args[5] as Function?)!(a), onFocusChange: identical(args[6], darticAbsent) ? null : (args[6] as Function?) == null ? null : (a) => (args[6] as Function?)!(a), focusNode: identical(args[7], darticAbsent) ? null : args[7] as FocusNode?, shortcut: identical(args[8], darticAbsent) ? null : args[8] as MenuSerializableShortcut?, style: identical(args[9], darticAbsent) ? null : args[9] as ButtonStyle?, statesController: identical(args[10], darticAbsent) ? null : args[10] as WidgetStatesController?, clipBehavior: identical(args[11], darticAbsent) ? Clip.none : args[11] as Clip, trailingIcon: identical(args[12], darticAbsent) ? null : args[12] as Widget?, closeOnActivate: identical(args[13], darticAbsent) ? true : args[13] as bool, child: args[14] as Widget?),
         '_#fromFields#15': (args) => RadioMenuButton<dynamic>(key: args[5] as Key?, value: args[14], groupValue: args[4], onChanged: args[6] as void Function(Object?)?, toggleable: args[12] as bool, onHover: args[8] as ValueChanged<bool>?, onFocusChange: args[7] as ValueChanged<bool>?, focusNode: args[3] as FocusNode?, shortcut: args[9] as MenuSerializableShortcut?, style: args[11] as ButtonStyle?, statesController: args[10] as WidgetStatesController?, clipBehavior: args[1] as Clip, trailingIcon: args[13] as Widget?, closeOnActivate: args[2] as bool, child: args[0] as Widget?),
       };

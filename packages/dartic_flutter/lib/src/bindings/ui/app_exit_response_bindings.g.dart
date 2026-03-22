@@ -33,6 +33,9 @@ abstract final class AppExitResponseBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
+        'toString#0': (args) => (args[0] as AppExitResponse).toString(),
+        'hashCode#0': (args) => (args[0] as AppExitResponse).hashCode,
         'index#0': (args) => (args[0] as AppExitResponse).index,
+        '==#1': (args) => (args[0] as AppExitResponse) == (args[1] as Object),
       };
 }

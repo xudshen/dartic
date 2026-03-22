@@ -35,11 +35,13 @@ abstract final class TwoDimensionalViewportParentDataBindings {
         'isVisible#0': (args) => (args[0] as TwoDimensionalViewportParentData).isVisible,
         'paintOffset#0': (args) => (args[0] as TwoDimensionalViewportParentData).paintOffset,
         'keptAlive#0': (args) => (args[0] as TwoDimensionalViewportParentData).keptAlive,
+        'hashCode#0': (args) => (args[0] as TwoDimensionalViewportParentData).hashCode,
         'keepAlive#0': (args) => (args[0] as TwoDimensionalViewportParentData).keepAlive,
         'layoutOffset=#1': (args) { (args[0] as TwoDimensionalViewportParentData).layoutOffset = args[1] as Offset?; return args[1]; },
         'vicinity=#1': (args) { (args[0] as TwoDimensionalViewportParentData).vicinity = args[1] as ChildVicinity; return args[1]; },
         'paintOffset=#1': (args) { (args[0] as TwoDimensionalViewportParentData).paintOffset = args[1] as Offset?; return args[1]; },
         'keepAlive=#1': (args) { (args[0] as TwoDimensionalViewportParentData).keepAlive = args[1] as bool; return args[1]; },
+        '==#1': (args) => (args[0] as TwoDimensionalViewportParentData) == (args[1] as Object),
         '#0': (args) => TwoDimensionalViewportParentData(),
       };
 }

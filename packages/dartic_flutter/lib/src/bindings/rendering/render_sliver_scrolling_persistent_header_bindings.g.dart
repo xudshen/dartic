@@ -44,6 +44,7 @@ abstract final class RenderSliverScrollingPersistentHeaderBindings {
         'updateGeometry#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).updateGeometry(),
         'performLayout#0': (args) { (args[0] as RenderSliverScrollingPersistentHeader).performLayout(); return null; },
         'childMainAxisPosition#1': (args) => (args[0] as RenderSliverScrollingPersistentHeader).childMainAxisPosition(args[1] as RenderBox),
+        'toString#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).toString(),
         'updateChild#2': (args) { (args[0] as RenderSliverScrollingPersistentHeader).updateChild(args[1] as double, args[2] as bool); return null; },
         'markNeedsLayout#0': (args) { (args[0] as RenderSliverScrollingPersistentHeader).markNeedsLayout(); return null; },
         'layoutChild#3': (args) { (args[0] as RenderSliverScrollingPersistentHeader).layoutChild(args[1] as double, args[2] as double, overlapsContent: identical(args[3], darticAbsent) ? false : args[3] as bool); return null; },
@@ -107,6 +108,7 @@ abstract final class RenderSliverScrollingPersistentHeaderBindings {
         'debugValidateChild#1': (args) => (args[0] as RenderSliverScrollingPersistentHeader).debugValidateChild(args[1] as RenderObject),
         'hitTestBoxChild#4': (args) => (args[0] as RenderSliverScrollingPersistentHeader).hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double),
         'applyPaintTransformForBoxChild#2': (args) { (args[0] as RenderSliverScrollingPersistentHeader).applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; },
+        'hashCode#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).hashCode,
         'maxExtent#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).maxExtent,
         'minExtent#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).minExtent,
         'childExtent#0': (args) => (args[0] as RenderSliverScrollingPersistentHeader).childExtent,
@@ -151,5 +153,6 @@ abstract final class RenderSliverScrollingPersistentHeaderBindings {
         'debugCreator=#1': (args) { (args[0] as RenderSliverScrollingPersistentHeader).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderSliverScrollingPersistentHeader).layer = args[1] as ContainerLayer?; return args[1]; },
         'child=#1': (args) { (args[0] as RenderSliverScrollingPersistentHeader).child = args[1] as RenderBox?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderSliverScrollingPersistentHeader) == (args[1] as Object),
       };
 }

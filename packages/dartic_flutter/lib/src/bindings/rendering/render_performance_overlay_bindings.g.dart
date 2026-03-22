@@ -42,6 +42,7 @@ abstract final class RenderPerformanceOverlayBindings {
         'computeMaxIntrinsicHeight#1': (args) => (args[0] as RenderPerformanceOverlay).computeMaxIntrinsicHeight(args[1] as double),
         'computeDryLayout#1': (args) => (args[0] as RenderPerformanceOverlay).computeDryLayout(args[1] as BoxConstraints),
         'paint#2': (args) { (args[0] as RenderPerformanceOverlay).paint(args[1] as PaintingContext, args[2] as Offset); return null; },
+        'toString#0': (args) => (args[0] as RenderPerformanceOverlay).toString(),
         'setupParentData#1': (args) { (args[0] as RenderPerformanceOverlay).setupParentData(args[1] as RenderObject); return null; },
         'getMinIntrinsicWidth#1': (args) => (args[0] as RenderPerformanceOverlay).getMinIntrinsicWidth(args[1] as double),
         'getMaxIntrinsicWidth#1': (args) => (args[0] as RenderPerformanceOverlay).getMaxIntrinsicWidth(args[1] as double),
@@ -115,6 +116,7 @@ abstract final class RenderPerformanceOverlayBindings {
         'optionsMask#0': (args) => (args[0] as RenderPerformanceOverlay).optionsMask,
         'sizedByParent#0': (args) => (args[0] as RenderPerformanceOverlay).sizedByParent,
         'alwaysNeedsCompositing#0': (args) => (args[0] as RenderPerformanceOverlay).alwaysNeedsCompositing,
+        'hashCode#0': (args) => (args[0] as RenderPerformanceOverlay).hashCode,
         'hasSize#0': (args) => (args[0] as RenderPerformanceOverlay).hasSize,
         'size#0': (args) => (args[0] as RenderPerformanceOverlay).size,
         'semanticBounds#0': (args) => (args[0] as RenderPerformanceOverlay).semanticBounds,
@@ -148,6 +150,7 @@ abstract final class RenderPerformanceOverlayBindings {
         'parentData=#1': (args) { (args[0] as RenderPerformanceOverlay).parentData = args[1] as ParentData?; return args[1]; },
         'debugCreator=#1': (args) { (args[0] as RenderPerformanceOverlay).debugCreator = args[1]; return args[1]; },
         'layer=#1': (args) { (args[0] as RenderPerformanceOverlay).layer = args[1] as ContainerLayer?; return args[1]; },
+        '==#1': (args) => (args[0] as RenderPerformanceOverlay) == (args[1] as Object),
         '#1': (args) => RenderPerformanceOverlay(optionsMask: identical(args[0], darticAbsent) ? 0 : args[0] as int),
       };
 }

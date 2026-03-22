@@ -25,7 +25,10 @@ abstract final class MouseCursorManagerBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'debugDeviceActiveCursor#1': (args) => (args[0] as MouseCursorManager).debugDeviceActiveCursor(args[1] as int),
         'handleDeviceCursorUpdate#3': (args) { (args[0] as MouseCursorManager).handleDeviceCursorUpdate(args[1] as int, args[2] as PointerEvent?, (args[3] as Iterable).cast<MouseCursor>()); return null; },
+        'toString#0': (args) => (args[0] as MouseCursorManager).toString(),
         'fallbackMouseCursor#0': (args) => (args[0] as MouseCursorManager).fallbackMouseCursor,
+        'hashCode#0': (args) => (args[0] as MouseCursorManager).hashCode,
+        '==#1': (args) => (args[0] as MouseCursorManager) == (args[1] as Object),
         '#1': (args) => MouseCursorManager(args[0] as MouseCursor),
       };
 }
