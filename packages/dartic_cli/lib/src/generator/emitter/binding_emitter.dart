@@ -738,19 +738,20 @@ void _writeFromFieldsKernel(StringBuffer buf, TypeInfo info,
 
   // ── Validate fromFields safety ──────────────────────────────────────
   // fromFields passes InstanceConstant field VALUES to a constructor.
-  // This is only safe when:
-  //   1. ALL fields are mapped to constructor params (full coverage)
-  //   2. ALL mappings are identity (field = param, no computation)
-  // Violations are reported as errors — user must provide YAML override.
+  // Unmapped fields (paramName == null) are set to constants by the
+  // constructor. This is safe when only ONE const constructor exists
+  // (all instances have the same constant). With MULTIPLE const
+  // constructors, different constructors may set unmapped fields to
+  // different constants — the single fromFields can't distinguish.
 
-  // Check 1: field coverage — unmapped fields mean multi-constructor ambiguity.
   final unmapped = mappings.where((m) => m.paramName == null).toList();
-  if (unmapped.isNotEmpty) {
+  if (unmapped.isNotEmpty && fromFieldsInfo.constCtorCount > 1) {
     final unmappedNames = unmapped.map((m) => m.fieldName).join(', ');
     final ctorDisplay = ctorName.isEmpty ? '(unnamed)' : '.$ctorName()';
     stderr.writeln(
         'ERROR: _#fromFields cannot auto-generate for ${info.className}: '
-        'constructor $ctorDisplay does not cover fields [$unmappedNames]. '
+        '${fromFieldsInfo.constCtorCount} const constructors with '
+        'uncovered fields [$unmappedNames] in $ctorDisplay. '
         'Add YAML override: "$fromFieldsKey"');
     return;
   }

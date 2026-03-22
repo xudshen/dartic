@@ -28,14 +28,14 @@ class DarticFlutterPlugin extends DarticPlugin {
   @override
   void register(DarticPluginContext context) {
     AnimationPlugin().register(context);
-    UiPlugin().register(context);
+    CupertinoPlugin().register(context);
+    GesturesPlugin().register(context);
+    MaterialPlugin().register(context);
     PaintingPlugin().register(context);
     RenderingPlugin().register(context);
-    GesturesPlugin().register(context);
-    ServicesPlugin().register(context);
     SchedulerPlugin().register(context);
+    ServicesPlugin().register(context);
+    UiPlugin().register(context);
     WidgetsPlugin().register(context);
-    MaterialPlugin().register(context);
-    CupertinoPlugin().register(context);
   }
 }

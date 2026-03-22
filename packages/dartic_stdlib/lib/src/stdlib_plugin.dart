@@ -17,9 +17,9 @@ class DarticStdlibPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext context) {
-    CorePlugin().register(context);
     AsyncPlugin().register(context);
     CollectionPlugin().register(context);
+    CorePlugin().register(context);
     ConvertPlugin().register(context);
     MathPlugin().register(context);
   }

@@ -74,9 +74,16 @@ class FromFieldsInfo {
   /// Per-field mappings.
   final List<FieldParamMapping> mappings;
 
+  /// Number of public non-external const constructors in the class.
+  /// When > 1, unmapped fields are ambiguous (different constructors may
+  /// set them to different constants). When == 1, unmapped fields are safe
+  /// (always the same constant for all instances).
+  final int constCtorCount;
+
   FromFieldsInfo({
     required this.constructorName,
     required this.mappings,
+    this.constCtorCount = 1,
   });
 }
 

@@ -437,11 +437,13 @@ class KernelIntrospector {
 
     if (constCtors.isEmpty) return null;
 
+    final ctorCount = constCtors.length;
     FromFieldsInfo? best;
     int bestScore = -1;
 
     for (final ctor in constCtors) {
-      final info = _extractFromFieldsInfo(cls, ctor, allFields);
+      final info = _extractFromFieldsInfo(cls, ctor, allFields,
+          constCtorCount: ctorCount);
       if (info == null) continue;
 
       // Score = number of fields with identified params.
@@ -462,8 +464,9 @@ class KernelIntrospector {
   FromFieldsInfo? _extractFromFieldsInfo(
     ir.Class cls,
     ir.Constructor ctor,
-    List<KernelFieldInfo> allFields,
-  ) {
+    List<KernelFieldInfo> allFields, {
+    int constCtorCount = 1,
+  }) {
     // Build outer param lookup.
     final outerParams = <String, ir.VariableDeclaration>{};
     for (final p in ctor.function.positionalParameters) {
@@ -522,6 +525,7 @@ class KernelIntrospector {
     return FromFieldsInfo(
       constructorName: ctor.name.text,
       mappings: mappings,
+      constCtorCount: constCtorCount,
     );
   }
 
