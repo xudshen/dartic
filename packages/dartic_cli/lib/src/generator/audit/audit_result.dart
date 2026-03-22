@@ -18,6 +18,9 @@ class AuditResult {
   /// Members where generated arity doesn't match Kernel arity.
   final List<AuditEntry> signatureMismatch;
 
+  /// Warnings about auto-gen patterns that may need manual attention.
+  final List<AuditEntry> warnings;
+
   AuditResult({
     required this.className,
     required this.libraryUri,
@@ -25,10 +28,13 @@ class AuditResult {
     required this.skipped,
     required this.stale,
     required this.signatureMismatch,
+    this.warnings = const [],
   });
 
   bool get isClean =>
       missing.isEmpty && stale.isEmpty && signatureMismatch.isEmpty;
+
+  bool get hasWarnings => warnings.isNotEmpty;
 
   String get qualifiedName => '$libraryUri::$className';
 }

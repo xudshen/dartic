@@ -21,6 +21,7 @@ class AuditReporter {
     required KernelClassInfo kernelInfo,
     Set<String>? yamlOverrideKeys,
     Set<String>? yamlSkipList,
+    bool bridgeRequested = false,
   }) {
     final kernelMembers = kernelInfo.allPublicMembers;
     final overrideKeys = yamlOverrideKeys ?? <String>{};
@@ -110,6 +111,9 @@ class AuditReporter {
       }
     }
 
+    // WARNINGS: auto-gen patterns that may produce incorrect behavior.
+    final warnings = _detectWarnings(info, bridgeRequested: bridgeRequested);
+
     return AuditResult(
       className: info.className,
       libraryUri: info.libraryUri,
@@ -117,7 +121,50 @@ class AuditReporter {
       skipped: skipped,
       stale: stale,
       signatureMismatch: signatureMismatch,
+      warnings: warnings,
     );
+  }
+
+  /// Detects auto-gen patterns that may need manual extra_methods.
+  static List<AuditEntry> _detectWarnings(
+    TypeInfo info, {
+    bool bridgeRequested = false,
+  }) {
+    final warnings = <AuditEntry>[];
+
+    // Check methods for nullable params with non-null inaccessible defaults.
+    // Auto-gen passes null for absent nullable params, but the actual default
+    // may be non-null (e.g., writeln([Object? obj = '']) — '' not null).
+    for (final method in [...info.methods, ...info.staticMethods]) {
+      for (final param in method.paramTypes) {
+        if (!param.isOptional) continue;
+        final type = param.type;
+        if (!type.endsWith('?') && type != 'dynamic') continue;
+        final defaultVal = param.defaultValueCode;
+        if (defaultVal == null || defaultVal == 'null') continue;
+        // Nullable param with non-null default — auto-gen will use null
+        // fallback which changes behavior.
+        warnings.add(AuditEntry(
+          '${method.name}#${method.paramTypes.length}',
+          "param '${param.name}' default is $defaultVal (not null) — "
+              'auto-gen uses null fallback, add extra_methods with omission '
+              'branching if behavior matters',
+          AuditSeverity.warning,
+        ));
+      }
+    }
+
+    // Bridge silently skipped: bridge: true in YAML but class is final/private.
+    if (bridgeRequested && (info.isFinal || info.className.startsWith('_'))) {
+      final reason = info.isFinal ? 'class is final' : 'class is private';
+      warnings.add(AuditEntry(
+        info.className,
+        'bridge: true but $reason — no Bridge class generated',
+        AuditSeverity.warning,
+      ));
+    }
+
+    return warnings;
   }
 
   /// Computes the set of binding keys that the emitter would generate
@@ -156,9 +203,6 @@ class AuditReporter {
       }
     }
 
-    // Operators == is always skipped.
-    if (name == '==') return 'operator == skipped';
-
     return null;
   }
 
@@ -168,9 +212,10 @@ class AuditReporter {
     var missingCount = 0;
     var staleCount = 0;
     var mismatchCount = 0;
+    var warningCount = 0;
 
     for (final r in results) {
-      if (r.isClean) {
+      if (r.isClean && !r.hasWarnings) {
         cleanCount++;
       } else {
         if (r.missing.isNotEmpty) {
@@ -197,15 +242,27 @@ class AuditReporter {
           }
           mismatchCount += r.signatureMismatch.length;
         }
+        if (r.warnings.isNotEmpty) {
+          stderr.writeln(
+              '  ${r.qualifiedName}: ${r.warnings.length} WARNING');
+          for (final e in r.warnings) {
+            stderr.writeln('    - $e');
+          }
+          warningCount += r.warnings.length;
+        }
       }
     }
 
     stderr.writeln('');
     stderr.writeln('=== Audit Summary ===');
-    stderr.writeln(
-        '${results.length} classes: $cleanCount clean, '
-        '$missingCount missing, $staleCount stale, '
-        '$mismatchCount signature mismatch');
+    final parts = <String>[
+      '$cleanCount clean',
+      if (missingCount > 0) '$missingCount missing',
+      if (staleCount > 0) '$staleCount stale',
+      if (mismatchCount > 0) '$mismatchCount signature mismatch',
+      if (warningCount > 0) '$warningCount warnings',
+    ];
+    stderr.writeln('${results.length} classes: ${parts.join(', ')}');
     stderr.writeln('=====================');
   }
 }

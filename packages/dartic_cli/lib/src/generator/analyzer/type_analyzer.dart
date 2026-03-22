@@ -20,8 +20,12 @@ import 'type_info.dart';
 class TypeAnalyzer {
   final AnalysisSession _session;
   final AnalysisContextCollection _collection;
+  final Map<String, TypeInfo> _typeInfoCache = {};
 
   TypeAnalyzer._(this._session, this._collection);
+
+  /// Returns cached TypeInfo for a class name, or null if not yet analyzed.
+  TypeInfo? getCachedTypeInfo(String className) => _typeInfoCache[className];
 
   /// Creates a new [TypeAnalyzer].
   ///
@@ -69,7 +73,9 @@ class TypeAnalyzer {
         'Class "$className" not found in library "$libraryUri"',
       );
     }
-    return _extractTypeInfo(cls, libraryUri);
+    final info = _extractTypeInfo(cls, libraryUri);
+    _typeInfoCache[className] = info;
+    return info;
   }
 
   /// Analyzes a top-level function from the given library.

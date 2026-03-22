@@ -493,7 +493,8 @@ class Runner {
       }
 
       // ── Audit ──
-      _auditClass(library, resolvedName, analyzer);
+      _auditClass(library, resolvedName, analyzer,
+          bridge: classConfig.bridge);
     }
 
     // ── Process top-level functions ────────────────────────────────────
@@ -797,36 +798,17 @@ class Runner {
   void _auditClass(
     LibraryConfig library,
     String resolvedName,
-    TypeAnalyzer analyzer,
-  ) {
+    TypeAnalyzer analyzer, {
+    bool bridge = false,
+  }) {
     final kernelInfo = _kernelIntrospector?.lookup(library.uri, resolvedName);
     if (kernelInfo == null) return; // No Kernel data, skip audit.
 
-    // Build TypeInfo from cache (analyzer already analyzed it).
-    // For private classes, use empty TypeInfo.
-    TypeInfo? info;
-    if (resolvedName.startsWith('_')) {
-      info = _emptyTypeInfo(resolvedName, library.uri);
-    } else {
-      try {
-        // Re-use the analyzer's cached result.
-        info = TypeInfo(
-          className: resolvedName,
-          libraryUri: library.uri,
-          methods: [],
-          getters: [],
-          setters: [],
-          operators: [],
-          staticMethods: [],
-          constructors: [],
-          superclasses: [],
-        );
-        // We don't have the full TypeInfo here without re-analyzing.
-        // For now, use Kernel-only audit (check YAML overrides against Kernel).
-      } catch (_) {
-        return;
-      }
-    }
+    // Use cached TypeInfo from analyzer if available; fall back to empty.
+    final info = resolvedName.startsWith('_')
+        ? _emptyTypeInfo(resolvedName, library.uri)
+        : (analyzer.getCachedTypeInfo(resolvedName) ??
+            _emptyTypeInfo(resolvedName, library.uri));
 
     final overrides = library.overrides[resolvedName];
     final yamlOverrideKeys = overrides?.extraMethods.keys.toSet();
@@ -835,9 +817,10 @@ class Runner {
       info: info,
       kernelInfo: kernelInfo,
       yamlOverrideKeys: yamlOverrideKeys,
+      bridgeRequested: bridge,
     );
 
-    if (!result.isClean) {
+    if (!result.isClean || result.hasWarnings) {
       auditResults.add(result);
     }
   }
