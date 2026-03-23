@@ -282,37 +282,24 @@ class DarticEngine {
         }
 
         // Host interface match (implements scenario).
+        // Also register under the INTERFACE classId for EXTRACT_FACE lookup.
         if (factory == null && classInfo.hostInterfaceNames != null) {
           for (final ifaceName in classInfo.hostInterfaceNames!) {
-            factory = _pendingBridgeFactories[ifaceName];
-            if (factory != null) break;
+            final ifaceFactory = _pendingBridgeFactories[ifaceName];
+            if (ifaceFactory != null) {
+              factory ??= ifaceFactory;
+              // Register under the interface classId for EXTRACT_FACE.
+              final ifaceClassId =
+                  _hostTypeResolver.hostClassNameToId[ifaceName];
+              if (ifaceClassId != null) {
+                _bridgeFactoryRegistry.register(ifaceClassId, ifaceFactory);
+              }
+            }
           }
         }
 
         if (factory != null) {
           _bridgeFactoryRegistry.register(classInfo.classId, factory);
-        }
-      }
-    }
-
-    // Resolve face factories from bridge factories: for interface bridges,
-    // the bridge factory is registered under the interface name in
-    // _pendingBridgeFactories. We also need it registered under the
-    // INTERFACE classId (for EXTRACT_FACE lookup), not just the dartic class
-    // classId. The bridge factory resolution above handles the dartic class
-    // classId; here we handle the interface classId.
-    if (_pendingBridgeFactories.isNotEmpty) {
-      for (final classInfo in module.classes) {
-        if (classInfo.hostInterfaceNames == null) continue;
-        for (final ifaceName in classInfo.hostInterfaceNames!) {
-          final factory = _pendingBridgeFactories[ifaceName];
-          if (factory != null) {
-            // Register under the INTERFACE classId for EXTRACT_FACE.
-            final ifaceClassId = _hostTypeResolver.hostClassNameToId[ifaceName];
-            if (ifaceClassId != null) {
-              _bridgeFactoryRegistry.register(ifaceClassId, factory);
-            }
-          }
         }
       }
     }
