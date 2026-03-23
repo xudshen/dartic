@@ -35,10 +35,14 @@ extension on DarticCompiler {
     }
 
     // Ensure implemented types (interfaces / mixin types) are registered.
+    // Also register host interfaces in _typeClassIdLookup so EXTRACT_FACE
+    // can reference them. This must happen BEFORE classId assignment below,
+    // because _ensureHostInterfaceRegistered may add entries to _classInfos.
     for (final implemented in cls.implementedTypes) {
       final implClass = implemented.classNode;
-      if (!_classToClassId.containsKey(implClass) &&
-          !_isHostLibrary(implClass.enclosingLibrary)) {
+      if (_isHostLibrary(implClass.enclosingLibrary)) {
+        _ensureHostInterfaceRegistered(implClass);
+      } else if (!_classToClassId.containsKey(implClass)) {
         _registerClass(implClass);
       }
     }
@@ -221,6 +225,8 @@ extension on DarticCompiler {
     }
 
     // Detect host interfaces (implements platform types).
+    // Host interfaces are already registered in _typeClassIdLookup by the
+    // early _ensureHostInterfaceRegistered call above (before classId assignment).
     List<String>? hostInterfaceNames;
     for (final implemented in cls.implementedTypes) {
       final implClass = implemented.classNode;
@@ -463,6 +469,33 @@ extension on DarticCompiler {
       }
     }
     visit(hostClass);
+  }
+
+  /// Ensures a host (platform) interface class has a classId in
+  /// [_typeClassIdLookup] so that EXTRACT_FACE can reference it at compile
+  /// time. If the class is already registered (as a core type or from a
+  /// previous call), this is a no-op.
+  ///
+  /// Creates a lightweight [DarticClassInfo] entry — same pattern as
+  /// [_registerCoreTypes] — with no fields and no methods, since the host
+  /// interface is never instantiated by the bytecode engine.
+  void _ensureHostInterfaceRegistered(ir.Class hostClass) {
+    if (_typeClassIdLookup.containsKey(hostClass)) return;
+    final classId = _classInfos.length;
+    _typeClassIdLookup[hostClass] = classId;
+    final info = DarticClassInfo(
+      classId: classId,
+      name: _hostTypeName(hostClass),
+      superClassId: -1,
+      refFieldCount: 0,
+      valueFieldCount: 0,
+      typeParamCount: hostClass.typeParameters.length,
+    );
+    // Add to _classInfos BEFORE _collectHostSupertypeIds — the walk may
+    // look up this classId via _typeClassIdLookup and access _classInfos.
+    info.supertypeIds.add(classId);
+    _classInfos.add(info);
+    _collectHostSupertypeIds(hostClass, info.supertypeIds);
   }
 
   // ── Constructor compilation (Pass 2c) ──

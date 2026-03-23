@@ -841,6 +841,8 @@ extension on DarticCompiler {
     // 统一：所有静态方法都填充到 max arity。
     final compiledArgs =
         _compileHostArgsWithPadding(expr.arguments, target.function);
+    _applyFaceExtractions(
+        compiledArgs, _collectParamTypes(target.function));
 
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -898,6 +900,8 @@ extension on DarticCompiler {
     final target = expr.target;
     final compiledArgs =
         _compileHostArgsWithPadding(expr.arguments, target.function);
+    _applyFaceExtractions(
+        compiledArgs, _collectParamTypes(target.function));
 
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -1288,6 +1292,96 @@ extension on DarticCompiler {
     return [(reg, loc, _inferExprType(expr))];
   }
 
+  /// Emits EXTRACT_FACE for CALL_HOST arguments that are dartic objects
+  /// being passed to parameters expecting a host interface type.
+  ///
+  /// When a dartic class `implements` a host interface (e.g., TickerProvider),
+  /// the host binding will attempt `args[n] as TickerProvider`. A raw
+  /// DarticObject would fail this cast. EXTRACT_FACE converts the dartic
+  /// object into its interface bridge (face) that genuinely implements the
+  /// host interface.
+  ///
+  /// [compiledArgs] is the already-compiled argument list (mutated in place).
+  /// [paramTypes] are the expected parameter types from the Kernel IR
+  /// FunctionNode, aligned 1:1 with the *non-receiver* portion of
+  /// compiledArgs (i.e., starting at index [receiverOffset]).
+  void _applyFaceExtractions(
+    List<(int reg, ResultLoc loc, ir.DartType? type)> compiledArgs,
+    List<ir.DartType> paramTypes, {
+    int receiverOffset = 0,
+  }) {
+    for (var i = 0; i < paramTypes.length; i++) {
+      final argIdx = receiverOffset + i;
+      if (argIdx >= compiledArgs.length) break;
+
+      final paramType = paramTypes[i];
+      if (paramType is! ir.InterfaceType) continue;
+
+      final paramClass = paramType.classNode;
+      // Parameter must be a host (platform) class.
+      if (!_isHostLibrary(paramClass.enclosingLibrary)) continue;
+
+      // Infer the argument's static type to find the dartic class.
+      final argType = compiledArgs[argIdx].$3;
+      if (argType is! ir.InterfaceType) continue;
+
+      final argClass = argType.classNode;
+      // Argument must be a dartic (user-compiled) class.
+      if (!_classToClassId.containsKey(argClass)) continue;
+
+      // Check if this dartic class declares the host interface in its
+      // implementedTypes (directly or via mixin application hierarchy).
+      if (!_darticClassImplementsHostInterface(argClass, paramClass)) continue;
+
+      // Look up the interface's classId (registered by
+      // _ensureHostInterfaceRegistered during class registration).
+      final ifaceClassId = _typeClassIdLookup[paramClass];
+      if (ifaceClassId == null) continue;
+
+      // Emit EXTRACT_FACE: convert the dartic object to its face.
+      final (srcReg, srcLoc, _) = compiledArgs[argIdx];
+      // EXTRACT_FACE operates on ref stack; box if still on value stack.
+      final refReg = _boxToRefIfValue(srcReg, srcLoc, argType);
+      final faceReg = _allocRefReg();
+      _emitter.emitABC(Op.extractFace, faceReg, refReg, ifaceClassId);
+      // Replace the arg entry with the face register (already on ref stack).
+      compiledArgs[argIdx] = (faceReg, ResultLoc.ref, argType);
+    }
+  }
+
+  /// Checks if a dartic class transitively implements a host interface.
+  ///
+  /// Walks the Kernel class hierarchy (superclass chain + implementedTypes)
+  /// of [darticClass] to find if [hostInterface] appears anywhere. This
+  /// handles both direct `implements` and indirect inheritance via mixin
+  /// application classes.
+  bool _darticClassImplementsHostInterface(
+    ir.Class darticClass, ir.Class hostInterface,
+  ) {
+    final visited = <ir.Class>{};
+    bool visit(ir.Class cls) {
+      if (!visited.add(cls)) return false;
+      for (final impl in cls.implementedTypes) {
+        if (impl.classNode == hostInterface) return true;
+        if (visit(impl.classNode)) return true;
+      }
+      if (cls.superclass != null && visit(cls.superclass!)) return true;
+      if (cls.mixedInClass != null && visit(cls.mixedInClass!)) return true;
+      return false;
+    }
+    return visit(darticClass);
+  }
+
+  /// Builds a flat list of parameter types from a [FunctionNode],
+  /// matching the order produced by [_compileHostArgsWithPadding]:
+  /// positional params first, then named params in declaration order.
+  List<ir.DartType> _collectParamTypes(ir.FunctionNode func) {
+    return [
+      for (final p in func.positionalParameters) p.type,
+      for (final p in func.namedParameters) p.type,
+    ];
+  }
+
   /// Emits a CALL_HOST instruction for a platform function call.
   ///
   /// Unlike CALL_STATIC (which pushes a CallStack frame), CALL_HOST reads
@@ -1543,6 +1637,10 @@ extension on DarticCompiler {
       }
     }
 
+    // Face extraction: receiver is at index 0, parameters start at index 1.
+    _applyFaceExtractions(
+        compiledArgs, _collectParamTypes(func), receiverOffset: 1);
+
     final symbolName = _hostSymbolName(target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length,
         methodName: target.name.text);
@@ -1726,6 +1824,8 @@ extension on DarticCompiler {
   ) {
     final compiledArgs =
         _compileHostArgsWithPadding(expr.arguments, expr.target.function);
+    _applyFaceExtractions(
+        compiledArgs, _collectParamTypes(expr.target.function));
 
     final symbolName = _hostSymbolName(expr.target);
     final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
@@ -2110,6 +2210,18 @@ extension on DarticCompiler {
       (valReg, valLoc, valType),
     ];
 
+    // Face extraction for the value argument (index 1, after receiver).
+    // Resolve the setter parameter type from the target member.
+    final ir.DartType setterParamType;
+    if (target is ir.Procedure && target.isSetter) {
+      setterParamType = target.function.positionalParameters.first.type;
+    } else {
+      // Field: the parameter type is the field type.
+      setterParamType = (target as ir.Field).type;
+    }
+    _applyFaceExtractions(
+        compiledArgs, [setterParamType], receiverOffset: 1);
+
     // Setter symbol: "propertyName=" with 1 explicit param (the value).
     final symbolName = _hostSymbolName(
       target,
@@ -2486,6 +2598,10 @@ extension on DarticCompiler {
         reg = _boxToRefIfValue(reg, loc, _inferExprType(arg.value));
         compiledArgs.add((reg, ResultLoc.ref, _inferExprType(arg.value)));
       }
+      // Face extraction: receiver is at index 0, parameters start at index 1.
+      _applyFaceExtractions(
+          compiledArgs, _collectParamTypes(target.function),
+          receiverOffset: 1);
       final symbolName = _superHostBindingName(target);
       final bindingIndex = _allocBinding(symbolName, compiledArgs.length);
       return _emitCallHost(compiledArgs, bindingIndex);
