@@ -1916,8 +1916,21 @@ extension on DarticCompiler {
     }
 
     // Platform class property → CALL_HOST.
+    // Exception: dartic class with compiled getter (host mixin getter copied by CFE).
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
+      final receiverClass = _resolveReceiverClass(expr.receiver);
+      if (receiverClass != null &&
+          _classToClassId.containsKey(receiverClass)) {
+        final classId = _classToClassId[receiverClass]!;
+        final methodName = _mangleName(expr.name);
+        final nameIdx = _constantPool.addName(methodName);
+        if (_classInfos[classId].methods.containsKey(nameIdx)) {
+          if (target is ir.Procedure && target.isGetter) {
+            return _compileInstanceGetterCall(expr, target);
+          }
+        }
+      }
       return _compileHostGetterCall(expr);
     }
 
