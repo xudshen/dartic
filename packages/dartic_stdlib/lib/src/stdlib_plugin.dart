@@ -6,6 +6,7 @@ import 'plugins/async_plugin.g.dart';
 import 'plugins/collection_plugin.g.dart';
 import 'plugins/convert_plugin.g.dart';
 import 'plugins/math_plugin.g.dart';
+import 'plugins/io_plugin.g.dart';
 
 /// Standard library bindings plugin for dartic.
 ///
@@ -22,5 +23,6 @@ class DarticStdlibPlugin extends DarticPlugin {
     CorePlugin().register(context);
     ConvertPlugin().register(context);
     MathPlugin().register(context);
+    IoPlugin().register(context);
   }
 }

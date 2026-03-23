@@ -1,0 +1,8 @@
+# dart:io bindings configuration for dartic code generator.
+
+output_bindings: "../lib/src/bindings/io"
+output_plugins: "../lib/src/plugins"
+
+libraries:
+  - uri: dart:io
+    discover: all
