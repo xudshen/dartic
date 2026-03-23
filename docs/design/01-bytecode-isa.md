@@ -257,7 +257,8 @@ sAx    [op:8][_:8][sAx:48]               48 位有符号立即数（大范围跳
 0x68  SET_FIELD_DYN A, B, C       refStack[A].setProperty(names[C], refStack[B])
 0x69  STORE_SUPER_ARGS A, B, _   将 A 个参数（从 refStack[rBase+B] 起）存入 this(rBase+2).pendingSuperArgs
 0x6A  WRAP_BRIDGE   A, Bx        查 BridgeFactoryRegistry[class[Bx].classId]，命中则用 Bridge 替换 refStack[A]（ABx 格式）
-0x6B-0x6F 预留
+0x6B  EXTRACT_FACE  A, B, C      refStack[A] = refStack[B].getOrCreateFace(C)；从 dartic 对象提取接口 Bridge（face），C 为接口 classId
+0x6C-0x6F 预留
 ```
 
 > 注意：`INSTANCEOF`/`CAST`/`GET_FIELD_DYN`/`SET_FIELD_DYN` 的 C 操作数在 ABC 格式下为 16 位（0-65535），原生支持大容量类型常量池和 names 常量池索引，无需额外前缀扩展。

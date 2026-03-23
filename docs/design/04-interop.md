@@ -217,6 +217,8 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 
 此设计确保 super 构造参数在 Bridge 创建前已求值，支持任意宿主类构造函数签名（位置参数、命名参数、可选参数）。
 
+**EXTRACT_FACE 接口 Bridge 提取**：当 dartic 对象通过 mixin `implements` 宿主接口（如 `SingleTickerProviderStateMixin implements TickerProvider`）时，主 Bridge（如 `_$State`）不直接实现该接口。编译器在 CALL_HOST 参数传递时检测此情况，emit `EXTRACT_FACE A, B, C`：从 `refStack[B]` 提取 DarticObject，以 `classId=C`（接口的 classId）查找 BridgeFactoryRegistry 创建接口 Bridge（face），缓存在 `DarticObject._faces[C]` 中（同一 classId 只创建一次），结果写入 `refStack[A]`。编译器的 `_applyFaceExtractions` 在所有 CALL_HOST 调用点检查参数类型，当参数的静态类型为 dartic 类、而对应形参期望的是宿主接口类型时，自动 emit EXTRACT_FACE。`_ensureHostInterfaceRegistered` 在类注册时递归注册传递性宿主接口，确保 face classId 可用。
+
 **CALL_HOST Bridge 拦截**：当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)` 中的 `e`），方法调用编译为 `CALL_HOST`。CALL_HOST handler 在调用宿主绑定之前检查接收者是否为 `DarticObjectHolder`，若是则优先通过 `DarticDispatch` 路由 dartic 覆盖，`notOverridden` 时降级到宿主绑定。此拦截依赖 `BindingEntry.methodName` 字段区分实例方法和静态方法/构造函数。
 
 ### Bridge 运行时集成
