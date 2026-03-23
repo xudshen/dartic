@@ -133,6 +133,7 @@ const Map<int, OpMeta> opTable = {
   Op.setFieldDyn: OpMeta('SET_FIELD_DYN', InstrFormat.abc),
   Op.storeSuperArgs: OpMeta('STORE_SUPER_ARGS', InstrFormat.abc),
   Op.wrapBridge: OpMeta('WRAP_BRIDGE', InstrFormat.aBx),
+  Op.extractFace: OpMeta('EXTRACT_FACE', InstrFormat.abc),
 
   // ── Closure ──
   Op.closure: OpMeta('CLOSURE', InstrFormat.aBx),

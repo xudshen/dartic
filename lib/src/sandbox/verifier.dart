@@ -151,6 +151,7 @@ class DarticVerifier {
     Op.setFieldDyn,
     Op.storeSuperArgs,
     Op.wrapBridge,
+    Op.extractFace,
     Op.closure,
     Op.closeUpvalue,
     Op.bindClosureFta,
@@ -759,6 +760,11 @@ class DarticVerifier {
 
       // cast: A=ref(result), B=ref, C=type pool (not register)
       case Op.cast:
+        _checkRef(a, rrc, 'A', prefix, pc, op);
+        _checkRef(b, rrc, 'B', prefix, pc, op);
+
+      // extractFace: A=ref(result), B=ref(source), C=classId (not register)
+      case Op.extractFace:
         _checkRef(a, rrc, 'A', prefix, pc, op);
         _checkRef(b, rrc, 'B', prefix, pc, op);
 

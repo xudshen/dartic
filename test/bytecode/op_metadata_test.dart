@@ -32,7 +32,7 @@ void main() {
         // Object operations
         Op.getFieldRef, Op.setFieldRef, Op.getFieldVal, Op.setFieldVal,
         Op.newInstance, Op.instanceOf, Op.cast, Op.getFieldDyn, Op.setFieldDyn,
-        Op.storeSuperArgs, Op.wrapBridge,
+        Op.storeSuperArgs, Op.wrapBridge, Op.extractFace,
         // Closure
         Op.closure, Op.closeUpvalue,
         // Generics & types
@@ -62,7 +62,7 @@ void main() {
 
     test('opTable contains no extra entries beyond valid opcodes', () {
       // Verify count matches expected number of opcodes (113 in total).
-      expect(opTable.length, 114);
+      expect(opTable.length, 115);
     });
   });
 

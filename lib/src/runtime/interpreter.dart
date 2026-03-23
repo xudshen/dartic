@@ -3324,6 +3324,23 @@ class DarticInterpreter {
             pc = unwindToHandler(pc - 1, DarticCastError(objType, targetType), DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
           }
 
+        case Op.extractFace: // EXTRACT_FACE A, B, C — extract interface bridge for classId=C
+          final a = decodeA(instr);
+          final b = decodeB(instr);
+          final c = decodeC(instr);
+          final value = rs.read(rBase + b)!;
+          final obj = _extractDarticObject(value);
+          final face = obj.getOrCreateFace(c, () {
+            final factory = faceFactoryRegistry?.lookupByClassId(c);
+            if (factory == null) {
+              throw DarticError(
+                'EXTRACT_FACE: no face factory for classId=$c',
+              );
+            }
+            return factory(_activeDarticDispatch!, obj);
+          });
+          rs.write(rBase + a, face);
+
         // ── Exception Handling (0xA4-0xA5) ──
 
         case Op.throw_: // THROW A — throw refStack[A]

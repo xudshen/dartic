@@ -599,6 +599,9 @@ class DarticDisassembler {
           ? _formatDynCallDescriptor(cp.getRef(c))
           : '<out of bounds>',
       Op.tagType => 'obj=r$a, type=r$b',
+      Op.extractFace => c < module.classes.length
+          ? 'face → ${module.classes[c].name}'
+          : '<classId $c out of bounds>',
       _ => '',
     };
   }

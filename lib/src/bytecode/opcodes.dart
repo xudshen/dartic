@@ -102,6 +102,7 @@ abstract final class Op {
   static const setFieldDyn = 0x68;
   static const storeSuperArgs = 0x69;
   static const wrapBridge = 0x6A;
+  static const extractFace = 0x6B;
 
   // ── Closure (0x70-0x77) ──
   static const closure = 0x70;
