@@ -668,12 +668,37 @@ class Runner {
     for (var library in config.libraries) {
       library = _resolveDiscovery(library);
       for (final classConfig in library.classes) {
-        if (!classConfig.bridge) continue;
+        if (!classConfig.bridge && !classConfig.face) continue;
 
         final resolvedName = classConfig.resolvedName;
         final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
-        final info =
+        var info =
             await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
+
+        // For face configs, force isInterface so bridge gen uses
+        // `implements` mode and registerFaceFactory.
+        if (classConfig.face && !info.isInterface) {
+          info = TypeInfo(
+            className: info.className,
+            libraryUri: info.libraryUri,
+            methods: info.methods,
+            getters: info.getters,
+            setters: info.setters,
+            operators: info.operators,
+            staticMethods: info.staticMethods,
+            staticGetters: info.staticGetters,
+            constructors: info.constructors,
+            superclasses: info.superclasses,
+            isAbstract: info.isAbstract,
+            isFinal: info.isFinal,
+            isInterface: true,
+            isBase: info.isBase,
+            bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
+            fields: info.fields,
+            sourceImports: info.sourceImports,
+            referencedTypes: info.referencedTypes,
+          );
+        }
 
         classConfigs.add((
           name: classConfig.name,

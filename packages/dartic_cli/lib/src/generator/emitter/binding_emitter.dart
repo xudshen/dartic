@@ -1791,7 +1791,8 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     overriddenMethods.add(method.name);
     buf.writeln();
     _writeBridgeMethodOverride(buf, info.className, method,
-        overrideConfig: methodOverrides?[method.name]);
+        overrideConfig: methodOverrides?[method.name],
+        isInterfaceBridge: info.isInterface);
   }
 
   // Override getters with dispatch delegation
@@ -1799,7 +1800,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   for (final getter in info.getters) {
     overriddenGetters.add(getter.name);
     buf.writeln();
-    _writeBridgeGetterOverride(buf, getter);
+    _writeBridgeGetterOverride(buf, getter, isInterfaceBridge: info.isInterface);
   }
 
   // Override setters with dispatch delegation
@@ -2062,7 +2063,7 @@ void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
 /// 5. **Normal method** — dispatch, fallback to super if notOverridden.
 void _writeBridgeMethodOverride(
     StringBuffer buf, String className, MethodInfo method,
-    {MethodOverrideConfig? overrideConfig}) {
+    {MethodOverrideConfig? overrideConfig, bool isInterfaceBridge = false}) {
   // Build parameter list with types, respecting optional/named params.
   final requiredParams = <String>[];
   final optionalPosParams = <String>[];
@@ -2117,7 +2118,7 @@ void _writeBridgeMethodOverride(
 
   buf.writeln('  @override');
 
-  if (method.isAbstract) {
+  if (method.isAbstract || isInterfaceBridge) {
     // ── Pattern: abstract ──
     // No super call; throw if dartic code didn't override.
     if (method.isVoid) {
@@ -2215,12 +2216,12 @@ String _emitBridgeSuperArg(ParamInfo p) {
 }
 
 /// Generates a dispatch-delegating getter override for Bridge.
-void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter) {
+void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter, {bool isInterfaceBridge = false}) {
   buf.writeln('  @override');
   buf.writeln('  ${getter.returnType} get ${getter.name} {');
   buf.writeln(
       "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${getter.name}');");
-  if (getter.isAbstract) {
+  if (getter.isAbstract || isInterfaceBridge) {
     buf.writeln('    if (identical(r, notOverridden)) {');
     buf.writeln(
         "      throw UnsupportedError('Abstract getter ${getter.name} must be overridden in dartic code');");
