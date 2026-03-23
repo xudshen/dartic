@@ -1491,14 +1491,24 @@ extension on DarticCompiler {
     }
 
     // Platform method call → CALL_HOST (if specialization above didn't fire).
-    // Exception: enum instances are DarticObjects, not host objects, so
-    // calls targeting _Enum methods must go through virtual dispatch.
+    // Exception: if the receiver is a dartic class (has classId) and the
+    // method exists in its compiled method table, use CALL_VIRTUAL. This
+    // handles two cases:
+    // 1. Enum instances calling _Enum methods (existing behavior).
+    // 2. Host mixin methods copied by CFE into mixin application classes —
+    //    the method body references the original host mixin class, but the
+    //    method has been compiled as a dartic function.
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
       final receiverClass = _resolveReceiverClass(expr.receiver);
-      if (receiverClass != null && receiverClass.isEnum &&
+      if (receiverClass != null &&
           _classToClassId.containsKey(receiverClass)) {
-        return _compileVirtualCall(expr);
+        final classId = _classToClassId[receiverClass]!;
+        final methodName = _mangleName(expr.name);
+        final nameIdx = _constantPool.addName(methodName);
+        if (_classInfos[classId].methods.containsKey(nameIdx)) {
+          return _compileVirtualCall(expr);
+        }
       }
       return _compileHostInstanceCall(expr);
     }
