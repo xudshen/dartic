@@ -1913,9 +1913,9 @@ extension on DarticCompiler {
         var (receiverReg, receiverLoc) = _compileExpression(expr.receiver);
         receiverReg = _boxToRefIfValue(
             receiverReg, receiverLoc, _inferExprType(expr.receiver));
-        final resultReg = _allocRefReg();
+        final (resultReg, retLoc) = _allocResultReg(target.type);
         _emitCallVirtual(resultReg, receiverReg, _mangleName(expr.name), 0);
-        return (resultReg, ResultLoc.ref);
+        return (resultReg, retLoc);
       }
     }
 
@@ -2049,7 +2049,8 @@ extension on DarticCompiler {
         valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
         final setterName = '${_mangleName(expr.name)}=';
         _emitCallVirtual(valReg, recvReg, setterName, 1);
-        return (valReg, ResultLoc.ref);
+        final retLoc = _classifyType(target.type);
+        return (valReg, retLoc);
       }
     }
 

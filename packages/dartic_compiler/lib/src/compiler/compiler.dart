@@ -2033,7 +2033,16 @@ class DarticCompiler {
     final classId = _classToClassId[receiverClass]!;
     final setterName = '${_mangleName(name)}=';
     final nameIdx = _constantPool.addName(setterName);
-    return _classInfos[classId].methods.containsKey(nameIdx);
+    if (_classInfos[classId].methods.containsKey(nameIdx)) return true;
+    // Hierarchy check: same as _isDarticCompiledMethod — the setter may be
+    // abstract in this class but implemented by a concrete subclass.
+    for (final info in _classInfos) {
+      if (info.supertypeIds.contains(classId) &&
+          info.methods.containsKey(nameIdx)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /// Finds the global slot index for an enum InstanceConstant by matching
