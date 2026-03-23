@@ -370,21 +370,21 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
 
   @override
   set first(dynamic value) {
-    if (!_dispatch.set(this, $darticObject, 'first', value)) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'first', value)) {
       super.first = value;
     }
   }
 
   @override
   set last(dynamic value) {
-    if (!_dispatch.set(this, $darticObject, 'last', value)) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'last', value)) {
       super.last = value;
     }
   }
 
   @override
   set length(int value) {
-    if (!_dispatch.set(this, $darticObject, 'length', value)) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'length', value)) {
       throw UnsupportedError('Abstract setter length must be overridden in dartic code');
     }
   }

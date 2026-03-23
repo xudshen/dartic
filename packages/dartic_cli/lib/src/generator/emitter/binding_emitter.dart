@@ -1765,9 +1765,16 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   // listen()/other abstract methods which ARE overridden.
   // Abstract generic methods MUST be implemented (the class can't be
   // instantiated otherwise).
+  // Object methods/getters are handled by the special section below (with
+  // correct super fallbacks). For interface bridges, skip them here so they
+  // don't go through the isInterfaceBridge abstract-throw path.
+  const objectMethodNames = {'toString', 'noSuchMethod'};
+  const objectGetterNames = {'hashCode'};
+
   final overriddenMethods = <String>{};
   for (final method in info.methods) {
     if (method.typeParamDecl != null && !method.isAbstract) continue;
+    if (info.isInterface && objectMethodNames.contains(method.name)) continue;
     overriddenMethods.add(method.name);
     buf.writeln();
     _writeBridgeMethodOverride(buf, info.className, method,
@@ -1778,6 +1785,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   // Override getters with dispatch delegation
   final overriddenGetters = <String>{};
   for (final getter in info.getters) {
+    if (info.isInterface && objectGetterNames.contains(getter.name)) continue;
     overriddenGetters.add(getter.name);
     buf.writeln();
     _writeBridgeGetterOverride(buf, getter, isInterfaceBridge: info.isInterface);
@@ -2219,7 +2227,7 @@ void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter) {
   buf.writeln('  @override');
   buf.writeln('  set ${setter.name}(${setter.paramType} value) {');
   buf.writeln(
-      "    if (!_dispatch.set(this, \$darticObject, '${setter.name}', value)) {");
+      "    if (!_dispatch.set(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${setter.name}', value)) {");
   if (setter.isAbstract) {
     buf.writeln(
         "      throw UnsupportedError('Abstract setter ${setter.name} must be overridden in dartic code');");

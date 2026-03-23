@@ -43,6 +43,13 @@ class _$EventSink implements EventSink, DarticObjectHolder {
   }
 
   @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  @override
   String toString() {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return super.toString();
@@ -52,15 +59,8 @@ class _$EventSink implements EventSink, DarticObjectHolder {
   @override
   int get hashCode {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
+    if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
   }
 }
 
