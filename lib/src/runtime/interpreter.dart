@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import '../api/dartic_absent.dart';
 import '../bridge/dartic_dispatch.dart';
 import '../bridge/bridge_factory_registry.dart';
+import '../bridge/face_factory_registry.dart';
 import '../bridge/closure_adapter.dart';
 import '../bridge/dartic_object_holder.dart';
 import '../bridge/host_binding_registry.dart';
@@ -54,6 +55,7 @@ class DarticInterpreter {
     this.typeRegistry,
     this.hostBindingRegistry,
     this.bridgeFactoryRegistry,
+    this.faceFactoryRegistry,
     this.hostTypeResolver,
     this.fuelBudget = defaultFuelBudget,
     this.maxTotalFuel,
@@ -117,6 +119,10 @@ class DarticInterpreter {
   /// Bridge factory registry for NEW_INSTANCE. If null, no Bridge instances
   /// are created (all allocations produce plain DarticObject).
   final BridgeFactoryRegistry? bridgeFactoryRegistry;
+
+  /// Face (interface bridge) factory registry for EXTRACT_FACE. If null,
+  /// EXTRACT_FACE throws when no factory is found.
+  final FaceFactoryRegistry? faceFactoryRegistry;
 
   /// Host type resolver for extractType(). Maps raw host objects to DarticType
   /// via registered predicates instead of hardcoded `is` checks.

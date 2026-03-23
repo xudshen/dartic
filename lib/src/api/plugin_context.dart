@@ -9,6 +9,7 @@
 library;
 
 import '../bridge/bridge_factory_registry.dart';
+import '../bridge/face_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_type_resolver.dart';
@@ -33,12 +34,14 @@ class DarticPluginContext {
     required BridgeFactoryRegistry bridgeFactoryRegistry,
     required HostTypeResolver hostTypeResolver,
     required Map<String, BridgeFactory> pendingBridgeFactories,
+    required Map<String, FaceFactory> pendingFaceFactories,
   })  : _config = config,
         _hostBindingRegistry = hostBindingRegistry,
         _hostClassRegistry = hostClassRegistry,
         _bridgeFactoryRegistry = bridgeFactoryRegistry,
         _hostTypeResolver = hostTypeResolver,
-        _pendingBridgeFactories = pendingBridgeFactories;
+        _pendingBridgeFactories = pendingBridgeFactories,
+        _pendingFaceFactories = pendingFaceFactories;
 
   final DarticConfig _config;
   final HostBindingRegistry _hostBindingRegistry;
@@ -47,6 +50,7 @@ class DarticPluginContext {
   final BridgeFactoryRegistry _bridgeFactoryRegistry;
   final HostTypeResolver _hostTypeResolver;
   final Map<String, BridgeFactory> _pendingBridgeFactories;
+  final Map<String, FaceFactory> _pendingFaceFactories;
 
   /// Read-only access to engine configuration.
   DarticConfig get config => _config;
@@ -130,5 +134,17 @@ class DarticPluginContext {
     if (bridgeFactory != null) {
       _pendingBridgeFactories[name] = bridgeFactory;
     }
+  }
+
+  /// Registers a face (interface bridge) factory for deferred classId resolution.
+  ///
+  /// [interfaceName] is the fully-qualified interface name
+  /// (e.g., `"package:flutter/src/scheduler/ticker.dart::TickerProvider"`).
+  /// The factory is resolved to a classId during [DarticEngine.loadBytecode].
+  void registerFaceFactory({
+    required String interfaceName,
+    required FaceFactory factory,
+  }) {
+    _pendingFaceFactories[interfaceName] = factory;
   }
 }

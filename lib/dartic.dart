@@ -13,6 +13,7 @@ export 'src/api/engine.dart';
 export 'src/api/plugin.dart';
 export 'src/api/plugin_context.dart';
 export 'src/bridge/bridge_factory_registry.dart' show BridgeFactory;
+export 'src/bridge/face_factory_registry.dart' show FaceFactory;
 export 'src/bridge/dartic_dispatch.dart'
     show DarticDispatch, InterpreterMethodCallback, notOverridden;
 export 'src/bridge/dartic_object_holder.dart';
