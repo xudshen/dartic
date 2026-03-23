@@ -219,6 +219,8 @@ DarticDispatch 是一个具体类（无接口），为 Bridge 实例提供将虚
 
 **EXTRACT_FACE 接口 Bridge 提取**：当 dartic 对象通过 mixin `implements` 宿主接口（如 `SingleTickerProviderStateMixin implements TickerProvider`）时，主 Bridge（如 `_$State`）不直接实现该接口。编译器在 CALL_HOST 参数传递时检测此情况，emit `EXTRACT_FACE A, B, C`：从 `refStack[B]` 提取 DarticObject，以 `classId=C`（接口的 classId）查找 BridgeFactoryRegistry 创建接口 Bridge（face），缓存在 `DarticObject._faces[C]` 中（同一 classId 只创建一次），结果写入 `refStack[A]`。编译器的 `_applyFaceExtractions` 在所有 CALL_HOST 调用点检查参数类型，当参数的静态类型为 dartic 类、而对应形参期望的是宿主接口类型时，自动 emit EXTRACT_FACE。`_ensureHostInterfaceRegistered` 在类注册时递归注册传递性宿主接口，确保 face classId 可用。
 
+**接口 Bridge 与主 Bridge 的行为差异**：接口 Bridge（face）的方法覆盖逻辑与主 Bridge 不同——未被 dartic 覆盖的方法抛出 `UnsupportedError`（因为接口无 super 实现可回退），而非调用 `super`。Object 方法（`toString`/`==`/`hashCode`）在 face 的 dispatch 覆盖循环中被跳过，直接 fall through 到 Object 默认实现，避免接口 Bridge 上的 Object 方法意外路由到 dartic 覆盖（应由主 Bridge 负责）。
+
 **CALL_HOST Bridge 拦截**：当 Bridge 实例被静态类型为宿主类型时（如 `on Error catch (e)` 中的 `e`），方法调用编译为 `CALL_HOST`。CALL_HOST handler 在调用宿主绑定之前检查接收者是否为 `DarticObjectHolder`，若是则优先通过 `DarticDispatch` 路由 dartic 覆盖，`notOverridden` 时降级到宿主绑定。此拦截依赖 `BindingEntry.methodName` 字段区分实例方法和静态方法/构造函数。
 
 ### Bridge 运行时集成
@@ -239,10 +241,14 @@ abstract interface class DarticObjectHolder {
 
 #### DarticDispatch API（双参数设计）
 
-DarticDispatch 的 `invoke` / `get` / `set` 方法接收两个参数：`receiver`（原始接收者，Bridge 实例）和 `darticObject`（提取后的 DarticObject）。双参数设计的原因：
+DarticDispatch 的 `invoke` / `get` / `set` 方法接收两个参数：`receiver`（原始接收者）和 `darticObject`（提取后的 DarticObject）。双参数设计的原因：
 
 - `darticObject`（DarticObject）用于在 `DarticClassInfo.methods` 中查找方法、在 ConstantPool 中解析名称
-- `receiver`（Bridge 实例）需作为 `this` 传入解释器方法调用，使方法体内的 `this` 仍然是 Bridge 实例（保证后续字段访问和方法调用可正确路由）
+- `receiver` 作为 `this` 传入解释器方法调用，使方法体内的 `this` 能正确路由字段访问和后续方法调用
+
+**统一 dispatch receiver**：所有 Bridge 生成代码（主 Bridge 和接口 Bridge）统一使用 `$darticObject.bridge ?? $darticObject` 作为 dispatch 的 `receiver` 参数。对于主 Bridge，`bridge` 字段指向自身（`bridge == this`），行为不变。对于接口 Bridge（face），`bridge` 指向主 Bridge 实例，确保 dartic 方法体内的 `this` 是主 Bridge 而非 face（使 `CALL_HOST` 能通过正确的宿主类型路由方法）。
+
+**DarticObject `==`/`hashCode` identity 语义**：DarticObject 重写了 `==` 和 `hashCode`，当 `dispatch` 非空时优先调用 dartic 覆盖。若 dartic 未覆盖，DarticObject 的 `==` 额外检查 `other is DarticObjectHolder && identical(this, other.$darticObject)`，确保同一 DarticObject 的主 Bridge 和 face 被视为相等。`hashCode` 降级到 `identityHashCode(this)`。
 
 #### 解释器 _extractDarticObject 辅助函数
 

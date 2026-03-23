@@ -302,8 +302,8 @@ Kernel 中属性访问统一为 `InstanceGet` / `InstanceSet` 节点。编译器
 
 | Kernel 节点 | 编译策略 |
 |------------|----------|
-| `StaticInvocation` | 编译参数 → `CALL_STATIC`（解释器函数）或 `CALL_HOST`（Bridge 绑定） |
-| `InstanceInvocation` | 编译 receiver + 参数 → `CALL_VIRTUAL`（IC 快路径） |
+| `StaticInvocation` | 编译参数 → `CALL_STATIC`（解释器函数）或 `CALL_HOST`（Bridge 绑定）。`CALL_HOST` 前 `_applyFaceExtractions` 检查参数是否需要 `EXTRACT_FACE`（dartic 对象传给宿主接口参数时，详见 Ch4） |
+| `InstanceInvocation` | 编译 receiver + 参数 → `CALL_VIRTUAL`（IC 快路径）。**Host mixin 特例**：当 `interfaceTarget` 指向 host mixin 类但 dartic 类方法表含该方法时（CFE 将 mixin 成员复制到 application 类），仍发射 `CALL_VIRTUAL`（通过 `_isDarticCompiledMethod` 层次检查确认），不走 `CALL_HOST`。同理适用于 `InstanceGet`/`InstanceSet` 的 getter/setter/抽象字段路径 |
 | `ConstructorInvocation` | `NEW_INSTANCE` → 编译参数 → `CALL_STATIC`（详见构造函数编译） |
 | `LocalFunctionInvocation` | 局部函数引用已在寄存器中 → `CALL` |
 | `FunctionInvocation` | 函数类型 `call()` → `CALL` |
