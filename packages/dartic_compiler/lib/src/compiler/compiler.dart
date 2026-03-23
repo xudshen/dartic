@@ -2006,7 +2006,10 @@ class DarticCompiler {
     }
     final classId = _classToClassId[receiverClass]!;
     final methodName = _mangleName(name);
-    final nameIdx = _constantPool.addName(methodName);
+    // Use lookupNameIndex (not addName) to avoid polluting the constant pool
+    // when the check fails and the name is never used.
+    final nameIdx = _constantPool.lookupNameIndex(methodName);
+    if (nameIdx < 0) return false;
     // Check this class's method table.
     if (_classInfos[classId].methods.containsKey(nameIdx)) return true;
     // For abstract methods in mixin application classes: the method may not
@@ -2032,7 +2035,8 @@ class DarticCompiler {
     }
     final classId = _classToClassId[receiverClass]!;
     final setterName = '${_mangleName(name)}=';
-    final nameIdx = _constantPool.addName(setterName);
+    final nameIdx = _constantPool.lookupNameIndex(setterName);
+    if (nameIdx < 0) return false;
     if (_classInfos[classId].methods.containsKey(nameIdx)) return true;
     // Hierarchy check: same as _isDarticCompiledMethod — the setter may be
     // abstract in this class but implemented by a concrete subclass.

@@ -2040,17 +2040,28 @@ extension on DarticCompiler {
         return (valReg, resultLoc);
       }
 
-      // Host mixin abstract field with compiled setter: same pattern as the
-      // getter case in _compileInstanceGet — the Kernel IR uses ir.Field but
-      // the setter was compiled as a dartic function.
+      // Host mixin abstract field with compiled setter: the Kernel IR uses
+      // ir.Field but the setter was compiled as a dartic function.
+      // Must replicate _compileInstanceSetterCall logic: save value before
+      // arg moves (InstanceSet evaluates to the assigned value), position
+      // args correctly for CALL_VIRTUAL.
       if (_isDarticCompiledSetter(expr.receiver, expr.name)) {
-        final (recvReg, _) = _compileExpression(expr.receiver);
+        var (recvReg, recvLoc) = _compileExpression(expr.receiver);
+        recvReg = _boxToRefIfValue(
+            recvReg, recvLoc, _inferExprType(expr.receiver));
         var (valReg, valLoc) = _compileExpression(expr.value);
+        // Save value for InstanceSet result (before arg moves may clobber it).
+        final savedValReg = valReg;
+        final savedValLoc = valLoc;
+        // Box to ref for arg passing.
         valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+        valLoc = ResultLoc.ref;
+        // Arg moves + CALL_VIRTUAL.
+        _emitArgMovesForVirtualCall([(valReg, valLoc)]);
+        final dummyResult = _allocRefReg();
         final setterName = '${_mangleName(expr.name)}=';
-        _emitCallVirtual(valReg, recvReg, setterName, 1);
-        final retLoc = _classifyType(target.type);
-        return (valReg, retLoc);
+        _emitCallVirtual(dummyResult, recvReg, setterName, 1);
+        return (savedValReg, savedValLoc);
       }
     }
 
