@@ -1993,6 +1993,35 @@ class DarticCompiler {
     return null;
   }
 
+  /// Returns true if [receiver]'s compile-time class is a dartic class
+  /// whose method table contains a compiled function for [name].
+  ///
+  /// Used to redirect host-library method/getter/setter calls to
+  /// CALL_VIRTUAL when the method was copied from a host mixin into
+  /// a dartic mixin application class by CFE.
+  bool _isDarticCompiledMethod(ir.Expression receiver, ir.Name name) {
+    final receiverClass = _resolveReceiverClass(receiver);
+    if (receiverClass == null || !_classToClassId.containsKey(receiverClass)) {
+      return false;
+    }
+    final classId = _classToClassId[receiverClass]!;
+    final methodName = _mangleName(name);
+    final nameIdx = _constantPool.addName(methodName);
+    return _classInfos[classId].methods.containsKey(nameIdx);
+  }
+
+  /// Same as [_isDarticCompiledMethod] but checks for a setter (`name=`).
+  bool _isDarticCompiledSetter(ir.Expression receiver, ir.Name name) {
+    final receiverClass = _resolveReceiverClass(receiver);
+    if (receiverClass == null || !_classToClassId.containsKey(receiverClass)) {
+      return false;
+    }
+    final classId = _classToClassId[receiverClass]!;
+    final setterName = '${_mangleName(name)}=';
+    final nameIdx = _constantPool.addName(setterName);
+    return _classInfos[classId].methods.containsKey(nameIdx);
+  }
+
   /// Finds the global slot index for an enum InstanceConstant by matching
   /// it against the static fields of the enum class.
   ///

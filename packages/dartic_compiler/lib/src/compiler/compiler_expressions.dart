@@ -1491,24 +1491,14 @@ extension on DarticCompiler {
     }
 
     // Platform method call → CALL_HOST (if specialization above didn't fire).
-    // Exception: if the receiver is a dartic class (has classId) and the
-    // method exists in its compiled method table, use CALL_VIRTUAL. This
-    // handles two cases:
-    // 1. Enum instances calling _Enum methods (existing behavior).
-    // 2. Host mixin methods copied by CFE into mixin application classes —
-    //    the method body references the original host mixin class, but the
-    //    method has been compiled as a dartic function.
+    // Exception: if the receiver is a dartic class whose method table contains
+    // a compiled version of this method, use CALL_VIRTUAL. Covers:
+    // 1. Enum instances calling _Enum methods.
+    // 2. Host mixin methods copied by CFE into mixin application classes.
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
-      final receiverClass = _resolveReceiverClass(expr.receiver);
-      if (receiverClass != null &&
-          _classToClassId.containsKey(receiverClass)) {
-        final classId = _classToClassId[receiverClass]!;
-        final methodName = _mangleName(expr.name);
-        final nameIdx = _constantPool.addName(methodName);
-        if (_classInfos[classId].methods.containsKey(nameIdx)) {
-          return _compileVirtualCall(expr);
-        }
+      if (_isDarticCompiledMethod(expr.receiver, expr.name)) {
+        return _compileVirtualCall(expr);
       }
       return _compileHostInstanceCall(expr);
     }
@@ -1919,17 +1909,9 @@ extension on DarticCompiler {
     // Exception: dartic class with compiled getter (host mixin getter copied by CFE).
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
-      final receiverClass = _resolveReceiverClass(expr.receiver);
-      if (receiverClass != null &&
-          _classToClassId.containsKey(receiverClass)) {
-        final classId = _classToClassId[receiverClass]!;
-        final methodName = _mangleName(expr.name);
-        final nameIdx = _constantPool.addName(methodName);
-        if (_classInfos[classId].methods.containsKey(nameIdx)) {
-          if (target is ir.Procedure && target.isGetter) {
-            return _compileInstanceGetterCall(expr, target);
-          }
-        }
+      if (_isDarticCompiledMethod(expr.receiver, expr.name) &&
+          target is ir.Procedure && target.isGetter) {
+        return _compileInstanceGetterCall(expr, target);
       }
       return _compileHostGetterCall(expr);
     }
@@ -2049,17 +2031,9 @@ extension on DarticCompiler {
     // Exception: dartic class with compiled setter (host mixin setter copied by CFE).
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
-      final receiverClass = _resolveReceiverClass(expr.receiver);
-      if (receiverClass != null &&
-          _classToClassId.containsKey(receiverClass)) {
-        final classId = _classToClassId[receiverClass]!;
-        final setterName = '${_mangleName(expr.name)}=';
-        final nameIdx = _constantPool.addName(setterName);
-        if (_classInfos[classId].methods.containsKey(nameIdx)) {
-          if (target is ir.Procedure && target.isSetter) {
-            return _compileInstanceSetterCall(expr, target);
-          }
-        }
+      if (_isDarticCompiledSetter(expr.receiver, expr.name) &&
+          target is ir.Procedure && target.isSetter) {
+        return _compileInstanceSetterCall(expr, target);
       }
       return _compileHostSetterCall(expr);
     }
