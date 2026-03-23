@@ -388,23 +388,13 @@ void _writeRegisterMethod(
           info.superclasses.map((s) => "'$s'").join(', ');
       buf.writeln('      superclasses: [$superList],');
     }
-    // Bridge factory — only for non-final, non-private classes
-    if (bridge && !info.isFinal && !info.isInterface) {
+    // Bridge factory — for both extends-based and implements-based bridges
+    if (bridge && !info.isFinal) {
       final bridgeClassName = '_\$${info.className}';
       buf.writeln('      bridgeFactory: (dispatch, darticObject, superArgs) =>');
       buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
     }
     buf.writeln('    );');
-
-    // Face factory — for interface bridges (implements mode)
-    if (bridge && !info.isFinal && info.isInterface) {
-      final bridgeClassName = '_\$${info.className}';
-      buf.writeln("    ctx.registerFaceFactory(");
-      buf.writeln("      interfaceName: '${info.qualifiedName}',");
-      buf.writeln('      factory: (dispatch, darticObject, superArgs) =>');
-      buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
-      buf.writeln('    );');
-    }
 
     // Static methods as registerBinding
     _writeStaticMethodRegistrations(buf, info,
@@ -455,23 +445,13 @@ void _writeRegisterMethodWithInternalTypes(
         mainInfo.superclasses.map((s) => "'$s'").join(', ');
     buf.writeln('      superclasses: [$superList],');
   }
-  // Bridge factory — only for non-final, non-private, non-interface classes
-  if (bridge && !mainInfo.isFinal && !mainInfo.isInterface) {
+  // Bridge factory — for both extends-based and implements-based bridges
+  if (bridge && !mainInfo.isFinal) {
     final bridgeClassName = '_\$${mainInfo.className}';
     buf.writeln('      bridgeFactory: (dispatch, darticObject, superArgs) =>');
     buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
   }
   buf.writeln('    );');
-
-  // Face factory — for interface bridges (implements mode)
-  if (bridge && !mainInfo.isFinal && mainInfo.isInterface) {
-    final bridgeClassName = '_\$${mainInfo.className}';
-    buf.writeln("    ctx.registerFaceFactory(");
-    buf.writeln("      interfaceName: '${mainInfo.qualifiedName}',");
-    buf.writeln('      factory: (dispatch, darticObject, superArgs) =>');
-    buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
-    buf.writeln('    );');
-  }
 
   // Static methods for main type
   _writeStaticMethodRegistrations(buf, mainInfo,

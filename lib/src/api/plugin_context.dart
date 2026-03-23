@@ -132,16 +132,4 @@ class DarticPluginContext {
     }
   }
 
-  /// Registers a face (interface bridge) factory for deferred classId resolution.
-  ///
-  /// [interfaceName] is the fully-qualified interface name
-  /// (e.g., `"package:flutter/src/scheduler/ticker.dart::TickerProvider"`).
-  /// The factory is resolved to a classId during [DarticEngine.loadBytecode]
-  /// and stored in the shared [BridgeFactoryRegistry].
-  void registerFaceFactory({
-    required String interfaceName,
-    required BridgeFactory factory,
-  }) {
-    _pendingBridgeFactories[interfaceName] = factory;
-  }
 }

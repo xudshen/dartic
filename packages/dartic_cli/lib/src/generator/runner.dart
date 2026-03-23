@@ -194,7 +194,7 @@ class Runner {
                 await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
             // For face configs, force isInterface so bridge gen uses
-            // `implements` mode and face factory registration.
+            // `implements` mode and interface bridge registration.
             if (classConfig.face && !info.isInterface) {
               info = TypeInfo(
                 className: info.className,
@@ -492,7 +492,7 @@ class Runner {
           }
         }
         // For face configs, force isInterface so bridge gen uses
-        // `implements` mode and registerFaceFactory.
+        // `implements` mode.
         if (classConfig.face && !info.isInterface) {
           info = TypeInfo(
             className: info.className,
@@ -676,7 +676,7 @@ class Runner {
             await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
         // For face configs, force isInterface so bridge gen uses
-        // `implements` mode and registerFaceFactory.
+        // `implements` mode.
         if (classConfig.face && !info.isInterface) {
           info = TypeInfo(
             className: info.className,

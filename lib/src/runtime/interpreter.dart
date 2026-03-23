@@ -3328,7 +3328,7 @@ class DarticInterpreter {
             final factory = bridgeFactoryRegistry?.lookupByClassId(c);
             if (factory == null) {
               throw DarticError(
-                'EXTRACT_FACE: no face factory for classId=$c',
+                'EXTRACT_FACE: no interface bridge factory for classId=$c',
               );
             }
             return factory(_activeDarticDispatch!, obj, const []);

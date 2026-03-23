@@ -67,10 +67,7 @@ abstract final class TickerProviderBindings {
       type: TickerProvider,
       test: (o) => o is TickerProvider,
       methods: methodMap(),
-    );
-    ctx.registerFaceFactory(
-      interfaceName: 'package:flutter/src/scheduler/ticker.dart::TickerProvider',
-      factory: (dispatch, darticObject, superArgs) =>
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
           _$TickerProvider(dispatch, darticObject, superArgs),
     );
   }
