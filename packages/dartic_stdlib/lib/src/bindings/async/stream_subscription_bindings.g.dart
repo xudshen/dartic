@@ -20,7 +20,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   Future<void> cancel() {
-    final r = _dispatch.invoke(this, $darticObject, 'cancel', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method cancel must be overridden in dartic code');
     }
@@ -29,7 +29,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   void onData(void Function(dynamic)? handleData) {
-    final r = _dispatch.invoke(this, $darticObject, 'onData', [handleData]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onData', [handleData]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method onData must be overridden in dartic code');
     }
@@ -37,7 +37,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   void onError(Function? handleError) {
-    final r = _dispatch.invoke(this, $darticObject, 'onError', [handleError]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onError', [handleError]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method onError must be overridden in dartic code');
     }
@@ -45,7 +45,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   void onDone(void Function()? handleDone) {
-    final r = _dispatch.invoke(this, $darticObject, 'onDone', [handleDone]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDone', [handleDone]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method onDone must be overridden in dartic code');
     }
@@ -53,7 +53,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   void pause([Future<void>? resumeSignal]) {
-    final r = _dispatch.invoke(this, $darticObject, 'pause', [resumeSignal]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pause', [resumeSignal]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method pause must be overridden in dartic code');
     }
@@ -61,7 +61,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   void resume() {
-    final r = _dispatch.invoke(this, $darticObject, 'resume', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resume', const []);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method resume must be overridden in dartic code');
     }
@@ -69,7 +69,7 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   Future<E> asFuture<E>([E? futureValue]) {
-    final r = _dispatch.invoke(this, $darticObject, 'asFuture', [futureValue]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asFuture', [futureValue]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method asFuture must be overridden in dartic code');
     }
@@ -78,14 +78,14 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return super.toString();
     return r as String;
   }
 
   @override
   bool get isPaused {
-    final r = _dispatch.get(this, $darticObject, 'isPaused');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isPaused');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isPaused must be overridden in dartic code');
     }
@@ -94,14 +94,14 @@ class _$StreamSubscription implements StreamSubscription, DarticObjectHolder {
 
   @override
   int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
   }

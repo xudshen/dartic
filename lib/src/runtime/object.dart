@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import '../bridge/dartic_dispatch.dart';
+import '../bridge/dartic_object_holder.dart';
 import 'class_info.dart';
 import 'dartic_type.dart';
 
@@ -96,6 +97,11 @@ class DarticObject {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
+    // A DarticObjectHolder (Bridge/Face) wrapping the same DarticObject
+    // should be considered equal.
+    if (other is DarticObjectHolder && identical(this, other.$darticObject)) {
+      return true;
+    }
     final d = dispatch;
     if (d != null) {
       try {

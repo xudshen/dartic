@@ -21,42 +21,42 @@ class _$FormatException extends FormatException implements DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return super.toString();
     return r as String;
   }
 
   @override
   String get message {
-    final r = _dispatch.get(this, $darticObject, 'message');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'message');
     if (identical(r, notOverridden)) return super.message;
     return r as String;
   }
 
   @override
   dynamic get source {
-    final r = _dispatch.get(this, $darticObject, 'source');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'source');
     if (identical(r, notOverridden)) return super.source;
     return r as dynamic;
   }
 
   @override
   int? get offset {
-    final r = _dispatch.get(this, $darticObject, 'offset');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
     return r as int?;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
   }

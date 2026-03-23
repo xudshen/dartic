@@ -30,49 +30,49 @@ class _$State extends State implements DarticObjectHolder {
 
   @override
   void initState() {
-    final r = _dispatch.invoke(this, $darticObject, 'initState', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
     if (identical(r, notOverridden)) { super.initState(); return; }
   }
 
   @override
   void didUpdateWidget(StatefulWidget oldWidget) {
-    final r = _dispatch.invoke(this, $darticObject, 'didUpdateWidget', [oldWidget]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
     if (identical(r, notOverridden)) { super.didUpdateWidget(oldWidget); return; }
   }
 
   @override
   void reassemble() {
-    final r = _dispatch.invoke(this, $darticObject, 'reassemble', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
     if (identical(r, notOverridden)) { super.reassemble(); return; }
   }
 
   @override
   void setState(VoidCallback fn) {
-    final r = _dispatch.invoke(this, $darticObject, 'setState', [fn]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
     if (identical(r, notOverridden)) { super.setState(() => fn()); return; }
   }
 
   @override
   void deactivate() {
-    final r = _dispatch.invoke(this, $darticObject, 'deactivate', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
     if (identical(r, notOverridden)) { super.deactivate(); return; }
   }
 
   @override
   void activate() {
-    final r = _dispatch.invoke(this, $darticObject, 'activate', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
     if (identical(r, notOverridden)) { super.activate(); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke(this, $darticObject, 'dispose', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
     if (identical(r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   Widget build(BuildContext context) {
-    final r = _dispatch.invoke(this, $darticObject, 'build', [context]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method build must be overridden in dartic code');
     }
@@ -81,68 +81,68 @@ class _$State extends State implements DarticObjectHolder {
 
   @override
   void didChangeDependencies() {
-    final r = _dispatch.invoke(this, $darticObject, 'didChangeDependencies', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
     if (identical(r, notOverridden)) { super.didChangeDependencies(); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke(this, $darticObject, 'debugFillProperties', [properties]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
     if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke(this, $darticObject, 'toString', [minLevel]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
     if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
     return r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke(this, $darticObject, 'toStringShort', const []);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
     if (identical(r, notOverridden)) return super.toStringShort();
     return r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke(this, $darticObject, 'toDiagnosticsNode', [name, style]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
     if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
     return r as DiagnosticsNode;
   }
 
   @override
   StatefulWidget get widget {
-    final r = _dispatch.get(this, $darticObject, 'widget');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
     return r as StatefulWidget;
   }
 
   @override
   BuildContext get context {
-    final r = _dispatch.get(this, $darticObject, 'context');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
     if (identical(r, notOverridden)) return super.context;
     return r as BuildContext;
   }
 
   @override
   bool get mounted {
-    final r = _dispatch.get(this, $darticObject, 'mounted');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mounted');
     if (identical(r, notOverridden)) return super.mounted;
     return r as bool;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get(this, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke(this, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
     if (identical(r, notOverridden)) return super == other;
     return r as bool;
   }

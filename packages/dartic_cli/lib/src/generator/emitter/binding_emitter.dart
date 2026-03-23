@@ -1803,7 +1803,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  @override');
     buf.writeln('  String toString() {');
     buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, 'toString', const []);");
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
     buf.writeln(
         '    if (identical(r, notOverridden)) return super.toString();');
     buf.writeln('    return r as String;');
@@ -1814,9 +1814,9 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  @override');
     buf.writeln('  int get hashCode {');
     buf.writeln(
-        "    final r = _dispatch.get(this, \$darticObject, 'hashCode');");
+        "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
     buf.writeln(
-        '    if (identical(r, notOverridden)) return super.hashCode;');
+        '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
     buf.writeln('    return r as int;');
     buf.writeln('  }');
   }
@@ -1828,9 +1828,9 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  @override');
     buf.writeln('  bool operator ==(Object other) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '==', [other]);");
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '==', [other]);");
     buf.writeln(
-        '    if (identical(r, notOverridden)) return super == other;');
+        '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : super == other; }');
     buf.writeln('    return r == true;');
     buf.writeln('  }');
   }
@@ -2091,7 +2091,7 @@ void _writeBridgeMethodOverride(
   }
   final superCall = 'super.${method.name}(${superCallArgs.join(', ')})';
   final dispatchCall =
-      "_dispatch.invoke(this, \$darticObject, '${method.name}', $argsListStr)";
+      "_dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${method.name}', $argsListStr)";
 
   final typeParamDecl = method.typeParamDecl ?? '';
 
@@ -2199,7 +2199,7 @@ void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter) {
   buf.writeln('  @override');
   buf.writeln('  ${getter.returnType} get ${getter.name} {');
   buf.writeln(
-      "    final r = _dispatch.get(this, \$darticObject, '${getter.name}');");
+      "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${getter.name}');");
   if (getter.isAbstract) {
     buf.writeln('    if (identical(r, notOverridden)) {');
     buf.writeln(
@@ -2239,7 +2239,7 @@ void _writeBridgeOperatorOverride(
     if (op.name == '~') {
       buf.writeln('  ${op.returnType} operator ~() {');
       buf.writeln(
-          "    final r = _dispatch.invoke(this, \$darticObject, '~', const []);");
+          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '~', const []);");
       if (op.isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
@@ -2249,7 +2249,7 @@ void _writeBridgeOperatorOverride(
       // unary -
       buf.writeln('  ${op.returnType} operator -() {');
       buf.writeln(
-          "    final r = _dispatch.invoke(this, \$darticObject, 'unary-', const []);");
+          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'unary-', const []);");
       if (op.isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
@@ -2261,7 +2261,7 @@ void _writeBridgeOperatorOverride(
   } else if (op.name == '[]') {
     buf.writeln('  ${op.returnType} operator [](${op.paramType} index) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '[]', [index]);");
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]', [index]);");
     if (op.isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
@@ -2274,7 +2274,7 @@ void _writeBridgeOperatorOverride(
     buf.writeln(
         '  void operator []=(${op.paramType} index, dynamic value) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '[]=', [index, value]);");
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]=', [index, value]);");
     if (op.isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
@@ -2287,7 +2287,7 @@ void _writeBridgeOperatorOverride(
     buf.writeln(
         '  ${op.returnType} operator ${op.name}(${op.paramType} other) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(this, \$darticObject, '${op.name}', [other]);");
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${op.name}', [other]);");
     if (op.isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
