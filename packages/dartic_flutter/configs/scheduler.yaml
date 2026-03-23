@@ -14,3 +14,6 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: package:flutter/src/scheduler
     discover: all
+    classes:
+      - name: TickerProvider
+        face: true

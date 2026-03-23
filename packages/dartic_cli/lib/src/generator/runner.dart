@@ -186,12 +186,37 @@ class Runner {
 
         for (final library in resolvedLibraries) {
           for (final classConfig in library.classes) {
-            if (!classConfig.bridge) continue;
+            if (!classConfig.bridge && !classConfig.face) continue;
 
             final resolvedName = classConfig.resolvedName;
             final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
-            final info =
+            var info =
                 await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
+
+            // For face configs, force isInterface so bridge gen uses
+            // `implements` mode and registerFaceFactory.
+            if (classConfig.face && !info.isInterface) {
+              info = TypeInfo(
+                className: info.className,
+                libraryUri: info.libraryUri,
+                methods: info.methods,
+                getters: info.getters,
+                setters: info.setters,
+                operators: info.operators,
+                staticMethods: info.staticMethods,
+                staticGetters: info.staticGetters,
+                constructors: info.constructors,
+                superclasses: info.superclasses,
+                isAbstract: info.isAbstract,
+                isFinal: info.isFinal,
+                isInterface: true,
+                isBase: info.isBase,
+                bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
+                fields: info.fields,
+                sourceImports: info.sourceImports,
+                referencedTypes: info.referencedTypes,
+              );
+            }
 
             classConfigs.add((
               name: classConfig.name,
@@ -436,7 +461,7 @@ class Runner {
           mainExtraMethods: _nullIfEmpty(mainExtraMethods),
           extraBindings: _nullIfEmpty(mainOverrides?.extraBindings),
           ignoreForFile: _mergeIgnoreForFile(mainOverrides?.ignoreForFile),
-          bridge: classConfig.bridge,
+          bridge: classConfig.bridge || classConfig.face,
           methodOverrides: _nullIfEmpty(mainOverrides?.methodOverrides),
           kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
           extraImports: _nullIfEmpty(library.extraImports),
@@ -466,6 +491,30 @@ class Runner {
             continue;
           }
         }
+        // For face configs, force isInterface so bridge gen uses
+        // `implements` mode and registerFaceFactory.
+        if (classConfig.face && !info.isInterface) {
+          info = TypeInfo(
+            className: info.className,
+            libraryUri: info.libraryUri,
+            methods: info.methods,
+            getters: info.getters,
+            setters: info.setters,
+            operators: info.operators,
+            staticMethods: info.staticMethods,
+            staticGetters: info.staticGetters,
+            constructors: info.constructors,
+            superclasses: info.superclasses,
+            isAbstract: info.isAbstract,
+            isFinal: info.isFinal,
+            isInterface: true,
+            isBase: info.isBase,
+            bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
+            fields: info.fields,
+            sourceImports: info.sourceImports,
+            referencedTypes: info.referencedTypes,
+          );
+        }
         // Check for overrides on this class
         final overrides = library.overrides[resolvedName];
         final extraMethods = overrides?.extraMethods;
@@ -476,7 +525,7 @@ class Runner {
           extraMethods: _nullIfEmpty(extraMethods),
           extraBindings: _nullIfEmpty(extraBindings),
           preamble: preamble,
-          bridge: classConfig.bridge,
+          bridge: classConfig.bridge || classConfig.face,
           customBridge: overrides?.customBridge ?? false,
           ignoreForFile: _mergeIgnoreForFile(overrides?.ignoreForFile),
 
@@ -965,6 +1014,7 @@ class Runner {
           sourceName: cls.sourceName,
           internalTypes: cls.internalTypes,
           bridge: cls.bridge,
+          face: cls.face,
           sourceLibraryUri: discoveredUris[cls.name],
         ));
       } else {

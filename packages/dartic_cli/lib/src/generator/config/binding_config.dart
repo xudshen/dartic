@@ -86,6 +86,14 @@ class ClassConfig {
   /// 3. 注册 super 转发器到 HostBindingRegistry
   final bool bridge;
 
+  /// 是否生成 interface Bridge 类和 FaceFactory。
+  ///
+  /// 当为 true 时，代码生成器会：
+  /// 1. 生成 `_$ClassName` Bridge 类（implements 宿主类 + DarticObjectHolder）
+  /// 2. 注册 registerFaceFactory
+  /// 类似 bridge 但使用 implements 模式，用于 multi-face IS-A。
+  final bool face;
+
   /// The actual declaring library URI for this class (from Kernel IR).
   /// Used by directory discovery to resolve the correct library for analysis.
   /// null for explicitly configured classes (uses LibraryConfig.uri instead).
@@ -96,6 +104,7 @@ class ClassConfig {
     this.sourceName,
     this.internalTypes = const [],
     this.bridge = false,
+    this.face = false,
     this.sourceLibraryUri,
   });
 

@@ -11,6 +11,51 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/scheduler/binding.dart';
 
+class _$TickerProvider implements TickerProvider, DarticObjectHolder {
+  _$TickerProvider(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Ticker createTicker(TickerCallback onTick) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createTicker must be overridden in dartic code');
+    }
+    return r as Ticker;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTickerProviderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TickerProvider(dispatch, obj, superArgs);
+
 abstract final class TickerProviderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,6 +63,11 @@ abstract final class TickerProviderBindings {
       type: TickerProvider,
       test: (o) => o is TickerProvider,
       methods: methodMap(),
+    );
+    ctx.registerFaceFactory(
+      interfaceName: 'package:flutter/src/scheduler/ticker.dart::TickerProvider',
+      factory: (dispatch, darticObject) =>
+          _$TickerProvider(dispatch, darticObject, const []),
     );
   }
 

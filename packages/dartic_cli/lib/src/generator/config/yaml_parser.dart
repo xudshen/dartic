@@ -132,6 +132,7 @@ ClassConfig _parseClass(dynamic value) {
     sourceName: map['source_name'] as String?,
     internalTypes: internalTypes,
     bridge: map['bridge'] as bool? ?? false,
+    face: map['face'] as bool? ?? false,
   );
 }
 
