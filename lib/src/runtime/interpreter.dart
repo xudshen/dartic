@@ -3194,7 +3194,9 @@ class DarticInterpreter {
             final obj = rs.read(rBase + a) as DarticObject;
             final superArgs = obj.pendingSuperArgs ?? const <Object?>[];
             obj.pendingSuperArgs = null;
-            rs.write(rBase + a, factory(_activeDarticDispatch!, obj, superArgs));
+            final bridgeObj = factory(_activeDarticDispatch!, obj, superArgs);
+            obj.bridge = bridgeObj;
+            rs.write(rBase + a, bridgeObj);
           }
 
         // ── Type Operations (0x65-0x66) ──

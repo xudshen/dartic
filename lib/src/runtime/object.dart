@@ -48,6 +48,26 @@ class DarticObject {
   /// invoke guest overrides when called by host APIs.
   DarticDispatch? dispatch;
 
+  /// The primary Bridge object wrapping this DarticObject (set by WRAP_BRIDGE).
+  ///
+  /// All bridge dispatch (both primary and interface bridges) uses this as
+  /// the receiver for DarticDispatch.invoke, ensuring CALL_HOST calls within
+  /// mixin methods (e.g., `this.context`) receive the correct host-typed object.
+  Object? bridge;
+
+  /// Interface bridge cache: maps interface classId → bridge instance.
+  ///
+  /// Lazily populated by EXTRACT_FACE. Each interface bridge implements one
+  /// host interface (e.g., TickerProvider) and delegates method calls back
+  /// to the interpreter via DarticDispatch.
+  Map<int, Object>? _faces;
+
+  /// Gets or creates an interface bridge for the given [classId].
+  Object getOrCreateFace(int classId, Object Function() factory) {
+    final faces = _faces ??= {};
+    return faces.putIfAbsent(classId, factory);
+  }
+
   @override
   String toString() {
     final d = dispatch;
