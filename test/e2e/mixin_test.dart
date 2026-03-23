@@ -308,10 +308,7 @@ int main() {
     // MapMixin methods are copied by CFE into the mixin application class.
     // Before the fix, the compiler generated CALL_HOST for mixin internal
     // method calls, causing runtime failures.
-    // TODO: Requires _compileInstanceGet Field-target path to also check
-    // dartic method table (keys is an abstract field in Kernel IR, but has
-    // a compiled getter in the dartic method table).
-    test('host mixin (dart:collection MapMixin) internal method dispatch', skip: 'needs InstanceGet Field-target path fix', () async {
+    test('host mixin (dart:collection MapMixin) internal method dispatch', () async {
       final result = await compileAndRunWithHost('''
 import 'dart:collection';
 

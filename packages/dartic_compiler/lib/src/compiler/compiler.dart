@@ -2007,7 +2007,21 @@ class DarticCompiler {
     final classId = _classToClassId[receiverClass]!;
     final methodName = _mangleName(name);
     final nameIdx = _constantPool.addName(methodName);
-    return _classInfos[classId].methods.containsKey(nameIdx);
+    // Check this class's method table.
+    if (_classInfos[classId].methods.containsKey(nameIdx)) return true;
+    // For abstract methods in mixin application classes: the method may not
+    // be in this class's table (abstract), but a concrete subclass must
+    // implement it. Check if ANY dartic class in the hierarchy has it.
+    // Walk all registered dartic classes to find one that inherits from this
+    // class and has the method. This handles the case where MapMixin declares
+    // abstract `keys` but the user class SimpleMap overrides it.
+    for (final info in _classInfos) {
+      if (info.supertypeIds.contains(classId) &&
+          info.methods.containsKey(nameIdx)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /// Same as [_isDarticCompiledMethod] but checks for a setter (`name=`).

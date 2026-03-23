@@ -1903,6 +1903,20 @@ extension on DarticCompiler {
         // Late field: read then check sentinel.
         return _emitLateFieldGet(recvReg, layout, target);
       }
+
+      // Host mixin abstract field with compiled getter: the Kernel IR
+      // represents the getter as ir.Field (e.g., `abstract Iterable<K> get
+      // keys` in MapMixin), but CFE copied the implementation into the mixin
+      // application class as a compiled dartic getter. Dispatch via
+      // CALL_VIRTUAL to the compiled getter instead of CALL_HOST.
+      if (_isDarticCompiledMethod(expr.receiver, expr.name)) {
+        var (receiverReg, receiverLoc) = _compileExpression(expr.receiver);
+        receiverReg = _boxToRefIfValue(
+            receiverReg, receiverLoc, _inferExprType(expr.receiver));
+        final resultReg = _allocRefReg();
+        _emitCallVirtual(resultReg, receiverReg, _mangleName(expr.name), 0);
+        return (resultReg, ResultLoc.ref);
+      }
     }
 
     // Platform class property → CALL_HOST.
@@ -2024,6 +2038,18 @@ extension on DarticCompiler {
         final resultLoc =
             layout.kind.isValue ? ResultLoc.value : ResultLoc.ref;
         return (valReg, resultLoc);
+      }
+
+      // Host mixin abstract field with compiled setter: same pattern as the
+      // getter case in _compileInstanceGet — the Kernel IR uses ir.Field but
+      // the setter was compiled as a dartic function.
+      if (_isDarticCompiledSetter(expr.receiver, expr.name)) {
+        final (recvReg, _) = _compileExpression(expr.receiver);
+        var (valReg, valLoc) = _compileExpression(expr.value);
+        valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+        final setterName = '${_mangleName(expr.name)}=';
+        _emitCallVirtual(valReg, recvReg, setterName, 1);
+        return (valReg, ResultLoc.ref);
       }
     }
 
