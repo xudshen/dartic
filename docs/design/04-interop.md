@@ -277,7 +277,11 @@ DarticClassInfo 新增两个字段用于 Engine BridgeFactory 解析：
 | hostSuperClassName | String? | dartic 类 extends 的宿主类名（如 `'dart:core::_Enum'`） |
 | hostInterfaceNames | List\<String\>? | dartic 类 implements 的宿主接口名列表 |
 
-编译器在编译类声明时检测 superclass 和 interfaces 是否为 platform 类（非用户定义），若是则记录到对应字段。
+编译器在编译类声明时通过 **Kernel IR 层次遍历** 检测宿主类型：
+- **hostSuperClassName**：沿 Kernel `superclass` 链向上走，跳过 dartic 中间类（mixin application），找到第一个 host class。例如 `class A extends Error with Mx` → A → `_Error&Mx`（dartic，跳过）→ `Error`（host，命中）。
+- **hostInterfaceNames**：沿同一条 Kernel `superclass` 链，收集所有 dartic 中间类的 `implementedTypes` 中的 host 接口。例如 mixin application `_Error&Mx` 的 `implementedTypes` 中若含 host mixin，会被收集。
+
+此遍历透明处理 mixin application 中间类，避免因 CFE 生成的匿名类打断 host 类型信息传递。
 
 #### Engine BridgeFactory 解析链
 

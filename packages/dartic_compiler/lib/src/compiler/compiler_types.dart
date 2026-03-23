@@ -256,7 +256,25 @@ class _ExprTypeInferVisitor
         node.arguments.types,
       );
   @override
-  ir.DartType? visitThisExpression(ir.ThisExpression node) => null;
+  ir.DartType? visitThisExpression(ir.ThisExpression node) {
+    final cls = _compiler._currentEnclosingClass;
+    if (cls == null) return null;
+    return ir.InterfaceType(
+      cls,
+      ir.Nullability.nonNullable,
+      cls.typeParameters.map((p) => ir.TypeParameterType(p, ir.Nullability.nonNullable)).toList(),
+    );
+  }
+  @override
+  ir.DartType? visitAwaitExpression(ir.AwaitExpression node) {
+    final operandType = _compiler._inferExprType(node.operand);
+    if (operandType is ir.InterfaceType &&
+        operandType.classNode == _compiler._coreTypes.futureClass) {
+      // Future<T> → T
+      return operandType.typeArguments.firstOrNull;
+    }
+    return operandType;
+  }
   @override
   ir.DartType? visitInstanceGet(ir.InstanceGet node) => node.resultType;
   @override

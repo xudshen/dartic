@@ -35,15 +35,23 @@ extension on DarticCompiler {
     }
 
     // Ensure implemented types (interfaces / mixin types) are registered.
-    // Also register host interfaces in _typeClassIdLookup so EXTRACT_FACE
-    // can reference them. This must happen BEFORE classId assignment below,
-    // because _ensureHostInterfaceRegistered may add entries to _classInfos.
-    for (final implemented in cls.implementedTypes) {
-      final implClass = implemented.classNode;
-      if (_isHostLibrary(implClass.enclosingLibrary)) {
-        _ensureHostInterfaceRegistered(implClass);
-      } else if (!_classToClassId.containsKey(implClass)) {
-        _registerClass(implClass);
+    // Walk the Kernel superclass chain to catch host interfaces declared on
+    // dartic intermediate classes (mixin applications).  This must happen
+    // BEFORE classId assignment below, because _ensureHostInterfaceRegistered
+    // may add entries to _classInfos.
+    {
+      ir.Class? c = cls;
+      while (c != null && !_isHostLibrary(c.enclosingLibrary)) {
+        for (final implemented in c.implementedTypes) {
+          final implClass = implemented.classNode;
+          if (_isHostLibrary(implClass.enclosingLibrary)) {
+            _ensureHostInterfaceRegistered(implClass);
+          } else if (!_classToClassId.containsKey(implClass) &&
+              !_registeringInProgress.contains(implClass)) {
+            _registerClass(implClass);
+          }
+        }
+        c = c.superclass;
       }
     }
 
@@ -214,24 +222,36 @@ extension on DarticCompiler {
     if (cls.isMixinClass) modifiers |= ClassModifiers.mixin_;
     if (cls.isAbstract) modifiers |= ClassModifiers.abstract_;
 
-    // Detect host superclass (extends platform class).
+    // Detect host superclass — walk the Kernel IR superclass chain to find
+    // the first host (platform) class.  This handles mixin applications
+    // transparently: `class A extends Error with Mx` → A → _Error&Mx → Error.
+    // Same pattern as `enumHostBase` above.
     String? hostSuperClassName;
-    if (superClass != null &&
-        _isHostLibrary(superClass.enclosingLibrary)) {
-      // Skip Object — all classes implicitly extend Object, no Bridge needed.
-      if (superClass.name != 'Object') {
-        hostSuperClassName = _hostTypeName(superClass);
+    {
+      ir.Class? c = superClass;
+      while (c != null && !_isHostLibrary(c.enclosingLibrary)) {
+        c = c.superclass;
+      }
+      if (c != null && c.name != 'Object') {
+        hostSuperClassName = _hostTypeName(c);
       }
     }
 
-    // Detect host interfaces (implements platform types).
-    // Host interfaces are already registered in _typeClassIdLookup by the
-    // early _ensureHostInterfaceRegistered call above (before classId assignment).
+    // Detect host interfaces — walk through the class AND all dartic
+    // ancestors' implementedTypes to find host interfaces.  Mixin
+    // applications may implement host mixins (e.g., SingleTickerProviderStateMixin)
+    // that the leaf class doesn't directly list in its `implements` clause.
     List<String>? hostInterfaceNames;
-    for (final implemented in cls.implementedTypes) {
-      final implClass = implemented.classNode;
-      if (_isHostLibrary(implClass.enclosingLibrary)) {
-        (hostInterfaceNames ??= []).add(_hostTypeName(implClass));
+    {
+      ir.Class? c = cls;
+      while (c != null && !_isHostLibrary(c.enclosingLibrary)) {
+        for (final impl in c.implementedTypes) {
+          final implClass = impl.classNode;
+          if (_isHostLibrary(implClass.enclosingLibrary)) {
+            (hostInterfaceNames ??= []).add(_hostTypeName(implClass));
+          }
+        }
+        c = c.superclass;
       }
     }
 
@@ -496,6 +516,16 @@ extension on DarticCompiler {
     info.supertypeIds.add(classId);
     _classInfos.add(info);
     _collectHostSupertypeIds(hostClass, info.supertypeIds);
+
+    // Recursively register host interfaces implemented by this host class.
+    // Without this, transitive host interfaces (e.g., TickerProvider
+    // implemented by SingleTickerProviderStateMixin) are never registered
+    // in _typeClassIdLookup, causing _applyFaceExtractions to skip them.
+    for (final impl in hostClass.implementedTypes) {
+      if (_isHostLibrary(impl.classNode.enclosingLibrary)) {
+        _ensureHostInterfaceRegistered(impl.classNode);
+      }
+    }
   }
 
   // ── Constructor compilation (Pass 2c) ──
