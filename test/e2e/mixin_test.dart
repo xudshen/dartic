@@ -268,6 +268,42 @@ int main() {
       expect(result, 300);
     });
 
+    test('mixin methods calling other mixin methods via this', () async {
+      final result = await compileAndRunWithHost('''
+mixin Tracker {
+  List<String> _log = [];
+
+  void _record(String msg) {
+    _log.add(msg);
+  }
+
+  void track(String action) {
+    _record('tracked: \$action');
+  }
+
+  int getLogCount() => _log.length;
+}
+
+class Base {
+  void init() {}
+}
+
+class MyTracker extends Base with Tracker {
+  void doWork() {
+    track('step1');
+    track('step2');
+  }
+}
+
+int main() {
+  final t = MyTracker();
+  t.doWork();
+  return t.getLogCount();
+}
+''');
+      expect(result, 2);
+    });
+
     test('extends + with: base class fields accessible through mixin chain', () async {
       final result = await compileAndRun('''
 class Base {
