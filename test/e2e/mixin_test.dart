@@ -304,6 +304,53 @@ int main() {
       expect(result, 2);
     });
 
+    // Regression test: host mixin (dart:collection MapMixin) with `with` clause.
+    // MapMixin methods are copied by CFE into the mixin application class.
+    // Before the fix, the compiler generated CALL_HOST for mixin internal
+    // method calls, causing runtime failures.
+    // TODO: Requires _compileInstanceGet Field-target path to also check
+    // dartic method table (keys is an abstract field in Kernel IR, but has
+    // a compiled getter in the dartic method table).
+    test('host mixin (dart:collection MapMixin) internal method dispatch', skip: 'needs InstanceGet Field-target path fix', () async {
+      final result = await compileAndRunWithHost('''
+import 'dart:collection';
+
+class SimpleMap<K, V> with MapMixin<K, V> {
+  final Map<K, V> _data = {};
+
+  @override
+  V? operator [](Object? key) => _data[key];
+
+  @override
+  void operator []=(K key, V value) { _data[key] = value; }
+
+  @override
+  V? remove(Object? key) => _data.remove(key);
+
+  @override
+  Iterable<K> get keys => _data.keys;
+
+  @override
+  void clear() { _data.clear(); }
+}
+
+int main() {
+  final m = SimpleMap<String, int>();
+  m['a'] = 1;
+  m['b'] = 2;
+  // containsKey is inherited from MapMixin (host mixin). CFE copies it
+  // into the mixin application class. It internally calls this[key]
+  // which is a dartic-compiled operator[]. This exercises the
+  // _isDarticCompiledMethod dispatch path.
+  if (m.containsKey('a') && !m.containsKey('c')) {
+    return m.length;
+  }
+  return -1;
+}
+''');
+      expect(result, 2);
+    });
+
     test('extends + with: base class fields accessible through mixin chain', () async {
       final result = await compileAndRun('''
 class Base {
