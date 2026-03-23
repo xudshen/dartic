@@ -32,6 +32,29 @@ dartic 的 bridge 机制当前只支持单继承——一个 bridge 对象 `exte
 | Phase 2 | Mixin bridge (IterableMixin) — 编译器增强 | 中等 | ~36 fix |
 | Phase 3 | 多接口组合 (未来) | 待定 | 按需 |
 
+## Phase 2 进展：宿主 Mixin 编译修复（2026-03-23）
+
+### CFE Mixin 消除与编译器修复
+
+**发现：** Dart CFE 将 `class A extends State with SingleTickerProviderStateMixin` 脱糖为匿名 mixin application 类 `_A&State&SingleTickerProviderStateMixin`，其中所有 mixin 方法被完整拷贝。dartic 编译器已正确编译这些方法体并映射 mixin 字段引用，但方法体中的 `this.{HostMixin::method}()` 调用被错误编译为 CALL_HOST（因 `interfaceTarget.enclosingClass` 仍指向原宿主 mixin 类）。
+
+**修复：** 泛化 `_compileInstanceInvocation`/`_compileInstanceGet`/`_compileInstanceSet` 中的 enum 特判——当 receiver 是 dartic 类且方法表中包含该方法时，走 CALL_VIRTUAL。提取 `_isDarticCompiledMethod`/`_isDarticCompiledSetter` 公共 helper。
+
+**验证：** 3281 个测试全部通过，无回归。
+
+### 多面对象 IS-A（待实现）
+
+宿主侧 IS-A 问题（如 `AnimationController(vsync: this)` 需要 `TickerProvider`）的解决方案：
+
+- **DarticObject 持有 `bridge` 引用**（WRAP_BRIDGE 时设置）+ lazy `faces` map
+- **Interface bridge**：复用 Bridge 生成机制的 `implements` 模式
+- **EXTRACT_FACE opcode**：编译器在 CALL_HOST 参数传递时精确提取所需 interface bridge
+- **统一 dispatch receiver**：所有 bridge 用 `$darticObject.bridge ?? $darticObject`
+- **DarticObject identity `==`**：所有 bridge/face 比较内部 DarticObject identity
+
+详见 `docs/plans/2026-03-23-multi-face-is-a.md`。
+
 ## 日期
 
-2026-03-14
+2026-03-14（初始调研）
+2026-03-23（Phase 2 编译器修复 + 多面对象方案设计）
