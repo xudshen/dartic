@@ -246,7 +246,6 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     bridgeFactoryRegistry: bridgeFactoryRegistry,
     hostTypeResolver: hostTypeResolver,
     pendingBridgeFactories: {},
-    pendingFaceFactories: {},
   );
   DarticStdlibPlugin().register(pluginContext);
   return (
@@ -278,7 +277,6 @@ Future<(Object?, List<String>)> compileAndCapturePrint(
     bridgeFactoryRegistry: bridgeFactoryRegistry,
     hostTypeResolver: hostTypeResolver,
     pendingBridgeFactories: pendingBridgeFactories,
-    pendingFaceFactories: {},
   );
   DarticStdlibPlugin().register(pluginContext);
   return (

@@ -9,7 +9,6 @@
 library;
 
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/face_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_type_resolver.dart';
@@ -34,14 +33,12 @@ class DarticPluginContext {
     required BridgeFactoryRegistry bridgeFactoryRegistry,
     required HostTypeResolver hostTypeResolver,
     required Map<String, BridgeFactory> pendingBridgeFactories,
-    required Map<String, FaceFactory> pendingFaceFactories,
   })  : _config = config,
         _hostBindingRegistry = hostBindingRegistry,
         _hostClassRegistry = hostClassRegistry,
         _bridgeFactoryRegistry = bridgeFactoryRegistry,
         _hostTypeResolver = hostTypeResolver,
-        _pendingBridgeFactories = pendingBridgeFactories,
-        _pendingFaceFactories = pendingFaceFactories;
+        _pendingBridgeFactories = pendingBridgeFactories;
 
   final DarticConfig _config;
   final HostBindingRegistry _hostBindingRegistry;
@@ -50,7 +47,6 @@ class DarticPluginContext {
   final BridgeFactoryRegistry _bridgeFactoryRegistry;
   final HostTypeResolver _hostTypeResolver;
   final Map<String, BridgeFactory> _pendingBridgeFactories;
-  final Map<String, FaceFactory> _pendingFaceFactories;
 
   /// Read-only access to engine configuration.
   DarticConfig get config => _config;
@@ -140,11 +136,12 @@ class DarticPluginContext {
   ///
   /// [interfaceName] is the fully-qualified interface name
   /// (e.g., `"package:flutter/src/scheduler/ticker.dart::TickerProvider"`).
-  /// The factory is resolved to a classId during [DarticEngine.loadBytecode].
+  /// The factory is resolved to a classId during [DarticEngine.loadBytecode]
+  /// and stored in the shared [BridgeFactoryRegistry].
   void registerFaceFactory({
     required String interfaceName,
-    required FaceFactory factory,
+    required BridgeFactory factory,
   }) {
-    _pendingFaceFactories[interfaceName] = factory;
+    _pendingBridgeFactories[interfaceName] = factory;
   }
 }

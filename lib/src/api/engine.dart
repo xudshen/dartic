@@ -9,7 +9,6 @@ library;
 import 'dart:typed_data';
 
 import '../bridge/bridge_factory_registry.dart';
-import '../bridge/face_factory_registry.dart';
 import '../bridge/host_class_registry.dart';
 import '../bridge/host_binding_registry.dart';
 import '../bridge/host_type_resolver.dart';
@@ -68,7 +67,6 @@ class DarticEngine {
     _hostBindingRegistry = HostBindingRegistry();
     _hostClassRegistry = HostClassRegistry(_hostBindingRegistry);
     _bridgeFactoryRegistry = BridgeFactoryRegistry();
-    _faceFactoryRegistry = FaceFactoryRegistry();
     _hostTypeResolver = HostTypeResolver();
     // 2. Create the plugin context for registration-only access.
     _pluginContext = DarticPluginContext(
@@ -78,7 +76,6 @@ class DarticEngine {
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
       hostTypeResolver: _hostTypeResolver,
       pendingBridgeFactories: _pendingBridgeFactories,
-      pendingFaceFactories: _pendingFaceFactories,
     );
 
     // 3. Register user plugins.
@@ -91,7 +88,6 @@ class DarticEngine {
       hostBindingRegistry: _hostBindingRegistry,
       hostClassRegistry: _hostClassRegistry,
       bridgeFactoryRegistry: _bridgeFactoryRegistry,
-      faceFactoryRegistry: _faceFactoryRegistry,
       hostTypeResolver: _hostTypeResolver,
       callStack: CallStack(maxFrames: config.maxCallDepth),
       fuelBudget: config.fuelBudget,
@@ -105,7 +101,6 @@ class DarticEngine {
   late final HostBindingRegistry _hostBindingRegistry;
   late final HostClassRegistry _hostClassRegistry;
   late final BridgeFactoryRegistry _bridgeFactoryRegistry;
-  late final FaceFactoryRegistry _faceFactoryRegistry;
   late final HostTypeResolver _hostTypeResolver;
   late final DarticInterpreter _interpreter;
   late final DarticPluginContext _pluginContext;
@@ -118,9 +113,6 @@ class DarticEngine {
   /// Bridge factories registered by class name, pending classId resolution
   /// during [loadBytecode]. Key is the fully-qualified class name.
   final Map<String, BridgeFactory> _pendingBridgeFactories = {};
-
-  /// Face factories registered by interface name, pending classId resolution.
-  final Map<String, FaceFactory> _pendingFaceFactories = {};
 
   /// Provides access to the config (for testing/inspection).
   DarticConfig get config => _config;
@@ -303,23 +295,22 @@ class DarticEngine {
       }
     }
 
-    // Resolve pending face factories: match interface names → classIds.
-    // Face factories are registered by interface FQN (e.g.,
-    // "package:flutter/.../ticker.dart::TickerProvider"). They match against
-    // hostInterfaceNames on module classes. Unlike bridge factories which
-    // attach to the class that extends/implements, face factories attach to
-    // the interface classId itself — any class whose hostInterfaceNames
-    // includes the interface triggers resolution of that interface's classId.
-    if (_pendingFaceFactories.isNotEmpty) {
+    // Resolve face factories from bridge factories: for interface bridges,
+    // the bridge factory is registered under the interface name in
+    // _pendingBridgeFactories. We also need it registered under the
+    // INTERFACE classId (for EXTRACT_FACE lookup), not just the dartic class
+    // classId. The bridge factory resolution above handles the dartic class
+    // classId; here we handle the interface classId.
+    if (_pendingBridgeFactories.isNotEmpty) {
       for (final classInfo in module.classes) {
         if (classInfo.hostInterfaceNames == null) continue;
         for (final ifaceName in classInfo.hostInterfaceNames!) {
-          final factory = _pendingFaceFactories[ifaceName];
+          final factory = _pendingBridgeFactories[ifaceName];
           if (factory != null) {
-            // Need the classId of the INTERFACE, not the class.
+            // Register under the INTERFACE classId for EXTRACT_FACE.
             final ifaceClassId = _hostTypeResolver.hostClassNameToId[ifaceName];
             if (ifaceClassId != null) {
-              _faceFactoryRegistry.register(ifaceClassId, factory);
+              _bridgeFactoryRegistry.register(ifaceClassId, factory);
             }
           }
         }

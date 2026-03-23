@@ -28,7 +28,6 @@ void main() {
       bridgeFactoryRegistry: BridgeFactoryRegistry(),
       hostTypeResolver: HostTypeResolver(),
       pendingBridgeFactories: {},
-      pendingFaceFactories: {},
     );
   });
 
@@ -52,8 +51,7 @@ void main() {
         bridgeFactoryRegistry: BridgeFactoryRegistry(),
         hostTypeResolver: HostTypeResolver(),
         pendingBridgeFactories: {},
-        pendingFaceFactories: {},
-      );
+        );
       CorePlugin().register(customCtx);
 
       final printId = hostRegistry.lookupByName('dart:core::::print#1');

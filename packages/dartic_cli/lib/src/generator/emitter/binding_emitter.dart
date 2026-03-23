@@ -401,8 +401,8 @@ void _writeRegisterMethod(
       final bridgeClassName = '_\$${info.className}';
       buf.writeln("    ctx.registerFaceFactory(");
       buf.writeln("      interfaceName: '${info.qualifiedName}',");
-      buf.writeln('      factory: (dispatch, darticObject) =>');
-      buf.writeln('          $bridgeClassName(dispatch, darticObject, const []),');
+      buf.writeln('      factory: (dispatch, darticObject, superArgs) =>');
+      buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
       buf.writeln('    );');
     }
 
@@ -468,8 +468,8 @@ void _writeRegisterMethodWithInternalTypes(
     final bridgeClassName = '_\$${mainInfo.className}';
     buf.writeln("    ctx.registerFaceFactory(");
     buf.writeln("      interfaceName: '${mainInfo.qualifiedName}',");
-    buf.writeln('      factory: (dispatch, darticObject) =>');
-    buf.writeln('          $bridgeClassName(dispatch, darticObject, const []),');
+    buf.writeln('      factory: (dispatch, darticObject, superArgs) =>');
+    buf.writeln('          $bridgeClassName(dispatch, darticObject, superArgs),');
     buf.writeln('    );');
   }
 

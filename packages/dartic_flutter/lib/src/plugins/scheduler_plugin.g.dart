@@ -6,6 +6,7 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
+import '../bindings/scheduler/ticker_provider_bindings.g.dart';
 import '../bindings/scheduler/performance_mode_request_handle_bindings.g.dart';
 import '../bindings/scheduler/priority_bindings.g.dart';
 import '../bindings/scheduler/scheduler_binding_bindings.g.dart';
@@ -14,7 +15,6 @@ import '../bindings/scheduler/scheduler_service_extensions_bindings.g.dart';
 import '../bindings/scheduler/ticker_bindings.g.dart';
 import '../bindings/scheduler/ticker_canceled_bindings.g.dart';
 import '../bindings/scheduler/ticker_future_bindings.g.dart';
-import '../bindings/scheduler/ticker_provider_bindings.g.dart';
 import '../bindings/scheduler/scheduler_top_level_bindings.g.dart';
 
 class SchedulerPlugin extends DarticPlugin {
@@ -23,6 +23,7 @@ class SchedulerPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext ctx) {
+    TickerProviderBindings.register(ctx);
     PerformanceModeRequestHandleBindings.register(ctx);
     PriorityBindings.register(ctx);
     SchedulerBindingBindings.register(ctx);
@@ -31,7 +32,6 @@ class SchedulerPlugin extends DarticPlugin {
     TickerBindings.register(ctx);
     TickerCanceledBindings.register(ctx);
     TickerFutureBindings.register(ctx);
-    TickerProviderBindings.register(ctx);
     SchedulerTopLevelBindings.register(ctx);
   }
 }
