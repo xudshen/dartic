@@ -2046,8 +2046,21 @@ extension on DarticCompiler {
     }
 
     // Platform class property set → CALL_HOST.
+    // Exception: dartic class with compiled setter (host mixin setter copied by CFE).
     if (targetClass != null &&
         _isHostLibrary(targetClass.enclosingLibrary)) {
+      final receiverClass = _resolveReceiverClass(expr.receiver);
+      if (receiverClass != null &&
+          _classToClassId.containsKey(receiverClass)) {
+        final classId = _classToClassId[receiverClass]!;
+        final setterName = '${_mangleName(expr.name)}=';
+        final nameIdx = _constantPool.addName(setterName);
+        if (_classInfos[classId].methods.containsKey(nameIdx)) {
+          if (target is ir.Procedure && target.isSetter) {
+            return _compileInstanceSetterCall(expr, target);
+          }
+        }
+      }
       return _compileHostSetterCall(expr);
     }
 
