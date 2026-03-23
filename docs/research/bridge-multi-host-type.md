@@ -42,19 +42,28 @@ dartic 的 bridge 机制当前只支持单继承——一个 bridge 对象 `exte
 
 **验证：** 3281 个测试全部通过，无回归。
 
-### 多面对象 IS-A（待实现）
+### 多面对象 IS-A（已实现）
 
-宿主侧 IS-A 问题（如 `AnimationController(vsync: this)` 需要 `TickerProvider`）的解决方案：
+宿主侧 IS-A 问题（如 `AnimationController(vsync: this)` 需要 `TickerProvider`）已通过多面对象机制解决：
 
-- **DarticObject 持有 `bridge` 引用**（WRAP_BRIDGE 时设置）+ lazy `faces` map
-- **Interface bridge**：复用 Bridge 生成机制的 `implements` 模式
-- **EXTRACT_FACE opcode**：编译器在 CALL_HOST 参数传递时精确提取所需 interface bridge
+**已完成：**
+- **DarticObject.bridge 引用**（WRAP_BRIDGE 时设置）+ lazy `_faces` map
 - **统一 dispatch receiver**：所有 bridge 用 `$darticObject.bridge ?? $darticObject`
 - **DarticObject identity `==`**：所有 bridge/face 比较内部 DarticObject identity
+- **FaceFactoryRegistry**：与 BridgeFactoryRegistry 对称，管理 interface bridge 工厂
+- **Interface bridge 生成**：gen 工具 `face: true` 配置，`implements` 模式 + `isInterfaceBridge` 抑制 super 调用
+- **EXTRACT_FACE opcode**（Op.extractFace = 0x6B，ABC 格式）：从 DarticObject 提取/创建 interface bridge
+- **编译器 CALL_HOST 参数 face 提取**：检测 dartic 对象传递给宿主接口参数时自动插入 EXTRACT_FACE
+- **宿主接口 classId 注册**：`_ensureHostInterfaceRegistered` 在编译期为宿主接口分配 classId
 
-详见 `docs/plans/2026-03-23-multi-face-is-a.md`。
+**待做：**
+- Auto-face：自动为所有纯 abstract class 生成 interface bridge（当前需手动 `face: true`）
+- 泛型接口 bridge（`Comparable<T>` 等）
+- Flutter E2E 验证（需 Flutter kernel 编译器生成 dill）
+
+**验证：** 3282 个测试全部通过，无回归。
 
 ## 日期
 
 2026-03-14（初始调研）
-2026-03-23（Phase 2 编译器修复 + 多面对象方案设计）
+2026-03-23（Phase 2 编译器修复 + 多面对象实现）
